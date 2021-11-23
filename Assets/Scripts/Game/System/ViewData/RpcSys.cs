@@ -11,21 +11,21 @@ namespace Game.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, UnitEffectsC, StunC> _effUnitF = default;
+        private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private readonly EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
+        private readonly EcsFilter<ConditionUnitC, UnitEffectsC, StunC> _effUnitF = default;
 
-        private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
-        private EcsFilter<ToolWeaponC> _twUnitF = default;
-        private EcsFilter<CornerArcherC> _archerF = default;
+        private readonly EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
+        private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
+        private readonly EcsFilter<CornerArcherC> _archerF = default;
 
 
-        private EcsFilter<BuildC, OwnerC> _buildF = default;
-        private EcsFilter<EnvC, EnvResC> _envF = default;
-        private EcsFilter<FireC> _fireF = default;
-        private EcsFilter<RiverC> _riverF = default;
-        private EcsFilter<TrailC> _trailF = default;
-        private EcsFilter<CloudC> _cloudF = default;
+        private readonly EcsFilter<BuildC, OwnerC> _buildF = default;
+        private readonly EcsFilter<EnvC, EnvResC> _envF = default;
+        private readonly EcsFilter<FireC> _fireF = default;
+        private readonly EcsFilter<RiverC> _riverF = default;
+        private readonly EcsFilter<TrailC> _trailF = default;
+        private readonly EcsFilter<CloudC> _cloudF = default;
 
 
         private static PhotonView PhotonView => RpcVC.PhotonView;
@@ -37,14 +37,20 @@ namespace Game.Game
 
         private int _idx_cur;
 
+        public static RpcSys Instance { get; private set; }
+
         public void Init()
         {
+            Instance = this;
+
             PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
 
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                SyncAllToMast();
-            }
+            SyncAllMaster();
+
+            //if (!PhotonNetwork.IsMasterClient)
+            //{
+            //    SyncAllToMast();
+            //}
         }
 
         #region ToMaster
@@ -263,7 +269,7 @@ namespace Game.Game
                 DataMastSC.InvokeRun(rpcType);
             }
 
-            SyncAllToMast();
+            SyncAllMaster();
         }
 
         #endregion
@@ -369,10 +375,10 @@ namespace Game.Game
 
         #region SyncData
 
-        public void SyncAllToMast() => PhotonView.RPC(SyncMasterRPCName, RpcTarget.MasterClient);
+        //public void SyncAllToMast() => PhotonView.RPC(SyncMasterRPCName, RpcTarget.MasterClient);
 
-        [PunRPC]
-        private void SyncAllMaster()
+        //[PunRPC]
+        public void SyncAllMaster()
         {
             var objs = new List<object>();
 
@@ -504,7 +510,8 @@ namespace Game.Game
 
 
             PhotonView.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
-            PhotonView.RPC(nameof(UpdateVision), RpcTarget.Others);
+
+            PhotonView.RPC(nameof(UpdateDataAndView), RpcTarget.All);
         }
 
         [PunRPC]
@@ -637,10 +644,16 @@ namespace Game.Game
             #endregion
         }
 
+
         [PunRPC]
-        private void UpdateVision()
+        private void UpdateDataAndView()
         {
-            DataViewSC.RotateAll.Invoke();
+            DataSC.Run(DataSystTypes.GetAvailCells);
+            DataSC.Run(DataSystTypes.GetAbilities);
+
+            //ViewDataSC.Run(ViewDataSTypes.RotateAll);
+            //ViewDataSC.Run(ViewDataSTypes.SyncCanvas);
+            //ViewDataSC.Run(ViewDataSTypes.SyncCells);
         }
 
         #endregion

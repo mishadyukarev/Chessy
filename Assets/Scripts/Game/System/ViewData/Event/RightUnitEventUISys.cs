@@ -198,7 +198,7 @@ namespace Game.Game
 
         private void TryOnHint(VideoClipTypes videoClip)
         {
-            if (HintComC.IsOnHint)
+            if (Common.HintC.IsOnHint)
             {
                 if (!HintC.WasActived(videoClip))
                 {

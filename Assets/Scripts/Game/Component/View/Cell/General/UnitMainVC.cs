@@ -14,7 +14,7 @@ namespace Game.Game
         }
 
 
-        public void SetEnabled_SR(bool enabled) => _main_SR.enabled = enabled;
+        public void SetEnabled(bool enabled) => _main_SR.enabled = enabled;
 
         public void SetSprite(UnitTypes unit, LevelTypes levUnit, bool isCornered)
         {

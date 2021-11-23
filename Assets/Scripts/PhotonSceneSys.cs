@@ -1,4 +1,5 @@
-﻿using Leopotam.Ecs;
+﻿using Game.Game;
+using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -57,6 +58,8 @@ namespace Game.Common
 
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
+
+            RpcSys.Instance.SyncAllMaster();
         }
 
         //public override sealed void OnDisconnectedFromPhoton()

@@ -10,8 +10,12 @@ namespace Game.Game
 
         public void Run()
         {
-            LevelC LevelUnitC(byte idx) => _unitF.Get2(idx);
-            OwnerC OwnUnitCom(byte idxCell) => _unitF.Get3(idxCell);
+            ref var unit_cur = ref _unitF.Get1(CurIdx.Idx);
+            ref var levUnit_cur = ref _unitF.Get2(CurIdx.Idx);
+            ref var ownUnit_cur = ref _unitF.Get3(CurIdx.Idx);
+            ref var visUnit_cur = ref _unitF.Get4(CurIdx.Idx);
+
+            ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
 
 
             if (InputC.IsClicked)
@@ -25,13 +29,6 @@ namespace Game.Game
 
                     else
                     {
-                        ref var unit_cur = ref _unitF.Get1(CurIdx.Idx);
-                        ref var levUnit_cur = ref _unitF.Get2(CurIdx.Idx);
-                        ref var ownUnit_cur = ref _unitF.Get3(CurIdx.Idx);
-
-                        ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
-
-
                         if (Is(CellClickTypes.SetUnit))
                         {
                             RpcSys.SetUniToMaster(CurIdx.Idx, SelUnitC.Unit);
@@ -61,7 +58,7 @@ namespace Game.Game
 
                         else if (Is(CellClickTypes.GiveTakeTW))
                         {
-                            if (unit_cur.Is(UnitTypes.Pawn) && OwnUnitCom(CurIdx.Idx).Is(WhoseMoveC.CurPlayerI))
+                            if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                             {
                                 RpcSys.GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx.Idx);
                             }
@@ -75,8 +72,8 @@ namespace Game.Game
                         else if (Is(CellClickTypes.UpgradeUnit))
                         {
                             if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
-                                && OwnUnitCom(CurIdx.Idx).Is(WhoseMoveC.CurPlayerI)
-                                && !LevelUnitC(CurIdx.Idx).Is(LevelTypes.Second))
+                                && ownUnit_cur.Is(WhoseMoveC.CurPlayerI)
+                                && !levUnit_cur.Is(LevelTypes.Second))
                             {
                                 RpcSys.UpgradeUnitToMaster(CurIdx.Idx);
                             }
@@ -90,7 +87,7 @@ namespace Game.Game
                         else if (Is(CellClickTypes.GiveScout))
                         {
                             if (unit_cur.Is(UnitTypes.Pawn)
-                                && OwnUnitCom(CurIdx.Idx).Is(WhoseMoveC.CurPlayerI))
+                                && ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                             {
                                 RpcSys.FromNewUnitToMas(UnitTypes.Scout, CurIdx.Idx);
                             }
@@ -206,9 +203,6 @@ namespace Game.Game
                 {
                     if (Is(CellClickTypes.SetUnit))
                     {
-                        ref var unit_cur = ref _unitF.Get1(CurIdx.Idx);
-                        ref var visUnit_cur = ref _unitF.Get4(CurIdx.Idx);
-
                         if (!unit_cur.HaveUnit || !visUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
                         {
                             if (CurIdx.IsStartDirectToCell)

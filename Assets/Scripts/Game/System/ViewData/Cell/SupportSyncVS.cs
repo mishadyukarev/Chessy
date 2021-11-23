@@ -104,7 +104,24 @@ namespace Game.Game
                         _supVF.Get1(idx_0).EnableSR(SupVisTypes.FireSelector);
                     }
                 }
+
+                else if (SelUniqAbilC.Is(UniqAbilTypes.ChangeDirWind))
+                {
+                    foreach (var item in WindC.Directs)
+                    {
+                        _supVF.Get1(item.Value).EnableSR(SupVisTypes.Spawn);
+                    }
+                }
             }
+
+            else if (CellClickC.Is(CellClickTypes.SetUnit))
+            {
+                foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.CurPlayerI))
+                {
+                    _supVF.Get1(idx_0).EnableSR(SupVisTypes.Spawn);
+                }
+            }
+
             else
             {
                 foreach (var idx_0 in ShiftCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
@@ -120,25 +137,6 @@ namespace Game.Game
                 foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelIdx.Idx))
                 {
                     _supVF.Get1(idx_0).EnableSR(SupVisTypes.UniqueAttack);
-                }
-            }
-
-            if (CellClickC.Is(CellClickTypes.SetUnit))
-            {
-                foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.CurPlayerI))
-                {
-                    _supVF.Get1(idx_0).EnableSR(SupVisTypes.Spawn);
-                }
-            }
-
-            if (CellClickC.Is(CellClickTypes.UniqAbil))
-            {
-                if (SelUniqAbilC.Is(UniqAbilTypes.ChangeDirWind))
-                {
-                    foreach (var item in WindC.Directs)
-                    {
-                        _supVF.Get1(item.Value).EnableSR(SupVisTypes.Spawn);
-                    }
                 }
             }
         }

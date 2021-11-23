@@ -4,21 +4,16 @@ using UnityEngine;
 
 namespace Game.Common
 {
-    public struct ClipsResComCom
+    public struct ClipsResC
     {
-
         private static Dictionary<ClipComTypes, AudioClip> _audioComClips;
 
-        public ClipsResComCom(bool needUpload) : this()
+
+        static ClipsResC()
         {
-            if (needUpload)
-            {
-                _audioComClips = new Dictionary<ClipComTypes, AudioClip>();
-                _audioComClips.Add(ClipComTypes.Music, Resources.Load<AudioClip>("Music"));
-
-            }
+            _audioComClips = new Dictionary<ClipComTypes, AudioClip>();
+            _audioComClips.Add(ClipComTypes.Music, Resources.Load<AudioClip>("Music"));
         }
-
 
 
         public static AudioClip AudioClip(ClipComTypes clipComType)

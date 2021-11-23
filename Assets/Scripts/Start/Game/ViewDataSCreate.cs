@@ -1,4 +1,6 @@
 ﻿using Leopotam.Ecs;
+using System;
+using System.Collections.Generic;
 
 namespace Game.Game
 {
@@ -8,22 +10,13 @@ namespace Game.Game
         {
             var gameWorld = gameSysts.World;
 
+            var list = new List<object>();
+            var actions = new Dictionary<ViewDataSTypes, Action>();
+            list.Add(actions);
 
-            var syncCellViewSyss = new EcsSystems(gameWorld)
-                .Add(new VisibElseSys())
-                .Add(new SyncCellUnitViewSys())
-                .Add(new SyncCellSelUnitViewSys())
-                .Add(new UnitStatCellSyncS())
-                .Add(new SyncCellBuildViewSystem())
-                .Add(new SyncCellEnvirsVisSystem())
-                .Add(new CellEffsVisSyncS())
-                .Add(new SupportSyncVS())
-                .Add(new CellWeatherViewSys())
-                .Add(new CellRiverViewSys())
-                .Add(new FliperAndRotatorUnitSystem())
-                .Add(new CellBarsEnvSystem())
-                .Add(new SyncCellTrailSys())
-                .Add(new CellStunViewS());
+
+
+
 
 
             var eventExecuters = new EcsSystems(gameWorld)
@@ -34,12 +27,52 @@ namespace Game.Game
                 .Add(new RightUnitEventUISys())
                 .Add(new UpEventUIS());
 
-            var syncCanvasViewSyss = new EcsSystems(gameWorld)
-            ///left
+            gameSysts.Add(eventExecuters);
+
+
+
+
+
+
+
+
+
+            //actions.Add(ViewDataSTypes.RotateAll, rotateAll.Run);
+            //gameSysts.Add(rotateAll);
+
+
+
+            var runUpdate = new EcsSystems(gameWorld)
+                .Add(new SoundClickCellS());
+
+            actions.Add(ViewDataSTypes.RunUpdate, runUpdate.Run);
+            gameSysts.Add(runUpdate);
+
+
+
+            var syncCell = new EcsSystems(gameWorld)
+                .Add(new VisibElseSys())
+                .Add(new SyncCellUnitViewSys())
+                .Add(new UnitStatCellSyncS())
+                .Add(new SyncCellBuildViewSystem())
+                .Add(new SyncCellEnvirsVisSystem())
+                .Add(new CellEffsVisSyncS())
+                .Add(new CellWeatherViewSys())
+                .Add(new CellRiverViewSys())
+                .Add(new CellBarsEnvSystem())
+                .Add(new SyncCellTrailSys())
+                .Add(new CellStunViewS())
+                .Add(new SyncSelUnitCellVS())
+                .Add(new SupportSyncVS())
+                .Add(new FliperAndRotatorUnitSystem());
+
+
+            var syncCanvas = new EcsSystems(gameWorld)
+                ///left
                 .Add(new BuildZoneUISys())
                 .Add(new EnvUIS())
 
-            ///right
+                ///right
                 .Add(new RightZoneUISys())
                 .Add(new StatsUISystem())
                 .Add(new ProtectUISys())
@@ -51,18 +84,18 @@ namespace Game.Game
                 .Add(new ShieldUISys())
                 .Add(new EffectsUISys())
 
-            ///down
+                ///down
                 .Add(new DonerUISystem())
                 .Add(new GetterUnitsUISystem())
                 .Add(new GiveTakeUISystem())
                 .Add(new ScoutSyncUIS())
                 .Add(new HeroSyncUIS())
 
-            ///up
+                ///up
                 .Add(new EconomyUpUISys())
                 .Add(new WindUISys())
 
-            ///center
+                ///center
                 .Add(new SelectorUISys())
                 .Add(new TheEndGameUISystem())
                 .Add(new MotionCenterUISystem())
@@ -74,26 +107,20 @@ namespace Game.Game
                 .Add(new PickUpgUIS())
                 .Add(new HeroesSyncUISys());
 
-
             var rotateAll = new EcsSystems(gameWorld)
                 .Add(new RotateAllSys());
 
+            var runFixedUpd = new EcsSystems(gameWorld)
+                .Add(syncCell)
+                .Add(syncCanvas)
+                .Add(rotateAll);
 
-            var runUpdate = new EcsSystems(gameWorld)
-                .Add(syncCellViewSyss)
-                .Add(syncCanvasViewSyss)
-                .Add(new SoundClickCellS());
-
-
-            new DataViewSC(runUpdate.Run, rotateAll.Run);
-
+            actions.Add(ViewDataSTypes.RunFixedUpdate, runFixedUpd.Run);
+            gameSysts.Add(runFixedUpd);
 
 
 
-            gameSysts
-                .Add(rotateAll)
-                .Add(runUpdate)
-                .Add(eventExecuters);
+            new ViewDataSC(list);
         }
     }
 }

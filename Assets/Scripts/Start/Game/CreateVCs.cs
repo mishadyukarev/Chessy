@@ -1,6 +1,5 @@
 ﻿using Game.Common;
 using Photon.Pun;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +7,7 @@ namespace Game.Game
 {
     public sealed class CreateVCs
     {
-        public CreateVCs()
+        public CreateVCs(Transform main)
         {
 
             //Main
@@ -28,7 +27,7 @@ namespace Game.Game
             new GenerZoneVC(genZone);
 
             var backGroundGO = GameObject.Instantiate(PrefabResC.BackGroundCollider2D,
-                MainGoVC.Pos + new Vector3(7, 5.5f, 2), MainGoVC.Rot);
+                MainGoVC.Pos + new Vector3(7, 5.5f, 2), main.rotation);
 
             GenerZoneVC.Attach(backGroundGO.transform);
 
@@ -76,7 +75,7 @@ namespace Game.Game
             new KingZoneUIC(centerZone_GO);
             new SelectorUIC(centerZone_GO);
             new FriendZoneUIC(centerZone_GO.transform);
-            new HintViewUIC(centerZone_GO.transform, HintComC.IsOnHint);
+            new HintViewUIC(centerZone_GO.transform, Common.HintC.IsOnHint);
             new PickUpgUIC(centerZone_GO.transform);
             new HeroesViewUIC(centerZone_GO.transform);
 

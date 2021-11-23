@@ -2,7 +2,7 @@
 
 namespace Game.Common
 {
-    public struct LanguageComC
+    public struct LanguageC
     {
         private static Dictionary<LanguageTypes, Dictionary<ComLanguageTypes, string>> _comLanguages;
         private static Dictionary<LanguageTypes, Dictionary<GameLanguageTypes, string>> _gameLanguages;
@@ -10,10 +10,9 @@ namespace Game.Common
         public static LanguageTypes CurLanguageType { get; set; }
 
 
-
-        public LanguageComC(LanguageTypes languageType) : this()
+        static LanguageC()
         {
-            CurLanguageType = languageType;
+            CurLanguageType = LanguageTypes.English;
 
             _comLanguages = new Dictionary<LanguageTypes, Dictionary<ComLanguageTypes, string>>();
 

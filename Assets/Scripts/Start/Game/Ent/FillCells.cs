@@ -2,7 +2,6 @@
 using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.Game
 {
@@ -176,7 +175,7 @@ namespace Game.Game
                         }
 
 
-  
+
                         levUnit_0.SetLevel(LevelTypes.First);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
                         unit_0.SetNew(UnitTypes.King, levUnit_0.Level, ownUnit_0.Owner);
@@ -197,7 +196,7 @@ namespace Game.Game
                             env_0.Remove(EnvTypes.AdultForest);
                         }
 
-                        
+
                         ownBuild_0.SetOwner(PlayerTypes.Second);
                         build_0.SetNew(BuildTypes.City, ownBuild_0.Owner);
                     }
@@ -208,7 +207,7 @@ namespace Game.Game
                         {
                             env_0.Remove(EnvTypes.Mountain);
                         }
-                        
+
                         int rand = UnityEngine.Random.Range(0, 100);
 
                         if (rand >= 50)
@@ -228,7 +227,7 @@ namespace Game.Game
                         unit_0.SetNew(UnitTypes.Pawn, levUnit_0.Level, ownUnit_0.Owner);
 
                         hpUnitC_0.SetMaxHp();
-                        condUnit_0.Set(CondUnitTypes.Protected);         
+                        condUnit_0.Set(CondUnitTypes.Protected);
                         thirUnitC_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                     }
                 }

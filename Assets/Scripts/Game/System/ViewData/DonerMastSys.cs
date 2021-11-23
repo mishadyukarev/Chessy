@@ -35,9 +35,9 @@ namespace Game.Game
                     WhoseMoveC.SetWhoseMove(nextPlayer);
 
 
-                    curPlayer = WhoseMoveC.CurPlayerI;
+                    //curPlayer = WhoseMoveC.CurPlayerI;
 
-                    DataViewSC.RotateAll.Invoke(); 
+                    //ViewDataSC.RotateAll.Invoke(); 
 
                     FriendC.IsActiveFriendZone = true;     
                 }

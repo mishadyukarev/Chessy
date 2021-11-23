@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using Yodo1.MAS;
 
 [Obsolete("Please use Yodo1U3dMas", false)]
@@ -75,54 +73,60 @@ public class Yodo1U3dSDK
 
     static void CallbackBanner(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error)
     {
-        if (_bannerDelegate != null) {
-            switch (adEvent) {
+        if (_bannerDelegate != null)
+        {
+            switch (adEvent)
+            {
                 case Yodo1U3dAdEvent.AdOpened:
-                _bannerDelegate(Yodo1U3dConstants.AdEvent.AdEventShowSuccess, null);
-                break;
+                    _bannerDelegate(Yodo1U3dConstants.AdEvent.AdEventShowSuccess, null);
+                    break;
                 case Yodo1U3dAdEvent.AdClosed:
-                _bannerDelegate(Yodo1U3dConstants.AdEvent.AdEventClose, null);
-                break;
+                    _bannerDelegate(Yodo1U3dConstants.AdEvent.AdEventClose, null);
+                    break;
                 case Yodo1U3dAdEvent.AdError:
-                _bannerDelegate(Yodo1U3dConstants.AdEvent.AdEventShowFail, error.ToString());
-                break;
+                    _bannerDelegate(Yodo1U3dConstants.AdEvent.AdEventShowFail, error.ToString());
+                    break;
             }
         }
     }
 
     static void CallbackInterstitial(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error)
     {
-        if (_interstitialAdDelegate != null) {
-            switch (adEvent) {
+        if (_interstitialAdDelegate != null)
+        {
+            switch (adEvent)
+            {
                 case Yodo1U3dAdEvent.AdOpened:
-                _interstitialAdDelegate(Yodo1U3dConstants.AdEvent.AdEventShowSuccess, null);
-                break;
+                    _interstitialAdDelegate(Yodo1U3dConstants.AdEvent.AdEventShowSuccess, null);
+                    break;
                 case Yodo1U3dAdEvent.AdClosed:
-                _interstitialAdDelegate(Yodo1U3dConstants.AdEvent.AdEventClose, null);
-                break;
+                    _interstitialAdDelegate(Yodo1U3dConstants.AdEvent.AdEventClose, null);
+                    break;
                 case Yodo1U3dAdEvent.AdError:
-                _interstitialAdDelegate(Yodo1U3dConstants.AdEvent.AdEventShowFail, error.ToString());
-                break;
+                    _interstitialAdDelegate(Yodo1U3dConstants.AdEvent.AdEventShowFail, error.ToString());
+                    break;
             }
         }
     }
 
-    static void CallbackVideo(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error) 
+    static void CallbackVideo(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error)
     {
-        if (_rewardVideoDelegate != null) {
-            switch (adEvent) {
+        if (_rewardVideoDelegate != null)
+        {
+            switch (adEvent)
+            {
                 case Yodo1U3dAdEvent.AdOpened:
-                _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventShowSuccess, null);
-                break;
+                    _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventShowSuccess, null);
+                    break;
                 case Yodo1U3dAdEvent.AdClosed:
-                _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventClose, null);
-                break;
+                    _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventClose, null);
+                    break;
                 case Yodo1U3dAdEvent.AdError:
-                _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventShowFail, error.ToString());
-                break;
+                    _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventShowFail, error.ToString());
+                    break;
                 case Yodo1U3dAdEvent.AdReward:
-                _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventFinish, null);
-                break;
+                    _rewardVideoDelegate(Yodo1U3dConstants.AdEvent.AdEventFinish, null);
+                    break;
             }
         }
     }

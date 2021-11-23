@@ -1,7 +1,6 @@
 ﻿using Game.Common;
 using Game.Game;
 using Leopotam.Ecs;
-using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -15,14 +14,39 @@ namespace Game
 
         private void Start()
         {
-            var comW = new EcsWorld();
-            var comSysts = new EcsSystems(comW);
-            new Common.FillEntitiesSys(comSysts, ToggleScene, gameObject);
+            new Common.CreateVCs(transform);
+
+            var comSysts = new EcsSystems(new EcsWorld());
+            new Common.CreateVSs(comSysts, gameObject);
+            new Common.CreateSysts(comSysts, ToggleScene);
+
+            comSysts.Init();
 
             ToggleScene(SceneTypes.Menu);
         }
 
         private void Update()
+        {
+            switch (CurSceneC.Scene)
+            {
+                case SceneTypes.None:
+                    throw new Exception();
+
+                case SceneTypes.Menu:
+                    break;
+
+                case SceneTypes.Game:
+                    Game.DataSC.Run(DataSystTypes.RunUpdate);
+                    DataMastSC.RunUpdate();
+                    ViewDataSC.Run(ViewDataSTypes.RunUpdate);
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
+
+        private void FixedUpdate()
         {
             Common.DataSC.RunUpdate();
 
@@ -36,9 +60,8 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    Game.DataSC.RunUpdate();
-                    DataMastSC.RunUpdate();
-                    DataViewSC.RunUpdate();
+                    Game.DataSC.Run(DataSystTypes.RunFixedUpdate);
+                    ViewDataSC.Run(ViewDataSTypes.RunFixedUpdate);
                     break;
 
                 default:
@@ -48,7 +71,7 @@ namespace Game
 
         private void ToggleScene(SceneTypes scene)
         {
-            CurSceneC.Scene = scene;
+            CurSceneC.Set(scene);
             switch (scene)
             {
                 case SceneTypes.None:
@@ -74,7 +97,7 @@ namespace Game
 
 
 
-                    new CreateVCs();
+                    new Game.CreateVCs(transform);
                     new CreateCs();
 
                     var gameSysts = new EcsSystems(_gameW)
@@ -82,7 +105,7 @@ namespace Game
                         .Add(new CreateEnts())
                         .Add(new FillCells());
 
-                    new DataSCreate(gameSysts);
+                    new Game.CreateDataS(gameSysts);
                     new DataMasSCreate(gameSysts);
                     new ViewDataSCreate(gameSysts);
 
@@ -90,10 +113,6 @@ namespace Game
                     gameSysts.Add(RpcVC.RpcView_GO.GetComponent<RpcSys>());
 
                     gameSysts.Init();
-
-                    DataViewSC.RotateAll?.Invoke();
-
-                    
 
                     break;
 

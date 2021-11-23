@@ -1,17 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Game.Game
 {
     public struct DataSC
     {
-        private static Action _runUpdate;
+        private static Dictionary<DataSystTypes, Action> _actions;
 
-        public DataSC(Action run)
+        public DataSC(List<object> list)
         {
-            _runUpdate = run;
+            var idx = 0;
+
+            _actions = (Dictionary<DataSystTypes, Action>)list[idx++];
         }
 
-        public static void RunUpdate() => _runUpdate.Invoke();
+        public static void Run(DataSystTypes type)
+        {
+            if (!_actions.ContainsKey(type)) throw new Exception();
+
+            _actions[type].Invoke();
+        }
     }
 }
 

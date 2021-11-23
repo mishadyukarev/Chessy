@@ -1,9 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Runtime.InteropServices;
-using Yodo1.MAS;
-
-public class Yodo1U3dAdsIOS
+﻿public class Yodo1U3dAdsIOS
 {
 #if UNITY_IPHONE
     private const string LIB_NAME = "__Internal";//对外扩展接口的库名

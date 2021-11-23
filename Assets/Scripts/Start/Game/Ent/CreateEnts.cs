@@ -1,7 +1,5 @@
-﻿using Game.Common;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Game.Game
 {
@@ -83,7 +81,7 @@ namespace Game.Game
                 }
 
 
-           
+
         }
     }
 }

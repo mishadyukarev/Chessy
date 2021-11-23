@@ -3,16 +3,16 @@ using UnityEngine.EventSystems;
 
 namespace Game.Common
 {
-    public struct UnityEventBaseComponent
+    public struct UnityEventC
     {
         private EventSystem _eventSystem;
         private StandaloneInputModule _standaloneInputModule;
         private AudioListener _audioListener;
 
-        public UnityEventBaseComponent(EventSystem eventSystem, StandaloneInputModule standaloneInputModule)
+        public UnityEventC(EventSystem eventS, StandaloneInputModule sIM)
         {
-            _eventSystem = eventSystem;
-            _standaloneInputModule = standaloneInputModule;
+            _eventSystem = eventS;
+            _standaloneInputModule = sIM;
             _audioListener = _eventSystem.gameObject.AddComponent<AudioListener>();
         }
     }

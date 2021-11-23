@@ -1,5 +1,5 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
+﻿using Game.Common;
+using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.Menu
@@ -24,10 +24,10 @@ namespace Game.Menu
             new MenuSysDataViewC(launchLikeGameSys.Run);
             new DataSC(runUpdate.Run);
 
-            
+
 
             menuSysts
-                .Add(this)    
+                .Add(this)
                 .Add(launchLikeGameSys)
                 .Add(runUpdate)
                 .Add(new EventSys());
@@ -47,7 +47,7 @@ namespace Game.Menu
 
 
             _curMenuW.NewEntity()
-                .Replace(new CenterZoneUICom(centerZone_Trans, SoundC.Volume, HintComC.IsOnHint))
+                .Replace(new CenterZoneUICom(centerZone_Trans, SoundC.Volume, HintC.IsOnHint))
                 .Replace(new LikeGameUICom(centerZone_Trans));
 
 

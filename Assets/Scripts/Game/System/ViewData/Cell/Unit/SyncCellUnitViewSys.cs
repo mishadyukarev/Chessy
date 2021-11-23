@@ -27,14 +27,14 @@ namespace Game.Game
                 ref var extraUnitC_0 = ref _unitVF.Get2(idx_0);
 
 
-                mainUnitC_0.SetEnabled_SR(false);
+                mainUnitC_0.SetEnabled(false);
                 extraUnitC_0.Disable_SR();
 
                 if (unit_0.HaveUnit)
                 {
                     if (visUnit_0.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
-                        mainUnitC_0.SetEnabled_SR(true);
+                        mainUnitC_0.SetEnabled(true);
 
                         if (unit_0.Is(UnitTypes.Pawn))
                         {

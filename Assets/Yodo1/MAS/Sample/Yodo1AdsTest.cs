@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Yodo1.MAS;
 
 public class Yodo1AdsTest : MonoBehaviour

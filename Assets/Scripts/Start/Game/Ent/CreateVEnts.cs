@@ -1,6 +1,5 @@
 ﻿using Game.Common;
 using Leopotam.Ecs;
-using Photon.Pun;
 using UnityEngine;
 
 namespace Game.Game

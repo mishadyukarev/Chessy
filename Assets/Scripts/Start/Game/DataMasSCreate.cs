@@ -71,7 +71,7 @@ namespace Game.Game
             uniqSys.Add(UniqAbilTypes.ChangeDirWind, new EcsSystems(gameWorld).Add(new ChangeDirWindMS()));
             uniqSys.Add(UniqAbilTypes.ChangeCornerArcher, new EcsSystems(gameWorld).Add(new ChangeCornerArcherMS()));
 
-            var uniqSysAction = new Dictionary<UniqAbilTypes, Action>();   
+            var uniqSysAction = new Dictionary<UniqAbilTypes, Action>();
             foreach (var item_0 in uniqSys) uniqSysAction.Add(item_0.Key, item_0.Value.Run);
 
 

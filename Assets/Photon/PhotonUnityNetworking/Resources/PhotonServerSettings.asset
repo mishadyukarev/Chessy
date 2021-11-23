@@ -45,6 +45,8 @@ MonoBehaviour:
   - SyncAllMaster
   - SyncAllOther
   - UpdateVision
+  - UpdateData
+  - UpdateDataAndView
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

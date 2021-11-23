@@ -1,20 +1,20 @@
-using UnityEngine;
 using System;
 
 [Obsolete("Please use Yodo1U3dMas", false)]
-public class Yodo1U3dAds {
+public class Yodo1U3dAds
+{
 
-    public static void InitializeSdk() 
+    public static void InitializeSdk()
     {
         Yodo1.MAS.Yodo1U3dMas.InitializeSdk();
     }
 
-    public static void SetUserConsent(bool consent) 
+    public static void SetUserConsent(bool consent)
     {
         Yodo1.MAS.Yodo1U3dMas.SetGDPR(consent);
     }
 
-    public static void SetTagForUnderAgeOfConsent(bool underAgeOfConsent) 
+    public static void SetTagForUnderAgeOfConsent(bool underAgeOfConsent)
     {
         Yodo1.MAS.Yodo1U3dMas.SetCOPPA(underAgeOfConsent);
     }
@@ -29,28 +29,28 @@ public class Yodo1U3dAds {
     private static int bannerX = 0;
     private static int bannerY = 0;
 
-    public static void SetBannerAlign(Yodo1U3dConstants.BannerAdAlign align) 
+    public static void SetBannerAlign(Yodo1U3dConstants.BannerAdAlign align)
     {
         bannerAlign = (int)align;
     }
 
-    public static void SetBannerOffset(float x, float y) 
+    public static void SetBannerOffset(float x, float y)
     {
         bannerX = (int)x;
         bannerY = (int)y;
     }
 
-    public static bool BannerIsReady() 
+    public static bool BannerIsReady()
     {
         return Yodo1.MAS.Yodo1U3dMas.IsBannerAdLoaded();
     }
 
-    public static void ShowBanner() 
+    public static void ShowBanner()
     {
         Yodo1.MAS.Yodo1U3dMas.ShowBannerAd(bannerAlign, bannerX, bannerY);
     }
 
-    public static void ShowBanner(string placementId) 
+    public static void ShowBanner(string placementId)
     {
         Yodo1.MAS.Yodo1U3dMas.ShowBannerAd(placementId, bannerAlign, bannerX, bannerY);
     }
@@ -71,7 +71,7 @@ public class Yodo1U3dAds {
     #region Interstitial
     public static bool InterstitialIsReady()
     {
-      
+
         return Yodo1.MAS.Yodo1U3dMas.IsInterstitialAdLoaded();
     }
 

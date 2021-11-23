@@ -14,12 +14,12 @@ namespace Game.Game
 
             else if (PlyerWinnerC.PlayerWinner == WhoseMoveC.CurPlayerI)
             {
-                EndGameUIC.Text = LanguageComC.GetText(GameLanguageTypes.YouAreWinner);
+                EndGameUIC.Text = LanguageC.GetText(GameLanguageTypes.YouAreWinner);
                 EndGameUIC.SetActiveZone(true);
             }
             else
             {
-                EndGameUIC.Text = LanguageComC.GetText(GameLanguageTypes.YouAreLoser);
+                EndGameUIC.Text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
                 EndGameUIC.SetActiveZone(true);
             }
         }

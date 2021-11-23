@@ -8,14 +8,14 @@ namespace Game.Menu
     {
         public void Run()
         {
-            if (!TimeStartGameComCom.WasLikeGameZone)
+            if (!TimeStartGameC.WasLikeGameZone)
             {
-                var difTime = DateTime.Now - TimeStartGameComCom.TimeStartGame;
+                var difTime = DateTime.Now - TimeStartGameC.TimeStartGame;
 
                 if (difTime.Minutes >= 20)
                 {
                     LikeGameUICom.SetActiveZone(true);
-                    TimeStartGameComCom.WasLikeGameZone = true;
+                    TimeStartGameC.WasLikeGameZone = true;
 
                     ShopUIC.EnableZone();
                 }

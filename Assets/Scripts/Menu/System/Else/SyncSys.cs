@@ -9,7 +9,7 @@ namespace Game.Menu
         {
             SoundC.Volume = CenterZoneUICom.MusicVolume;
 
-            HintComC.IsOnHint = CenterZoneUICom.IsOn;
+            HintC.IsOnHint = CenterZoneUICom.IsOn;
         }
     }
 }
