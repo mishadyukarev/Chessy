@@ -41,9 +41,9 @@ namespace Game.Game
 
                     cdUniq_0.SetCooldown(UniqAbilTypes.CircularAttack, 2);
 
-                    foreach (var xy1 in CellSpace.GetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy))
+                    foreach (var xy1 in CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy))
                     {
-                        var idx_1 = EntityDataPool.GetIdxCell(xy1);
+                        var idx_1 = EntityPool.IdxCell(xy1);
 
                         ref var unit_1 = ref _unitF.Get1(idx_1);
 
@@ -55,7 +55,7 @@ namespace Game.Game
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
 
                         ref var envC_1 = ref _envF.Get1(idx_1);
-                        ref var buildC_1 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_1);
+                        ref var buildC_1 = ref EntityPool.BuildCellC<BuildC>(idx_1);
 
 
                         if (unit_1.HaveUnit)

@@ -18,8 +18,8 @@ namespace Game.Game
 
             ref var curUnitDataCom = ref _unitF.Get1(idx_0);
             ref var curOwnUnitCom = ref _unitF.Get2(idx_0);
-            ref var buildC_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
-            ref var ownBuildC_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
+            ref var buildC_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
+            ref var ownBuildC_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
             ref var curEnvDataCom = ref _envF.Get1(idx_0);
 
 

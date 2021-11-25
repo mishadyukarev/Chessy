@@ -48,7 +48,7 @@ namespace Game.Game
                 }
 
 
-            new EntityViewPool(_curGameW, cells);
+            new EntityVPool(_curGameW, cells);
         }
     }
 }

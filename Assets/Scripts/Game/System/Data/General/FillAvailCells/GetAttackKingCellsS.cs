@@ -8,11 +8,13 @@ namespace Game.Game
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<UnitEffectsC, StunC> _effUnitF = default;
 
-        ref EnvC Env(byte idx) => ref EntityDataPool.GetEnvCellC<EnvC>(idx);
-
+        
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
+            ref EnvC Env(in byte idx) => ref EntityPool.EnvCellC<EnvC>(idx);
+
+
+            foreach (byte idx_0 in EntityPool.Idxs)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var level_0 = ref _unitF.Get2(idx_0);
@@ -30,20 +32,20 @@ namespace Game.Game
                     {
                         DirectTypes curDir_1 = default;
 
-                        CellSpace.TryGetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy, out var dirs);
+                        CellSpaceC.TryGetXyAround(EntityPool.CellC<XyC>(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             curDir_1 += 1;
 
-                            var idx_1 = EntityDataPool.GetIdxCell(item_1.Value);
+                            var idx_1 = EntityPool.IdxCell(item_1.Value);
    
 
                             ref var unit_1 = ref _unitF.Get1(idx_1);
                             ref var ownUnit_1 = ref _unitF.Get3(idx_1);
 
-                            ref var env_1 = ref EntityDataPool.GetEnvCellC<EnvC>(idx_1);
-                            ref var trail_1 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_1);
+                            ref var env_1 = ref EntityPool.EnvCellC<EnvC>(idx_1);
+                            ref var trail_1 = ref EntityPool.GetTrailCellC<TrailC>(idx_1);
 
 
                             if (!Env(idx_1).Have(EnvTypes.Mountain))

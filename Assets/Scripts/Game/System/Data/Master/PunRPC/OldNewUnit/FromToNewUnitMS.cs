@@ -31,9 +31,9 @@ namespace Game.Game
                 {
                     if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
                     {
-                        var xy_from = EntityDataPool.GetCellC<XyC>(idx_from).Xy;
+                        var xy_from = EntityPool.CellC<XyC>(idx_from).Xy;
 
-                        var list_around = CellSpace.GetXyAround(xy_from);
+                        var list_around = CellSpaceC.XyAround(xy_from);
 
                         
 
@@ -42,7 +42,7 @@ namespace Game.Game
                            
 
 
-                            var idx_1 = EntityDataPool.GetIdxCell(xy_1);
+                            var idx_1 = EntityPool.IdxCell(xy_1);
 
                             if (idx_1 == idx_to)
                             {

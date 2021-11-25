@@ -410,8 +410,8 @@ namespace Game.Game
 
 
 
-                objs.Add(EntityDataPool.GetBuildCellC<BuildC>(idx_0).Build);
-                objs.Add(EntityDataPool.GetBuildCellC<OwnerC>(idx_0).Owner);
+                objs.Add(EntityPool.BuildCellC<BuildC>(idx_0).Build);
+                objs.Add(EntityPool.BuildCellC<OwnerC>(idx_0).Owner);
 
 
 
@@ -427,7 +427,7 @@ namespace Game.Game
                     objs.Add(item_0.Value);
 
 
-                foreach (var item_0 in EntityDataPool.GetTrailCellC<TrailC>(idx_0).Health)
+                foreach (var item_0 in EntityPool.GetTrailCellC<TrailC>(idx_0).Health)
                     objs.Add(item_0.Value);
 
 
@@ -546,8 +546,8 @@ namespace Game.Game
 
 
 
-                EntityDataPool.GetBuildCellC<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
-                EntityDataPool.GetBuildCellC<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
+                EntityPool.BuildCellC<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
+                EntityPool.BuildCellC<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
 
 
 
@@ -564,7 +564,7 @@ namespace Game.Game
 
 
 
-                ref var trail_0 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref EntityPool.GetTrailCellC<TrailC>(idx_0);
                 foreach (var item_0 in trail_0.Health)
                     trail_0.SyncTrail(item_0.Key, (int)objects[_idx_cur++]);
 

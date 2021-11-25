@@ -4,53 +4,34 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct EntityDataPool
+    public readonly struct EntityPool
     {
         readonly static Dictionary<CellTypes, EcsEntity[]> _cells;
+        readonly static List<byte> _idxs;
 
-        public static int AmountAllCells => CellValuesC.AMOUNT_ALL_CELLS;
+        public static ref T CellC<T>(in byte idx) where T : struct, ICell => ref _cells[CellTypes.Cell][idx].Get<T>();
+        public static ref T UnitCellC<T>(in byte idx) where T : struct, IUnitCell => ref _cells[CellTypes.Unit][idx].Get<T>();
+        public static ref T BuildCellC<T>(in byte idx) where T : struct, IBuildCell => ref _cells[CellTypes.Build][idx].Get<T>();
+        public static ref T EnvCellC<T>(in byte idx) where T : struct, IEnvCell => ref _cells[CellTypes.Env][idx].Get<T>();
+        public static ref T GetTrailCellC<T>(in byte idx) where T : struct, ITrailCell => ref _cells[CellTypes.Trail][idx].Get<T>();
+        public static ref T ElseCellC<T>(in byte idx) where T : struct, IElseCell => ref _cells[CellTypes.Else][idx].Get<T>();
 
-        public static ref T GetCellC<T>(byte idx) where T : struct, ICell => ref _cells[CellTypes.Cell][idx].Get<T>();
-        public static ref T GetUnitCellC<T>(byte idx) where T : struct, IUnitCell => ref _cells[CellTypes.Unit][idx].Get<T>();
-        public static ref T GetBuildCellC<T>(byte idx) where T : struct, IBuildCell => ref _cells[CellTypes.Build][idx].Get<T>();
-        public static ref T GetEnvCellC<T>(byte idx) where T : struct, IEnvCell => ref _cells[CellTypes.Env][idx].Get<T>();
-        public static ref T GetTrailCellC<T>(byte idx) where T : struct, ITrailCell => ref _cells[CellTypes.Trail][idx].Get<T>();
-        public static ref T GetElseCellC<T>(byte idx) where T : struct, IElseCell
-        {
-            if (!_cells[CellTypes.Else][idx].Has<T>()) throw new Exception();
-            return ref _cells[CellTypes.Else][idx].Get<T>();
-        }
-
-        public static byte GetIdxCell(in byte[] xy)
+        public static byte IdxCell(in byte[] xy)
         {
             for (byte idx = 0; idx < _cells[CellTypes.Cell].Length; idx++)
             {
-                if (GetCellC<XyC>(idx).Xy.Compare(xy))
+                if (CellC<XyC>(idx).Xy.Compare(xy))
                 {
                     return idx;
                 }
             }
             throw new Exception();
         }
-        public static List<byte> Idxs
-        {
-            get
-            {
-                var list = new List<byte>();
-                foreach (var ents in _cells.Values)
-                {
-                    for (byte idx = 0; idx < ents.Length; idx++)
-                    {
-                        list.Add(idx);
-                    }
-                }
-                return list;
-            }
-        }
+        public static List<byte> Idxs => _idxs.Copy();
 
 
 
-        static EntityDataPool()
+        static EntityPool()
         {
             _cells = new Dictionary<CellTypes, EcsEntity[]>();
 
@@ -58,8 +39,15 @@ namespace Game.Game
             {
                 _cells.Add(type, new EcsEntity[CellValuesC.AMOUNT_ALL_CELLS]);
             }
+
+            _idxs = new List<byte>();
+
+            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            {
+                _idxs.Add(idx);
+            }
         }
-        public EntityDataPool(in EcsWorld curGameW, in bool[] isActiveCells, in int[] idCells)
+        public EntityPool(in EcsWorld curGameW, in bool[] isActiveCells, in int[] idCells)
         {
             byte idx = 0;
 

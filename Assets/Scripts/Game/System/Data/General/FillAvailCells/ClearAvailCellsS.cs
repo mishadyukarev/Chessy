@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
+            foreach(byte idx_0 in EntityPool.Idxs)
             {
                 AttackCellsC.Clear(AttackTypes.Simple, PlayerTypes.First, idx_0);
                 AttackCellsC.Clear(AttackTypes.Simple, PlayerTypes.Second, idx_0);

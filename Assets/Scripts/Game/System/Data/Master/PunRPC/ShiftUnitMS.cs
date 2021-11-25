@@ -69,19 +69,19 @@ namespace Game.Game
 
 
                 ref var fire_to = ref _cellFireFilt.Get1(idx_to);
-                ref var build_to = ref EntityDataPool.GetBuildCellC<BuildC>(idx_to);
-                ref var ownBuild_to = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_to);
-                ref var xy_to = ref EntityDataPool.GetCellC<XyC>(idx_to);
+                ref var build_to = ref EntityPool.BuildCellC<BuildC>(idx_to);
+                ref var ownBuild_to = ref EntityPool.BuildCellC<OwnerC>(idx_to);
+                ref var xy_to = ref EntityPool.CellC<XyC>(idx_to);
                     ref var env_to = ref _cellEnvrDataFilter.Get1(idx_to);
                 ref var river_to = ref _cellRiverFilt.Get1(idx_to);
-                ref var trail_to = ref EntityDataPool.GetTrailCellC<TrailC>(idx_to);
+                ref var trail_to = ref EntityPool.GetTrailCellC<TrailC>(idx_to);
 
                 ref var envDat_from = ref _cellEnvrDataFilter.Get1(idx_from);
-                ref var trail_from = ref EntityDataPool.GetTrailCellC<TrailC>(idx_from);
+                ref var trail_from = ref EntityPool.GetTrailCellC<TrailC>(idx_from);
 
 
 
-                var dir_from = CellSpace.GetDirect(EntityDataPool.GetCellC<XyC>(idx_from).Xy, EntityDataPool.GetCellC<XyC>(idx_to).Xy);
+                var dir_from = CellSpaceC.GetDirect(EntityPool.CellC<XyC>(idx_from).Xy, EntityPool.CellC<XyC>(idx_to).Xy);
 
                 step_from.TakeStepsForDoing(env_to, dir_from, trail_to);
 

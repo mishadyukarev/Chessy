@@ -15,8 +15,8 @@ namespace Game.Game
                 {
                     foreach (var idx_0 in WhereBuildsC.IdxBuilds(build, player))
                     {
-                        ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
-                        ref var ownBuild_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
+                        ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
+                        ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
 
                         ref var env_0 = ref _cellEnvFilt.Get1(idx_0);
                         ref var envRes_0 = ref _cellEnvFilt.Get2(idx_0);
@@ -59,7 +59,7 @@ namespace Game.Game
 
                                 build_0.Remove(ownBuild_0.Owner);
 
-                                EntityDataPool.GetTrailCellC<TrailC>(idx_0).ResetAll();
+                                EntityPool.GetTrailCellC<TrailC>(idx_0).ResetAll();
 
                                 if (fire_0.Have)
                                 {

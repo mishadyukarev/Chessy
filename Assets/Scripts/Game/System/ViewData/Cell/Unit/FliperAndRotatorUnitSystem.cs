@@ -7,14 +7,14 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in EntityDataPool.Idxs)
+            foreach (byte idx_0 in EntityPool.Idxs)
             {
-                ref var unit_0 = ref EntityDataPool.GetUnitCellC<UnitC>(idx_0);
-                ref var ownUnit_0 = ref EntityDataPool.GetUnitCellC<OwnerC>(idx_0);
-                ref var corner_0 = ref EntityDataPool.GetUnitCellC<CornerArcherC>(idx_0);
+                ref var unit_0 = ref EntityPool.UnitCellC<UnitC>(idx_0);
+                ref var ownUnit_0 = ref EntityPool.UnitCellC<OwnerC>(idx_0);
+                ref var corner_0 = ref EntityPool.UnitCellC<CornerArcherC>(idx_0);
 
-                ref var main_0 = ref EntityViewPool.GetUnitCellVC<UnitMainVC>(idx_0);
-                ref var extra_0 = ref EntityViewPool.GetUnitCellVC<UnitExtraVC>(idx_0);
+                ref var main_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
+                ref var extra_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);
 
 
                 main_0.SetLocRot(new Vector3(0, 0, 0));

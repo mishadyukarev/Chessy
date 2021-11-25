@@ -4,27 +4,21 @@ namespace Game.Game
 {
     public sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<ToolWeaponC> _twUnitF = default;
-        private EcsFilter<UnitC, LevelC, VisibleC> _unitF = default;
-        private EcsFilter<CornerArcherC> _archerFilt = default;
-
-        private EcsFilter<UnitMainVC, UnitExtraVC> _unitVF = default;
-
         public void Run()
         {
-            foreach (byte idx_0 in _twUnitF)
+            foreach (byte idx_0 in EntityPool.Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var levelUnit_0 = ref _unitF.Get2(idx_0);
-                ref var visUnit_0 = ref _unitF.Get3(idx_0);
+                ref var unit_0 = ref EntityPool.UnitCellC<UnitC>(idx_0);
+                ref var levelUnit_0 = ref EntityPool.UnitCellC<LevelC>(idx_0);
+                ref var visUnit_0 = ref EntityPool.UnitCellC<VisibleC>(idx_0);
 
-                ref var corner_0 = ref _archerFilt.Get1(idx_0);
+                ref var corner_0 = ref EntityPool.UnitCellC<CornerArcherC>(idx_0);
 
-                ref var twUnitC_0 = ref _twUnitF.Get1(idx_0);
+                ref var twUnitC_0 = ref EntityPool.UnitCellC<ToolWeaponC>(idx_0);
 
                 
-                ref var mainUnitC_0 = ref _unitVF.Get1(idx_0);
-                ref var extraUnitC_0 = ref _unitVF.Get2(idx_0);
+                ref var mainUnitC_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
+                ref var extraUnitC_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);
 
 
                 mainUnitC_0.SetEnabled(false);

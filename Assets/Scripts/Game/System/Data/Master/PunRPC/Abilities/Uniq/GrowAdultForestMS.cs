@@ -47,10 +47,10 @@ namespace Game.Game
 
                         if (!effUnit_0.Have(UnitStatTypes.Steps)) effUnit_0.Set(UnitStatTypes.Steps);
 
-                        var around = CellSpace.GetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy);
+                        var around = CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy);
                         foreach (var xy_1 in around)
                         {
-                            var idx_1 = EntityDataPool.GetIdxCell(xy_1);
+                            var idx_1 = EntityPool.IdxCell(xy_1);
 
                             ref var unit_1 = ref _unitF.Get1(idx_1);
                             ref var ownUnit_1 = ref _unitF.Get2(idx_1);

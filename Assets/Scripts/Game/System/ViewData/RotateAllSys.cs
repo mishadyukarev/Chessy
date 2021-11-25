@@ -12,9 +12,9 @@ namespace Game.Game
         {
             var curPlayer = WhoseMoveC.CurPlayerI;
 
-            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
+            foreach (byte idx_0 in EntityPool.Idxs)
             {
-                EntityViewPool.GetCellVC<CellVC>(idx_0).SetRotForClient(curPlayer);
+                EntityVPool.GetCellVC<CellVC>(idx_0).SetRotForClient(curPlayer);
                 _riverF.Get1(idx_0).Rotate(curPlayer);
                 _trailF.Get1(idx_0).Rotate(curPlayer);
             }

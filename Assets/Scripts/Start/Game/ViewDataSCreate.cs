@@ -54,7 +54,7 @@ namespace Game.Game
                 .Add(new VisibElseSys())
                 .Add(new SyncCellUnitViewSys())
                 .Add(new UnitStatCellSyncS())
-                .Add(new SyncCellBuildViewSystem())
+                .Add(new BuildCellSyncVS())
                 .Add(new SyncCellEnvirsVisSystem())
                 .Add(new CellEffsVisSyncS())
                 .Add(new CellWeatherViewSys())

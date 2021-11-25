@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public struct LevelC : IUnitCell
     {
-        private LevelTypes _levelUnit;
+        LevelTypes _levelUnit;
         public LevelTypes Level => _levelUnit;
         public bool Is(LevelTypes level) => _levelUnit == level;
 

@@ -27,9 +27,9 @@ namespace Game.Game
         }
         public static PlayerTypes WhoseMove => _whoseMove[IsOffline];
         public static bool IsMyMove => CurPlayerI == WhoseMove;
-        public static PlayerTypes NextPlayerFrom(PlayerTypes playerType)
+        public static PlayerTypes NextPlayerFrom(PlayerTypes player)
         {
-            if (playerType == PlayerTypes.First) return PlayerTypes.Second;
+            if (player == PlayerTypes.First) return PlayerTypes.Second;
             else return PlayerTypes.First;
         }
 

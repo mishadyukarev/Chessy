@@ -6,10 +6,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var build_sel = ref EntityDataPool.GetBuildCellC<BuildC>(SelIdx.Idx);
+            ref var build_sel = ref EntityPool.BuildCellC<BuildC>(SelIdx.Idx);
 
-            ref var env_sel = ref EntityDataPool.GetEnvCellC<EnvC>(SelIdx.Idx);
-            ref var envRes_sel = ref EntityDataPool.GetEnvCellC<EnvResC>(SelIdx.Idx);
+            ref var env_sel = ref EntityPool.EnvCellC<EnvC>(SelIdx.Idx);
+            ref var envRes_sel = ref EntityPool.EnvCellC<EnvResC>(SelIdx.Idx);
 
 
             if (SelIdx.IsSelCell && !build_sel.Is(BuildTypes.City))

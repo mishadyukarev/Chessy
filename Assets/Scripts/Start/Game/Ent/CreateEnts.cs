@@ -13,11 +13,11 @@ namespace Game.Game
 
             for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
             {
-                isActiveCells[idx] = EntityViewPool.GetCellVC<CellVC>(idx).IsActiveSelf;
-                idCells[idx] = EntityViewPool.GetCellVC<CellVC>(idx).InstanceID;
+                isActiveCells[idx] = EntityVPool.GetCellVC<CellVC>(idx).IsActiveSelf;
+                idCells[idx] = EntityVPool.GetCellVC<CellVC>(idx).InstanceID;
             }
 
-            new EntityDataPool(_curGameW, isActiveCells, idCells);
+            new EntityPool(_curGameW, isActiveCells, idCells);    
         }
     }
 }

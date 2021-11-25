@@ -59,18 +59,18 @@ namespace Game.Game
 
 
             ref var river_from = ref _riverF.Get1(idx_from);
-            ref var build_from = ref EntityDataPool.GetBuildCellC<BuildC>(idx_from);
-            ref var ownBuild_from = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_from);
+            ref var build_from = ref EntityPool.BuildCellC<BuildC>(idx_from);
+            ref var ownBuild_from = ref EntityPool.BuildCellC<OwnerC>(idx_from);
             ref var env_from = ref _envF.Get1(idx_from);
-            ref var trail_from = ref EntityDataPool.GetTrailCellC<TrailC>(idx_from);
+            ref var trail_from = ref EntityPool.GetTrailCellC<TrailC>(idx_from);
             ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
 
 
             ref var river_to = ref _riverF.Get1(idx_to);
-            ref var build_to = ref EntityDataPool.GetBuildCellC<BuildC>(idx_to);
-            ref var ownBuild_to = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_to);
+            ref var build_to = ref EntityPool.BuildCellC<BuildC>(idx_to);
+            ref var ownBuild_to = ref EntityPool.BuildCellC<OwnerC>(idx_to);
             ref var env_to = ref _envF.Get1(idx_to);
-            ref var trail_to = ref EntityDataPool.GetTrailCellC<TrailC>(idx_to);
+            ref var trail_to = ref EntityPool.GetTrailCellC<TrailC>(idx_to);
             ref var cdUniq_to = ref _uniqUnitF.Get1(idx_to);
 
 
@@ -198,7 +198,7 @@ namespace Game.Game
                             cdUniq_to.Replace(cdUniq_from);
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner));
 
-                            var dir = CellSpace.GetDirect(EntityDataPool.GetCellC<XyC>(idx_from).Xy, EntityDataPool.GetCellC<XyC>(idx_to).Xy);
+                            var dir = CellSpaceC.GetDirect(EntityPool.CellC<XyC>(idx_from).Xy, EntityPool.CellC<XyC>(idx_to).Xy);
                             trail_to.TrySetNewTrail(dir.Invert(), env_to);
                             trail_from.TrySetNewTrail(dir, env_from);
 

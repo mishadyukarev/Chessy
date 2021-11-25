@@ -6,8 +6,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref EntityDataPool.GetBuildCellC<BuildC>(SelIdx.Idx);
-            ref var own_sel = ref EntityDataPool.GetBuildCellC<OwnerC>(SelIdx.Idx);
+            ref var unit_sel = ref EntityPool.BuildCellC<BuildC>(SelIdx.Idx);
+            ref var own_sel = ref EntityPool.BuildCellC<OwnerC>(SelIdx.Idx);
 
 
             if (SelIdx.IsSelCell && unit_sel.Is(BuildTypes.City))

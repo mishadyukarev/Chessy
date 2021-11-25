@@ -28,8 +28,8 @@ namespace Game.Game
 
                 ref var riverC_0 = ref _cellRiverFilt.Get1(idx_0);
 
-                ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
-                ref var ownBuild_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
+                ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
 
 
                 if (unit_0.HaveUnit)

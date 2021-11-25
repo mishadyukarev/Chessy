@@ -37,9 +37,9 @@ namespace Game.Game
 
             if (raycast)
             {
-                for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
+                foreach (byte idx_0 in EntityPool.Idxs)
                 {
-                    int one = EntityDataPool.GetCellC<CellC>(idx_0).InstanceID;
+                    int one = EntityPool.CellC<CellC>(idx_0).InstanceID;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)

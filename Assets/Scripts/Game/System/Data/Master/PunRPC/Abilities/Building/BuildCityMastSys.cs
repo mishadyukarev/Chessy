@@ -19,8 +19,8 @@ namespace Game.Game
 
             if (forBuildType == BuildTypes.City)
             {
-                ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
-                ref var ownBuild_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
+                ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
 
                 ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
                 ref var curCellEnvCom = ref _envF.Get1(idx_0);
@@ -34,11 +34,11 @@ namespace Game.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpace.GetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy))
+                    foreach (var xy in CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy))
                     {
-                        var curIdx = EntityDataPool.GetIdxCell(xy);
+                        var curIdx = EntityPool.IdxCell(xy);
 
-                        if (!EntityDataPool.GetCellC<CellC>(curIdx).IsActiveCell)
+                        if (!EntityPool.CellC<CellC>(curIdx).IsActiveCell)
                         {
                             haveNearBorder = true;
                             break;

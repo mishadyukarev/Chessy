@@ -5,8 +5,8 @@ namespace Game.Game
 {
     public struct EnvC : IEnvCell
     {
-        private Dictionary<EnvTypes, bool> _envs;
-        private readonly byte _idx;
+        Dictionary<EnvTypes, bool> _envs;
+        readonly byte _idx;
 
         public Dictionary<EnvTypes, bool> Envronments
         {

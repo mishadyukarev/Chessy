@@ -14,8 +14,8 @@ namespace Game.Game
                 ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelIdx.Idx);
                 ref var selOwnUnitCom = ref _cellUnitFilter.Get2(SelIdx.Idx);
 
-                ref var selBuildDatCom = ref EntityDataPool.GetBuildCellC<BuildC>(SelIdx.Idx);
-                ref var ownBuildC_sel = ref EntityDataPool.GetBuildCellC<OwnerC>(SelIdx.Idx);
+                ref var selBuildDatCom = ref EntityPool.BuildCellC<BuildC>(SelIdx.Idx);
+                ref var ownBuildC_sel = ref EntityPool.BuildCellC<OwnerC>(SelIdx.Idx);
 
                 var needActiveThirdButt = false;
 

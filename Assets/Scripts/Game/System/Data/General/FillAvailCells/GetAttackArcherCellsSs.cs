@@ -14,9 +14,9 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
+            foreach (byte idx_0 in EntityPool.Idxs)
             {
-                var xy_0 = EntityDataPool.GetCellC<XyC>(idx_0).Xy;
+                var xy_0 = EntityPool.CellC<XyC>(idx_0).Xy;
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get2(idx_0);
@@ -31,8 +31,8 @@ namespace Game.Game
 
                 for (var dir_1 = DirectTypes.First; dir_1 < DirectTypes.End; dir_1++)
                 {
-                    var xy_1 = CellSpace.GetXyCellByDirect(xy_0, dir_1);
-                    var idx_1 = EntityDataPool.GetIdxCell(xy_1);
+                    var xy_1 = CellSpaceC.GetXyCellByDirect(xy_0, dir_1);
+                    var idx_1 = EntityPool.IdxCell(xy_1);
 
 
                     ref var env_1 = ref _envF.Get1(idx_1);
@@ -42,7 +42,7 @@ namespace Game.Game
 
 
 
-                    if (EntityDataPool.GetCellC<CellC>(idx_1).IsActiveCell && !env_1.Have(EnvTypes.Mountain))
+                    if (EntityPool.CellC<CellC>(idx_1).IsActiveCell && !env_1.Have(EnvTypes.Mountain))
                     {
                         if (unit_1.HaveUnit)
                         {
@@ -75,8 +75,8 @@ namespace Game.Game
                         }
 
 
-                        var xy_2 = CellSpace.GetXyCellByDirect(xy_1, dir_1);
-                        var idx_2 = EntityDataPool.GetIdxCell(xy_2);
+                        var xy_2 = CellSpaceC.GetXyCellByDirect(xy_1, dir_1);
+                        var idx_2 = EntityPool.IdxCell(xy_2);
 
 
                         ref var envrDataCom_2 = ref _envF.Get1(idx_2);
@@ -86,7 +86,7 @@ namespace Game.Game
 
 
 
-                        if (EntityDataPool.GetCellC<CellC>(idx_2).IsActiveCell && unitDataCom_2.HaveUnit 
+                        if (EntityPool.CellC<CellC>(idx_2).IsActiveCell && unitDataCom_2.HaveUnit 
                             && visUnit_2.IsVisibled(ownUnit_0.Owner) && !ownUnitCom_2.Is(ownUnit_0.Owner))
                         {
                             if (unit_0.Is(UnitTypes.Archer))

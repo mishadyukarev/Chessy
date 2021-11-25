@@ -32,8 +32,8 @@ namespace Game.Game
                             ref var env_0 = ref _cellEnvFilt.Get1(idx_0);
                             ref var envRes_0 = ref _cellEnvFilt.Get2(idx_0);
 
-                            ref var buil_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
-                            ref var ownBuil_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
+                            ref var buil_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
+                            ref var ownBuil_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
 
                             ref var trail_0 = ref _cellTrailFilt.Get1(idx_0);
 

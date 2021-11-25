@@ -15,9 +15,9 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
+            foreach (byte idx_0 in EntityPool.Idxs)
             {
-                var curXy = EntityDataPool.GetCellC<XyC>(idx_0).Xy;
+                var curXy = EntityPool.CellC<XyC>(idx_0).Xy;
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
@@ -25,8 +25,8 @@ namespace Game.Game
 
                 ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
 
-                ref var buil_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
-                ref var ownBuil_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
+                ref var buil_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
+                ref var ownBuil_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
 
                 ref var fire_0 = ref _fireF.Get1(idx_0);
                 ref var env_0 = ref _envF.Get1(idx_0);
@@ -77,12 +77,12 @@ namespace Game.Game
                         fire_0.Disable();
 
 
-                        var aroundXYList = CellSpace.GetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy);
+                        var aroundXYList = CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy);
                         foreach (var xy1 in aroundXYList)
                         {
-                            var curIdxCell1 = EntityDataPool.GetIdxCell(xy1);
+                            var curIdxCell1 = EntityPool.IdxCell(xy1);
 
-                            if (EntityDataPool.GetCellC<CellC>(curIdxCell1).IsActiveCell)
+                            if (EntityPool.CellC<CellC>(curIdxCell1).IsActiveCell)
                             {
                                 if (_envF.Get1(curIdxCell1).Have(EnvTypes.AdultForest))
                                 {
