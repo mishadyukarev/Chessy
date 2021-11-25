@@ -4,28 +4,22 @@ namespace Game.Game
 {
     internal sealed class FillCellsGiveTWSys : IEcsRunSystem
     {
-        private EcsFilter<CellsGiveTWC> _cellsGiveFilter = default;
-
-        private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
-
         public void Run()
         {
-            ref var cellsGiveTWCom = ref _cellsGiveFilter.Get1(0);
-
-            foreach (var curIdxCell in _cellUnitFilter)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
-                ref var curUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var curOwnerUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var unit_0 = ref EntityDataPool.GetUnitCellC<UnitC>(idx_0);
+                ref var owUnit_0 = ref EntityDataPool.GetUnitCellC<OwnerC>(idx_0);
 
 
-                if (curUnitDataCom.HaveUnit)
+                if (unit_0.HaveUnit)
                 {
-                    if (curUnitDataCom.Is(UnitTypes.Pawn))
+                    if (unit_0.Is(UnitTypes.Pawn))
                     {
                         //cellsGiveTWCom.Add(ToolWeaponTypes.Axe,)
                     }
 
-                    else if (curUnitDataCom.Is(UnitTypes.Archer))
+                    else if (unit_0.Is(UnitTypes.Archer))
                     {
 
                     }

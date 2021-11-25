@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct SupportVC
+    public struct SupportVC : IElseCellV
     {
         private SpriteRenderer _supVis_SR;
 

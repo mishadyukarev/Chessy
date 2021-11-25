@@ -5,13 +5,12 @@ namespace Game.Game
 {
     public sealed class CloudUpdMS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyF = default;
         private EcsFilter<CloudC> _cloudF = default;
 
         public void Run()
         {
             var weather_0 = _cloudF.Get1(CloudCenterC.Idx);
-            var xy_0 = _xyF.Get1(CloudCenterC.Idx).Xy;
+            var xy_0 = EntityDataPool.GetCellC<XyC>(CloudCenterC.Idx).Xy;
 
 
             var aroundList = CellSpace.GetXyAround(xy_0);
@@ -20,7 +19,7 @@ namespace Game.Game
 
             foreach (var xyArount in aroundList)
             {
-                var idx_1 = _xyF.GetIdxCell(xyArount);
+                var idx_1 = EntityDataPool.GetIdxCell(xyArount);
 
                 _cloudF.Get1(idx_1).Have = false;
             }
@@ -30,7 +29,7 @@ namespace Game.Game
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                CloudCenterC.Idx = _xyF.GetIdxCell(xy_next);
+                CloudCenterC.Idx = EntityDataPool.GetIdxCell(xy_next);
                 _cloudF.Get1(CloudCenterC.Idx).Have = true;
             }
             else
@@ -50,7 +49,7 @@ namespace Game.Game
 
             foreach (var item in dirs)
             {
-                var idx_1 = _xyF.GetIdxCell(item.Value);
+                var idx_1 = EntityDataPool.GetIdxCell(item.Value);
 
                 _cloudF.Get1(idx_1).Have = true;
 

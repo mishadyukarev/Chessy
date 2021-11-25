@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct StepC
+    public struct StepC : IUnitCell
     {
         private int _steps;
 

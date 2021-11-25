@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct EnvVC
+    public struct EnvVC : IEnvCellV
     {
         private Dictionary<EnvTypes, SpriteRenderer> _cellEnviron_SRs;
 

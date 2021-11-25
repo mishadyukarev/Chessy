@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct VisibleC
+    public struct VisibleC : IUnitCell, IBuildCell, ITrailCell
     {
         private Dictionary<PlayerTypes, bool> _isVisibleDict;
         public bool IsVisibled(PlayerTypes key) => _isVisibleDict[key];

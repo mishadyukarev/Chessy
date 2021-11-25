@@ -23,9 +23,9 @@ namespace Game.Game
 
 
             var runUpd = new EcsSystems(gameWorld)
-                .Add(new SelectorS())
                 .Add(new InputSystem())
-                .Add(new RaySystem());
+                .Add(new RaySystem())
+                .Add(new SelectorS());
 
             dataSC.Add(DataSystTypes.RunUpdate, runUpd.Run);
 

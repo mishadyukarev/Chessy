@@ -4,18 +4,15 @@ namespace Game.Game
 {
     public sealed class VisibElseSys : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
-        private EcsFilter<TrailC, VisibleC> _cellTrailFilt = default;
 
         private EcsFilter<UnitC, OwnerC, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<BuildC, OwnerC, VisibleC> _cellBuildFilt = default;
 
         public void Run()
         {
-            foreach (byte idx_0 in _cellUnitFilter)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
-                var xy = _xyCellFilter.Get1(idx_0).Xy;
+                var xy = EntityDataPool.GetCellC<XyC>(idx_0).Xy;
 
                 ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
@@ -35,7 +32,7 @@ namespace Game.Game
 
                         foreach (var xy_1 in list)
                         {
-                            var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+                            var idxCell_1 = EntityDataPool.GetIdxCell(xy_1);
 
                             ref var unitCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
                             ref var ownUnitCom_1 = ref _cellUnitFilter.Get2(idxCell_1);
@@ -59,12 +56,12 @@ namespace Game.Game
 
                 }
 
-                ref var curBuildCom = ref _cellBuildFilt.Get1(idx_0);
+                ref var curBuildCom = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
 
                 if (curBuildCom.Have)
                 {
-                    ref var curOwnBuildCom = ref _cellBuildFilt.Get2(idx_0);
-                    ref var curVisBuildCom = ref _cellBuildFilt.Get3(idx_0);
+                    ref var curOwnBuildCom = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
+                    ref var curVisBuildCom = ref EntityDataPool.GetBuildCellC<VisibleC>(idx_0);
 
                     curVisBuildCom.SetVisibled(curOwnBuildCom.Owner, true);
 
@@ -76,7 +73,7 @@ namespace Game.Game
 
                         foreach (var xy_1 in list)
                         {
-                            var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+                            var idxCell_1 = EntityDataPool.GetIdxCell(xy_1);
 
                             ref var aroUnitDataCom = ref _cellUnitFilter.Get1(idxCell_1);
                             ref var arouOnUnitCom = ref _cellUnitFilter.Get2(idxCell_1);
@@ -97,11 +94,11 @@ namespace Game.Game
                 }
 
 
-                ref var trail_0 = ref _cellTrailFilt.Get1(idx_0);
+                ref var trail_0 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_0);
 
                 if (trail_0.HaveAnyTrail)
                 {
-                    ref var trailVis_0 = ref _cellTrailFilt.Get2(idx_0);
+                    ref var trailVis_0 = ref EntityDataPool.GetTrailCellC<VisibleC>(idx_0);
 
                     var list = CellSpace.GetXyAround(xy);
 
@@ -112,7 +109,7 @@ namespace Game.Game
 
                     foreach (var xy_1 in list)
                     {
-                        var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+                        var idxCell_1 = EntityDataPool.GetIdxCell(xy_1);
 
                         ref var unitCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
                         ref var ownUnit_1 = ref _cellUnitFilter.Get2(idxCell_1);

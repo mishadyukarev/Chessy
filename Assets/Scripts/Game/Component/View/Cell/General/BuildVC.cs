@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct BuildVC
+    public struct BuildVC : IBuildCellV
     {
         private SpriteRenderer _build_SR;
         private SpriteRenderer _buildBack_SR;

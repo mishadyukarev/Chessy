@@ -7,12 +7,8 @@ namespace Game.Game
 {
     public sealed class FillCells : IEcsInitSystem
     {
-        private readonly EcsFilter<XyC> _xyF = default;
         private readonly EcsFilter<EnvC, EnvResC> _envF = default;
 
-        private readonly EcsFilter<CellC> _cellVF = default;
-
-        private readonly EcsFilter<BuildC, OwnerC> _buildF = default;
         private readonly EcsFilter<CloudC> _cloudF = default;
         private readonly EcsFilter<RiverC> _riverF = default;
 
@@ -27,9 +23,10 @@ namespace Game.Game
             {
                 int random;
 
-                foreach (byte idx_0 in _xyF)
+
+                for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
                 {
-                    var xy_0 = _xyF.Get1(idx_0).Xy;
+                    var xy_0 = EntityDataPool.GetCellC<XyC>(idx_0).Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
@@ -37,7 +34,7 @@ namespace Game.Game
                     ref var envRes_0 = ref _envF.Get2(idx_0);
                     ref var cloud_0 = ref _cloudF.Get1(idx_0);
 
-                    if (_cellVF.Get1(idx_0).IsActiveCell)
+                    if (EntityDataPool.GetCellC<CellC>(idx_0).IsActiveCell)
                     {
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
@@ -92,7 +89,7 @@ namespace Game.Game
                             CellSpace.TryGetXyAround(xy_0, out var dirs);
                             foreach (var item in dirs)
                             {
-                                var idx_1 = _xyF.GetIdxCell(item.Value);
+                                var idx_1 = EntityDataPool.GetIdxCell(item.Value);
                                 WindC.Set(item.Key, idx_1);
                             }
                         }
@@ -121,16 +118,16 @@ namespace Game.Game
 
                         foreach (var dir in river_0.Directs)
                         {
-                            var xy_next = CellSpace.GetXyCellByDirect(_xyF.Get1(idx_0).Xy, dir);
-                            var idx_next = _xyF.GetIdxCell(xy_next);
+                            var xy_next = CellSpace.GetXyCellByDirect(EntityDataPool.GetCellC<XyC>(idx_0).Xy, dir);
+                            var idx_next = EntityDataPool.GetIdxCell(xy_next);
 
                             _riverF.Get1(idx_next).SetEnd(dir.Invert());
                         }
 
                         foreach (var dir in corners)
                         {
-                            var xy_next = CellSpace.GetXyCellByDirect(_xyF.Get1(idx_0).Xy, dir);
-                            var idx_next = _xyF.GetIdxCell(xy_next);
+                            var xy_next = CellSpace.GetXyCellByDirect(EntityDataPool.GetCellC<XyC>(idx_0).Xy, dir);
+                            var idx_next = EntityDataPool.GetIdxCell(xy_next);
 
                             _riverF.Get1(idx_next).SetCorner();
                         }
@@ -141,15 +138,15 @@ namespace Game.Game
 
             if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {
-                foreach (byte idx_0 in _xyF)
+                for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
                 {
-                    var curXyCell = _xyF.Get1(idx_0).Xy;
+                    var curXyCell = EntityDataPool.GetCellC<XyC>(idx_0).Xy;
                     var x = curXyCell[0];
                     var y = curXyCell[1];
 
                     ref var env_0 = ref _envF.Get1(idx_0);
 
-                    ref var unit_0 = ref _unitF.Get1(idx_0);
+                    ref var unit_0 = ref EntityDataPool.GetUnitCellC<UnitC>(idx_0);// ref _unitF.Get1(idx_0);
 
                     ref var levUnit_0 = ref _unitF.Get2(idx_0);
                     ref var ownUnit_0 = ref _unitF.Get3(idx_0);
@@ -160,8 +157,8 @@ namespace Game.Game
                     ref var twUnit_0 = ref _twUnitF.Get1(idx_0);
                     ref var thirUnitC_0 = ref _statUnitF.Get4(idx_0);
 
-                    ref var build_0 = ref _buildF.Get1(idx_0);
-                    ref var ownBuild_0 = ref _buildF.Get2(idx_0);
+                    ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
+                    ref var ownBuild_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
 
                     if (x == 7 && y == 8)
                     {

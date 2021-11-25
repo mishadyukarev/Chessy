@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct BuildC
+    public struct BuildC : IBuildCell
     {
         private BuildTypes _build;
         private readonly byte _idx;

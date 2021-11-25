@@ -19,12 +19,9 @@ namespace Game.Game
         private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
         private readonly EcsFilter<CornerArcherC> _archerF = default;
 
-
-        private readonly EcsFilter<BuildC, OwnerC> _buildF = default;
         private readonly EcsFilter<EnvC, EnvResC> _envF = default;
         private readonly EcsFilter<FireC> _fireF = default;
         private readonly EcsFilter<RiverC> _riverF = default;
-        private readonly EcsFilter<TrailC> _trailF = default;
         private readonly EcsFilter<CloudC> _cloudF = default;
 
 
@@ -383,7 +380,7 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (var idx_0 in _effUnitF)
+            foreach (byte idx_0 in _effUnitF)
             {
                 ref var unitC_0 = ref _unitF.Get1(idx_0);
                 objs.Add(unitC_0.Unit);
@@ -413,8 +410,8 @@ namespace Game.Game
 
 
 
-                objs.Add(_buildF.Get1(idx_0).Build);
-                objs.Add(_buildF.Get2(idx_0).Owner);
+                objs.Add(EntityDataPool.GetBuildCellC<BuildC>(idx_0).Build);
+                objs.Add(EntityDataPool.GetBuildCellC<OwnerC>(idx_0).Owner);
 
 
 
@@ -430,7 +427,7 @@ namespace Game.Game
                     objs.Add(item_0.Value);
 
 
-                foreach (var item_0 in _trailF.Get1(idx_0).Health)
+                foreach (var item_0 in EntityDataPool.GetTrailCellC<TrailC>(idx_0).Health)
                     objs.Add(item_0.Value);
 
 
@@ -520,7 +517,7 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (var idx_0 in _effUnitF)
+            foreach (byte idx_0 in _effUnitF)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 unit_0.Sync((UnitTypes)objects[_idx_cur++]);
@@ -549,8 +546,8 @@ namespace Game.Game
 
 
 
-                _buildF.Get1(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
-                _buildF.Get2(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
+                EntityDataPool.GetBuildCellC<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
+                EntityDataPool.GetBuildCellC<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
 
 
 
@@ -567,7 +564,7 @@ namespace Game.Game
 
 
 
-                ref var trail_0 = ref _trailF.Get1(idx_0);
+                ref var trail_0 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_0);
                 foreach (var item_0 in trail_0.Health)
                     trail_0.SyncTrail(item_0.Key, (int)objects[_idx_cur++]);
 

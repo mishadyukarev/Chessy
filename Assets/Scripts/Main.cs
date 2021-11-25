@@ -101,7 +101,7 @@ namespace Game
                     new CreateCs();
 
                     var gameSysts = new EcsSystems(_gameW)
-                        .Add(new CreateVEnts())
+                        .Add(new SpawnCells())
                         .Add(new CreateEnts())
                         .Add(new FillCells());
 

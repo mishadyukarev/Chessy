@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct TrailVC
+    public struct TrailVC : ITrailCellV
     {
         private Transform _parent_Trans;
         private Dictionary<DirectTypes, SpriteRenderer> _trails_SRs;

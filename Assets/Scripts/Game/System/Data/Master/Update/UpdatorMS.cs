@@ -8,12 +8,8 @@ namespace Game.Game
 {
     public sealed class UpdatorMS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyCellFilter = default;
-        private EcsFilter<CellC> _cellDataFilt = default;
         private EcsFilter<FireC> _cellFireDataFilter = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvDataFilter = default;
-        private EcsFilter<BuildC, OwnerC> _buildF = default;
-        private EcsFilter<TrailC> _cellTrailFilt = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
@@ -33,9 +29,9 @@ namespace Game.Game
             ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, PlayerTypes.Second);
 
 
-            foreach (byte idx_0 in _xyCellFilter)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
-                ref var cell_0 = ref _cellDataFilt.Get1(idx_0);
+                ref var cell_0 = ref EntityDataPool.GetCellC<CellC>(idx_0);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var level_0 = ref _unitF.Get2(idx_0);
@@ -53,11 +49,11 @@ namespace Game.Game
                 
 
 
-                ref var buil_0 = ref _buildF.Get1(idx_0);
-                ref var ownBuil_0 = ref _buildF.Get2(idx_0);
+                ref var buil_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
+                ref var ownBuil_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
                 ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
                 ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
-                ref var trail_0 = ref _cellTrailFilt.Get1(idx_0);
+                ref var trail_0 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_0);
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
@@ -116,7 +112,7 @@ namespace Game.Game
                                                 {
                                                     var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
 
-                                                    _buildF.Get1(idxCamp).Remove(own_0.Owner);
+                                                    EntityDataPool.GetBuildCellC<BuildC>(idxCamp).Remove(own_0.Owner);
                                                 }
 
 
@@ -136,7 +132,7 @@ namespace Game.Game
                                             {
                                                 var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
 
-                                                _buildF.Get1(idxCamp).Remove(own_0.Owner);
+                                                EntityDataPool.GetBuildCellC<BuildC>(idxCamp).Remove(own_0.Owner);
                                             }
 
 
@@ -180,12 +176,12 @@ namespace Game.Game
 
             if (MotionsC.AmountMotions % 3 == 0)
             {
-                foreach (byte idx_0 in _xyCellFilter)
+                for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
                 {
                     ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
                     ref var envRes_0 = ref _cellEnvDataFilter.Get2(idx_0);
 
-                    ref var build_0 = ref _buildF.Get1(idx_0);
+                    ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
 
                     if (env_0.Have(EnvTypes.Hill))
                     {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct CooldownUniqC
+    public struct CooldownUniqC : IUnitCell
     {
         private Dictionary<UniqAbilTypes, int> _cooldowns;
 

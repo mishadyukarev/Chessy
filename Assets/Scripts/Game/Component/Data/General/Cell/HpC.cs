@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct HpC
+    public struct HpC : IUnitCell
     {
         private int _hp;
         public const int MAX_HP = 100;

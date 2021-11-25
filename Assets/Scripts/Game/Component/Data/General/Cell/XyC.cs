@@ -1,9 +1,8 @@
 ﻿namespace Game.Game
 {
-    public struct XyC
+    public struct XyC : ICell
     {
         private byte[] _xy;
-        public readonly byte Idx;
 
         public byte[] Xy
         {
@@ -11,9 +10,8 @@
             set => _xy = (byte[])value.Clone();
         }
 
-        public XyC(byte idx, byte[] xy)
+        public XyC(byte[] xy)
         {
-            Idx = idx;
             _xy = xy;
         }
     }

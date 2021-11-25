@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct EnvResC
+    public struct EnvResC : IEnvCell
     {
-        private Dictionary<EnvTypes, int> _amountResours;
+        Dictionary<EnvTypes, int> _amountResours;
 
         public Dictionary<EnvTypes, int> Resources
         {
@@ -20,18 +20,18 @@ namespace Game.Game
             }
         }
 
-        public int AmountRes(EnvTypes envType)
+        public int AmountRes(EnvTypes env)
         {
-            if (envType == default) throw new Exception();
-            return _amountResours[envType];
+            if (env == default) throw new Exception();
+            return _amountResours[env];
         }
-        public byte MaxAmountRes(EnvTypes envType)
+        public byte MaxAmountRes(EnvTypes env)
         {
-            if (envType == default) throw new Exception();
-            return EnvironValues.MaxAmount(envType);
+            if (env == default) throw new Exception();
+            return EnvironValues.MaxAmount(env);
         }
-        public bool HaveRes(EnvTypes envType) => AmountRes(envType) > 0;
-        public bool HaveMaxRes(EnvTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
+        public bool HaveRes(EnvTypes env) => AmountRes(env) > 0;
+        public bool HaveMaxRes(EnvTypes env) => AmountRes(env) >= MaxAmountRes(env);
 
 
         public EnvResC(bool needNew)

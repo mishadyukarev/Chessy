@@ -4,9 +4,7 @@ namespace Game.Game
 {
     public sealed class GetAttackPawnCellsS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyF = default;
         private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<TrailC> _trailF = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
@@ -14,7 +12,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in _xyF)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var level_0 = ref _unitF.Get2(idx_0);
@@ -31,18 +29,18 @@ namespace Game.Game
                     {
                         DirectTypes dir_cur = default;
 
-                        CellSpace.TryGetXyAround(_xyF.Get1(idx_0).Xy, out var dirs);
+                        CellSpace.TryGetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             dir_cur += 1;
-                            var idx_1 = _xyF.GetIdxCell(item_1.Value);
+                            var idx_1 = EntityDataPool.GetIdxCell(item_1.Value);
 
                             ref var env_1 = ref _envF.Get1(idx_1);
                             ref var unit_1 = ref _unitF.Get1(idx_1);
                             ref var own_1 = ref _unitF.Get3(idx_1);
 
-                            ref var trail_1 = ref _trailF.Get1(idx_1);
+                            ref var trail_1 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_1);
 
 
                             if (!env_1.Have(EnvTypes.Mountain))

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct FireVC
+    public struct FireVC : IElseCellV
     {
         private SpriteRenderer _cellFire_SR;
 

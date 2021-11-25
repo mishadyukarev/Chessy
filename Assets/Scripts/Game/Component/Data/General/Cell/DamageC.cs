@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct DamageC
+    public struct DamageC : IUnitCell
     {
         public int StandDamage(UnitTypes unit, LevelTypes level) => UnitValues.StandDamage(unit, level);
         public int DamageAttack(UnitTypes unit, LevelTypes level, ToolWeaponC tWC, UnitEffectsC effectsC, AttackTypes attack, float upgPerc)

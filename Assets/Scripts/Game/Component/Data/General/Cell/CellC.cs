@@ -1,16 +1,14 @@
-﻿using UnityEngine;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public readonly struct CellC
+    public readonly struct CellC : ICell
     {
         public readonly bool IsActiveCell;
         public readonly int InstanceID;
 
-        public CellC(GameObject cell_GO)
+        public CellC(in bool isActiveCell, in int instanceID)
         {
-            IsActiveCell = cell_GO.transform.parent.gameObject.activeSelf;
-            InstanceID = cell_GO.GetInstanceID();
+            IsActiveCell = isActiveCell;
+            InstanceID = instanceID;
         }
     }
 }

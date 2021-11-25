@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct WaterC
+    public struct WaterC : IUnitCell
     {
         private int _water;
 

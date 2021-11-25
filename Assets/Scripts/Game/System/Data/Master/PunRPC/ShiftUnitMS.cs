@@ -5,12 +5,9 @@ namespace Game.Game
 {
     public sealed class ShiftUnitMS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _cellXyFilt = default;
         private EcsFilter<EnvC> _cellEnvrDataFilter = default;
         private EcsFilter<RiverC> _cellRiverFilt = default;
-        private EcsFilter<TrailC> _cellTrailFilt = default;
         private EcsFilter<FireC> _cellFireFilt = default;
-        private EcsFilter<BuildC, OwnerC> _buildFilt = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
@@ -72,19 +69,19 @@ namespace Game.Game
 
 
                 ref var fire_to = ref _cellFireFilt.Get1(idx_to);
-                ref var build_to = ref _buildFilt.Get1(idx_to);
-                ref var ownBuild_to = ref _buildFilt.Get2(idx_to);
-                ref var xy_to = ref _cellXyFilt.Get1(idx_to);
-                ref var env_to = ref _cellEnvrDataFilter.Get1(idx_to);
+                ref var build_to = ref EntityDataPool.GetBuildCellC<BuildC>(idx_to);
+                ref var ownBuild_to = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_to);
+                ref var xy_to = ref EntityDataPool.GetCellC<XyC>(idx_to);
+                    ref var env_to = ref _cellEnvrDataFilter.Get1(idx_to);
                 ref var river_to = ref _cellRiverFilt.Get1(idx_to);
-                ref var trail_to = ref _cellTrailFilt.Get1(idx_to);
+                ref var trail_to = ref EntityDataPool.GetTrailCellC<TrailC>(idx_to);
 
                 ref var envDat_from = ref _cellEnvrDataFilter.Get1(idx_from);
-                ref var trail_from = ref _cellTrailFilt.Get1(idx_from);
+                ref var trail_from = ref EntityDataPool.GetTrailCellC<TrailC>(idx_from);
 
 
 
-                var dir_from = CellSpace.GetDirect(_cellXyFilt.Get1(idx_from).Xy, _cellXyFilt.Get1(idx_to).Xy);
+                var dir_from = CellSpace.GetDirect(EntityDataPool.GetCellC<XyC>(idx_from).Xy, EntityDataPool.GetCellC<XyC>(idx_to).Xy);
 
                 step_from.TakeStepsForDoing(env_to, dir_from, trail_to);
 

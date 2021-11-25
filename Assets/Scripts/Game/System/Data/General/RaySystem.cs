@@ -7,9 +7,6 @@ namespace Game.Game
 {
     public sealed class RaySystem : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyF = default;
-        private EcsFilter<CellC> _cellF = default;
-
         private Ray _ray;
         private const float RAY_DISTANCE = 100;
 
@@ -40,14 +37,14 @@ namespace Game.Game
 
             if (raycast)
             {
-                foreach (byte idx in _xyF)
+                for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
                 {
-                    int one = _cellF.Get1(idx).InstanceID;
+                    int one = EntityDataPool.GetCellC<CellC>(idx_0).InstanceID;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        CurIdx.Idx = idx;
+                        CurIdx.Idx = idx_0;
                         RayCastC.Set(RaycastTypes.Cell);
                         return;
                     }

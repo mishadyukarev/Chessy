@@ -11,7 +11,6 @@ namespace Game.Game
         private EcsFilter<UnitEffectsC> _effUnitF = default;
 
         private EcsFilter<RiverC> _cellRiverFilt = default;
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -29,8 +28,8 @@ namespace Game.Game
 
                 ref var riverC_0 = ref _cellRiverFilt.Get1(idx_0);
 
-                ref var build_0 = ref _cellBuildFilt.Get1(idx_0);
-                ref var ownBuild_0 = ref _cellBuildFilt.Get2(idx_0);
+                ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
 
 
                 if (unit_0.HaveUnit)

@@ -12,11 +12,8 @@ namespace Game.Game
         private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
         private readonly EcsFilter<CooldownUniqC> _uniqUnitF = default;
 
-        private readonly EcsFilter<XyC> _xyF = default;
-        private readonly EcsFilter<BuildC, OwnerC> _buildF = default;
         private readonly EcsFilter<EnvC> _envF = default;
         private readonly EcsFilter<RiverC> _riverF = default;
-        private readonly EcsFilter<TrailC> _trailF = default;
 
 
         public void Run()
@@ -62,18 +59,18 @@ namespace Game.Game
 
 
             ref var river_from = ref _riverF.Get1(idx_from);
-            ref var build_from = ref _buildF.Get1(idx_from);
-            ref var ownBuild_from = ref _buildF.Get2(idx_from);
+            ref var build_from = ref EntityDataPool.GetBuildCellC<BuildC>(idx_from);
+            ref var ownBuild_from = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_from);
             ref var env_from = ref _envF.Get1(idx_from);
-            ref var trail_from = ref _trailF.Get1(idx_from);
+            ref var trail_from = ref EntityDataPool.GetTrailCellC<TrailC>(idx_from);
             ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
 
 
             ref var river_to = ref _riverF.Get1(idx_to);
-            ref var build_to = ref _buildF.Get1(idx_to);
-            ref var ownBuild_to = ref _buildF.Get2(idx_to);
+            ref var build_to = ref EntityDataPool.GetBuildCellC<BuildC>(idx_to);
+            ref var ownBuild_to = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_to);
             ref var env_to = ref _envF.Get1(idx_to);
-            ref var trail_to = ref _trailF.Get1(idx_to);
+            ref var trail_to = ref EntityDataPool.GetTrailCellC<TrailC>(idx_to);
             ref var cdUniq_to = ref _uniqUnitF.Get1(idx_to);
 
 
@@ -201,7 +198,7 @@ namespace Game.Game
                             cdUniq_to.Replace(cdUniq_from);
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner));
 
-                            var dir = CellSpace.GetDirect(_xyF.Get1(idx_from).Xy, _xyF.Get1(idx_to).Xy);
+                            var dir = CellSpace.GetDirect(EntityDataPool.GetCellC<XyC>(idx_from).Xy, EntityDataPool.GetCellC<XyC>(idx_to).Xy);
                             trail_to.TrySetNewTrail(dir.Invert(), env_to);
                             trail_from.TrySetNewTrail(dir, env_from);
 

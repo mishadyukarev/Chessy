@@ -7,11 +7,8 @@ namespace Game.Game
 {
     public sealed class TruceMS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyCellFilter = default;
-        private EcsFilter<BuildC> _cellBuildFilter = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
         private EcsFilter<FireC> _cellFireFilter = default;
-        private EcsFilter<TrailC> _trailFilt = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
@@ -20,18 +17,18 @@ namespace Game.Game
         {
             int random;
 
-            foreach (byte idx_0 in _xyCellFilter)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
                 ref var tw_0 = ref _twUnitF.Get1(idx_0);
 
-                ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
+                ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
                 ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
                 ref var curFireCom = ref _cellFireFilter.Get1(idx_0);
-                ref var trail_0 = ref _trailFilt.Get1(idx_0);
+                ref var trail_0 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_0);
 
 
                 curFireCom.Disable();

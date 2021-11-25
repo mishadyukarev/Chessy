@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct LevelC
+    public struct LevelC : IUnitCell
     {
         private LevelTypes _levelUnit;
         public LevelTypes Level => _levelUnit;

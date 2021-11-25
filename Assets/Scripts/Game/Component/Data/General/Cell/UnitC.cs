@@ -2,10 +2,10 @@
 
 namespace Game.Game
 {
-    public struct UnitC
+    public struct UnitC : IUnitCell
     {
-        private UnitTypes _unit;
-        private readonly byte _idx;
+        UnitTypes _unit;
+        readonly byte _idx;
 
         public UnitTypes Unit => _unit;
         public bool HaveUnit => Unit != UnitTypes.None;

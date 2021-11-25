@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct UnitExtraVC
+    public struct UnitExtraVC : IUnitCellV
     {
         private SpriteRenderer _extraUnit_SR;
 

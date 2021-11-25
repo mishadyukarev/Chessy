@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using System;
 using static Game.Game.CellClickC;
 
 namespace Game.Game
@@ -134,7 +133,7 @@ namespace Game.Game
 
                             else
                             {
-                                
+
 
                                 if (unit_cur.HaveUnit)
                                 {

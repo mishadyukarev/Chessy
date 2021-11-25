@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct CloudVC
+    public struct CloudVC : IElseCellV
     {
         private SpriteRenderer _cloud_SR;
 

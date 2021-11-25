@@ -10,7 +10,6 @@ namespace Game.Game
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         private EcsFilter<EnvC, EnvResC> _cellEnvFilt = default;
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<TrailC> _cellTrailFilt = default;
         public void Run()
         {
@@ -33,8 +32,8 @@ namespace Game.Game
                             ref var env_0 = ref _cellEnvFilt.Get1(idx_0);
                             ref var envRes_0 = ref _cellEnvFilt.Get2(idx_0);
 
-                            ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
-                            ref var ownBuil_0 = ref _cellBuildFilt.Get2(idx_0);
+                            ref var buil_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
+                            ref var ownBuil_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
 
                             ref var trail_0 = ref _cellTrailFilt.Get1(idx_0);
 

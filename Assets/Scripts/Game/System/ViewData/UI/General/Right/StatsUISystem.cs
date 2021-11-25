@@ -9,9 +9,6 @@ namespace Game.Game
         private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
-        private EcsFilter<BuildC> _buildF = default;
-        private EcsFilter<EnvC> _envF = default;
-
         public void Run()
         {
             ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
@@ -32,8 +29,8 @@ namespace Game.Game
 
 
 
-            ref var selBuildC = ref _buildF.Get1(SelIdx.Idx);
-            ref var selEnvC = ref _envF.Get1(SelIdx.Idx);
+            ref var selBuildC = ref EntityDataPool.GetBuildCellC<BuildC>(SelIdx.Idx);
+            ref var selEnvC = ref EntityDataPool.GetEnvCellC<EnvC>(SelIdx.Idx);
 
 
             if (unit_sel.HaveUnit)

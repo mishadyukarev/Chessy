@@ -1,16 +1,12 @@
 ﻿namespace Game.Game
 {
-    public struct CloudC
+    public struct CloudC : IElseCell
     {
         public bool Have { get; set; }
-        //public CloudWidthTypes CloudWidth { get; set; }
 
-        //public bool IsCenter => CloudWidth != default;
-
-        public void Sync(bool haveCloud/*, CloudWidthTypes cloudWidth*/)
+        public void Sync(bool haveCloud)
         {
             Have = haveCloud;
-            //CloudWidth = cloudWidth;
         }
     }
 }

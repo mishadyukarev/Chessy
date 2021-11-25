@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct CornerArcherC
+    public struct CornerArcherC : IUnitCell
     {
         private bool _isCornered;
 

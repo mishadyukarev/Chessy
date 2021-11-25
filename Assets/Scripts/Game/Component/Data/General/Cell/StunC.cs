@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct StunC
+    public struct StunC : IUnitCell
     {
         private bool _isStunned;
         private int _stepsInStun;

@@ -6,7 +6,6 @@ namespace Game.Game
 {
     public sealed class FromToNewUnitMS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyFilt = default;
         private EcsFilter<UnitC, LevelC, OwnerC> _unitMainFilt = default;
 
         public void Run()
@@ -32,7 +31,7 @@ namespace Game.Game
                 {
                     if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
                     {
-                        var xy_from = _xyFilt.Get1(idx_from).Xy;
+                        var xy_from = EntityDataPool.GetCellC<XyC>(idx_from).Xy;
 
                         var list_around = CellSpace.GetXyAround(xy_from);
 
@@ -43,7 +42,7 @@ namespace Game.Game
                            
 
 
-                            var idx_1 = _xyFilt.GetIdxCell(xy_1);
+                            var idx_1 = EntityDataPool.GetIdxCell(xy_1);
 
                             if (idx_1 == idx_to)
                             {

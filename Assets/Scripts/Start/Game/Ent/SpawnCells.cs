@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class CreateVEnts : IEcsInitSystem
+    public sealed class SpawnCells : IEcsInitSystem
     {
         private EcsWorld _curGameW = default;
 
@@ -17,6 +17,8 @@ namespace Game.Game
 
             byte idx_0 = 0;
 
+            var cells = new GameObject[CellValuesC.AMOUNT_ALL_CELLS];
+
             for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
                 for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
                 {
@@ -26,7 +28,7 @@ namespace Game.Game
 
 
                     var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
-                    cell.name = "Cell";
+                    cell.name = "CellMain";
                     cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
 
                     if (y == 0 || y == 10 && x >= 0 && x < 15 ||
@@ -40,38 +42,13 @@ namespace Game.Game
 
                     cell.transform.SetParent(parCells.transform);
 
-
-                    var cellView_GO = cell.transform.Find("Cell").gameObject;
-
-                    _curGameW.NewEntity()
-                        .Replace(new CellVC(cellView_GO))
-                        .Replace(new EnvVC(cell))
-                        .Replace(new FireVC(cell))
-                        .Replace(new SupportVC(cell))
-                        .Replace(new CloudVC(cell))
-                        .Replace(new RiverVC(cell.transform));
-
-
-                    _curGameW.NewEntity()
-                         .Replace(new BuildVC(cell));
-
-
-                    _curGameW.NewEntity()
-                         .Replace(new UnitMainVC(cell))
-                         .Replace(new UnitExtraVC(cell))
-                         .Replace(new BlocksVC(cell))
-                         .Replace(new BarsVC(cell))
-                         .Replace(new StunVC(cell.transform));
-
-
-                    _curGameW.NewEntity()
-                        .Replace(new TrailVC(cell.transform));
-
-
-
+                    cells[idx_0] = cell;
 
                     ++idx_0;
                 }
+
+
+            new EntityViewPool(_curGameW, cells);
         }
     }
 }

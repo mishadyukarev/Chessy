@@ -2,11 +2,10 @@
 
 namespace Game.Game
 {
-    public struct OwnerC
+    public struct OwnerC : IUnitCell, IBuildCell
     {
         private PlayerTypes _owner;
         public PlayerTypes Owner => _owner;
-
         public bool Is(params PlayerTypes[] players)
         {
             foreach (var player in players) if (player == _owner) return true;

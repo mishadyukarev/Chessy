@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct TrailC
+    public struct TrailC : ITrailCell
     {
         private readonly Dictionary<DirectTypes, int> _health;
 

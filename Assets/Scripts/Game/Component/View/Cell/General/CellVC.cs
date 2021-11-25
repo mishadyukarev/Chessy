@@ -3,23 +3,24 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct CellVC
+    public struct CellVC : ICellVE
     {
-        private GameObject _cellParent_GO;
-        private GameObject _cell_GO;
+        private GameObject _cell;
+        private GameObject _cellUnder;
 
-        public GameObject Cell => _cell_GO;
+        public bool IsActiveSelf => _cellUnder.activeSelf;
+        public int InstanceID => _cellUnder.GetInstanceID();
 
-        public CellVC(GameObject cellView_GO)
+        public CellVC(GameObject cell)
         {
-            _cellParent_GO = cellView_GO.transform.parent.gameObject;
-            _cell_GO = cellView_GO;
+            _cell = cell;
+            _cellUnder = cell.transform.Find("Cell").gameObject;
         }
 
-        public void SetRotForClient(PlayerTypes playerType)
+        public void SetRotForClient(PlayerTypes player)
         {
-            if (playerType == PlayerTypes.None) throw new Exception();
-            _cellParent_GO.transform.rotation = playerType == PlayerTypes.First ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
+            if (player == PlayerTypes.None) throw new Exception();
+            _cell.transform.rotation = player == PlayerTypes.First ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
         }
     }
 }

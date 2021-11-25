@@ -5,7 +5,6 @@ namespace Game.Game
 {
     public sealed class BuildFarmMastSys : IEcsRunSystem
     {
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
 
@@ -16,8 +15,8 @@ namespace Game.Game
             BuildDoingMC.Get(out var forBuildType);
             IdxDoingMC.Get(out var idx_0);
 
-            ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
-            ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
+            ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
+            ref var ownBuildC_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
 
             ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
             ref var env_0 = ref _cellEnvFilter.Get1(idx_0);

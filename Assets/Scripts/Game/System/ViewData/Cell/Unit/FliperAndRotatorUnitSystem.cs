@@ -5,25 +5,19 @@ namespace Game.Game
 {
     public class FliperAndRotatorUnitSystem : IEcsRunSystem
     {
-        private EcsFilter<UnitMainVC> _unitVF = default;
-        private EcsFilter<UnitC, OwnerC> _unitF = default;
-        private EcsFilter<CornerArcherC> _archerF = default;
-
-        private EcsFilter<UnitExtraVC> _unitExtVF = default;
-
         public void Run()
         {
-            foreach (byte idx_0 in _unitF)
+            foreach (byte idx_0 in EntityDataPool.Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
-                ref var corner_0 = ref _archerF.Get1(idx_0);
+                ref var unit_0 = ref EntityDataPool.GetUnitCellC<UnitC>(idx_0);
+                ref var ownUnit_0 = ref EntityDataPool.GetUnitCellC<OwnerC>(idx_0);
+                ref var corner_0 = ref EntityDataPool.GetUnitCellC<CornerArcherC>(idx_0);
 
-                ref var main_0 = ref _unitVF.Get1(idx_0);
-                ref var extra_0 = ref _unitExtVF.Get1(idx_0);
+                ref var main_0 = ref EntityViewPool.GetUnitCellVC<UnitMainVC>(idx_0);
+                ref var extra_0 = ref EntityViewPool.GetUnitCellVC<UnitExtraVC>(idx_0);
 
 
-                main_0.Set_LocRotEuler(new Vector3(0, 0, 0));
+                main_0.SetLocRot(new Vector3(0, 0, 0));
                 main_0.SetFlipX(false);
                 extra_0.SetFlipX(false);
 
@@ -37,12 +31,12 @@ namespace Game.Game
                             {
                                 if (corner_0.IsCornered)
                                 {
-                                    main_0.Set_LocRotEuler(new Vector3(0, 0, -90));
+                                    main_0.SetLocRot(new Vector3(0, 0, -90));
                                     main_0.SetFlipX(false);
                                 }
                                 else
                                 {
-                                    main_0.Set_LocRotEuler(new Vector3(0, 0, 0));
+                                    main_0.SetLocRot(new Vector3(0, 0, 0));
                                     main_0.SetFlipX(true);
                                 }
                             }

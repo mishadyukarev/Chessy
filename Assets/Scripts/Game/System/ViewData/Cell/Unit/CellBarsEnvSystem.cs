@@ -5,7 +5,6 @@ namespace Game.Game
 {
     public sealed class CellBarsEnvSystem : IEcsRunSystem
     {
-        private EcsFilter<BuildC> _cellBuildFilter = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
         private EcsFilter<BarsVC> _cellBarsFilter = default;
 
@@ -16,7 +15,7 @@ namespace Game.Game
             //ref var env_sel = ref _cellEnvFilter.Get1(SelCell.IdxSelCell);
             
 
-            foreach (var curIdxCell in _cellBuildFilter)
+            foreach (var curIdxCell in _cellEnvFilter)
             {
                 ref var env_0 = ref _cellEnvFilter.Get1(curIdxCell);
                 ref var envRes_0 = ref _cellEnvFilter.Get2(curIdxCell);

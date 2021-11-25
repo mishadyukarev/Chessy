@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct ToolWeaponC
+    public struct ToolWeaponC : IUnitCell
     {
         public TWTypes TW;
         public bool Is(TWTypes tW) => TW == tW;

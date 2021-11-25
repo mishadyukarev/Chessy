@@ -5,7 +5,6 @@ namespace Game.Game
 {
     public sealed class RotateAllSys : IEcsRunSystem
     {
-        private EcsFilter<CellVC> _cellVF = default;
         private EcsFilter<RiverVC> _riverF = default;
         private EcsFilter<TrailVC> _trailF = default;
 
@@ -13,9 +12,9 @@ namespace Game.Game
         {
             var curPlayer = WhoseMoveC.CurPlayerI;
 
-            foreach (byte idx_0 in _cellVF)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
-                _cellVF.Get1(idx_0).SetRotForClient(curPlayer);
+                EntityViewPool.GetCellVC<CellVC>(idx_0).SetRotForClient(curPlayer);
                 _riverF.Get1(idx_0).Rotate(curPlayer);
                 _trailF.Get1(idx_0).Rotate(curPlayer);
             }

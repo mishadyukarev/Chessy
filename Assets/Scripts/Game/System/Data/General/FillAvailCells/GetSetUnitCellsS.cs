@@ -4,11 +4,8 @@ namespace Game.Game
 {
     public sealed class GetSetUnitCellsS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyF = default;
         private EcsFilter<UnitC> _unitF = default;
         private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<BuildC, OwnerC> _buldF = default;
-
 
         public void Run()
         {
@@ -21,13 +18,13 @@ namespace Game.Game
                     var idx_city = WhereBuildsC.Idx(BuildTypes.City, player);
                     ref var unit_city = ref _unitF.Get1(idx_city);
                     
-                    var listAround = CellSpace.GetXyAround(_xyF.Get1(idx_city).Xy);
+                    var listAround = CellSpace.GetXyAround(EntityDataPool.GetCellC<XyC>(idx_city).Xy);
 
                     if(!unit_city.HaveUnit) SetUnitCellsC.AddIdxCell(player, idx_city);
 
                     foreach (var xy in listAround)
                     {
-                        var curIdx = _xyF.GetIdxCell(xy);
+                        var curIdx = EntityDataPool.GetIdxCell(xy);
 
                         ref var curUnitDatCom = ref _unitF.Get1(curIdx);
                         ref var curEnvDatCom = ref _envF.Get1(curIdx);
@@ -41,13 +38,13 @@ namespace Game.Game
 
                 else
                 {
-                    foreach (byte curIdx in _xyF)
+                    for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
                     {
-                        var xy = _xyF.Get1(curIdx).Xy;
+                        var xy = EntityDataPool.GetCellC<XyC>(idx_0).Xy;
                         var x = xy[0];
                         var y = xy[1];
 
-                        ref var curUnitDatCom = ref _unitF.Get1(curIdx);
+                        ref var curUnitDatCom = ref _unitF.Get1(idx_0);
 
 
                         if (!curUnitDatCom.HaveUnit)
@@ -56,14 +53,14 @@ namespace Game.Game
                             {
                                 if (y < 3 && x > 3 && x < 12)
                                 {
-                                    SetUnitCellsC.AddIdxCell(PlayerTypes.First, curIdx);
+                                    SetUnitCellsC.AddIdxCell(PlayerTypes.First, idx_0);
                                 }
                             }
                             else
                             {
                                 if (y > 7 && x > 3 && x < 12)
                                 {
-                                    SetUnitCellsC.AddIdxCell(PlayerTypes.Second, curIdx);
+                                    SetUnitCellsC.AddIdxCell(PlayerTypes.Second, idx_0);
                                 }
                             }
                         }
@@ -71,11 +68,11 @@ namespace Game.Game
                 }
             }
 
-            foreach (byte idx_0 in _xyF)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var buld_0 = ref _buldF.Get1(idx_0);
-                ref var ownBuld_0 = ref _buldF.Get2(idx_0);
+                ref var buld_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
+                ref var ownBuld_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
                 ref var env_0 = ref _envF.Get1(idx_0);
 
                 if (buld_0.Is(BuildTypes.Camp))

@@ -4,9 +4,7 @@ namespace Game.Game
 {
     public sealed class GetShiftCellsS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyF = default;
         private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<TrailC> _trailF = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
@@ -14,7 +12,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in _xyF)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
                 ShiftCellsC.Clear(PlayerTypes.First, idx_0);
                 ShiftCellsC.Clear(PlayerTypes.Second, idx_0);
@@ -34,13 +32,13 @@ namespace Game.Game
                 {
                     if (unit_0.HaveUnit)
                     {
-                        CellSpace.TryGetXyAround(_xyF.Get1(idx_0).Xy, out var directs);
+                        CellSpace.TryGetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy, out var directs);
 
                         foreach (var item_1 in directs)
                         {
-                            var idx_1 = _xyF.GetIdxCell(item_1.Value);
+                            var idx_1 = EntityDataPool.GetIdxCell(item_1.Value);
 
-                            ref var trail_1 = ref _trailF.Get1(idx_1);
+                            ref var trail_1 = ref EntityDataPool.GetTrailCellC<TrailC>(idx_1);
 
                             ref var unitC_1 = ref _unitF.Get1(idx_1);
                             ref var envC_1 = ref _envF.Get1(idx_1);

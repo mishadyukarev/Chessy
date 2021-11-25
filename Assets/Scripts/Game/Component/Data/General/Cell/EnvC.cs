@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct EnvC
+    public struct EnvC : IEnvCell
     {
         private Dictionary<EnvTypes, bool> _envs;
         private readonly byte _idx;

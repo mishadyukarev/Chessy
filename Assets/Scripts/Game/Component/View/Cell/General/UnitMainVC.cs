@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct UnitMainVC
+    public struct UnitMainVC : IUnitCellV
     {
         private SpriteRenderer _main_SR;
 
@@ -84,7 +84,7 @@ namespace Game.Game
         }
 
         public void SetFlipX(bool isActive) => _main_SR.flipX = isActive;
-        public void Set_LocRotEuler(Vector3 rotation) => _main_SR.transform.localEulerAngles = rotation;
+        public void SetLocRot(Vector3 rotation) => _main_SR.transform.localEulerAngles = rotation;
     }
 }
 

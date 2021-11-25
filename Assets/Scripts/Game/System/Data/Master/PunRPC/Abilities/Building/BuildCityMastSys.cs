@@ -4,9 +4,6 @@ namespace Game.Game
 {
     public sealed class BuildCityMastSys : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyF = default;
-        private EcsFilter<CellC> _cellF = default;
-        private EcsFilter<BuildC, OwnerC> _buildF = default;
         private EcsFilter<EnvC> _envF = default;
         private EcsFilter<FireC> _fireF = default;
 
@@ -22,8 +19,8 @@ namespace Game.Game
 
             if (forBuildType == BuildTypes.City)
             {
-                ref var build_0 = ref _buildF.Get1(idx_0);
-                ref var ownBuild_0 = ref _buildF.Get2(idx_0);
+                ref var build_0 = ref EntityDataPool.GetBuildCellC<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityDataPool.GetBuildCellC<OwnerC>(idx_0);
 
                 ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
                 ref var curCellEnvCom = ref _envF.Get1(idx_0);
@@ -37,11 +34,11 @@ namespace Game.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpace.GetXyAround(_xyF.Get1(idx_0).Xy))
+                    foreach (var xy in CellSpace.GetXyAround(EntityDataPool.GetCellC<XyC>(idx_0).Xy))
                     {
-                        var curIdx = _xyF.GetIdxCell(xy);
+                        var curIdx = EntityDataPool.GetIdxCell(xy);
 
-                        if (!_cellF.Get1(curIdx).IsActiveCell)
+                        if (!EntityDataPool.GetCellC<CellC>(curIdx).IsActiveCell)
                         {
                             haveNearBorder = true;
                             break;

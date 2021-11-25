@@ -6,19 +6,16 @@ namespace Game.Game
     public sealed class ThirdButtonBuildUISys : IEcsRunSystem
     {
         private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
 
         public void Run()
         {
             if (SelIdx.IsSelCell)
             {
-                var idxSelCell = SelIdx.Idx;
-
                 ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelIdx.Idx);
                 ref var selOwnUnitCom = ref _cellUnitFilter.Get2(SelIdx.Idx);
 
-                ref var selBuildDatCom = ref _cellBuildFilt.Get1(SelIdx.Idx);
-                ref var ownBuildC_sel = ref _cellBuildFilt.Get2(SelIdx.Idx);
+                ref var selBuildDatCom = ref EntityDataPool.GetBuildCellC<BuildC>(SelIdx.Idx);
+                ref var ownBuildC_sel = ref EntityDataPool.GetBuildCellC<OwnerC>(SelIdx.Idx);
 
                 var needActiveThirdButt = false;
 

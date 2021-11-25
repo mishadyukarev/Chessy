@@ -4,16 +4,14 @@ namespace Game.Game
 {
     public sealed class ClearAvailCellsS : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyF = default;
-
         public void Run()
         {
-            foreach (byte idx_0 in _xyF)
+            for (byte idx_0 = 0; idx_0 < EntityDataPool.AmountAllCells; idx_0++)
             {
-                AttackCellsC.Clear(AttackTypes.Simple, PlayerTypes.First,  idx_0);
+                AttackCellsC.Clear(AttackTypes.Simple, PlayerTypes.First, idx_0);
                 AttackCellsC.Clear(AttackTypes.Simple, PlayerTypes.Second, idx_0);
-                AttackCellsC.Clear(AttackTypes.Unique, PlayerTypes.First,  idx_0);
-                AttackCellsC.Clear(AttackTypes.Unique, PlayerTypes.Second,  idx_0);
+                AttackCellsC.Clear(AttackTypes.Unique, PlayerTypes.First, idx_0);
+                AttackCellsC.Clear(AttackTypes.Unique, PlayerTypes.Second, idx_0);
 
                 ArsonCellsC.Clear(PlayerTypes.First, idx_0);
                 ArsonCellsC.Clear(PlayerTypes.Second, idx_0);
