@@ -4,13 +4,12 @@ using Game.Common;
 
 namespace Game.Game
 {
-    public sealed class CircularAttackKingMastSys : IEcsRunSystem
+    public sealed class CircularAttackKingMS : IEcsRunSystem
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
         private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
-        private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         private EcsFilter<EnvC> _envF = default;
 
@@ -46,13 +45,14 @@ namespace Game.Game
                         var idx_1 = EntityPool.IdxCell(xy1);
 
                         ref var unit_1 = ref _unitF.Get1(idx_1);
-
                         ref var levUnit_1 = ref _unitF.Get2(idx_1);
                         ref var ownUnit_1 = ref _unitF.Get3(idx_1);
-
                         ref var hpUnitC_1 = ref _statUnitF.Get1(idx_1);
-                        ref var twUnitC_1 = ref _twUnitF.Get1(idx_1);
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
+                        ref var tw_1 = ref EntityPool.TWCellC<ToolWeaponC>(idx_1);
+                        ref var shield_1 = ref EntityPool.TWCellC<ShieldC>(idx_1);
+
+
 
                         ref var envC_1 = ref _envF.Get1(idx_1);
                         ref var buildC_1 = ref EntityPool.BuildCellC<BuildC>(idx_1);
@@ -64,9 +64,10 @@ namespace Game.Game
                             {
                                 effUnitC_1.DefAllEffects();
 
-                                if (twUnitC_1.Is(TWTypes.Shield))
+                                if (tw_1.Is(TWTypes.Shield))
                                 {
-                                    twUnitC_1.TakeShieldProtect();
+                                    shield_1.TakeShieldProtect();
+                                    if (!shield_1.Have) tw_1.Reset();
                                 }
                                 else
                                 {

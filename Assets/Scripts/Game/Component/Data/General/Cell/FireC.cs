@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct FireC : IElseCell
+    public struct FireC : IFireCell
     {
         public bool Have { get; private set; }
 

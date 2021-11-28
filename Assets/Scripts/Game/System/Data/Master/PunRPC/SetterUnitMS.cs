@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -9,7 +10,7 @@ namespace Game.Game
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, MoveInCondC, UnitEffectsC> _effUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
@@ -46,18 +47,19 @@ namespace Game.Game
                 if (InvUnitsC.Have(unit, LevelTypes.Second, whoseMove))
                 {
                     InvUnitsC.Take(whoseMove, unit, LevelTypes.Second);
-                    levUnit_0.SetLevel(LevelTypes.Second);
+                    levUnit_0.Set(LevelTypes.Second);
                 }
                 else
                 {
                     InvUnitsC.Take(whoseMove, unit, LevelTypes.First);
-                    levUnit_0.SetLevel(LevelTypes.First);
+                    levUnit_0.Set(LevelTypes.First);
                 }
                 ownUnit_0.SetOwner(whoseMove);
                 unit_0.SetNew(unit, levUnit_0.Level, ownUnit_0.Owner);
 
 
-                tw_0.TW = default;
+                tw_0.Reset();
+
                 eff_0.DefAllEffects();
                 hp_0.SetMaxHp();
                 if (cond_0.HaveCondition) cond_0.Reset();  

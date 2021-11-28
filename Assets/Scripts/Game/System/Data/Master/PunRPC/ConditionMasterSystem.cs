@@ -7,7 +7,7 @@ namespace Game.Game
     public sealed class ConditionMasterSystem : IEcsRunSystem
     {
         private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC> _effUnitF = default;
+        private EcsFilter<ConditionC> _effUnitF = default;
 
         public void Run()
         {

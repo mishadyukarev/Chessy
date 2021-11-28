@@ -14,9 +14,9 @@ namespace Game.Game
 
                 ref var corner_0 = ref EntityPool.UnitCellC<CornerArcherC>(idx_0);
 
-                ref var twUnitC_0 = ref EntityPool.UnitCellC<ToolWeaponC>(idx_0);
+                ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
 
-                
                 ref var mainUnitC_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
                 ref var extraUnitC_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);
 
@@ -34,10 +34,10 @@ namespace Game.Game
                         {
                             mainUnitC_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
 
-                            if (twUnitC_0.HaveTW)
+                            if (tw_0.HaveTW)
                             {
                                 extraUnitC_0.Enable_SR();
-                                extraUnitC_0.SetToolWeapon_Sprite(twUnitC_0.TW, twUnitC_0.Level);
+                                extraUnitC_0.SetToolWeapon_Sprite(tw_0.TW, twLevel_0.Level);
                             }
                         }
 

@@ -6,7 +6,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         private EcsFilter<EnvC, EnvResC> _cellEnvFilt = default;

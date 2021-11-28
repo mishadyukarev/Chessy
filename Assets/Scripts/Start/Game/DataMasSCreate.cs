@@ -66,7 +66,7 @@ namespace Game.Game
             uniqSys.Add(UniqAbilTypes.PutOutFirePawn, new EcsSystems(gameWorld).Add(new PutOutFireMS()));
             uniqSys.Add(UniqAbilTypes.FireArcher, new EcsSystems(gameWorld).Add(new FireArcherMS()));
             uniqSys.Add(UniqAbilTypes.GrowAdultForest, new EcsSystems(gameWorld).Add(new GrowAdultForestMS()));
-            uniqSys.Add(UniqAbilTypes.CircularAttack, new EcsSystems(gameWorld).Add(new CircularAttackKingMastSys()));
+            uniqSys.Add(UniqAbilTypes.CircularAttack, new EcsSystems(gameWorld).Add(new CircularAttackKingMS()));
             uniqSys.Add(UniqAbilTypes.BonusNear, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMS()));
             uniqSys.Add(UniqAbilTypes.ChangeDirWind, new EcsSystems(gameWorld).Add(new ChangeDirWindMS()));
             uniqSys.Add(UniqAbilTypes.ChangeCornerArcher, new EcsSystems(gameWorld).Add(new ChangeCornerArcherMS()));

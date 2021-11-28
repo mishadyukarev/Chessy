@@ -16,12 +16,6 @@ namespace Game.Game
             list.Add(dataSC);
 
 
-            var syncAbilities = new EcsSystems(gameWorld)
-                .Add(new AbilSyncMasSys());
-
-            dataSC.Add(DataSystTypes.GetAbilities, syncAbilities.Run);
-
-
             var runUpd = new EcsSystems(gameWorld)
                 .Add(new InputSystem())
                 .Add(new RaySystem())
@@ -30,15 +24,18 @@ namespace Game.Game
             dataSC.Add(DataSystTypes.RunUpdate, runUpd.Run);
 
 
+
             var runFixedUpd = new EcsSystems(gameWorld)
-                .Add(syncAbilities)
                 .Add(new SoundS());
 
-            dataSC.Add(DataSystTypes.RunFixedUpdate, runUpd.Run);
+            dataSC.Add(DataSystTypes.RunFixedUpdate, runFixedUpd.Run);
 
 
+            var afterDoing = new EcsSystems(gameWorld)
+                .Add(new VisibElseS())
 
-            var getAvailCells = new EcsSystems(gameWorld)
+                .Add(new AbilSyncMS())
+
                 .Add(new ClearAvailCellsS())
                 .Add(new GetAttackKingCellsS())
                 .Add(new GetAttackPawnCellsS())
@@ -47,7 +44,7 @@ namespace Game.Game
                 .Add(new GetShiftCellsS())
                 .Add(new GetArsonCellsS());
 
-            dataSC.Add(DataSystTypes.GetAvailCells, getAvailCells.Run);
+            dataSC.Add(DataSystTypes.RunAfterDoing, afterDoing.Run);
 
 
             
@@ -60,7 +57,7 @@ namespace Game.Game
             gameSysts
                 .Add(runUpd)
                 .Add(runFixedUpd)
-                .Add(getAvailCells);
+                .Add(afterDoing);
         }
     }
 }

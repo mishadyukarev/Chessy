@@ -7,7 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
 
         private EcsFilter<BarsVC> _cellBarsFilter = default;
         private EcsFilter<BlocksVC> _cellBlocksFilter = default;

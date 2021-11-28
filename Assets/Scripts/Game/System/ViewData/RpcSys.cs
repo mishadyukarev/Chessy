@@ -13,7 +13,7 @@ namespace Game.Game
     {
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private readonly EcsFilter<ConditionUnitC, UnitEffectsC, StunC> _effUnitF = default;
+        private readonly EcsFilter<ConditionC, UnitEffectsC, StunC> _effUnitF = default;
 
         private readonly EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
         private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
@@ -394,9 +394,9 @@ namespace Game.Game
                 foreach (var item in _effUnitF.Get2(idx_0).Effects) objs.Add(item.Value);
                 objs.Add(_statUnitF.Get3(idx_0).Water);
 
-                objs.Add(_twUnitF.Get1(idx_0).TW);
-                objs.Add(_twUnitF.Get1(idx_0).Level);
-                objs.Add(_twUnitF.Get1(idx_0).ShieldProt);
+                objs.Add(EntityPool.TWCellC<ToolWeaponC>(idx_0).TW);
+                objs.Add(EntityPool.TWCellC<LevelC>(idx_0).Level);
+                objs.Add(EntityPool.TWCellC<ShieldC>(idx_0).Protection);
 
                 objs.Add(_effUnitF.Get3(idx_0).IsStunned);
                 objs.Add(_effUnitF.Get3(idx_0).StepsInStun);
@@ -427,7 +427,7 @@ namespace Game.Game
                     objs.Add(item_0.Value);
 
 
-                foreach (var item_0 in EntityPool.GetTrailCellC<TrailC>(idx_0).Health)
+                foreach (var item_0 in EntityPool.TrailCellC<TrailC>(idx_0).Health)
                     objs.Add(item_0.Value);
 
 
@@ -530,9 +530,9 @@ namespace Game.Game
                 foreach (var item in _effUnitF.Get2(idx_0).Effects) _effUnitF.Get2(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
                 _statUnitF.Get3(idx_0).Sync((int)objects[_idx_cur++]);
 
-                _twUnitF.Get1(idx_0).TW = (TWTypes)objects[_idx_cur++];
-                _twUnitF.Get1(idx_0).Level = (LevelTypes)objects[_idx_cur++];
-                _twUnitF.Get1(idx_0).SyncShield((int)objects[_idx_cur++]);
+                EntityPool.TWCellC<ToolWeaponC>(idx_0).Sync((TWTypes)objects[_idx_cur++]);
+                EntityPool.TWCellC<LevelC>(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
+                EntityPool.TWCellC<ShieldC>(idx_0).Sync((int)objects[_idx_cur++]);
 
                 
                 _effUnitF.Get3(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
@@ -564,7 +564,7 @@ namespace Game.Game
 
 
 
-                ref var trail_0 = ref EntityPool.GetTrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
                 foreach (var item_0 in trail_0.Health)
                     trail_0.SyncTrail(item_0.Key, (int)objects[_idx_cur++]);
 
@@ -645,12 +645,7 @@ namespace Game.Game
         [PunRPC]
         private void UpdateDataAndView()
         {
-            DataSC.Run(DataSystTypes.GetAvailCells);
-            DataSC.Run(DataSystTypes.GetAbilities);
-
-            //ViewDataSC.Run(ViewDataSTypes.RotateAll);
-            //ViewDataSC.Run(ViewDataSTypes.SyncCanvas);
-            //ViewDataSC.Run(ViewDataSTypes.SyncCells);
+            DataSC.Run(DataSystTypes.RunAfterDoing);
         }
 
         #endregion

@@ -19,6 +19,10 @@ namespace Game.Game
 
             _owner = playerType;
         }
+        public void Set(OwnerC ownerC)
+        {
+            _owner = ownerC._owner;
+        }
         public void DefOwner()
         {
             if (_owner == default) throw new Exception();

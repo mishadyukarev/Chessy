@@ -3,7 +3,7 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class AbilSyncMasSys : IEcsRunSystem
+    public sealed class AbilSyncMS : IEcsRunSystem
     {
         private EcsFilter<UnitC, OwnerC> _unitF = default;
         private EcsFilter<UniqAbilC> _uniqUnitF = default;

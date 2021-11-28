@@ -59,7 +59,7 @@ namespace Game.Game
 
                                 build_0.Remove(ownBuild_0.Owner);
 
-                                EntityPool.GetTrailCellC<TrailC>(idx_0).ResetAll();
+                                EntityPool.TrailCellC<TrailC>(idx_0).ResetAll();
 
                                 if (fire_0.Have)
                                 {

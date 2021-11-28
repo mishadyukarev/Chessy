@@ -13,7 +13,7 @@ namespace Game.Game
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
+        private EcsFilter<ConditionC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
         private EcsFilter<CooldownUniqC> _unitUniqF = default;
 
         public void Run()
@@ -53,7 +53,7 @@ namespace Game.Game
                 ref var ownBuil_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
                 ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
                 ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
-                ref var trail_0 = ref EntityPool.GetTrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);

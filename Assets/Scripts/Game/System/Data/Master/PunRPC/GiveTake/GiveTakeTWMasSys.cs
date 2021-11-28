@@ -25,7 +25,9 @@ namespace Game.Game
 
                 ref var stepUnit_0 = ref _statUnitF.Get2(idx_0);
 
-                ref var twUnit_0 = ref _twUnitF.Get1(idx_0);
+                ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
+                ref var twShield_0 = ref EntityPool.TWCellC<ShieldC>(idx_0);
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
@@ -33,10 +35,10 @@ namespace Game.Game
                     if (stepUnit_0.HaveMinSteps)
                     {
 
-                        if (twUnit_0.HaveTW)
+                        if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(twUnit_0.TW, twUnit_0.Level, ownUnit_0.Owner);
-                            twUnit_0.TW = default;
+                            InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                            tw_0.Reset();
 
                             stepUnit_0.TakeSteps();
 
@@ -48,9 +50,9 @@ namespace Game.Game
                         {
                             InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Owner);
 
-                            twUnit_0.TW = tWTypeForGive;
-                            twUnit_0.Level = levelTW;
-                            if (twUnit_0.Is(TWTypes.Shield)) twUnit_0.SetShieldProtect(levelTW);
+                            tw_0.Set(tWTypeForGive);
+                            twLevel_0.Set(levelTW);
+                            if (tw_0.Is(TWTypes.Shield)) twShield_0.SetShieldProtect(levelTW);
 
                             stepUnit_0.TakeSteps();
 
@@ -63,8 +65,8 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW);
 
-                                twUnit_0.TW = tWTypeForGive;
-                                twUnit_0.Level = levelTW;
+                                tw_0.Set(tWTypeForGive);
+                                twLevel_0.Set(levelTW);
 
                                 stepUnit_0.TakeSteps();
 
@@ -82,8 +84,8 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW);
 
-                                twUnit_0.TW = tWTypeForGive;
-                                twUnit_0.Level = levelTW;
+                                tw_0.Set(tWTypeForGive);
+                                twLevel_0.Set(levelTW);
 
                                 stepUnit_0.TakeSteps();
 
@@ -101,9 +103,9 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW);
 
-                                twUnit_0.TW = tWTypeForGive;
-                                twUnit_0.Level = levelTW;
-                                twUnit_0.SetShieldProtect(levelTW);
+                                tw_0.Set(tWTypeForGive);
+                                twLevel_0.Set(levelTW);
+                                twShield_0.SetShieldProtect(levelTW);
 
                                 stepUnit_0.TakeSteps();
 

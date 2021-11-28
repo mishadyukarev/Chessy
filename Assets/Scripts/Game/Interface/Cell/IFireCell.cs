@@ -3,8 +3,5 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public interface IElseCellV
-    {
-
-    }
+    public interface IFireCell { }
 }

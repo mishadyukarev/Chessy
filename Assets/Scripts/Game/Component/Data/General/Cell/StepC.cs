@@ -46,7 +46,12 @@ namespace Game.Game
             if (IsMinusSteps) DefSteps();
         }
         public void DefSteps() => _steps = 0;
+
         public void SetMaxSteps(UnitTypes unit, bool haveEff, float upgPerc) => _steps = MaxSteps(unit, haveEff, upgPerc);
+        public void Set(StepC stepC)
+        {
+            _steps = stepC._steps;
+        }
 
         public void TakeStepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, TrailC trailC) => _steps -= StepsForDoing(cellEnvC, dir_cur, trailC);
 

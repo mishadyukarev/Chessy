@@ -38,7 +38,7 @@ namespace Game.Game
                         {
                             var idx_1 = EntityPool.IdxCell(item_1.Value);
 
-                            ref var trail_1 = ref EntityPool.GetTrailCellC<TrailC>(idx_1);
+                            ref var trail_1 = ref EntityPool.TrailCellC<TrailC>(idx_1);
 
                             ref var unitC_1 = ref _unitF.Get1(idx_1);
                             ref var envC_1 = ref _envF.Get1(idx_1);

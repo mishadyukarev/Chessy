@@ -10,6 +10,8 @@ namespace Game.Game
         public bool Have => _water > 0;
         public bool IsMinus => _water < 0;
         public bool NeedWater => _water <= 100 * 0.4f;
+        public int MaxWater(float upgPerc) => (int)(100 + 100 * upgPerc);
+        public bool HaveMaxWater(float upgPerc) => _water >= MaxWater(upgPerc);
 
 
 
@@ -24,10 +26,13 @@ namespace Game.Game
             _water -= taking;
             if (IsMinus) _water = 0;
         }
-
-        public int MaxWater(float upgPerc) => (int)(100 + 100 * upgPerc);
-        public bool HaveMaxWater(float upgPerc) => _water >= MaxWater(upgPerc);
+        
         public void SetMaxWater(float upgPerc) => _water = MaxWater(upgPerc);
+        public void Set(WaterC waterC)
+        {
+            _water = waterC._water;
+        }
+
         public void TakeWater() => TakeWater((int)(100 * 0.15f));
 
         public void Sync(int waterAmount) => _water = waterAmount;

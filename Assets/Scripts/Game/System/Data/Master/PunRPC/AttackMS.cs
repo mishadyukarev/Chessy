@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Game.Common;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -8,8 +8,7 @@ namespace Game.Game
     {
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
-        private readonly EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
-        private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
+        private readonly EcsFilter<ConditionC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
         private readonly EcsFilter<CooldownUniqC> _uniqUnitF = default;
 
         private readonly EcsFilter<EnvC> _envF = default;
@@ -29,13 +28,14 @@ namespace Game.Game
             ref var hpUnit_from = ref _statUnitF.Get1(idx_from);
             ref var damUnit_from = ref _statUnitF.Get2(idx_from);
             ref var stepUnit_from = ref _statUnitF.Get3(idx_from);
-            ref var waterUnit_from = ref _statUnitF.Get4(idx_from);  
+            ref var waterUnit_from = ref _statUnitF.Get4(idx_from);
 
             ref var condUnit_from = ref _effUnitF.Get1(idx_from);
             ref var moveCond_from = ref _effUnitF.Get2(idx_from);
             ref var effUnit_from = ref _effUnitF.Get3(idx_from);
 
-            ref var twUnit_from = ref _twUnitF.Get1(idx_from);
+            ref var tw_from = ref EntityPool.TWCellC<ToolWeaponC>(idx_from);
+            ref var twShield_from = ref EntityPool.TWCellC<ShieldC>(idx_from);
 
 
 
@@ -53,8 +53,9 @@ namespace Game.Game
             ref var effUnit_to = ref _effUnitF.Get3(idx_to);
             ref var stun_to = ref _effUnitF.Get4(idx_to);
 
-            ref var twUnit_to = ref _twUnitF.Get1(idx_to);
-            
+            ref var tw_to = ref EntityPool.TWCellC<ToolWeaponC>(idx_to);
+            ref var twShield_to = ref EntityPool.TWCellC<ShieldC>(idx_to);
+
             #endregion
 
 
@@ -62,7 +63,7 @@ namespace Game.Game
             ref var build_from = ref EntityPool.BuildCellC<BuildC>(idx_from);
             ref var ownBuild_from = ref EntityPool.BuildCellC<OwnerC>(idx_from);
             ref var env_from = ref _envF.Get1(idx_from);
-            ref var trail_from = ref EntityPool.GetTrailCellC<TrailC>(idx_from);
+            ref var trail_from = ref EntityPool.TrailCellC<TrailC>(idx_from);
             ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
 
 
@@ -70,7 +71,7 @@ namespace Game.Game
             ref var build_to = ref EntityPool.BuildCellC<BuildC>(idx_to);
             ref var ownBuild_to = ref EntityPool.BuildCellC<OwnerC>(idx_to);
             ref var env_to = ref _envF.Get1(idx_to);
-            ref var trail_to = ref EntityPool.GetTrailCellC<TrailC>(idx_to);
+            ref var trail_to = ref EntityPool.TrailCellC<TrailC>(idx_to);
             ref var cdUniq_to = ref _uniqUnitF.Get1(idx_to);
 
 
@@ -80,14 +81,14 @@ namespace Game.Game
             if (simpUniqueType != default)
             {
                 stepUnit_from.DefSteps();
-                if(condUnit_from.HaveCondition) condUnit_from.Reset();
+                if (condUnit_from.HaveCondition) condUnit_from.Reset();
 
 
                 float powerDam_from = 0;
                 float powerDam_to = 0;
 
 
-                powerDam_from += damUnit_from.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnit_from, effUnit_from, simpUniqueType, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner));
+                powerDam_from += damUnit_from.DamageAttack(unit_from.Unit, levUnit_from.Level, tw_from, effUnit_from, simpUniqueType, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner));
 
                 if (unit_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
@@ -95,7 +96,7 @@ namespace Game.Game
 
 
 
-                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner), build_to.Build, env_to.Envronments);   
+                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, tw_to, effUnit_to, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner), build_to.Build, env_to.Envronments);
 
 
                 float min_limit = 0;
@@ -148,9 +149,10 @@ namespace Game.Game
 
                 if (unit_from.IsMelee)
                 {
-                    if (twUnit_from.Is(TWTypes.Shield))
+                    if (tw_from.Is(TWTypes.Shield))
                     {
-                        twUnit_from.TakeShieldProtect();
+                        twShield_from.TakeShieldProtect();
+                        if (!twShield_from.Have) tw_from.Reset();
                     }
                     else if (minus_from > 0)
                     {
@@ -160,9 +162,10 @@ namespace Game.Game
                 }
 
 
-                if (twUnit_to.Is(TWTypes.Shield))
+                if (tw_to.Is(TWTypes.Shield))
                 {
-                    twUnit_to.TakeShieldProtect();
+                    twShield_to.TakeShieldProtect();
+                    if (!twShield_to.Have) tw_to.Reset();
                 }
                 else if (minus_to > 0)
                 {
@@ -185,34 +188,42 @@ namespace Game.Game
                         }
                         else
                         {
-                            unit_to = unit_from;
-                            levUnit_to.SetLevel(levUnit_from.Level);
-                            hpUnit_to = hpUnit_from;
-                            stepUnit_to = stepUnit_from;
-                            condUnit_to = condUnit_from;
-                            twUnit_to = twUnit_from;
-                            ownUnit_to = ownUnit_from;
-                            waterUnit_to = waterUnit_from;
-                            moveCond_to.ResetAll();
-                            stun_to.Reset();
-                            cdUniq_to.Replace(cdUniq_from);
-                            if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner));
+                            var dir = CellSpaceC.GetDirect(CellC<XyC>(idx_from).Xy, CellC<XyC>(idx_to).Xy);
+                            unit_to.Shift(idx_from, dir);
 
-                            var dir = CellSpaceC.GetDirect(EntityPool.CellC<XyC>(idx_from).Xy, EntityPool.CellC<XyC>(idx_to).Xy);
-                            trail_to.TrySetNewTrail(dir.Invert(), env_to);
-                            trail_from.TrySetNewTrail(dir, env_from);
+                            //unit_to.SetNew(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
+                            //ownUnit_to.SetOwner(ownUnit_from.Owner);
+                            //levUnit_to.Set(levUnit_from.Level);
+
+                            //hpUnit_to.Set(hpUnit_from);
+                            //stepUnit_to.Set(stepUnit_from);
+                            //condUnit_to.Set(condUnit_from);
+
+                            //tw_to.Set(tw_from);
+                            //TWCellC<LevelC>(idx_to).Set(TWCellC<LevelC>(idx_from));
+                            //TWCellC<ShieldC>(idx_to).Set(TWCellC<ShieldC>(idx_from));
+
+                            //waterUnit_to = waterUnit_from;
+                            //moveCond_to.ResetAll();
+                            //stun_to.Reset();
+                            //cdUniq_to.Replace(cdUniq_from);
+                            //if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner));
+
+                            
+                            //trail_to.TrySetNewTrail(dir.Invert(), env_to);
+                            //trail_from.TrySetNewTrail(dir, env_from);
 
 
-                            if (build_to.Is(BuildTypes.Camp))
-                            {
-                                if (!ownBuild_to.Is(ownUnit_to.Owner))
-                                {
-                                    build_to.Remove(ownBuild_to.Owner);
-                                }
-                            }
+                            //if (build_to.Is(BuildTypes.Camp))
+                            //{
+                            //    if (!ownBuild_to.Is(ownUnit_to.Owner))
+                            //    {
+                            //        build_to.Remove(ownBuild_to.Owner);
+                            //    }
+                            //}
 
 
-                            unit_from.Clean(levUnit_from.Level, ownUnit_from.Owner);
+                            //unit_from.Clean(levUnit_from.Level, ownUnit_from.Owner);
                         }
                     }
                 }

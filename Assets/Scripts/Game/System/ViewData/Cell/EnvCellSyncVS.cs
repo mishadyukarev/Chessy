@@ -3,17 +3,14 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class SyncCellEnvirsVisSystem : IEcsRunSystem
+    public sealed class EnvCellSyncVS : IEcsRunSystem
     {
-        private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<EnvVC> _envViewF = default;
-
         public void Run()
         {
-            foreach (var idx in _envViewF)
+            foreach (var idx in EntityPool.Idxs)
             {
-                ref var envD_0 = ref _envF.Get1(idx);
-                ref var envV_0 = ref _envViewF.Get1(idx);
+                ref var envD_0 = ref EntityPool.EnvCellC<EnvC>(idx);
+                ref var envV_0 = ref EntityVPool.EnvCellVC<EnvVC>(idx);
 
                 for (var env_0 = EnvTypes.First; env_0 < EnvTypes.End; env_0++)
                 {

@@ -7,8 +7,7 @@
         RunUpdate,
         RunFixedUpdate,
 
-        GetAvailCells,
-        GetAbilities,
+        RunAfterDoing,
 
         End
     }

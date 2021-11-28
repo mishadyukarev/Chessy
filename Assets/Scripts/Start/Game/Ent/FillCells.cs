@@ -15,7 +15,7 @@ namespace Game.Game
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
         private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
-        private readonly EcsFilter<ConditionUnitC> _effUnitF = default;
+        private readonly EcsFilter<ConditionC> _effUnitF = default;
 
         public void Init()
         {
@@ -147,15 +147,14 @@ namespace Game.Game
                     ref var env_0 = ref _envF.Get1(idx_0);
 
                     ref var unit_0 = ref EntityPool.UnitCellC<UnitC>(idx_0);
-
                     ref var levUnit_0 = ref _unitF.Get2(idx_0);
                     ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-
                     ref var hpUnitC_0 = ref _statUnitF.Get1(idx_0);
-
                     ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
-                    ref var twUnit_0 = ref _twUnitF.Get1(idx_0);
                     ref var thirUnitC_0 = ref _statUnitF.Get4(idx_0);
+                    ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
+                    ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
+                    ref var twShield_0 = ref EntityPool.TWCellC<ShieldC>(idx_0);
 
                     ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
                     ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
@@ -173,7 +172,7 @@ namespace Game.Game
 
 
 
-                        levUnit_0.SetLevel(LevelTypes.First);
+                        levUnit_0.Set(LevelTypes.First);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
                         unit_0.SetNew(UnitTypes.King, levUnit_0.Level, ownUnit_0.Owner);
 
@@ -209,17 +208,17 @@ namespace Game.Game
 
                         if (rand >= 50)
                         {
-                            twUnit_0.TW = TWTypes.Sword;
-                            twUnit_0.Level = LevelTypes.Second;
+                            tw_0.Set(TWTypes.Sword);
+                            twLevel_0.Set(LevelTypes.Second);
                         }
                         else
                         {
-                            twUnit_0.TW = TWTypes.Shield;
-                            twUnit_0.Level = LevelTypes.First;
-                            twUnit_0.SetShieldProtect(LevelTypes.First);
+                            tw_0.Set(TWTypes.Shield);
+                            twLevel_0.Set(LevelTypes.First);
+                            twShield_0.SetShieldProtect(LevelTypes.First);
                         }
 
-                        levUnit_0.SetLevel(LevelTypes.First);
+                        levUnit_0.Set(LevelTypes.First);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
                         unit_0.SetNew(UnitTypes.Pawn, levUnit_0.Level, ownUnit_0.Owner);
 

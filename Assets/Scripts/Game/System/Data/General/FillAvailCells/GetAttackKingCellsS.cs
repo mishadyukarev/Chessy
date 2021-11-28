@@ -45,7 +45,7 @@ namespace Game.Game
                             ref var ownUnit_1 = ref _unitF.Get3(idx_1);
 
                             ref var env_1 = ref EntityPool.EnvCellC<EnvC>(idx_1);
-                            ref var trail_1 = ref EntityPool.GetTrailCellC<TrailC>(idx_1);
+                            ref var trail_1 = ref EntityPool.TrailCellC<TrailC>(idx_1);
 
 
                             if (!Env(idx_1).Have(EnvTypes.Mountain))

@@ -4,7 +4,6 @@ namespace Game.Game
 {
     public sealed class SupportSyncVS : IEcsRunSystem
     {
-        private EcsFilter<SupportVC> _supVF = default;
         private EcsFilter<EnvC> _envF = default;
         private EcsFilter<FireC> _fireF = default;
 
@@ -13,14 +12,14 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in _supVF)
+            foreach (byte idx_0 in EntityPool.Idxs)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var lev_0 = ref _unitF.Get2(idx_0);
                 ref var own_0 = ref _unitF.Get3(idx_0);
                 ref var vis_0 = ref _unitF.Get4(idx_0);
 
-                ref var supV_0 = ref _supVF.Get1(idx_0);
+                ref var supV_0 = ref EntityVPool.ElseCellVC<SupportVC>(idx_0);
 
                 ref var env_0 = ref _envF.Get1(idx_0);
                 ref var fire_0 = ref _fireF.Get1(idx_0);
@@ -101,7 +100,7 @@ namespace Game.Game
                 {
                     foreach (var idx_0 in ArsonCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
                     {
-                        _supVF.Get1(idx_0).EnableSR(SupVisTypes.FireSelector);
+                        EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
                     }
                 }
 
@@ -109,7 +108,7 @@ namespace Game.Game
                 {
                     foreach (var item in WindC.Directs)
                     {
-                        _supVF.Get1(item.Value).EnableSR(SupVisTypes.Spawn);
+                        EntityVPool.ElseCellVC<SupportVC>(item.Value).EnableSR(SupVisTypes.Spawn);
                     }
                 }
             }
@@ -118,7 +117,7 @@ namespace Game.Game
             {
                 foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.CurPlayerI))
                 {
-                    _supVF.Get1(idx_0).EnableSR(SupVisTypes.Spawn);
+                    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.Spawn);
                 }
             }
 
@@ -126,17 +125,17 @@ namespace Game.Game
             {
                 foreach (var idx_0 in ShiftCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
                 {
-                    _supVF.Get1(idx_0).EnableSR(SupVisTypes.Shift);
+                    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.Shift);
                 }
 
                 foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Simple, SelIdx.Idx))
                 {
-                    _supVF.Get1(idx_0).EnableSR(SupVisTypes.SimpleAttack);
+                    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.SimpleAttack);
                 }
 
                 foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelIdx.Idx))
                 {
-                    _supVF.Get1(idx_0).EnableSR(SupVisTypes.UniqueAttack);
+                    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.UniqueAttack);
                 }
             }
         }

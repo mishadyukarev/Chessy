@@ -5,6 +5,7 @@ namespace Game.Game
     public struct HpC : IUnitCell
     {
         private int _hp;
+
         public const int MAX_HP = 100;
         public const int MIN_HP = 0;
 
@@ -44,6 +45,10 @@ namespace Game.Game
 
         public void SetMaxHp() => _hp = MAX_HP;
         public int SetMinHp() => _hp = MIN_HP;
+        public void Set(HpC hpC)
+        {
+            _hp = hpC._hp;
+        }
 
         public void TakeHpThirsty(UnitTypes unitType)
         {

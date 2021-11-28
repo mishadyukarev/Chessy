@@ -6,7 +6,7 @@ namespace Game.Game
     public class ProtectUISys : IEcsRunSystem
     {
         private EcsFilter<UnitC, OwnerC> _unitF = default;
-        private EcsFilter<ConditionUnitC> _effUnitF = default;
+        private EcsFilter<ConditionC> _effUnitF = default;
 
         public void Run()
         {

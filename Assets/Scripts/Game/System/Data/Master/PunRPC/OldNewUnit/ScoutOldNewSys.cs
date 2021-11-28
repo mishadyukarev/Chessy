@@ -7,8 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
-        private EcsFilter<ToolWeaponC> _twUnitF = default;
+        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
 
         public void Run()
         {
@@ -27,24 +26,24 @@ namespace Game.Game
             ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
             ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
 
-            ref var twUnitC_0 = ref _twUnitF.Get1(idx_0);
+            ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
+            ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
 
 
             if (hpUnit_0.HaveMaxHp)
             {
                 if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
                 {
-                    InvUnitsC.Take(ownUnit_0.Owner, UnitTypes.Scout, LevelTypes.First);
-                    unit_0.Clean(levUnit_0.Level, ownUnit_0.Owner);
+                    unit_0.CreateScout();
 
-                    if (twUnitC_0.HaveTW)
+                    if (tw_0.HaveTW)
                     {
-                        InvTWC.Add(twUnitC_0.TW, twUnitC_0.Level, ownUnit_0.Owner);
-                        twUnitC_0.TW = default;
+                        InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                        tw_0.Reset();
                     }
 
 
-                    levUnit_0.SetLevel(LevelTypes.First);
+                    levUnit_0.Set(LevelTypes.First);
                     hpUnit_0.SetMaxHp();
                     stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct RiverVC : IElseCellV
+    public struct RiverVC : IRiverCellV
     {
         private Transform _parent_Trans;
         private Dictionary<DirectTypes, SpriteRenderer> _sprites;

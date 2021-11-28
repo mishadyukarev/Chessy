@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct ConditionUnitC : IUnitCell, IDamageUnit
+    public struct ConditionC : IUnitCell, IDamageUnit
     {
         private CondUnitTypes _condition;
 
@@ -25,6 +25,11 @@ namespace Game.Game
 
             _condition = cond;
         }
+        public void Set(ConditionC condC)
+        {
+            _condition = condC._condition;
+        }
+
         public void Reset()
         {
             if (_condition == default) throw new Exception();

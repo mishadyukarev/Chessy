@@ -6,7 +6,7 @@ namespace Game.Game
 {
     public sealed class RightUnitEventUISys : IEcsInitSystem
     {
-        private EcsFilter<ConditionUnitC> _effUnitF = default;
+        private EcsFilter<ConditionC> _effUnitF = default;
         private EcsFilter<UniqAbilC, CooldownUniqC> _uniqAbilF = default;
 
         public void Init()

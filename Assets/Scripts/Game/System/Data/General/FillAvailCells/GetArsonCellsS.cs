@@ -23,7 +23,7 @@ namespace Game.Game
                             var idx_1 = EntityPool.IdxCell(xy_1);
 
                             ref var env_1 = ref EntityPool.EnvCellC<EnvC>(idx_1);
-                            ref var fire_1 = ref EntityPool.ElseCellC<FireC>(idx_1);
+                            ref var fire_1 = ref EntityPool.FireCellC<FireC>(idx_1);
 
                             if (!fire_1.Have)
                             {

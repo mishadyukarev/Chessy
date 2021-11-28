@@ -20,7 +20,7 @@ namespace Game.Game
 
             return (int)powerDamege;
         }
-        public int DamageOnCell(UnitTypes unit, LevelTypes level, ConditionUnitC condUnitC, ToolWeaponC tWC, UnitEffectsC effectsC, float upgPerc, BuildTypes build, Dictionary<EnvTypes, bool> envrs)
+        public int DamageOnCell(UnitTypes unit, LevelTypes level, ConditionC condUnitC, ToolWeaponC tWC, UnitEffectsC effectsC, float upgPerc, BuildTypes build, Dictionary<EnvTypes, bool> envrs)
         {
             float powerDamege = DamageAttack(unit, level, tWC, effectsC, AttackTypes.Simple, upgPerc);
 

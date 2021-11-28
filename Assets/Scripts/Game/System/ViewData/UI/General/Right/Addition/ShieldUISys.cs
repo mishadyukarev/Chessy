@@ -4,17 +4,16 @@ namespace Game.Game
 {
     public sealed class ShieldUISys : IEcsRunSystem
     {
-        private EcsFilter<ToolWeaponC> _twUnitF = default;
-
         public void Run()
         {
-            ref var selTwUnitC = ref _twUnitF.Get1(SelIdx.Idx);
+            ref var tw_sel = ref EntityPool.TWCellC<ToolWeaponC>(SelIdx.Idx);
+            ref var twLevel_sel = ref EntityPool.TWCellC<LevelC>(SelIdx.Idx);
 
             ExtraTWZoneUIC.DisableAll();
 
-            if (selTwUnitC.HaveTW)
+            if (tw_sel.HaveTW)
             {
-                ExtraTWZoneUIC.Toggle(selTwUnitC.TW, selTwUnitC.Level, true);
+                ExtraTWZoneUIC.Toggle(tw_sel.TW, twLevel_sel.Level, true);
             }
         }
     }

@@ -74,7 +74,7 @@ namespace Game.Game
 
 
         
-        public static void Set(UnitTypes unit, LevelTypes lev, PlayerTypes player, byte idx, bool have)
+        internal static void Set(UnitTypes unit, LevelTypes lev, PlayerTypes player, byte idx, bool have)
         {
             var key = Key(unit, lev, player, idx);
 

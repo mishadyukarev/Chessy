@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public enum CellTypes
     {
@@ -11,9 +8,13 @@ namespace Game.Game
         First = Cell,
 
         Unit,
+        ToolWeapon,
         Build,
         Env,
         Trail,
+        Fire,
+        Cloud,
+        River,
 
         Else,
 

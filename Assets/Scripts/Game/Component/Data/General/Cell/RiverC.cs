@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct RiverC : IElseCell
+    public struct RiverC : IRiverCell
     {
         private RiverTypes _river;
         private List<DirectTypes> _directs;

@@ -2,37 +2,30 @@
 
 namespace Game.Game
 {
-    public struct ToolWeaponC : IUnitCell
+    public struct ToolWeaponC : ITWCellE
     {
-        public TWTypes TW;
+        TWTypes _tw;
+
+        public TWTypes TW => _tw;
         public bool Is(TWTypes tW) => TW == tW;
         public bool HaveTW => TW != default;
 
 
-        public LevelTypes Level;
-        public bool Is(LevelTypes level) => Level == level;
-
-
-        private int _shieldProt;
-        public int ShieldProt => _shieldProt;
-        public void SetShieldProtect(LevelTypes levelTWType)
+        public void Set(TWTypes tw)
         {
-            switch (levelTWType)
-            {
-                case LevelTypes.None: throw new Exception();
-                case LevelTypes.First: _shieldProt = 1; return;
-                case LevelTypes.Second: _shieldProt = 3; return;
-                default: throw new Exception();
-            }
+            _tw = tw;
         }
-        public void TakeShieldProtect(int taking = 1)
+        public void Set(ToolWeaponC twC)
         {
-            _shieldProt -= taking;
-            if (ShieldProt <= 0)
-            {
-                TW = TWTypes.None;
-            }
+            _tw = twC.TW;
         }
-        public void SyncShield(int shieldProt) => _shieldProt = shieldProt;
+        public void Reset()
+        {
+            _tw = default;
+        }
+        public void Sync(TWTypes tw)
+        {
+            _tw = tw;
+        }
     }
 }

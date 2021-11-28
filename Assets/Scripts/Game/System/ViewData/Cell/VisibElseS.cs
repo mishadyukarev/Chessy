@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class VisibElseSys : IEcsRunSystem
+    public sealed class VisibElseS : IEcsRunSystem
     {
         public void Run()
         {
@@ -90,11 +90,11 @@ namespace Game.Game
                 }
 
 
-                ref var trail_0 = ref EntityPool.GetTrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
 
                 if (trail_0.HaveAnyTrail)
                 {
-                    ref var trailVis_0 = ref EntityPool.GetTrailCellC<VisibleC>(idx_0);
+                    ref var trailVis_0 = ref EntityPool.TrailCellC<VisibleC>(idx_0);
 
                     var list = CellSpaceC.XyAround(xy);
 

@@ -2,6 +2,7 @@
 using Photon.Pun;
 using Game.Common;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -11,7 +12,6 @@ namespace Game.Game
         private EcsFilter<FireC> _cellFireFilter = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
         {
@@ -22,13 +22,15 @@ namespace Game.Game
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-                ref var tw_0 = ref _twUnitF.Get1(idx_0);
+                ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
+
 
                 ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
                 ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
                 ref var curFireCom = ref _cellFireFilter.Get1(idx_0);
-                ref var trail_0 = ref EntityPool.GetTrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
 
 
                 curFireCom.Disable();
@@ -44,12 +46,11 @@ namespace Game.Game
                         {
                             if (tw_0.HaveTW)
                             {
-                                InvTWC.Add(tw_0.TW, tw_0.Level, ownUnit_0.Owner);
-                                tw_0.TW = default;
+                                InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                                tw_0.Reset();
                             }
 
-                            InvUnitsC.Add(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
-                            unit_0.Clean(levUnit_0.Level, ownUnit_0.Owner);
+                            unit_0.AddToInventor();
                         }
                     }
                     else
@@ -57,12 +58,11 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(tw_0.TW, tw_0.Level, ownUnit_0.Owner);
-                            tw_0.TW = default;
+                            InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                            tw_0.Reset();
                         }
 
-                        InvUnitsC.Add(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
-                        unit_0.Clean(levUnit_0.Level, ownUnit_0.Owner);
+                        unit_0.AddToInventor();
                     }
                 }
 

@@ -37,13 +37,13 @@ namespace Game.Game
             foreach (var idx_0 in WhereUnitsC.Idxs(UnitTypes.Pawn, LevelTypes.First, curPlayer))
             {
                 if (EntityPool.EnvCellC<EnvC>(idx_0).Have(EnvTypes.AdultForest))
-                    if (EntityPool.UnitCellC<ConditionUnitC>(idx_0).Is(CondUnitTypes.Relaxed))
+                    if (EntityPool.UnitCellC<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 1;
             }
             foreach (var idx_0 in WhereUnitsC.Idxs(UnitTypes.Pawn, LevelTypes.Second, curPlayer))
             {
                 if (EntityPool.EnvCellC<EnvC>(idx_0).Have(EnvTypes.AdultForest))
-                    if (EntityPool.UnitCellC<ConditionUnitC>(idx_0).Is(CondUnitTypes.Relaxed))
+                    if (EntityPool.UnitCellC<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 2;
             }
             amountAddWood += amountWoodcutter * extOneWoodcut;

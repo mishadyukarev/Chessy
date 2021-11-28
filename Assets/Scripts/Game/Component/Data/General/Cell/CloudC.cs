@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct CloudC : IElseCell
+    public struct CloudC : ICloudCell
     {
         public bool Have { get; set; }
 

@@ -7,7 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, OwnerC> _mainUnitF;
         private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
         private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
 
         public void Run()

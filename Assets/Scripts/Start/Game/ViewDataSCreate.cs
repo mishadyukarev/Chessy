@@ -51,14 +51,13 @@ namespace Game.Game
 
 
             var syncCell = new EcsSystems(gameWorld)
-                .Add(new VisibElseSys())
                 .Add(new SyncCellUnitViewSys())
                 .Add(new UnitStatCellSyncS())
                 .Add(new BuildCellSyncVS())
-                .Add(new SyncCellEnvirsVisSystem())
-                .Add(new CellEffsVisSyncS())
-                .Add(new CellWeatherViewSys())
-                .Add(new CellRiverViewSys())
+                .Add(new EnvCellSyncVS())
+                .Add(new FireCellSyncVS())
+                .Add(new CloudCellSyncVS())
+                .Add(new RiverCellSyncVS())
                 .Add(new CellBarsEnvSystem())
                 .Add(new SyncCellTrailSys())
                 .Add(new CellStunViewS())
@@ -108,7 +107,7 @@ namespace Game.Game
                 .Add(new HeroesSyncUISys());
 
             var rotateAll = new EcsSystems(gameWorld)
-                .Add(new RotateAllSys());
+                .Add(new RotateAllVS());
 
             var runFixedUpd = new EcsSystems(gameWorld)
                 .Add(syncCell)

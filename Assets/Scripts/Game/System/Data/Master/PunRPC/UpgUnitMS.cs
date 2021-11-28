@@ -36,7 +36,7 @@ namespace Game.Game
                     {
                         InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                        levUnit_0.SetLevel(LevelTypes.Second);
+                        levUnit_0.Set(LevelTypes.Second);
 
                         stepUnit_0.TakeSteps();
 
