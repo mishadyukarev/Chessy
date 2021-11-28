@@ -43,7 +43,7 @@ namespace Game.Game
             else throw new Exception("Hp <= 0");
         }
 
-        public void SetMaxHp() => _hp = MAX_HP;
+        public void SetMax() => _hp = MAX_HP;
         public int SetMinHp() => _hp = MIN_HP;
         public void Set(HpC hpC)
         {

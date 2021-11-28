@@ -8,7 +8,7 @@ namespace Game.Game
         {
             foreach (var idx in EntityPool.Idxs)
             {
-                if (EntityPool.FireCellC<FireC>(idx).Have)
+                if (EntityPool.Fire<FireC>(idx).Have)
                 {
                     EntityVPool.FireCellVC<FireVC>(idx).EnableSR();
                 }

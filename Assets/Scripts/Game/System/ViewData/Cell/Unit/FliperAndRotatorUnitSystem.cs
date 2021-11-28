@@ -9,9 +9,9 @@ namespace Game.Game
         {
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                ref var unit_0 = ref EntityPool.UnitCellC<UnitC>(idx_0);
-                ref var ownUnit_0 = ref EntityPool.UnitCellC<OwnerC>(idx_0);
-                ref var corner_0 = ref EntityPool.UnitCellC<CornerArcherC>(idx_0);
+                ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref EntityPool.Unit<OwnerC>(idx_0);
+                ref var corner_0 = ref EntityPool.Unit<CornerArcherC>(idx_0);
 
                 ref var main_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
                 ref var extra_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);

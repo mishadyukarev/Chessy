@@ -20,7 +20,7 @@ namespace Game.Game
                 .Add(new FireUpdMasSys())
                 .Add(new CloudUpdMS())
                 .Add(new ThirstyUpdMS())
-                .Add(new RelaxUpdMasSys())
+                .Add(new RelaxUpdMS())
                 .Add(new HungryUpdMS());
 
             var truceSystems = new EcsSystems(gameWorld)
@@ -35,7 +35,7 @@ namespace Game.Game
             var rpcSystems = new Dictionary<RpcMasterTypes, EcsSystems>();
             rpcSystems.Add(RpcMasterTypes.Build, new EcsSystems(gameWorld)
                 .Add(new BuildMineMastSys())
-                .Add(new BuildFarmMastSys())
+                .Add(new BuildFarmMS())
                 .Add(new BuildCityMastSys()));
             rpcSystems.Add(RpcMasterTypes.DestroyBuild, new EcsSystems(gameWorld).Add(new DestroyMS()));
             rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMS()));

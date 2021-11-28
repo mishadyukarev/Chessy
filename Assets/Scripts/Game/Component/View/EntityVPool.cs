@@ -1,4 +1,5 @@
-﻿using Leopotam.Ecs;
+﻿using Game.Common;
+using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Game.Game
     {
         readonly static Dictionary<CellTypes, EcsEntity[]> _cells;
 
-        public static ref T CellVC<T>(in byte idx) where T : struct, ICellVE => ref _cells[CellTypes.Cell][idx].Get<T>();
+        public static ref T Cell<T>(in byte idx) where T : struct, ICellVE => ref _cells[CellTypes.Cell][idx].Get<T>();
         public static ref T UnitCellVC<T>(in byte idx) where T : struct, IUnitCellV => ref _cells[CellTypes.Unit][idx].Get<T>();
         public static ref T BuildCellVC<T>(in byte idx) where T : struct, IBuildCellV => ref _cells[CellTypes.Build][idx].Get<T>();
         public static ref T EnvCellVC<T>(in byte idx) where T : struct, IEnvCellV => ref _cells[CellTypes.Env][idx].Get<T>();
@@ -27,8 +28,44 @@ namespace Game.Game
                 _cells.Add(type, new EcsEntity[CellValuesC.AMOUNT_ALL_CELLS]);
             }
         }
-        public EntityVPool(in EcsWorld curGameW, in GameObject[] cells)
+        public EntityVPool(in EcsWorld curGameW)
         {
+            var parCells = new GameObject("Cells");
+            GenerZoneVC.Attach(parCells.transform);
+
+            byte idx_0 = 0;
+
+            var cells = new GameObject[CellValuesC.AMOUNT_ALL_CELLS];
+
+            for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
+                for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
+                {
+                    var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
+                        ? SpritesResC.Sprite(SpriteTypes.WhiteCell)
+                        : SpritesResC.Sprite(SpriteTypes.BlackCell);
+
+
+                    var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
+                    cell.name = "CellMain";
+                    cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
+
+                    if (y == 0 || y == 10 && x >= 0 && x < 15 ||
+                            y >= 1 && y < 10 && x >= 0 && x <= 2 || x >= 13 && x < 15 ||
+
+                            y == 1 && x == 3 || y == 1 && x == 12 ||
+                            y == 9 && x == 3 || y == 9 && x == 12)
+                    {
+                        cell.SetActive(false);
+                    }
+
+                    cell.transform.SetParent(parCells.transform);
+
+                    cells[idx_0] = cell;
+
+                    ++idx_0;
+                }
+
+
             for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
             {
                 _cells[CellTypes.Cell][idx] = curGameW.NewEntity()

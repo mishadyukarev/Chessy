@@ -28,15 +28,15 @@ namespace Game.Game
                                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
-                                ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-                                ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
+                                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
+                                ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
 
 
 
                                 if (build_0.Is(BuildTypes.Camp))
                                 {
-                                    build_0.Remove(ownBuild_0.Owner);
+                                    build_0.Remove();
                                 }
 
                                 unit_0.Kill(levUnit_0.Level, ownUnit_0.Owner);

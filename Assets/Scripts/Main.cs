@@ -8,8 +8,8 @@ namespace Game
 {
     public sealed class Main : MonoBehaviour
     {
-        private EcsWorld _menuW;
-        private EcsWorld _gameW;
+        EcsWorld _menuW;
+        EcsWorld _gameW;
 
 
         private void Start()
@@ -96,14 +96,11 @@ namespace Game
                     _gameW = new EcsWorld();
 
 
-
-                    new Game.CreateVCs(transform);
+                    new Game.CreateVCs(MainGoVC.Rot);
                     new CreateCs();
 
                     var gameSysts = new EcsSystems(_gameW)
-                        .Add(new SpawnCells())
-                        .Add(new CreateEnts())
-                        .Add(new FillCells());
+                        .Add(new SpawnEntities());
 
                     new Game.CreateDataS(gameSysts);
                     new DataMasSCreate(gameSysts);

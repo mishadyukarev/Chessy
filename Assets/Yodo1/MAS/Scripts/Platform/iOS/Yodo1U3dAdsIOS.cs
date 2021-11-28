@@ -1,4 +1,9 @@
-﻿public class Yodo1U3dAdsIOS
+﻿using UnityEngine;
+using System.Collections;
+using System.Runtime.InteropServices;
+using Yodo1.MAS;
+
+public class Yodo1U3dAdsIOS
 {
 #if UNITY_IPHONE
     private const string LIB_NAME = "__Internal";//对外扩展接口的库名
@@ -169,6 +174,82 @@
         {
             UnityDismissBannerAdWithDestroy(destroy);
         }
+    }
+
+    [DllImport(LIB_NAME)]
+    private static extern void UnityLoadBannerAdV2(string param);
+    [DllImport(LIB_NAME)]
+    private static extern void UnityShowBannerAdV2(string param);
+    [DllImport(LIB_NAME)]
+    private static extern void UnityHideBannerAdV2(string param);
+    [DllImport(LIB_NAME)]
+    private static extern void UnityDestroyBannerAdV2(string param);
+
+    public static void BannerV2(string methodName, string param)
+    {
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            if (methodName.Equals("loadBannerAdV2"))
+            {
+                UnityLoadBannerAdV2(param);
+            }
+            if (methodName.Equals("showBannerAdV2"))
+            {
+                UnityShowBannerAdV2(param);
+            }
+            if (methodName.Equals("hideBannerAdV2"))
+            {
+                UnityHideBannerAdV2(param);
+            }
+            if (methodName.Equals("destroyBannerAdV2"))
+            {
+                UnityDestroyBannerAdV2(param);
+            }
+        }
+    }
+
+    [DllImport(LIB_NAME)]
+    private static extern int UnityGetBannerHeightV2(int type);
+    public static int GetBannerHeight(int type)
+    {
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            return UnityGetBannerHeightV2(type);
+        }
+        return 0;
+    }
+
+    [DllImport(LIB_NAME)]
+    private static extern int UnityGetBannerWidthV2(int type);
+    public static int GetBannerWidth(int type)
+    {
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            return UnityGetBannerWidthV2(type);
+        }
+        return 0;
+    }
+
+    [DllImport(LIB_NAME)]
+    private static extern float UnityGetBannerHeightInPixelsV2(int type);
+    public static float GetBannerHeightInPixels(int type)
+    {
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            return UnityGetBannerHeightInPixelsV2(type);
+        }
+        return 0;
+    }
+
+    [DllImport(LIB_NAME)]
+    private static extern float UnityGetBannerWidthInPixelsV2(int type);
+    public static float GetBannerWidthInPixels(int type)
+    {
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            return UnityGetBannerWidthInPixelsV2(type);
+        }
+        return 0;
     }
 
     #endregion

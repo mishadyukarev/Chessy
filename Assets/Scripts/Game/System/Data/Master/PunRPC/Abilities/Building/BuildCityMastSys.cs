@@ -19,26 +19,26 @@ namespace Game.Game
 
             if (forBuildType == BuildTypes.City)
             {
-                ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-                ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
+                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
-                ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
-                ref var curCellEnvCom = ref _envF.Get1(idx_0);
-                ref var curFireCom = ref _fireF.Get1(idx_0);
+                ref var step_0 = ref _statUnitF.Get1(idx_0);
+                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var fire_0 = ref _fireF.Get1(idx_0);
 
 
                 var whoseMove = WhoseMoveC.WhoseMove;
 
 
-                if (curStepUnitC.HaveMinSteps)
+                if (step_0.HaveMinSteps)
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy))
+                    foreach (var xy in CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy))
                     {
                         var curIdx = EntityPool.IdxCell(xy);
 
-                        if (!EntityPool.CellC<CellC>(curIdx).IsActiveCell)
+                        if (!EntityPool.Cell<CellC>(curIdx).IsActiveCell)
                         {
                             haveNearBorder = true;
                             break;
@@ -50,33 +50,22 @@ namespace Game.Game
                         RpcSys.SoundToGeneral(sender, ClipTypes.Building);
                         RpcSys.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
-                        if (build_0.Have)
-                        {
-                            build_0.Remove(ownBuild_0.Owner);
-                        }
+                        build_0.Remove();
 
                         
                         ownBuild_0.SetOwner(whoseMove);
                         build_0.SetNew(forBuildType, ownBuild_0.Owner);
 
 
-                        curStepUnitC.DefSteps();
+                        step_0.DefSteps();
 
 
-                        curFireCom.Disable();
+                        fire_0.Disable();
 
-                        if (curCellEnvCom.Have(EnvTypes.AdultForest))
-                        {
-                            curCellEnvCom.Remove(EnvTypes.AdultForest);
-                        }
-                        if (curCellEnvCom.Have(EnvTypes.Fertilizer))
-                        {
-                            curCellEnvCom.Remove(EnvTypes.Fertilizer);
-                        }
-                        if (curCellEnvCom.Have(EnvTypes.YoungForest))
-                        {
-                            curCellEnvCom.Remove(EnvTypes.YoungForest);
-                        }
+
+                        env_0.Remove(EnvTypes.AdultForest);
+                        env_0.Remove(EnvTypes.Fertilizer);
+                        env_0.Remove(EnvTypes.YoungForest);
                     }
 
                     else

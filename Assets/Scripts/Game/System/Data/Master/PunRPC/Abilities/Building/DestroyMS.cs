@@ -16,11 +16,11 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             IdxDoingMC.Get(out var idx_0);
 
-            ref var curUnitDataCom = ref _unitF.Get1(idx_0);
-            ref var curOwnUnitCom = ref _unitF.Get2(idx_0);
-            ref var buildC_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-            ref var ownBuildC_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
-            ref var curEnvDataCom = ref _envF.Get1(idx_0);
+            ref var unit_0 = ref _unitF.Get1(idx_0);
+            ref var ownUnit_0 = ref _unitF.Get2(idx_0);
+            ref var buildC_0 = ref EntityPool.Build<BuildC>(idx_0);
+            ref var ownBuildC_0 = ref EntityPool.Build<OwnerC>(idx_0);
+            ref var env_0 = ref _envF.Get1(idx_0);
 
 
             if (_statUnitF.Get1(idx_0).HaveMinSteps)
@@ -29,16 +29,16 @@ namespace Game.Game
 
                 if (buildC_0.Is(BuildTypes.City))
                 {
-                    PlyerWinnerC.PlayerWinner = curOwnUnitCom.Owner;
+                    PlyerWinnerC.PlayerWinner = ownUnit_0.Owner;
                 }
                 _statUnitF.Get1(idx_0).TakeSteps();
 
                 if (buildC_0.Is(BuildTypes.Farm))
                 {
-                    curEnvDataCom.Remove(EnvTypes.Fertilizer);
+                    env_0.Remove(EnvTypes.Fertilizer);
                 }
 
-                buildC_0.Remove(ownBuildC_0.Owner);
+                buildC_0.Remove();
             }
             else
             {

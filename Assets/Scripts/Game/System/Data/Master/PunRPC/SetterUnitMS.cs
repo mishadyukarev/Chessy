@@ -61,7 +61,7 @@ namespace Game.Game
                 tw_0.Reset();
 
                 eff_0.DefAllEffects();
-                hp_0.SetMaxHp();
+                hp_0.SetMax();
                 if (cond_0.HaveCondition) cond_0.Reset();  
                 moveCond_0.ResetAll();
                 step_0.SetMaxSteps(unit, false, UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));

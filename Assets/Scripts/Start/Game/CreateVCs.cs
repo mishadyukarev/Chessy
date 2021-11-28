@@ -7,7 +7,7 @@ namespace Game.Game
 {
     public sealed class CreateVCs
     {
-        public CreateVCs(Transform main)
+        public CreateVCs(Quaternion main_rot)
         {
 
             //Main
@@ -27,7 +27,7 @@ namespace Game.Game
             new GenerZoneVC(genZone);
 
             var backGroundGO = GameObject.Instantiate(PrefabResC.BackGroundCollider2D,
-                MainGoVC.Pos + new Vector3(7, 5.5f, 2), main.rotation);
+                MainGoVC.Pos + new Vector3(7, 5.5f, 2), main_rot);
 
             GenerZoneVC.Attach(backGroundGO.transform);
 

@@ -32,13 +32,13 @@ namespace Game.Game
                 {
                     if (unit_0.HaveUnit)
                     {
-                        CellSpaceC.TryGetXyAround(EntityPool.CellC<XyC>(idx_0).Xy, out var directs);
+                        CellSpaceC.TryGetXyAround(EntityPool.Cell<XyC>(idx_0).Xy, out var directs);
 
                         foreach (var item_1 in directs)
                         {
                             var idx_1 = EntityPool.IdxCell(item_1.Value);
 
-                            ref var trail_1 = ref EntityPool.TrailCellC<TrailC>(idx_1);
+                            ref var trail_1 = ref EntityPool.Trail<TrailC>(idx_1);
 
                             ref var unitC_1 = ref _unitF.Get1(idx_1);
                             ref var envC_1 = ref _envF.Get1(idx_1);

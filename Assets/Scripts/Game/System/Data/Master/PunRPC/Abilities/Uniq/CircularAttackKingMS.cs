@@ -40,7 +40,7 @@ namespace Game.Game
 
                     cdUniq_0.SetCooldown(UniqAbilTypes.CircularAttack, 2);
 
-                    foreach (var xy1 in CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy))
+                    foreach (var xy1 in CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy))
                     {
                         var idx_1 = EntityPool.IdxCell(xy1);
 
@@ -49,13 +49,13 @@ namespace Game.Game
                         ref var ownUnit_1 = ref _unitF.Get3(idx_1);
                         ref var hpUnitC_1 = ref _statUnitF.Get1(idx_1);
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
-                        ref var tw_1 = ref EntityPool.TWCellC<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref EntityPool.TWCellC<ShieldC>(idx_1);
+                        ref var tw_1 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_1);
+                        ref var shield_1 = ref EntityPool.ToolWeapon<ShieldC>(idx_1);
 
 
 
                         ref var envC_1 = ref _envF.Get1(idx_1);
-                        ref var buildC_1 = ref EntityPool.BuildCellC<BuildC>(idx_1);
+                        ref var buildC_1 = ref EntityPool.Build<BuildC>(idx_1);
 
 
                         if (unit_1.HaveUnit)

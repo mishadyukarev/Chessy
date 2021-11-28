@@ -8,9 +8,9 @@ namespace Game.Game
         {
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-                ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
-                ref var visBuild_0 = ref EntityPool.BuildCellC<VisibleC>(idx_0);
+                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
+                ref var visBuild_0 = ref EntityPool.Build<VisibleC>(idx_0);
 
                 ref var buildV_0 = ref EntityVPool.BuildCellVC<BuildVC>(idx_0);
                 ref var buildBackV_0 = ref EntityVPool.BuildCellVC<BuildBackVC>(idx_0);

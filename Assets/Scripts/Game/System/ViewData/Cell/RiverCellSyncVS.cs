@@ -8,7 +8,7 @@ namespace Game.Game
         {
             foreach (var idx_0 in EntityPool.Idxs)
             {
-                ref var river_0 = ref EntityPool.RiverCellC<RiverC>(idx_0);
+                ref var river_0 = ref EntityPool.River<RiverC>(idx_0);
 
                 if(river_0.River == RiverTypes.Start)
                 {

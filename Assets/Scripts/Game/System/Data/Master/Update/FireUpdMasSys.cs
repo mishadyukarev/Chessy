@@ -17,7 +17,7 @@ namespace Game.Game
         {
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                var curXy = EntityPool.CellC<XyC>(idx_0).Xy;
+                var curXy = EntityPool.Cell<XyC>(idx_0).Xy;
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
@@ -25,8 +25,8 @@ namespace Game.Game
 
                 ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
 
-                ref var buil_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-                ref var ownBuil_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
+                ref var buil_0 = ref EntityPool.Build<BuildC>(idx_0);
+                ref var ownBuil_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
                 ref var fire_0 = ref _fireF.Get1(idx_0);
                 ref var env_0 = ref _envF.Get1(idx_0);
@@ -42,7 +42,7 @@ namespace Game.Game
 
                 if (fire_0.Have)
                 {
-                    envRes_0.TakeAmountRes(EnvTypes.AdultForest, 2);
+                    envRes_0.Take(EnvTypes.AdultForest, 2);
 
                     if (unit_0.HaveUnit)
                     {
@@ -56,12 +56,9 @@ namespace Game.Game
 
 
 
-                    if (!envRes_0.HaveRes(EnvTypes.AdultForest))
+                    if (!envRes_0.Have(EnvTypes.AdultForest))
                     {
-                        if (buil_0.Have)
-                        {
-                            buil_0.Remove(ownBuil_0.Owner);
-                        }
+                        buil_0.Remove();
 
                         env_0.Remove(EnvTypes.AdultForest);
 
@@ -77,12 +74,12 @@ namespace Game.Game
                         fire_0.Disable();
 
 
-                        var aroundXYList = CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy);
+                        var aroundXYList = CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy);
                         foreach (var xy1 in aroundXYList)
                         {
                             var curIdxCell1 = EntityPool.IdxCell(xy1);
 
-                            if (EntityPool.CellC<CellC>(curIdxCell1).IsActiveCell)
+                            if (EntityPool.Cell<CellC>(curIdxCell1).IsActiveCell)
                             {
                                 if (_envF.Get1(curIdxCell1).Have(EnvTypes.AdultForest))
                                 {

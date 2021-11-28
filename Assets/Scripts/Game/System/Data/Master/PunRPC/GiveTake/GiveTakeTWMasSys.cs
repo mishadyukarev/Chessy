@@ -25,9 +25,9 @@ namespace Game.Game
 
                 ref var stepUnit_0 = ref _statUnitF.Get2(idx_0);
 
-                ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
-                ref var twShield_0 = ref EntityPool.TWCellC<ShieldC>(idx_0);
+                ref var tw_0 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
+                ref var twShield_0 = ref EntityPool.ToolWeapon<ShieldC>(idx_0);
 
 
                 if (unit_0.Is(UnitTypes.Pawn))

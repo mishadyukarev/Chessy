@@ -14,8 +14,8 @@ namespace Game.Game
             BuildDoingMC.Get(out var build);
             IdxDoingMC.Get(out var idx_0);
 
-            ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-            ref var ownBuild_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
+            ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
+            ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
             ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
             ref var env_0 = ref _envF.Get1(idx_0);
@@ -30,14 +30,11 @@ namespace Game.Game
                 {
                     if (!build_0.Have || build_0.Is(BuildTypes.Camp))
                     {
-                        if (env_0.Have(EnvTypes.Hill) && envRes_0.HaveRes(EnvTypes.Hill))
+                        if (env_0.Have(EnvTypes.Hill) && envRes_0.Have(EnvTypes.Hill))
                         {
                             if (InvResC.CanCreateBuild(whoseMove, build, out var needRes))
                             {
-                                if (build_0.Have)
-                                {
-                                    build_0.Remove(ownBuild_0.Owner);
-                                }
+                                build_0.Remove();
 
                                 RpcSys.SoundToGeneral(sender, ClipTypes.Building);
 

@@ -8,14 +8,14 @@ namespace Game.Game
         {
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                ref var unit_0 = ref EntityPool.UnitCellC<UnitC>(idx_0);
-                ref var levelUnit_0 = ref EntityPool.UnitCellC<LevelC>(idx_0);
-                ref var visUnit_0 = ref EntityPool.UnitCellC<VisibleC>(idx_0);
+                ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
+                ref var levelUnit_0 = ref EntityPool.Unit<LevelC>(idx_0);
+                ref var visUnit_0 = ref EntityPool.Unit<VisibleC>(idx_0);
 
-                ref var corner_0 = ref EntityPool.UnitCellC<CornerArcherC>(idx_0);
+                ref var corner_0 = ref EntityPool.Unit<CornerArcherC>(idx_0);
 
-                ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
+                ref var tw_0 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
 
                 ref var mainUnitC_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
                 ref var extraUnitC_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);

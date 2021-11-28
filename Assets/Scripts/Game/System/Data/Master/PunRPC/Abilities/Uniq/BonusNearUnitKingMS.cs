@@ -41,7 +41,7 @@ namespace Game.Game
 
                     if (!effUnit_0.Have(UnitStatTypes.Damage)) effUnit_0.Set(UnitStatTypes.Damage);
 
-                    var around = CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy);
+                    var around = CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy);
                     foreach (var xy in around)
                     {
                         var idx_1 = EntityPool.IdxCell(xy);

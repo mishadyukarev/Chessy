@@ -39,7 +39,7 @@ namespace Game.Game
             {
                 foreach (byte idx_0 in EntityPool.Idxs)
                 {
-                    int one = EntityPool.CellC<CellC>(idx_0).InstanceID;
+                    int one = EntityPool.Cell<CellC>(idx_0).InstanceID;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)

@@ -8,8 +8,8 @@ namespace Game.Game
         {
             if (CellClickC.Is(CellClickTypes.SetUnit))
             {
-                ref var unit_cur = ref EntityPool.UnitCellC<UnitC>(CurIdx.Idx);
-                ref var visUnit_cur = ref EntityPool.UnitCellC<VisibleC>(CurIdx.Idx);
+                ref var unit_cur = ref EntityPool.Unit<UnitC>(CurIdx.Idx);
+                ref var visUnit_cur = ref EntityPool.Unit<VisibleC>(CurIdx.Idx);
 
                 ref var mainUnit_cur = ref EntityVPool.UnitCellVC<UnitMainVC>(CurIdx.Idx);
                 ref var mainUnit_pre = ref EntityVPool.UnitCellVC<UnitMainVC>(IdxPreVis.Idx);

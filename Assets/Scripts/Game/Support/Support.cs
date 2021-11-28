@@ -6,12 +6,12 @@ namespace Game.Game
 {
     public static class Support
     {
-        public static PlayerTypes GetPlayerType(this Player player)
+        public static PlayerTypes GetPlayer(this Player player)
         {
             if (player.IsMasterClient == true) return PlayerTypes.First;
             else return PlayerTypes.Second;
         }
-        public static Player GetPlayerType(this PlayerTypes playerType)
+        public static Player GetPlayer(this PlayerTypes playerType)
         {
             if (playerType == PlayerTypes.First) return PhotonNetwork.PlayerList[0];
             else return PhotonNetwork.PlayerList[1];

@@ -4,25 +4,35 @@ namespace Yodo1.MAS
 {
     public class Yodo1U3dMas
     {
-        static bool initialized = false;
+        //static bool initialized = false;
 
         public delegate void InitializeDelegate(bool success, Yodo1U3dAdError error);
+        [System.Obsolete("Please use `Yodo1U3dMasCallback.OnSdkInitializedEvent` instead.\n" +
+            "Yodo1U3dMasCallback.OnSdkInitializedEvent += (success, error) => { };")]
         public static void SetInitializeDelegate(InitializeDelegate initializeDelegate)
         {
             Yodo1U3dMasCallback.SetInitializeDelegate(initializeDelegate);
         }
 
-        #region Ad Delegate
+        #region Ad Delegates
 
         //InterstitialAd of delegate
         public delegate void InterstitialAdDelegate(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError adError);
+        [System.Obsolete("Please use `Yodo1U3dMasCallback.Interstitial` instead.\n" +
+            "Yodo1U3dMasCallback.Interstitial.OnAdOpenedEvent += OnInterstitialAdOpenedEvent;\n" +
+            "Yodo1U3dMasCallback.Interstitial.OnAdClosedEvent += OnInterstitialAdClosedEvent;\n" +
+            "Yodo1U3dMasCallback.Interstitial.OnAdErrorEvent += OnInterstitialAdErorEvent;")]
         public static void SetInterstitialAdDelegate(InterstitialAdDelegate interstitialAdDelegate)
         {
             Yodo1U3dMasCallback.SetInterstitialAdDelegate(interstitialAdDelegate);
         }
 
-        //ShowBanner of delegate
+        //BannerAd of delegate
         public delegate void BannerdAdDelegate(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error);
+        [System.Obsolete("Please use `Yodo1U3dMasCallback.Banner` instead.\n" +
+            "Yodo1U3dMasCallback.Banner.OnAdOpenedEvent += OnBannerAdOpenedEvent;\n" +
+            "Yodo1U3dMasCallback.Banner.OnAdClosedEvent += OnBannerAdClosedEvent;\n" +
+            "Yodo1U3dMasCallback.Banner.OnAdErrorEvent += OnBannerAdErorEvent;")]
         public static void SetBannerAdDelegate(BannerdAdDelegate bannerAdDelegate)
         {
             Yodo1U3dMasCallback.SetBannerAdDelegate(bannerAdDelegate);
@@ -30,6 +40,11 @@ namespace Yodo1.MAS
 
         //RewardVideo of delegate
         public delegate void RewardedAdDelegate(Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error);
+        [System.Obsolete("Please use `Yodo1U3dMasCallback.Rewarded` instead.\n" +
+            "Yodo1U3dMasCallback.Rewarded.OnAdOpenedEvent += OnRewardedAdOpenedEvent;\n" +
+            "Yodo1U3dMasCallback.Rewarded.OnAdClosedEvent += OnRewardedAdClosedEvent;\n" +
+            "Yodo1U3dMasCallback.Rewarded.OnAdErrorEvent += OnRewardedAdErorEvent;\n" +
+            "Yodo1U3dMasCallback.Rewarded.OnAdReceivedRewardEvent += OnAdReceivedRewardEvent;")]
         public static void SetRewardedAdDelegate(RewardedAdDelegate rewardedAdDelegate)
         {
             Yodo1U3dMasCallback.SetRewardedAdDelegate(rewardedAdDelegate);
@@ -37,9 +52,12 @@ namespace Yodo1.MAS
 
         #endregion
 
+        /// <summary>
+        /// Initialize the default instance of Yodo1 MAS SDK.
+        /// </summary>
         public static void InitializeSdk()
         {
-            if (initialized)
+            if (Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogWarning("[Yodo1 Mas] The SDK has been initialized, please do not initialize the SDK repeatedly.");
                 return;
@@ -66,10 +84,16 @@ namespace Yodo1.MAS
 #elif UNITY_IOS
             appKey = settings.iOSSettings.AppKey.Trim();
 #endif
-            Debug.Log("[Yodo1 Mas] The SDK has been initialized, the app key is " + appKey);
+            Debug.Log("[Yodo1 Mas] The SDK is initializing, the app key is " + appKey);
             Yodo1U3dMas.InitWithAppKey(appKey);
 
-            initialized = true;
+#if UNITY_EDITOR
+            Yodo1U3dMas.InitializeDelegate initializeDelegate = Yodo1U3dMasCallback.GetInitializeDelegate();
+            if (initializeDelegate != null)
+            {
+                initializeDelegate(true, null);
+            }
+#endif
         }
 
         /// <summary>
@@ -92,9 +116,12 @@ namespace Yodo1.MAS
             }
         }
 
-        #region Privacy
+        #region Privacy Methods
         /// <summary>
-        /// MAS SDK requires that publishers set a flag indicating whether a user located in the European Economic Area (i.e., EEA/GDPR data subject) has provided opt-in consent for the collection and use of personal data. If the user has consented, please set the flag to true. If the user has not consented, please set the flag to false.
+        /// MAS SDK requires that publishers set a flag indicating whether a user located in the European Economic Area (i.e., EEA/GDPR data subject) has provided opt-in consent for the collection and use of personal data.
+        /// If the user has consented, please set the flag to true. If the user has not consented, please set the flag to false.
+        ///
+        /// This method must be called before InitializeSdk method.
         /// </summary>
         /// <param name="consent"></param>
         public static void SetGDPR(bool consent)
@@ -114,7 +141,11 @@ namespace Yodo1.MAS
         }
 
         /// <summary>
-        /// To ensure COPPA, GDPR, and Google Play policy compliance, you should indicate whether a user is a child. If the user is known to be in an age-restricted category (i.e., under the age of 13) please set the flag to true. If the user is known to not be in an age-restricted category (i.e., age 13 or older) please set the flag to false.
+        /// To ensure COPPA, GDPR, and Google Play policy compliance, you should indicate whether a user is a child.
+        /// If the user is known to be in an age-restricted category (i.e., under the age of 13) please set the flag to true.
+        /// If the user is known to not be in an age-restricted category (i.e., age 13 or older) please set the flag to false.
+        ///
+        /// This method must be called before InitializeSdk method.
         /// </summary>
         /// <param name="underAgeOfConsent"></param>
         public static void SetCOPPA(bool underAgeOfConsent)
@@ -134,7 +165,10 @@ namespace Yodo1.MAS
         }
 
         /// <summary>
-        /// Publishers may choose to display a "Do Not Sell My Personal Information" link. Such publishers may choose to set a flag indicating whether a user located in California, USA has opted to not have their personal data sold.
+        /// Publishers may choose to display a "Do Not Sell My Personal Information" link.
+        /// Such publishers may choose to set a flag indicating whether a user located in California, USA has opted to not have their personal data sold.
+        ///
+        /// This method must be called before InitializeSdk method.
         /// </summary>
         /// <param name="doNotSell"></param>
         public static void SetCCPA(bool doNotSell)
@@ -178,14 +212,15 @@ namespace Yodo1.MAS
         }
         #endregion
 
-        #region Banner
+        #region Banner Ad Methods
         /// <summary>
         /// Whether the banner ads have been loaded.
         /// </summary>
         /// <returns><c>true</c>, if the banner ads have been loaded, <c>false</c> otherwise.</returns>
+        [System.Obsolete("After the ShowBanner method is called, the banner ad will be displayed automatically when it is loaded successfully", true)]
         public static bool IsBannerAdLoaded()
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return false;
@@ -207,14 +242,11 @@ namespace Yodo1.MAS
 
         /// <summary>
         /// Shows the banner ad.
+        /// The banner ad will be displayed automatically after loaded.
+        /// It is recommended that this method be called after the MAS SDK initialization successful.
         /// </summary>
         public static void ShowBannerAd()
         {
-            if (!initialized)
-            {
-                Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
-                return;
-            }
             if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
 #if UNITY_IPHONE
@@ -231,15 +263,12 @@ namespace Yodo1.MAS
 
         /// <summary>
         /// Shows the banner ad.
+        /// The banner ad will be displayed automatically after loaded.
+        /// It is recommended that this method be called after the MAS SDK initialization successful.
         /// </summary>
         /// <param name="placementId">The ad placement</param>
         public static void ShowBannerAd(string placementId)
         {
-            if (!initialized)
-            {
-                Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
-                return;
-            }
             if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
 #if UNITY_IPHONE
@@ -256,15 +285,12 @@ namespace Yodo1.MAS
 
         /// <summary>
         /// Shows the banner ad.
+        /// The banner ad will be displayed automatically after loaded.
+        /// It is recommended that this method be called after the MAS SDK initialization successful.
         /// </summary>
-        /// <param name="align">banner alignment</param>
+        /// <param name="align">The banner ad alignment</param>
         public static void ShowBannerAd(int align)
         {
-            if (!initialized)
-            {
-                Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
-                return;
-            }
             if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
 #if UNITY_IPHONE
@@ -281,17 +307,14 @@ namespace Yodo1.MAS
 
         /// <summary>
         /// Shows the banner ad.
+        /// The banner ad will be displayed automatically after loaded.
+        /// It is recommended that this method be called after the MAS SDK initialization successful.
         /// </summary>
-        /// <param name="align">banner alignment</param>
+        /// <param name="align">The banner ad position</param>
         /// <param name="offsetX">horizontal offset, offsetX > 0, offset right. offsetX < 0, offset left. if align = Yodo1Mas.BannerLeft, offsetX < 0 is invalid (Only Android)</param>
         /// <param name="offsetY">vertical offset, offsetY > 0, offset bottom. offsetY < 0, offset top.if align = Yodo1Mas.BannerTop, offsetY < 0 is invalid(Only Android)</param>
         public static void ShowBannerAd(int align, int offsetX, int offsetY)
         {
-            if (!initialized)
-            {
-                Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
-                return;
-            }
             if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
 #if UNITY_IPHONE
@@ -308,18 +331,15 @@ namespace Yodo1.MAS
 
         /// <summary>
         /// Shows the banner ad.
+        /// The banner ad will be displayed automatically after loaded.
+        /// It is recommended that this method be called after the MAS SDK initialization successful.
         /// </summary>
-        /// <param name="placementId">The ad placement</param>
-        /// <param name="align">banner alignment</param>
+        /// <param name="placementId">The banner ad placement</param>
+        /// <param name="align">The banner ad position</param>
         /// <param name="offsetX">horizontal offset, offsetX > 0, the banner will move to the right. offsetX < 0, the banner will move to the left. if align = Yodo1Mas.BannerLeft, offsetX < 0 is invalid (Only Android</param>
         /// <param name="offsetY">vertical offset, offsetY > 0, the banner will move to the bottom. offsetY < 0, the banner will move to the top. if align = Yodo1Mas.BannerTop, offsetY < 0 is invalid(Only Android)</param>
         public static void ShowBannerAd(string placementId, int align, int offsetX, int offsetY)
         {
-            if (!initialized)
-            {
-                Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
-                return;
-            }
             if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
 #if UNITY_IPHONE
@@ -334,9 +354,12 @@ namespace Yodo1.MAS
             }
         }
 
+        /// <summary>
+        /// Hide banner ads
+        /// </summary>
         public static void DismissBannerAd()
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return;
@@ -361,7 +384,7 @@ namespace Yodo1.MAS
         /// <param name="destroy">if destroy == true, the ads displayed in the next call to showBanner are different. if destroy == false, the ads displayed in the next call to showBanner are same</param>
         public static void DismissBannerAd(bool destroy)
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return;
@@ -382,14 +405,14 @@ namespace Yodo1.MAS
 
         #endregion
 
-        #region Interstitial
+        #region Interstitial Ad Methods
         /// <summary>
         /// Whether the interstitial ads have been loaded.
         /// </summary>
         /// <returns><c>true</c>, if the interstitial ads have been loaded complete, <c>false</c> otherwise.</returns>
         public static bool IsInterstitialAdLoaded()
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return false;
@@ -414,7 +437,7 @@ namespace Yodo1.MAS
         /// </summary>
         public static void ShowInterstitialAd()
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return;
@@ -439,7 +462,7 @@ namespace Yodo1.MAS
         /// <param name="placementId"></param>
         public static void ShowInterstitialAd(string placementId)
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return;
@@ -460,14 +483,14 @@ namespace Yodo1.MAS
 
         #endregion
 
-        #region Rewarded Video
+        #region Rewarded Ad Methods
         /// <summary>
         /// Whether the reward video ads have been loaded.
         /// </summary>
         /// <returns><c>true</c>, if the reward video ads have been loaded complete, <c>false</c> otherwise.</returns>
         public static bool IsRewardedAdLoaded()
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return false;
@@ -492,7 +515,7 @@ namespace Yodo1.MAS
         /// </summary>
         public static void ShowRewardedAd()
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return;
@@ -517,7 +540,7 @@ namespace Yodo1.MAS
         /// <param name="placementId"></param>
         public static void ShowRewardedAd(string palcementId)
         {
-            if (!initialized)
+            if (!Yodo1U3dMasCallback.isInitialized())
             {
                 Debug.LogError("[Yodo1 Mas] The SDK has not been initialized yet. Please initialize the SDK first.");
                 return;

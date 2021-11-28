@@ -9,12 +9,24 @@ namespace Yodo1.MAS
         private string _userAgreementUrl;
         private string _privacyPolicyUrl;
 
+        /// <summary>
+        /// Enable adaptive banner method, 
+        /// <c>true</c>, if enable adaptive banner, <c>false</c> otherwise.
+        /// </summary>
+        /// <param name="adaptiveBanner"><c>true</c>, if enable adaptive banner, <c>false</c> otherwise.</param>
+        /// <returns></returns>
         public Yodo1AdBuildConfig enableAdaptiveBanner(bool adaptiveBanner)
         {
             this._enableAdaptiveBanner = adaptiveBanner;
             return this;
         }
 
+        /// <summary>
+        /// Enable privacy compliance dialog method, 
+        /// <c>true</c>, enable privacy compliance dialog, <c>false</c> otherwise.
+        /// </summary>
+        /// <param name="userPrivacyDialog"></param>
+        /// <returns></returns>
         public Yodo1AdBuildConfig enableUserPrivacyDialog(bool userPrivacyDialog)
         {
             this._enableUserPrivacyDialog = userPrivacyDialog;

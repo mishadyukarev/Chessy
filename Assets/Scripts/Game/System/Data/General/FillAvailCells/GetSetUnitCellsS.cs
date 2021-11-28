@@ -18,7 +18,7 @@ namespace Game.Game
                     var idx_city = WhereBuildsC.Idx(BuildTypes.City, player);
                     ref var unit_city = ref _unitF.Get1(idx_city);
                     
-                    var listAround = CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_city).Xy);
+                    var listAround = CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_city).Xy);
 
                     if(!unit_city.HaveUnit) SetUnitCellsC.AddIdxCell(player, idx_city);
 
@@ -40,7 +40,7 @@ namespace Game.Game
                 {
                     foreach (byte idx_0 in EntityPool.Idxs)
                     {
-                        var xy = EntityPool.CellC<XyC>(idx_0).Xy;
+                        var xy = EntityPool.Cell<XyC>(idx_0).Xy;
                         var x = xy[0];
                         var y = xy[1];
 
@@ -71,8 +71,8 @@ namespace Game.Game
             foreach (byte idx_0 in EntityPool.Idxs)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var buld_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-                ref var ownBuld_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
+                ref var buld_0 = ref EntityPool.Build<BuildC>(idx_0);
+                ref var ownBuld_0 = ref EntityPool.Build<OwnerC>(idx_0);
                 ref var env_0 = ref _envF.Get1(idx_0);
 
                 if (buld_0.Is(BuildTypes.Camp))

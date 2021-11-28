@@ -43,9 +43,9 @@ namespace Game.Game
                 ref var cdUniq_from = ref _uniqUnitF.Get2(idx_from);
                 ref var corner_from = ref _archerF.Get1(idx_from);
 
-                ref var tw_from = ref TWCellC<ToolWeaponC>(idx_from);
-                ref var twLevel_from = ref TWCellC<LevelC>(idx_from);
-                ref var twShield_from = ref TWCellC<ShieldC>(idx_from);
+                ref var tw_from = ref ToolWeapon<ToolWeaponC>(idx_from);
+                ref var twLevel_from = ref ToolWeapon<LevelC>(idx_from);
+                ref var twShield_from = ref ToolWeapon<ShieldC>(idx_from);
 
 
 
@@ -65,28 +65,28 @@ namespace Game.Game
                 ref var cdUniq_to = ref _uniqUnitF.Get2(idx_to);
                 ref var corner_to = ref _archerF.Get1(idx_to);
 
-                ref var tw_to = ref TWCellC<ToolWeaponC>(idx_to);
-                ref var twLevel_to = ref TWCellC<LevelC>(idx_to);
-                ref var twShield_to = ref TWCellC<ShieldC>(idx_to);
+                ref var tw_to = ref ToolWeapon<ToolWeaponC>(idx_to);
+                ref var twLevel_to = ref ToolWeapon<LevelC>(idx_to);
+                ref var twShield_to = ref ToolWeapon<ShieldC>(idx_to);
 
                 #endregion
 
 
 
                 ref var fire_to = ref _cellFireFilt.Get1(idx_to);
-                ref var build_to = ref BuildCellC<BuildC>(idx_to);
-                ref var ownBuild_to = ref BuildCellC<OwnerC>(idx_to);
-                ref var xy_to = ref CellC<XyC>(idx_to);
+                ref var build_to = ref Build<BuildC>(idx_to);
+                ref var ownBuild_to = ref Build<OwnerC>(idx_to);
+                ref var xy_to = ref Cell<XyC>(idx_to);
                 ref var env_to = ref _cellEnvrDataFilter.Get1(idx_to);
                 ref var river_to = ref _cellRiverFilt.Get1(idx_to);
-                ref var trail_to = ref TrailCellC<TrailC>(idx_to);
+                ref var trail_to = ref Trail<TrailC>(idx_to);
 
                 ref var envDat_from = ref _cellEnvrDataFilter.Get1(idx_from);
-                ref var trail_from = ref TrailCellC<TrailC>(idx_from);
+                ref var trail_from = ref Trail<TrailC>(idx_from);
 
 
 
-                var dir_from = CellSpaceC.GetDirect(CellC<XyC>(idx_from).Xy, CellC<XyC>(idx_to).Xy);
+                var dir_from = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
 
                 step_from.TakeStepsForDoing(env_to, dir_from, trail_to);
 

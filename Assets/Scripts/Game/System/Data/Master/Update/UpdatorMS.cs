@@ -18,8 +18,8 @@ namespace Game.Game
 
         public void Run()
         {
-            InvResC.Add(ResTypes.Food, PlayerTypes.First,  4);
-            InvResC.Add(ResTypes.Food, PlayerTypes.Second,  4);
+            InvResC.Add(ResTypes.Food, PlayerTypes.First,  40);
+            InvResC.Add(ResTypes.Food, PlayerTypes.Second,  40);
 
 
             ScoutHeroCooldownC.TakeCooldown(UnitTypes.Scout, PlayerTypes.First);
@@ -31,7 +31,7 @@ namespace Game.Game
 
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                ref var cell_0 = ref EntityPool.CellC<CellC>(idx_0);
+                ref var cell_0 = ref EntityPool.Cell<CellC>(idx_0);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var level_0 = ref _unitF.Get2(idx_0);
@@ -49,11 +49,11 @@ namespace Game.Game
                 
 
 
-                ref var buil_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
-                ref var ownBuil_0 = ref EntityPool.BuildCellC<OwnerC>(idx_0);
+                ref var buil_0 = ref EntityPool.Build<BuildC>(idx_0);
+                ref var ownBuil_0 = ref EntityPool.Build<OwnerC>(idx_0);
                 ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
                 ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
-                ref var trail_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref EntityPool.Trail<TrailC>(idx_0);
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
@@ -77,7 +77,7 @@ namespace Game.Game
 
                                 if (hp_0.HaveMaxHp)
                                 {
-                                    hp_0.SetMaxHp();
+                                    hp_0.SetMax();
                                 }
                             }
                         }
@@ -103,16 +103,13 @@ namespace Game.Game
                                         {
                                             if (own_0.Is(PlayerTypes.First))
                                             {
-                                                if (buil_0.Have)
-                                                {
-                                                    buil_0.Remove(ownBuil_0.Owner);
-                                                }
+                                                buil_0.Remove();
 
                                                 if (WhereBuildsC.IsSetted(BuildTypes.Camp, own_0.Owner))
                                                 {
                                                     var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
 
-                                                    EntityPool.BuildCellC<BuildC>(idxCamp).Remove(own_0.Owner);
+                                                    EntityPool.Build<BuildC>(idxCamp).Remove();
                                                 }
 
 
@@ -123,16 +120,13 @@ namespace Game.Game
                                         }
                                         else
                                         {
-                                            if (buil_0.Have)
-                                            {
-                                                buil_0.Remove(ownBuil_0.Owner);
-                                            }
+                                            buil_0.Remove();
 
                                             if (WhereBuildsC.IsSetted(BuildTypes.Camp, own_0.Owner))
                                             {
                                                 var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
 
-                                                EntityPool.BuildCellC<BuildC>(idxCamp).Remove(own_0.Owner);
+                                                EntityPool.Build<BuildC>(idxCamp).Remove();
                                             }
 
 
@@ -168,7 +162,7 @@ namespace Game.Game
             }
 
 
-            if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 6)
+            if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 8)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 DataMastSC.InvokeRun(MastDataSysTypes.Truce);
@@ -181,15 +175,15 @@ namespace Game.Game
                     ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
                     ref var envRes_0 = ref _cellEnvDataFilter.Get2(idx_0);
 
-                    ref var build_0 = ref EntityPool.BuildCellC<BuildC>(idx_0);
+                    ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
 
                     if (env_0.Have(EnvTypes.Hill))
                     {
                         if (!build_0.Is(BuildTypes.Mine))
                         {
-                            if (!envRes_0.HaveMaxRes(EnvTypes.Hill))
+                            if (!envRes_0.HaveMax(EnvTypes.Hill))
                             {
-                                envRes_0.AddAmountRes(EnvTypes.Hill);
+                                envRes_0.Add(EnvTypes.Hill);
                             }
                         }
                     }

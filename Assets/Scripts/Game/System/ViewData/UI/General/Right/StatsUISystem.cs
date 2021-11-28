@@ -29,8 +29,8 @@ namespace Game.Game
 
 
 
-            ref var selBuildC = ref EntityPool.BuildCellC<BuildC>(SelIdx.Idx);
-            ref var selEnvC = ref EntityPool.EnvCellC<EnvC>(SelIdx.Idx);
+            ref var selBuildC = ref EntityPool.Build<BuildC>(SelIdx.Idx);
+            ref var selEnvC = ref EntityPool.Environment<EnvC>(SelIdx.Idx);
 
 
             if (unit_sel.HaveUnit)

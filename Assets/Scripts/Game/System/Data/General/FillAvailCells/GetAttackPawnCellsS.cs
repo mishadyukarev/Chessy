@@ -29,7 +29,7 @@ namespace Game.Game
                     {
                         DirectTypes dir_cur = default;
 
-                        CellSpaceC.TryGetXyAround(EntityPool.CellC<XyC>(idx_0).Xy, out var dirs);
+                        CellSpaceC.TryGetXyAround(EntityPool.Cell<XyC>(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
@@ -40,7 +40,7 @@ namespace Game.Game
                             ref var unit_1 = ref _unitF.Get1(idx_1);
                             ref var own_1 = ref _unitF.Get3(idx_1);
 
-                            ref var trail_1 = ref EntityPool.TrailCellC<TrailC>(idx_1);
+                            ref var trail_1 = ref EntityPool.Trail<TrailC>(idx_1);
 
 
                             if (!env_1.Have(EnvTypes.Mountain))

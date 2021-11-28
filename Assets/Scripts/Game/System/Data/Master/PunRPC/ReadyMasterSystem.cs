@@ -8,7 +8,7 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var playerSend = sender.GetPlayerType();
+            var playerSend = sender.GetPlayer();
 
 
             ReadyC.SetIsReady(playerSend, !ReadyC.IsReady(playerSend));

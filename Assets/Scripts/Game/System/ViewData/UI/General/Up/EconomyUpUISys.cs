@@ -24,7 +24,7 @@ namespace Game.Game
 
             var percUpgFarms = BuildsUpgC.PercUpg(BuildTypes.Farm, curPlayer);
             var amountFarms = WhereBuildsC.Amount(BuildTypes.Farm, curPlayer);
-            var amountAddFood = Extractor.GetAddFood(percUpgFarms, amountFarms, unitsInGame);
+            var amountAddFood = ExtractorC.GetAddFood(percUpgFarms, amountFarms, unitsInGame);
 
             if (amountAddFood < 0) EconomyUIC.SetAddText(ResTypes.Food, amountAddFood.ToString());
             else EconomyUIC.SetAddText(ResTypes.Food, "+ " + amountAddFood.ToString());
@@ -32,18 +32,18 @@ namespace Game.Game
 
 
             var amountWoodcutter = WhereBuildsC.Amount(BuildTypes.Woodcutter, curPlayer);
-            var extOneWoodcut = Extractor.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Woodcutter, curPlayer));
+            var extOneWoodcut = ExtractorC.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Woodcutter, curPlayer));
             var amountAddWood = 0;
             foreach (var idx_0 in WhereUnitsC.Idxs(UnitTypes.Pawn, LevelTypes.First, curPlayer))
             {
-                if (EntityPool.EnvCellC<EnvC>(idx_0).Have(EnvTypes.AdultForest))
-                    if (EntityPool.UnitCellC<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
+                if (EntityPool.Environment<EnvC>(idx_0).Have(EnvTypes.AdultForest))
+                    if (EntityPool.Unit<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 1;
             }
             foreach (var idx_0 in WhereUnitsC.Idxs(UnitTypes.Pawn, LevelTypes.Second, curPlayer))
             {
-                if (EntityPool.EnvCellC<EnvC>(idx_0).Have(EnvTypes.AdultForest))
-                    if (EntityPool.UnitCellC<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
+                if (EntityPool.Environment<EnvC>(idx_0).Have(EnvTypes.AdultForest))
+                    if (EntityPool.Unit<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 2;
             }
             amountAddWood += amountWoodcutter * extOneWoodcut;
@@ -51,7 +51,7 @@ namespace Game.Game
 
 
             var amountAddOre = WhereBuildsC.Amount(BuildTypes.Mine, curPlayer)
-                * Extractor.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Mine, curPlayer));
+                * ExtractorC.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Mine, curPlayer));
             EconomyUIC.SetAddText(ResTypes.Ore, "+ " + amountAddOre);
 
 

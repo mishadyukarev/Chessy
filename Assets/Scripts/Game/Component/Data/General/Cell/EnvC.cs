@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -45,16 +46,24 @@ namespace Game.Game
             if (env == default) throw new Exception();
             if (Have(env)) throw new Exception();
 
+            Environment<EnvResC>(_idx).SetNew(env);
+
             WhereEnvC.Set(env, _idx, true);
             _envs[env] = true;
         }
         public void Remove(EnvTypes env)
         {
             if (env == default) throw new Exception();
-            if (!Have(env)) throw new Exception();
 
-            WhereEnvC.Set(env, _idx, false);
-            _envs[env] = false;
+            if (Have(env))
+            {
+                if (env == EnvTypes.AdultForest) Trail<TrailC>(_idx).ResetAll();
+
+                Environment<EnvResC>(_idx).Reset(env);
+
+                WhereEnvC.Set(env, _idx, false);
+                _envs[env] = false;
+            }
         }
         public void Sync(EnvTypes env, bool have)
         {

@@ -11,7 +11,7 @@ namespace Game.Game
         
         public void Run()
         {
-            ref EnvC Env(in byte idx) => ref EntityPool.EnvCellC<EnvC>(idx);
+            ref EnvC Env(in byte idx) => ref EntityPool.Environment<EnvC>(idx);
 
 
             foreach (byte idx_0 in EntityPool.Idxs)
@@ -32,7 +32,7 @@ namespace Game.Game
                     {
                         DirectTypes curDir_1 = default;
 
-                        CellSpaceC.TryGetXyAround(EntityPool.CellC<XyC>(idx_0).Xy, out var dirs);
+                        CellSpaceC.TryGetXyAround(EntityPool.Cell<XyC>(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
@@ -44,8 +44,8 @@ namespace Game.Game
                             ref var unit_1 = ref _unitF.Get1(idx_1);
                             ref var ownUnit_1 = ref _unitF.Get3(idx_1);
 
-                            ref var env_1 = ref EntityPool.EnvCellC<EnvC>(idx_1);
-                            ref var trail_1 = ref EntityPool.TrailCellC<TrailC>(idx_1);
+                            ref var env_1 = ref EntityPool.Environment<EnvC>(idx_1);
+                            ref var trail_1 = ref EntityPool.Trail<TrailC>(idx_1);
 
 
                             if (!Env(idx_1).Have(EnvTypes.Mountain))

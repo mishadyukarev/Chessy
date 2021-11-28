@@ -26,8 +26,8 @@ namespace Game.Game
             ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
             ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
 
-            ref var tw_0 = ref EntityPool.TWCellC<ToolWeaponC>(idx_0);
-            ref var twLevel_0 = ref EntityPool.TWCellC<LevelC>(idx_0);
+            ref var tw_0 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_0);
+            ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
 
 
             if (hpUnit_0.HaveMaxHp)
@@ -44,7 +44,7 @@ namespace Game.Game
 
 
                     levUnit_0.Set(LevelTypes.First);
-                    hpUnit_0.SetMaxHp();
+                    hpUnit_0.SetMax();
                     stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 

@@ -8,8 +8,8 @@ namespace Game.Game
         {
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                ref var trailData_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
-                ref var trailVisData_0 = ref EntityPool.TrailCellC<VisibleC>(idx_0);
+                ref var trailData_0 = ref EntityPool.Trail<TrailC>(idx_0);
+                ref var trailVisData_0 = ref EntityPool.Trail<VisibleC>(idx_0);
                 ref var trailView_0 = ref EntityVPool.TrailCellVC<TrailVC>(idx_0);
 
                 foreach (var item in trailData_0.DictTrail)

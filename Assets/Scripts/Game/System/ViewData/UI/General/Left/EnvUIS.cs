@@ -6,10 +6,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var build_sel = ref EntityPool.BuildCellC<BuildC>(SelIdx.Idx);
+            ref var build_sel = ref EntityPool.Build<BuildC>(SelIdx.Idx);
 
-            ref var env_sel = ref EntityPool.EnvCellC<EnvC>(SelIdx.Idx);
-            ref var envRes_sel = ref EntityPool.EnvCellC<EnvResC>(SelIdx.Idx);
+            ref var env_sel = ref EntityPool.Environment<EnvC>(SelIdx.Idx);
+            ref var envRes_sel = ref EntityPool.Environment<EnvResC>(SelIdx.Idx);
 
 
             if (SelIdx.IsSelCell && !build_sel.Is(BuildTypes.City))
@@ -22,9 +22,9 @@ namespace Game.Game
             }
 
 
-            EnvirUIC.SetTextResour(ResTypes.Food, envRes_sel.AmountRes(EnvTypes.Fertilizer).ToString());
-            EnvirUIC.SetTextResour(ResTypes.Wood, envRes_sel.AmountRes(EnvTypes.AdultForest).ToString());
-            EnvirUIC.SetTextResour(ResTypes.Ore, envRes_sel.AmountRes(EnvTypes.Hill).ToString());
+            EnvirUIC.SetTextResour(ResTypes.Food, envRes_sel.Amount(EnvTypes.Fertilizer).ToString());
+            EnvirUIC.SetTextResour(ResTypes.Wood, envRes_sel.Amount(EnvTypes.AdultForest).ToString());
+            EnvirUIC.SetTextResour(ResTypes.Ore, envRes_sel.Amount(EnvTypes.Hill).ToString());
         }
     }
 }

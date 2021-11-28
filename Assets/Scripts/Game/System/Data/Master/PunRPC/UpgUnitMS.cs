@@ -40,7 +40,7 @@ namespace Game.Game
 
                         stepUnit_0.TakeSteps();
 
-                        hpUnit_0.SetMaxHp();
+                        hpUnit_0.SetMax();
 
                         RpcSys.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                     }

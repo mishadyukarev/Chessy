@@ -37,7 +37,7 @@ namespace Game.Game
                         env_0.Remove(EnvTypes.YoungForest);
 
                         env_0.SetNew(EnvTypes.AdultForest);
-                        envRes_0.SetMaxAmountRes(EnvTypes.AdultForest);
+                        envRes_0.SetMax(EnvTypes.AdultForest);
 
                         unitStep_0.TakeSteps();
 
@@ -47,7 +47,7 @@ namespace Game.Game
 
                         if (!effUnit_0.Have(UnitStatTypes.Steps)) effUnit_0.Set(UnitStatTypes.Steps);
 
-                        var around = CellSpaceC.XyAround(EntityPool.CellC<XyC>(idx_0).Xy);
+                        var around = CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy);
                         foreach (var xy_1 in around)
                         {
                             var idx_1 = EntityPool.IdxCell(xy_1);

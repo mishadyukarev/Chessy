@@ -6,33 +6,20 @@ using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private readonly EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private readonly EcsFilter<ConditionC, UnitEffectsC, StunC> _effUnitF = default;
+        static PhotonView PhotonView => RpcVC.PhotonView;
 
-        private readonly EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
-        private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
-        private readonly EcsFilter<CornerArcherC> _archerF = default;
+        static string MasterRPCName => nameof(MasterRPC);
+        static string GeneralRPCName => nameof(GeneralRPC);
+        static string OtherRPCName => nameof(OtherRPC);
+        static string SyncMasterRPCName => nameof(SyncAllMaster);
 
-        private readonly EcsFilter<EnvC, EnvResC> _envF = default;
-        private readonly EcsFilter<FireC> _fireF = default;
-        private readonly EcsFilter<RiverC> _riverF = default;
-        private readonly EcsFilter<CloudC> _cloudF = default;
-
-
-        private static PhotonView PhotonView => RpcVC.PhotonView;
-
-        private static string MasterRPCName => nameof(MasterRPC);
-        private static string GeneralRPCName => nameof(GeneralRPC);
-        private static string OtherRPCName => nameof(OtherRPC);
-        private static string SyncMasterRPCName => nameof(SyncAllMaster);
-
-        private int _idx_cur;
+        int _idx_cur;
 
         public static RpcSys Instance { get; private set; }
 
@@ -380,110 +367,86 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (byte idx_0 in _effUnitF)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unitC_0 = ref _unitF.Get1(idx_0);
-                objs.Add(unitC_0.Unit);
-                objs.Add(_unitF.Get3(idx_0).Owner);
-                objs.Add(_unitF.Get2(idx_0).Level);
-                ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
-                objs.Add(hpUnit_0.Hp);
-                objs.Add(_statUnitF.Get2(idx_0).Steps);
+                objs.Add(Unit<UnitC>(idx_0).Unit);
+                objs.Add(Unit<OwnerC>(idx_0).Owner);
+                objs.Add(Unit<LevelC>(idx_0).Level);
+                objs.Add(Unit<HpC>(idx_0).Hp);
+                objs.Add(Unit<StepC>(idx_0).Steps);
 
-                objs.Add(_effUnitF.Get1(idx_0).Condition);
-                foreach (var item in _effUnitF.Get2(idx_0).Effects) objs.Add(item.Value);
-                objs.Add(_statUnitF.Get3(idx_0).Water);
+                objs.Add(Unit<ConditionC>(idx_0).Condition);
+                foreach (var item in Unit<UnitEffectsC>(idx_0).Effects) objs.Add(item.Value);
+                objs.Add(Unit<WaterC>(idx_0).Water);
 
-                objs.Add(EntityPool.TWCellC<ToolWeaponC>(idx_0).TW);
-                objs.Add(EntityPool.TWCellC<LevelC>(idx_0).Level);
-                objs.Add(EntityPool.TWCellC<ShieldC>(idx_0).Protection);
+                objs.Add(ToolWeapon<ToolWeaponC>(idx_0).TW);
+                objs.Add(ToolWeapon<LevelC>(idx_0).Level);
+                objs.Add(ToolWeapon<ShieldC>(idx_0).Protection);
 
-                objs.Add(_effUnitF.Get3(idx_0).IsStunned);
-                objs.Add(_effUnitF.Get3(idx_0).StepsInStun);
+                objs.Add(Unit<StunC>(idx_0).IsStunned);
+                objs.Add(Unit<StunC>(idx_0).StepsInStun);
 
-                objs.Add(_archerF.Get1(idx_0).IsCornered);
+                objs.Add(Unit<CornerArcherC>(idx_0).IsCornered);
 
-                foreach (var item in _uniqUnitF.Get2(idx_0).Cooldowns)
+                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
                     objs.Add(item.Value);
 
 
 
 
 
-                objs.Add(EntityPool.BuildCellC<BuildC>(idx_0).Build);
-                objs.Add(EntityPool.BuildCellC<OwnerC>(idx_0).Owner);
+                objs.Add(Build<BuildC>(idx_0).Build);
+                objs.Add(Build<OwnerC>(idx_0).Owner);
 
 
 
-                ref var env_0 = ref _envF.Get1(idx_0);
-                ref var envRes_0 = ref _envF.Get2(idx_0);
+                ref var env_0 = ref Environment<EnvC>(idx_0);
+                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
                 foreach (var item in env_0.Envronments) objs.Add(item.Value);
                 foreach (var item in envRes_0.Resources) objs.Add(item.Value);
 
 
 
-                objs.Add(_riverF.Get1(idx_0).River);
-                foreach (var item_0 in _riverF.Get1(idx_0).DirectsDict)
+                objs.Add(River<RiverC>(idx_0).River);
+                foreach (var item_0 in River<RiverC>(idx_0).DirectsDict)
                     objs.Add(item_0.Value);
 
 
-                foreach (var item_0 in EntityPool.TrailCellC<TrailC>(idx_0).Health)
+                foreach (var item_0 in Trail<TrailC>(idx_0).Health)
                     objs.Add(item_0.Value);
 
 
-                ref var cloud_0 = ref _cloudF.Get1(idx_0);
-                objs.Add(cloud_0.Have);
-                //objs.Add(cloud_0.CloudWidth);
+                objs.Add(Cloud<CloudC>(idx_0).Have);
 
 
-                objs.Add(_fireF.Get1(idx_0).Have);
+                objs.Add(Fire<FireC>(idx_0).Have);
 
 
                 
             }
 
 
-            #region Cooldowns
-
             foreach (var item_0 in ScoutHeroCooldownC.Cooldowns) objs.Add(item_0.Value);
 
-            #endregion
-
-
-            #region Upgrades
 
             foreach (var item_0 in UnitUpgC.Upgrades) objs.Add(item_0.Value);
             foreach (var item_0 in BuildsUpgC.HaveUpgrades) objs.Add(item_0.Value);
 
-            #endregion
-
-
-            #region Inventor
 
             foreach (var item_0 in InvResC.Resources) objs.Add(item_0.Value);
             foreach (var item_0 in InvUnitsC.Units) objs.Add(item_0.Value);
             foreach (var item_0 in InvTWC.ToolWeapons) objs.Add(item_0.Value);
 
-            #endregion
-
-
-            #region Where
 
             foreach (var item in WhereUnitsC.Units) objs.Add(item.Value);
             foreach (var item in WhereBuildsC.Cells) objs.Add(item.Value);
             foreach (var item in WhereEnvC.Envs) objs.Add(item.Value);
 
-            #endregion
-
-
-            #region PickUpgade
 
             foreach (var item in PickUpgC.HaveUpgrades) objs.Add(item.Value);
             foreach (var item in UnitAvailPickUpgC.Available_0) objs.Add(item.Value);
             foreach (var item in BuildAvailPickUpgC.Available) objs.Add(item.Value);
             foreach (var item in WaterAvailPickUpgC.Available) objs.Add(item.Value);
-
-            #endregion
 
 
             #region Other
@@ -517,111 +480,84 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (byte idx_0 in _effUnitF)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                unit_0.Sync((UnitTypes)objects[_idx_cur++]);
-                _unitF.Get3(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
-                _unitF.Get2(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
-                _statUnitF.Get1(idx_0).Sync((int)objects[_idx_cur++]);
-                _statUnitF.Get2(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<UnitC>(idx_0).Sync((UnitTypes)objects[_idx_cur++]);
+                Unit<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
+                Unit<LevelC>(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
+                Unit<HpC>(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<StepC>(idx_0).Sync((int)objects[_idx_cur++]);
 
-                _effUnitF.Get1(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
-                foreach (var item in _effUnitF.Get2(idx_0).Effects) _effUnitF.Get2(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
-                _statUnitF.Get3(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
+                foreach (var item in Unit<UnitEffectsC>(idx_0).Effects) Unit<UnitEffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
+                Unit<WaterC>(idx_0).Sync((int)objects[_idx_cur++]);
 
-                EntityPool.TWCellC<ToolWeaponC>(idx_0).Sync((TWTypes)objects[_idx_cur++]);
-                EntityPool.TWCellC<LevelC>(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
-                EntityPool.TWCellC<ShieldC>(idx_0).Sync((int)objects[_idx_cur++]);
+                ToolWeapon<ToolWeaponC>(idx_0).Sync((TWTypes)objects[_idx_cur++]);
+                ToolWeapon<LevelC>(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
+                ToolWeapon<ShieldC>(idx_0).Sync((int)objects[_idx_cur++]);
 
                 
-                _effUnitF.Get3(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                Unit<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                _archerF.Get1(idx_0).Sync((bool)objects[_idx_cur++]);
+                Unit<CornerArcherC>(idx_0).Sync((bool)objects[_idx_cur++]);
 
-                foreach (var item in _uniqUnitF.Get2(idx_0).Cooldowns)
-                    _uniqUnitF.Get2(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
-
-
+                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
+                    Unit<CooldownUniqC>(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
 
 
 
-                EntityPool.BuildCellC<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
-                EntityPool.BuildCellC<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
+
+
+                Build<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
+                Build<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
 
 
 
-                ref var env_0 = ref _envF.Get1(idx_0);
-                ref var envRes_0 = ref _envF.Get2(idx_0);
+                ref var env_0 = ref Environment<EnvC>(idx_0);
+                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
                 foreach (var item in env_0.Envronments) env_0.Sync(item.Key, (bool)objects[_idx_cur++]);
                 foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, (int)objects[_idx_cur++]);
 
 
-                ref var river_0 = ref _riverF.Get1(idx_0);
+                ref var river_0 = ref River<RiverC>(idx_0);
                 river_0.Sync((RiverTypes)objects[_idx_cur++]);
                 foreach (var item_0 in river_0.DirectsDict)
                     river_0.Sync(item_0.Key, (bool)objects[_idx_cur++]);
 
 
 
-                ref var trail_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref Trail<TrailC>(idx_0);
                 foreach (var item_0 in trail_0.Health)
                     trail_0.SyncTrail(item_0.Key, (int)objects[_idx_cur++]);
 
 
 
-                ref var cloud_0 = ref _cloudF.Get1(idx_0);
-                cloud_0.Sync((bool)objects[_idx_cur++]/*, (CloudWidthTypes)objects[_curIdx++]*/);
-
-
-
-                ref var fire_0 = ref _fireF.Get1(idx_0);
-                fire_0.Sync((bool)objects[_idx_cur++]);
+                Cloud<CloudC>(idx_0).Sync((bool)objects[_idx_cur++]);
+                Fire<FireC>(idx_0).Sync((bool)objects[_idx_cur++]);
             }
 
 
-            #region Cooldowns
-
             foreach (var item_0 in ScoutHeroCooldownC.Cooldowns) ScoutHeroCooldownC.Sync(item_0.Key, (int)objects[_idx_cur++]);
 
-            #endregion
-
-
-            #region Upgrades
 
             foreach (var item_0 in UnitUpgC.Upgrades) UnitUpgC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
-
             foreach (var item_0 in BuildsUpgC.HaveUpgrades) BuildsUpgC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
 
-            #endregion
-
-
-            #region Inventor
 
             foreach (var item_0 in InvResC.Resources) InvResC.Sync(item_0.Key, (int)objects[_idx_cur++]);
             foreach (var item_0 in InvUnitsC.Units) InvUnitsC.Sync(item_0.Key, (int)objects[_idx_cur++]);
             foreach (var item_0 in InvTWC.ToolWeapons) InvTWC.Sync(item_0.Key, (int)objects[_idx_cur++]);
 
-            #endregion
-
-
-            #region Where
 
             foreach (var item_0 in WhereUnitsC.Units) WhereUnitsC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
             foreach (var item_0 in WhereBuildsC.Cells) WhereBuildsC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
             foreach (var item_0 in WhereEnvC.Envs) WhereEnvC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
 
-            #endregion
-
-
-            #region PickUpgade
 
             foreach (var item in PickUpgC.HaveUpgrades) PickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
             foreach (var item in UnitAvailPickUpgC.Available_0) UnitAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
             foreach (var item in BuildAvailPickUpgC.Available) BuildAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
             foreach (var item in WaterAvailPickUpgC.Available) WaterAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
-
-            #endregion
 
 
             #region Other

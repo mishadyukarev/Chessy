@@ -8,11 +8,11 @@ namespace Game.Game
         {
             foreach(byte idx_0 in EntityPool.Idxs)
             {
-                var curXy = EntityPool.CellC<XyC>(idx_0).Xy;
+                var curXy = EntityPool.Cell<XyC>(idx_0).Xy;
 
-                ref var unit_0 = ref EntityPool.UnitCellC<UnitC>(idx_0);
-                ref var ownUnit_0 = ref EntityPool.UnitCellC<OwnerC>(idx_0);
-                ref var stun_0 = ref EntityPool.UnitCellC<StunC>(idx_0);
+                ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref EntityPool.Unit<OwnerC>(idx_0);
+                ref var stun_0 = ref EntityPool.Unit<StunC>(idx_0);
 
                 if (!stun_0.IsStunned)
                 {
@@ -22,8 +22,8 @@ namespace Game.Game
                         {
                             var idx_1 = EntityPool.IdxCell(xy_1);
 
-                            ref var env_1 = ref EntityPool.EnvCellC<EnvC>(idx_1);
-                            ref var fire_1 = ref EntityPool.FireCellC<FireC>(idx_1);
+                            ref var env_1 = ref EntityPool.Environment<EnvC>(idx_1);
+                            ref var fire_1 = ref EntityPool.Fire<FireC>(idx_1);
 
                             if (!fire_1.Have)
                             {

@@ -34,8 +34,8 @@ namespace Game.Game
             ref var moveCond_from = ref _effUnitF.Get2(idx_from);
             ref var effUnit_from = ref _effUnitF.Get3(idx_from);
 
-            ref var tw_from = ref EntityPool.TWCellC<ToolWeaponC>(idx_from);
-            ref var twShield_from = ref EntityPool.TWCellC<ShieldC>(idx_from);
+            ref var tw_from = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_from);
+            ref var twShield_from = ref EntityPool.ToolWeapon<ShieldC>(idx_from);
 
 
 
@@ -53,25 +53,25 @@ namespace Game.Game
             ref var effUnit_to = ref _effUnitF.Get3(idx_to);
             ref var stun_to = ref _effUnitF.Get4(idx_to);
 
-            ref var tw_to = ref EntityPool.TWCellC<ToolWeaponC>(idx_to);
-            ref var twShield_to = ref EntityPool.TWCellC<ShieldC>(idx_to);
+            ref var tw_to = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_to);
+            ref var twShield_to = ref EntityPool.ToolWeapon<ShieldC>(idx_to);
 
             #endregion
 
 
             ref var river_from = ref _riverF.Get1(idx_from);
-            ref var build_from = ref EntityPool.BuildCellC<BuildC>(idx_from);
-            ref var ownBuild_from = ref EntityPool.BuildCellC<OwnerC>(idx_from);
+            ref var build_from = ref EntityPool.Build<BuildC>(idx_from);
+            ref var ownBuild_from = ref EntityPool.Build<OwnerC>(idx_from);
             ref var env_from = ref _envF.Get1(idx_from);
-            ref var trail_from = ref EntityPool.TrailCellC<TrailC>(idx_from);
+            ref var trail_from = ref EntityPool.Trail<TrailC>(idx_from);
             ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
 
 
             ref var river_to = ref _riverF.Get1(idx_to);
-            ref var build_to = ref EntityPool.BuildCellC<BuildC>(idx_to);
-            ref var ownBuild_to = ref EntityPool.BuildCellC<OwnerC>(idx_to);
+            ref var build_to = ref EntityPool.Build<BuildC>(idx_to);
+            ref var ownBuild_to = ref EntityPool.Build<OwnerC>(idx_to);
             ref var env_to = ref _envF.Get1(idx_to);
-            ref var trail_to = ref EntityPool.TrailCellC<TrailC>(idx_to);
+            ref var trail_to = ref EntityPool.Trail<TrailC>(idx_to);
             ref var cdUniq_to = ref _uniqUnitF.Get1(idx_to);
 
 
@@ -188,7 +188,7 @@ namespace Game.Game
                         }
                         else
                         {
-                            var dir = CellSpaceC.GetDirect(CellC<XyC>(idx_from).Xy, CellC<XyC>(idx_to).Xy);
+                            var dir = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
                             unit_to.Shift(idx_from, dir);
 
                             //unit_to.SetNew(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);

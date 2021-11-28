@@ -5,8 +5,8 @@ namespace Game.Game
 {
     public struct CellVC : ICellVE
     {
-        private GameObject _cell;
-        private GameObject _cellUnder;
+        GameObject _cell;
+        GameObject _cellUnder;
 
         public bool IsActiveSelf => _cellUnder.activeSelf;
         public int InstanceID => _cellUnder.GetInstanceID();

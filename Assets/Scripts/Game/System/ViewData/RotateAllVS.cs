@@ -11,7 +11,7 @@ namespace Game.Game
 
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                EntityVPool.CellVC<CellVC>(idx_0).SetRotForClient(curPlayer);
+                EntityVPool.Cell<CellVC>(idx_0).SetRotForClient(curPlayer);
                 EntityVPool.TrailCellVC<TrailVC>(idx_0).Rotate(curPlayer);
             }
 

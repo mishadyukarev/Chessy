@@ -31,7 +31,7 @@ namespace Game.Game
                 {
                     if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
                     {
-                        var xy_from = EntityPool.CellC<XyC>(idx_from).Xy;
+                        var xy_from = EntityPool.Cell<XyC>(idx_from).Xy;
 
                         var list_around = CellSpaceC.XyAround(xy_from);
 

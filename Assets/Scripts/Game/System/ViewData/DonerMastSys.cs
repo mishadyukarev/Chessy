@@ -44,18 +44,18 @@ namespace Game.Game
             }
             else
             {
-                var playerSend = sender.GetPlayerType();
+                var playerSend = sender.GetPlayer();
 
                 if (WhoseMoveC.WhoseMove == playerSend)
                 {
-                    if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayerType()))
+                    if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))
                     {
                         if (playerSend == PlayerTypes.Second)
                         {
                             DataMastSC.InvokeRun(MastDataSysTypes.Update);
 
-                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayerType());
-                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayerType());
+                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
                         }
 
                         WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

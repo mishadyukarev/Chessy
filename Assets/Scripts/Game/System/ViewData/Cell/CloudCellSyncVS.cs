@@ -8,7 +8,7 @@ namespace Game.Game
         {
             foreach (var idx_0 in EntityPool.Idxs)
             {
-                EntityVPool.CloudCellVC<CloudVC>(idx_0).EnableCloud(EntityPool.CloudCellC<CloudC>(idx_0).Have);
+                EntityVPool.CloudCellVC<CloudVC>(idx_0).EnableCloud(EntityPool.Cloud<CloudC>(idx_0).Have);
             }
         }
     }

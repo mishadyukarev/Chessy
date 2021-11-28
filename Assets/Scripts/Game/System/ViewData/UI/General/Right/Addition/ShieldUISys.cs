@@ -6,8 +6,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var tw_sel = ref EntityPool.TWCellC<ToolWeaponC>(SelIdx.Idx);
-            ref var twLevel_sel = ref EntityPool.TWCellC<LevelC>(SelIdx.Idx);
+            ref var tw_sel = ref EntityPool.ToolWeapon<ToolWeaponC>(SelIdx.Idx);
+            ref var twLevel_sel = ref EntityPool.ToolWeapon<LevelC>(SelIdx.Idx);
 
             ExtraTWZoneUIC.DisableAll();
 

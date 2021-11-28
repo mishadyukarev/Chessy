@@ -11,7 +11,7 @@ namespace Game.Game
         public bool Have => Build != default;
         public bool Is(params BuildTypes[] builds)
         {
-            foreach (var buildType in builds) if (buildType == _build) return true;
+            foreach (var build in builds) if (build == _build) return true;
             return false;
         }
 
@@ -34,12 +34,15 @@ namespace Game.Game
             _build = build;
             WhereBuildsC.Set(build, owner, _idx, true);
         }
-        public void Remove(PlayerTypes owner)
+        public void Remove()
         {
-            if (!Have) throw new Exception();
+            var owner = EntityPool.Build<OwnerC>(_idx).Owner;
 
-            WhereBuildsC.Set(_build, owner, _idx, false);
-            _build = BuildTypes.None;
+            if (Have)
+            {
+                WhereBuildsC.Set(_build,  owner, _idx, false);
+                _build = BuildTypes.None;
+            } 
         }
         public void Sync(BuildTypes build)
         {

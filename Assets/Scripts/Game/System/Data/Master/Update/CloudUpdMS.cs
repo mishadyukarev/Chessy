@@ -10,7 +10,7 @@ namespace Game.Game
         public void Run()
         {
             var weather_0 = _cloudF.Get1(CloudCenterC.Idx);
-            var xy_0 = EntityPool.CellC<XyC>(CloudCenterC.Idx).Xy;
+            var xy_0 = EntityPool.Cell<XyC>(CloudCenterC.Idx).Xy;
 
 
             var aroundList = CellSpaceC.XyAround(xy_0);

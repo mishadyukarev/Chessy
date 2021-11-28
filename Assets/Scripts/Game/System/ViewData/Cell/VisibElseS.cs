@@ -8,15 +8,15 @@ namespace Game.Game
         {
             foreach (byte idx_0 in EntityPool.Idxs)
             {
-                var xy = EntityPool.CellC<XyC>(idx_0).Xy;
+                var xy = EntityPool.Cell<XyC>(idx_0).Xy;
 
-                ref var env_0 = ref EntityPool.EnvCellC<EnvC>(idx_0);
-                ref var unit_0 = ref EntityPool.UnitCellC<UnitC>(idx_0);
-                ref var ownUnit_0 = ref EntityPool.UnitCellC<OwnerC>(idx_0);
+                ref var env_0 = ref EntityPool.Environment<EnvC>(idx_0);
+                ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref EntityPool.Unit<OwnerC>(idx_0);
 
                 if (unit_0.HaveUnit)
                 {
-                    ref var visUnit_0 = ref EntityPool.UnitCellC<VisibleC>(idx_0);
+                    ref var visUnit_0 = ref EntityPool.Unit<VisibleC>(idx_0);
 
                     visUnit_0.SetVisibled(ownUnit_0.Owner, true);
 
@@ -30,8 +30,8 @@ namespace Game.Game
                         {
                             var idxCell_1 = EntityPool.IdxCell(xy_1);
 
-                            ref var unitCom_1 = ref EntityPool.UnitCellC<UnitC>(idxCell_1);
-                            ref var ownUnitCom_1 = ref EntityPool.UnitCellC<OwnerC>(idxCell_1);
+                            ref var unitCom_1 = ref EntityPool.Unit<UnitC>(idxCell_1);
+                            ref var ownUnitCom_1 = ref EntityPool.Unit<OwnerC>(idxCell_1);
 
                             if (unitCom_1.HaveUnit)
                             {
@@ -52,12 +52,12 @@ namespace Game.Game
 
                 }
 
-                ref var curBuildCom = ref EntityPool.BuildCellC<BuildC>(idx_0);
+                ref var curBuildCom = ref EntityPool.Build<BuildC>(idx_0);
 
                 if (curBuildCom.Have)
                 {
-                    ref var curOwnBuildCom = ref EntityPool.BuildCellC<OwnerC>(idx_0);
-                    ref var curVisBuildCom = ref EntityPool.BuildCellC<VisibleC>(idx_0);
+                    ref var curOwnBuildCom = ref EntityPool.Build<OwnerC>(idx_0);
+                    ref var curVisBuildCom = ref EntityPool.Build<VisibleC>(idx_0);
 
                     curVisBuildCom.SetVisibled(curOwnBuildCom.Owner, true);
 
@@ -71,8 +71,8 @@ namespace Game.Game
                         {
                             var idxCell_1 = EntityPool.IdxCell(xy_1);
 
-                            ref var aroUnitDataCom = ref EntityPool.UnitCellC<UnitC>(idxCell_1);
-                            ref var arouOnUnitCom = ref EntityPool.UnitCellC<OwnerC>(idxCell_1);
+                            ref var aroUnitDataCom = ref EntityPool.Unit<UnitC>(idxCell_1);
+                            ref var arouOnUnitCom = ref EntityPool.Unit<OwnerC>(idxCell_1);
 
                             if (aroUnitDataCom.HaveUnit)
                             {
@@ -90,11 +90,11 @@ namespace Game.Game
                 }
 
 
-                ref var trail_0 = ref EntityPool.TrailCellC<TrailC>(idx_0);
+                ref var trail_0 = ref EntityPool.Trail<TrailC>(idx_0);
 
                 if (trail_0.HaveAnyTrail)
                 {
-                    ref var trailVis_0 = ref EntityPool.TrailCellC<VisibleC>(idx_0);
+                    ref var trailVis_0 = ref EntityPool.Trail<VisibleC>(idx_0);
 
                     var list = CellSpaceC.XyAround(xy);
 
@@ -107,8 +107,8 @@ namespace Game.Game
                     {
                         var idxCell_1 = EntityPool.IdxCell(xy_1);
 
-                        ref var unitCom_1 = ref EntityPool.UnitCellC<UnitC>(idxCell_1);
-                        ref var ownUnit_1 = ref EntityPool.UnitCellC<OwnerC>(idxCell_1);
+                        ref var unitCom_1 = ref EntityPool.Unit<UnitC>(idxCell_1);
+                        ref var ownUnit_1 = ref EntityPool.Unit<OwnerC>(idxCell_1);
 
 
                         if (unitCom_1.HaveUnit)
