@@ -35,13 +35,13 @@ namespace Game.Game
             {
                 if (visUnit_to.IsVisibled(playerSend))
                 {
-                    if (unit_to.HaveUnit)
+                    if (unit_to.Have)
                     {
                         if (env_to.Have(EnvTypes.AdultForest))
                         {
-                            if (hp_from.HaveMaxHp)
+                            if (hp_from.HaveMax)
                             {
-                                if (step_from.HaveMinSteps)
+                                if (step_from.HaveMin)
                                 {
                                     if (!ownUnit_from.Is(ownUnit_to.Owner))
                                     {

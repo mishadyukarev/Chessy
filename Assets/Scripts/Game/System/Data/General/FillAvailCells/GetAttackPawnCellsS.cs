@@ -48,7 +48,7 @@ namespace Game.Game
                                 if (step_0.HaveStepsForDoing(env_1, item_1.Key, trail_1)
                                     || step_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
                                 {
-                                    if (unit_1.HaveUnit)
+                                    if (unit_1.Have)
                                     {
                                         if (!own_1.Is(ownUnit_0.Owner))
                                         {

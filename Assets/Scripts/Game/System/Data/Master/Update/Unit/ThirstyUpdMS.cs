@@ -32,7 +32,7 @@ namespace Game.Game
                 ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
 
-                if (unit_0.HaveUnit)
+                if (unit_0.Have)
                 {
                     var canExecute = false;
                     if (GameModesCom.IsGameMode(GameModes.TrainingOff))

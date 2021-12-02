@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -6,91 +7,36 @@ namespace Game.Game
     {
         public void Run()
         {
-            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            foreach (var idx_0 in Idxs)
             {
-                for (var build = BuildTypes.First; build < BuildTypes.End; build++)
+                ref var build_0 = ref Build<BuildC>(idx_0);
+                ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
+
+                ref var env_0 = ref Environment<EnvC>(idx_0);
+                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
+
+
+                if (build_0.CanExtract(out var extract, out var env, out var res))
                 {
-                    foreach (var idx_0 in WhereBuildsC.IdxBuilds(build, player))
+                    envRes_0.Take(env, extract);
+                    InvResC.Add(res, ownBuild_0.Owner, extract);
+
+                    if (!envRes_0.Have(env))
                     {
-                        ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-                        ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
+                        build_0.Remove();
 
-                        ref var env_0 = ref EntityPool.Environment<EnvC>(idx_0);
-                        ref var envRes_0 = ref EntityPool.Environment<EnvResC>(idx_0);
-                        ref var fire_0 = ref EntityPool.Fire<FireC>(idx_0);
+                        if (env != EnvTypes.Hill) env_0.Remove(env);          
 
-                        var minus_0 = 0;
-
-
-                        if (build_0.Is(BuildTypes.Farm))
+                        if (env == EnvTypes.AdultForest)
                         {
-                            minus_0 =  ExtractorC.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Farm, ownBuild_0.Owner));
-
-                            if (minus_0 > envRes_0.Amount(EnvTypes.Fertilizer)) 
-                                minus_0 = envRes_0.Amount(EnvTypes.Fertilizer);
-
-                            envRes_0.Take(EnvTypes.Fertilizer, minus_0);
-                            InvResC.Add(ResTypes.Food, ownBuild_0.Owner, minus_0);
-
-                            if (!envRes_0.Have(EnvTypes.Fertilizer))
+                            if (UnityEngine.Random.Range(0, 100) < 50)
                             {
-                                env_0.Remove(EnvTypes.Fertilizer);
-
-                                build_0.Remove();
-                            }
-                        }
-
-                        else if (build_0.Is(BuildTypes.Woodcutter))
-                        {
-                            minus_0 = ExtractorC.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Woodcutter, ownBuild_0.Owner));
-
-                            if (minus_0 > envRes_0.Amount(EnvTypes.AdultForest))
-                                minus_0 = envRes_0.Amount(EnvTypes.AdultForest);
-
-                            envRes_0.Take(EnvTypes.AdultForest, minus_0);
-                            InvResC.Add(ResTypes.Wood, ownBuild_0.Owner, minus_0);
-
-                            if (!envRes_0.Have(EnvTypes.AdultForest))
-                            {
-                                env_0.Remove(EnvTypes.AdultForest);
-
-                                build_0.Remove();
-
-                                
-
-                                if (fire_0.Have)
-                                {
-                                    fire_0.Disable();
-                                }
-
-
-                                if (UnityEngine.Random.Range(0, 100) < 50)
-                                {
-                                    EntityPool.Environment<EnvC>(idx_0).SetNew(EnvTypes.YoungForest);
-                                }
-                            }
-                        }
-
-                        else if (build_0.Is(BuildTypes.Mine))
-                        {
-                            minus_0 = ExtractorC.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Mine, ownBuild_0.Owner));
-
-                            if (minus_0 > envRes_0.Amount(EnvTypes.Hill))
-                                minus_0 = envRes_0.Amount(EnvTypes.Hill);
-
-                            envRes_0.Take(EnvTypes.Hill, minus_0);
-                            InvResC.Add(ResTypes.Ore, ownBuild_0.Owner, minus_0);
-
-                            if (!envRes_0.Have(EnvTypes.Hill))
-                            {
-                                build_0.Remove();
+                                Environment<EnvC>(idx_0).SetNew(EnvTypes.YoungForest);
                             }
                         }
                     }
                 }
             }
-
-
         }
     }
 }

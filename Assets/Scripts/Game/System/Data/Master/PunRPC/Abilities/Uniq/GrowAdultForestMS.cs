@@ -30,7 +30,7 @@ namespace Game.Game
 
             if (!cdUniq_0.HaveCooldown(UniqAbilTypes.GrowAdultForest))
             {
-                if (unitStep_0.HaveMinSteps)
+                if (unitStep_0.HaveMin)
                 {
                     if (env_0.Have(EnvTypes.YoungForest))
                     {
@@ -56,7 +56,7 @@ namespace Game.Game
                             ref var ownUnit_1 = ref _unitF.Get2(idx_1);
                             ref var effUnit_1 = ref _effUnitF.Get1(idx_1);   
 
-                            if (unit_1.HaveUnit)
+                            if (unit_1.Have)
                             {
                                 if (ownUnit_1.Is(ownUnit_0.Owner))
                                 {

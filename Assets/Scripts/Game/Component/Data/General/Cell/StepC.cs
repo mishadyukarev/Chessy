@@ -7,7 +7,7 @@ namespace Game.Game
         private int _steps;
 
         public int Steps => _steps;
-        public bool HaveMinSteps => Steps > 0;
+        public bool HaveMin => Steps > 0;
         public bool IsMinusSteps => Steps < 0;
         public bool IsNull => Steps == 0;
         public bool HaveMaxSteps(UnitTypes unit, bool haveEff, float upgPerc) => Steps >= MaxSteps(unit, haveEff, upgPerc);

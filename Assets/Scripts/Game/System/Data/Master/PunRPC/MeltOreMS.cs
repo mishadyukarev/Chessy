@@ -1,10 +1,11 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Game.Common;
+using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class MeltOreMasterSystem : IEcsRunSystem
+    public sealed class MeltOreMS : IEcsRunSystem
     {
         public void Run()
         {

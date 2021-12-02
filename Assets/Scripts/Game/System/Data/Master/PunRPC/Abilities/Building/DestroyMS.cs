@@ -23,7 +23,7 @@ namespace Game.Game
             ref var env_0 = ref _envF.Get1(idx_0);
 
 
-            if (_statUnitF.Get1(idx_0).HaveMinSteps)
+            if (_statUnitF.Get1(idx_0).HaveMin)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 

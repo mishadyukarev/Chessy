@@ -44,9 +44,9 @@ namespace Game.Game
                 {
                     envRes_0.Take(EnvTypes.AdultForest, 2);
 
-                    if (unit_0.HaveUnit)
+                    if (unit_0.Have)
                     {
-                        hpUnit_0.TakeHp(40);
+                        hpUnit_0.Take(40);
 
                         if (!hpUnit_0.HaveHp)
                         {

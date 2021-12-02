@@ -23,7 +23,7 @@ namespace Game.Game
 
                 if (SelIdx.Idx == idx_0)
                 {
-                    if (unit_0.HaveUnit)
+                    if (unit_0.Have)
                     {
                         if (ownUnit_0.Is(WhoseMoveC.CurPlayerI))
                         {

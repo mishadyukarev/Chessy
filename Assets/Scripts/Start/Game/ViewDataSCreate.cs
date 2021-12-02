@@ -91,7 +91,7 @@ namespace Game.Game
                 .Add(new HeroSyncUIS())
 
                 ///up
-                .Add(new EconomyUpUISys())
+                .Add(new EconomyUpUIS())
                 .Add(new WindUISys())
 
                 ///center

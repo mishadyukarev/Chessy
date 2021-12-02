@@ -14,7 +14,7 @@ namespace Game.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (InvResC.CanBuyRes(whoseMove, res, out var needRes))
+            if (InvResC.CanBuy(whoseMove, res, out var needRes))
             {
                 InvResC.BuyRes(whoseMove, res);
 

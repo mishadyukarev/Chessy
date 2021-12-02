@@ -5,6 +5,8 @@
         None,
 
         Protected,
-        Relaxed
+        Relaxed,
+
+        End
     }
 }

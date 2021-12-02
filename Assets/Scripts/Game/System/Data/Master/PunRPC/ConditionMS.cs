@@ -4,7 +4,7 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class ConditionMasterSystem : IEcsRunSystem
+    public sealed class ConditionMS : IEcsRunSystem
     {
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<ConditionC> _effUnitF = default;
@@ -30,28 +30,14 @@ namespace Game.Game
                     if (cond_0.Is(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-
                         cond_0.Reset();
                     }
 
-                    else if (step_0.HaveMinSteps)
+                    else if (step_0.HaveMin)
                     {
-                        if (cond_0.Is(CondUnitTypes.Relaxed))
-                        {
-                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-
-                            cond_0.Set(cond);
-
-                            step_0.TakeSteps();
-                        }
-                        else
-                        {
-                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-
-                            cond_0.Set(cond);
-
-                            step_0.TakeSteps();
-                        }
+                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        step_0.TakeSteps();
+                        cond_0.Set(cond);
                     }
 
                     else
@@ -68,20 +54,11 @@ namespace Game.Game
                         cond_0.Reset();
                     }
 
-                    else if (step_0.HaveMinSteps)
+                    else if (step_0.HaveMin)
                     {
-                        if (cond_0.Is(CondUnitTypes.Protected))
-                        {
-                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                            cond_0.Set(cond);
-                            step_0.TakeSteps();
-                        }
-                        else
-                        {
-                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                            cond_0.Set(cond);
-                            step_0.TakeSteps();
-                        }
+                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        cond_0.Set(cond);
+                        step_0.TakeSteps();
                     }
 
                     else

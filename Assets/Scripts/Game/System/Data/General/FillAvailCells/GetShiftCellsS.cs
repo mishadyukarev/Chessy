@@ -30,7 +30,7 @@ namespace Game.Game
 
                 if (!stun_0.IsStunned)
                 {
-                    if (unit_0.HaveUnit)
+                    if (unit_0.Have)
                     {
                         CellSpaceC.TryGetXyAround(EntityPool.Cell<XyC>(idx_0).Xy, out var directs);
 
@@ -46,7 +46,7 @@ namespace Game.Game
 
                             if (!envC_1.Have(EnvTypes.Mountain))
                             {
-                                if (!unitC_1.HaveUnit)
+                                if (!unitC_1.Have)
                                 {
                                     if (step_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
                                         || step_0.HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner)))

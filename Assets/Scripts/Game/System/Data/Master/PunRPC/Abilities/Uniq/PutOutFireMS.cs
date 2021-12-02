@@ -18,7 +18,7 @@ namespace Game.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (stepUnit_0.HaveMinSteps)
+            if (stepUnit_0.HaveMin)
             {
                 fire_0.Disable();
 

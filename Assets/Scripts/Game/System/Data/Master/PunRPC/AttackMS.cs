@@ -156,7 +156,7 @@ namespace Game.Game
                     }
                     else if (minus_from > 0)
                     {
-                        hpUnit_from.TakeHp((int)minus_from);
+                        hpUnit_from.Take((int)minus_from);
                         if (hpUnit_from.IsHpDeathAfterAttack) hpUnit_from.SetMinHp();
                     }
                 }
@@ -169,7 +169,7 @@ namespace Game.Game
                 }
                 else if (minus_to > 0)
                 {
-                    hpUnit_to.TakeHp((int)minus_to);
+                    hpUnit_to.Take((int)minus_to);
                     if (hpUnit_to.IsHpDeathAfterAttack) hpUnit_to.SetMinHp();
                 }
 

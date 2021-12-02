@@ -4,9 +4,9 @@ using UnityEngine.EventSystems;
 
 namespace Game.Common
 {
-    public sealed class CreateVCs
+    public sealed class CreateCs
     {
-        public CreateVCs(Transform main)
+        public CreateCs(Transform main, TestModes testMode)
         {
             new MainGoVC(main.gameObject);
 
@@ -21,21 +21,20 @@ namespace Game.Common
 
             var aS = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
             aS.clip = ClipsResC.AudioClip(ClipComTypes.Music);
-            aS.volume = 0.2f;
+            aS.volume = testMode == TestModes.Standart ? 0 : 0.2f;
             aS.loop = true;
             aS.Play();
 
-
+            new TestModeC(testMode);
             new ComZoneC(new GameObject(NameConst.COMMON_ZONE));
             new UnityEventC(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>());
             new CanvasC(canvas);
             new SoundC(aS);
             new AdComC(DateTime.Now);
             new TimeStartGameC(DateTime.Now);
-            new HintC(true);
+            new HintC(testMode != TestModes.Standart);
             new ToggleZoneVC(new GameObject());
-            new ShopUIC(CanvasC.FindUnderComZone<Transform>("ShopZone"));
-
+            new ShopUIC(CanvasC.FindUnderComZone<Transform>("ShopZone"));      
 
 
             ComZoneC.Attach(camera.transform);

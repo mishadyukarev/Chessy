@@ -30,7 +30,7 @@ namespace Game.Game
                 var whoseMove = WhoseMoveC.WhoseMove;
 
 
-                if (step_0.HaveMinSteps)
+                if (step_0.HaveMin)
                 {
                     bool haveNearBorder = false;
 
@@ -50,11 +50,8 @@ namespace Game.Game
                         RpcSys.SoundToGeneral(sender, ClipTypes.Building);
                         RpcSys.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
-                        build_0.Remove();
 
-                        
-                        ownBuild_0.SetOwner(whoseMove);
-                        build_0.SetNew(forBuildType, ownBuild_0.Owner);
+                        build_0.SetNew(forBuildType, whoseMove);
 
 
                         step_0.DefSteps();

@@ -24,7 +24,7 @@ namespace Game.Game
         {
             var list = new List<byte>();
 
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 if (_units[Key(unit, lev, player, idx)])
                     list.Add(idx);
@@ -35,7 +35,7 @@ namespace Game.Game
         {
             get
             {
-                for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+                for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
                 {
                     if (_units[Key(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveC.CurPlayerI, idx)])
                     {
@@ -58,7 +58,7 @@ namespace Game.Game
                 {
                     for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                     {
-                        for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+                        for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
                         {
                             _units.Add(Key(unit, lev, player, idx), false);
                         }

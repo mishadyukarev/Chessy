@@ -8,17 +8,19 @@ namespace Game
 {
     public sealed class Main : MonoBehaviour
     {
+        [SerializeField] TestModes _testMode;
+
         EcsWorld _menuW;
         EcsWorld _gameW;
 
 
         private void Start()
         {
-            new Common.CreateVCs(transform);
+            new Common.CreateCs(transform, _testMode);
 
             var comSysts = new EcsSystems(new EcsWorld());
             new Common.CreateVSs(comSysts, gameObject);
-            new Common.CreateSysts(comSysts, ToggleScene);
+            new Common.CreateSs(comSysts, ToggleScene);
 
             comSysts.Init();
 
@@ -97,7 +99,7 @@ namespace Game
 
 
                     new Game.CreateVCs(MainGoVC.Rot);
-                    new CreateCs();
+                    new Game.CreateCs();
 
                     var gameSysts = new EcsSystems(_gameW)
                         .Add(new SpawnEntities());

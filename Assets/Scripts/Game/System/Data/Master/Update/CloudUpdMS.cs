@@ -1,16 +1,15 @@
 ﻿using Leopotam.Ecs;
 using System;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class CloudUpdMS : IEcsRunSystem
     {
-        private EcsFilter<CloudC> _cloudF = default;
-
         public void Run()
         {
-            var weather_0 = _cloudF.Get1(CloudCenterC.Idx);
-            var xy_0 = EntityPool.Cell<XyC>(CloudCenterC.Idx).Xy;
+            var weather_0 = Cloud<CloudC>(CloudCenterC.Idx);
+            var xy_0 = Cell<XyC>(CloudCenterC.Idx).Xy;
 
 
             var aroundList = CellSpaceC.XyAround(xy_0);
@@ -19,9 +18,9 @@ namespace Game.Game
 
             foreach (var xyArount in aroundList)
             {
-                var idx_1 = EntityPool.IdxCell(xyArount);
+                var idx_1 = IdxCell(xyArount);
 
-                _cloudF.Get1(idx_1).Have = false;
+                Cloud<CloudC>(idx_1).Have = false;
             }
 
             var xy_next = CellSpaceC.GetXyCellByDirect(xy_0, WindC.CurDirWind);
@@ -29,8 +28,8 @@ namespace Game.Game
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                CloudCenterC.Idx = EntityPool.IdxCell(xy_next);
-                _cloudF.Get1(CloudCenterC.Idx).Have = true;
+                CloudCenterC.Idx = IdxCell(xy_next);
+                Cloud<CloudC>(CloudCenterC.Idx).Have = true;
             }
             else
             {
@@ -49,9 +48,9 @@ namespace Game.Game
 
             foreach (var item in dirs)
             {
-                var idx_1 = EntityPool.IdxCell(item.Value);
+                var idx_1 = IdxCell(item.Value);
 
-                _cloudF.Get1(idx_1).Have = true;
+                Cloud<CloudC>(idx_1).Have = true;
 
                 WindC.Set(item.Key, idx_1);
             }

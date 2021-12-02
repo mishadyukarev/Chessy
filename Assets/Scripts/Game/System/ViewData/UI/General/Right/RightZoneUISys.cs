@@ -16,7 +16,7 @@ namespace Game.Game
 
             if (SelIdx.IsSelCell)
             {
-                if (unitD_sel.HaveUnit)
+                if (unitD_sel.Have)
                 {
                     if (unitV_sel.IsVisibled(WhoseMoveC.CurPlayerI))
                     {

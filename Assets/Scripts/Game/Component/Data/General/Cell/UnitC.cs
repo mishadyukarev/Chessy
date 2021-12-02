@@ -9,7 +9,7 @@ namespace Game.Game
         readonly byte _idx;
 
         public UnitTypes Unit => _unit;
-        public bool HaveUnit => Unit != UnitTypes.None;
+        public bool Have => Unit != UnitTypes.None;
         public bool IsMelee
         {
             get
@@ -48,7 +48,104 @@ namespace Game.Game
                 }
             }
         }
+        public int CostFood
+        {
+            get
+            {
+                if (Have)
+                {
+                    if (!Is(UnitTypes.King)) return 10;
+                    return 0;
+                }
 
+                return 0;
+            }
+        }
+        public bool CanExtract(out int extract, out EnvTypes env, out ResTypes res)
+        {
+            extract = 0;
+            env = EnvTypes.None;
+            res = ResTypes.None;
+
+
+            if (Environment<EnvC>(_idx).Have(EnvTypes.AdultForest))
+            {
+                env = EnvTypes.AdultForest;
+                res = ResTypes.Wood;
+            }
+            else return false;
+
+
+            if (!Is(UnitTypes.Pawn) || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed)
+                || !Unit<HpC>(_idx).HaveMax) return false;
+
+
+            var ration = 0f;
+
+            switch (Unit<LevelC>(_idx).Level)
+            {
+                case LevelTypes.First: ration = 0.1f; break;
+                case LevelTypes.Second: ration = 0.2f; break;
+                default: throw new Exception();
+            }
+
+
+            var envResC = Environment<EnvResC>(_idx);
+
+            extract = (int)(envResC.Max(env) * ration);
+
+            if (extract > envResC.Amount(env)) extract = envResC.Amount(env);
+
+            return true;
+        }
+        public bool CanResume(out int resume, out EnvTypes env)
+        {
+            resume = 0;
+            env = EnvTypes.None;
+
+
+            var envC = Environment<EnvC>(_idx);
+            var envResC = Environment<EnvResC>(_idx);
+            var twC = ToolWeapon<ToolWeaponC>(_idx);
+
+            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !Unit<HpC>(_idx).HaveMax) return false;
+
+
+
+            var ration = 0f;
+
+            switch (_unit)
+            {
+                case UnitTypes.Pawn:
+                    if (!envC.Have(EnvTypes.Hill) && !twC.Is(TWTypes.Pick)) return false;
+
+                    env = EnvTypes.Hill;
+
+                    switch (Unit<LevelC>(_idx).Level)
+                    {
+                        case LevelTypes.First: ration = 0.3f; break;
+                        case LevelTypes.Second: ration = 0.6f; break;
+                        default: throw new Exception();
+                    }
+                    break;
+
+                case UnitTypes.Elfemale:
+                    ration = 0.3f;
+                    env = EnvTypes.AdultForest;
+                    break;
+
+                default: return false;
+            }
+
+
+
+            resume = (int)(envResC.Max(env) * ration);
+
+            if (resume > envResC.Amount(env)) resume = envResC.Amount(env);
+
+            return true;
+        }
+    
 
 
         public UnitC(UnitTypes unit, byte idx)
@@ -62,7 +159,7 @@ namespace Game.Game
         public void SetNew(UnitTypes unit, LevelTypes level, PlayerTypes owner)
         {
             if (unit == UnitTypes.None) throw new Exception();
-            if (HaveUnit) throw new Exception("It's got unit");
+            if (Have) throw new Exception("It's got unit");
  
             _unit = unit;
             WhereUnitsC.Set(unit, level, owner, _idx, true);
@@ -70,7 +167,7 @@ namespace Game.Game
 
         public void Kill(LevelTypes level, PlayerTypes owner)
         {
-            if (!HaveUnit) throw new Exception("It's not got unit");
+            if (!Have) throw new Exception("It's not got unit");
 
             if (Is(UnitTypes.King))
             {
@@ -88,7 +185,7 @@ namespace Game.Game
 
         public void Clean(in LevelTypes level, in PlayerTypes owner)
         {
-            if (!HaveUnit) throw new Exception("It's not got unit");
+            if (!Have) throw new Exception("It's not got unit");
 
             WhereUnitsC.Set(_unit, level, owner, _idx, false);
             _unit = UnitTypes.None;

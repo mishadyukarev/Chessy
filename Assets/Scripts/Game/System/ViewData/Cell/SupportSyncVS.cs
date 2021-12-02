@@ -43,7 +43,7 @@ namespace Game.Game
                     }
                 }
 
-                if (unit_0.HaveUnit)
+                if (unit_0.Have)
                 {
                     if (own_0.Is(WhoseMoveC.CurPlayerI))
                     {

@@ -18,24 +18,24 @@ namespace Game.Game
 
         public void Run()
         {
-            InvResC.Add(ResTypes.Food, PlayerTypes.First,  40);
-            InvResC.Add(ResTypes.Food, PlayerTypes.Second,  40);
+            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            {
+                InvResC.Add(res, PlayerTypes.First, EconomyValues.Adding(res));
+            }
 
-
-            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Scout, PlayerTypes.First);
-            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Scout, PlayerTypes.Second);
-
-            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, PlayerTypes.First);
-            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, PlayerTypes.Second);
-
+            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            {
+                ScoutHeroCooldownC.TakeCooldown(UnitTypes.Scout, player);
+                ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, player);
+            }
 
             foreach (byte idx_0 in EntityPool.Idxs)
             {
                 ref var cell_0 = ref EntityPool.Cell<CellC>(idx_0);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var level_0 = ref _unitF.Get2(idx_0);
-                ref var own_0 = ref _unitF.Get3(idx_0);
+                ref var levUnit_0 = ref _unitF.Get2(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
                 ref var hp_0 = ref _statUnitF.Get1(idx_0);
                 ref var step_0 = ref _statUnitF.Get2(idx_0);
@@ -61,21 +61,21 @@ namespace Game.Game
                 stun_0.Take();
 
 
-                if (unit_0.HaveUnit)
+                if (unit_0.Have)
                 {
                     moveCond_0.AddMove(condUnit_0.Condition);
 
-                    if (!unit_0.Is(UnitTypes.King)) InvResC.Take(ResTypes.Food, own_0.Owner);
+                    if (!unit_0.Is(UnitTypes.King)) InvResC.Take(ResTypes.Food, ownUnit_0.Owner);
 
                     if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (own_0.Is(PlayerTypes.Second))
+                        if (ownUnit_0.Is(PlayerTypes.Second))
                         {
-                            if (!hp_0.HaveMaxHp)
+                            if (!hp_0.HaveMax)
                             {
-                                hp_0.AddHp(100);
+                                hp_0.Add(100);
 
-                                if (hp_0.HaveMaxHp)
+                                if (hp_0.HaveMax)
                                 {
                                     hp_0.SetMax();
                                 }
@@ -93,7 +93,7 @@ namespace Game.Game
                     {
                         if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
-                            if (hp_0.HaveMaxHp)
+                            if (hp_0.HaveMax)
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
@@ -101,38 +101,31 @@ namespace Game.Game
                                     {
                                         if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                                         {
-                                            if (own_0.Is(PlayerTypes.First))
+                                            if (ownUnit_0.Is(PlayerTypes.First))
                                             {
-                                                buil_0.Remove();
-
-                                                if (WhereBuildsC.IsSetted(BuildTypes.Camp, own_0.Owner))
+                                                if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Owner))
                                                 {
-                                                    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
+                                                    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Owner);
 
                                                     EntityPool.Build<BuildC>(idxCamp).Remove();
                                                 }
 
 
                                                
-                                                ownBuil_0.SetOwner(own_0.Owner);
-                                                buil_0.SetNew(BuildTypes.Camp, ownBuil_0.Owner);
+                                                buil_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
                                             }
                                         }
                                         else
                                         {
-                                            buil_0.Remove();
-
-                                            if (WhereBuildsC.IsSetted(BuildTypes.Camp, own_0.Owner))
+                                            if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Owner))
                                             {
-                                                var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
+                                                var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Owner);
 
                                                 EntityPool.Build<BuildC>(idxCamp).Remove();
                                             }
 
 
-                                            
-                                            ownBuil_0.SetOwner(own_0.Owner);
-                                            buil_0.SetNew(BuildTypes.Camp, ownBuil_0.Owner);
+                                            buil_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
                                         }
                                     }
                                 }
@@ -141,14 +134,14 @@ namespace Game.Game
 
                         else if (!condUnit_0.Is(CondUnitTypes.Relaxed))
                         {
-                            if (step_0.HaveMinSteps)
+                            if (step_0.HaveMin)
                             {
                                 condUnit_0.Set(CondUnitTypes.Protected);
                             }
                         }
                     }
 
-                    step_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner));
+                    step_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                 }
 
                 //else

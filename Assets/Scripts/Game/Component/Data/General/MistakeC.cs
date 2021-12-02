@@ -9,8 +9,8 @@ namespace Game.Game
         public static MistakeTypes MistakeType { get; set; }
         public static float CurTime { get; set; }
 
-        public static bool NeedRes(ResTypes resType) => _needRes[resType] < 0;
-        public static int NeedResAmount(ResTypes resType) => _needRes[resType];
+        public static bool NeedRes(ResTypes res) => _needRes[res] > 0;
+        public static int NeedResAmount(ResTypes res) => _needRes[res];
 
 
 

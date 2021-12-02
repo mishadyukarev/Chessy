@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public struct EnvResC : IEnvCell
     {
         Dictionary<EnvTypes, int> _resources;
+        byte _idx;
 
         public Dictionary<EnvTypes, int> Resources
         {
@@ -34,49 +36,34 @@ namespace Game.Game
         public bool HaveMax(in EnvTypes env) => Amount(env) >= Max(env);
 
 
-        public EnvResC(bool needNew)
-        {
-            if (needNew)
-            {
-                _resources = new Dictionary<EnvTypes, int>();
 
-                for (var env = EnvTypes.First; env < EnvTypes.End; env++)
-                {
-                    _resources.Add(env, default);
-                }
+        public EnvResC(byte idx)
+        {
+            _resources = new Dictionary<EnvTypes, int>();
+
+            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
+            {
+                _resources.Add(env, default);
             }
-            else throw new Exception();
+
+            _idx = idx;
         }
 
 
         internal void SetNew(in EnvTypes env)
         {
             byte randAmountRes = 0;
-            switch (env)
+
+
+            var forMin = 3;
+
+            if (env == EnvTypes.Fertilizer || env == EnvTypes.AdultForest)
             {
-                case EnvTypes.None:
-                    throw new Exception();
-
-                case EnvTypes.Fertilizer:
-                    randAmountRes = (byte)UnityEngine.Random.Range(EnvValuesC.MaxAmount(env) / 3, EnvValuesC.MaxAmount(env) / 2 + 1);
-                    break;
-
-                case EnvTypes.YoungForest:
-                    break;
-
-                case EnvTypes.AdultForest:
-                    randAmountRes = (byte)UnityEngine.Random.Range(EnvValuesC.MaxAmount(env) / 3, EnvValuesC.MaxAmount(env) / 2 + 1);
-                    break;
-
-                case EnvTypes.Hill:
-                    randAmountRes = 1;
-                    break;
-
-                case EnvTypes.Mountain:
-                    break;
-
-                default:
-                    throw new Exception();
+                randAmountRes = (byte)UnityEngine.Random.Range(EnvValuesC.MaxAmount(env) / forMin, EnvValuesC.MaxAmount(env) + 1);
+            }
+            else if (env == EnvTypes.Hill)
+            {
+                randAmountRes = (byte)(EnvValuesC.MaxAmount(env) / forMin);
             }
 
             _resources[env] = randAmountRes;

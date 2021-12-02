@@ -16,8 +16,8 @@ namespace Game.Game
                 var dict2 = new Dictionary<byte, List<byte>>();
 
                 byte curIdx = 0;
-                for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
-                    for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
+                for (byte x = 0; x < CellValues.CellCount(XyzTypes.X); x++)
+                    for (byte y = 0; y < CellValues.CellCount(XyzTypes.Y); y++)
                     {
                         dict1.Add(curIdx, new List<byte>());
                         dict2.Add(curIdx, new List<byte>());

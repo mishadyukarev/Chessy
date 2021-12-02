@@ -19,9 +19,9 @@ namespace Game.Game
             ref var step_0 = ref _statUnitF.Get2(idx_0);
             ref var corner_0 = ref _archerFilt.Get1(idx_0);
 
-            if (hp_0.HaveMaxHp)
+            if (hp_0.HaveMax)
             {
-                if (step_0.HaveMinSteps)
+                if (step_0.HaveMin)
                 {
                     corner_0.ChangeCorner();
 

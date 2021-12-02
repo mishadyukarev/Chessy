@@ -32,7 +32,7 @@ namespace Game.Game
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (stepUnit_0.HaveMinSteps)
+                    if (stepUnit_0.HaveMin)
                     {
 
                         if (tw_0.HaveTW)

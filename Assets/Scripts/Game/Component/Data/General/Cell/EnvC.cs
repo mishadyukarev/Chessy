@@ -44,7 +44,6 @@ namespace Game.Game
         public void SetNew(EnvTypes env)
         {
             if (env == default) throw new Exception();
-            if (Have(env)) throw new Exception();
 
             Environment<EnvResC>(_idx).SetNew(env);
 
@@ -57,7 +56,11 @@ namespace Game.Game
 
             if (Have(env))
             {
-                if (env == EnvTypes.AdultForest) Trail<TrailC>(_idx).ResetAll();
+                if (env == EnvTypes.AdultForest)
+                {
+                    Trail<TrailC>(_idx).ResetAll();
+                    Fire<FireC>(_idx).Disable();
+                }
 
                 Environment<EnvResC>(_idx).Reset(env);
 

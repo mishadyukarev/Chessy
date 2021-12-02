@@ -10,10 +10,10 @@ namespace Game.Game
         {
             new EntityVPool(_curGameW);
 
-            var isActiveCells = new bool[CellValuesC.AMOUNT_ALL_CELLS];
-            var idCells = new int[CellValuesC.AMOUNT_ALL_CELLS];
+            var isActiveCells = new bool[CellValues.AMOUNT_ALL_CELLS];
+            var idCells = new int[CellValues.AMOUNT_ALL_CELLS];
 
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 isActiveCells[idx] = EntityVPool.Cell<CellVC>(idx).IsActiveSelf;
                 idCells[idx] = EntityVPool.Cell<CellVC>(idx).InstanceID;

@@ -135,7 +135,7 @@ namespace Game.Game
                             {
 
 
-                                if (unit_cur.HaveUnit)
+                                if (unit_cur.Have)
                                 {
                                     if (ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                                     {
@@ -160,7 +160,7 @@ namespace Game.Game
 
                         else if (Is(CellClickTypes.Firstlick))
                         {
-                            if (unit_cur.HaveUnit)
+                            if (unit_cur.Have)
                             {
                                 if (ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                                 {
@@ -202,7 +202,7 @@ namespace Game.Game
                 {
                     if (Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.HaveUnit || !visUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
+                        if (!unit_cur.Have || !visUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
                         {
                             if (CurIdx.IsStartDirectToCell)
                             {

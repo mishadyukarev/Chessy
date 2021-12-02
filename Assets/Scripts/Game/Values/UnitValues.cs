@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public static class UnitValues
+    public readonly struct UnitValues
     {
         #region Damage
 

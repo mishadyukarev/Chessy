@@ -22,7 +22,7 @@ namespace Game.Game
         public static byte Amount(BuildTypes build, PlayerTypes player)
         {
             byte amount = 0;
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 if (_cells[Key(build, player, idx)]) ++amount;
             }
@@ -31,7 +31,7 @@ namespace Game.Game
         public static List<byte> IdxBuilds(BuildTypes build, PlayerTypes player)
         {
             var list = new List<byte>();
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 if(_cells[Key(build, player, idx)]) list.Add(idx);
             }
@@ -39,7 +39,7 @@ namespace Game.Game
         }
         public static bool IsSetted(BuildTypes build, PlayerTypes player)
         {
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 if (_cells[Key(build, player, idx)]) return true;
             }
@@ -47,7 +47,7 @@ namespace Game.Game
         }
         public static byte Idx(BuildTypes build, PlayerTypes player)
         {
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 if (_cells[Key(build, player, idx)]) return idx;
             }
@@ -65,7 +65,7 @@ namespace Game.Game
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
 
-                    for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+                    for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
                     {
                         _cells.Add(Key(build, player, idx), default);
                     }

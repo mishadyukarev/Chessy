@@ -20,7 +20,6 @@ namespace Game.Game
 
         public void Set(CondUnitTypes cond)
         {
-            if (_condition == cond) throw new Exception();
             if (cond == default) throw new Exception();
 
             _condition = cond;
@@ -32,8 +31,6 @@ namespace Game.Game
 
         public void Reset()
         {
-            if (_condition == default) throw new Exception();
-
             _condition = default;
         }
         public void Sync(CondUnitTypes cond) => _condition = cond;

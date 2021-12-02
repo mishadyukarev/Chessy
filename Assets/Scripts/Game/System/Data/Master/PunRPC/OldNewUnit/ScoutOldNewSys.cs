@@ -30,7 +30,7 @@ namespace Game.Game
             ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
 
 
-            if (hpUnit_0.HaveMaxHp)
+            if (hpUnit_0.HaveMax)
             {
                 if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
                 {

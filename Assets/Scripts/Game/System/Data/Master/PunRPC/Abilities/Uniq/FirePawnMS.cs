@@ -25,7 +25,7 @@ namespace Game.Game
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (stepUnit_0.HaveMinSteps)
+            if (stepUnit_0.HaveMin)
             {
                 if (env_0.Have(EnvTypes.AdultForest))
                 {

@@ -38,7 +38,7 @@ namespace Game.Game
 
                 trail_0.ResetAll();
 
-                if (unit_0.HaveUnit)
+                if (unit_0.Have)
                 {
                     if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                     {

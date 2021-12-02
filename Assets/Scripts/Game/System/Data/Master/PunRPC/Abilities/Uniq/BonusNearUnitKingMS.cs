@@ -30,7 +30,7 @@ namespace Game.Game
 
             if (!cdUniq_0.HaveCooldown(UniqAbilTypes.BonusNear))
             {
-                if (stepUnit_0.HaveMinSteps)
+                if (stepUnit_0.HaveMin)
                 {
                     cdUniq_0.SetCooldown(UniqAbilTypes.BonusNear, 3);
 
@@ -52,7 +52,7 @@ namespace Game.Game
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
                         
 
-                        if (unit_1.HaveUnit)
+                        if (unit_1.Have)
                         {
                             if (ownUnit_1.Is(ownUnit_0.Owner))
                             {

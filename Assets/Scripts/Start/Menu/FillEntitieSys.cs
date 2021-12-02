@@ -6,7 +6,7 @@ namespace Game.Menu
 {
     public sealed class FillEntitieSys : IEcsInitSystem
     {
-        private EcsWorld _curMenuW = default;
+        EcsWorld _curMenuW = default;
 
         public FillEntitieSys(EcsWorld menuWorld)
         {
@@ -21,7 +21,7 @@ namespace Game.Menu
                 .Add(new SyncSys())
                 .Add(new ConnectorMenuSys());
 
-            new MenuSysDataViewC(launchLikeGameSys.Run);
+            new MenuSVC(launchLikeGameSys.Run);
             new DataSC(runUpdate.Run);
 
 
@@ -34,7 +34,7 @@ namespace Game.Menu
 
             menuSysts.Init();
 
-            MenuSysDataViewC.LaunchLikeGame.Invoke();
+            MenuSVC.LaunchLikeGame.Invoke();
         }
 
         public void Init()

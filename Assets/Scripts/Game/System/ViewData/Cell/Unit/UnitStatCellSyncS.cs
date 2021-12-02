@@ -43,7 +43,7 @@ namespace Game.Game
 
                 if (visUnit_0.IsVisibled(WhoseMoveC.CurPlayerI))
                 {
-                    if (unit_0.HaveUnit)
+                    if (unit_0.Have)
                     {
 
                             barsViewCom.EnableSR(CellBarTypes.Hp);

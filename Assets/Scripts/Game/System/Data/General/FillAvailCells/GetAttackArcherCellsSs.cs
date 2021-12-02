@@ -26,7 +26,7 @@ namespace Game.Game
                 ref var corner_0 = ref _archerFilt.Get1(idx_0);
 
 
-                if (stun_0.IsStunned || !unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale) || !step_0.HaveMinSteps) continue;
+                if (stun_0.IsStunned || !unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale) || !step_0.HaveMin) continue;
 
 
                 for (var dir_1 = DirectTypes.First; dir_1 < DirectTypes.End; dir_1++)
@@ -44,7 +44,7 @@ namespace Game.Game
 
                     if (EntityPool.Cell<CellC>(idx_1).IsActiveCell && !env_1.Have(EnvTypes.Mountain))
                     {
-                        if (unit_1.HaveUnit)
+                        if (unit_1.Have)
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Owner))
                             {
@@ -86,7 +86,7 @@ namespace Game.Game
 
 
 
-                        if (EntityPool.Cell<CellC>(idx_2).IsActiveCell && unitDataCom_2.HaveUnit 
+                        if (EntityPool.Cell<CellC>(idx_2).IsActiveCell && unitDataCom_2.Have 
                             && visUnit_2.IsVisibled(ownUnit_0.Owner) && !ownUnitCom_2.Is(ownUnit_0.Owner))
                         {
                             if (unit_0.Is(UnitTypes.Archer))

@@ -14,7 +14,7 @@ namespace Game.Game
                 ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
                 ref var ownUnit_0 = ref EntityPool.Unit<OwnerC>(idx_0);
 
-                if (unit_0.HaveUnit)
+                if (unit_0.Have)
                 {
                     ref var visUnit_0 = ref EntityPool.Unit<VisibleC>(idx_0);
 
@@ -33,7 +33,7 @@ namespace Game.Game
                             ref var unitCom_1 = ref EntityPool.Unit<UnitC>(idxCell_1);
                             ref var ownUnitCom_1 = ref EntityPool.Unit<OwnerC>(idxCell_1);
 
-                            if (unitCom_1.HaveUnit)
+                            if (unitCom_1.Have)
                             {
                                 if (!ownUnitCom_1.Is(ownUnit_0.Owner))
                                 {
@@ -74,7 +74,7 @@ namespace Game.Game
                             ref var aroUnitDataCom = ref EntityPool.Unit<UnitC>(idxCell_1);
                             ref var arouOnUnitCom = ref EntityPool.Unit<OwnerC>(idxCell_1);
 
-                            if (aroUnitDataCom.HaveUnit)
+                            if (aroUnitDataCom.Have)
                             {
                                 if (!arouOnUnitCom.Is(curOwnBuildCom.Owner))
                                 {
@@ -101,7 +101,7 @@ namespace Game.Game
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.First), false);
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.Second), false);
         
-                    if (unit_0.HaveUnit) trailVis_0.SetVisibled(ownUnit_0.Owner, true);
+                    if (unit_0.Have) trailVis_0.SetVisibled(ownUnit_0.Owner, true);
 
                     foreach (var xy_1 in list)
                     {
@@ -111,7 +111,7 @@ namespace Game.Game
                         ref var ownUnit_1 = ref EntityPool.Unit<OwnerC>(idxCell_1);
 
 
-                        if (unitCom_1.HaveUnit)
+                        if (unitCom_1.Have)
                         {
                             trailVis_0.SetVisibled(ownUnit_1.Owner, true);
                         }

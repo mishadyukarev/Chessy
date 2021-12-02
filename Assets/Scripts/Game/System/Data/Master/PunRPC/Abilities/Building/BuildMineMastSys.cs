@@ -26,7 +26,7 @@ namespace Game.Game
 
             if (build == BuildTypes.Mine)
             {
-                if (curStepUnitC.HaveMinSteps)
+                if (curStepUnitC.HaveMin)
                 {
                     if (!build_0.Have || build_0.Is(BuildTypes.Camp))
                     {
@@ -34,15 +34,12 @@ namespace Game.Game
                         {
                             if (InvResC.CanCreateBuild(whoseMove, build, out var needRes))
                             {
-                                build_0.Remove();
-
                                 RpcSys.SoundToGeneral(sender, ClipTypes.Building);
 
                                 InvResC.BuyBuild(whoseMove, build);
 
                                 
-                                ownBuild_0.SetOwner(whoseMove);
-                                build_0.SetNew(build, ownBuild_0.Owner);
+                                build_0.SetNew(build, whoseMove);
 
                                 curStepUnitC.TakeSteps();
                             }

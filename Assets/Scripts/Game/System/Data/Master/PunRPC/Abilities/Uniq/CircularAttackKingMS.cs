@@ -34,7 +34,7 @@ namespace Game.Game
 
             if (!cdUniq_0.HaveCooldown(UniqAbilTypes.CircularAttack))
             {
-                if (stepUnit_0.HaveMinSteps)
+                if (stepUnit_0.HaveMin)
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
@@ -58,7 +58,7 @@ namespace Game.Game
                         ref var buildC_1 = ref EntityPool.Build<BuildC>(idx_1);
 
 
-                        if (unit_1.HaveUnit)
+                        if (unit_1.Have)
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Owner))
                             {
@@ -71,7 +71,7 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    hpUnitC_1.TakeHp(25);
+                                    hpUnitC_1.Take(25);
                                     if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.HaveHp)
                                     {
                                         unit_1.Kill(levUnit_1.Level, ownUnit_1.Owner);

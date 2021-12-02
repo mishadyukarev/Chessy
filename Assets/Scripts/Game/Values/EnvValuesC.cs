@@ -12,7 +12,7 @@ namespace Game.Game
                 case EnvTypes.Fertilizer: return 100;
                 case EnvTypes.YoungForest: return 0;
                 case EnvTypes.AdultForest: return 100;
-                case EnvTypes.Hill: return 50;
+                case EnvTypes.Hill: return 100;
                 case EnvTypes.Mountain: return 0;
                 default: throw new Exception();
             }

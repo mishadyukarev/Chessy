@@ -2,11 +2,11 @@
 
 namespace Game.Menu
 {
-    public struct MenuSysDataViewC
+    public struct MenuSVC
     {
         public static Action LaunchLikeGame { get; private set; }
 
-        public MenuSysDataViewC(Action launchLikeGame)
+        public MenuSVC(Action launchLikeGame)
         {
             LaunchLikeGame = launchLikeGame;
         }

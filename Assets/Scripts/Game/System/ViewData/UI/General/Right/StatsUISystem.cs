@@ -33,7 +33,7 @@ namespace Game.Game
             ref var selEnvC = ref EntityPool.Environment<EnvC>(SelIdx.Idx);
 
 
-            if (unit_sel.HaveUnit)
+            if (unit_sel.Have)
             {
                 StatUIC.SetActiveStatZone(true);
 

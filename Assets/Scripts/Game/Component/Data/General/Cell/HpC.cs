@@ -12,9 +12,9 @@ namespace Game.Game
 
         public int Hp => _hp;
         public int MinHp => MIN_HP;
-        public int MaxHp => MAX_HP;
+        public int Max => MAX_HP;
 
-        public bool HaveMaxHp => Hp >= MAX_HP;
+        public bool HaveMax => Hp >= MAX_HP;
         public bool HaveHp => Hp > MIN_HP;
         public bool IsMinusHp => Hp < MIN_HP;
         public bool IsZeroHp => Hp == MIN_HP;
@@ -24,13 +24,18 @@ namespace Game.Game
 
 
 
-        public void AddHp(int adding = 1)
+        public void SetMax() => _hp = MAX_HP;
+        public int SetMinHp() => _hp = MIN_HP;
+
+        public void Add(int adding = 1)
         {
             if (adding < MIN_HP) throw new Exception("Need a positive number");
             else if (adding == MIN_HP) throw new Exception("You're adding zero");
             _hp += adding;
         }
-        public void TakeHp(int taking = 1)
+
+
+        public void Take(int taking = 1)
         {
             if (HaveHp)
             {
@@ -42,14 +47,6 @@ namespace Game.Game
             }
             else throw new Exception("Hp <= 0");
         }
-
-        public void SetMax() => _hp = MAX_HP;
-        public int SetMinHp() => _hp = MIN_HP;
-        public void Set(HpC hpC)
-        {
-            _hp = hpC._hp;
-        }
-
         public void TakeHpThirsty(UnitTypes unitType)
         {
             float percent = 0;
@@ -64,8 +61,15 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            TakeHp((int)(MAX_HP * percent));
+            Take((int)(MAX_HP * percent));
         }
+
+        public void Set(HpC hpC)
+        {
+            _hp = hpC._hp;
+        }
+
+
 
         public void Sync(int hp) => _hp = hp;
     }

@@ -15,7 +15,7 @@ namespace Game.Game
                 ref var mainUnit_pre = ref EntityVPool.UnitCellVC<UnitMainVC>(IdxPreVis.Idx);
 
 
-                if (unit_cur.HaveUnit)
+                if (unit_cur.Have)
                 {
                     if (visUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
                     {

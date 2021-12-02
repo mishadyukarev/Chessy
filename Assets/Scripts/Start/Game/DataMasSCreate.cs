@@ -19,9 +19,12 @@ namespace Game.Game
                 .Add(new ExtractBuildUpdMS())
                 .Add(new FireUpdMasSys())
                 .Add(new CloudUpdMS())
-                .Add(new ThirstyUpdMS())
-                .Add(new RelaxUpdMS())
-                .Add(new HungryUpdMS());
+
+                .Add(new ExtractUnitUpdMS())
+                .Add(new ResumeUnitUpdMS())
+                .Add(new HealingUnitUpdMS())
+                .Add(new HungryUpdMS())
+                .Add(new ThirstyUpdMS());
 
             var truceSystems = new EcsSystems(gameWorld)
                 .Add(new TruceMS());
@@ -40,11 +43,11 @@ namespace Game.Game
             rpcSystems.Add(RpcMasterTypes.DestroyBuild, new EcsSystems(gameWorld).Add(new DestroyMS()));
             rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMS()));
             rpcSystems.Add(RpcMasterTypes.Attack, new EcsSystems(gameWorld).Add(new AttackMS()));
-            rpcSystems.Add(RpcMasterTypes.ConditionUnit, new EcsSystems(gameWorld).Add(new ConditionMasterSystem()));
+            rpcSystems.Add(RpcMasterTypes.ConditionUnit, new EcsSystems(gameWorld).Add(new ConditionMS()));
             rpcSystems.Add(RpcMasterTypes.Ready, new EcsSystems(gameWorld).Add(new ReadyMasterSystem()));
             rpcSystems.Add(RpcMasterTypes.Done, new EcsSystems(gameWorld).Add(new DonerMastSys()));
             rpcSystems.Add(RpcMasterTypes.CreateUnit, new EcsSystems(gameWorld).Add(new CreateUnitMastSys()));
-            rpcSystems.Add(RpcMasterTypes.MeltOre, new EcsSystems(gameWorld).Add(new MeltOreMasterSystem()));
+            rpcSystems.Add(RpcMasterTypes.MeltOre, new EcsSystems(gameWorld).Add(new MeltOreMS()));
             rpcSystems.Add(RpcMasterTypes.SetUnit, new EcsSystems(gameWorld).Add(new SetterUnitMS()));
             rpcSystems.Add(RpcMasterTypes.BuyRes, new EcsSystems(gameWorld).Add(new BuyResMastS()));
             rpcSystems.Add(RpcMasterTypes.UpgradeUnit, new EcsSystems(gameWorld).Add(new UpgUnitMS()));

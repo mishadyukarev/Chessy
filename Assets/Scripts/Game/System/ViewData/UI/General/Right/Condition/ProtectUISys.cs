@@ -17,7 +17,7 @@ namespace Game.Game
 
             var isEnableButt = false;
 
-            if (unit_sel.HaveUnit)
+            if (unit_sel.Have)
             {
                 if (ownUnit_sel.Is(WhoseMoveC.CurPlayerI))
                 {

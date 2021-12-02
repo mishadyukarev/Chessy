@@ -50,12 +50,12 @@ namespace Game.Game
 
             for (var type = CellTypes.First; type < CellTypes.End; type++)
             {
-                _cells.Add(type, new EcsEntity[CellValuesC.AMOUNT_ALL_CELLS]);
+                _cells.Add(type, new EcsEntity[CellValues.AMOUNT_ALL_CELLS]);
             }
 
             _idxs = new HashSet<byte>();
 
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 _idxs.Add(idx);
             }
@@ -64,7 +64,7 @@ namespace Game.Game
         {
             byte idx = 0;
 
-            for (idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 _cells[CellTypes.Unit][idx] = curGameW.NewEntity()
                     .Replace(new UnitC(UnitTypes.None, idx))
@@ -104,7 +104,7 @@ namespace Game.Game
 
                 _cells[CellTypes.Env][idx] = curGameW.NewEntity()
                     .Replace(new EnvC(new Dictionary<EnvTypes, bool>(), idx))
-                    .Replace(new EnvResC(true));
+                    .Replace(new EnvResC(idx));
 
 
                 _cells[CellTypes.Trail][idx] = curGameW.NewEntity()
@@ -127,8 +127,8 @@ namespace Game.Game
 
             idx = 0;
 
-            for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
-                for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
+            for (byte x = 0; x < CellValues.CellCount(XyzTypes.X); x++)
+                for (byte y = 0; y < CellValues.CellCount(XyzTypes.Y); y++)
                 {
                     _cells[CellTypes.Cell][idx] = curGameW.NewEntity()
                         .Replace(new XyC(new byte[] { x, y }))
@@ -293,8 +293,7 @@ namespace Game.Game
                         env_0.Remove(EnvTypes.AdultForest);
 
 
-                        ownBuild_0.SetOwner(PlayerTypes.Second);
-                        build_0.SetNew(BuildTypes.City, ownBuild_0.Owner);
+                        build_0.SetNew(BuildTypes.City, PlayerTypes.Second);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)

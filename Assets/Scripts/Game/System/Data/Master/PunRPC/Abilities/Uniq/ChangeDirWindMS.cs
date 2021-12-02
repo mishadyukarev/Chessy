@@ -19,9 +19,9 @@ namespace Game.Game
             ref var uniq_from = ref _uniqUnitF.Get1(idx_from);
 
 
-            if (hp_from.HaveMaxHp)
+            if (hp_from.HaveMax)
             {
-                if (step_from.HaveMinSteps)
+                if (step_from.HaveMin)
                 {
                     if (WindC.Have(idx_to))
                     {

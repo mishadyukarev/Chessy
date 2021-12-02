@@ -24,7 +24,7 @@ namespace Game.Game
                 mainUnitC_0.SetEnabled(false);
                 extraUnitC_0.Disable_SR();
 
-                if (unit_0.HaveUnit)
+                if (unit_0.Have)
                 {
                     if (visUnit_0.IsVisibled(WhoseMoveC.CurPlayerI))
                     {

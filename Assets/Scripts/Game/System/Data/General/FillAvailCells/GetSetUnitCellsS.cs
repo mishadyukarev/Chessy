@@ -20,7 +20,7 @@ namespace Game.Game
                     
                     var listAround = CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_city).Xy);
 
-                    if(!unit_city.HaveUnit) SetUnitCellsC.AddIdxCell(player, idx_city);
+                    if(!unit_city.Have) SetUnitCellsC.AddIdxCell(player, idx_city);
 
                     foreach (var xy in listAround)
                     {
@@ -29,7 +29,7 @@ namespace Game.Game
                         ref var curUnitDatCom = ref _unitF.Get1(curIdx);
                         ref var curEnvDatCom = ref _envF.Get1(curIdx);
 
-                        if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.HaveUnit)
+                        if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.Have)
                         {
                             SetUnitCellsC.AddIdxCell(player, curIdx);
                         }
@@ -47,7 +47,7 @@ namespace Game.Game
                         ref var curUnitDatCom = ref _unitF.Get1(idx_0);
 
 
-                        if (!curUnitDatCom.HaveUnit)
+                        if (!curUnitDatCom.Have)
                         {
                             if (player == PlayerTypes.First)
                             {
@@ -77,7 +77,7 @@ namespace Game.Game
 
                 if (buld_0.Is(BuildTypes.Camp))
                 {
-                    if (!env_0.Have(EnvTypes.Mountain) && !unit_0.HaveUnit)
+                    if (!env_0.Have(EnvTypes.Mountain) && !unit_0.Have)
                     {
                         SetUnitCellsC.AddIdxCell(ownBuld_0.Owner, idx_0);
                     }

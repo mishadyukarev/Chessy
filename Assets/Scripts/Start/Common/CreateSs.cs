@@ -3,9 +3,9 @@ using System;
 
 namespace Game.Common
 {
-    public sealed class CreateSysts
+    public sealed class CreateSs
     {
-        public CreateSysts(EcsSystems comSysts, Action<SceneTypes> toggleScene)
+        public CreateSs(EcsSystems comSysts, Action<SceneTypes> toggleScene)
         {
             var comW = comSysts.World;
 

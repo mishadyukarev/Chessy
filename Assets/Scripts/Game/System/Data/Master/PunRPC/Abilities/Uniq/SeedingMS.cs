@@ -31,7 +31,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvTypes.YoungForest:
-                    if (stepUnit_0.HaveMinSteps)
+                    if (stepUnit_0.HaveMin)
                     {
                         if (build_0.Have && !build_0.Is(BuildTypes.Camp))
                         {

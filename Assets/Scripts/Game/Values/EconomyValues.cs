@@ -4,6 +4,17 @@ namespace Game.Game
 {
     public readonly struct EconomyValues
     {
+        public static int Adding(ResTypes res)
+        {
+            switch (res)
+            {
+                case ResTypes.Food: return 40;
+                case ResTypes.Wood: return 0;
+                case ResTypes.Ore: return 5;
+                default: return 0;
+            }
+        }
+
         public static int StartAmountUnits(UnitTypes unit, LevelTypes level)
         {
             switch (unit)

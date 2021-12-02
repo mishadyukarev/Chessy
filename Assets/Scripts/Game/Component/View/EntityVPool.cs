@@ -25,7 +25,7 @@ namespace Game.Game
 
             for (var type = CellTypes.First; type < CellTypes.End; type++)
             {
-                _cells.Add(type, new EcsEntity[CellValuesC.AMOUNT_ALL_CELLS]);
+                _cells.Add(type, new EcsEntity[CellValues.AMOUNT_ALL_CELLS]);
             }
         }
         public EntityVPool(in EcsWorld curGameW)
@@ -35,10 +35,10 @@ namespace Game.Game
 
             byte idx_0 = 0;
 
-            var cells = new GameObject[CellValuesC.AMOUNT_ALL_CELLS];
+            var cells = new GameObject[CellValues.AMOUNT_ALL_CELLS];
 
-            for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
-                for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
+            for (byte x = 0; x < CellValues.CellCount(XyzTypes.X); x++)
+                for (byte y = 0; y < CellValues.CellCount(XyzTypes.Y); y++)
                 {
                     var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
                         ? SpritesResC.Sprite(SpriteTypes.WhiteCell)
@@ -66,7 +66,7 @@ namespace Game.Game
                 }
 
 
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 _cells[CellTypes.Cell][idx] = curGameW.NewEntity()
                         .Replace(new CellVC(cells[idx]));

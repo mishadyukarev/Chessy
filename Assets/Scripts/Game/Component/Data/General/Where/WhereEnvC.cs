@@ -23,7 +23,7 @@ namespace Game.Game
         public static byte Amount(EnvTypes env)
         {
             byte amount = 0;
-            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 if (_envs[Key(env, idx)]) ++amount;
             }
@@ -37,7 +37,7 @@ namespace Game.Game
 
             for (var env = EnvTypes.First; env < EnvTypes.End; env++)
             {
-                for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+                for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
                 {
                     _envs.Add(Key(env, idx), default);
                 }

@@ -28,9 +28,9 @@ namespace Game.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (hpUnit_0.HaveMaxHp)
+            if (hpUnit_0.HaveMax)
             {
-                if (stepUnit_0.HaveMinSteps)
+                if (stepUnit_0.HaveMin)
                 {
                     if (InvResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     {
