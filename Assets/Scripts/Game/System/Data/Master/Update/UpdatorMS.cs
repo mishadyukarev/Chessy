@@ -141,17 +141,8 @@ namespace Game.Game
                         }
                     }
 
-                    EntityPool.UnitStat<UnitStatC>(idx_0).SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                    EntityPool.UnitStat<UnitStatCellC>(idx_0).SetMaxSteps();
                 }
-
-                //else
-                //{
-                //    if (buil_0.Is(BuildTypes.Camp))
-                //    {
-                //        WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                //        buil_0.Reset();
-                //    }
-                //}
             }
 
 

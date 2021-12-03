@@ -11,7 +11,9 @@
         Unit_Stat,
         Unit_Effects,
         Unit_ToolWeapon,
-        Unit_Abilities,
+        Unit_Shield,
+        Unit_UniqueAbilities,
+        //Unit_UniqueAbility,
 
         Build,
         Env,

@@ -24,7 +24,7 @@ namespace Game.Game
         public static bool Have(UpgTypes upg, UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
             => _upgrades[Key(upg, stat, unit, level, player)];
 
-        public static float UpgPercent(UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
+        internal static float UpgPercent(UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
         {
             if (stat == UnitStatTypes.Steps) throw new Exception();
 

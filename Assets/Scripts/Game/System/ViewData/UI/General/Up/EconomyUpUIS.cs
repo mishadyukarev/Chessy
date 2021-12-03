@@ -20,7 +20,7 @@ namespace Game.Game
 
             foreach (var idx_0 in Idxs)
             {
-                if (Unit<UnitC>(idx_0).CanExtract(out var extract, out var env, out var res))
+                if (Unit<UnitCellC>(idx_0).CanExtract(out var extract, out var env, out var res))
                 {
                     extracts[res] += extract;
                 }

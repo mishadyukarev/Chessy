@@ -45,7 +45,7 @@ namespace Game.Game
 
                 ref var tw_from = ref UnitToolWeapon<ToolWeaponC>(idx_from);
                 ref var twLevel_from = ref UnitToolWeapon<LevelC>(idx_from);
-                ref var twShield_from = ref UnitToolWeapon<ShieldProtectionC>(idx_from);
+                ref var twShield_from = ref UnitShield<ProtectionC>(idx_from);
 
 
 
@@ -67,7 +67,7 @@ namespace Game.Game
 
                 ref var tw_to = ref UnitToolWeapon<ToolWeaponC>(idx_to);
                 ref var twLevel_to = ref UnitToolWeapon<LevelC>(idx_to);
-                ref var twShield_to = ref UnitToolWeapon<ShieldProtectionC>(idx_to);
+                ref var twShield_to = ref UnitShield<ProtectionC>(idx_to);
 
                 #endregion
 
@@ -85,9 +85,9 @@ namespace Game.Game
 
                 var dir_from = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
 
-                UnitStat<UnitStatC>(idx_from).TakeStepsForDoing(env_to, dir_from, trail_to);
+                UnitStat<UnitStatCellC>(idx_from).TakeStepsForDoing(dir_from);
 
-                unit_to.Shift(idx_from, dir_from);
+                Unit<UnitCellC>(idx_to).Shift(idx_from, dir_from);
 
                 RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

@@ -48,8 +48,8 @@ namespace Game.Game
                             {
                                 if (!unitC_1.Have)
                                 {
-                                    if (EntityPool.UnitStat<UnitStatC>(idx_0).HaveStepsForDoing(envC_1, item_1.Key, trail_1)
-                                        || EntityPool.UnitStat<UnitStatC>(idx_0).HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner)))
+                                    if (EntityPool.UnitStat<UnitStatCellC>(idx_0).HaveStepsForDoing(item_1.Key)
+                                        || EntityPool.UnitStat<UnitStatCellC>(idx_0).HaveMaxSteps)
                                     {
                                         ShiftCellsC.AddIdxCell(own_0.Owner, idx_0, idx_1);
                                     }

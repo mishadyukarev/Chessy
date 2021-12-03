@@ -30,7 +30,7 @@ namespace Game.Game
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (EntityPool.UnitStat<UnitStatC>(idx_from).HaveMaxSteps(unit_from.Unit, eff_from.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_from.Unit, level_from.Level, own_from.Owner)))
+            if (EntityPool.UnitStat<UnitStatCellC>(idx_from).HaveMaxSteps)
             {
                 if (ArsonCellsC.ContainIdx(whoseMove, idx_from, idx_to))
                 {

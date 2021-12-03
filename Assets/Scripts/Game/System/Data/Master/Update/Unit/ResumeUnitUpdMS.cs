@@ -15,7 +15,7 @@ namespace Game.Game
                 ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 
 
-                if (unit_0.CanResume(out var resume, out var env))
+                if (Unit<UnitCellC>(idx_0).CanResume(out var resume, out var env))
                 {
                     if (envRes_0.HaveMax(env))
                     {
@@ -26,7 +26,7 @@ namespace Game.Game
                         envRes_0.Add(env, resume);
                     }
                 }
-                else if (!unit_0.CanExtract(out resume, out env, out var res))
+                else if (!Unit<UnitCellC>(idx_0).CanExtract(out resume, out env, out var res))
                 {
                     if (UnitStat<HpC>(idx_0).HaveMax)
                     {

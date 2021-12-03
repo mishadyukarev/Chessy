@@ -36,7 +36,7 @@ namespace Game.Game
                     {
                         InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                        unit_0.Upgrade();
+                        EntityPool.Unit<UnitCellC>(idx_0).Upgrade();
 
                         stepUnit_0.Take();
 

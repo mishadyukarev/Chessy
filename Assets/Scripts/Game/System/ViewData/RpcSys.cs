@@ -373,7 +373,7 @@ namespace Game.Game
                 objs.Add(Unit<LevelC>(idx_0).Level);
                 objs.Add(Unit<OwnerC>(idx_0).Owner);
 
-                objs.Add(UnitStat<HpC>(idx_0).Hp);
+                objs.Add(UnitStat<HpC>(idx_0).HP);
                 objs.Add(UnitStat<StepC>(idx_0).Steps);
                 objs.Add(UnitStat<WaterC>(idx_0).Water);
 
@@ -383,7 +383,7 @@ namespace Game.Game
 
                 objs.Add(UnitToolWeapon<ToolWeaponC>(idx_0).ToolWeapon);
                 objs.Add(UnitToolWeapon<LevelC>(idx_0).Level);
-                objs.Add(UnitToolWeapon<ShieldProtectionC>(idx_0).Protection);
+                objs.Add(UnitShield<ProtectionC>(idx_0).Protection);
 
                 objs.Add(UnitEffects<StunC>(idx_0).IsStunned);
                 objs.Add(UnitEffects<StunC>(idx_0).StepsInStun);
@@ -484,13 +484,13 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                Unit<UnitC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
-                UnitStat<UnitStatC>(idx_0).Sync((int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                Unit<UnitCellC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
+                UnitStat<UnitStatCellC>(idx_0).Sync((int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
                 UnitEffects<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
                 foreach (var item in UnitEffects<EffectsC>(idx_0).Effects) UnitEffects<EffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
 
-                UnitToolWeapon<ToolWeaponC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                UnitToolWeapon<UnitTWCellC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
 
                 UnitEffects<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);

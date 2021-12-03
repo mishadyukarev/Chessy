@@ -50,7 +50,7 @@ namespace Game.Game
 
                         if (!hpUnit_0.Have)
                         {
-                            unit_0.Kill(levUnit_0.Level, ownUnit_0.Owner);
+                            EntityPool.Unit<UnitCellC>(idx_0).Kill(levUnit_0.Level, ownUnit_0.Owner);
                         }
                     }
 

@@ -51,8 +51,8 @@ namespace Game.Game
 
                             if (!Env(idx_1).Have(EnvTypes.Mountain))
                             {
-                                if (UnitStat<UnitStatC>(idx_0).HaveStepsForDoing(Env(idx_1), item_1.Key, trail_1)
-                                    || UnitStat<UnitStatC>(idx_0).HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
+                                if (UnitStat<UnitStatCellC>(idx_0).HaveStepsForDoing(item_1.Key)
+                                    || UnitStat<UnitStatCellC>(idx_0).HaveMaxSteps)
                                 {
                                     if (unit_1.Have)
                                     {

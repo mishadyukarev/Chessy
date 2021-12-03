@@ -47,10 +47,11 @@ namespace Game.Game
                         ref var unit_1 = ref _unitF.Get1(idx_1);
                         ref var levUnit_1 = ref _unitF.Get2(idx_1);
                         ref var ownUnit_1 = ref _unitF.Get3(idx_1);
+                        ref var statUnit_1 = ref EntityPool.UnitStat<UnitStatCellC>(idx_1);
                         ref var hpUnitC_1 = ref _statUnitF.Get1(idx_1);
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
                         ref var tw_1 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref EntityPool.UnitToolWeapon<ShieldProtectionC>(idx_1);
+                        ref var shield_1 = ref EntityPool.UnitShield<UnitShieldCellC>(idx_1);
 
 
 
@@ -71,9 +72,9 @@ namespace Game.Game
                                 else
                                 {
                                     hpUnitC_1.Take(25);
-                                    if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.Have)
+                                    if (statUnit_1.IsHpDeathAfterAttack || !hpUnitC_1.Have)
                                     {
-                                        unit_1.Kill(levUnit_1.Level, ownUnit_1.Owner);
+                                        EntityPool.Unit<UnitCellC>(idx_1).Kill(levUnit_1.Level, ownUnit_1.Owner);
                                     }
                                 }
                             }

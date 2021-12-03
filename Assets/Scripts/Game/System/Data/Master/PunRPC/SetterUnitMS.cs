@@ -56,17 +56,17 @@ namespace Game.Game
                     InvUnitsC.Take(whoseMove, unit, LevelTypes.First);
                     levUnit = LevelTypes.First;
                 }
-                unit_0.SetNew(unit, levUnit, whoseMove);
+                Unit<UnitCellC>(idx_0).SetNew(unit, levUnit, whoseMove);
 
 
-                tw_0.Reset();
+                UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
 
                 eff_0.DefAllEffects();
                 hp_0.SetMax();
                 if (cond_0.HaveCondition) cond_0.Reset();  
                 moveCond_0.ResetAll();
-                UnitStat<UnitStatC>(idx_0).SetMaxSteps(unit, false, UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
-                UnitStat<UnitStatC>(idx_0).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                UnitStat<UnitStatCellC>(idx_0).SetMaxSteps();
+                UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
 
       
 

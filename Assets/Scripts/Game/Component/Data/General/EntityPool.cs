@@ -15,8 +15,9 @@ namespace Game.Game
         public static ref T Unit<T>(in byte idx) where T : struct, IUnitCell => ref _cells[CellTypes.Unit][idx].Get<T>();
         public static ref T UnitStat<T>(in byte idx) where T : struct, IUnitStatCell => ref _cells[CellTypes.Unit_Stat][idx].Get<T>();
         public static ref T UnitToolWeapon<T>(in byte idx) where T : struct, ITWCellE => ref _cells[CellTypes.Unit_ToolWeapon][idx].Get<T>();
+        public static ref T UnitShield<T>(in byte idx) where T : struct, IShieldCell => ref _cells[CellTypes.Unit_Shield][idx].Get<T>();
         public static ref T UnitEffects<T>(in byte idx) where T : struct, IUnitEffectCell => ref _cells[CellTypes.Unit_Effects][idx].Get<T>();
-        public static ref T UnitAbilities<T>(in byte idx) where T : struct, IUnitAbilitiesCell => ref _cells[CellTypes.Unit_Abilities][idx].Get<T>();
+        public static ref T UnitAbilities<T>(in byte idx) where T : struct, IUnitAbilitiesCell => ref _cells[CellTypes.Unit_UniqueAbilities][idx].Get<T>();
 
         public static ref T Build<T>(in byte idx) where T : struct, IBuildCell => ref _cells[CellTypes.Build][idx].Get<T>();
         public static ref T Environment<T>(in byte idx) where T : struct, IEnvCell => ref _cells[CellTypes.Env][idx].Get<T>();
@@ -71,24 +72,30 @@ namespace Game.Game
             for (idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
             {
                 _cells[CellTypes.Unit][idx] = curGameW.NewEntity()
-                    .Replace(new UnitC(UnitTypes.None, idx))
+                    .Replace(new UnitCellC(idx))
+                    .Replace(new UnitC(UnitTypes.None))
                     .Replace(new LevelC())
                     .Replace(new OwnerC())
                     .Replace(new VisibleC(true));
 
 
                 _cells[CellTypes.Unit_Stat][idx] = curGameW.NewEntity()
-                    .Replace(new UnitStatC(idx))
+                    .Replace(new UnitStatCellC(idx))
                     .Replace(new HpC())
-                    .Replace(new DamageC())
                     .Replace(new StepC())
                     .Replace(new WaterC());
 
 
                 _cells[CellTypes.Unit_ToolWeapon][idx] = curGameW.NewEntity()
-                    .Replace(new ToolWeaponC(idx))
-                    .Replace(new ShieldProtectionC(idx))
+                    .Replace(new UnitTWCellC(idx))
+                    .Replace(new ToolWeaponC())
                     .Replace(new LevelC());
+
+
+                _cells[CellTypes.Unit_Shield][idx] = curGameW.NewEntity()
+                    .Replace(new UnitShieldCellC(idx))
+                    .Replace(new ProtectionC());
+
 
 
                 _cells[CellTypes.Unit_Effects][idx] = curGameW.NewEntity()
@@ -98,7 +105,7 @@ namespace Game.Game
                     .Replace(new MoveInCondC(true));
 
 
-                _cells[CellTypes.Unit_Abilities][idx] = curGameW.NewEntity()
+                _cells[CellTypes.Unit_UniqueAbilities][idx] = curGameW.NewEntity()
                     .Replace(new UniqAbilC(true))
                     .Replace(new CooldownUniqC(true))
                     .Replace(new CornerArcherC());
@@ -275,9 +282,10 @@ namespace Game.Game
                     ref var condUnit_0 = ref UnitEffects<ConditionC>(idx_0);
                     ref var waterUnit_0 = ref UnitStat<WaterC>(idx_0);
 
+
                     ref var tw_0 = ref UnitToolWeapon<ToolWeaponC>(idx_0);
                     ref var twLevel_0 = ref UnitToolWeapon<LevelC>(idx_0);
-                    ref var twShield_0 = ref UnitToolWeapon<ShieldProtectionC>(idx_0);
+                    ref var protShiel_0 = ref UnitShield<ProtectionC>(idx_0);
 
                     ref var build_0 = ref Build<BuildC>(idx_0);
                     ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
@@ -287,10 +295,10 @@ namespace Game.Game
                         env_0.Remove(EnvTypes.Mountain);
                         env_0.Remove(EnvTypes.AdultForest);
 
-                        unit_0.SetNew(UnitTypes.King, LevelTypes.First, PlayerTypes.Second);
+                        Unit<UnitCellC>(idx_0).SetNew(UnitTypes.King, LevelTypes.First, PlayerTypes.Second);
 
                         hp_0.SetMax();
-                        UnitStat<UnitStatC>(idx_0).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                        UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
                         condUnit_0.Set(CondUnitTypes.Protected);
                     }
 
@@ -311,18 +319,18 @@ namespace Game.Game
 
                         if (rand >= 50)
                         {
-                            tw_0.SetNew(TWTypes.Sword, LevelTypes.Second);
+                            UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(TWTypes.Sword, LevelTypes.Second);
                         }
                         else
                         {
-                            tw_0.SetNew(TWTypes.Shield, LevelTypes.First);
+                            UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(TWTypes.Shield, LevelTypes.First);
                         }
 
-                        unit_0.SetNew(UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second);
+                        Unit<UnitCellC>(idx_0).SetNew(UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second);
 
                         hp_0.SetMax();
                         condUnit_0.Set(CondUnitTypes.Protected);
-                        UnitStat<UnitStatC>(idx_0).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                        UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
                     }
                 }
             }

@@ -33,30 +33,10 @@ namespace Game.Game
 
             if (hpUnit_0.HaveMax)
             {
-                if (UnitStat<UnitStatC>(idx_0).HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
+                if (UnitStat<UnitStatCellC>(idx_0).HaveMaxSteps)
                 {
-                    var level = Unit<LevelC>(idx_0).Level;
-                    var owner = Unit<OwnerC>(idx_0).Owner;
-
-                    InvUnitsC.Take(owner, UnitTypes.Scout, LevelTypes.First);
-
-                    WhereUnitsC.Set(UnitTypes.Scout, level, owner, idx_0, false);
-                    unit_0.Clean();
-
-
-
-                    if (tw_0.HaveTW)
-                    {
-                        InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
-                        tw_0.Reset();
-                    }
-
-
-                    hpUnit_0.SetMax();
-                    UnitStat<UnitStatC>(idx_0).SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
-                    if (condUnit_0.HaveCondition) condUnit_0.Reset();
-
-                    unit_0.SetNew(unit_0.Unit, LevelTypes.First, ownUnit_0.Owner);
+                    InvUnitsC.Take(Unit<OwnerC>(idx_0).Owner, UnitTypes.Scout, LevelTypes.First);
+                    Unit<UnitCellC>(idx_0).SetScout(UnitTypes.Scout, LevelTypes.First);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }

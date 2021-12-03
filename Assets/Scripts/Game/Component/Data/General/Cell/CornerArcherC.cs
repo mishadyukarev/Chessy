@@ -2,22 +2,20 @@
 {
     public struct CornerArcherC : IUnitAbilitiesCell
     {
-        private bool _isCornered;
-
-        public bool IsCornered => _isCornered;
+        public bool IsCornered { get; private set; }
 
 
         public void Set(CornerArcherC cornerAC)
         {
-            _isCornered = cornerAC._isCornered;
+            IsCornered = cornerAC.IsCornered;
         }
         public void ChangeCorner()
         {
-            _isCornered = !_isCornered;
+            IsCornered = !IsCornered;
         }
         public void Sync(bool isCorned)
         {
-            _isCornered = isCorned;
+            IsCornered = isCorned;
         }
     }
 }

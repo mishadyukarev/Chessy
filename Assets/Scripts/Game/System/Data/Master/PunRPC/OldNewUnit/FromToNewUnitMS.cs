@@ -1,6 +1,4 @@
-﻿using Game.Common;
-using Leopotam.Ecs;
-using UnityEngine;
+﻿using Leopotam.Ecs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -34,7 +32,7 @@ namespace Game.Game
 
                         var list_around = CellSpaceC.XyAround(xy_from);
 
-                        
+
                         foreach (var xy_1 in list_around)
                         {
                             var idx_1 = IdxCell(xy_1);
@@ -43,21 +41,7 @@ namespace Game.Game
                             {
                                 RpcSys.SoundToGeneral(sender, ClipTypes.GetHero);
 
-
-                                WhereUnitsC.Set(UnitTypes.Archer, levUnit_from.Level, ownUnit_from.Owner, idx_from, false);
-                                unit_from.Set(UnitTypes.None);
-
-                                WhereUnitsC.Set(UnitTypes.Archer, levUnit_to.Level, ownUnit_to.Owner, idx_to, false);
-                                unit_to.Set(UnitTypes.None);
-
-
-                                unit_to.SetNew(UnitTypes.Archer, LevelTypes.First, ownUnit_to.Owner);
-
-                                WhereUnitsC.Set(unit, levUnit_to.Level, ownUnit_to.Owner, idx_to, true);
-
-
-                                InvUnitsC.Take(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level);
-
+                                Unit<UnitCellC>(idx_to).SetHero(idx_from, unit, LevelTypes.First);
 
                                 break;
                             }

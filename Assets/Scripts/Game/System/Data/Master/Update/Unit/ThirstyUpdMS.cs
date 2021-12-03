@@ -47,14 +47,14 @@ namespace Game.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            UnitStat<UnitStatC>(idx_0).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                            UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
                         }
                         else
                         {
-                            UnitStat<UnitStatC>(idx_0).TakeWater();
+                            UnitStat<UnitStatCellC>(idx_0).TakeWater();
                             if (!water_0.Have)
                             {
-                                UnitStat<UnitStatC>(idx_0).ExecuteThirsty(unit_0.Unit);
+                                UnitStat<UnitStatCellC>(idx_0).ExecuteThirsty();
 
                                 if (!hp_0.Have)
                                 {
@@ -63,7 +63,7 @@ namespace Game.Game
                                         build_0.Remove();
                                     }
 
-                                    unit_0.Kill(levUnit_0.Level, ownUnit_0.Owner);
+                                    Unit<UnitCellC>(idx_0).Kill(levUnit_0.Level, ownUnit_0.Owner);
                                 }
                             }
                         }

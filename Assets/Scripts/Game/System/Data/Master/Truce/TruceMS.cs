@@ -47,10 +47,10 @@ namespace Game.Game
                             if (tw_0.HaveTW)
                             {
                                 InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
-                                tw_0.Reset();
+                                UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
                             }
 
-                            unit_0.AddToInventor();
+                            Unit<UnitCellC>(idx_0).AddToInventor();
                         }
                     }
                     else
@@ -59,10 +59,10 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
-                            tw_0.Reset();
+                            UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
                         }
 
-                        unit_0.AddToInventor();
+                        Unit<UnitCellC>(idx_0).AddToInventor();
                     }
                 }
 

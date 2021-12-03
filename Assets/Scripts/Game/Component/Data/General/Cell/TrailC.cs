@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public struct TrailC : ITrailCell
     {
-        private readonly Dictionary<DirectTypes, int> _health;
+        readonly Dictionary<DirectTypes, int> _health;
 
         public Dictionary<DirectTypes, int> Health
         {
@@ -39,13 +39,13 @@ namespace Game.Game
         }
 
 
-        public TrailC(Dictionary<DirectTypes, int> directs)
+        internal TrailC(Dictionary<DirectTypes, int> directs)
         {
             _health = directs;
 
             for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
             {
-                _health.Add(dir, 0);
+                _health.Add(dir, default);
             }
         }
 
@@ -61,8 +61,11 @@ namespace Game.Game
                 _health[item.Key] = 7;
             }
         }
-        public bool Have(DirectTypes dir) => _health[dir] > 0;
-        public void TakeHealth(DirectTypes dir) => _health[dir] -= 1;
+        public bool Have(DirectTypes dir) => _health[dir]> 0;
+        public void TakeHealth(DirectTypes dir)
+        {
+            _health[dir] -= 1;
+        }
         public void ResetAll()
         {
             foreach (var item in Health)

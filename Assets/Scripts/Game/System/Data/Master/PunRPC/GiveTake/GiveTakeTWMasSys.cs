@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -27,7 +28,7 @@ namespace Game.Game
 
                 ref var tw_0 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref EntityPool.UnitToolWeapon<LevelC>(idx_0);
-                ref var twShield_0 = ref EntityPool.UnitToolWeapon<ShieldProtectionC>(idx_0);
+                ref var twShield_0 = ref EntityPool.UnitShield<ProtectionC>(idx_0);
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
@@ -38,7 +39,7 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
-                            tw_0.Reset();
+                            UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
 
                             stepUnit_0.Take();
 
@@ -50,7 +51,7 @@ namespace Game.Game
                         {
                             InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Owner);
 
-                            tw_0.SetNew(tWTypeForGive, levelTW);
+                            UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                             stepUnit_0.Take();
 
@@ -63,7 +64,7 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW);
 
-                                tw_0.SetNew(tWTypeForGive, levelTW);
+                                UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                                 stepUnit_0.Take();
 
@@ -81,7 +82,7 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW);
 
-                                tw_0.SetNew(tWTypeForGive, levelTW);
+                                UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                                 stepUnit_0.Take();
 
@@ -99,7 +100,7 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW);
 
-                                tw_0.SetNew(tWTypeForGive, levelTW);
+                                UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                                 stepUnit_0.Take();
 

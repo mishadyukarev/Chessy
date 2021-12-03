@@ -7,7 +7,7 @@ namespace Game.Game
     public sealed class AttackMS : IEcsRunSystem
     {
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private readonly EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
+        private readonly EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
         private readonly EcsFilter<ConditionC, MoveInCondC, EffectsC, StunC> _effUnitF = default;
         private readonly EcsFilter<CooldownUniqC> _uniqUnitF = default;
 
@@ -26,16 +26,15 @@ namespace Game.Game
             ref var ownUnit_from = ref _unitF.Get3(idx_from);
 
             ref var hpUnit_from = ref _statUnitF.Get1(idx_from);
-            ref var damUnit_from = ref _statUnitF.Get2(idx_from);
-            ref var stepUnit_from = ref _statUnitF.Get3(idx_from);
-            ref var waterUnit_from = ref _statUnitF.Get4(idx_from);
+            ref var stepUnit_from = ref _statUnitF.Get2(idx_from);
+            ref var waterUnit_from = ref _statUnitF.Get3(idx_from);
 
             ref var condUnit_from = ref _effUnitF.Get1(idx_from);
             ref var moveCond_from = ref _effUnitF.Get2(idx_from);
             ref var effUnit_from = ref _effUnitF.Get3(idx_from);
 
             ref var tw_from = ref UnitToolWeapon<ToolWeaponC>(idx_from);
-            ref var twShield_from = ref UnitToolWeapon<ShieldProtectionC>(idx_from);
+            ref var twShield_from = ref UnitShield<ProtectionC>(idx_from);
 
 
 
@@ -44,9 +43,8 @@ namespace Game.Game
             ref var ownUnit_to = ref _unitF.Get3(idx_to);
 
             ref var hpUnit_to = ref _statUnitF.Get1(idx_to);
-            ref var damUnit_to = ref _statUnitF.Get2(idx_to);
-            ref var stepUnit_to = ref _statUnitF.Get3(idx_to);
-            ref var waterUnit_to = ref _statUnitF.Get4(idx_to);
+            ref var stepUnit_to = ref _statUnitF.Get2(idx_to);
+            ref var waterUnit_to = ref _statUnitF.Get3(idx_to);
 
             ref var condUnit_to = ref _effUnitF.Get1(idx_to);
             ref var moveCond_to = ref _effUnitF.Get2(idx_to);
@@ -54,7 +52,7 @@ namespace Game.Game
             ref var stun_to = ref _effUnitF.Get4(idx_to);
 
             ref var tw_to = ref UnitToolWeapon<ToolWeaponC>(idx_to);
-            ref var twShield_to = ref UnitToolWeapon<ShieldProtectionC>(idx_to);
+            ref var twShield_to = ref UnitShield<ProtectionC>(idx_to);
 
             #endregion
 
@@ -88,7 +86,7 @@ namespace Game.Game
                 float powerDam_to = 0;
 
 
-                powerDam_from += damUnit_from.DamageAttack(unit_from.Unit, levUnit_from.Level, tw_from, effUnit_from, simpUniqueType, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner));
+                powerDam_from += EntityPool.UnitStat<UnitStatCellC>(idx_from).DamageAttack(simpUniqueType);
 
                 if (unit_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
@@ -96,7 +94,7 @@ namespace Game.Game
 
 
 
-                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, tw_to, effUnit_to, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner), build_to.Build, env_to.Envronments);
+                powerDam_to += UnitStat<UnitStatCellC>(idx_to).DamageOnCell;
 
 
                 float min_limit = 0;
@@ -151,50 +149,50 @@ namespace Game.Game
                 {
                     if (tw_from.Is(TWTypes.Shield))
                     {
-                        twShield_from.Take();
+                        UnitShield<UnitShieldCellC>(idx_from).Take();
                     }
                     else if (minus_from > 0)
                     {
                         hpUnit_from.Take((int)minus_from);
-                        if (hpUnit_from.IsHpDeathAfterAttack) hpUnit_from.SetMinHp();
+                        if (UnitStat<UnitStatCellC>(idx_from).IsHpDeathAfterAttack) hpUnit_from.SetMinHp();
                     }
                 }
 
 
                 if (tw_to.Is(TWTypes.Shield))
                 {
-                    twShield_to.Take();
+                    UnitShield<UnitShieldCellC>(idx_to).Take();
                 }
                 else if (minus_to > 0)
                 {
                     hpUnit_to.Take((int)minus_to);
-                    if (hpUnit_to.IsHpDeathAfterAttack) hpUnit_to.SetMinHp();
+                    if (UnitStat<UnitStatCellC>(idx_to).IsHpDeathAfterAttack) hpUnit_to.SetMinHp();
                 }
 
 
 
                 if (!hpUnit_to.Have)
                 {
-                    unit_to.Kill(levUnit_to.Level, ownUnit_to.Owner);
+                    Unit<UnitCellC>(idx_to).Kill(levUnit_to.Level, ownUnit_to.Owner);
 
 
                     if (unit_from.IsMelee)
                     {
                         if (!hpUnit_from.Have)
                         {
-                            unit_from.Kill(levUnit_from.Level, ownUnit_from.Owner);
+                            Unit<UnitCellC>(idx_from).Kill(levUnit_from.Level, ownUnit_from.Owner);
                         }
                         else
                         {
                             var dir = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
-                            unit_to.Shift(idx_from, dir);
+                            Unit<UnitCellC>(idx_to).Shift(idx_from, dir);
                         }
                     }
                 }
 
                 else if (!hpUnit_from.Have)
                 {
-                    unit_from.Kill(levUnit_from.Level, ownUnit_from.Owner);
+                    Unit<UnitCellC>(idx_from).Kill(levUnit_from.Level, ownUnit_from.Owner);
                 }
 
                 effUnit_from.DefAllEffects();

@@ -4,9 +4,7 @@ namespace Game.Game
 {
     public struct StepC : IUnitStatCell
     {
-        int _steps;
-
-        public int Steps => _steps;
+        public int Steps { get; internal set; }
         public bool HaveMin => Steps > 0;
         public bool IsMinusSteps => Steps < 0;
         public bool IsNull => Steps == 0;
@@ -14,22 +12,22 @@ namespace Game.Game
 
 
 
-        internal void Set(in StepC stepC) => _steps = stepC._steps;
-        internal void Set(in int steps) => _steps = steps;
+        internal void Set(in StepC stepC) => Steps = stepC.Steps;
+        internal void Set(in int steps) => Steps = steps;
 
-        public void AddSteps(in int adding = 1)
+        internal void AddSteps(in int adding = 1)
         {
             if (adding < 0) throw new Exception("Need a positive number");
             else if (adding == 0) throw new Exception("You're adding zero");
-            _steps += adding;
+            Steps += adding;
         }
         public void Take(in int taking = 1)
         {
             if (taking < 0) throw new Exception("Need a positive number");
             else if (taking == 0) throw new Exception("You're taking zero");
-            _steps -= taking;
+            Steps -= taking;
             if (IsMinusSteps) Reset();
         }
-        public void Reset() => _steps = 0;
+        public void Reset() => Steps = 0;
     }
 }
