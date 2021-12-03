@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -7,7 +8,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, EffectsC> _effUnitF = default;
 
         private EcsFilter<BarsVC> _cellBarsFilter = default;
         private EcsFilter<BlocksVC> _cellBlocksFilter = default;
@@ -55,7 +56,7 @@ namespace Game.Game
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
                         
 
-                        if (water_0.NeedWater)
+                        if (UnitStat<UnitStatC>(idx_0).NeedWater)
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.NeedWater);
                         }
@@ -64,7 +65,7 @@ namespace Game.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
                         }
 
-                        if (step_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
+                        if (UnitStat<UnitStatC>(idx_0).HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
                         }

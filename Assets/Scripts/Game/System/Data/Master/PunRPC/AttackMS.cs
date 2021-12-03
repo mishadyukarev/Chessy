@@ -8,7 +8,7 @@ namespace Game.Game
     {
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
-        private readonly EcsFilter<ConditionC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
+        private readonly EcsFilter<ConditionC, MoveInCondC, EffectsC, StunC> _effUnitF = default;
         private readonly EcsFilter<CooldownUniqC> _uniqUnitF = default;
 
         private readonly EcsFilter<EnvC> _envF = default;
@@ -34,8 +34,8 @@ namespace Game.Game
             ref var moveCond_from = ref _effUnitF.Get2(idx_from);
             ref var effUnit_from = ref _effUnitF.Get3(idx_from);
 
-            ref var tw_from = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_from);
-            ref var twShield_from = ref EntityPool.ToolWeapon<ShieldC>(idx_from);
+            ref var tw_from = ref UnitToolWeapon<ToolWeaponC>(idx_from);
+            ref var twShield_from = ref UnitToolWeapon<ShieldProtectionC>(idx_from);
 
 
 
@@ -53,25 +53,25 @@ namespace Game.Game
             ref var effUnit_to = ref _effUnitF.Get3(idx_to);
             ref var stun_to = ref _effUnitF.Get4(idx_to);
 
-            ref var tw_to = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_to);
-            ref var twShield_to = ref EntityPool.ToolWeapon<ShieldC>(idx_to);
+            ref var tw_to = ref UnitToolWeapon<ToolWeaponC>(idx_to);
+            ref var twShield_to = ref UnitToolWeapon<ShieldProtectionC>(idx_to);
 
             #endregion
 
 
             ref var river_from = ref _riverF.Get1(idx_from);
-            ref var build_from = ref EntityPool.Build<BuildC>(idx_from);
-            ref var ownBuild_from = ref EntityPool.Build<OwnerC>(idx_from);
+            ref var build_from = ref Build<BuildC>(idx_from);
+            ref var ownBuild_from = ref Build<OwnerC>(idx_from);
             ref var env_from = ref _envF.Get1(idx_from);
-            ref var trail_from = ref EntityPool.Trail<TrailC>(idx_from);
+            ref var trail_from = ref Trail<TrailC>(idx_from);
             ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
 
 
             ref var river_to = ref _riverF.Get1(idx_to);
-            ref var build_to = ref EntityPool.Build<BuildC>(idx_to);
-            ref var ownBuild_to = ref EntityPool.Build<OwnerC>(idx_to);
+            ref var build_to = ref Build<BuildC>(idx_to);
+            ref var ownBuild_to = ref Build<OwnerC>(idx_to);
             ref var env_to = ref _envF.Get1(idx_to);
-            ref var trail_to = ref EntityPool.Trail<TrailC>(idx_to);
+            ref var trail_to = ref Trail<TrailC>(idx_to);
             ref var cdUniq_to = ref _uniqUnitF.Get1(idx_to);
 
 
@@ -80,7 +80,7 @@ namespace Game.Game
 
             if (simpUniqueType != default)
             {
-                stepUnit_from.DefSteps();
+                stepUnit_from.Reset();
                 if (condUnit_from.HaveCondition) condUnit_from.Reset();
 
 
@@ -151,8 +151,7 @@ namespace Game.Game
                 {
                     if (tw_from.Is(TWTypes.Shield))
                     {
-                        twShield_from.TakeShieldProtect();
-                        if (!twShield_from.Have) tw_from.Reset();
+                        twShield_from.Take();
                     }
                     else if (minus_from > 0)
                     {
@@ -164,8 +163,7 @@ namespace Game.Game
 
                 if (tw_to.Is(TWTypes.Shield))
                 {
-                    twShield_to.TakeShieldProtect();
-                    if (!twShield_to.Have) tw_to.Reset();
+                    twShield_to.Take();
                 }
                 else if (minus_to > 0)
                 {
@@ -175,14 +173,14 @@ namespace Game.Game
 
 
 
-                if (!hpUnit_to.HaveHp)
+                if (!hpUnit_to.Have)
                 {
                     unit_to.Kill(levUnit_to.Level, ownUnit_to.Owner);
 
 
                     if (unit_from.IsMelee)
                     {
-                        if (!hpUnit_from.HaveHp)
+                        if (!hpUnit_from.Have)
                         {
                             unit_from.Kill(levUnit_from.Level, ownUnit_from.Owner);
                         }
@@ -190,45 +188,11 @@ namespace Game.Game
                         {
                             var dir = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
                             unit_to.Shift(idx_from, dir);
-
-                            //unit_to.SetNew(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
-                            //ownUnit_to.SetOwner(ownUnit_from.Owner);
-                            //levUnit_to.Set(levUnit_from.Level);
-
-                            //hpUnit_to.Set(hpUnit_from);
-                            //stepUnit_to.Set(stepUnit_from);
-                            //condUnit_to.Set(condUnit_from);
-
-                            //tw_to.Set(tw_from);
-                            //TWCellC<LevelC>(idx_to).Set(TWCellC<LevelC>(idx_from));
-                            //TWCellC<ShieldC>(idx_to).Set(TWCellC<ShieldC>(idx_from));
-
-                            //waterUnit_to = waterUnit_from;
-                            //moveCond_to.ResetAll();
-                            //stun_to.Reset();
-                            //cdUniq_to.Replace(cdUniq_from);
-                            //if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner));
-
-                            
-                            //trail_to.TrySetNewTrail(dir.Invert(), env_to);
-                            //trail_from.TrySetNewTrail(dir, env_from);
-
-
-                            //if (build_to.Is(BuildTypes.Camp))
-                            //{
-                            //    if (!ownBuild_to.Is(ownUnit_to.Owner))
-                            //    {
-                            //        build_to.Remove(ownBuild_to.Owner);
-                            //    }
-                            //}
-
-
-                            //unit_from.Clean(levUnit_from.Level, ownUnit_from.Owner);
                         }
                     }
                 }
 
-                else if (!hpUnit_from.HaveHp)
+                else if (!hpUnit_from.Have)
                 {
                     unit_from.Kill(levUnit_from.Level, ownUnit_from.Owner);
                 }

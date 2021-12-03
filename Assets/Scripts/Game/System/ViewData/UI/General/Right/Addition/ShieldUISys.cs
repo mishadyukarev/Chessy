@@ -6,14 +6,14 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var tw_sel = ref EntityPool.ToolWeapon<ToolWeaponC>(SelIdx.Idx);
-            ref var twLevel_sel = ref EntityPool.ToolWeapon<LevelC>(SelIdx.Idx);
+            ref var tw_sel = ref EntityPool.UnitToolWeapon<ToolWeaponC>(SelIdx.Idx);
+            ref var twLevel_sel = ref EntityPool.UnitToolWeapon<LevelC>(SelIdx.Idx);
 
             ExtraTWZoneUIC.DisableAll();
 
             if (tw_sel.HaveTW)
             {
-                ExtraTWZoneUIC.Toggle(tw_sel.TW, twLevel_sel.Level, true);
+                ExtraTWZoneUIC.Toggle(tw_sel.ToolWeapon, twLevel_sel.Level, true);
             }
         }
     }

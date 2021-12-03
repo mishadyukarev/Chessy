@@ -22,7 +22,7 @@ namespace Game.Game
             {
                 fire_0.Disable();
 
-                stepUnit_0.TakeSteps();
+                stepUnit_0.Take();
             }
 
             else

@@ -7,7 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, OwnerC> _mainUnitF;
         private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, EffectsC> _effUnitF = default;
         private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
 
         public void Run()
@@ -34,7 +34,7 @@ namespace Game.Game
                 {
                     cdUniq_0.SetCooldown(UniqAbilTypes.BonusNear, 3);
 
-                    stepUnit_0.TakeSteps();
+                    stepUnit_0.Take();
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
                     RpcSys.SoundToGeneral(sender, UniqAbilTypes.BonusNear);

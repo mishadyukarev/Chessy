@@ -15,7 +15,7 @@ namespace Game.Game
             ref var build_0 = ref Build<BuildC>(idx_0);
             ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
-            ref var step_0 = ref Unit<StepC>(idx_0);
+            ref var step_0 = ref UnitStat<StepC>(idx_0);
 
             ref var env_0 = ref Environment<EnvC>(idx_0);
             ref var envRes_0 = ref Environment<EnvResC>(idx_0);
@@ -47,7 +47,7 @@ namespace Game.Game
 
                     build_0.SetNew(buildType, whoseMove);
 
-                    step_0.TakeSteps();
+                    step_0.Take();
                 }
                                
                 else

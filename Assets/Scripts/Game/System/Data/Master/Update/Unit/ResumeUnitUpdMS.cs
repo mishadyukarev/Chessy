@@ -10,7 +10,7 @@ namespace Game.Game
             foreach (var idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                ref var condUnit_0 = ref UnitEffects<ConditionC>(idx_0);
 
                 ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 
@@ -28,9 +28,9 @@ namespace Game.Game
                 }
                 else if (!unit_0.CanExtract(out resume, out env, out var res))
                 {
-                    if (Unit<HpC>(idx_0).HaveMax)
+                    if (UnitStat<HpC>(idx_0).HaveMax)
                     {
-                        if (unit_0.Have && Unit<StepC>(idx_0).HaveMin)
+                        if (unit_0.Have && UnitStat<StepC>(idx_0).HaveMin)
                         {
                             condUnit_0.Set(CondUnitTypes.Protected);
                         }

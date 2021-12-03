@@ -10,7 +10,7 @@ namespace Game.Game
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionC, MoveInCondC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, MoveInCondC, EffectsC> _effUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
@@ -44,18 +44,19 @@ namespace Game.Game
 
             if (SetUnitCellsC.HaveIdxCell(whoseMove, idx_0))
             {
+                var levUnit = LevelTypes.None;
+
                 if (InvUnitsC.Have(unit, LevelTypes.Second, whoseMove))
                 {
                     InvUnitsC.Take(whoseMove, unit, LevelTypes.Second);
-                    levUnit_0.Set(LevelTypes.Second);
+                    levUnit  = LevelTypes.Second;
                 }
                 else
                 {
                     InvUnitsC.Take(whoseMove, unit, LevelTypes.First);
-                    levUnit_0.Set(LevelTypes.First);
+                    levUnit = LevelTypes.First;
                 }
-                ownUnit_0.SetOwner(whoseMove);
-                unit_0.SetNew(unit, levUnit_0.Level, ownUnit_0.Owner);
+                unit_0.SetNew(unit, levUnit, whoseMove);
 
 
                 tw_0.Reset();
@@ -64,8 +65,8 @@ namespace Game.Game
                 hp_0.SetMax();
                 if (cond_0.HaveCondition) cond_0.Reset();  
                 moveCond_0.ResetAll();
-                step_0.SetMaxSteps(unit, false, UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
-                water_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                UnitStat<UnitStatC>(idx_0).SetMaxSteps(unit, false, UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                UnitStat<UnitStatC>(idx_0).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
 
       
 

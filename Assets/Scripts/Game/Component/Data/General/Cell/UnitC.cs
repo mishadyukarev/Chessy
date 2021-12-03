@@ -76,8 +76,8 @@ namespace Game.Game
             else return false;
 
 
-            if (!Is(UnitTypes.Pawn) || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed)
-                || !Unit<HpC>(_idx).HaveMax) return false;
+            if (!Is(UnitTypes.Pawn) || !UnitEffects<ConditionC>(_idx).Is(CondUnitTypes.Relaxed)
+                || !UnitStat<HpC>(_idx).HaveMax) return false;
 
 
             var ration = 0f;
@@ -106,9 +106,9 @@ namespace Game.Game
 
             var envC = Environment<EnvC>(_idx);
             var envResC = Environment<EnvResC>(_idx);
-            var twC = ToolWeapon<ToolWeaponC>(_idx);
+            var twC = UnitToolWeapon<ToolWeaponC>(_idx);
 
-            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !Unit<HpC>(_idx).HaveMax) return false;
+            if (Build<BuildC>(_idx).Have || !UnitEffects<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !UnitStat<HpC>(_idx).HaveMax) return false;
 
 
 
@@ -148,7 +148,7 @@ namespace Game.Game
     
 
 
-        public UnitC(UnitTypes unit, byte idx)
+        public UnitC(in UnitTypes unit, in byte idx)
         {
             _unit = unit;
             _idx = idx;
@@ -156,16 +156,29 @@ namespace Game.Game
 
 
 
-        public void SetNew(UnitTypes unit, LevelTypes level, PlayerTypes owner)
+        public void Set(UnitTypes unit)
+        {
+            if (unit == UnitTypes.None) throw new Exception();
+
+            _unit = unit;
+        }
+        public void Clean()
+        {
+            _unit = UnitTypes.None;
+        }
+
+        public void SetNew(in UnitTypes unit, in LevelTypes level, in PlayerTypes owner)
         {
             if (unit == UnitTypes.None) throw new Exception();
             if (Have) throw new Exception("It's got unit");
  
             _unit = unit;
+            Unit<LevelC>(_idx).Level = level;
+            Unit<OwnerC>(_idx).Owner = owner;
+
             WhereUnitsC.Set(unit, level, owner, _idx, true);
         }
-
-        public void Kill(LevelTypes level, PlayerTypes owner)
+        public void Kill(in LevelTypes level, in PlayerTypes owner)
         {
             if (!Have) throw new Exception("It's not got unit");
 
@@ -181,16 +194,7 @@ namespace Game.Game
 
             WhereUnitsC.Set(_unit, level, owner, _idx, false);
             _unit = UnitTypes.None;
-        }
-
-        public void Clean(in LevelTypes level, in PlayerTypes owner)
-        {
-            if (!Have) throw new Exception("It's not got unit");
-
-            WhereUnitsC.Set(_unit, level, owner, _idx, false);
-            _unit = UnitTypes.None;
-        }
-
+        }    
         public void Shift(in byte idx_from, in DirectTypes dir_from)
         {
             var idx_to = _idx;
@@ -207,20 +211,21 @@ namespace Game.Game
             Unit<LevelC>(idx_to).Set(Unit<LevelC>(idx_from));
 
 
-            Unit<HpC>(idx_to).Set(Unit<HpC>(idx_from));
-            Unit<StepC>(idx_to).Set(Unit<StepC>(idx_from));
-            if (Unit<ConditionC>(idx_to).HaveCondition) Unit<ConditionC>(idx_to).Reset();
+            UnitStat<HpC>(idx_to).Set(UnitStat<HpC>(idx_from));
+            UnitStat<StepC>(idx_to).Set(UnitStat<StepC>(idx_from));
+            if (UnitEffects<ConditionC>(idx_to).HaveCondition) UnitEffects<ConditionC>(idx_to).Reset();
 
-            ToolWeapon<ToolWeaponC>(idx_to).Set(ToolWeapon<ToolWeaponC>(idx_from));
-            ToolWeapon<LevelC>(idx_to).Set(ToolWeapon<LevelC>(idx_from));
-            ToolWeapon<ShieldC>(idx_to).Set(ToolWeapon<ShieldC>(idx_from));
+            UnitToolWeapon<ToolWeaponC>(idx_to).Set(idx_from);
+            UnitToolWeapon<LevelC>(idx_to).Set(UnitToolWeapon<LevelC>(idx_from));
+            UnitToolWeapon<ShieldProtectionC>(idx_to).Set(UnitToolWeapon<ShieldProtectionC>(idx_from));
 
-            Unit<UnitEffectsC>(idx_to).Set(Unit<UnitEffectsC>(idx_from));
-            Unit<WaterC>(idx_to).Set(Unit<WaterC>(idx_from));
-            Unit<MoveInCondC>(idx_to).ResetAll();
-            Unit<CooldownUniqC>(idx_to).Replace(Unit<CooldownUniqC>(idx_from));
-            Unit<CornerArcherC>(idx_to).Set(Unit<CornerArcherC>(idx_from));
-            if (River<RiverC>(idx_to).HaveNearRiver) Unit<WaterC>(idx_to).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_from.Unit, level_from.Level, own_from.Owner));
+            UnitEffects<EffectsC>(idx_to).Set(UnitEffects<EffectsC>(idx_from));
+            UnitStat<WaterC>(idx_to).Set(UnitStat<WaterC>(idx_from));
+            UnitEffects<MoveInCondC>(idx_to).ResetAll();
+            UnitAbilities<CooldownUniqC>(idx_to).Replace(UnitAbilities<CooldownUniqC>(idx_from));
+            UnitAbilities<CornerArcherC>(idx_to).Set(UnitAbilities<CornerArcherC>(idx_from));
+            if (River<RiverC>(idx_to).HaveNearRiver)
+                UnitStat<UnitStatC>(idx_to).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_from.Unit, level_from.Level, own_from.Owner));
 
 
 
@@ -242,7 +247,6 @@ namespace Game.Game
 
             //UnitCellC<UnitC>(idx_from).Clean(lev_from, own_from.Owner);
         }
-
         public void AddToInventor()
         {
             var level = Unit<LevelC>(_idx).Level;
@@ -253,85 +257,28 @@ namespace Game.Game
             WhereUnitsC.Set(_unit, level, owner, _idx, false);
             _unit = UnitTypes.None;
         }
-
-        public void CreateScout()
+        public void Upgrade()
         {
-            var level = Unit<LevelC>(_idx).Level;
-            var owner = Unit<OwnerC>(_idx).Owner;
+            ref var levC = ref Unit<LevelC>(_idx);
 
-            InvUnitsC.Take(owner, UnitTypes.Scout, LevelTypes.First);
-
-            WhereUnitsC.Set(_unit, level, owner, _idx, false);
-            _unit = UnitTypes.None;
-        }
-
-        public void SetFromToUnit(UnitTypes unit, in byte idx_from)
-        {
-            var idx_to = _idx;
-
-            ref var unit_from = ref Unit<UnitC>(idx_from);
-            ref var level_from = ref Unit<LevelC>(idx_from);
-            ref var own_from = ref Unit<OwnerC>(idx_from);
-
-            WhereUnitsC.Set(UnitTypes.Archer, level_from.Level, own_from.Owner, idx_from, false);
-            unit_from._unit = UnitTypes.None;
-
-
-            ref var unit_to = ref Unit<UnitC>(idx_to);
-            ref var level_to = ref Unit<LevelC>(idx_to);
-            ref var own_to = ref Unit<OwnerC>(idx_to);
-
-            WhereUnitsC.Set(UnitTypes.Archer, level_to.Level, own_to.Owner, idx_to, false);
-            _unit = UnitTypes.None;
-
-
-            _unit = unit;
-            level_to.Set(LevelTypes.First);
-
-            WhereUnitsC.Set(unit, level_to.Level, own_to.Owner, idx_to, true);
-
-
-            InvUnitsC.Take(own_to.Owner, unit_to.Unit, level_to.Level);
-        }
-
-        public int ExtractFood()
-        {
-            switch (Unit<LevelC>(_idx).Level)
+            if (levC.Is(LevelTypes.First))
             {
-                case LevelTypes.None: throw new Exception();
-
-                case LevelTypes.First:
-                    switch (Unit)
-                    {
-                        case UnitTypes.None: throw new Exception();
-                        case UnitTypes.King: throw new Exception();
-                        case UnitTypes.Pawn: return 10;
-                        case UnitTypes.Archer: throw new Exception();
-                        case UnitTypes.Scout: throw new Exception();
-                        case UnitTypes.Elfemale: throw new Exception();
-                        case UnitTypes.End: throw new Exception();
-                        default: throw new Exception();
-                    }
-                case LevelTypes.Second:
-                    switch (Unit)
-                    {
-                        case UnitTypes.None: throw new Exception();
-                        case UnitTypes.King: throw new Exception();
-                        case UnitTypes.Pawn: return 20;
-                        case UnitTypes.Archer: throw new Exception();
-                        case UnitTypes.Scout: throw new Exception();
-                        case UnitTypes.Elfemale: throw new Exception();
-                        case UnitTypes.End: throw new Exception();
-                        default: throw new Exception();
-                    }
-                case LevelTypes.End: throw new Exception();
-                default: throw new Exception();
+                levC.Level = LevelTypes.Second;
             }
+            else throw new Exception();
         }
+        public void Replace(UnitTypes unit, LevelTypes level)
+        {
+            //_unit = unit;
+            //Unit<LevelC>(_idx).Level = level;
 
-        public void Sync(UnitTypes unit)
+            //WhereUnitsC.Set(unit, level, owner, _idx, true);
+        }
+        public void Sync(UnitTypes unit, LevelTypes lev, PlayerTypes owner)
         {
             _unit = unit;
+            Unit<LevelC>(_idx).Level = lev;
+            Unit<OwnerC>(_idx).Owner = owner;
         }
     }
 }

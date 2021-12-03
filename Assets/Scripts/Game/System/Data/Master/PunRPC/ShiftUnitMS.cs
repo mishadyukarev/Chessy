@@ -11,7 +11,7 @@ namespace Game.Game
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionC, MoveInCondC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, MoveInCondC, EffectsC> _effUnitF = default;
 
         private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
         private EcsFilter<CornerArcherC> _archerF = default;
@@ -43,9 +43,9 @@ namespace Game.Game
                 ref var cdUniq_from = ref _uniqUnitF.Get2(idx_from);
                 ref var corner_from = ref _archerF.Get1(idx_from);
 
-                ref var tw_from = ref ToolWeapon<ToolWeaponC>(idx_from);
-                ref var twLevel_from = ref ToolWeapon<LevelC>(idx_from);
-                ref var twShield_from = ref ToolWeapon<ShieldC>(idx_from);
+                ref var tw_from = ref UnitToolWeapon<ToolWeaponC>(idx_from);
+                ref var twLevel_from = ref UnitToolWeapon<LevelC>(idx_from);
+                ref var twShield_from = ref UnitToolWeapon<ShieldProtectionC>(idx_from);
 
 
 
@@ -65,9 +65,9 @@ namespace Game.Game
                 ref var cdUniq_to = ref _uniqUnitF.Get2(idx_to);
                 ref var corner_to = ref _archerF.Get1(idx_to);
 
-                ref var tw_to = ref ToolWeapon<ToolWeaponC>(idx_to);
-                ref var twLevel_to = ref ToolWeapon<LevelC>(idx_to);
-                ref var twShield_to = ref ToolWeapon<ShieldC>(idx_to);
+                ref var tw_to = ref UnitToolWeapon<ToolWeaponC>(idx_to);
+                ref var twLevel_to = ref UnitToolWeapon<LevelC>(idx_to);
+                ref var twShield_to = ref UnitToolWeapon<ShieldProtectionC>(idx_to);
 
                 #endregion
 
@@ -81,50 +81,13 @@ namespace Game.Game
                 ref var river_to = ref _cellRiverFilt.Get1(idx_to);
                 ref var trail_to = ref Trail<TrailC>(idx_to);
 
-                ref var envDat_from = ref _cellEnvrDataFilter.Get1(idx_from);
-                ref var trail_from = ref Trail<TrailC>(idx_from);
-
 
 
                 var dir_from = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
 
-                step_from.TakeStepsForDoing(env_to, dir_from, trail_to);
-
-                //trail_to.TrySetNewTrail(dir_from.Invert(), env_to);
-                //trail_from.TrySetNewTrail(dir_from, envDat_from);
+                UnitStat<UnitStatC>(idx_from).TakeStepsForDoing(env_to, dir_from, trail_to);
 
                 unit_to.Shift(idx_from, dir_from);
-
-                //own_to.Set(own_from);
-                //lev_to.Set(lev_from.Level);
-                //unit_to.SetNew(unit_from.Unit, lev_to.Level, own_to.Owner);
-
-                //hp_to.Set(hp_from);
-                //step_to.Set(step_from);
-                //if (cond_to.HaveCondition) cond_to.Reset();
-
-                //tw_to.Set(tw_from);
-                //twLevel_to.Set(twLevel_from);
-                //twShield_to.Set(twShield_from);
-
-                //effUnit_to.Set(eff_from);
-                //water_to.Set(water_from);
-                //moveCond_to.ResetAll();
-                //cdUniq_to.Replace(cdUniq_from);
-                //corner_to.Set(corner_from);
-                //if (river_to.HaveNearRiver) water_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, lev_to.Level, own_to.Owner));
-
-
-
-                //if (build_to.Is(BuildTypes.Camp))
-                //{
-                //    if (!ownBuild_to.Is(own_to.Owner))
-                //    {
-                //        build_to.Remove(ownBuild_to.Owner);
-                //    }
-                //}
-
-                //unit_from.Clean(lev_from.Level, own_from.Owner);
 
                 RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

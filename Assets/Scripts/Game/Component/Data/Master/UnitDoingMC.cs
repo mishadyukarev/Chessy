@@ -2,7 +2,7 @@
 {
     public struct UnitDoingMC
     {
-        private static UnitTypes _unit;
+        static UnitTypes _unit;
 
         public static void Set(UnitTypes unit)
         {

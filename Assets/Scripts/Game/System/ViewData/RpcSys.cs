@@ -370,25 +370,27 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 objs.Add(Unit<UnitC>(idx_0).Unit);
-                objs.Add(Unit<OwnerC>(idx_0).Owner);
                 objs.Add(Unit<LevelC>(idx_0).Level);
-                objs.Add(Unit<HpC>(idx_0).Hp);
-                objs.Add(Unit<StepC>(idx_0).Steps);
+                objs.Add(Unit<OwnerC>(idx_0).Owner);
 
-                objs.Add(Unit<ConditionC>(idx_0).Condition);
-                foreach (var item in Unit<UnitEffectsC>(idx_0).Effects) objs.Add(item.Value);
-                objs.Add(Unit<WaterC>(idx_0).Water);
+                objs.Add(UnitStat<HpC>(idx_0).Hp);
+                objs.Add(UnitStat<StepC>(idx_0).Steps);
+                objs.Add(UnitStat<WaterC>(idx_0).Water);
 
-                objs.Add(ToolWeapon<ToolWeaponC>(idx_0).TW);
-                objs.Add(ToolWeapon<LevelC>(idx_0).Level);
-                objs.Add(ToolWeapon<ShieldC>(idx_0).Protection);
+                objs.Add(UnitEffects<ConditionC>(idx_0).Condition);
+                foreach (var item in UnitEffects<EffectsC>(idx_0).Effects) objs.Add(item.Value);
+               
 
-                objs.Add(Unit<StunC>(idx_0).IsStunned);
-                objs.Add(Unit<StunC>(idx_0).StepsInStun);
+                objs.Add(UnitToolWeapon<ToolWeaponC>(idx_0).ToolWeapon);
+                objs.Add(UnitToolWeapon<LevelC>(idx_0).Level);
+                objs.Add(UnitToolWeapon<ShieldProtectionC>(idx_0).Protection);
 
-                objs.Add(Unit<CornerArcherC>(idx_0).IsCornered);
+                objs.Add(UnitEffects<StunC>(idx_0).IsStunned);
+                objs.Add(UnitEffects<StunC>(idx_0).StepsInStun);
 
-                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
+                objs.Add(UnitAbilities<CornerArcherC>(idx_0).IsCornered);
+
+                foreach (var item in UnitAbilities<CooldownUniqC>(idx_0).Cooldowns)
                     objs.Add(item.Value);
 
 
@@ -482,34 +484,27 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                Unit<UnitC>(idx_0).Sync((UnitTypes)objects[_idx_cur++]);
-                Unit<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
-                Unit<LevelC>(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
-                Unit<HpC>(idx_0).Sync((int)objects[_idx_cur++]);
-                Unit<StepC>(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<UnitC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
+                UnitStat<UnitStatC>(idx_0).Sync((int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                Unit<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
-                foreach (var item in Unit<UnitEffectsC>(idx_0).Effects) Unit<UnitEffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
-                Unit<WaterC>(idx_0).Sync((int)objects[_idx_cur++]);
+                UnitEffects<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
+                foreach (var item in UnitEffects<EffectsC>(idx_0).Effects) UnitEffects<EffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
 
-                ToolWeapon<ToolWeaponC>(idx_0).Sync((TWTypes)objects[_idx_cur++]);
-                ToolWeapon<LevelC>(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
-                ToolWeapon<ShieldC>(idx_0).Sync((int)objects[_idx_cur++]);
+                UnitToolWeapon<ToolWeaponC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                
-                Unit<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                Unit<CornerArcherC>(idx_0).Sync((bool)objects[_idx_cur++]);
+                UnitEffects<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
-                    Unit<CooldownUniqC>(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
+                UnitAbilities<CornerArcherC>(idx_0).Sync((bool)objects[_idx_cur++]);
+
+                foreach (var item in UnitAbilities<CooldownUniqC>(idx_0).Cooldowns)
+                    UnitAbilities<CooldownUniqC>(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
 
 
 
 
 
-                Build<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
-                Build<OwnerC>(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
+                Build<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
 
 
 

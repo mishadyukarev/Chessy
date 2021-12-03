@@ -10,7 +10,7 @@ namespace Game.Game
         private EcsFilter<UnitC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<CooldownUniqC> _uniqUnitF = default;
-        private EcsFilter<UnitEffectsC> _effUnitF = default;
+        private EcsFilter<EffectsC> _effUnitF = default;
 
         public void Run()
         {
@@ -39,7 +39,7 @@ namespace Game.Game
                         env_0.SetNew(EnvTypes.AdultForest);
                         envRes_0.SetMax(EnvTypes.AdultForest);
 
-                        unitStep_0.TakeSteps();
+                        unitStep_0.Take();
 
                         cdUniq_0.SetCooldown(UniqAbilTypes.GrowAdultForest, 5);
 

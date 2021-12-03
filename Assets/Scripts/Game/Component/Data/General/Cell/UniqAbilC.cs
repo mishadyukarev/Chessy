@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct UniqAbilC : IUnitCell
+    public struct UniqAbilC : IUnitAbilitiesCell
     {
-        private Dictionary<UniqButTypes, UniqAbilTypes> _abilities;
+        Dictionary<UniqButTypes, UniqAbilTypes> _abilities;
 
         public UniqAbilTypes Ability(UniqButTypes uniqBut) => _abilities[uniqBut];
 
@@ -16,7 +16,7 @@ namespace Game.Game
             {
                 _abilities = new Dictionary<UniqButTypes, UniqAbilTypes>();
 
-                for (var uniqBut = (UniqButTypes)1; uniqBut < (UniqButTypes)typeof(UniqButTypes).GetEnumNames().Length; uniqBut++)
+                for (var uniqBut = UniqButTypes.First; uniqBut < UniqButTypes.End; uniqBut++)
                 {
                     _abilities.Add(uniqBut, default);
 

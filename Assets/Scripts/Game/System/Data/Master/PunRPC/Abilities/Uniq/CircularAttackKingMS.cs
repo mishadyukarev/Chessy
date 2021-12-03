@@ -8,7 +8,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, EffectsC> _effUnitF = default;
         private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
 
         private EcsFilter<EnvC> _envF = default;
@@ -49,8 +49,8 @@ namespace Game.Game
                         ref var ownUnit_1 = ref _unitF.Get3(idx_1);
                         ref var hpUnitC_1 = ref _statUnitF.Get1(idx_1);
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
-                        ref var tw_1 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref EntityPool.ToolWeapon<ShieldC>(idx_1);
+                        ref var tw_1 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_1);
+                        ref var shield_1 = ref EntityPool.UnitToolWeapon<ShieldProtectionC>(idx_1);
 
 
 
@@ -66,13 +66,12 @@ namespace Game.Game
 
                                 if (tw_1.Is(TWTypes.Shield))
                                 {
-                                    shield_1.TakeShieldProtect();
-                                    if (!shield_1.Have) tw_1.Reset();
+                                    shield_1.Take();
                                 }
                                 else
                                 {
                                     hpUnitC_1.Take(25);
-                                    if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.HaveHp)
+                                    if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.Have)
                                     {
                                         unit_1.Kill(levUnit_1.Level, ownUnit_1.Owner);
                                     }
@@ -81,7 +80,7 @@ namespace Game.Game
                         }
                     }
 
-                    stepUnit_0.TakeSteps();
+                    stepUnit_0.Take();
                     effUnit_0.DefAllEffects();
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.AttackMelee);

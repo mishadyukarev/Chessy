@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -8,7 +9,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, WaterC> _statUnitF = default;
-        private EcsFilter<UnitEffectsC> _effUnitF = default;
+        private EcsFilter<EffectsC> _effUnitF = default;
 
         private EcsFilter<RiverC> _cellRiverFilt = default;
 
@@ -46,16 +47,16 @@ namespace Game.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            water_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                            UnitStat<UnitStatC>(idx_0).SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                         }
                         else
                         {
-                            water_0.TakeWater();
+                            UnitStat<UnitStatC>(idx_0).TakeWater();
                             if (!water_0.Have)
                             {
-                                hp_0.TakeHpThirsty(unit_0.Unit);
+                                UnitStat<UnitStatC>(idx_0).ExecuteThirsty(unit_0.Unit);
 
-                                if (!hp_0.HaveHp)
+                                if (!hp_0.Have)
                                 {
                                     if (build_0.Is(BuildTypes.Camp))
                                     {

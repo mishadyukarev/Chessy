@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct StunC : IUnitCell
+    public struct StunC : IUnitEffectCell
     {
         private bool _isStunned;
         private int _stepsInStun;

@@ -7,7 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<UnitEffectsC> _effUnitF = default;
+        private EcsFilter<EffectsC> _effUnitF = default;
 
         public void Run()
         {
@@ -36,9 +36,9 @@ namespace Game.Game
                     {
                         InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                        levUnit_0.Set(LevelTypes.Second);
+                        unit_0.Upgrade();
 
-                        stepUnit_0.TakeSteps();
+                        stepUnit_0.Take();
 
                         hpUnit_0.SetMax();
 

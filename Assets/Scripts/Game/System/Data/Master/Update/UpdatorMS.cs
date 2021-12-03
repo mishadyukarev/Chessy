@@ -13,7 +13,7 @@ namespace Game.Game
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<ConditionC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
+        private EcsFilter<ConditionC, MoveInCondC, EffectsC, StunC> _effUnitF = default;
         private EcsFilter<CooldownUniqC> _unitUniqF = default;
 
         public void Run()
@@ -141,7 +141,7 @@ namespace Game.Game
                         }
                     }
 
-                    step_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                    EntityPool.UnitStat<UnitStatC>(idx_0).SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                 }
 
                 //else

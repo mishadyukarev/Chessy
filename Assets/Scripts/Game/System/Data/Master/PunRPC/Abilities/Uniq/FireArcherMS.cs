@@ -7,7 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<UnitEffectsC> _effUnitF = default;
+        private EcsFilter<EffectsC> _effUnitF = default;
 
         private EcsFilter<FireC> _fireF = default;
 
@@ -30,13 +30,13 @@ namespace Game.Game
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (step_from.HaveMaxSteps(unit_from.Unit, eff_from.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_from.Unit, level_from.Level, own_from.Owner)))
+            if (EntityPool.UnitStat<UnitStatC>(idx_from).HaveMaxSteps(unit_from.Unit, eff_from.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_from.Unit, level_from.Level, own_from.Owner)))
             {
                 if (ArsonCellsC.ContainIdx(whoseMove, idx_from, idx_to))
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.FireArcher);
 
-                    step_from.DefSteps();
+                    step_from.Reset();
                     fire_to.Enable();
                 }
             }

@@ -22,8 +22,8 @@ namespace Game.Game
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-                ref var tw_0 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
+                ref var tw_0 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.UnitToolWeapon<LevelC>(idx_0);
 
 
                 ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
@@ -46,7 +46,7 @@ namespace Game.Game
                         {
                             if (tw_0.HaveTW)
                             {
-                                InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                                InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
                                 tw_0.Reset();
                             }
 
@@ -58,7 +58,7 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
                             tw_0.Reset();
                         }
 

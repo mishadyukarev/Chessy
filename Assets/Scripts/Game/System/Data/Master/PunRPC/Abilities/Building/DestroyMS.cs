@@ -31,7 +31,7 @@ namespace Game.Game
                 {
                     PlyerWinnerC.PlayerWinner = ownUnit_0.Owner;
                 }
-                _statUnitF.Get1(idx_0).TakeSteps();
+                _statUnitF.Get1(idx_0).Take();
 
                 if (buildC_0.Is(BuildTypes.Farm))
                 {

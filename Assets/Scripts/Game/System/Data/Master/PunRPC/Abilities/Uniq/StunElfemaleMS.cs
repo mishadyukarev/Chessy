@@ -48,7 +48,7 @@ namespace Game.Game
                                         _effUnitF.Get1(idx_to).SetNewStun();
                                         _uniqUnitF.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 3);
 
-                                        step_from.TakeSteps();
+                                        step_from.Take();
 
                                         RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.StunElfemale);
                                     }

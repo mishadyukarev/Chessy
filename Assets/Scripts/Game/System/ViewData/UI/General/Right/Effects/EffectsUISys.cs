@@ -5,7 +5,7 @@ namespace Game.Game
     public sealed class EffectsUISys : IEcsRunSystem
     {
         private EcsFilter<UnitC> _unitF = default;
-        private EcsFilter<UnitEffectsC> _effUnitF = default;
+        private EcsFilter<EffectsC> _effUnitF = default;
 
         public void Run()
         {

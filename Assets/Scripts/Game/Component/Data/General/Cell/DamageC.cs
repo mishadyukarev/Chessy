@@ -2,16 +2,16 @@
 
 namespace Game.Game
 {
-    public struct DamageC : IUnitCell
+    public struct DamageC : IUnitStatCell
     {
         public int StandDamage(UnitTypes unit, LevelTypes level) => UnitValues.StandDamage(unit, level);
-        public int DamageAttack(UnitTypes unit, LevelTypes level, ToolWeaponC tWC, UnitEffectsC effectsC, AttackTypes attack, float upgPerc)
+        public int DamageAttack(UnitTypes unit, LevelTypes level, ToolWeaponC tWC, EffectsC effectsC, AttackTypes attack, float upgPerc)
         {
             var standDamage = StandDamage(unit, level);
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * UnitValues.PercentTW(tWC.TW);
+            powerDamege += standDamage * UnitValues.PercentTW(tWC.ToolWeapon);
             if (attack == AttackTypes.Unique) powerDamege += standDamage * UnitValues.UNIQUE_PERCENT_DAMAGE;
 
             if (effectsC.Have(UnitStatTypes.Damage)) powerDamege += standDamage * 0.2f;
@@ -20,7 +20,7 @@ namespace Game.Game
 
             return (int)powerDamege;
         }
-        public int DamageOnCell(UnitTypes unit, LevelTypes level, ConditionC condUnitC, ToolWeaponC tWC, UnitEffectsC effectsC, float upgPerc, BuildTypes build, Dictionary<EnvTypes, bool> envrs)
+        public int DamageOnCell(UnitTypes unit, LevelTypes level, ConditionC condUnitC, ToolWeaponC tWC, EffectsC effectsC, float upgPerc, BuildTypes build, Dictionary<EnvTypes, bool> envrs)
         {
             float powerDamege = DamageAttack(unit, level, tWC, effectsC, AttackTypes.Simple, upgPerc);
 

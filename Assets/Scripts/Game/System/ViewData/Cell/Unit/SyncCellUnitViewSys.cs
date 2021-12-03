@@ -12,10 +12,10 @@ namespace Game.Game
                 ref var levelUnit_0 = ref EntityPool.Unit<LevelC>(idx_0);
                 ref var visUnit_0 = ref EntityPool.Unit<VisibleC>(idx_0);
 
-                ref var corner_0 = ref EntityPool.Unit<CornerArcherC>(idx_0);
+                ref var corner_0 = ref EntityPool.UnitAbilities<CornerArcherC>(idx_0);
 
-                ref var tw_0 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
+                ref var tw_0 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.UnitToolWeapon<LevelC>(idx_0);
 
                 ref var mainUnitC_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
                 ref var extraUnitC_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);
@@ -37,7 +37,7 @@ namespace Game.Game
                             if (tw_0.HaveTW)
                             {
                                 extraUnitC_0.Enable_SR();
-                                extraUnitC_0.SetToolWeapon_Sprite(tw_0.TW, twLevel_0.Level);
+                                extraUnitC_0.SetToolWeapon_Sprite(tw_0.ToolWeapon, twLevel_0.Level);
                             }
                         }
 

@@ -27,7 +27,7 @@ namespace Game.Game
                     {
                         WindC.Set(idx_to);
 
-                        step_from.TakeSteps();
+                        step_from.Take();
 
                         uniq_from.SetCooldown(UniqAbilTypes.ChangeDirWind, 6);
 

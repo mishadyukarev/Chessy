@@ -9,9 +9,9 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                if (Unit<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
+                if (UnitEffects<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
                 {
-                    Unit<HpC>(idx_0).SetMax();
+                    UnitStat<HpC>(idx_0).SetMax();
                 }
             }
         }

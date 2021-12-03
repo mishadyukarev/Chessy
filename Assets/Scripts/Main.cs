@@ -8,13 +8,13 @@ namespace Game
 {
     public sealed class Main : MonoBehaviour
     {
-        [SerializeField] TestModes _testMode;
+        [SerializeField] TestModes _testMode = default;
 
         EcsWorld _menuW;
         EcsWorld _gameW;
 
 
-        private void Start()
+        void Start()
         {
             new Common.CreateCs(transform, _testMode);
 
@@ -27,7 +27,7 @@ namespace Game
             ToggleScene(SceneTypes.Menu);
         }
 
-        private void Update()
+        void Update()
         {
             switch (CurSceneC.Scene)
             {

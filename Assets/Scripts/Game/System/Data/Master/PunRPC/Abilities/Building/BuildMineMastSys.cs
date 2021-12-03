@@ -41,7 +41,7 @@ namespace Game.Game
                                 
                                 build_0.SetNew(build, whoseMove);
 
-                                curStepUnitC.TakeSteps();
+                                curStepUnitC.Take();
                             }
 
                             else RpcSys.MistakeEconomyToGeneral(sender, needRes);

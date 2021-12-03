@@ -54,7 +54,7 @@ namespace Game.Game
                         build_0.SetNew(forBuildType, whoseMove);
 
 
-                        step_0.DefSteps();
+                        step_0.Reset();
 
 
                         fire_0.Disable();

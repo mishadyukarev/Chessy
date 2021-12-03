@@ -48,7 +48,7 @@ namespace Game.Game
                     {
                         hpUnit_0.Take(40);
 
-                        if (!hpUnit_0.HaveHp)
+                        if (!hpUnit_0.Have)
                         {
                             unit_0.Kill(levUnit_0.Level, ownUnit_0.Owner);
                         }

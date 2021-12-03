@@ -49,7 +49,7 @@ namespace Game.Game
 
                                         env_0.SetNew(EnvTypes.YoungForest);
 
-                                        stepUnit_0.TakeSteps();
+                                        stepUnit_0.Take();
                                     }
                                     else
                                     {

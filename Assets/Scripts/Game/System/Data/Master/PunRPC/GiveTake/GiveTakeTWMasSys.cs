@@ -25,9 +25,9 @@ namespace Game.Game
 
                 ref var stepUnit_0 = ref _statUnitF.Get2(idx_0);
 
-                ref var tw_0 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
-                ref var twShield_0 = ref EntityPool.ToolWeapon<ShieldC>(idx_0);
+                ref var tw_0 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.UnitToolWeapon<LevelC>(idx_0);
+                ref var twShield_0 = ref EntityPool.UnitToolWeapon<ShieldProtectionC>(idx_0);
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
@@ -37,10 +37,10 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
                             tw_0.Reset();
 
-                            stepUnit_0.TakeSteps();
+                            stepUnit_0.Take();
 
                             RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -50,11 +50,9 @@ namespace Game.Game
                         {
                             InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Owner);
 
-                            tw_0.Set(tWTypeForGive);
-                            twLevel_0.Set(levelTW);
-                            if (tw_0.Is(TWTypes.Shield)) twShield_0.SetShieldProtect(levelTW);
+                            tw_0.SetNew(tWTypeForGive, levelTW);
 
-                            stepUnit_0.TakeSteps();
+                            stepUnit_0.Take();
 
                             RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -65,10 +63,9 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW);
 
-                                tw_0.Set(tWTypeForGive);
-                                twLevel_0.Set(levelTW);
+                                tw_0.SetNew(tWTypeForGive, levelTW);
 
-                                stepUnit_0.TakeSteps();
+                                stepUnit_0.Take();
 
                                 RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -84,10 +81,9 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW);
 
-                                tw_0.Set(tWTypeForGive);
-                                twLevel_0.Set(levelTW);
+                                tw_0.SetNew(tWTypeForGive, levelTW);
 
-                                stepUnit_0.TakeSteps();
+                                stepUnit_0.Take();
 
                                 RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -103,11 +99,9 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW);
 
-                                tw_0.Set(tWTypeForGive);
-                                twLevel_0.Set(levelTW);
-                                twShield_0.SetShieldProtect(levelTW);
+                                tw_0.SetNew(tWTypeForGive, levelTW);
 
-                                stepUnit_0.TakeSteps();
+                                stepUnit_0.Take();
 
                                 RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }

@@ -6,8 +6,8 @@ namespace Game.Game
 {
     public struct BuildC : IBuildCell
     {
-        private BuildTypes _build;
-        private readonly byte _idx;
+        BuildTypes _build;
+        readonly byte _idx;
 
         public BuildTypes Build => _build;
         public bool Have => Build != default;
@@ -66,7 +66,7 @@ namespace Game.Game
             var envC = Environment<EnvC>(_idx);
 
 
-            if (Unit<StepC>(_idx).HaveMin)
+            if (UnitStat<StepC>(_idx).HaveMin)
             {
                 if (!buildC.Have || buildC.Is(BuildTypes.Camp))
                 {
@@ -117,22 +117,23 @@ namespace Game.Game
             if (Have) Remove();
    
             _build = build;
-            Build<OwnerC>(_idx).SetOwner(owner);
+            Build<OwnerC>(_idx).Owner = owner;
             WhereBuildsC.Set(build, owner, _idx, true);
         }
         public void Remove()
         {
-            var owner = Build<OwnerC>(_idx).Owner;
-
             if (Have)
             {
-                WhereBuildsC.Set(_build,  owner, _idx, false);
+                WhereBuildsC.Set(_build, Build<OwnerC>(_idx).Owner, _idx, false);
+
                 _build = BuildTypes.None;
+                Build<OwnerC>(_idx).Reset();
             } 
         }
-        public void Sync(BuildTypes build)
+        public void Sync(BuildTypes build, PlayerTypes owner)
         {
             _build = build;
+            Build<OwnerC>(_idx).Owner = owner;
         }
     }
 }

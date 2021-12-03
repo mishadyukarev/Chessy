@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -6,7 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, EffectsC> _effUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
@@ -29,8 +30,8 @@ namespace Game.Game
 
 
 
-            ref var selBuildC = ref EntityPool.Build<BuildC>(SelIdx.Idx);
-            ref var selEnvC = ref EntityPool.Environment<EnvC>(SelIdx.Idx);
+            ref var selBuildC = ref Build<BuildC>(SelIdx.Idx);
+            ref var selEnvC = ref Environment<EnvC>(SelIdx.Idx);
 
 
             if (unit_sel.Have)
@@ -54,8 +55,8 @@ namespace Game.Game
 
 
 
-                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, selStepUnitC.MaxSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
-                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
+                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, UnitValues.MaxAmountSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
+                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, UnitStat<UnitStatC>(SelIdx.Idx).MaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
             }
 
             else

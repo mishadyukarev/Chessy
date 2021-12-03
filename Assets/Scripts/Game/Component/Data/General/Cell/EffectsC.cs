@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct UnitEffectsC : IUnitCell
+    public struct EffectsC : IUnitEffectCell
     {
-        private Dictionary<UnitStatTypes, bool> _effects;
+        Dictionary<UnitStatTypes, bool> _effects;
         public Dictionary<UnitStatTypes, bool> Effects
         {
             get
@@ -24,7 +24,7 @@ namespace Game.Game
         }
 
 
-        public UnitEffectsC(bool needNew) : this()
+        public EffectsC(bool needNew) : this()
         {
             if (needNew)
             {
@@ -39,7 +39,7 @@ namespace Game.Game
             if (_effects.ContainsKey(statType)) _effects[statType] = isActive;
             else throw new Exception();
         }
-        public void Set(UnitEffectsC effectsC)
+        public void Set(EffectsC effectsC)
         {
             Set(UnitStatTypes.Damage, effectsC.Have(UnitStatTypes.Damage));
             Set(UnitStatTypes.Steps, effectsC.Have(UnitStatTypes.Steps));

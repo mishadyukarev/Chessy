@@ -36,7 +36,7 @@ namespace Game.Game
                     else if (step_0.HaveMin)
                     {
                         RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        step_0.TakeSteps();
+                        step_0.Take();
                         cond_0.Set(cond);
                     }
 
@@ -58,7 +58,7 @@ namespace Game.Game
                     {
                         RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Set(cond);
-                        step_0.TakeSteps();
+                        step_0.Take();
                     }
 
                     else

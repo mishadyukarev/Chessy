@@ -32,7 +32,7 @@ namespace Game.Game
                     RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.FirePawn);
 
                     fire_0.Enable();
-                    stepUnit_0.TakeSteps();
+                    stepUnit_0.Take();
                 }
                 else
                 {

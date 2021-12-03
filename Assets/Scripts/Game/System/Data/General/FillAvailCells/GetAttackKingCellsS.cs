@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -6,7 +7,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<UnitEffectsC, StunC> _effUnitF = default;
+        private EcsFilter<EffectsC, StunC> _effUnitF = default;
 
         
         public void Run()
@@ -50,8 +51,8 @@ namespace Game.Game
 
                             if (!Env(idx_1).Have(EnvTypes.Mountain))
                             {
-                                if (stepUnit_0.HaveStepsForDoing(Env(idx_1), item_1.Key, trail_1)
-                                    || stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
+                                if (UnitStat<UnitStatC>(idx_0).HaveStepsForDoing(Env(idx_1), item_1.Key, trail_1)
+                                    || UnitStat<UnitStatC>(idx_0).HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
                                 {
                                     if (unit_1.Have)
                                     {

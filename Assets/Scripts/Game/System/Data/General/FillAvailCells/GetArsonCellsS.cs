@@ -12,7 +12,7 @@ namespace Game.Game
 
                 ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
                 ref var ownUnit_0 = ref EntityPool.Unit<OwnerC>(idx_0);
-                ref var stun_0 = ref EntityPool.Unit<StunC>(idx_0);
+                ref var stun_0 = ref EntityPool.UnitEffects<StunC>(idx_0);
 
                 if (!stun_0.IsStunned)
                 {

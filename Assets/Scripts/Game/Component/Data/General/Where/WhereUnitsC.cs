@@ -74,7 +74,7 @@ namespace Game.Game
 
 
         
-        internal static void Set(UnitTypes unit, LevelTypes lev, PlayerTypes player, byte idx, bool have)
+        public static void Set(UnitTypes unit, LevelTypes lev, PlayerTypes player, byte idx, bool have)
         {
             var key = Key(unit, lev, player, idx);
 
@@ -83,6 +83,7 @@ namespace Game.Game
 
             _units[key] = have;
         }
+
         public static void Sync(string key, bool have)
         {
             if (!ContainsKey(key)) throw new Exception();

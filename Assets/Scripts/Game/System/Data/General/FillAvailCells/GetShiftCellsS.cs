@@ -8,7 +8,7 @@ namespace Game.Game
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<UnitEffectsC, StunC> _effUnitF = default;
+        private EcsFilter<EffectsC, StunC> _effUnitF = default;
 
         public void Run()
         {
@@ -48,8 +48,8 @@ namespace Game.Game
                             {
                                 if (!unitC_1.Have)
                                 {
-                                    if (step_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
-                                        || step_0.HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner)))
+                                    if (EntityPool.UnitStat<UnitStatC>(idx_0).HaveStepsForDoing(envC_1, item_1.Key, trail_1)
+                                        || EntityPool.UnitStat<UnitStatC>(idx_0).HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner)))
                                     {
                                         ShiftCellsC.AddIdxCell(own_0.Owner, idx_0, idx_1);
                                     }

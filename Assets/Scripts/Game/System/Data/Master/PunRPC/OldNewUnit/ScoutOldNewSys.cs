@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -7,7 +8,7 @@ namespace Game.Game
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<ConditionC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ConditionC, EffectsC> _effUnitF = default;
 
         public void Run()
         {
@@ -26,29 +27,36 @@ namespace Game.Game
             ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
             ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
 
-            ref var tw_0 = ref EntityPool.ToolWeapon<ToolWeaponC>(idx_0);
-            ref var twLevel_0 = ref EntityPool.ToolWeapon<LevelC>(idx_0);
+            ref var tw_0 = ref UnitToolWeapon<ToolWeaponC>(idx_0);
+            ref var twLevel_0 = ref UnitToolWeapon<LevelC>(idx_0);
 
 
             if (hpUnit_0.HaveMax)
             {
-                if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
+                if (UnitStat<UnitStatC>(idx_0).HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
                 {
-                    unit_0.CreateScout();
+                    var level = Unit<LevelC>(idx_0).Level;
+                    var owner = Unit<OwnerC>(idx_0).Owner;
+
+                    InvUnitsC.Take(owner, UnitTypes.Scout, LevelTypes.First);
+
+                    WhereUnitsC.Set(UnitTypes.Scout, level, owner, idx_0, false);
+                    unit_0.Clean();
+
+
 
                     if (tw_0.HaveTW)
                     {
-                        InvTWC.Add(tw_0.TW, twLevel_0.Level, ownUnit_0.Owner);
+                        InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
                         tw_0.Reset();
                     }
 
 
-                    levUnit_0.Set(LevelTypes.First);
                     hpUnit_0.SetMax();
-                    stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                    UnitStat<UnitStatC>(idx_0).SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
-                    unit_0.SetNew(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                    unit_0.SetNew(unit_0.Unit, LevelTypes.First, ownUnit_0.Owner);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }

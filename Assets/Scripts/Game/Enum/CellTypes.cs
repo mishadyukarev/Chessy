@@ -8,7 +8,11 @@
         First = Cell,
 
         Unit,
-        ToolWeapon,
+        Unit_Stat,
+        Unit_Effects,
+        Unit_ToolWeapon,
+        Unit_Abilities,
+
         Build,
         Env,
         Trail,

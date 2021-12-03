@@ -131,7 +131,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        public static int StandartAmountSteps(UnitTypes unitType, bool haveEffect, float upg)
+        public static int MaxAmountSteps(UnitTypes unitType, bool haveEffect, float upg)
         {
             var steps = 0;
 

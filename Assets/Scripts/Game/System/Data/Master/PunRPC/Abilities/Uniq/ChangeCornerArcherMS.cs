@@ -25,7 +25,7 @@ namespace Game.Game
                 {
                     corner_0.ChangeCorner();
 
-                    step_0.TakeSteps();
+                    step_0.Take();
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
