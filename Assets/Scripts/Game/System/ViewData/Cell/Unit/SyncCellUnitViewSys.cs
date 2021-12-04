@@ -12,7 +12,7 @@ namespace Game.Game
                 ref var levelUnit_0 = ref EntityPool.Unit<LevelC>(idx_0);
                 ref var visUnit_0 = ref EntityPool.Unit<VisibleC>(idx_0);
 
-                ref var corner_0 = ref EntityPool.UnitAbilities<CornerArcherC>(idx_0);
+                ref var corner_0 = ref EntityPool.Unit<CornerArcherC>(idx_0);
 
                 ref var tw_0 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref EntityPool.UnitToolWeapon<LevelC>(idx_0);

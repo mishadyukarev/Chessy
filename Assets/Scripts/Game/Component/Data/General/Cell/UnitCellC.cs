@@ -23,8 +23,8 @@ namespace Game.Game
             else return false;
 
 
-            if (!Unit<UnitC>(_idx).Is(UnitTypes.Pawn) || !UnitEffects<ConditionC>(_idx).Is(CondUnitTypes.Relaxed)
-                || !UnitStat<HpC>(_idx).HaveMax) return false;
+            if (!Unit<UnitC>(_idx).Is(UnitTypes.Pawn) || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed)
+                || !Unit<HpUnitC>(_idx).HaveMax) return false;
 
 
             var ration = 0f;
@@ -55,7 +55,7 @@ namespace Game.Game
             var envResC = Environment<EnvResC>(_idx);
             var twC = UnitToolWeapon<ToolWeaponC>(_idx);
 
-            if (Build<BuildC>(_idx).Have || !UnitEffects<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !UnitStat<HpC>(_idx).HaveMax) return false;
+            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !Unit<HpUnitC>(_idx).HaveMax) return false;
 
 
 
@@ -141,20 +141,20 @@ namespace Game.Game
             Unit<LevelC>(idx_to).Set(Unit<LevelC>(idx_from));
 
 
-            UnitStat<HpC>(idx_to).Set(UnitStat<HpC>(idx_from));
-            UnitStat<StepC>(idx_to).Set(UnitStat<StepC>(idx_from));
-            if (UnitEffects<ConditionC>(idx_to).HaveCondition) UnitEffects<ConditionC>(idx_to).Reset();
+            Unit<HpC>(idx_to).Set(Unit<HpC>(idx_from));
+            Unit<StepC>(idx_to).Set(Unit<StepC>(idx_from));
+            if (Unit<ConditionC>(idx_to).HaveCondition) Unit<ConditionC>(idx_to).Reset();
 
             UnitToolWeapon<UnitTWCellC>(idx_to).Set(idx_from);
             UnitToolWeapon<LevelC>(idx_to).Set(UnitToolWeapon<LevelC>(idx_from));
-            UnitShield<ProtectionC>(idx_to).Set(UnitShield<ProtectionC>(idx_from));
+            UnitToolWeapon<ProtectionC>(idx_to).Set(UnitToolWeapon<ProtectionC>(idx_from));
 
-            UnitEffects<EffectsC>(idx_to).Set(UnitEffects<EffectsC>(idx_from));
-            UnitStat<WaterC>(idx_to).Set(UnitStat<WaterC>(idx_from));
-            UnitEffects<MoveInCondC>(idx_to).ResetAll();
-            UnitAbilities<CooldownUniqC>(idx_to).Replace(UnitAbilities<CooldownUniqC>(idx_from));
-            UnitAbilities<CornerArcherC>(idx_to).Set(UnitAbilities<CornerArcherC>(idx_from));
-            if (River<RiverC>(idx_to).HaveNearRiver) UnitStat<UnitStatCellC>(idx_to).SetMaxWater();
+            Unit<EffectsC>(idx_to).Set(Unit<EffectsC>(idx_from));
+            Unit<WaterC>(idx_to).Set(Unit<WaterC>(idx_from));
+            Unit<MoveInCondC>(idx_to).ResetAll();
+            Unit<CooldownUniqC >(idx_to).Replace(Unit<CooldownUniqC>(idx_from));
+            Unit<CornerArcherC>(idx_to).Set(Unit<CornerArcherC>(idx_from));
+            if (River<RiverC>(idx_to).HaveNearRiver) Unit<WaterUnitC>(idx_to).SetMaxWater();
 
 
 
@@ -162,7 +162,7 @@ namespace Game.Game
             {
                 if (!Build<OwnerC>(idx_to).Is(Unit<OwnerC>(idx_to).Owner))
                 {
-                    Build<BuildC>(idx_to).Remove();
+                    Build<BuildCellC>(idx_to).Remove();
                 }
             }
 

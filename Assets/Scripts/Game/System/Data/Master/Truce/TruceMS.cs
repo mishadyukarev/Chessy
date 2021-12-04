@@ -26,8 +26,10 @@ namespace Game.Game
                 ref var twLevel_0 = ref EntityPool.UnitToolWeapon<LevelC>(idx_0);
 
 
+                ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
                 ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-                ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
+                ref var env_0 = ref Environment<EnvC>(idx_0);
+                ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
                 ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
                 ref var curFireCom = ref _cellFireFilter.Get1(idx_0);
                 ref var trail_0 = ref EntityPool.Trail<TrailC>(idx_0);
@@ -71,7 +73,7 @@ namespace Game.Game
                 {
                     if (build_0.Is(BuildTypes.Camp))
                     {
-                        build_0.Remove();
+                        buildCell_0.Remove();
                     }
                 }
 
@@ -79,9 +81,9 @@ namespace Game.Game
                 {
                     if (env_0.Have(EnvTypes.YoungForest))
                     {
-                        env_0.Remove(EnvTypes.YoungForest);
+                        envCell_0.Remove(EnvTypes.YoungForest);
 
-                        env_0.SetNew(EnvTypes.AdultForest);
+                        envCell_0.SetNew(EnvTypes.AdultForest);
                     }
 
                     if (!env_0.Have(EnvTypes.Fertilizer)
@@ -92,7 +94,7 @@ namespace Game.Game
 
                         if (random <= 3)
                         {
-                            env_0.SetNew(EnvTypes.Fertilizer);
+                            envCell_0.SetNew(EnvTypes.Fertilizer);
                         }
                     }
                 }

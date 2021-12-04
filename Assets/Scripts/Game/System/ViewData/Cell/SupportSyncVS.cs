@@ -36,7 +36,7 @@ namespace Game.Game
                 {
                     if (CellClickC.Is(CellClickTypes.UniqAbil))
                     {
-                        if (SelUniqAbilC.Is(UniqAbilTypes.ChangeDirWind))
+                        if (SelUniqAbilC.Is(UniqueAbilTypes.ChangeDirWind))
                         {
                             supV_0.EnableSR(SupVisTypes.GivePawnTool);
                         }
@@ -83,7 +83,7 @@ namespace Game.Game
                             {
                                 if (CellClickC.Is(CellClickTypes.UniqAbil))
                                 {
-                                    if (SelUniqAbilC.Is(UniqAbilTypes.StunElfemale))
+                                    if (SelUniqAbilC.Is(UniqueAbilTypes.StunElfemale))
                                     {
                                         supV_0.EnableSR(SupVisTypes.GivePawnTool);
                                     }
@@ -96,7 +96,7 @@ namespace Game.Game
 
             if (CellClickC.Is(CellClickTypes.UniqAbil))
             {
-                if (SelUniqAbilC.Is(UniqAbilTypes.FireArcher))
+                if (SelUniqAbilC.Is(UniqueAbilTypes.FireArcher))
                 {
                     foreach (var idx_0 in ArsonCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
                     {
@@ -104,7 +104,7 @@ namespace Game.Game
                     }
                 }
 
-                else if (SelUniqAbilC.Is(UniqAbilTypes.ChangeDirWind))
+                else if (SelUniqAbilC.Is(UniqueAbilTypes.ChangeDirWind))
                 {
                     foreach (var item in WindC.Directs)
                     {

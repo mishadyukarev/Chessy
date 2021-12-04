@@ -2,11 +2,11 @@
 
 namespace Game.Game
 {
-    public struct StepC : IUnitStatCell
+    public struct StepC : IUnitCell
     {
         public int Steps { get; internal set; }
-        public bool HaveMin => Steps > 0;
-        public bool IsMinusSteps => Steps < 0;
+        public bool Have => Steps > 0;
+        public bool IsMinus => Steps < 0;
         public bool IsNull => Steps == 0;
 
 
@@ -21,13 +21,13 @@ namespace Game.Game
             else if (adding == 0) throw new Exception("You're adding zero");
             Steps += adding;
         }
-        public void Take(in int taking = 1)
+        internal void Take(in int taking = 1)
         {
             if (taking < 0) throw new Exception("Need a positive number");
             else if (taking == 0) throw new Exception("You're taking zero");
             Steps -= taking;
-            if (IsMinusSteps) Reset();
+            if (IsMinus) Reset();
         }
-        public void Reset() => Steps = 0;
+        internal void Reset() => Steps = 0;
     }
 }

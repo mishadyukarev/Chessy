@@ -36,17 +36,17 @@ namespace Game.Game
 
                         else if (Is(CellClickTypes.UniqAbil))
                         {
-                            if (SelUniqAbilC.Is(UniqAbilTypes.FireArcher))
+                            if (SelUniqAbilC.Is(UniqueAbilTypes.FireArcher))
                             {
                                 RpcSys.FireArcherToMas(SelIdx.Idx, CurIdx.Idx);
                             }
 
-                            else if (SelUniqAbilC.Is(UniqAbilTypes.ChangeDirWind))
+                            else if (SelUniqAbilC.Is(UniqueAbilTypes.ChangeDirWind))
                             {
                                 RpcSys.PutOutFireElffToMas(SelIdx.Idx, CurIdx.Idx);
                             }
 
-                            else if (SelUniqAbilC.Is(UniqAbilTypes.StunElfemale))
+                            else if (SelUniqAbilC.Is(UniqueAbilTypes.StunElfemale))
                             {
                                 RpcSys.StunElfemaleToMas(SelIdx.Idx, CurIdx.Idx);
                             }

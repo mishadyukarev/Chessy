@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct UniqAbilC : IUnitAbilitiesCell
+    public struct UniqAbilC : IUnitCell
     {
-        Dictionary<UniqButTypes, UniqAbilTypes> _abilities;
+        Dictionary<UniqButTypes, UniqueAbilTypes> _abilities;
 
-        public UniqAbilTypes Ability(UniqButTypes uniqBut) => _abilities[uniqBut];
+        public UniqueAbilTypes Ability(UniqButTypes uniqBut) => _abilities[uniqBut];
 
 
         public UniqAbilC(bool needNew)
         {
             if (needNew)
             {
-                _abilities = new Dictionary<UniqButTypes, UniqAbilTypes>();
+                _abilities = new Dictionary<UniqButTypes, UniqueAbilTypes>();
 
                 for (var uniqBut = UniqButTypes.First; uniqBut < UniqButTypes.End; uniqBut++)
                 {
@@ -26,7 +26,7 @@ namespace Game.Game
         }
 
 
-        public void SetAbility(UniqButTypes uniqBut, UniqAbilTypes uniqAbil) => _abilities[uniqBut] = uniqAbil;
+        public void SetAbility(UniqButTypes uniqBut, UniqueAbilTypes uniqAbil) => _abilities[uniqBut] = uniqAbil;
         public void Reset(UniqButTypes uniqBut)
         {
             _abilities[uniqBut] = default;

@@ -1,25 +1,25 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
 using System;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class SeedingMS : IEcsRunSystem
     {
-        private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<EnvC> _envF = default;
-
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
             EnvDoingMC.Get(out var env);
             IdxDoingMC.Get(out var idx_0);
+            UniqueAbilityMC.Get(out var uniq_cur);
 
-            ref var stepUnit_0 = ref _statUnitF.Get1(idx_0);
+            ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
 
-            ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-            ref var env_0 = ref _envF.Get1(idx_0);
+            ref var build_0 = ref Build<BuildC>(idx_0);
+            ref var env_0 = ref Environment<EnvC>(idx_0);
+            ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
 
 
             switch (env)
@@ -31,7 +31,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvTypes.YoungForest:
-                    if (stepUnit_0.HaveMin)
+                    if (stepUnit_0.Have(uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildTypes.Camp))
                         {
@@ -45,11 +45,11 @@ namespace Game.Game
 
                                     if (!env_0.Have(EnvTypes.YoungForest))
                                     {
-                                        RpcSys.SoundToGeneral(sender, UniqAbilTypes.Seed);
+                                        RpcSys.SoundToGeneral(sender, uniq_cur);
 
-                                        env_0.SetNew(EnvTypes.YoungForest);
+                                        envCell_0.SetNew(EnvTypes.YoungForest);
 
-                                        stepUnit_0.Take();
+                                        stepUnit_0.Take(uniq_cur);
                                     }
                                     else
                                     {

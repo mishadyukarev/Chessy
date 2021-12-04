@@ -25,8 +25,9 @@ namespace Game.Game
             ref var levUnit_from = ref _unitF.Get2(idx_from);
             ref var ownUnit_from = ref _unitF.Get3(idx_from);
 
+            ref var hpUnitCell_from = ref Unit<HpUnitC>(idx_from);
             ref var hpUnit_from = ref _statUnitF.Get1(idx_from);
-            ref var stepUnit_from = ref _statUnitF.Get2(idx_from);
+            ref var stepUnit_from = ref Unit<StepUnitC>(idx_from);
             ref var waterUnit_from = ref _statUnitF.Get3(idx_from);
 
             ref var condUnit_from = ref _effUnitF.Get1(idx_from);
@@ -34,7 +35,7 @@ namespace Game.Game
             ref var effUnit_from = ref _effUnitF.Get3(idx_from);
 
             ref var tw_from = ref UnitToolWeapon<ToolWeaponC>(idx_from);
-            ref var twShield_from = ref UnitShield<ProtectionC>(idx_from);
+            ref var twShield_from = ref UnitToolWeapon<ProtectionC>(idx_from);
 
 
 
@@ -42,6 +43,7 @@ namespace Game.Game
             ref var levUnit_to = ref _unitF.Get2(idx_to);
             ref var ownUnit_to = ref _unitF.Get3(idx_to);
 
+            ref var hpUnitCell_to = ref Unit<HpUnitC>(idx_to);
             ref var hpUnit_to = ref _statUnitF.Get1(idx_to);
             ref var stepUnit_to = ref _statUnitF.Get2(idx_to);
             ref var waterUnit_to = ref _statUnitF.Get3(idx_to);
@@ -52,7 +54,7 @@ namespace Game.Game
             ref var stun_to = ref _effUnitF.Get4(idx_to);
 
             ref var tw_to = ref UnitToolWeapon<ToolWeaponC>(idx_to);
-            ref var twShield_to = ref UnitShield<ProtectionC>(idx_to);
+            ref var twShield_to = ref UnitToolWeapon<ProtectionC>(idx_to);
 
             #endregion
 
@@ -79,14 +81,14 @@ namespace Game.Game
             if (simpUniqueType != default)
             {
                 stepUnit_from.Reset();
-                if (condUnit_from.HaveCondition) condUnit_from.Reset();
+                condUnit_from.Reset();
 
 
                 float powerDam_from = 0;
                 float powerDam_to = 0;
 
 
-                powerDam_from += EntityPool.UnitStat<UnitStatCellC>(idx_from).DamageAttack(simpUniqueType);
+                powerDam_from += Unit<DamageUnitC>(idx_from).DamageAttack(simpUniqueType);
 
                 if (unit_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
@@ -94,7 +96,7 @@ namespace Game.Game
 
 
 
-                powerDam_to += UnitStat<UnitStatCellC>(idx_to).DamageOnCell;
+                powerDam_to += Unit<DamageUnitC>(idx_to).DamageOnCell;
 
 
                 float min_limit = 0;
@@ -102,8 +104,8 @@ namespace Game.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = HpC.MAX_HP;
-                var minDamage = HpC.MIN_HP;
+                var maxDamage = HpUnitC.MAX;
+                var minDamage = HpC.MIN;
 
                 if (!unit_to.IsMelee) powerDam_to /= 2;
 
@@ -149,24 +151,22 @@ namespace Game.Game
                 {
                     if (tw_from.Is(TWTypes.Shield))
                     {
-                        UnitShield<UnitShieldCellC>(idx_from).Take();
+                        UnitToolWeapon<ShieldC>(idx_from).Take();
                     }
                     else if (minus_from > 0)
                     {
-                        hpUnit_from.Take((int)minus_from);
-                        if (UnitStat<UnitStatCellC>(idx_from).IsHpDeathAfterAttack) hpUnit_from.SetMinHp();
+                        hpUnitCell_from.TakeAttack((int)minus_from);
                     }
                 }
 
 
                 if (tw_to.Is(TWTypes.Shield))
                 {
-                    UnitShield<UnitShieldCellC>(idx_to).Take();
+                    UnitToolWeapon<ShieldC>(idx_to).Take();
                 }
                 else if (minus_to > 0)
                 {
-                    hpUnit_to.Take((int)minus_to);
-                    if (UnitStat<UnitStatCellC>(idx_to).IsHpDeathAfterAttack) hpUnit_to.SetMinHp();
+                    hpUnitCell_to.TakeAttack((int)minus_to);
                 }
 
 

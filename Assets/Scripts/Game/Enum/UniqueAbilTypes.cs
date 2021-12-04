@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public enum UniqAbilTypes
+    public enum UniqueAbilTypes
     {
         None,
         Start = None,

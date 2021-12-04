@@ -62,11 +62,11 @@ namespace Game.Game
                 UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
 
                 eff_0.DefAllEffects();
-                hp_0.SetMax();
+                Unit<HpUnitC>(idx_0).SetMax();
                 if (cond_0.HaveCondition) cond_0.Reset();  
                 moveCond_0.ResetAll();
-                UnitStat<UnitStatCellC>(idx_0).SetMaxSteps();
-                UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
+                Unit<StepUnitC>(idx_0).SetMaxSteps();
+                Unit<WaterUnitC>(idx_0).SetMaxWater();
 
       
 

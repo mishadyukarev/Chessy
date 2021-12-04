@@ -2,11 +2,11 @@
 {
     public struct SelUniqAbilC
     {
-        public static UniqAbilTypes UniqAbil { get; set; }
+        public static UniqueAbilTypes UniqAbil { get; set; }
 
-        public static bool Is(UniqAbilTypes uniqAbil) => UniqAbil == uniqAbil;
+        public static bool Is(UniqueAbilTypes uniqAbil) => UniqAbil == uniqAbil;
 
-        public SelUniqAbilC(UniqAbilTypes uniqAbil)
+        public SelUniqAbilC(UniqueAbilTypes uniqAbil)
         {
             UniqAbil = uniqAbil;
         }

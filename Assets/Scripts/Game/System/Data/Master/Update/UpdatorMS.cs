@@ -3,6 +3,7 @@ using Photon.Pun;
 using Game.Common;
 using System;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -37,8 +38,9 @@ namespace Game.Game
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
+                ref var hpUnitCell_0 = ref Unit<HpUnitC>(idx_0);
                 ref var hp_0 = ref _statUnitF.Get1(idx_0);
-                ref var step_0 = ref _statUnitF.Get2(idx_0);
+                ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
 
                 ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
                 ref var moveCond_0 = ref _effUnitF.Get2(idx_0);
@@ -46,9 +48,9 @@ namespace Game.Game
                 ref var stun_0 = ref _effUnitF.Get4(idx_0);
 
                 ref var cdUniq_0 = ref _unitUniqF.Get1(idx_0);
-                
 
 
+                ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
                 ref var buil_0 = ref EntityPool.Build<BuildC>(idx_0);
                 ref var ownBuil_0 = ref EntityPool.Build<OwnerC>(idx_0);
                 ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
@@ -71,15 +73,7 @@ namespace Game.Game
                     {
                         if (ownUnit_0.Is(PlayerTypes.Second))
                         {
-                            if (!hp_0.HaveMax)
-                            {
-                                hp_0.Add(100);
-
-                                if (hp_0.HaveMax)
-                                {
-                                    hp_0.SetMax();
-                                }
-                            }
+                            hpUnitCell_0.SetMax();
                         }
                     }
 
@@ -93,7 +87,7 @@ namespace Game.Game
                     {
                         if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
-                            if (hp_0.HaveMax)
+                            if (hpUnitCell_0.HaveMax)
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
@@ -107,12 +101,12 @@ namespace Game.Game
                                                 {
                                                     var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Owner);
 
-                                                    EntityPool.Build<BuildC>(idxCamp).Remove();
+                                                    Build<BuildCellC>(idxCamp).Remove();
                                                 }
 
 
-                                               
-                                                buil_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
+
+                                                buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
                                             }
                                         }
                                         else
@@ -121,11 +115,11 @@ namespace Game.Game
                                             {
                                                 var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Owner);
 
-                                                EntityPool.Build<BuildC>(idxCamp).Remove();
+                                                Build<BuildCellC>(idxCamp).Remove();
                                             }
 
 
-                                            buil_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
+                                            buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
                                         }
                                     }
                                 }
@@ -134,14 +128,14 @@ namespace Game.Game
 
                         else if (!condUnit_0.Is(CondUnitTypes.Relaxed))
                         {
-                            if (step_0.HaveMin)
+                            if (stepUnit_0.HaveMin)
                             {
                                 condUnit_0.Set(CondUnitTypes.Protected);
                             }
                         }
                     }
 
-                    EntityPool.UnitStat<UnitStatCellC>(idx_0).SetMaxSteps();
+                    Unit<StepUnitC>(idx_0).SetMaxSteps();
                 }
             }
 

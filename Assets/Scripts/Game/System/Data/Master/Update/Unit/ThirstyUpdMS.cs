@@ -29,6 +29,7 @@ namespace Game.Game
 
                 ref var riverC_0 = ref _cellRiverFilt.Get1(idx_0);
 
+                ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
                 ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
                 ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
@@ -47,20 +48,20 @@ namespace Game.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
+                            Unit<WaterUnitC>(idx_0).SetMaxWater();
                         }
                         else
                         {
-                            UnitStat<UnitStatCellC>(idx_0).TakeWater();
+                            Unit<WaterUnitC>(idx_0).TakeWater();
                             if (!water_0.Have)
                             {
-                                UnitStat<UnitStatCellC>(idx_0).ExecuteThirsty();
+                                Unit<WaterUnitC>(idx_0).ExecuteThirsty();
 
                                 if (!hp_0.Have)
                                 {
                                     if (build_0.Is(BuildTypes.Camp))
                                     {
-                                        build_0.Remove();
+                                        buildCell_0.Remove();
                                     }
 
                                     Unit<UnitCellC>(idx_0).Kill(levUnit_0.Level, ownUnit_0.Owner);

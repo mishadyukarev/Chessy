@@ -45,8 +45,8 @@ namespace Game.Game
 
                             if (!env_1.Have(EnvTypes.Mountain))
                             {
-                                if (EntityPool.UnitStat<UnitStatCellC>(idx_0).HaveStepsForDoing(item_1.Key)
-                                    || EntityPool.UnitStat<UnitStatCellC>(idx_0).HaveMaxSteps)
+                                if (EntityPool.Unit<StepUnitC>(idx_0).HaveStepsForDoing(item_1.Key)
+                                    || EntityPool.Unit<StepUnitC>(idx_0).HaveMaxSteps)
                                 {
                                     if (unit_1.Have)
                                     {

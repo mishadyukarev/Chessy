@@ -9,22 +9,22 @@ namespace Game.Game
     public struct UniqButtonsUIC
     {
         private static Dictionary<UniqButTypes, Button> _buttons;
-        private static Dictionary<UniqButTypes, Dictionary<UniqAbilTypes, GameObject>> _zones;
+        private static Dictionary<UniqButTypes, Dictionary<UniqueAbilTypes, GameObject>> _zones;
         private static Dictionary<UniqButTypes, TextMeshProUGUI> _cooldowns;
 
         public UniqButtonsUIC(Transform parent)
         {
             _buttons = new Dictionary<UniqButTypes, Button>();
-            _zones = new Dictionary<UniqButTypes, Dictionary<UniqAbilTypes, GameObject>>();
+            _zones = new Dictionary<UniqButTypes, Dictionary<UniqueAbilTypes, GameObject>>();
             _cooldowns = new Dictionary<UniqButTypes, TextMeshProUGUI>();
 
             for (var uniqBut = UniqButTypes.First; uniqBut < UniqButTypes.End; uniqBut++)
             {
                 _buttons.Add(uniqBut, parent.Find(uniqBut.ToString()).GetComponent<Button>());
-                _zones.Add(uniqBut, new Dictionary<UniqAbilTypes, GameObject>());
+                _zones.Add(uniqBut, new Dictionary<UniqueAbilTypes, GameObject>());
                 _cooldowns.Add(uniqBut, _buttons[uniqBut].transform.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
-                for (var uniq = UniqAbilTypes.First; uniq < UniqAbilTypes.End; uniq++)
+                for (var uniq = UniqueAbilTypes.First; uniq < UniqueAbilTypes.End; uniq++)
                 {
                     _zones[uniqBut].Add(uniq, _buttons[uniqBut].transform.Find(uniq.ToString()).gameObject);
                 }
@@ -33,7 +33,7 @@ namespace Game.Game
         }
 
         public static void AddListener(UniqButTypes uniqBut, UnityAction action) => _buttons[uniqBut].onClick.AddListener(action);
-        public static void SetActive(UniqButTypes uniqBut, UniqAbilTypes ability)
+        public static void SetActive(UniqButTypes uniqBut, UniqueAbilTypes ability)
         {
             if(ability == default)
             {

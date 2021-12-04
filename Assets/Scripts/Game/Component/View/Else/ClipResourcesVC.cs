@@ -8,7 +8,7 @@ namespace Game.Game
     public struct ClipResourcesVC
     {
         private static Dictionary<ClipTypes, AudioClip> _clips;
-        private static Dictionary<UniqAbilTypes, AudioClip> _uniq;
+        private static Dictionary<UniqueAbilTypes, AudioClip> _uniq;
 
         static ClipResourcesVC()
         {
@@ -20,13 +20,13 @@ namespace Game.Game
             }
 
 
-            _uniq = new Dictionary<UniqAbilTypes, AudioClip>();
+            _uniq = new Dictionary<UniqueAbilTypes, AudioClip>();
 
-            for (var uniq = UniqAbilTypes.First; uniq < UniqAbilTypes.End; uniq++)
+            for (var uniq = UniqueAbilTypes.First; uniq < UniqueAbilTypes.End; uniq++)
             {
                 string name = "Uniq/";
 
-                if (uniq == UniqAbilTypes.FireArcher || uniq == UniqAbilTypes.FirePawn) name += "Fire";
+                if (uniq == UniqueAbilTypes.FireArcher || uniq == UniqueAbilTypes.FirePawn) name += "Fire";
                 else name += uniq;
 
                 _uniq.Add(uniq, Resources.Load<AudioClip>(name + "_Clip"));
@@ -42,7 +42,7 @@ namespace Game.Game
             }
         }
 
-        public static AudioClip AudioClip(UniqAbilTypes uniqAbil)
+        public static AudioClip AudioClip(UniqueAbilTypes uniqAbil)
         {
             if (!_uniq.ContainsKey(uniqAbil)) throw new Exception();
 

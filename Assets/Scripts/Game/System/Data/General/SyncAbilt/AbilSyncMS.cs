@@ -33,41 +33,41 @@ namespace Game.Game
                             case UnitTypes.None: throw new Exception();
 
                             case UnitTypes.King:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqAbilTypes.CircularAttack);
-                                uniq_0.SetAbility(UniqButTypes.Second, UniqAbilTypes.BonusNear);
+                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilTypes.CircularAttack);
+                                uniq_0.SetAbility(UniqButTypes.Second, UniqueAbilTypes.BonusNear);
                                 uniq_0.Reset(UniqButTypes.Third);
                                 break;
 
                             case UnitTypes.Pawn:
                                 if (env_0.Have(EnvTypes.AdultForest))
                                 {
-                                    if (fire_0.Have) uniq_0.SetAbility(UniqButTypes.First, UniqAbilTypes.PutOutFirePawn);
-                                    else uniq_0.SetAbility(UniqButTypes.First, UniqAbilTypes.FirePawn);
+                                    if (fire_0.Have) uniq_0.SetAbility(UniqButTypes.First, UniqueAbilTypes.PutOutFirePawn);
+                                    else uniq_0.SetAbility(UniqButTypes.First, UniqueAbilTypes.FirePawn);
                                 }
                                 else
                                 {
-                                    uniq_0.SetAbility(UniqButTypes.First, UniqAbilTypes.Seed);
+                                    uniq_0.SetAbility(UniqButTypes.First, UniqueAbilTypes.Seed);
                                 }
                                 uniq_0.Reset(UniqButTypes.Second);
                                 uniq_0.Reset(UniqButTypes.Third);
                                 break;
 
                             case UnitTypes.Archer:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqAbilTypes.FireArcher);
-                                uniq_0.SetAbility(UniqButTypes.Second, UniqAbilTypes.ChangeCornerArcher);
+                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilTypes.FireArcher);
+                                uniq_0.SetAbility(UniqButTypes.Second, UniqueAbilTypes.ChangeCornerArcher);
                                 uniq_0.Reset(UniqButTypes.Third);
                                 break;
 
                             case UnitTypes.Scout:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqAbilTypes.None);
+                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilTypes.None);
                                 uniq_0.Reset(UniqButTypes.Second);
                                 uniq_0.Reset(UniqButTypes.Third);
                                 break;
 
                             case UnitTypes.Elfemale:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqAbilTypes.GrowAdultForest);
-                                uniq_0.SetAbility(UniqButTypes.Second, UniqAbilTypes.StunElfemale);
-                                uniq_0.SetAbility(UniqButTypes.Third, UniqAbilTypes.ChangeDirWind);
+                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilTypes.GrowAdultForest);
+                                uniq_0.SetAbility(UniqButTypes.Second, UniqueAbilTypes.StunElfemale);
+                                uniq_0.SetAbility(UniqButTypes.Third, UniqueAbilTypes.ChangeDirWind);
                                 break;
 
                             default: throw new Exception();

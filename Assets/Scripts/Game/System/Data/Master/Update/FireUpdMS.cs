@@ -1,10 +1,11 @@
 ﻿using Leopotam.Ecs;
 using UnityEditor;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public sealed class FireUpdMasSys : IEcsRunSystem
+    public sealed class FireUpdMS : IEcsRunSystem
     {
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC> _statUnitF = default;
@@ -23,13 +24,16 @@ namespace Game.Game
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
+                ref var hpUnitCell_0 = ref Unit<HpUnitC>(idx_0);
                 ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
 
+                ref var buildCell_0 = ref EntityPool.Build<BuildCellC>(idx_0);
                 ref var buil_0 = ref EntityPool.Build<BuildC>(idx_0);
                 ref var ownBuil_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
                 ref var fire_0 = ref _fireF.Get1(idx_0);
-                ref var env_0 = ref _envF.Get1(idx_0);
+
+                ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
                 ref var envRes_0 = ref _envF.Get2(idx_0);
 
                 ref var cloud_0 = ref _cloudsF.Get1(idx_0);
@@ -46,11 +50,11 @@ namespace Game.Game
 
                     if (unit_0.Have)
                     {
-                        hpUnit_0.Take(40);
+                        hpUnitCell_0.TakeFire();
 
                         if (!hpUnit_0.Have)
                         {
-                            EntityPool.Unit<UnitCellC>(idx_0).Kill(levUnit_0.Level, ownUnit_0.Owner);
+                            Unit<UnitCellC>(idx_0).Kill(levUnit_0.Level, ownUnit_0.Owner);
                         }
                     }
 
@@ -58,16 +62,16 @@ namespace Game.Game
 
                     if (!envRes_0.Have(EnvTypes.AdultForest))
                     {
-                        buil_0.Remove();
+                        buildCell_0.Remove();
 
-                        env_0.Remove(EnvTypes.AdultForest);
+                        envCell_0.Remove(EnvTypes.AdultForest);
 
 
                         if (UnityEngine.Random.Range(0, 100) < 50)
                         {
                             ref var envDatCom = ref _envF.Get1(idx_0);
 
-                            envDatCom.SetNew(EnvTypes.YoungForest);
+                            envCell_0.SetNew(EnvTypes.YoungForest);
                         }
 
 

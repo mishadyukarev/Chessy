@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct ProtectionC : IShieldCell
+    public struct ProtectionC : ITWCellE
     {
         public int Protection { get; internal set; }
 

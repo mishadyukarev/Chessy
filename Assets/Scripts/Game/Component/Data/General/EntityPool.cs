@@ -13,11 +13,7 @@ namespace Game.Game
 
         public static ref T Cell<T>(in byte idx) where T : struct, ICell => ref _cells[CellTypes.Cell][idx].Get<T>();
         public static ref T Unit<T>(in byte idx) where T : struct, IUnitCell => ref _cells[CellTypes.Unit][idx].Get<T>();
-        public static ref T UnitStat<T>(in byte idx) where T : struct, IUnitStatCell => ref _cells[CellTypes.Unit_Stat][idx].Get<T>();
         public static ref T UnitToolWeapon<T>(in byte idx) where T : struct, ITWCellE => ref _cells[CellTypes.Unit_ToolWeapon][idx].Get<T>();
-        public static ref T UnitShield<T>(in byte idx) where T : struct, IShieldCell => ref _cells[CellTypes.Unit_Shield][idx].Get<T>();
-        public static ref T UnitEffects<T>(in byte idx) where T : struct, IUnitEffectCell => ref _cells[CellTypes.Unit_Effects][idx].Get<T>();
-        public static ref T UnitAbilities<T>(in byte idx) where T : struct, IUnitAbilitiesCell => ref _cells[CellTypes.Unit_UniqueAbilities][idx].Get<T>();
 
         public static ref T Build<T>(in byte idx) where T : struct, IBuildCell => ref _cells[CellTypes.Build][idx].Get<T>();
         public static ref T Environment<T>(in byte idx) where T : struct, IEnvCell => ref _cells[CellTypes.Env][idx].Get<T>();
@@ -76,51 +72,50 @@ namespace Game.Game
                     .Replace(new UnitC(UnitTypes.None))
                     .Replace(new LevelC())
                     .Replace(new OwnerC())
-                    .Replace(new VisibleC(true));
+                    .Replace(new VisibleC(true))
 
+                    .Replace(new EffectsC(true))
+                    .Replace(new StunC())
+                    .Replace(new ConditionC())
+                    .Replace(new MoveInCondC(true))
 
-                _cells[CellTypes.Unit_Stat][idx] = curGameW.NewEntity()
-                    .Replace(new UnitStatCellC(idx))
+                    .Replace(new UniqAbilC(true))
+                    .Replace(new CooldownUniqC(true))
+                    .Replace(new CornerArcherC())
+
+                    .Replace(new DamageUnitC(idx))
+
+                    .Replace(new HpUnitC(idx))
                     .Replace(new HpC())
+
+                    .Replace(new StepUnitC(idx))
                     .Replace(new StepC())
+
+                    .Replace(new WaterUnitC(idx))
                     .Replace(new WaterC());
 
 
                 _cells[CellTypes.Unit_ToolWeapon][idx] = curGameW.NewEntity()
                     .Replace(new UnitTWCellC(idx))
                     .Replace(new ToolWeaponC())
-                    .Replace(new LevelC());
+                    .Replace(new LevelC())
 
-
-                _cells[CellTypes.Unit_Shield][idx] = curGameW.NewEntity()
-                    .Replace(new UnitShieldCellC(idx))
+                    .Replace(new ShieldC(idx))
                     .Replace(new ProtectionC());
 
 
 
-                _cells[CellTypes.Unit_Effects][idx] = curGameW.NewEntity()
-                    .Replace(new EffectsC(true))
-                    .Replace(new StunC())
-                    .Replace(new ConditionC())
-                    .Replace(new MoveInCondC(true));
-
-
-                _cells[CellTypes.Unit_UniqueAbilities][idx] = curGameW.NewEntity()
-                    .Replace(new UniqAbilC(true))
-                    .Replace(new CooldownUniqC(true))
-                    .Replace(new CornerArcherC());
-
-
-
                 _cells[CellTypes.Build][idx] = curGameW.NewEntity()
-                    .Replace(new BuildC(BuildTypes.None, idx))
+                    .Replace(new BuildCellC(idx))
+                    .Replace(new BuildC(BuildTypes.None))
                     .Replace(new OwnerC())
                     .Replace(new VisibleC(true));
 
 
                 _cells[CellTypes.Env][idx] = curGameW.NewEntity()
-                    .Replace(new EnvC(new Dictionary<EnvTypes, bool>(), idx))
-                    .Replace(new EnvResC(idx));
+                    .Replace(new EnvCellC(idx))
+                    .Replace(new EnvC(new Dictionary<EnvTypes, bool>()))
+                    .Replace(new EnvResC(true));
 
 
                 _cells[CellTypes.Trail][idx] = curGameW.NewEntity()
@@ -164,7 +159,7 @@ namespace Game.Game
                     var x = xy_0[0];
                     var y = xy_0[1];
 
-                    ref var env_0 = ref Environment<EnvC>(idx_0);
+                    ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
                     ref var envRes_0 = ref Environment<EnvResC>(idx_0);
                     ref var cloud_0 = ref Cloud<CloudC>(idx_0);
 
@@ -175,7 +170,7 @@ namespace Game.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvValuesC.StartPercent(EnvTypes.Mountain))
                             {
-                                env_0.SetNew(EnvTypes.Mountain);
+                                envCell_0.SetNew(EnvTypes.Mountain);
                             }
 
                             else
@@ -183,13 +178,13 @@ namespace Game.Game
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvValuesC.StartPercent(EnvTypes.AdultForest))
                                 {
-                                    env_0.SetNew(EnvTypes.AdultForest);
+                                    envCell_0.SetNew(EnvTypes.AdultForest);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvValuesC.StartPercent(EnvTypes.Hill))
                                 {
-                                    env_0.SetNew(EnvTypes.Hill);
+                                    envCell_0.SetNew(EnvTypes.Hill);
                                 }
                             }
                         }
@@ -199,14 +194,14 @@ namespace Game.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvValuesC.StartPercent(EnvTypes.AdultForest))
                             {
-                                env_0.SetNew(EnvTypes.AdultForest);
+                                envCell_0.SetNew(EnvTypes.AdultForest);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvValuesC.StartPercent(EnvTypes.Fertilizer))
                                 {
-                                    env_0.SetNew(EnvTypes.Fertilizer);
+                                    envCell_0.SetNew(EnvTypes.Fertilizer);
                                 }
                             }
                         }
@@ -273,47 +268,49 @@ namespace Game.Game
                     var x = curXyCell[0];
                     var y = curXyCell[1];
 
-                    ref var env_0 = ref Environment<EnvC>(idx_0);
+                    ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
 
                     ref var unit_0 = ref Unit<UnitC>(idx_0);
                     ref var levUnit_0 = ref Unit<LevelC>(idx_0);
                     ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
-                    ref var hp_0 = ref UnitStat<HpC>(idx_0);
-                    ref var condUnit_0 = ref UnitEffects<ConditionC>(idx_0);
-                    ref var waterUnit_0 = ref UnitStat<WaterC>(idx_0);
+
+                    ref var hpUnitCell_0 = ref Unit<HpUnitC>(idx_0);
+                    ref var hp_0 = ref Unit<HpC>(idx_0);
+                    ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                    ref var waterUnit_0 = ref Unit<WaterC>(idx_0);
 
 
                     ref var tw_0 = ref UnitToolWeapon<ToolWeaponC>(idx_0);
                     ref var twLevel_0 = ref UnitToolWeapon<LevelC>(idx_0);
-                    ref var protShiel_0 = ref UnitShield<ProtectionC>(idx_0);
+                    ref var protShiel_0 = ref UnitToolWeapon<ProtectionC>(idx_0);
 
                     ref var build_0 = ref Build<BuildC>(idx_0);
                     ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
                     if (x == 7 && y == 8)
                     {
-                        env_0.Remove(EnvTypes.Mountain);
-                        env_0.Remove(EnvTypes.AdultForest);
+                        envCell_0.Remove(EnvTypes.Mountain);
+                        envCell_0.Remove(EnvTypes.AdultForest);
 
                         Unit<UnitCellC>(idx_0).SetNew(UnitTypes.King, LevelTypes.First, PlayerTypes.Second);
 
-                        hp_0.SetMax();
-                        UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
+                        hpUnitCell_0.SetMax();
+                        Unit<WaterUnitC>(idx_0).SetMaxWater();
                         condUnit_0.Set(CondUnitTypes.Protected);
                     }
 
                     else if (x == 8 && y == 8)
                     {
-                        env_0.Remove(EnvTypes.Mountain);
-                        env_0.Remove(EnvTypes.AdultForest);
+                        envCell_0.Remove(EnvTypes.Mountain);
+                        envCell_0.Remove(EnvTypes.AdultForest);
 
 
-                        build_0.SetNew(BuildTypes.City, PlayerTypes.Second);
+                        Build<BuildCellC>(idx_0).SetNew(BuildTypes.City, PlayerTypes.Second);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
                     {
-                        env_0.Remove(EnvTypes.Mountain);
+                        envCell_0.Remove(EnvTypes.Mountain);
 
                         int rand = UnityEngine.Random.Range(0, 100);
 
@@ -328,9 +325,9 @@ namespace Game.Game
 
                         Unit<UnitCellC>(idx_0).SetNew(UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second);
 
-                        hp_0.SetMax();
+                        hpUnitCell_0.SetMax();
                         condUnit_0.Set(CondUnitTypes.Protected);
-                        UnitStat<UnitStatCellC>(idx_0).SetMaxWater();
+                        Unit<WaterUnitC>(idx_0).SetMaxWater();
                     }
                 }
             }

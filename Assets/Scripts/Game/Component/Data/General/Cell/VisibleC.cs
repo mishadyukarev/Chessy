@@ -23,6 +23,6 @@ namespace Game.Game
             else throw new Exception();
         }
 
-        public void SetVisibled(PlayerTypes key, bool value) => _isVisibled[key] = value;
+        public void SetVisibled(in PlayerTypes key, in bool value) => _isVisibled[key] = value;
     }
 }

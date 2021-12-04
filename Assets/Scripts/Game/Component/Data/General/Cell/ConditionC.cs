@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct ConditionC : IUnitEffectCell, IDamageUnit
+    public struct ConditionC : IUnitCell
     {
         private CondUnitTypes _condition;
 
@@ -34,21 +34,5 @@ namespace Game.Game
             _condition = default;
         }
         public void Sync(CondUnitTypes cond) => _condition = cond;
-
-        public int Damage(int standDamage)
-        {
-            switch (_condition)
-            {
-                case CondUnitTypes.None: return 0;
-
-                case CondUnitTypes.Protected:
-                    return (int)(standDamage * 0.2f);
-
-                case CondUnitTypes.Relaxed:
-                    return -(int)(standDamage * 0.2f);
-
-                default: throw new Exception();
-            }
-        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct EffectsC : IUnitEffectCell
+    public struct EffectsC : IUnitCell
     {
         Dictionary<UnitStatTypes, bool> _effects;
         public Dictionary<UnitStatTypes, bool> Effects

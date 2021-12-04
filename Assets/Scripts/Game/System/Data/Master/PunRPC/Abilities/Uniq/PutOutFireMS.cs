@@ -1,20 +1,18 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class PutOutFireMS : IEcsRunSystem
     {
-        private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<FireC> _cellFireFilter = default;
-
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var stepUnit_0 = ref _statUnitF.Get1(idx_0);
-            ref var fire_0 = ref _cellFireFilter.Get1(idx_0);
+            ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+            ref var fire_0 = ref Fire<FireC>(idx_0);
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
@@ -22,7 +20,7 @@ namespace Game.Game
             {
                 fire_0.Disable();
 
-                stepUnit_0.Take();
+                stepUnit_0.TakeMin();
             }
 
             else

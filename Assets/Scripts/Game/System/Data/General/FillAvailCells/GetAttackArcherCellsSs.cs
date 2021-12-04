@@ -1,48 +1,42 @@
 ﻿using Leopotam.Ecs;
 using System;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class GetAttackArcherCellsSs : IEcsRunSystem
     {
-        private EcsFilter<EnvC> _envF = default;
-  
-        private EcsFilter<UnitC, OwnerC, VisibleC> _unitF = default;
-        private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<StunC> _effUnitF = default;
-        private EcsFilter<CornerArcherC> _archerFilt = default;
-
         public void Run()
         {
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                var xy_0 = EntityPool.Cell<XyC>(idx_0).Xy;
+                var xy_0 = Cell<XyC>(idx_0).Xy;
 
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
 
-                ref var step_0 = ref _statUnitF.Get1(idx_0);     
-                ref var stun_0 = ref _effUnitF.Get1(idx_0);
-                ref var corner_0 = ref _archerFilt.Get1(idx_0);
+                ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);     
+                ref var stun_0 = ref Unit<StunC>(idx_0);
+                ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
 
 
-                if (stun_0.IsStunned || !unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale) || !step_0.HaveMin) continue;
+                if (stun_0.IsStunned || !unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale) || !stepUnit_0.HaveMin) continue;
 
 
                 for (var dir_1 = DirectTypes.First; dir_1 < DirectTypes.End; dir_1++)
                 {
                     var xy_1 = CellSpaceC.GetXyCellByDirect(xy_0, dir_1);
-                    var idx_1 = EntityPool.IdxCell(xy_1);
+                    var idx_1 = IdxCell(xy_1);
 
 
-                    ref var env_1 = ref _envF.Get1(idx_1);
-                    ref var unit_1 = ref _unitF.Get1(idx_1);
-                    ref var ownUnit_1 = ref _unitF.Get2(idx_1);
+                    ref var env_1 = ref Environment<EnvC>(idx_1);
+                    ref var unit_1 = ref Unit<UnitC>(idx_1);
+                    ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
 
 
 
 
-                    if (EntityPool.Cell<CellC>(idx_1).IsActiveCell && !env_1.Have(EnvTypes.Mountain))
+                    if (Cell<CellC>(idx_1).IsActiveCell && !env_1.Have(EnvTypes.Mountain))
                     {
                         if (unit_1.Have)
                         {
@@ -76,18 +70,18 @@ namespace Game.Game
 
 
                         var xy_2 = CellSpaceC.GetXyCellByDirect(xy_1, dir_1);
-                        var idx_2 = EntityPool.IdxCell(xy_2);
+                        var idx_2 = IdxCell(xy_2);
 
 
-                        ref var envrDataCom_2 = ref _envF.Get1(idx_2);
-                        ref var unitDataCom_2 = ref _unitF.Get1(idx_2);
-                        ref var ownUnitCom_2 = ref _unitF.Get2(idx_2);
-                        ref var visUnit_2 = ref _unitF.Get3(idx_2);
+                        ref var env_2 = ref Environment<EnvC>(idx_2);
+                        ref var unit_2 = ref Unit<UnitC>(idx_2);
+                        ref var ownUnit_2 = ref Unit<OwnerC>(idx_2);
+                        ref var visUnit_2 = ref Unit<VisibleC>(idx_2);
 
 
 
-                        if (EntityPool.Cell<CellC>(idx_2).IsActiveCell && unitDataCom_2.Have 
-                            && visUnit_2.IsVisibled(ownUnit_0.Owner) && !ownUnitCom_2.Is(ownUnit_0.Owner))
+                        if (Cell<CellC>(idx_2).IsActiveCell && unit_2.Have 
+                            && visUnit_2.IsVisibled(ownUnit_0.Owner) && !ownUnit_2.Is(ownUnit_0.Owner))
                         {
                             if (unit_0.Is(UnitTypes.Archer))
                             {

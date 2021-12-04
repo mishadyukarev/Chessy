@@ -38,21 +38,21 @@ namespace Game.Game
                 StatUIC.SetActiveStatZone(true);
 
                 StatUIC.SetTextToStat(UnitStatTypes.Hp, selHpUnitC.HP.ToString());
-                StatUIC.SetTextToStat(UnitStatTypes.Damage, UnitStat<UnitStatCellC>(SelIdx.Idx).DamageOnCell.ToString());
+                StatUIC.SetTextToStat(UnitStatTypes.Damage, Unit<DamageUnitC>(SelIdx.Idx).DamageOnCell.ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.Steps.ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.Water.ToString());
 
-                StatUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.HP, HpC.MAX_HP);
+                StatUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.HP, HpUnitC.MAX);
 
 
 
-                StatUIC.FillAmount(UnitStatTypes.Damage, UnitStat<UnitStatCellC>(SelIdx.Idx).DamageOnCell,
-                    UnitStat<UnitStatCellC>(SelIdx.Idx).DamageAttack(AttackTypes.Simple));
+                StatUIC.FillAmount(UnitStatTypes.Damage, Unit<DamageUnitC>(SelIdx.Idx).DamageOnCell,
+                    Unit<DamageUnitC>(SelIdx.Idx).DamageAttack(AttackTypes.Simple));
 
 
 
-                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, UnitStat<UnitStatCellC>(SelIdx.Idx).MaxAmountSteps);
-                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, UnitStat<UnitStatCellC>(SelIdx.Idx).MaxWater);
+                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, Unit<StepUnitC>(SelIdx.Idx).MaxAmountSteps);
+                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, Unit<WaterUnitC>(SelIdx.Idx).MaxWater);
             }
 
             else

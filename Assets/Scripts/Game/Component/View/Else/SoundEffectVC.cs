@@ -8,12 +8,12 @@ namespace Game.Game
     public struct SoundEffectVC
     {
         private static Dictionary<ClipTypes, AudioSource> _soundEffect_ASs;
-        private static Dictionary<UniqAbilTypes, AudioSource> _uniqEff;
+        private static Dictionary<UniqueAbilTypes, AudioSource> _uniqEff;
 
         public SoundEffectVC(GameObject aSParent)
         {
             _soundEffect_ASs = new Dictionary<ClipTypes, AudioSource>();
-            _uniqEff = new Dictionary<UniqAbilTypes, AudioSource>();
+            _uniqEff = new Dictionary<UniqueAbilTypes, AudioSource>();
 
             var mistake_AS = aSParent.AddComponent<AudioSource>();
             mistake_AS.clip = ClipResourcesVC.AudioClip(ClipTypes.Mistake);
@@ -109,12 +109,12 @@ namespace Game.Game
 
 
 
-            for (var uniq = UniqAbilTypes.First; uniq < UniqAbilTypes.End; uniq++)
+            for (var uniq = UniqueAbilTypes.First; uniq < UniqueAbilTypes.End; uniq++)
             {
-                if (uniq != UniqAbilTypes.CircularAttack 
-                    && uniq != UniqAbilTypes.PutOutFirePawn
-                    && uniq != UniqAbilTypes.PutOutFirePawn
-                    && uniq != UniqAbilTypes.ChangeCornerArcher)
+                if (uniq != UniqueAbilTypes.CircularAttack 
+                    && uniq != UniqueAbilTypes.PutOutFirePawn
+                    && uniq != UniqueAbilTypes.PutOutFirePawn
+                    && uniq != UniqueAbilTypes.ChangeCornerArcher)
                 {
                     cur_AS = aSParent.AddComponent<AudioSource>();
                     cur_AS.clip = ClipResourcesVC.AudioClip(uniq);
@@ -123,18 +123,18 @@ namespace Game.Game
                     var volume = 0f;
                     switch (uniq)
                     {
-                        case UniqAbilTypes.None: throw new Exception();
-                        case UniqAbilTypes.CircularAttack: throw new Exception();
-                        case UniqAbilTypes.BonusNear: volume = 0.3f; break;
-                        case UniqAbilTypes.FirePawn: volume = 0.2f; break;
-                        case UniqAbilTypes.PutOutFirePawn: throw new Exception();
-                        case UniqAbilTypes.Seed: volume = 0.2f; break;
-                        case UniqAbilTypes.FireArcher: volume = 0.2f; break;
-                        case UniqAbilTypes.ChangeCornerArcher: throw new Exception();
-                        case UniqAbilTypes.GrowAdultForest: volume = 0.3f; break;
-                        case UniqAbilTypes.StunElfemale: volume = 0.3f; break;
-                        case UniqAbilTypes.ChangeDirWind: volume = 0.1f; break;
-                        case UniqAbilTypes.End: throw new Exception();
+                        case UniqueAbilTypes.None: throw new Exception();
+                        case UniqueAbilTypes.CircularAttack: throw new Exception();
+                        case UniqueAbilTypes.BonusNear: volume = 0.3f; break;
+                        case UniqueAbilTypes.FirePawn: volume = 0.2f; break;
+                        case UniqueAbilTypes.PutOutFirePawn: throw new Exception();
+                        case UniqueAbilTypes.Seed: volume = 0.2f; break;
+                        case UniqueAbilTypes.FireArcher: volume = 0.2f; break;
+                        case UniqueAbilTypes.ChangeCornerArcher: throw new Exception();
+                        case UniqueAbilTypes.GrowAdultForest: volume = 0.3f; break;
+                        case UniqueAbilTypes.StunElfemale: volume = 0.3f; break;
+                        case UniqueAbilTypes.ChangeDirWind: volume = 0.1f; break;
+                        case UniqueAbilTypes.End: throw new Exception();
                         default: throw new Exception();
                     }
 
@@ -149,7 +149,7 @@ namespace Game.Game
 
             _soundEffect_ASs[eff].Play();
         }
-        public static void Play(UniqAbilTypes uniq)
+        public static void Play(UniqueAbilTypes uniq)
         {
             if (!_uniqEff.ContainsKey(uniq)) throw new Exception();
 

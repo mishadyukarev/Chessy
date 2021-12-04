@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Game.Common;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -18,6 +19,7 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
+            UniqueAbilityMC.Get(out var uniq_cur);
 
             ref var unit_0 = ref _statUnitF.Get1(idx_0);
 
@@ -26,19 +28,19 @@ namespace Game.Game
 
             ref var cdUniq_0 = ref _uniqUnitF.Get2(idx_0);
 
-            ref var stepUnit_0 = ref _statUnitF.Get2(idx_0);
+            ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
 
             ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
             ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
 
 
-            if (!cdUniq_0.HaveCooldown(UniqAbilTypes.CircularAttack))
+            if (!cdUniq_0.HaveCooldown(uniq_cur))
             {
-                if (stepUnit_0.HaveMin)
+                if (stepUnit_0.Have(uniq_cur))
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    cdUniq_0.SetCooldown(UniqAbilTypes.CircularAttack, 2);
+                    cdUniq_0.SetCooldown(uniq_cur, 2);
 
                     foreach (var xy1 in CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy))
                     {
@@ -47,11 +49,11 @@ namespace Game.Game
                         ref var unit_1 = ref _unitF.Get1(idx_1);
                         ref var levUnit_1 = ref _unitF.Get2(idx_1);
                         ref var ownUnit_1 = ref _unitF.Get3(idx_1);
-                        ref var statUnit_1 = ref EntityPool.UnitStat<UnitStatCellC>(idx_1);
+                        ref var statUnit_1 = ref EntityPool.Unit<WaterUnitC>(idx_1);
                         ref var hpUnitC_1 = ref _statUnitF.Get1(idx_1);
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
                         ref var tw_1 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref EntityPool.UnitShield<UnitShieldCellC>(idx_1);
+                        ref var shield_1 = ref EntityPool.UnitToolWeapon<ShieldC>(idx_1);
 
 
 
@@ -71,7 +73,8 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    hpUnitC_1.Take(25);
+                                    Unit<HpUnitC>(idx_0).Take(uniq_cur);
+
                                     if (statUnit_1.IsHpDeathAfterAttack || !hpUnitC_1.Have)
                                     {
                                         EntityPool.Unit<UnitCellC>(idx_1).Kill(levUnit_1.Level, ownUnit_1.Owner);
@@ -81,7 +84,7 @@ namespace Game.Game
                         }
                     }
 
-                    stepUnit_0.Take();
+                    stepUnit_0.Take(uniq_cur);
                     effUnit_0.DefAllEffects();
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.AttackMelee);

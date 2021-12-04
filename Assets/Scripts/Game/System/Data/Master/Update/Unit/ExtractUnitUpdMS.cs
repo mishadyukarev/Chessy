@@ -11,11 +11,12 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
-                ref var condUnit_0 = ref UnitEffects<ConditionC>(idx_0);
+                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
 
-                ref var env_0 = ref Environment<EnvC>(idx_0);
+                ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
                 ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 
+                ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
                 ref var buil_0 = ref Build<BuildC>(idx_0);
 
 
@@ -30,7 +31,7 @@ namespace Game.Game
                         {
                             if (buil_0.Is(BuildTypes.Camp) || !buil_0.Have)
                             {
-                                buil_0.SetNew(BuildTypes.Woodcutter, ownUnit_0.Owner);
+                                buildCell_0.SetNew(BuildTypes.Woodcutter, ownUnit_0.Owner);
                             }
 
                             else if (!buil_0.Is(BuildTypes.Woodcutter))
@@ -41,21 +42,21 @@ namespace Game.Game
 
                         else
                         {
-                            buil_0.Remove();
-                            env_0.Remove(env);
+                            buildCell_0.Remove();
+                            envCell_0.Remove(env);
 
                             if (UnityEngine.Random.Range(0, 100) < 50)
                             {
-                                env_0.SetNew(EnvTypes.YoungForest);
+                                envCell_0.SetNew(EnvTypes.YoungForest);
                             }
                         }
                     }
                 }
                 else if(!Unit<UnitCellC>(idx_0).CanResume(out extract, out env))
                 {
-                    if (UnitStat<HpC>(idx_0).HaveMax)
+                    if (Unit<HpUnitC>(idx_0).HaveMax)
                     {
-                        if (unit_0.Have && UnitStat<StepC>(idx_0).HaveMin)
+                        if (unit_0.Have && Unit<StepUnitC>(idx_0).HaveMin)
                         {
                             condUnit_0.Set(CondUnitTypes.Protected);
                         }

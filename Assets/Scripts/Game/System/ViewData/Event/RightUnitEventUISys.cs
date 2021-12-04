@@ -61,35 +61,35 @@ namespace Game.Game
                             {
                                 switch (abil)
                                 {
-                                    case UniqAbilTypes.None: throw new Exception();
+                                    case UniqueAbilTypes.None: throw new Exception();
 
-                                    case UniqAbilTypes.FirePawn:
+                                    case UniqueAbilTypes.FirePawn:
                                         RpcSys.FirePawnToMas(SelIdx.Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqAbilTypes.PutOutFirePawn:
+                                    case UniqueAbilTypes.PutOutFirePawn:
                                         RpcSys.PutOutFirePawnToMas(SelIdx.Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqAbilTypes.Seed:
+                                    case UniqueAbilTypes.Seed:
                                         RpcSys.SeedEnvToMaster(SelIdx.Idx, EnvTypes.YoungForest);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqAbilTypes.FireArcher:
+                                    case UniqueAbilTypes.FireArcher:
                                         CellClickC.Set(CellClickTypes.UniqAbil);
-                                        SelUniqAbilC.UniqAbil = UniqAbilTypes.FireArcher;
+                                        SelUniqAbilC.UniqAbil = UniqueAbilTypes.FireArcher;
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqAbilTypes.CircularAttack:
+                                    case UniqueAbilTypes.CircularAttack:
                                         RpcSys.CircularAttackKingToMaster(SelIdx.Idx);
                                         TryOnHint(VideoClipTypes.CircularAttack);
                                         break;
 
-                                    case UniqAbilTypes.GrowAdultForest:
+                                    case UniqueAbilTypes.GrowAdultForest:
                                         RpcSys.GrowAdultForest(SelIdx.Idx);
                                         TryOnHint(VideoClipTypes.GrowingAdForesElfemale);
                                         break;
@@ -102,22 +102,22 @@ namespace Game.Game
                             {
                                 switch (abil)
                                 {
-                                    case UniqAbilTypes.None: throw new Exception();
+                                    case UniqueAbilTypes.None: throw new Exception();
 
-                                    case UniqAbilTypes.BonusNear:
+                                    case UniqueAbilTypes.BonusNear:
                                         RpcSys.BonusNearUnits(SelIdx.Idx);
                                         TryOnHint(VideoClipTypes.BonusKing);
                                         break;
 
-                                    case UniqAbilTypes.StunElfemale:
+                                    case UniqueAbilTypes.StunElfemale:
                                         {
                                             CellClickC.Set(CellClickTypes.UniqAbil);
-                                            SelUniqAbilC.UniqAbil = UniqAbilTypes.StunElfemale;
+                                            SelUniqAbilC.UniqAbil = UniqueAbilTypes.StunElfemale;
                                             TryOnHint(VideoClipTypes.StunElfemale);
                                         }
                                         break;
 
-                                    case UniqAbilTypes.ChangeCornerArcher:
+                                    case UniqueAbilTypes.ChangeCornerArcher:
                                         {
                                             RpcSys.ChangeCornerArchToMas(SelIdx.Idx);
                                         }
@@ -132,12 +132,12 @@ namespace Game.Game
                             {
                                 switch (abil)
                                 {
-                                    case UniqAbilTypes.None: throw new Exception();
-                                    case UniqAbilTypes.ChangeDirWind:
+                                    case UniqueAbilTypes.None: throw new Exception();
+                                    case UniqueAbilTypes.ChangeDirWind:
                                         {
                                             TryOnHint(VideoClipTypes.PutOutElfemale);
                                             CellClickC.Set(CellClickTypes.UniqAbil);
-                                            SelUniqAbilC.UniqAbil = UniqAbilTypes.ChangeDirWind;
+                                            SelUniqAbilC.UniqAbil = UniqueAbilTypes.ChangeDirWind;
                                         }
                                         break;
                                     default: throw new Exception();

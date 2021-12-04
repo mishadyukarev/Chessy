@@ -17,20 +17,20 @@ namespace Game.Game
             UnitToolWeapon<ToolWeaponC>(_idx).ToolWeapon = UnitToolWeapon<ToolWeaponC>(idx).ToolWeapon;
             UnitToolWeapon<LevelC>(_idx).Level = UnitToolWeapon<LevelC>(idx).Level;
 
-            UnitShield<ProtectionC>(_idx).Set(UnitShield<ProtectionC>(idx));
+            UnitToolWeapon<ProtectionC>(_idx).Set(UnitToolWeapon<ProtectionC>(idx));
         }
         public void Reset()
         {
             UnitToolWeapon<ToolWeaponC>(_idx).Reset();
             UnitToolWeapon<LevelC>(_idx).Reset();
 
-            UnitShield<ProtectionC>(_idx).Reset();
+            UnitToolWeapon<ProtectionC>(_idx).Reset();
         }
         public void Sync(in TWTypes tw, in LevelTypes lev, in int shieldProt)
         {
             UnitToolWeapon<ToolWeaponC>(_idx).ToolWeapon = tw;
             UnitToolWeapon<LevelC>(_idx).Level = lev;
-            UnitShield<ProtectionC>(_idx).Set(shieldProt);
+            UnitToolWeapon<ProtectionC>(_idx).Set(shieldProt);
         }
 
         public void SetNew(in TWTypes tw, in LevelTypes level)
@@ -43,11 +43,11 @@ namespace Game.Game
                 switch (level)
                 {
                     case LevelTypes.First:
-                        UnitShield<ProtectionC>(_idx).Set(1);
+                        UnitToolWeapon<ProtectionC>(_idx).Set(1);
                         break;
 
                     case LevelTypes.Second:
-                        UnitShield<ProtectionC>(_idx).Set(3);
+                        UnitToolWeapon<ProtectionC>(_idx).Set(3);
                         break;
 
                     default: throw new Exception();

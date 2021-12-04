@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public struct EnvResC : IEnvCell
     {
         Dictionary<EnvTypes, int> _resources;
-        byte _idx;
 
         public Dictionary<EnvTypes, int> Resources
         {
@@ -37,7 +35,7 @@ namespace Game.Game
 
 
 
-        public EnvResC(byte idx)
+        public EnvResC(bool b)
         {
             _resources = new Dictionary<EnvTypes, int>();
 
@@ -45,8 +43,6 @@ namespace Game.Game
             {
                 _resources.Add(env, default);
             }
-
-            _idx = idx;
         }
 
 
@@ -73,6 +69,10 @@ namespace Game.Game
             if (env == default) throw new Exception();
             _resources[env] = 0;
         }
+        internal void Set(in EnvTypes env, in int res)
+        {
+            _resources[env] = res;
+        }
 
 
         public void SetMax(in EnvTypes env)
@@ -83,7 +83,7 @@ namespace Game.Game
         }
         public void Add(in EnvTypes env, in int adding = 1)
         {
-            if(!_resources.ContainsKey(env)) throw new Exception();
+            if (!_resources.ContainsKey(env)) throw new Exception();
             if (adding == 0) throw new Exception();
             if (adding < 0) throw new Exception();
 

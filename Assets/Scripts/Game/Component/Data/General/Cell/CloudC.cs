@@ -4,9 +4,6 @@
     {
         public bool Have { get; set; }
 
-        public void Sync(bool haveCloud)
-        {
-            Have = haveCloud;
-        }
+        public void Sync(in bool haveCloud) => Have = haveCloud;
     }
 }

@@ -1,37 +1,37 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class ChangeDirWindMS : IEcsRunSystem
     {
-        private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<CooldownUniqC> _uniqUnitF = default;
-
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             FromToDoingMC.Get(out var idx_from, out var idx_to);
+            UniqueAbilityMC.Get(out var uniq_cur);
 
-            ref var unit_from = ref _statUnitF.Get1(idx_from);
-            ref var hp_from = ref _statUnitF.Get1(idx_from);
-            ref var step_from = ref _statUnitF.Get2(idx_from);
-            ref var uniq_from = ref _uniqUnitF.Get1(idx_from);
+            ref var unit_from = ref Unit<UnitC>(idx_from);
+
+            ref var hpUnitCell_from = ref Unit<HpUnitC>(idx_from);
+            ref var stepUnit_from = ref Unit<StepUnitC>(idx_from);
+            ref var uniq_from = ref Unit<CooldownUniqC>(idx_from);
 
 
-            if (hp_from.HaveMax)
+            if (hpUnitCell_from.HaveMax)
             {
-                if (step_from.HaveMin)
+                if (stepUnit_from.Have(uniq_cur))
                 {
                     if (WindC.Have(idx_to))
                     {
                         WindC.Set(idx_to);
 
-                        step_from.Take();
+                        Unit<StepUnitC>(idx_from).Take(uniq_cur);
 
-                        uniq_from.SetCooldown(UniqAbilTypes.ChangeDirWind, 6);
+                        uniq_from.SetCooldown(uniq_cur, 6);
 
-                        RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.ChangeDirWind);
+                        RpcSys.SoundToGeneral(RpcTarget.All, uniq_cur);
                     }
                 }
 

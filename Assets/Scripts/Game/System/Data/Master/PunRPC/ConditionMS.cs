@@ -1,14 +1,12 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
 using System;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class ConditionMS : IEcsRunSystem
     {
-        private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<ConditionC> _effUnitF = default;
-
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
@@ -16,8 +14,8 @@ namespace Game.Game
             CondDoingMC.Get(out var cond);
             IdxDoingMC.Get(out var idx_0);
 
-            ref var step_0 = ref _statUnitF.Get1(idx_0);
-            ref var cond_0 = ref _effUnitF.Get1(idx_0);
+            ref var step_0 = ref Unit<StepUnitC>(idx_0);
+            ref var cond_0 = ref Unit<ConditionC>(idx_0);
 
 
             switch (cond)
@@ -36,7 +34,7 @@ namespace Game.Game
                     else if (step_0.HaveMin)
                     {
                         RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        step_0.Take();
+                        step_0.TakeMin();
                         cond_0.Set(cond);
                     }
 
@@ -58,7 +56,7 @@ namespace Game.Game
                     {
                         RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Set(cond);
-                        step_0.Take();
+                        step_0.TakeMin();
                     }
 
                     else

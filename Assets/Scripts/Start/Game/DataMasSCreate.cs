@@ -17,7 +17,7 @@ namespace Game.Game
             var updateMotion = new EcsSystems(gameWorld)
                 .Add(new UpdatorMS())
                 .Add(new ExtractBuildUpdMS())
-                .Add(new FireUpdMasSys())
+                .Add(new FireUpdMS())
                 .Add(new CloudUpdMS())
 
                 .Add(new ExtractUnitUpdMS())
@@ -62,19 +62,19 @@ namespace Game.Game
             foreach (var item_0 in rpcSystems) rpcSystsAction.Add(item_0.Key, item_0.Value.Run);
 
 
-            var uniqSys = new Dictionary<UniqAbilTypes, EcsSystems>();
-            uniqSys.Add(UniqAbilTypes.Seed, new EcsSystems(gameWorld).Add(new SeedingMS()));
-            uniqSys.Add(UniqAbilTypes.StunElfemale, new EcsSystems(gameWorld).Add(new StunElfemaleMS()));
-            uniqSys.Add(UniqAbilTypes.FirePawn, new EcsSystems(gameWorld).Add(new FirePawnMS()));
-            uniqSys.Add(UniqAbilTypes.PutOutFirePawn, new EcsSystems(gameWorld).Add(new PutOutFireMS()));
-            uniqSys.Add(UniqAbilTypes.FireArcher, new EcsSystems(gameWorld).Add(new FireArcherMS()));
-            uniqSys.Add(UniqAbilTypes.GrowAdultForest, new EcsSystems(gameWorld).Add(new GrowAdultForestMS()));
-            uniqSys.Add(UniqAbilTypes.CircularAttack, new EcsSystems(gameWorld).Add(new CircularAttackKingMS()));
-            uniqSys.Add(UniqAbilTypes.BonusNear, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMS()));
-            uniqSys.Add(UniqAbilTypes.ChangeDirWind, new EcsSystems(gameWorld).Add(new ChangeDirWindMS()));
-            uniqSys.Add(UniqAbilTypes.ChangeCornerArcher, new EcsSystems(gameWorld).Add(new ChangeCornerArcherMS()));
+            var uniqSys = new Dictionary<UniqueAbilTypes, EcsSystems>();
+            uniqSys.Add(UniqueAbilTypes.Seed, new EcsSystems(gameWorld).Add(new SeedingMS()));
+            uniqSys.Add(UniqueAbilTypes.StunElfemale, new EcsSystems(gameWorld).Add(new StunElfemaleMS()));
+            uniqSys.Add(UniqueAbilTypes.FirePawn, new EcsSystems(gameWorld).Add(new FirePawnMS()));
+            uniqSys.Add(UniqueAbilTypes.PutOutFirePawn, new EcsSystems(gameWorld).Add(new PutOutFireMS()));
+            uniqSys.Add(UniqueAbilTypes.FireArcher, new EcsSystems(gameWorld).Add(new FireArcherMS()));
+            uniqSys.Add(UniqueAbilTypes.GrowAdultForest, new EcsSystems(gameWorld).Add(new GrowAdultForestMS()));
+            uniqSys.Add(UniqueAbilTypes.CircularAttack, new EcsSystems(gameWorld).Add(new CircularAttackKingMS()));
+            uniqSys.Add(UniqueAbilTypes.BonusNear, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMS()));
+            uniqSys.Add(UniqueAbilTypes.ChangeDirWind, new EcsSystems(gameWorld).Add(new ChangeDirWindMS()));
+            uniqSys.Add(UniqueAbilTypes.ChangeCornerArcher, new EcsSystems(gameWorld).Add(new ChangeCornerArcherMS()));
 
-            var uniqSysAction = new Dictionary<UniqAbilTypes, Action>();
+            var uniqSysAction = new Dictionary<UniqueAbilTypes, Action>();
             foreach (var item_0 in uniqSys) uniqSysAction.Add(item_0.Key, item_0.Value.Run);
 
 

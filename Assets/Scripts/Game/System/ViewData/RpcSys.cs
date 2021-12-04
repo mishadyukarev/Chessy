@@ -43,20 +43,20 @@ namespace Game.Game
 
         #region Uniq
 
-        public static void FireArcherToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.FireArcher, fromIdx, toIdx });
-        public static void FirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.FirePawn, idx });
-        public static void PutOutFirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.PutOutFirePawn, idx });
-        public static void SeedEnvToMaster(byte idxCell, EnvTypes env) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.Seed, idxCell, env });
-        public static void ChangeCornerArchToMas(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.ChangeCornerArcher, idxCell });
+        public static void FireArcherToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.FireArcher, fromIdx, toIdx });
+        public static void FirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.FirePawn, idx });
+        public static void PutOutFirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.PutOutFirePawn, idx });
+        public static void SeedEnvToMaster(byte idxCell, EnvTypes env) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.Seed, idxCell, env });
+        public static void ChangeCornerArchToMas(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.ChangeCornerArcher, idxCell });
 
-        public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.BonusNear, idxCell });
+        public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.BonusNear, idxCell });
 
-        public static void StunElfemaleToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.StunElfemale, fromIdx, toIdx });
+        public static void StunElfemaleToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.StunElfemale, fromIdx, toIdx });
 
-        public static void GrowAdultForest(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.GrowAdultForest, idx });
-        public static void PutOutFireElffToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.ChangeDirWind, fromIdx, toIdx });
+        public static void GrowAdultForest(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.GrowAdultForest, idx });
+        public static void PutOutFireElffToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.ChangeDirWind, fromIdx, toIdx });
 
-        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.CircularAttack, idxCell });
+        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqueAbilTypes.CircularAttack, idxCell });
 
         #endregion
 
@@ -109,56 +109,57 @@ namespace Game.Game
 
             if(rpcType == RpcMasterTypes.UniqAbil)
             {
-                var uniqAbil = (UniqAbilTypes)objects[_idx_cur++];
+                var uniqAbil = (UniqueAbilTypes)objects[_idx_cur++];
 
                 switch (uniqAbil)
                 {
-                    case UniqAbilTypes.None: throw new Exception();
+                    case UniqueAbilTypes.None: throw new Exception();
 
-                    case UniqAbilTypes.CircularAttack:
+                    case UniqueAbilTypes.CircularAttack:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.BonusNear:
+                    case UniqueAbilTypes.BonusNear:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.FirePawn:
+                    case UniqueAbilTypes.FirePawn:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.PutOutFirePawn:
+                    case UniqueAbilTypes.PutOutFirePawn:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.Seed:
+                    case UniqueAbilTypes.Seed:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         EnvDoingMC.Set((EnvTypes)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.FireArcher:
+                    case UniqueAbilTypes.FireArcher:
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.GrowAdultForest:
+                    case UniqueAbilTypes.GrowAdultForest:
                         ForGrowAdultForestMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.StunElfemale:
+                    case UniqueAbilTypes.StunElfemale:
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.ChangeDirWind:
+                    case UniqueAbilTypes.ChangeDirWind:
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqAbilTypes.ChangeCornerArcher:
+                    case UniqueAbilTypes.ChangeCornerArcher:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     default: throw new Exception();
                 }
 
+                UniqueAbilityMC.Set(uniqAbil);
                 DataMastSC.InvokeRun(uniqAbil);
             }
             else
@@ -279,9 +280,9 @@ namespace Game.Game
         public static void ActiveMotionZoneToGen(Player player) => PhotonView.RPC(GeneralRPCName, player, RpcGeneralTypes.ActiveMotion, new object[] { });
 
         public static void SoundToGeneral(RpcTarget rpcTarget, ClipTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundEff, new object[] { soundEffectType });
-        public static void SoundToGeneral(RpcTarget rpcTarget, UniqAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundUniq, new object[] { uniq });
+        public static void SoundToGeneral(RpcTarget rpcTarget, UniqueAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundUniq, new object[] { uniq });
         public static void SoundToGeneral(Player playerTo, ClipTypes eff) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundEff, new object[] { eff });
-        public static void SoundToGeneral(Player playerTo, UniqAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundUniq, new object[] { uniq });
+        public static void SoundToGeneral(Player playerTo, UniqueAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundUniq, new object[] { uniq });
 
         [PunRPC]
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
@@ -321,7 +322,7 @@ namespace Game.Game
                     break;
 
                 case RpcGeneralTypes.SoundUniq:
-                    SoundEffectVC.Play((UniqAbilTypes)objects[_idx_cur++]);
+                    SoundEffectVC.Play((UniqueAbilTypes)objects[_idx_cur++]);
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -373,24 +374,24 @@ namespace Game.Game
                 objs.Add(Unit<LevelC>(idx_0).Level);
                 objs.Add(Unit<OwnerC>(idx_0).Owner);
 
-                objs.Add(UnitStat<HpC>(idx_0).HP);
-                objs.Add(UnitStat<StepC>(idx_0).Steps);
-                objs.Add(UnitStat<WaterC>(idx_0).Water);
+                objs.Add(Unit<HpC>(idx_0).HP);
+                objs.Add(Unit<StepC>(idx_0).Steps);
+                objs.Add(Unit<WaterC>(idx_0).Water);
 
-                objs.Add(UnitEffects<ConditionC>(idx_0).Condition);
-                foreach (var item in UnitEffects<EffectsC>(idx_0).Effects) objs.Add(item.Value);
+                objs.Add(Unit<ConditionC>(idx_0).Condition);
+                foreach (var item in Unit<EffectsC>(idx_0).Effects) objs.Add(item.Value);
                
 
                 objs.Add(UnitToolWeapon<ToolWeaponC>(idx_0).ToolWeapon);
                 objs.Add(UnitToolWeapon<LevelC>(idx_0).Level);
-                objs.Add(UnitShield<ProtectionC>(idx_0).Protection);
+                objs.Add(UnitToolWeapon<ProtectionC>(idx_0).Protection);
 
-                objs.Add(UnitEffects<StunC>(idx_0).IsStunned);
-                objs.Add(UnitEffects<StunC>(idx_0).StepsInStun);
+                objs.Add(Unit<StunC>(idx_0).IsStunned);
+                objs.Add(Unit<StunC>(idx_0).StepsInStun);
 
-                objs.Add(UnitAbilities<CornerArcherC>(idx_0).IsCornered);
+                objs.Add(Unit<CornerArcherC>(idx_0).IsCornered);
 
-                foreach (var item in UnitAbilities<CooldownUniqC>(idx_0).Cooldowns)
+                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
                     objs.Add(item.Value);
 
 
@@ -404,8 +405,13 @@ namespace Game.Game
 
                 ref var env_0 = ref Environment<EnvC>(idx_0);
                 ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-                foreach (var item in env_0.Envronments) objs.Add(item.Value);
-                foreach (var item in envRes_0.Resources) objs.Add(item.Value);
+                foreach (var item_0 in env_0.Envronments)
+                    foreach (var item_1 in envRes_0.Resources)
+                    {
+                        objs.Add(item_0.Value);
+                        objs.Add(item_1.Value);
+                    }
+                        
 
 
 
@@ -485,33 +491,36 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 Unit<UnitCellC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
-                UnitStat<UnitStatCellC>(idx_0).Sync((int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                Unit<HpUnitC>(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<StepUnitC>(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<WaterUnitC>(idx_0).Sync((int)objects[_idx_cur++]);
 
-                UnitEffects<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
-                foreach (var item in UnitEffects<EffectsC>(idx_0).Effects) UnitEffects<EffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
+                Unit<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
+                foreach (var item in Unit<EffectsC>(idx_0).Effects) Unit<EffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
 
                 UnitToolWeapon<UnitTWCellC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
 
-                UnitEffects<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                Unit<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                UnitAbilities<CornerArcherC>(idx_0).Sync((bool)objects[_idx_cur++]);
+                Unit<CornerArcherC>(idx_0).Sync((bool)objects[_idx_cur++]);
 
-                foreach (var item in UnitAbilities<CooldownUniqC>(idx_0).Cooldowns)
-                    UnitAbilities<CooldownUniqC>(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
-
-
+                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
+                    Unit<CooldownUniqC>(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
 
 
 
-                Build<BuildC>(idx_0).Sync((BuildTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
 
 
+                Build<BuildCellC>(idx_0).Sync((BuildTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
 
+
+                ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
                 ref var env_0 = ref Environment<EnvC>(idx_0);
                 ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-                foreach (var item in env_0.Envronments) env_0.Sync(item.Key, (bool)objects[_idx_cur++]);
-                foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, (int)objects[_idx_cur++]);
+                foreach (var item_0 in env_0.Envronments)
+                    foreach (var item_1 in envRes_0.Resources)
+                        envCell_0.Sync(item_1.Key, (bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
 
                 ref var river_0 = ref River<RiverC>(idx_0);

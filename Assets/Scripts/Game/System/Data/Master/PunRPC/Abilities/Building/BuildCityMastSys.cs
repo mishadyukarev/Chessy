@@ -1,44 +1,41 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class BuildCityMastSys : IEcsRunSystem
     {
-        private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<FireC> _fireF = default;
-
-        private EcsFilter<StepC> _statUnitF = default;
-
-
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             BuildDoingMC.Get(out var forBuildType);
             IdxDoingMC.Get(out var idx_0);
+            UniqueAbilityMC.Get(out var uniq);
 
 
             if (forBuildType == BuildTypes.City)
             {
-                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-                ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
+                ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
+                ref var build_0 = ref Build<BuildC>(idx_0);
+                ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
-                ref var step_0 = ref _statUnitF.Get1(idx_0);
-                ref var env_0 = ref _envF.Get1(idx_0);
-                ref var fire_0 = ref _fireF.Get1(idx_0);
+                ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+                ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
+                ref var fire_0 = ref Fire<FireC>(idx_0);
 
 
                 var whoseMove = WhoseMoveC.WhoseMove;
 
 
-                if (step_0.HaveMin)
+                if (stepUnit_0.Have(uniq))
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy))
+                    foreach (var xy in CellSpaceC.XyAround(Cell<XyC>(idx_0).Xy))
                     {
-                        var curIdx = EntityPool.IdxCell(xy);
+                        var curIdx = IdxCell(xy);
 
-                        if (!EntityPool.Cell<CellC>(curIdx).IsActiveCell)
+                        if (!Cell<CellC>(curIdx).IsActiveCell)
                         {
                             haveNearBorder = true;
                             break;
@@ -51,18 +48,18 @@ namespace Game.Game
                         RpcSys.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        build_0.SetNew(forBuildType, whoseMove);
+                        buildCell_0.SetNew(forBuildType, whoseMove);
 
 
-                        step_0.Reset();
+                        stepUnit_0.Take(uniq);
 
 
                         fire_0.Disable();
 
 
-                        env_0.Remove(EnvTypes.AdultForest);
-                        env_0.Remove(EnvTypes.Fertilizer);
-                        env_0.Remove(EnvTypes.YoungForest);
+                        envCell_0.Remove(EnvTypes.AdultForest);
+                        envCell_0.Remove(EnvTypes.Fertilizer);
+                        envCell_0.Remove(EnvTypes.YoungForest);
                     }
 
                     else

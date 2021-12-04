@@ -1,12 +1,10 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class BuildMineMastSys : IEcsRunSystem
     {
-        private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<EnvC, EnvResC> _envF = default;
-
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
@@ -14,19 +12,22 @@ namespace Game.Game
             BuildDoingMC.Get(out var build);
             IdxDoingMC.Get(out var idx_0);
 
-            ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-            ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
 
-            ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
-            ref var env_0 = ref _envF.Get1(idx_0);
-            ref var envRes_0 = ref _envF.Get2(idx_0);
+            ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
+            ref var build_0 = ref Build<BuildC>(idx_0);
+            ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
+
+
+            ref var stepUnitCell_0 = ref Unit<StepUnitC>(idx_0);
+            ref var env_0 = ref Environment<EnvC>(idx_0);
+            ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
             if (build == BuildTypes.Mine)
             {
-                if (curStepUnitC.HaveMin)
+                if (stepUnitCell_0.Have(build))
                 {
                     if (!build_0.Have || build_0.Is(BuildTypes.Camp))
                     {
@@ -38,10 +39,10 @@ namespace Game.Game
 
                                 InvResC.BuyBuild(whoseMove, build);
 
-                                
-                                build_0.SetNew(build, whoseMove);
 
-                                curStepUnitC.Take();
+                                buildCell_0.SetNew(build, whoseMove);
+
+                                stepUnitCell_0.TakeForBuild();
                             }
 
                             else RpcSys.MistakeEconomyToGeneral(sender, needRes);

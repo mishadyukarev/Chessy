@@ -29,7 +29,7 @@ namespace Game.Game
                     extracts[ResTypes.Food] -= Unit<UnitC>(idx_0).CostFood;
                 }
 
-                if(Build<BuildC>(idx_0).CanExtract(out extract, out env, out res))
+                if(Build<BuildCellC>(idx_0).CanExtract(out extract, out env, out res))
                 {
                     extracts[res] += extract;
                 }
