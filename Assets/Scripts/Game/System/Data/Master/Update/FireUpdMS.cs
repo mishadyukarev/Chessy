@@ -16,20 +16,20 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                var curXy = EntityPool.Cell<XyC>(idx_0).Xy;
+                var curXy = Cell<XyC>(idx_0).Xy;
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
-                ref var hpUnitCell_0 = ref Unit<HpUnitC>(idx_0);
+                ref var hpUnitCell_0 = ref Unit<HpUnitWC>(idx_0);
                 ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
 
-                ref var buildCell_0 = ref EntityPool.Build<BuildCellC>(idx_0);
-                ref var buil_0 = ref EntityPool.Build<BuildC>(idx_0);
-                ref var ownBuil_0 = ref EntityPool.Build<OwnerC>(idx_0);
+                ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
+                ref var buil_0 = ref Build<BuildC>(idx_0);
+                ref var ownBuil_0 = ref Build<OwnerC>(idx_0);
 
                 ref var fire_0 = ref _fireF.Get1(idx_0);
 
@@ -54,7 +54,7 @@ namespace Game.Game
 
                         if (!hpUnit_0.Have)
                         {
-                            Unit<UnitCellC>(idx_0).Kill(levUnit_0.Level, ownUnit_0.Owner);
+                            Unit<UnitCellWC>(idx_0).Kill();
                         }
                     }
 
@@ -78,12 +78,12 @@ namespace Game.Game
                         fire_0.Disable();
 
 
-                        var aroundXYList = CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy);
+                        var aroundXYList = CellSpaceC.XyAround(Cell<XyC>(idx_0).Xy);
                         foreach (var xy1 in aroundXYList)
                         {
-                            var curIdxCell1 = EntityPool.IdxCell(xy1);
+                            var curIdxCell1 = IdxCell(xy1);
 
-                            if (EntityPool.Cell<CellC>(curIdxCell1).IsActiveCell)
+                            if (Cell<CellC>(curIdxCell1).IsActiveCell)
                             {
                                 if (_envF.Get1(curIdxCell1).Have(EnvTypes.AdultForest))
                                 {

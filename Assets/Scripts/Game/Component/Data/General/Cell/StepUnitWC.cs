@@ -1,11 +1,13 @@
-﻿using static Game.Game.EntityPool;
+﻿using System;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public struct StepUnitC : IUnitCell
+    public struct StepUnitWC : IUnitCell
     {
         readonly byte _idx;
 
+        const int MIN = 1;
 
         UnitTypes Unit
         {
@@ -27,21 +29,19 @@ namespace Game.Game
             get => Unit<StepC>(_idx).Steps;
             set => Unit<StepC>(_idx).Steps = value;
         }
-        int UpgradeSteps => UnitUpgC.Steps(Unit, Level, Owner);
-        bool HaveEffect(UnitStatTypes stat) => Unit<EffectsC>(_idx).Have(stat);
         EnvC EnvC => Environment<EnvC>(_idx);
         TrailC TrailC => Trail<TrailC>(_idx);
 
-        public int MaxAmountSteps => UnitValues.MaxAmountSteps(Unit, HaveEffect(UnitStatTypes.Steps), UpgradeSteps);
+        public int MaxAmountSteps => UnitValues.MaxAmountSteps(Unit, Unit<EffectsC>(_idx).Have(UnitStatTypes.Steps), UnitUpgC.Steps(Unit, Level, Owner));
         public bool HaveMaxSteps => Steps >= MaxAmountSteps;
-        public int StepsForDoing(DirectTypes dir_cur)
+        public int StepsForDoing(in byte idx_to)
         {
             var needSteps = 1;
 
             if (EnvC.Have(EnvTypes.AdultForest))
             {
                 needSteps += UnitValues.NeedAmountSteps(EnvTypes.AdultForest);
-                if (TrailC.Have(dir_cur.Invert())) needSteps -= 1;
+                if (TrailC.Have(CellSpaceC.GetDirect(_idx, idx_to).Invert())) needSteps -= 1;
             }
 
             if (EnvC.Have(EnvTypes.Hill))
@@ -49,41 +49,23 @@ namespace Game.Game
 
             return needSteps;
         }
-        public bool HaveStepsForDoing(DirectTypes dir_cur) => Steps >= StepsForDoing(dir_cur);
+        public bool HaveStepsForDoing(in byte idx_to) => Steps >= StepsForDoing(idx_to);
 
         public int NeedSteps(UniqueAbilTypes uniq)
         {
-            return 0;
-
             switch (uniq)
             {
-                case UniqueAbilTypes.CircularAttack:
-                    break;
-
-                case UniqueAbilTypes.BonusNear:
-                    break;
-
-                case UniqueAbilTypes.FirePawn:
-                    break;
-
-                case UniqueAbilTypes.PutOutFirePawn:
-                    break;
-                case UniqueAbilTypes.Seed:
-                    break;
-                case UniqueAbilTypes.FireArcher:
-                    break;
-                case UniqueAbilTypes.ChangeCornerArcher:
-                    break;
-                case UniqueAbilTypes.GrowAdultForest:
-                    break;
-                case UniqueAbilTypes.StunElfemale:
-                    break;
-                case UniqueAbilTypes.ChangeDirWind:
-                    break;
-                case UniqueAbilTypes.End:
-                    break;
-                default:
-                    break;
+                case UniqueAbilTypes.CircularAttack: return MIN;
+                case UniqueAbilTypes.BonusNear: return MIN;
+                case UniqueAbilTypes.FirePawn: return MIN;
+                case UniqueAbilTypes.PutOutFirePawn: return MIN;
+                case UniqueAbilTypes.Seed: return MIN;
+                case UniqueAbilTypes.FireArcher: return MIN;
+                case UniqueAbilTypes.ChangeCornerArcher: return MIN;
+                case UniqueAbilTypes.GrowAdultForest: return MIN;
+                case UniqueAbilTypes.StunElfemale: return MIN;
+                case UniqueAbilTypes.ChangeDirWind: return MIN;
+                default: throw new Exception();
             }
         }
         public int NeedSteps(BuildTypes build)
@@ -96,13 +78,13 @@ namespace Game.Game
         public bool Have(BuildTypes build) => Steps >= NeedSteps(build);
         public bool HaveMin => Steps >= Min;
 
-        internal StepUnitC(in byte idx) => _idx = idx;
+        internal StepUnitWC(in byte idx) => _idx = idx;
 
 
         public void SetMaxSteps() => Unit<StepC>(_idx).Set(MaxAmountSteps);
         public void Reset() => Unit<StepC>(_idx).Reset();
 
-        public void TakeStepsForDoing(DirectTypes dir_cur) => Unit<StepC>(_idx).Take(StepsForDoing(dir_cur));
+        public void TakeStepsForDoing(in byte idx_to) => Unit<StepC>(_idx).Take(StepsForDoing(idx_to));
         public void TakeForBuild() => Unit<StepC>(_idx).Take();
         public void Take(UniqueAbilTypes uniq) => Unit<StepC>(_idx).Take(NeedSteps(uniq));
         public void Take(BuildTypes build) => Unit<StepC>(_idx).Take(NeedSteps(build));

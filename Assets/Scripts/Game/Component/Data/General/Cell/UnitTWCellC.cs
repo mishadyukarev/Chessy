@@ -14,40 +14,40 @@ namespace Game.Game
 
         public void Set(byte idx)
         {
-            UnitToolWeapon<ToolWeaponC>(_idx).ToolWeapon = UnitToolWeapon<ToolWeaponC>(idx).ToolWeapon;
-            UnitToolWeapon<LevelC>(_idx).Level = UnitToolWeapon<LevelC>(idx).Level;
+            UnitTW<ToolWeaponC>(_idx).ToolWeapon = UnitTW<ToolWeaponC>(idx).ToolWeapon;
+            UnitTW<LevelC>(_idx).Level = UnitTW<LevelC>(idx).Level;
 
-            UnitToolWeapon<ProtectionC>(_idx).Set(UnitToolWeapon<ProtectionC>(idx));
+            UnitTW<ProtectionC>(_idx).Set(UnitTW<ProtectionC>(idx));
         }
         public void Reset()
         {
-            UnitToolWeapon<ToolWeaponC>(_idx).Reset();
-            UnitToolWeapon<LevelC>(_idx).Reset();
+            UnitTW<ToolWeaponC>(_idx).Reset();
+            UnitTW<LevelC>(_idx).Reset();
 
-            UnitToolWeapon<ProtectionC>(_idx).Reset();
+            UnitTW<ProtectionC>(_idx).Reset();
         }
         public void Sync(in TWTypes tw, in LevelTypes lev, in int shieldProt)
         {
-            UnitToolWeapon<ToolWeaponC>(_idx).ToolWeapon = tw;
-            UnitToolWeapon<LevelC>(_idx).Level = lev;
-            UnitToolWeapon<ProtectionC>(_idx).Set(shieldProt);
+            UnitTW<ToolWeaponC>(_idx).ToolWeapon = tw;
+            UnitTW<LevelC>(_idx).Level = lev;
+            UnitTW<ProtectionC>(_idx).Set(shieldProt);
         }
 
         public void SetNew(in TWTypes tw, in LevelTypes level)
         {
-            UnitToolWeapon<ToolWeaponC>(_idx).ToolWeapon = tw;
-            UnitToolWeapon<LevelC>(_idx).Level = level;
+            UnitTW<ToolWeaponC>(_idx).ToolWeapon = tw;
+            UnitTW<LevelC>(_idx).Level = level;
 
             if (tw == TWTypes.Shield)
             {
                 switch (level)
                 {
                     case LevelTypes.First:
-                        UnitToolWeapon<ProtectionC>(_idx).Set(1);
+                        UnitTW<ProtectionC>(_idx).Set(1);
                         break;
 
                     case LevelTypes.Second:
-                        UnitToolWeapon<ProtectionC>(_idx).Set(3);
+                        UnitTW<ProtectionC>(_idx).Set(3);
                         break;
 
                     default: throw new Exception();

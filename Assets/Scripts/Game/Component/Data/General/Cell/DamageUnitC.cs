@@ -24,9 +24,9 @@ namespace Game.Game
 
         public int DamageAttack(AttackTypes attack)
         {
-            var tw = UnitToolWeapon<ToolWeaponC>(_idx).ToolWeapon;
+            var tw = UnitTW<ToolWeaponC>(_idx).ToolWeapon;
             var haveEff = Unit<EffectsC>(_idx).Have(UnitStatTypes.Damage);
-            var upgPerc = UnitUpgC.UpgPercent(UnitStatTypes.Damage, Unit, Level, Owner);
+            var upgPerc = UnitUpgC.UpgDamagePercent(Unit, Level, Owner);
 
 
             var standDamage = UnitValues.StandDamage(Unit, Level);

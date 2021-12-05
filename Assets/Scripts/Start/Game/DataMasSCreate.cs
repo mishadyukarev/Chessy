@@ -39,7 +39,7 @@ namespace Game.Game
             rpcSystems.Add(RpcMasterTypes.Build, new EcsSystems(gameWorld)
                 .Add(new BuildMineMastSys())
                 .Add(new BuildFarmMS())
-                .Add(new BuildCityMastSys()));
+                .Add(new BuildCityMS()));
             rpcSystems.Add(RpcMasterTypes.DestroyBuild, new EcsSystems(gameWorld).Add(new DestroyMS()));
             rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMS()));
             rpcSystems.Add(RpcMasterTypes.Attack, new EcsSystems(gameWorld).Add(new AttackMS()));

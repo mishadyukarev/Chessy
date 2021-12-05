@@ -15,7 +15,7 @@ namespace Game.Game
             UniqueAbilityMC.Get(out var uniq_cur);
 
 
-            ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+            ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
             ref var fire_0 = ref Fire<FireC>(idx_0);
             ref var env_0 = ref Environment<EnvC>(idx_0);
 

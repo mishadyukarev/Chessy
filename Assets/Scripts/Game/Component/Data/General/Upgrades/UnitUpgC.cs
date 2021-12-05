@@ -8,7 +8,7 @@ namespace Game.Game
         private static Dictionary<string, bool> _upgrades;
         private const string BETWEEN = "_";
 
-        private static string Key(UpgTypes upg, UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
+        static string Key(in UpgTypes upg, in UnitStatTypes stat, in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
             => upg.ToString() + BETWEEN + stat + BETWEEN + unit + BETWEEN + level + BETWEEN + player;
 
         public static Dictionary<string, bool> Upgrades
@@ -24,28 +24,30 @@ namespace Game.Game
         public static bool Have(UpgTypes upg, UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
             => _upgrades[Key(upg, stat, unit, level, player)];
 
-        internal static float UpgPercent(UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
+        internal static float UpgDamagePercent(in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
         {
-            if (stat == UnitStatTypes.Steps) throw new Exception();
-
             var percent = 0f;
 
             for (var upg = UpgTypes.First; upg < UpgTypes.End; upg++)
             {
-                var key = Key(upg, stat, unit, level, player);
+                var key = Key(upg, UnitStatTypes.Damage, unit, level, player);
                 if (!_upgrades.ContainsKey(key)) throw new Exception();
 
-                if (_upgrades[key])
-                {
-                    if (stat == UnitStatTypes.Damage)
-                    {
-                        percent += 0.1f;
-                    }
-                    else if (stat == UnitStatTypes.Water)
-                    {
-                        percent += 0.2f;
-                    }
-                }
+                if (_upgrades[key]) percent += 0.1f;
+            }
+
+            return percent;
+        }
+        internal static float UpgWaterPercent(in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
+        {
+            var percent = 0f;
+
+            for (var upg = UpgTypes.First; upg < UpgTypes.End; upg++)
+            {
+                var key = Key(upg, UnitStatTypes.Damage, unit, level, player);
+                if (!_upgrades.ContainsKey(key)) throw new Exception();
+
+                if (_upgrades[key]) percent += 0.2f;
             }
 
             return percent;

@@ -23,13 +23,13 @@ namespace Game.Game
             get => Unit<OwnerC>(_idx).Owner;
             set => Unit<OwnerC>(_idx).Owner = value;
         }
-        float UpgadePercent(UnitStatTypes stat) => UnitUpgC.UpgPercent(stat, Unit, Level, Owner);
+        float UpgadeWaterPercent => UnitUpgC.UpgWaterPercent(Unit, Level, Owner);
 
 
         public bool IsHpDeathAfterAttack => Unit<HpC>(_idx).HP <= UnitValues.HP_FOR_DEATH_AFTER_ATTACK;
 
         public bool NeedWater => Unit<WaterC>(_idx).Water <= 100 * 0.4f;
-        public int MaxWater => (int)(100 + 100 * UpgadePercent(UnitStatTypes.Water));
+        public int MaxWater => (int)(100 + 100 * UpgadeWaterPercent);
         public bool HaveMaxWater => Unit<WaterC>(_idx).Water >= MaxWater;
 
 
@@ -53,7 +53,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            Unit<HpC>(_idx).Take((int)(HpUnitC.MAX * percent));
+            Unit<HpC>(_idx).Take((int)(HpUnitWC.MAX * percent));
         }
         public void TakeWater() => Unit<WaterC>(_idx).TakeWater((int)(100 * 0.15f));
 

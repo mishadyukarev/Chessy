@@ -3,11 +3,39 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public struct UnitCellC : IUnitCell
+    public struct UnitCellWC : IUnitCell
     {
         readonly byte _idx;
 
 
+        public bool CanShift(in byte idx_to)
+        {
+            var idx_from = _idx;
+
+            ref var stepUnit_from = ref Unit<StepUnitWC>(idx_from);
+
+            if (!Unit<StunC>(idx_from).IsStunned && Unit<UnitC>(idx_from).Have)
+            {
+                CellSpaceC.TryGetIdxAround(idx_from, out var directs);
+
+                foreach (var item_1 in directs)
+                {
+                    if (idx_to == item_1.Value && !Environment<EnvC>(idx_to).Have(EnvTypes.Mountain) || Unit<UnitC>(idx_to).Have)
+                    {
+                        var one = stepUnit_from.HaveStepsForDoing(idx_to);
+                        var two = stepUnit_from.HaveMaxSteps;
+
+                        if (one || two)
+                        {
+                            return true;
+                        }
+                        
+                    }
+                }
+                return false;
+            }
+            else return false;
+        }
         public bool CanExtract(out int extract, out EnvTypes env, out ResTypes res)
         {
             extract = 0;
@@ -24,7 +52,7 @@ namespace Game.Game
 
 
             if (!Unit<UnitC>(_idx).Is(UnitTypes.Pawn) || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed)
-                || !Unit<HpUnitC>(_idx).HaveMax) return false;
+                || !Unit<HpUnitWC>(_idx).HaveMax) return false;
 
 
             var ration = 0f;
@@ -53,9 +81,9 @@ namespace Game.Game
 
             var envC = Environment<EnvC>(_idx);
             var envResC = Environment<EnvResC>(_idx);
-            var twC = UnitToolWeapon<ToolWeaponC>(_idx);
+            var twC = UnitTW<ToolWeaponC>(_idx);
 
-            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !Unit<HpUnitC>(_idx).HaveMax) return false;
+            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !Unit<HpUnitWC>(_idx).HaveMax) return false;
 
 
 
@@ -94,7 +122,7 @@ namespace Game.Game
         }
 
 
-        internal UnitCellC(in byte idx) => _idx = idx;
+        internal UnitCellWC(in byte idx) => _idx = idx;
 
 
         public void SetNew(in UnitTypes unit, in LevelTypes level, in PlayerTypes owner)
@@ -108,29 +136,32 @@ namespace Game.Game
 
             WhereUnitsC.Set(unit, level, owner, _idx, true);
         }
-        public void Kill(in LevelTypes level, in PlayerTypes owner)
+        public void Kill()
         {
             if (!Unit<UnitC>(_idx).Have) throw new Exception("It's not got unit");
 
             if (Unit<UnitC>(_idx).Is(UnitTypes.King))
             {
-                PlyerWinnerC.PlayerWinner = owner;
+                PlyerWinnerC.PlayerWinner = Unit<OwnerC>(_idx).Owner;
             }
             else if (Unit<UnitC>(_idx).Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {
-                ScoutHeroCooldownC.SetStandCooldown(Unit<UnitC>(_idx).Unit, owner);
-                InvUnitsC.Add(Unit<UnitC>(_idx).Unit, level, owner);
+                ScoutHeroCooldownC.SetStandCooldown(Unit<UnitC>(_idx).Unit, Unit<OwnerC>(_idx).Owner);
+                InvUnitsC.Add(Unit<UnitC>(_idx).Unit, Unit<LevelC>(_idx).Level, Unit<OwnerC>(_idx).Owner);
             }
 
-            WhereUnitsC.Set(Unit<UnitC>(_idx).Unit, level, owner, _idx, false);
+            WhereUnitsC.Set(Unit<UnitC>(_idx).Unit, Unit<LevelC>(_idx).Level, Unit<OwnerC>(_idx).Owner, _idx, false);
             Unit<UnitC>(_idx).Reset();
         }
-        public void Shift(in byte idx_from, in DirectTypes dir_from)
+        public void Shift(in byte idx_to)
         {
-            var idx_to = _idx;
+            var idx_from = _idx;
 
-            Trail<TrailC>(idx_to).TrySetNewTrail(dir_from.Invert(), Environment<EnvC>(idx_to));
-            Trail<TrailC>(idx_from).TrySetNewTrail(dir_from, Environment<EnvC>(idx_from));
+            var dir = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
+
+
+            Trail<TrailC>(idx_to).TrySetNewTrail(dir.Invert(), Environment<EnvC>(idx_to));
+            Trail<TrailC>(idx_from).TrySetNewTrail(dir, Environment<EnvC>(idx_from));
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
             ref var level_from = ref Unit<LevelC>(idx_from);
@@ -145,16 +176,16 @@ namespace Game.Game
             Unit<StepC>(idx_to).Set(Unit<StepC>(idx_from));
             if (Unit<ConditionC>(idx_to).HaveCondition) Unit<ConditionC>(idx_to).Reset();
 
-            UnitToolWeapon<UnitTWCellC>(idx_to).Set(idx_from);
-            UnitToolWeapon<LevelC>(idx_to).Set(UnitToolWeapon<LevelC>(idx_from));
-            UnitToolWeapon<ProtectionC>(idx_to).Set(UnitToolWeapon<ProtectionC>(idx_from));
+            UnitTW<UnitTWCellC>(idx_to).Set(idx_from);
+            UnitTW<LevelC>(idx_to).Set(UnitTW<LevelC>(idx_from));
+            UnitTW<ProtectionC>(idx_to).Set(UnitTW<ProtectionC>(idx_from));
 
             Unit<EffectsC>(idx_to).Set(Unit<EffectsC>(idx_from));
             Unit<WaterC>(idx_to).Set(Unit<WaterC>(idx_from));
             Unit<MoveInCondC>(idx_to).ResetAll();
             Unit<CooldownUniqC >(idx_to).Replace(Unit<CooldownUniqC>(idx_from));
             Unit<CornerArcherC>(idx_to).Set(Unit<CornerArcherC>(idx_from));
-            if (River<RiverC>(idx_to).HaveNearRiver) Unit<WaterUnitC>(idx_to).SetMaxWater();
+            if (River<RiverC>(idx_to).HaveNearRiver) Unit<WaterUnitC>(idx_from).SetMaxWater();
 
 
 
@@ -167,11 +198,11 @@ namespace Game.Game
             }
 
 
-            Unit<UnitC>(_idx).Unit = Unit<UnitC>(idx_from).Unit;
-            WhereUnitsC.Set(Unit<UnitC>(_idx).Unit, level_from.Level, own_from.Owner, _idx, true);
+            Unit<UnitC>(idx_to).Unit = Unit<UnitC>(idx_from).Unit;
+            WhereUnitsC.Set(Unit<UnitC>(idx_to).Unit, level_from.Level, own_from.Owner, idx_to, true);
 
 
-            WhereUnitsC.Set(Unit<UnitC>(_idx).Unit, level_from.Level, own_from.Owner, idx_from, false);
+            WhereUnitsC.Set(Unit<UnitC>(idx_from).Unit, level_from.Level, own_from.Owner, idx_from, false);
             Unit<UnitC>(idx_from).Reset();
 
             //UnitCellC<UnitC>(idx_from).Clean(lev_from, own_from.Owner);
@@ -196,26 +227,26 @@ namespace Game.Game
             }
             else throw new Exception();
         }
-        public void SetScout(UnitTypes unit, LevelTypes level)
+        public void SetScout()
         {
             ref var ownUnitC = ref Unit<OwnerC>(_idx);
 
-            ref var twUnitC = ref UnitToolWeapon<UnitTWCellC>(_idx);
-            ref var twC = ref UnitToolWeapon<ToolWeaponC>(_idx);
-            ref var levTWC = ref UnitToolWeapon<LevelC>(_idx);
+            ref var twUnitC = ref UnitTW<UnitTWCellC>(_idx);
+            ref var twC = ref UnitTW<ToolWeaponC>(_idx);
+            ref var levTWC = ref UnitTW<LevelC>(_idx);
 
 
             WhereUnitsC.Set(Unit<UnitC>(_idx).Unit, Unit<LevelC>(_idx).Level, ownUnitC.Owner, _idx, false);
 
-            Unit<UnitC>(_idx).Unit = unit;
-            Unit<LevelC>(_idx).Level = level;
+            Unit<UnitC>(_idx).Unit = UnitTypes.Scout;
+            Unit<LevelC>(_idx).Level = LevelTypes.First;
             if (twC.HaveTW)
             {
                 InvTWC.Add(twC.ToolWeapon, levTWC.Level, ownUnitC.Owner);
                 twUnitC.Reset();
             }
 
-            WhereUnitsC.Set(unit, level, Unit<OwnerC>(_idx).Owner, _idx, true);
+            WhereUnitsC.Set(UnitTypes.Scout, LevelTypes.First, Unit<OwnerC>(_idx).Owner, _idx, true);
         }
         public void SetHero(in byte idx_from, in UnitTypes unit, in LevelTypes lev)
         {
@@ -236,7 +267,7 @@ namespace Game.Game
 
             InvUnitsC.Take(Unit<OwnerC>(idx_to).Owner, unit, lev);
         }
-        public void Sync(UnitTypes unit, LevelTypes lev, PlayerTypes owner)
+        public void Sync(in UnitTypes unit, in LevelTypes lev, in PlayerTypes owner)
         {
             Unit<UnitC>(_idx).Unit = unit;
             Unit<LevelC>(_idx).Level = lev;

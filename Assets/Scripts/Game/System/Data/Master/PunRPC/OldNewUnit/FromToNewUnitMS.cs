@@ -41,7 +41,7 @@ namespace Game.Game
                             {
                                 RpcSys.SoundToGeneral(sender, ClipTypes.GetHero);
 
-                                Unit<UnitCellC>(idx_to).SetHero(idx_from, unit, LevelTypes.First);
+                                Unit<UnitCellWC>(idx_to).SetHero(idx_from, unit, LevelTypes.First);
 
                                 break;
                             }

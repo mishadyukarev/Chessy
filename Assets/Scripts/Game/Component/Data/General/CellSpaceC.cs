@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using static Game.Game.CellValues;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -40,6 +41,13 @@ namespace Game.Game
                 directs.Add(dir, (byte[])xyResult.Clone());
             }
         }
+        public static void TryGetIdxAround(in byte idx_start, out Dictionary<DirectTypes, byte> directs)
+        {
+            TryGetXyAround(Cell<XyC>(idx_start).Xy, out var dirs);
+
+            directs = new Dictionary<DirectTypes, byte>();
+            foreach (var item in dirs) directs.Add(item.Key, IdxCell(item.Value));
+        }
 
         public static DirectTypes GetDirect(byte[] xy_from, byte[] xy_to)
         {
@@ -50,8 +58,9 @@ namespace Game.Game
                 if (item_1.Value.Compare(xy_to)) return item_1.Key;
             }
 
-            throw new Exception();
+            return DirectTypes.None;
         }
+        public static DirectTypes GetDirect(byte idx_from, byte idx_to) => GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
 
         public static byte[] GetXyCellByDirect(byte[] xyStart, DirectTypes directType)
         {

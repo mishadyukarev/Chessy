@@ -5,11 +5,11 @@ namespace Game.Game
 {
     public struct WhereUnitsC
     {
-        private static Dictionary<string, bool> _units;
+        static Dictionary<string, bool> _units;
 
 
-        private static bool ContainsKey(string key) => _units.ContainsKey(key);
-        private static string Key(UnitTypes unit, LevelTypes level, PlayerTypes player, byte idx) => unit.ToString() + level + player + idx;
+        static bool ContainsKey(in string key) => _units.ContainsKey(key);
+        static string Key(in UnitTypes unit, in LevelTypes level, in PlayerTypes player, in byte idx) => unit.ToString() + level + player + idx;
 
         public static Dictionary<string, bool> Units
         {
@@ -20,7 +20,7 @@ namespace Game.Game
                 return dict;
             }
         }
-        public static List<byte> Idxs(UnitTypes unit, LevelTypes lev, PlayerTypes player)
+        public static List<byte> Idxs(in UnitTypes unit, in LevelTypes lev, in PlayerTypes player)
         {
             var list = new List<byte>();
 
@@ -66,7 +66,7 @@ namespace Game.Game
                 }
             }
         }
-        public WhereUnitsC(bool needReset)
+        public WhereUnitsC(in bool needReset)
         {
             if (needReset) foreach (var item in Units) _units[item.Key] = false;
             else throw new Exception();
@@ -74,7 +74,7 @@ namespace Game.Game
 
 
         
-        public static void Set(UnitTypes unit, LevelTypes lev, PlayerTypes player, byte idx, bool have)
+        public static void Set(in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, in byte idx, in bool have)
         {
             var key = Key(unit, lev, player, idx);
 
@@ -84,7 +84,7 @@ namespace Game.Game
             _units[key] = have;
         }
 
-        public static void Sync(string key, bool have)
+        public static void Sync(in string key, in bool have)
         {
             if (!ContainsKey(key)) throw new Exception();
 

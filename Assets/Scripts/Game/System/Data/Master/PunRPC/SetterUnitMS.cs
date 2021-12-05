@@ -56,16 +56,16 @@ namespace Game.Game
                     InvUnitsC.Take(whoseMove, unit, LevelTypes.First);
                     levUnit = LevelTypes.First;
                 }
-                Unit<UnitCellC>(idx_0).SetNew(unit, levUnit, whoseMove);
+                Unit<UnitCellWC>(idx_0).SetNew(unit, levUnit, whoseMove);
 
 
-                UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
+                UnitTW<UnitTWCellC>(idx_0).Reset();
 
                 eff_0.DefAllEffects();
-                Unit<HpUnitC>(idx_0).SetMax();
+                Unit<HpUnitWC>(idx_0).SetMax();
                 if (cond_0.HaveCondition) cond_0.Reset();  
                 moveCond_0.ResetAll();
-                Unit<StepUnitC>(idx_0).SetMaxSteps();
+                Unit<StepUnitWC>(idx_0).SetMaxSteps();
                 Unit<WaterUnitC>(idx_0).SetMaxWater();
 
       

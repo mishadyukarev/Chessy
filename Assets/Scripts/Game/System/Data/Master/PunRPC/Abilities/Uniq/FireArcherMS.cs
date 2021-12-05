@@ -13,7 +13,7 @@ namespace Game.Game
             UniqueAbilityMC.Get(out var uniq_cur);
 
 
-            ref var stepUnit_from = ref Unit<StepUnitC>(idx_from);
+            ref var stepUnit_from = ref Unit<StepUnitWC>(idx_from);
 
             ref var fire_to = ref Fire<FireC>(idx_to);
 
@@ -21,7 +21,7 @@ namespace Game.Game
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (Unit<StepUnitC>(idx_from).HaveMaxSteps)
+            if (Unit<StepUnitWC>(idx_from).HaveMaxSteps)
             {
                 if (ArsonCellsC.ContainIdx(whoseMove, idx_from, idx_to))
                 {

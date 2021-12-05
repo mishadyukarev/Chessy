@@ -14,8 +14,8 @@ namespace Game.Game
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
 
-            ref var hpUnitCell_from = ref Unit<HpUnitC>(idx_from);
-            ref var stepUnit_from = ref Unit<StepUnitC>(idx_from);
+            ref var hpUnitCell_from = ref Unit<HpUnitWC>(idx_from);
+            ref var stepUnit_from = ref Unit<StepUnitWC>(idx_from);
             ref var uniq_from = ref Unit<CooldownUniqC>(idx_from);
 
 
@@ -27,7 +27,7 @@ namespace Game.Game
                     {
                         WindC.Set(idx_to);
 
-                        Unit<StepUnitC>(idx_from).Take(uniq_cur);
+                        Unit<StepUnitWC>(idx_from).Take(uniq_cur);
 
                         uniq_from.SetCooldown(uniq_cur, 6);
 

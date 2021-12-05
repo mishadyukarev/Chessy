@@ -11,7 +11,7 @@ namespace Game.Game
             {
                 if (Unit<ConditionC>(idx_0).Is(CondUnitTypes.Relaxed))
                 {
-                    Unit<HpUnitC>(idx_0).SetMax();
+                    Unit<HpUnitWC>(idx_0).SetMax();
                 }
             }
         }

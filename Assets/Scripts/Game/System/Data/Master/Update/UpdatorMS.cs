@@ -38,9 +38,9 @@ namespace Game.Game
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
-                ref var hpUnitCell_0 = ref Unit<HpUnitC>(idx_0);
+                ref var hpUnitCell_0 = ref Unit<HpUnitWC>(idx_0);
                 ref var hp_0 = ref _statUnitF.Get1(idx_0);
-                ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+                ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
 
                 ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
                 ref var moveCond_0 = ref _effUnitF.Get2(idx_0);
@@ -135,7 +135,7 @@ namespace Game.Game
                         }
                     }
 
-                    Unit<StepUnitC>(idx_0).SetMaxSteps();
+                    Unit<StepUnitWC>(idx_0).SetMaxSteps();
                 }
             }
 

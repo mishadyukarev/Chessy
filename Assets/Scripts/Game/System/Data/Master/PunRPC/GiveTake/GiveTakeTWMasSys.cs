@@ -20,11 +20,11 @@ namespace Game.Game
                 ref var levUnit_0 = ref Unit<LevelC>(idx_0);
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
 
-                ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+                ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
 
-                ref var tw_0 = ref UnitToolWeapon<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref UnitToolWeapon<LevelC>(idx_0);
-                ref var twShield_0 = ref UnitToolWeapon<ProtectionC>(idx_0);
+                ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
+                ref var twShield_0 = ref UnitTW<ProtectionC>(idx_0);
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
@@ -35,7 +35,7 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
-                            UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
+                            UnitTW<UnitTWCellC>(idx_0).Reset();
 
                             stepUnit_0.TakeMin();
 
@@ -47,7 +47,7 @@ namespace Game.Game
                         {
                             InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Owner);
 
-                            UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
+                            UnitTW<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                             stepUnit_0.TakeMin();
 
@@ -60,7 +60,7 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW);
 
-                                UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
+                                UnitTW<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                                 stepUnit_0.TakeMin();
 
@@ -78,7 +78,7 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW);
 
-                                UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
+                                UnitTW<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                                 stepUnit_0.TakeMin();
 
@@ -96,7 +96,7 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW);
 
-                                UnitToolWeapon<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
+                                UnitTW<UnitTWCellC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
                                 stepUnit_0.TakeMin();
 

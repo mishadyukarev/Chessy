@@ -3,7 +3,7 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public sealed class BuildCityMastSys : IEcsRunSystem
+    public sealed class BuildCityMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -19,7 +19,7 @@ namespace Game.Game
                 ref var build_0 = ref Build<BuildC>(idx_0);
                 ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
-                ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+                ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
                 ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
                 ref var fire_0 = ref Fire<FireC>(idx_0);
 
@@ -27,7 +27,7 @@ namespace Game.Game
                 var whoseMove = WhoseMoveC.WhoseMove;
 
 
-                if (stepUnit_0.Have(uniq))
+                if (stepUnit_0.Have(BuildTypes.City))
                 {
                     bool haveNearBorder = false;
 
@@ -51,7 +51,7 @@ namespace Game.Game
                         buildCell_0.SetNew(forBuildType, whoseMove);
 
 
-                        stepUnit_0.Take(uniq);
+                        stepUnit_0.Take(BuildTypes.City);
 
 
                         fire_0.Disable();

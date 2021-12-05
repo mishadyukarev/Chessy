@@ -12,7 +12,7 @@ namespace Game.Game
             IdxDoingMC.Get(out var idx_0);
 
             ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
-            ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+            ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
 
             ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
             ref var buildC_0 = ref Build<BuildC>(idx_0);

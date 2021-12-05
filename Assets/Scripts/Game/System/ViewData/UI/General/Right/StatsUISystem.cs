@@ -42,7 +42,7 @@ namespace Game.Game
                 StatUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.Steps.ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.Water.ToString());
 
-                StatUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.HP, HpUnitC.MAX);
+                StatUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.HP, HpUnitWC.MAX);
 
 
 
@@ -51,7 +51,7 @@ namespace Game.Game
 
 
 
-                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, Unit<StepUnitC>(SelIdx.Idx).MaxAmountSteps);
+                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, Unit<StepUnitWC>(SelIdx.Idx).MaxAmountSteps);
                 StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, Unit<WaterUnitC>(SelIdx.Idx).MaxWater);
             }
 

@@ -20,7 +20,7 @@ namespace Game.Game
                 ref var buil_0 = ref Build<BuildC>(idx_0);
 
 
-                if (Unit<UnitCellC>(idx_0).CanExtract(out var extract, out var env, out var res))
+                if (Unit<UnitCellWC>(idx_0).CanExtract(out var extract, out var env, out var res))
                 {
                     InvResC.Add(res, ownUnit_0.Owner, extract);
                     envRes_0.Take(env, extract);
@@ -52,11 +52,11 @@ namespace Game.Game
                         }
                     }
                 }
-                else if(!Unit<UnitCellC>(idx_0).CanResume(out extract, out env))
+                else if(!Unit<UnitCellWC>(idx_0).CanResume(out extract, out env))
                 {
-                    if (Unit<HpUnitC>(idx_0).HaveMax)
+                    if (Unit<HpUnitWC>(idx_0).HaveMax)
                     {
-                        if (unit_0.Have && Unit<StepUnitC>(idx_0).HaveMin)
+                        if (unit_0.Have && Unit<StepUnitWC>(idx_0).HaveMin)
                         {
                             condUnit_0.Set(CondUnitTypes.Protected);
                         }

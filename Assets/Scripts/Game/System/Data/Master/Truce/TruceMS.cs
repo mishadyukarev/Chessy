@@ -22,8 +22,8 @@ namespace Game.Game
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);
                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-                ref var tw_0 = ref EntityPool.UnitToolWeapon<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref EntityPool.UnitToolWeapon<LevelC>(idx_0);
+                ref var tw_0 = ref EntityPool.UnitTW<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref EntityPool.UnitTW<LevelC>(idx_0);
 
 
                 ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
@@ -49,10 +49,10 @@ namespace Game.Game
                             if (tw_0.HaveTW)
                             {
                                 InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
-                                UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
+                                UnitTW<UnitTWCellC>(idx_0).Reset();
                             }
 
-                            Unit<UnitCellC>(idx_0).AddToInventor();
+                            Unit<UnitCellWC>(idx_0).AddToInventor();
                         }
                     }
                     else
@@ -61,10 +61,10 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
-                            UnitToolWeapon<UnitTWCellC>(idx_0).Reset();
+                            UnitTW<UnitTWCellC>(idx_0).Reset();
                         }
 
-                        Unit<UnitCellC>(idx_0).AddToInventor();
+                        Unit<UnitCellWC>(idx_0).AddToInventor();
                     }
                 }
 

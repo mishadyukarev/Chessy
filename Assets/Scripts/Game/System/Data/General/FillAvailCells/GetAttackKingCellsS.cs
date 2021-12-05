@@ -45,14 +45,14 @@ namespace Game.Game
                             ref var unit_1 = ref _unitF.Get1(idx_1);
                             ref var ownUnit_1 = ref _unitF.Get3(idx_1);
 
-                            ref var env_1 = ref EntityPool.Environment<EnvC>(idx_1);
-                            ref var trail_1 = ref EntityPool.Trail<TrailC>(idx_1);
+                            ref var env_1 = ref Environment<EnvC>(idx_1);
+                            ref var trail_1 = ref Trail<TrailC>(idx_1);
 
 
                             if (!Env(idx_1).Have(EnvTypes.Mountain))
                             {
-                                if (Unit<StepUnitC>(idx_0).HaveStepsForDoing(item_1.Key)
-                                    || Unit<StepUnitC>(idx_0).HaveMaxSteps)
+                                if (Unit<StepUnitWC>(idx_0).HaveStepsForDoing(idx_1)
+                                    || Unit<StepUnitWC>(idx_0).HaveMaxSteps)
                                 {
                                     if (unit_1.Have)
                                     {

@@ -382,9 +382,9 @@ namespace Game.Game
                 foreach (var item in Unit<EffectsC>(idx_0).Effects) objs.Add(item.Value);
                
 
-                objs.Add(UnitToolWeapon<ToolWeaponC>(idx_0).ToolWeapon);
-                objs.Add(UnitToolWeapon<LevelC>(idx_0).Level);
-                objs.Add(UnitToolWeapon<ProtectionC>(idx_0).Protection);
+                objs.Add(UnitTW<ToolWeaponC>(idx_0).ToolWeapon);
+                objs.Add(UnitTW<LevelC>(idx_0).Level);
+                objs.Add(UnitTW<ProtectionC>(idx_0).Protection);
 
                 objs.Add(Unit<StunC>(idx_0).IsStunned);
                 objs.Add(Unit<StunC>(idx_0).StepsInStun);
@@ -490,15 +490,15 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                Unit<UnitCellC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
-                Unit<HpUnitC>(idx_0).Sync((int)objects[_idx_cur++]);
-                Unit<StepUnitC>(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<UnitCellWC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
+                Unit<HpUnitWC>(idx_0).Sync((int)objects[_idx_cur++]);
+                Unit<StepUnitWC>(idx_0).Sync((int)objects[_idx_cur++]);
                 Unit<WaterUnitC>(idx_0).Sync((int)objects[_idx_cur++]);
 
                 Unit<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
                 foreach (var item in Unit<EffectsC>(idx_0).Effects) Unit<EffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
 
-                UnitToolWeapon<UnitTWCellC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                UnitTW<UnitTWCellC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
 
                 Unit<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);

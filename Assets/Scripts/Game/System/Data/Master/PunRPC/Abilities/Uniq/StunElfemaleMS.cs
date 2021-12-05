@@ -16,8 +16,8 @@ namespace Game.Game
 
             ref var ownUnit_from = ref Unit<OwnerC>(idx_from);
 
-            ref var hpUnitCell_from = ref Unit<HpUnitC>(idx_from);
-            ref var step_from = ref Unit<StepUnitC>(idx_from);
+            ref var hpUnitCell_from = ref Unit<HpUnitWC>(idx_from);
+            ref var step_from = ref Unit<StepUnitWC>(idx_from);
             ref var cdUniq_from = ref Unit<CooldownUniqC>(idx_from);
 
             ref var unit_to = ref Unit<UnitC>(idx_to);

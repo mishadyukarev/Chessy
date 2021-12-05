@@ -1,10 +1,13 @@
 ﻿using Leopotam.Ecs;
 using static Game.Game.CellClickC;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class SelectorS : IEcsRunSystem
     {
+
+
         private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
 
         public void Run()
@@ -126,7 +129,7 @@ namespace Game.Game
                                 RpcSys.AttackUnitToMaster(SelIdx.Idx, CurIdx.Idx);
                             }
 
-                            else if (ShiftCellsC.HaveIdxCell(WhoseMoveC.CurPlayerI, SelIdx.Idx, CurIdx.Idx))
+                            else if (Unit<UnitCellWC>(SelIdx.Idx).CanShift(CurIdx.Idx))
                             {
                                 RpcSys.ShiftUnitToMaster(SelIdx.Idx, CurIdx.Idx);
                             }

@@ -3,33 +3,17 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public struct HpUnitC : IUnitCell
+    public struct HpUnitWC : IUnitCell
     {
         readonly byte _idx;
 
         public const int MAX = 100;
 
 
-        UnitTypes Unit
-        {
-            get => Unit<UnitC>(_idx).Unit;
-            set => Unit<UnitC>(_idx).Unit = value;
-        }
-        LevelTypes Level
-        {
-            get => Unit<LevelC>(_idx).Level;
-            set => Unit<LevelC>(_idx).Level = value;
-        }
-        PlayerTypes Owner
-        {
-            get => Unit<OwnerC>(_idx).Owner;
-            set => Unit<OwnerC>(_idx).Owner = value;
-        }
-
         public bool HaveMax => Unit<HpC>(_idx).HP >= MAX;
 
 
-        internal HpUnitC(in byte idx) => _idx = idx;
+        internal HpUnitWC(in byte idx) => _idx = idx;
 
 
         public void SetMax() => Unit<HpC>(_idx).HP = 100;
@@ -58,7 +42,7 @@ namespace Game.Game
 
             if (!Unit<HpC>(_idx).Have)
             {
-                Unit<UnitCellC>(_idx).Kill(Level, Owner);
+                Unit<UnitCellWC>(_idx).Kill();
             }
         }
         public void Sync(in int hp) => Unit<HpC>(_idx).HP = hp;

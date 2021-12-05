@@ -58,7 +58,7 @@ namespace Game.Game
             var envC = Environment<EnvC>(_idx);
 
 
-            if (Unit<StepUnitC>(_idx).Have(build))
+            if (Unit<StepUnitWC>(_idx).Have(build))
             {
                 if (!buildC.Have || buildC.Is(BuildTypes.Camp))
                 {

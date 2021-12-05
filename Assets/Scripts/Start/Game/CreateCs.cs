@@ -18,7 +18,7 @@ namespace Game.Game
 
 
             new SetUnitCellsC(true);
-            new ShiftCellsC(true);
+            //new ShiftCellsC(true);
             new ArsonCellsC(true);
             new AttackCellsC(true);
             new CellsGiveTWC(true);

@@ -14,7 +14,7 @@ namespace Game.Game
             ref var unit_0 = ref Unit<UnitC>(idx_0);
             ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
 
-            ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+            ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
 
             ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
             ref var effUnit_0 = ref Unit<EffectsC>(idx_0);

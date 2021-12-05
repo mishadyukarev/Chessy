@@ -14,7 +14,7 @@ namespace Game.Game
             CondDoingMC.Get(out var cond);
             IdxDoingMC.Get(out var idx_0);
 
-            ref var step_0 = ref Unit<StepUnitC>(idx_0);
+            ref var step_0 = ref Unit<StepUnitWC>(idx_0);
             ref var cond_0 = ref Unit<ConditionC>(idx_0);
 
 

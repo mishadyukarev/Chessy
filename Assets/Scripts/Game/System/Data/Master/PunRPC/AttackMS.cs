@@ -25,17 +25,17 @@ namespace Game.Game
             ref var levUnit_from = ref _unitF.Get2(idx_from);
             ref var ownUnit_from = ref _unitF.Get3(idx_from);
 
-            ref var hpUnitCell_from = ref Unit<HpUnitC>(idx_from);
+            ref var hpUnitCell_from = ref Unit<HpUnitWC>(idx_from);
             ref var hpUnit_from = ref _statUnitF.Get1(idx_from);
-            ref var stepUnit_from = ref Unit<StepUnitC>(idx_from);
+            ref var stepUnit_from = ref Unit<StepUnitWC>(idx_from);
             ref var waterUnit_from = ref _statUnitF.Get3(idx_from);
 
             ref var condUnit_from = ref _effUnitF.Get1(idx_from);
             ref var moveCond_from = ref _effUnitF.Get2(idx_from);
             ref var effUnit_from = ref _effUnitF.Get3(idx_from);
 
-            ref var tw_from = ref UnitToolWeapon<ToolWeaponC>(idx_from);
-            ref var twShield_from = ref UnitToolWeapon<ProtectionC>(idx_from);
+            ref var tw_from = ref UnitTW<ToolWeaponC>(idx_from);
+            ref var twShield_from = ref UnitTW<ProtectionC>(idx_from);
 
 
 
@@ -43,7 +43,7 @@ namespace Game.Game
             ref var levUnit_to = ref _unitF.Get2(idx_to);
             ref var ownUnit_to = ref _unitF.Get3(idx_to);
 
-            ref var hpUnitCell_to = ref Unit<HpUnitC>(idx_to);
+            ref var hpUnitCell_to = ref Unit<HpUnitWC>(idx_to);
             ref var hpUnit_to = ref _statUnitF.Get1(idx_to);
             ref var stepUnit_to = ref _statUnitF.Get2(idx_to);
             ref var waterUnit_to = ref _statUnitF.Get3(idx_to);
@@ -53,8 +53,8 @@ namespace Game.Game
             ref var effUnit_to = ref _effUnitF.Get3(idx_to);
             ref var stun_to = ref _effUnitF.Get4(idx_to);
 
-            ref var tw_to = ref UnitToolWeapon<ToolWeaponC>(idx_to);
-            ref var twShield_to = ref UnitToolWeapon<ProtectionC>(idx_to);
+            ref var tw_to = ref UnitTW<ToolWeaponC>(idx_to);
+            ref var twShield_to = ref UnitTW<ProtectionC>(idx_to);
 
             #endregion
 
@@ -104,7 +104,7 @@ namespace Game.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = HpUnitC.MAX;
+                var maxDamage = HpUnitWC.MAX;
                 var minDamage = HpC.MIN;
 
                 if (!unit_to.IsMelee) powerDam_to /= 2;
@@ -151,7 +151,7 @@ namespace Game.Game
                 {
                     if (tw_from.Is(TWTypes.Shield))
                     {
-                        UnitToolWeapon<ShieldC>(idx_from).Take();
+                        UnitTW<ShieldC>(idx_from).Take();
                     }
                     else if (minus_from > 0)
                     {
@@ -162,7 +162,7 @@ namespace Game.Game
 
                 if (tw_to.Is(TWTypes.Shield))
                 {
-                    UnitToolWeapon<ShieldC>(idx_to).Take();
+                    UnitTW<ShieldC>(idx_to).Take();
                 }
                 else if (minus_to > 0)
                 {
@@ -173,26 +173,26 @@ namespace Game.Game
 
                 if (!hpUnit_to.Have)
                 {
-                    Unit<UnitCellC>(idx_to).Kill(levUnit_to.Level, ownUnit_to.Owner);
+                    Unit<UnitCellWC>(idx_to).Kill();
 
 
                     if (unit_from.IsMelee)
                     {
                         if (!hpUnit_from.Have)
                         {
-                            Unit<UnitCellC>(idx_from).Kill(levUnit_from.Level, ownUnit_from.Owner);
+                            Unit<UnitCellWC>(idx_from).Kill();
                         }
                         else
                         {
-                            var dir = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
-                            Unit<UnitCellC>(idx_to).Shift(idx_from, dir);
+                            
+                            Unit<UnitCellWC>(idx_to).Shift(idx_to);
                         }
                     }
                 }
 
                 else if (!hpUnit_from.Have)
                 {
-                    Unit<UnitCellC>(idx_from).Kill(levUnit_from.Level, ownUnit_from.Owner);
+                    Unit<UnitCellWC>(idx_from).Kill();
                 }
 
                 effUnit_from.DefAllEffects();

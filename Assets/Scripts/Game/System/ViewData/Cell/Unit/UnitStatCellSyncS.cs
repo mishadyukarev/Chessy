@@ -50,7 +50,7 @@ namespace Game.Game
                             barsViewCom.EnableSR(CellBarTypes.Hp);
                             barsViewCom.SetColorHp(Color.red);
 
-                            float maxHpUnit_0 = HpUnitC.MAX;
+                            float maxHpUnit_0 = HpUnitWC.MAX;
 
                             float xCordinate = (float)hpUnit_0.HP / maxHpUnit_0;
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
@@ -65,7 +65,7 @@ namespace Game.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
                         }
 
-                        if (Unit<StepUnitC>(idx_0).HaveMaxSteps)
+                        if (Unit<StepUnitWC>(idx_0).HaveMaxSteps)
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
                         }

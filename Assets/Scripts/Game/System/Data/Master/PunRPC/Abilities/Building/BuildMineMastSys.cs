@@ -18,7 +18,7 @@ namespace Game.Game
             ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
 
-            ref var stepUnitCell_0 = ref Unit<StepUnitC>(idx_0);
+            ref var stepUnitCell_0 = ref Unit<StepUnitWC>(idx_0);
             ref var env_0 = ref Environment<EnvC>(idx_0);
             ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 

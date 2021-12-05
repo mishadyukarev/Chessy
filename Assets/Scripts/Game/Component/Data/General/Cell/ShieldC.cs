@@ -11,11 +11,11 @@ namespace Game.Game
 
         public void Take(int taking = 1)
         {
-            UnitToolWeapon<ProtectionC>(_idx).Take(taking);
+            UnitTW<ProtectionC>(_idx).Take(taking);
 
-            if (UnitToolWeapon<ProtectionC>(_idx).Protection <= 0)
+            if (UnitTW<ProtectionC>(_idx).Protection <= 0)
             {
-                UnitToolWeapon<ToolWeaponC>(_idx).Reset();
+                UnitTW<ToolWeaponC>(_idx).Reset();
             }
         }
     }

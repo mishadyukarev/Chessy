@@ -12,8 +12,8 @@ namespace Game.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var hpUnitCell_0 = ref Unit<HpUnitC>(idx_0);
-            ref var stepUnit_0 = ref Unit<StepUnitC>(idx_0);
+            ref var hpUnitCell_0 = ref Unit<HpUnitWC>(idx_0);
+            ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
             ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
 
 
@@ -23,7 +23,7 @@ namespace Game.Game
                 {
                     corner_0.ChangeCorner();
 
-                    Unit<StepUnitC>(idx_0).Take(uniq);
+                    Unit<StepUnitWC>(idx_0).Take(uniq);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
