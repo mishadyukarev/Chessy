@@ -96,7 +96,7 @@ namespace Leopotam.Ecs
         [Unity.IL2CPP.CompilerServices.Il2CppSetOption (Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false)]
 #endif
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ref T Get<T>(in this EcsEntity entity) where T : struct
+        public static ref T Get<T>(/*in */this EcsEntity entity) where T : struct
         {
             ref var entityData = ref entity.Owner.GetEntityData(entity);
 #if DEBUG

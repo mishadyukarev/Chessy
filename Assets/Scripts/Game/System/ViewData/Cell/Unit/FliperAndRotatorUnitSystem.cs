@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -7,11 +8,11 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
-                ref var ownUnit_0 = ref EntityPool.Unit<OwnerC>(idx_0);
-                ref var corner_0 = ref EntityPool.Unit<CornerArcherC>(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
 
                 ref var main_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
                 ref var extra_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);
@@ -21,7 +22,7 @@ namespace Game.Game
                 main_0.SetFlipX(false);
                 extra_0.SetFlipX(false);
 
-                if (SelIdx.Idx == idx_0)
+                if (SelIdx<IdxC>().Is(idx_0))   
                 {
                     if (unit_0.Have)
                     {

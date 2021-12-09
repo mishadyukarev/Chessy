@@ -7,8 +7,8 @@ namespace Game.Game
 {
     public struct ReadyUIC
     {
-        private static Button _ready;
-        private static Button _joinDiscord;
+        static Button _ready;
+        static Button _joinDiscord;
 
 
         public ReadyUIC(GameObject readyZone_GO)

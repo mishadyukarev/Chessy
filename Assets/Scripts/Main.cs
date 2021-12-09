@@ -98,9 +98,6 @@ namespace Game
                     _gameW = new EcsWorld();
 
 
-                    new Game.CreateVCs(MainGoVC.Rot);
-                    new Game.CreateCs();
-
                     var gameSysts = new EcsSystems(_gameW)
                         .Add(new SpawnEntities());
 
@@ -109,7 +106,12 @@ namespace Game
                     new ViewDataSCreate(gameSysts);
 
 
-                    gameSysts.Add(RpcVC.RpcView_GO.GetComponent<RpcSys>());
+                    var rpc_GO = new GameObject("RpcView");
+                    var rpc = rpc_GO.AddComponent<RpcSys>();
+                    //GenerZoneVC.Attach(rpc.transform);
+                    new RpcVC(rpc_GO);
+
+                    gameSysts.Add(rpc);
 
                     gameSysts.Init();
 

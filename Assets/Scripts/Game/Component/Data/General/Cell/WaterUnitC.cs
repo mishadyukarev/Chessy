@@ -26,7 +26,7 @@ namespace Game.Game
         float UpgadeWaterPercent => UnitUpgC.UpgWaterPercent(Unit, Level, Owner);
 
 
-        public bool IsHpDeathAfterAttack => Unit<HpC>(_idx).HP <= UnitValues.HP_FOR_DEATH_AFTER_ATTACK;
+        public bool IsHpDeathAfterAttack => Unit<HpC>(_idx).HP <= DamageUnitValues.HP_FOR_DEATH_AFTER_ATTACK;
 
         public bool NeedWater => Unit<WaterC>(_idx).Water <= 100 * 0.4f;
         public int MaxWater => (int)(100 + 100 * UpgadeWaterPercent);

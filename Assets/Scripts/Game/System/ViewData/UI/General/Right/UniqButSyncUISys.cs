@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -8,8 +9,8 @@ namespace Game.Game
 
         public void Run()
         {
-            ref var uniq_sel = ref _unitAbilFilt.Get1(SelIdx.Idx);
-            ref var cdUniq_sel = ref _unitAbilFilt.Get2(SelIdx.Idx);
+            ref var uniq_sel = ref _unitAbilFilt.Get1(SelIdx<IdxC>().Idx);
+            ref var cdUniq_sel = ref _unitAbilFilt.Get2(SelIdx<IdxC>().Idx);
 
             var abil1 = uniq_sel.Ability(UniqButTypes.First);
             var abil2 = uniq_sel.Ability(UniqButTypes.Second);

@@ -5,7 +5,8 @@ namespace Game.Game
 {
     public readonly struct WhereEnvC
     {
-        private static Dictionary<string, bool> _envs;
+        static Dictionary<string, bool> _envs;
+        static CellValues _cellValues;
 
 
         private static string Key(EnvTypes env, byte idx) => env.ToString() + idx;
@@ -23,7 +24,7 @@ namespace Game.Game
         public static byte Amount(EnvTypes env)
         {
             byte amount = 0;
-            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
                 if (_envs[Key(env, idx)]) ++amount;
             }
@@ -34,10 +35,11 @@ namespace Game.Game
         static WhereEnvC()
         {
             _envs = new Dictionary<string, bool>();
+            _cellValues = new CellValues();
 
             for (var env = EnvTypes.First; env < EnvTypes.End; env++)
             {
-                for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+                for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
                 {
                     _envs.Add(Key(env, idx), default);
                 }

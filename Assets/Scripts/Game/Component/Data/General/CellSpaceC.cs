@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Game.Game.CellValues;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -8,6 +7,10 @@ namespace Game.Game
     public readonly struct CellSpaceC
     {
         readonly static Dictionary<DirectTypes, sbyte[]> _directs;
+
+        const byte XY_FOR_ARRAY = 2;
+        const byte X = 0;
+        const byte Y = 0;
 
         public static List<byte[]> XyAround(byte[] xy_start)
         {
@@ -77,7 +80,7 @@ namespace Game.Game
         static CellSpaceC()
         {
             _directs = new Dictionary<DirectTypes, sbyte[]>();
-    
+
             for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
             {
                 var xyDirect = new sbyte[XY_FOR_ARRAY];
@@ -133,6 +136,6 @@ namespace Game.Game
 
                 _directs.Add(dir, xyDirect);
             }
-        } 
+        }
     }
 }

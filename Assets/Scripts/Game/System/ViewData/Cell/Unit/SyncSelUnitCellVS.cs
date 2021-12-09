@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -8,11 +9,11 @@ namespace Game.Game
         {
             if (CellClickC.Is(CellClickTypes.SetUnit))
             {
-                ref var unit_cur = ref EntityPool.Unit<UnitC>(CurIdx.Idx);
-                ref var visUnit_cur = ref EntityPool.Unit<VisibleC>(CurIdx.Idx);
+                ref var unit_cur = ref Unit<UnitC>(CurIdx<IdxC>().Idx);
+                ref var visUnit_cur = ref Unit<VisibleC>(CurIdx<IdxC>().Idx);
 
-                ref var mainUnit_cur = ref EntityVPool.UnitCellVC<UnitMainVC>(CurIdx.Idx);
-                ref var mainUnit_pre = ref EntityVPool.UnitCellVC<UnitMainVC>(IdxPreVis.Idx);
+                ref var mainUnit_cur = ref EntityVPool.UnitCellVC<UnitMainVC>(CurIdx<IdxC>().Idx);
+                ref var mainUnit_pre = ref EntityVPool.UnitCellVC<UnitMainVC>(PreVisIdx<IdxC>().Idx);
 
 
                 if (unit_cur.Have)

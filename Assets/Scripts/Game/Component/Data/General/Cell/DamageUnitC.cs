@@ -5,6 +5,7 @@ namespace Game.Game
     public struct DamageUnitC : IUnitCell
     {
         readonly byte _idx;
+        readonly DamageUnitValues _values;
 
         UnitTypes Unit
         {
@@ -29,12 +30,12 @@ namespace Game.Game
             var upgPerc = UnitUpgC.UpgDamagePercent(Unit, Level, Owner);
 
 
-            var standDamage = UnitValues.StandDamage(Unit, Level);
+            var standDamage = _values.StandDamage(Unit, Level);
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * UnitValues.PercentTW(tw);
-            if (attack == AttackTypes.Unique) powerDamege += standDamage * UnitValues.UNIQUE_PERCENT_DAMAGE;
+            powerDamege += standDamage * _values.PercentTW(tw);
+            if (attack == AttackTypes.Unique) powerDamege += standDamage * DamageUnitValues.UNIQUE_PERCENT_DAMAGE;
 
             if (haveEff) powerDamege += standDamage * 0.2f;
 
@@ -54,18 +55,22 @@ namespace Game.Game
 
                 float powerDamege = DamageAttack(AttackTypes.Simple);
 
-                var standDamage = UnitValues.StandDamage(Unit, Level);
+                var standDamage = _values.StandDamage(Unit, Level);
 
-                powerDamege += standDamage * UnitValues.Percent(condition);
-                powerDamege += standDamage * UnitValues.ProtectionPercent(build);
+                powerDamege += standDamage * _values.ProtRelaxPercent(condition);
+                powerDamege += standDamage * _values.ProtectionPercent(build);
                 foreach (var item in envrs)
                 {
-                    if (item.Value) powerDamege += standDamage * UnitValues.ProtectionPercent(item.Key);
+                    if (item.Value) powerDamege += standDamage * _values.ProtectionPercent(item.Key);
                 }
                 return (int)powerDamege;
             }
         }
 
-        internal DamageUnitC(in byte idx) => _idx = idx;
+        internal DamageUnitC(in byte idx, in DamageUnitValues values)
+        {
+            _idx = idx;
+            _values = values;
+        }
     }
 }

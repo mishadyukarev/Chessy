@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            DirWindUIC.SetEulerRot(WhoseMoveC.CurPlayerI, WindC.CurDirWind);
+            EntityUIPool.DirectWindUp<DirWindUIC>().SetEulerRot(WhoseMoveC.CurPlayerI, WindC.CurDirWind);
         }
     }
 }

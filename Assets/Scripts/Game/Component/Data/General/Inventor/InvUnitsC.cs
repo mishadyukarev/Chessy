@@ -5,7 +5,8 @@ namespace Game.Game
 {
     public struct InvUnitsC
     {
-        private static Dictionary<string, int> _units;
+        static Dictionary<string, int> _units;
+        static EconomyValues _values;
 
         private static string Key(UnitTypes unit, LevelTypes level, PlayerTypes player) => unit.ToString() + level + player;
         private static bool ContainsKey(string key) => _units.ContainsKey(key);
@@ -48,6 +49,8 @@ namespace Game.Game
                     }
                 }
             }
+
+            _values = new EconomyValues();
         }
         public InvUnitsC(bool @new) : this()
         {
@@ -59,7 +62,7 @@ namespace Game.Game
                     {
                         for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                         {
-                            _units[Key(unit, level, player)] = EconomyValues.StartAmountUnits(unit, level);
+                            _units[Key(unit, level, player)] = _values.StartAmountUnits(unit, level);
                         }
                     }
                 }

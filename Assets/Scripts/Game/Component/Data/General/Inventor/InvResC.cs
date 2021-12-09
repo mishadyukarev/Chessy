@@ -6,7 +6,8 @@ namespace Game.Game
 {
     public readonly struct InvResC
     {
-        static Dictionary<string, int> _resources;
+        readonly static Dictionary<string, int> _resources;
+        readonly static EconomyValues _values;
 
         static string Key(ResTypes res, PlayerTypes player) => res.ToString() + player;
         static bool ContainsKey(string key) => _resources.ContainsKey(key);
@@ -31,6 +32,7 @@ namespace Game.Game
         }
         public static bool Have(ResTypes res, PlayerTypes player) => AmountRes(res, player) > 0;
         public static bool IsMinusRes(ResTypes res, PlayerTypes player) => AmountRes(res, player) < 0;
+        public static int StandartAdding(ResTypes res) => _values.Adding(res);
 
 
 
@@ -45,6 +47,8 @@ namespace Game.Game
                     _resources.Add(Key(res, player), default);
                 }
             }
+
+            _values = new EconomyValues();
         }
         public InvResC(bool isStartGame)
         {
@@ -54,7 +58,7 @@ namespace Game.Game
                 {
                     for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                     {
-                        _resources[Key(res, player)] = EconomyValues.AmountResources(res);
+                        _resources[Key(res, player)] = _values.AmountResources(res);
                     }
                 }
             }
@@ -83,6 +87,13 @@ namespace Game.Game
 
             _resources[key] += adding;
         }
+        public static void AddStandartValues()
+        {
+            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            {
+                Add(res, PlayerTypes.First, _values.Adding(res));
+            }
+        }
         public static void Take(ResTypes res, PlayerTypes player, int taking = 1)
         {
             var key = Key(res, player);
@@ -101,8 +112,8 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                var difAmountRes = AmountRes(res, player) - AmountResForBuild(build, res);
-                needRes.Add(res, AmountResForBuild(build, res));
+                var difAmountRes = AmountRes(res, player) - _values.AmountResForBuild(build, res);
+                needRes.Add(res, _values.AmountResForBuild(build, res));
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
             }
@@ -112,7 +123,7 @@ namespace Game.Game
         public static void BuyBuild(PlayerTypes player, BuildTypes build)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(resType, player, AmountRes(resType, player) - AmountResForBuild(build, resType));
+                Set(resType, player, AmountRes(resType, player) - _values.AmountResForBuild(build, resType));
         }
 
         public static bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType, out Dictionary<ResTypes, int> needRes)
@@ -122,7 +133,7 @@ namespace Game.Game
 
             for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForBuy(unitType, resType);
+                var difAmountRes = AmountRes(resType, playerType) - _values.AmountResForBuy(unitType, resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -133,7 +144,7 @@ namespace Game.Game
         public static void BuyCreateUnit(PlayerTypes playerType, UnitTypes unitType)
         {
             for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(resType, playerType,  AmountRes(resType, playerType) - EconomyValues.AmountResForBuy(unitType, resType));
+                Set(resType, playerType,  AmountRes(resType, playerType) - _values.AmountResForBuy(unitType, resType));
         }
 
         public static bool CanMeltOre(PlayerTypes player, out Dictionary<ResTypes, int> needRes)
@@ -143,9 +154,9 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                needRes[res] = AmountResForMelting(res);
+                needRes[res] = _values.AmountResForMelting(res);
 
-                if (AmountRes(res, player) - AmountResForMelting(res) < 0) can = false;
+                if (AmountRes(res, player) - _values.AmountResForMelting(res) < 0) can = false;
             }     
 
             return can;
@@ -153,7 +164,7 @@ namespace Game.Game
         public static void BuyMeltOre(PlayerTypes player)
         {
             for (var res = ResTypes.First; res < ResTypes.End; res++)
-                Set(res, player,  AmountRes(res, player) - AmountResForMelting(res));
+                Set(res, player,  AmountRes(res, player) - _values.AmountResForMelting(res));
 
             Add(ResTypes.Iron, player,  4);
             Add(ResTypes.Gold, player,  1);
@@ -166,7 +177,7 @@ namespace Game.Game
 
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForBuyRes(resType);
+                var difAmountRes = AmountRes(resType, playerType) - _values.AmountResForBuyRes(resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -178,7 +189,7 @@ namespace Game.Game
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                Set(resType, playerType,  AmountRes(resType, playerType) - EconomyValues.AmountResForBuyRes(resType));
+                Set(resType, playerType,  AmountRes(resType, playerType) - _values.AmountResForBuyRes(resType));
             }
 
             var amount = 0;
@@ -206,7 +217,7 @@ namespace Game.Game
 
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType);
+                var difAmountRes = AmountRes(resType, playerType) - _values.AmountResForUpgradeUnit(unitType, resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -217,7 +228,7 @@ namespace Game.Game
         public static void BuyUpgradeUnit(PlayerTypes playerType, UnitTypes unitType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(resType, playerType, AmountRes(resType, playerType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType));
+                Set(resType, playerType, AmountRes(resType, playerType) - _values.AmountResForUpgradeUnit(unitType, resType));
         }
 
 
@@ -229,7 +240,7 @@ namespace Game.Game
 
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType);
+                var difAmountRes = AmountRes(resType, playerType) - _values.AmountResForBuyTW(toolWeaponType, levelTWType, resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -240,7 +251,7 @@ namespace Game.Game
         public static void BuyTW(PlayerTypes playerType, TWTypes toolWeaponType, LevelTypes levelTWType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(resType, playerType,  AmountRes(resType, playerType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType));
+                Set(resType, playerType,  AmountRes(resType, playerType) - _values.AmountResForBuyTW(toolWeaponType, levelTWType, resType));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -8,13 +9,13 @@ namespace Game.Game
 
         public void Run()
         {
-            ref var unitD_sel = ref _unitF.Get1(SelIdx.Idx);
-            ref var unitV_sel = ref _unitF.Get3(SelIdx.Idx);
+            ref var unitD_sel = ref _unitF.Get1(SelIdx<IdxC>().Idx);
+            ref var unitV_sel = ref _unitF.Get3(SelIdx<IdxC>().Idx);
 
             var activeParent = false;
 
 
-            if (SelIdx.IsSelCell)
+            if (SelIdx<SelIdxC>().IsSelCell)
             {
                 if (unitD_sel.Have)
                 {

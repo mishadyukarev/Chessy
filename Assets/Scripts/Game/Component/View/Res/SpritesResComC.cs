@@ -7,7 +7,7 @@ namespace Game.Game
 {
     public struct SpritesResC
     {
-        private static Dictionary<SpriteTypes, Sprite> _gameSprites;
+        static Dictionary<SpriteTypes, Sprite> _gameSprites;
 
 
         public SpritesResC(bool needUpload)

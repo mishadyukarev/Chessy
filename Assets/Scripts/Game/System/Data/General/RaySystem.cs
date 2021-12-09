@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -37,14 +38,14 @@ namespace Game.Game
 
             if (raycast)
             {
-                foreach (byte idx_0 in EntityPool.Idxs)
+                foreach (byte idx_0 in Idxs)
                 {
-                    int one = EntityPool.Cell<CellC>(idx_0).InstanceID;
+                    int one = Cell<CellC>(idx_0).InstanceID;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        CurIdx.Idx = idx_0;
+                        CurIdx<IdxC>().Idx = idx_0;
                         RayCastC.Set(RaycastTypes.Cell);
                         return;
                     }

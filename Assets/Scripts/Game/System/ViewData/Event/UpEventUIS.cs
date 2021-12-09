@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public void Init()
         {
-            AlphaUpUIC.AddList(OpenShop);
+            EntityUIPool.AlphaUp<ButtonC>().AddList(OpenShop);
         }
 
         private void OpenShop()

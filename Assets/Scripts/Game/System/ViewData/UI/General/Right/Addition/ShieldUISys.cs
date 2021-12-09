@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -6,8 +7,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var tw_sel = ref EntityPool.UnitTW<ToolWeaponC>(SelIdx.Idx);
-            ref var twLevel_sel = ref EntityPool.UnitTW<LevelC>(SelIdx.Idx);
+            ref var tw_sel = ref UnitTW<ToolWeaponC>(SelIdx<IdxC>().Idx);
+            ref var twLevel_sel = ref UnitTW<LevelC>(SelIdx<IdxC>().Idx);
 
             ExtraTWZoneUIC.DisableAll();
 

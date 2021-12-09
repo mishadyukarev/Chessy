@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -10,9 +11,9 @@ namespace Game.Game
 
         public void Run()
         {
-            ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
-            ref var ownUnit_sel = ref _unitF.Get2(SelIdx.Idx);
-            ref var cond_sel = ref _effUnitF.Get1(SelIdx.Idx);
+            ref var unit_sel = ref _unitF.Get1(SelIdx<IdxC>().Idx);
+            ref var ownUnit_sel = ref _unitF.Get2(SelIdx<IdxC>().Idx);
+            ref var cond_sel = ref _effUnitF.Get1(SelIdx<IdxC>().Idx);
 
 
             var isEnableButt = false;

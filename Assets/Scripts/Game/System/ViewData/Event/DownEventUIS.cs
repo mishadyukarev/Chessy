@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -27,7 +28,7 @@ namespace Game.Game
 
         private void ExecuteScout()
         {
-            SelIdx.Reset();
+            SelIdx<IdxC>().Reset();
 
             TryOnHint(VideoClipTypes.CreatingScout);
 
@@ -49,7 +50,7 @@ namespace Game.Game
         }
         private void Hero()
         {
-            SelIdx.Reset();
+            SelIdx<IdxC>().Reset();
             TryOnHint(VideoClipTypes.CreatingHero);
 
             if (WhoseMoveC.IsMyMove)
@@ -93,7 +94,7 @@ namespace Game.Game
         private void GetUnit(UnitTypes unitType)
         {
             CellClickC.Set(CellClickTypes.Firstlick);
-            SelIdx.Reset();
+            SelIdx<IdxC>().Reset();
 
             GetterUnitsC.ResetCurTimer(unitType);
 
@@ -119,7 +120,7 @@ namespace Game.Game
 
         private void ToggleToolWeapon(TWTypes tWType)
         {
-            SelIdx.Reset();
+            SelIdx<IdxC>().Reset();
 
             if (WhoseMoveC.IsMyMove)
             {
@@ -171,7 +172,7 @@ namespace Game.Game
 
         private void ToggleUpgradeUnit()
         {
-            SelIdx.Reset();
+            SelIdx<IdxC>().Reset();
 
             if (WhoseMoveC.IsMyMove)
             {

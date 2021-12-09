@@ -1,23 +1,15 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using Game.Common;
 
 namespace Game.Game
 {
     public struct EndGameUIC
     {
-        private static TextMeshProUGUI _text;
+        public void SetActiveZone(bool isActive) => EntityUIPool.EndGameCenter<TextUIC>().Parent_G.SetActive(isActive);
 
-        public static string Text
+        public void SetText(in bool imWinner)
         {
-            get => _text.text;
-            set => _text.text = value;
+            if (imWinner) EntityUIPool.EndGameCenter<TextUIC>().Text = LanguageC.GetText(GameLanguageTypes.YouAreWinner);
+            else EntityUIPool.EndGameCenter<TextUIC>().Text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
         }
-
-        public EndGameUIC(GameObject centerZone_GO)
-        {
-            _text = centerZone_GO.transform.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>();
-        }
-
-        public static void SetActiveZone(bool isActive) => _text.transform.parent.gameObject.SetActive(isActive);
     }
 }

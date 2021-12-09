@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -9,13 +10,13 @@ namespace Game.Game
 
         public void Run()
         {
-            if (SelIdx.IsSelCell)
+            if (SelIdx<SelIdxC>().IsSelCell)
             {
-                ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelIdx.Idx);
-                ref var selOwnUnitCom = ref _cellUnitFilter.Get2(SelIdx.Idx);
+                ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelIdx<IdxC>().Idx);
+                ref var selOwnUnitCom = ref _cellUnitFilter.Get2(SelIdx<IdxC>().Idx);
 
-                ref var selBuildDatCom = ref EntityPool.Build<BuildC>(SelIdx.Idx);
-                ref var ownBuildC_sel = ref EntityPool.Build<OwnerC>(SelIdx.Idx);
+                ref var selBuildDatCom = ref Build<BuildC>(SelIdx<IdxC>().Idx);
+                ref var ownBuildC_sel = ref Build<OwnerC>(SelIdx<IdxC>().Idx);
 
                 var needActiveThirdButt = false;
 

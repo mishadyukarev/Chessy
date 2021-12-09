@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -6,11 +7,11 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref EntityPool.Build<BuildC>(SelIdx.Idx);
-            ref var own_sel = ref EntityPool.Build<OwnerC>(SelIdx.Idx);
+            ref var unit_sel = ref Build<BuildC>(SelIdx<IdxC>().Idx);
+            ref var own_sel = ref Build<OwnerC>(SelIdx<IdxC>().Idx);
 
 
-            if (SelIdx.IsSelCell && unit_sel.Is(BuildTypes.City))
+            if (SelIdx<SelIdxC>().IsSelCell && unit_sel.Is(BuildTypes.City))
             {
                 if (own_sel.Is(WhoseMoveC.CurPlayerI))
                 {

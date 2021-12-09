@@ -5,7 +5,7 @@ namespace Game.Common
 {
     public readonly struct ToggleZoneVC
     {
-        private static GameObject _toggleZoneGO;
+        static GameObject _toggleZoneGO;
 
         public ToggleZoneVC(GameObject toggleZoneGO) => _toggleZoneGO = toggleZoneGO;
 

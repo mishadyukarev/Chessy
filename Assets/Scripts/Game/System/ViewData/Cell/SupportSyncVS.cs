@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -27,7 +28,7 @@ namespace Game.Game
 
                 supV_0.DisableSR();
 
-                if (SelIdx.Idx == idx_0)
+                if (SelIdx<IdxC>().Is(idx_0))
                 {
                     supV_0.EnableSR(SupVisTypes.Selector);
                 }      
@@ -98,7 +99,7 @@ namespace Game.Game
             {
                 if (SelUniqAbilC.Is(UniqueAbilTypes.FireArcher))
                 {
-                    foreach (var idx_0 in ArsonCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
+                    foreach (var idx_0 in ArsonCellsC.List(WhoseMoveC.CurPlayerI, SelIdx<IdxC>().Idx))
                     {
                         EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
                     }
@@ -128,12 +129,12 @@ namespace Game.Game
                 //    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.Shift);
                 //}
 
-                foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Simple, SelIdx.Idx))
+                foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Simple, SelIdx<IdxC>().Idx))
                 {
                     EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.SimpleAttack);
                 }
 
-                foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelIdx.Idx))
+                foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelIdx<IdxC>().Idx))
                 {
                     EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.UniqueAttack);
                 }

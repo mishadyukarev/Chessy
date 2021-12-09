@@ -5,9 +5,9 @@ namespace Game.Game
 {
     public struct ArsonCellsC
     {
-        private static Dictionary<string, List<byte>> _cells;
+        static Dictionary<string, List<byte>> _cells;
 
-        private static string Key(PlayerTypes player, byte idx) => player.ToString() + idx;
+        static string Key(PlayerTypes player, byte idx) => player.ToString() + idx;
 
         public static Dictionary<string, List<byte>> Cells
         {
@@ -29,7 +29,7 @@ namespace Game.Game
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+                for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
                 {
                     _cells.Add(Key(player, idx), new List<byte>());
                 }

@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -6,13 +7,13 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var build_sel = ref EntityPool.Build<BuildC>(SelIdx.Idx);
+            ref var build_sel = ref Build<BuildC>(SelIdx<IdxC>().Idx);
 
-            ref var env_sel = ref EntityPool.Environment<EnvC>(SelIdx.Idx);
-            ref var envRes_sel = ref EntityPool.Environment<EnvResC>(SelIdx.Idx);
+            ref var env_sel = ref Environment<EnvC>(SelIdx<IdxC>().Idx);
+            ref var envRes_sel = ref Environment<EnvResC>(SelIdx<IdxC>().Idx);
 
 
-            if (SelIdx.IsSelCell && !build_sel.Is(BuildTypes.City))
+            if (SelIdx<SelIdxC>().IsSelCell && !build_sel.Is(BuildTypes.City))
             {
                 EnvirUIC.SetActiveParent(true);
             }

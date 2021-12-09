@@ -1,25 +1,27 @@
 ﻿using Leopotam.Ecs;
+using UnityEngine;
 
 namespace Game.Game
 {
     public sealed class SpawnEntities : IEcsInitSystem
     {
-        EcsWorld _curGameW;
+        EcsWorld _curGameW = default;
 
         public void Init()
         {
+            new EntityUIPool(_curGameW);
             new EntityVPool(_curGameW);
 
-            var isActiveCells = new bool[CellValues.AMOUNT_ALL_CELLS];
-            var idCells = new int[CellValues.AMOUNT_ALL_CELLS];
+            var isActiveCells = new bool[CellValues.ALL_CELLS_AMOUNT];
+            var idCells = new int[CellValues.ALL_CELLS_AMOUNT];
 
-            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
                 isActiveCells[idx] = EntityVPool.Cell<CellVC>(idx).IsActiveSelf;
                 idCells[idx] = EntityVPool.Cell<CellVC>(idx).InstanceID;
             }
 
-            new EntityPool(_curGameW, isActiveCells, idCells);
+            new EntityPool(_curGameW, isActiveCells, idCells, BackgroundVC.Name);
         }
     }
 }

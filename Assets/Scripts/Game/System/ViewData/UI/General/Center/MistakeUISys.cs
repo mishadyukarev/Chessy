@@ -28,7 +28,7 @@ namespace Game.Game
 
                         for (var res = ResTypes.First; res < ResTypes.End; res++)
                         {
-                            EconomyUIC.SetMainColor(res, Color.white);
+                            EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.white;
                         }
                     }
 
@@ -38,13 +38,13 @@ namespace Game.Game
                         {
                             if (MistakeC.NeedRes(res))
                             {
-                                EconomyUIC.SetMainColor(res, Color.red);
+                                EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.red;
                                 MistakeUIC.SetActiveRes(res, true);
                                 MistakeUIC.SetText(res, ">= " + (-MistakeC.NeedResAmount(res)).ToString());
                             }
                             else
                             {
-                                EconomyUIC.SetMainColor(res, Color.white);
+                                EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.white;
                                 MistakeUIC.SetActiveRes(res, false);
                             }
                         }
@@ -102,7 +102,7 @@ namespace Game.Game
             }
         }
 
-        private void ResetAll()
+        void ResetAll()
         {
             MistakeUIC.ActiveBackgroud(false);
 
@@ -116,7 +116,7 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                EconomyUIC.SetMainColor(res, Color.white);
+                EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.white;
                 MistakeUIC.SetActiveRes(res, false);
             }
         }

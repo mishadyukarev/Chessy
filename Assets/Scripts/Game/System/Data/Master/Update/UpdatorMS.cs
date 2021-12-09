@@ -19,10 +19,8 @@ namespace Game.Game
 
         public void Run()
         {
-            for (var res = ResTypes.First; res < ResTypes.End; res++)
-            {
-                InvResC.Add(res, PlayerTypes.First, EconomyValues.Adding(res));
-            }
+            InvResC.AddStandartValues();
+            
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
@@ -30,9 +28,9 @@ namespace Game.Game
                 ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, player);
             }
 
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var cell_0 = ref EntityPool.Cell<CellC>(idx_0);
+                ref var cell_0 = ref Cell<CellC>(idx_0);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var levUnit_0 = ref _unitF.Get2(idx_0);

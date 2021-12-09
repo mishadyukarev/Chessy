@@ -6,6 +6,7 @@ namespace Game.Game
     public struct StepUnitWC : IUnitCell
     {
         readonly byte _idx;
+        readonly StepUnitValues _values;
 
         const int MIN = 1;
 
@@ -29,23 +30,23 @@ namespace Game.Game
             get => Unit<StepC>(_idx).Steps;
             set => Unit<StepC>(_idx).Steps = value;
         }
-        EnvC EnvC => Environment<EnvC>(_idx);
-        TrailC TrailC => Trail<TrailC>(_idx);
 
-        public int MaxAmountSteps => UnitValues.MaxAmountSteps(Unit, Unit<EffectsC>(_idx).Have(UnitStatTypes.Steps), UnitUpgC.Steps(Unit, Level, Owner));
+        public int MaxAmountSteps => _values.MaxAmountSteps(Unit, Unit<EffectsC>(_idx).Have(UnitStatTypes.Steps), UnitUpgC.Steps(Unit, Level, Owner));
         public bool HaveMaxSteps => Steps >= MaxAmountSteps;
         public int StepsForDoing(in byte idx_to)
         {
+            var idx_from = _idx;
+
             var needSteps = 1;
 
-            if (EnvC.Have(EnvTypes.AdultForest))
+            if (Environment<EnvC>(idx_to).Have(EnvTypes.AdultForest))
             {
-                needSteps += UnitValues.NeedAmountSteps(EnvTypes.AdultForest);
-                if (TrailC.Have(CellSpaceC.GetDirect(_idx, idx_to).Invert())) needSteps -= 1;
+                needSteps += _values.NeedAmountSteps(EnvTypes.AdultForest);
+                if (Trail<TrailC>(idx_to).Have(CellSpaceC.GetDirect(idx_from, idx_to).Invert())) needSteps -= 1;
             }
 
-            if (EnvC.Have(EnvTypes.Hill))
-                needSteps += UnitValues.NeedAmountSteps(EnvTypes.Hill);
+            if (Environment<EnvC>(idx_to).Have(EnvTypes.Hill))
+                needSteps += _values.NeedAmountSteps(EnvTypes.Hill);
 
             return needSteps;
         }
@@ -70,16 +71,18 @@ namespace Game.Game
         }
         public int NeedSteps(BuildTypes build)
         {
-            return 1;
+            return MIN;
         }
-        public int Min => 1;
 
         public bool Have(UniqueAbilTypes uniq) => Steps >= NeedSteps(uniq);
         public bool Have(BuildTypes build) => Steps >= NeedSteps(build);
-        public bool HaveMin => Steps >= Min;
+        public bool HaveMin => Steps >= MIN;
 
-        internal StepUnitWC(in byte idx) => _idx = idx;
-
+        internal StepUnitWC(in byte idx, in StepUnitValues stepValues)
+        {
+            _idx = idx;
+            _values = stepValues;
+        }
 
         public void SetMaxSteps() => Unit<StepC>(_idx).Set(MaxAmountSteps);
         public void Reset() => Unit<StepC>(_idx).Reset();
@@ -88,7 +91,7 @@ namespace Game.Game
         public void TakeForBuild() => Unit<StepC>(_idx).Take();
         public void Take(UniqueAbilTypes uniq) => Unit<StepC>(_idx).Take(NeedSteps(uniq));
         public void Take(BuildTypes build) => Unit<StepC>(_idx).Take(NeedSteps(build));
-        public void TakeMin() => Unit<StepC>(_idx).Take(Min);
+        public void TakeMin() => Unit<StepC>(_idx).Take(MIN);
 
         public void Sync(in int steps) => Unit<StepC>(_idx).Steps = steps;
     }

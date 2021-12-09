@@ -11,21 +11,21 @@ namespace Game.Game
         {
             if (MotionsC.IsActivated)
             {
-                MotionsUIC.Text = MotionsC.AmountMotions.ToString();
-                MotionsUIC.SetActiveParent(true);
+                EntityUIPool.MotionCenter<MotionsUIC>().Text = MotionsC.AmountMotions.ToString();
+                EntityUIPool.MotionCenter<MotionsUIC>().SetActiveParent(true);
 
                 _timer += Time.deltaTime;
 
                 if (_timer >= 1)
                 {
-                    MotionsUIC.SetActiveParent(false);
+                    EntityUIPool.MotionCenter<MotionsUIC>().SetActiveParent(false);
                     MotionsC.IsActivated = false;
                     _timer = 0;
                 }
             }
             else
             {
-                MotionsUIC.SetActiveParent(false);
+                EntityUIPool.MotionCenter<MotionsUIC>().SetActiveParent(false);
             }
         }
     }

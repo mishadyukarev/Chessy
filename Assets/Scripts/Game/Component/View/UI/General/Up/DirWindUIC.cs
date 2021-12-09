@@ -4,33 +4,28 @@ using UnityEngine.UI;
 
 namespace Game.Game
 {
-    public struct DirWindUIC
+    public readonly struct DirWindUIC
     {
-        private static Image _image;
+        Image Image => EntityUIPool.DirectWindUp<ImageUIC>().Image;
 
-        public DirWindUIC(Transform upZone_Trans)
-        {
-            _image = upZone_Trans.Find("WindZone").Find("Direct_Image").GetComponent<Image>();
-        }
-
-        public static void SetEulerRot(PlayerTypes playerType, DirectTypes directType)
+        public void SetEulerRot(PlayerTypes playerType, DirectTypes directType)
         {
             switch (directType)
             {
                 case DirectTypes.None: throw new Exception();
-                case DirectTypes.Right: _image.rectTransform.eulerAngles = new Vector3(); break;
-                case DirectTypes.Left: _image.rectTransform.eulerAngles = new Vector3(0, 0, 180); break;
-                case DirectTypes.Up: _image.rectTransform.eulerAngles = new Vector3(0, 0, 90); break;
-                case DirectTypes.Down: _image.rectTransform.eulerAngles = new Vector3(0, 0, 270); break;
-                case DirectTypes.UpRight: _image.rectTransform.eulerAngles = new Vector3(0, 0, 45); break;
-                case DirectTypes.UpLeft: _image.rectTransform.eulerAngles = new Vector3(0, 0, 135); break;
-                case DirectTypes.DownRight: _image.rectTransform.eulerAngles = new Vector3(0, 0, 315); break;
-                case DirectTypes.DownLeft: _image.rectTransform.eulerAngles = new Vector3(0, 0, 225); break;
+                case DirectTypes.Right: Image.rectTransform.eulerAngles = new Vector3(); break;
+                case DirectTypes.Left: Image.rectTransform.eulerAngles = new Vector3(0, 0, 180); break;
+                case DirectTypes.Up: Image.rectTransform.eulerAngles = new Vector3(0, 0, 90); break;
+                case DirectTypes.Down: Image.rectTransform.eulerAngles = new Vector3(0, 0, 270); break;
+                case DirectTypes.UpRight: Image.rectTransform.eulerAngles = new Vector3(0, 0, 45); break;
+                case DirectTypes.UpLeft: Image.rectTransform.eulerAngles = new Vector3(0, 0, 135); break;
+                case DirectTypes.DownRight: Image.rectTransform.eulerAngles = new Vector3(0, 0, 315); break;
+                case DirectTypes.DownLeft: Image.rectTransform.eulerAngles = new Vector3(0, 0, 225); break;
                 default: throw new Exception();
             }
 
             if (playerType == PlayerTypes.Second)
-                _image.rectTransform.eulerAngles += new Vector3(0, 0, 180);
+                Image.rectTransform.eulerAngles += new Vector3(0, 0, 180);
         }
     }
 }

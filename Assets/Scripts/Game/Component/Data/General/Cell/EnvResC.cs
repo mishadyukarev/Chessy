@@ -5,7 +5,8 @@ namespace Game.Game
 {
     public struct EnvResC : IEnvCell
     {
-        Dictionary<EnvTypes, int> _resources;
+        readonly Dictionary<EnvTypes, int> _resources;
+        readonly EnvironmentValues _values;
 
         public Dictionary<EnvTypes, int> Resources
         {
@@ -28,14 +29,14 @@ namespace Game.Game
         public byte Max(in EnvTypes env)
         {
             if (!_resources.ContainsKey(env)) throw new Exception();
-            return EnvValuesC.MaxAmount(env);
+            return _values.MaxAmount(env);
         }
         public bool Have(in EnvTypes env) => Amount(env) > 0;
         public bool HaveMax(in EnvTypes env) => Amount(env) >= Max(env);
 
 
 
-        public EnvResC(bool b)
+        internal EnvResC(in EnvironmentValues values)
         {
             _resources = new Dictionary<EnvTypes, int>();
 
@@ -43,6 +44,8 @@ namespace Game.Game
             {
                 _resources.Add(env, default);
             }
+
+            _values = values;
         }
 
 
@@ -55,11 +58,11 @@ namespace Game.Game
 
             if (env == EnvTypes.Fertilizer || env == EnvTypes.AdultForest)
             {
-                randAmountRes = (byte)UnityEngine.Random.Range(EnvValuesC.MaxAmount(env) / forMin, EnvValuesC.MaxAmount(env) + 1);
+                randAmountRes = (byte)UnityEngine.Random.Range(_values.MaxAmount(env) / forMin, _values.MaxAmount(env) + 1);
             }
             else if (env == EnvTypes.Hill)
             {
-                randAmountRes = (byte)(EnvValuesC.MaxAmount(env) / forMin);
+                randAmountRes = (byte)(_values.MaxAmount(env) / forMin);
             }
 
             _resources[env] = randAmountRes;
@@ -79,7 +82,7 @@ namespace Game.Game
         {
             if (!_resources.ContainsKey(env)) throw new Exception();
 
-            _resources[env] = EnvValuesC.MaxAmount(env);
+            _resources[env] = _values.MaxAmount(env);
         }
         public void Add(in EnvTypes env, in int adding = 1)
         {

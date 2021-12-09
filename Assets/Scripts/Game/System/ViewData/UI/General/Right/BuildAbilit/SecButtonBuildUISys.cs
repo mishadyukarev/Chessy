@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -10,13 +11,13 @@ namespace Game.Game
         {
             var needActiveButton = false;
 
-            if (SelIdx.IsSelCell)
+            if (SelIdx<SelIdxC>().IsSelCell)
             {
-                ref var selUnitDatCom = ref _unitF.Get1(SelIdx.Idx);
+                ref var selUnitDatCom = ref _unitF.Get1(SelIdx<IdxC>().Idx);
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var sellOnUnitCom = ref _unitF.Get2(SelIdx.Idx);
+                    ref var sellOnUnitCom = ref _unitF.Get2(SelIdx<IdxC>().Idx);
 
                     if (sellOnUnitCom.Is(WhoseMoveC.CurPlayerI))
                     {

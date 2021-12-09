@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Game.Game.CellValues;
 
 namespace Game.Game
 {
     public static class CellBaseOperat
     {
+        const byte XY_FOR_ARRAY = 2;
+        const byte X = 0;
+        const byte Y = 1;
+
         public static bool Compare(this byte[] xyLeft, in byte[] xyRight)
         {
             if (xyLeft[X] == xyRight[X]

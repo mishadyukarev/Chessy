@@ -9,7 +9,9 @@ namespace Game.Game
         public void Init()
         {
             ReadyUIC.AddListenerToReadyButton(Ready);
-            LeaveUIC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
+
+
+            EntityUIPool.LeaveUp<ButtonC>().AddList(delegate { PhotonNetwork.LeaveRoom(); });
             FriendZoneUIC.AddListenerReady(FriendReady);
             HintViewUIC.AddListHint_But(Hint);
 

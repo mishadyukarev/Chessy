@@ -8,23 +8,31 @@ namespace Game.Game
 {
     public readonly struct EntityPool
     {
-        readonly static Dictionary<CellTypes, EcsEntity[]> _cells;
+        readonly static Dictionary<CellEntTypes, EcsEntity[]> _cells;
         readonly static HashSet<byte> _idxs;
 
-        public static ref T Cell<T>(in byte idx) where T : struct, ICell => ref _cells[CellTypes.Cell][idx].Get<T>();
-        public static ref T Unit<T>(in byte idx) where T : struct, IUnitCell => ref _cells[CellTypes.Unit][idx].Get<T>();
-        public static ref T UnitTW<T>(in byte idx) where T : struct, ITWCellE => ref _cells[CellTypes.Unit_ToolWeapon][idx].Get<T>();
+        readonly static Dictionary<IdxTypes, EcsEntity> _curSelOtherIdxs;
 
-        public static ref T Build<T>(in byte idx) where T : struct, IBuildCell => ref _cells[CellTypes.Build][idx].Get<T>();
-        public static ref T Environment<T>(in byte idx) where T : struct, IEnvCell => ref _cells[CellTypes.Env][idx].Get<T>();
-        public static ref T Trail<T>(in byte idx) where T : struct, ITrailCell => ref _cells[CellTypes.Trail][idx].Get<T>();
-        public static ref T Fire<T>(in byte idx) where T : struct, IFireCell => ref _cells[CellTypes.Fire][idx].Get<T>();
-        public static ref T Cloud<T>(in byte idx) where T : struct, ICloudCell => ref _cells[CellTypes.Cloud][idx].Get<T>();
-        public static ref T River<T>(in byte idx) where T : struct, IRiverCell => ref _cells[CellTypes.River][idx].Get<T>();
+        public static ref T Cell<T>(in byte idx) where T : struct, ICell => ref _cells[CellEntTypes.Cell][idx].Get<T>();
+        public static ref T Unit<T>(in byte idx) where T : struct, IUnitCell => ref _cells[CellEntTypes.Unit][idx].Get<T>();
+        public static ref T UnitTW<T>(in byte idx) where T : struct, ITWCellE => ref _cells[CellEntTypes.Unit_ToolWeapon][idx].Get<T>();
+
+        public static ref T Build<T>(in byte idx) where T : struct, IBuildCell => ref _cells[CellEntTypes.Build][idx].Get<T>();
+        public static ref T Environment<T>(in byte idx) where T : struct, IEnvCell => ref _cells[CellEntTypes.Env][idx].Get<T>();
+        public static ref T Trail<T>(in byte idx) where T : struct, ITrailCell => ref _cells[CellEntTypes.Trail][idx].Get<T>();
+        public static ref T Fire<T>(in byte idx) where T : struct, IFireCell => ref _cells[CellEntTypes.Fire][idx].Get<T>();
+        public static ref T Cloud<T>(in byte idx) where T : struct, ICloudCell => ref _cells[CellEntTypes.Cloud][idx].Get<T>();
+        public static ref T River<T>(in byte idx) where T : struct, IRiverCell => ref _cells[CellEntTypes.River][idx].Get<T>();
+
+
+        public static ref T SelIdx<T>() where T : struct, ISelectedIdx => ref _curSelOtherIdxs[IdxTypes.Selected].Get<T>();
+        public static ref T CurIdx<T>() where T : struct, ICurrectIdx => ref _curSelOtherIdxs[IdxTypes.Current].Get<T>();
+        public static ref T PreVisIdx<T>() where T : struct, IPreVisionIdx => ref _curSelOtherIdxs[IdxTypes.PreVision].Get<T>();
+
 
         public static byte IdxCell(in byte[] xy)
         {
-            for (byte idx = 0; idx < _cells[CellTypes.Cell].Length; idx++)
+            for (byte idx = 0; idx < _cells[CellEntTypes.Cell].Length; idx++)
             {
                 if (Cell<XyC>(idx).Xy.Compare(xy))
                 {
@@ -43,31 +51,89 @@ namespace Game.Game
             }
         }
 
+        
+
 
 
         static EntityPool()
         {
-            _cells = new Dictionary<CellTypes, EcsEntity[]>();
-
-            for (var type = CellTypes.First; type < CellTypes.End; type++)
-            {
-                _cells.Add(type, new EcsEntity[CellValues.AMOUNT_ALL_CELLS]);
-            }
-
+            _cells = new Dictionary<CellEntTypes, EcsEntity[]>();
             _idxs = new HashSet<byte>();
+            _curSelOtherIdxs = new Dictionary<IdxTypes, EcsEntity>();
 
-            for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+            for (var type = CellEntTypes.First; type < CellEntTypes.End; type++)
+            {
+                _cells.Add(type, new EcsEntity[CellValues.ALL_CELLS_AMOUNT]);
+            }
+          
+            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
                 _idxs.Add(idx);
             }
         }
-        public EntityPool(in EcsWorld curGameW, in bool[] isActiveCells, in int[] idCells)
+        public EntityPool(in EcsWorld curGameW, in bool[] isActiveCells, in int[] idCells, in string nameBackground)
         {
+            #region UI
+
+            new WindC(DirectTypes.Right);
+
+
+            BuildsUpgC.Start();
+            UnitUpgC.StartGame();
+            new UnitAvailPickUpgC(true);
+            new BuildAvailPickUpgC(new Dictionary<string, bool>());
+            new WaterAvailPickUpgC(new Dictionary<PlayerTypes, bool>());
+
+
+            new SetUnitCellsC(true);
+            new ArsonCellsC(true);
+            new AttackCellsC(true);
+            new CellsGiveTWC(true);
+
+            new WhereEnvC(true);
+            new WhereUnitsC(true);
+            new WhereBuildsC(true);
+
+            new InvUnitsC(true);
+            new InvResC(true);
+            new InvTWC(true);
+
+            new BackgroundC(nameBackground);
+
+
+            new WhoseMoveC(true);
+            new ScoutHeroCooldownC(true);
+            new CellClickC(default);
+
+
+            new PlyerWinnerC(default);
+            new ReadyC(new Dictionary<PlayerTypes, bool>());
+            new MotionsC(0);
+            new MistakeC(new Dictionary<ResTypes, int>());
+
+            new HintC(new Dictionary<VideoClipTypes, bool>());
+            new PickUpgC(new Dictionary<PlayerTypes, bool>());
+            new GetterUnitsC(new Dictionary<UnitTypes, bool>());
+            new EnvInfoC();
+            new BuildAbilC(true);
+            new FriendC(GameModesCom.IsGameMode(GameModes.WithFriendOff));
+
+
+            if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+            {
+                InvResC.Set(ResTypes.Food, PlayerTypes.Second, 999999);
+            }
+
+            #endregion
+
+
             byte idx = 0;
 
-            for (idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+            var envValues = new EnvironmentValues();
+
+            for (idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
-                _cells[CellTypes.Unit][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.Unit][idx] = curGameW.NewEntity()
                     .Replace(new UnitCellWC(idx))
                     .Replace(new UnitC(UnitTypes.None))
                     .Replace(new LevelC())
@@ -83,19 +149,19 @@ namespace Game.Game
                     .Replace(new CooldownUniqC(true))
                     .Replace(new CornerArcherC())
 
-                    .Replace(new DamageUnitC(idx))
+                    .Replace(new DamageUnitC(idx, new DamageUnitValues()))
 
                     .Replace(new HpUnitWC(idx))
                     .Replace(new HpC())
 
-                    .Replace(new StepUnitWC(idx))
+                    .Replace(new StepUnitWC(idx, new StepUnitValues()))
                     .Replace(new StepC())
 
                     .Replace(new WaterUnitC(idx))
                     .Replace(new WaterC());
 
 
-                _cells[CellTypes.Unit_ToolWeapon][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.Unit_ToolWeapon][idx] = curGameW.NewEntity()
                     .Replace(new UnitTWCellC(idx))
                     .Replace(new ToolWeaponC())
                     .Replace(new LevelC())
@@ -105,48 +171,61 @@ namespace Game.Game
 
 
 
-                _cells[CellTypes.Build][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.Build][idx] = curGameW.NewEntity()
                     .Replace(new BuildCellC(idx))
                     .Replace(new BuildC(BuildTypes.None))
                     .Replace(new OwnerC())
                     .Replace(new VisibleC(true));
 
 
-                _cells[CellTypes.Env][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.Env][idx] = curGameW.NewEntity()
                     .Replace(new EnvCellC(idx))
                     .Replace(new EnvC(new Dictionary<EnvTypes, bool>()))
-                    .Replace(new EnvResC(true));
+                    .Replace(new EnvResC(envValues));
 
 
-                _cells[CellTypes.Trail][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.Trail][idx] = curGameW.NewEntity()
                     .Replace(new TrailC(new Dictionary<DirectTypes, int>()))
                     .Replace(new VisibleC(true));
 
 
-                _cells[CellTypes.Fire][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.Fire][idx] = curGameW.NewEntity()
                     .Replace(new FireC());
 
 
-                _cells[CellTypes.Cloud][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.Cloud][idx] = curGameW.NewEntity()
                     .Replace(new CloudC());
 
 
-                _cells[CellTypes.River][idx] = curGameW.NewEntity()
+                _cells[CellEntTypes.River][idx] = curGameW.NewEntity()
                     .Replace(new RiverC(true));
             }
 
 
             idx = 0;
 
-            for (byte x = 0; x < CellValues.CellCount(XyzTypes.X); x++)
-                for (byte y = 0; y < CellValues.CellCount(XyzTypes.Y); y++)
+            for (byte x = 0; x < CellValues.X_AMOUNT; x++)
+                for (byte y = 0; y < CellValues.Y_AMOUNT; y++)
                 {
-                    _cells[CellTypes.Cell][idx] = curGameW.NewEntity()
+                    _cells[CellEntTypes.Cell][idx] = curGameW.NewEntity()
                         .Replace(new XyC(new byte[] { x, y }))
                         .Replace(new CellC(isActiveCells[idx], idCells[idx]));
 
                     ++idx;
                 }
+
+
+            _curSelOtherIdxs[IdxTypes.Selected] = curGameW.NewEntity()
+                .Replace(new SelIdxC())
+                .Replace(new IdxC(0));
+
+            _curSelOtherIdxs[IdxTypes.Current] = curGameW.NewEntity()
+                .Replace(new CurIdxC())
+                .Replace(new IdxC(0));
+
+            _curSelOtherIdxs[IdxTypes.PreVision] = curGameW.NewEntity()
+                .Replace(new PreVisIdxC())
+                .Replace(new IdxC(0));
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -168,7 +247,7 @@ namespace Game.Game
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= EnvValuesC.StartPercent(EnvTypes.Mountain))
+                            if (random <= envValues.StartPercent(EnvTypes.Mountain))
                             {
                                 envCell_0.SetNew(EnvTypes.Mountain);
                             }
@@ -176,13 +255,13 @@ namespace Game.Game
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvValuesC.StartPercent(EnvTypes.AdultForest))
+                                if (random <= envValues.StartPercent(EnvTypes.AdultForest))
                                 {
                                     envCell_0.SetNew(EnvTypes.AdultForest);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvValuesC.StartPercent(EnvTypes.Hill))
+                                if (random <= envValues.StartPercent(EnvTypes.Hill))
                                 {
                                     envCell_0.SetNew(EnvTypes.Hill);
                                 }
@@ -192,14 +271,14 @@ namespace Game.Game
                         else
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= EnvValuesC.StartPercent(EnvTypes.AdultForest))
+                            if (random <= envValues.StartPercent(EnvTypes.AdultForest))
                             {
                                 envCell_0.SetNew(EnvTypes.AdultForest);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvValuesC.StartPercent(EnvTypes.Fertilizer))
+                                if (random <= envValues.StartPercent(EnvTypes.Fertilizer))
                                 {
                                     envCell_0.SetNew(EnvTypes.Fertilizer);
                                 }
