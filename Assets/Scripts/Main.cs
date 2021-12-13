@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public sealed class Main : MonoBehaviour
+    internal sealed class Main : MonoBehaviour
     {
         [SerializeField] TestModes _testMode = default;
 
@@ -48,7 +48,7 @@ namespace Game
             }
         }
 
-        private void FixedUpdate()
+        void FixedUpdate()
         {
             Common.DataSC.RunUpdate();
 
@@ -71,10 +71,12 @@ namespace Game
             }
         }
 
-        private void ToggleScene(SceneTypes scene)
+        void ToggleScene(SceneTypes newScene)
         {
-            CurSceneC.Set(scene);
-            switch (scene)
+            if (CurSceneC.Is(newScene)) throw new Exception("Need other scene");
+
+            CurSceneC.Set(newScene);
+            switch (newScene)
             {
                 case SceneTypes.None:
                     throw new Exception();

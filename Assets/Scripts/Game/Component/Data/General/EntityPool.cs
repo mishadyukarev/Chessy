@@ -2,6 +2,7 @@
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -51,9 +52,36 @@ namespace Game.Game
             }
         }
 
-        
+        struct WorldEcs
+        {
+            public struct Entity
+            {
+
+            }
+
+            readonly struct ComponentPool<T>
+            {
+                static readonly Dictionary<int, T> _components;
+
+                static ComponentPool()
+                {
+                    _components = new Dictionary<int, T>();
+                }
+
+                public void Set(in int idx, in T component) => _components[idx] = component;
+                public T Get(in int idx) => _components[idx];
+            }
+
+            public Entity NewEntity<T>(params T[] s) where T : struct
+            {
+                Entity ent;
 
 
+
+
+                return ent;
+            }
+        }
 
         static EntityPool()
         {
@@ -73,7 +101,8 @@ namespace Game.Game
         }
         public EntityPool(in EcsWorld curGameW, in bool[] isActiveCells, in int[] idCells, in string nameBackground)
         {
-            #region UI
+            
+
 
             new WindC(DirectTypes.Right);
 
@@ -117,14 +146,6 @@ namespace Game.Game
             new EnvInfoC();
             new BuildAbilC(true);
             new FriendC(GameModesCom.IsGameMode(GameModes.WithFriendOff));
-
-
-            if (GameModesCom.IsGameMode(GameModes.TrainingOff))
-            {
-                InvResC.Set(ResTypes.Food, PlayerTypes.Second, 999999);
-            }
-
-            #endregion
 
 
             byte idx = 0;
@@ -341,6 +362,8 @@ namespace Game.Game
 
             if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {
+                InvResC.Set(ResTypes.Food, PlayerTypes.Second, 999999);
+
                 foreach (byte idx_0 in Idxs)
                 {
                     var curXyCell = Cell<XyC>(idx_0).Xy;
