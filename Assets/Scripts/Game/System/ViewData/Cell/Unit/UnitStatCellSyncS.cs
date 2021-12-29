@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -52,7 +52,7 @@ namespace Game.Game
 
                             float maxHpUnit_0 = HpUnitWC.MAX;
 
-                            float xCordinate = (float)hpUnit_0.HP / maxHpUnit_0;
+                            float xCordinate = (float)hpUnit_0.Hp / maxHpUnit_0;
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
                         
 

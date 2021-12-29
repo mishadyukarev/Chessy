@@ -53,7 +53,7 @@ namespace Game.Game
             else image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
         }
 
-        
+
         public static void AddList_Button(TWTypes giveTakeType, UnityAction unityAction) => _toolAndWeapon_Buts[giveTakeType].onClick.AddListener(unityAction);
 
         public static void SetText(TWTypes giveTakeType, string text) => _toolWeaponAmount_texsMPs[giveTakeType].text = text;

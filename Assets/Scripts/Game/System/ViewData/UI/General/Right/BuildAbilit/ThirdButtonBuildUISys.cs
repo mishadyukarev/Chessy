@@ -1,19 +1,17 @@
 ﻿using Leopotam.Ecs;
-using Game.Common;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class ThirdButtonBuildUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
-
         public void Run()
         {
             if (SelIdx<SelIdxC>().IsSelCell)
             {
-                ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelIdx<IdxC>().Idx);
-                ref var selOwnUnitCom = ref _cellUnitFilter.Get2(SelIdx<IdxC>().Idx);
+                ref var selUnitDatCom = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
+                ref var selOwnUnitCom = ref Unit<OwnerC>(SelIdx<IdxC>().Idx);
 
                 ref var selBuildDatCom = ref Build<BuildC>(SelIdx<IdxC>().Idx);
                 ref var ownBuildC_sel = ref Build<OwnerC>(SelIdx<IdxC>().Idx);

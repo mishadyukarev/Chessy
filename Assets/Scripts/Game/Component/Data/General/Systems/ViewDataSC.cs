@@ -5,7 +5,7 @@ namespace Game.Game
 {
     public struct ViewDataSC
     {
-        private static Dictionary<ViewDataSTypes, Action> _actions;
+        static Dictionary<ViewDataSTypes, Action> _actions;
 
         public ViewDataSC(List<object> list)
         {

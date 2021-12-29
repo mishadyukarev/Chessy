@@ -6,9 +6,9 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx_0 in EntityPool.Idxs)
+            foreach (var idx_0 in EntityCellPool.Idxs)
             {
-                EntityVPool.CloudCellVC<CloudVC>(idx_0).EnableCloud(EntityPool.Cloud<CloudC>(idx_0).Have);
+                EntityCellVPool.CloudCellVC<CloudVC>(idx_0).EnableCloud(EntityCellPool.Cloud<CloudC>(idx_0).Have);
             }
         }
     }

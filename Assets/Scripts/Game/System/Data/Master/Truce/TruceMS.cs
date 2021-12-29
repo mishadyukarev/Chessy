@@ -1,38 +1,34 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
-using Game.Common;
+﻿using Game.Common;
+using Leopotam.Ecs;
 using UnityEngine;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
     public sealed class TruceMS : IEcsRunSystem
     {
-        private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
-        private EcsFilter<FireC> _cellFireFilter = default;
-
-        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-
         public void Run()
         {
             int random;
 
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var levUnit_0 = ref _unitF.Get2(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-                ref var tw_0 = ref EntityPool.UnitTW<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref EntityPool.UnitTW<LevelC>(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var levUnit_0 = ref Unit<LevelC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
 
+                ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
+                ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
-                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
+                ref var build_0 = ref Build<BuildC>(idx_0);
+
                 ref var env_0 = ref Environment<EnvC>(idx_0);
                 ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
-                ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
-                ref var curFireCom = ref _cellFireFilter.Get1(idx_0);
-                ref var trail_0 = ref EntityPool.Trail<TrailC>(idx_0);
+                ref var envRes_0 = ref Environment<EnvC>(idx_0);
+
+                ref var curFireCom = ref Fire<HaveEffectC>(idx_0);
+                ref var trail_0 = ref Trail<TrailC>(idx_0);
 
 
                 curFireCom.Disable();

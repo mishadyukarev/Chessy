@@ -4,8 +4,6 @@
     {
         public int Protection { get; internal set; }
 
-
-
         internal void Take(int taking = 1)
         {
             Protection = taking;

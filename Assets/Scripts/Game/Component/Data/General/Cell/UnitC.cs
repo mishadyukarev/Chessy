@@ -5,6 +5,7 @@ namespace Game.Game
     public struct UnitC : IUnitCell
     {
         public UnitTypes Unit { get; internal set; }
+
         public bool Have => Unit != UnitTypes.None;
         public bool IsMelee
         {
@@ -58,7 +59,7 @@ namespace Game.Game
             }
         }
 
-        public UnitC(in UnitTypes unit) => Unit = unit;
+        internal UnitC(in UnitTypes unit) => Unit = unit;
 
         internal void Reset() => Unit = UnitTypes.None;
     }

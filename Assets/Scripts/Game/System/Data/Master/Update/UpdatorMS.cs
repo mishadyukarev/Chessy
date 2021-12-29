@@ -1,26 +1,16 @@
-﻿using Leopotam.Ecs;
+﻿using Game.Common;
+using Leopotam.Ecs;
 using Photon.Pun;
-using Game.Common;
-using System;
-using UnityEngine;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
     public sealed class UpdatorMS : IEcsRunSystem
     {
-        private EcsFilter<FireC> _cellFireDataFilter = default;
-        private EcsFilter<EnvC, EnvResC> _cellEnvDataFilter = default;
-
-        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, StepC> _statUnitF = default;
-        private EcsFilter<ConditionC, MoveInCondC, EffectsC, StunC> _effUnitF = default;
-        private EcsFilter<CooldownUniqC> _unitUniqF = default;
-
         public void Run()
         {
             InvResC.AddStandartValues();
-            
+
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
@@ -32,28 +22,24 @@ namespace Game.Game
             {
                 ref var cell_0 = ref Cell<CellC>(idx_0);
 
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var levUnit_0 = ref _unitF.Get2(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var levUnit_0 = ref Unit<LevelC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
                 ref var hpUnitCell_0 = ref Unit<HpUnitWC>(idx_0);
-                ref var hp_0 = ref _statUnitF.Get1(idx_0);
+                ref var hp_0 = ref Unit<HpC>(idx_0);
                 ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
-
-                ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
-                ref var moveCond_0 = ref _effUnitF.Get2(idx_0);
-                ref var effUnit_0 = ref _effUnitF.Get3(idx_0);
-                ref var stun_0 = ref _effUnitF.Get4(idx_0);
-
-                ref var cdUniq_0 = ref _unitUniqF.Get1(idx_0);
-
+                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                ref var moveCond_0 = ref Unit<MoveInCondC>(idx_0);
+                ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
+                ref var stun_0 = ref Unit<StunC>(idx_0);
+                ref var cdUniq_0 = ref Unit<CooldownUniqC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
-                ref var buil_0 = ref EntityPool.Build<BuildC>(idx_0);
-                ref var ownBuil_0 = ref EntityPool.Build<OwnerC>(idx_0);
-                ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
-                ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
-                ref var trail_0 = ref EntityPool.Trail<TrailC>(idx_0);
+                ref var buil_0 = ref Build<BuildC>(idx_0);
+                ref var ownBuil_0 = ref Build<OwnerC>(idx_0);
+                ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
+                ref var env_0 = ref Environment<EnvC>(idx_0);
+                ref var trail_0 = ref Trail<TrailC>(idx_0);
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
@@ -146,12 +132,12 @@ namespace Game.Game
 
             if (MotionsC.AmountMotions % 3 == 0)
             {
-                foreach (byte idx_0 in EntityPool.Idxs)
+                foreach (byte idx_0 in Idxs)
                 {
-                    ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
-                    ref var envRes_0 = ref _cellEnvDataFilter.Get2(idx_0);
+                    ref var env_0 = ref Environment<EnvC>(idx_0);
+                    ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 
-                    ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
+                    ref var build_0 = ref Build<BuildC>(idx_0);
 
                     if (env_0.Have(EnvTypes.Hill))
                     {

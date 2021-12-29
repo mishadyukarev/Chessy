@@ -1,12 +1,11 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 
 namespace Game.Game
 {
     public struct BuildBackVC : IBuildCellV
     {
-        SpriteRenderer _buildBack_SR;  
+        SpriteRenderer _buildBack_SR;
 
         public BuildBackVC(GameObject build)
         {

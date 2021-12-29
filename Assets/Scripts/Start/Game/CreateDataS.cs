@@ -6,13 +6,13 @@ namespace Game.Game
 {
     public sealed class CreateDataS
     {
-        public CreateDataS(EcsSystems gameSysts)
+        public CreateDataS(in EcsSystems gameSysts)
         {
             var gameWorld = gameSysts.World;
 
 
             var list = new List<object>();
-            var dataSC = new Dictionary<DataSystTypes, Action>();
+            var dataSC = new Dictionary<DataSTypes, Action>();
             list.Add(dataSC);
 
 
@@ -21,14 +21,14 @@ namespace Game.Game
                 .Add(new RaySystem())
                 .Add(new SelectorS());
 
-            dataSC.Add(DataSystTypes.RunUpdate, runUpd.Run);
+            dataSC.Add(DataSTypes.RunUpdate, runUpd.Run);
 
 
 
             var runFixedUpd = new EcsSystems(gameWorld)
                 .Add(new SoundS());
 
-            dataSC.Add(DataSystTypes.RunFixedUpdate, runFixedUpd.Run);
+            dataSC.Add(DataSTypes.RunFixedUpdate, runFixedUpd.Run);
 
 
             var afterDoing = new EcsSystems(gameWorld)
@@ -44,7 +44,7 @@ namespace Game.Game
                 .Add(new GetShiftCellsS())
                 .Add(new GetArsonCellsS());
 
-            dataSC.Add(DataSystTypes.RunAfterDoing, afterDoing.Run);
+            dataSC.Add(DataSTypes.RunAfterDoing, afterDoing.Run);
 
 
             

@@ -1,5 +1,5 @@
 ﻿using Leopotam.Ecs;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -30,8 +30,8 @@ namespace Game.Game
                                 ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
                                 ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
-                                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-                                ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
+                                ref var build_0 = ref EntityCellPool.Build<BuildC>(idx_0);
+                                ref var ownBuild_0 = ref EntityCellPool.Build<OwnerC>(idx_0);
 
 
 
@@ -41,7 +41,7 @@ namespace Game.Game
                                     buildCell_0.Remove();
                                 }
 
-                                EntityPool.Unit<UnitCellWC>(idx_0).Kill();
+                                EntityCellPool.Unit<UnitCellWC>(idx_0).Kill();
 
                                 return;
                             }

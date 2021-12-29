@@ -6,7 +6,7 @@ using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -374,7 +374,7 @@ namespace Game.Game
                 objs.Add(Unit<LevelC>(idx_0).Level);
                 objs.Add(Unit<OwnerC>(idx_0).Owner);
 
-                objs.Add(Unit<HpC>(idx_0).HP);
+                objs.Add(Unit<HpC>(idx_0).Hp);
                 objs.Add(Unit<StepC>(idx_0).Steps);
                 objs.Add(Unit<WaterC>(idx_0).Water);
 
@@ -427,7 +427,7 @@ namespace Game.Game
                 objs.Add(Cloud<CloudC>(idx_0).Have);
 
 
-                objs.Add(Fire<FireC>(idx_0).Have);
+                objs.Add(Fire<HaveEffectC>(idx_0).Have);
 
 
                 
@@ -537,7 +537,7 @@ namespace Game.Game
 
 
                 Cloud<CloudC>(idx_0).Sync((bool)objects[_idx_cur++]);
-                Fire<FireC>(idx_0).Sync((bool)objects[_idx_cur++]);
+                Fire<HaveEffectC>(idx_0).Have = (bool)objects[_idx_cur++];
             }
 
 
@@ -585,7 +585,7 @@ namespace Game.Game
         [PunRPC]
         private void UpdateDataAndView()
         {
-            DataSC.Run(DataSystTypes.RunAfterDoing);
+            DataSC.Run(DataSTypes.RunAfterDoing);
         }
 
         #endregion

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game
 {
-    internal sealed class Main : MonoBehaviour
+    sealed class Main : MonoBehaviour
     {
         [SerializeField] TestModes _testMode = default;
 
@@ -38,7 +38,7 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    Game.DataSC.Run(DataSystTypes.RunUpdate);
+                    Game.DataSC.Run(DataSTypes.RunUpdate);
                     DataMastSC.RunUpdate();
                     ViewDataSC.Run(ViewDataSTypes.RunUpdate);
                     break;
@@ -62,7 +62,7 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    Game.DataSC.Run(DataSystTypes.RunFixedUpdate);
+                    Game.DataSC.Run(DataSTypes.RunFixedUpdate);
                     ViewDataSC.Run(ViewDataSTypes.RunFixedUpdate);
                     break;
 

@@ -2,15 +2,11 @@
 {
     public struct XyC : ICell
     {
-        private byte[] _xy;
+        readonly byte[] _xy;
 
-        public byte[] Xy
-        {
-            get => (byte[])_xy.Clone();
-            set => _xy = (byte[])value.Clone();
-        }
+        public byte[] Xy => (byte[])_xy.Clone();
 
-        public XyC(byte[] xy)
+        public XyC(in byte[] xy)
         {
             _xy = xy;
         }

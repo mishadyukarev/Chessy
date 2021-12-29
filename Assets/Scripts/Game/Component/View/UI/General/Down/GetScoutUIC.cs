@@ -27,7 +27,7 @@ namespace Game.Game
             if (isActive && cooldown > 0)
             {
                 _cooldown_go.SetActive(true);
-                _cooldown_tmp.text = cooldown.ToString();     
+                _cooldown_tmp.text = cooldown.ToString();
             }
             else
             {

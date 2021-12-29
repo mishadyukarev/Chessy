@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
 using UnityEngine;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -30,8 +30,8 @@ namespace Game.Game
                 ref var riverC_0 = ref _cellRiverFilt.Get1(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellC>(idx_0);
-                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-                ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
+                ref var build_0 = ref EntityCellPool.Build<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityCellPool.Build<OwnerC>(idx_0);
 
 
                 if (unit_0.Have)

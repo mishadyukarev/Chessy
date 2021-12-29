@@ -27,8 +27,8 @@ namespace Game.Game
 
                 _selZones.Add(click, go);
 
-                
-                if(click == CellClickTypes.UniqAbil)
+
+                if (click == CellClickTypes.UniqAbil)
                 {
                     _uniqZones.Add(UniqueAbilTypes.FireArcher, go.transform.Find(UniqueAbilTypes.FireArcher.ToString()).gameObject);
                     _uniqZones.Add(UniqueAbilTypes.StunElfemale, go.transform.Find(UniqueAbilTypes.StunElfemale.ToString()).gameObject);

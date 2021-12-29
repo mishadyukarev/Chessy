@@ -6,11 +6,11 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in EntityCellPool.Idxs)
             {
-                ref var trailData_0 = ref EntityPool.Trail<TrailC>(idx_0);
-                ref var trailVisData_0 = ref EntityPool.Trail<VisibleC>(idx_0);
-                ref var trailView_0 = ref EntityVPool.TrailCellVC<TrailVC>(idx_0);
+                ref var trailData_0 = ref EntityCellPool.Trail<TrailC>(idx_0);
+                ref var trailVisData_0 = ref EntityCellPool.Trail<VisibleC>(idx_0);
+                ref var trailView_0 = ref EntityCellVPool.TrailCellVC<TrailVC>(idx_0);
 
                 foreach (var item in trailData_0.DictTrail)
                 {

@@ -36,7 +36,7 @@ namespace Game.Game
             }
         }
 
-        internal void Set(in EnvTypes env, in bool have)
+        public void Set(in EnvTypes env, in bool have)
         {
             _envs[env] = have;
         }

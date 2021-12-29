@@ -4,9 +4,9 @@ namespace Game.Game
 {
     public struct UnitAvailPickUpgC
     {
-        private static Dictionary<string, bool> _available;
+        static Dictionary<string, bool> _available;
 
-        private static string Key(UnitTypes unit, PlayerTypes player) => unit.ToString() + player;
+        static string Key(UnitTypes unit, PlayerTypes player) => unit.ToString() + player;
         public static Dictionary<string, bool> Available_0
         {
             get

@@ -1,5 +1,5 @@
 ﻿using Leopotam.Ecs;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -12,7 +12,7 @@ namespace Game.Game
             IdxDoingMC.Get(out var idx_0);
 
             ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
-            ref var fire_0 = ref Fire<FireC>(idx_0);
+            ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
             var whoseMove = WhoseMoveC.WhoseMove;
 

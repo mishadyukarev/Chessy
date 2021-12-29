@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -16,16 +17,15 @@ namespace Game.Game
             if (SelIdx<SelIdxC>().IsSelCell && !build_sel.Is(BuildTypes.City))
             {
                 EnvirUIC.SetActiveParent(true);
+
+                EnvirUIC.SetTextResour(ResTypes.Food, envRes_sel.Amount(EnvTypes.Fertilizer).ToString());
+                EnvirUIC.SetTextResour(ResTypes.Wood, envRes_sel.Amount(EnvTypes.AdultForest).ToString());
+                EnvirUIC.SetTextResour(ResTypes.Ore, envRes_sel.Amount(EnvTypes.Hill).ToString());
             }
             else
             {
                 EnvirUIC.SetActiveParent(false);
             }
-
-
-            EnvirUIC.SetTextResour(ResTypes.Food, envRes_sel.Amount(EnvTypes.Fertilizer).ToString());
-            EnvirUIC.SetTextResour(ResTypes.Wood, envRes_sel.Amount(EnvTypes.AdultForest).ToString());
-            EnvirUIC.SetTextResour(ResTypes.Ore, envRes_sel.Amount(EnvTypes.Hill).ToString());
         }
     }
 }

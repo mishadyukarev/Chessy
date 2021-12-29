@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 using System;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -16,11 +16,8 @@ namespace Game.Game
 
 
             ref var stepUnit_0 = ref Unit<StepUnitWC>(idx_0);
-            ref var fire_0 = ref Fire<FireC>(idx_0);
+            ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
             ref var env_0 = ref Environment<EnvC>(idx_0);
-
-
-            var whoseMove = WhoseMoveC.WhoseMove;
 
 
             if (stepUnit_0.Have(uniq_cur))

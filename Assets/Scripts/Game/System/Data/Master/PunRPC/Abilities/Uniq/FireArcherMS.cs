@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -15,7 +15,7 @@ namespace Game.Game
 
             ref var stepUnit_from = ref Unit<StepUnitWC>(idx_from);
 
-            ref var fire_to = ref Fire<FireC>(idx_to);
+            ref var fire_to = ref Fire<HaveEffectC>(idx_to);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;

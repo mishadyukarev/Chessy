@@ -5,16 +5,16 @@ namespace Game.Game
 {
     public struct DataSC
     {
-        private static Dictionary<DataSystTypes, Action> _actions;
+        static Dictionary<DataSTypes, Action> _actions;
 
-        public DataSC(List<object> list)
+        public DataSC(in List<object> list)
         {
             var idx = 0;
 
-            _actions = (Dictionary<DataSystTypes, Action>)list[idx++];
+            _actions = (Dictionary<DataSTypes, Action>)list[idx++];
         }
 
-        public static void Run(DataSystTypes type)
+        public static void Run(in DataSTypes type)
         {
             if (!_actions.ContainsKey(type)) throw new Exception();
 

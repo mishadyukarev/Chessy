@@ -18,7 +18,7 @@ namespace Game.Game
             return false;
         }
 
-        internal IdxC(in byte idx) => Idx = idx;
+        public IdxC(in byte idx) => Idx = idx;
 
         public void Reset() => Idx = 0;
     }

@@ -7,21 +7,23 @@ namespace Game.Game
     {
         readonly internal TextMeshProUGUI TextUI;
 
-        internal Transform Transform => TextUI.transform;
-        internal Transform Parent_T => Transform.parent;
-        internal GameObject Parent_G => Parent_T.gameObject;
+        public Transform Transform => TextUI.transform;
+        public Transform Parent_T => Transform.parent;
+        public GameObject Parent_G => Parent_T.gameObject;
 
         public string Text
         {
             get => TextUI.text;
-            internal set => TextUI.text = value;
+            set => TextUI.text = value;
         }
         public Color Color
         {
             get => TextUI.color;
-            internal set => TextUI.color = value;
+            set => TextUI.color = value;
         }
 
-        internal TextUIC(in TextMeshProUGUI text) => TextUI = text;
+        public TextUIC(in TextMeshProUGUI text) => TextUI = text;
+
+        public void SetActiveParent(in bool isActive) => Parent_T.gameObject.SetActive(isActive);
     }
 }

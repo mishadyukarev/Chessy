@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using UnityEngine;
 
 namespace Game.Game
 {
@@ -9,19 +8,21 @@ namespace Game.Game
 
         public void Init()
         {
-            new EntityUIPool(_curGameW);
             new EntityVPool(_curGameW);
+            new EntityUIPool(_curGameW);
+            new EntityCellVPool(_curGameW, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
 
             var isActiveCells = new bool[CellValues.ALL_CELLS_AMOUNT];
             var idCells = new int[CellValues.ALL_CELLS_AMOUNT];
 
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
-                isActiveCells[idx] = EntityVPool.Cell<CellVC>(idx).IsActiveSelf;
-                idCells[idx] = EntityVPool.Cell<CellVC>(idx).InstanceID;
+                isActiveCells[idx] = EntityCellVPool.Cell<CellVC>(idx).IsActiveSelf;
+                idCells[idx] = EntityCellVPool.Cell<CellVC>(idx).InstanceID;
             }
 
-            new EntityPool(_curGameW, isActiveCells, idCells, BackgroundVC.Name);
+            new EntityCellPool(_curGameW, isActiveCells, idCells, BackgroundVC.Name);
+            new EntityPool(_curGameW);
         }
     }
 }

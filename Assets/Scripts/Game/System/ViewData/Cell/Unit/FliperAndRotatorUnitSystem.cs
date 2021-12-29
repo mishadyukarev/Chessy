@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -14,8 +15,8 @@ namespace Game.Game
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
                 ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
 
-                ref var main_0 = ref EntityVPool.UnitCellVC<UnitMainVC>(idx_0);
-                ref var extra_0 = ref EntityVPool.UnitCellVC<UnitExtraVC>(idx_0);
+                ref var main_0 = ref EntityCellVPool.UnitCellVC<UnitMainVC>(idx_0);
+                ref var extra_0 = ref EntityCellVPool.UnitCellVC<UnitExtraVC>(idx_0);
 
 
                 main_0.SetLocRot(new Vector3(0, 0, 0));

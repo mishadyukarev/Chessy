@@ -1,30 +1,23 @@
 ﻿using Leopotam.Ecs;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
     public sealed class GetAttackKingCellsS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<StepC> _statUnitF = default;
-        private EcsFilter<EffectsC, StunC> _effUnitF = default;
-
-        
         public void Run()
         {
-            ref EnvC Env(in byte idx) => ref EntityPool.Environment<EnvC>(idx);
+            ref EnvC Env(in byte idx) => ref Environment<EnvC>(idx);
 
 
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var level_0 = ref _unitF.Get2(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-
-                ref var stepUnit_0 = ref _statUnitF.Get1(idx_0);
-
-                ref var effUnit_0 = ref _effUnitF.Get1(idx_0);
-                ref var stunUnit_0 = ref _effUnitF.Get2(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var level_0 = ref Unit<LevelC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var stepUnit_0 = ref Unit<StepC>(idx_0);
+                ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
+                ref var stunUnit_0 = ref Unit<StunC>(idx_0);
 
 
                 if (!stunUnit_0.IsStunned)
@@ -33,17 +26,17 @@ namespace Game.Game
                     {
                         DirectTypes curDir_1 = default;
 
-                        CellSpaceC.TryGetXyAround(EntityPool.Cell<XyC>(idx_0).Xy, out var dirs);
+                        CellSpaceC.TryGetXyAround(Cell<XyC>(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             curDir_1 += 1;
 
-                            var idx_1 = EntityPool.IdxCell(item_1.Value);
+                            var idx_1 = IdxCell(item_1.Value);
    
 
-                            ref var unit_1 = ref _unitF.Get1(idx_1);
-                            ref var ownUnit_1 = ref _unitF.Get3(idx_1);
+                            ref var unit_1 = ref Unit<UnitC>(idx_1);
+                            ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
 
                             ref var env_1 = ref Environment<EnvC>(idx_1);
                             ref var trail_1 = ref Trail<TrailC>(idx_1);

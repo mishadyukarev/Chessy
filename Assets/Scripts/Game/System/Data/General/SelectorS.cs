@@ -1,23 +1,20 @@
 ﻿using Leopotam.Ecs;
 using static Game.Game.CellClickC;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class SelectorS : IEcsRunSystem
     {
-
-
-        private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
-
         public void Run()
         {
-            ref var unit_cur = ref _unitF.Get1(CurIdx<IdxC>().Idx);
-            ref var levUnit_cur = ref _unitF.Get2(CurIdx<IdxC>().Idx);
-            ref var ownUnit_cur = ref _unitF.Get3(CurIdx<IdxC>().Idx);
-            ref var visUnit_cur = ref _unitF.Get4(CurIdx<IdxC>().Idx);
+            ref var unit_cur = ref Unit<UnitC>(CurIdx<IdxC>().Idx);
+            ref var levUnit_cur = ref Unit<LevelC>(CurIdx<IdxC>().Idx);
+            ref var ownUnit_cur = ref Unit<OwnerC>(CurIdx<IdxC>().Idx);
+            ref var visUnit_cur = ref Unit<VisibleC>(CurIdx<IdxC>().Idx);
 
-            ref var unit_sel = ref _unitF.Get1(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
 
 
             if (InputC.IsClicked)
@@ -207,7 +204,7 @@ namespace Game.Game
                     {
                         if (!unit_cur.Have || !visUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
                         {
-                            if (CurIdxC.IsStartDirectToCell)
+                            if (CurIdx<CurIdxC>().IsStartDirectToCell)
                             {
                                 PreVisIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                             }

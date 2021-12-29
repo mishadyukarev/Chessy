@@ -3,6 +3,7 @@
     public struct BuildC : IBuildCell
     {
         public BuildTypes Build { get; internal set; }
+
         public bool Have => Build != default;
         public bool Is(params BuildTypes[] builds)
         {

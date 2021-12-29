@@ -1,6 +1,7 @@
 ﻿using Game.Common;
 using Leopotam.Ecs;
 using Photon.Pun;
+using UnityEngine;
 
 namespace Game.Game
 {
@@ -8,8 +9,8 @@ namespace Game.Game
     {
         public void Init()
         {
-            ReadyUIC.AddListenerToReadyButton(Ready);
-
+            EntityUIPool.ReadyCenter<ButtonC>().AddList(Ready);
+            EntityUIPool.JoinDiscordCenter<ButtonC>().AddList(delegate { Application.OpenURL(URLC.URL_DISCORD); });
 
             EntityUIPool.LeaveUp<ButtonC>().AddList(delegate { PhotonNetwork.LeaveRoom(); });
             FriendZoneUIC.AddListenerReady(FriendReady);

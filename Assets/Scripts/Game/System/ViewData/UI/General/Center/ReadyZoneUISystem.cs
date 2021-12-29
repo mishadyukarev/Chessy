@@ -8,22 +8,17 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (ReadyC.IsReady(WhoseMoveC.CurPlayerI))
-            {
-                ReadyUIC.SetColorReadyButton(Color.red);
-            }
-            else
-            {
-                ReadyUIC.SetColorReadyButton(Color.white);
-            }
+            ref var readyBut = ref EntityUIPool.ReadyCenter<ButtonC>();
+
+            readyBut.Color = ReadyC.IsReady(WhoseMoveC.CurPlayerI) ? Color.red : Color.white;
 
             if (ReadyC.IsStartedGame || PhotonNetwork.OfflineMode)
             {
-                ReadyUIC.SetActiveParent(false);
+                readyBut.SetActiveParent(false);
             }
             else
             {
-                ReadyUIC.SetActiveParent(true);
+                readyBut.SetActiveParent(true);
             }
         }
     }

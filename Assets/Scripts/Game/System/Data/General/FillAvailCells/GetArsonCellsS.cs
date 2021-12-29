@@ -6,13 +6,13 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach(byte idx_0 in EntityPool.Idxs)
+            foreach(byte idx_0 in EntityCellPool.Idxs)
             {
-                var curXy = EntityPool.Cell<XyC>(idx_0).Xy;
+                var curXy = EntityCellPool.Cell<XyC>(idx_0).Xy;
 
-                ref var unit_0 = ref EntityPool.Unit<UnitC>(idx_0);
-                ref var ownUnit_0 = ref EntityPool.Unit<OwnerC>(idx_0);
-                ref var stun_0 = ref EntityPool.Unit<StunC>(idx_0);
+                ref var unit_0 = ref EntityCellPool.Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref EntityCellPool.Unit<OwnerC>(idx_0);
+                ref var stun_0 = ref EntityCellPool.Unit<StunC>(idx_0);
 
                 if (!stun_0.IsStunned)
                 {
@@ -20,10 +20,10 @@ namespace Game.Game
                     {
                         foreach (var xy_1 in CellSpaceC.XyAround(curXy))
                         {
-                            var idx_1 = EntityPool.IdxCell(xy_1);
+                            var idx_1 = EntityCellPool.IdxCell(xy_1);
 
-                            ref var env_1 = ref EntityPool.Environment<EnvC>(idx_1);
-                            ref var fire_1 = ref EntityPool.Fire<FireC>(idx_1);
+                            ref var env_1 = ref EntityCellPool.Environment<EnvC>(idx_1);
+                            ref var fire_1 = ref EntityCellPool.Fire<HaveEffectC>(idx_1);
 
                             if (!fire_1.Have)
                             {

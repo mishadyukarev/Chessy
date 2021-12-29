@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +6,8 @@ namespace Game.Game
 {
     public struct SoundEffectVC
     {
-        private static Dictionary<ClipTypes, AudioSource> _soundEffect_ASs;
-        private static Dictionary<UniqueAbilTypes, AudioSource> _uniqEff;
+        static Dictionary<ClipTypes, AudioSource> _soundEffect_ASs;
+        static Dictionary<UniqueAbilTypes, AudioSource> _uniqEff;
 
         public SoundEffectVC(GameObject aSParent)
         {
@@ -111,7 +110,7 @@ namespace Game.Game
 
             for (var uniq = UniqueAbilTypes.First; uniq < UniqueAbilTypes.End; uniq++)
             {
-                if (uniq != UniqueAbilTypes.CircularAttack 
+                if (uniq != UniqueAbilTypes.CircularAttack
                     && uniq != UniqueAbilTypes.PutOutFirePawn
                     && uniq != UniqueAbilTypes.PutOutFirePawn
                     && uniq != UniqueAbilTypes.ChangeCornerArcher)

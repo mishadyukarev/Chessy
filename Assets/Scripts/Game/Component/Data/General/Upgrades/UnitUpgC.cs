@@ -5,8 +5,8 @@ namespace Game.Game
 {
     public struct UnitUpgC
     {
-        private static Dictionary<string, bool> _upgrades;
-        private const string BETWEEN = "_";
+        static Dictionary<string, bool> _upgrades;
+        const string BETWEEN = "_";
 
         static string Key(in UpgTypes upg, in UnitStatTypes stat, in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
             => upg.ToString() + BETWEEN + stat + BETWEEN + unit + BETWEEN + level + BETWEEN + player;
@@ -24,7 +24,7 @@ namespace Game.Game
         public static bool Have(UpgTypes upg, UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
             => _upgrades[Key(upg, stat, unit, level, player)];
 
-        internal static float UpgDamagePercent(in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
+        public static float UpgDamagePercent(in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
         {
             var percent = 0f;
 
@@ -38,7 +38,7 @@ namespace Game.Game
 
             return percent;
         }
-        internal static float UpgWaterPercent(in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
+        public static float UpgWaterPercent(in UnitTypes unit, in LevelTypes level, in PlayerTypes player)
         {
             var percent = 0f;
 

@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEditor;
 using UnityEngine;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -10,7 +10,6 @@ namespace Game.Game
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC> _statUnitF = default;
 
-        private readonly EcsFilter<FireC> _fireF = default;
         private readonly EcsFilter<EnvC, EnvResC> _envF = default;
         private readonly EcsFilter<CloudC> _cloudsF = default;
 
@@ -31,7 +30,7 @@ namespace Game.Game
                 ref var buil_0 = ref Build<BuildC>(idx_0);
                 ref var ownBuil_0 = ref Build<OwnerC>(idx_0);
 
-                ref var fire_0 = ref _fireF.Get1(idx_0);
+                ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
                 ref var envCell_0 = ref Environment<EnvCellC>(idx_0);
                 ref var envRes_0 = ref _envF.Get2(idx_0);
@@ -87,7 +86,7 @@ namespace Game.Game
                             {
                                 if (_envF.Get1(curIdxCell1).Have(EnvTypes.AdultForest))
                                 {
-                                    _fireF.Get1(curIdxCell1).Enable();
+                                    Fire<HaveEffectC>(curIdxCell1).Enable();
                                 }
                             }
                         }

@@ -80,7 +80,7 @@ namespace Game.Game
 
 
 
-        internal static void Set(BuildTypes build, PlayerTypes player, byte idx, bool have)
+        public static void Set(BuildTypes build, PlayerTypes player, byte idx, bool have)
         {
             var key = Key(build, player, idx);
 

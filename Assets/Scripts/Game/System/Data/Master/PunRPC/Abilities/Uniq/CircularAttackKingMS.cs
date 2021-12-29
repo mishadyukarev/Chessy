@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Game.Common;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -42,23 +42,23 @@ namespace Game.Game
 
                     cdUniq_0.SetCooldown(uniq_cur, 2);
 
-                    foreach (var xy1 in CellSpaceC.XyAround(EntityPool.Cell<XyC>(idx_0).Xy))
+                    foreach (var xy1 in CellSpaceC.XyAround(EntityCellPool.Cell<XyC>(idx_0).Xy))
                     {
-                        var idx_1 = EntityPool.IdxCell(xy1);
+                        var idx_1 = EntityCellPool.IdxCell(xy1);
 
                         ref var unit_1 = ref _unitF.Get1(idx_1);
                         ref var levUnit_1 = ref _unitF.Get2(idx_1);
                         ref var ownUnit_1 = ref _unitF.Get3(idx_1);
-                        ref var statUnit_1 = ref EntityPool.Unit<WaterUnitC>(idx_1);
+                        ref var statUnit_1 = ref EntityCellPool.Unit<WaterUnitC>(idx_1);
                         ref var hpUnitC_1 = ref _statUnitF.Get1(idx_1);
                         ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
-                        ref var tw_1 = ref EntityPool.UnitTW<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref EntityPool.UnitTW<ShieldC>(idx_1);
+                        ref var tw_1 = ref EntityCellPool.UnitTW<ToolWeaponC>(idx_1);
+                        ref var shield_1 = ref EntityCellPool.UnitTW<ShieldC>(idx_1);
 
 
 
                         ref var envC_1 = ref _envF.Get1(idx_1);
-                        ref var buildC_1 = ref EntityPool.Build<BuildC>(idx_1);
+                        ref var buildC_1 = ref EntityCellPool.Build<BuildC>(idx_1);
 
 
                         if (unit_1.Have)

@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public struct CellClickC
     {
-        private static CellClickTypes _click;
+        static CellClickTypes _click;
         public static CellClickTypes Click => _click;
         public static bool Is(params CellClickTypes[] clicks)
         {

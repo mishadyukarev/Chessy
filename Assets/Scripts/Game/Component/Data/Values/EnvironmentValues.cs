@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    internal struct EnvironmentValues
+    public struct EnvironmentValues
     {
-        internal byte MaxAmount(EnvTypes env)
+        public byte MaxAmount(EnvTypes env)
         {
             switch (env)
             {
@@ -17,7 +17,7 @@ namespace Game.Game
             }
         }
 
-        internal byte StartPercent(EnvTypes env)
+        public byte StartPercent(EnvTypes env)
         {
             switch (env)
             {

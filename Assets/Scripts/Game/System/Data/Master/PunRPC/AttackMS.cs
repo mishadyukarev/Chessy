@@ -1,78 +1,34 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
     public sealed class AttackMS : IEcsRunSystem
     {
-        private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private readonly EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private readonly EcsFilter<ConditionC, MoveInCondC, EffectsC, StunC> _effUnitF = default;
-        private readonly EcsFilter<CooldownUniqC> _uniqUnitF = default;
-
-        private readonly EcsFilter<EnvC> _envF = default;
-        private readonly EcsFilter<RiverC> _riverF = default;
-
-
         public void Run()
         {
             FromToDoingMC.Get(out var idx_from, out var idx_to);
 
-            #region Unit
-
-            ref var unit_from = ref _unitF.Get1(idx_from);
-            ref var levUnit_from = ref _unitF.Get2(idx_from);
-            ref var ownUnit_from = ref _unitF.Get3(idx_from);
-
+            ref var unit_from = ref Unit<UnitC>(idx_from);
+            ref var ownUnit_from = ref Unit<OwnerC>(idx_from);
             ref var hpUnitCell_from = ref Unit<HpUnitWC>(idx_from);
-            ref var hpUnit_from = ref _statUnitF.Get1(idx_from);
+            ref var hpUnit_from = ref Unit<HpC>(idx_from);
             ref var stepUnit_from = ref Unit<StepUnitWC>(idx_from);
-            ref var waterUnit_from = ref _statUnitF.Get3(idx_from);
-
-            ref var condUnit_from = ref _effUnitF.Get1(idx_from);
-            ref var moveCond_from = ref _effUnitF.Get2(idx_from);
-            ref var effUnit_from = ref _effUnitF.Get3(idx_from);
+            ref var condUnit_from = ref Unit<ConditionC>(idx_from);
+            ref var effUnit_from = ref Unit<EffectsC>(idx_from);
 
             ref var tw_from = ref UnitTW<ToolWeaponC>(idx_from);
-            ref var twShield_from = ref UnitTW<ProtectionC>(idx_from);
 
 
-
-            ref var unit_to = ref _unitF.Get1(idx_to);
-            ref var levUnit_to = ref _unitF.Get2(idx_to);
-            ref var ownUnit_to = ref _unitF.Get3(idx_to);
-
+            ref var unit_to = ref Unit<UnitC>(idx_to);
             ref var hpUnitCell_to = ref Unit<HpUnitWC>(idx_to);
-            ref var hpUnit_to = ref _statUnitF.Get1(idx_to);
-            ref var stepUnit_to = ref _statUnitF.Get2(idx_to);
-            ref var waterUnit_to = ref _statUnitF.Get3(idx_to);
-
-            ref var condUnit_to = ref _effUnitF.Get1(idx_to);
-            ref var moveCond_to = ref _effUnitF.Get2(idx_to);
-            ref var effUnit_to = ref _effUnitF.Get3(idx_to);
-            ref var stun_to = ref _effUnitF.Get4(idx_to);
+            ref var hpUnit_to = ref Unit<HpC>(idx_to);
+            ref var effUnit_to = ref Unit<EffectsC>(idx_to);
 
             ref var tw_to = ref UnitTW<ToolWeaponC>(idx_to);
-            ref var twShield_to = ref UnitTW<ProtectionC>(idx_to);
-
-            #endregion
 
 
-            ref var river_from = ref _riverF.Get1(idx_from);
-            ref var build_from = ref Build<BuildC>(idx_from);
-            ref var ownBuild_from = ref Build<OwnerC>(idx_from);
-            ref var env_from = ref _envF.Get1(idx_from);
-            ref var trail_from = ref Trail<TrailC>(idx_from);
-            ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
-
-
-            ref var river_to = ref _riverF.Get1(idx_to);
-            ref var build_to = ref Build<BuildC>(idx_to);
-            ref var ownBuild_to = ref Build<OwnerC>(idx_to);
-            ref var env_to = ref _envF.Get1(idx_to);
-            ref var trail_to = ref Trail<TrailC>(idx_to);
-            ref var cdUniq_to = ref _uniqUnitF.Get1(idx_to);
 
 
 

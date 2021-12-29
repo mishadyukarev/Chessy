@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public struct TrailC : ITrailCell
     {
-        readonly Dictionary<DirectTypes, int> _health;
+        readonly byte _idx;
 
         public Dictionary<DirectTypes, int> Health
         {
@@ -12,9 +12,9 @@ namespace Game.Game
             {
                 var dict_0 = new Dictionary<DirectTypes, int>();
 
-                foreach (var item_0 in _health)
+                for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
                 {
-                    dict_0.Add(item_0.Key, item_0.Value);
+                    dict_0.Add(dir, EntityCellPool.Trail<HpC>(_idx, dir).Hp);
                 }
 
                 return dict_0;
@@ -25,7 +25,7 @@ namespace Game.Game
             get
             {
                 var dict = new Dictionary<DirectTypes, bool>();
-                foreach (var item in _health) dict[item.Key] = _health[item.Key] > 0;
+                foreach (var item in Health) dict[item.Key] = item.Value > 0;
                 return dict;
             }
         }
@@ -37,46 +37,39 @@ namespace Game.Game
                 return false;
             }
         }
+        public bool Have(DirectTypes dir) => Health[dir] > 0;
 
 
-        internal TrailC(Dictionary<DirectTypes, int> directs)
+        internal TrailC(in byte idx) => _idx = idx;
+
+
+        public bool TrySetNewTrail(in DirectTypes dir, in EnvC envC)
         {
-            _health = directs;
-
-            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
-            {
-                _health.Add(dir, default);
-            }
-        }
-
-        public bool TrySetNewTrail(DirectTypes dir, EnvC envC)
-        {
-            if (envC.Have(EnvTypes.AdultForest)) _health[dir] = 7;
+            if (envC.Have(EnvTypes.AdultForest)) EntityCellPool.Trail<HpC>(_idx, dir).Hp = 7;
             return envC.Have(EnvTypes.AdultForest);
         }
         public void SetAllTrail()
         {
             foreach (var item in Health)
             {
-                _health[item.Key] = 7;
+                EntityCellPool.Trail<HpC>(_idx, item.Key).Hp = 7;
             }
         }
-        public bool Have(DirectTypes dir) => _health[dir]> 0;
-        public void TakeHealth(DirectTypes dir)
+        public void TakeHealth(in DirectTypes dir)
         {
-            _health[dir] -= 1;
+            EntityCellPool.Trail<HpC>(_idx, dir).Hp -= 1;
         }
         public void ResetAll()
         {
             foreach (var item in Health)
             {
-                _health[item.Key] = 0;
+                EntityCellPool.Trail<HpC>(_idx, item.Key).Hp = 0;
             }
         }
 
-        public void SyncTrail(DirectTypes dir, int amount)
+        public void SyncTrail(in DirectTypes dir, in int hp)
         {
-            _health[dir] = amount;
+            EntityCellPool.Trail<HpC>(_idx, dir).Hp = hp;
         }
     }
 }

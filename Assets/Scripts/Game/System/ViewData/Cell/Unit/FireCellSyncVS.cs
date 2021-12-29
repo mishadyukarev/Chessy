@@ -6,16 +6,16 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx in EntityPool.Idxs)
+            foreach (var idx in EntityCellPool.Idxs)
             {
-                if (EntityPool.Fire<FireC>(idx).Have)
+                if (EntityCellPool.Fire<HaveEffectC>(idx).Have)
                 {
-                    EntityVPool.FireCellVC<FireVC>(idx).EnableSR();
+                    EntityCellVPool.FireCellVC<FireVC>(idx).EnableSR();
                 }
 
                 else
                 {
-                    EntityVPool.FireCellVC<FireVC>(idx).DisableSR();
+                    EntityCellVPool.FireCellVC<FireVC>(idx).DisableSR();
                 }
             }
         }

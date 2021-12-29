@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using System;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -8,11 +9,10 @@ namespace Game.Game
         private EcsFilter<UnitC, OwnerC> _unitF = default;
         private EcsFilter<UniqAbilC> _uniqUnitF = default;
         private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<FireC> _fireF = default;
 
         public void Run()
         {
-            foreach (var idx_0 in _uniqUnitF)
+            foreach (byte idx_0 in _uniqUnitF)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
 
@@ -21,7 +21,7 @@ namespace Game.Game
                 ref var uniq_0 = ref _uniqUnitF.Get1(idx_0);
 
                 ref var env_0 = ref _envF.Get1(idx_0);
-                ref var fire_0 = ref _fireF.Get1(idx_0);
+                ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
                 if (ownUnit_0.Is(WhoseMoveC.CurPlayerI))

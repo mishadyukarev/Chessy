@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Game.Game
@@ -42,13 +41,13 @@ namespace Game.Game
                         case LevelTypes.None: throw new Exception();
                         case LevelTypes.First:
                             {
-                                if(isCornered) _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.RookBow);
+                                if (isCornered) _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.RookBow);
                                 else _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.BishopBow);
                             }
                             break;
                         case LevelTypes.Second:
                             {
-                                if(isCornered) _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.RookCrossbow);
+                                if (isCornered) _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.RookCrossbow);
                                 else _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.BishopCrossbow);
                             }
                             break;

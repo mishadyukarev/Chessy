@@ -1,0 +1,22 @@
+{
+    "name": "Game.Entity.View",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f8b9587ab9104e74586dec6b8477f11e",
+        "GUID:0c4a60b21c34398498c32904cd19b40e",
+        "GUID:66389d1629e584b4991940abdcbafb00",
+        "GUID:86c7db8b64f68154790c800543dc5ec6",
+        "GUID:656c2c43d3cfe4855bd40e058874b0be",
+        "GUID:57c32fc907df0f54e8e6e8f0d2488336",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -35,7 +35,7 @@ namespace Game.Game
         public static void AddListener(UniqButTypes uniqBut, UnityAction action) => _buttons[uniqBut].onClick.AddListener(action);
         public static void SetActive(UniqButTypes uniqBut, UniqueAbilTypes ability)
         {
-            if(ability == default)
+            if (ability == default)
             {
                 _buttons[uniqBut].gameObject.SetActive(false);
             }

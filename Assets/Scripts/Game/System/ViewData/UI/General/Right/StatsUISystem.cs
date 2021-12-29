@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -39,12 +40,12 @@ namespace Game.Game
             {
                 StatUIC.SetActiveStatZone(true);
 
-                StatUIC.SetTextToStat(UnitStatTypes.Hp, selHpUnitC.HP.ToString());
+                StatUIC.SetTextToStat(UnitStatTypes.Hp, selHpUnitC.Hp.ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Damage, Unit<DamageUnitC>(selIdx).DamageOnCell.ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.Steps.ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.Water.ToString());
 
-                StatUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.HP, HpUnitWC.MAX);
+                StatUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.Hp, HpUnitWC.MAX);
 
 
 

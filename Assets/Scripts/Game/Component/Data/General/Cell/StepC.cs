@@ -5,11 +5,10 @@ namespace Game.Game
     public struct StepC : IUnitCell
     {
         public int Steps { get; internal set; }
+
         public bool Have => Steps > 0;
         public bool IsMinus => Steps < 0;
         public bool IsNull => Steps == 0;
-
-
 
 
         internal void Set(in StepC stepC) => Steps = stepC.Steps;

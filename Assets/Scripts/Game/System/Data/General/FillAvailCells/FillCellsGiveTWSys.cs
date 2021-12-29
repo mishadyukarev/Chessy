@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in EntityCellPool.Idxs)
             {
                 //ref var unit_0 = ref UnitDataEnt<UnitC>.Component(idx_0);
                 //ref var owUnit_0 = ref UnitDataEnt<OwnerC>.Component(idx_0);

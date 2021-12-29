@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public struct OwnerC : IUnitCell, IBuildCell
     {
         public PlayerTypes Owner { get; internal set; }
+
         public bool Is(params PlayerTypes[] owners)
         {
             foreach (var player in owners) if (player == Owner) return true;

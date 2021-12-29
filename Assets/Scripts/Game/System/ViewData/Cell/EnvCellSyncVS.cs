@@ -7,10 +7,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx in EntityPool.Idxs)
+            foreach (var idx in EntityCellPool.Idxs)
             {
-                ref var envD_0 = ref EntityPool.Environment<EnvC>(idx);
-                ref var envV_0 = ref EntityVPool.EnvCellVC<EnvVC>(idx);
+                ref var envD_0 = ref EntityCellPool.Environment<EnvC>(idx);
+                ref var envV_0 = ref EntityCellVPool.EnvCellVC<EnvVC>(idx);
 
                 for (var env_0 = EnvTypes.First; env_0 < EnvTypes.End; env_0++)
                 {

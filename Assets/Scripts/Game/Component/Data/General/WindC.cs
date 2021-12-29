@@ -5,8 +5,8 @@ namespace Game.Game
 {
     public struct WindC
     {
-        private static DirectTypes _curDirWind;
-        private static Dictionary<DirectTypes, byte> _directs;
+        static DirectTypes _curDirWind;
+        static Dictionary<DirectTypes, byte> _directs;
 
         public static DirectTypes CurDirWind => _curDirWind;
         public static Dictionary<DirectTypes, byte> Directs

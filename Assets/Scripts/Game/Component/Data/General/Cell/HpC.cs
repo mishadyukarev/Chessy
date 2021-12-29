@@ -2,38 +2,38 @@
 
 namespace Game.Game
 {
-    public struct HpC : IUnitCell
+    public struct HpC : IUnitCell, ITrailCell
     {
         public const int MIN = 0;
 
 
-        public int HP { get; internal set; }
+        public int Hp { get; internal set; }
 
-        public bool Have => HP > MIN;
-        public bool IsMinus => HP < MIN;
-        public bool IsZero => HP == MIN;
-
-
-        internal HpC(in int hp) => HP = hp;
+        public bool Have => Hp > MIN;
+        public bool IsMinus => Hp < MIN;
+        public bool IsZero => Hp == MIN;
 
 
-        internal void Set(in HpC hpC) => HP = hpC.HP;
+        internal HpC(in int hp) => Hp = hp;
 
-        internal int SetMinHp() => HP = MIN;
+
+        internal void Set(in HpC hpC) => Hp = hpC.Hp;
+
+        internal int SetMinHp() => Hp = MIN;
 
         internal void Add(int adding = 1)
         {
             if (adding < 0) throw new Exception("Need a positive number");
             else if (adding == 0) throw new Exception("You're adding zero");
-            HP += adding;
+            Hp += adding;
         }
         internal void Take(int taking = 1)
         {
             if (taking < 0) throw new Exception("Need a positive number");
             else if (taking == 0) throw new Exception("You're taking zero");
-            HP -= taking;
+            Hp -= taking;
 
-            if (IsMinus) HP = MIN;
+            if (IsMinus) Hp = MIN;
         }
     }
 }

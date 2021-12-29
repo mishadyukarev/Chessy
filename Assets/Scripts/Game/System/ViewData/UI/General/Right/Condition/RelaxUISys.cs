@@ -1,18 +1,18 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class RelaxUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC> _unitF = default;
         private EcsFilter<ConditionC> _effUnitF = default;
 
         public void Run()
         {
-            ref var unit_sel = ref _unitF.Get1(SelIdx<IdxC>().Idx);
-            ref var selOnUnitCom = ref _unitF.Get2(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
+            ref var selOnUnitCom = ref Unit<OwnerC>(SelIdx<IdxC>().Idx);
 
             ref var selCondUnitC = ref _effUnitF.Get1(SelIdx<IdxC>().Idx);  
 

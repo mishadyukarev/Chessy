@@ -6,14 +6,14 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in EntityCellPool.Idxs)
             {
-                ref var build_0 = ref EntityPool.Build<BuildC>(idx_0);
-                ref var ownBuild_0 = ref EntityPool.Build<OwnerC>(idx_0);
-                ref var visBuild_0 = ref EntityPool.Build<VisibleC>(idx_0);
+                ref var build_0 = ref EntityCellPool.Build<BuildC>(idx_0);
+                ref var ownBuild_0 = ref EntityCellPool.Build<OwnerC>(idx_0);
+                ref var visBuild_0 = ref EntityCellPool.Build<VisibleC>(idx_0);
 
-                ref var buildV_0 = ref EntityVPool.BuildCellVC<BuildVC>(idx_0);
-                ref var buildBackV_0 = ref EntityVPool.BuildCellVC<BuildBackVC>(idx_0);
+                ref var buildV_0 = ref EntityCellVPool.BuildCellVC<BuildVC>(idx_0);
+                ref var buildBackV_0 = ref EntityCellVPool.BuildCellVC<BuildBackVC>(idx_0);
 
 
                 var build = build_0.Build;

@@ -4,8 +4,8 @@ namespace Game.Game
 {
     public struct ImageUIC
     {
-        internal readonly Image Image;
+        public readonly Image Image;
 
-        internal ImageUIC(in Image image) => Image = image;
+        public ImageUIC(in Image image) => Image = image;
     }
 }

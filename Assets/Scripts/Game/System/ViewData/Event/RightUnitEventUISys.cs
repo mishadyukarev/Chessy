@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Game.Common;
 using System;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game

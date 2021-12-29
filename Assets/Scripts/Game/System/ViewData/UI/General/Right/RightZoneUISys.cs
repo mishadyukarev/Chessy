@@ -1,16 +1,15 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class RightZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC, VisibleC> _unitF = default;
-
         public void Run()
         {
-            ref var unitD_sel = ref _unitF.Get1(SelIdx<IdxC>().Idx);
-            ref var unitV_sel = ref _unitF.Get3(SelIdx<IdxC>().Idx);
+            ref var unitD_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
+            ref var unitV_sel = ref Unit<VisibleC>(SelIdx<IdxC>().Idx);
 
             var activeParent = false;
 

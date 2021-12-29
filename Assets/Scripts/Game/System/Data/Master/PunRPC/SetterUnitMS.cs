@@ -1,12 +1,11 @@
 ﻿using Leopotam.Ecs;
-using static Game.Game.EntityPool;
+using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
     public sealed class SetterUnitMS : IEcsRunSystem
     {
         private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<FireC> _fireF = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
@@ -22,7 +21,7 @@ namespace Game.Game
 
 
             ref var env_0 = ref _envF.Get1(idx_0);
-            ref var fire_0 = ref _fireF.Get1(idx_0);
+            ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
             ref var unit_0 = ref _unitF.Get1(idx_0);
             ref var levUnit_0 = ref _unitF.Get2(idx_0);

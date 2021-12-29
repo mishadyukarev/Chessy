@@ -5,8 +5,9 @@ namespace Game.Game
 {
     public struct BuildsUpgC
     {
-        private static Dictionary<string, bool> _haveUpgrades;
+        static Dictionary<string, bool> _haveUpgrades;
 
+        static string Key(BuildTypes build, PlayerTypes player, UpgTypes upg) => build.ToString() + player + upg;
         public static Dictionary<string, bool> HaveUpgrades
         {
             get
@@ -16,8 +17,6 @@ namespace Game.Game
                 return dict;
             }
         }
-        public static string Key(BuildTypes build, PlayerTypes player, UpgTypes upg) => build.ToString() + player + upg;
-
         public static float PercUpg(BuildTypes build, PlayerTypes player)
         {
             var percent = 0f;

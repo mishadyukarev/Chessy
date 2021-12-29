@@ -24,7 +24,7 @@ namespace Game.Game
         }
 
 
-        public EffectsC(bool needNew) : this()
+        internal EffectsC(bool needNew) : this()
         {
             if (needNew)
             {

@@ -1,29 +1,24 @@
 ﻿using Leopotam.Ecs;
+using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
     public sealed class SupportSyncVS : IEcsRunSystem
     {
-        private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<FireC> _fireF = default;
-
-        private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
-
-
         public void Run()
         {
-            foreach (byte idx_0 in EntityPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var lev_0 = ref _unitF.Get2(idx_0);
-                ref var own_0 = ref _unitF.Get3(idx_0);
-                ref var vis_0 = ref _unitF.Get4(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var lev_0 = ref Unit<LevelC>(idx_0);
+                ref var own_0 = ref Unit<OwnerC>(idx_0);
+                ref var vis_0 = ref Unit<VisibleC>(idx_0);
 
-                ref var supV_0 = ref EntityVPool.ElseCellVC<SupportVC>(idx_0);
+                ref var supV_0 = ref EntityCellVPool.ElseCellVC<SupportVC>(idx_0);
 
-                ref var env_0 = ref _envF.Get1(idx_0);
-                ref var fire_0 = ref _fireF.Get1(idx_0);
+                ref var env_0 = ref Environment<EnvC>(idx_0);
+                ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
                 supV_0.DisableSR();
@@ -101,7 +96,7 @@ namespace Game.Game
                 {
                     foreach (var idx_0 in ArsonCellsC.List(WhoseMoveC.CurPlayerI, SelIdx<IdxC>().Idx))
                     {
-                        EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
+                        EntityCellVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
                     }
                 }
 
@@ -109,7 +104,7 @@ namespace Game.Game
                 {
                     foreach (var item in WindC.Directs)
                     {
-                        EntityVPool.ElseCellVC<SupportVC>(item.Value).EnableSR(SupVisTypes.Spawn);
+                        EntityCellVPool.ElseCellVC<SupportVC>(item.Value).EnableSR(SupVisTypes.Spawn);
                     }
                 }
             }
@@ -118,7 +113,7 @@ namespace Game.Game
             {
                 foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.CurPlayerI))
                 {
-                    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.Spawn);
+                    EntityCellVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.Spawn);
                 }
             }
 
@@ -131,12 +126,12 @@ namespace Game.Game
 
                 foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Simple, SelIdx<IdxC>().Idx))
                 {
-                    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.SimpleAttack);
+                    EntityCellVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.SimpleAttack);
                 }
 
                 foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelIdx<IdxC>().Idx))
                 {
-                    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.UniqueAttack);
+                    EntityCellVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.UniqueAttack);
                 }
             }
         }
