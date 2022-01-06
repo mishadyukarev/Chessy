@@ -21,8 +21,8 @@ namespace Game.Game
                 idCells[idx] = EntityCellVPool.Cell<CellVC>(idx).InstanceID;
             }
 
-            new EntityCellPool(_curGameW, isActiveCells, idCells, BackgroundVC.Name);
-            new EntityPool(_curGameW);
+            new EntityPool(_curGameW, EntityVPool.Background<GameObjectC>().Name);
+            new EntityCellPool(_curGameW, isActiveCells, idCells);    
         }
     }
 }
