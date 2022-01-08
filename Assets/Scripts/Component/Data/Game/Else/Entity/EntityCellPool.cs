@@ -1,5 +1,5 @@
-﻿using Game.Common;
-using Leopotam.Ecs;
+﻿using ECS;
+using Game.Common;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -8,8 +8,8 @@ namespace Game.Game
 {
     public readonly struct EntityCellPool
     {
-        readonly static Dictionary<CellEntTypes, EcsEntity[]> _cells;
-        readonly static Dictionary<DirectTypes, EcsEntity[]> _trails;
+        readonly static Dictionary<CellEntTypes, Entity[]> _cells;
+        readonly static Dictionary<DirectTypes, Entity[]> _trails;
 
         readonly static HashSet<byte> _idxs;
 
@@ -50,13 +50,13 @@ namespace Game.Game
 
         static EntityCellPool()
         {
-            _cells = new Dictionary<CellEntTypes, EcsEntity[]>();
-            _trails = new Dictionary<DirectTypes, EcsEntity[]>();
+            _cells = new Dictionary<CellEntTypes, Entity[]>();
+            _trails = new Dictionary<DirectTypes, Entity[]>();
             _idxs = new HashSet<byte>();
 
             for (var type = CellEntTypes.First; type < CellEntTypes.End; type++)
             {
-                _cells.Add(type, new EcsEntity[CellValues.ALL_CELLS_AMOUNT]);
+                _cells.Add(type, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
 
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
@@ -66,10 +66,10 @@ namespace Game.Game
 
             for (var dir = DirectTypes.None; dir < DirectTypes.End; dir++)
             {
-                _trails.Add(dir, new EcsEntity[CellValues.ALL_CELLS_AMOUNT]);
+                _trails.Add(dir, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
         }
-        public EntityCellPool(in EcsWorld curGameW, in bool[] isActiveCells, in int[] idCells)
+        public EntityCellPool(in WorldEcs curGameW, in bool[] isActiveCells, in int[] idCells)
         {
             byte idx = 0;
 
@@ -78,67 +78,67 @@ namespace Game.Game
             for (idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
                 _cells[CellEntTypes.Unit][idx] = curGameW.NewEntity()
-                    .Replace(new UnitCellEC(idx))
+                    .Add(new UnitCellEC(idx))
 
-                    .Replace(new UnitC(UnitTypes.None))
-                    .Replace(new LevelC())
-                    .Replace(new OwnerC())
-                    .Replace(new VisibleC(true))
-                    .Replace(new EffectsC(true))
-                    .Replace(new StunC())
-                    .Replace(new ConditionC())
-                    .Replace(new MoveInCondC(true))
-                    .Replace(new UniqAbilC(true))
-                    .Replace(new CooldownUniqC(true))
-                    .Replace(new CornerArcherC())
-                    .Replace(new HpC())
-                    .Replace(new StepC())
-                    .Replace(new WaterC());
+                    .Add(new UnitC(UnitTypes.None))
+                    .Add(new LevelC())
+                    .Add(new OwnerC())
+                    .Add(new VisibleC(true))
+                    .Add(new EffectsC(true))
+                    .Add(new StunC())
+                    .Add(new ConditionC())
+                    .Add(new MoveInCondC(true))
+                    .Add(new UniqAbilC(true))
+                    .Add(new CooldownUniqC(true))
+                    .Add(new CornerArcherC())
+                    .Add(new HpC())
+                    .Add(new StepC())
+                    .Add(new WaterC());
 
 
                 _cells[CellEntTypes.Unit_ToolWeapon][idx] = curGameW.NewEntity()
-                    .Replace(new UnitTWCellEC(idx))
+                    .Add(new UnitTWCellEC(idx))
 
-                    .Replace(new ToolWeaponC())
-                    .Replace(new LevelC())
-                    .Replace(new ShieldC(idx))
-                    .Replace(new ProtectionC());
+                    .Add(new ToolWeaponC())
+                    .Add(new LevelC())
+                    .Add(new ShieldC(idx))
+                    .Add(new ProtectionC());
 
 
 
                 _cells[CellEntTypes.Build][idx] = curGameW.NewEntity()
-                    .Replace(new BuildCellEC(idx))
+                    .Add(new BuildCellEC(idx))
 
-                    .Replace(new BuildC(BuildTypes.None))
-                    .Replace(new OwnerC())
-                    .Replace(new VisibleC(true));
+                    .Add(new BuildC(BuildTypes.None))
+                    .Add(new OwnerC())
+                    .Add(new VisibleC(true));
 
 
                 _cells[CellEntTypes.Env][idx] = curGameW.NewEntity()
-                    .Replace(new EnvCellEC(idx))
+                    .Add(new EnvCellEC(idx))
 
-                    .Replace(new EnvironmentC(new Dictionary<EnvTypes, bool>()))
-                    .Replace(new EnvResC(envValues));
+                    .Add(new EnvironmentC(new Dictionary<EnvTypes, bool>()))
+                    .Add(new EnvResC(envValues));
 
 
                 _cells[CellEntTypes.Fire][idx] = curGameW.NewEntity()
-                    .Replace(new HaveEffectC());
+                    .Add(new HaveEffectC());
 
 
                 _cells[CellEntTypes.Cloud][idx] = curGameW.NewEntity()
-                    .Replace(new HaveEffectC());
+                    .Add(new HaveEffectC());
 
 
                 _cells[CellEntTypes.River][idx] = curGameW.NewEntity()
-                    .Replace(new RiverC(true));
+                    .Add(new RiverC(true));
 
 
                 for (var dir = DirectTypes.None; dir < DirectTypes.End; dir++)
                 {
                     _trails[dir][idx] = curGameW.NewEntity()
-                    .Replace(new TrailCellEC(idx))
-                    .Replace(new VisibleC(true))
-                    .Replace(new HpC());
+                    .Add(new TrailCellEC(idx))
+                    .Add(new VisibleC(true))
+                    .Add(new HpC());
                 }
             }
 
@@ -149,8 +149,8 @@ namespace Game.Game
                 for (byte y = 0; y < CellValues.Y_AMOUNT; y++)
                 {
                     _cells[CellEntTypes.Cell][idx] = curGameW.NewEntity()
-                        .Replace(new XyC(new byte[] { x, y }))
-                        .Replace(new CellC(isActiveCells[idx], idCells[idx]));
+                        .Add(new XyC(new byte[] { x, y }))
+                        .Add(new CellC(isActiveCells[idx], idCells[idx]));
 
                     ++idx;
                 }

@@ -1,5 +1,5 @@
-﻿using Game.Common;
-using Leopotam.Ecs;
+﻿using ECS;
+using Game.Common;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace Game.Game
 {
     public readonly struct EntityCellVPool
     {
-        readonly static Dictionary<CellEntTypes, EcsEntity[]> _cells;
+        readonly static Dictionary<CellEntTypes, Entity[]> _cells;
 
         public static ref C Cell<C>(in byte idx) where C : struct, ICellVE => ref _cells[CellEntTypes.Cell][idx].Get<C>();
         public static ref C UnitCellVC<C>(in byte idx) where C : struct, IUnitCellV => ref _cells[CellEntTypes.Unit][idx].Get<C>();
@@ -22,9 +22,13 @@ namespace Game.Game
 
         static EntityCellVPool()
         {
-            _cells = new Dictionary<CellEntTypes, EcsEntity[]>();
+            _cells = new Dictionary<CellEntTypes, Entity[]>();
+            for (var type = CellEntTypes.First; type < CellEntTypes.End; type++)
+            {
+                _cells.Add(type, new Entity[300]);
+            }
         }
-        public EntityCellVPool(in EcsWorld curGameW, in byte xAmount, in byte yAmount)
+        public EntityCellVPool(in WorldEcs curGameW, in byte xAmount, in byte yAmount)
         {
             var parCells = new GameObject("Cells");
             EntityVPool.GeneralZone<GeneralZoneVEC>().Attach(parCells.transform);
@@ -35,7 +39,7 @@ namespace Game.Game
 
             for (var type = CellEntTypes.First; type < CellEntTypes.End; type++)
             {
-                _cells.Add(type, new EcsEntity[amountCells]);
+                _cells[type] = new Entity[amountCells];
             }
             var cells = new GameObject[amountCells];
 
@@ -71,46 +75,46 @@ namespace Game.Game
             for (byte idx = 0; idx < amountCells; idx++)
             {
                 _cells[CellEntTypes.Cell][idx] = curGameW.NewEntity()
-                        .Replace(new CellVC(cells[idx]));
+                        .Add(new CellVC(cells[idx]));
 
 
                 _cells[CellEntTypes.Unit][idx] = curGameW.NewEntity()
-                     .Replace(new UnitMainVC(cells[idx]))
-                     .Replace(new UnitExtraVC(cells[idx]));
+                     .Add(new UnitMainVC(cells[idx]))
+                     .Add(new UnitExtraVC(cells[idx]));
 
 
                 var build_GO = cells[idx].transform.Find("Building").gameObject;
 
                 _cells[CellEntTypes.Build][idx] = curGameW.NewEntity()
-                     .Replace(new BuildVC(build_GO))
-                     .Replace(new BuildBackVC(build_GO));
+                     .Add(new BuildVC(build_GO))
+                     .Add(new BuildBackVC(build_GO));
 
 
                 _cells[CellEntTypes.Env][idx] = curGameW.NewEntity()
-                    .Replace(new EnvVC(cells[idx]));
+                    .Add(new EnvVC(cells[idx]));
 
 
                 _cells[CellEntTypes.Trail][idx] = curGameW.NewEntity()
-                    .Replace(new TrailVC(cells[idx].transform));
+                    .Add(new TrailVC(cells[idx].transform));
 
 
                 _cells[CellEntTypes.Fire][idx] = curGameW.NewEntity()
-                    .Replace(new FireVC(cells[idx]));
+                    .Add(new FireVC(cells[idx]));
 
 
                 _cells[CellEntTypes.Cloud][idx] = curGameW.NewEntity()
-                    .Replace(new CloudVC(cells[idx]));
+                    .Add(new CloudVC(cells[idx]));
 
 
                 _cells[CellEntTypes.River][idx] = curGameW.NewEntity()
-                    .Replace(new RiverVC(cells[idx].transform));
+                    .Add(new RiverVC(cells[idx].transform));
 
 
                 _cells[CellEntTypes.Else][idx] = curGameW.NewEntity()
-                    .Replace(new SupportVC(cells[idx]))
-                    .Replace(new BlocksVC(cells[idx]))
-                    .Replace(new BarsVC(cells[idx]))
-                    .Replace(new StunVC(cells[idx].transform));
+                    .Add(new SupportVC(cells[idx]))
+                    .Add(new BlocksVC(cells[idx]))
+                    .Add(new BarsVC(cells[idx]))
+                    .Add(new StunVC(cells[idx].transform));
             }
         }
     }

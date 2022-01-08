@@ -99,9 +99,9 @@ namespace Game
 
                     _gameW = new EcsWorld();
 
+                    new SpawnEntities();
 
-                    var gameSysts = new EcsSystems(_gameW)
-                        .Add(new SpawnEntities());
+                    var gameSysts = new EcsSystems(_gameW);
 
                     new Game.CreateDataS(gameSysts);
                     new DataMasSCreate(gameSysts);

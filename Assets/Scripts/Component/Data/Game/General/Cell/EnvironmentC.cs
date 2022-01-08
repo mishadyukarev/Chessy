@@ -19,7 +19,6 @@ namespace Game.Game
         public bool Have(params EnvTypes[] envs)
         {
             if (envs == default) throw new Exception();
-
             foreach (var env in envs) if (_envs[env]) return true;
             return false;
         }

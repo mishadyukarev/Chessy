@@ -1,16 +1,18 @@
-﻿using Leopotam.Ecs;
+﻿using ECS;
+using Leopotam.Ecs;
+using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class SpawnEntities : IEcsInitSystem
+    public sealed class SpawnEntities
     {
-        EcsWorld _curGameW = default;
-
-        public void Init()
+        public SpawnEntities()
         {
-            new EntityVPool(_curGameW);
-            new EntityUIPool(_curGameW);
-            new EntityCellVPool(_curGameW, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
+            var worldTest = new WorldEcs(new Dictionary<int, Entity>());
+
+            new EntityVPool(worldTest);
+            new EntityUIPool(worldTest);
+            new EntityCellVPool(worldTest, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
 
             var isActiveCells = new bool[CellValues.ALL_CELLS_AMOUNT];
             var idCells = new int[CellValues.ALL_CELLS_AMOUNT];
@@ -21,8 +23,8 @@ namespace Game.Game
                 idCells[idx] = EntityCellVPool.Cell<CellVC>(idx).InstanceID;
             }
 
-            new EntityPool(_curGameW, EntityVPool.Background<GameObjectC>().Name);
-            new EntityCellPool(_curGameW, isActiveCells, idCells);    
+            new EntityPool(worldTest, EntityVPool.Background<GameObjectC>().Name);
+            new EntityCellPool(worldTest, isActiveCells, idCells);
         }
     }
 }

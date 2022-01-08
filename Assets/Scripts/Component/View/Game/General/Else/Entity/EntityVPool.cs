@@ -1,5 +1,5 @@
-﻿using Game.Common;
-using Leopotam.Ecs;
+﻿using ECS;
+using Game.Common;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace Game.Game
 {
     public readonly struct EntityVPool
     {
-        static readonly Dictionary<string, EcsEntity> _ents;
+        static readonly Dictionary<string, Entity> _ents;
 
         public static ref C Background<C>() where C : struct => ref _ents[nameof(Background)].Get<C>();
         public static ref C GeneralZone<C>() where C : struct => ref _ents[nameof(GeneralZone)].Get<C>();
@@ -16,17 +16,17 @@ namespace Game.Game
 
         static EntityVPool()
         {
-            _ents = new Dictionary<string, EcsEntity>();
+            _ents = new Dictionary<string, Entity>();
         }
-        public EntityVPool(in EcsWorld curGameW)
+        public EntityVPool(in WorldEcs curGameW)
         {
             ToggleZoneVC.ReplaceZone(SceneTypes.Game);
 
             var genZone = new GameObject("GeneralZone");
             ToggleZoneVC.Attach(genZone.transform);
             _ents[nameof(GeneralZone)] = curGameW.NewEntity()
-                .Replace(new GeneralZoneVEC())
-                .Replace(new GameObjectC(genZone));
+                .Add(new GeneralZoneVEC())
+                .Add(new GameObjectC(genZone));
 
 
             new VideoClipsResC(true);
@@ -41,7 +41,7 @@ namespace Game.Game
             backGroundGO.transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
             _ents[nameof(Background)] = curGameW.NewEntity()
-                .Replace(new GameObjectC(backGroundGO));
+                .Add(new GameObjectC(backGroundGO));
 
 
             var aSParent = new GameObject("AudioSource");

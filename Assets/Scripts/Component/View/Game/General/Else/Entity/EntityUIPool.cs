@@ -1,5 +1,5 @@
-﻿using Game.Common;
-using Leopotam.Ecs;
+﻿using ECS;
+using Game.Common;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
@@ -8,8 +8,8 @@ namespace Game.Game
 {
     public struct EntityUIPool
     {
-        readonly static Dictionary<CanvasEntTypes, EcsEntity> _uI;
-        readonly static Dictionary<ResTypes, EcsEntity> _economyUp;
+        readonly static Dictionary<CanvasEntTypes, Entity> _uI;
+        readonly static Dictionary<ResTypes, Entity> _economyUp;
 
 
         //Up
@@ -27,8 +27,8 @@ namespace Game.Game
 
         static EntityUIPool()
         {
-            _uI = new Dictionary<CanvasEntTypes, EcsEntity>();
-            _economyUp = new Dictionary<ResTypes, EcsEntity>();
+            _uI = new Dictionary<CanvasEntTypes, Entity>();
+            _economyUp = new Dictionary<ResTypes, Entity>();
 
             for (var type = CanvasEntTypes.First; type < CanvasEntTypes.End; type++)
             {
@@ -40,7 +40,7 @@ namespace Game.Game
             }
         }
 
-        public EntityUIPool(in EcsWorld curGameW)
+        public EntityUIPool(in WorldEcs curGameW)
         {
             CanvasC.SetCurZone(SceneTypes.Game);
 
@@ -58,38 +58,38 @@ namespace Game.Game
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
                 _economyUp[res] = curGameW.NewEntity()
-                    .Replace(new EconomyUpUIC(res))
-                    .Replace(new TextUIC(upZone_GO.transform.Find("ResourcesZone").Find(res.ToString()).Find(res.ToString() + "_TMP").GetComponent<TextMeshProUGUI>()));
+                    .Add(new EconomyUpUIC(res))
+                    .Add(new TextUIC(upZone_GO.transform.Find("ResourcesZone").Find(res.ToString()).Find(res.ToString() + "_TMP").GetComponent<TextMeshProUGUI>()));
             }
 
             _uI[CanvasEntTypes.Leave] = curGameW.NewEntity()
-                .Replace(new ButtonC(CanvasC.FindUnderCurZone<Button>("ButtonLeave")));
+                .Add(new ButtonC(CanvasC.FindUnderCurZone<Button>("ButtonLeave")));
 
             _uI[CanvasEntTypes.DirectWind] = curGameW.NewEntity()
-                .Replace(new DirWindUIC())
-                .Replace(new ImageUIC(upZone_GO.transform.Find("WindZone").Find("Direct_Image").GetComponent<Image>()));
+                .Add(new DirWindUIC())
+                .Add(new ImageUIC(upZone_GO.transform.Find("WindZone").Find("Direct_Image").GetComponent<Image>()));
 
             _uI[CanvasEntTypes.Alpha] = curGameW.NewEntity()
-                .Replace(new ButtonC(upZone_GO.transform.Find("Alpha_Button").GetComponent<Button>()));
+                .Add(new ButtonC(upZone_GO.transform.Find("Alpha_Button").GetComponent<Button>()));
 
 
             ///Center
             _uI[CanvasEntTypes.EndGame] = curGameW.NewEntity()
-                .Replace(new EndGameUIC())
-                .Replace(new TextUIC(centerZone_GO.transform.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>()));
+                .Add(new EndGameUIC())
+                .Add(new TextUIC(centerZone_GO.transform.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>()));
 
             _uI[CanvasEntTypes.Motion] = curGameW.NewEntity()
-                .Replace(new MotionsUIC())
-                .Replace(new TextUIC(centerZone_GO.transform.Find("MotionZone").Find("MotionText").GetComponent<TextMeshProUGUI>()));
+                .Add(new MotionsUIC())
+                .Add(new TextUIC(centerZone_GO.transform.Find("MotionZone").Find("MotionText").GetComponent<TextMeshProUGUI>()));
 
 
             var readyZone = centerZone_GO.transform.Find("ReadyZone");
 
             _uI[CanvasEntTypes.JoinDiscord] = curGameW.NewEntity()
-                .Replace(new ButtonC(readyZone.Find("JoinDiscordButton").GetComponent<Button>()));
+                .Add(new ButtonC(readyZone.Find("JoinDiscordButton").GetComponent<Button>()));
 
             _uI[CanvasEntTypes.Ready] = curGameW.NewEntity()
-                .Replace(new ButtonC(readyZone.Find("ReadyButton").GetComponent<Button>()));
+                .Add(new ButtonC(readyZone.Find("ReadyButton").GetComponent<Button>()));
 
 
             new MistakeUIC(centerZone_GO);
