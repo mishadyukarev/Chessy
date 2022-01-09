@@ -5,8 +5,8 @@ namespace Game.Menu
 {
     public struct BackgroundUIC
     {
-        private Image _frontBackgroundImage;
-        private Image _backBackgroundImage;
+        static Image _frontBackgroundImage;
+        static Image _backBackgroundImage;
 
         public BackgroundUIC(bool isOnline, RectTransform zoneRectTrans)
         {
@@ -22,6 +22,6 @@ namespace Game.Menu
             }
         }
 
-        public void SetActiveFrontImage(bool isActive) => _frontBackgroundImage.gameObject.SetActive(isActive);
+        public static void SetActiveFrontImage(bool isActive) => _frontBackgroundImage.gameObject.SetActive(isActive);
     }
 }

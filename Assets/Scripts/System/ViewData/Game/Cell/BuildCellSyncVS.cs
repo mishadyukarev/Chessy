@@ -1,8 +1,6 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class BuildCellSyncVS : IEcsRunSystem
+    sealed class BuildCellSyncVS : IEcsRunSystem
     {
         public void Run()
         {

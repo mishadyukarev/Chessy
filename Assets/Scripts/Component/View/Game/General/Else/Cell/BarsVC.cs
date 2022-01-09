@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct BarsVC : IFireCellV
+    public struct BarsVC : IElseCellVE
     {
         private Dictionary<CellBarTypes, SpriteRenderer> _bar_SRs;
 

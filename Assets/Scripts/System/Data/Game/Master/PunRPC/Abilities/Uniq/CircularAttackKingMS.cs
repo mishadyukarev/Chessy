@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -26,7 +25,7 @@ namespace Game.Game
             {
                 if (stepUnit_0.Have(uniq_cur))
                 {
-                    RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     cdUniq_0.SetCooldown(uniq_cur, 2);
 
@@ -73,17 +72,17 @@ namespace Game.Game
                     stepUnit_0.Take(uniq_cur);
                     effUnit_0.DefAllEffects();
 
-                    RpcSys.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    RpcS.SoundToGeneral(sender, ClipTypes.AttackMelee);
 
 
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
                 }
                 else
                 {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
-            else RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
+            else RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

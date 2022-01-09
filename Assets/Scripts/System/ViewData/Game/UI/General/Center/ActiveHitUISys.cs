@@ -1,8 +1,6 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class ActiveHitUISys : IEcsRunSystem
+    sealed class ActiveHitUISys : IEcsRunSystem
     {
 
         private bool _isStartHit = true;

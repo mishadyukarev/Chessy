@@ -59,7 +59,7 @@ namespace Game.Game
 
             foreach (var item in _directs)
             {
-                if(item.Value == idx)
+                if (item.Value == idx)
                 {
                     _curDirWind = item.Key;
                 }

@@ -7,7 +7,7 @@
         RunUpdate,
         RunFixedUpdate,
 
-        RunAfterDoing,
+        RunAfterUpdate,
 
         End
     }

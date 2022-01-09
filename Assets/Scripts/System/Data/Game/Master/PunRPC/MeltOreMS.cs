@@ -1,9 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
-using Game.Common;
-using System.Collections.Generic;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class MeltOreMS : IEcsRunSystem
     {
@@ -16,11 +11,11 @@ namespace Game.Game
             if (InvResC.CanMeltOre(whoseMove, out var needRes))
             {
                 InvResC.BuyMeltOre(whoseMove);
-                RpcSys.SoundToGeneral(sender, ClipTypes.Melting);
+                RpcS.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                RpcS.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

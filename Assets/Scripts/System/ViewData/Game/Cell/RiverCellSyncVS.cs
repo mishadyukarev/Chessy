@@ -1,8 +1,6 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class RiverCellSyncVS : IEcsRunSystem
+    sealed class RiverCellSyncVS : IEcsRunSystem
     {
         public void Run()
         {
@@ -10,7 +8,7 @@ namespace Game.Game
             {
                 ref var river_0 = ref EntityCellPool.River<RiverC>(idx_0);
 
-                if(river_0.River == RiverTypes.Start)
+                if (river_0.River == RiverTypes.Start)
                 {
                     foreach (var item_0 in river_0.DirectsDict)
                     {

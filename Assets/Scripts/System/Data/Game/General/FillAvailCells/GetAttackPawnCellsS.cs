@@ -1,9 +1,8 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public sealed class GetAttackPawnCellsS : IEcsRunSystem
+    sealed class GetAttackPawnCellsS : IEcsRunSystem
     {
         public void Run()
         {
@@ -13,7 +12,7 @@ namespace Game.Game
                 ref var level_0 = ref Unit<LevelC>(idx_0);
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
                 ref var step_0 = ref Unit<StepC>(idx_0);
-                ref var effUnit_0 = ref Unit<EffectsC>(idx_0); 
+                ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
                 ref var stunUnit_0 = ref Unit<StunC>(idx_0);
 
                 if (!stunUnit_0.IsStunned)
@@ -48,9 +47,9 @@ namespace Game.Game
                                             if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                 || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                             {
-                                                AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_1);
+                                                AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner, idx_0, idx_1);
                                             }
-                                            else AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner,  idx_0, idx_1);
+                                            else AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner, idx_0, idx_1);
                                         }
                                     }
                                 }

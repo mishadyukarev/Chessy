@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class PickUpgUnitsMS : IEcsRunSystem
     {
@@ -11,7 +9,7 @@ namespace Game.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if(unit == UnitTypes.Scout)
+            if (unit == UnitTypes.Scout)
             {
                 UnitUpgC.AddUpg(UpgTypes.PickCenter, UnitStatTypes.Steps, unit, LevelTypes.First, whoseMove);
                 UnitUpgC.AddUpg(UpgTypes.PickCenter, UnitStatTypes.Steps, unit, LevelTypes.Second, whoseMove);
@@ -25,7 +23,7 @@ namespace Game.Game
 
             UnitAvailPickUpgC.Set(unit, whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);
-            RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            RpcS.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

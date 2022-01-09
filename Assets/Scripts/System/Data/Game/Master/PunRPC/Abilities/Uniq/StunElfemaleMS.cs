@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -46,19 +45,19 @@ namespace Game.Game
 
                                         step_from.Take(uniq_cur);
 
-                                        RpcSys.SoundToGeneral(RpcTarget.All, uniq_cur);
+                                        RpcS.SoundToGeneral(RpcTarget.All, uniq_cur);
                                     }
                                 }
 
-                                else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
-                            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                            else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                         }
                     }
                 }
             }
 
-            else RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
+            else RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

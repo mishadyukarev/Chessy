@@ -1,14 +1,12 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Common
 {
     public sealed class CreateVSs
     {
-        public CreateVSs(EcsSystems comSysts, GameObject main)
+        public CreateVSs(GameObject main)
         {
-            comSysts
-                .Add(main.AddComponent<PhotonSceneSys>());
+            main.AddComponent<PhotonSceneSys>();
         }
     }
 }

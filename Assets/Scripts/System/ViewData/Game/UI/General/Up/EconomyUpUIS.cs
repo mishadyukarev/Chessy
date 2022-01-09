@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -11,7 +10,7 @@ namespace Game.Game
             var curPlayer = WhoseMoveC.CurPlayerI;
 
 
-            var extracts = new Dictionary<ResTypes, int>(); 
+            var extracts = new Dictionary<ResTypes, int>();
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
                 extracts.Add(res, 0);
@@ -29,7 +28,7 @@ namespace Game.Game
                     extracts[ResTypes.Food] -= Unit<UnitC>(idx_0).CostFood;
                 }
 
-                if(Build<BuildCellEC>(idx_0).CanExtract(out extract, out env, out res))
+                if (Build<BuildCellEC>(idx_0).CanExtract(out extract, out env, out res))
                 {
                     extracts[res] += extract;
                 }

@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -25,7 +24,7 @@ namespace Game.Game
 
             else
             {
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

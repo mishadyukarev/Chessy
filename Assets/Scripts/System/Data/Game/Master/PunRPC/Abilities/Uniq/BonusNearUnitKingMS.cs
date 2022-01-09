@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -34,7 +33,7 @@ namespace Game.Game
                     stepUnit_0.Take(uniq);
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
-                    RpcSys.SoundToGeneral(sender, uniq);
+                    RpcS.SoundToGeneral(sender, uniq);
 
                     if (!effUnit_0.Have(UnitStatTypes.Damage)) effUnit_0.Set(UnitStatTypes.Damage);
 
@@ -63,11 +62,11 @@ namespace Game.Game
                 }
                 else
                 {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
+            else RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

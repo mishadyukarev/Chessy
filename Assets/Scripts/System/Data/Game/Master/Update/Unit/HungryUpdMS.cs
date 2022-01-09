@@ -1,12 +1,9 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public sealed class HungryUpdMS : IEcsRunSystem
+    sealed class HungryUpdMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-
         public void Run()
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
@@ -25,14 +22,8 @@ namespace Game.Game
                         {
                             foreach (var idx_0 in WhereUnitsC.Idxs(unit, levUnit, player))
                             {
-                                ref var unit_0 = ref _unitF.Get1(idx_0);
-                                ref var levUnit_0 = ref _unitF.Get2(idx_0);
-                                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-
                                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                                ref var build_0 = ref EntityCellPool.Build<BuildC>(idx_0);
-                                ref var ownBuild_0 = ref EntityCellPool.Build<OwnerC>(idx_0);
-
+                                ref var build_0 = ref Build<BuildC>(idx_0);
 
 
 
@@ -41,7 +32,7 @@ namespace Game.Game
                                     buildCell_0.Remove();
                                 }
 
-                                EntityCellPool.Unit<UnitCellEC>(idx_0).Kill();
+                                Unit<UnitCellEC>(idx_0).Kill();
 
                                 return;
                             }

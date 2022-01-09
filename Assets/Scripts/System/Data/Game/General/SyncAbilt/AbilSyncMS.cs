@@ -1,26 +1,19 @@
-﻿using Leopotam.Ecs;
-using System;
+﻿using System;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public sealed class AbilSyncMS : IEcsRunSystem
+    sealed class AbilSyncMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC> _unitF = default;
-        private EcsFilter<UniqAbilC> _uniqUnitF = default;
-        private EcsFilter<EnvironmentC> _envF = default;
-
         public void Run()
         {
-            foreach (byte idx_0 in _uniqUnitF)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var uniq_0 = ref Unit<UniqAbilC>(idx_0);
 
-                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
-
-                ref var uniq_0 = ref _uniqUnitF.Get1(idx_0);
-
-                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 

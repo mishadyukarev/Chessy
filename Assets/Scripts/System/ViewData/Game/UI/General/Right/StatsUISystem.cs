@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -15,7 +14,7 @@ namespace Game.Game
             ref var hpUnit_sel = ref Unit<HpC>(selIdx);
             ref var stepUnit_sel = ref Unit<StepC>(selIdx);
             ref var waterUnit_sel = ref Unit<WaterC>(selIdx);
-            
+
 
             if (unit_sel.Have)
             {

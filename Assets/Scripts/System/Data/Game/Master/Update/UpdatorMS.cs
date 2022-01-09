@@ -1,5 +1,4 @@
 ﻿using Game.Common;
-using Leopotam.Ecs;
 using Photon.Pun;
 using static Game.Game.EntityCellPool;
 
@@ -122,11 +121,11 @@ namespace Game.Game
                     Unit<UnitCellEC>(idx_0).SetMaxSteps();
                 }
             }
-                
+
 
             if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 8)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 DataMastSC.InvokeRun(MastDataSysTypes.Truce);
             }
 

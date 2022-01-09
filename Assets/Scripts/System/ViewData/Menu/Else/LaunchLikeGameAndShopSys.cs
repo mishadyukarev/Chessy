@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
+﻿using Game.Common;
 using System;
 
 namespace Game.Menu

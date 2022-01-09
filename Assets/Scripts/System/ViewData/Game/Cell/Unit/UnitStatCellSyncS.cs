@@ -1,38 +1,27 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellVPool;
 
 namespace Game.Game
 {
-    public sealed class UnitStatCellSyncS : IEcsRunSystem
+    sealed class UnitStatCellSyncS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
-        private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
-        private EcsFilter<ConditionC, EffectsC> _effUnitF = default;
-
-        private EcsFilter<BarsVC> _cellBarsFilter = default;
-        private EcsFilter<BlocksVC> _cellBlocksFilter = default;
-
         public void Run()
         {
-            foreach (byte idx_0 in _statUnitF)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var level_0 = ref _unitF.Get2(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
-                ref var visUnit_0 = ref _unitF.Get4(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var level_0 = ref Unit<LevelC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var visUnit_0 = ref Unit<VisibleC>(idx_0);
+                ref var hpUnit_0 = ref Unit<HpC>(idx_0);
+                ref var step_0 = ref Unit<StepC>(idx_0);
+                ref var water_0 = ref Unit<StepC>(idx_0);
+                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
 
-                ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
-                ref var step_0 = ref _statUnitF.Get2(idx_0);
-                ref var water_0 = ref _statUnitF.Get3(idx_0);
-
-                ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
-                ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
-                      
-                
-
-                ref var barsViewCom = ref _cellBarsFilter.Get1(idx_0);
-                ref var blocksViewCom = ref _cellBlocksFilter.Get1(idx_0);
+                ref var barsViewCom = ref ElseCellVE<BarsVC>(idx_0);
+                ref var blocksViewCom = ref ElseCellVE<BlocksVC>(idx_0);
 
 
                 barsViewCom.DisableSR(CellBarTypes.Hp);
@@ -47,14 +36,14 @@ namespace Game.Game
                     if (unit_0.Have)
                     {
 
-                            barsViewCom.EnableSR(CellBarTypes.Hp);
-                            barsViewCom.SetColorHp(Color.red);
+                        barsViewCom.EnableSR(CellBarTypes.Hp);
+                        barsViewCom.SetColorHp(Color.red);
 
-                            float maxHpUnit_0 = UnitCellEC.MAX_HP;
+                        float maxHpUnit_0 = UnitCellEC.MAX_HP;
 
-                            float xCordinate = (float)hpUnit_0.Hp / maxHpUnit_0;
-                            barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
-                        
+                        float xCordinate = (float)hpUnit_0.Hp / maxHpUnit_0;
+                        barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
+
 
                         if (Unit<UnitCellEC>(idx_0).NeedWater)
                         {

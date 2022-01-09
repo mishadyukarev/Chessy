@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -32,7 +31,7 @@ namespace Game.Game
 
             var playerSender = InfoC.Sender(MGOTypes.Master).GetPlayer();
 
-            
+
             if (Unit<UnitCellEC>(idx_from).CanAttack(playerSender, idx_to, out var attack))
             {
                 stepUnit_from.Reset();
@@ -46,8 +45,8 @@ namespace Game.Game
                 powerDam_from += Unit<UnitCellEC>(idx_from).DamageAttack(attack);
 
                 if (unit_from.IsMelee)
-                    RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-                else RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+                    RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                else RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
 
@@ -139,7 +138,7 @@ namespace Game.Game
                         }
                         else
                         {
-                            
+
                             Unit<UnitCellEC>(idx_from).Shift(idx_to);
                         }
                     }

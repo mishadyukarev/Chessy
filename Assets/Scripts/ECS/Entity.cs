@@ -7,7 +7,8 @@ namespace ECS
     {
         readonly Dictionary<int, Entity> _ents;
 
-        public WorldEcs(in Dictionary<int, Entity> ents) => _ents = ents;
+        public WorldEcs() => _ents = new Dictionary<int, Entity>();
+        ~WorldEcs() => _ents.Clear();
 
         public Entity NewEntity()
         {
@@ -20,12 +21,10 @@ namespace ECS
     public readonly struct Entity
     {
         readonly int _numberEnt;
-        readonly Dictionary<int, int> _keysForComponents;
 
-        public Entity(in int numberEnt)
+        internal Entity(in int numberEnt)
         {
             _numberEnt = numberEnt;
-            _keysForComponents = new Dictionary<int, int>();
         }
 
         public Entity Add<C>(in C component) where C : struct
@@ -39,22 +38,46 @@ namespace ECS
         }
     }
 
-    public struct ComponentPool<C> where C : struct
+    struct ComponentPool<C> where C : struct
     {
         static C[] _components;
+        static Dictionary<int, int> _numbers;
 
-        public static void AddComponent(int idx, in C component)
+        static ComponentPool()
         {
-            if (_components == default) _components = new C[0];
-
-            Array.Resize(ref _components, _components.Length + 1);
-
-            _components[idx] = component;
+            _numbers = new Dictionary<int, int>();
         }
 
-        public static ref C Component(int idx)
+        internal static void AddComponent(in int idxEnt, in C component)
         {
-            return ref _components[idx];
+            var key = idxEnt;
+
+            if (_numbers.ContainsKey(key))
+            {
+                _components[_numbers[key]] = component;
+            }
+
+            else
+            {
+                var idx = 0;
+                foreach (var item in _numbers) idx++;
+
+                _numbers[key] = idx;
+
+                if (_components == default)
+                {
+                    _components = new C[1];
+                }
+                else
+                {
+                    idx = _components.Length;
+                    Array.Resize(ref _components, idx + 1);
+                }
+
+                _components[idx] = component;
+            }
         }
+
+        internal static ref C Component(int idxEnt) => ref _components[_numbers[idxEnt]];
     }
 }

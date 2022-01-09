@@ -1,7 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class WindUISys : IEcsRunSystem
     {

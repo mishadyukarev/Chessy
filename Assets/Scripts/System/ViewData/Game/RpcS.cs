@@ -1,6 +1,4 @@
-﻿using Game.Common;
-using ExitGames.Client.Photon;
-using Leopotam.Ecs;
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -10,7 +8,7 @@ using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
+    public sealed class RpcS : MonoBehaviour
     {
         static PhotonView PhotonView => RpcVC.PhotonView;
 
@@ -21,7 +19,7 @@ namespace Game.Game
 
         int _idx_cur;
 
-        public static RpcSys Instance { get; private set; }
+        public static RpcS Instance { get; private set; }
 
         public void Init()
         {
@@ -75,7 +73,7 @@ namespace Game.Game
         public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
 
         public static void BuyResToMaster(ResTypes res) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BuyRes, new object[] { res });
-        
+
         public static void GetHero(UnitTypes unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GetHero, new object[] { unit });
 
         public static void ShiftUnitToMaster(byte idx_from, byte idx_to) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idx_from, idx_to });
@@ -107,7 +105,7 @@ namespace Game.Game
 
             InfoC.AddInfo(MGOTypes.Master, infoFrom);
 
-            if(rpcType == RpcMasterTypes.UniqAbil)
+            if (rpcType == RpcMasterTypes.UniqAbil)
             {
                 var uniqAbil = (UniqueAbilTypes)objects[_idx_cur++];
 
@@ -176,7 +174,7 @@ namespace Game.Game
                     case RpcMasterTypes.Done:
                         break;
 
-                    case RpcMasterTypes.Build: 
+                    case RpcMasterTypes.Build:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         BuildDoingMC.Set((BuildTypes)objects[_idx_cur++]);
                         break;
@@ -381,7 +379,7 @@ namespace Game.Game
 
                 objs.Add(Unit<ConditionC>(idx_0).Condition);
                 foreach (var item in Unit<EffectsC>(idx_0).Effects) objs.Add(item.Value);
-               
+
 
                 objs.Add(UnitTW<ToolWeaponC>(idx_0).ToolWeapon);
                 objs.Add(UnitTW<LevelC>(idx_0).Level);
@@ -412,7 +410,7 @@ namespace Game.Game
                         objs.Add(item_0.Value);
                         objs.Add(item_1.Value);
                     }
-                        
+
 
 
 
@@ -431,7 +429,7 @@ namespace Game.Game
                 objs.Add(Fire<HaveEffectC>(idx_0).Have);
 
 
-                
+
             }
 
 
@@ -461,7 +459,7 @@ namespace Game.Game
             #region Other
 
             objs.Add(WhoseMoveC.WhoseMove);
-            objs.Add(PlyerWinnerC.PlayerWinner);
+            objs.Add(PlayerWinnerC.PlayerWinner);
             objs.Add(ReadyC.IsStartedGame);
             objs.Add(ReadyC.IsReady(PlayerTypes.Second));
 
@@ -484,7 +482,7 @@ namespace Game.Game
         }
 
         [PunRPC]
-        private void SyncAllOther(object[] objects)
+        void SyncAllOther(object[] objects)
         {
             _idx_cur = 0;
 
@@ -565,7 +563,7 @@ namespace Game.Game
             #region Other
 
             WhoseMoveC.SetWhoseMove((PlayerTypes)objects[_idx_cur++]);
-            PlyerWinnerC.PlayerWinner = (PlayerTypes)objects[_idx_cur++];
+            PlayerWinnerC.PlayerWinner = (PlayerTypes)objects[_idx_cur++];
             ReadyC.IsStartedGame = (bool)objects[_idx_cur++];
             ReadyC.SetIsReady(WhoseMoveC.CurPlayerI, (bool)objects[_idx_cur++]);
 
@@ -583,7 +581,7 @@ namespace Game.Game
         [PunRPC]
         private void UpdateDataAndView()
         {
-            DataSC.Run(DataSTypes.RunAfterDoing);
+            DataSC.Run(DataSTypes.RunAfterUpdate);
         }
 
         #endregion

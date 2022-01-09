@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -26,7 +25,7 @@ namespace Game.Game
                     {
                         buildCell_0.Remove();
 
-                        if (env != EnvTypes.Hill) envCell_0.Remove(env);          
+                        if (env != EnvTypes.Hill) envCell_0.Remove(env);
 
                         if (env == EnvTypes.AdultForest)
                         {

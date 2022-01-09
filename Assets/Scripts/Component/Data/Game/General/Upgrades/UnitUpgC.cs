@@ -74,7 +74,7 @@ namespace Game.Game
                     default: throw new Exception();
                 }
 
-                
+
             }
 
             return steps;

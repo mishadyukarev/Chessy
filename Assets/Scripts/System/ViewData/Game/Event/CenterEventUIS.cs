@@ -1,13 +1,12 @@
 ﻿using Game.Common;
-using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class CenterEventUIS : IEcsInitSystem
+    sealed class CenterEventUIS
     {
-        public void Init()
+        internal CenterEventUIS()
         {
             EntityUIPool.ReadyCenter<ButtonC>().AddList(Ready);
             EntityUIPool.JoinDiscordCenter<ButtonC>().AddList(delegate { Application.OpenURL(URLC.URL_DISCORD); });
@@ -32,7 +31,7 @@ namespace Game.Game
             HeroesViewUIC.AddListPremium(OpenShop);
         }
 
-        private void Ready() => RpcSys.ReadyToMaster();
+        private void Ready() => RpcS.ReadyToMaster();
         private void FriendReady()
         {
             FriendC.IsActiveFriendZone = false;
@@ -56,7 +55,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcSys.PickUpgUnitToMas(unit);
+                RpcS.PickUpgUnitToMas(unit);
 
                 HeroesViewUIC.SetActiveZone(true);
             }
@@ -67,7 +66,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcSys.PickUpgBuildToMas(build);
+                RpcS.PickUpgBuildToMas(build);
 
                 HeroesViewUIC.SetActiveZone(true);
             }
@@ -78,7 +77,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcSys.UpgWater();
+                RpcS.UpgWater();
 
                 HeroesViewUIC.SetActiveZone(true);
             }
@@ -89,7 +88,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcSys.GetHero(UnitTypes.Elfemale);
+                RpcS.GetHero(UnitTypes.Elfemale);
             }
             else SoundEffectVC.Play(ClipTypes.Mistake);
         }

@@ -1,8 +1,4 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-using System;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class PickUpgMasSys : IEcsRunSystem
     {
@@ -13,53 +9,53 @@ namespace Game.Game
 
             //if (PickUpgC.HaveUpgrade(whoseMove))
             //{
-                //switch (ForPickUpgMasC.UpgButType)
-                //{
-                //    case PickUpgradeTypes.None: throw new Exception();
+            //switch (ForPickUpgMasC.UpgButType)
+            //{
+            //    case PickUpgradeTypes.None: throw new Exception();
 
-                //    case PickUpgradeTypes.King:
-                //        UnitPercUpgC.AddUpg(whoseMove, UnitTypes.King, UnitStatTypes.Damage, 0.2f);
-                //        break;
+            //    case PickUpgradeTypes.King:
+            //        UnitPercUpgC.AddUpg(whoseMove, UnitTypes.King, UnitStatTypes.Damage, 0.2f);
+            //        break;
 
-                //    case PickUpgradeTypes.Pawn:
-                //        UnitPercUpgC.AddUpg(whoseMove, UnitTypes.Pawn, UnitStatTypes.Damage, 0.2f);
-                //        break;
+            //    case PickUpgradeTypes.Pawn:
+            //        UnitPercUpgC.AddUpg(whoseMove, UnitTypes.Pawn, UnitStatTypes.Damage, 0.2f);
+            //        break;
 
-                //    case PickUpgradeTypes.Archer:
-                //        UnitPercUpgC.AddUpg(whoseMove, UnitTypes.Archer, UnitStatTypes.Damage, 0.2f);
-                //        break;
+            //    case PickUpgradeTypes.Archer:
+            //        UnitPercUpgC.AddUpg(whoseMove, UnitTypes.Archer, UnitStatTypes.Damage, 0.2f);
+            //        break;
 
-                //    case PickUpgradeTypes.Scout:
-                //        UnitStepUpgC.SetStepUpg(whoseMove, UnitTypes.Scout, 3);
-                //        break;
+            //    case PickUpgradeTypes.Scout:
+            //        UnitStepUpgC.SetStepUpg(whoseMove, UnitTypes.Scout, 3);
+            //        break;
 
-                //    case PickUpgradeTypes.Water:
-                //        for (var unit = (UnitTypes)1; unit < (UnitTypes)typeof(UnitTypes).GetEnumNames().Length; unit++)
-                //        {
-                //            UnitPercUpgC.AddUpg(whoseMove, unit, UnitStatTypes.Water, 0.2f);
-                //        }
-                //        break;
+            //    case PickUpgradeTypes.Water:
+            //        for (var unit = (UnitTypes)1; unit < (UnitTypes)typeof(UnitTypes).GetEnumNames().Length; unit++)
+            //        {
+            //            UnitPercUpgC.AddUpg(whoseMove, unit, UnitStatTypes.Water, 0.2f);
+            //        }
+            //        break;
 
-                //    case PickUpgradeTypes.Farm:
-                //        BuildsUpgC.AddUpgrade(whoseMove, BuildTypes.Farm);
-                //        break;
+            //    case PickUpgradeTypes.Farm:
+            //        BuildsUpgC.AddUpgrade(whoseMove, BuildTypes.Farm);
+            //        break;
 
-                //    case PickUpgradeTypes.Woodcutter:
-                //        BuildsUpgC.AddUpgrade(whoseMove, BuildTypes.Woodcutter);
-                //        break;
+            //    case PickUpgradeTypes.Woodcutter:
+            //        BuildsUpgC.AddUpgrade(whoseMove, BuildTypes.Woodcutter);
+            //        break;
 
-                //    case PickUpgradeTypes.Mine:
-                //        BuildsUpgC.AddUpgrade(whoseMove, BuildTypes.Mine);
-                //        break;
+            //    case PickUpgradeTypes.Mine:
+            //        BuildsUpgC.AddUpgrade(whoseMove, BuildTypes.Mine);
+            //        break;
 
-                //    default: throw new Exception();
-                //}
+            //    default: throw new Exception();
+            //}
 
 
-                //PickUpgC.SetHaveUpgrade(whoseMove, false);
-                //PickUpgC.SetHave_But(whoseMove, ForPickUpgMasC.UpgButType, false);
+            //PickUpgC.SetHaveUpgrade(whoseMove, false);
+            //PickUpgC.SetHave_But(whoseMove, ForPickUpgMasC.UpgButType, false);
 
-                RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            RpcS.SoundToGeneral(sender, ClipTypes.PickUpgrade);
             //}
         }
     }

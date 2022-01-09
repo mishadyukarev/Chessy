@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct StunVC : IFireCellV
+    public struct StunVC : IElseCellVE
     {
         private SpriteRenderer _stun;
 

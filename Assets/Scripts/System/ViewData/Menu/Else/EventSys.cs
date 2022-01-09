@@ -1,25 +1,16 @@
-﻿using Leopotam.Ecs;
+﻿using Game.Common;
 using Photon.Pun;
 using Photon.Realtime;
-using Game.Common;
 using UnityEngine;
 
 namespace Game.Menu
 {
-    public sealed class EventSys : IEcsInitSystem
+    public sealed class EventSys
     {
-        private EcsFilter<ConnectorUIC, OnZoneUIC, BackgroundUIC> _rightZoneFilter = default;
-        private EcsFilter<ConnectorUIC, OffZoneUIC, BackgroundUIC> _leftZoneFilter = default;
-
         private const byte MAX_PLAYERS = 2;
 
-        public void Init()
+        public EventSys()
         {
-            ref var rightConnectCom = ref _rightZoneFilter.Get1(0);
-            ref var rightOnlineCom = ref _rightZoneFilter.Get2(0);
-
-
-
             CenterZoneUICom.AddListShop_But(ShopZone);
 
             CenterZoneUICom.AddListDiscord_But(delegate { Application.OpenURL(URLC.URL_DISCORD); });
@@ -27,17 +18,17 @@ namespace Game.Menu
             CenterZoneUICom.AddListQuit_But(delegate { Application.Quit(); });
 
 
-            rightConnectCom.AddListConnect_Button(ConnectOnline);
-            rightOnlineCom.AddListCreatePublicRoom(CreateRoom);
-            rightOnlineCom.AddListJoinRandomPublicRoom(JoinRandomRoom);
+            ConnectorUIC.AddListConnect_Button(ConnectOnline);
+            OnZoneUIC.AddListCreatePublicRoom(CreateRoom);
+            OnZoneUIC.AddListJoinRandomPublicRoom(JoinRandomRoom);
 
-            rightOnlineCom.AddListCreateFriendRoom(CreateFriendRoom);
-            rightOnlineCom.AddListJoinFriendRoom(JoinFriendRoom);
+            OnZoneUIC.AddListCreateFriendRoom(CreateFriendRoom);
+            OnZoneUIC.AddListJoinFriendRoom(JoinFriendRoom);
 
 
-            _leftZoneFilter.Get1(0).AddListConnect_Button(ConnectOffline);
-            _leftZoneFilter.Get2(0).AddListTrain(delegate { CreateOffGame(GameModes.TrainingOff); });
-            _leftZoneFilter.Get2(0).AddListFriend(delegate { CreateOffGame(GameModes.WithFriendOff); });
+            ConUIC.AddListConnect_Button(ConnectOffline);
+            OffZoneUIC.AddListTrain(delegate { CreateOffGame(GameModes.TrainingOff); });
+            OffZoneUIC.AddListFriend(delegate { CreateOffGame(GameModes.WithFriendOff); });
 
 
 
@@ -82,8 +73,7 @@ namespace Game.Menu
 
         private void CreateFriendRoom()
         {
-            ref var rightOnlineUICom = ref _rightZoneFilter.Get2(0);
-            var roomName = rightOnlineUICom.TextCreateFriendRoom;
+            var roomName = OnZoneUIC.TextCreateFriendRoom;
 
             GameModesCom.CurGameMode = GameModes.WithFriendOn;
 
@@ -105,7 +95,7 @@ namespace Game.Menu
         private void JoinFriendRoom()
         {
             GameModesCom.CurGameMode = GameModes.WithFriendOn;
-            PhotonNetwork.JoinRoom(_rightZoneFilter.Get2(0).TextJoinFriendRoom);
+            PhotonNetwork.JoinRoom(OnZoneUIC.TextJoinFriendRoom);
         }
 
         private void CreateOffGame(GameModes offGameMode)

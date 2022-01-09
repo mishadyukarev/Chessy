@@ -1,25 +1,23 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
+using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellVPool;
 
 namespace Game.Game
 {
-    public sealed class CellBarsEnvSystem : IEcsRunSystem
+    sealed class CellBarsEnvS : IEcsRunSystem
     {
-        private EcsFilter<EnvironmentC, EnvResC> _cellEnvFilter = default;
-        private EcsFilter<BarsVC> _cellBarsFilter = default;
-
         public void Run()
         {
             //ref var selBuildDatC = ref _cellBuildFilter.Get1(SelCell.IdxSelCell);
 
             //ref var env_sel = ref _cellEnvFilter.Get1(SelCell.IdxSelCell);
-            
 
-            foreach (var curIdxCell in _cellEnvFilter)
+
+            foreach (var curIdxCell in Idxs)
             {
-                ref var env_0 = ref _cellEnvFilter.Get1(curIdxCell);
-                ref var envRes_0 = ref _cellEnvFilter.Get2(curIdxCell);
-                ref var barsView_0 = ref _cellBarsFilter.Get1(curIdxCell);
+                ref var env_0 = ref Environment<EnvironmentC>(curIdxCell);
+                ref var envRes_0 = ref Environment<EnvResC>(curIdxCell);
+                ref var barsView_0 = ref ElseCellVE<BarsVC>(curIdxCell);
 
                 if (EnvInfoC.IsActivatedInfo)
                 {

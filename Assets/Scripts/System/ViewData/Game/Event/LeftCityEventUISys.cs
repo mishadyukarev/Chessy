@@ -1,10 +1,8 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class LeftCityEventUISys : IEcsInitSystem
+    sealed class LeftCityEventUISys
     {
-        public void Init()
+        internal LeftCityEventUISys()
         {
             CutyLeftUIC.AddListenerToMelt(delegate { MeltOre(); });
 
@@ -14,12 +12,12 @@ namespace Game.Game
 
         private void MeltOre()
         {
-            if (WhoseMoveC.IsMyMove) RpcSys.MeltOreToMaster();
+            if (WhoseMoveC.IsMyMove) RpcS.MeltOreToMaster();
         }
 
         private void BuyRes(ResTypes res)
         {
-            if (WhoseMoveC.IsMyMove) RpcSys.BuyResToMaster(res);
+            if (WhoseMoveC.IsMyMove) RpcS.BuyResToMaster(res);
         }
     }
 }

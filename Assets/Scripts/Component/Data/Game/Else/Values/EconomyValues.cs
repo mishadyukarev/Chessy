@@ -57,7 +57,7 @@ namespace Game.Game
                 case ResTypes.None: throw new Exception();
                 case ResTypes.Food: return 250;
                 case ResTypes.Wood: return 250;
-                case ResTypes.Ore:  return 0;
+                case ResTypes.Ore: return 0;
                 case ResTypes.Iron: return 0;
                 case ResTypes.Gold: return 0;
                 default: throw new Exception();
@@ -282,7 +282,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            
+
         }
 
         #endregion

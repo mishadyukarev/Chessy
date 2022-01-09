@@ -1,11 +1,10 @@
 ﻿using Game.Common;
-using Leopotam.Ecs;
 
 namespace Game.Game
 {
-    public sealed class UpEventUIS : IEcsInitSystem
+    sealed class UpEventUIS
     {
-        public void Init()
+        internal UpEventUIS()
         {
             EntityUIPool.AlphaUp<ButtonC>().AddList(OpenShop);
         }

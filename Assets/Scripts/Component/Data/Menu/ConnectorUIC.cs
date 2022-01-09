@@ -6,7 +6,7 @@ namespace Game.Menu
 {
     public struct ConnectorUIC
     {
-        private Button _button;
+        static Button _button;
 
         public ConnectorUIC(bool isOnline, RectTransform zoneRectTrans)
         {
@@ -17,7 +17,7 @@ namespace Game.Menu
             else _button = zoneRectTrans.transform.Find("ConnectOffline_Button").GetComponent<Button>();
         }
 
-        public void AddListConnect_Button(UnityAction unityAction) => _button.onClick.AddListener(unityAction);
-        public void SetActive_Button(bool isActive) => _button.gameObject.SetActive(isActive);
+        public static void AddListConnect_Button(UnityAction unityAction) => _button.onClick.AddListener(unityAction);
+        public static void SetActive_Button(bool isActive) => _button.gameObject.SetActive(isActive);
     }
 }

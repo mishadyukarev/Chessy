@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class CreateUnitMastSys : IEcsRunSystem
     {
@@ -20,18 +18,18 @@ namespace Game.Game
                     InvResC.BuyCreateUnit(playerSend, unit);
                     InvUnitsC.Add(unit, LevelTypes.First, playerSend);
 
-                    RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                    RpcS.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }
                 else
                 {
-                    RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
-                    RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                    RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
+                    RpcS.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
+                RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
+                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }
     }

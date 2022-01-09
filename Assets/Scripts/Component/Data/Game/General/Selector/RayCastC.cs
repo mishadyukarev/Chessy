@@ -6,6 +6,6 @@
 
         public bool Is(in RaycastTypes raycast) => Raycast == raycast;
 
-        public void Reset() => Raycast = default; 
+        public void Reset() => Raycast = default;
     }
 }

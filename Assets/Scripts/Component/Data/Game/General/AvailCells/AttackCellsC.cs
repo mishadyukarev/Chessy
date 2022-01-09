@@ -8,7 +8,7 @@ namespace Game.Game
         private static Dictionary<string, List<byte>> _cells;
 
         private static string Key(AttackTypes attack, PlayerTypes player, byte idx) => attack.ToString() + player + idx;
-        
+
         public static Dictionary<string, List<byte>> Cells
         {
             get

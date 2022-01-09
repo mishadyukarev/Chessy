@@ -1,43 +1,32 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 
 namespace Game.Menu
 {
     public sealed class ConnectorMenuSys : IEcsRunSystem
     {
-        private EcsFilter<ConnectorUIC, OnZoneUIC, BackgroundUIC> _rightZoneFilter = default;
-        private EcsFilter<ConnectorUIC, OffZoneUIC, BackgroundUIC> _leftZoneFilter = default;
-
         public void Run()
         {
-            ref var rightConnectCom = ref _rightZoneFilter.Get1(0);
-            ref var rightOnlineCom = ref _rightZoneFilter.Get2(0);
-            ref var rightBackCom = ref _rightZoneFilter.Get3(0);
-
-            ref var leftConnectCom = ref _leftZoneFilter.Get1(0);
-            ref var leftBackCom = ref _leftZoneFilter.Get3(0);
-
             if (PhotonNetwork.IsConnected)
             {
                 if (PhotonNetwork.OfflineMode)
                 {
-                    rightBackCom.SetActiveFrontImage(true);
-                    rightConnectCom.SetActive_Button(true);
-                    rightBackCom.SetActiveFrontImage(true);
+                    BackgroundUIC.SetActiveFrontImage(true);
+                    ConnectorUIC.SetActive_Button(true);
+                    BackgroundUIC.SetActiveFrontImage(true);
 
                     CenterZoneUICom.SetLogText("Offline");
-                    leftConnectCom.SetActive_Button(false);
-                    leftBackCom.SetActiveFrontImage(false);
+                    ConUIC.SetActive_Button(false);
+                    BackUIC.SetActiveFrontImage(false);
                 }
                 else if (PhotonNetwork.IsConnectedAndReady)
                 {
-                    leftConnectCom.SetActive_Button(true);
-                    leftBackCom.SetActiveFrontImage(true);
+                    ConUIC.SetActive_Button(true);
+                    BackUIC.SetActiveFrontImage(true);
 
                     CenterZoneUICom.SetLogText("Online");
-                    rightBackCom.SetActiveFrontImage(false);
-                    rightConnectCom.SetActive_Button(false);
-                    rightBackCom.SetActiveFrontImage(false);
+                    BackgroundUIC.SetActiveFrontImage(false);
+                    ConnectorUIC.SetActive_Button(false);
+                    BackgroundUIC.SetActiveFrontImage(false);
                 }
             }
         }

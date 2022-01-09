@@ -1,8 +1,6 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class KingZoneUISys : IEcsRunSystem
+    sealed class KingZoneUISys : IEcsRunSystem
     {
         public void Run()
         {

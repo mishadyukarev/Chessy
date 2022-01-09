@@ -1,6 +1,5 @@
-﻿using Leopotam.Ecs;
+﻿using Game.Common;
 using Photon.Pun;
-using Game.Common;
 
 namespace Game.Game
 {
@@ -10,7 +9,7 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+            RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
 
             if (PhotonNetwork.OfflineMode)
@@ -18,7 +17,7 @@ namespace Game.Game
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
                     DataMastSC.InvokeRun(MastDataSysTypes.Update);
-                    RpcSys.ActiveMotionZoneToGen(sender);
+                    RpcS.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
@@ -26,10 +25,10 @@ namespace Game.Game
                     var curPlayer = WhoseMoveC.CurPlayerI;
                     var nextPlayer = WhoseMoveC.NextPlayerFrom(curPlayer);
 
-                    if(nextPlayer == PlayerTypes.First)
+                    if (nextPlayer == PlayerTypes.First)
                     {
                         DataMastSC.InvokeRun(MastDataSysTypes.Update);
-                        RpcSys.ActiveMotionZoneToGen(sender);
+                        RpcS.ActiveMotionZoneToGen(sender);
                     }
 
                     WhoseMoveC.SetWhoseMove(nextPlayer);
@@ -39,7 +38,7 @@ namespace Game.Game
 
                     //ViewDataSC.RotateAll.Invoke(); 
 
-                    FriendC.IsActiveFriendZone = true;     
+                    FriendC.IsActiveFriendZone = true;
                 }
             }
             else
@@ -54,8 +53,8 @@ namespace Game.Game
                         {
                             DataMastSC.InvokeRun(MastDataSysTypes.Update);
 
-                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                            RpcS.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                            RpcS.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
                         }
 
                         WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

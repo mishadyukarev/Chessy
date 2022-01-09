@@ -1,7 +1,4 @@
-﻿using Game.Common;
-using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public class GetHeroMS : IEcsRunSystem
     {

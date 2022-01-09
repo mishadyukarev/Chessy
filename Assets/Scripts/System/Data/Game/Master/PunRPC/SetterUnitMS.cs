@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -41,7 +40,7 @@ namespace Game.Game
                 if (InvUnitsC.Have(unit, LevelTypes.Second, whoseMove))
                 {
                     InvUnitsC.Take(whoseMove, unit, LevelTypes.Second);
-                    levUnit  = LevelTypes.Second;
+                    levUnit = LevelTypes.Second;
                 }
                 else
                 {
@@ -53,7 +52,7 @@ namespace Game.Game
 
                 if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
-                RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -25,16 +24,16 @@ namespace Game.Game
 
                     Unit<UnitCellEC>(idx_0).Take(uniq);
 
-                    RpcSys.SoundToGeneral(sender, ClipTypes.PickArcher);
+                    RpcS.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
                 else
                 {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

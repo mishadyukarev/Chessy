@@ -27,7 +27,7 @@ namespace Game.Common
         }
         public static void Set(IExtensionProvider exten)
         {
-            _storeExtProvider = exten;      
+            _storeExtProvider = exten;
         }
         public static void InitiatePurchase(Product product)
         {

@@ -7,7 +7,7 @@ namespace Game.Game
     {
         Dictionary<PlayerTypes, bool> _isVisibled;
         public bool IsVisibled(PlayerTypes key) => _isVisibled[key];
-        
+
 
         public VisibleC(bool needNew)
         {

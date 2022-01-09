@@ -10,6 +10,6 @@
 //        internal HpUnitCellEC(in byte idx) => _idx = idx;
 
 
-        
+
 //    }
 //}

@@ -1,10 +1,9 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class ReadyZoneUISystem : IEcsRunSystem
+    sealed class ReadyZoneUISystem : IEcsRunSystem
     {
         public void Run()
         {

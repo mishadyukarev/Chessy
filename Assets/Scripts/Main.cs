@@ -1,6 +1,7 @@
-﻿using Game.Common;
+﻿using ECS;
+using Game.Common;
 using Game.Game;
-using Leopotam.Ecs;
+using Game.Menu;
 using System;
 using UnityEngine;
 
@@ -10,19 +11,20 @@ namespace Game
     {
         [SerializeField] TestModes _testMode = default;
 
-        EcsWorld _menuW;
-        EcsWorld _gameW;
+        WorldEcs _commonW;
+        WorldEcs _menuW;
+        WorldEcs _gameW;
 
 
         void Start()
         {
+            _commonW = new WorldEcs();
+
             new Common.CreateCs(transform, _testMode);
 
-            var comSysts = new EcsSystems(new EcsWorld());
-            new Common.CreateVSs(comSysts, gameObject);
-            new Common.CreateSs(comSysts, ToggleScene);
 
-            comSysts.Init();
+            new Common.CreateSs(ToggleScene);
+            new Common.CreateVSs(gameObject);
 
             ToggleScene(SceneTypes.Menu);
         }
@@ -82,40 +84,31 @@ namespace Game
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    if (_gameW != default)
-                    {
-                        _gameW.Destroy();
-                    }
+                    if (_gameW != default) _gameW = default;
 
-                    _menuW = new EcsWorld();
-                    new Menu.FillEntitieSys(_menuW);
+                    _menuW = new WorldEcs();
+                    new EntitieManager(_menuW);
+                    new SystemsManager();
                     break;
 
                 case SceneTypes.Game:
-                    if (_menuW != default)
-                    {
-                        _menuW.Destroy();
-                    }
+                    if (_menuW != default) _menuW = default;
 
-                    _gameW = new EcsWorld();
+                    _gameW = new WorldEcs();
 
-                    new SpawnEntities();
+                    new SpawnEntities(_gameW);
 
-                    var gameSysts = new EcsSystems(_gameW);
-
-                    new Game.CreateDataS(gameSysts);
-                    new DataMasSCreate(gameSysts);
-                    new ViewDataSCreate(gameSysts);
+                    new SystemDataManager();
+                    new SystemDataMasterManager();
+                    new SystemViewDataManager();
 
 
                     var rpc_GO = new GameObject("RpcView");
-                    var rpc = rpc_GO.AddComponent<RpcSys>();
-                    //GenerZoneVC.Attach(rpc.transform);
+                    var rpc = rpc_GO.AddComponent<RpcS>();
+                    EntityVPool.GeneralZone<GeneralZoneVEC>().Attach(rpc.transform);
                     new RpcVC(rpc_GO);
 
-                    gameSysts.Add(rpc);
-
-                    gameSysts.Init();
+                    rpc.Init();
 
                     break;
 

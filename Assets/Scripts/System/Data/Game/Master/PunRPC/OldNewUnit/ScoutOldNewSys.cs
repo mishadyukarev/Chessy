@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -21,12 +19,12 @@ namespace Game.Game
                     InvUnitsC.Take(Unit<OwnerC>(idx_0).Owner, UnitTypes.Scout, LevelTypes.First);
                     Unit<UnitCellEC>(idx_0).SetScout();
 
-                    RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                    RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }
 
-                else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+            else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
         }
     }
 }

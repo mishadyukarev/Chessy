@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using System;
 using static Game.Game.EntityCellPool;
 
@@ -24,7 +23,7 @@ namespace Game.Game
             {
                 if (env_0.Have(EnvTypes.AdultForest))
                 {
-                    RpcSys.SoundToGeneral(RpcTarget.All, UniqueAbilTypes.FirePawn);
+                    RpcS.SoundToGeneral(RpcTarget.All, UniqueAbilTypes.FirePawn);
 
                     fire_0.Enable();
                     stepUnit_0.Take(uniq_cur);
@@ -37,7 +36,7 @@ namespace Game.Game
 
             else
             {
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

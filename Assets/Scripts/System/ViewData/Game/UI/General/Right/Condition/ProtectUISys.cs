@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 

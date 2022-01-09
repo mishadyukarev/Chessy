@@ -1,12 +1,11 @@
-﻿using Leopotam.Ecs;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class MistakeUISys : IEcsRunSystem
+    sealed class MistakeUISys : IEcsRunSystem
     {
-        private float _neededTimeForFading = 1.3f;
+        float _neededTimeForFading = 1.3f;
 
         public void Run()
         {

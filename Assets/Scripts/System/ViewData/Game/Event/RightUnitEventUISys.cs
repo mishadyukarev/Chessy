@@ -1,17 +1,12 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-using System;
+﻿using System;
 using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public sealed class RightUnitEventUISys : IEcsInitSystem
+    sealed class RightUnitEventUISys
     {
-        private EcsFilter<ConditionC> _effUnitF = default;
-        private EcsFilter<UniqAbilC, CooldownUniqC> _uniqAbilF = default;
-
-        public void Init()
+        internal RightUnitEventUISys()
         {
             UniqButtonsUIC.AddListener(UniqButTypes.First, delegate { UniqBut(UniqButTypes.First); });
             UniqButtonsUIC.AddListener(UniqButTypes.Second, delegate { UniqBut(UniqButTypes.Second); });
@@ -31,13 +26,13 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (_effUnitF.Get1(SelIdx<IdxC>().Idx).Is(condUnitType))
+                if (Unit<ConditionC>(SelIdx<IdxC>().Idx).Is(condUnitType))
                 {
-                    RpcSys.ConditionUnitToMaster(CondUnitTypes.None, SelIdx<IdxC>().Idx);
+                    RpcS.ConditionUnitToMaster(CondUnitTypes.None, SelIdx<IdxC>().Idx);
                 }
                 else
                 {
-                    RpcSys.ConditionUnitToMaster(condUnitType, SelIdx<IdxC>().Idx);
+                    RpcS.ConditionUnitToMaster(condUnitType, SelIdx<IdxC>().Idx);
                 }
             }
             else SoundEffectVC.Play(ClipTypes.Mistake);
@@ -47,8 +42,8 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                ref var uniq_sel = ref _uniqAbilF.Get1(SelIdx<IdxC>().Idx);
-                ref var cdUniq_sel = ref _uniqAbilF.Get2(SelIdx<IdxC>().Idx);
+                ref var uniq_sel = ref Unit<UniqAbilC>(SelIdx<IdxC>().Idx);
+                ref var cdUniq_sel = ref Unit<CooldownUniqC>(SelIdx<IdxC>().Idx);
 
                 var abil = uniq_sel.Ability(uniqBut);
 
@@ -66,17 +61,17 @@ namespace Game.Game
                                     case UniqueAbilTypes.None: throw new Exception();
 
                                     case UniqueAbilTypes.FirePawn:
-                                        RpcSys.FirePawnToMas(SelIdx<IdxC>().Idx);
+                                        RpcS.FirePawnToMas(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
                                     case UniqueAbilTypes.PutOutFirePawn:
-                                        RpcSys.PutOutFirePawnToMas(SelIdx<IdxC>().Idx);
+                                        RpcS.PutOutFirePawnToMas(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
                                     case UniqueAbilTypes.Seed:
-                                        RpcSys.SeedEnvToMaster(SelIdx<IdxC>().Idx, EnvTypes.YoungForest);
+                                        RpcS.SeedEnvToMaster(SelIdx<IdxC>().Idx, EnvTypes.YoungForest);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
@@ -87,12 +82,12 @@ namespace Game.Game
                                         break;
 
                                     case UniqueAbilTypes.CircularAttack:
-                                        RpcSys.CircularAttackKingToMaster(SelIdx<IdxC>().Idx);
+                                        RpcS.CircularAttackKingToMaster(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.CircularAttack);
                                         break;
 
                                     case UniqueAbilTypes.GrowAdultForest:
-                                        RpcSys.GrowAdultForest(SelIdx<IdxC>().Idx);
+                                        RpcS.GrowAdultForest(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.GrowingAdForesElfemale);
                                         break;
                                     default: throw new Exception();
@@ -107,7 +102,7 @@ namespace Game.Game
                                     case UniqueAbilTypes.None: throw new Exception();
 
                                     case UniqueAbilTypes.BonusNear:
-                                        RpcSys.BonusNearUnits(SelIdx<IdxC>().Idx);
+                                        RpcS.BonusNearUnits(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.BonusKing);
                                         break;
 
@@ -121,7 +116,7 @@ namespace Game.Game
 
                                     case UniqueAbilTypes.ChangeCornerArcher:
                                         {
-                                            RpcSys.ChangeCornerArchToMas(SelIdx<IdxC>().Idx);
+                                            RpcS.ChangeCornerArchToMas(SelIdx<IdxC>().Idx);
                                         }
                                         break;
 
@@ -165,12 +160,12 @@ namespace Game.Game
                         throw new Exception();
 
                     case BuildButtonTypes.First:
-                        RpcSys.BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.Farm);
+                        RpcS.BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.Farm);
                         TryOnHint(VideoClipTypes.BuldFarms);
                         break;
 
                     case BuildButtonTypes.Second:
-                        RpcSys.BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.Mine);
+                        RpcS.BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.Mine);
                         TryOnHint(VideoClipTypes.BuildMine);
                         break;
 
@@ -181,11 +176,11 @@ namespace Game.Game
                             case BuildAbilTypes.FarmBuild: throw new Exception();
                             case BuildAbilTypes.MineBuild: throw new Exception();
                             case BuildAbilTypes.CityBuild:
-                                RpcSys.BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.City);
+                                RpcS.BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.City);
                                 break;
 
                             case BuildAbilTypes.Destroy:
-                                RpcSys.DestroyBuildingToMaster(SelIdx<IdxC>().Idx);
+                                RpcS.DestroyBuildingToMaster(SelIdx<IdxC>().Idx);
                                 break;
 
                             default: throw new Exception();

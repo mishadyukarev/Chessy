@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -21,9 +20,9 @@ namespace Game.Game
 
             if (Unit<UnitCellEC>(idx_from).HaveMaxSteps)
             {
-                if(Unit<UnitCellEC>(idx_from).CanArson(whoseMove, idx_to))
+                if (Unit<UnitCellEC>(idx_from).CanArson(whoseMove, idx_to))
                 {
-                    RpcSys.SoundToGeneral(RpcTarget.All, UniqueAbilTypes.FireArcher);
+                    RpcS.SoundToGeneral(RpcTarget.All, UniqueAbilTypes.FireArcher);
 
                     stepUnit_from.Take(uniq_cur);
                     fire_to.Enable();
@@ -32,7 +31,7 @@ namespace Game.Game
 
             else
             {
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

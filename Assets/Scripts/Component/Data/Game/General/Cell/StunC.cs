@@ -21,7 +21,7 @@
         public void Take()
         {
             _stepsInStun -= 1;
-            if(_stepsInStun <= 0)
+            if (_stepsInStun <= 0)
             {
                 _isStunned = false;
             }

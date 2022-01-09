@@ -73,7 +73,7 @@ namespace Game.Game
         }
 
 
-        
+
         public static void Set(in (UnitTypes, LevelTypes, PlayerTypes) unit, in byte idx, in bool have)
         {
             var key = Key(unit, idx);

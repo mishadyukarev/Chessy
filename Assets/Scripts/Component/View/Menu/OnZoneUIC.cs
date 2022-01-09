@@ -7,19 +7,19 @@ namespace Game.Menu
 {
     public struct OnZoneUIC
     {
-        private Button _createPublicRoom_Button;
-        private Button _joinRandomPublicRoom_Button;
+        static Button _createPublicRoom_Button;
+        static Button _joinRandomPublicRoom_Button;
 
 
-        private Button _createFR_Button;
-        private TMP_InputField _createFR_InputField;
+        static Button _createFR_Button;
+        static TMP_InputField _createFR_InputField;
 
-        private Button _joinFR_Button;
-        private TMP_InputField _joinFR_InputField;
+        static Button _joinFR_Button;
+        static TMP_InputField _joinFR_InputField;
 
 
-        public string TextCreateFriendRoom => _createFR_InputField.text;
-        public string TextJoinFriendRoom => _joinFR_InputField.text;
+        public static string TextCreateFriendRoom => _createFR_InputField.text;
+        public static string TextJoinFriendRoom => _joinFR_InputField.text;
 
 
         public OnZoneUIC(RectTransform rightZone_RectTrans)
@@ -36,9 +36,9 @@ namespace Game.Menu
             _joinFR_InputField = rightZone_RectTrans.transform.Find("JoinFriendRoom_InputField").GetComponent<TMP_InputField>();
         }
 
-        public void AddListCreatePublicRoom(UnityAction unityAction) => _createPublicRoom_Button.onClick.AddListener(unityAction);
-        public void AddListJoinRandomPublicRoom(UnityAction unityAction) => _joinRandomPublicRoom_Button.onClick.AddListener(unityAction);
-        public void AddListCreateFriendRoom(UnityAction unityAction) => _createFR_Button.onClick.AddListener(unityAction);
-        public void AddListJoinFriendRoom(UnityAction unityAction) => _joinFR_Button.onClick.AddListener(unityAction);
+        public static void AddListCreatePublicRoom(UnityAction unityAction) => _createPublicRoom_Button.onClick.AddListener(unityAction);
+        public static void AddListJoinRandomPublicRoom(UnityAction unityAction) => _joinRandomPublicRoom_Button.onClick.AddListener(unityAction);
+        public static void AddListCreateFriendRoom(UnityAction unityAction) => _createFR_Button.onClick.AddListener(unityAction);
+        public static void AddListJoinFriendRoom(UnityAction unityAction) => _joinFR_Button.onClick.AddListener(unityAction);
     }
 }

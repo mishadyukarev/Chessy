@@ -1,9 +1,8 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class MotionCenterUISystem : IEcsRunSystem
+    sealed class MotionCenterUISystem : IEcsRunSystem
     {
         private float _timer;
 

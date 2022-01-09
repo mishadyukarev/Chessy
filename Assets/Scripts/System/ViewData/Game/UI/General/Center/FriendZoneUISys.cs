@@ -1,9 +1,8 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
+﻿using Game.Common;
 
 namespace Game.Game
 {
-    public sealed class FriendZoneUISys : IEcsRunSystem
+    sealed class FriendZoneUISys : IEcsRunSystem
     {
         public void Run()
         {

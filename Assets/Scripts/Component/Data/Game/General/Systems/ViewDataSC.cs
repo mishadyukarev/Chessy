@@ -7,11 +7,9 @@ namespace Game.Game
     {
         static Dictionary<ViewDataSTypes, Action> _actions;
 
-        public ViewDataSC(List<object> list)
+        public ViewDataSC(Dictionary<ViewDataSTypes, Action> actions)
         {
-            var idx = 0;
-
-            _actions = (Dictionary<ViewDataSTypes, Action>)list[idx++];
+            _actions = actions;
         }
 
         public static void Run(ViewDataSTypes type)

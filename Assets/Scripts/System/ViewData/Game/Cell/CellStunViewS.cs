@@ -1,21 +1,17 @@
-﻿using Leopotam.Ecs;
+﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellVPool;
 
 namespace Game.Game
 {
     public sealed class CellStunViewS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, VisibleC> _unitVisF = default;
-        private EcsFilter<StunC> _effUnitF = default;
-
-        private EcsFilter<StunVC> _stunVF = default;
-
         public void Run()
         {
-            foreach (byte idx_0 in _stunVF)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var stunView_0 = ref _stunVF.Get1(idx_0);
-                ref var stun_0 = ref _effUnitF.Get1(idx_0);
-                ref var visUnit_0 = ref _unitVisF.Get2(idx_0);
+                ref var stunView_0 = ref ElseCellVE<StunVC>(idx_0);
+                ref var stun_0 = ref Unit<StunC>(idx_0);
+                ref var visUnit_0 = ref Unit<VisibleC>(idx_0);
 
                 if (visUnit_0.IsVisibled(WhoseMoveC.CurPlayerI))
                 {

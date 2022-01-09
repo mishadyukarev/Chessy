@@ -21,7 +21,7 @@ namespace Game.Game
 
         public EntityPool(in WorldEcs curGameW, in string nameBackground)
         {
-            
+
 
             _entsTest[nameof(ISelectedIdx)] = curGameW.NewEntity()
                 .Add(new SelIdxC())
@@ -39,7 +39,8 @@ namespace Game.Game
                 .Add(new ClickC());
 
             _entsTest[nameof(IClickerObjectE)] = curGameW.NewEntity()
-                .Add(new CellClickC(default));
+                .Add(new CellClickC(CellClickTypes.SimpleClick))
+                .Add(new RayCastC());
 
 
             new WindC(DirectTypes.Right);
@@ -69,10 +70,9 @@ namespace Game.Game
 
             new WhoseMoveC(true);
             new ScoutHeroCooldownC(true);
-            new CellClickC(default);
 
 
-            new PlyerWinnerC(default);
+            new PlayerWinnerC(default);
             new ReadyC(new Dictionary<PlayerTypes, bool>());
             new MotionsC(0);
             new MistakeC(new Dictionary<ResTypes, int>());

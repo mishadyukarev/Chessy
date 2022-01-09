@@ -33,7 +33,7 @@ namespace Game.Game
             var list = new List<byte>();
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
-                if(_cells[Key(build, player, idx)]) list.Add(idx);
+                if (_cells[Key(build, player, idx)]) list.Add(idx);
             }
             return list;
         }

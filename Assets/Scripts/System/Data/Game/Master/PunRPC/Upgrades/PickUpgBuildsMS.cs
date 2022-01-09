@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public class PickUpgBuildsMS : IEcsRunSystem
     {
@@ -15,7 +13,7 @@ namespace Game.Game
 
             BuildAvailPickUpgC.Set(build, whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);
-            RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            RpcS.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

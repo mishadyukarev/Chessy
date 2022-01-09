@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 using static Game.Game.EntityCellVPool;
 
 namespace Game.Game
@@ -19,8 +18,8 @@ namespace Game.Game
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
 
-                ref var mainUnit_0 = ref UnitCellVC<UnitMainVC>(idx_0);
-                ref var extraUnit_0 = ref UnitCellVC<UnitExtraVC>(idx_0);
+                ref var mainUnit_0 = ref UnitV<UnitMainVC>(idx_0);
+                ref var extraUnit_0 = ref UnitV<UnitExtraVC>(idx_0);
 
 
                 mainUnit_0.SetEnabled(false);

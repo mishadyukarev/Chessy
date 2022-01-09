@@ -1,12 +1,10 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class PickUpgUIS : IEcsRunSystem
+    sealed class PickUpgUIS : IEcsRunSystem
     {
         public void Run()
         {
-           
+
             var isActivatedZone = PickUpgC.HaveUpgrade(WhoseMoveC.CurPlayerI);
 
             PickUpgUIC.SetActiveZone(isActivatedZone);

@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using System;
+﻿using System;
 using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;
 
@@ -41,12 +40,12 @@ namespace Game.Game
                                     {
                                         if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanAttack(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx, out var attack))
                                         {
-                                            RpcSys.AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                            RpcS.AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
 
                                         else if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanShift(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx))
                                         {
-                                            RpcSys.ShiftUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                            RpcS.ShiftUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
 
                                         else
@@ -102,7 +101,7 @@ namespace Game.Game
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    RpcSys.SetUniToMaster(CurIdx<IdxC>().Idx, SelUnitC.Unit);
+                                    RpcS.SetUniToMaster(CurIdx<IdxC>().Idx, SelUnitC.Unit);
                                     cellClick.Set(CellClickTypes.SimpleClick);
                                 }
                                 break;
@@ -111,7 +110,7 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                                     {
-                                        RpcSys.GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx<IdxC>().Idx);
+                                        RpcS.GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx<IdxC>().Idx);
                                     }
                                     else
                                     {
@@ -127,7 +126,7 @@ namespace Game.Game
                                         && ownUnit_cur.Is(WhoseMoveC.CurPlayerI)
                                         && !levUnit_cur.Is(LevelTypes.Second))
                                     {
-                                        RpcSys.UpgradeUnitToMaster(CurIdx<IdxC>().Idx);
+                                        RpcS.UpgradeUnitToMaster(CurIdx<IdxC>().Idx);
                                     }
                                     else
                                     {
@@ -142,7 +141,7 @@ namespace Game.Game
                                     if (unit_cur.Is(UnitTypes.Pawn)
                                         && ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                                     {
-                                        RpcSys.FromNewUnitToMas(UnitTypes.Scout, CurIdx<IdxC>().Idx);
+                                        RpcS.FromNewUnitToMas(UnitTypes.Scout, CurIdx<IdxC>().Idx);
                                     }
 
                                     cellClick.Set(CellClickTypes.SimpleClick);
@@ -156,7 +155,7 @@ namespace Game.Game
                                     {
                                         if (unit_sel.Is(UnitTypes.Archer))
                                         {
-                                            RpcSys.FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                            RpcS.FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                             cellClick.Set(CellClickTypes.SimpleClick);
 
                                             NeedSoundEffC.Clip = ClipTypes.PickArcher;
@@ -177,17 +176,17 @@ namespace Game.Game
                                 {
                                     if (SelUniqAbilC.Is(UniqueAbilTypes.FireArcher))
                                     {
-                                        RpcSys.FireArcherToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                        RpcS.FireArcherToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }
 
                                     else if (SelUniqAbilC.Is(UniqueAbilTypes.ChangeDirWind))
                                     {
-                                        RpcSys.PutOutFireElffToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                        RpcS.PutOutFireElffToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }
 
                                     else if (SelUniqAbilC.Is(UniqueAbilTypes.StunElfemale))
                                     {
-                                        RpcSys.StunElfemaleToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                        RpcS.StunElfemaleToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }
 
                                     cellClick.Set(CellClickTypes.SimpleClick);

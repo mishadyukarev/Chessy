@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-using System;
+﻿using System;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -35,7 +33,7 @@ namespace Game.Game
                     {
                         if (build_0.Have && !build_0.Is(BuildTypes.Camp))
                         {
-                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                         else
                         {
@@ -45,7 +43,7 @@ namespace Game.Game
 
                                     if (!env_0.Have(EnvTypes.YoungForest))
                                     {
-                                        RpcSys.SoundToGeneral(sender, uniq_cur);
+                                        RpcS.SoundToGeneral(sender, uniq_cur);
 
                                         envCell_0.SetNew(EnvTypes.YoungForest);
 
@@ -53,16 +51,16 @@ namespace Game.Game
                                     }
                                     else
                                     {
-                                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                     }
                                 else
                                 {
-                                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                 }
                             }
                             else
                             {
-                                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                             }
 
                         }
@@ -70,7 +68,7 @@ namespace Game.Game
 
                     else
                     {
-                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

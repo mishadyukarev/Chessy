@@ -1,9 +1,8 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class DonerUISystem : IEcsRunSystem
+    sealed class DonerUISystem : IEcsRunSystem
     {
         public void Run()
         {

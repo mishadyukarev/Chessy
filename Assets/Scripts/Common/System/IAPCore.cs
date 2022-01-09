@@ -1,14 +1,12 @@
-﻿using Leopotam.Ecs;
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Purchasing; //библиотека с покупками, будет доступна когда активируем сервисы
-using UnityEngine.UI;
 
 namespace Game.Common
 {
-    public sealed class IAPCore : IEcsInitSystem, IStoreListener //для получения сообщений из Unity Purchasing
+    public sealed class IAPCore : IStoreListener //для получения сообщений из Unity Purchasing
     {
-        public void Init()
+        public IAPCore()
         {
             //if (PlayerPrefs.HasKey("ads") == true)
             //{

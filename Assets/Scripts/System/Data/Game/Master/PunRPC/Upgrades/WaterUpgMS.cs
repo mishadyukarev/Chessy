@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class WaterUpgMS : IEcsRunSystem
     {
@@ -21,7 +19,7 @@ namespace Game.Game
 
             WaterAvailPickUpgC.Set(whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);
-            RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            RpcS.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

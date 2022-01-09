@@ -6,8 +6,8 @@ namespace Game.Menu
 {
     public struct OffZoneUIC
     {
-        private Button _startWithBot_Button;
-        private Button _withFriend_Button;
+        static Button _startWithBot_Button;
+        static Button _withFriend_Button;
 
         public OffZoneUIC(RectTransform leftZoneRectTrans)
         {
@@ -15,7 +15,7 @@ namespace Game.Menu
             _withFriend_Button = leftZoneRectTrans.Find("WithFriend_Button").GetComponent<Button>();
         }
 
-        public void AddListTrain(UnityAction unityAction) => _startWithBot_Button.onClick.AddListener(unityAction);
-        public void AddListFriend(UnityAction unityAction) => _withFriend_Button.onClick.AddListener(unityAction);
+        public static void AddListTrain(UnityAction unityAction) => _startWithBot_Button.onClick.AddListener(unityAction);
+        public static void AddListFriend(UnityAction unityAction) => _withFriend_Button.onClick.AddListener(unityAction);
     }
 }

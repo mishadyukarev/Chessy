@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -21,11 +20,11 @@ namespace Game.Game
 
             if (stepUnit_0.HaveMin)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 if (buildC_0.Is(BuildTypes.City))
                 {
-                    PlyerWinnerC.PlayerWinner = ownUnit_0.Owner;
+                    PlayerWinnerC.PlayerWinner = ownUnit_0.Owner;
                 }
                 stepUnit_0.TakeMin();
 
@@ -38,7 +37,7 @@ namespace Game.Game
             }
             else
             {
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

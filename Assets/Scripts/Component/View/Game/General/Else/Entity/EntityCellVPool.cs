@@ -10,11 +10,11 @@ namespace Game.Game
         readonly static Dictionary<CellEntTypes, Entity[]> _cells;
 
         public static ref C Cell<C>(in byte idx) where C : struct, ICellVE => ref _cells[CellEntTypes.Cell][idx].Get<C>();
-        public static ref C UnitCellVC<C>(in byte idx) where C : struct, IUnitCellV => ref _cells[CellEntTypes.Unit][idx].Get<C>();
+        public static ref C UnitV<C>(in byte idx) where C : struct, IUnitCellV => ref _cells[CellEntTypes.Unit][idx].Get<C>();
         public static ref C BuildCellVC<C>(in byte idx) where C : struct, IBuildCellV => ref _cells[CellEntTypes.Build][idx].Get<C>();
         public static ref C EnvCellVC<C>(in byte idx) where C : struct, IEnvCellV => ref _cells[CellEntTypes.Env][idx].Get<C>();
         public static ref T TrailCellVC<T>(in byte idx) where T : struct, ITrailCellV => ref _cells[CellEntTypes.Trail][idx].Get<T>();
-        public static ref T FireCellVC<T>(in byte idx) where T : struct, IFireCellV => ref _cells[CellEntTypes.Fire][idx].Get<T>();
+        public static ref T FireCellVC<T>(in byte idx) where T : struct, IFireCellVE => ref _cells[CellEntTypes.Fire][idx].Get<T>();
         public static ref T CloudCellVC<T>(in byte idx) where T : struct, ICloudCellV => ref _cells[CellEntTypes.Cloud][idx].Get<T>();
         public static ref T RiverCellVC<T>(in byte idx) where T : struct, IRiverCellV => ref _cells[CellEntTypes.River][idx].Get<T>();
         public static ref T ElseCellVE<T>(in byte idx) where T : struct, IElseCellVE => ref _cells[CellEntTypes.Else][idx].Get<T>();

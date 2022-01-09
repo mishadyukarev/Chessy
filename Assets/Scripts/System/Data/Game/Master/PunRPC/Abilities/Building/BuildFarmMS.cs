@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -31,7 +30,7 @@ namespace Game.Game
             {
                 if (buildCell_0.CanBuild(buildType, whoseMove, out var mistake, out var needRes))
                 {
-                    RpcSys.SoundToGeneral(sender, ClipTypes.Building);
+                    RpcS.SoundToGeneral(sender, ClipTypes.Building);
 
                     envCell_0.Remove(EnvTypes.YoungForest);
 
@@ -51,11 +50,11 @@ namespace Game.Game
 
                     stepUnit_0.Take(buildType);
                 }
-                               
+
                 else
                 {
-                    if(mistake == MistakeTypes.Economy) RpcSys.MistakeEconomyToGeneral(sender, needRes);
-                    else RpcSys.SimpleMistakeToGeneral(mistake, sender);
+                    if (mistake == MistakeTypes.Economy) RpcS.MistakeEconomyToGeneral(sender, needRes);
+                    else RpcS.SimpleMistakeToGeneral(mistake, sender);
                 }
             }
         }

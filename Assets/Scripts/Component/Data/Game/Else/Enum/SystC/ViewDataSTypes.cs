@@ -7,10 +7,6 @@
         RunUpdate,
         RunFixedUpdate,
 
-        //RotateAll,
-        //SyncCells,
-        //SyncCanvas,
-
         End,
     }
 }

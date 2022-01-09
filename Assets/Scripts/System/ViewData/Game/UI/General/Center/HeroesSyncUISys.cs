@@ -1,8 +1,6 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public class HeroesSyncUISys : IEcsRunSystem
+    class HeroesSyncUISys : IEcsRunSystem
     {
         public void Run()
         {

@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-using System;
+﻿using System;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
@@ -27,20 +25,20 @@ namespace Game.Game
                 case CondUnitTypes.Protected:
                     if (cond_0.Is(CondUnitTypes.Protected))
                     {
-                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
                     else if (step_0.HaveMin)
                     {
-                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         step_0.TakeMin();
                         cond_0.Set(cond);
                     }
 
                     else
                     {
-                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 
@@ -48,20 +46,20 @@ namespace Game.Game
                 case CondUnitTypes.Relaxed:
                     if (cond_0.Is(CondUnitTypes.Relaxed))
                     {
-                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
                     else if (step_0.HaveMin)
                     {
-                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Set(cond);
                         step_0.TakeMin();
                     }
 
                     else
                     {
-                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

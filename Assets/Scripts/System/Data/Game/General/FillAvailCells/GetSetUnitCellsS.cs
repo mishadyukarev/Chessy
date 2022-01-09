@@ -1,12 +1,9 @@
-﻿using Leopotam.Ecs;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public sealed class GetSetUnitCellsS : IEcsRunSystem
+    sealed class GetSetUnitCellsS : IEcsRunSystem
     {
-        private EcsFilter<UnitC> _unitF = default;
-        private EcsFilter<EnvironmentC> _envF = default;
-
         public void Run()
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
@@ -16,18 +13,18 @@ namespace Game.Game
                 if (WhereBuildsC.IsSetted(BuildTypes.City, player))
                 {
                     var idx_city = WhereBuildsC.Idx(BuildTypes.City, player);
-                    ref var unit_city = ref _unitF.Get1(idx_city);
-                    
-                    var listAround = CellSpaceC.XyAround(EntityCellPool.Cell<XyC>(idx_city).Xy);
+                    ref var unit_city = ref Build<BuildC>(idx_city);
 
-                    if(!unit_city.Have) SetUnitCellsC.AddIdxCell(player, idx_city);
+                    var listAround = CellSpaceC.XyAround(Cell<XyC>(idx_city).Xy);
+
+                    if (!unit_city.Have) SetUnitCellsC.AddIdxCell(player, idx_city);
 
                     foreach (var xy in listAround)
                     {
-                        var curIdx = EntityCellPool.IdxCell(xy);
+                        var curIdx = IdxCell(xy);
 
-                        ref var curUnitDatCom = ref _unitF.Get1(curIdx);
-                        ref var curEnvDatCom = ref _envF.Get1(curIdx);
+                        ref var curUnitDatCom = ref Unit<UnitC>(curIdx);
+                        ref var curEnvDatCom = ref Environment<EnvironmentC>(curIdx);
 
                         if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.Have)
                         {
@@ -38,13 +35,13 @@ namespace Game.Game
 
                 else
                 {
-                    foreach (byte idx_0 in EntityCellPool.Idxs)
+                    foreach (byte idx_0 in Idxs)
                     {
-                        var xy = EntityCellPool.Cell<XyC>(idx_0).Xy;
+                        var xy = Cell<XyC>(idx_0).Xy;
                         var x = xy[0];
                         var y = xy[1];
 
-                        ref var curUnitDatCom = ref _unitF.Get1(idx_0);
+                        ref var curUnitDatCom = ref Unit<UnitC>(idx_0);
 
 
                         if (!curUnitDatCom.Have)
@@ -68,12 +65,12 @@ namespace Game.Game
                 }
             }
 
-            foreach (byte idx_0 in EntityCellPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var buld_0 = ref EntityCellPool.Build<BuildC>(idx_0);
-                ref var ownBuld_0 = ref EntityCellPool.Build<OwnerC>(idx_0);
-                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var buld_0 = ref Build<BuildC>(idx_0);
+                ref var ownBuld_0 = ref Build<OwnerC>(idx_0);
+                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
 
                 if (buld_0.Is(BuildTypes.Camp))
                 {

@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using static Game.Game.EntityCellPool;
 using static Game.Game.EntityPool;

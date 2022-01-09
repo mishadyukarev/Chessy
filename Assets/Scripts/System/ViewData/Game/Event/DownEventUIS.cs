@@ -1,13 +1,10 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntityPool;
+﻿using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public sealed class DownEventUIS : IEcsInitSystem
+    sealed class DownEventUIS
     {
-        public void Init()
+        internal DownEventUIS()
         {
             GetScoutUIC.AddListScout(ExecuteScout);
             GetHeroDownUIC.AddList(Hero);
@@ -73,7 +70,7 @@ namespace Game.Game
         {
             if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, WhoseMoveC.CurPlayerI))
             {
-                RpcSys.DoneToMaster();
+                RpcS.DoneToMaster();
             }
             else
             {
@@ -87,7 +84,7 @@ namespace Game.Game
             {
                 GetterUnitsC.ResetCurTimer(unitType);
 
-                RpcSys.CreateUnitToMaster(unitType);
+                RpcS.CreateUnitToMaster(unitType);
             }
             else SoundEffectVC.Play(ClipTypes.Mistake);
         }

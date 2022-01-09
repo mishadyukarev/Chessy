@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public struct LevelC : IUnitCell, ITWCellE
     {

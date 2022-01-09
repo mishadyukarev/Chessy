@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public struct GeneralZoneVEC
     {
-        public void Attach(in Transform transForAttach) 
+        public void Attach(in Transform transForAttach)
             => transForAttach.transform.SetParent(EntityVPool.GeneralZone<GameObjectC>().Transform);
     }
 }

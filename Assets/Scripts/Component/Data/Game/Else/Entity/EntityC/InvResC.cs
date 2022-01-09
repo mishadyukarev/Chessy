@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Game.Game.EconomyValues;
 
 namespace Game.Game
 {
@@ -20,7 +19,7 @@ namespace Game.Game
                 foreach (var item in _resources) dict.Add(item.Key, item.Value);
                 return dict;
             }
-        }   
+        }
 
         public static int AmountRes(ResTypes res, PlayerTypes player)
         {
@@ -79,7 +78,7 @@ namespace Game.Game
 
             _resources[key] = value;
         }
-        public static void Reset(ResTypes res, PlayerTypes player) => Set(res, player,  0);
+        public static void Reset(ResTypes res, PlayerTypes player) => Set(res, player, 0);
         public static void Add(ResTypes res, PlayerTypes player, int adding = 1)
         {
             var key = Key(res, player);
@@ -144,7 +143,7 @@ namespace Game.Game
         public static void BuyCreateUnit(PlayerTypes playerType, UnitTypes unitType)
         {
             for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(resType, playerType,  AmountRes(resType, playerType) - _values.AmountResForBuy(unitType, resType));
+                Set(resType, playerType, AmountRes(resType, playerType) - _values.AmountResForBuy(unitType, resType));
         }
 
         public static bool CanMeltOre(PlayerTypes player, out Dictionary<ResTypes, int> needRes)
@@ -157,17 +156,17 @@ namespace Game.Game
                 needRes[res] = _values.AmountResForMelting(res);
 
                 if (AmountRes(res, player) - _values.AmountResForMelting(res) < 0) can = false;
-            }     
+            }
 
             return can;
         }
         public static void BuyMeltOre(PlayerTypes player)
         {
             for (var res = ResTypes.First; res < ResTypes.End; res++)
-                Set(res, player,  AmountRes(res, player) - _values.AmountResForMelting(res));
+                Set(res, player, AmountRes(res, player) - _values.AmountResForMelting(res));
 
-            Add(ResTypes.Iron, player,  4);
-            Add(ResTypes.Gold, player,  1);
+            Add(ResTypes.Iron, player, 4);
+            Add(ResTypes.Gold, player, 1);
         }
 
         public static bool CanBuy(PlayerTypes playerType, ResTypes res, out Dictionary<ResTypes, int> needRes)
@@ -189,7 +188,7 @@ namespace Game.Game
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                Set(resType, playerType,  AmountRes(resType, playerType) - _values.AmountResForBuyRes(resType));
+                Set(resType, playerType, AmountRes(resType, playerType) - _values.AmountResForBuyRes(resType));
             }
 
             var amount = 0;
@@ -205,7 +204,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            Add(res, playerType,  amount);
+            Add(res, playerType, amount);
         }
 
 
@@ -251,7 +250,7 @@ namespace Game.Game
         public static void BuyTW(PlayerTypes playerType, TWTypes toolWeaponType, LevelTypes levelTWType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(resType, playerType,  AmountRes(resType, playerType) - _values.AmountResForBuyTW(toolWeaponType, levelTWType, resType));
+                Set(resType, playerType, AmountRes(resType, playerType) - _values.AmountResForBuyTW(toolWeaponType, levelTWType, resType));
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -44,8 +43,8 @@ namespace Game.Game
 
                     if (!haveNearBorder)
                     {
-                        RpcSys.SoundToGeneral(sender, ClipTypes.Building);
-                        RpcSys.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
+                        RpcS.SoundToGeneral(sender, ClipTypes.Building);
+                        RpcS.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
                         buildCell_0.SetNew(forBuildType, whoseMove);
@@ -64,12 +63,12 @@ namespace Game.Game
 
                     else
                     {
-                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
+                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                     }
                 }
                 else
                 {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

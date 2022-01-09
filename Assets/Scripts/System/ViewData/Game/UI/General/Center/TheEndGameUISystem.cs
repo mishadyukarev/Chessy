@@ -1,18 +1,15 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class TheEndGameUISystem : IEcsRunSystem
+    sealed class TheEndGameUISystem : IEcsRunSystem
     {
         public void Run()
         {
-            if (PlyerWinnerC.PlayerWinner == default)
+            if (PlayerWinnerC.PlayerWinner == default)
             {
                 EntityUIPool.EndGameCenter<EndGameUIC>().SetActiveZone(false);
             }
 
-            else if (PlyerWinnerC.PlayerWinner == WhoseMoveC.CurPlayerI)
+            else if (PlayerWinnerC.PlayerWinner == WhoseMoveC.CurPlayerI)
             {
                 EntityUIPool.EndGameCenter<EndGameUIC>().SetText(true);
                 EntityUIPool.EndGameCenter<EndGameUIC>().SetActiveZone(true);

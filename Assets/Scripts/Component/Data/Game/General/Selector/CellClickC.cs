@@ -8,7 +8,7 @@ namespace Game.Game
         public CellClickTypes Click => _click;
         public bool Is(params CellClickTypes[] clicks)
         {
-            foreach (var click in clicks) 
+            foreach (var click in clicks)
                 if (click == _click) return true;
             return false;
         }

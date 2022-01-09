@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -52,7 +51,7 @@ namespace Game.Game
                         }
                     }
                 }
-                else if(!Unit<UnitCellEC>(idx_0).CanResume(out extract, out env))
+                else if (!Unit<UnitCellEC>(idx_0).CanResume(out extract, out env))
                 {
                     if (Unit<UnitCellEC>(idx_0).HaveMax)
                     {

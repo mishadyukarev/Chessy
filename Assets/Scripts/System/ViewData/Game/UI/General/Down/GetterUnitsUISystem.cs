@@ -1,10 +1,8 @@
-﻿using Leopotam.Ecs;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class GetterUnitsUISystem : IEcsRunSystem
+    sealed class GetterUnitsUISystem : IEcsRunSystem
     {
         private const float NEEDED_TIME = 1;
 

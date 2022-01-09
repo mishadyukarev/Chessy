@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -16,9 +15,9 @@ namespace Game.Game
             {
                 Unit<UnitCellEC>(idx_from).TakeStepsForDoing(idx_to);
 
-                Unit<UnitCellEC>(idx_from).Shift(idx_to); 
+                Unit<UnitCellEC>(idx_from).Shift(idx_to);
 
-                RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
+                RpcS.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }
         }
     }

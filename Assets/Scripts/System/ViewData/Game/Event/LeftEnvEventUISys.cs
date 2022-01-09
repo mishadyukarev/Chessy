@@ -1,10 +1,8 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class LeftEnvEventUISys : IEcsInitSystem
+    sealed class LeftEnvEventUISys
     {
-        public void Init()
+        internal LeftEnvEventUISys()
         {
             EnvirUIC.AddListenerToEnvInfo(EnvironmentInfo);
         }

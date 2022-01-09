@@ -1,12 +1,11 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 using Yodo1.MAS;
 
 namespace Game.Common
 {
-    public sealed class MyYodo : IEcsInitSystem, IEcsRunSystem
+    public sealed class MyYodo : IEcsRunSystem
     {
-        public void Init()
+        public MyYodo()
         {
 
             //Yodo1AdBuildConfig config = new Yodo1AdBuildConfig().enableUserPrivacyDialog(true);

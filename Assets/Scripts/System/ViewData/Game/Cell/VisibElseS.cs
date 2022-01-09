@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class VisibElseS : IEcsRunSystem
     {
@@ -100,7 +98,7 @@ namespace Game.Game
 
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.First), false);
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.Second), false);
-        
+
                     if (unit_0.Have) trailVis_0.SetVisibled(ownUnit_0.Owner, true);
 
                     foreach (var xy_1 in list)

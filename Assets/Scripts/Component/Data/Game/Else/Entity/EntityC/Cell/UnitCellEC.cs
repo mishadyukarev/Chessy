@@ -578,7 +578,7 @@ namespace Game.Game
 
             if (unit.Is(UnitTypes.King))
             {
-                PlyerWinnerC.PlayerWinner = ownUnit.Owner;
+                PlayerWinnerC.PlayerWinner = ownUnit.Owner;
             }
             else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {

@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Game.Common
+﻿namespace Game.Common
 {
     public struct TestModeC
     {

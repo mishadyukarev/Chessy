@@ -1,17 +1,11 @@
 ﻿using Game.Game;
-using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 
 namespace Game.Common
 {
-    public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks, IEcsInitSystem
+    public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks
     {
-        public void Init()
-        {
-
-        }
-
         public override sealed void OnLeftRoom()
         {
             base.OnLeftRoom();
@@ -59,7 +53,7 @@ namespace Game.Common
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            RpcSys.Instance.SyncAllMaster();
+            RpcS.Instance.SyncAllMaster();
         }
 
         //public override sealed void OnDisconnectedFromPhoton()

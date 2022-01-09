@@ -1,8 +1,6 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public sealed class FireCellSyncVS : IEcsRunSystem
+    sealed class FireCellSyncVS : IEcsRunSystem
     {
         public void Run()
         {

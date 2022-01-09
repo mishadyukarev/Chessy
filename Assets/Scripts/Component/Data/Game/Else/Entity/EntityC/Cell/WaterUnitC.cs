@@ -12,6 +12,6 @@
 //        internal UnitCellEC(in byte idx) => _idx = idx;
 
 
-       
+
 //    }
 //}

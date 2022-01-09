@@ -1,10 +1,7 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public interface ISelectedIdx
     {
-        
+
     }
 }

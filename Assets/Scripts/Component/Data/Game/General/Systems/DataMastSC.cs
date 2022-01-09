@@ -5,10 +5,10 @@ namespace Game.Game
 {
     public struct DataMastSC
     {
-        private static Action _runUpdSysts;
-        private static Dictionary<MastDataSysTypes, Action> _systems;
-        private static Dictionary<RpcMasterTypes, Action> _rpcSysts;
-        private static Dictionary<UniqueAbilTypes, Action> _uniqAbil;
+        static Action _runUpdSysts;
+        static Dictionary<MastDataSysTypes, Action> _systems;
+        static Dictionary<RpcMasterTypes, Action> _rpcSysts;
+        static Dictionary<UniqueAbilTypes, Action> _uniqAbil;
 
         public DataMastSC(List<object> list)
         {
@@ -19,7 +19,7 @@ namespace Game.Game
             _uniqAbil = (Dictionary<UniqueAbilTypes, Action>)list[i++];
         }
 
-        public static void RunUpdate() => _runUpdSysts.Invoke();
+        public static void RunUpdate() => _runUpdSysts?.Invoke();
         public static void InvokeRun(MastDataSysTypes mastDataSys) => _systems[mastDataSys].Invoke();
         public static void InvokeRun(RpcMasterTypes rpc)
         {

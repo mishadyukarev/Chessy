@@ -1,7 +1,4 @@
-﻿using Leopotam.Ecs;
-using Game.Common;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public class BuyResMastS : IEcsRunSystem
     {
@@ -18,11 +15,11 @@ namespace Game.Game
             {
                 InvResC.BuyRes(whoseMove, res);
 
-                RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                RpcS.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                RpcS.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

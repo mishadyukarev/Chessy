@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -39,7 +38,7 @@ namespace Game.Game
 
                             if (idx_1 == idx_to)
                             {
-                                RpcSys.SoundToGeneral(sender, ClipTypes.GetHero);
+                                RpcS.SoundToGeneral(sender, ClipTypes.GetHero);
 
                                 Unit<UnitCellEC>(idx_to).SetHero(idx_from, unit, LevelTypes.First);
 

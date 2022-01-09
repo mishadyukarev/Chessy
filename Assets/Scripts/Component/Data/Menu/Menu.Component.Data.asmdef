@@ -1,8 +1,7 @@
 {
     "name": "Menu.Component.Data",
-    "references": [
-        "GUID:087d8f159035f4543b00398caf40f939"
-    ],
+    "rootNamespace": "",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

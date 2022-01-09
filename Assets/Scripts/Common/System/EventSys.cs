@@ -1,10 +1,8 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Common
+﻿namespace Game.Common
 {
-    public sealed class EventSys : IEcsInitSystem
+    public sealed class EventSys
     {
-        public void Init()
+        public EventSys()
         {
             ShopUIC.AddListExit(ExitShop);
         }

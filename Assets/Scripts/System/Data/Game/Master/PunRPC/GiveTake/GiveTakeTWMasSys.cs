@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
@@ -39,7 +38,7 @@ namespace Game.Game
 
                             stepUnit_0.TakeMin();
 
-                            RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            RpcS.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
 
@@ -51,7 +50,7 @@ namespace Game.Game
 
                             stepUnit_0.TakeMin();
 
-                            RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            RpcS.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
                         else if (tWTypeForGive == TWTypes.Pick)
@@ -64,11 +63,11 @@ namespace Game.Game
 
                                 stepUnit_0.TakeMin();
 
-                                RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                RpcS.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                                RpcS.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -82,11 +81,11 @@ namespace Game.Game
 
                                 stepUnit_0.TakeMin();
 
-                                RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                RpcS.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                                RpcS.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -100,15 +99,15 @@ namespace Game.Game
 
                                 stepUnit_0.TakeMin();
 
-                                RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                RpcS.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                                RpcS.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
                     }
-                    else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }
