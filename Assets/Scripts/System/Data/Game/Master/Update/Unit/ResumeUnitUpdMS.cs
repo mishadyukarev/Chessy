@@ -11,18 +11,15 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
 
-                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-
-
                 if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 {
-                    if (envRes_0.HaveMax(env))
+                    if (Environment<EnvCellEC>(env, idx_0).HaveMax())
                     {
                         condUnit_0.Set(CondUnitTypes.Protected);
                     }
                     else
                     {
-                        envRes_0.Add(env, resume);
+                        Environment<ResourcesC>(env, idx_0).Resources += resume;
                     }
                 }
                 else if (!Unit<UnitCellEC>(idx_0).CanExtract(out resume, out env, out var res))

@@ -15,7 +15,6 @@ namespace Game.Game
 
             ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
-            ref var uniq_from = ref Unit<CooldownUniqC>(idx_from);
 
 
             if (unitE_from.HaveMax)
@@ -28,7 +27,7 @@ namespace Game.Game
 
                         Unit<UnitCellEC>(idx_from).Take(uniq_cur);
 
-                        uniq_from.SetCooldown(uniq_cur, 6);
+                        Unit<CooldownC>(uniq_cur, idx_from).Cooldown = 6;
 
                         EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
                     }

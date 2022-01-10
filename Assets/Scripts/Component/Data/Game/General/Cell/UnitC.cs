@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct UnitC : IUnitCell
+    public struct UnitC : IUnitCellE
     {
         public UnitTypes Unit { get; internal set; }
 

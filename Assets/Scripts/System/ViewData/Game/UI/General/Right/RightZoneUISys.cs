@@ -8,7 +8,6 @@ namespace Game.Game
         public void Run()
         {
             ref var unitD_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
-            ref var unitV_sel = ref Unit<VisibleC>(SelIdx<IdxC>().Idx);
 
             var activeParent = false;
 
@@ -17,7 +16,7 @@ namespace Game.Game
             {
                 if (unitD_sel.Have)
                 {
-                    if (unitV_sel.IsVisibled(WhoseMoveC.CurPlayerI))
+                    if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, SelIdx<IdxC>().Idx).IsVisibled)
                     {
                         activeParent = true;
                     }

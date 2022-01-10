@@ -1,24 +1,23 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityCellPool;
+
+namespace Game.Game
 {
     public struct VisibElseS : IEcsRunSystem
     {
         public void Run()
         {
-            foreach (byte idx_0 in EntityCellPool.Idxs)
+            foreach (byte idx_0 in Idxs)
             {
-                var xy = EntityCellPool.Cell<XyC>(idx_0).Xy;
+                var xy = Cell<XyC>(idx_0).Xy;
 
-                ref var env_0 = ref EntityCellPool.Environment<EnvironmentC>(idx_0);
-                ref var unit_0 = ref EntityCellPool.Unit<UnitC>(idx_0);
-                ref var ownUnit_0 = ref EntityCellPool.Unit<OwnerC>(idx_0);
+                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
 
                 if (unit_0.Have)
                 {
-                    ref var visUnit_0 = ref EntityCellPool.Unit<VisibleC>(idx_0);
+                    Unit<VisibledC>(ownUnit_0.Owner, idx_0).IsVisibled = true;
 
-                    visUnit_0.SetVisibled(ownUnit_0.Owner, true);
-
-                    if (env_0.Have(EnvTypes.AdultForest))
+                    if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                     {
                         var isVisibledNextPlayer = false;
 
@@ -26,10 +25,10 @@
 
                         foreach (var xy_1 in list)
                         {
-                            var idxCell_1 = EntityCellPool.IdxCell(xy_1);
+                            var idxCell_1 = IdxCell(xy_1);
 
-                            ref var unitCom_1 = ref EntityCellPool.Unit<UnitC>(idxCell_1);
-                            ref var ownUnitCom_1 = ref EntityCellPool.Unit<OwnerC>(idxCell_1);
+                            ref var unitCom_1 = ref Unit<UnitC>(idxCell_1);
+                            ref var ownUnitCom_1 = ref Unit<OwnerC>(idxCell_1);
 
                             if (unitCom_1.Have)
                             {
@@ -41,25 +40,25 @@
                             }
                         }
 
-                        visUnit_0.SetVisibled(WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner), isVisibledNextPlayer);
+                        Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner), idx_0).IsVisibled = isVisibledNextPlayer;
                     }
                     else
                     {
-                        visUnit_0.SetVisibled(WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner), true);
+                        Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner), idx_0).IsVisibled = true;
                     }
 
                 }
 
-                ref var curBuildCom = ref EntityCellPool.Build<BuildC>(idx_0);
+                ref var curBuildCom = ref Build<BuildC>(idx_0);
 
                 if (curBuildCom.Have)
                 {
-                    ref var curOwnBuildCom = ref EntityCellPool.Build<OwnerC>(idx_0);
-                    ref var curVisBuildCom = ref EntityCellPool.Build<VisibleC>(idx_0);
+                    ref var curOwnBuildCom = ref Build<OwnerC>(idx_0);
+                    ref var curVisBuildCom = ref Build<VisibledC>(curOwnBuildCom.Owner, idx_0);
 
-                    curVisBuildCom.SetVisibled(curOwnBuildCom.Owner, true);
+                    curVisBuildCom.IsVisibled = true;
 
-                    if (env_0.Have(EnvTypes.AdultForest))
+                    if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                     {
                         var isVisibledNextPlayer = false;
 
@@ -67,10 +66,10 @@
 
                         foreach (var xy_1 in list)
                         {
-                            var idxCell_1 = EntityCellPool.IdxCell(xy_1);
+                            var idxCell_1 = IdxCell(xy_1);
 
-                            ref var aroUnitDataCom = ref EntityCellPool.Unit<UnitC>(idxCell_1);
-                            ref var arouOnUnitCom = ref EntityCellPool.Unit<OwnerC>(idxCell_1);
+                            ref var aroUnitDataCom = ref Unit<UnitC>(idxCell_1);
+                            ref var arouOnUnitCom = ref Unit<OwnerC>(idxCell_1);
 
                             if (aroUnitDataCom.Have)
                             {
@@ -81,10 +80,9 @@
                                 }
                             }
                         }
-
-                        curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Owner), isVisibledNextPlayer);
+                        Build<VisibledC>(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Owner), idx_0).IsVisibled = isVisibledNextPlayer;
                     }
-                    else curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Owner), true);
+                    else Build<VisibledC>(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Owner), idx_0).IsVisibled = true;
                 }
 
 

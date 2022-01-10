@@ -3,7 +3,7 @@ using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    sealed class AbilSyncS : IEcsRunSystem
+    struct AbilSyncS : IEcsRunSystem
     {
         public void Run()
         {
@@ -13,7 +13,6 @@ namespace Game.Game
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
                 ref var uniq_0 = ref Unit<UniqAbilC>(idx_0);
 
-                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
@@ -32,7 +31,7 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Pawn:
-                                if (env_0.Have(EnvTypes.AdultForest))
+                                if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                                 {
                                     if (fire_0.Have) uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.PutOutFirePawn);
                                     else uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.FirePawn);

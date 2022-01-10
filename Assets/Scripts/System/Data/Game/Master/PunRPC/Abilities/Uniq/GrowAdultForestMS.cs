@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class GrowAdultForestMS : IEcsRunSystem
+    struct GrowAdultForestMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -14,32 +14,28 @@ namespace Game.Game
             ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-            ref var cdUniq_0 = ref Unit<CooldownUniqC>(idx_0);
-            ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
-
-            ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
-            ref var env_0 = ref Environment<EnvironmentC>(idx_0);
-            ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 
 
-            if (!cdUniq_0.HaveCooldown(uniq_cur))
+            if (!Unit<CooldownC>(uniq_cur, idx_0).HaveCooldown)
             {
                 if (stepUnit_0.Have(uniq_cur))
                 {
-                    if (env_0.Have(EnvTypes.YoungForest))
+                    if (Environment<HaveEnvironmentC>(EnvTypes.YoungForest, idx_0).Have)
                     {
-                        envCell_0.Remove(EnvTypes.YoungForest);
+                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
 
-                        envCell_0.SetNew(EnvTypes.AdultForest);
+                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).SetNew();
 
                         stepUnit_0.Take(uniq_cur);
 
-                        cdUniq_0.SetCooldown(uniq_cur, 5);
+                        Unit<CooldownC>(uniq_cur, idx_0).Cooldown = 5;
 
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 
-                        if (!effUnit_0.Have(UnitStatTypes.Steps)) effUnit_0.Set(UnitStatTypes.Steps);
-
+                        if (!Unit<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have)
+                        {
+                            Unit<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have = true;
+                        }
                         var around = CellSpaceC.XyAround(Cell<XyC>(idx_0).Xy);
                         foreach (var xy_1 in around)
                         {
@@ -47,15 +43,14 @@ namespace Game.Game
 
                             ref var unit_1 = ref Unit<UnitC>(idx_1);
                             ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
-                            ref var effUnit_1 = ref Unit<EffectsC>(idx_1);
 
                             if (unit_1.Have)
                             {
                                 if (ownUnit_1.Is(ownUnit_0.Owner))
                                 {
-                                    if (!effUnit_1.Have(UnitStatTypes.Steps))
+                                    if (!Unit<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have)
                                     {
-                                        effUnit_1.Set(UnitStatTypes.Steps);
+                                        Unit<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have = true;
                                     }
                                 }
                             }

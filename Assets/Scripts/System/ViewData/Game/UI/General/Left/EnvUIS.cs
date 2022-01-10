@@ -9,8 +9,8 @@ namespace Game.Game
         {
             ref var build_sel = ref Build<BuildC>(SelIdx<IdxC>().Idx);
 
-            ref var env_sel = ref Environment<EnvironmentC>(SelIdx<IdxC>().Idx);
-            ref var envRes_sel = ref Environment<EnvResC>(SelIdx<IdxC>().Idx);
+            ref var env_sel = ref Environment<HaveEnvironmentC>(SelIdx<IdxC>().Idx);
+            ref var envRes_sel = ref Environment<ResourcesC>(SelIdx<IdxC>().Idx);
 
 
             if (SelIdx<SelIdxC>().IsSelCell && !build_sel.Is(BuildTypes.City))

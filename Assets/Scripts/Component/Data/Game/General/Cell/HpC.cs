@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct HpC : IUnitCell, ITrailCell
+    public struct HpC : IUnitCellE, ITrailCell
     {
         public const int MIN = 0;
 

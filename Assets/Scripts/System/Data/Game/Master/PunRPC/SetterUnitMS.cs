@@ -12,7 +12,7 @@ namespace Game.Game
             IdxDoingMC.Get(out var idx_0);
 
 
-            ref var env_0 = ref Environment<EnvironmentC>(idx_0);
+            ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
             ref var unit_0 = ref Unit<UnitC>(idx_0);
@@ -25,7 +25,6 @@ namespace Game.Game
 
             ref var cond_0 = ref Unit<ConditionC>(idx_0);
             ref var moveCond_0 = ref Unit<MoveInCondC>(idx_0);
-            ref var eff_0 = ref Unit<EffectsC>(idx_0);
 
             ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
 

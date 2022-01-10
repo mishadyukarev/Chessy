@@ -23,9 +23,6 @@ namespace Game.Game
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
-                ref var envE_0 = ref Environment<EnvCellEC>(idx_0);
-                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-
                 ref var cloud_0 = ref Cloud<HaveEffectC>(idx_0);
 
 
@@ -36,7 +33,7 @@ namespace Game.Game
 
                 if (fire_0.Have)
                 {
-                    envRes_0.Take(EnvTypes.AdultForest, 2);
+                    Environment<ResourcesC>(EnvTypes.AdultForest, idx_0).Resources -= 2;
 
                     if (unit_0.Have)
                     {
@@ -50,16 +47,16 @@ namespace Game.Game
 
 
 
-                    if (!envRes_0.Have(EnvTypes.AdultForest))
+                    if (!Environment<ResourcesC>(EnvTypes.AdultForest, idx_0).Have)
                     {
                         buildE_0.Remove();
 
-                        envE_0.Remove(EnvTypes.AdultForest);
+                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Remove();
 
 
                         if (UnityEngine.Random.Range(0, 100) < 50)
                         {
-                            envE_0.SetNew(EnvTypes.YoungForest);
+                            Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).SetNew();
                         }
 
 
@@ -73,7 +70,7 @@ namespace Game.Game
 
                             if (Cell<CellC>(curIdxCell1).IsActiveCell)
                             {
-                                if (Environment<EnvironmentC>(curIdxCell1).Have(EnvTypes.AdultForest))
+                                if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, curIdxCell1).Have)
                                 {
                                     Fire<HaveEffectC>(curIdxCell1).Enable();
                                 }

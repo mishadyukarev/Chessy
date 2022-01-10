@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class UpgUnitMS : IEcsRunSystem
+    struct UpgUnitMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -18,8 +18,6 @@ namespace Game.Game
             ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
             ref var hpUnit_0 = ref Unit<HpC>(idx_0);
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-
-            ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;

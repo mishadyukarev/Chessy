@@ -24,7 +24,7 @@ namespace Game.Game
                         var curIdx = IdxCell(xy);
 
                         ref var curUnitDatCom = ref Unit<UnitC>(curIdx);
-                        ref var curEnvDatCom = ref Environment<EnvironmentC>(curIdx);
+                        ref var curEnvDatCom = ref Environment<HaveEnvironmentC>(curIdx);
 
                         if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.Have)
                         {
@@ -70,7 +70,7 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var buld_0 = ref Build<BuildC>(idx_0);
                 ref var ownBuld_0 = ref Build<OwnerC>(idx_0);
-                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
+                ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
 
                 if (buld_0.Is(BuildTypes.Camp))
                 {

@@ -4,7 +4,7 @@ using static Game.Game.EntityCellVPool;
 
 namespace Game.Game
 {
-    sealed class CellBarsEnvS : IEcsRunSystem
+    struct CellBarsEnvS : IEcsRunSystem
     {
         public void Run()
         {
@@ -13,15 +13,13 @@ namespace Game.Game
             //ref var env_sel = ref _cellEnvFilter.Get1(SelCell.IdxSelCell);
 
 
-            foreach (var curIdxCell in Idxs)
+            foreach (var idx_0 in Idxs)
             {
-                ref var env_0 = ref Environment<EnvironmentC>(curIdxCell);
-                ref var envRes_0 = ref Environment<EnvResC>(curIdxCell);
-                ref var barsView_0 = ref ElseCellVE<BarsVC>(curIdxCell);
+                ref var barsView_0 = ref ElseCellVE<BarsVC>(idx_0);
 
                 if (EnvInfoC.IsActivatedInfo)
                 {
-                    if (env_0.Have(EnvTypes.Fertilizer))
+                    if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
                     {
                         barsView_0.EnableSR(CellBarTypes.Food);
 

@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct OwnerC : IUnitCell, IBuildCell
+    public struct OwnerC : IUnitCellE, IBuildCell
     {
         public PlayerTypes Owner { get; internal set; }
 

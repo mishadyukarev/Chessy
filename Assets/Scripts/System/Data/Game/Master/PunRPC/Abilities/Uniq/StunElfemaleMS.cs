@@ -17,18 +17,16 @@ namespace Game.Game
 
             ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
             ref var step_from = ref Unit<UnitCellEC>(idx_from);
-            ref var cdUniq_from = ref Unit<CooldownUniqC>(idx_from);
 
             ref var unit_to = ref Unit<UnitC>(idx_to);
             ref var ownUnit_to = ref Unit<OwnerC>(idx_to);
-            ref var visUnit_to = ref Unit<VisibleC>(idx_to);
-            ref var env_to = ref Environment<EnvironmentC>(idx_to);
+            ref var env_to = ref Environment<HaveEnvironmentC>(idx_to);
             ref var eff_to = ref Unit<StunC>(idx_to);
 
 
-            if (!cdUniq_from.HaveCooldown(uniq_cur))
+            if (!Unit<CooldownC>(uniq_cur, idx_from).HaveCooldown)
             {
-                if (visUnit_to.IsVisibled(playerSend))
+                if (Unit<VisibledC>(playerSend, idx_to).IsVisibled)
                 {
                     if (unit_to.Have)
                     {
@@ -41,7 +39,7 @@ namespace Game.Game
                                     if (!ownUnit_from.Is(ownUnit_to.Owner))
                                     {
                                         eff_to.SetNewStun();
-                                        Unit<CooldownUniqC>(idx_from).SetCooldown(uniq_cur, 3);
+                                        Unit<CooldownC>(uniq_cur, idx_from).Cooldown = 3;
 
                                         step_from.Take(uniq_cur);
 

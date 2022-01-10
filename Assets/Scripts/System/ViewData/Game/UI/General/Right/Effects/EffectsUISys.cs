@@ -7,12 +7,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unitC_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
-            ref var effUnitC_sel = ref Unit<EffectsC>(SelIdx<IdxC>().Idx);
-
-            //EffectsIUC.SetColor(UnitStatTypes.Hp, effUnitC_sel.Have(UnitStatTypes.Hp));
-            EffectsUIC.SetColor(UnitStatTypes.Damage, effUnitC_sel.Have(UnitStatTypes.Damage));
-            EffectsUIC.SetColor(UnitStatTypes.Steps, effUnitC_sel.Have(UnitStatTypes.Steps));
+            EffectsUIC.SetColor(UnitStatTypes.Damage, Unit<HaveEffectC>(UnitStatTypes.Damage, SelIdx<IdxC>().Idx).Have);
+            EffectsUIC.SetColor(UnitStatTypes.Steps, Unit<HaveEffectC>(UnitStatTypes.Steps, SelIdx<IdxC>().Idx).Have);
         }
     }
 }

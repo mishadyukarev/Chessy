@@ -11,9 +11,8 @@ namespace Game.Game
             {
                 ref var stunView_0 = ref ElseCellVE<StunVC>(idx_0);
                 ref var stun_0 = ref Unit<StunC>(idx_0);
-                ref var visUnit_0 = ref Unit<VisibleC>(idx_0);
 
-                if (visUnit_0.IsVisibled(WhoseMoveC.CurPlayerI))
+                if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
                 {
                     stunView_0.SetEnabled(stun_0.IsStunned);
                 }

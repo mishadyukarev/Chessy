@@ -3,7 +3,7 @@ using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public struct UnitCellEC : IUnitCell
+    public struct UnitCellEC : IUnitCellE
     {
         readonly byte _idx;
         readonly DamageUnitValues _damageValues;
@@ -35,7 +35,7 @@ namespace Game.Game
         public int DamageAttack(AttackTypes attack)
         {
             var tw = UnitTW<ToolWeaponC>(_idx).ToolWeapon;
-            var haveEff = Unit<EffectsC>(_idx).Have(UnitStatTypes.Damage);
+            var haveEff = Unit<HaveEffectC>(UnitStatTypes.Damage, _idx).Have;
             var upgPerc = UnitUpgC.UpgDamagePercent(Unit, Level, Owner);
 
 
@@ -59,8 +59,6 @@ namespace Game.Game
                 var condition = Unit<ConditionC>(_idx).Condition;
 
                 var build = Build<BuildC>(_idx).Build;
-                var envrs = Environment<EnvironmentC>(_idx).Envronments;
-
 
                 float powerDamege = DamageAttack(AttackTypes.Simple);
 
@@ -68,10 +66,7 @@ namespace Game.Game
 
                 powerDamege += standDamage * _damageValues.ProtRelaxPercent(condition);
                 powerDamege += standDamage * _damageValues.ProtectionPercent(build);
-                foreach (var item in envrs)
-                {
-                    if (item.Value) powerDamege += standDamage * _damageValues.ProtectionPercent(item.Key);
-                }
+                foreach (var item in Enviroments) if (Environment<HaveEnvironmentC>(item, _idx).Have) powerDamege += standDamage * _damageValues.ProtectionPercent(item);
                 return (int)powerDamege;
             }
         }
@@ -94,7 +89,7 @@ namespace Game.Game
             set => Unit<StepC>(_idx).Steps = value;
         }
 
-        public int MaxAmountSteps => _stepValues.MaxAmountSteps(Unit, Unit<EffectsC>(_idx).Have(UnitStatTypes.Steps), UnitUpgC.Steps(Unit, Level, Owner));
+        public int MaxAmountSteps => _stepValues.MaxAmountSteps(Unit, Unit<HaveEffectC>(UnitStatTypes.Steps, _idx).Have, UnitUpgC.Steps(Unit, Level, Owner));
         public bool HaveMaxSteps => Steps >= MaxAmountSteps;
         public int StepsForDoing(in byte idx_to)
         {
@@ -102,13 +97,13 @@ namespace Game.Game
 
             var needSteps = 1;
 
-            if (Environment<EnvironmentC>(idx_to).Have(EnvTypes.AdultForest))
+            if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_to).Have)
             {
                 needSteps += _stepValues.NeedAmountSteps(EnvTypes.AdultForest);
                 if (Trail<TrailCellEC>(idx_to).Have(CellSpaceC.GetDirect(idx_from, idx_to).Invert())) needSteps -= 1;
             }
 
-            if (Environment<EnvironmentC>(idx_to).Have(EnvTypes.Hill))
+            if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_to).Have)
                 needSteps += _stepValues.NeedAmountSteps(EnvTypes.Hill);
 
             return needSteps;
@@ -160,7 +155,7 @@ namespace Game.Game
 
                 foreach (var item_1 in directs)
                 {
-                    if (idx_to == item_1.Value && !Environment<EnvironmentC>(idx_to).Have(EnvTypes.Mountain) && !Unit<UnitC>(idx_to).Have)
+                    if (idx_to == item_1.Value && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_to).Have && !Unit<UnitC>(idx_to).Have)
                     {
                         var one = stepUnit_from.HaveStepsForDoing(idx_to);
                         var two = stepUnit_from.HaveMaxSteps;
@@ -181,7 +176,6 @@ namespace Game.Game
             ref var level_from = ref Unit<LevelC>(idx_from);
             ref var ownUnit_from = ref Unit<OwnerC>(idx_from);
             ref var stepUnit_from = ref Unit<StepC>(idx_from);
-            ref var effUnit_from = ref Unit<EffectsC>(idx_from);
             ref var stunUnit_from = ref Unit<StunC>(idx_from);
             ref var corner_from = ref Unit<CornerArcherC>(idx_from);
 
@@ -207,11 +201,10 @@ namespace Game.Game
                             ref var unit_1 = ref Unit<UnitC>(idx_1);
                             ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
 
-                            ref var env_1 = ref Environment<EnvironmentC>(idx_1);
                             ref var trail_1 = ref Trail<TrailCellEC>(idx_1);
 
 
-                            if (!Environment<EnvironmentC>(idx_1).Have(EnvTypes.Mountain))
+                            if (!Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_1).Have)
                             {
                                 if (Unit<UnitCellEC>(idx_from).HaveStepsForDoing(idx_1)
                                     || Unit<UnitCellEC>(idx_from).HaveMaxSteps)
@@ -241,14 +234,13 @@ namespace Game.Game
                         var idx_1 = IdxCell(xy_1);
 
 
-                        ref var env_1 = ref Environment<EnvironmentC>(idx_1);
                         ref var unit_1 = ref Unit<UnitC>(idx_1);
                         ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
 
 
 
 
-                        if (Cell<CellC>(idx_1).IsActiveCell && !env_1.Have(EnvTypes.Mountain))
+                        if (Cell<CellC>(idx_1).IsActiveCell && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_1).Have)
                         {
                             if (unit_1.Have)
                             {
@@ -283,15 +275,13 @@ namespace Game.Game
                             var idx_2 = IdxCell(xy_2);
 
 
-                            ref var env_2 = ref Environment<EnvironmentC>(idx_2);
                             ref var unit_2 = ref Unit<UnitC>(idx_2);
                             ref var ownUnit_2 = ref Unit<OwnerC>(idx_2);
-                            ref var visUnit_2 = ref Unit<VisibleC>(idx_2);
 
 
 
                             if (Cell<CellC>(idx_2).IsActiveCell && unit_2.Have
-                                && visUnit_2.IsVisibled(ownUnit_from.Owner) && !ownUnit_2.Is(ownUnit_from.Owner))
+                                && Unit<VisibledC>(ownUnit_from.Owner, idx_2).IsVisibled && !ownUnit_2.Is(ownUnit_from.Owner))
                             {
                                 if (unit_from.Is(UnitTypes.Archer))
                                 {
@@ -335,7 +325,7 @@ namespace Game.Game
             res = ResTypes.None;
 
 
-            if (Environment<EnvironmentC>(_idx).Have(EnvTypes.AdultForest))
+            if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
             {
                 env = EnvTypes.AdultForest;
                 res = ResTypes.Wood;
@@ -357,11 +347,11 @@ namespace Game.Game
             }
 
 
-            var envResC = Environment<EnvResC>(_idx);
+            var envResC = Environment<EnvCellEC>(env, _idx);
 
-            extract = (int)(envResC.Max(env) * ration);
+            extract = (int)(envResC.Max() * ration);
 
-            if (extract > envResC.Amount(env)) extract = envResC.Amount(env);
+            if (extract > Environment<ResourcesC>(env, _idx).Resources) extract = Environment<ResourcesC>(env, _idx).Resources;
 
             return true;
         }
@@ -370,9 +360,6 @@ namespace Game.Game
             resume = 0;
             env = EnvTypes.None;
 
-
-            var envC = Environment<EnvironmentC>(_idx);
-            var envResC = Environment<EnvResC>(_idx);
             var twC = UnitTW<ToolWeaponC>(_idx);
 
             if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !Unit<UnitCellEC>(_idx).HaveMax) return false;
@@ -384,7 +371,7 @@ namespace Game.Game
             switch (Unit<UnitC>(_idx).Unit)
             {
                 case UnitTypes.Pawn:
-                    if (!envC.Have(EnvTypes.Hill) && !twC.Is(TWTypes.Pick)) return false;
+                    if (!Environment<HaveEnvironmentC>(EnvTypes.Hill, _idx).Have && !twC.Is(TWTypes.Pick)) return false;
 
                     env = EnvTypes.Hill;
 
@@ -406,9 +393,9 @@ namespace Game.Game
 
 
 
-            resume = (int)(envResC.Max(env) * ration);
+            resume = (int)(Environment<EnvCellEC>(env, _idx).Max() * ration);
 
-            if (resume > envResC.Amount(env)) resume = envResC.Amount(env);
+            if (resume > Environment<ResourcesC>(env, _idx).Resources) resume = Environment<ResourcesC>(env, _idx).Resources;
 
             return true;
         }
@@ -427,13 +414,11 @@ namespace Game.Game
                     foreach (var idx_1 in CellSpaceC.IdxAround(idx_from))
                     {
                         if (idx_to != idx_1) continue;
-
-                        ref var env_1 = ref Environment<EnvironmentC>(idx_1);
                         ref var fire_1 = ref Fire<HaveEffectC>(idx_1);
 
                         if (!fire_1.Have)
                         {
-                            if (env_1.Have(EnvTypes.AdultForest))
+                            if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
                             {
                                 return true;
                             }
@@ -560,7 +545,7 @@ namespace Game.Game
             SetMaxWater();
             SetMaxSteps();
 
-            Unit<EffectsC>(_idx).DefAllEffects();
+            foreach (var item in Stats) Unit<HaveEffectC>(item, _idx).Disable();
             Unit<ConditionC>(_idx).Reset();
             Unit<MoveInCondC>(_idx).ResetAll();
 
@@ -597,8 +582,8 @@ namespace Game.Game
             var dir = CellSpaceC.GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
 
 
-            Trail<TrailCellEC>(idx_to).TrySetNewTrail(dir.Invert(), Environment<EnvironmentC>(idx_to));
-            Trail<TrailCellEC>(idx_from).TrySetNewTrail(dir, Environment<EnvironmentC>(idx_from));
+            Trail<TrailCellEC>(idx_to).TrySetNewTrail(dir.Invert(), Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_to).Have);
+            Trail<TrailCellEC>(idx_from).TrySetNewTrail(dir, Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_from).Have);
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
             ref var level_from = ref Unit<LevelC>(idx_from);
@@ -617,10 +602,10 @@ namespace Game.Game
             UnitTW<LevelC>(idx_to).Set(UnitTW<LevelC>(idx_from));
             UnitTW<ProtectionC>(idx_to).Set(UnitTW<ProtectionC>(idx_from));
 
-            Unit<EffectsC>(idx_to).Set(Unit<EffectsC>(idx_from));
+            foreach (var item in Stats) Unit<HaveEffectC>(item, idx_to).Have = Unit<HaveEffectC>(item, idx_from).Have;
             Unit<WaterC>(idx_to).Set(Unit<WaterC>(idx_from));
             Unit<MoveInCondC>(idx_to).ResetAll();
-            Unit<CooldownUniqC>(idx_to).Replace(Unit<CooldownUniqC>(idx_from));
+            foreach (var unique in Unique) Unit<CooldownC>(unique, idx_to).Cooldown = Unit<CooldownC>(unique, idx_from).Cooldown;
             Unit<CornerArcherC>(idx_to).Set(Unit<CornerArcherC>(idx_from));
 
 

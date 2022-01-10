@@ -44,12 +44,11 @@ namespace Game.Game
             if (WhoseMoveC.IsMyMove)
             {
                 ref var uniq_sel = ref Unit<UniqAbilC>(SelIdx<IdxC>().Idx);
-                ref var cdUniq_sel = ref Unit<CooldownUniqC>(SelIdx<IdxC>().Idx);
 
                 var abil = uniq_sel.Ability(uniqBut);
 
 
-                if (!cdUniq_sel.HaveCooldown(abil))
+                if (!Unit<CooldownC>(abil, SelIdx<IdxC>().Idx).HaveCooldown)
                 {
                     switch (uniqBut)
                     {

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct WaterC : IUnitCell
+    public struct WaterC : IUnitCellE
     {
         public int Water { get; internal set; }
         public bool Have => Water > 0;

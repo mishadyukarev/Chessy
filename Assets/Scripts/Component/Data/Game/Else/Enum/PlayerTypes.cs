@@ -2,8 +2,8 @@
 {
     public enum PlayerTypes
     {
-        Start,
-        None = Start,
+        None,
+        Start = None,
 
         First,
         Second,

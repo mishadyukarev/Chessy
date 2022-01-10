@@ -88,7 +88,7 @@ namespace Game.Game
         {
             if (!_actions.ContainsKey(type)) throw new Exception();
 
-            _actions[type].Invoke();
+            _actions[type]?.Invoke();
         }
     }
 }

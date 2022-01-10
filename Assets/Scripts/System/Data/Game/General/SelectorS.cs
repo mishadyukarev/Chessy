@@ -11,7 +11,6 @@ namespace Game.Game
             ref var unit_cur = ref Unit<UnitC>(CurIdx<IdxC>().Idx);
             ref var levUnit_cur = ref Unit<LevelC>(CurIdx<IdxC>().Idx);
             ref var ownUnit_cur = ref Unit<OwnerC>(CurIdx<IdxC>().Idx);
-            ref var visUnit_cur = ref Unit<VisibleC>(CurIdx<IdxC>().Idx);
 
             ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
 
@@ -218,7 +217,7 @@ namespace Game.Game
                 {
                     if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !visUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
+                        if (!unit_cur.Have || !Unit<VisibledC>(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx).IsVisibled)
                         {
                             if (CurIdx<CurIdxC>().IsStartDirectToCell)
                             {

@@ -29,20 +29,17 @@ namespace Game.Game
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
                 ref var moveCond_0 = ref Unit<MoveInCondC>(idx_0);
-                ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
                 ref var stun_0 = ref Unit<StunC>(idx_0);
-                ref var cdUniq_0 = ref Unit<CooldownUniqC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var buil_0 = ref Build<BuildC>(idx_0);
                 ref var ownBuil_0 = ref Build<OwnerC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
-                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
-                foreach (var item in cdUniq_0.Cooldowns) cdUniq_0.TakeCooldown(item.Key);
+                foreach (var item in Unique) Unit<CooldownC>(item, idx_0).Take();
                 stun_0.Take();
 
 
@@ -133,18 +130,15 @@ namespace Game.Game
             {
                 foreach (byte idx_0 in Idxs)
                 {
-                    ref var env_0 = ref Environment<EnvironmentC>(idx_0);
-                    ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-
                     ref var build_0 = ref Build<BuildC>(idx_0);
 
-                    if (env_0.Have(EnvTypes.Hill))
+                    if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have)
                     {
                         if (!build_0.Is(BuildTypes.Mine))
                         {
-                            if (!envRes_0.HaveMax(EnvTypes.Hill))
+                            if (!Environment<EnvCellEC>(EnvTypes.Hill, idx_0).HaveMax())
                             {
-                                envRes_0.Add(EnvTypes.Hill);
+                                Environment<ResourcesC>(EnvTypes.Hill, idx_0).Resources += 1;
                             }
                         }
                     }

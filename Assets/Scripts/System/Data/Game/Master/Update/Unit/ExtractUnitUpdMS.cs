@@ -12,9 +12,6 @@ namespace Game.Game
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
 
-                ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
-                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var buil_0 = ref Build<BuildC>(idx_0);
 
@@ -22,11 +19,11 @@ namespace Game.Game
                 if (Unit<UnitCellEC>(idx_0).CanExtract(out var extract, out var env, out var res))
                 {
                     InvResC.Add(res, ownUnit_0.Owner, extract);
-                    envRes_0.Take(env, extract);
+                    Environment<ResourcesC>(env, idx_0).Resources -= extract;
 
                     if (env == EnvTypes.AdultForest)
                     {
-                        if (envRes_0.Have(env))
+                        if (Environment<ResourcesC>(env, idx_0).Have)
                         {
                             if (buil_0.Is(BuildTypes.Camp) || !buil_0.Have)
                             {
@@ -42,11 +39,11 @@ namespace Game.Game
                         else
                         {
                             buildCell_0.Remove();
-                            envCell_0.Remove(env);
+                            Environment<EnvCellEC>(env, idx_0).Remove();
 
                             if (UnityEngine.Random.Range(0, 100) < 50)
                             {
-                                envCell_0.SetNew(EnvTypes.YoungForest);
+                                Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).SetNew();
                             }
                         }
                     }

@@ -3,7 +3,7 @@ using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    sealed class AttackMS : IEcsRunSystem
+    struct AttackMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -14,7 +14,6 @@ namespace Game.Game
             ref var hpUnit_from = ref Unit<HpC>(idx_from);
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
             ref var condUnit_from = ref Unit<ConditionC>(idx_from);
-            ref var effUnit_from = ref Unit<EffectsC>(idx_from);
 
             ref var tw_from = ref UnitTW<ToolWeaponC>(idx_from);
 
@@ -23,7 +22,6 @@ namespace Game.Game
             ref var unit_to = ref Unit<UnitC>(idx_to);
             ref var hpUnitCell_to = ref Unit<UnitCellEC>(idx_to);
             ref var hpUnit_to = ref Unit<HpC>(idx_to);
-            ref var effUnit_to = ref Unit<EffectsC>(idx_to);
 
             ref var tw_to = ref UnitTW<ToolWeaponC>(idx_to);
 
@@ -149,8 +147,8 @@ namespace Game.Game
                     Unit<UnitCellEC>(idx_from).Kill();
                 }
 
-                effUnit_from.DefAllEffects();
-                effUnit_to.DefAllEffects();
+                foreach (var item in Stats) Unit<HaveEffectC>(item, idx_from).Disable();
+                foreach (var item in Stats) Unit<HaveEffectC>(item, idx_to).Disable();
             }
         }
     }

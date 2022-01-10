@@ -256,7 +256,7 @@ namespace Game.Game
                 objs.Add(Unit<WaterC>(idx_0).Water);
 
                 objs.Add(Unit<ConditionC>(idx_0).Condition);
-                foreach (var item in Unit<EffectsC>(idx_0).Effects) objs.Add(item.Value);
+                foreach (var item in Stats) objs.Add(Unit<HaveEffectC>(item, idx_0).Have);
 
 
                 objs.Add(UnitTW<ToolWeaponC>(idx_0).ToolWeapon);
@@ -268,8 +268,7 @@ namespace Game.Game
 
                 objs.Add(Unit<CornerArcherC>(idx_0).IsCornered);
 
-                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
-                    objs.Add(item.Value);
+                foreach (var item in Unique) objs.Add(Unit<CooldownC>(item, idx_0).Cooldown);
 
 
 
@@ -280,14 +279,11 @@ namespace Game.Game
 
 
 
-                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
-                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-                foreach (var item_0 in env_0.Envronments)
-                    foreach (var item_1 in envRes_0.Resources)
-                    {
-                        objs.Add(item_0.Value);
-                        objs.Add(item_1.Value);
-                    }
+                foreach (var env in Enviroments)
+                {
+                    objs.Add(Environment<HaveEnvironmentC>(env, idx_0));
+                    objs.Add(Environment<ResourcesC>(env, idx_0));
+                }
 
 
 
@@ -370,7 +366,7 @@ namespace Game.Game
                 Unit<UnitCellEC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
                 Unit<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
-                foreach (var item in Unit<EffectsC>(idx_0).Effects) Unit<EffectsC>(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
+                foreach (var item in Stats) Unit<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
                 UnitTW<UnitTWCellEC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
@@ -379,8 +375,7 @@ namespace Game.Game
 
                 Unit<CornerArcherC>(idx_0).Sync((bool)objects[_idx_cur++]);
 
-                foreach (var item in Unit<CooldownUniqC>(idx_0).Cooldowns)
-                    Unit<CooldownUniqC>(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
+                foreach (var item in Unique) Unit<CooldownC>(item, idx_0).Cooldown = (int)objects[_idx_cur++];
 
 
 
@@ -389,13 +384,11 @@ namespace Game.Game
                 Build<BuildCellEC>(idx_0).Sync((BuildTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
 
 
-                ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
-                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
-                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-                foreach (var item_0 in env_0.Envronments)
-                    foreach (var item_1 in envRes_0.Resources)
-                        envCell_0.Sync(item_1.Key, (bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
-
+                foreach (var item_0 in Enviroments)
+                {
+                    Environment<HaveEnvironmentC>(item_0, idx_0).Have = (bool)objects[_idx_cur++];
+                    Environment<ResourcesC>(item_0, idx_0).Resources = (int)objects[_idx_cur++];
+                }
 
                 ref var river_0 = ref River<RiverC>(idx_0);
                 river_0.Sync((RiverTypes)objects[_idx_cur++]);

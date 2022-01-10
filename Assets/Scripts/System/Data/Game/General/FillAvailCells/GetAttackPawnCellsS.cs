@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    sealed class GetAttackPawnCellsS : IEcsRunSystem
+    struct GetAttackPawnCellsS : IEcsRunSystem
     {
         public void Run()
         {
@@ -12,7 +12,6 @@ namespace Game.Game
                 ref var level_0 = ref Unit<LevelC>(idx_0);
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
                 ref var step_0 = ref Unit<StepC>(idx_0);
-                ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
                 ref var stunUnit_0 = ref Unit<StunC>(idx_0);
 
                 if (!stunUnit_0.IsStunned)
@@ -28,14 +27,13 @@ namespace Game.Game
                             dir_cur += 1;
                             var idx_1 = IdxCell(item_1.Value);
 
-                            ref var env_1 = ref Environment<EnvironmentC>(idx_1);
                             ref var unit_1 = ref Unit<UnitC>(idx_1);
                             ref var own_1 = ref Unit<OwnerC>(idx_1);
 
                             ref var trail_1 = ref Trail<TrailCellEC>(idx_1);
 
 
-                            if (!env_1.Have(EnvTypes.Mountain))
+                            if (!Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_1).Have)
                             {
                                 if (Unit<UnitCellEC>(idx_0).HaveStepsForDoing(idx_1)
                                     || Unit<UnitCellEC>(idx_0).HaveMaxSteps)

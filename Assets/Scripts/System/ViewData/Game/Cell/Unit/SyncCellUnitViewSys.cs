@@ -11,7 +11,6 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var levelUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var visUnit_0 = ref Unit<VisibleC>(idx_0);
 
                 ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
 
@@ -27,7 +26,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (visUnit_0.IsVisibled(WhoseMoveC.CurPlayerI))
+                    if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
                     {
                         mainUnit_0.SetEnabled(true);
 
@@ -53,8 +52,8 @@ namespace Game.Game
                         }
 
 
-                        mainUnit_0.SetAlpha(visUnit_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
-                        extraUnit_0.SetAlpha(visUnit_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
+                        mainUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI), idx_0).IsVisibled);
+                        extraUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI), idx_0).IsVisibled);
                     }
                 }
             }

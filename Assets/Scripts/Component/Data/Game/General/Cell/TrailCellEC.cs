@@ -43,10 +43,10 @@ namespace Game.Game
         internal TrailCellEC(in byte idx) => _idx = idx;
 
 
-        public bool TrySetNewTrail(in DirectTypes dir, in EnvironmentC envC)
+        public bool TrySetNewTrail(in DirectTypes dir, in bool haveAdultForest)
         {
-            if (envC.Have(EnvTypes.AdultForest)) EntityCellPool.Trail<HpC>(_idx, dir).Hp = 7;
-            return envC.Have(EnvTypes.AdultForest);
+            if (haveAdultForest) EntityCellPool.Trail<HpC>(_idx, dir).Hp = 7;
+            return haveAdultForest;
         }
         public void SetAllTrail()
         {

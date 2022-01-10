@@ -19,7 +19,6 @@ namespace Game.Game
                 ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-                ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
@@ -56,9 +55,9 @@ namespace Game.Game
                         fire_0.Disable();
 
 
-                        envCell_0.Remove(EnvTypes.AdultForest);
-                        envCell_0.Remove(EnvTypes.Fertilizer);
-                        envCell_0.Remove(EnvTypes.YoungForest);
+                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Remove();
+                        Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Remove();
+                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
                     }
 
                     else

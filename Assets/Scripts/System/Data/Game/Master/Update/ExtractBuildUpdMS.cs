@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class ExtractBuildUpdMS : IEcsRunSystem
+    struct ExtractBuildUpdMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -12,26 +12,22 @@ namespace Game.Game
                 ref var build_0 = ref Build<BuildC>(idx_0);
                 ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
-                ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
-                ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-
-
                 if (buildCell_0.CanExtract(out var extract, out var env, out var res))
                 {
-                    envRes_0.Take(env, extract);
+                    Environment<ResourcesC>(env, idx_0).Resources -= extract;
                     InvResC.Add(res, ownBuild_0.Owner, extract);
 
-                    if (!envRes_0.Have(env))
+                    if (!Environment<ResourcesC>(env, idx_0).Have)
                     {
                         buildCell_0.Remove();
 
-                        if (env != EnvTypes.Hill) envCell_0.Remove(env);
+                        if (env != EnvTypes.Hill) Environment<EnvCellEC>(env, idx_0).Remove();
 
                         if (env == EnvTypes.AdultForest)
                         {
                             if (UnityEngine.Random.Range(0, 100) < 50)
                             {
-                                envCell_0.SetNew(EnvTypes.YoungForest);
+                                Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).SetNew();
                             }
                         }
                     }

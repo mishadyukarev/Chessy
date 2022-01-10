@@ -15,11 +15,10 @@ namespace Game.Game
                 ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var lev_0 = ref Unit<LevelC>(idx_0);
                 ref var own_0 = ref Unit<OwnerC>(idx_0);
-                ref var vis_0 = ref Unit<VisibleC>(idx_0);
 
                 ref var supV_0 = ref EntityCellVPool.ElseCellVE<SupportVC>(idx_0);
 
-                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
+                ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
@@ -75,7 +74,7 @@ namespace Game.Game
 
                     else
                     {
-                        if (vis_0.IsVisibled(WhoseMoveC.CurPlayerI))
+                        if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
                         {
                             if (env_0.Have(EnvTypes.AdultForest))
                             {

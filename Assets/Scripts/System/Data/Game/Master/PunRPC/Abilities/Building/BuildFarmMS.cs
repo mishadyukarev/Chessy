@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class BuildFarmMS : IEcsRunSystem
+    struct BuildFarmMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -17,11 +17,6 @@ namespace Game.Game
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
-            ref var env_0 = ref Environment<EnvironmentC>(idx_0);
-            ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
-            ref var envRes_0 = ref Environment<EnvResC>(idx_0);
-
-
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
@@ -32,15 +27,15 @@ namespace Game.Game
                 {
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
 
-                    envCell_0.Remove(EnvTypes.YoungForest);
+                    Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
 
-                    if (env_0.Have(EnvTypes.Fertilizer))
+                    if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
                     {
-                        envRes_0.AddMax(EnvTypes.Fertilizer);
+                        Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).AddMax();
                     }
                     else
                     {
-                        envCell_0.SetNew(EnvTypes.Fertilizer);
+                        Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).SetNew();
                     }
 
                     InvResC.BuyBuild(whoseMove, buildType);

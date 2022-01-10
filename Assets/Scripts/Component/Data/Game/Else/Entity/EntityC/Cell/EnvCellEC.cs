@@ -3,43 +3,98 @@ using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public struct EnvCellEC : IEnvCell
+    public readonly struct EnvCellEC : IEnvCell
     {
         readonly byte _idx;
+        readonly EnvTypes _env;
 
-        internal EnvCellEC(in byte idx) => _idx = idx;
+        readonly EnvironmentValues _values;
 
-        public void SetNew(EnvTypes env)
+
+        public byte Max() => _values.MaxAmount(_env);
+        public bool Have() => Environment<ResourcesC>(_env, _idx).Resources > 0;
+        public bool HaveMax() => Environment<ResourcesC>(_env, _idx).Resources >= Max();
+
+
+        internal EnvCellEC(in byte idx, in EnvTypes env)
         {
-            if (env == default) throw new Exception();
-
-            Environment<EnvResC>(_idx).SetNew(env);
-
-            WhereEnvC.Set(env, _idx, true);
-            Environment<EnvironmentC>(_idx).Set(env, true);
+            _idx = idx;
+            _env = env;
+            _values = new EnvironmentValues();
         }
-        public void Remove(EnvTypes env)
+        public void SetNew()
         {
-            if (env == default) throw new Exception();
+            if (_env == default) throw new Exception();
 
-            if (Environment<EnvironmentC>(_idx).Have(env))
+            byte randAmountRes = 0;
+
+
+            var forMin = 3;
+
+            if (_env == EnvTypes.Fertilizer || _env == EnvTypes.AdultForest)
             {
-                if (env == EnvTypes.AdultForest)
+                randAmountRes = (byte)UnityEngine.Random.Range(_values.MaxAmount(_env) / forMin, _values.MaxAmount(_env) + 1);
+            }
+            else if (_env == EnvTypes.Hill)
+            {
+                randAmountRes = (byte)(_values.MaxAmount(_env) / forMin);
+            }
+
+            Environment<ResourcesC>(_env, _idx).Resources = randAmountRes;
+
+
+            WhereEnvC.Set(_env, _idx, true);
+            Environment<HaveEnvironmentC>(_env, _idx).Have = true;
+        }
+        public void Remove()
+        {
+            if (_env == default) throw new Exception();
+
+            if (Environment<HaveEnvironmentC>(_env, _idx).Have)
+            {
+                if (_env == EnvTypes.AdultForest)
                 {
                     Trail<TrailCellEC>(_idx).ResetAll();
                     Fire<HaveEffectC>(_idx).Disable();
                 }
 
-                Environment<EnvResC>(_idx).Reset(env);
+                Environment<ResourcesC>(_env, _idx).Resources = 0;
 
-                WhereEnvC.Set(env, _idx, false);
-                Environment<EnvironmentC>(_idx).Set(env, false);
+                WhereEnvC.Set(_env, _idx, false);
+                Environment<HaveEnvironmentC>(_env, _idx).Have = false;
             }
         }
-        public void Sync(in EnvTypes env, in bool have, in int resource)
+        public void SetMax()
         {
-            Environment<EnvironmentC>(_idx).Set(env, have);
-            Environment<EnvResC>(_idx).Set(env, resource);
+            Environment<ResourcesC>(_env, _idx).Resources = Max();
         }
+        public void Add(in int adding = 1)
+        {
+            if (adding == 0) throw new Exception();
+            if (adding < 0) throw new Exception();
+
+            Environment<ResourcesC>(_env, _idx).Resources += adding;
+
+            if (Environment<ResourcesC>(_env, _idx).Resources > Max()) Environment<ResourcesC>(_env, _idx).Resources = Max();
+        }
+        public void AddMax()
+        {
+            Environment<ResourcesC>(_env, _idx).Resources += Max();
+        }
+        public void Take(in int taking = 1)
+        {
+            if (taking == 0) throw new Exception();
+            if (taking < 0) throw new Exception();
+
+            Environment<ResourcesC>(_env, _idx).Resources -= taking;
+
+            if (Environment<ResourcesC>(_env, _idx).Resources < 0) Environment<ResourcesC>(_env, _idx).Resources = 0;
+        }
+
+        public void Sync(in int amount)
+        {
+            Environment<ResourcesC>(_env, _idx).Resources = amount;
+        }
+
     }
 }

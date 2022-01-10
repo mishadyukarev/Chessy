@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct MoveInCondC : IUnitCell
+    public struct MoveInCondC : IUnitCellE
     {
         private Dictionary<CondUnitTypes, int> _moveInCond;
 

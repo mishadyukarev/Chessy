@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct UniqAbilC : IUnitCell
+    public struct UniqAbilC : IUnitCellE
     {
         Dictionary<UniqButTypes, UniqueAbilityTypes> _abilities;
 

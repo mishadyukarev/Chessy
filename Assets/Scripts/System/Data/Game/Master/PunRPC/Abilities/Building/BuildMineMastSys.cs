@@ -18,8 +18,6 @@ namespace Game.Game
 
 
             ref var stepUnitCell_0 = ref Unit<UnitCellEC>(idx_0);
-            ref var env_0 = ref Environment<EnvironmentC>(idx_0);
-            ref var envRes_0 = ref Environment<EnvResC>(idx_0);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;
@@ -30,7 +28,8 @@ namespace Game.Game
                 {
                     if (!build_0.Have || build_0.Is(BuildTypes.Camp))
                     {
-                        if (env_0.Have(EnvTypes.Hill) && envRes_0.Have(EnvTypes.Hill))
+                        if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have 
+                            && Environment<ResourcesC>(EnvTypes.Hill, idx_0).Have)
                         {
                             if (InvResC.CanCreateBuild(whoseMove, build, out var needRes))
                             {

@@ -16,7 +16,7 @@ namespace Game.Game
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
-            ref var env_0 = ref Environment<EnvironmentC>(idx_0);
+            ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
 
 
             if (stepUnit_0.Have(uniq_cur))

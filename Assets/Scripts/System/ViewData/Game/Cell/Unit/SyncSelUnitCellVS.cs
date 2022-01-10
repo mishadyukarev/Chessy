@@ -10,7 +10,6 @@ namespace Game.Game
             if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
             {
                 ref var unit_cur = ref Unit<UnitC>(CurIdx<IdxC>().Idx);
-                ref var visUnit_cur = ref Unit<VisibleC>(CurIdx<IdxC>().Idx);
 
                 ref var mainUnit_cur = ref EntityCellVPool.UnitV<UnitMainVC>(CurIdx<IdxC>().Idx);
                 ref var mainUnit_pre = ref EntityCellVPool.UnitV<UnitMainVC>(PreVisIdx<IdxC>().Idx);
@@ -18,7 +17,7 @@ namespace Game.Game
 
                 if (unit_cur.Have)
                 {
-                    if (visUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
+                    if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx).IsVisibled)
                     {
                         mainUnit_pre.SetEnabled(true);
                         mainUnit_pre.SetSprite(SelUnitC.Unit, SelUnitC.Level, false);

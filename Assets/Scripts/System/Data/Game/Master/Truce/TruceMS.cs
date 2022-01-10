@@ -22,9 +22,9 @@ namespace Game.Game
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var build_0 = ref Build<BuildC>(idx_0);
 
-                ref var env_0 = ref Environment<EnvironmentC>(idx_0);
+                ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
                 ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
-                ref var envRes_0 = ref Environment<EnvironmentC>(idx_0);
+                ref var envRes_0 = ref Environment<HaveEnvironmentC>(idx_0);
 
                 ref var curFireCom = ref Fire<HaveEffectC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);

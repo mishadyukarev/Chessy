@@ -16,26 +16,27 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
             ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
-            ref var effUnit_0 = ref Unit<EffectsC>(idx_0);
 
             ref var uniq_0 = ref Unit<UniqAbilC>(idx_0);
-            ref var cdUniq_0 = ref Unit<CooldownUniqC>(idx_0);
 
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            if (!cdUniq_0.HaveCooldown(uniq))
+            if (!Unit<CooldownC>(uniq, idx_0).HaveCooldown)
             {
                 if (stepUnit_0.Have(uniq))
                 {
-                    cdUniq_0.SetCooldown(uniq, 3);
+                    Unit<CooldownC>(uniq, idx_0).Cooldown = 3;
 
                     stepUnit_0.Take(uniq);
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq);
 
-                    if (!effUnit_0.Have(UnitStatTypes.Damage)) effUnit_0.Set(UnitStatTypes.Damage);
+                    if (!Unit<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have)
+                    {
+                        Unit<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
+                    }
 
                     var around = CellSpaceC.XyAround(Cell<XyC>(idx_0).Xy);
                     foreach (var xy in around)
@@ -45,16 +46,13 @@ namespace Game.Game
                         ref var unit_1 = ref Unit<UnitC>(idx_1);
                         ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
 
-                        ref var effUnitC_1 = ref Unit<EffectsC>(idx_1);
-
-
                         if (unit_1.Have)
                         {
                             if (ownUnit_1.Is(ownUnit_0.Owner))
                             {
-                                if (!effUnitC_1.Have(UnitStatTypes.Damage))
+                                if (!Unit<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
                                 {
-                                    effUnitC_1.Set(UnitStatTypes.Damage);
+                                    Unit<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have = true;
                                 }
                             }
                         }

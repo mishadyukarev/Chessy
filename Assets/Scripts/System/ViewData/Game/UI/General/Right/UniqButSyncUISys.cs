@@ -3,12 +3,11 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public sealed class UniqButSyncUISys : IEcsRunSystem
+    struct UniqButSyncUISys : IEcsRunSystem
     {
         public void Run()
         {
             ref var uniq_sel = ref Unit<UniqAbilC>(SelIdx<IdxC>().Idx);
-            ref var cdUniq_sel = ref Unit<CooldownUniqC>(SelIdx<IdxC>().Idx);
 
             var abil1 = uniq_sel.Ability(UniqButTypes.First);
             var abil2 = uniq_sel.Ability(UniqButTypes.Second);
@@ -20,18 +19,18 @@ namespace Game.Game
 
             if (abil1 != default)
             {
-                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.First, cdUniq_sel.HaveCooldown(abil1));
-                UniqButtonsUIC.SetTextCooldown(UniqButTypes.First, cdUniq_sel.Cooldown(abil1).ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.First, Unit<CooldownC>(abil1, SelIdx<IdxC>().Idx).HaveCooldown);
+                UniqButtonsUIC.SetTextCooldown(UniqButTypes.First, Unit<CooldownC>(abil1, SelIdx<IdxC>().Idx).Cooldown.ToString());
             }
             if (abil2 != default)
             {
-                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Second, cdUniq_sel.HaveCooldown(abil2));
-                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Second, cdUniq_sel.Cooldown(abil2).ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Second, Unit<CooldownC>(abil2, SelIdx<IdxC>().Idx).HaveCooldown);
+                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Second, Unit<CooldownC>(abil2, SelIdx<IdxC>().Idx).ToString());
             }
             if (abil3 != default)
             {
-                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Third, cdUniq_sel.HaveCooldown(abil3));
-                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Third, cdUniq_sel.Cooldown(abil3).ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Third, Unit<CooldownC>(abil3, SelIdx<IdxC>().Idx).HaveCooldown);
+                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Third, Unit<CooldownC>(abil3, SelIdx<IdxC>().Idx).Cooldown.ToString());
             }
         }
     }

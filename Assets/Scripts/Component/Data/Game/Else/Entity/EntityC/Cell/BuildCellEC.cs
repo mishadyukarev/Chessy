@@ -11,21 +11,19 @@ namespace Game.Game
         public bool CanExtract(out int extract, out EnvTypes env, out ResTypes res)
         {
             var ownC = Build<OwnerC>(_idx);
-            var envC = Environment<EnvironmentC>(_idx);
-            var envResC = Environment<EnvResC>(_idx);
 
 
-            if (Build<BuildC>(_idx).Is(BuildTypes.Farm) && envC.Have(EnvTypes.Fertilizer))
+            if (Build<BuildC>(_idx).Is(BuildTypes.Farm) && Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, _idx).Have)
             {
                 env = EnvTypes.Fertilizer;
                 res = ResTypes.Food;
             }
-            else if (Build<BuildC>(_idx).Is(BuildTypes.Woodcutter) && envC.Have(EnvTypes.AdultForest))
+            else if (Build<BuildC>(_idx).Is(BuildTypes.Woodcutter) && Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
             {
                 env = EnvTypes.AdultForest;
                 res = ResTypes.Wood;
             }
-            else if (Build<BuildC>(_idx).Is(BuildTypes.Mine) && envC.Have(EnvTypes.Hill))
+            else if (Build<BuildC>(_idx).Is(BuildTypes.Mine) && Environment<HaveEnvironmentC>(EnvTypes.Hill, _idx).Have)
             {
                 env = EnvTypes.Hill;
                 res = ResTypes.Ore;
@@ -45,7 +43,7 @@ namespace Game.Game
             extract += (int)(extract * BuildsUpgC.PercUpg(Build<BuildC>(_idx).Build, ownC.Owner));
 
 
-            if (extract > envResC.Amount(env)) extract = envResC.Amount(env);
+            if (extract > Environment<ResourcesC>(env, _idx).Resources) extract = Environment<ResourcesC>(env, _idx).Resources;
 
             return true;
         }
@@ -55,14 +53,13 @@ namespace Game.Game
             needRes = default;
 
             var buildC = Build<BuildC>(_idx);
-            var envC = Environment<EnvironmentC>(_idx);
 
 
             if (Unit<UnitCellEC>(_idx).Have(build))
             {
                 if (!buildC.Have || buildC.Is(BuildTypes.Camp))
                 {
-                    if (!envC.Have(EnvTypes.AdultForest))
+                    if (!Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
                     {
                         if (InvResC.CanCreateBuild(who, build, out needRes))
                         {
