@@ -17,7 +17,7 @@ namespace Game.Game
 
                 Unit<UnitCellEC>(idx_from).Shift(idx_to);
 
-                RpcS.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }
         }
     }

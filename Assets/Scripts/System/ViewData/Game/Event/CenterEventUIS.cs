@@ -1,6 +1,7 @@
 ﻿using Game.Common;
 using Photon.Pun;
 using UnityEngine;
+using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
@@ -31,7 +32,7 @@ namespace Game.Game
             HeroesViewUIC.AddListPremium(OpenShop);
         }
 
-        private void Ready() => RpcS.ReadyToMaster();
+        private void Ready() => EntityPool.Rpc<RpcC>().ReadyToMaster();
         private void FriendReady()
         {
             FriendC.IsActiveFriendZone = false;
@@ -55,7 +56,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcS.PickUpgUnitToMas(unit);
+                EntityPool.Rpc<RpcC>().PickUpgUnitToMas(unit);
 
                 HeroesViewUIC.SetActiveZone(true);
             }
@@ -66,7 +67,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcS.PickUpgBuildToMas(build);
+                EntityPool.Rpc<RpcC>().PickUpgBuildToMas(build);
 
                 HeroesViewUIC.SetActiveZone(true);
             }
@@ -77,7 +78,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcS.UpgWater();
+                EntityPool.Rpc<RpcC>().UpgWater();
 
                 HeroesViewUIC.SetActiveZone(true);
             }
@@ -88,7 +89,7 @@ namespace Game.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcS.GetHero(UnitTypes.Elfemale);
+                EntityPool.Rpc<RpcC>().GetHero(UnitTypes.Elfemale);
             }
             else SoundEffectVC.Play(ClipTypes.Mistake);
         }

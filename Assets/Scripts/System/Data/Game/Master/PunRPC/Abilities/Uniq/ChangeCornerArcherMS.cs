@@ -24,16 +24,16 @@ namespace Game.Game
 
                     Unit<UnitCellEC>(idx_0).Take(uniq);
 
-                    RpcS.SoundToGeneral(sender, ClipTypes.PickArcher);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
                 else
                 {
-                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

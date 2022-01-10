@@ -25,7 +25,7 @@ namespace Game.Game
             {
                 if (stepUnit_0.Have(uniq_cur))
                 {
-                    RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     cdUniq_0.SetCooldown(uniq_cur, 2);
 
@@ -72,17 +72,17 @@ namespace Game.Game
                     stepUnit_0.Take(uniq_cur);
                     effUnit_0.DefAllEffects();
 
-                    RpcS.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AttackMelee);
 
 
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
                 }
                 else
                 {
-                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
-            else RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
+            else EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

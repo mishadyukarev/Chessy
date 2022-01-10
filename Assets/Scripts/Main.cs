@@ -102,13 +102,7 @@ namespace Game
                     new SystemDataMasterManager();
                     new SystemViewDataManager();
 
-
-                    var rpc_GO = new GameObject("RpcView");
-                    var rpc = rpc_GO.AddComponent<RpcS>();
-                    EntityVPool.GeneralZone<GeneralZoneVEC>().Attach(rpc.transform);
-                    new RpcVC(rpc_GO);
-
-                    rpc.Init();
+                    RpcVC.Instance.SyncAllMaster();
 
                     break;
 

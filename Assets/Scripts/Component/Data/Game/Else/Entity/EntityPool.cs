@@ -6,41 +6,49 @@ namespace Game.Game
 {
     public readonly struct EntityPool
     {
-        readonly static Dictionary<string, Entity> _entsTest;
+        readonly static Dictionary<string, Entity> _ents;
 
-        public static ref C SelIdx<C>() where C : struct, ISelectedIdx => ref _entsTest[nameof(ISelectedIdx)].Get<C>();
-        public static ref C CurIdx<C>() where C : struct, ICurrectIdx => ref _entsTest[nameof(ICurrectIdx)].Get<C>();
-        public static ref C PreVisIdx<C>() where C : struct, IPreVisionIdx => ref _entsTest[nameof(IPreVisionIdx)].Get<C>();
-        public static ref C Input<C>() where C : struct, IInputE => ref _entsTest[nameof(IInputE)].Get<C>();
-        public static ref C ClickerObject<C>() where C : struct, IClickerObjectE => ref _entsTest[nameof(IClickerObjectE)].Get<C>();
+        public static ref C SelIdx<C>() where C : struct, ISelectedIdx => ref _ents[nameof(ISelectedIdx)].Get<C>();
+        public static ref C CurIdx<C>() where C : struct, ICurrectIdx => ref _ents[nameof(ICurrectIdx)].Get<C>();
+        public static ref C PreVisIdx<C>() where C : struct, IPreVisionIdx => ref _ents[nameof(IPreVisionIdx)].Get<C>();
+        public static ref C Input<C>() where C : struct, IInputE => ref _ents[nameof(IInputE)].Get<C>();
+        public static ref C ClickerObject<C>() where C : struct, IClickerObjectE => ref _ents[nameof(IClickerObjectE)].Get<C>();
+        public static ref C Rpc<C>() where C : struct, IRpc => ref _ents[nameof(Rpc)].Get<C>();
+
+        public interface IRpc { }
 
         static EntityPool()
         {
-            _entsTest = new Dictionary<string, Entity>();
+            _ents = new Dictionary<string, Entity>();
         }
 
-        public EntityPool(in WorldEcs curGameW, in string nameBackground)
+        public EntityPool(in WorldEcs curGameW, in string nameBackground, in List<object> actions, in List<string> namesMethods)
         {
 
 
-            _entsTest[nameof(ISelectedIdx)] = curGameW.NewEntity()
+            _ents[nameof(ISelectedIdx)] = curGameW.NewEntity()
                 .Add(new SelIdxC())
                 .Add(new IdxC(0));
 
-            _entsTest[nameof(ICurrectIdx)] = curGameW.NewEntity()
+            _ents[nameof(ICurrectIdx)] = curGameW.NewEntity()
                 .Add(new CurIdxC())
                 .Add(new IdxC(0));
 
-            _entsTest[nameof(IPreVisionIdx)] = curGameW.NewEntity()
+            _ents[nameof(IPreVisionIdx)] = curGameW.NewEntity()
                 .Add(new PreVisIdxC())
                 .Add(new IdxC(0));
 
-            _entsTest[nameof(IInputE)] = curGameW.NewEntity()
+            _ents[nameof(IInputE)] = curGameW.NewEntity()
                 .Add(new ClickC());
 
-            _entsTest[nameof(IClickerObjectE)] = curGameW.NewEntity()
+            _ents[nameof(IClickerObjectE)] = curGameW.NewEntity()
                 .Add(new CellClickC(CellClickTypes.SimpleClick))
                 .Add(new RayCastC());
+
+
+
+            _ents[nameof(Rpc)] = curGameW.NewEntity()
+                .Add(new RpcC(actions, namesMethods));
 
 
             new WindC(DirectTypes.Right);

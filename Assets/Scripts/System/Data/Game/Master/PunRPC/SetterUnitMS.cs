@@ -52,7 +52,7 @@ namespace Game.Game
 
                 if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
-                RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

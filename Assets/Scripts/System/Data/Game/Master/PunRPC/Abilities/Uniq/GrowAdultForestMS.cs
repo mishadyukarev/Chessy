@@ -36,7 +36,7 @@ namespace Game.Game
 
                         cdUniq_0.SetCooldown(uniq_cur, 5);
 
-                        RpcS.SoundToGeneral(sender, uniq_cur);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 
                         if (!effUnit_0.Have(UnitStatTypes.Steps)) effUnit_0.Set(UnitStatTypes.Steps);
 
@@ -63,13 +63,13 @@ namespace Game.Game
 
                     }
 
-                    else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
-                else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
             else
             {
-                RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

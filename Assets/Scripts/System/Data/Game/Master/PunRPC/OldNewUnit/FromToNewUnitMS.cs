@@ -38,7 +38,7 @@ namespace Game.Game
 
                             if (idx_1 == idx_to)
                             {
-                                RpcS.SoundToGeneral(sender, ClipTypes.GetHero);
+                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.GetHero);
 
                                 Unit<UnitCellEC>(idx_to).SetHero(idx_from, unit, LevelTypes.First);
 

@@ -55,7 +55,7 @@
             //PickUpgC.SetHaveUpgrade(whoseMove, false);
             //PickUpgC.SetHave_But(whoseMove, ForPickUpgMasC.UpgButType, false);
 
-            RpcS.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickUpgrade);
             //}
         }
     }

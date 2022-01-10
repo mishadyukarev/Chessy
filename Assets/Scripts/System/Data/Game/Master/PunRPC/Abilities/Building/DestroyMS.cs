@@ -20,7 +20,7 @@ namespace Game.Game
 
             if (stepUnit_0.HaveMin)
             {
-                RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 if (buildC_0.Is(BuildTypes.City))
                 {
@@ -37,7 +37,7 @@ namespace Game.Game
             }
             else
             {
-                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

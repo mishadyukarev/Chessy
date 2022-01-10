@@ -12,23 +12,20 @@ namespace Game.Game
             list.Add(dataSC);
 
 
-            var action =
+            dataSC.Add(DataSTypes.RunUpdate, 
                 (Action)new InputS().Run
                 + new RayS().Run
-                + new SelectorS().Run;
-            dataSC.Add(DataSTypes.RunUpdate, action);
+                + new SelectorS().Run);
 
-            dataSC.Add(DataSTypes.RunFixedUpdate, new SoundS().Run);
+            dataSC.Add(DataSTypes.RunFixedUpdate,
+                (Action)new SoundS().Run);
 
-
-            action =
+            dataSC.Add(DataSTypes.RunAfterUpdate,
                 (Action)new VisibElseS().Run
                 + new AbilSyncMS().Run
                 + new ClearAvailCellsS().Run
                 + new GetAttackPawnCellsS().Run
-                + new GetSetUnitCellsS().Run;
-
-            dataSC.Add(DataSTypes.RunAfterUpdate, action);
+                + new GetSetUnitCellsS().Run);
 
             new DataSC(list);
         }

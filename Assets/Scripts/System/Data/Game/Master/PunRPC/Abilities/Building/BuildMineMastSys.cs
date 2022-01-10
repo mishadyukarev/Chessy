@@ -34,7 +34,7 @@ namespace Game.Game
                         {
                             if (InvResC.CanCreateBuild(whoseMove, build, out var needRes))
                             {
-                                RpcS.SoundToGeneral(sender, ClipTypes.Building);
+                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
 
                                 InvResC.BuyBuild(whoseMove, build);
 
@@ -44,16 +44,16 @@ namespace Game.Game
                                 stepUnitCell_0.TakeForBuild();
                             }
 
-                            else RpcS.MistakeEconomyToGeneral(sender, needRes);
+                            else EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
                         }
 
-                        else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
-                    else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
                 else
                 {
-                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

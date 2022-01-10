@@ -15,11 +15,11 @@
             {
                 InvResC.BuyRes(whoseMove, res);
 
-                RpcS.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                RpcS.MistakeEconomyToGeneral(sender, needRes);
+                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

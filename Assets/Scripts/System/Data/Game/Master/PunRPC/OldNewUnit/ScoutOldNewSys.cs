@@ -19,12 +19,12 @@ namespace Game.Game
                     InvUnitsC.Take(Unit<OwnerC>(idx_0).Owner, UnitTypes.Scout, LevelTypes.First);
                     Unit<UnitCellEC>(idx_0).SetScout();
 
-                    RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }
 
-                else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+            else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
         }
     }
 }

@@ -38,21 +38,21 @@ namespace Game.Game
 
                         Unit<UnitCellEC>(idx_0).SetMaxHp();
 
-                        RpcS.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                     }
                     else
                     {
-                        RpcS.MistakeEconomyToGeneral(sender, needRes);
+                        EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
                     }
                 }
                 else
                 {
-                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

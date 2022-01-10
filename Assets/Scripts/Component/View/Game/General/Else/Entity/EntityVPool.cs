@@ -12,13 +12,14 @@ namespace Game.Game
 
         public static ref C Background<C>() where C : struct => ref _ents[nameof(Background)].Get<C>();
         public static ref C GeneralZone<C>() where C : struct => ref _ents[nameof(GeneralZone)].Get<C>();
+        public static ref C Photon<C>() where C : struct, IPhoton => ref _ents[nameof(Photon)].Get<C>();
 
 
         static EntityVPool()
         {
             _ents = new Dictionary<string, Entity>();
         }
-        public EntityVPool(in WorldEcs curGameW)
+        public EntityVPool(in WorldEcs curGameW, out List<object> actions)
         {
             ToggleZoneVC.ReplaceZone(SceneTypes.Game);
 
@@ -51,6 +52,21 @@ namespace Game.Game
             new SoundEffectVC(aSParent);
 
 
+            var photonView_Rpc = new GameObject("PhotonView_Rpc");
+            GeneralZone<GeneralZoneVEC>().Attach(photonView_Rpc.transform);
+
+            var photonV = photonView_Rpc.AddComponent<PhotonView>();
+            var rpcVC = photonView_Rpc.AddComponent<RpcVC>();
+            rpcVC.Init();
+
+            if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(photonV);
+            else photonV.ViewID = 1001;
+            _ents[nameof(Photon)] = curGameW.NewEntity()
+                .Add(new PhotonVC(photonV, out actions));
+
+
         }
     }
+
+    public interface IPhoton { }
 }

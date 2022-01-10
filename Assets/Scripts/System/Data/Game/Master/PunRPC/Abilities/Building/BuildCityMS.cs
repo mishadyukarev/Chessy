@@ -43,8 +43,8 @@ namespace Game.Game
 
                     if (!haveNearBorder)
                     {
-                        RpcS.SoundToGeneral(sender, ClipTypes.Building);
-                        RpcS.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
                         buildCell_0.SetNew(forBuildType, whoseMove);
@@ -63,12 +63,12 @@ namespace Game.Game
 
                     else
                     {
-                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
+                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                     }
                 }
                 else
                 {
-                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

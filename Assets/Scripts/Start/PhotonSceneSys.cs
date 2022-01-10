@@ -53,7 +53,7 @@ namespace Game.Common
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            RpcS.Instance.SyncAllMaster();
+            RpcVC.Instance.SyncAllMaster();
         }
 
         //public override sealed void OnDisconnectedFromPhoton()

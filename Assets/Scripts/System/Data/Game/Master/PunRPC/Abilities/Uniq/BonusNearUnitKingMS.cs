@@ -33,7 +33,7 @@ namespace Game.Game
                     stepUnit_0.Take(uniq);
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
-                    RpcS.SoundToGeneral(sender, uniq);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq);
 
                     if (!effUnit_0.Have(UnitStatTypes.Damage)) effUnit_0.Set(UnitStatTypes.Damage);
 
@@ -62,11 +62,11 @@ namespace Game.Game
                 }
                 else
                 {
-                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
+            else EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

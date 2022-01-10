@@ -22,7 +22,7 @@ namespace Game.Game
             {
                 if (Unit<UnitCellEC>(idx_from).CanArson(whoseMove, idx_to))
                 {
-                    RpcS.SoundToGeneral(RpcTarget.All, UniqueAbilTypes.FireArcher);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilTypes.FireArcher);
 
                     stepUnit_from.Take(uniq_cur);
                     fire_to.Enable();
@@ -31,7 +31,7 @@ namespace Game.Game
 
             else
             {
-                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

@@ -30,7 +30,7 @@ namespace Game.Game
             {
                 if (buildCell_0.CanBuild(buildType, whoseMove, out var mistake, out var needRes))
                 {
-                    RpcS.SoundToGeneral(sender, ClipTypes.Building);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
 
                     envCell_0.Remove(EnvTypes.YoungForest);
 
@@ -53,8 +53,8 @@ namespace Game.Game
 
                 else
                 {
-                    if (mistake == MistakeTypes.Economy) RpcS.MistakeEconomyToGeneral(sender, needRes);
-                    else RpcS.SimpleMistakeToGeneral(mistake, sender);
+                    if (mistake == MistakeTypes.Economy) EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                    else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(mistake, sender);
                 }
             }
         }

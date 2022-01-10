@@ -45,8 +45,8 @@ namespace Game.Game
                 powerDam_from += Unit<UnitCellEC>(idx_from).DamageAttack(attack);
 
                 if (unit_from.IsMelee)
-                    RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-                else RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                else EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
 

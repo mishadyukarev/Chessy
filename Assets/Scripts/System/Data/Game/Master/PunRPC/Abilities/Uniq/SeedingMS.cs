@@ -33,7 +33,7 @@ namespace Game.Game
                     {
                         if (build_0.Have && !build_0.Is(BuildTypes.Camp))
                         {
-                            RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                         else
                         {
@@ -43,7 +43,7 @@ namespace Game.Game
 
                                     if (!env_0.Have(EnvTypes.YoungForest))
                                     {
-                                        RpcS.SoundToGeneral(sender, uniq_cur);
+                                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 
                                         envCell_0.SetNew(EnvTypes.YoungForest);
 
@@ -51,16 +51,16 @@ namespace Game.Game
                                     }
                                     else
                                     {
-                                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                     }
                                 else
                                 {
-                                    RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                 }
                             }
                             else
                             {
-                                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                             }
 
                         }
@@ -68,7 +68,7 @@ namespace Game.Game
 
                     else
                     {
-                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

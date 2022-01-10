@@ -45,19 +45,19 @@ namespace Game.Game
 
                                         step_from.Take(uniq_cur);
 
-                                        RpcS.SoundToGeneral(RpcTarget.All, uniq_cur);
+                                        EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
                                     }
                                 }
 
-                                else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
-                            else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                            else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                         }
                     }
                 }
             }
 
-            else RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
+            else EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

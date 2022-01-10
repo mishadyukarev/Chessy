@@ -1,4 +1,6 @@
-﻿namespace Game.Game
+﻿
+
+namespace Game.Game
 {
     sealed class LeftCityEventUISys
     {
@@ -12,12 +14,12 @@
 
         private void MeltOre()
         {
-            if (WhoseMoveC.IsMyMove) RpcS.MeltOreToMaster();
+            if (WhoseMoveC.IsMyMove) EntityPool.Rpc<RpcC>().MeltOreToMaster();
         }
 
         private void BuyRes(ResTypes res)
         {
-            if (WhoseMoveC.IsMyMove) RpcS.BuyResToMaster(res);
+            if (WhoseMoveC.IsMyMove) EntityPool.Rpc<RpcC>().BuyResToMaster(res);
         }
     }
 }

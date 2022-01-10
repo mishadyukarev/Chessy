@@ -18,18 +18,18 @@
                     InvResC.BuyCreateUnit(playerSend, unit);
                     InvUnitsC.Add(unit, LevelTypes.First, playerSend);
 
-                    RpcS.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }
                 else
                 {
-                    RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
-                    RpcS.MistakeEconomyToGeneral(sender, needRes);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
+                    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                RpcS.SoundToGeneral(sender, ClipTypes.Mistake);
-                RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
+                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }
     }

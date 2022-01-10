@@ -125,7 +125,7 @@ namespace Game.Game
 
             if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 8)
             {
-                RpcS.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 DataMastSC.InvokeRun(MastDataSysTypes.Truce);
             }
 

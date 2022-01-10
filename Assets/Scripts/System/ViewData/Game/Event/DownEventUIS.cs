@@ -1,4 +1,5 @@
 ﻿using static Game.Game.EntityPool;
+using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
@@ -70,7 +71,7 @@ namespace Game.Game
         {
             if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, WhoseMoveC.CurPlayerI))
             {
-                RpcS.DoneToMaster();
+                EntityPool.Rpc<RpcC>().DoneToMaster();
             }
             else
             {
@@ -84,7 +85,7 @@ namespace Game.Game
             {
                 GetterUnitsC.ResetCurTimer(unitType);
 
-                RpcS.CreateUnitToMaster(unitType);
+                EntityPool.Rpc<RpcC>().CreateUnitToMaster(unitType);
             }
             else SoundEffectVC.Play(ClipTypes.Mistake);
         }

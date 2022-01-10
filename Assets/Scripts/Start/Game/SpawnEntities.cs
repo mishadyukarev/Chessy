@@ -1,4 +1,5 @@
 ﻿using ECS;
+using System.Collections.Generic;
 
 namespace Game.Game
 {
@@ -6,7 +7,7 @@ namespace Game.Game
     {
         public SpawnEntities(in WorldEcs worldEcs)
         {
-            new EntityVPool(worldEcs);
+            new EntityVPool(worldEcs, out var actions);
             new EntityUIPool(worldEcs);
             new EntityCellVPool(worldEcs, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
 
@@ -19,7 +20,9 @@ namespace Game.Game
                 idCells[idx] = EntityCellVPool.Cell<CellVC>(idx).InstanceID;
             }
 
-            new EntityPool(worldEcs, EntityVPool.Background<GameObjectC>().Name);
+            var namesMethods = RpcVC.NamesMethods;
+
+            new EntityPool(worldEcs, EntityVPool.Background<GameObjectC>().Name, actions, namesMethods);
             new EntityCellPool(worldEcs, isActiveCells, idCells);
         }
     }

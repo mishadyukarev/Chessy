@@ -30,13 +30,13 @@ namespace Game.Game
 
                         uniq_from.SetCooldown(uniq_cur, 6);
 
-                        RpcS.SoundToGeneral(RpcTarget.All, uniq_cur);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
                     }
                 }
 
-                else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+            else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
 
         }
     }

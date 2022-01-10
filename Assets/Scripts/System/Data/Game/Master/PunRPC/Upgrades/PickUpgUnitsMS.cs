@@ -23,7 +23,7 @@
 
             UnitAvailPickUpgC.Set(unit, whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);
-            RpcS.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

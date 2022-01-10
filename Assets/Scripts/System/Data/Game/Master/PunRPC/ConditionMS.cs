@@ -25,20 +25,20 @@ namespace Game.Game
                 case CondUnitTypes.Protected:
                     if (cond_0.Is(CondUnitTypes.Protected))
                     {
-                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
                     else if (step_0.HaveMin)
                     {
-                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
                         step_0.TakeMin();
                         cond_0.Set(cond);
                     }
 
                     else
                     {
-                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 
@@ -46,20 +46,20 @@ namespace Game.Game
                 case CondUnitTypes.Relaxed:
                     if (cond_0.Is(CondUnitTypes.Relaxed))
                     {
-                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
                     else if (step_0.HaveMin)
                     {
-                        RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Set(cond);
                         step_0.TakeMin();
                     }
 
                     else
                     {
-                        RpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

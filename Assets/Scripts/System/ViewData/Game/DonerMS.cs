@@ -1,5 +1,6 @@
 ﻿using Game.Common;
 using Photon.Pun;
+using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -9,7 +10,7 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            RpcS.SoundToGeneral(sender, ClipTypes.ClickToTable);
+            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
 
 
             if (PhotonNetwork.OfflineMode)
@@ -17,7 +18,7 @@ namespace Game.Game
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
                     DataMastSC.InvokeRun(MastDataSysTypes.Update);
-                    RpcS.ActiveMotionZoneToGen(sender);
+                    EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
@@ -28,7 +29,7 @@ namespace Game.Game
                     if (nextPlayer == PlayerTypes.First)
                     {
                         DataMastSC.InvokeRun(MastDataSysTypes.Update);
-                        RpcS.ActiveMotionZoneToGen(sender);
+                        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
                     }
 
                     WhoseMoveC.SetWhoseMove(nextPlayer);
@@ -53,8 +54,8 @@ namespace Game.Game
                         {
                             DataMastSC.InvokeRun(MastDataSysTypes.Update);
 
-                            RpcS.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                            RpcS.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                            EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                            EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
                         }
 
                         WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
