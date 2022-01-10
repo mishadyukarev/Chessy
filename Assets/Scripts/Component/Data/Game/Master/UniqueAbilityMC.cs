@@ -2,9 +2,9 @@
 {
     public struct UniqueAbilityMC
     {
-        static UniqueAbilTypes _uniq;
+        static UniqueAbilityTypes _uniq;
 
-        public static void Set(UniqueAbilTypes uniq) => _uniq = uniq;
-        public static void Get(out UniqueAbilTypes uniq) => uniq = _uniq;
+        public static void Set(UniqueAbilityTypes uniq) => _uniq = uniq;
+        public static void Get(out UniqueAbilityTypes uniq) => uniq = _uniq;
     }
 }

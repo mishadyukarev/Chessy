@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//using System;
+//using System.Collections.Generic;
 
-namespace Game.Game
-{
-    public struct DataSC
-    {
-        static Dictionary<DataSTypes, Action> _actions;
+//namespace Game.Game
+//{
+//    public struct DataSC
+//    {
+       
 
-        public DataSC(in List<object> list)
-        {
-            var idx = 0;
+//        public DataSC(in List<object> list)
+//        {
+//            var idx = 0;
 
-            _actions = (Dictionary<DataSTypes, Action>)list[idx++];
-        }
+//            _actions = (Dictionary<DataSTypes, Action>)list[idx++];
+//        }
 
-        public static void Run(in DataSTypes type)
-        {
-            if (!_actions.ContainsKey(type)) throw new Exception();
 
-            _actions[type].Invoke();
-        }
-    }
-}
+//    }
+//}
 

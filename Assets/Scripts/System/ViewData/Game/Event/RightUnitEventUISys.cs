@@ -36,7 +36,7 @@ namespace Game.Game
                     EntityPool.Rpc<RpcC>().ConditionUnitToMaster(condUnitType, SelIdx<IdxC>().Idx);
                 }
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         private void UniqBut(UniqButTypes uniqBut)
@@ -59,35 +59,35 @@ namespace Game.Game
                             {
                                 switch (abil)
                                 {
-                                    case UniqueAbilTypes.None: throw new Exception();
+                                    case UniqueAbilityTypes.None: throw new Exception();
 
-                                    case UniqueAbilTypes.FirePawn:
+                                    case UniqueAbilityTypes.FirePawn:
                                         EntityPool.Rpc<RpcC>().FirePawnToMas(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqueAbilTypes.PutOutFirePawn:
+                                    case UniqueAbilityTypes.PutOutFirePawn:
                                         EntityPool.Rpc<RpcC>().PutOutFirePawnToMas(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqueAbilTypes.Seed:
+                                    case UniqueAbilityTypes.Seed:
                                         EntityPool.Rpc<RpcC>().SeedEnvToMaster(SelIdx<IdxC>().Idx, EnvTypes.YoungForest);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqueAbilTypes.FireArcher:
+                                    case UniqueAbilityTypes.FireArcher:
                                         ClickerObject<CellClickC>().Set(CellClickTypes.UniqAbil);
-                                        SelUniqAbilC.UniqAbil = UniqueAbilTypes.FireArcher;
+                                        SelUniqAbilC.UniqAbil = UniqueAbilityTypes.FireArcher;
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
-                                    case UniqueAbilTypes.CircularAttack:
+                                    case UniqueAbilityTypes.CircularAttack:
                                         EntityPool.Rpc<RpcC>().CircularAttackKingToMaster(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.CircularAttack);
                                         break;
 
-                                    case UniqueAbilTypes.GrowAdultForest:
+                                    case UniqueAbilityTypes.GrowAdultForest:
                                         EntityPool.Rpc<RpcC>().GrowAdultForest(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.GrowingAdForesElfemale);
                                         break;
@@ -100,22 +100,22 @@ namespace Game.Game
                             {
                                 switch (abil)
                                 {
-                                    case UniqueAbilTypes.None: throw new Exception();
+                                    case UniqueAbilityTypes.None: throw new Exception();
 
-                                    case UniqueAbilTypes.BonusNear:
+                                    case UniqueAbilityTypes.BonusNear:
                                         EntityPool.Rpc<RpcC>().BonusNearUnits(SelIdx<IdxC>().Idx);
                                         TryOnHint(VideoClipTypes.BonusKing);
                                         break;
 
-                                    case UniqueAbilTypes.StunElfemale:
+                                    case UniqueAbilityTypes.StunElfemale:
                                         {
                                             ClickerObject<CellClickC>().Set(CellClickTypes.UniqAbil);
-                                            SelUniqAbilC.UniqAbil = UniqueAbilTypes.StunElfemale;
+                                            SelUniqAbilC.UniqAbil = UniqueAbilityTypes.StunElfemale;
                                             TryOnHint(VideoClipTypes.StunElfemale);
                                         }
                                         break;
 
-                                    case UniqueAbilTypes.ChangeCornerArcher:
+                                    case UniqueAbilityTypes.ChangeCornerArcher:
                                         {
                                             EntityPool.Rpc<RpcC>().ChangeCornerArchToMas(SelIdx<IdxC>().Idx);
                                         }
@@ -130,12 +130,12 @@ namespace Game.Game
                             {
                                 switch (abil)
                                 {
-                                    case UniqueAbilTypes.None: throw new Exception();
-                                    case UniqueAbilTypes.ChangeDirWind:
+                                    case UniqueAbilityTypes.None: throw new Exception();
+                                    case UniqueAbilityTypes.ChangeDirWind:
                                         {
                                             TryOnHint(VideoClipTypes.PutOutElfemale);
                                             ClickerObject<CellClickC>().Set(CellClickTypes.UniqAbil);
-                                            SelUniqAbilC.UniqAbil = UniqueAbilTypes.ChangeDirWind;
+                                            SelUniqAbilC.UniqAbil = UniqueAbilityTypes.ChangeDirWind;
                                         }
                                         break;
                                     default: throw new Exception();
@@ -146,9 +146,9 @@ namespace Game.Game
                     }
                 }
 
-                else SoundEffectVC.Play(ClipTypes.Mistake);
+                else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         private void ExecuteBuild_Button(BuildButtonTypes buildBut)
@@ -191,7 +191,7 @@ namespace Game.Game
                     default: throw new Exception();
                 }
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         private void TryOnHint(VideoClipTypes videoClip)

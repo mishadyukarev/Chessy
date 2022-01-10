@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//using System;
+//using System.Collections.Generic;
 
-namespace Game.Game
-{
-    public struct ViewDataSC
-    {
-        static Dictionary<ViewDataSTypes, Action> _actions;
+//namespace Game.Game
+//{
+//    public struct ViewDataSC
+//    {
 
-        public ViewDataSC(Dictionary<ViewDataSTypes, Action> actions)
-        {
-            _actions = actions;
-        }
 
-        public static void Run(ViewDataSTypes type)
-        {
-            if (!_actions.ContainsKey(type)) throw new Exception();
+//        public ViewDataSC(Dictionary<ViewDataSTypes, Action> actions)
+//        {
+//            _actions = actions;
+//        }
 
-            _actions[type].Invoke();
-        }
-    }
-}
+
+//    }
+//}

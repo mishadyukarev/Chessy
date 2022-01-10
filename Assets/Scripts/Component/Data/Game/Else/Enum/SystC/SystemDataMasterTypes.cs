@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public enum MastDataSysTypes
+    public enum SystemDataMasterTypes
     {
         None,
 

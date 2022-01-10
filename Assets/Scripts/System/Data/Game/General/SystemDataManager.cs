@@ -5,29 +5,36 @@ namespace Game.Game
 {
     public sealed class SystemDataManager
     {
+        readonly static Dictionary<DataSTypes, Action> _actions;
+
+        static SystemDataManager()
+        {
+            _actions = new Dictionary<DataSTypes, Action>();
+        }
         public SystemDataManager()
         {
-            var list = new List<object>();
-            var dataSC = new Dictionary<DataSTypes, Action>();
-            list.Add(dataSC);
-
-
-            dataSC.Add(DataSTypes.RunUpdate, 
+            _actions.Add(DataSTypes.RunUpdate, 
                 (Action)new InputS().Run
                 + new RayS().Run
                 + new SelectorS().Run);
 
-            dataSC.Add(DataSTypes.RunFixedUpdate,
-                (Action)new SoundS().Run);
+            _actions.Add(DataSTypes.RunFixedUpdate,
+                (Action)default);
 
-            dataSC.Add(DataSTypes.RunAfterUpdate,
+            _actions.Add(DataSTypes.RunAfterUpdate,
                 (Action)new VisibElseS().Run
-                + new AbilSyncMS().Run
+                + new AbilSyncS().Run
                 + new ClearAvailCellsS().Run
                 + new GetAttackPawnCellsS().Run
                 + new GetSetUnitCellsS().Run);
+        }
 
-            new DataSC(list);
+        
+        public static void Run(in DataSTypes type)
+        {
+            if (!_actions.ContainsKey(type)) throw new Exception();
+
+            _actions[type]?.Invoke();
         }
     }
 }

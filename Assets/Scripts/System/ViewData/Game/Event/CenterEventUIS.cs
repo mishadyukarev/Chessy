@@ -60,7 +60,7 @@ namespace Game.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         private void UpgradeBuild(BuildTypes build)
@@ -71,7 +71,7 @@ namespace Game.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         private void UpgradeWater()
@@ -82,7 +82,7 @@ namespace Game.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         private void Elf()
@@ -91,7 +91,7 @@ namespace Game.Game
             {
                 EntityPool.Rpc<RpcC>().GetHero(UnitTypes.Elfemale);
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         private void OpenShop()

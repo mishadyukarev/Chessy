@@ -5,16 +5,16 @@ namespace Game.Game
 {
     public struct UniqAbilC : IUnitCell
     {
-        Dictionary<UniqButTypes, UniqueAbilTypes> _abilities;
+        Dictionary<UniqButTypes, UniqueAbilityTypes> _abilities;
 
-        public UniqueAbilTypes Ability(UniqButTypes uniqBut) => _abilities[uniqBut];
+        public UniqueAbilityTypes Ability(UniqButTypes uniqBut) => _abilities[uniqBut];
 
 
         public UniqAbilC(bool needNew)
         {
             if (needNew)
             {
-                _abilities = new Dictionary<UniqButTypes, UniqueAbilTypes>();
+                _abilities = new Dictionary<UniqButTypes, UniqueAbilityTypes>();
 
                 for (var uniqBut = UniqButTypes.First; uniqBut < UniqButTypes.End; uniqBut++)
                 {
@@ -26,7 +26,7 @@ namespace Game.Game
         }
 
 
-        public void SetAbility(UniqButTypes uniqBut, UniqueAbilTypes uniqAbil) => _abilities[uniqBut] = uniqAbil;
+        public void SetAbility(UniqButTypes uniqBut, UniqueAbilityTypes uniqAbil) => _abilities[uniqBut] = uniqAbil;
         public void Reset(UniqButTypes uniqBut)
         {
             _abilities[uniqBut] = default;

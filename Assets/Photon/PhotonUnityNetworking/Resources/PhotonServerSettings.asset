@@ -47,6 +47,8 @@ MonoBehaviour:
   - UpdateVision
   - UpdateData
   - UpdateDataAndView
+  - GeneralRpc
+  - OtherRpc
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -30,7 +30,5 @@
         UpgWater,
 
         UniqAbil,
-
-        Sync,
     }
 }

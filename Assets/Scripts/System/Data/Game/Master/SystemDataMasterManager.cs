@@ -5,11 +5,20 @@ namespace Game.Game
 {
     public sealed class SystemDataMasterManager
     {
+        static Action _runUpdSysts;
+        static Dictionary<SystemDataMasterTypes, Action> _systems;
+        static Dictionary<RpcMasterTypes, Action> _rpcSysts;
+        static Dictionary<UniqueAbilityTypes, Action> _uniqAbil;
+
+
+        static SystemDataMasterManager()
+        {
+            _systems = new Dictionary<SystemDataMasterTypes, Action>();
+            _rpcSysts = new Dictionary<RpcMasterTypes, Action>();
+            _uniqAbil = new Dictionary<UniqueAbilityTypes, Action>();
+        }
         public SystemDataMasterManager()
         {
-
-            var systs = new Dictionary<MastDataSysTypes, Action>();
-
             var action =
                 (Action)new UpdatorMS().Run
                 + new UpdatorMS().Run
@@ -22,57 +31,55 @@ namespace Game.Game
                 + new HealingUnitUpdMS().Run
                 + new HungryUpdMS().Run
                 + new ThirstyUpdMS().Run;
-            systs.Add(MastDataSysTypes.Update, action);
+            _systems.Add(SystemDataMasterTypes.Update, action);
 
             action = new TruceMS().Run;
-            systs.Add(MastDataSysTypes.Truce, action);
+            _systems.Add(SystemDataMasterTypes.Truce, action);
 
 
 
-            var rpcSystems = new Dictionary<RpcMasterTypes, Action>();
-            rpcSystems.Add(RpcMasterTypes.Build, (Action)new BuildMineMastSys().Run
+            _rpcSysts.Add(RpcMasterTypes.Build, (Action)new BuildMineMastSys().Run
                 + new BuildFarmMS().Run
                 + new BuildCityMS().Run);
-            rpcSystems.Add(RpcMasterTypes.DestroyBuild, new DestroyMS().Run);
-            rpcSystems.Add(RpcMasterTypes.Shift, new ShiftUnitMS().Run);
-            rpcSystems.Add(RpcMasterTypes.Attack, new AttackMS().Run);
-            rpcSystems.Add(RpcMasterTypes.ConditionUnit, new ConditionMS().Run);
-            rpcSystems.Add(RpcMasterTypes.Ready, new ReadyMS().Run);
-            rpcSystems.Add(RpcMasterTypes.Done, new DonerMS().Run);
-            rpcSystems.Add(RpcMasterTypes.CreateUnit, new CreateUnitMastSys().Run);
-            rpcSystems.Add(RpcMasterTypes.MeltOre, new MeltOreMS().Run);
-            rpcSystems.Add(RpcMasterTypes.SetUnit, new SetterUnitMS().Run);
-            rpcSystems.Add(RpcMasterTypes.BuyRes, new BuyResMastS().Run);
-            rpcSystems.Add(RpcMasterTypes.UpgradeUnit, new UpgUnitMS().Run);
-            rpcSystems.Add(RpcMasterTypes.ToNewUnit, new ScoutOldNewSys().Run);
-            rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, new GiveTakeTWMasSys().Run);
-            rpcSystems.Add(RpcMasterTypes.GetHero, new GetHeroMS().Run);
-            rpcSystems.Add(RpcMasterTypes.FromToNewUnit, new FromToNewUnitMS().Run);
-            rpcSystems.Add(RpcMasterTypes.UpgUnits, new PickUpgUnitsMS().Run);
-            rpcSystems.Add(RpcMasterTypes.UpgBuilds, new PickUpgBuildsMS().Run);
-            rpcSystems.Add(RpcMasterTypes.UpgWater, new WaterUpgMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.DestroyBuild, new DestroyMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.Shift, new ShiftUnitMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.Attack, new AttackMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.ConditionUnit, new ConditionMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.Ready, new ReadyMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.Done, new DonerMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.CreateUnit, new CreateUnitMastSys().Run);
+            _rpcSysts.Add(RpcMasterTypes.MeltOre, new MeltOreMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.SetUnit, new SetterUnitMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.BuyRes, new BuyResMastS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgradeUnit, new UpgUnitMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.ToNewUnit, new ScoutOldNewSys().Run);
+            _rpcSysts.Add(RpcMasterTypes.GiveTakeToolWeapon, new GiveTakeTWMasSys().Run);
+            _rpcSysts.Add(RpcMasterTypes.GetHero, new GetHeroMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.FromToNewUnit, new FromToNewUnitMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgUnits, new PickUpgUnitsMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgBuilds, new PickUpgBuildsMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgWater, new WaterUpgMS().Run);
 
 
-            var uniqSys = new Dictionary<UniqueAbilTypes, Action>();
-            uniqSys.Add(UniqueAbilTypes.Seed, new SeedingMS().Run);
-            uniqSys.Add(UniqueAbilTypes.StunElfemale, new StunElfemaleMS().Run);
-            uniqSys.Add(UniqueAbilTypes.FirePawn, new FirePawnMS().Run);
-            uniqSys.Add(UniqueAbilTypes.PutOutFirePawn, new PutOutFireMS().Run);
-            uniqSys.Add(UniqueAbilTypes.FireArcher, new FireArcherMS().Run);
-            uniqSys.Add(UniqueAbilTypes.GrowAdultForest, new GrowAdultForestMS().Run);
-            uniqSys.Add(UniqueAbilTypes.CircularAttack, new CircularAttackKingMS().Run);
-            uniqSys.Add(UniqueAbilTypes.BonusNear, new BonusNearUnitKingMS().Run);
-            uniqSys.Add(UniqueAbilTypes.ChangeDirWind, new ChangeDirWindMS().Run);
-            uniqSys.Add(UniqueAbilTypes.ChangeCornerArcher, new ChangeCornerArcherMS().Run);
-
-            var list = new List<object>()
-            {
-                (Action)default,
-                systs,
-                rpcSystems,
-                uniqSys
-            };
-            new DataMastSC(list);
+            _uniqAbil.Add(UniqueAbilityTypes.Seed, new SeedingMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.StunElfemale, new StunElfemaleMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.FirePawn, new FirePawnMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.PutOutFirePawn, new PutOutFireMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.FireArcher, new FireArcherMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.GrowAdultForest, new GrowAdultForestMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.CircularAttack, new CircularAttackKingMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.BonusNear, new BonusNearUnitKingMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.ChangeDirWind, new ChangeDirWindMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS().Run);
         }
+
+        public static void RunUpdate() => _runUpdSysts?.Invoke();
+        public static void InvokeRun(SystemDataMasterTypes mastDataSys) => _systems[mastDataSys].Invoke();
+        public static void InvokeRun(RpcMasterTypes rpc)
+        {
+            if (_rpcSysts.ContainsKey(rpc)) _rpcSysts[rpc].Invoke();
+            else throw new System.Exception();
+        }
+        public static void InvokeRun(UniqueAbilityTypes uniqAbil) => _uniqAbil[uniqAbil].Invoke();
     }
 }

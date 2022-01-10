@@ -4,7 +4,7 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    sealed class SelectorS : IEcsRunSystem
+    struct SelectorS : IEcsRunSystem
     {
         public void Run()
         {
@@ -174,17 +174,17 @@ namespace Game.Game
 
                             case CellClickTypes.UniqAbil:
                                 {
-                                    if (SelUniqAbilC.Is(UniqueAbilTypes.FireArcher))
+                                    if (SelUniqAbilC.Is(UniqueAbilityTypes.FireArcher))
                                     {
                                         EntityPool.Rpc<RpcC>().FireArcherToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }
 
-                                    else if (SelUniqAbilC.Is(UniqueAbilTypes.ChangeDirWind))
+                                    else if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirWind))
                                     {
                                         EntityPool.Rpc<RpcC>().PutOutFireElffToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }
 
-                                    else if (SelUniqAbilC.Is(UniqueAbilTypes.StunElfemale))
+                                    else if (SelUniqAbilC.Is(UniqueAbilityTypes.StunElfemale))
                                     {
                                         EntityPool.Rpc<RpcC>().StunElfemaleToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }

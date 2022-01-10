@@ -23,7 +23,7 @@ namespace Game.Game
             {
                 if (env_0.Have(EnvTypes.AdultForest))
                 {
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilTypes.FirePawn);
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 
                     fire_0.Enable();
                     stepUnit_0.Take(uniq_cur);

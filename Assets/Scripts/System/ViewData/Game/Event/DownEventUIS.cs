@@ -42,10 +42,10 @@ namespace Game.Game
                 }
                 else
                 {
-                    SoundEffectVC.Play(ClipTypes.Mistake);
+                    SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
                 }
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
         void Hero()
         {
@@ -60,10 +60,10 @@ namespace Game.Game
                 }
                 else
                 {
-                    SoundEffectVC.Play(ClipTypes.Mistake);
+                    SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
                 }
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
 
@@ -75,7 +75,7 @@ namespace Game.Game
             }
             else
             {
-                SoundEffectVC.Play(ClipTypes.Mistake);
+                SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
             }
         }
 
@@ -87,7 +87,7 @@ namespace Game.Game
 
                 EntityPool.Rpc<RpcC>().CreateUnitToMaster(unitType);
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         void GetUnit(UnitTypes unitType)
@@ -114,7 +114,7 @@ namespace Game.Game
                     GetterUnitsC.ActiveNeedCreateButton(unitType, true);
                 }
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         void ToggleToolWeapon(TWTypes tWType)
@@ -166,7 +166,7 @@ namespace Game.Game
                     else TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
                 }
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
         void ToggleUpgradeUnit()
@@ -178,7 +178,7 @@ namespace Game.Game
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
                 ClickerObject<CellClickC>().Set(CellClickTypes.UpgradeUnit);
             }
-            else SoundEffectVC.Play(ClipTypes.Mistake);
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
 

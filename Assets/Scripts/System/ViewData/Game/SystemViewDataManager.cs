@@ -5,6 +5,12 @@ namespace Game.Game
 {
     public sealed class SystemViewDataManager
     {
+        readonly static Dictionary<ViewDataSTypes, Action> _actions;
+
+        static SystemViewDataManager()
+        {
+            _actions = new Dictionary<ViewDataSTypes, Action>();
+        }
         public SystemViewDataManager()
         {
             new CenterEventUIS();
@@ -15,12 +21,10 @@ namespace Game.Game
             new UpEventUIS();
 
 
-            var actions = new Dictionary<ViewDataSTypes, Action>();
-
-            actions.Add(ViewDataSTypes.RunUpdate, new SoundClickCellS().Run);
+            _actions.Add(ViewDataSTypes.RunUpdate, new SoundClickCellS().Run);
 
 
-            actions.Add(ViewDataSTypes.RunFixedUpdate,
+            _actions.Add(ViewDataSTypes.RunFixedUpdate,
                 (Action)new SyncCellUnitViewSys().Run
                 + new UnitStatCellSyncS().Run
                 + new BuildCellSyncVS().Run
@@ -74,9 +78,17 @@ namespace Game.Game
                 + new PickUpgUIS().Run
                 + new HeroesSyncUISys().Run
 
-                + new RotateAllVS().Run);
+                + new RotateAllVS().Run
+                
 
-            new ViewDataSC(actions);
+                + new SoundVS().Run);
+        }
+
+        public static void Run(ViewDataSTypes type)
+        {
+            if (!_actions.ContainsKey(type)) throw new Exception();
+
+            _actions[type].Invoke();
         }
     }
 }

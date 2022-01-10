@@ -6,10 +6,12 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public delegate void Action<T1, T2, T3>(T1 arg1, T2 arg2, params T3[] arg3);
+    public delegate void Action<in T1, in T2, in T3>(T1 arg1, T2 arg2, params T3[] arg3);
 
-    public readonly struct RpcC : IRpc
+    public struct RpcC : IRpc
     {
+        int _idx_cur;
+
         readonly Action<string, RpcTarget, object[]> _action0;
         readonly Action<string, Player, object[]> _action1;
 
@@ -19,16 +21,40 @@ namespace Game.Game
 
         public RpcC(in List<object> objs, in List<string> names)
         {
-            var i = 0;
+            _idx_cur = 0;
 
-            _action0 = (Action<string, RpcTarget, object[]>)objs[i++];
-            _action1 = (Action<string, Player, object[]>)objs[i++];
+            _action0 = (Action<string, RpcTarget, object[]>)objs[_idx_cur++];
+            _action1 = (Action<string, Player, object[]>)objs[_idx_cur++];
 
-            i = 0;
-            _masterRPCName = names[i++];
-            _generalRPCName = names[i++];
-            _otherRPCName = names[i++];
+            _idx_cur = 0;
+            _masterRPCName = names[_idx_cur++];
+            _generalRPCName = names[_idx_cur++];
+            _otherRPCName = names[_idx_cur++];
+
+            _idx_cur = 0;
         }
+
+        public void OtherRpc(object[] objects, PhotonMessageInfo infoFrom)
+        {
+            _idx_cur = 0;
+            var rpcT = (RpcOtherTypes)objects[_idx_cur++];
+            InfoC.AddInfo(MGOTypes.Other, infoFrom);
+
+            switch (rpcT)
+            {
+                case RpcOtherTypes.None:
+                    throw new Exception();
+
+                case RpcOtherTypes.Sync:
+
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+
+        }
+
 
         public void RPC(in string name, in RpcTarget rpcTarget, params object[] objs)
         {
@@ -44,20 +70,20 @@ namespace Game.Game
 
         #region Uniq
 
-        public void FireArcherToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.FireArcher, fromIdx, toIdx });
-        public void FirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.FirePawn, idx });
-        public void PutOutFirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.PutOutFirePawn, idx });
-        public void SeedEnvToMaster(byte idxCell, EnvTypes env) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.Seed, idxCell, env });
-        public void ChangeCornerArchToMas(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.ChangeCornerArcher, idxCell });
+        public void FireArcherToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.FireArcher, fromIdx, toIdx });
+        public void FirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.FirePawn, idx });
+        public void PutOutFirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.PutOutFirePawn, idx });
+        public void SeedEnvToMaster(byte idxCell, EnvTypes env) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.Seed, idxCell, env });
+        public void ChangeCornerArchToMas(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.ChangeCornerArcher, idxCell });
 
-        public void BonusNearUnits(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.BonusNear, idxCell });
+        public void BonusNearUnits(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.BonusNear, idxCell });
 
-        public void StunElfemaleToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.StunElfemale, fromIdx, toIdx });
+        public void StunElfemaleToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.StunElfemale, fromIdx, toIdx });
 
-        public void GrowAdultForest(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.GrowAdultForest, idx });
-        public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.ChangeDirWind, fromIdx, toIdx });
+        public void GrowAdultForest(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.GrowAdultForest, idx });
+        public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient,  new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.ChangeDirWind, fromIdx, toIdx });
 
-        public void CircularAttackKingToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilTypes.CircularAttack, idxCell });
+        public void CircularAttackKingToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.CircularAttack, idxCell });
 
         #endregion
 
@@ -121,9 +147,9 @@ namespace Game.Game
         public void ActiveMotionZoneToGen(Player player) => _action1(_generalRPCName, player,  new object[] { RpcGeneralTypes.ActiveMotion, });
 
         public void SoundToGeneral(RpcTarget rpcTarget, ClipTypes soundEffectType) => _action0(_generalRPCName, rpcTarget,  new object[] { RpcGeneralTypes.SoundEff, soundEffectType });
-        public void SoundToGeneral(RpcTarget rpcTarget, UniqueAbilTypes uniq) => _action0(_generalRPCName, rpcTarget,  new object[] { RpcGeneralTypes.SoundUniq, uniq });
+        public void SoundToGeneral(RpcTarget rpcTarget, UniqueAbilityTypes uniq) => _action0(_generalRPCName, rpcTarget,  new object[] { RpcGeneralTypes.SoundUniq, uniq });
         public void SoundToGeneral(Player playerTo, ClipTypes eff) => _action1(_generalRPCName, playerTo,  new object[] { RpcGeneralTypes.SoundEff, eff });
-        public void SoundToGeneral(Player playerTo, UniqueAbilTypes uniq) => _action1(_generalRPCName, playerTo,  new object[] { RpcGeneralTypes.SoundUniq, uniq });
+        public void SoundToGeneral(Player playerTo, UniqueAbilityTypes uniq) => _action1(_generalRPCName, playerTo,  new object[] { RpcGeneralTypes.SoundUniq, uniq });
 
         #endregion
     }

@@ -17,7 +17,7 @@ namespace Game.Game
             {
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    DataMastSC.InvokeRun(MastDataSysTypes.Update);
+                    SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
                     EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
                 }
 
@@ -28,7 +28,7 @@ namespace Game.Game
 
                     if (nextPlayer == PlayerTypes.First)
                     {
-                        DataMastSC.InvokeRun(MastDataSysTypes.Update);
+                        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
                         EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
                     }
 
@@ -52,7 +52,7 @@ namespace Game.Game
                     {
                         if (playerSend == PlayerTypes.Second)
                         {
-                            DataMastSC.InvokeRun(MastDataSysTypes.Update);
+                            SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
 
                             EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
                             EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());

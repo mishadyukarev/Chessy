@@ -9,7 +9,7 @@
 
             if (NeedSoundEffC.Clip != default)
             {
-                SoundEffectVC.Play(NeedSoundEffC.Clip);
+                EntityVPool.SoundV<AudioSourceVC>(NeedSoundEffC.Clip).Play();
             }
 
 

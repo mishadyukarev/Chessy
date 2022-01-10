@@ -115,20 +115,20 @@ namespace Game.Game
         }
         public bool HaveStepsForDoing(in byte idx_to) => Steps >= StepsForDoing(idx_to);
 
-        public int NeedSteps(UniqueAbilTypes uniq)
+        public int NeedSteps(UniqueAbilityTypes uniq)
         {
             switch (uniq)
             {
-                case UniqueAbilTypes.CircularAttack: return MIN_STEPS;
-                case UniqueAbilTypes.BonusNear: return MIN_STEPS;
-                case UniqueAbilTypes.FirePawn: return MIN_STEPS;
-                case UniqueAbilTypes.PutOutFirePawn: return MIN_STEPS;
-                case UniqueAbilTypes.Seed: return MIN_STEPS;
-                case UniqueAbilTypes.FireArcher: return MIN_STEPS;
-                case UniqueAbilTypes.ChangeCornerArcher: return MIN_STEPS;
-                case UniqueAbilTypes.GrowAdultForest: return MIN_STEPS;
-                case UniqueAbilTypes.StunElfemale: return MIN_STEPS;
-                case UniqueAbilTypes.ChangeDirWind: return MIN_STEPS;
+                case UniqueAbilityTypes.CircularAttack: return MIN_STEPS;
+                case UniqueAbilityTypes.BonusNear: return MIN_STEPS;
+                case UniqueAbilityTypes.FirePawn: return MIN_STEPS;
+                case UniqueAbilityTypes.PutOutFirePawn: return MIN_STEPS;
+                case UniqueAbilityTypes.Seed: return MIN_STEPS;
+                case UniqueAbilityTypes.FireArcher: return MIN_STEPS;
+                case UniqueAbilityTypes.ChangeCornerArcher: return MIN_STEPS;
+                case UniqueAbilityTypes.GrowAdultForest: return MIN_STEPS;
+                case UniqueAbilityTypes.StunElfemale: return MIN_STEPS;
+                case UniqueAbilityTypes.ChangeDirWind: return MIN_STEPS;
                 default: throw new Exception();
             }
         }
@@ -137,7 +137,7 @@ namespace Game.Game
             return MIN_STEPS;
         }
 
-        public bool Have(UniqueAbilTypes uniq) => Steps >= NeedSteps(uniq);
+        public bool Have(UniqueAbilityTypes uniq) => Steps >= NeedSteps(uniq);
         public bool Have(BuildTypes build) => Steps >= NeedSteps(build);
         public bool HaveMin => Steps >= MIN_STEPS;
 
@@ -476,13 +476,13 @@ namespace Game.Game
         #region Hp
 
         public void SetMaxHp() => Unit<HpC>(_idx).Hp = 100;
-        public void Take(in UniqueAbilTypes uniq)
+        public void Take(in UniqueAbilityTypes uniq)
         {
             var damage = 0;
 
             switch (uniq)
             {
-                case UniqueAbilTypes.CircularAttack: damage = 25; break;
+                case UniqueAbilityTypes.CircularAttack: damage = 25; break;
                 default: throw new Exception();
             }
 
@@ -514,7 +514,7 @@ namespace Game.Game
 
         public void TakeStepsForDoing(in byte idx_to) => Unit<StepC>(_idx).Take(StepsForDoing(idx_to));
         public void TakeForBuild() => Unit<StepC>(_idx).Take();
-        public void Take(UniqueAbilTypes uniq) => Unit<StepC>(_idx).Take(NeedSteps(uniq));
+        public void Take(UniqueAbilityTypes uniq) => Unit<StepC>(_idx).Take(NeedSteps(uniq));
         public void Take(BuildTypes build) => Unit<StepC>(_idx).Take(NeedSteps(build));
         public void TakeMin() => Unit<StepC>(_idx).Take(MIN_STEPS);
 

@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public sealed class VisibElseS : IEcsRunSystem
+    public struct VisibElseS : IEcsRunSystem
     {
         public void Run()
         {

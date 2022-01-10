@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    sealed class InputS : IEcsRunSystem
+    struct InputS : IEcsRunSystem
     {
         public void Run()
         {

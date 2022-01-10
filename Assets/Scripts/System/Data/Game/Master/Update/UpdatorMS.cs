@@ -4,7 +4,7 @@ using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public sealed class UpdatorMS : IEcsRunSystem
+    struct UpdatorMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -126,7 +126,7 @@ namespace Game.Game
             if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 8)
             {
                 EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
-                DataMastSC.InvokeRun(MastDataSysTypes.Truce);
+                SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Truce);
             }
 
             if (MotionsC.AmountMotions % 3 == 0)

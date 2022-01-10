@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public SpawnEntities(in WorldEcs worldEcs)
         {
-            new EntityVPool(worldEcs, out var actions);
+            new EntityVPool(worldEcs, out var actions, out var sounds0, out var sounds1);
             new EntityUIPool(worldEcs);
             new EntityCellVPool(worldEcs, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
 
@@ -20,9 +20,9 @@ namespace Game.Game
                 idCells[idx] = EntityCellVPool.Cell<CellVC>(idx).InstanceID;
             }
 
-            var namesMethods = RpcVC.NamesMethods;
+            var namesMethods = RpcS.NamesMethods;
 
-            new EntityPool(worldEcs, EntityVPool.Background<GameObjectC>().Name, actions, namesMethods);
+            new EntityPool(worldEcs, EntityVPool.Background<GameObjectC>().Name, actions, namesMethods, sounds0, sounds1);
             new EntityCellPool(worldEcs, isActiveCells, idCells);
         }
     }

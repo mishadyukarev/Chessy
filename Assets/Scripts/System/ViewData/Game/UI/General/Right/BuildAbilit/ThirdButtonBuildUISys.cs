@@ -3,7 +3,7 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public sealed class ThirdButtonBuildUISys : IEcsRunSystem
+    struct ThirdButtonBuildUISys : IEcsRunSystem
     {
         public void Run()
         {

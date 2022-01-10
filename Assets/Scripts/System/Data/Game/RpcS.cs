@@ -1,5 +1,4 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
+﻿using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,35 +6,20 @@ using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
-    public sealed class RpcVC : MonoBehaviour
+    public sealed class RpcS : MonoBehaviour
     {
         int _idx_cur;
 
-        public static RpcVC Instance { get; private set; }
         public static List<string> NamesMethods
         {
             get
             {
                 var list = new List<string>();
                 list.Add(nameof(MasterRPC));
-                list.Add(nameof(GeneralRPC));
-                list.Add(nameof(OtherRPC));
+                list.Add(nameof(GeneralRpc));
+                list.Add(nameof(OtherRpc));
                 return list;
             }
-        }
-
-        public void Init()
-        {
-            Instance = this;
-
-            PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
-
-            //SyncAllMaster();
-
-            //if (!PhotonNetwork.IsMasterClient)
-            //{
-            //    SyncAllToMast();
-            //}
         }
 
 
@@ -50,50 +34,50 @@ namespace Game.Game
 
             if (rpcT == RpcMasterTypes.UniqAbil)
             {
-                var uniqAbil = (UniqueAbilTypes)objects[_idx_cur++];
+                var uniqAbil = (UniqueAbilityTypes)objects[_idx_cur++];
 
                 switch (uniqAbil)
                 {
-                    case UniqueAbilTypes.None: throw new Exception();
+                    case UniqueAbilityTypes.None: throw new Exception();
 
-                    case UniqueAbilTypes.CircularAttack:
+                    case UniqueAbilityTypes.CircularAttack:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.BonusNear:
+                    case UniqueAbilityTypes.BonusNear:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.FirePawn:
+                    case UniqueAbilityTypes.FirePawn:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.PutOutFirePawn:
+                    case UniqueAbilityTypes.PutOutFirePawn:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.Seed:
+                    case UniqueAbilityTypes.Seed:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         EnvDoingMC.Set((EnvTypes)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.FireArcher:
+                    case UniqueAbilityTypes.FireArcher:
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.GrowAdultForest:
+                    case UniqueAbilityTypes.GrowAdultForest:
                         ForGrowAdultForestMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.StunElfemale:
+                    case UniqueAbilityTypes.StunElfemale:
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.ChangeDirWind:
+                    case UniqueAbilityTypes.ChangeDirWind:
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilTypes.ChangeCornerArcher:
+                    case UniqueAbilityTypes.ChangeCornerArcher:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
@@ -101,7 +85,7 @@ namespace Game.Game
                 }
 
                 UniqueAbilityMC.Set(uniqAbil);
-                DataMastSC.InvokeRun(uniqAbil);
+                SystemDataMasterManager.InvokeRun(uniqAbil);
             }
 
             else
@@ -193,14 +177,14 @@ namespace Game.Game
                         throw new Exception();
                 }
 
-                DataMastSC.InvokeRun(rpcT);
+                SystemDataMasterManager.InvokeRun(rpcT);
             }
 
             SyncAllMaster();
         }
 
         [PunRPC]
-        void GeneralRPC(object[] objects, PhotonMessageInfo infoFrom)
+        void GeneralRpc(object[] objects, PhotonMessageInfo infoFrom)
         {
             _idx_cur = 0;
             var rpcT = (RpcGeneralTypes)objects[_idx_cur++];
@@ -230,16 +214,15 @@ namespace Game.Game
                         MistakeC.AddNeedRes(ResTypes.Gold, needRes[4]);
                     }
 
-                    SoundEffectVC.Play(ClipTypes.Mistake);
+                    EntityPool.Sound<ActionC>(ClipTypes.Mistake).Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundEff:
-                    var soundEffectType = (ClipTypes)objects[_idx_cur++];
-                    SoundEffectVC.Play(soundEffectType);
+                    EntityPool.Sound<ActionC>((ClipTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundUniq:
-                    SoundEffectVC.Play((UniqueAbilTypes)objects[_idx_cur++]);
+                    EntityPool.Sound<ActionC>((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -252,29 +235,12 @@ namespace Game.Game
         }
 
         [PunRPC]
-        void OtherRPC(object[] objects, PhotonMessageInfo infoFrom)
-        {
-            _idx_cur = 0;
-            var rpcT = (RpcOtherTypes)objects[_idx_cur++];
-            InfoC.AddInfo(MGOTypes.Other, infoFrom);
-
-            switch (rpcT)
-            {
-                case RpcOtherTypes.None:
-                    throw new Exception();
-
-                default:
-                    throw new Exception();
-            }
-        }
+        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => EntityPool.Rpc<RpcC>().OtherRpc(objects, infoFrom);
 
 
         #region SyncData
 
-        //public void SyncAllToMast() => Photon<PhotonVC>().RPC(SyncMasterRPCName, RpcTarget.MasterClient);
-
-        //[PunRPC]
-        public void SyncAllMaster()
+        public static void SyncAllMaster()
         {
             var objs = new List<object>();
 
@@ -390,7 +356,7 @@ namespace Game.Game
 
             EntityPool.Rpc<RpcC>().RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
 
-            EntityPool.Rpc<RpcC>().RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] {});
+            EntityPool.Rpc<RpcC>().RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
         }
 
         [PunRPC]
@@ -493,7 +459,7 @@ namespace Game.Game
         [PunRPC]
         void UpdateDataAndView(object[] objects)
         {
-            DataSC.Run(DataSTypes.RunAfterUpdate);
+            SystemDataManager.Run(DataSTypes.RunAfterUpdate);
         }
 
         #endregion
@@ -501,26 +467,31 @@ namespace Game.Game
 
         #region Serialize
 
-        public static object DeserializeVector2Int(byte[] data)
-        {
-            Vector2Int result = new Vector2Int();
+        //public void Init()
+        //{
+        //    PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
+        //}
 
-            result.x = BitConverter.ToInt32(data, 0);
-            result.y = BitConverter.ToInt32(data, 4);
+        //public static object DeserializeVector2Int(byte[] data)
+        //{
+        //    Vector2Int result = new Vector2Int();
 
-            return result;
+        //    result.x = BitConverter.ToInt32(data, 0);
+        //    result.y = BitConverter.ToInt32(data, 4);
 
-        }
-        public static byte[] SerializeVector2Int(object obj)
-        {
-            Vector2Int vector = (Vector2Int)obj;
-            byte[] result = new byte[8];
+        //    return result;
 
-            BitConverter.GetBytes(vector.x).CopyTo(result, 0);
-            BitConverter.GetBytes(vector.y).CopyTo(result, 4);
+        //}
+        //public static byte[] SerializeVector2Int(object obj)
+        //{
+        //    Vector2Int vector = (Vector2Int)obj;
+        //    byte[] result = new byte[8];
 
-            return result;
-        }
+        //    BitConverter.GetBytes(vector.x).CopyTo(result, 0);
+        //    BitConverter.GetBytes(vector.y).CopyTo(result, 4);
+
+        //    return result;
+        //}
 
         #endregion
     }

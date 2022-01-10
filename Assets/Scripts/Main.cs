@@ -40,9 +40,9 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    Game.DataSC.Run(DataSTypes.RunUpdate);
-                    DataMastSC.RunUpdate();
-                    ViewDataSC.Run(ViewDataSTypes.RunUpdate);
+                    SystemDataManager.Run(DataSTypes.RunUpdate);
+                    SystemDataMasterManager.RunUpdate();
+                    SystemViewDataManager.Run(ViewDataSTypes.RunUpdate);
                     break;
 
                 default:
@@ -64,8 +64,8 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    Game.DataSC.Run(DataSTypes.RunFixedUpdate);
-                    ViewDataSC.Run(ViewDataSTypes.RunFixedUpdate);
+                    SystemDataManager.Run(DataSTypes.RunFixedUpdate);
+                    SystemViewDataManager.Run(ViewDataSTypes.RunFixedUpdate);
                     break;
 
                 default:
@@ -98,11 +98,14 @@ namespace Game
 
                     new SpawnEntities(_gameW);
 
+                    EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>();
                     new SystemDataManager();
                     new SystemDataMasterManager();
+                    new SystemDataOtherManager(_gameW);
+
                     new SystemViewDataManager();
 
-                    RpcVC.Instance.SyncAllMaster();
+                    RpcS.SyncAllMaster();
 
                     break;
 

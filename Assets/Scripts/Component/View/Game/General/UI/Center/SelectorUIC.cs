@@ -8,14 +8,14 @@ namespace Game.Game
     {
         private static Image _back;
         private static Dictionary<CellClickTypes, GameObject> _selZones;
-        private static Dictionary<UniqueAbilTypes, GameObject> _uniqZones;
+        private static Dictionary<UniqueAbilityTypes, GameObject> _uniqZones;
 
         public SelectorUIC(GameObject centerZone)
         {
             var selZone = centerZone.transform.Find("SelectorTypeZone");
 
             _selZones = new Dictionary<CellClickTypes, GameObject>();
-            _uniqZones = new Dictionary<UniqueAbilTypes, GameObject>();
+            _uniqZones = new Dictionary<UniqueAbilityTypes, GameObject>();
 
             _back = selZone.Find("Back_Image").GetComponent<Image>();
 
@@ -30,14 +30,14 @@ namespace Game.Game
 
                 if (click == CellClickTypes.UniqAbil)
                 {
-                    _uniqZones.Add(UniqueAbilTypes.FireArcher, go.transform.Find(UniqueAbilTypes.FireArcher.ToString()).gameObject);
-                    _uniqZones.Add(UniqueAbilTypes.StunElfemale, go.transform.Find(UniqueAbilTypes.StunElfemale.ToString()).gameObject);
-                    _uniqZones.Add(UniqueAbilTypes.ChangeDirWind, go.transform.Find(UniqueAbilTypes.ChangeDirWind.ToString()).gameObject);
+                    _uniqZones.Add(UniqueAbilityTypes.FireArcher, go.transform.Find(UniqueAbilityTypes.FireArcher.ToString()).gameObject);
+                    _uniqZones.Add(UniqueAbilityTypes.StunElfemale, go.transform.Find(UniqueAbilityTypes.StunElfemale.ToString()).gameObject);
+                    _uniqZones.Add(UniqueAbilityTypes.ChangeDirWind, go.transform.Find(UniqueAbilityTypes.ChangeDirWind.ToString()).gameObject);
                 }
             }
         }
 
-        public static void SyncView(CellClickTypes click, UniqueAbilTypes uniqAbil)
+        public static void SyncView(CellClickTypes click, UniqueAbilityTypes uniqAbil)
         {
             _back.gameObject.SetActive(false);
             foreach (var item in _selZones.Keys) _selZones[item].SetActive(false);

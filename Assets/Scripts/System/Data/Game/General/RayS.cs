@@ -5,7 +5,7 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    sealed class RayS : IEcsRunSystem
+    struct RayS : IEcsRunSystem
     {
         Ray _ray;
         const float RAY_DISTANCE = 100;

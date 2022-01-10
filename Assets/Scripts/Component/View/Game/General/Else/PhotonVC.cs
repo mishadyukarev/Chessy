@@ -2,10 +2,11 @@
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Game
 {
-    public readonly struct PhotonVC : IPhoton
+    public readonly struct PhotonVC : IPhotonE
     {
         readonly PhotonView _photonView;
 
@@ -17,5 +18,8 @@ namespace Game.Game
             actions.Add((Action<string, RpcTarget, object[]>)_photonView.RPC);
             actions.Add((Action<string, Player, object[]>)_photonView.RPC);
         }
+
+
+        public C AddComponent<C>() where C : MonoBehaviour => _photonView.gameObject.AddComponent<C>();
     }
 }
