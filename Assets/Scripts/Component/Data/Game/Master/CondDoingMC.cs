@@ -2,14 +2,14 @@
 {
     public struct CondDoingMC
     {
-        private static CondUnitTypes _condUnit;
+        private static ConditionUnitTypes _condUnit;
 
-        public static void Set(CondUnitTypes cond)
+        public static void Set(ConditionUnitTypes cond)
         {
             _condUnit = cond;
         }
 
-        public static void Get(out CondUnitTypes cond)
+        public static void Get(out ConditionUnitTypes cond)
         {
             cond = _condUnit;
         }

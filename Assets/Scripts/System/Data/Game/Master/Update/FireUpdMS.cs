@@ -1,8 +1,13 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
+using static Game.Game.EntityCellCloudPool;
 
 namespace Game.Game
 {
-    public sealed class FireUpdMS : IEcsRunSystem
+    struct FireUpdMS : IEcsRunSystem
     {
         public void Run()
         {

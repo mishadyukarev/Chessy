@@ -1,6 +1,11 @@
 ﻿using Game.Common;
 using Photon.Pun;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellTrailPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
 {
@@ -28,7 +33,6 @@ namespace Game.Game
                 ref var hp_0 = ref Unit<HpC>(idx_0);
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
-                ref var moveCond_0 = ref Unit<MoveInCondC>(idx_0);
                 ref var stun_0 = ref Unit<StunC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
@@ -45,7 +49,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    moveCond_0.AddMove(condUnit_0.Condition);
+                    Unit<StepC>(condUnit_0.Condition, idx_0).Add();
 
                     if (!unit_0.Is(UnitTypes.King)) InvResC.Take(ResTypes.Food, ownUnit_0.Owner);
 
@@ -65,7 +69,7 @@ namespace Game.Game
 
                     else
                     {
-                        if (condUnit_0.Is(CondUnitTypes.Protected))
+                        if (condUnit_0.Is(ConditionUnitTypes.Protected))
                         {
                             if (unitE_0.HaveMax)
                             {
@@ -106,11 +110,11 @@ namespace Game.Game
                             }
                         }
 
-                        else if (!condUnit_0.Is(CondUnitTypes.Relaxed))
+                        else if (!condUnit_0.Is(ConditionUnitTypes.Relaxed))
                         {
                             if (stepUnit_0.HaveMin)
                             {
-                                condUnit_0.Set(CondUnitTypes.Protected);
+                                condUnit_0.Set(ConditionUnitTypes.Protected);
                             }
                         }
                     }

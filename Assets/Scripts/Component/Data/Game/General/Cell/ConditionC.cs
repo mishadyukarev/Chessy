@@ -4,11 +4,11 @@ namespace Game.Game
 {
     public struct ConditionC : IUnitCellE
     {
-        private CondUnitTypes _condition;
+        private ConditionUnitTypes _condition;
 
-        public CondUnitTypes Condition => _condition;
+        public ConditionUnitTypes Condition => _condition;
         public bool HaveCondition => Condition != default;
-        public bool Is(params CondUnitTypes[] conds)
+        public bool Is(params ConditionUnitTypes[] conds)
         {
             if (conds == default) throw new Exception();
 
@@ -18,7 +18,7 @@ namespace Game.Game
 
 
 
-        public void Set(CondUnitTypes cond)
+        public void Set(ConditionUnitTypes cond)
         {
             if (cond == default) throw new Exception();
 
@@ -33,6 +33,6 @@ namespace Game.Game
         {
             _condition = default;
         }
-        public void Sync(CondUnitTypes cond) => _condition = cond;
+        public void Sync(ConditionUnitTypes cond) => _condition = cond;
     }
 }

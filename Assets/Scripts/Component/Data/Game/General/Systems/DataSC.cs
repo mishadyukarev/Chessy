@@ -5,7 +5,7 @@
 //{
 //    public struct DataSC
 //    {
-       
+
 
 //        public DataSC(in List<object> list)
 //        {

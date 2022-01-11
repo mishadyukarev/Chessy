@@ -1,8 +1,11 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
 
 namespace Game.Game
 {
-    sealed class GetSetUnitCellsS : IEcsRunSystem
+    struct GetSetUnitCellsS : IEcsRunSystem
     {
         public void Run()
         {
@@ -21,14 +24,13 @@ namespace Game.Game
 
                     foreach (var xy in listAround)
                     {
-                        var curIdx = IdxCell(xy);
+                        var idx_0 = IdxCell(xy);
 
-                        ref var curUnitDatCom = ref Unit<UnitC>(curIdx);
-                        ref var curEnvDatCom = ref Environment<HaveEnvironmentC>(curIdx);
+                        ref var curUnitDatCom = ref Unit<UnitC>(idx_0);
 
-                        if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.Have)
+                        if (!Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_0).Have && !curUnitDatCom.Have)
                         {
-                            SetUnitCellsC.AddIdxCell(player, curIdx);
+                            SetUnitCellsC.AddIdxCell(player, idx_0);
                         }
                     }
                 }
@@ -70,11 +72,10 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var buld_0 = ref Build<BuildC>(idx_0);
                 ref var ownBuld_0 = ref Build<OwnerC>(idx_0);
-                ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
 
                 if (buld_0.Is(BuildTypes.Camp))
                 {
-                    if (!env_0.Have(EnvTypes.Mountain) && !unit_0.Have)
+                    if (!Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_0).Have && !unit_0.Have)
                     {
                         SetUnitCellsC.AddIdxCell(ownBuld_0.Owner, idx_0);
                     }

@@ -1,12 +1,14 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityCellFirePool;
+
+namespace Game.Game
 {
-    sealed class FireCellSyncVS : IEcsRunSystem
+    struct FireCellSyncVS : IEcsRunSystem
     {
         public void Run()
         {
             foreach (var idx in EntityCellPool.Idxs)
             {
-                if (EntityCellPool.Fire<HaveEffectC>(idx).Have)
+                if (Fire<HaveEffectC>(idx).Have)
                 {
                     EntityCellVPool.FireCellVC<FireVC>(idx).EnableSR();
                 }

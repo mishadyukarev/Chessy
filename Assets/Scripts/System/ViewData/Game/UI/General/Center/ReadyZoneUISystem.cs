@@ -1,13 +1,14 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+using static Game.Game.EntityCenterUIPool;
 
 namespace Game.Game
 {
-    sealed class ReadyZoneUISystem : IEcsRunSystem
+    struct ReadyZoneUISystem : IEcsRunSystem
     {
         public void Run()
         {
-            ref var readyBut = ref EntityUIPool.ReadyCenter<ButtonC>();
+            ref var readyBut = ref Ready<ButtonVC>();
 
             readyBut.Color = ReadyC.IsReady(WhoseMoveC.CurPlayerI) ? Color.red : Color.white;
 

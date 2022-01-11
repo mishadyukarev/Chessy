@@ -1,9 +1,11 @@
 ﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
 
 namespace Game.Game
 {
-    sealed class CircularAttackKingMS : IEcsRunSystem
+    struct CircularAttackKingMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -37,9 +39,8 @@ namespace Game.Game
                         ref var hpUnit_1 = ref Unit<HpC>(idx_1);
 
                         ref var tw_1 = ref UnitTW<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref UnitTW<ShieldC>(idx_1);
+                        ref var shield_1 = ref UnitTW<ShieldEC>(idx_1);
 
-                        ref var envC_1 = ref Environment<HaveEnvironmentC>(idx_1);
                         ref var buildC_1 = ref Build<BuildC>(idx_1);
 
 

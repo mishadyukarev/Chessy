@@ -1,16 +1,18 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityCenterKingUIPool;
+
+namespace Game.Game
 {
-    sealed class KingZoneUISys : IEcsRunSystem
+    struct KingZoneUISys : IEcsRunSystem
     {
         public void Run()
         {
             if (InvUnitsC.Have(UnitTypes.King, LevelTypes.First, WhoseMoveC.CurPlayerI))
             {
-                KingZoneUIC.EnableZone();
+                Button<ButtonVC>().SetActiveParent(true);
             }
             else
             {
-                KingZoneUIC.DisableZone();
+                Button<ButtonVC>().SetActiveParent(false);
             }
         }
     }

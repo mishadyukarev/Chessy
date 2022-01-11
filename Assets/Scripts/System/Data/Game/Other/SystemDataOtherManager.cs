@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class SystemDataOtherManager
+    public readonly struct SystemDataOtherManager
     {
         readonly static Dictionary<string, System.Action> _systems;
 
@@ -11,9 +11,9 @@ namespace Game.Game
         {
             _systems = new Dictionary<string, System.Action>();
         }
-        public SystemDataOtherManager(in WorldEcs gameW)
+        public SystemDataOtherManager(in bool def)
         {
-            _systems["0"] = new SyncOS().Run;
+
         }
     }
 }

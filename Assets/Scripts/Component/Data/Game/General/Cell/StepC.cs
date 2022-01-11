@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct StepC : IUnitCellE
+    public struct StepC : IUnitCellE, IUnitConditionCellE
     {
         public int Steps { get; internal set; }
 
@@ -12,9 +12,8 @@ namespace Game.Game
 
 
         internal void Set(in StepC stepC) => Steps = stepC.Steps;
-        internal void Set(in int steps) => Steps = steps;
 
-        internal void AddSteps(in int adding = 1)
+        public void Add(in int adding = 1)
         {
             if (adding < 0) throw new Exception("Need a positive number");
             else if (adding == 0) throw new Exception("You're adding zero");

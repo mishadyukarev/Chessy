@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
-using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellUnitPool;
 
 namespace Game.Game
 {
@@ -20,7 +21,6 @@ namespace Game.Game
 
             ref var unit_to = ref Unit<UnitC>(idx_to);
             ref var ownUnit_to = ref Unit<OwnerC>(idx_to);
-            ref var env_to = ref Environment<HaveEnvironmentC>(idx_to);
             ref var eff_to = ref Unit<StunC>(idx_to);
 
 
@@ -30,7 +30,7 @@ namespace Game.Game
                 {
                     if (unit_to.Have)
                     {
-                        if (env_to.Have(EnvTypes.AdultForest))
+                        if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_to).Have)
                         {
                             if (unitE_from.HaveMax)
                             {

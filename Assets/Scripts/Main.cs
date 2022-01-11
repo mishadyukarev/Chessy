@@ -41,7 +41,6 @@ namespace Game
 
                 case SceneTypes.Game:
                     SystemDataManager.Run(DataSTypes.RunUpdate);
-                    SystemDataMasterManager.RunUpdate();
                     SystemViewDataManager.Run(ViewDataSTypes.RunUpdate);
                     break;
 
@@ -96,14 +95,14 @@ namespace Game
 
                     _gameW = new WorldEcs();
 
-                    new SpawnEntities(_gameW);
+                    new EntitiesManager(_gameW);
 
                     EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>();
-                    new SystemDataManager();
-                    new SystemDataMasterManager();
-                    new SystemDataOtherManager(_gameW);
+                    new SystemDataManager(default);
+                    new SystemDataMasterManager(default);
+                    new SystemDataOtherManager(default);
 
-                    new SystemViewDataManager();
+                    new SystemViewDataManager(default);
 
                     RpcS.SyncAllMaster();
 

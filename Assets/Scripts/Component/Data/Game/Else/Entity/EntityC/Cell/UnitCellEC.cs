@@ -1,5 +1,11 @@
 ﻿using System;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellTrailPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
+using static Game.Game.EntityCellRiverPool;
 
 namespace Game.Game
 {
@@ -333,7 +339,7 @@ namespace Game.Game
             else return false;
 
 
-            if (!Unit<UnitC>(_idx).Is(UnitTypes.Pawn) || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed)
+            if (!Unit<UnitC>(_idx).Is(UnitTypes.Pawn) || !Unit<ConditionC>(_idx).Is(ConditionUnitTypes.Relaxed)
                 || !Unit<UnitCellEC>(_idx).HaveMax) return false;
 
 
@@ -362,7 +368,7 @@ namespace Game.Game
 
             var twC = UnitTW<ToolWeaponC>(_idx);
 
-            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(CondUnitTypes.Relaxed) || !Unit<UnitCellEC>(_idx).HaveMax) return false;
+            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(ConditionUnitTypes.Relaxed) || !Unit<UnitCellEC>(_idx).HaveMax) return false;
 
 
 
@@ -494,7 +500,7 @@ namespace Game.Game
 
         #region Steps
 
-        public void SetMaxSteps() => Unit<StepC>(_idx).Set(MaxAmountSteps);
+        public void SetMaxSteps() => Unit<StepC>(_idx).Steps = MaxAmountSteps;
         public void Reset() => Unit<StepC>(_idx).Reset();
 
         public void TakeStepsForDoing(in byte idx_to) => Unit<StepC>(_idx).Take(StepsForDoing(idx_to));
@@ -547,7 +553,7 @@ namespace Game.Game
 
             foreach (var item in Stats) Unit<HaveEffectC>(item, _idx).Disable();
             Unit<ConditionC>(_idx).Reset();
-            Unit<MoveInCondC>(_idx).ResetAll();
+            foreach (var item in Conditions) Unit<StepC>(item, _idx).Reset();
 
             UnitTW<UnitTWCellEC>(_idx).Reset();
 
@@ -604,7 +610,7 @@ namespace Game.Game
 
             foreach (var item in Stats) Unit<HaveEffectC>(item, idx_to).Have = Unit<HaveEffectC>(item, idx_from).Have;
             Unit<WaterC>(idx_to).Set(Unit<WaterC>(idx_from));
-            Unit<MoveInCondC>(idx_to).ResetAll();
+            foreach (var item in Conditions) Unit<StepC>(item, idx_to).Reset();
             foreach (var unique in Unique) Unit<CooldownC>(unique, idx_to).Cooldown = Unit<CooldownC>(unique, idx_from).Cooldown;
             Unit<CornerArcherC>(idx_to).Set(Unit<CornerArcherC>(idx_from));
 

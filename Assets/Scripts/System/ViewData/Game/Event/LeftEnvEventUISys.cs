@@ -1,10 +1,12 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityLeftEnvUIPool;
+
+namespace Game.Game
 {
     sealed class LeftEnvEventUISys
     {
         internal LeftEnvEventUISys()
         {
-            EnvirUIC.AddListenerToEnvInfo(EnvironmentInfo);
+            Info<ButtonVC>().AddList(EnvironmentInfo);
         }
 
         private void EnvironmentInfo()

@@ -4,17 +4,7 @@
     {
         None,
 
-        //Up
-        Leave,
-        First = Leave,
-        Alpha,
-        DirectWind,
-
         //Center
-        EndGame,
-        Motion,
-        JoinDiscord,
-        Ready,
 
         End,
     }

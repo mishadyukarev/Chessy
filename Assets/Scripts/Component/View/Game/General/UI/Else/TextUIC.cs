@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct TextUIC
+    public struct TextUIC : EntityLeftEnvUIPool.ILeftEnvResTextUIE
     {
         readonly internal TextMeshProUGUI TextUI;
 

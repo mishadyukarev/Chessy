@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public readonly struct CellC : ICell
+    public readonly struct CellC : EntityCellPool.ICell
     {
         public readonly bool IsActiveCell;
         public readonly int InstanceID;

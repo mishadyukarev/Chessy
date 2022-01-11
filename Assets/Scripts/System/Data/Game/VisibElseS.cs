@@ -1,8 +1,12 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellTrailPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
 
 namespace Game.Game
 {
-    public struct VisibElseS : IEcsRunSystem
+    struct VisibElseS : IEcsRunSystem
     {
         public void Run()
         {
@@ -86,30 +90,28 @@ namespace Game.Game
                 }
 
 
-                ref var trail_0 = ref EntityCellPool.Trail<TrailCellEC>(idx_0);
+                ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
 
                 if (trail_0.HaveAnyTrail)
                 {
-                    ref var trailVis_0 = ref EntityCellPool.Trail<VisibleC>(idx_0);
-
                     var list = CellSpaceC.XyAround(xy);
 
-                    trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.First), false);
-                    trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.Second), false);
+                    Trail<VisibledC>(WhoseMoveC.NextPlayerFrom(PlayerTypes.First), idx_0).IsVisibled = false;
+                    Trail<VisibledC>(WhoseMoveC.NextPlayerFrom(PlayerTypes.Second), idx_0).IsVisibled = false;
 
-                    if (unit_0.Have) trailVis_0.SetVisibled(ownUnit_0.Owner, true);
+                    if (unit_0.Have) Trail<VisibledC>(ownUnit_0.Owner, idx_0).IsVisibled = true;
 
                     foreach (var xy_1 in list)
                     {
                         var idxCell_1 = EntityCellPool.IdxCell(xy_1);
 
-                        ref var unitCom_1 = ref EntityCellPool.Unit<UnitC>(idxCell_1);
-                        ref var ownUnit_1 = ref EntityCellPool.Unit<OwnerC>(idxCell_1);
+                        ref var unitCom_1 = ref Unit<UnitC>(idxCell_1);
+                        ref var ownUnit_1 = ref Unit<OwnerC>(idxCell_1);
 
 
                         if (unitCom_1.Have)
                         {
-                            trailVis_0.SetVisibled(ownUnit_1.Owner, true);
+                            Trail<VisibledC>(ownUnit_1.Owner, idx_0).IsVisibled = true;
                         }
                     }
                 }

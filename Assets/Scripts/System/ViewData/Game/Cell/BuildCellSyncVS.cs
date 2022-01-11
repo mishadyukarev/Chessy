@@ -1,4 +1,5 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellBuildPool;
 
 namespace Game.Game
 {
@@ -11,7 +12,7 @@ namespace Game.Game
                 ref var build_0 = ref Build<BuildC>(idx_0);
                 ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
 
-                
+
 
                 ref var buildV_0 = ref EntityCellVPool.BuildCellVC<BuildVC>(idx_0);
                 ref var buildBackV_0 = ref EntityCellVPool.BuildCellVC<BuildBackVC>(idx_0);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class SystemDataManager
+    public readonly struct SystemDataManager
     {
         readonly static Dictionary<DataSTypes, Action> _actions;
 
@@ -11,9 +11,9 @@ namespace Game.Game
         {
             _actions = new Dictionary<DataSTypes, Action>();
         }
-        public SystemDataManager()
+        public SystemDataManager(in bool def)
         {
-            _actions.Add(DataSTypes.RunUpdate, 
+            _actions.Add(DataSTypes.RunUpdate,
                 (Action)new InputS().Run
                 + new RayS().Run
                 + new SelectorS().Run);
@@ -29,7 +29,7 @@ namespace Game.Game
                 + new GetSetUnitCellsS().Run);
         }
 
-        
+
         public static void Run(in DataSTypes type)
         {
             if (!_actions.ContainsKey(type)) throw new Exception();

@@ -1,8 +1,9 @@
-﻿using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellFirePool;
+using static Game.Game.EntityCellUnitPool;
 
 namespace Game.Game
 {
-    public sealed class PutOutFireMS : IEcsRunSystem
+    struct PutOutFireMS : IEcsRunSystem
     {
         public void Run()
         {

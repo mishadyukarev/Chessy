@@ -1,5 +1,7 @@
 ﻿using System;
-using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
+using static Game.Game.EntityCellTrailPool;
 
 namespace Game.Game
 {

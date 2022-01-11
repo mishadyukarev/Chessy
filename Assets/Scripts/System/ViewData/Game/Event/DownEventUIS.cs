@@ -1,5 +1,6 @@
 ﻿using static Game.Game.EntityPool;
 using static Game.Game.EntityVPool;
+using static Game.Game.EntityCenterKingUIPool;
 
 namespace Game.Game
 {
@@ -15,7 +16,8 @@ namespace Game.Game
             GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
             GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Archer, delegate { CreateUnit(UnitTypes.Archer); });
 
-            KingZoneUIC.AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
+
+            Button<ButtonVC>().AddList(delegate { GetUnit(UnitTypes.King); });
             GetPawnArcherUIC.AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
             GetPawnArcherUIC.AddListener(UnitTypes.Archer, delegate { GetUnit(UnitTypes.Archer); });
 
@@ -188,8 +190,8 @@ namespace Game.Game
             {
                 if (!HintC.WasActived(videoClip))
                 {
-                    HintViewUIC.SetActiveHintZone(true);
-                    HintViewUIC.SetVideoClip(videoClip);
+                    //EntityCenterHintUIPool.SetActiveHintZone(true);
+                    //EntityCenterHintUIPool.SetVideoClip(videoClip);
                     HintC.SetWasActived(videoClip, true);
                 }
             }

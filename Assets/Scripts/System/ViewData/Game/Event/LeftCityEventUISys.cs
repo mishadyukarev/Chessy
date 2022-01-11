@@ -1,4 +1,4 @@
-﻿
+﻿using static Game.Game.EntityLeftCityUIPool;
 
 namespace Game.Game
 {
@@ -6,18 +6,18 @@ namespace Game.Game
     {
         internal LeftCityEventUISys()
         {
-            CutyLeftUIC.AddListenerToMelt(delegate { MeltOre(); });
+            Melt<ButtonVC>().AddList(delegate { MeltOre(); });
 
-            CutyLeftUIC.AddListToBuyRes(ResTypes.Food, delegate { BuyRes(ResTypes.Food); });
-            CutyLeftUIC.AddListToBuyRes(ResTypes.Wood, delegate { BuyRes(ResTypes.Wood); });
+            Resources<ButtonVC>(ResTypes.Food).AddList(delegate { BuyRes(ResTypes.Food); });
+            Resources<ButtonVC>(ResTypes.Wood).AddList(delegate { BuyRes(ResTypes.Wood); });
         }
 
-        private void MeltOre()
+        void MeltOre()
         {
             if (WhoseMoveC.IsMyMove) EntityPool.Rpc<RpcC>().MeltOreToMaster();
         }
 
-        private void BuyRes(ResTypes res)
+        void BuyRes(ResTypes res)
         {
             if (WhoseMoveC.IsMyMove) EntityPool.Rpc<RpcC>().BuyResToMaster(res);
         }

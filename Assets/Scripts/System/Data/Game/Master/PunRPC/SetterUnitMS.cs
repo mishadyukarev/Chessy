@@ -1,8 +1,10 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
 {
-    public sealed class SetterUnitMS : IEcsRunSystem
+    struct SetterUnitMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -12,7 +14,6 @@ namespace Game.Game
             IdxDoingMC.Get(out var idx_0);
 
 
-            ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
             ref var unit_0 = ref Unit<UnitC>(idx_0);
@@ -24,7 +25,6 @@ namespace Game.Game
             ref var water_0 = ref Unit<WaterC>(idx_0);
 
             ref var cond_0 = ref Unit<ConditionC>(idx_0);
-            ref var moveCond_0 = ref Unit<MoveInCondC>(idx_0);
 
             ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using static Game.Game.EntityCellTrailPool;
 
 namespace Game.Game
 {
@@ -14,7 +15,7 @@ namespace Game.Game
 
                 for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
                 {
-                    dict_0.Add(dir, EntityCellPool.Trail<HpC>(_idx, dir).Hp);
+                    dict_0.Add(dir, Trail<HpC>(_idx, dir).Hp);
                 }
 
                 return dict_0;
@@ -45,31 +46,31 @@ namespace Game.Game
 
         public bool TrySetNewTrail(in DirectTypes dir, in bool haveAdultForest)
         {
-            if (haveAdultForest) EntityCellPool.Trail<HpC>(_idx, dir).Hp = 7;
+            if (haveAdultForest) Trail<HpC>(_idx, dir).Hp = 7;
             return haveAdultForest;
         }
         public void SetAllTrail()
         {
             foreach (var item in Health)
             {
-                EntityCellPool.Trail<HpC>(_idx, item.Key).Hp = 7;
+                Trail<HpC>(_idx, item.Key).Hp = 7;
             }
         }
         public void TakeHealth(in DirectTypes dir)
         {
-            EntityCellPool.Trail<HpC>(_idx, dir).Hp -= 1;
+            Trail<HpC>(_idx, dir).Hp -= 1;
         }
         public void ResetAll()
         {
             foreach (var item in Health)
             {
-                EntityCellPool.Trail<HpC>(_idx, item.Key).Hp = 0;
+                Trail<HpC>(_idx, item.Key).Hp = 0;
             }
         }
 
         public void SyncTrail(in DirectTypes dir, in int hp)
         {
-            EntityCellPool.Trail<HpC>(_idx, dir).Hp = hp;
+            Trail<HpC>(_idx, dir).Hp = hp;
         }
     }
 }

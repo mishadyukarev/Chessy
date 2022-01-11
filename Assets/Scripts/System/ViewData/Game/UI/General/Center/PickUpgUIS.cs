@@ -1,13 +1,14 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityCenterPickUpgUIPool;
+
+namespace Game.Game
 {
-    sealed class PickUpgUIS : IEcsRunSystem
+    struct PickUpgUIS : IEcsRunSystem
     {
         public void Run()
         {
-
             var isActivatedZone = PickUpgC.HaveUpgrade(WhoseMoveC.CurPlayerI);
 
-            PickUpgUIC.SetActiveZone(isActivatedZone);
+            Water<ButtonVC>().SetActiveParent(isActivatedZone);
 
             if (isActivatedZone)
             {
@@ -17,7 +18,7 @@
                     {
                         if (item_1.Key == WhoseMoveC.CurPlayerI)
                         {
-                            PickUpgUIC.SetActive(item_0.Key, item_1.Value);
+                            Units<ButtonVC>(item_0.Key).SetActive(item_1.Value);
                         }
                     }
                 }
@@ -28,7 +29,7 @@
                     {
                         if (item_1.Key == WhoseMoveC.CurPlayerI)
                         {
-                            PickUpgUIC.SetActive(item_0.Key, item_1.Value);
+                            Builds<ButtonVC>(item_0.Key).SetActive(item_1.Value);
                         }
                     }
                 }
@@ -38,7 +39,7 @@
                 {
                     if (item_0.Key == WhoseMoveC.CurPlayerI)
                     {
-                        PickUpgUIC.SetWater(item_0.Value);
+                        Water<ButtonVC>().SetActive(item_0.Value);
                     }
                 }
             }

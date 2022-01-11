@@ -1,8 +1,10 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
 
 namespace Game.Game
 {
-    sealed class HungryUpdMS : IEcsRunSystem
+    struct HungryUpdMS : IEcsRunSystem
     {
         public void Run()
         {

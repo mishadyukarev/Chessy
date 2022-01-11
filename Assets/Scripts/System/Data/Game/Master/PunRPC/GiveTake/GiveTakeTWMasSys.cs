@@ -1,8 +1,9 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
 
 namespace Game.Game
 {
-    public sealed class GiveTakeTWMasSys : IEcsRunSystem
+    struct GiveTakeTWMasSys : IEcsRunSystem
     {
         public void Run()
         {

@@ -6,6 +6,10 @@
 
         Update,
         Truce,
+
+        RunUpdate,
+
+        End
     }
 }
 

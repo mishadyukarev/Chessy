@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
 using static Game.Game.EntityCellVPool;
 
 namespace Game.Game
 {
-    sealed class UnitStatCellSyncS : IEcsRunSystem
+    struct UnitStatCellSyncS : IEcsRunSystem
     {
         public void Run()
         {
@@ -61,13 +62,13 @@ namespace Game.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
                         }
 
-                        if (condUnit_0.Is(CondUnitTypes.Protected))
+                        if (condUnit_0.Is(ConditionUnitTypes.Protected))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.yellow);
                         }
 
-                        else if (condUnit_0.Is(CondUnitTypes.Relaxed))
+                        else if (condUnit_0.Is(ConditionUnitTypes.Relaxed))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.green);

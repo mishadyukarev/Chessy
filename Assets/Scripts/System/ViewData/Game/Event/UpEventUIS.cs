@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using static Game.Game.EntityUpUIPool;
 
 namespace Game.Game
 {
@@ -6,7 +7,7 @@ namespace Game.Game
     {
         internal UpEventUIS()
         {
-            EntityUIPool.AlphaUp<ButtonC>().AddList(OpenShop);
+            Alpha<ButtonVC>().AddList(OpenShop);
         }
 
         private void OpenShop()

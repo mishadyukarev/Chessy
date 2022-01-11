@@ -1,9 +1,12 @@
 ﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
 
 namespace Game.Game
 {
-    public sealed class DestroyMS : IEcsRunSystem
+    struct DestroyMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -15,7 +18,6 @@ namespace Game.Game
 
             ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
             ref var buildC_0 = ref Build<BuildC>(idx_0);
-            ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
 
 
             if (stepUnit_0.HaveMin)
@@ -30,7 +32,7 @@ namespace Game.Game
 
                 if (buildC_0.Is(BuildTypes.Farm))
                 {
-                    envCell_0.Remove(EnvTypes.Fertilizer);
+                    Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Remove();
                 }
 
                 buildCell_0.Remove();

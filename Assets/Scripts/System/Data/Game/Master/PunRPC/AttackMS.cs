@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
 
 namespace Game.Game
 {
@@ -103,7 +104,7 @@ namespace Game.Game
                 {
                     if (tw_from.Is(TWTypes.Shield))
                     {
-                        UnitTW<ShieldC>(idx_from).Take();
+                        UnitTW<ShieldEC>(idx_from).Take();
                     }
                     else if (minus_from > 0)
                     {
@@ -114,7 +115,7 @@ namespace Game.Game
 
                 if (tw_to.Is(TWTypes.Shield))
                 {
-                    UnitTW<ShieldC>(idx_to).Take();
+                    UnitTW<ShieldEC>(idx_to).Take();
                 }
                 else if (minus_to > 0)
                 {

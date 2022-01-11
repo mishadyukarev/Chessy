@@ -1,8 +1,9 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
 
 namespace Game.Game
 {
-    public sealed class BonusNearUnitKingMS : IEcsRunSystem
+    struct BonusNearUnitKingMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -16,8 +17,6 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
             ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
-
-            ref var uniq_0 = ref Unit<UniqAbilC>(idx_0);
 
 
             var sender = InfoC.Sender(MGOTypes.Master);

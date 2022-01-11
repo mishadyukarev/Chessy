@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public class FliperAndRotatorUnitSystem : IEcsRunSystem
+    struct FliperAndRotatorUnitSystem : IEcsRunSystem
     {
         public void Run()
         {

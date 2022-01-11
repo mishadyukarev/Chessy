@@ -1,23 +1,25 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityCenterUIPool;
+
+namespace Game.Game
 {
-    sealed class TheEndGameUISystem : IEcsRunSystem
+    struct TheEndGameUISystem : IEcsRunSystem
     {
         public void Run()
         {
             if (PlayerWinnerC.PlayerWinner == default)
             {
-                EntityUIPool.EndGameCenter<EndGameUIC>().SetActiveZone(false);
+                EndGame<EndGameUIEC>().SetActiveZone(false);
             }
 
             else if (PlayerWinnerC.PlayerWinner == WhoseMoveC.CurPlayerI)
             {
-                EntityUIPool.EndGameCenter<EndGameUIC>().SetText(true);
-                EntityUIPool.EndGameCenter<EndGameUIC>().SetActiveZone(true);
+                EndGame<EndGameUIEC>().SetText(true);
+                EndGame<EndGameUIEC>().SetActiveZone(true);
             }
             else
             {
-                EntityUIPool.EndGameCenter<EndGameUIC>().SetText(false);
-                EntityUIPool.EndGameCenter<EndGameUIC>().SetActiveZone(true);
+                EndGame<EndGameUIEC>().SetText(false);
+                EndGame<EndGameUIEC>().SetActiveZone(true);
             }
         }
     }

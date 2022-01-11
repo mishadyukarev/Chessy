@@ -1,26 +1,27 @@
 ﻿using Game.Common;
+using static Game.Game.EntityCenterFriendUIPool;
 
 namespace Game.Game
 {
-    sealed class FriendZoneUISys : IEcsRunSystem
+    struct FriendZoneUISys : IEcsRunSystem
     {
         public void Run()
         {
-            FriendZoneUIC.SetActiveParent(false);
+            Friend<ButtonVC>().SetActiveParent(false);
 
             if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
             {
                 if (FriendC.IsActiveFriendZone)
                 {
-                    FriendZoneUIC.SetActiveParent(true);
+                    Friend<ButtonVC>().SetActiveParent(true);
 
                     if (WhoseMoveC.CurPlayerI == PlayerTypes.First)
                     {
-                        FriendZoneUIC.SetTextPlayerMotion("1");
+                        Friend<TextUIC>().Text = "1";
                     }
                     else
                     {
-                        FriendZoneUIC.SetTextPlayerMotion("2");
+                        Friend<TextUIC>().Text = "2";
                     }
                 }
             }

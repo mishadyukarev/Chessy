@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using static Game.Game.EntityCenterUIPool;
 
 namespace Game.Game
 {
-    sealed class MotionCenterUISystem : IEcsRunSystem
+    struct MotionCenterUISystem : IEcsRunSystem
     {
         private float _timer;
 
@@ -10,21 +11,21 @@ namespace Game.Game
         {
             if (MotionsC.IsActivated)
             {
-                EntityUIPool.MotionCenter<MotionsUIC>().Text = MotionsC.AmountMotions.ToString();
-                EntityUIPool.MotionCenter<MotionsUIC>().SetActiveParent(true);
+                Motion<MotionsUIEC>().Text = MotionsC.AmountMotions.ToString();
+                Motion<MotionsUIEC>().SetActiveParent(true);
 
                 _timer += Time.deltaTime;
 
                 if (_timer >= 1)
                 {
-                    EntityUIPool.MotionCenter<MotionsUIC>().SetActiveParent(false);
+                    Motion<MotionsUIEC>().SetActiveParent(false);
                     MotionsC.IsActivated = false;
                     _timer = 0;
                 }
             }
             else
             {
-                EntityUIPool.MotionCenter<MotionsUIC>().SetActiveParent(false);
+                Motion<MotionsUIEC>().SetActiveParent(false);
             }
         }
     }

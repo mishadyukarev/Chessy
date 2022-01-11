@@ -6,6 +6,7 @@
         Start = None,
 
         SimpleClick,
+        First = SimpleClick,
 
         SetUnit,
         GiveTakeTW,

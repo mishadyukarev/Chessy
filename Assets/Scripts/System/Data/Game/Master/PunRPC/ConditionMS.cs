@@ -1,9 +1,9 @@
 ﻿using System;
-using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
 
 namespace Game.Game
 {
-    public sealed class ConditionMS : IEcsRunSystem
+    struct ConditionMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -18,12 +18,12 @@ namespace Game.Game
 
             switch (cond)
             {
-                case CondUnitTypes.None:
+                case ConditionUnitTypes.None:
                     cond_0.Reset();
                     break;
 
-                case CondUnitTypes.Protected:
-                    if (cond_0.Is(CondUnitTypes.Protected))
+                case ConditionUnitTypes.Protected:
+                    if (cond_0.Is(ConditionUnitTypes.Protected))
                     {
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
@@ -43,8 +43,8 @@ namespace Game.Game
                     break;
 
 
-                case CondUnitTypes.Relaxed:
-                    if (cond_0.Is(CondUnitTypes.Relaxed))
+                case ConditionUnitTypes.Relaxed:
+                    if (cond_0.Is(ConditionUnitTypes.Relaxed))
                     {
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();

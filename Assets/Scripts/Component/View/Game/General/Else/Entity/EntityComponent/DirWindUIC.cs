@@ -1,12 +1,13 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using static Game.Game.EntityUpUIPool;
 
 namespace Game.Game
 {
     public readonly struct DirWindUIC
     {
-        Image Image => EntityUIPool.DirectWindUp<ImageUIC>().Image;
+        Image Image => DirectWind<ImageUIC>().Image;
 
         public void SetEulerRot(PlayerTypes playerType, DirectTypes directType)
         {

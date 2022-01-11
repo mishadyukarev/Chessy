@@ -1,9 +1,9 @@
-﻿using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellUnitPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    public sealed class SyncSelUnitCellVS : IEcsRunSystem
+    struct SyncSelUnitCellVS : IEcsRunSystem
     {
         public void Run()
         {

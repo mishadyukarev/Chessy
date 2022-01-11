@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityCellPool;
+﻿using static Game.Game.EntityCellUnitPool;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -7,30 +7,28 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var uniq_sel = ref Unit<UniqAbilC>(SelIdx<IdxC>().Idx);
+            ref var abil1 = ref Unit<UniqueAbilityC>(UniqueButtonTypes.First, SelIdx<IdxC>().Idx);
+            ref var abil2 = ref Unit<UniqueAbilityC>(UniqueButtonTypes.Second, SelIdx<IdxC>().Idx);
+            ref var abil3 = ref Unit<UniqueAbilityC>(UniqueButtonTypes.Third, SelIdx<IdxC>().Idx);
 
-            var abil1 = uniq_sel.Ability(UniqButTypes.First);
-            var abil2 = uniq_sel.Ability(UniqButTypes.Second);
-            var abil3 = uniq_sel.Ability(UniqButTypes.Third);
+            UniqButtonsUIC.SetActive(UniqueButtonTypes.First, abil1.Ability);
+            UniqButtonsUIC.SetActive(UniqueButtonTypes.Second, abil2.Ability);
+            UniqButtonsUIC.SetActive(UniqueButtonTypes.Third, abil3.Ability);
 
-            UniqButtonsUIC.SetActive(UniqButTypes.First, abil1);
-            UniqButtonsUIC.SetActive(UniqButTypes.Second, abil2);
-            UniqButtonsUIC.SetActive(UniqButTypes.Third, abil3);
-
-            if (abil1 != default)
+            if (abil1.Ability != default)
             {
-                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.First, Unit<CooldownC>(abil1, SelIdx<IdxC>().Idx).HaveCooldown);
-                UniqButtonsUIC.SetTextCooldown(UniqButTypes.First, Unit<CooldownC>(abil1, SelIdx<IdxC>().Idx).Cooldown.ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqueButtonTypes.First, Unit<CooldownC>(abil1.Ability, SelIdx<IdxC>().Idx).HaveCooldown);
+                UniqButtonsUIC.SetTextCooldown(UniqueButtonTypes.First, Unit<CooldownC>(abil1.Ability, SelIdx<IdxC>().Idx).Cooldown.ToString());
             }
-            if (abil2 != default)
+            if (abil2.Ability != default)
             {
-                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Second, Unit<CooldownC>(abil2, SelIdx<IdxC>().Idx).HaveCooldown);
-                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Second, Unit<CooldownC>(abil2, SelIdx<IdxC>().Idx).ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqueButtonTypes.Second, Unit<CooldownC>(abil2.Ability, SelIdx<IdxC>().Idx).HaveCooldown);
+                UniqButtonsUIC.SetTextCooldown(UniqueButtonTypes.Second, Unit<CooldownC>(abil2.Ability, SelIdx<IdxC>().Idx).ToString());
             }
-            if (abil3 != default)
+            if (abil3.Ability != default)
             {
-                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Third, Unit<CooldownC>(abil3, SelIdx<IdxC>().Idx).HaveCooldown);
-                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Third, Unit<CooldownC>(abil3, SelIdx<IdxC>().Idx).Cooldown.ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqueButtonTypes.Third, Unit<CooldownC>(abil3.Ability, SelIdx<IdxC>().Idx).HaveCooldown);
+                UniqButtonsUIC.SetTextCooldown(UniqueButtonTypes.Third, Unit<CooldownC>(abil3.Ability, SelIdx<IdxC>().Idx).Cooldown.ToString());
             }
         }
     }

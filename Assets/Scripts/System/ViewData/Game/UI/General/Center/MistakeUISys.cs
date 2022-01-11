@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static Game.Game.EntityUpUIPool;
 
 namespace Game.Game
 {
@@ -27,7 +28,7 @@ namespace Game.Game
 
                         for (var res = ResTypes.First; res < ResTypes.End; res++)
                         {
-                            EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.white;
+                            Economy<EconomyUpUIC>(res).Color = Color.white;
                         }
                     }
 
@@ -37,13 +38,13 @@ namespace Game.Game
                         {
                             if (MistakeC.NeedRes(res))
                             {
-                                EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.red;
+                                Economy<EconomyUpUIC>(res).Color = Color.red;
                                 MistakeUIC.SetActiveRes(res, true);
                                 MistakeUIC.SetText(res, ">= " + (-MistakeC.NeedResAmount(res)).ToString());
                             }
                             else
                             {
-                                EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.white;
+                                Economy<EconomyUpUIC>(res).Color = Color.white;
                                 MistakeUIC.SetActiveRes(res, false);
                             }
                         }
@@ -115,7 +116,7 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                EntityUIPool.EconomyUp<EconomyUpUIC>(res).Color = Color.white;
+                Economy<EconomyUpUIC>(res).Color = Color.white;
                 MistakeUIC.SetActiveRes(res, false);
             }
         }

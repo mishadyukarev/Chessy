@@ -1,5 +1,8 @@
 ﻿using System;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
 {
@@ -11,7 +14,6 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
-                ref var uniq_0 = ref Unit<UniqAbilC>(idx_0);
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
@@ -25,41 +27,41 @@ namespace Game.Game
                             case UnitTypes.None: throw new Exception();
 
                             case UnitTypes.King:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.CircularAttack);
-                                uniq_0.SetAbility(UniqButTypes.Second, UniqueAbilityTypes.BonusNear);
-                                uniq_0.Reset(UniqButTypes.Third);
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.CircularAttack;
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.BonusNear;
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Third, idx_0).Reset();
                                 break;
 
                             case UnitTypes.Pawn:
                                 if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                                 {
-                                    if (fire_0.Have) uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.PutOutFirePawn);
-                                    else uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.FirePawn);
+                                    if (fire_0.Have) Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.PutOutFirePawn;
+                                    else Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.FirePawn;
                                 }
                                 else
                                 {
-                                    uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.Seed);
+                                    Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.Seed;
                                 }
-                                uniq_0.Reset(UniqButTypes.Second);
-                                uniq_0.Reset(UniqButTypes.Third);
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Second, idx_0).Reset();
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Third, idx_0).Reset();
                                 break;
 
                             case UnitTypes.Archer:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.FireArcher);
-                                uniq_0.SetAbility(UniqButTypes.Second, UniqueAbilityTypes.ChangeCornerArcher);
-                                uniq_0.Reset(UniqButTypes.Third);
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.FireArcher;
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.ChangeCornerArcher;
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Third, idx_0).Reset();
                                 break;
 
                             case UnitTypes.Scout:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.None);
-                                uniq_0.Reset(UniqButTypes.Second);
-                                uniq_0.Reset(UniqButTypes.Third);
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Reset();
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Second, idx_0).Reset();
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Third, idx_0).Reset();
                                 break;
 
                             case UnitTypes.Elfemale:
-                                uniq_0.SetAbility(UniqButTypes.First, UniqueAbilityTypes.GrowAdultForest);
-                                uniq_0.SetAbility(UniqButTypes.Second, UniqueAbilityTypes.StunElfemale);
-                                uniq_0.SetAbility(UniqButTypes.Third, UniqueAbilityTypes.ChangeDirWind);
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.GrowAdultForest;
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.StunElfemale;
+                                Unit<UniqueAbilityC>(UniqueButtonTypes.Third, idx_0).Ability = UniqueAbilityTypes.ChangeDirWind;
                                 break;
 
                             default: throw new Exception();
@@ -68,9 +70,9 @@ namespace Game.Game
                 }
                 else
                 {
-                    uniq_0.Reset(UniqButTypes.First);
-                    uniq_0.Reset(UniqButTypes.Second);
-                    uniq_0.Reset(UniqButTypes.Third);
+                    Unit<UniqueAbilityC>(UniqueButtonTypes.First, idx_0).Reset();
+                    Unit<UniqueAbilityC>(UniqueButtonTypes.Second, idx_0).Reset();
+                    Unit<UniqueAbilityC>(UniqueButtonTypes.Third, idx_0).Reset();
                 }
             }
         }

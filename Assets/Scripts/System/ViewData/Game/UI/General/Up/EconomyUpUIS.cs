@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+
+using static Game.Game.EntityUpUIPool;
 
 namespace Game.Game
 {
-    public sealed class EconomyUpUIS : IEcsRunSystem
+    struct EconomyUpUIS : IEcsRunSystem
     {
         public void Run()
         {
@@ -44,7 +48,7 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                EntityUIPool.EconomyUp<EconomyUpUIC>(res).Text = InvResC.AmountRes(res, curPlayer).ToString();
+                Economy<EconomyUpUIC>(res).Text = InvResC.AmountRes(res, curPlayer).ToString();
             }
         }
     }

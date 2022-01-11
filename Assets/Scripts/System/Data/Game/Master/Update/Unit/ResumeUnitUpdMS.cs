@@ -1,8 +1,10 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellEnvPool;
 
 namespace Game.Game
 {
-    public sealed class ResumeUnitUpdMS : IEcsRunSystem
+    struct ResumeUnitUpdMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -15,7 +17,7 @@ namespace Game.Game
                 {
                     if (Environment<EnvCellEC>(env, idx_0).HaveMax())
                     {
-                        condUnit_0.Set(CondUnitTypes.Protected);
+                        condUnit_0.Set(ConditionUnitTypes.Protected);
                     }
                     else
                     {
@@ -28,7 +30,7 @@ namespace Game.Game
                     {
                         if (unit_0.Have && Unit<UnitCellEC>(idx_0).HaveMin)
                         {
-                            condUnit_0.Set(CondUnitTypes.Protected);
+                            condUnit_0.Set(ConditionUnitTypes.Protected);
                         }
                     }
                 }

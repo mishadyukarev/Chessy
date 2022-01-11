@@ -17,7 +17,7 @@ namespace Game.Game
         public static ref C GeneralZone<C>() where C : struct => ref _ents[nameof(IGeneralZoneE)].Get<C>();
         public static ref C Photon<C>() where C : struct, IPhotonE => ref _ents[nameof(IPhotonE)].Get<C>();
 
-        public static ref C SoundV<C>(in ClipTypes clip) where C : struct, ISoundE 
+        public static ref C SoundV<C>(in ClipTypes clip) where C : struct, ISoundE
         {
             if (!_sounds0.ContainsKey(clip)) throw new Exception();
             return ref _sounds0[clip].Get<C>();
@@ -43,7 +43,7 @@ namespace Game.Game
             ToggleZoneVC.Attach(genZone.transform);
             _ents[nameof(IGeneralZoneE)] = gameW.NewEntity()
                 .Add(new GeneralZoneVEC())
-                .Add(new GameObjectC(genZone));
+                .Add(new GameObjectVC(genZone));
 
 
             new VideoClipsResC(true);
@@ -58,7 +58,7 @@ namespace Game.Game
             backGroundGO.transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
             _ents[nameof(IBackgroundE)] = gameW.NewEntity()
-                .Add(new GameObjectC(backGroundGO));
+                .Add(new GameObjectVC(backGroundGO));
 
 
             var aSParent = new GameObject("AudioSource");

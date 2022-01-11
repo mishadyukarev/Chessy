@@ -1,16 +1,20 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityCenterHeroUIPool;
+using static Game.Game.EntityCenterPickUpgUIPool;
+using static Game.Game.EntityCenterKingUIPool;
+
+namespace Game.Game
 {
-    class HeroesSyncUISys : IEcsRunSystem
+    struct HeroesSyncUISys : IEcsRunSystem
     {
         public void Run()
         {
-            if (!KingZoneUIC.IsActiveZone && !PickUpgUIC.IsActiveZone && !WhereUnitsC.HaveMyHeroInGame)
+            if (!Button<ButtonVC>().IsActiveParent && !Water<ButtonVC>().IsActiveParent && !WhereUnitsC.HaveMyHeroInGame)
             {
-                HeroesViewUIC.SetActiveZone(!InvUnitsC.Have(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveC.CurPlayerI));
+                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(!InvUnitsC.Have(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveC.CurPlayerI));
             }
             else
             {
-                HeroesViewUIC.SetActiveZone(false);
+                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(false);
             }
         }
     }

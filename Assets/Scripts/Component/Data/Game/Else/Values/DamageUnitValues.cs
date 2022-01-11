@@ -70,13 +70,13 @@ namespace Game.Game
 
         #region Protection
 
-        internal float ProtRelaxPercent(CondUnitTypes cond)
+        internal float ProtRelaxPercent(ConditionUnitTypes cond)
         {
             switch (cond)
             {
-                case CondUnitTypes.None: return 0;
-                case CondUnitTypes.Protected: return 0.2f;
-                case CondUnitTypes.Relaxed: return -0.2f;
+                case ConditionUnitTypes.None: return 0;
+                case ConditionUnitTypes.Protected: return 0.2f;
+                case ConditionUnitTypes.Relaxed: return -0.2f;
                 default: throw new Exception();
             }
         }

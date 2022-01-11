@@ -1,8 +1,11 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
 
 namespace Game.Game
 {
-    public sealed class ExtractUnitUpdMS : IEcsRunSystem
+    struct ExtractUnitUpdMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -32,7 +35,7 @@ namespace Game.Game
 
                             else if (!buil_0.Is(BuildTypes.Woodcutter))
                             {
-                                condUnit_0.Set(CondUnitTypes.Protected);
+                                condUnit_0.Set(ConditionUnitTypes.Protected);
                             }
                         }
 
@@ -54,7 +57,7 @@ namespace Game.Game
                     {
                         if (unit_0.Have && Unit<UnitCellEC>(idx_0).HaveMin)
                         {
-                            condUnit_0.Set(CondUnitTypes.Protected);
+                            condUnit_0.Set(ConditionUnitTypes.Protected);
                         }
                     }
                 }

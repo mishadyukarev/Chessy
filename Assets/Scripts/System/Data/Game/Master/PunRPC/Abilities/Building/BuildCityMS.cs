@@ -1,8 +1,12 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
 {
-    public sealed class BuildCityMS : IEcsRunSystem
+    struct BuildCityMS : IEcsRunSystem
     {
         public void Run()
         {

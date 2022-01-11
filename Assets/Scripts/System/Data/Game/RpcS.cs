@@ -3,6 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellTrailPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
+using static Game.Game.EntityCellCloudPool;
+using static Game.Game.EntityCellRiverPool;
+
+using static Game.Game.EntitySoundPool;
 
 namespace Game.Game
 {
@@ -119,7 +128,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        CondDoingMC.Set((CondUnitTypes)objects[_idx_cur++]);
+                        CondDoingMC.Set((ConditionUnitTypes)objects[_idx_cur++]);
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
@@ -214,15 +223,15 @@ namespace Game.Game
                         MistakeC.AddNeedRes(ResTypes.Gold, needRes[4]);
                     }
 
-                    EntityPool.Sound<ActionC>(ClipTypes.Mistake).Invoke();
+                    Sound<ActionC>(ClipTypes.Mistake).Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundEff:
-                    EntityPool.Sound<ActionC>((ClipTypes)objects[_idx_cur++]).Invoke();
+                    Sound<ActionC>((ClipTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundUniq:
-                    EntityPool.Sound<ActionC>((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
+                    Sound<ActionC>((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -365,7 +374,7 @@ namespace Game.Game
             {
                 Unit<UnitCellEC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                Unit<ConditionC>(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
+                Unit<ConditionC>(idx_0).Sync((ConditionUnitTypes)objects[_idx_cur++]);
                 foreach (var item in Stats) Unit<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
                 UnitTW<UnitTWCellEC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);

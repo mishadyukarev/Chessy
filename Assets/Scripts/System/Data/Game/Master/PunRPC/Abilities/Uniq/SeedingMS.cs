@@ -1,9 +1,12 @@
 ﻿using System;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellEnvPool;
 
 namespace Game.Game
 {
-    public sealed class SeedingMS : IEcsRunSystem
+    struct SeedingMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -16,8 +19,6 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
             ref var build_0 = ref Build<BuildC>(idx_0);
-            ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
-            ref var envCell_0 = ref Environment<EnvCellEC>(idx_0);
 
 
             switch (env)
@@ -37,15 +38,15 @@ namespace Game.Game
                         }
                         else
                         {
-                            if (!env_0.Have(EnvTypes.Fertilizer))
+                            if (!Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
                             {
-                                if (!env_0.Have(EnvTypes.AdultForest))
+                                if (!Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
 
-                                    if (!env_0.Have(EnvTypes.YoungForest))
+                                    if (!Environment<HaveEnvironmentC>(EnvTypes.YoungForest, idx_0).Have)
                                     {
                                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 
-                                        envCell_0.SetNew(EnvTypes.YoungForest);
+                                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).SetNew();
 
                                         stepUnit_0.Take(uniq_cur);
                                     }

@@ -1,10 +1,12 @@
 ﻿using Photon.Pun;
 using System;
-using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
+using static Game.Game.EntityCellUnitPool;
 
 namespace Game.Game
 {
-    public sealed class FirePawnMS : IEcsRunSystem
+    struct FirePawnMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -16,12 +18,11 @@ namespace Game.Game
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
-            ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
 
 
             if (stepUnit_0.Have(uniq_cur))
             {
-                if (env_0.Have(EnvTypes.AdultForest))
+                if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                 {
                     EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class SystemViewDataManager
+    public readonly struct SystemViewDataManager
     {
         readonly static Dictionary<ViewDataSTypes, Action> _actions;
 
@@ -11,13 +11,13 @@ namespace Game.Game
         {
             _actions = new Dictionary<ViewDataSTypes, Action>();
         }
-        public SystemViewDataManager()
+        public SystemViewDataManager(in bool def)
         {
             new CenterEventUIS();
             new LeftCityEventUISys();
             new LeftEnvEventUISys();
             new DownEventUIS();
-            new RightUnitEventUISys();
+            new RightUnitEventUIS();
             new UpEventUIS();
 
 
@@ -25,7 +25,7 @@ namespace Game.Game
 
 
             _actions.Add(ViewDataSTypes.RunFixedUpdate,
-                (Action)new SyncCellUnitViewSys().Run
+                (Action)new SyncCellUnitVS().Run
                 + new UnitStatCellSyncS().Run
                 + new BuildCellSyncVS().Run
                 + new EnvCellSyncVS().Run
@@ -40,19 +40,19 @@ namespace Game.Game
                 + new FliperAndRotatorUnitSystem().Run
 
 
-                + new BuildZoneUISys().Run
+                + new BuildZoneUIS().Run
                 + new EnvUIS().Run
 
                 ///right
-                + new RightZoneUISys().Run
-                + new StatsUISystem().Run
-                + new ProtectUISys().Run
-                + new RelaxUISys().Run
+                + new RightZoneUIS().Run
+                + new StatsUIS().Run
+                + new ProtectUIS().Run
+                + new RelaxUIS().Run
                 + new UniqButSyncUISys().Run
-                + new FirstButtonBuildUISys().Run
+                + new FirstButtonBuildUIS().Run
                 + new SecButtonBuildUISys().Run
                 + new ThirdButtonBuildUISys().Run
-                + new ShieldUISys().Run
+                + new ShieldUIS().Run
                 + new EffectsUISys().Run
 
                 ///down
@@ -67,7 +67,7 @@ namespace Game.Game
                 + new WindUISys().Run
 
                 ///center
-                + new SelectorUISys().Run
+                + new SelectorUIS().Run
                 + new TheEndGameUISystem().Run
                 + new MotionCenterUISystem().Run
                 + new ReadyZoneUISystem().Run
@@ -79,7 +79,7 @@ namespace Game.Game
                 + new HeroesSyncUISys().Run
 
                 + new RotateAllVS().Run
-                
+
 
                 + new SoundVS().Run);
         }

@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class SystemDataMasterManager
+    public readonly struct SystemDataMasterManager
     {
-        static Action _runUpdSysts;
         static Dictionary<SystemDataMasterTypes, Action> _systems;
         static Dictionary<RpcMasterTypes, Action> _rpcSysts;
         static Dictionary<UniqueAbilityTypes, Action> _uniqAbil;
@@ -17,7 +16,7 @@ namespace Game.Game
             _rpcSysts = new Dictionary<RpcMasterTypes, Action>();
             _uniqAbil = new Dictionary<UniqueAbilityTypes, Action>();
         }
-        public SystemDataMasterManager()
+        public SystemDataMasterManager(in bool def)
         {
             var action =
                 (Action)new UpdatorMS().Run
@@ -38,7 +37,7 @@ namespace Game.Game
 
 
 
-            _rpcSysts.Add(RpcMasterTypes.Build, (Action)new BuildMineMastSys().Run
+            _rpcSysts.Add(RpcMasterTypes.Build, (Action)new BuildMineMS().Run
                 + new BuildFarmMS().Run
                 + new BuildCityMS().Run);
             _rpcSysts.Add(RpcMasterTypes.DestroyBuild, new DestroyMS().Run);
@@ -73,7 +72,6 @@ namespace Game.Game
             _uniqAbil.Add(UniqueAbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS().Run);
         }
 
-        public static void RunUpdate() => _runUpdSysts?.Invoke();
         public static void InvokeRun(SystemDataMasterTypes mastDataSys) => _systems[mastDataSys].Invoke();
         public static void InvokeRun(RpcMasterTypes rpc)
         {

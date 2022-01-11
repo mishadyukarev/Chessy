@@ -1,12 +1,14 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityCellRiverPool;
+
+namespace Game.Game
 {
-    sealed class RiverCellSyncVS : IEcsRunSystem
+    struct RiverCellSyncVS : IEcsRunSystem
     {
         public void Run()
         {
             foreach (var idx_0 in EntityCellPool.Idxs)
             {
-                ref var river_0 = ref EntityCellPool.River<RiverC>(idx_0);
+                ref var river_0 = ref River<RiverC>(idx_0);
 
                 if (river_0.River == RiverTypes.Start)
                 {

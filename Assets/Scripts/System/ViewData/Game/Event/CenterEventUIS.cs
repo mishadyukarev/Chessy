@@ -2,6 +2,13 @@
 using Photon.Pun;
 using UnityEngine;
 using static Game.Game.EntityVPool;
+using static Game.Game.EntityUpUIPool;
+using static Game.Game.EntityCenterUIPool;
+using static Game.Game.EntityCenterHeroUIPool;
+using static Game.Game.EntityCenterFriendUIPool;
+
+using static Game.Game.EntityCenterPickUpgUIPool;
+using static Game.Game.EntityCenterHintUIPool;
 
 namespace Game.Game
 {
@@ -9,56 +16,56 @@ namespace Game.Game
     {
         internal CenterEventUIS()
         {
-            EntityUIPool.ReadyCenter<ButtonC>().AddList(Ready);
-            EntityUIPool.JoinDiscordCenter<ButtonC>().AddList(delegate { Application.OpenURL(URLC.URL_DISCORD); });
+            Ready<ButtonVC>().AddList(Ready);
+            JoinDiscord<ButtonVC>().AddList(delegate { Application.OpenURL(URLC.URL_DISCORD); });
 
-            EntityUIPool.LeaveUp<ButtonC>().AddList(delegate { PhotonNetwork.LeaveRoom(); });
-            FriendZoneUIC.AddListenerReady(FriendReady);
-            HintViewUIC.AddListHint_But(Hint);
+            Leave<ButtonVC>().AddList(delegate { PhotonNetwork.LeaveRoom(); });
+            Friend<ButtonVC>().AddList(FriendReady);
+            Hint<ButtonVC>().AddList(Hint);
 
-            PickUpgUIC.AddList(UnitTypes.King, delegate { UpgradeUnit(UnitTypes.King); });
-            PickUpgUIC.AddList(UnitTypes.Pawn, delegate { UpgradeUnit(UnitTypes.Pawn); });
-            PickUpgUIC.AddList(UnitTypes.Archer, delegate { UpgradeUnit(UnitTypes.Archer); });
-            PickUpgUIC.AddList(UnitTypes.Scout, delegate { UpgradeUnit(UnitTypes.Scout); });
+            Units<ButtonVC>(UnitTypes.King).AddList(delegate { UpgradeUnit(UnitTypes.King); });
+            Units<ButtonVC>(UnitTypes.Pawn).AddList(delegate { UpgradeUnit(UnitTypes.Pawn); });
+            Units<ButtonVC>(UnitTypes.Archer).AddList(delegate { UpgradeUnit(UnitTypes.Archer); });
+            Units<ButtonVC>(UnitTypes.Scout).AddList(delegate { UpgradeUnit(UnitTypes.Scout); });
 
-            PickUpgUIC.AddList(BuildTypes.Farm, delegate { UpgradeBuild(BuildTypes.Farm); });
-            PickUpgUIC.AddList(BuildTypes.Woodcutter, delegate { UpgradeBuild(BuildTypes.Woodcutter); });
-            PickUpgUIC.AddList(BuildTypes.Mine, delegate { UpgradeBuild(BuildTypes.Mine); });
+            Builds<ButtonVC>(BuildTypes.Farm).AddList(delegate { UpgradeBuild(BuildTypes.Farm); });
+            Builds<ButtonVC>(BuildTypes.Woodcutter).AddList(delegate { UpgradeBuild(BuildTypes.Woodcutter); });
+            Builds<ButtonVC>(BuildTypes.Mine).AddList(delegate { UpgradeBuild(BuildTypes.Mine); });
 
-            PickUpgUIC.AddListWater(UpgradeWater);
+            Water<ButtonVC>().AddList(UpgradeWater);
 
 
-            HeroesViewUIC.AddListElf(Elf);
-            HeroesViewUIC.AddListPremium(OpenShop);
+            Unit<ButtonVC>(UnitTypes.Elfemale).AddList(Elf);
+            Unit<ButtonVC>(UnitTypes.None).AddList(OpenShop);
         }
 
-        private void Ready() => EntityPool.Rpc<RpcC>().ReadyToMaster();
-        private void FriendReady()
+        void Ready() => EntityPool.Rpc<RpcC>().ReadyToMaster();
+        void FriendReady()
         {
             FriendC.IsActiveFriendZone = false;
         }
-        private void Hint()
+        void Hint()
         {
             HintC.CurStartNumber++;
 
             if (HintC.CurStartNumber <= (int)VideoClipTypes.Start5)
             {
                 HintC.SetWasActived((VideoClipTypes)HintC.CurStartNumber, true);
-                HintViewUIC.SetVideoClip((VideoClipTypes)HintC.CurStartNumber);
+                //EntityCenterHintUIPool.SetVideoClip((VideoClipTypes)HintC.CurStartNumber);
             }
             else
             {
-                HintViewUIC.SetActiveHintZone(false);
+                //EntityCenterHintUIPool.SetActiveHintZone(false);
             }
         }
 
-        private void UpgradeUnit(UnitTypes unit)
+        void UpgradeUnit(UnitTypes unit)
         {
             if (WhoseMoveC.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().PickUpgUnitToMas(unit);
 
-                HeroesViewUIC.SetActiveZone(true);
+                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -69,7 +76,7 @@ namespace Game.Game
             {
                 EntityPool.Rpc<RpcC>().PickUpgBuildToMas(build);
 
-                HeroesViewUIC.SetActiveZone(true);
+                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -80,7 +87,7 @@ namespace Game.Game
             {
                 EntityPool.Rpc<RpcC>().UpgWater();
 
-                HeroesViewUIC.SetActiveZone(true);
+                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }

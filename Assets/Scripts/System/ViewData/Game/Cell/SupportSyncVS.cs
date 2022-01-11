@@ -1,9 +1,12 @@
 ﻿using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
 using static Game.Game.EntityPool;
+using static Game.Game.EntityCellEnvPool;
+using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
 {
-    public sealed class SupportSyncVS : IEcsRunSystem
+    struct SupportSyncVS : IEcsRunSystem
     {
         public void Run()
         {
@@ -18,7 +21,6 @@ namespace Game.Game
 
                 ref var supV_0 = ref EntityCellVPool.ElseCellVE<SupportVC>(idx_0);
 
-                ref var env_0 = ref Environment<HaveEnvironmentC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
@@ -76,7 +78,7 @@ namespace Game.Game
                     {
                         if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
                         {
-                            if (env_0.Have(EnvTypes.AdultForest))
+                            if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                             {
                                 if (cellClick.Is(CellClickTypes.UniqAbil))
                                 {

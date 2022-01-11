@@ -1,9 +1,12 @@
 ﻿using Game.Common;
 using static Game.Game.EntityCellPool;
+using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntityCellBuildPool;
+using static Game.Game.EntityCellRiverPool;
 
 namespace Game.Game
 {
-    public sealed class ThirstyUpdMS : IEcsRunSystem
+    struct ThirstyUpdMS : IEcsRunSystem
     {
         public void Run()
         {

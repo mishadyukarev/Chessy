@@ -1,6 +1,5 @@
 ﻿using Game.Common;
 using Photon.Pun;
-using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
