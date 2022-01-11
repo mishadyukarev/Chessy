@@ -34,7 +34,6 @@ namespace Game.Game
             new EntityCenterSelectorUIPool(gameW, centerZone);
             new EntityCenterKingUIPool(gameW, centerZone);
 
-
             new EntityUpUIPool(gameW);
             new EntityDownUIPool(gameW);
             new EntityRightUIPool(gameW);

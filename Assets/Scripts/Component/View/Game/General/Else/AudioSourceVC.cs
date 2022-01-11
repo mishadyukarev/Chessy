@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct AudioSourceVC : ISoundE
+    public readonly struct AudioSourceVC : ISoundE
     {
         readonly AudioSource _audioSource;
 
