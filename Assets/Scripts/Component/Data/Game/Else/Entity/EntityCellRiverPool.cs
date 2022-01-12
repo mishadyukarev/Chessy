@@ -12,7 +12,7 @@ namespace Game.Game
         {
             _rivers = new Entity[CellValues.ALL_CELLS_AMOUNT];
         }
-        public EntityCellRiverPool(in WorldEcs gameW)
+        public EntityCellRiverPool(in EcsWorld gameW)
         {
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {

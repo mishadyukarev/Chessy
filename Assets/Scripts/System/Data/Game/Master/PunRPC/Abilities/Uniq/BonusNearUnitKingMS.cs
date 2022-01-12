@@ -1,5 +1,5 @@
 ﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 
 namespace Game.Game
 {
@@ -12,7 +12,7 @@ namespace Game.Game
 
 
             ref var unit_0 = ref Unit<UnitC>(idx_0);
-            ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+            ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
@@ -43,11 +43,11 @@ namespace Game.Game
                         var idx_1 = IdxCell(xy);
 
                         ref var unit_1 = ref Unit<UnitC>(idx_1);
-                        ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
+                        ref var ownUnit_1 = ref Unit<PlayerC>(idx_1);
 
                         if (unit_1.Have)
                         {
-                            if (ownUnit_1.Is(ownUnit_0.Owner))
+                            if (ownUnit_1.Is(ownUnit_0.Player))
                             {
                                 if (!Unit<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
                                 {

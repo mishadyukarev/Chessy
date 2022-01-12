@@ -8,7 +8,7 @@ namespace Game.Game
         {
             var isActivatedZone = PickUpgC.HaveUpgrade(WhoseMoveC.CurPlayerI);
 
-            Water<ButtonVC>().SetActiveParent(isActivatedZone);
+            Water<ButtonUIC>().SetActiveParent(isActivatedZone);
 
             if (isActivatedZone)
             {
@@ -18,7 +18,7 @@ namespace Game.Game
                     {
                         if (item_1.Key == WhoseMoveC.CurPlayerI)
                         {
-                            Units<ButtonVC>(item_0.Key).SetActive(item_1.Value);
+                            Units<ButtonUIC>(item_0.Key).SetActive(item_1.Value);
                         }
                     }
                 }
@@ -29,7 +29,7 @@ namespace Game.Game
                     {
                         if (item_1.Key == WhoseMoveC.CurPlayerI)
                         {
-                            Builds<ButtonVC>(item_0.Key).SetActive(item_1.Value);
+                            Builds<ButtonUIC>(item_0.Key).SetActive(item_1.Value);
                         }
                     }
                 }
@@ -39,7 +39,7 @@ namespace Game.Game
                 {
                     if (item_0.Key == WhoseMoveC.CurPlayerI)
                     {
-                        Water<ButtonVC>().SetActive(item_0.Value);
+                        Water<ButtonUIC>().SetActive(item_0.Value);
                     }
                 }
             }

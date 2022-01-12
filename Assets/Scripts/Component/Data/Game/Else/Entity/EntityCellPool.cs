@@ -39,7 +39,7 @@ namespace Game.Game
             _idxs = new HashSet<byte>();
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++) _idxs.Add(idx);
         }
-        public EntityCellPool(in WorldEcs gameW, in bool[] isActiveCells, in int[] idCells)
+        public EntityCellPool(in EcsWorld gameW, in bool[] isActiveCells, in int[] idCells)
         {
             byte idx = 0;
 

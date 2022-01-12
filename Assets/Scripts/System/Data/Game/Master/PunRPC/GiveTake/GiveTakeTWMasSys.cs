@@ -1,5 +1,5 @@
 ﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 
 namespace Game.Game
 {
@@ -18,7 +18,7 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
 
                 ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
 
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
@@ -34,7 +34,7 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
+                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player);
                             UnitTW<UnitTWCellEC>(idx_0).Reset();
 
                             stepUnit_0.TakeMin();
@@ -43,9 +43,9 @@ namespace Game.Game
                         }
 
 
-                        else if (InvTWC.Have(tWTypeForGive, levelTW, ownUnit_0.Owner))
+                        else if (InvTWC.Have(tWTypeForGive, levelTW, ownUnit_0.Player))
                         {
-                            InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Owner);
+                            InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Player);
 
                             UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
@@ -56,9 +56,9 @@ namespace Game.Game
 
                         else if (tWTypeForGive == TWTypes.Pick)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Player, TWTypes.Pick, levelTW, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW);
+                                InvResC.BuyTW(ownUnit_0.Player, TWTypes.Pick, levelTW);
 
                                 UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
@@ -74,9 +74,9 @@ namespace Game.Game
 
                         else if (tWTypeForGive == TWTypes.Sword)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Player, TWTypes.Sword, levelTW, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW);
+                                InvResC.BuyTW(ownUnit_0.Player, TWTypes.Sword, levelTW);
 
                                 UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
@@ -92,9 +92,9 @@ namespace Game.Game
 
                         else if (tWTypeForGive == TWTypes.Shield)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Player, tWTypeForGive, levelTW, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW);
+                                InvResC.BuyTW(ownUnit_0.Player, tWTypeForGive, levelTW);
 
                                 UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 

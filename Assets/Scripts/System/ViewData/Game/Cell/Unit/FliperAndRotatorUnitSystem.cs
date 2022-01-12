@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -12,7 +12,7 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
                 ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
 
                 ref var main_0 = ref EntityCellVPool.UnitV<UnitMainVC>(idx_0);

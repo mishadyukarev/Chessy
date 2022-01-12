@@ -6,12 +6,12 @@ namespace Game.Game
     {
         internal LeftEnvEventUISys()
         {
-            Info<ButtonVC>().AddList(EnvironmentInfo);
+            Info<ButtonUIC>().AddListener(EnvironmentInfo);
         }
 
         private void EnvironmentInfo()
         {
-            EnvInfoC.IsActivatedInfo = !EnvInfoC.IsActivatedInfo;
+            EntityPool.EnvironmentInfo<IsActivatedC>().Toggle();
         }
     }
 }

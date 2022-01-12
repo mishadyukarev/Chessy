@@ -7,13 +7,13 @@ namespace Game.Game
     {
         public void Run()
         {
-            Friend<ButtonVC>().SetActiveParent(false);
+            Friend<ButtonUIC>().SetActiveParent(false);
 
-            if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
+            if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
-                if (FriendC.IsActiveFriendZone)
+                if (EntityPool.FriendZone<IsActivatedC>().IsActivated)
                 {
-                    Friend<ButtonVC>().SetActiveParent(true);
+                    Friend<ButtonUIC>().SetActiveParent(true);
 
                     if (WhoseMoveC.CurPlayerI == PlayerTypes.First)
                     {

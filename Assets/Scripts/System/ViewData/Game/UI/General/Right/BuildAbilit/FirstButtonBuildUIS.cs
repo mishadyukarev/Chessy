@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityCellUnitPool;
+﻿using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -9,13 +9,13 @@ namespace Game.Game
         {
             var needActiveButton = false;
 
-            if (SelIdx<SelIdxC>().IsSelCell)
+            if (SelIdx<SelIdxEC>().IsSelCell)
             {
                 ref var selUnitDatCom = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var selOnUnitCom = ref Unit<OwnerC>(SelIdx<IdxC>().Idx);
+                    ref var selOnUnitCom = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
 
                     if (selOnUnitCom.Is(WhoseMoveC.CurPlayerI))
                     {
@@ -24,7 +24,7 @@ namespace Game.Game
                 }
             }
 
-            BuildAbilitUIC.SetActive_Button(BuildButtonTypes.First, needActiveButton);
+            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.First).SetActive(needActiveButton);
         }
     }
 }

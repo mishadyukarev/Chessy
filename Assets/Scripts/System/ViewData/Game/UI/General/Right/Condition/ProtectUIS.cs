@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -9,7 +9,7 @@ namespace Game.Game
         public void Run()
         {
             ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
-            ref var ownUnit_sel = ref Unit<OwnerC>(SelIdx<IdxC>().Idx);
+            ref var ownUnit_sel = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
             ref var cond_sel = ref Unit<ConditionC>(SelIdx<IdxC>().Idx);
 
 
@@ -20,21 +20,28 @@ namespace Game.Game
                 if (ownUnit_sel.Is(WhoseMoveC.CurPlayerI))
                 {
                     isEnableButt = true;
-                    ProtectUIC.SetZone(unit_sel.Unit);
+
+                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
+                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
+                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
+                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
+                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
+
+                    UIEntRightProtect.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
 
                     if (cond_sel.Is(ConditionUnitTypes.Protected))
                     {
-                        ProtectUIC.SetColor(Color.yellow);
+                        UIEntRightProtect.Button<ImageUIC>().Color = Color.yellow;
                     }
 
                     else
                     {
-                        ProtectUIC.SetColor(Color.white);
+                        UIEntRightProtect.Button<ImageUIC>().Color = Color.white;
                     }
                 }
             }
 
-            ProtectUIC.SetActiveButton(isEnableButt);
+            UIEntRightProtect.Button<ImageUIC>().SetActive(isEnableButt);
         }
     }
 }

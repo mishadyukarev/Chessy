@@ -1,5 +1,5 @@
 ﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellTrailPool;
 using static Game.Game.EntityCellEnvPool;
 
@@ -13,7 +13,7 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var level_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
                 ref var step_0 = ref Unit<StepC>(idx_0);
                 ref var stunUnit_0 = ref Unit<StunC>(idx_0);
 
@@ -31,7 +31,7 @@ namespace Game.Game
                             var idx_1 = IdxCell(item_1.Value);
 
                             ref var unit_1 = ref Unit<UnitC>(idx_1);
-                            ref var own_1 = ref Unit<OwnerC>(idx_1);
+                            ref var own_1 = ref Unit<PlayerC>(idx_1);
 
                             ref var trail_1 = ref Trail<TrailCellEC>(idx_1);
 
@@ -43,14 +43,14 @@ namespace Game.Game
                                 {
                                     if (unit_1.Have)
                                     {
-                                        if (!own_1.Is(ownUnit_0.Owner))
+                                        if (!own_1.Is(ownUnit_0.Player))
                                         {
                                             if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                 || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                             {
-                                                AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner, idx_0, idx_1);
+                                                AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Player, idx_0, idx_1);
                                             }
-                                            else AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner, idx_0, idx_1);
+                                            else AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Player, idx_0, idx_1);
                                         }
                                     }
                                 }

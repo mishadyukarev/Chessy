@@ -3,6 +3,7 @@
     public enum UnitStatTypes
     {
         None,
+        Start = None,
 
         Hp,
         First = Hp,

@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 using static Game.Game.EntityCellEnvPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 
 namespace Game.Game
 {
@@ -14,13 +14,13 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = WhoseMoveC.WhoseMove;
 
-            ref var ownUnit_from = ref Unit<OwnerC>(idx_from);
+            ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
 
             ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
             ref var step_from = ref Unit<UnitCellEC>(idx_from);
 
             ref var unit_to = ref Unit<UnitC>(idx_to);
-            ref var ownUnit_to = ref Unit<OwnerC>(idx_to);
+            ref var ownUnit_to = ref Unit<PlayerC>(idx_to);
             ref var eff_to = ref Unit<StunC>(idx_to);
 
 
@@ -36,7 +36,7 @@ namespace Game.Game
                             {
                                 if (step_from.Have(uniq_cur))
                                 {
-                                    if (!ownUnit_from.Is(ownUnit_to.Owner))
+                                    if (!ownUnit_from.Is(ownUnit_to.Player))
                                     {
                                         eff_to.SetNewStun();
                                         Unit<CooldownC>(uniq_cur, idx_from).Cooldown = 3;

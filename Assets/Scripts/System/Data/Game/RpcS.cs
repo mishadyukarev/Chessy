@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellTrailPool;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
@@ -11,7 +11,7 @@ using static Game.Game.EntityCellFirePool;
 using static Game.Game.EntityCellCloudPool;
 using static Game.Game.EntityCellRiverPool;
 
-using static Game.Game.EntitySoundPool;
+using static Game.Game.EntitySound;
 
 namespace Game.Game
 {
@@ -235,7 +235,7 @@ namespace Game.Game
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
-                    MotionsC.IsActivated = true;
+                    EntityPool.MotionZone<IsActivatedC>().IsActivated = true;
                     break;
 
                 default:
@@ -258,7 +258,7 @@ namespace Game.Game
             {
                 objs.Add(Unit<UnitC>(idx_0).Unit);
                 objs.Add(Unit<LevelC>(idx_0).Level);
-                objs.Add(Unit<OwnerC>(idx_0).Owner);
+                objs.Add(Unit<PlayerC>(idx_0).Player);
 
                 objs.Add(Unit<HpC>(idx_0).Hp);
                 objs.Add(Unit<StepC>(idx_0).Steps);
@@ -284,7 +284,7 @@ namespace Game.Game
 
 
                 objs.Add(Build<BuildC>(idx_0).Build);
-                objs.Add(Build<OwnerC>(idx_0).Owner);
+                objs.Add(Build<PlayerC>(idx_0).Player);
 
 
 
@@ -342,11 +342,11 @@ namespace Game.Game
             #region Other
 
             objs.Add(WhoseMoveC.WhoseMove);
-            objs.Add(PlayerWinnerC.PlayerWinner);
-            objs.Add(ReadyC.IsStartedGame);
-            objs.Add(ReadyC.IsReady(PlayerTypes.Second));
+            objs.Add(EntityPool.Winner<PlayerC>().Player);
+            objs.Add(EntityPool.GameInfo<IsStartedGameC>().IsStartedGame);
+            objs.Add(EntityPool.Ready<IsReadyC>(PlayerTypes.Second).IsReady);
 
-            objs.Add(MotionsC.AmountMotions);
+            objs.Add(EntityPool.GameInfo<AmountMotionsC>().Amount);
 
             objs.Add(CloudCenterC.Idx);
             foreach (var item in WindC.Directs) objs.Add(item.Value);
@@ -443,12 +443,12 @@ namespace Game.Game
             #region Other
 
             WhoseMoveC.SetWhoseMove((PlayerTypes)objects[_idx_cur++]);
-            PlayerWinnerC.PlayerWinner = (PlayerTypes)objects[_idx_cur++];
-            ReadyC.IsStartedGame = (bool)objects[_idx_cur++];
-            ReadyC.SetIsReady(WhoseMoveC.CurPlayerI, (bool)objects[_idx_cur++]);
+            EntityPool.Winner<PlayerC>().Player = (PlayerTypes)objects[_idx_cur++];
+            EntityPool.GameInfo<IsStartedGameC>().IsStartedGame = (bool)objects[_idx_cur++];
+            EntityPool.Ready<IsReadyC>(WhoseMoveC.CurPlayerI).IsReady = (bool)objects[_idx_cur++];
 
 
-            MotionsC.AmountMotions = (int)objects[_idx_cur++];
+            EntityPool.GameInfo<AmountMotionsC>().Amount = (int)objects[_idx_cur++];
 
             CloudCenterC.Sync((byte)objects[_idx_cur++]);
             foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);

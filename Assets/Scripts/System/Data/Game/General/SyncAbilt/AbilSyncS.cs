@@ -1,6 +1,6 @@
 ﻿using System;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellEnvPool;
 using static Game.Game.EntityCellFirePool;
 
@@ -13,7 +13,7 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 

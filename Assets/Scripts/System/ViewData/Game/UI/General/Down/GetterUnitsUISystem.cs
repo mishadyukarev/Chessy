@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class GetterUnitsUISystem : IEcsRunSystem
+    struct GetterUnitsUISystem : IEcsRunSystem
     {
-        private const float NEEDED_TIME = 1;
+        const float NEEDED_TIME = 1;
 
         public void Run()
         {
@@ -14,12 +14,12 @@ namespace Game.Game
                 {
                     if (GetterUnitsC.IsActivatedButton(curUnitType))
                     {
-                        GetPawnArcherUIC.SetActiveCreateButton(curUnitType, true);
+                        UIEntDownPawnArcher.Create<ButtonUIC>(curUnitType).SetActive(true);
                         GetterUnitsC.AddTimer(curUnitType, Time.deltaTime);
 
                         if (GetterUnitsC.GetTimer(curUnitType) >= NEEDED_TIME)
                         {
-                            GetPawnArcherUIC.SetActiveCreateButton(curUnitType, false);
+                            UIEntDownPawnArcher.Create<ButtonUIC>(curUnitType).SetActive(false);
                             GetterUnitsC.ActiveNeedCreateButton(curUnitType, false);
                             GetterUnitsC.ResetCurTimer(curUnitType);
                         }
@@ -27,14 +27,14 @@ namespace Game.Game
 
                     else
                     {
-                        GetPawnArcherUIC.SetActiveCreateButton(curUnitType, false);
+                        UIEntDownPawnArcher.Create<ButtonUIC>(curUnitType).SetActive(false);
                     }
                 }
             }
 
 
-            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Pawn, InvUnitsC.AmountUnits(UnitTypes.Pawn, WhoseMoveC.CurPlayerI).ToString());
-            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Archer, InvUnitsC.AmountUnits(UnitTypes.Archer, WhoseMoveC.CurPlayerI).ToString());
+            UIEntDownPawnArcher.Taker<TextUIC>(UnitTypes.Pawn).Text = InvUnitsC.AmountUnits(UnitTypes.Pawn, WhoseMoveC.CurPlayerI).ToString();
+            UIEntDownPawnArcher.Taker<TextUIC>(UnitTypes.Archer).Text = InvUnitsC.AmountUnits(UnitTypes.Archer, WhoseMoveC.CurPlayerI).ToString();
         }
     }
 }

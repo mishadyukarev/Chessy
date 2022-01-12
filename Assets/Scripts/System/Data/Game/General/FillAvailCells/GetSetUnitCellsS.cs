@@ -1,5 +1,5 @@
 ﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
 
@@ -71,13 +71,13 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var buld_0 = ref Build<BuildC>(idx_0);
-                ref var ownBuld_0 = ref Build<OwnerC>(idx_0);
+                ref var ownBuld_0 = ref Build<PlayerC>(idx_0);
 
                 if (buld_0.Is(BuildTypes.Camp))
                 {
                     if (!Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_0).Have && !unit_0.Have)
                     {
-                        SetUnitCellsC.AddIdxCell(ownBuld_0.Owner, idx_0);
+                        SetUnitCellsC.AddIdxCell(ownBuld_0.Player, idx_0);
                     }
                 }
             }

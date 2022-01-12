@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
 
@@ -13,7 +13,7 @@ namespace Game.Game
 
         public bool CanExtract(out int extract, out EnvTypes env, out ResTypes res)
         {
-            var ownC = Build<OwnerC>(_idx);
+            var ownC = Build<PlayerC>(_idx);
 
 
             if (Build<BuildC>(_idx).Is(BuildTypes.Farm) && Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, _idx).Have)
@@ -43,7 +43,7 @@ namespace Game.Game
 
 
             extract = 10;
-            extract += (int)(extract * BuildsUpgC.PercUpg(Build<BuildC>(_idx).Build, ownC.Owner));
+            extract += (int)(extract * BuildsUpgC.PercUpg(Build<BuildC>(_idx).Build, ownC.Player));
 
 
             if (extract > Environment<ResourcesC>(env, _idx).Resources) extract = Environment<ResourcesC>(env, _idx).Resources;
@@ -104,23 +104,23 @@ namespace Game.Game
             if (Build<BuildC>(_idx).Have) Remove();
 
             Build<BuildC>(_idx).Build = build;
-            Build<OwnerC>(_idx).Owner = owner;
+            Build<PlayerC>(_idx).Player = owner;
             WhereBuildsC.Set(build, owner, _idx, true);
         }
         public void Remove()
         {
             if (Build<BuildC>(_idx).Have)
             {
-                WhereBuildsC.Set(Build<BuildC>(_idx).Build, Build<OwnerC>(_idx).Owner, _idx, false);
+                WhereBuildsC.Set(Build<BuildC>(_idx).Build, Build<PlayerC>(_idx).Player, _idx, false);
 
                 Build<BuildC>(_idx).Reset();
-                Build<OwnerC>(_idx).Reset();
+                Build<PlayerC>(_idx).Reset();
             }
         }
         public void Sync(in BuildTypes build, in PlayerTypes owner)
         {
             Build<BuildC>(_idx).Build = build;
-            Build<OwnerC>(_idx).Owner = owner;
+            Build<PlayerC>(_idx).Player = owner;
         }
     }
 }

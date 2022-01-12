@@ -57,7 +57,7 @@ namespace Game.Menu
         {
             RoomOptions roomOptions = new RoomOptions();
 
-            GameModesCom.CurGameMode = GameModes.PublicOn;
+            GameModeC.CurGameMode = GameModes.PublicOn;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
@@ -75,7 +75,7 @@ namespace Game.Menu
         {
             var roomName = OnZoneUIC.TextCreateFriendRoom;
 
-            GameModesCom.CurGameMode = GameModes.WithFriendOn;
+            GameModeC.CurGameMode = GameModes.WithFriendOn;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -87,20 +87,20 @@ namespace Game.Menu
 
         private void JoinRandomRoom()
         {
-            GameModesCom.CurGameMode = GameModes.PublicOn;
+            GameModeC.CurGameMode = GameModes.PublicOn;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
 
         private void JoinFriendRoom()
         {
-            GameModesCom.CurGameMode = GameModes.WithFriendOn;
+            GameModeC.CurGameMode = GameModes.WithFriendOn;
             PhotonNetwork.JoinRoom(OnZoneUIC.TextJoinFriendRoom);
         }
 
         private void CreateOffGame(GameModes offGameMode)
         {
-            GameModesCom.CurGameMode = offGameMode;
+            GameModeC.CurGameMode = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
 

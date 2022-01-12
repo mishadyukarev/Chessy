@@ -3,7 +3,7 @@ using Photon.Pun;
 
 namespace Game.Game
 {
-    public sealed class DonerMS : IEcsRunSystem
+    struct DonerMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -14,13 +14,13 @@ namespace Game.Game
 
             if (PhotonNetwork.OfflineMode)
             {
-                if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
                     SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
                     EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
                 }
 
-                else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
+                else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
                     var curPlayer = WhoseMoveC.CurPlayerI;
                     var nextPlayer = WhoseMoveC.NextPlayerFrom(curPlayer);
@@ -38,7 +38,7 @@ namespace Game.Game
 
                     //ViewDataSC.RotateAll.Invoke(); 
 
-                    FriendC.IsActiveFriendZone = true;
+                    EntityPool.FriendZone<IsActivatedC>().IsActivated = true;
                 }
             }
             else

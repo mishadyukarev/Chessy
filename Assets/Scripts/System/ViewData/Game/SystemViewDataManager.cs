@@ -56,11 +56,11 @@ namespace Game.Game
                 + new EffectsUISys().Run
 
                 ///down
-                + new DonerUISystem().Run
+                + new DonerUIS().Run
                 + new GetterUnitsUISystem().Run
-                + new GiveTakeUISystem().Run
+                + new DownToolWeaponUIS().Run
                 + new ScoutSyncUIS().Run
-                + new HeroSyncUIS().Run
+                + new DownHeroUIS().Run
 
                 ///up
                 + new EconomyUpUIS().Run
@@ -69,7 +69,7 @@ namespace Game.Game
                 ///center
                 + new SelectorUIS().Run
                 + new TheEndGameUISystem().Run
-                + new MotionCenterUISystem().Run
+                + new MotionCenterUIS().Run
                 + new ReadyZoneUISystem().Run
                 + new MistakeUISys().Run
                 + new KingZoneUISys().Run

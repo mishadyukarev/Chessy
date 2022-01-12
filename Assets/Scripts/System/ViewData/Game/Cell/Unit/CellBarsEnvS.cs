@@ -14,7 +14,7 @@ namespace Game.Game
             {
                 ref var barsView_0 = ref ElseCellVE<BarsVC>(idx_0);
 
-                if (EnvInfoC.IsActivatedInfo)
+                if (EntityPool.EnvironmentInfo<IsActivatedC>().IsActivated)
                 {
                     if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
                     {

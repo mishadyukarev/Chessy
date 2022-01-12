@@ -1,4 +1,5 @@
-﻿using static Game.Game.EntityCellUnitPool;
+﻿using UnityEngine;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -7,8 +8,18 @@ namespace Game.Game
     {
         public void Run()
         {
-            EffectsUIC.SetColor(UnitStatTypes.Damage, Unit<HaveEffectC>(UnitStatTypes.Damage, SelIdx<IdxC>().Idx).Have);
-            EffectsUIC.SetColor(UnitStatTypes.Steps, Unit<HaveEffectC>(UnitStatTypes.Steps, SelIdx<IdxC>().Idx).Have);
+            if (Unit<HaveEffectC>(UnitStatTypes.Damage, SelIdx<IdxC>().Idx).Have) 
+            {
+                UIEntRightEffects.Image<ImageUIC>(UnitStatTypes.Damage).Color = Color.green;
+            }
+            else UIEntRightEffects.Image<ImageUIC>(UnitStatTypes.Damage).Color = Color.white;
+
+
+            if (Unit<HaveEffectC>(UnitStatTypes.Steps, SelIdx<IdxC>().Idx).Have)
+            {
+                UIEntRightEffects.Image<ImageUIC>(UnitStatTypes.Steps).Color = Color.green;
+            }
+            else UIEntRightEffects.Image<ImageUIC>(UnitStatTypes.Steps).Color = Color.white;
         }
     }
 }

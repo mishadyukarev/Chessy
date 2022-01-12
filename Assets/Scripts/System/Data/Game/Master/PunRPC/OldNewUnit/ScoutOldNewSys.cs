@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityCellUnitPool;
+﻿using static Game.Game.EntCellUnit;
 
 namespace Game.Game
 {
@@ -16,7 +16,7 @@ namespace Game.Game
             {
                 if (Unit<UnitCellEC>(idx_0).HaveMaxSteps)
                 {
-                    InvUnitsC.Take(Unit<OwnerC>(idx_0).Owner, UnitTypes.Scout, LevelTypes.First);
+                    InvUnitsC.Take(Unit<PlayerC>(idx_0).Player, UnitTypes.Scout, LevelTypes.First);
                     Unit<UnitCellEC>(idx_0).SetScout();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);

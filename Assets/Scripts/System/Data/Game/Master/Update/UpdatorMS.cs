@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using Photon.Pun;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellTrailPool;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
@@ -28,7 +28,7 @@ namespace Game.Game
 
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
                 ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var hp_0 = ref Unit<HpC>(idx_0);
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
@@ -37,7 +37,7 @@ namespace Game.Game
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var buil_0 = ref Build<BuildC>(idx_0);
-                ref var ownBuil_0 = ref Build<OwnerC>(idx_0);
+                ref var ownBuil_0 = ref Build<PlayerC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
 
@@ -51,9 +51,9 @@ namespace Game.Game
                 {
                     Unit<StepC>(condUnit_0.Condition, idx_0).Add();
 
-                    if (!unit_0.Is(UnitTypes.King)) InvResC.Take(ResTypes.Food, ownUnit_0.Owner);
+                    if (!unit_0.Is(UnitTypes.King)) InvResC.Take(ResTypes.Food, ownUnit_0.Player);
 
-                    if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                    if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
                         if (ownUnit_0.Is(PlayerTypes.Second))
                         {
@@ -77,33 +77,33 @@ namespace Game.Game
                                 {
                                     if (buil_0.Is(BuildTypes.Woodcutter) || !buil_0.Have)
                                     {
-                                        if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                                        if (GameModeC.IsGameMode(GameModes.TrainingOff))
                                         {
                                             if (ownUnit_0.Is(PlayerTypes.First))
                                             {
-                                                if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Owner))
+                                                if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
                                                 {
-                                                    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Owner);
+                                                    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
 
                                                     Build<BuildCellEC>(idxCamp).Remove();
                                                 }
 
 
 
-                                                buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
+                                                buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Player);
                                             }
                                         }
                                         else
                                         {
-                                            if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Owner))
+                                            if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
                                             {
-                                                var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Owner);
+                                                var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
 
                                                 Build<BuildCellEC>(idxCamp).Remove();
                                             }
 
 
-                                            buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Owner);
+                                            buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Player);
                                         }
                                     }
                                 }
@@ -130,7 +130,7 @@ namespace Game.Game
                 SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Truce);
             }
 
-            if (MotionsC.AmountMotions % 3 == 0)
+            if (EntityPool.GameInfo<AmountMotionsC>().Amount % 3 == 0)
             {
                 foreach (byte idx_0 in Idxs)
                 {
@@ -149,7 +149,7 @@ namespace Game.Game
                 }
             }
 
-            MotionsC.AmountMotions += 1;
+            EntityPool.GameInfo<AmountMotionsC>().Amount += 1;
         }
     }
 }

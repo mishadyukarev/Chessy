@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -9,7 +9,7 @@ namespace Game.Game
         public void Run()
         {
             ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
-            ref var selOnUnitCom = ref Unit<OwnerC>(SelIdx<IdxC>().Idx);
+            ref var selOnUnitCom = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
 
             ref var selCondUnitC = ref Unit<ConditionC>(SelIdx<IdxC>().Idx);
 
@@ -24,18 +24,24 @@ namespace Game.Game
 
                     if (selCondUnitC.Is(ConditionUnitTypes.Relaxed))
                     {
-                        RelaxUIC.SetColor(Color.green);
+                        UIEntRelax.Button<ImageUIC>().Color = Color.green;
                     }
                     else
                     {
-                        RelaxUIC.SetColor(Color.white);
+                        UIEntRelax.Button<ImageUIC>().Color = Color.white;
                     }
 
-                    RelaxUIC.SetZone(unit_sel.Unit);
+                    UIEntRelax.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
+                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
+                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
+                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
+                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
+
+                    UIEntRelax.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
                 }
             }
 
-            RelaxUIC.SetActiveButton(activeButt);
+            UIEntRelax.Button<ButtonUIC>().SetActive(activeButt);
         }
     }
 }

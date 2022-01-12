@@ -3,10 +3,9 @@
     public enum TWTypes
     {
         None,
+        Start = None,
 
         Pick,
-        First = Pick,
-
         Sword,
         Shield,
 

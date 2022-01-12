@@ -1,6 +1,7 @@
 ﻿using static Game.Game.EntityPool;
 using static Game.Game.EntityVPool;
 using static Game.Game.EntityCenterKingUIPool;
+using static Game.Game.UIEntDownToolWeapon;
 
 namespace Game.Game
 {
@@ -8,23 +9,24 @@ namespace Game.Game
     {
         internal DownEventUIS()
         {
-            GetScoutUIC.AddListScout(ExecuteScout);
-            GetHeroDownUIC.AddList(Hero);
+            UIEntDownScout.Scout<ButtonUIC>().AddListener(ExecuteScout);
+            UIEntDownHero.Scout<ButtonUIC>().AddListener(Hero);
 
-            DonerUICom.AddListener(Done);
+            UIEntDownDoner.Doner<ButtonUIC>().AddListener(Done);
 
-            GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
-            GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Archer, delegate { CreateUnit(UnitTypes.Archer); });
+            UIEntDownPawnArcher.Create<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { CreateUnit(UnitTypes.Pawn); });
+            UIEntDownPawnArcher.Create<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { CreateUnit(UnitTypes.Archer); });
 
 
-            Button<ButtonVC>().AddList(delegate { GetUnit(UnitTypes.King); });
-            GetPawnArcherUIC.AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
-            GetPawnArcherUIC.AddListener(UnitTypes.Archer, delegate { GetUnit(UnitTypes.Archer); });
+            Button<ButtonUIC>().AddListener(delegate { GetUnit(UnitTypes.King); });
+            UIEntDownPawnArcher.Taker<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { GetUnit(UnitTypes.Pawn); });
+            UIEntDownPawnArcher.Taker<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { GetUnit(UnitTypes.Archer); });
 
-            UpgUnitUIC.AddList(ToggleUpgradeUnit);
-            TwGiveTakeUIC.AddList_Button(TWTypes.Pick, delegate { ToggleToolWeapon(TWTypes.Pick); });
-            TwGiveTakeUIC.AddList_Button(TWTypes.Sword, delegate { ToggleToolWeapon(TWTypes.Sword); });
-            TwGiveTakeUIC.AddList_Button(TWTypes.Shield, delegate { ToggleToolWeapon(TWTypes.Shield); });
+            UIEntDownUpgrade.Upgrade<ButtonUIC>().AddListener(ToggleUpgradeUnit);
+
+            Button<ButtonUIC>(TWTypes.Pick).AddListener( delegate { ToggleToolWeapon(TWTypes.Pick); });
+            Button<ButtonUIC>(TWTypes.Sword).AddListener(delegate { ToggleToolWeapon(TWTypes.Sword); });
+            Button<ButtonUIC>(TWTypes.Shield).AddListener(delegate { ToggleToolWeapon(TWTypes.Shield); });
         }
 
         void ExecuteScout()

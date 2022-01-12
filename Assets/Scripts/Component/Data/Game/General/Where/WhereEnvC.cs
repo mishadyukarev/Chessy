@@ -9,7 +9,7 @@ namespace Game.Game
         static CellValues _cellValues;
 
 
-        private static string Key(EnvTypes env, byte idx) => env.ToString() + idx;
+        private static string Key(in EnvTypes env, in byte idx) => env.ToString() + idx;
         private static bool ContainsKey(string key) => _envs.ContainsKey(key);
 
         public static Dictionary<string, bool> Envs

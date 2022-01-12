@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellBuildPool;
 
 using static Game.Game.EntityUpUIPool;
@@ -27,7 +27,7 @@ namespace Game.Game
                 {
                     extracts[res] += extract;
                 }
-                if (Unit<OwnerC>(idx_0).Is(WhoseMoveC.CurPlayerI))
+                if (Unit<PlayerC>(idx_0).Is(WhoseMoveC.CurPlayerI))
                 {
                     extracts[ResTypes.Food] -= Unit<UnitC>(idx_0).CostFood;
                 }

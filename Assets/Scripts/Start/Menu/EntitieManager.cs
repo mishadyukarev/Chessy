@@ -13,7 +13,7 @@ namespace Game.Menu
         {
             _ents = new Dictionary<string, Entity>();
         }
-        public EntitieManager(in WorldEcs worldEcs)
+        public EntitieManager(in EcsWorld worldEcs)
         {
             CanvasC.SetCurZone(SceneTypes.Menu);
             ToggleZoneVC.ReplaceZone(SceneTypes.Menu);

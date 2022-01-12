@@ -7,7 +7,7 @@ namespace Game.Game
     {
         internal UpEventUIS()
         {
-            Alpha<ButtonVC>().AddList(OpenShop);
+            Alpha<ButtonUIC>().AddListener(OpenShop);
         }
 
         private void OpenShop()

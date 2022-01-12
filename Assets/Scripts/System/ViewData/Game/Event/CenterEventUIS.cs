@@ -16,33 +16,33 @@ namespace Game.Game
     {
         internal CenterEventUIS()
         {
-            Ready<ButtonVC>().AddList(Ready);
-            JoinDiscord<ButtonVC>().AddList(delegate { Application.OpenURL(URLC.URL_DISCORD); });
+            Ready<ButtonUIC>().AddListener(Ready);
+            JoinDiscord<ButtonUIC>().AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
 
-            Leave<ButtonVC>().AddList(delegate { PhotonNetwork.LeaveRoom(); });
-            Friend<ButtonVC>().AddList(FriendReady);
-            Hint<ButtonVC>().AddList(Hint);
+            Leave<ButtonUIC>().AddListener(delegate { PhotonNetwork.LeaveRoom(); });
+            Friend<ButtonUIC>().AddListener(FriendReady);
+            Hint<ButtonUIC>().AddListener(Hint);
 
-            Units<ButtonVC>(UnitTypes.King).AddList(delegate { UpgradeUnit(UnitTypes.King); });
-            Units<ButtonVC>(UnitTypes.Pawn).AddList(delegate { UpgradeUnit(UnitTypes.Pawn); });
-            Units<ButtonVC>(UnitTypes.Archer).AddList(delegate { UpgradeUnit(UnitTypes.Archer); });
-            Units<ButtonVC>(UnitTypes.Scout).AddList(delegate { UpgradeUnit(UnitTypes.Scout); });
+            Units<ButtonUIC>(UnitTypes.King).AddListener(delegate { UpgradeUnit(UnitTypes.King); });
+            Units<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
+            Units<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { UpgradeUnit(UnitTypes.Archer); });
+            Units<ButtonUIC>(UnitTypes.Scout).AddListener(delegate { UpgradeUnit(UnitTypes.Scout); });
 
-            Builds<ButtonVC>(BuildTypes.Farm).AddList(delegate { UpgradeBuild(BuildTypes.Farm); });
-            Builds<ButtonVC>(BuildTypes.Woodcutter).AddList(delegate { UpgradeBuild(BuildTypes.Woodcutter); });
-            Builds<ButtonVC>(BuildTypes.Mine).AddList(delegate { UpgradeBuild(BuildTypes.Mine); });
+            Builds<ButtonUIC>(BuildTypes.Farm).AddListener(delegate { UpgradeBuild(BuildTypes.Farm); });
+            Builds<ButtonUIC>(BuildTypes.Woodcutter).AddListener(delegate { UpgradeBuild(BuildTypes.Woodcutter); });
+            Builds<ButtonUIC>(BuildTypes.Mine).AddListener(delegate { UpgradeBuild(BuildTypes.Mine); });
 
-            Water<ButtonVC>().AddList(UpgradeWater);
+            Water<ButtonUIC>().AddListener(UpgradeWater);
 
 
-            Unit<ButtonVC>(UnitTypes.Elfemale).AddList(Elf);
-            Unit<ButtonVC>(UnitTypes.None).AddList(OpenShop);
+            Unit<ButtonUIC>(UnitTypes.Elfemale).AddListener(Elf);
+            Unit<ButtonUIC>(UnitTypes.None).AddListener(OpenShop);
         }
 
         void Ready() => EntityPool.Rpc<RpcC>().ReadyToMaster();
         void FriendReady()
         {
-            FriendC.IsActiveFriendZone = false;
+            EntityPool.FriendZone<IsActivatedC>().IsActivated = false;
         }
         void Hint()
         {
@@ -65,7 +65,7 @@ namespace Game.Game
             {
                 EntityPool.Rpc<RpcC>().PickUpgUnitToMas(unit);
 
-                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(true);
+                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -76,7 +76,7 @@ namespace Game.Game
             {
                 EntityPool.Rpc<RpcC>().PickUpgBuildToMas(build);
 
-                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(true);
+                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -87,7 +87,7 @@ namespace Game.Game
             {
                 EntityPool.Rpc<RpcC>().UpgWater();
 
-                Unit<ButtonVC>(UnitTypes.Elfemale).SetActiveParent(true);
+                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }

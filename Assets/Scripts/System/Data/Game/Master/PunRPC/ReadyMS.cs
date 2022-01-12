@@ -1,6 +1,8 @@
-﻿namespace Game.Game
+﻿using static Game.Game.EntityPool;
+
+namespace Game.Game
 {
-    sealed class ReadyMS : IEcsRunSystem
+    struct ReadyMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -8,17 +10,17 @@
 
             var playerSend = sender.GetPlayer();
 
+            Ready<IsReadyC>(playerSend).IsReady = !Ready<IsReadyC>(playerSend).IsReady;
 
-            ReadyC.SetIsReady(playerSend, !ReadyC.IsReady(playerSend));
-
-            if (ReadyC.IsReady(PlayerTypes.First) && ReadyC.IsReady(PlayerTypes.Second))
+            if (Ready<IsReadyC>(PlayerTypes.First).IsReady 
+                && Ready<IsReadyC>(PlayerTypes.Second).IsReady)
             {
-                ReadyC.IsStartedGame = true;
+                GameInfo<IsStartedGameC>().IsStartedGame = true;
             }
 
             else
             {
-                ReadyC.IsStartedGame = false;
+                GameInfo<IsStartedGameC>().IsStartedGame = false;
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using UnityEngine;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellTrailPool;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
@@ -19,7 +19,7 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
@@ -38,13 +38,13 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                    if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
                         if (ownUnit_0.Is(PlayerTypes.First))
                         {
                             if (tw_0.HaveTW)
                             {
-                                InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
+                                InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player);
                                 UnitTW<UnitTWCellEC>(idx_0).Reset();
                             }
 
@@ -56,7 +56,7 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Owner);
+                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player);
                             UnitTW<UnitTWCellEC>(idx_0).Reset();
                         }
 

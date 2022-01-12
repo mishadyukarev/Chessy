@@ -1,5 +1,5 @@
 ﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 
 namespace Game.Game
 {
@@ -15,11 +15,11 @@ namespace Game.Game
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
             ref var levUnit_from = ref Unit<LevelC>(idx_from);
-            ref var ownUnit_from = ref Unit<OwnerC>(idx_from);
+            ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
 
             ref var unit_to = ref Unit<UnitC>(idx_to);
             ref var levUnit_to = ref Unit<LevelC>(idx_to);
-            ref var ownUnit_to = ref Unit<OwnerC>(idx_to);
+            ref var ownUnit_to = ref Unit<PlayerC>(idx_to);
 
 
             if (unit_from.Is(UnitTypes.Archer))

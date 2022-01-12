@@ -33,7 +33,7 @@ namespace Game.Game
         {
             _tWs = new Dictionary<string, int>();
 
-            for (var tw = TWTypes.First; tw < TWTypes.End; tw++)
+            for (var tw = TWTypes.Pick; tw < TWTypes.End; tw++)
             {
                 for (var level = LevelTypes.First; level < LevelTypes.End; level++)
                 {

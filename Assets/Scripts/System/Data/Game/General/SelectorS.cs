@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -10,7 +10,7 @@ namespace Game.Game
         {
             ref var unit_cur = ref Unit<UnitC>(CurIdx<IdxC>().Idx);
             ref var levUnit_cur = ref Unit<LevelC>(CurIdx<IdxC>().Idx);
-            ref var ownUnit_cur = ref Unit<OwnerC>(CurIdx<IdxC>().Idx);
+            ref var ownUnit_cur = ref Unit<PlayerC>(CurIdx<IdxC>().Idx);
 
             ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
 
@@ -35,7 +35,7 @@ namespace Game.Game
 
                             case CellClickTypes.SimpleClick:
                                 {
-                                    if (SelIdx<SelIdxC>().IsSelCell)
+                                    if (SelIdx<SelIdxEC>().IsSelCell)
                                     {
                                         if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanAttack(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx, out var attack))
                                         {

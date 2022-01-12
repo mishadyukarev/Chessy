@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace ECS
 {
-    public sealed class WorldEcs
+    public sealed class EcsWorld
     {
         readonly Dictionary<int, Entity> _ents;
 
-        public WorldEcs() => _ents = new Dictionary<int, Entity>();
-        ~WorldEcs() => _ents.Clear();
+        public EcsWorld() => _ents = new Dictionary<int, Entity>();
+        ~EcsWorld() => _ents.Clear();
 
         public Entity NewEntity()
         {

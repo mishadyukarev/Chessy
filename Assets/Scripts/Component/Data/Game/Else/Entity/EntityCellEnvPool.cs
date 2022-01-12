@@ -28,7 +28,7 @@ namespace Game.Game
                 _envEnts.Add(env, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
         }
-        public EntityCellEnvPool(in WorldEcs gameW)
+        public EntityCellEnvPool(in EcsWorld gameW)
         {
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {

@@ -12,7 +12,7 @@ namespace Game.Game
         {
             _clouds = new Entity[CellValues.ALL_CELLS_AMOUNT];
         }
-        public EntityCellCloudPool(in WorldEcs gameW)
+        public EntityCellCloudPool(in EcsWorld gameW)
         {
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {

@@ -11,14 +11,14 @@ namespace Game
     {
         [SerializeField] TestModes _testMode = default;
 
-        WorldEcs _commonW;
-        WorldEcs _menuW;
-        WorldEcs _gameW;
+        EcsWorld _commonW;
+        EcsWorld _menuW;
+        EcsWorld _gameW;
 
 
         void Start()
         {
-            _commonW = new WorldEcs();
+            _commonW = new EcsWorld();
 
             new Common.CreateCs(transform, _testMode);
 
@@ -85,7 +85,7 @@ namespace Game
                 case SceneTypes.Menu:
                     if (_gameW != default) _gameW = default;
 
-                    _menuW = new WorldEcs();
+                    _menuW = new EcsWorld();
                     new EntitieManager(_menuW);
                     new SystemsManager();
                     break;
@@ -93,7 +93,7 @@ namespace Game
                 case SceneTypes.Game:
                     if (_menuW != default) _menuW = default;
 
-                    _gameW = new WorldEcs();
+                    _gameW = new EcsWorld();
 
                     new EntitiesManager(_gameW);
 

@@ -12,12 +12,12 @@ namespace Game.Game
             {
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var build_0 = ref Build<BuildC>(idx_0);
-                ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
+                ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
 
                 if (buildCell_0.CanExtract(out var extract, out var env, out var res))
                 {
                     Environment<ResourcesC>(env, idx_0).Resources -= extract;
-                    InvResC.Add(res, ownBuild_0.Owner, extract);
+                    InvResC.Add(res, ownBuild_0.Player, extract);
 
                     if (!Environment<ResourcesC>(env, idx_0).Have)
                     {

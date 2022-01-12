@@ -6,25 +6,28 @@ using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellCloudPool;
 using static Game.Game.EntityCellEnvPool;
 using static Game.Game.EntityCellRiverPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellPool;
 
 namespace Game.Game
 {
     public struct EntitiesManager
     {
-        public EntitiesManager(in WorldEcs gameW)
+        public EntitiesManager(in EcsWorld gameW)
         {
             #region View
 
             CanvasC.SetCurZone(SceneTypes.Game);
 
             new EntityVPool(gameW, out var actions, out var sounds0, out var sounds1);
+            new EntityCellVPool(gameW, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
 
+            ///Left
             var leftZone = CanvasC.FindUnderCurZone("LeftZone").transform;
             new EntityLeftCityUIPool(gameW, leftZone);
             new EntityLeftEnvUIPool(gameW, leftZone);
 
+            ///Center
             var centerZone = CanvasC.FindUnderCurZone("CenterZone").transform;
             new EntityCenterUIPool(gameW, centerZone);
             new EntityCenterHeroUIPool(gameW, centerZone);
@@ -34,12 +37,30 @@ namespace Game.Game
             new EntityCenterSelectorUIPool(gameW, centerZone);
             new EntityCenterKingUIPool(gameW, centerZone);
 
+            ///Up
             new EntityUpUIPool(gameW);
-            new EntityDownUIPool(gameW);
-            new EntityRightUIPool(gameW);
 
+            ///Down
+            var downZone = CanvasC.FindUnderCurZone("DownZone").transform;
+            new UIEntDownToolWeapon(gameW, downZone);
+            new UIEntDownDoner(gameW, downZone);
+            new UIEntDownUpgrade(gameW, downZone);
+            var takeUnitZone = downZone.Find("TakeUnitZone");
+            new UIEntDownPawnArcher(gameW, takeUnitZone);
+            new UIEntDownScout(gameW, takeUnitZone);
+            new UIEntDownHero(gameW, takeUnitZone);
 
-            new EntityCellVPool(gameW, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
+            ///Right
+            var rightZone = CanvasC.FindUnderCurZone("RightZone").transform;
+            new UIEntRight(gameW, rightZone.gameObject);
+            new UIEntRightStats(gameW, rightZone.gameObject);
+            new UIEntRightUnique(gameW, rightZone);
+            new UIEntBuild(gameW, rightZone);
+            new UIEntExtraTW(gameW, rightZone);
+            new UIEntRightEffects(gameW, rightZone);
+            var conditionZone = rightZone.Find("ConditionZone");
+            new UIEntRightProtect(gameW, conditionZone);
+            new UIEntRelax(gameW, conditionZone);
 
             #endregion
 
@@ -59,10 +80,10 @@ namespace Game.Game
 
             #region Data
 
-            new EntitySoundPool(gameW, sounds0, sounds1);
+            new EntitySound(gameW, sounds0, sounds1);
             new EntityPool(gameW, EntityVPool.Background<GameObjectVC>().Name, actions, namesMethods);
 
-            new EntityCellUnitPool(gameW);
+            new EntCellUnit(gameW);
             new EntityCellTrailPool(gameW);
             new EntityCellBuildPool(gameW);
             new EntityCellEnvPool(gameW);
@@ -186,7 +207,7 @@ namespace Game.Game
                 }
             }
 
-            if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+            if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
                 InvResC.Set(ResTypes.Food, PlayerTypes.Second, 999999);
 
@@ -198,7 +219,7 @@ namespace Game.Game
 
                     ref var unit_0 = ref Unit<UnitC>(idx_0);
                     ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                    ref var ownUnit_0 = ref Unit<OwnerC>(idx_0);
+                    ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
 
                     ref var hp_0 = ref Unit<HpC>(idx_0);
                     ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
@@ -210,7 +231,7 @@ namespace Game.Game
                     ref var protShiel_0 = ref UnitTW<ProtectionC>(idx_0);
 
                     ref var build_0 = ref Build<BuildC>(idx_0);
-                    ref var ownBuild_0 = ref Build<OwnerC>(idx_0);
+                    ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
 
                     if (x == 7 && y == 8)
                     {

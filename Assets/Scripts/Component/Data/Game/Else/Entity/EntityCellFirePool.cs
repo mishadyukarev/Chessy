@@ -12,7 +12,7 @@ namespace Game.Game
         {
             _fires = new Entity[CellValues.ALL_CELLS_AMOUNT];
         }
-        public EntityCellFirePool(in WorldEcs gameW)
+        public EntityCellFirePool(in EcsWorld gameW)
         {
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {

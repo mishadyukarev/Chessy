@@ -23,14 +23,14 @@ namespace Game.Game
                 _buildEnts.Add(player, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
         }
-        public EntityCellBuildPool(in WorldEcs gameW)
+        public EntityCellBuildPool(in EcsWorld gameW)
         {
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
                 _builds[idx] = gameW.NewEntity()
                     .Add(new BuildCellEC(idx))
                     .Add(new BuildC())
-                    .Add(new OwnerC());
+                    .Add(new PlayerC());
 
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {

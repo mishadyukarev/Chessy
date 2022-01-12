@@ -1,5 +1,6 @@
-﻿using static Game.Game.EntityCellUnitPool;
+﻿using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
+using static Game.Game.UIEntRightStats;
 
 namespace Game.Game
 {
@@ -18,29 +19,36 @@ namespace Game.Game
 
             if (unit_sel.Have)
             {
-                StatUIC.SetActiveStatZone(true);
-
-                StatUIC.SetTextToStat(UnitStatTypes.Hp, hpUnit_sel.Hp.ToString());
-                StatUIC.SetTextToStat(UnitStatTypes.Damage, Unit<UnitCellEC>(selIdx).DamageOnCell.ToString());
-                StatUIC.SetTextToStat(UnitStatTypes.Steps, stepUnit_sel.Steps.ToString());
-                StatUIC.SetTextToStat(UnitStatTypes.Water, waterUnit_sel.Water.ToString());
-
-                StatUIC.FillAmount(UnitStatTypes.Hp, hpUnit_sel.Hp, UnitCellEC.MAX_HP);
+                Stat<ImageUIC>(UnitStatTypes.Hp).SetActiveParent(true);
+                Stat<ImageUIC>(UnitStatTypes.Damage).SetActiveParent(true);
+                Stat<ImageUIC>(UnitStatTypes.Steps).SetActiveParent(true);
+                Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(true);
 
 
+                Stat<TextUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Hp.ToString();
+                Stat<TextUIC>(UnitStatTypes.Damage).Text = Unit<UnitCellEC>(selIdx).DamageOnCell.ToString();
+                Stat<TextUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Steps.ToString();
+                Stat<TextUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Water.ToString();
 
-                StatUIC.FillAmount(UnitStatTypes.Damage, Unit<UnitCellEC>(selIdx).DamageOnCell,
-                    Unit<UnitCellEC>(selIdx).DamageAttack(AttackTypes.Simple));
+                //UIEntRightStats.FillAmount(UnitStatTypes.Hp, hpUnit_sel.Hp, UnitCellEC.MAX_HP);
 
 
 
-                StatUIC.FillAmount(UnitStatTypes.Steps, stepUnit_sel.Steps, Unit<UnitCellEC>(selIdx).MaxAmountSteps);
-                StatUIC.FillAmount(UnitStatTypes.Water, waterUnit_sel.Water, Unit<UnitCellEC>(selIdx).MaxWater);
+                //UIEntRightStats.FillAmount(UnitStatTypes.Damage, Unit<UnitCellEC>(selIdx).DamageOnCell,
+                //    Unit<UnitCellEC>(selIdx).DamageAttack(AttackTypes.Simple));
+
+
+
+                //UIEntRightStats.FillAmount(UnitStatTypes.Steps, stepUnit_sel.Steps, Unit<UnitCellEC>(selIdx).MaxAmountSteps);
+                //UIEntRightStats.FillAmount(UnitStatTypes.Water, waterUnit_sel.Water, Unit<UnitCellEC>(selIdx).MaxWater);
             }
 
             else
             {
-                StatUIC.SetActiveStatZone(false);
+                Stat<ImageUIC>(UnitStatTypes.Hp).SetActiveParent(false);
+                Stat<ImageUIC>(UnitStatTypes.Damage).SetActiveParent(false);
+                Stat<ImageUIC>(UnitStatTypes.Steps).SetActiveParent(false);
+                Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(false);
             }
         }
     }

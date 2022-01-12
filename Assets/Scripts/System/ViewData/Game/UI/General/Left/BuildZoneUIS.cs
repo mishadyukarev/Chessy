@@ -9,20 +9,20 @@ namespace Game.Game
         public void Run()
         {
             ref var unit_sel = ref Build<BuildC>(SelIdx<IdxC>().Idx);
-            ref var own_sel = ref Build<OwnerC>(SelIdx<IdxC>().Idx);
+            ref var own_sel = ref Build<PlayerC>(SelIdx<IdxC>().Idx);
 
 
-            if (SelIdx<SelIdxC>().IsSelCell && unit_sel.Is(BuildTypes.City))
+            if (SelIdx<SelIdxEC>().IsSelCell && unit_sel.Is(BuildTypes.City))
             {
                 if (own_sel.Is(WhoseMoveC.CurPlayerI))
                 {
-                    Melt<ButtonVC>().SetActiveParent(true);
+                    Melt<ButtonUIC>().SetActiveParent(true);
                 }
-                else Melt<ButtonVC>().SetActiveParent(false);
+                else Melt<ButtonUIC>().SetActiveParent(false);
             }
             else
             {
-                Melt<ButtonVC>().SetActiveParent(false);
+                Melt<ButtonUIC>().SetActiveParent(false);
             }
         }
     }

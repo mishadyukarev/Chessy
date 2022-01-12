@@ -1,13 +1,28 @@
-﻿namespace Game.Game
+﻿using static Game.Game.UIEntDownScout;
+
+namespace Game.Game
 {
-    public sealed class ScoutSyncUIS : IEcsRunSystem
+    struct ScoutSyncUIS : IEcsRunSystem
     {
         public void Run()
         {
             var curPlayer = WhoseMoveC.CurPlayerI;
 
-            GetScoutUIC.SetActiveScout(InvUnitsC.Have(UnitTypes.Scout, LevelTypes.First, curPlayer),
-                ScoutHeroCooldownC.Cooldown(UnitTypes.Scout, curPlayer));
+            var isActive = InvUnitsC.Have(UnitTypes.Scout, LevelTypes.First, curPlayer);
+            var cooldown = ScoutHeroCooldownC.Cooldown(UnitTypes.Scout, curPlayer);
+
+
+            Scout<ButtonUIC>().SetActive(isActive);
+
+            if (isActive && cooldown > 0)
+            {
+                Cooldown<TextUIC>().SetActiveParent(true);
+                Cooldown<TextUIC>().Text = cooldown.ToString();
+            }
+            else
+            {
+                Cooldown<TextUIC>().SetActiveParent(false);
+            }
         }
     }
 }

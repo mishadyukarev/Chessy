@@ -12,9 +12,9 @@ namespace Game.Game
             ref var build_sel = ref Build<BuildC>(SelIdx<IdxC>().Idx);
 
 
-            if (SelIdx<SelIdxC>().IsSelCell && !build_sel.Is(BuildTypes.City))
+            if (SelIdx<SelIdxEC>().IsSelCell && !build_sel.Is(BuildTypes.City))
             {
-                Info<ButtonVC>().SetActiveParent(true);
+                Info<ButtonUIC>().SetActiveParent(true);
 
                 Resources<TextUIC>(ResTypes.Food).Text = Environment<ResourcesC>(EnvTypes.Fertilizer, SelIdx<IdxC>().Idx).Resources.ToString();
                 Resources<TextUIC>(ResTypes.Wood).Text = Environment<ResourcesC>(EnvTypes.AdultForest, SelIdx<IdxC>().Idx).Resources.ToString();
@@ -22,7 +22,7 @@ namespace Game.Game
             }
             else
             {
-                Info<ButtonVC>().SetActiveParent(false);
+                Info<ButtonUIC>().SetActiveParent(false);
             }
         }
     }

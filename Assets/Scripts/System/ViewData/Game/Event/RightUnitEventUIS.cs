@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 using static Game.Game.EntityVPool;
 
@@ -9,19 +9,19 @@ namespace Game.Game
     {
         internal RightUnitEventUIS()
         {
-            UniqButtonsUIC.AddListener(UniqueButtonTypes.First, delegate { UniqBut(UniqueButtonTypes.First); });
-            UniqButtonsUIC.AddListener(UniqueButtonTypes.Second, delegate { UniqBut(UniqueButtonTypes.Second); });
-            UniqButtonsUIC.AddListener(UniqueButtonTypes.Third, delegate { UniqBut(UniqueButtonTypes.Third); });
+            UIEntRightUnique.Buttons<ButtonUIC>(UniqueButtonTypes.First).AddListener(delegate { UniqBut(UniqueButtonTypes.First); });
+            UIEntRightUnique.Buttons<ButtonUIC>(UniqueButtonTypes.Second).AddListener(delegate { UniqBut(UniqueButtonTypes.Second); });
+            UIEntRightUnique.Buttons<ButtonUIC>(UniqueButtonTypes.Third).AddListener(delegate { UniqBut(UniqueButtonTypes.Third); });
 
-            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
-            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
-            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.Third, delegate { ExecuteBuild_Button(BuildButtonTypes.Third); });
+            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.First).AddListener(delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
+            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.Second).AddListener(delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
+            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.Third).AddListener(delegate { ExecuteBuild_Button(BuildButtonTypes.Third); });
 
-            ProtectUIC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
-            RelaxUIC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
+            UIEntRightProtect.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
+            UIEntRelax.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
         }
 
-        private void ConditionAbilityButton(ConditionUnitTypes condUnitType)
+        void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
             if (WhoseMoveC.IsMyMove)
             {
@@ -39,7 +39,7 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        private void UniqBut(UniqueButtonTypes uniqBut)
+        void UniqBut(UniqueButtonTypes uniqBut)
         {
             if (WhoseMoveC.IsMyMove)
             {
@@ -148,7 +148,7 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        private void ExecuteBuild_Button(BuildButtonTypes buildBut)
+        void ExecuteBuild_Button(BuildButtonTypes buildBut)
         {
             if (WhoseMoveC.IsMyMove)
             {
@@ -191,7 +191,7 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        private void TryOnHint(VideoClipTypes videoClip)
+        void TryOnHint(VideoClipTypes videoClip)
         {
             if (Common.HintC.IsOnHint)
             {

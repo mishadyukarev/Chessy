@@ -1,6 +1,6 @@
 ﻿using System;
 using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellTrailPool;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
@@ -35,8 +35,8 @@ namespace Game.Game
         }
         PlayerTypes Owner
         {
-            get => Unit<OwnerC>(_idx).Owner;
-            set => Unit<OwnerC>(_idx).Owner = value;
+            get => Unit<PlayerC>(_idx).Player;
+            set => Unit<PlayerC>(_idx).Player = value;
         }
         public int DamageAttack(AttackTypes attack)
         {
@@ -155,7 +155,7 @@ namespace Game.Game
 
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
 
-            if (!Unit<StunC>(idx_from).IsStunned && Unit<UnitC>(idx_from).Have && Unit<OwnerC>(idx_from).Is(whoseMove))
+            if (!Unit<StunC>(idx_from).IsStunned && Unit<UnitC>(idx_from).Have && Unit<PlayerC>(idx_from).Is(whoseMove))
             {
                 CellSpaceC.TryGetIdxAround(idx_from, out var directs);
 
@@ -180,7 +180,7 @@ namespace Game.Game
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
             ref var level_from = ref Unit<LevelC>(idx_from);
-            ref var ownUnit_from = ref Unit<OwnerC>(idx_from);
+            ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
             ref var stepUnit_from = ref Unit<StepC>(idx_from);
             ref var stunUnit_from = ref Unit<StunC>(idx_from);
             ref var corner_from = ref Unit<CornerArcherC>(idx_from);
@@ -189,7 +189,7 @@ namespace Game.Game
             {
                 if (unit_from.Is(UnitTypes.King))
                 {
-                    if (whoseMove == ownUnit_from.Owner)
+                    if (whoseMove == ownUnit_from.Player)
                     {
 
                         DirectTypes curDir_1 = default;
@@ -205,7 +205,7 @@ namespace Game.Game
                             curDir_1 += 1;
 
                             ref var unit_1 = ref Unit<UnitC>(idx_1);
-                            ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
+                            ref var ownUnit_1 = ref Unit<PlayerC>(idx_1);
 
                             ref var trail_1 = ref Trail<TrailCellEC>(idx_1);
 
@@ -217,7 +217,7 @@ namespace Game.Game
                                 {
                                     if (unit_1.Have)
                                     {
-                                        if (!ownUnit_1.Is(ownUnit_from.Owner))
+                                        if (!ownUnit_1.Is(ownUnit_from.Player))
                                         {
                                             attack = AttackTypes.Simple;
                                             return true;
@@ -241,7 +241,7 @@ namespace Game.Game
 
 
                         ref var unit_1 = ref Unit<UnitC>(idx_1);
-                        ref var ownUnit_1 = ref Unit<OwnerC>(idx_1);
+                        ref var ownUnit_1 = ref Unit<PlayerC>(idx_1);
 
 
 
@@ -250,7 +250,7 @@ namespace Game.Game
                         {
                             if (unit_1.Have)
                             {
-                                if (!ownUnit_1.Is(ownUnit_from.Owner))
+                                if (!ownUnit_1.Is(ownUnit_from.Player))
                                 {
                                     if (unit_from.Is(UnitTypes.Archer))
                                     {
@@ -282,12 +282,12 @@ namespace Game.Game
 
 
                             ref var unit_2 = ref Unit<UnitC>(idx_2);
-                            ref var ownUnit_2 = ref Unit<OwnerC>(idx_2);
+                            ref var ownUnit_2 = ref Unit<PlayerC>(idx_2);
 
 
 
                             if (Cell<CellC>(idx_2).IsActiveCell && unit_2.Have
-                                && Unit<VisibledC>(ownUnit_from.Owner, idx_2).IsVisibled && !ownUnit_2.Is(ownUnit_from.Owner))
+                                && Unit<VisibledC>(ownUnit_from.Player, idx_2).IsVisibled && !ownUnit_2.Is(ownUnit_from.Player))
                             {
                                 if (unit_from.Is(UnitTypes.Archer))
                                 {
@@ -410,7 +410,7 @@ namespace Game.Game
             var idx_from = _idx;
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
-            ref var ownUnit_from = ref Unit<OwnerC>(idx_from);
+            ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
             ref var stun_from = ref Unit<StunC>(idx_from);
 
             if (!stun_from.IsStunned)
@@ -545,7 +545,7 @@ namespace Game.Game
 
             Unit<UnitC>(_idx).Unit = unit.Item1;
             Unit<LevelC>(_idx).Level = unit.Item2;
-            Unit<OwnerC>(_idx).Owner = unit.Item3;
+            Unit<PlayerC>(_idx).Player = unit.Item3;
 
             SetMaxHp();
             SetMaxWater();
@@ -562,23 +562,23 @@ namespace Game.Game
         public void Kill()
         {
             ref var unit = ref Unit<UnitC>(_idx);
-            ref var ownUnit = ref Unit<OwnerC>(_idx);
+            ref var ownUnit = ref Unit<PlayerC>(_idx);
             ref var levUnit = ref Unit<LevelC>(_idx);
 
             if (!unit.Have) throw new Exception("It's not got unit");
 
             if (unit.Is(UnitTypes.King))
             {
-                PlayerWinnerC.PlayerWinner = ownUnit.Owner;
+                EntityPool.Winner<PlayerC>().Player = ownUnit.Player;
             }
             else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {
-                ScoutHeroCooldownC.SetStandCooldown(unit.Unit, ownUnit.Owner);
-                InvUnitsC.Add(unit.Unit, levUnit.Level, ownUnit.Owner);
+                ScoutHeroCooldownC.SetStandCooldown(unit.Unit, ownUnit.Player);
+                InvUnitsC.Add(unit.Unit, levUnit.Level, ownUnit.Player);
             }
 
 
-            WhereUnitsC.Set((unit.Unit, levUnit.Level, ownUnit.Owner), _idx, false);
+            WhereUnitsC.Set((unit.Unit, levUnit.Level, ownUnit.Player), _idx, false);
             unit.Reset();
         }
         public void Shift(in byte idx_to)
@@ -593,10 +593,10 @@ namespace Game.Game
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
             ref var level_from = ref Unit<LevelC>(idx_from);
-            ref var own_from = ref Unit<OwnerC>(idx_from);
+            ref var own_from = ref Unit<PlayerC>(idx_from);
 
 
-            Unit<OwnerC>(idx_to).Set(Unit<OwnerC>(idx_from));
+            Unit<PlayerC>(idx_to).Set(Unit<PlayerC>(idx_from));
             Unit<LevelC>(idx_to).Set(Unit<LevelC>(idx_from));
 
 
@@ -618,7 +618,7 @@ namespace Game.Game
 
             if (Build<BuildC>(idx_to).Is(BuildTypes.Camp))
             {
-                if (!Build<OwnerC>(idx_to).Is(Unit<OwnerC>(idx_to).Owner))
+                if (!Build<PlayerC>(idx_to).Is(Unit<PlayerC>(idx_to).Player))
                 {
                     Build<BuildCellEC>(idx_to).Remove();
                 }
@@ -626,9 +626,9 @@ namespace Game.Game
 
 
             Unit<UnitC>(idx_to).Unit = Unit<UnitC>(idx_from).Unit;
-            WhereUnitsC.Set((Unit<UnitC>(idx_to).Unit, level_from.Level, own_from.Owner), idx_to, true);
+            WhereUnitsC.Set((Unit<UnitC>(idx_to).Unit, level_from.Level, own_from.Player), idx_to, true);
 
-            WhereUnitsC.Set((Unit<UnitC>(idx_from).Unit, level_from.Level, own_from.Owner), idx_from, false);
+            WhereUnitsC.Set((Unit<UnitC>(idx_from).Unit, level_from.Level, own_from.Player), idx_from, false);
             Unit<UnitC>(idx_from).Reset();
 
 
@@ -637,7 +637,7 @@ namespace Game.Game
         public void AddToInventor()
         {
             var level = Unit<LevelC>(_idx).Level;
-            var owner = Unit<OwnerC>(_idx).Owner;
+            var owner = Unit<PlayerC>(_idx).Player;
 
             InvUnitsC.Add(Unit<UnitC>(_idx).Unit, level, owner);
 
@@ -656,50 +656,50 @@ namespace Game.Game
         }
         public void SetScout()
         {
-            ref var ownUnitC = ref Unit<OwnerC>(_idx);
+            ref var ownUnitC = ref Unit<PlayerC>(_idx);
 
             ref var twUnitC = ref UnitTW<UnitTWCellEC>(_idx);
             ref var twC = ref UnitTW<ToolWeaponC>(_idx);
             ref var levTWC = ref UnitTW<LevelC>(_idx);
 
 
-            WhereUnitsC.Set((Unit<UnitC>(_idx).Unit, Unit<LevelC>(_idx).Level, ownUnitC.Owner), _idx, false);
+            WhereUnitsC.Set((Unit<UnitC>(_idx).Unit, Unit<LevelC>(_idx).Level, ownUnitC.Player), _idx, false);
 
             Unit<UnitC>(_idx).Unit = UnitTypes.Scout;
             Unit<LevelC>(_idx).Level = LevelTypes.First;
             if (twC.HaveTW)
             {
-                InvTWC.Add(twC.ToolWeapon, levTWC.Level, ownUnitC.Owner);
+                InvTWC.Add(twC.ToolWeapon, levTWC.Level, ownUnitC.Player);
                 twUnitC.Reset();
             }
 
-            WhereUnitsC.Set((UnitTypes.Scout, LevelTypes.First, Unit<OwnerC>(_idx).Owner), _idx, true);
+            WhereUnitsC.Set((UnitTypes.Scout, LevelTypes.First, Unit<PlayerC>(_idx).Player), _idx, true);
         }
         public void SetHero(in byte idx_from, in UnitTypes unit, in LevelTypes lev)
         {
             var idx_to = _idx;
 
-            WhereUnitsC.Set((UnitTypes.Archer, Unit<LevelC>(idx_from).Level, Unit<OwnerC>(idx_from).Owner), idx_from, false);
+            WhereUnitsC.Set((UnitTypes.Archer, Unit<LevelC>(idx_from).Level, Unit<PlayerC>(idx_from).Player), idx_from, false);
             Unit<UnitC>(idx_from).Reset();
 
-            WhereUnitsC.Set((UnitTypes.Archer, Unit<LevelC>(idx_to).Level, Unit<OwnerC>(idx_to).Owner), idx_to, false);
+            WhereUnitsC.Set((UnitTypes.Archer, Unit<LevelC>(idx_to).Level, Unit<PlayerC>(idx_to).Player), idx_to, false);
             Unit<UnitC>(idx_to).Reset();
 
 
             Unit<UnitC>(idx_to).Unit = unit;
             Unit<LevelC>(idx_to).Level = lev;
 
-            WhereUnitsC.Set((unit, lev, Unit<OwnerC>(idx_to).Owner), idx_to, true);
+            WhereUnitsC.Set((unit, lev, Unit<PlayerC>(idx_to).Player), idx_to, true);
 
 
-            InvUnitsC.Take(Unit<OwnerC>(idx_to).Owner, unit, lev);
+            InvUnitsC.Take(Unit<PlayerC>(idx_to).Player, unit, lev);
         }
 
         public void Sync(in UnitTypes unit, in LevelTypes lev, in PlayerTypes owner, in int hp, in int steps, in int water)
         {
             Unit<UnitC>(_idx).Unit = unit;
             Unit<LevelC>(_idx).Level = lev;
-            Unit<OwnerC>(_idx).Owner = owner;
+            Unit<PlayerC>(_idx).Player = owner;
             Unit<HpC>(_idx).Hp = hp;
             Unit<StepC>(_idx).Steps = steps;
             Unit<WaterC>(_idx).Water = water;

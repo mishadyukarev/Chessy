@@ -1,5 +1,5 @@
 ﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntityCellUnitPool;
+using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 using static Game.Game.EntityCellEnvPool;
 using static Game.Game.EntityCellFirePool;
@@ -17,7 +17,7 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var lev_0 = ref Unit<LevelC>(idx_0);
-                ref var own_0 = ref Unit<OwnerC>(idx_0);
+                ref var own_0 = ref Unit<PlayerC>(idx_0);
 
                 ref var supV_0 = ref EntityCellVPool.ElseCellVE<SupportVC>(idx_0);
 

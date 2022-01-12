@@ -28,7 +28,7 @@ namespace Game.Game
                 _trailVisibleEnts.Add(player, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
         }
-        public EntityCellTrailPool(in WorldEcs gameW)
+        public EntityCellTrailPool(in EcsWorld gameW)
         {
             byte idx = 0;
 

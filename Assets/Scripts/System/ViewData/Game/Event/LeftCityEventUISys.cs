@@ -6,10 +6,10 @@ namespace Game.Game
     {
         internal LeftCityEventUISys()
         {
-            Melt<ButtonVC>().AddList(delegate { MeltOre(); });
+            Melt<ButtonUIC>().AddListener(delegate { MeltOre(); });
 
-            Resources<ButtonVC>(ResTypes.Food).AddList(delegate { BuyRes(ResTypes.Food); });
-            Resources<ButtonVC>(ResTypes.Wood).AddList(delegate { BuyRes(ResTypes.Wood); });
+            Resources<ButtonUIC>(ResTypes.Food).AddListener(delegate { BuyRes(ResTypes.Food); });
+            Resources<ButtonUIC>(ResTypes.Wood).AddListener(delegate { BuyRes(ResTypes.Wood); });
         }
 
         void MeltOre()
