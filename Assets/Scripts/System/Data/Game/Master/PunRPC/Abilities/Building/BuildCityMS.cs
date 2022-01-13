@@ -11,22 +11,23 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            BuildDoingMC.Get(out var forBuildType);
-            IdxDoingMC.Get(out var idx_0);
-            UniqueAbilityMC.Get(out var uniq);
+
+            var forBuildType = EntityMPool.Build<BuildingC>().Build;
+            var idx_0 = EntityMPool.Build<IdxC>().Idx;
+
 
 
             if (forBuildType == BuildTypes.City)
             {
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var build_0 = ref Build<BuildC>(idx_0);
+                ref var build_0 = ref Build<BuildingC>(idx_0);
                 ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
 
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
-                var whoseMove = WhoseMoveC.WhoseMove;
+                //var whoseMove = WhoseMoveC.WhoseMove;
 
 
                 if (stepUnit_0.Have(BuildTypes.City))
@@ -37,7 +38,7 @@ namespace Game.Game
                     {
                         var curIdx = IdxCell(xy);
 
-                        if (!Cell<CellC>(curIdx).IsActiveCell)
+                        if (!Cell<IsActivatedC>(curIdx).IsActivated)
                         {
                             haveNearBorder = true;
                             break;
@@ -50,7 +51,7 @@ namespace Game.Game
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        buildCell_0.SetNew(forBuildType, whoseMove);
+                        //buildCell_0.SetNew(forBuildType, whoseMove);
 
 
                         stepUnit_0.Take(BuildTypes.City);

@@ -1,4 +1,5 @@
-﻿using static Game.Game.EntityLeftCityUIPool;
+﻿using Game.Common;
+using static Game.Game.EntityLeftCityUIPool;
 
 namespace Game.Game
 {
@@ -14,12 +15,12 @@ namespace Game.Game
 
         void MeltOre()
         {
-            if (WhoseMoveC.IsMyMove) EntityPool.Rpc<RpcC>().MeltOreToMaster();
+            if (EntWhoseMove.IsMyMove) EntityPool.Rpc<RpcC>().MeltOreToMaster();
         }
 
         void BuyRes(ResTypes res)
         {
-            if (WhoseMoveC.IsMyMove) EntityPool.Rpc<RpcC>().BuyResToMaster(res);
+            if (EntWhoseMove.IsMyMove) EntityPool.Rpc<RpcC>().BuyResToMaster(res);
         }
     }
 }

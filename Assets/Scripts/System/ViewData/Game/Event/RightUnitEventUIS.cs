@@ -9,13 +9,13 @@ namespace Game.Game
     {
         internal RightUnitEventUIS()
         {
-            UIEntRightUnique.Buttons<ButtonUIC>(UniqueButtonTypes.First).AddListener(delegate { UniqBut(UniqueButtonTypes.First); });
-            UIEntRightUnique.Buttons<ButtonUIC>(UniqueButtonTypes.Second).AddListener(delegate { UniqBut(UniqueButtonTypes.Second); });
-            UIEntRightUnique.Buttons<ButtonUIC>(UniqueButtonTypes.Third).AddListener(delegate { UniqBut(UniqueButtonTypes.Third); });
+            UIEntRightUnique.Buttons<ButtonUIC>(ButtonTypes.First).AddListener(delegate { UniqBut(ButtonTypes.First); });
+            UIEntRightUnique.Buttons<ButtonUIC>(ButtonTypes.Second).AddListener(delegate { UniqBut(ButtonTypes.Second); });
+            UIEntRightUnique.Buttons<ButtonUIC>(ButtonTypes.Third).AddListener(delegate { UniqBut(ButtonTypes.Third); });
 
-            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.First).AddListener(delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
-            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.Second).AddListener(delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
-            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.Third).AddListener(delegate { ExecuteBuild_Button(BuildButtonTypes.Third); });
+            UIEntBuild.Button<ButtonUIC>(ButtonTypes.First).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
+            UIEntBuild.Button<ButtonUIC>(ButtonTypes.Second).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
+            UIEntBuild.Button<ButtonUIC>(ButtonTypes.Third).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Third); });
 
             UIEntRightProtect.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
             UIEntRelax.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
@@ -23,11 +23,11 @@ namespace Game.Game
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (Unit<ConditionC>(SelIdx<IdxC>().Idx).Is(condUnitType))
+                if (Unit<ConditionUnitC>(SelIdx<IdxC>().Idx).Is(condUnitType))
                 {
                     EntityPool.Rpc<RpcC>().ConditionUnitToMaster(ConditionUnitTypes.None, SelIdx<IdxC>().Idx);
                 }
@@ -39,20 +39,20 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        void UniqBut(UniqueButtonTypes uniqBut)
+        void UniqBut(ButtonTypes uniqBut)
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
-                ref var abil = ref Unit<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
+                ref var abil = ref UnitBuilding<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
 
 
                 if (!Unit<CooldownC>(abil.Ability, SelIdx<IdxC>().Idx).HaveCooldown)
                 {
                     switch (uniqBut)
                     {
-                        case UniqueButtonTypes.None: throw new Exception();
+                        case ButtonTypes.None: throw new Exception();
 
-                        case UniqueButtonTypes.First:
+                        case ButtonTypes.First:
                             {
                                 switch (abil.Ability)
                                 {
@@ -93,7 +93,7 @@ namespace Game.Game
                             }
                             break;
 
-                        case UniqueButtonTypes.Second:
+                        case ButtonTypes.Second:
                             {
                                 switch (abil.Ability)
                                 {
@@ -123,7 +123,7 @@ namespace Game.Game
                             }
                             break;
 
-                        case UniqueButtonTypes.Third:
+                        case ButtonTypes.Third:
                             {
                                 switch (abil.Ability)
                                 {
@@ -148,41 +148,47 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        void ExecuteBuild_Button(BuildButtonTypes buildBut)
+        void ExecuteBuild_Button(ButtonTypes buildBut)
         {
-            if (WhoseMoveC.IsMyMove)
+            var idx_sel = SelIdx<IdxC>().Idx;
+
+            if (EntWhoseMove.IsMyMove)
             {
                 switch (buildBut)
                 {
-                    case BuildButtonTypes.None:
+                    case ButtonTypes.None:
                         throw new Exception();
 
-                    case BuildButtonTypes.First:
-                        EntityPool.Rpc<RpcC>().BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.Farm);
+                    case ButtonTypes.First:
+                        EntityPool.Rpc<RpcC>().BuildToMaster(idx_sel, BuildTypes.Farm);
                         TryOnHint(VideoClipTypes.BuldFarms);
                         break;
 
-                    case BuildButtonTypes.Second:
-                        EntityPool.Rpc<RpcC>().BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.Mine);
+                    case ButtonTypes.Second:
+                        EntityPool.Rpc<RpcC>().BuildToMaster(idx_sel, BuildTypes.Mine);
                         TryOnHint(VideoClipTypes.BuildMine);
                         break;
 
-                    case BuildButtonTypes.Third:
-                        switch (BuildAbilC.AbilityType(buildBut))
-                        {
-                            case BuildAbilTypes.None: throw new Exception();
-                            case BuildAbilTypes.FarmBuild: throw new Exception();
-                            case BuildAbilTypes.MineBuild: throw new Exception();
-                            case BuildAbilTypes.CityBuild:
-                                EntityPool.Rpc<RpcC>().BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.City);
-                                break;
+                    case ButtonTypes.Third:
+                        var buildAbility = UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build;
+                        if (buildAbility == BuildTypes.None)Rpc<RpcC>().DestroyBuildingToMaster(idx_sel);
+                        else Rpc<RpcC>().BuildToMaster(idx_sel, UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build);
 
-                            case BuildAbilTypes.Destroy:
-                                EntityPool.Rpc<RpcC>().DestroyBuildingToMaster(SelIdx<IdxC>().Idx);
-                                break;
+                        //switch (BuildAbilC.AbilityType(buildBut))
+                        //{
+                        //    case BuildAbilityTypes.None: throw new Exception();
+                        //    case BuildAbilityTypes.FarmBuild: throw new Exception();
+                        //    case BuildAbilityTypes.MineBuild: throw new Exception();
+                        //    case BuildAbilityTypes.CityBuild:
+                        //        EntityPool.Rpc<RpcC>().BuildToMaster(SelIdx<IdxC>().Idx, BuildTypes.City);
+                        //        break;
 
-                            default: throw new Exception();
-                        }
+                        //    case BuildAbilityTypes.Destroy:
+                        //        EntityPool
+                        //        break;
+
+                        //    default: throw new Exception();
+                        //}
                         break;
 
                     default: throw new Exception();
@@ -195,12 +201,12 @@ namespace Game.Game
         {
             if (Common.HintC.IsOnHint)
             {
-                if (!HintC.WasActived(videoClip))
-                {
-                    //EntityCenterHintUIPool.SetActiveHintZone(true);
-                    //EntityCenterHintUIPool.SetVideoClip(videoClip);
-                    HintC.SetWasActived(videoClip, true);
-                }
+                //if (!HintC.WasActived(videoClip))
+                //{
+                //    //EntityCenterHintUIPool.SetActiveHintZone(true);
+                //    //EntityCenterHintUIPool.SetVideoClip(videoClip);
+                //    HintC.SetWasActived(videoClip, true);
+                //}
             }
         }
     }

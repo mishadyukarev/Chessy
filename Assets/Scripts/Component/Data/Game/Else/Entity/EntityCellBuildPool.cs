@@ -29,13 +29,13 @@ namespace Game.Game
             {
                 _builds[idx] = gameW.NewEntity()
                     .Add(new BuildCellEC(idx))
-                    .Add(new BuildC())
+                    .Add(new BuildingC())
                     .Add(new PlayerC());
 
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
                     _buildEnts[player][idx] = gameW.NewEntity()
-                        .Add(new VisibledC());
+                        .Add(new IsVisibledC());
                 }
             }
         }

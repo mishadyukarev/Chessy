@@ -22,19 +22,19 @@ namespace Game.Game
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
-                    var curPlayer = WhoseMoveC.CurPlayerI;
-                    var nextPlayer = WhoseMoveC.NextPlayerFrom(curPlayer);
+                    //var curPlayer = WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI;
+                    //var nextPlayer = WhoseMoveC.NextPlayerFrom(curPlayer);
 
-                    if (nextPlayer == PlayerTypes.First)
-                    {
-                        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
-                        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
-                    }
+                    //if (nextPlayer == PlayerTypes.First)
+                    //{
+                    //    SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
+                    //    EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
+                    //}
 
-                    WhoseMoveC.SetWhoseMove(nextPlayer);
+                    //WhoseMoveC.SetWhoseMove(nextPlayer);
 
 
-                    //curPlayer = WhoseMoveC.CurPlayerI;
+                    //curPlayer = WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI;
 
                     //ViewDataSC.RotateAll.Invoke(); 
 
@@ -45,21 +45,21 @@ namespace Game.Game
             {
                 var playerSend = sender.GetPlayer();
 
-                if (WhoseMoveC.WhoseMove == playerSend)
-                {
-                    if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))
-                    {
-                        if (playerSend == PlayerTypes.Second)
-                        {
-                            SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
+                //if (WhoseMoveC.WhoseMove == playerSend)
+                //{
+                //    //if (!EntInventorUnits.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))
+                //    //{
+                //    //    if (playerSend == PlayerTypes.Second)
+                //    //    {
+                //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
 
-                            EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                            EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
-                        }
+                //    //        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                //    //        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                //    //    }
 
-                        WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
-                    }
-                }
+                //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
+                //    //}
+                //}
             }
         }
     }

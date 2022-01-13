@@ -13,7 +13,7 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var levelUnit_0 = ref Unit<LevelC>(idx_0);
 
-                ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
+                ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
@@ -27,35 +27,35 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
-                    {
-                        mainUnit_0.SetEnabled(true);
+                    //if (Unit<VisibledC>(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, idx_0).IsVisibled)
+                    //{
+                    //    mainUnit_0.SetEnabled(true);
 
-                        if (unit_0.Is(UnitTypes.Pawn))
-                        {
-                            mainUnit_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
+                    //    if (unit_0.Is(UnitTypes.Pawn))
+                    //    {
+                    //        mainUnit_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
 
-                            if (tw_0.HaveTW)
-                            {
-                                extraUnit_0.Enable_SR();
-                                extraUnit_0.SetToolWeapon_Sprite(tw_0.ToolWeapon, twLevel_0.Level);
-                            }
-                        }
+                    //        if (tw_0.HaveTW)
+                    //        {
+                    //            extraUnit_0.Enable_SR();
+                    //            extraUnit_0.SetToolWeapon_Sprite(tw_0.ToolWeapon, twLevel_0.Level);
+                    //        }
+                    //    }
 
-                        else if (unit_0.Is(UnitTypes.Archer))
-                        {
-                            mainUnit_0.SetSprite(unit_0.Unit, levelUnit_0.Level, corner_0.IsCornered);
-                        }
+                    //    else if (unit_0.Is(UnitTypes.Archer))
+                    //    {
+                    //        mainUnit_0.SetSprite(unit_0.Unit, levelUnit_0.Level, corner_0.IsCornered);
+                    //    }
 
-                        else
-                        {
-                            mainUnit_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
-                        }
+                    //    else
+                    //    {
+                    //        mainUnit_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
+                    //    }
 
 
-                        mainUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI), idx_0).IsVisibled);
-                        extraUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI), idx_0).IsVisibled);
-                    }
+                    //    //mainUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI), idx_0).IsVisibled);
+                    //    //extraUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI), idx_0).IsVisibled);
+                    //}
                 }
             }
         }

@@ -34,7 +34,7 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player);
+                            EntInventorToolWeapon.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
                             UnitTW<UnitTWCellEC>(idx_0).Reset();
 
                             stepUnit_0.TakeMin();
@@ -43,9 +43,9 @@ namespace Game.Game
                         }
 
 
-                        else if (InvTWC.Have(tWTypeForGive, levelTW, ownUnit_0.Player))
+                        else if (EntInventorToolWeapon.ToolWeapons<AmountC>(tWTypeForGive, levelTW, ownUnit_0.Player).Have)
                         {
-                            InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Player);
+                            EntInventorToolWeapon.ToolWeapons<AmountC>(tWTypeForGive, levelTW, ownUnit_0.Player).Take();
 
                             UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
@@ -56,56 +56,56 @@ namespace Game.Game
 
                         else if (tWTypeForGive == TWTypes.Pick)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Player, TWTypes.Pick, levelTW, out var needRes))
-                            {
-                                InvResC.BuyTW(ownUnit_0.Player, TWTypes.Pick, levelTW);
+                            //if (InvResC.CanBuyTW(ownUnit_0.Player, TWTypes.Pick, levelTW, out var needRes))
+                            //{
+                            //    InvResC.BuyTW(ownUnit_0.Player, TWTypes.Pick, levelTW);
 
-                                UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
+                            //    UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
-                                stepUnit_0.TakeMin();
+                            //    stepUnit_0.TakeMin();
 
-                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
-                            }
-                            else
-                            {
-                                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-                            }
+                            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                            //}
+                            //else
+                            //{
+                            //    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                            //}
                         }
 
                         else if (tWTypeForGive == TWTypes.Sword)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Player, TWTypes.Sword, levelTW, out var needRes))
-                            {
-                                InvResC.BuyTW(ownUnit_0.Player, TWTypes.Sword, levelTW);
+                            //if (InvResC.CanBuyTW(ownUnit_0.Player, TWTypes.Sword, levelTW, out var needRes))
+                            //{
+                            //    InvResC.BuyTW(ownUnit_0.Player, TWTypes.Sword, levelTW);
 
-                                UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
+                            //    UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
-                                stepUnit_0.TakeMin();
+                            //    stepUnit_0.TakeMin();
 
-                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
-                            }
-                            else
-                            {
-                                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-                            }
+                            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                            //}
+                            //else
+                            //{
+                            //    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                            //}
                         }
 
                         else if (tWTypeForGive == TWTypes.Shield)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Player, tWTypeForGive, levelTW, out var needRes))
-                            {
-                                InvResC.BuyTW(ownUnit_0.Player, tWTypeForGive, levelTW);
+                            //if (InvResC.CanBuyTW(ownUnit_0.Player, tWTypeForGive, levelTW, out var needRes))
+                            //{
+                            //    InvResC.BuyTW(ownUnit_0.Player, tWTypeForGive, levelTW);
 
-                                UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
+                            //    UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
-                                stepUnit_0.TakeMin();
+                            //    stepUnit_0.TakeMin();
 
-                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
-                            }
-                            else
-                            {
-                                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-                            }
+                            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                            //}
+                            //else
+                            //{
+                            //    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                            //}
                         }
                     }
                     else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);

@@ -14,7 +14,7 @@ namespace Game.Game
 
                 foreach (var item in trailData_0.DictTrail)
                 {
-                    if (Trail<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
+                    if (Trail<IsVisibledC>(EntWhoseMove.CurPlayerI, idx_0).IsVisibled)
                     {
                         trailView_0.SetActive(item.Key, trailData_0.Have(item.Key));
                     }

@@ -18,7 +18,7 @@ namespace Game.Game
             ref var levUnit_0 = ref Unit<LevelC>(idx_0);
             ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-            ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+            ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
 
             if (!Unit<CooldownC>(uniq_cur, idx_0).HaveCooldown)
@@ -41,7 +41,7 @@ namespace Game.Game
                         ref var tw_1 = ref UnitTW<ToolWeaponC>(idx_1);
                         ref var shield_1 = ref UnitTW<ShieldEC>(idx_1);
 
-                        ref var buildC_1 = ref Build<BuildC>(idx_1);
+                        ref var buildC_1 = ref Build<BuildingC>(idx_1);
 
 
                         if (unit_1.Have)

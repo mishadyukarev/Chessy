@@ -5,9 +5,13 @@
         None,
 
         TrainingOff,
+        First = TrainingOff,
+
         WithFriendOff,
 
         PublicOn,
         WithFriendOn,
+
+        End,
     }
 }

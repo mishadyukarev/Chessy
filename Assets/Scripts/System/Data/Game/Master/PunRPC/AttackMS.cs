@@ -14,7 +14,7 @@ namespace Game.Game
             ref var hpUnitCell_from = ref Unit<UnitCellEC>(idx_from);
             ref var hpUnit_from = ref Unit<HpC>(idx_from);
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
-            ref var condUnit_from = ref Unit<ConditionC>(idx_from);
+            ref var condUnit_from = ref Unit<ConditionUnitC>(idx_from);
 
             ref var tw_from = ref UnitTW<ToolWeaponC>(idx_from);
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using static Game.Game.EntityCellPool;
 using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
@@ -12,13 +11,14 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            EnvDoingMC.Get(out var env);
-            IdxDoingMC.Get(out var idx_0);
+
+            var env = EntityMPool.Seed<EnvironmetC>().Environment;
+            var idx_0 = EntityMPool.Seed<IdxC>().Idx;
             UniqueAbilityMC.Get(out var uniq_cur);
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
-            ref var build_0 = ref Build<BuildC>(idx_0);
+            ref var build_0 = ref Build<BuildingC>(idx_0);
 
 
             switch (env)

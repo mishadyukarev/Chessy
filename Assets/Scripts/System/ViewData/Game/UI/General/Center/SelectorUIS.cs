@@ -1,5 +1,5 @@
 ﻿using static Game.Game.EntityPool;
-using static Game.Game.EntityCenterSelectorUIPool;
+using static Game.Game.CenterSelectorUIE;
 
 namespace Game.Game
 {

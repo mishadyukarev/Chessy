@@ -14,29 +14,32 @@ namespace Game.Game
 
 
 
-                if (InvResC.IsMinusRes(res, player))
+                if (EntInventorResources.Resource<AmountC>(res, player).IsMinus)
                 {
-                    InvResC.Reset(res, player);
+                    EntInventorResources.Resource<AmountC>(res, player).Reset();
 
                     for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
                     {
                         for (var levUnit = LevelTypes.Second; levUnit > LevelTypes.None; levUnit--)
                         {
-                            foreach (var idx_0 in WhereUnitsC.Idxs(unit, levUnit, player))
+                            foreach (var idx_0 in Idxs)
                             {
-                                ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                                ref var build_0 = ref Build<BuildC>(idx_0);
-
-
-
-                                if (build_0.Is(BuildTypes.Camp))
+                                if(EntWhereUnits.HaveUnit<HaveUnitC>(unit, levUnit, player, idx_0).Have)
                                 {
-                                    buildCell_0.Remove();
+                                    ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
+                                    ref var build_0 = ref Build<BuildingC>(idx_0);
+
+
+                                    if (build_0.Is(BuildTypes.Camp))
+                                    {
+                                        buildCell_0.Remove();
+                                    }
+
+                                    Unit<UnitCellEC>(idx_0).Kill();
+
+                                    return;
+
                                 }
-
-                                Unit<UnitCellEC>(idx_0).Kill();
-
-                                return;
                             }
                         }
                     }

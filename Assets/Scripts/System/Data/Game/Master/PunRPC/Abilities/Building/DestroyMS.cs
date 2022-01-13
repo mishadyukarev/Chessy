@@ -17,7 +17,7 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
             ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-            ref var buildC_0 = ref Build<BuildC>(idx_0);
+            ref var buildC_0 = ref Build<BuildingC>(idx_0);
 
 
             if (stepUnit_0.HaveMin)

@@ -24,35 +24,35 @@ namespace Game.Game
             ref var step_0 = ref Unit<StepC>(idx_0);
             ref var water_0 = ref Unit<WaterC>(idx_0);
 
-            ref var cond_0 = ref Unit<ConditionC>(idx_0);
+            ref var cond_0 = ref Unit<ConditionUnitC>(idx_0);
 
             ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
 
 
-            var whoseMove = WhoseMoveC.WhoseMove;
+            //var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (SetUnitCellsC.HaveIdxCell(whoseMove, idx_0))
-            {
-                var levUnit = LevelTypes.None;
+            //if (SetUnitCellsC.HaveIdxCell(whoseMove, idx_0))
+            //{
+            //    var levUnit = LevelTypes.None;
 
-                if (InvUnitsC.Have(unit, LevelTypes.Second, whoseMove))
-                {
-                    InvUnitsC.Take(whoseMove, unit, LevelTypes.Second);
-                    levUnit = LevelTypes.Second;
-                }
-                else
-                {
-                    InvUnitsC.Take(whoseMove, unit, LevelTypes.First);
-                    levUnit = LevelTypes.First;
-                }
-                Unit<UnitCellEC>(idx_0).SetNew((unit, levUnit, whoseMove));
+            //    if (EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Have)
+            //    {
+            //        EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Amount -= 1;
+            //        levUnit = LevelTypes.Second;
+            //    }
+            //    else
+            //    {
+            //        EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, whoseMove).Amount -= 1;
+            //        levUnit = LevelTypes.First;
+            //    }
+            //    Unit<UnitCellEC>(idx_0).SetNew((unit, levUnit, whoseMove));
 
 
-                if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
+            //    if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
-                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
-            }
+            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+            //}
         }
     }
 }

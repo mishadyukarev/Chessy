@@ -17,7 +17,7 @@ namespace Game.Game
                 ref var hpUnit_0 = ref Unit<HpC>(idx_0);
                 ref var step_0 = ref Unit<StepC>(idx_0);
                 ref var water_0 = ref Unit<StepC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 ref var barsViewCom = ref ElseCellVE<BarsVC>(idx_0);
                 ref var blocksViewCom = ref ElseCellVE<BlocksVC>(idx_0);
@@ -30,7 +30,7 @@ namespace Game.Game
                 blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
 
 
-                if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
+                if (Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, idx_0).IsVisibled)
                 {
                     if (unit_0.Have)
                     {

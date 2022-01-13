@@ -1,7 +1,8 @@
 ﻿using static Game.Game.EntityPool;
 using static Game.Game.EntityVPool;
-using static Game.Game.EntityCenterKingUIPool;
+using static Game.Game.CenterKingUIE;
 using static Game.Game.UIEntDownToolWeapon;
+using Game.Common;
 
 namespace Game.Game
 {
@@ -35,11 +36,11 @@ namespace Game.Game
 
             TryOnHint(VideoClipTypes.CreatingScout);
 
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
-                if (!ScoutHeroCooldownC.HaveCooldown(UnitTypes.Scout, WhoseMoveC.CurPlayerI))
+                if (!ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, EntWhoseMove.CurPlayerI).HaveCooldown)
                 {
-                    if (WhoseMoveC.IsMyMove)
+                    if (EntWhoseMove.IsMyMove)
                     {
                         ClickerObject<CellClickC>().Set(CellClickTypes.GiveScout);
                     }
@@ -56,9 +57,9 @@ namespace Game.Game
             SelIdx<IdxC>().Reset();
             TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
-                if (!ScoutHeroCooldownC.HaveCooldown(UnitTypes.Elfemale, WhoseMoveC.CurPlayerI))
+                if (!ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, EntWhoseMove.CurPlayerI).HaveCooldown)
                 {
                     ClickerObject<CellClickC>().Set(CellClickTypes.GiveHero);
                 }
@@ -73,7 +74,7 @@ namespace Game.Game
 
         void Done()
         {
-            if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, WhoseMoveC.CurPlayerI))
+            if (!EntInventorUnits.Units<AmountC>(UnitTypes.King, LevelTypes.First, EntWhoseMove.CurPlayerI).Have)
             {
                 EntityPool.Rpc<RpcC>().DoneToMaster();
             }
@@ -85,9 +86,9 @@ namespace Game.Game
 
         void CreateUnit(UnitTypes unitType)
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
-                GetterUnitsC.ResetCurTimer(unitType);
+                GetterUnitsC.GetterUnit<TimerC>(unitType).Reset();
 
                 EntityPool.Rpc<RpcC>().CreateUnitToMaster(unitType);
             }
@@ -99,23 +100,23 @@ namespace Game.Game
             //CellClicker<CellClickC>().Set(CellClickTypes.FirstClick);
             SelIdx<IdxC>().Reset();
 
-            GetterUnitsC.ResetCurTimer(unitType);
+            GetterUnitsC.GetterUnit<TimerC>(unitType).Reset();
 
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
-                if (InvUnitsC.Have(unitType, LevelTypes.Second, WhoseMoveC.CurPlayerI))
+                if (EntInventorUnits.Units<AmountC>(unitType, LevelTypes.Second, EntWhoseMove.CurPlayerI).Have)
                 {
                     ClickerObject<CellClickC>().Set(CellClickTypes.SetUnit);
-                    SelUnitC.SetSelUnit(unitType, LevelTypes.Second);
+                    SelectedUnitEnt.SetSelUnit(unitType, LevelTypes.Second);
                 }
-                else if (InvUnitsC.Have(unitType, LevelTypes.First, WhoseMoveC.CurPlayerI))
+                else if (EntInventorUnits.Units<AmountC>(unitType, LevelTypes.First, EntWhoseMove.CurPlayerI).Have)
                 {
                     ClickerObject<CellClickC>().Set(CellClickTypes.SetUnit);
-                    SelUnitC.SetSelUnit(unitType, LevelTypes.First);
+                    SelectedUnitEnt.SetSelUnit(unitType, LevelTypes.First);
                 }
                 else
                 {
-                    GetterUnitsC.ActiveNeedCreateButton(unitType, true);
+                    GetterUnitsC.GetterUnit<IsActivatedC>(unitType).IsActivated = true;
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
@@ -125,7 +126,7 @@ namespace Game.Game
         {
             SelIdx<IdxC>().Reset();
 
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 if (tWType == TWTypes.Pick)
                 {
@@ -138,36 +139,36 @@ namespace Game.Game
 
                 if (ClickerObject<CellClickC>().Is(CellClickTypes.GiveTakeTW))
                 {
-                    if (tWType == TWTypes.Shield)
-                    {
-                        if (TwGiveTakeC.TWTypeForGive == tWType)
-                        {
-                            if (TwGiveTakeC.Level(tWType) == LevelTypes.First) TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
-                            else TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
-                        }
-                        else
-                        {
-                            TwGiveTakeC.Set(tWType);
-                            TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
-                        }
-                    }
-                    else
-                    {
-                        TwGiveTakeC.Set(tWType);
-                        TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
-                    }
+                    //if (tWType == TWTypes.Shield)
+                    //{
+                    //    if (TwGiveTakeC.TWTypeForGive == tWType)
+                    //    {
+                    //        if (TwGiveTakeC.Level(tWType) == LevelTypes.First) TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
+                    //        else TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
+                    //    }
+                    //    else
+                    //    {
+                    //        TwGiveTakeC.Set(tWType);
+                    //        TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    TwGiveTakeC.Set(tWType);
+                    //    TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
+                    //}
                 }
                 else
                 {
-                    ClickerObject<CellClickC>().Set(CellClickTypes.GiveTakeTW);
-                    TwGiveTakeC.Set(tWType);
+                    //ClickerObject<CellClickC>().Set(CellClickTypes.GiveTakeTW);
+                    //TwGiveTakeC.Set(tWType);
 
-                    if (tWType == TWTypes.Shield)
-                    {
-                        //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
-                        //SelectorC.LevelTWType = LevelTWTypes.Wood;
-                    }
-                    else TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
+                    //if (tWType == TWTypes.Shield)
+                    //{
+                    //    //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
+                    //    //SelectorC.LevelTWType = LevelTWTypes.Wood;
+                    //}
+                    //else TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
@@ -177,7 +178,7 @@ namespace Game.Game
         {
             SelIdx<IdxC>().Reset();
 
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
                 ClickerObject<CellClickC>().Set(CellClickTypes.UpgradeUnit);
@@ -190,12 +191,12 @@ namespace Game.Game
         {
             if (Common.HintC.IsOnHint)
             {
-                if (!HintC.WasActived(videoClip))
-                {
-                    //EntityCenterHintUIPool.SetActiveHintZone(true);
-                    //EntityCenterHintUIPool.SetVideoClip(videoClip);
-                    HintC.SetWasActived(videoClip, true);
-                }
+                //if (!HintC.WasActived(videoClip))
+                //{
+                //    //EntityCenterHintUIPool.SetActiveHintZone(true);
+                //    //EntityCenterHintUIPool.SetVideoClip(videoClip);
+                //    HintC.SetWasActived(videoClip, true);
+                //}
             }
         }
     }

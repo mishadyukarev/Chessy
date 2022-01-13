@@ -9,7 +9,7 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                if (Unit<ConditionC>(idx_0).Is(ConditionUnitTypes.Relaxed))
+                if (Unit<ConditionUnitC>(idx_0).Is(ConditionUnitTypes.Relaxed))
                 {
                     Unit<UnitCellEC>(idx_0).SetMaxHp();
                 }

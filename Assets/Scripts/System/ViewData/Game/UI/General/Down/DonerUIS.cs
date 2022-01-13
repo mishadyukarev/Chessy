@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Common;
+using UnityEngine;
 
 namespace Game.Game
 {
@@ -6,7 +7,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 UIEntDownDoner.Wait<GameObjectVC>().SetActive(false);
                 UIEntDownDoner.Doner<ButtonUIC>().Color = Color.white;

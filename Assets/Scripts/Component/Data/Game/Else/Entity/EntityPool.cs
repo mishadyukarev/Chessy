@@ -8,13 +8,15 @@ namespace Game.Game
     {
         readonly static Dictionary<string, Entity> _ents;
         static Entity _background;
-        static Dictionary<bool, Entity> _whoseMove;
+
         static Entity _winner;
         static Dictionary<PlayerTypes, Entity> _ready;
         static Entity _gameInfo;
         static Entity _motionZone;
         static Entity _friendZone;
         static Entity _infoEnvironment;
+        static Dictionary<string, Entity> _scoutHeroCooldown;
+
 
         public static ref C SelIdx<C>() where C : struct, ISelectedIdx => ref _ents[nameof(ISelectedIdx)].Get<C>();
         public static ref C CurIdx<C>() where C : struct, ICurrectIdx => ref _ents[nameof(ICurrectIdx)].Get<C>();
@@ -23,25 +25,29 @@ namespace Game.Game
         public static ref C ClickerObject<C>() where C : struct, IClickerObjectE => ref _ents[nameof(IClickerObjectE)].Get<C>();
         public static ref C Rpc<C>() where C : struct, IRpc => ref _ents[nameof(Rpc)].Get<C>();
         public static ref C Background<C>() where C : struct => ref _background.Get<C>();
-        public static ref C WhoseMove<C>(in bool isOffline) where C : struct => ref _whoseMove[isOffline].Get<C>();
         public static ref C Winner<C>() where C : struct => ref _winner.Get<C>();
         public static ref C Ready<C>(in PlayerTypes player) where C : struct => ref _ready[player].Get<C>();
         public static ref C GameInfo<C>() where C : struct => ref _gameInfo.Get<C>();
         public static ref C MotionZone<C>() where C : struct => ref _motionZone.Get<C>();
         public static ref C FriendZone<C>() where C : struct => ref _friendZone.Get<C>();
         public static ref C EnvironmentInfo<C>() where C : struct => ref _infoEnvironment.Get<C>();
-
+        public static ref C ScoutHeroCooldown<C>(in UnitTypes unit, in PlayerTypes player) where C : struct => ref _scoutHeroCooldown[unit.ToString() + player].Get<C>();
+        
         static EntityPool()
         {
             _ents = new Dictionary<string, Entity>();
-            _whoseMove = new Dictionary<bool, Entity>();
             _ready = new Dictionary<PlayerTypes, Entity>();
+            _scoutHeroCooldown = new Dictionary<string, Entity>();
 
-            _whoseMove.Add(true, default);
-            _whoseMove.Add(false, default);
 
-            for (var player = PlayerTypes.Start; player <= PlayerTypes.End; player++)
+
+            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            {
                 _ready.Add(player, default);
+
+                _scoutHeroCooldown.Add(UnitTypes.Scout.ToString() + player, default);
+                _scoutHeroCooldown.Add(UnitTypes.Elfemale.ToString() + player, default);
+            }
         }
 
         public EntityPool(in EcsWorld gameW, in string nameBackground, in List<object> actions, in List<string> namesMethods)
@@ -55,11 +61,10 @@ namespace Game.Game
                 .Add(new IdxC(0));
 
             _ents[nameof(IPreVisionIdx)] = gameW.NewEntity()
-                .Add(new PreVisIdxC())
                 .Add(new IdxC(0));
 
             _ents[nameof(IInputE)] = gameW.NewEntity()
-                .Add(new ClickC());
+                .Add(new IsClickedC());
 
             _ents[nameof(IClickerObjectE)] = gameW.NewEntity()
                 .Add(new CellClickC(CellClickTypes.SimpleClick))
@@ -70,12 +75,6 @@ namespace Game.Game
 
             _background = gameW.NewEntity()
                 .Add(new NameC(nameBackground));
-
-            _whoseMove[true] = gameW.NewEntity()
-                .Add(new PlayerC());
-
-            _whoseMove[false] = gameW.NewEntity()
-                .Add(new PlayerC());
 
             _winner = gameW.NewEntity()
                 .Add(new PlayerC());
@@ -100,41 +99,15 @@ namespace Game.Game
             _infoEnvironment = gameW.NewEntity()
                 .Add(new IsActivatedC(false));
 
-            new WhoseMoveC(true);
 
+            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            {
+                _scoutHeroCooldown[UnitTypes.Scout.ToString() + player] = gameW.NewEntity()
+                    .Add(new CooldownC());
 
-            new WindC(DirectTypes.Right);
-
-
-            BuildsUpgC.Start();
-            UnitUpgC.StartGame();
-            new UnitAvailPickUpgC(true);
-            new BuildAvailPickUpgC(new Dictionary<string, bool>());
-            new WaterAvailPickUpgC(new Dictionary<PlayerTypes, bool>());
-
-
-            new SetUnitCellsC(true);
-            new AttackCellsC(true);
-            new CellsGiveTWC(true);
-
-            new WhereEnvC(true);
-            new WhereUnitsC(true);
-            new WhereBuildsC(true);
-
-            new InvUnitsC(true);
-            new InvResC(true);
-            new InvTWC(true);
-
-
-            
-            new ScoutHeroCooldownC(true);
-
-            new MistakeC(new Dictionary<ResTypes, int>());
-
-            new HintC(new Dictionary<VideoClipTypes, bool>());
-            new PickUpgC(new Dictionary<PlayerTypes, bool>());
-            new GetterUnitsC(new Dictionary<UnitTypes, bool>());
-            new BuildAbilC(true);
+                _scoutHeroCooldown[UnitTypes.Elfemale.ToString() + player] = gameW.NewEntity()
+                    .Add(new CooldownC());
+            }
         }
     }
 

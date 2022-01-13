@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            DirectWind<DirWindUIC>().SetEulerRot(WhoseMoveC.CurPlayerI, WindC.CurDirWind);
+            //DirectWind<DirWindUIC>().SetEulerRot(EntWhoseMove.CurPlayerI, WindC.CurDirWind);
         }
     }
 }

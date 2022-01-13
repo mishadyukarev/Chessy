@@ -1,4 +1,5 @@
-﻿using static Game.Game.UIEntDownToolWeapon;
+﻿using Game.Common;
+using static Game.Game.UIEntDownToolWeapon;
 
 namespace Game.Game
 {
@@ -20,9 +21,9 @@ namespace Game.Game
             //    }
 
 
-            Button<TextUIC>(TWTypes.Pick).Text = InvTWC.Amount(TWTypes.Pick, LevelTypes.Second, WhoseMoveC.CurPlayerI).ToString();
-            Button<TextUIC>(TWTypes.Sword).Text = InvTWC.Amount(TWTypes.Sword, LevelTypes.Second, WhoseMoveC.CurPlayerI).ToString();
-            Button<TextUIC>(TWTypes.Shield).Text = InvTWC.Amount(TWTypes.Shield, TwGiveTakeC.Level(TWTypes.Shield), WhoseMoveC.CurPlayerI).ToString();
+            //Button<TextUIC>(TWTypes.Pick).Text = EntInventorToolWeapon.ToolWeapons<AmountC>(TWTypes.Pick, LevelTypes.Second, EntWhoseMove.CurPlayerI).Amount.ToString();
+            //Button<TextUIC>(TWTypes.Sword).Text = EntInventorToolWeapon.ToolWeapons<AmountC>(TWTypes.Sword, LevelTypes.Second, EntWhoseMove.CurPlayerI).Amount.ToString();
+            //Button<TextUIC>(TWTypes.Shield).Text = EntInventorToolWeapon.ToolWeapons<AmountC>(TWTypes.Shield, TwGiveTakeC.Level(TWTypes.Shield), EntWhoseMove.CurPlayerI).Amount.ToString();
         }
     }
 }

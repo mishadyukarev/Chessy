@@ -8,13 +8,13 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Build<BuildC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Build<BuildingC>(SelIdx<IdxC>().Idx);
             ref var own_sel = ref Build<PlayerC>(SelIdx<IdxC>().Idx);
 
 
             if (SelIdx<SelIdxEC>().IsSelCell && unit_sel.Is(BuildTypes.City))
             {
-                if (own_sel.Is(WhoseMoveC.CurPlayerI))
+                if (own_sel.Is(EntWhoseMove.CurPlayerI))
                 {
                     Melt<ButtonUIC>().SetActiveParent(true);
                 }

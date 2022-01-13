@@ -25,10 +25,10 @@ namespace Game.Game
                 Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(true);
 
 
-                Stat<TextUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Hp.ToString();
-                Stat<TextUIC>(UnitStatTypes.Damage).Text = Unit<UnitCellEC>(selIdx).DamageOnCell.ToString();
-                Stat<TextUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Steps.ToString();
-                Stat<TextUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Water.ToString();
+                Stat<TextMPUGUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Hp.ToString();
+                Stat<TextMPUGUIC>(UnitStatTypes.Damage).Text = Unit<UnitCellEC>(selIdx).DamageOnCell.ToString();
+                Stat<TextMPUGUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Steps.ToString();
+                Stat<TextMPUGUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Water.ToString();
 
                 //UIEntRightStats.FillAmount(UnitStatTypes.Hp, hpUnit_sel.Hp, UnitCellEC.MAX_HP);
 

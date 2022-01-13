@@ -6,9 +6,9 @@ namespace Game.Game
     {
         public string Text
         {
-            set => Motion<TextUIC>().Text = value;
+            set => Motion<TextMPUGUIC>().Text = value;
         }
 
-        public void SetActiveParent(in bool isActive) => Motion<TextUIC>().Parent_G.SetActive(isActive);
+        public void SetActiveParent(in bool isActive) => Motion<TextMPUGUIC>().Parent_G.SetActive(isActive);
     }
 }

@@ -14,8 +14,8 @@ namespace Game.Game
 
 
         public byte Max() => _values.MaxAmount(_env);
-        public bool Have() => Environment<ResourcesC>(_env, _idx).Resources > 0;
-        public bool HaveMax() => Environment<ResourcesC>(_env, _idx).Resources >= Max();
+        public bool Have() => Environment<AmountResourcesC>(_env, _idx).Resources > 0;
+        public bool HaveMax() => Environment<AmountResourcesC>(_env, _idx).Resources >= Max();
 
 
         internal EnvCellEC(in byte idx, in EnvTypes env)
@@ -42,10 +42,10 @@ namespace Game.Game
                 randAmountRes = (byte)(_values.MaxAmount(_env) / forMin);
             }
 
-            Environment<ResourcesC>(_env, _idx).Resources = randAmountRes;
+            Environment<AmountResourcesC>(_env, _idx).Resources = randAmountRes;
 
 
-            WhereEnvC.Set(_env, _idx, true);
+            EntWhereEnviroments.HaveEnv<HaveEnvC>(_env, _idx).Have = true;
             Environment<HaveEnvironmentC>(_env, _idx).Have = true;
         }
         public void Remove()
@@ -60,42 +60,42 @@ namespace Game.Game
                     Fire<HaveEffectC>(_idx).Disable();
                 }
 
-                Environment<ResourcesC>(_env, _idx).Resources = 0;
+                Environment<AmountResourcesC>(_env, _idx).Resources = 0;
 
-                WhereEnvC.Set(_env, _idx, false);
+                EntWhereEnviroments.HaveEnv<HaveEnvC>(_env, _idx).Have = false;
                 Environment<HaveEnvironmentC>(_env, _idx).Have = false;
             }
         }
         public void SetMax()
         {
-            Environment<ResourcesC>(_env, _idx).Resources = Max();
+            Environment<AmountResourcesC>(_env, _idx).Resources = Max();
         }
         public void Add(in int adding = 1)
         {
             if (adding == 0) throw new Exception();
             if (adding < 0) throw new Exception();
 
-            Environment<ResourcesC>(_env, _idx).Resources += adding;
+            Environment<AmountResourcesC>(_env, _idx).Resources += adding;
 
-            if (Environment<ResourcesC>(_env, _idx).Resources > Max()) Environment<ResourcesC>(_env, _idx).Resources = Max();
+            if (Environment<AmountResourcesC>(_env, _idx).Resources > Max()) Environment<AmountResourcesC>(_env, _idx).Resources = Max();
         }
         public void AddMax()
         {
-            Environment<ResourcesC>(_env, _idx).Resources += Max();
+            Environment<AmountResourcesC>(_env, _idx).Resources += Max();
         }
         public void Take(in int taking = 1)
         {
             if (taking == 0) throw new Exception();
             if (taking < 0) throw new Exception();
 
-            Environment<ResourcesC>(_env, _idx).Resources -= taking;
+            Environment<AmountResourcesC>(_env, _idx).Resources -= taking;
 
-            if (Environment<ResourcesC>(_env, _idx).Resources < 0) Environment<ResourcesC>(_env, _idx).Resources = 0;
+            if (Environment<AmountResourcesC>(_env, _idx).Resources < 0) Environment<AmountResourcesC>(_env, _idx).Resources = 0;
         }
 
         public void Sync(in int amount)
         {
-            Environment<ResourcesC>(_env, _idx).Resources = amount;
+            Environment<AmountResourcesC>(_env, _idx).Resources = amount;
         }
 
     }

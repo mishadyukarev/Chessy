@@ -8,7 +8,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            ForGrowAdultForestMC.Get(out var idx_0);
+            var idx_0 = EntityMPool.GrowAdultForest<IdxC>().Idx;
             UniqueAbilityMC.Get(out var uniq_cur);
 
             var sender = InfoC.Sender(MGOTypes.Master);

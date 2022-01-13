@@ -11,10 +11,12 @@ namespace Game.Game
         {
             if (SelIdx<SelIdxEC>().IsSelCell)
             {
+                var idx_sel = SelIdx<IdxC>().Idx;
+
                 ref var selUnitDatCom = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
                 ref var selOwnUnitCom = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
 
-                ref var selBuildDatCom = ref Build<BuildC>(SelIdx<IdxC>().Idx);
+                ref var selBuildDatCom = ref Build<BuildingC>(SelIdx<IdxC>().Idx);
                 ref var ownBuildC_sel = ref Build<PlayerC>(SelIdx<IdxC>().Idx);
 
                 var needActiveThirdButt = false;
@@ -22,40 +24,40 @@ namespace Game.Game
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    if (selOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
+                    if (selOwnUnitCom.Is(EntWhoseMove.CurPlayerI))
                     {
                         if (selBuildDatCom.Have)
                         {
-                            if (ownBuildC_sel.Is(WhoseMoveC.CurPlayerI))
+                            if (ownBuildC_sel.Is(EntWhoseMove.CurPlayerI))
                             {
-                                if (!WhereBuildsC.IsSetted(BuildTypes.City, WhoseMoveC.CurPlayerI))
-                                {
-                                    needActiveThirdButt = true;
-                                    UIEntBuild.Button<ImageUIC>(BuildButtonTypes.Third).Sprite = SpritesResC.Sprite(SpriteTypes.City);
-                                    BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
-                                }
+                                //if (!EntWhereBuilds.IsSetted(BuildTypes.City, WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI))
+                                //{
+                                //    needActiveThirdButt = true;
+                                //    UIEntBuild.Button<ImageUIC>(ButtonTypes.Third).Sprite = SpritesResC.Sprite(SpriteTypes.City);
+                                //    UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build = BuildTypes.City;
+                                //}
                             }
                             else
                             {
                                 needActiveThirdButt = true;
-                                UIEntBuild.Button<ImageUIC>(BuildButtonTypes.Third).Sprite = SpritesResC.Sprite(SpriteTypes.CityNone);
-                                BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.Destroy);
+                                UIEntBuild.Button<ImageUIC>(ButtonTypes.Third).Sprite = SpritesResC.Sprite(SpriteTypes.CityNone);
+                                UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build = BuildTypes.None;
                             }
                         }
 
                         else
                         {
-                            if (!WhereBuildsC.IsSetted(BuildTypes.City, WhoseMoveC.CurPlayerI))
-                            {
-                                needActiveThirdButt = true;
-                                UIEntBuild.Button<ImageUIC>(BuildButtonTypes.Third).Sprite = SpritesResC.Sprite(SpriteTypes.City);
-                                BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
-                            }
+                            //if (!EntWhereBuilds.IsSetted(BuildTypes.City, WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI))
+                            //{
+                            //    needActiveThirdButt = true;
+                            //    UIEntBuild.Button<ImageUIC>(ButtonTypes.Third).Sprite = SpritesResC.Sprite(SpriteTypes.City);
+                            //    UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build = BuildTypes.City;
+                            //}
                         }
                     }
                 }
 
-                UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.Third).SetActive(needActiveThirdButt);
+                UIEntBuild.Button<ButtonUIC>(ButtonTypes.Third).SetActive(needActiveThirdButt);
             }
         }
     }

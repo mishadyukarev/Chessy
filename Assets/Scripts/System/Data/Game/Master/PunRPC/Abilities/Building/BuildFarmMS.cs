@@ -11,50 +11,50 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            BuildDoingMC.Get(out var buildType);
-            IdxDoingMC.Get(out var idx_0);
+            var buildType = EntityMPool.Build<BuildingC>().Build;
+            var idx_0 = EntityMPool.Build<IdxC>().Idx;
 
             ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-            ref var build_0 = ref Build<BuildC>(idx_0);
+            ref var build_0 = ref Build<BuildingC>(idx_0);
             ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
-            var whoseMove = WhoseMoveC.WhoseMove;
+            //var whoseMove = WhoseMoveC.WhoseMove;
 
 
 
-            if (buildType == BuildTypes.Farm)
-            {
-                if (buildCell_0.CanBuild(buildType, whoseMove, out var mistake, out var needRes))
-                {
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
+            //if (buildType == BuildTypes.Farm)
+            //{
+            //    if (buildCell_0.CanBuild(buildType, whoseMove, out var mistake, out var needRes))
+            //    {
+            //        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
 
-                    Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
+            //        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
 
-                    if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
-                    {
-                        Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).AddMax();
-                    }
-                    else
-                    {
-                        Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).SetNew();
-                    }
+            //        if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
+            //        {
+            //            Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).AddMax();
+            //        }
+            //        else
+            //        {
+            //            Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).SetNew();
+            //        }
 
-                    InvResC.BuyBuild(whoseMove, buildType);
+            //        //InvResC.BuyBuild(whoseMove, buildType);
 
 
-                    buildCell_0.SetNew(buildType, whoseMove);
+            //        buildCell_0.SetNew(buildType, whoseMove);
 
-                    stepUnit_0.Take(buildType);
-                }
+            //        stepUnit_0.Take(buildType);
+            //    }
 
-                else
-                {
-                    if (mistake == MistakeTypes.Economy) EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-                    else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(mistake, sender);
-                }
-            }
+            //    else
+            //    {
+            //        if (mistake == MistakeTypes.Economy) EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+            //        else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(mistake, sender);
+            //    }
+            //}
         }
     }
 }

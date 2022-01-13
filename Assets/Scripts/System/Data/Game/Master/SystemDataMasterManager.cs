@@ -46,10 +46,10 @@ namespace Game.Game
             _rpcSysts.Add(RpcMasterTypes.ConditionUnit, new ConditionMS().Run);
             _rpcSysts.Add(RpcMasterTypes.Ready, new ReadyMS().Run);
             _rpcSysts.Add(RpcMasterTypes.Done, new DonerMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.CreateUnit, new CreateUnitMastSys().Run);
+            _rpcSysts.Add(RpcMasterTypes.CreateUnit, new CreateUnitMS().Run);
             _rpcSysts.Add(RpcMasterTypes.MeltOre, new MeltOreMS().Run);
             _rpcSysts.Add(RpcMasterTypes.SetUnit, new SetterUnitMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.BuyRes, new BuyResMastS().Run);
+            _rpcSysts.Add(RpcMasterTypes.BuyRes, new BuyResMS().Run);
             _rpcSysts.Add(RpcMasterTypes.UpgradeUnit, new UpgUnitMS().Run);
             _rpcSysts.Add(RpcMasterTypes.ToNewUnit, new ScoutOldNewSys().Run);
             _rpcSysts.Add(RpcMasterTypes.GiveTakeToolWeapon, new GiveTakeTWMasSys().Run);

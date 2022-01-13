@@ -11,15 +11,15 @@ namespace Game.Game
             foreach (var idx_0 in Idxs)
             {
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var build_0 = ref Build<BuildC>(idx_0);
+                ref var build_0 = ref Build<BuildingC>(idx_0);
                 ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
 
                 if (buildCell_0.CanExtract(out var extract, out var env, out var res))
                 {
-                    Environment<ResourcesC>(env, idx_0).Resources -= extract;
-                    InvResC.Add(res, ownBuild_0.Player, extract);
+                    Environment<AmountResourcesC>(env, idx_0).Resources -= extract;
+                    EntInventorResources.Resource<AmountC>(res, ownBuild_0.Player).Amount += extract;
 
-                    if (!Environment<ResourcesC>(env, idx_0).Have)
+                    if (!Environment<AmountResourcesC>(env, idx_0).Have)
                     {
                         buildCell_0.Remove();
 

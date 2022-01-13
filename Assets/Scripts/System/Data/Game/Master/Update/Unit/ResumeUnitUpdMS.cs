@@ -11,7 +11,7 @@ namespace Game.Game
             foreach (var idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 {
@@ -21,7 +21,7 @@ namespace Game.Game
                     }
                     else
                     {
-                        Environment<ResourcesC>(env, idx_0).Resources += resume;
+                        Environment<AmountResourcesC>(env, idx_0).Resources += resume;
                     }
                 }
                 else if (!Unit<UnitCellEC>(idx_0).CanExtract(out resume, out env, out var res))

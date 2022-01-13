@@ -44,7 +44,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (own_0.Is(WhoseMoveC.CurPlayerI))
+                    if (own_0.Is(EntWhoseMove.CurPlayerI))
                     {
                         if (cellClick.Is(CellClickTypes.GiveTakeTW, CellClickTypes.GiveScout))
                         {
@@ -76,7 +76,7 @@ namespace Game.Game
 
                     else
                     {
-                        if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, idx_0).IsVisibled)
+                        if (Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, idx_0).IsVisibled)
                         {
                             if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                             {
@@ -96,7 +96,7 @@ namespace Game.Game
                 {
                     if (SelUniqAbilC.Is(UniqueAbilityTypes.FireArcher))
                     {
-                        if (unitE_0.CanArson(WhoseMoveC.CurPlayerI, idx_0))
+                        if (unitE_0.CanArson(EntWhoseMove.CurPlayerI, idx_0))
                         {
                             EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
                         }
@@ -109,37 +109,37 @@ namespace Game.Game
             {
                 if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirWind))
                 {
-                    foreach (var item in WindC.Directs)
-                    {
-                        EntityCellVPool.ElseCellVE<SupportVC>(item.Value).EnableSR(SupVisTypes.Spawn);
-                    }
+                    //foreach (var item in WindC.Directs)
+                    //{
+                    //    EntityCellVPool.ElseCellVE<SupportVC>(item.Value).EnableSR(SupVisTypes.Spawn);
+                    //}
                 }
             }
 
             else if (cellClick.Is(CellClickTypes.SetUnit))
             {
-                foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.CurPlayerI))
-                {
-                    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.Spawn);
-                }
+                //foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI))
+                //{
+                //    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.Spawn);
+                //}
             }
 
             else
             {
-                //foreach (var idx_0 in ShiftCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
+                //foreach (var idx_0 in ShiftCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, SelIdx.Idx))
                 //{
                 //    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.Shift);
                 //}
 
-                foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Simple, SelIdx<IdxC>().Idx))
-                {
-                    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.SimpleAttack);
-                }
+                //foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, AttackTypes.Simple, SelIdx<IdxC>().Idx))
+                //{
+                //    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.SimpleAttack);
+                //}
 
-                foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelIdx<IdxC>().Idx))
-                {
-                    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.UniqueAttack);
-                }
+                //foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, AttackTypes.Unique, SelIdx<IdxC>().Idx))
+                //{
+                //    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.UniqueAttack);
+                //}
             }
         }
     }

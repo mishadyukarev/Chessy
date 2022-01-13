@@ -6,8 +6,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (Input.GetMouseButtonDown(0)) EntityPool.Input<ClickC>().IsClicked = true;
-            else EntityPool.Input<ClickC>().IsClicked = false;
+            if (Input.GetMouseButtonDown(0)) EntityPool.Input<IsClickedC>().IsClicked = true;
+            else EntityPool.Input<IsClickedC>().IsClicked = false;
         }
     }
 }

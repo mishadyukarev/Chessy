@@ -17,23 +17,23 @@ namespace Game.Game
 
                 if (unit_cur.Have)
                 {
-                    if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx).IsVisibled)
+                    if (Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, CurIdx<IdxC>().Idx).IsVisibled)
                     {
                         mainUnit_pre.SetEnabled(true);
-                        mainUnit_pre.SetSprite(SelUnitC.Unit, SelUnitC.Level, false);
+                        mainUnit_pre.SetSprite(SelectedUnitEnt.Unit, SelectedUnitEnt.Level, false);
                     }
 
                     else
                     {
                         mainUnit_cur.SetEnabled(true);
-                        mainUnit_cur.SetSprite(SelUnitC.Unit, SelUnitC.Level, false);
+                        mainUnit_cur.SetSprite(SelectedUnitEnt.Unit, SelectedUnitEnt.Level, false);
                     }
                 }
 
                 else
                 {
                     mainUnit_cur.SetEnabled(true);
-                    mainUnit_cur.SetSprite(SelUnitC.Unit, SelUnitC.Level, false);
+                    mainUnit_cur.SetSprite(SelectedUnitEnt.Unit, SelectedUnitEnt.Level, false);
                 }
             }
         }

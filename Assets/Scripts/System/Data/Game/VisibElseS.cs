@@ -3,6 +3,7 @@ using static Game.Game.EntCellUnit;
 using static Game.Game.EntityCellTrailPool;
 using static Game.Game.EntityCellBuildPool;
 using static Game.Game.EntityCellEnvPool;
+using Game.Common;
 
 namespace Game.Game
 {
@@ -19,7 +20,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    Unit<VisibledC>(ownUnit_0.Player, idx_0).IsVisibled = true;
+                    Unit<IsVisibledC>(ownUnit_0.Player, idx_0).IsVisibled = true;
 
                     if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                     {
@@ -44,21 +45,21 @@ namespace Game.Game
                             }
                         }
 
-                        Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisibled = isVisibledNextPlayer;
+                        Unit<IsVisibledC>(EntWhoseMove.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisibled = isVisibledNextPlayer;
                     }
                     else
                     {
-                        Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisibled = true;
+                        Unit<IsVisibledC>(EntWhoseMove.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisibled = true;
                     }
 
                 }
 
-                ref var curBuildCom = ref Build<BuildC>(idx_0);
+                ref var curBuildCom = ref Build<BuildingC>(idx_0);
 
                 if (curBuildCom.Have)
                 {
                     ref var curOwnBuildCom = ref Build<PlayerC>(idx_0);
-                    ref var curVisBuildCom = ref Build<VisibledC>(curOwnBuildCom.Player, idx_0);
+                    ref var curVisBuildCom = ref Build<IsVisibledC>(curOwnBuildCom.Player, idx_0);
 
                     curVisBuildCom.IsVisibled = true;
 
@@ -84,9 +85,9 @@ namespace Game.Game
                                 }
                             }
                         }
-                        Build<VisibledC>(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Player), idx_0).IsVisibled = isVisibledNextPlayer;
+                        Build<IsVisibledC>(EntWhoseMove.NextPlayerFrom(curOwnBuildCom.Player), idx_0).IsVisibled = isVisibledNextPlayer;
                     }
-                    else Build<VisibledC>(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Player), idx_0).IsVisibled = true;
+                    else Build<IsVisibledC>(EntWhoseMove.NextPlayerFrom(curOwnBuildCom.Player), idx_0).IsVisibled = true;
                 }
 
 
@@ -96,10 +97,10 @@ namespace Game.Game
                 {
                     var list = CellSpaceC.XyAround(xy);
 
-                    Trail<VisibledC>(WhoseMoveC.NextPlayerFrom(PlayerTypes.First), idx_0).IsVisibled = false;
-                    Trail<VisibledC>(WhoseMoveC.NextPlayerFrom(PlayerTypes.Second), idx_0).IsVisibled = false;
+                    Trail<IsVisibledC>(EntWhoseMove.NextPlayerFrom(PlayerTypes.First), idx_0).IsVisibled = false;
+                    Trail<IsVisibledC>(EntWhoseMove.NextPlayerFrom(PlayerTypes.Second), idx_0).IsVisibled = false;
 
-                    if (unit_0.Have) Trail<VisibledC>(ownUnit_0.Player, idx_0).IsVisibled = true;
+                    if (unit_0.Have) Trail<IsVisibledC>(ownUnit_0.Player, idx_0).IsVisibled = true;
 
                     foreach (var xy_1 in list)
                     {
@@ -111,7 +112,7 @@ namespace Game.Game
 
                         if (unitCom_1.Have)
                         {
-                            Trail<VisibledC>(ownUnit_1.Player, idx_0).IsVisibled = true;
+                            Trail<IsVisibledC>(ownUnit_1.Player, idx_0).IsVisibled = true;
                         }
                     }
                 }

@@ -12,6 +12,7 @@ using static Game.Game.EntityCellCloudPool;
 using static Game.Game.EntityCellRiverPool;
 
 using static Game.Game.EntitySound;
+using Game.Common;
 
 namespace Game.Game
 {
@@ -66,8 +67,8 @@ namespace Game.Game
                         break;
 
                     case UniqueAbilityTypes.Seed:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
-                        EnvDoingMC.Set((EnvTypes)objects[_idx_cur++]);
+                        EntityMPool.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntityMPool.Seed<EnvironmetC>().Environment = (EnvTypes)objects[_idx_cur++];
                         break;
 
                     case UniqueAbilityTypes.FireArcher:
@@ -75,7 +76,7 @@ namespace Game.Game
                         break;
 
                     case UniqueAbilityTypes.GrowAdultForest:
-                        ForGrowAdultForestMC.Set((byte)objects[_idx_cur++]);
+                        EntityMPool.GrowAdultForest<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case UniqueAbilityTypes.StunElfemale:
@@ -111,8 +112,8 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Build:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
-                        BuildDoingMC.Set((BuildTypes)objects[_idx_cur++]);
+                        EntityMPool.Build<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntityMPool.Build<BuildingC>().Build = (BuildTypes)objects[_idx_cur++];        
                         break;
 
                     case RpcMasterTypes.DestroyBuild:
@@ -128,8 +129,8 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        CondDoingMC.Set((ConditionUnitTypes)objects[_idx_cur++]);
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        EntityMPool.ConditionUnit<ConditionUnitC>().Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                        EntityMPool.ConditionUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.CreateUnit:
@@ -145,7 +146,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.BuyRes:
-                        ForBuyResMasC.Res = (ResTypes)objects[_idx_cur++];
+                        EntityMPool.BuyResources<ResourceTypeC>().Resource = (ResTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ToNewUnit:
@@ -176,7 +177,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.UpgBuilds:
-                        BuildDoingMC.Set((BuildTypes)objects[_idx_cur++]);
+                        //BuildDoingMC.Set((BuildTypes)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.UpgWater:
@@ -207,20 +208,24 @@ namespace Game.Game
 
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_idx_cur++];
-                    MistakeC.MistakeType = mistakeType;
-                    MistakeC.CurTime = default;
+                    EntMistakeC.Mistake<MistakeC>().Mistake = mistakeType;
+                    EntMistakeC.Mistake<TimerC>().Reset();
 
                     if (mistakeType == MistakeTypes.Economy)
                     {
-                        MistakeC.ClearAllNeeds();
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = default;
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = default;
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = default;
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = default;
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = default;
 
                         var needRes = (int[])objects[_idx_cur++];
 
-                        MistakeC.AddNeedRes(ResTypes.Food, needRes[0]);
-                        MistakeC.AddNeedRes(ResTypes.Wood, needRes[1]);
-                        MistakeC.AddNeedRes(ResTypes.Ore, needRes[2]);
-                        MistakeC.AddNeedRes(ResTypes.Iron, needRes[3]);
-                        MistakeC.AddNeedRes(ResTypes.Gold, needRes[4]);
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = needRes[0];
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = needRes[1];
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = needRes[2];
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = needRes[3];
+                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = needRes[4];
                     }
 
                     Sound<ActionC>(ClipTypes.Mistake).Invoke();
@@ -264,7 +269,7 @@ namespace Game.Game
                 objs.Add(Unit<StepC>(idx_0).Steps);
                 objs.Add(Unit<WaterC>(idx_0).Water);
 
-                objs.Add(Unit<ConditionC>(idx_0).Condition);
+                objs.Add(Unit<ConditionUnitC>(idx_0).Condition);
                 foreach (var item in Stats) objs.Add(Unit<HaveEffectC>(item, idx_0).Have);
 
 
@@ -272,10 +277,9 @@ namespace Game.Game
                 objs.Add(UnitTW<LevelC>(idx_0).Level);
                 objs.Add(UnitTW<ProtectionC>(idx_0).Protection);
 
-                objs.Add(Unit<StunC>(idx_0).IsStunned);
-                objs.Add(Unit<StunC>(idx_0).StepsInStun);
+                objs.Add(Unit<NeedStepsForExitStunC>(idx_0).Steps);
 
-                objs.Add(Unit<CornerArcherC>(idx_0).IsCornered);
+                objs.Add(Unit<IsCornedArcherC>(idx_0).IsCornered);
 
                 foreach (var item in Unique) objs.Add(Unit<CooldownC>(item, idx_0).Cooldown);
 
@@ -283,7 +287,7 @@ namespace Game.Game
 
 
 
-                objs.Add(Build<BuildC>(idx_0).Build);
+                objs.Add(Build<BuildingC>(idx_0).Build);
                 objs.Add(Build<PlayerC>(idx_0).Player);
 
 
@@ -291,7 +295,7 @@ namespace Game.Game
                 foreach (var env in Enviroments)
                 {
                     objs.Add(Environment<HaveEnvironmentC>(env, idx_0));
-                    objs.Add(Environment<ResourcesC>(env, idx_0));
+                    objs.Add(Environment<AmountResourcesC>(env, idx_0));
                 }
 
 
@@ -315,42 +319,45 @@ namespace Game.Game
 
             }
 
-
-            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns) objs.Add(item_0.Value);
-
-
-            foreach (var item_0 in UnitUpgC.Upgrades) objs.Add(item_0.Value);
-            foreach (var item_0 in BuildsUpgC.HaveUpgrades) objs.Add(item_0.Value);
+            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.First));
+            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.Second));
+            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.First));
+            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.Second));
 
 
-            foreach (var item_0 in InvResC.Resources) objs.Add(item_0.Value);
-            foreach (var item_0 in InvUnitsC.Units) objs.Add(item_0.Value);
-            foreach (var item_0 in InvTWC.ToolWeapons) objs.Add(item_0.Value);
+
+            foreach (var key in EntUnitUpgrades.Keys) objs.Add(EntUnitUpgrades.Upgrade<HaveUpgradeC>(key).Have);
+            foreach (var key in BuildingUpgradesEnt.Keys) objs.Add(BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have);
 
 
-            foreach (var item in WhereUnitsC.Units) objs.Add(item.Value);
-            foreach (var item in WhereBuildsC.Cells) objs.Add(item.Value);
-            foreach (var item in WhereEnvC.Envs) objs.Add(item.Value);
+            foreach (var key in EntInventorResources.Keys) objs.Add(EntInventorResources.Resource<AmountC>(key).Amount);
+            foreach (var key in EntInventorUnits.Keys) objs.Add(EntInventorUnits.Units<AmountC>(key).Amount);
+            foreach (var key in EntInventorToolWeapon.Keys) objs.Add(EntInventorToolWeapon.ToolWeapons<AmountC>(key).Amount);
 
 
-            foreach (var item in PickUpgC.HaveUpgrades) objs.Add(item.Value);
-            foreach (var item in UnitAvailPickUpgC.Available_0) objs.Add(item.Value);
-            foreach (var item in BuildAvailPickUpgC.Available) objs.Add(item.Value);
-            foreach (var item in WaterAvailPickUpgC.Available) objs.Add(item.Value);
+            foreach (var key in EntWhereUnits.Keys) objs.Add(EntWhereUnits.HaveUnit<HaveUnitC>(key).Have);
+            foreach (var key in EntWhereBuilds.Keys) objs.Add(EntWhereBuilds.HaveBuild<HaveBuildingC>(key).Have);
+            foreach (var key in EntWhereEnviroments.Keys) objs.Add(EntWhereEnviroments.HaveEnv<HaveEnvC>(key).Have);
+
+
+            //foreach (var item in PickUpgC.HaveUpgrades) objs.Add(item.Value);
+            //foreach (var item in UnitAvailPickUpgC.Available_0) objs.Add(item.Value);
+            //foreach (var item in BuildAvailPickUpgC.Available) objs.Add(item.Value);
+            //foreach (var item in WaterAvailPickUpgC.Available) objs.Add(item.Value);
 
 
             #region Other
 
-            objs.Add(WhoseMoveC.WhoseMove);
+            objs.Add(EntWhoseMove.WhoseMove<PlayerC>().Player);
             objs.Add(EntityPool.Winner<PlayerC>().Player);
             objs.Add(EntityPool.GameInfo<IsStartedGameC>().IsStartedGame);
             objs.Add(EntityPool.Ready<IsReadyC>(PlayerTypes.Second).IsReady);
 
             objs.Add(EntityPool.GameInfo<AmountMotionsC>().Amount);
 
-            objs.Add(CloudCenterC.Idx);
-            foreach (var item in WindC.Directs) objs.Add(item.Value);
-            objs.Add(WindC.CurDirWind);
+            objs.Add(CloudEnt.Cloud<IdxC>().Idx);
+            //foreach (var item in WindC.Directs) objs.Add(item.Value);
+            //objs.Add(WindC.CurDirWind);
 
             #endregion
 
@@ -374,15 +381,15 @@ namespace Game.Game
             {
                 Unit<UnitCellEC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                Unit<ConditionC>(idx_0).Sync((ConditionUnitTypes)objects[_idx_cur++]);
+                Unit<ConditionUnitC>(idx_0).Sync((ConditionUnitTypes)objects[_idx_cur++]);
                 foreach (var item in Stats) Unit<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
                 UnitTW<UnitTWCellEC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
 
-                Unit<StunC>(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                Unit<NeedStepsForExitStunC>(idx_0).Steps = (int)objects[_idx_cur++];
 
-                Unit<CornerArcherC>(idx_0).Sync((bool)objects[_idx_cur++]);
+                Unit<IsCornedArcherC>(idx_0).IsCornered = (bool)objects[_idx_cur++];
 
                 foreach (var item in Unique) Unit<CooldownC>(item, idx_0).Cooldown = (int)objects[_idx_cur++];
 
@@ -396,7 +403,7 @@ namespace Game.Game
                 foreach (var item_0 in Enviroments)
                 {
                     Environment<HaveEnvironmentC>(item_0, idx_0).Have = (bool)objects[_idx_cur++];
-                    Environment<ResourcesC>(item_0, idx_0).Resources = (int)objects[_idx_cur++];
+                    Environment<AmountResourcesC>(item_0, idx_0).Resources = (int)objects[_idx_cur++];
                 }
 
                 ref var river_0 = ref River<RiverC>(idx_0);
@@ -417,42 +424,46 @@ namespace Game.Game
             }
 
 
-            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns) ScoutHeroCooldownC.Sync(item_0.Key, (int)objects[_idx_cur++]);
+            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.First).Cooldown = (int)objects[_idx_cur++];
+            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.Second).Cooldown = (int)objects[_idx_cur++];
+            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.First).Cooldown = (int)objects[_idx_cur++];
+            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.Second).Cooldown = (int)objects[_idx_cur++];
 
 
-            foreach (var item_0 in UnitUpgC.Upgrades) UnitUpgC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
-            foreach (var item_0 in BuildsUpgC.HaveUpgrades) BuildsUpgC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
+
+            foreach (var key in EntUnitUpgrades.Keys) EntUnitUpgrades.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
+            foreach (var key in BuildingUpgradesEnt.Keys) BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
 
 
-            foreach (var item_0 in InvResC.Resources) InvResC.Sync(item_0.Key, (int)objects[_idx_cur++]);
-            foreach (var item_0 in InvUnitsC.Units) InvUnitsC.Sync(item_0.Key, (int)objects[_idx_cur++]);
-            foreach (var item_0 in InvTWC.ToolWeapons) InvTWC.Sync(item_0.Key, (int)objects[_idx_cur++]);
+            foreach (var key in EntInventorResources.Keys) EntInventorResources.Resource<AmountC>(key).Amount = (int)objects[_idx_cur++];
+            foreach (var key in EntInventorUnits.Keys) EntInventorUnits.Units<AmountC>(key).Amount = (int)objects[_idx_cur++];
+            foreach (var key in EntInventorToolWeapon.Keys) EntInventorToolWeapon.ToolWeapons<AmountC>(key).Amount = (int)objects[_idx_cur++];
 
 
-            foreach (var item_0 in WhereUnitsC.Units) WhereUnitsC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
-            foreach (var item_0 in WhereBuildsC.Cells) WhereBuildsC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
-            foreach (var item_0 in WhereEnvC.Envs) WhereEnvC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
+            foreach (var key in EntWhereUnits.Keys) EntWhereUnits.HaveUnit<HaveUnitC>(key).Have = (bool)objects[_idx_cur++];
+            foreach (var key in EntWhereBuilds.Keys) EntWhereBuilds.HaveBuild<HaveBuildingC>(key).Have = (bool)objects[_idx_cur++];
+            foreach (var key in EntWhereEnviroments.Keys) EntWhereEnviroments.HaveEnv<HaveEnvC>(key).Have = (bool)objects[_idx_cur++];
 
 
-            foreach (var item in PickUpgC.HaveUpgrades) PickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
-            foreach (var item in UnitAvailPickUpgC.Available_0) UnitAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
-            foreach (var item in BuildAvailPickUpgC.Available) BuildAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
-            foreach (var item in WaterAvailPickUpgC.Available) WaterAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+            //foreach (var item in PickUpgC.HaveUpgrades) PickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+            //foreach (var item in UnitAvailPickUpgC.Available_0) UnitAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+            //foreach (var item in BuildAvailPickUpgC.Available) BuildAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+            //foreach (var item in WaterAvailPickUpgC.Available) WaterAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
 
 
             #region Other
 
-            WhoseMoveC.SetWhoseMove((PlayerTypes)objects[_idx_cur++]);
+            EntWhoseMove.WhoseMove<PlayerC>().Player = (PlayerTypes)objects[_idx_cur++];
             EntityPool.Winner<PlayerC>().Player = (PlayerTypes)objects[_idx_cur++];
             EntityPool.GameInfo<IsStartedGameC>().IsStartedGame = (bool)objects[_idx_cur++];
-            EntityPool.Ready<IsReadyC>(WhoseMoveC.CurPlayerI).IsReady = (bool)objects[_idx_cur++];
+            EntityPool.Ready<IsReadyC>(EntWhoseMove.CurPlayerI).IsReady = (bool)objects[_idx_cur++];
 
 
             EntityPool.GameInfo<AmountMotionsC>().Amount = (int)objects[_idx_cur++];
 
-            CloudCenterC.Sync((byte)objects[_idx_cur++]);
-            foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
-            WindC.Sync((DirectTypes)objects[_idx_cur++]);
+            CloudEnt.Cloud<IdxC>().Idx = (byte)objects[_idx_cur++];
+            //foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
+            //WindC.Sync((DirectTypes)objects[_idx_cur++]);
 
             #endregion
         }

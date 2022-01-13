@@ -17,14 +17,14 @@ namespace Game.Game
                 {
                     ref var selOnUnitCom = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
 
-                    if (selOnUnitCom.Is(WhoseMoveC.CurPlayerI))
+                    if (selOnUnitCom.Is(EntWhoseMove.CurPlayerI))
                     {
                         needActiveButton = true;
                     }
                 }
             }
 
-            UIEntBuild.Button<ButtonUIC>(BuildButtonTypes.First).SetActive(needActiveButton);
+            UIEntBuild.Button<ButtonUIC>(ButtonTypes.First).SetActive(needActiveButton);
         }
     }
 }

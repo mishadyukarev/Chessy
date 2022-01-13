@@ -20,28 +20,28 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
 
-            var whoseMove = WhoseMoveC.WhoseMove;
+            //var whoseMove = WhoseMoveC.WhoseMove;
 
             if (unitE_0.HaveMax)
             {
                 if (stepUnit_0.Have(unit_cur))
                 {
-                    if (InvResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
-                    {
-                        InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
+                    //if (InvResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
+                    //{
+                    //    InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                        Unit<UnitCellEC>(idx_0).Upgrade();
+                    //    Unit<UnitCellEC>(idx_0).Upgrade();
 
-                        stepUnit_0.Take(unit_cur);
+                    //    stepUnit_0.Take(unit_cur);
 
-                        Unit<UnitCellEC>(idx_0).SetMaxHp();
+                    //    Unit<UnitCellEC>(idx_0).SetMaxHp();
 
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.UpgradeMelee);
-                    }
-                    else
-                    {
-                        EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-                    }
+                    //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.UpgradeMelee);
+                    //}
+                    //else
+                    //{
+                    //    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                    //}
                 }
                 else
                 {

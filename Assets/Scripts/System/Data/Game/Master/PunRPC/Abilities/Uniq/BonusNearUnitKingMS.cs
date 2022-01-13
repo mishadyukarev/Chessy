@@ -16,7 +16,7 @@ namespace Game.Game
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
-            ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+            ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
 
             var sender = InfoC.Sender(MGOTypes.Master);

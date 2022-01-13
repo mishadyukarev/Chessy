@@ -1,14 +1,14 @@
-﻿namespace Game.Game
-{
-    public enum UniqueButtonTypes
-    {
-        Start,
-        None = Start,
+﻿//namespace Game.Game
+//{
+//    public enum ButtonTypes
+//    {
+//        Start,
+//        None = Start,
 
-        First,
-        Second,
-        Third,
+//        First,
+//        Second,
+//        Third,
 
-        End,
-    }
-}
+//        End,
+//    }
+//}

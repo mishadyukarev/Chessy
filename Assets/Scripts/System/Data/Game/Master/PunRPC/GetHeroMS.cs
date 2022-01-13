@@ -1,13 +1,13 @@
 ﻿namespace Game.Game
 {
-    public class GetHeroMS : IEcsRunSystem
+    struct GetHeroMS : IEcsRunSystem
     {
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             UnitDoingMC.Get(out var unit);
 
-            InvUnitsC.Add(unit, LevelTypes.First, WhoseMoveC.WhoseMove);
+            //EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, WhoseMoveC.WhoseMove).Amount += 1;
         }
     }
 }

@@ -48,14 +48,16 @@ namespace Game.Game
                 {
                     _cells[idx] = gameW.NewEntity()
                         .Add(new XyC(new byte[] { x, y }))
-                        .Add(new CellC(isActiveCells[idx], idCells[idx]));
+                        .Add(new InstanceIDC(idCells[idx]))
+                        .Add(new IsActivatedC(isActiveCells[idx]));
 
                     ++idx;
                 }
         }
 
-        public interface ICell { }
+
     }
+    public interface ICell { }
     public interface IUnitCellE { }
     public interface IUnitPlayerCellE { }
     public interface IUnitUniqueCellE { }

@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityCenterKingUIPool;
+﻿using static Game.Game.CenterKingUIE;
 
 namespace Game.Game
 {
@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (InvUnitsC.Have(UnitTypes.King, LevelTypes.First, WhoseMoveC.CurPlayerI))
+            if (EntInventorUnits.Units<AmountC>(UnitTypes.King, LevelTypes.First, EntWhoseMove.CurPlayerI).Have)
             {
                 Button<ButtonUIC>().SetActiveParent(true);
             }

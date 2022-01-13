@@ -24,7 +24,6 @@ namespace Game.Game
             _actions.Add(DataSTypes.RunAfterUpdate,
                 (Action)new VisibElseS().Run
                 + new AbilSyncS().Run
-                + new ClearAvailCellsS().Run
                 + new GetAttackPawnCellsS().Run
                 + new GetSetUnitCellsS().Run);
         }

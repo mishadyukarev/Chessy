@@ -21,7 +21,7 @@ namespace Game.Game
             new UpEventUIS();
 
 
-            _actions.Add(ViewDataSTypes.RunUpdate, new SoundClickCellS().Run);
+            _actions.Add(ViewDataSTypes.RunUpdate, default);
 
 
             _actions.Add(ViewDataSTypes.RunFixedUpdate,
@@ -34,7 +34,7 @@ namespace Game.Game
                 + new RiverCellSyncVS().Run
                 + new CellBarsEnvS().Run
                 + new SyncCellTrailSys().Run
-                + new CellStunViewS().Run
+                + new CellStunVS().Run
                 + new SyncSelUnitCellVS().Run
                 + new SupportSyncVS().Run
                 + new FliperAndRotatorUnitSystem().Run
@@ -57,7 +57,7 @@ namespace Game.Game
 
                 ///down
                 + new DonerUIS().Run
-                + new GetterUnitsUISystem().Run
+                + new GetterUnitsUIS().Run
                 + new DownToolWeaponUIS().Run
                 + new ScoutSyncUIS().Run
                 + new DownHeroUIS().Run
@@ -71,12 +71,11 @@ namespace Game.Game
                 + new TheEndGameUISystem().Run
                 + new MotionCenterUIS().Run
                 + new ReadyZoneUISystem().Run
-                + new MistakeUISys().Run
+                + new MistakeUIS().Run
                 + new KingZoneUISys().Run
                 + new FriendZoneUISys().Run
-                + new ActiveHitUISys().Run
                 + new PickUpgUIS().Run
-                + new HeroesSyncUISys().Run
+                + new HeroesSyncUIS().Run
 
                 + new RotateAllVS().Run
 

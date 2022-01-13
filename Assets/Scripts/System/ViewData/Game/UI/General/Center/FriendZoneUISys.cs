@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using static Game.Game.EntityCenterFriendUIPool;
+using static Game.Game.CenterFriendUIE;
 
 namespace Game.Game
 {
@@ -15,13 +15,13 @@ namespace Game.Game
                 {
                     Friend<ButtonUIC>().SetActiveParent(true);
 
-                    if (WhoseMoveC.CurPlayerI == PlayerTypes.First)
+                    if (EntWhoseMove.CurPlayerI == PlayerTypes.First)
                     {
-                        Friend<TextUIC>().Text = "1";
+                        Friend<TextMPUGUIC>().Text = "1";
                     }
                     else
                     {
-                        Friend<TextUIC>().Text = "2";
+                        Friend<TextMPUGUIC>().Text = "2";
                     }
                 }
             }

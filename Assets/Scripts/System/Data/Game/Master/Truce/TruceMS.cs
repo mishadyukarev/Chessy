@@ -25,7 +25,7 @@ namespace Game.Game
                 ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var build_0 = ref Build<BuildC>(idx_0);
+                ref var build_0 = ref Build<BuildingC>(idx_0);
 
                 ref var curFireCom = ref Fire<HaveEffectC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
@@ -44,7 +44,7 @@ namespace Game.Game
                         {
                             if (tw_0.HaveTW)
                             {
-                                InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player);
+                                EntInventorToolWeapon.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
                                 UnitTW<UnitTWCellEC>(idx_0).Reset();
                             }
 
@@ -56,7 +56,7 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player);
+                            EntInventorToolWeapon.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
                             UnitTW<UnitTWCellEC>(idx_0).Reset();
                         }
 

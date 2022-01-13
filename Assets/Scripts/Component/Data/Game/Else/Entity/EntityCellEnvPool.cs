@@ -37,7 +37,7 @@ namespace Game.Game
                     _envEnts[env][idx] = gameW.NewEntity()
                         .Add(new EnvCellEC(idx, env))
                         .Add(new HaveEnvironmentC())
-                        .Add(new ResourcesC());
+                        .Add(new AmountResourcesC());
                 }
             }
         }

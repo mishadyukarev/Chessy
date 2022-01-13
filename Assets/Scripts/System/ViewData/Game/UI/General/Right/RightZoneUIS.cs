@@ -16,7 +16,7 @@ namespace Game.Game
             {
                 if (unit_sel.Have)
                 {
-                    if (Unit<VisibledC>(WhoseMoveC.CurPlayerI, SelIdx<IdxC>().Idx).IsVisibled)
+                    if (Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, SelIdx<IdxC>().Idx).IsVisibled)
                     {
                         activeParent = true;
                     }

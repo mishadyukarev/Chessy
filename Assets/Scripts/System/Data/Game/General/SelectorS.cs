@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Common;
+using System;
 using static Game.Game.EntCellUnit;
 using static Game.Game.EntityPool;
 
@@ -18,11 +19,11 @@ namespace Game.Game
             ref var cellClick = ref ClickerObject<CellClickC>();
 
 
-            if (Input<ClickC>().IsClicked)
+            if (Input<IsClickedC>().IsClicked)
             {
                 if (raycast.Is(RaycastTypes.Cell))
                 {
-                    if (!WhoseMoveC.IsMyMove)
+                    if (!EntWhoseMove.IsMyMove)
                     {
                         SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                     }
@@ -37,12 +38,12 @@ namespace Game.Game
                                 {
                                     if (SelIdx<SelIdxEC>().IsSelCell)
                                     {
-                                        if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanAttack(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx, out var attack))
+                                        if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanAttack(EntWhoseMove.CurPlayerI, CurIdx<IdxC>().Idx, out var attack))
                                         {
                                             EntityPool.Rpc<RpcC>().AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
 
-                                        else if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanShift(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx))
+                                        else if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanShift(EntWhoseMove.CurPlayerI, CurIdx<IdxC>().Idx))
                                         {
                                             EntityPool.Rpc<RpcC>().ShiftUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
@@ -51,7 +52,7 @@ namespace Game.Game
                                         {
                                             if (unit_cur.Have)
                                             {
-                                                if (ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
+                                                if (ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
                                                 {
                                                     if (unit_cur.Is(UnitTypes.Scout))
                                                     {
@@ -59,11 +60,11 @@ namespace Game.Game
                                                     }
                                                     else if (unit_cur.IsMelee)
                                                     {
-                                                        NeedSoundEffC.Clip = ClipTypes.PickMelee;
+                                                        //NeedSoundEffC.Clip = ClipTypes.PickMelee;
                                                     }
                                                     else
                                                     {
-                                                        NeedSoundEffC.Clip = ClipTypes.PickArcher;
+                                                        //NeedSoundEffC.Clip = ClipTypes.PickArcher;
                                                     }
                                                 }
                                             }
@@ -76,7 +77,7 @@ namespace Game.Game
                                     {
                                         if (unit_cur.Have)
                                         {
-                                            if (ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
+                                            if (ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
                                             {
                                                 if (unit_cur.Is(UnitTypes.Scout))
                                                 {
@@ -84,11 +85,11 @@ namespace Game.Game
                                                 }
                                                 else if (unit_cur.IsMelee)
                                                 {
-                                                    NeedSoundEffC.Clip = ClipTypes.PickMelee;
+                                                    //NeedSoundEffC.Clip = ClipTypes.PickMelee;
                                                 }
                                                 else
                                                 {
-                                                    NeedSoundEffC.Clip = ClipTypes.PickArcher;
+                                                    //NeedSoundEffC.Clip = ClipTypes.PickArcher;
                                                 }
                                             }
                                         }
@@ -100,16 +101,16 @@ namespace Game.Game
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    EntityPool.Rpc<RpcC>().SetUniToMaster(CurIdx<IdxC>().Idx, SelUnitC.Unit);
+                                    EntityPool.Rpc<RpcC>().SetUniToMaster(CurIdx<IdxC>().Idx, SelectedUnitEnt.Unit);
                                     cellClick.Set(CellClickTypes.SimpleClick);
                                 }
                                 break;
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
+                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
                                     {
-                                        EntityPool.Rpc<RpcC>().GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx<IdxC>().Idx);
+                                        //EntityPool.Rpc<RpcC>().GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx<IdxC>().Idx);
                                     }
                                     else
                                     {
@@ -122,7 +123,7 @@ namespace Game.Game
                             case CellClickTypes.UpgradeUnit:
                                 {
                                     if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
-                                        && ownUnit_cur.Is(WhoseMoveC.CurPlayerI)
+                                        && ownUnit_cur.Is(EntWhoseMove.CurPlayerI)
                                         && !levUnit_cur.Is(LevelTypes.Second))
                                     {
                                         EntityPool.Rpc<RpcC>().UpgradeUnitToMaster(CurIdx<IdxC>().Idx);
@@ -138,7 +139,7 @@ namespace Game.Game
                             case CellClickTypes.GiveScout:
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn)
-                                        && ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
+                                        && ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
                                     {
                                         EntityPool.Rpc<RpcC>().FromNewUnitToMas(UnitTypes.Scout, CurIdx<IdxC>().Idx);
                                     }
@@ -157,10 +158,10 @@ namespace Game.Game
                                             EntityPool.Rpc<RpcC>().FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                             cellClick.Set(CellClickTypes.SimpleClick);
 
-                                            NeedSoundEffC.Clip = ClipTypes.PickArcher;
+                                            //NeedSoundEffC.Clip = ClipTypes.PickArcher;
                                         }
 
-                                        NeedSoundEffC.Clip = ClipTypes.ClickToTable;
+                                        //NeedSoundEffC.Clip = ClipTypes.ClickToTable;
                                     }
                                     else
                                     {
@@ -217,7 +218,7 @@ namespace Game.Game
                 {
                     if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !Unit<VisibledC>(WhoseMoveC.CurPlayerI, CurIdx<IdxC>().Idx).IsVisibled)
+                        if (!unit_cur.Have || !Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, CurIdx<IdxC>().Idx).IsVisibled)
                         {
                             if (CurIdx<CurIdxC>().IsStartDirectToCell)
                             {
@@ -231,7 +232,7 @@ namespace Game.Game
                     }
                 }
 
-                NeedSoundEffC.Clip = default;
+                //NeedSoundEffC.Clip = default;
             }
         }
     }

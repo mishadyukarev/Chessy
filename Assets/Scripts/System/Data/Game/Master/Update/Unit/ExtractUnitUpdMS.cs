@@ -13,20 +13,20 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var buil_0 = ref Build<BuildC>(idx_0);
+                ref var buil_0 = ref Build<BuildingC>(idx_0);
 
 
                 if (Unit<UnitCellEC>(idx_0).CanExtract(out var extract, out var env, out var res))
                 {
-                    InvResC.Add(res, ownUnit_0.Player, extract);
-                    Environment<ResourcesC>(env, idx_0).Resources -= extract;
+                    EntInventorResources.Resource<AmountC>(res, ownUnit_0.Player).Amount += extract;
+                    Environment<AmountResourcesC>(env, idx_0).Resources -= extract;
 
                     if (env == EnvTypes.AdultForest)
                     {
-                        if (Environment<ResourcesC>(env, idx_0).Have)
+                        if (Environment<AmountResourcesC>(env, idx_0).Have)
                         {
                             if (buil_0.Is(BuildTypes.Camp) || !buil_0.Have)
                             {

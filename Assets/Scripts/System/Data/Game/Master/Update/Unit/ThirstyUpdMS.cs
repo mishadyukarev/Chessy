@@ -20,7 +20,7 @@ namespace Game.Game
                 ref var riverC_0 = ref River<RiverC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var build_0 = ref Build<BuildC>(idx_0);
+                ref var build_0 = ref Build<BuildingC>(idx_0);
 
 
                 if (unit_0.Have)

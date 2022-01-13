@@ -11,14 +11,14 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayer = WhoseMoveC.CurPlayerI;
+            var curPlayer = EntWhoseMove.CurPlayerI;
 
 
             var extracts = new Dictionary<ResTypes, int>();
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
                 extracts.Add(res, 0);
-                extracts[res] += InvResC.StandartAdding(res);
+                //extracts[res] += InvResC.StandartAdding(res);
             }
 
             foreach (var idx_0 in Idxs)
@@ -27,7 +27,7 @@ namespace Game.Game
                 {
                     extracts[res] += extract;
                 }
-                if (Unit<PlayerC>(idx_0).Is(WhoseMoveC.CurPlayerI))
+                if (Unit<PlayerC>(idx_0).Is(EntWhoseMove.CurPlayerI))
                 {
                     extracts[ResTypes.Food] -= Unit<UnitC>(idx_0).CostFood;
                 }
@@ -48,7 +48,7 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                Economy<EconomyUpUIC>(res).Text = InvResC.AmountRes(res, curPlayer).ToString();
+                Economy<EconomyUpUIC>(res).Text = EntInventorResources.Resource<AmountC>(res, curPlayer).Amount.ToString();
             }
         }
     }

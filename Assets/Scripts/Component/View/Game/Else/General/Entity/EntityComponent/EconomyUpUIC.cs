@@ -9,11 +9,11 @@ namespace Game.Game
 
         public Color Color
         {
-            set => Economy<TextUIC>(_curRes).Color = value;
+            set => Economy<TextMPUGUIC>(_curRes).Color = value;
         }
         public string Text
         {
-            set => Economy<TextUIC>(_curRes).Text = value;
+            set => Economy<TextMPUGUIC>(_curRes).Text = value;
         }
 
         internal EconomyUpUIC(in ResTypes res) => _curRes = res;

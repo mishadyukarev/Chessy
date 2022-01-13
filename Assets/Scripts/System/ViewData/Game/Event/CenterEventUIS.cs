@@ -4,11 +4,11 @@ using UnityEngine;
 using static Game.Game.EntityVPool;
 using static Game.Game.EntityUpUIPool;
 using static Game.Game.EntityCenterUIPool;
-using static Game.Game.EntityCenterHeroUIPool;
-using static Game.Game.EntityCenterFriendUIPool;
+using static Game.Game.CenterHeroUIE;
+using static Game.Game.CenterFriendUIE;
 
-using static Game.Game.EntityCenterPickUpgUIPool;
-using static Game.Game.EntityCenterHintUIPool;
+using static Game.Game.CenterUpgradeUIE;
+using static Game.Game.CenterHintUIE;
 
 namespace Game.Game
 {
@@ -46,22 +46,22 @@ namespace Game.Game
         }
         void Hint()
         {
-            HintC.CurStartNumber++;
+            //HintC.CurStartNumber++;
 
-            if (HintC.CurStartNumber <= (int)VideoClipTypes.Start5)
-            {
-                HintC.SetWasActived((VideoClipTypes)HintC.CurStartNumber, true);
-                //EntityCenterHintUIPool.SetVideoClip((VideoClipTypes)HintC.CurStartNumber);
-            }
-            else
-            {
-                //EntityCenterHintUIPool.SetActiveHintZone(false);
-            }
+            //if (HintC.CurStartNumber <= (int)VideoClipTypes.Start5)
+            //{
+            //    HintC.SetWasActived((VideoClipTypes)HintC.CurStartNumber, true);
+            //    //EntityCenterHintUIPool.SetVideoClip((VideoClipTypes)HintC.CurStartNumber);
+            //}
+            //else
+            //{
+            //    //EntityCenterHintUIPool.SetActiveHintZone(false);
+            //}
         }
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().PickUpgUnitToMas(unit);
 
@@ -72,7 +72,7 @@ namespace Game.Game
 
         private void UpgradeBuild(BuildTypes build)
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().PickUpgBuildToMas(build);
 
@@ -83,7 +83,7 @@ namespace Game.Game
 
         private void UpgradeWater()
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().UpgWater();
 
@@ -94,7 +94,7 @@ namespace Game.Game
 
         private void Elf()
         {
-            if (WhoseMoveC.IsMyMove)
+            if (EntWhoseMove.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().GetHero(UnitTypes.Elfemale);
             }

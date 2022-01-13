@@ -42,7 +42,7 @@ namespace Game.Game
         {
             var tw = UnitTW<ToolWeaponC>(_idx).ToolWeapon;
             var haveEff = Unit<HaveEffectC>(UnitStatTypes.Damage, _idx).Have;
-            var upgPerc = UnitUpgC.UpgDamagePercent(Unit, Level, Owner);
+            //var upgPerc = UnitUpgC.UpgDamagePercent(Unit, Level, Owner);
 
 
             var standDamage = _damageValues.StandDamage(Unit, Level);
@@ -54,7 +54,7 @@ namespace Game.Game
 
             if (haveEff) powerDamege += standDamage * 0.2f;
 
-            powerDamege += standDamage * upgPerc;
+            powerDamege += standDamage /** upgPerc*/;
 
             return (int)powerDamege;
         }
@@ -62,9 +62,9 @@ namespace Game.Game
         {
             get
             {
-                var condition = Unit<ConditionC>(_idx).Condition;
+                var condition = Unit<ConditionUnitC>(_idx).Condition;
 
-                var build = Build<BuildC>(_idx).Build;
+                var build = Build<BuildingC>(_idx).Build;
 
                 float powerDamege = DamageAttack(AttackTypes.Simple);
 
@@ -95,7 +95,7 @@ namespace Game.Game
             set => Unit<StepC>(_idx).Steps = value;
         }
 
-        public int MaxAmountSteps => _stepValues.MaxAmountSteps(Unit, Unit<HaveEffectC>(UnitStatTypes.Steps, _idx).Have, UnitUpgC.Steps(Unit, Level, Owner));
+        public int MaxAmountSteps => _stepValues.MaxAmountSteps(Unit, Unit<HaveEffectC>(UnitStatTypes.Steps, _idx).Have/*, UnitUpgC.Steps(Unit, Level, Owner)*/);
         public bool HaveMaxSteps => Steps >= MaxAmountSteps;
         public int StepsForDoing(in byte idx_to)
         {
@@ -155,7 +155,7 @@ namespace Game.Game
 
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
 
-            if (!Unit<StunC>(idx_from).IsStunned && Unit<UnitC>(idx_from).Have && Unit<PlayerC>(idx_from).Is(whoseMove))
+            if (!Unit<NeedStepsForExitStunC>(idx_from).IsStunned && Unit<UnitC>(idx_from).Have && Unit<PlayerC>(idx_from).Is(whoseMove))
             {
                 CellSpaceC.TryGetIdxAround(idx_from, out var directs);
 
@@ -182,8 +182,8 @@ namespace Game.Game
             ref var level_from = ref Unit<LevelC>(idx_from);
             ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
             ref var stepUnit_from = ref Unit<StepC>(idx_from);
-            ref var stunUnit_from = ref Unit<StunC>(idx_from);
-            ref var corner_from = ref Unit<CornerArcherC>(idx_from);
+            ref var stunUnit_from = ref Unit<NeedStepsForExitStunC>(idx_from);
+            ref var corner_from = ref Unit<IsCornedArcherC>(idx_from);
 
             if (!stunUnit_from.IsStunned)
             {
@@ -246,7 +246,7 @@ namespace Game.Game
 
 
 
-                        if (Cell<CellC>(idx_1).IsActiveCell && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_1).Have)
+                        if (Cell<IsActivatedC>(idx_1).IsActivated && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_1).Have)
                         {
                             if (unit_1.Have)
                             {
@@ -286,8 +286,8 @@ namespace Game.Game
 
 
 
-                            if (Cell<CellC>(idx_2).IsActiveCell && unit_2.Have
-                                && Unit<VisibledC>(ownUnit_from.Player, idx_2).IsVisibled && !ownUnit_2.Is(ownUnit_from.Player))
+                            if (Cell<IsActivatedC>(idx_2).IsActivated && unit_2.Have
+                                && Unit<IsVisibledC>(ownUnit_from.Player, idx_2).IsVisibled && !ownUnit_2.Is(ownUnit_from.Player))
                             {
                                 if (unit_from.Is(UnitTypes.Archer))
                                 {
@@ -339,7 +339,7 @@ namespace Game.Game
             else return false;
 
 
-            if (!Unit<UnitC>(_idx).Is(UnitTypes.Pawn) || !Unit<ConditionC>(_idx).Is(ConditionUnitTypes.Relaxed)
+            if (!Unit<UnitC>(_idx).Is(UnitTypes.Pawn) || !Unit<ConditionUnitC>(_idx).Is(ConditionUnitTypes.Relaxed)
                 || !Unit<UnitCellEC>(_idx).HaveMax) return false;
 
 
@@ -357,7 +357,7 @@ namespace Game.Game
 
             extract = (int)(envResC.Max() * ration);
 
-            if (extract > Environment<ResourcesC>(env, _idx).Resources) extract = Environment<ResourcesC>(env, _idx).Resources;
+            if (extract > Environment<AmountResourcesC>(env, _idx).Resources) extract = Environment<AmountResourcesC>(env, _idx).Resources;
 
             return true;
         }
@@ -368,7 +368,7 @@ namespace Game.Game
 
             var twC = UnitTW<ToolWeaponC>(_idx);
 
-            if (Build<BuildC>(_idx).Have || !Unit<ConditionC>(_idx).Is(ConditionUnitTypes.Relaxed) || !Unit<UnitCellEC>(_idx).HaveMax) return false;
+            if (Build<BuildingC>(_idx).Have || !Unit<ConditionUnitC>(_idx).Is(ConditionUnitTypes.Relaxed) || !Unit<UnitCellEC>(_idx).HaveMax) return false;
 
 
 
@@ -401,7 +401,7 @@ namespace Game.Game
 
             resume = (int)(Environment<EnvCellEC>(env, _idx).Max() * ration);
 
-            if (resume > Environment<ResourcesC>(env, _idx).Resources) resume = Environment<ResourcesC>(env, _idx).Resources;
+            if (resume > Environment<AmountResourcesC>(env, _idx).Resources) resume = Environment<AmountResourcesC>(env, _idx).Resources;
 
             return true;
         }
@@ -411,7 +411,7 @@ namespace Game.Game
 
             ref var unit_from = ref Unit<UnitC>(idx_from);
             ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
-            ref var stun_from = ref Unit<StunC>(idx_from);
+            ref var stun_from = ref Unit<NeedStepsForExitStunC>(idx_from);
 
             if (!stun_from.IsStunned)
             {
@@ -441,12 +441,12 @@ namespace Game.Game
 
         #region Water
 
-        float UpgadeWaterPercent => UnitUpgC.UpgWaterPercent(Unit, Level, Owner);
+        //float UpgadeWaterPercent => UnitUpgC.UpgWaterPercent(Unit, Level, Owner);
 
         public bool IsHpDeathAfterAttack => Unit<HpC>(_idx).Hp <= DamageUnitValues.HP_FOR_DEATH_AFTER_ATTACK;
 
         public bool NeedWater => Unit<WaterC>(_idx).Water <= 100 * 0.4f;
-        public int MaxWater => (int)(100 + 100 * UpgadeWaterPercent);
+        public int MaxWater => (int)(100 + 100 /** UpgadeWaterPercent*/);
         public bool HaveMaxWater => Unit<WaterC>(_idx).Water >= MaxWater;
 
 
@@ -552,12 +552,12 @@ namespace Game.Game
             SetMaxSteps();
 
             foreach (var item in Stats) Unit<HaveEffectC>(item, _idx).Disable();
-            Unit<ConditionC>(_idx).Reset();
+            Unit<ConditionUnitC>(_idx).Reset();
             foreach (var item in Conditions) Unit<StepC>(item, _idx).Reset();
 
             UnitTW<UnitTWCellEC>(_idx).Reset();
 
-            WhereUnitsC.Set(unit, _idx, true);
+            EntWhereUnits.HaveUnit<HaveUnitC>(unit, _idx).Have = true;
         }
         public void Kill()
         {
@@ -573,12 +573,12 @@ namespace Game.Game
             }
             else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {
-                ScoutHeroCooldownC.SetStandCooldown(unit.Unit, ownUnit.Player);
-                InvUnitsC.Add(unit.Unit, levUnit.Level, ownUnit.Player);
+                EntityPool.ScoutHeroCooldown<CooldownC>(unit.Unit, ownUnit.Player).Cooldown = 3;
+                EntInventorUnits.Units<AmountC>(unit.Unit, levUnit.Level, ownUnit.Player).Amount += 1;
             }
 
 
-            WhereUnitsC.Set((unit.Unit, levUnit.Level, ownUnit.Player), _idx, false);
+            EntWhereUnits.HaveUnit<HaveUnitC>(unit.Unit, levUnit.Level, ownUnit.Player, _idx).Have = false;
             unit.Reset();
         }
         public void Shift(in byte idx_to)
@@ -602,7 +602,7 @@ namespace Game.Game
 
             Unit<HpC>(idx_to).Set(Unit<HpC>(idx_from));
             Unit<StepC>(idx_to).Set(Unit<StepC>(idx_from));
-            if (Unit<ConditionC>(idx_to).HaveCondition) Unit<ConditionC>(idx_to).Reset();
+            if (Unit<ConditionUnitC>(idx_to).HaveCondition) Unit<ConditionUnitC>(idx_to).Reset();
 
             UnitTW<UnitTWCellEC>(idx_to).Set(idx_from);
             UnitTW<LevelC>(idx_to).Set(UnitTW<LevelC>(idx_from));
@@ -612,11 +612,11 @@ namespace Game.Game
             Unit<WaterC>(idx_to).Set(Unit<WaterC>(idx_from));
             foreach (var item in Conditions) Unit<StepC>(item, idx_to).Reset();
             foreach (var unique in Unique) Unit<CooldownC>(unique, idx_to).Cooldown = Unit<CooldownC>(unique, idx_from).Cooldown;
-            Unit<CornerArcherC>(idx_to).Set(Unit<CornerArcherC>(idx_from));
+            Unit<IsCornedArcherC>(idx_to).Set(Unit<IsCornedArcherC>(idx_from));
 
 
 
-            if (Build<BuildC>(idx_to).Is(BuildTypes.Camp))
+            if (Build<BuildingC>(idx_to).Is(BuildTypes.Camp))
             {
                 if (!Build<PlayerC>(idx_to).Is(Unit<PlayerC>(idx_to).Player))
                 {
@@ -626,9 +626,9 @@ namespace Game.Game
 
 
             Unit<UnitC>(idx_to).Unit = Unit<UnitC>(idx_from).Unit;
-            WhereUnitsC.Set((Unit<UnitC>(idx_to).Unit, level_from.Level, own_from.Player), idx_to, true);
+            EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitC>(idx_to).Unit, level_from.Level, own_from.Player, idx_to).Have = true;
 
-            WhereUnitsC.Set((Unit<UnitC>(idx_from).Unit, level_from.Level, own_from.Player), idx_from, false);
+            EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitC>(idx_from).Unit, level_from.Level, own_from.Player, idx_from).Have = false;
             Unit<UnitC>(idx_from).Reset();
 
 
@@ -639,9 +639,9 @@ namespace Game.Game
             var level = Unit<LevelC>(_idx).Level;
             var owner = Unit<PlayerC>(_idx).Player;
 
-            InvUnitsC.Add(Unit<UnitC>(_idx).Unit, level, owner);
+            EntInventorUnits.Units<AmountC>(Unit<UnitC>(_idx).Unit, level, owner).Amount += 1;
 
-            WhereUnitsC.Set((Unit<UnitC>(_idx).Unit, level, owner), _idx, false);
+            EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitC>(_idx).Unit, level, owner, _idx).Have = false;
             Unit<UnitC>(_idx).Reset();
         }
         public void Upgrade()
@@ -663,36 +663,36 @@ namespace Game.Game
             ref var levTWC = ref UnitTW<LevelC>(_idx);
 
 
-            WhereUnitsC.Set((Unit<UnitC>(_idx).Unit, Unit<LevelC>(_idx).Level, ownUnitC.Player), _idx, false);
+            EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitC>(_idx).Unit, Unit<LevelC>(_idx).Level, ownUnitC.Player, _idx).Have = false;
 
             Unit<UnitC>(_idx).Unit = UnitTypes.Scout;
             Unit<LevelC>(_idx).Level = LevelTypes.First;
             if (twC.HaveTW)
             {
-                InvTWC.Add(twC.ToolWeapon, levTWC.Level, ownUnitC.Player);
+                EntInventorToolWeapon.ToolWeapons<AmountC>(twC.ToolWeapon, levTWC.Level, ownUnitC.Player).Amount += 1;
                 twUnitC.Reset();
             }
 
-            WhereUnitsC.Set((UnitTypes.Scout, LevelTypes.First, Unit<PlayerC>(_idx).Player), _idx, true);
+            EntWhereUnits.HaveUnit<HaveUnitC>(UnitTypes.Scout, LevelTypes.First, Unit<PlayerC>(_idx).Player, _idx).Have = true;
         }
         public void SetHero(in byte idx_from, in UnitTypes unit, in LevelTypes lev)
         {
             var idx_to = _idx;
 
-            WhereUnitsC.Set((UnitTypes.Archer, Unit<LevelC>(idx_from).Level, Unit<PlayerC>(idx_from).Player), idx_from, false);
+            EntWhereUnits.HaveUnit<HaveUnitC>(UnitTypes.Archer, Unit<LevelC>(idx_from).Level, Unit<PlayerC>(idx_from).Player, idx_from).Have = false;
             Unit<UnitC>(idx_from).Reset();
 
-            WhereUnitsC.Set((UnitTypes.Archer, Unit<LevelC>(idx_to).Level, Unit<PlayerC>(idx_to).Player), idx_to, false);
+            EntWhereUnits.HaveUnit<HaveUnitC>(UnitTypes.Archer, Unit<LevelC>(idx_to).Level, Unit<PlayerC>(idx_to).Player, idx_to).Have = false;
             Unit<UnitC>(idx_to).Reset();
 
 
             Unit<UnitC>(idx_to).Unit = unit;
             Unit<LevelC>(idx_to).Level = lev;
 
-            WhereUnitsC.Set((unit, lev, Unit<PlayerC>(idx_to).Player), idx_to, true);
+            EntWhereUnits.HaveUnit<HaveUnitC>(unit, lev, Unit<PlayerC>(idx_to).Player, idx_to).Have = true;
 
 
-            InvUnitsC.Take(Unit<PlayerC>(idx_to).Player, unit, lev);
+            EntInventorUnits.Units<AmountC>(unit, lev,  Unit<PlayerC>(idx_to).Player).Amount -= 1;
         }
 
         public void Sync(in UnitTypes unit, in LevelTypes lev, in PlayerTypes owner, in int hp, in int steps, in int water)

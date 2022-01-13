@@ -17,17 +17,17 @@ namespace Game.Game
 
             ref var fire_to = ref Fire<HaveEffectC>(idx_to);
 
-            var whoseMove = WhoseMoveC.WhoseMove;
+            //var whoseMove = WhoseMoveC.WhoseMove;
 
             if (Unit<UnitCellEC>(idx_from).HaveMaxSteps)
             {
-                if (Unit<UnitCellEC>(idx_from).CanArson(whoseMove, idx_to))
-                {
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
+                //if (Unit<UnitCellEC>(idx_from).CanArson(whoseMove, idx_to))
+                //{
+                //    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
 
-                    stepUnit_from.Take(uniq_cur);
-                    fire_to.Enable();
-                }
+                //    stepUnit_from.Take(uniq_cur);
+                //    fire_to.Enable();
+                //}
             }
 
             else

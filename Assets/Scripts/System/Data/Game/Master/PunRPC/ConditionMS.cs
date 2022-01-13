@@ -9,11 +9,11 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            CondDoingMC.Get(out var cond);
-            IdxDoingMC.Get(out var idx_0);
+            var cond = EntityMPool.ConditionUnit<ConditionUnitC>().Condition;
+            var idx_0 = EntityMPool.ConditionUnit<IdxC>().Idx;
 
             ref var step_0 = ref Unit<UnitCellEC>(idx_0);
-            ref var cond_0 = ref Unit<ConditionC>(idx_0);
+            ref var cond_0 = ref Unit<ConditionUnitC>(idx_0);
 
 
             switch (cond)

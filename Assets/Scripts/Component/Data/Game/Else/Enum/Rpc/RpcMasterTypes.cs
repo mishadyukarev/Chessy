@@ -5,6 +5,8 @@
         None,
 
         Ready,
+        First = Ready,
+
         Done,
         Build,
         DestroyBuild,
@@ -30,5 +32,7 @@
         UpgWater,
 
         UniqAbil,
+
+        End
     }
 }

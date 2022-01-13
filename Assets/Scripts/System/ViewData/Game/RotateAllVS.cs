@@ -2,11 +2,11 @@
 
 namespace Game.Game
 {
-    public sealed class RotateAllVS : IEcsRunSystem
+    struct RotateAllVS : IEcsRunSystem
     {
         public void Run()
         {
-            var curPlayer = WhoseMoveC.CurPlayerI;
+            var curPlayer = EntWhoseMove.CurPlayerI;
 
             foreach (byte idx_0 in EntityCellPool.Idxs)
             {

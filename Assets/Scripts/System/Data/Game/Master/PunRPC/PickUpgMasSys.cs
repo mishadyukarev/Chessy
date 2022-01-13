@@ -5,7 +5,7 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var whoseMove = WhoseMoveC.WhoseMove;
+            //var whoseMove = WhoseMoveC.WhoseMove;
 
             //if (PickUpgC.HaveUpgrade(whoseMove))
             //{

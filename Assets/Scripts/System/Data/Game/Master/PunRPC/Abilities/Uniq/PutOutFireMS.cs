@@ -14,7 +14,7 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
-            var whoseMove = WhoseMoveC.WhoseMove;
+            //var whoseMove = WhoseMoveC.WhoseMove;
 
             if (stepUnit_0.HaveMin)
             {

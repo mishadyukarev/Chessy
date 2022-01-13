@@ -21,16 +21,16 @@ namespace Game.Game
             {
                 if (stepUnit_from.Have(uniq_cur))
                 {
-                    if (WindC.Have(idx_to))
-                    {
-                        WindC.Set(idx_to);
+                    //if (WindC.Have(idx_to))
+                    //{
+                    //    WindC.Set(idx_to);
 
-                        Unit<UnitCellEC>(idx_from).Take(uniq_cur);
+                    //    Unit<UnitCellEC>(idx_from).Take(uniq_cur);
 
-                        Unit<CooldownC>(uniq_cur, idx_from).Cooldown = 6;
+                    //    Unit<CooldownC>(uniq_cur, idx_from).Cooldown = 6;
 
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
-                    }
+                    //    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
+                    //}
                 }
 
                 else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);

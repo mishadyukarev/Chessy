@@ -13,7 +13,7 @@ namespace Game.Game
 
             ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-            ref var corner_0 = ref Unit<CornerArcherC>(idx_0);
+            ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
 
 
             if (unitE_0.HaveMax)

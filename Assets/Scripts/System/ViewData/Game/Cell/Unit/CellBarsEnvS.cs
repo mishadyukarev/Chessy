@@ -20,7 +20,7 @@ namespace Game.Game
                     {
                         barsView_0.EnableSR(CellBarTypes.Food);
 
-                        barsView_0.SetScale(CellBarTypes.Food, new Vector3(Environment<ResourcesC>(EnvTypes.Fertilizer, idx_0).Resources / (float)(Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Max() + Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Max()), 0.15f, 1));
+                        barsView_0.SetScale(CellBarTypes.Food, new Vector3(Environment<AmountResourcesC>(EnvTypes.Fertilizer, idx_0).Resources / (float)(Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Max() + Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Max()), 0.15f, 1));
                     }
                     else
                     {
@@ -30,7 +30,7 @@ namespace Game.Game
                     if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                     {
                         barsView_0.EnableSR(CellBarTypes.Wood);
-                        barsView_0.SetScale(CellBarTypes.Wood, new Vector3(Environment<ResourcesC>(EnvTypes.AdultForest, idx_0).Resources / (float)Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Max(), 0.15f, 1));
+                        barsView_0.SetScale(CellBarTypes.Wood, new Vector3(Environment<AmountResourcesC>(EnvTypes.AdultForest, idx_0).Resources / (float)Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Max(), 0.15f, 1));
                     }
                     else
                     {
@@ -40,7 +40,7 @@ namespace Game.Game
                     if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have)
                     {
                         barsView_0.EnableSR(CellBarTypes.Ore);
-                        barsView_0.SetScale(CellBarTypes.Ore, new Vector3(Environment<ResourcesC>(EnvTypes.Hill, idx_0).Resources / (float)Environment<EnvCellEC>(EnvTypes.Hill, idx_0).Max(), 0.15f, 1));
+                        barsView_0.SetScale(CellBarTypes.Ore, new Vector3(Environment<AmountResourcesC>(EnvTypes.Hill, idx_0).Resources / (float)Environment<EnvCellEC>(EnvTypes.Hill, idx_0).Max(), 0.15f, 1));
                     }
                     else
                     {

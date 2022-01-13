@@ -30,12 +30,12 @@ namespace Game.Game
             ///Center
             var centerZone = CanvasC.FindUnderCurZone("CenterZone").transform;
             new EntityCenterUIPool(gameW, centerZone);
-            new EntityCenterHeroUIPool(gameW, centerZone);
-            new EntityCenterFriendUIPool(gameW, centerZone);
-            new EntityCenterPickUpgUIPool(gameW, centerZone);
-            new EntityCenterHintUIPool(gameW, centerZone);
-            new EntityCenterSelectorUIPool(gameW, centerZone);
-            new EntityCenterKingUIPool(gameW, centerZone);
+            new CenterHeroUIE(gameW, centerZone);
+            new CenterFriendUIE(gameW, centerZone);
+            new CenterUpgradeUIE(gameW, centerZone);
+            new CenterHintUIE(gameW, centerZone);
+            new CenterSelectorUIE(gameW, centerZone);
+            new CenterKingUIE(gameW, centerZone);
 
             ///Up
             new EntityUpUIPool(gameW);
@@ -64,8 +64,6 @@ namespace Game.Game
 
             #endregion
 
-
-
             var isActiveCells = new bool[CellValues.ALL_CELLS_AMOUNT];
             var idCells = new int[CellValues.ALL_CELLS_AMOUNT];
 
@@ -82,6 +80,22 @@ namespace Game.Game
 
             new EntitySound(gameW, sounds0, sounds1);
             new EntityPool(gameW, EntityVPool.Background<GameObjectVC>().Name, actions, namesMethods);
+            new EntityMPool(gameW);
+
+            new BuildingUpgradesEnt(gameW);
+            new EntUnitUpgrades(gameW);
+
+            new EntWhereEnviroments(gameW);
+            new EntWhereUnits(gameW);
+            new EntWhereBuilds(gameW);
+
+            new EntInventorUnits(gameW);
+            new EntInventorResources(gameW);
+            new EntInventorToolWeapon(gameW);
+
+            new SetUnitCellsC(gameW);
+
+            new GetterUnitsC(gameW);
 
             new EntCellUnit(gameW);
             new EntityCellTrailPool(gameW);
@@ -91,6 +105,15 @@ namespace Game.Game
             new EntityCellCloudPool(gameW);
             new EntityCellRiverPool(gameW);
             new EntityCellPool(gameW, isActiveCells, idCells);
+
+
+            new EntWhoseMove(gameW);
+            new EntMistakeC(gameW);
+            new EntHint(gameW);
+
+            new WindEnt(gameW);
+            new CloudEnt(gameW);
+            
 
             #endregion
 
@@ -110,7 +133,7 @@ namespace Game.Game
 
                     ref var cloud_0 = ref Cloud<HaveEffectC>(idx_0);
 
-                    if (Cell<CellC>(idx_0).IsActiveCell)
+                    if (Cell<IsActivatedC>(idx_0).IsActivated)
                     {
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
@@ -156,13 +179,13 @@ namespace Game.Game
                         if (xy_0[0] == 5 && xy_0[1] == 5)
                         {
                             cloud_0.Have = true;
-                            CloudCenterC.Idx = idx_0;
+                            CloudEnt.Cloud<IdxC>().Idx = idx_0;
 
                             CellSpaceC.TryGetXyAround(xy_0, out var dirs);
                             foreach (var item in dirs)
                             {
                                 var idx_1 = IdxCell(item.Value);
-                                WindC.Set(item.Key, idx_1);
+                                //WindC.Set(item.Key, idx_1);
                             }
                         }
 
@@ -209,7 +232,7 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                InvResC.Set(ResTypes.Food, PlayerTypes.Second, 999999);
+                EntInventorResources.Resource<AmountC>(ResTypes.Food, PlayerTypes.Second).Amount = 999999;
 
                 foreach (byte idx_0 in Idxs)
                 {
@@ -222,7 +245,7 @@ namespace Game.Game
                     ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
 
                     ref var hp_0 = ref Unit<HpC>(idx_0);
-                    ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
+                    ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
                     ref var waterUnit_0 = ref Unit<WaterC>(idx_0);
 
 
@@ -230,7 +253,7 @@ namespace Game.Game
                     ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
                     ref var protShiel_0 = ref UnitTW<ProtectionC>(idx_0);
 
-                    ref var build_0 = ref Build<BuildC>(idx_0);
+                    ref var build_0 = ref Build<BuildingC>(idx_0);
                     ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
 
                     if (x == 7 && y == 8)

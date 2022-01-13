@@ -13,18 +13,18 @@ namespace Game.Game
     {
         public void Run()
         {
-            InvResC.AddStandartValues();
+            //InvResC.AddStandartValues();
 
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                ScoutHeroCooldownC.TakeCooldown(UnitTypes.Scout, player);
-                ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, player);
+                EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, player).Cooldown -= 1;
+                EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, player).Cooldown -= 1;
             }
 
             foreach (byte idx_0 in Idxs)
             {
-                ref var cell_0 = ref Cell<CellC>(idx_0);
+                ref var cell_0 = ref Cell<InstanceIDC>(idx_0);
 
                 ref var unit_0 = ref Unit<UnitC>(idx_0);
                 ref var levUnit_0 = ref Unit<LevelC>(idx_0);
@@ -32,11 +32,10 @@ namespace Game.Game
                 ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var hp_0 = ref Unit<HpC>(idx_0);
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionC>(idx_0);
-                ref var stun_0 = ref Unit<StunC>(idx_0);
+                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var buil_0 = ref Build<BuildC>(idx_0);
+                ref var buil_0 = ref Build<BuildingC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
@@ -44,14 +43,14 @@ namespace Game.Game
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
                 foreach (var item in Unique) Unit<CooldownC>(item, idx_0).Take();
-                stun_0.Take();
+                Unit<NeedStepsForExitStunC>(idx_0).Steps -= 1;
 
 
                 if (unit_0.Have)
                 {
                     Unit<StepC>(condUnit_0.Condition, idx_0).Add();
 
-                    if (!unit_0.Is(UnitTypes.King)) InvResC.Take(ResTypes.Food, ownUnit_0.Player);
+                    if (!unit_0.Is(UnitTypes.King)) EntInventorResources.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Amount -= 1;
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -81,12 +80,12 @@ namespace Game.Game
                                         {
                                             if (ownUnit_0.Is(PlayerTypes.First))
                                             {
-                                                if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
-                                                {
-                                                    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
+                                                //if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
+                                                //{
+                                                //    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
 
-                                                    Build<BuildCellEC>(idxCamp).Remove();
-                                                }
+                                                //    Build<BuildCellEC>(idxCamp).Remove();
+                                                //}
 
 
 
@@ -95,12 +94,12 @@ namespace Game.Game
                                         }
                                         else
                                         {
-                                            if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
-                                            {
-                                                var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
+                                            //if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
+                                            //{
+                                            //    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
 
-                                                Build<BuildCellEC>(idxCamp).Remove();
-                                            }
+                                            //    Build<BuildCellEC>(idxCamp).Remove();
+                                            //}
 
 
                                             buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Player);
@@ -123,8 +122,14 @@ namespace Game.Game
                 }
             }
 
+            var amountAdultForest = 0;
+            foreach (var idx in Idxs)
+            {
+                if (EntWhereEnviroments.HaveEnv<HaveEnvC>(EnvTypes.AdultForest, idx).Have)
+                    amountAdultForest += 1;
+            }
 
-            if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 8)
+            if (amountAdultForest <= 8)
             {
                 EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Truce);
@@ -134,7 +139,7 @@ namespace Game.Game
             {
                 foreach (byte idx_0 in Idxs)
                 {
-                    ref var build_0 = ref Build<BuildC>(idx_0);
+                    ref var build_0 = ref Build<BuildingC>(idx_0);
 
                     if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have)
                     {
@@ -142,7 +147,7 @@ namespace Game.Game
                         {
                             if (!Environment<EnvCellEC>(EnvTypes.Hill, idx_0).HaveMax())
                             {
-                                Environment<ResourcesC>(EnvTypes.Hill, idx_0).Resources += 1;
+                                Environment<AmountResourcesC>(EnvTypes.Hill, idx_0).Resources += 1;
                             }
                         }
                     }

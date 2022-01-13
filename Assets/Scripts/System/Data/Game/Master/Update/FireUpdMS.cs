@@ -23,7 +23,7 @@ namespace Game.Game
                 ref var hpUnit_0 = ref Unit<HpC>(idx_0);
 
                 ref var buildE_0 = ref Build<BuildCellEC>(idx_0);
-                ref var buil_0 = ref Build<BuildC>(idx_0);
+                ref var buil_0 = ref Build<BuildingC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerC>(idx_0);
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
@@ -38,7 +38,7 @@ namespace Game.Game
 
                 if (fire_0.Have)
                 {
-                    Environment<ResourcesC>(EnvTypes.AdultForest, idx_0).Resources -= 2;
+                    Environment<AmountResourcesC>(EnvTypes.AdultForest, idx_0).Resources -= 2;
 
                     if (unit_0.Have)
                     {
@@ -52,7 +52,7 @@ namespace Game.Game
 
 
 
-                    if (!Environment<ResourcesC>(EnvTypes.AdultForest, idx_0).Have)
+                    if (!Environment<AmountResourcesC>(EnvTypes.AdultForest, idx_0).Have)
                     {
                         buildE_0.Remove();
 
@@ -73,7 +73,7 @@ namespace Game.Game
                         {
                             var curIdxCell1 = IdxCell(xy1);
 
-                            if (Cell<CellC>(curIdxCell1).IsActiveCell)
+                            if (Cell<IsActivatedC>(curIdxCell1).IsActivated)
                             {
                                 if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, curIdxCell1).Have)
                                 {

@@ -16,7 +16,7 @@ namespace Game.Game
             {
                 if (Unit<UnitCellEC>(idx_0).HaveMaxSteps)
                 {
-                    InvUnitsC.Take(Unit<PlayerC>(idx_0).Player, UnitTypes.Scout, LevelTypes.First);
+                    EntInventorUnits.Units<AmountC>(UnitTypes.Scout, LevelTypes.First, Unit<PlayerC>(idx_0).Player).Amount -= 1;
                     Unit<UnitCellEC>(idx_0).SetScout();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);

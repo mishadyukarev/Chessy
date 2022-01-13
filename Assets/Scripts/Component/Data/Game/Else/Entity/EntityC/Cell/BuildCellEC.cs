@@ -16,17 +16,17 @@ namespace Game.Game
             var ownC = Build<PlayerC>(_idx);
 
 
-            if (Build<BuildC>(_idx).Is(BuildTypes.Farm) && Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, _idx).Have)
+            if (Build<BuildingC>(_idx).Is(BuildTypes.Farm) && Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, _idx).Have)
             {
                 env = EnvTypes.Fertilizer;
                 res = ResTypes.Food;
             }
-            else if (Build<BuildC>(_idx).Is(BuildTypes.Woodcutter) && Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
+            else if (Build<BuildingC>(_idx).Is(BuildTypes.Woodcutter) && Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
             {
                 env = EnvTypes.AdultForest;
                 res = ResTypes.Wood;
             }
-            else if (Build<BuildC>(_idx).Is(BuildTypes.Mine) && Environment<HaveEnvironmentC>(EnvTypes.Hill, _idx).Have)
+            else if (Build<BuildingC>(_idx).Is(BuildTypes.Mine) && Environment<HaveEnvironmentC>(EnvTypes.Hill, _idx).Have)
             {
                 env = EnvTypes.Hill;
                 res = ResTypes.Ore;
@@ -43,10 +43,10 @@ namespace Game.Game
 
 
             extract = 10;
-            extract += (int)(extract * BuildsUpgC.PercUpg(Build<BuildC>(_idx).Build, ownC.Player));
+            //extract += (int)(extract * BuildsUpgC.PercUpg(Build<BuildingC>(_idx).Build, ownC.Player));
 
 
-            if (extract > Environment<ResourcesC>(env, _idx).Resources) extract = Environment<ResourcesC>(env, _idx).Resources;
+            if (extract > Environment<AmountResourcesC>(env, _idx).Resources) extract = Environment<AmountResourcesC>(env, _idx).Resources;
 
             return true;
         }
@@ -55,7 +55,7 @@ namespace Game.Game
             mistake = default;
             needRes = default;
 
-            var buildC = Build<BuildC>(_idx);
+            var buildC = Build<BuildingC>(_idx);
 
 
             if (Unit<UnitCellEC>(_idx).Have(build))
@@ -64,15 +64,17 @@ namespace Game.Game
                 {
                     if (!Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
                     {
-                        if (InvResC.CanCreateBuild(who, build, out needRes))
-                        {
-                            return true;
-                        }
-                        else
-                        {
-                            mistake = MistakeTypes.Economy;
-                            return false;
-                        }
+                        //if (InvResC.CanCreateBuild(who, build, out needRes))
+                        //{
+                        //    return true;
+                        //}
+                        //else
+                        //{
+                        //    mistake = MistakeTypes.Economy;
+                        //    return false;
+                        //}
+
+                        return true;
                     }
                     else
                     {
@@ -100,26 +102,26 @@ namespace Game.Game
         public void SetNew(in BuildTypes build, in PlayerTypes owner)
         {
             if (build == default) throw new Exception("BuildType is None");
-            if (Build<BuildC>(_idx).Is(build)) throw new Exception("It's got yet");
-            if (Build<BuildC>(_idx).Have) Remove();
+            if (Build<BuildingC>(_idx).Is(build)) throw new Exception("It's got yet");
+            if (Build<BuildingC>(_idx).Have) Remove();
 
-            Build<BuildC>(_idx).Build = build;
+            Build<BuildingC>(_idx).Build = build;
             Build<PlayerC>(_idx).Player = owner;
-            WhereBuildsC.Set(build, owner, _idx, true);
+            EntWhereBuilds.HaveBuild<HaveBuildingC>(build, owner, _idx).Have = true;
         }
         public void Remove()
         {
-            if (Build<BuildC>(_idx).Have)
+            if (Build<BuildingC>(_idx).Have)
             {
-                WhereBuildsC.Set(Build<BuildC>(_idx).Build, Build<PlayerC>(_idx).Player, _idx, false);
+                EntWhereBuilds.HaveBuild<HaveBuildingC>(Build<BuildingC>(_idx).Build, Build<PlayerC>(_idx).Player, _idx).Have = false;
 
-                Build<BuildC>(_idx).Reset();
+                Build<BuildingC>(_idx).Reset();
                 Build<PlayerC>(_idx).Reset();
             }
         }
         public void Sync(in BuildTypes build, in PlayerTypes owner)
         {
-            Build<BuildC>(_idx).Build = build;
+            Build<BuildingC>(_idx).Build = build;
             Build<PlayerC>(_idx).Player = owner;
         }
     }

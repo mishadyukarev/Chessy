@@ -11,14 +11,14 @@ namespace Game.Game
             ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
             ref var selOnUnitCom = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
 
-            ref var selCondUnitC = ref Unit<ConditionC>(SelIdx<IdxC>().Idx);
+            ref var selCondUnitC = ref Unit<ConditionUnitC>(SelIdx<IdxC>().Idx);
 
 
             var activeButt = false;
 
             if (unit_sel.Have)
             {
-                if (selOnUnitCom.Is(WhoseMoveC.CurPlayerI))
+                if (selOnUnitCom.Is(EntWhoseMove.CurPlayerI))
                 {
                     activeButt = true;
 

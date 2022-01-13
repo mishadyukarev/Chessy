@@ -17,7 +17,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal int MaxAmountSteps(UnitTypes unit, bool haveEffect, float upg)
+        internal int MaxAmountSteps(UnitTypes unit, bool haveEffect/*, float upg*/)
         {
             var steps = 0;
 
@@ -34,7 +34,7 @@ namespace Game.Game
 
             if (haveEffect) steps += 1;
 
-            steps += (int)upg;
+            //steps += (int)upg;
 
             return steps;
         }

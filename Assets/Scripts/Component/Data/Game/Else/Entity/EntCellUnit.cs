@@ -11,7 +11,8 @@ namespace Game.Game
         readonly static Dictionary<UniqueAbilityTypes, Entity[]> _uniqueAbilEnts;
         readonly static Dictionary<UnitStatTypes, Entity[]> _unitStatEnts;
         readonly static Dictionary<ConditionUnitTypes, Entity[]> _conditionUnitEnts;
-        readonly static Dictionary<UniqueButtonTypes, Entity[]> _uniqButtonUnitEnts;
+        readonly static Dictionary<ButtonTypes, Entity[]> _uniqButtonUnitEnts;
+        readonly static Dictionary<ButtonTypes, Entity[]> _buildButtonUnits;
         readonly static Entity[] _unitTWs;
 
         public static ref C Unit<C>(in byte idx) where C : struct, IUnitCellE => ref _units[idx].Get<C>();
@@ -31,10 +32,15 @@ namespace Game.Game
             if (!_conditionUnitEnts.ContainsKey(cond)) throw new Exception();
             return ref _conditionUnitEnts[cond][idx].Get<C>();
         }
-        public static ref C Unit<C>(in UniqueButtonTypes button, in byte idx) where C : struct, IUnitUniqueButtonCellE
+        public static ref C Unit<C>(in ButtonTypes button, in byte idx) where C : struct, IUnitUniqueButtonCellE
         {
             if (!_uniqButtonUnitEnts.ContainsKey(button)) throw new Exception();
             return ref _uniqButtonUnitEnts[button][idx].Get<C>();
+        }
+        public static ref C UnitBuilding<C>(in ButtonTypes button, in byte idx) where C : struct
+        {
+            if (!_buildButtonUnits.ContainsKey(button)) throw new Exception();
+            return ref _buildButtonUnits[button][idx].Get<C>();
         }
 
         public static ref T UnitTW<T>(in byte idx) where T : struct, ITWCellE => ref _unitTWs[idx].Get<T>();
@@ -75,7 +81,8 @@ namespace Game.Game
             _uniqueAbilEnts = new Dictionary<UniqueAbilityTypes, Entity[]>();
             _unitStatEnts = new Dictionary<UnitStatTypes, Entity[]>();
             _conditionUnitEnts = new Dictionary<ConditionUnitTypes, Entity[]>();
-            _uniqButtonUnitEnts = new Dictionary<UniqueButtonTypes, Entity[]>();
+            _uniqButtonUnitEnts = new Dictionary<ButtonTypes, Entity[]>();
+            _buildButtonUnits = new Dictionary<ButtonTypes, Entity[]>();
 
             _unitTWs = new Entity[CellValues.ALL_CELLS_AMOUNT];
 
@@ -95,8 +102,9 @@ namespace Game.Game
             {
                 _conditionUnitEnts.Add(cond, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
-            for (var button = UniqueButtonTypes.First; button < UniqueButtonTypes.End; button++)
+            for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
+                _buildButtonUnits.Add(button, new Entity[CellValues.ALL_CELLS_AMOUNT]);
                 _uniqButtonUnitEnts.Add(button, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
         }
@@ -109,9 +117,9 @@ namespace Game.Game
                     .Add(new UnitC())
                     .Add(new LevelC())
                     .Add(new PlayerC())
-                    .Add(new StunC())
-                    .Add(new ConditionC())
-                    .Add(new CornerArcherC())
+                    .Add(new NeedStepsForExitStunC())
+                    .Add(new ConditionUnitC())
+                    .Add(new IsCornedArcherC())
                     .Add(new HpC())
                     .Add(new StepC())
                     .Add(new WaterC());
@@ -127,7 +135,7 @@ namespace Game.Game
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
                     _unitEnts[player][idx] = gameW.NewEntity()
-                        .Add(new VisibledC());
+                        .Add(new IsVisibledC());
                 }
 
                 for (var uniqAbil = UniqueAbilityTypes.First; uniqAbil < UniqueAbilityTypes.End; uniqAbil++)
@@ -148,8 +156,11 @@ namespace Game.Game
                         .Add(new StepC());
                 }
 
-                for (var button = UniqueButtonTypes.First; button < UniqueButtonTypes.End; button++)
+                for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
                 {
+                    _buildButtonUnits[button][idx] = gameW.NewEntity()
+                        .Add(new BuildingC());
+
                     _uniqButtonUnitEnts[button][idx] = gameW.NewEntity()
                         .Add(new UniqueAbilityC());
                 }
