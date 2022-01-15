@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Game.Game.EntityCellPool;
+using static Game.Game.CellE;
 
 namespace Game.Game
 {

@@ -1,7 +1,7 @@
 ﻿using System;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellEnvironmentE;
 using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game

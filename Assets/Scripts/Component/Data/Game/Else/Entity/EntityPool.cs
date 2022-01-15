@@ -77,7 +77,7 @@ namespace Game.Game
                 .Add(new NameC(nameBackground));
 
             _winner = gameW.NewEntity()
-                .Add(new PlayerC());
+                .Add(new PlayerTC());
 
             _ready[PlayerTypes.First] = gameW.NewEntity()
                 .Add(new IsStartedGameC())
@@ -91,13 +91,13 @@ namespace Game.Game
                 .Add(new AmountMotionsC(0));
 
             _motionZone = gameW.NewEntity()
-                .Add(new IsActivatedC(false));
+                .Add(new IsActiveC(false));
 
             _friendZone = gameW.NewEntity()
-                .Add(new IsActivatedC(GameModeC.IsGameMode(GameModes.WithFriendOff)));
+                .Add(new IsActiveC(GameModeC.IsGameMode(GameModes.WithFriendOff)));
 
             _infoEnvironment = gameW.NewEntity()
-                .Add(new IsActivatedC(false));
+                .Add(new IsActiveC(false));
 
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)

@@ -11,7 +11,7 @@ namespace Game.Game
             if (!Button<ButtonUIC>().IsActiveParent && !Water<ButtonUIC>().IsActiveParent /*&& !WhereUnitsC.HaveMyHeroInGame*/)
             {
                 Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent
-                    (!EntInventorUnits.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, EntWhoseMove.CurPlayerI).Have);
+                    (!EntInventorUnits.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have);
             }
             else
             {

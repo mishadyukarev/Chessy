@@ -1,7 +1,7 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellBuildPool;
-using static Game.Game.EntityCellEnvPool;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellBuildE;
+using static Game.Game.CellEnvironmentE;
 using static Game.Game.EntityCellFirePool;
 using static Game.Game.EntityCellCloudPool;
 
@@ -15,16 +15,16 @@ namespace Game.Game
             {
                 var xy_0 = Cell<XyC>(idx_0).Xy;
 
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
                 ref var hpUnitCell_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var hpUnit_0 = ref Unit<HpC>(idx_0);
 
                 ref var buildE_0 = ref Build<BuildCellEC>(idx_0);
                 ref var buil_0 = ref Build<BuildingC>(idx_0);
-                ref var ownBuil_0 = ref Build<PlayerC>(idx_0);
+                ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
@@ -73,7 +73,7 @@ namespace Game.Game
                         {
                             var curIdxCell1 = IdxCell(xy1);
 
-                            if (Cell<IsActivatedC>(curIdxCell1).IsActivated)
+                            if (Cell<IsActiveC>(curIdxCell1).IsActive)
                             {
                                 if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, curIdxCell1).Have)
                                 {

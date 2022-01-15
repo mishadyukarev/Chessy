@@ -1,11 +1,12 @@
 ﻿using Game.Common;
 using UnityEngine;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityCellTrailPool;
-using static Game.Game.EntityCellBuildPool;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellBuildE;
+using static Game.Game.CellEnvironmentE;
 using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellUnitTWE;
 
 namespace Game.Game
 {
@@ -17,12 +18,12 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
+                ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var build_0 = ref Build<BuildingC>(idx_0);

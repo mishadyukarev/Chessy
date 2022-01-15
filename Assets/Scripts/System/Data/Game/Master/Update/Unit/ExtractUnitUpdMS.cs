@@ -1,7 +1,7 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellBuildPool;
-using static Game.Game.EntityCellEnvPool;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellBuildE;
+using static Game.Game.CellEnvironmentE;
 
 namespace Game.Game
 {
@@ -11,8 +11,8 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);

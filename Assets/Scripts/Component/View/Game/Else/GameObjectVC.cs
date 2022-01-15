@@ -2,12 +2,14 @@
 
 namespace Game.Game
 {
-    public struct GameObjectVC : IBackgroundE, IGeneralZoneE
+    public struct GameObjectVC : IBackgroundE, IGeneralZoneE, ICellVE
     {
         readonly GameObject _gO;
 
         public string Name => _gO.name;
-        internal Transform Transform => _gO.transform;
+        public Transform Transform => _gO.transform;
+        public int InstanceID => _gO.GetInstanceID();
+        public bool IsActiveSelf => _gO.activeSelf;
 
         internal GameObjectVC(in GameObject gO)
         {

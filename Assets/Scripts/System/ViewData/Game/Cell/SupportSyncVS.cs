@@ -1,7 +1,7 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellEnvironmentE;
 using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
@@ -14,12 +14,12 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
                 ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
-                ref var lev_0 = ref Unit<LevelC>(idx_0);
-                ref var own_0 = ref Unit<PlayerC>(idx_0);
+                ref var lev_0 = ref Unit<LevelTC>(idx_0);
+                ref var own_0 = ref Unit<PlayerTC>(idx_0);
 
-                ref var supV_0 = ref EntityCellVPool.ElseCellVE<SupportVC>(idx_0);
+                ref var supV_0 = ref CellVEs.ElseCellVE<SupportVC>(idx_0);
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
@@ -44,7 +44,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (own_0.Is(EntWhoseMove.CurPlayerI))
+                    if (own_0.Is(WhoseMoveE.CurPlayerI))
                     {
                         if (cellClick.Is(CellClickTypes.GiveTakeTW, CellClickTypes.GiveScout))
                         {
@@ -76,7 +76,7 @@ namespace Game.Game
 
                     else
                     {
-                        if (Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, idx_0).IsVisibled)
+                        if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
                         {
                             if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                             {
@@ -96,9 +96,9 @@ namespace Game.Game
                 {
                     if (SelUniqAbilC.Is(UniqueAbilityTypes.FireArcher))
                     {
-                        if (unitE_0.CanArson(EntWhoseMove.CurPlayerI, idx_0))
+                        if (unitE_0.CanArson(WhoseMoveE.CurPlayerI, idx_0))
                         {
-                            EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
+                            CellVEs.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
                         }
                     }
                 }

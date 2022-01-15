@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellUnitE;
 
 namespace Game.Game
 {
@@ -10,9 +10,9 @@ namespace Game.Game
             IdxDoingMC.Get(out var idx_0);
             UniqueAbilityMC.Get(out var unit_cur);
 
-            ref var unit_0 = ref Unit<UnitC>(idx_0);
-            ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-            ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+            ref var unit_0 = ref Unit<UnitTC>(idx_0);
+            ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+            ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
 
             ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);

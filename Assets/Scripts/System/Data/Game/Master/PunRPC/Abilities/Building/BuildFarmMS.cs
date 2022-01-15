@@ -1,7 +1,7 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellBuildPool;
-using static Game.Game.EntityCellEnvPool;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellBuildE;
+using static Game.Game.CellEnvironmentE;
 
 namespace Game.Game
 {
@@ -16,7 +16,7 @@ namespace Game.Game
 
             ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
             ref var build_0 = ref Build<BuildingC>(idx_0);
-            ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
+            ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 

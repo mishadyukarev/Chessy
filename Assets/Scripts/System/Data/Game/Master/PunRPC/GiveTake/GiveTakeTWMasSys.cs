@@ -1,5 +1,6 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellUnitTWE;
 
 namespace Game.Game
 {
@@ -15,15 +16,15 @@ namespace Game.Game
             {
                 var sender = InfoC.Sender(MGOTypes.Master);
 
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
 
-                ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
-                ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
+                ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);
                 ref var twShield_0 = ref UnitTW<ProtectionC>(idx_0);
 
 

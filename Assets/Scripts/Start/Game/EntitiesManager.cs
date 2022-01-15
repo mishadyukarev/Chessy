@@ -2,12 +2,12 @@
 using Game.Common;
 using Photon.Pun;
 using System.Collections.Generic;
-using static Game.Game.EntityCellBuildPool;
+using static Game.Game.CellBuildE;
 using static Game.Game.EntityCellCloudPool;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellEnvironmentE;
 using static Game.Game.EntityCellRiverPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellPool;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellE;
 
 namespace Game.Game
 {
@@ -20,7 +20,12 @@ namespace Game.Game
             CanvasC.SetCurZone(SceneTypes.Game);
 
             new EntityVPool(gameW, out var actions, out var sounds0, out var sounds1);
-            new EntityCellVPool(gameW, CellValues.X_AMOUNT, CellValues.Y_AMOUNT);
+            new CellVEs(gameW, CellValues.X_AMOUNT, CellValues.Y_AMOUNT, out var cells);
+            new CellUnitVEs(gameW, cells);
+            new CellFireVEs(gameW, cells);
+            new CellEnvVEs(gameW, cells);
+            new CellTrailVE(gameW, cells);
+            new CellCloudVEs(gameW, cells);
 
             ///Left
             var leftZone = CanvasC.FindUnderCurZone("LeftZone").transform;
@@ -69,8 +74,8 @@ namespace Game.Game
 
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
-                isActiveCells[idx] = EntityCellVPool.Cell<CellVC>(idx).IsActiveSelf;
-                idCells[idx] = EntityCellVPool.Cell<CellVC>(idx).InstanceID;
+                isActiveCells[idx] = CellVEs.Cell<GameObjectVC>(idx).IsActiveSelf;
+                idCells[idx] = CellVEs.Cell<GameObjectVC>(idx).InstanceID;
             }
 
             var namesMethods = RpcS.NamesMethods;
@@ -82,32 +87,36 @@ namespace Game.Game
             new EntityPool(gameW, EntityVPool.Background<GameObjectVC>().Name, actions, namesMethods);
             new EntityMPool(gameW);
 
+            new SelectedUnitE(gameW);
+
             new BuildingUpgradesEnt(gameW);
             new EntUnitUpgrades(gameW);
 
             new EntWhereEnviroments(gameW);
             new EntWhereUnits(gameW);
-            new EntWhereBuilds(gameW);
+            new WhereBuildsE(gameW);
 
             new EntInventorUnits(gameW);
             new EntInventorResources(gameW);
             new EntInventorToolWeapon(gameW);
 
             new SetUnitCellsC(gameW);
-
             new GetterUnitsC(gameW);
 
-            new EntCellUnit(gameW);
+            new CellUnitE(gameW);
+            new CellUnitTWE(gameW);
             new EntityCellTrailPool(gameW);
-            new EntityCellBuildPool(gameW);
-            new EntityCellEnvPool(gameW);
+            new CellBuildE(gameW);
+            new CellEnvironmentE(gameW);
             new EntityCellFirePool(gameW);
             new EntityCellCloudPool(gameW);
             new EntityCellRiverPool(gameW);
-            new EntityCellPool(gameW, isActiveCells, idCells);
+
+            new CellE(gameW, isActiveCells, idCells);
+            new CellParentE(gameW);
 
 
-            new EntWhoseMove(gameW);
+            new WhoseMoveE(gameW);
             new EntMistakeC(gameW);
             new EntHint(gameW);
 
@@ -133,7 +142,7 @@ namespace Game.Game
 
                     ref var cloud_0 = ref Cloud<HaveEffectC>(idx_0);
 
-                    if (Cell<IsActivatedC>(idx_0).IsActivated)
+                    if (Cell<IsActiveC>(idx_0).IsActive)
                     {
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
@@ -240,21 +249,21 @@ namespace Game.Game
                     var x = curXyCell[0];
                     var y = curXyCell[1];
 
-                    ref var unit_0 = ref Unit<UnitC>(idx_0);
-                    ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                    ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                    ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                    ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+                    ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
                     ref var hp_0 = ref Unit<HpC>(idx_0);
                     ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
                     ref var waterUnit_0 = ref Unit<WaterC>(idx_0);
 
 
-                    ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
-                    ref var twLevel_0 = ref UnitTW<LevelC>(idx_0);
-                    ref var protShiel_0 = ref UnitTW<ProtectionC>(idx_0);
+                    ref var tw_0 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_0);
+                    ref var twLevel_0 = ref CellUnitTWE.UnitTW<LevelTC>(idx_0);
+                    ref var protShiel_0 = ref CellUnitTWE.UnitTW<ProtectionC>(idx_0);
 
                     ref var build_0 = ref Build<BuildingC>(idx_0);
-                    ref var ownBuild_0 = ref Build<PlayerC>(idx_0);
+                    ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
                     if (x == 7 && y == 8)
                     {
@@ -283,11 +292,11 @@ namespace Game.Game
 
                         if (rand >= 50)
                         {
-                            UnitTW<UnitTWCellEC>(idx_0).SetNew(TWTypes.Sword, LevelTypes.Second);
+                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(TWTypes.Sword, LevelTypes.Second);
                         }
                         else
                         {
-                            UnitTW<UnitTWCellEC>(idx_0).SetNew(TWTypes.Shield, LevelTypes.First);
+                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(TWTypes.Shield, LevelTypes.First);
                         }
 
                         Unit<UnitCellEC>(idx_0).SetNew((UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second));

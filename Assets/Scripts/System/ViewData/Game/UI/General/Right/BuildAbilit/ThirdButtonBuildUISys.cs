@@ -1,7 +1,7 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
-using static Game.Game.EntityCellBuildPool;
+using static Game.Game.CellBuildE;
 
 namespace Game.Game
 {
@@ -13,22 +13,22 @@ namespace Game.Game
             {
                 var idx_sel = SelIdx<IdxC>().Idx;
 
-                ref var selUnitDatCom = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
-                ref var selOwnUnitCom = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
+                ref var selUnitDatCom = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
+                ref var selOwnUnitCom = ref Unit<PlayerTC>(SelIdx<IdxC>().Idx);
 
                 ref var selBuildDatCom = ref Build<BuildingC>(SelIdx<IdxC>().Idx);
-                ref var ownBuildC_sel = ref Build<PlayerC>(SelIdx<IdxC>().Idx);
+                ref var ownBuildC_sel = ref Build<PlayerTC>(SelIdx<IdxC>().Idx);
 
                 var needActiveThirdButt = false;
 
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    if (selOwnUnitCom.Is(EntWhoseMove.CurPlayerI))
+                    if (selOwnUnitCom.Is(WhoseMoveE.CurPlayerI))
                     {
                         if (selBuildDatCom.Have)
                         {
-                            if (ownBuildC_sel.Is(EntWhoseMove.CurPlayerI))
+                            if (ownBuildC_sel.Is(WhoseMoveE.CurPlayerI))
                             {
                                 //if (!EntWhereBuilds.IsSetted(BuildTypes.City, WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI))
                                 //{
@@ -41,7 +41,7 @@ namespace Game.Game
                             {
                                 needActiveThirdButt = true;
                                 UIEntBuild.Button<ImageUIC>(ButtonTypes.Third).Sprite = SpritesResC.Sprite(SpriteTypes.CityNone);
-                                UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build = BuildTypes.None;
+                                UnitBuildButton<BuildingC>(ButtonTypes.Third, idx_sel).Build = BuildTypes.None;
                             }
                         }
 

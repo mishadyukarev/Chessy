@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 using System;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -9,11 +9,13 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_cur = ref Unit<UnitC>(CurIdx<IdxC>().Idx);
-            ref var levUnit_cur = ref Unit<LevelC>(CurIdx<IdxC>().Idx);
-            ref var ownUnit_cur = ref Unit<PlayerC>(CurIdx<IdxC>().Idx);
+            var idx_cur = CurIdx<IdxC>().Idx;
 
-            ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
+            ref var unit_cur = ref Unit<UnitTC>(idx_cur);
+            ref var levUnit_cur = ref Unit<LevelTC>(idx_cur);
+            ref var ownUnit_cur = ref Unit<PlayerTC>(idx_cur);
+
+            ref var unit_sel = ref Unit<UnitTC>(idx_cur);
 
             ref var raycast = ref ClickerObject<RayCastC>();
             ref var cellClick = ref ClickerObject<CellClickC>();
@@ -23,7 +25,7 @@ namespace Game.Game
             {
                 if (raycast.Is(RaycastTypes.Cell))
                 {
-                    if (!EntWhoseMove.IsMyMove)
+                    if (!WhoseMoveE.IsMyMove)
                     {
                         SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                     }
@@ -38,21 +40,21 @@ namespace Game.Game
                                 {
                                     if (SelIdx<SelIdxEC>().IsSelCell)
                                     {
-                                        if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanAttack(EntWhoseMove.CurPlayerI, CurIdx<IdxC>().Idx, out var attack))
+                                        if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanAttack(WhoseMoveE.CurPlayerI, CurIdx<IdxC>().Idx, out var attack))
                                         {
-                                            EntityPool.Rpc<RpcC>().AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                            Rpc<RpcC>().AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
 
-                                        else if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanShift(EntWhoseMove.CurPlayerI, CurIdx<IdxC>().Idx))
+                                        else if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanShift(WhoseMoveE.CurPlayerI, CurIdx<IdxC>().Idx))
                                         {
-                                            EntityPool.Rpc<RpcC>().ShiftUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                            Rpc<RpcC>().ShiftUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
 
                                         else
                                         {
                                             if (unit_cur.Have)
                                             {
-                                                if (ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
+                                                if (ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                                 {
                                                     if (unit_cur.Is(UnitTypes.Scout))
                                                     {
@@ -77,7 +79,7 @@ namespace Game.Game
                                     {
                                         if (unit_cur.Have)
                                         {
-                                            if (ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
+                                            if (ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                             {
                                                 if (unit_cur.Is(UnitTypes.Scout))
                                                 {
@@ -101,20 +103,20 @@ namespace Game.Game
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    EntityPool.Rpc<RpcC>().SetUniToMaster(CurIdx<IdxC>().Idx, SelectedUnitEnt.Unit);
-                                    cellClick.Set(CellClickTypes.SimpleClick);
+                                    EntityPool.Rpc<RpcC>().SetUniToMaster(CurIdx<IdxC>().Idx, SelectedUnitE.SelUnit<UnitTC>().Unit);
+                                    cellClick.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
+                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                     {
                                         //EntityPool.Rpc<RpcC>().GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx<IdxC>().Idx);
                                     }
                                     else
                                     {
-                                        cellClick.Set(CellClickTypes.SimpleClick);
+                                        cellClick.Click = CellClickTypes.SimpleClick;
                                         SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                                     }
                                 }
@@ -123,14 +125,14 @@ namespace Game.Game
                             case CellClickTypes.UpgradeUnit:
                                 {
                                     if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
-                                        && ownUnit_cur.Is(EntWhoseMove.CurPlayerI)
+                                        && ownUnit_cur.Is(WhoseMoveE.CurPlayerI)
                                         && !levUnit_cur.Is(LevelTypes.Second))
                                     {
                                         EntityPool.Rpc<RpcC>().UpgradeUnitToMaster(CurIdx<IdxC>().Idx);
                                     }
                                     else
                                     {
-                                        cellClick.Set(CellClickTypes.SimpleClick);
+                                        cellClick.Click = CellClickTypes.SimpleClick;
                                         SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                                     }
                                 }
@@ -139,12 +141,12 @@ namespace Game.Game
                             case CellClickTypes.GiveScout:
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn)
-                                        && ownUnit_cur.Is(EntWhoseMove.CurPlayerI))
+                                        && ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                     {
                                         EntityPool.Rpc<RpcC>().FromNewUnitToMas(UnitTypes.Scout, CurIdx<IdxC>().Idx);
                                     }
 
-                                    cellClick.Set(CellClickTypes.SimpleClick);
+                                    cellClick.Click = CellClickTypes.SimpleClick;
                                     SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                                 }
                                 break;
@@ -156,7 +158,7 @@ namespace Game.Game
                                         if (unit_sel.Is(UnitTypes.Archer))
                                         {
                                             EntityPool.Rpc<RpcC>().FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
-                                            cellClick.Set(CellClickTypes.SimpleClick);
+                                            cellClick.Click = CellClickTypes.SimpleClick;
 
                                             //NeedSoundEffC.Clip = ClipTypes.PickArcher;
                                         }
@@ -165,7 +167,7 @@ namespace Game.Game
                                     }
                                     else
                                     {
-                                        cellClick.Set(CellClickTypes.SimpleClick);
+                                        cellClick.Click = CellClickTypes.SimpleClick;
                                     }
 
                                     SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
@@ -189,7 +191,7 @@ namespace Game.Game
                                         EntityPool.Rpc<RpcC>().StunElfemaleToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }
 
-                                    cellClick.Set(CellClickTypes.SimpleClick);
+                                    cellClick.Click = CellClickTypes.SimpleClick;
                                     //cellClick.Set(CellClickTypes.FirstClick);
                                     SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                                 }
@@ -202,13 +204,12 @@ namespace Game.Game
 
                 else if (raycast.Is(RaycastTypes.UI))
                 {
-
+                    cellClick.Click = CellClickTypes.SimpleClick;
                 }
 
                 else if (raycast.Is(RaycastTypes.Background))
                 {
-                    //CellClicker<CellClickC>().Set(CellClickTypes.FirstClick);
-                    SelIdx<IdxC>().Reset();
+                    cellClick.Click = CellClickTypes.SimpleClick;
                 }
             }
 
@@ -216,9 +217,9 @@ namespace Game.Game
             {
                 if (raycast.Is(RaycastTypes.Cell))
                 {
-                    if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
+                    if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, CurIdx<IdxC>().Idx).IsVisibled)
+                        if (!unit_cur.Have || !Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisibled)
                         {
                             if (CurIdx<CurIdxC>().IsStartDirectToCell)
                             {

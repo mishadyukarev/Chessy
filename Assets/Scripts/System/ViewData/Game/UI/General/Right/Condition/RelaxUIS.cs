@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -8,8 +8,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
-            ref var selOnUnitCom = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
+            ref var selOnUnitCom = ref Unit<PlayerTC>(SelIdx<IdxC>().Idx);
 
             ref var selCondUnitC = ref Unit<ConditionUnitC>(SelIdx<IdxC>().Idx);
 
@@ -18,7 +18,7 @@ namespace Game.Game
 
             if (unit_sel.Have)
             {
-                if (selOnUnitCom.Is(EntWhoseMove.CurPlayerI))
+                if (selOnUnitCom.Is(WhoseMoveE.CurPlayerI))
                 {
                     activeButt = true;
 

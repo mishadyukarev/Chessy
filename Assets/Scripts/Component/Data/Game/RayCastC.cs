@@ -2,7 +2,7 @@
 {
     public struct RayCastC : IClickerObjectE
     {
-        public RaycastTypes Raycast { private get; set; }
+        public RaycastTypes Raycast;
 
         public bool Is(in RaycastTypes raycast) => Raycast == raycast;
 

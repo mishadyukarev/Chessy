@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellBuildPool;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellBuildE;
+using static Game.Game.CellEnvironmentE;
 
 namespace Game.Game
 {
@@ -13,7 +13,7 @@ namespace Game.Game
 
         public bool CanExtract(out int extract, out EnvTypes env, out ResTypes res)
         {
-            var ownC = Build<PlayerC>(_idx);
+            var ownC = Build<PlayerTC>(_idx);
 
 
             if (Build<BuildingC>(_idx).Is(BuildTypes.Farm) && Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, _idx).Have)
@@ -106,23 +106,23 @@ namespace Game.Game
             if (Build<BuildingC>(_idx).Have) Remove();
 
             Build<BuildingC>(_idx).Build = build;
-            Build<PlayerC>(_idx).Player = owner;
-            EntWhereBuilds.HaveBuild<HaveBuildingC>(build, owner, _idx).Have = true;
+            Build<PlayerTC>(_idx).Player = owner;
+            WhereBuildsE.HaveBuild<HaveBuildingC>(build, owner, _idx).Have = true;
         }
         public void Remove()
         {
             if (Build<BuildingC>(_idx).Have)
             {
-                EntWhereBuilds.HaveBuild<HaveBuildingC>(Build<BuildingC>(_idx).Build, Build<PlayerC>(_idx).Player, _idx).Have = false;
+                WhereBuildsE.HaveBuild<HaveBuildingC>(Build<BuildingC>(_idx).Build, Build<PlayerTC>(_idx).Player, _idx).Have = false;
 
                 Build<BuildingC>(_idx).Reset();
-                Build<PlayerC>(_idx).Reset();
+                Build<PlayerTC>(_idx).Reset();
             }
         }
         public void Sync(in BuildTypes build, in PlayerTypes owner)
         {
             Build<BuildingC>(_idx).Build = build;
-            Build<PlayerC>(_idx).Player = owner;
+            Build<PlayerTC>(_idx).Player = owner;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
-using static Game.Game.EntityCellEnvPool;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellEnvironmentE;
+using static Game.Game.CellUnitE;
 
 namespace Game.Game
 {

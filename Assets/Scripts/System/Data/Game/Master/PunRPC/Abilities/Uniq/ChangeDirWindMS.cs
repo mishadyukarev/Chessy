@@ -1,5 +1,5 @@
 ﻿using Photon.Pun;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellUnitE;
 
 namespace Game.Game
 {
@@ -11,7 +11,7 @@ namespace Game.Game
             FromToDoingMC.Get(out var idx_from, out var idx_to);
             UniqueAbilityMC.Get(out var uniq_cur);
 
-            ref var unit_from = ref Unit<UnitC>(idx_from);
+            ref var unit_from = ref Unit<UnitTC>(idx_from);
 
             ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);

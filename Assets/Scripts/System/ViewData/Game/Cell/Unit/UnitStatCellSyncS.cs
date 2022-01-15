@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellVPool;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellVEs;
 
 namespace Game.Game
 {
@@ -11,9 +11,9 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var level_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                ref var level_0 = ref Unit<LevelTC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var hpUnit_0 = ref Unit<HpC>(idx_0);
                 ref var step_0 = ref Unit<StepC>(idx_0);
                 ref var water_0 = ref Unit<StepC>(idx_0);
@@ -30,7 +30,7 @@ namespace Game.Game
                 blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
 
 
-                if (Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, idx_0).IsVisibled)
+                if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
                 {
                     if (unit_0.Have)
                     {

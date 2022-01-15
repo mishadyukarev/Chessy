@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 using UnityEngine;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -9,8 +9,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
-            ref var ownUnit_sel = ref Unit<PlayerC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
+            ref var ownUnit_sel = ref Unit<PlayerTC>(SelIdx<IdxC>().Idx);
             ref var cond_sel = ref Unit<ConditionUnitC>(SelIdx<IdxC>().Idx);
 
 
@@ -18,7 +18,7 @@ namespace Game.Game
 
             if (unit_sel.Have)
             {
-                if (ownUnit_sel.Is(EntWhoseMove.CurPlayerI))
+                if (ownUnit_sel.Is(WhoseMoveE.CurPlayerI))
                 {
                     isEnableButt = true;
 

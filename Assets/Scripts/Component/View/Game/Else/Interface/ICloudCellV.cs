@@ -1,4 +1,4 @@
-﻿namespace Game.Game
-{
-    public interface ICloudCellV { }
-}
+﻿//namespace Game.Game
+//{
+  
+//}

@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellBuildPool;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellBuildE;
 
 namespace Game.Game
 {
@@ -15,8 +15,8 @@ namespace Game.Game
             UniqueAbilityMC.Get(out var uniq_cur);
 
             ref var hpUnit_0 = ref Unit<HpC>(idx_0);
-            ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-            ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+            ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+            ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
@@ -33,13 +33,13 @@ namespace Game.Game
                     {
                         var idx_1 = IdxCell(xy1);
 
-                        ref var unit_1 = ref Unit<UnitC>(idx_1);
-                        ref var ownUnit_1 = ref Unit<PlayerC>(idx_1);
+                        ref var unit_1 = ref Unit<UnitTC>(idx_1);
+                        ref var ownUnit_1 = ref Unit<PlayerTC>(idx_1);
                         ref var waterUnit_1 = ref Unit<UnitCellEC>(idx_1);
                         ref var hpUnit_1 = ref Unit<HpC>(idx_1);
 
-                        ref var tw_1 = ref UnitTW<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref UnitTW<ShieldEC>(idx_1);
+                        ref var tw_1 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_1);
+                        ref var shield_1 = ref CellUnitTWE.UnitTW<ShieldEC>(idx_1);
 
                         ref var buildC_1 = ref Build<BuildingC>(idx_1);
 
@@ -48,7 +48,7 @@ namespace Game.Game
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Player))
                             {
-                                foreach (var item in Stats) Unit<HaveEffectC>(item, idx_1).Disable();
+                                foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_1).Disable();
 
                                 if (tw_1.Is(TWTypes.Shield))
                                 {
@@ -68,7 +68,7 @@ namespace Game.Game
                     }
 
                     stepUnit_0.Take(uniq_cur);
-                    foreach (var item in Stats) Unit<HaveEffectC>(item, idx_0).Disable();
+                    foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_0).Disable();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AttackMelee);
 

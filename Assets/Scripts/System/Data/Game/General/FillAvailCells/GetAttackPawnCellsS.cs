@@ -1,7 +1,7 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityCellTrailPool;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellEnvironmentE;
 
 namespace Game.Game
 {
@@ -11,9 +11,9 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var level_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                ref var level_0 = ref Unit<LevelTC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var step_0 = ref Unit<StepC>(idx_0);
                 ref var stunUnit_0 = ref Unit<NeedStepsForExitStunC>(idx_0);
 
@@ -30,8 +30,8 @@ namespace Game.Game
                             dir_cur += 1;
                             var idx_1 = IdxCell(item_1.Value);
 
-                            ref var unit_1 = ref Unit<UnitC>(idx_1);
-                            ref var own_1 = ref Unit<PlayerC>(idx_1);
+                            ref var unit_1 = ref Unit<UnitTC>(idx_1);
+                            ref var own_1 = ref Unit<PlayerTC>(idx_1);
 
                             ref var trail_1 = ref Trail<TrailCellEC>(idx_1);
 

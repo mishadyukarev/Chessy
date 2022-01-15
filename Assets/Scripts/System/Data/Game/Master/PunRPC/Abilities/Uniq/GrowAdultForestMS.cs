@@ -1,6 +1,6 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellEnvPool;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellEnvironmentE;
 
 namespace Game.Game
 {
@@ -13,7 +13,7 @@ namespace Game.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+            ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
@@ -43,8 +43,8 @@ namespace Game.Game
                         {
                             var idx_1 = IdxCell(xy_1);
 
-                            ref var unit_1 = ref Unit<UnitC>(idx_1);
-                            ref var ownUnit_1 = ref Unit<PlayerC>(idx_1);
+                            ref var unit_1 = ref Unit<UnitTC>(idx_1);
+                            ref var ownUnit_1 = ref Unit<PlayerTC>(idx_1);
 
                             if (unit_1.Have)
                             {

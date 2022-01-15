@@ -15,12 +15,12 @@ namespace Game.Game
 
         void MeltOre()
         {
-            if (EntWhoseMove.IsMyMove) EntityPool.Rpc<RpcC>().MeltOreToMaster();
+            if (WhoseMoveE.IsMyMove) EntityPool.Rpc<RpcC>().MeltOreToMaster();
         }
 
         void BuyRes(ResTypes res)
         {
-            if (EntWhoseMove.IsMyMove) EntityPool.Rpc<RpcC>().BuyResToMaster(res);
+            if (WhoseMoveE.IsMyMove) EntityPool.Rpc<RpcC>().BuyResToMaster(res);
         }
     }
 }

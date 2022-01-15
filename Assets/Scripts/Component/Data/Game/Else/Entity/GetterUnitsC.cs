@@ -32,7 +32,7 @@ namespace Game.Game
             foreach (var key in Keys)
             {
                 _getter[key] = gameW.NewEntity()
-                    .Add(new IsActivatedC())
+                    .Add(new IsActiveC())
                     .Add(new TimerC());
             }
         }

@@ -1,5 +1,5 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 
 namespace Game.Game
 {

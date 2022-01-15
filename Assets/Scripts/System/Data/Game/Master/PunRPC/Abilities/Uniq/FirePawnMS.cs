@@ -1,8 +1,8 @@
 ﻿using Photon.Pun;
 using System;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellEnvironmentE;
 using static Game.Game.EntityCellFirePool;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellUnitE;
 
 namespace Game.Game
 {

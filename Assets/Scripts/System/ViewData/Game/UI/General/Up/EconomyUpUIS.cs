@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
-using static Game.Game.EntityCellBuildPool;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
+using static Game.Game.CellBuildE;
 
 using static Game.Game.EntityUpUIPool;
 
@@ -11,7 +11,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayer = EntWhoseMove.CurPlayerI;
+            var curPlayer = WhoseMoveE.CurPlayerI;
 
 
             var extracts = new Dictionary<ResTypes, int>();
@@ -27,9 +27,9 @@ namespace Game.Game
                 {
                     extracts[res] += extract;
                 }
-                if (Unit<PlayerC>(idx_0).Is(EntWhoseMove.CurPlayerI))
+                if (Unit<PlayerTC>(idx_0).Is(WhoseMoveE.CurPlayerI))
                 {
-                    extracts[ResTypes.Food] -= Unit<UnitC>(idx_0).CostFood;
+                    extracts[ResTypes.Food] -= Unit<UnitTC>(idx_0).CostFood;
                 }
 
                 if (Build<BuildCellEC>(idx_0).CanExtract(out extract, out env, out res))

@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -7,8 +7,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var tw_sel = ref UnitTW<ToolWeaponC>(SelIdx<IdxC>().Idx);
-            ref var twLevel_sel = ref UnitTW<LevelC>(SelIdx<IdxC>().Idx);
+            ref var tw_sel = ref CellUnitTWE.UnitTW<ToolWeaponC>(SelIdx<IdxC>().Idx);
+            ref var twLevel_sel = ref CellUnitTWE.UnitTW<LevelTC>(SelIdx<IdxC>().Idx);
 
             UIEntExtraTW.Image<ImageUIC>(TWTypes.Pick, LevelTypes.Second).SetActive(false);
             UIEntExtraTW.Image<ImageUIC>(TWTypes.Sword, LevelTypes.Second).SetActive(false);

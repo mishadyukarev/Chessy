@@ -11,11 +11,11 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
-                if (EntityPool.FriendZone<IsActivatedC>().IsActivated)
+                if (EntityPool.FriendZone<IsActiveC>().IsActive)
                 {
                     Friend<ButtonUIC>().SetActiveParent(true);
 
-                    if (EntWhoseMove.CurPlayerI == PlayerTypes.First)
+                    if (WhoseMoveE.CurPlayerI == PlayerTypes.First)
                     {
                         Friend<TextMPUGUIC>().Text = "1";
                     }

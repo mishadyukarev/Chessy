@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx_0 in EntityCellPool.Idxs)
+            foreach (var idx_0 in CellE.Idxs)
             {
                 ref var river_0 = ref River<RiverC>(idx_0);
 
@@ -14,7 +14,7 @@ namespace Game.Game
                 {
                     foreach (var item_0 in river_0.DirectsDict)
                     {
-                        EntityCellVPool.RiverCellVC<RiverVC>(idx_0).SetActiveRive(item_0.Key, item_0.Value);
+                        CellVEs.RiverCellVC<RiverVC>(idx_0).SetActiveRive(item_0.Key, item_0.Value);
                     }
                 }
             }

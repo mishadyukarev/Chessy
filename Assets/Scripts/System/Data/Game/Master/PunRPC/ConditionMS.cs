@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellUnitE;
 
 namespace Game.Game
 {

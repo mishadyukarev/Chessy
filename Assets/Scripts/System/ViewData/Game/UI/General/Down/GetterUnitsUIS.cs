@@ -12,7 +12,7 @@ namespace Game.Game
             {
                 if (unitT_cur == UnitTypes.Pawn || unitT_cur == UnitTypes.Archer)
                 {
-                    if (GetterUnitsC.GetterUnit<IsActivatedC>(unitT_cur).IsActivated)
+                    if (GetterUnitsC.GetterUnit<IsActiveC>(unitT_cur).IsActive)
                     {
                         UIEntDownPawnArcher.Create<ButtonUIC>(unitT_cur).SetActive(true);
 
@@ -21,7 +21,7 @@ namespace Game.Game
                         if (GetterUnitsC.GetterUnit<TimerC>(unitT_cur).Timer >= NEEDED_TIME)
                         {
                             UIEntDownPawnArcher.Create<ButtonUIC>(unitT_cur).SetActive(false);
-                            GetterUnitsC.GetterUnit<IsActivatedC>(unitT_cur).IsActivated = false;
+                            GetterUnitsC.GetterUnit<IsActiveC>(unitT_cur).IsActive = false;
                             GetterUnitsC.GetterUnit<TimerC>(unitT_cur).Reset();
                         }
                     }

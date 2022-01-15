@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
 
             var activeParent = false;
 
@@ -16,7 +16,7 @@ namespace Game.Game
             {
                 if (unit_sel.Have)
                 {
-                    if (Unit<IsVisibledC>(EntWhoseMove.CurPlayerI, SelIdx<IdxC>().Idx).IsVisibled)
+                    if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, SelIdx<IdxC>().Idx).IsVisibled)
                     {
                         activeParent = true;
                     }

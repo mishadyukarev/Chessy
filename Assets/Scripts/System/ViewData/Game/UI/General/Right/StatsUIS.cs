@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 using static Game.Game.UIEntRightStats;
 
@@ -10,7 +10,7 @@ namespace Game.Game
         {
             var selIdx = SelIdx<IdxC>().Idx;
 
-            ref var unit_sel = ref Unit<UnitC>(selIdx);
+            ref var unit_sel = ref Unit<UnitTC>(selIdx);
 
             ref var hpUnit_sel = ref Unit<HpC>(selIdx);
             ref var stepUnit_sel = ref Unit<StepC>(selIdx);

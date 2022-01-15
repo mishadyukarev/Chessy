@@ -28,16 +28,16 @@ namespace Game.Game
                 (Action)new SyncCellUnitVS().Run
                 + new UnitStatCellSyncS().Run
                 + new BuildCellSyncVS().Run
-                + new EnvCellSyncVS().Run
-                + new FireCellSyncVS().Run
-                + new CloudCellSyncVS().Run
+                + new EnvCellVS().Run
+                + new FireCellVS().Run
+                + new CloudCellVS().Run
                 + new RiverCellSyncVS().Run
-                + new CellBarsEnvS().Run
-                + new SyncCellTrailSys().Run
+                + new CellBarsEnvVS().Run
+                + new CellTrailVS().Run
                 + new CellStunVS().Run
                 + new SyncSelUnitCellVS().Run
                 + new SupportSyncVS().Run
-                + new FliperAndRotatorUnitSystem().Run
+                + new FliperAndRotatorUnitVS().Run
 
 
                 + new BuildZoneUIS().Run

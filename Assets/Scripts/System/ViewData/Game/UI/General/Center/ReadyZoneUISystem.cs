@@ -11,7 +11,7 @@ namespace Game.Game
         {
             ref var readyBut = ref Ready<ButtonUIC>();
 
-            readyBut.Color = Ready<IsReadyC>(EntWhoseMove.CurPlayerI).IsReady ? Color.red : Color.white;
+            readyBut.Color = Ready<IsReadyC>(WhoseMoveE.CurPlayerI).IsReady ? Color.red : Color.white;
 
             if (GameInfo<IsStartedGameC>().IsStartedGame || PhotonNetwork.OfflineMode)
             {

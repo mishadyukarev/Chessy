@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 using static Game.Game.EntityVPool;
 
@@ -23,7 +23,7 @@ namespace Game.Game
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
-            if (EntWhoseMove.IsMyMove)
+            if (WhoseMoveE.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
@@ -41,9 +41,9 @@ namespace Game.Game
 
         void UniqBut(ButtonTypes uniqBut)
         {
-            if (EntWhoseMove.IsMyMove)
+            if (WhoseMoveE.IsMyMove)
             {
-                ref var abil = ref UnitBuilding<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
+                ref var abil = ref UnitBuildButton<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
 
 
                 if (!Unit<CooldownC>(abil.Ability, SelIdx<IdxC>().Idx).HaveCooldown)
@@ -74,7 +74,7 @@ namespace Game.Game
                                         break;
 
                                     case UniqueAbilityTypes.FireArcher:
-                                        ClickerObject<CellClickC>().Set(CellClickTypes.UniqAbil);
+                                        ClickerObject<CellClickC>().Click = CellClickTypes.UniqAbil;
                                         SelUniqAbilC.UniqAbil = UniqueAbilityTypes.FireArcher;
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
@@ -106,7 +106,7 @@ namespace Game.Game
 
                                     case UniqueAbilityTypes.StunElfemale:
                                         {
-                                            ClickerObject<CellClickC>().Set(CellClickTypes.UniqAbil);
+                                            ClickerObject<CellClickC>().Click = CellClickTypes.UniqAbil;
                                             SelUniqAbilC.UniqAbil = UniqueAbilityTypes.StunElfemale;
                                             TryOnHint(VideoClipTypes.StunElfemale);
                                         }
@@ -131,7 +131,7 @@ namespace Game.Game
                                     case UniqueAbilityTypes.ChangeDirWind:
                                         {
                                             TryOnHint(VideoClipTypes.PutOutElfemale);
-                                            ClickerObject<CellClickC>().Set(CellClickTypes.UniqAbil);
+                                            ClickerObject<CellClickC>().Click = CellClickTypes.UniqAbil;
                                             SelUniqAbilC.UniqAbil = UniqueAbilityTypes.ChangeDirWind;
                                         }
                                         break;
@@ -152,7 +152,7 @@ namespace Game.Game
         {
             var idx_sel = SelIdx<IdxC>().Idx;
 
-            if (EntWhoseMove.IsMyMove)
+            if (WhoseMoveE.IsMyMove)
             {
                 switch (buildBut)
                 {
@@ -170,9 +170,9 @@ namespace Game.Game
                         break;
 
                     case ButtonTypes.Third:
-                        var buildAbility = UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build;
+                        var buildAbility = UnitBuildButton<BuildingC>(ButtonTypes.Third, idx_sel).Build;
                         if (buildAbility == BuildTypes.None)Rpc<RpcC>().DestroyBuildingToMaster(idx_sel);
-                        else Rpc<RpcC>().BuildToMaster(idx_sel, UnitBuilding<BuildingC>(ButtonTypes.Third, idx_sel).Build);
+                        else Rpc<RpcC>().BuildToMaster(idx_sel, UnitBuildButton<BuildingC>(ButtonTypes.Third, idx_sel).Build);
 
                         //switch (BuildAbilC.AbilityType(buildBut))
                         //{

@@ -1,6 +1,7 @@
-﻿using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellUnitTWE;
 
 namespace Game.Game
 {
@@ -16,9 +17,9 @@ namespace Game.Game
 
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
-            ref var unit_0 = ref Unit<UnitC>(idx_0);
-            ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-            ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+            ref var unit_0 = ref Unit<UnitTC>(idx_0);
+            ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+            ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
             ref var hp_0 = ref Unit<HpC>(idx_0);
             ref var step_0 = ref Unit<StepC>(idx_0);
@@ -29,30 +30,30 @@ namespace Game.Game
             ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
 
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
-            //if (SetUnitCellsC.HaveIdxCell(whoseMove, idx_0))
-            //{
-            //    var levUnit = LevelTypes.None;
+            if (CellUnitE.CanSetUnit(idx_0, whoseMove))
+            {
+                var levUnit = LevelTypes.None;
 
-            //    if (EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Have)
-            //    {
-            //        EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Amount -= 1;
-            //        levUnit = LevelTypes.Second;
-            //    }
-            //    else
-            //    {
-            //        EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, whoseMove).Amount -= 1;
-            //        levUnit = LevelTypes.First;
-            //    }
-            //    Unit<UnitCellEC>(idx_0).SetNew((unit, levUnit, whoseMove));
+                if (EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Have)
+                {
+                    EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Amount -= 1;
+                    levUnit = LevelTypes.Second;
+                }
+                else
+                {
+                    EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, whoseMove).Amount -= 1;
+                    levUnit = LevelTypes.First;
+                }
+                Unit<UnitCellEC>(idx_0).SetNew((unit, levUnit, whoseMove));
 
 
-            //    if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
+                //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
-            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
-            //}
+                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+            }
         }
     }
 }

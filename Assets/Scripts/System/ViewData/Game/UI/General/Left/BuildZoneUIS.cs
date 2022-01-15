@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityCellBuildPool;
+﻿using static Game.Game.CellBuildE;
 using static Game.Game.EntityLeftCityUIPool;
 using static Game.Game.EntityPool;
 
@@ -9,12 +9,12 @@ namespace Game.Game
         public void Run()
         {
             ref var unit_sel = ref Build<BuildingC>(SelIdx<IdxC>().Idx);
-            ref var own_sel = ref Build<PlayerC>(SelIdx<IdxC>().Idx);
+            ref var own_sel = ref Build<PlayerTC>(SelIdx<IdxC>().Idx);
 
 
             if (SelIdx<SelIdxEC>().IsSelCell && unit_sel.Is(BuildTypes.City))
             {
-                if (own_sel.Is(EntWhoseMove.CurPlayerI))
+                if (own_sel.Is(WhoseMoveE.CurPlayerI))
                 {
                     Melt<ButtonUIC>().SetActiveParent(true);
                 }

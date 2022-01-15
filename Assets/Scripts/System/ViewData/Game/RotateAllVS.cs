@@ -1,4 +1,6 @@
 ﻿using Game.Common;
+using System;
+using UnityEngine;
 
 namespace Game.Game
 {
@@ -6,15 +8,36 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayer = EntWhoseMove.CurPlayerI;
+            var curPlayer = WhoseMoveE.CurPlayerI;
 
-            foreach (byte idx_0 in EntityCellPool.Idxs)
+            foreach (byte idx_0 in CellE.Idxs)
             {
-                EntityCellVPool.Cell<CellVC>(idx_0).SetRotForClient(curPlayer);
-                EntityCellVPool.TrailCellVC<TrailVC>(idx_0).Rotate(curPlayer);
+                if (curPlayer == PlayerTypes.None) throw new Exception();
+                CellVEs.Cell<SpriteRendererVC>(idx_0).RotParent = curPlayer == PlayerTypes.First 
+                    ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
+
+                switch (curPlayer)
+                {
+                    case PlayerTypes.None: throw new Exception();
+
+                    case PlayerTypes.First:
+                        CellTrailVE.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 0);
+                        break;
+
+                    case PlayerTypes.Second:
+                        CellTrailVE.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 180);
+                        break;
+
+                    default: throw new Exception();
+                }
             }
 
             CameraVC.SetPosRotClient(curPlayer, MainGoVC.Pos);
+        }
+
+        public void SetRotForClient(PlayerTypes player)
+        {
+            
         }
     }
 }

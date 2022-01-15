@@ -38,7 +38,7 @@ namespace Game.Game
 
                     //ViewDataSC.RotateAll.Invoke(); 
 
-                    EntityPool.FriendZone<IsActivatedC>().IsActivated = true;
+                    EntityPool.FriendZone<IsActiveC>().IsActive = true;
                 }
             }
             else

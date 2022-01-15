@@ -1,10 +1,10 @@
 ﻿using Game.Common;
 using Photon.Pun;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 using static Game.Game.EntityCellTrailPool;
-using static Game.Game.EntityCellBuildPool;
-using static Game.Game.EntityCellEnvPool;
+using static Game.Game.CellBuildE;
+using static Game.Game.CellEnvironmentE;
 using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
@@ -26,9 +26,9 @@ namespace Game.Game
             {
                 ref var cell_0 = ref Cell<InstanceIDC>(idx_0);
 
-                ref var unit_0 = ref Unit<UnitC>(idx_0);
-                ref var levUnit_0 = ref Unit<LevelC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerC>(idx_0);
+                ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
+                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var hp_0 = ref Unit<HpC>(idx_0);
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
@@ -36,19 +36,19 @@ namespace Game.Game
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var buil_0 = ref Build<BuildingC>(idx_0);
-                ref var ownBuil_0 = ref Build<PlayerC>(idx_0);
+                ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
-                foreach (var item in Unique) Unit<CooldownC>(item, idx_0).Take();
+                foreach (var item in KeysUnique) Unit<CooldownC>(item, idx_0).Take();
                 Unit<NeedStepsForExitStunC>(idx_0).Steps -= 1;
 
 
                 if (unit_0.Have)
                 {
-                    Unit<StepC>(condUnit_0.Condition, idx_0).Add();
+                    AmountStepsInCondition<StepC>(condUnit_0.Condition, idx_0).Add();
 
                     if (!unit_0.Is(UnitTypes.King)) EntInventorResources.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Amount -= 1;
 

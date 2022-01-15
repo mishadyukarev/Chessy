@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
-using static Game.Game.EntityCellPool;
-using static Game.Game.EntCellUnit;
+using static Game.Game.CellE;
+using static Game.Game.CellUnitE;
 
 namespace Game.Game
 {
@@ -10,21 +10,21 @@ namespace Game.Game
         {
             FromToDoingMC.Get(out var idx_from, out var idx_to);
 
-            ref var unit_from = ref Unit<UnitC>(idx_from);
+            ref var unit_from = ref Unit<UnitTC>(idx_from);
             ref var hpUnitCell_from = ref Unit<UnitCellEC>(idx_from);
             ref var hpUnit_from = ref Unit<HpC>(idx_from);
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
             ref var condUnit_from = ref Unit<ConditionUnitC>(idx_from);
 
-            ref var tw_from = ref UnitTW<ToolWeaponC>(idx_from);
+            ref var tw_from = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_from);
 
 
             ref var unitE_to = ref Unit<UnitCellEC>(idx_to);
-            ref var unit_to = ref Unit<UnitC>(idx_to);
+            ref var unit_to = ref Unit<UnitTC>(idx_to);
             ref var hpUnitCell_to = ref Unit<UnitCellEC>(idx_to);
             ref var hpUnit_to = ref Unit<HpC>(idx_to);
 
-            ref var tw_to = ref UnitTW<ToolWeaponC>(idx_to);
+            ref var tw_to = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_to);
 
 
 
@@ -104,7 +104,7 @@ namespace Game.Game
                 {
                     if (tw_from.Is(TWTypes.Shield))
                     {
-                        UnitTW<ShieldEC>(idx_from).Take();
+                        CellUnitTWE.UnitTW<ShieldEC>(idx_from).Take();
                     }
                     else if (minus_from > 0)
                     {
@@ -115,7 +115,7 @@ namespace Game.Game
 
                 if (tw_to.Is(TWTypes.Shield))
                 {
-                    UnitTW<ShieldEC>(idx_to).Take();
+                    CellUnitTWE.UnitTW<ShieldEC>(idx_to).Take();
                 }
                 else if (minus_to > 0)
                 {
@@ -148,8 +148,8 @@ namespace Game.Game
                     Unit<UnitCellEC>(idx_from).Kill();
                 }
 
-                foreach (var item in Stats) Unit<HaveEffectC>(item, idx_from).Disable();
-                foreach (var item in Stats) Unit<HaveEffectC>(item, idx_to).Disable();
+                foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_from).Disable();
+                foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_to).Disable();
             }
         }
     }

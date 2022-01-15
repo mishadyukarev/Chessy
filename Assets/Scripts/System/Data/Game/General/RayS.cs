@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using static Game.Game.EntityCellPool;
+using static Game.Game.CellE;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -25,15 +25,15 @@ namespace Game.Game
                 return;
             }
 
-            //#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+//#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
 
-            //            if (EventSystem.current.IsPointerOverGameObject())
-            //        {
-            //            SelectorC.RaycastGettedType = RaycastGettedTypes.UI;
-            //            return;
-            //        }
+//            if (EventSystem.current.IsPointerOverGameObject())
+//            {
+//                raycastC.Raycast = RaycastTypes.UI;
+//                return;
+//            }
 
-            //#endif
+//#endif
 
             if (raycast)
             {

@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntCellUnit;
+﻿using static Game.Game.CellUnitE;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -7,9 +7,9 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var abil1 = ref Unit<UniqueAbilityC>(ButtonTypes.First, SelIdx<IdxC>().Idx);
-            ref var abil2 = ref Unit<UniqueAbilityC>(ButtonTypes.Second, SelIdx<IdxC>().Idx);
-            ref var abil3 = ref Unit<UniqueAbilityC>(ButtonTypes.Third, SelIdx<IdxC>().Idx);
+            ref var abil1 = ref UnitUniqueButton<UniqueAbilityC>(ButtonTypes.First, SelIdx<IdxC>().Idx);
+            ref var abil2 = ref UnitUniqueButton<UniqueAbilityC>(ButtonTypes.Second, SelIdx<IdxC>().Idx);
+            ref var abil3 = ref UnitUniqueButton<UniqueAbilityC>(ButtonTypes.Third, SelIdx<IdxC>().Idx);
 
             //UniqButtonsUIC.SetActive(ButtonTypes.First, abil1.Ability);
             //UniqButtonsUIC.SetActive(ButtonTypes.Second, abil2.Ability);

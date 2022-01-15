@@ -42,7 +42,7 @@ namespace Game.Game
         void Ready() => EntityPool.Rpc<RpcC>().ReadyToMaster();
         void FriendReady()
         {
-            EntityPool.FriendZone<IsActivatedC>().IsActivated = false;
+            EntityPool.FriendZone<IsActiveC>().IsActive = false;
         }
         void Hint()
         {
@@ -61,7 +61,7 @@ namespace Game.Game
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (EntWhoseMove.IsMyMove)
+            if (WhoseMoveE.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().PickUpgUnitToMas(unit);
 
@@ -72,7 +72,7 @@ namespace Game.Game
 
         private void UpgradeBuild(BuildTypes build)
         {
-            if (EntWhoseMove.IsMyMove)
+            if (WhoseMoveE.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().PickUpgBuildToMas(build);
 
@@ -83,7 +83,7 @@ namespace Game.Game
 
         private void UpgradeWater()
         {
-            if (EntWhoseMove.IsMyMove)
+            if (WhoseMoveE.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().UpgWater();
 
@@ -94,7 +94,7 @@ namespace Game.Game
 
         private void Elf()
         {
-            if (EntWhoseMove.IsMyMove)
+            if (WhoseMoveE.IsMyMove)
             {
                 EntityPool.Rpc<RpcC>().GetHero(UnitTypes.Elfemale);
             }
