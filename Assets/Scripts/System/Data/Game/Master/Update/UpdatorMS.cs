@@ -50,7 +50,7 @@ namespace Game.Game
                 {
                     AmountStepsInCondition<StepC>(condUnit_0.Condition, idx_0).Add();
 
-                    if (!unit_0.Is(UnitTypes.King)) EntInventorResources.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Amount -= 1;
+                    if (!unit_0.Is(UnitTypes.King)) InventorResourcesE.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Amount -= 1;
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {

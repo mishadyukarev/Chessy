@@ -46,7 +46,7 @@ namespace Game.Game
                                     {
                                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 
-                                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).SetNew();
+                                        SetNew(EnvTypes.YoungForest, idx_0);
 
                                         stepUnit_0.Take(uniq_cur);
                                     }

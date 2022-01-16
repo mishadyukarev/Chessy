@@ -50,10 +50,9 @@ namespace Game.Game
 
             return true;
         }
-        public bool CanBuild(in BuildTypes build, in PlayerTypes who, out MistakeTypes mistake, out Dictionary<ResTypes, int> needRes)
+        public bool CanBuild(in BuildTypes build, in PlayerTypes who, out MistakeTypes mistake)
         {
             mistake = default;
-            needRes = default;
 
             var buildC = Build<BuildingC>(_idx);
 
@@ -64,16 +63,6 @@ namespace Game.Game
                 {
                     if (!Environment<HaveEnvironmentC>(EnvTypes.AdultForest, _idx).Have)
                     {
-                        //if (InvResC.CanCreateBuild(who, build, out needRes))
-                        //{
-                        //    return true;
-                        //}
-                        //else
-                        //{
-                        //    mistake = MistakeTypes.Economy;
-                        //    return false;
-                        //}
-
                         return true;
                     }
                     else

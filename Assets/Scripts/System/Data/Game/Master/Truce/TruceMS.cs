@@ -80,7 +80,7 @@ namespace Game.Game
                     {
                         Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
 
-                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).SetNew();
+                        SetNew(EnvTypes.AdultForest, idx_0);
                     }
 
                     if (!Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have
@@ -91,7 +91,7 @@ namespace Game.Game
 
                         if (random <= 3)
                         {
-                            Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).SetNew();
+                            SetNew(EnvTypes.Fertilizer, idx_0);
                         }
                     }
                 }

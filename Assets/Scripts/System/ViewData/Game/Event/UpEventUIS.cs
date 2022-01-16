@@ -1,5 +1,5 @@
 ﻿using Game.Common;
-using static Game.Game.EntityUpUIPool;
+using static Game.Game.EconomyUpUIE;
 
 namespace Game.Game
 {

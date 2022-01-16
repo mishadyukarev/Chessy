@@ -24,30 +24,7 @@ namespace Game.Game
             _env = env;
             _values = new EnvironmentValues();
         }
-        public void SetNew()
-        {
-            if (_env == default) throw new Exception();
-
-            byte randAmountRes = 0;
-
-
-            var forMin = 3;
-
-            if (_env == EnvTypes.Fertilizer || _env == EnvTypes.AdultForest)
-            {
-                randAmountRes = (byte)UnityEngine.Random.Range(_values.MaxAmount(_env) / forMin, _values.MaxAmount(_env) + 1);
-            }
-            else if (_env == EnvTypes.Hill)
-            {
-                randAmountRes = (byte)(_values.MaxAmount(_env) / forMin);
-            }
-
-            Environment<AmountResourcesC>(_env, _idx).Resources = randAmountRes;
-
-
-            EntWhereEnviroments.HaveEnv<HaveEnvC>(_env, _idx).Have = true;
-            Environment<HaveEnvironmentC>(_env, _idx).Have = true;
-        }
+        
         public void Remove()
         {
             if (_env == default) throw new Exception();

@@ -329,7 +329,7 @@ namespace Game.Game
             foreach (var key in BuildingUpgradesEnt.Keys) objs.Add(BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have);
 
 
-            foreach (var key in EntInventorResources.Keys) objs.Add(EntInventorResources.Resource<AmountC>(key).Amount);
+            foreach (var key in InventorResourcesE.Keys) objs.Add(InventorResourcesE.Resource<AmountC>(key).Amount);
             foreach (var key in EntInventorUnits.Keys) objs.Add(EntInventorUnits.Units<AmountC>(key).Amount);
             foreach (var key in EntInventorToolWeapon.Keys) objs.Add(EntInventorToolWeapon.ToolWeapons<AmountC>(key).Amount);
 
@@ -434,7 +434,7 @@ namespace Game.Game
             foreach (var key in BuildingUpgradesEnt.Keys) BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
 
 
-            foreach (var key in EntInventorResources.Keys) EntInventorResources.Resource<AmountC>(key).Amount = (int)objects[_idx_cur++];
+            foreach (var key in InventorResourcesE.Keys) InventorResourcesE.Resource<AmountC>(key).Amount = (int)objects[_idx_cur++];
             foreach (var key in EntInventorUnits.Keys) EntInventorUnits.Units<AmountC>(key).Amount = (int)objects[_idx_cur++];
             foreach (var key in EntInventorToolWeapon.Keys) EntInventorToolWeapon.ToolWeapons<AmountC>(key).Amount = (int)objects[_idx_cur++];
 

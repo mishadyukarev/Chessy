@@ -5,7 +5,7 @@ using static Game.Game.CellBuildE;
 
 namespace Game.Game
 {
-    struct ThirdButtonBuildUISys : IEcsRunSystem
+    struct ThirdButtonBuildUIS : IEcsRunSystem
     {
         public void Run()
         {

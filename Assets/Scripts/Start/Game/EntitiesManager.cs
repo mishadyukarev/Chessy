@@ -91,7 +91,7 @@ namespace Game.Game
             new CenterKingUIE(gameW, centerZone);
 
             ///Up
-            new EntityUpUIPool(gameW);
+            new EconomyUpUIE(gameW);
 
             ///Down
             var downZone = CanvasC.FindUnderCurZone("DownZone").transform;
@@ -146,7 +146,7 @@ namespace Game.Game
             new WhereBuildsE(gameW);
 
             new EntInventorUnits(gameW);
-            new EntInventorResources(gameW);
+            new InventorResourcesE(gameW);
             new EntInventorToolWeapon(gameW);
 
             new CellsForSetUnitEs(gameW);
@@ -171,7 +171,7 @@ namespace Game.Game
             new EntMistakeC(gameW);
             new EntHint(gameW);
 
-            new WindEnt(gameW);
+            new WindEs(gameW);
             new CloudEnt(gameW);
 
 
@@ -201,7 +201,7 @@ namespace Game.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= envValues.StartPercent(EnvTypes.Mountain))
                             {
-                                Environment<EnvCellEC>(EnvTypes.Mountain, idx_0).SetNew();
+                                SetNew(EnvTypes.Mountain, idx_0);
                             }
 
                             else
@@ -209,13 +209,13 @@ namespace Game.Game
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= envValues.StartPercent(EnvTypes.AdultForest))
                                 {
-                                    Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).SetNew();
+                                    SetNew(EnvTypes.AdultForest, idx_0);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= envValues.StartPercent(EnvTypes.Hill))
                                 {
-                                    Environment<EnvCellEC>(EnvTypes.Hill, idx_0).SetNew();
+                                    SetNew(EnvTypes.Hill, idx_0);
                                 }
                             }
                         }
@@ -225,14 +225,14 @@ namespace Game.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= envValues.StartPercent(EnvTypes.AdultForest))
                             {
-                                Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).SetNew();
+                                SetNew(EnvTypes.AdultForest, idx_0);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= envValues.StartPercent(EnvTypes.Fertilizer))
                                 {
-                                    Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).SetNew();
+                                    SetNew(EnvTypes.Fertilizer, idx_0);
                                 }
                             }
                         }
@@ -293,7 +293,7 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                EntInventorResources.Resource<AmountC>(ResTypes.Food, PlayerTypes.Second).Amount = 999999;
+                InventorResourcesE.Resource<AmountC>(ResTypes.Food, PlayerTypes.Second).Amount = 999999;
 
                 foreach (byte idx_0 in Idxs)
                 {

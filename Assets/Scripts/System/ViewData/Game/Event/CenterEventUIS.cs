@@ -2,7 +2,7 @@
 using Photon.Pun;
 using UnityEngine;
 using static Game.Game.EntityVPool;
-using static Game.Game.EntityUpUIPool;
+using static Game.Game.EconomyUpUIE;
 using static Game.Game.EntityCenterUIPool;
 using static Game.Game.CenterHeroUIE;
 using static Game.Game.CenterFriendUIE;

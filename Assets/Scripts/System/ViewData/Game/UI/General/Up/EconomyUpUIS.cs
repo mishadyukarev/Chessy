@@ -3,7 +3,7 @@ using static Game.Game.CellEs;
 using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildE;
 
-using static Game.Game.EntityUpUIPool;
+using static Game.Game.EconomyUpUIE;
 
 namespace Game.Game
 {
@@ -41,14 +41,13 @@ namespace Game.Game
             //if (extracts[ResTypes.Food] < 0) EconomyUIC.SetAddText(ResTypes.Food, extracts[ResTypes.Food].ToString());
             //else EconomyUIC.SetAddText(ResTypes.Food, "+ " + extracts[ResTypes.Food].ToString());
 
-
-            //EconomyUIC.SetAddText(ResTypes.Wood, "+ " + extracts[ResTypes.Wood]);
-            //EconomyUIC.SetAddText(ResTypes.Ore, "+ " + extracts[ResTypes.Ore]);
+            Economy<TextMPUGUIC>(ResTypes.Wood).Text = "+ " + extracts[ResTypes.Wood];
+            Economy<TextMPUGUIC>(ResTypes.Ore).Text = "+ " + extracts[ResTypes.Ore];
 
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                Economy<EconomyUpUIC>(res).Text = EntInventorResources.Resource<AmountC>(res, curPlayer).Amount.ToString();
+                Economy<TextMPUGUIC>(res).Text = InventorResourcesE.Resource<AmountC>(res, curPlayer).Amount.ToString();
             }
         }
     }

@@ -43,7 +43,7 @@ namespace Game.Game
                 + new BuildZoneUIS().Run
                 + new EnvUIS().Run
 
-                ///right
+                ///Right
                 + new RightZoneUIS().Run
                 + new StatsUIS().Run
                 + new ProtectUIS().Run
@@ -51,22 +51,22 @@ namespace Game.Game
                 + new UniqButSyncUISys().Run
                 + new FirstButtonBuildUIS().Run
                 + new SecButtonBuildUISys().Run
-                + new ThirdButtonBuildUISys().Run
+                + new ThirdButtonBuildUIS().Run
                 + new ShieldUIS().Run
                 + new EffectsUISys().Run
 
-                ///down
+                ///Down
                 + new DonerUIS().Run
                 + new GetterUnitsUIS().Run
                 + new DownToolWeaponUIS().Run
                 + new ScoutSyncUIS().Run
                 + new DownHeroUIS().Run
 
-                ///up
+                ///Up
                 + new EconomyUpUIS().Run
-                + new WindUISys().Run
+                + new WindUIS().Run
 
-                ///center
+                ///Center
                 + new SelectorUIS().Run
                 + new TheEndGameUISystem().Run
                 + new MotionCenterUIS().Run

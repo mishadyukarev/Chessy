@@ -61,7 +61,7 @@ namespace Game.Game
 
                         if (UnityEngine.Random.Range(0, 100) < 50)
                         {
-                            Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).SetNew();
+                            SetNew(EnvTypes.YoungForest, idx_0);
                         }
 
 

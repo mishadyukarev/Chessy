@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct WindEnt
+    public struct WindEs
     {
         static Entity _ent;
         static Dictionary<DirectTypes, Entity> _directs;
+
+
+        public static ref C Wind<C>() where C : struct, IDirectWindE => ref _ent.Get<C>();
 
         public static HashSet<DirectTypes> Keys
         {
@@ -19,25 +22,19 @@ namespace Game.Game
             }
         }
 
-        static WindEnt()
+        public WindEs(in EcsWorld gameW)
         {
             _directs = new Dictionary<DirectTypes, Entity>();
             for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
             {
-                _directs.Add(dir, default);
+                _directs.Add(dir, gameW.NewEntity()
+                    .Add(new IdxC()));
             }
-        }
 
-        public WindEnt(in EcsWorld gameW)
-        {
             _ent = gameW.NewEntity()
-                .Add(new DirectC(DirectTypes.Right));
-
-            foreach (var key in Keys)
-            {
-                _directs[key] = gameW.NewEntity()
-                    .Add(new IdxC());
-            }
+                .Add(new DirectTC(DirectTypes.Right));
         }
     }
+
+    public interface IDirectWindE { }
 }

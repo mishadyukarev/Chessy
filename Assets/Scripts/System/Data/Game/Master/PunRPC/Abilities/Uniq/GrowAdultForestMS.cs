@@ -26,7 +26,7 @@ namespace Game.Game
                     {
                         Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
 
-                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).SetNew();
+                        SetNew(EnvTypes.AdultForest, idx_0);
 
                         stepUnit_0.Take(uniq_cur);
 

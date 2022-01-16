@@ -14,9 +14,9 @@ namespace Game.Game
 
 
 
-                if (EntInventorResources.Resource<AmountC>(res, player).IsMinus)
+                if (InventorResourcesE.Resource<AmountC>(res, player).IsMinus)
                 {
-                    EntInventorResources.Resource<AmountC>(res, player).Reset();
+                    InventorResourcesE.Resource<AmountC>(res, player).Reset();
 
                     for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
                     {

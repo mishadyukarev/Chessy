@@ -644,16 +644,6 @@ namespace Game.Game
             EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitTC>(_idx).Unit, level, owner, _idx).Have = false;
             Unit<UnitTC>(_idx).Reset();
         }
-        public void Upgrade()
-        {
-            ref var levC = ref Unit<LevelTC>(_idx);
-
-            if (levC.Is(LevelTypes.First))
-            {
-                levC.Level = LevelTypes.Second;
-            }
-            else throw new Exception();
-        }
         public void SetScout()
         {
             ref var ownUnitC = ref Unit<PlayerTC>(_idx);

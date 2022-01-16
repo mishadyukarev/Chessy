@@ -17,7 +17,7 @@ namespace Game.Game
                 if (buildCell_0.CanExtract(out var extract, out var env, out var res))
                 {
                     Environment<AmountResourcesC>(env, idx_0).Resources -= extract;
-                    EntInventorResources.Resource<AmountC>(res, ownBuild_0.Player).Amount += extract;
+                    InventorResourcesE.Resource<AmountC>(res, ownBuild_0.Player).Amount += extract;
 
                     if (!Environment<AmountResourcesC>(env, idx_0).Have)
                     {
@@ -29,7 +29,7 @@ namespace Game.Game
                         {
                             if (UnityEngine.Random.Range(0, 100) < 50)
                             {
-                                Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).SetNew();
+                                SetNew(EnvTypes.YoungForest, idx_0);
                             }
                         }
                     }

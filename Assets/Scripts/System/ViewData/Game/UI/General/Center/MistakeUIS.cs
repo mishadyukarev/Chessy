@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static Game.Game.EntityUpUIPool;
+using static Game.Game.EconomyUpUIE;
 
 namespace Game.Game
 {
@@ -27,7 +27,7 @@ namespace Game.Game
 
                         for (var res = ResTypes.First; res < ResTypes.End; res++)
                         {
-                            Economy<EconomyUpUIC>(res).Color = Color.white;
+                            Economy<TextMPUGUIC>(res).Color = Color.white;
                         }
                     }
 
@@ -115,7 +115,7 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                Economy<EconomyUpUIC>(res).Color = Color.white;
+                Economy<TextMPUGUIC>(res).Color = Color.white;
                 MistakeUIC.SetActiveRes(res, false);
             }
         }

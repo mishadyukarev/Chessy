@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct EntInventorResources
+    public readonly struct InventorResourcesE
     {
-        readonly static Dictionary<string, Entity> _resources;
-        readonly static EconomyValues _values;
+        static Dictionary<string, Entity> _resources;
+        static EconomyValues _values;
 
         static string Key(in ResTypes res, in PlayerTypes player) => res.ToString() + player;
 
@@ -24,55 +24,42 @@ namespace Game.Game
             }
         }
 
-        static EntInventorResources()
+        public InventorResourcesE(in EcsWorld gameW)
         {
             _resources = new Dictionary<string, Entity>();
-
-            for (var res = ResTypes.First; res < ResTypes.End; res++)
-            {
-                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
-                {
-                    _resources.Add(Key(res, player), default);
-                }
-            }
-
             _values = new EconomyValues();
-        }
-        public EntInventorResources(in EcsWorld gameW)
-        {
+
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _resources[Key(res, player)] = gameW.NewEntity()
-                        .Add(new AmountC(_values.AmountResources(res)));
+                    _resources.Add(Key(res, player), gameW.NewEntity()
+                        .Add(new AmountC(_values.AmountResources(res))));
                 }
             }
         }
 
 
+        public static bool CanCreateBuild(PlayerTypes player, BuildTypes build, out Dictionary<ResTypes, int> needRes)
+        {
+            needRes = new Dictionary<ResTypes, int>();
+            var canCreatBuild = true;
 
+            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            {
+                var difAmountRes = Resource<AmountC>(res, player).Amount - _values.AmountResForBuild(build, res);
+                needRes.Add(res, _values.AmountResForBuild(build, res));
 
-        //public static bool CanCreateBuild(PlayerTypes player, BuildTypes build, out Dictionary<ResTypes, int> needRes)
-        //{
-        //    needRes = new Dictionary<ResTypes, int>();
-        //    var canCreatBuild = true;
+                if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
+            }
 
-        //    for (var res = ResTypes.First; res < ResTypes.End; res++)
-        //    {
-        //        var difAmountRes = AmountRes(res, player) - _values.AmountResForBuild(build, res);
-        //        needRes.Add(res, _values.AmountResForBuild(build, res));
-
-        //        if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
-        //    }
-
-        //    return canCreatBuild;
-        //}
-        //public static void BuyBuild(PlayerTypes player, BuildTypes build)
-        //{
-        //    for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-        //        Set(resType, player, AmountRes(resType, player) - _values.AmountResForBuild(build, resType));
-        //}
+            return canCreatBuild;
+        }
+        public static void BuyBuild(in PlayerTypes player, in BuildTypes build)
+        {
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
+                Resource<AmountC>(resType, player).Amount -= _values.AmountResForBuild(build, resType);
+        }
 
         //public static bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType, out Dictionary<ResTypes, int> needRes)
         //{

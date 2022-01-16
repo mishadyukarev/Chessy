@@ -11,7 +11,7 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var buildType = EntityMPool.Build<BuildingC>().Build;
+            var build = EntityMPool.Build<BuildingC>().Build;
             var idx_0 = EntityMPool.Build<IdxC>().Idx;
 
             ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
@@ -20,41 +20,47 @@ namespace Game.Game
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
 
-            //if (buildType == BuildTypes.Farm)
-            //{
-            //    if (buildCell_0.CanBuild(buildType, whoseMove, out var mistake, out var needRes))
-            //    {
-            //        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
+            if (build == BuildTypes.Farm)
+            {
+                if (buildCell_0.CanBuild(build, whoseMove, out var mistake))
+                {
+                    if (InventorResourcesE.CanCreateBuild(whoseMove, build, out var needRes))
+                    {
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
 
-            //        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
+                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
 
-            //        if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
-            //        {
-            //            Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).AddMax();
-            //        }
-            //        else
-            //        {
-            //            Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).SetNew();
-            //        }
+                        if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
+                        {
+                            Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).AddMax();
+                        }
+                        else
+                        {
+                            SetNew(EnvTypes.Fertilizer, idx_0);
+                        }
 
-            //        //InvResC.BuyBuild(whoseMove, buildType);
+                        InventorResourcesE.BuyBuild(whoseMove, build);
 
 
-            //        buildCell_0.SetNew(buildType, whoseMove);
+                        buildCell_0.SetNew(build, whoseMove);
 
-            //        stepUnit_0.Take(buildType);
-            //    }
+                        stepUnit_0.Take(build);
+                    }
+                    else
+                    {
+                        EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                    }
+                }
 
-            //    else
-            //    {
-            //        if (mistake == MistakeTypes.Economy) EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-            //        else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(mistake, sender);
-            //    }
-            //}
+                else
+                {
+                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(mistake, sender);
+                }
+            }
         }
     }
 }

@@ -107,7 +107,7 @@ namespace Game.Game
         public void ShiftUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
         public void AttackUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
 
-        public void BuildToMaster(byte idxCellForBuild, BuildTypes buildingType) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Build, idxCellForBuild, buildingType });
+        public void BuildToMaster(in byte idx, in BuildTypes build) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Build, idx, build });
         public void DestroyBuildingToMaster(byte xyCellForDestroy) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.DestroyBuild, xyCellForDestroy });
 
         public void ConditionUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, neededCondtionType, idxCell });
