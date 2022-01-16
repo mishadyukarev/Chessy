@@ -37,7 +37,8 @@ namespace Game.Game
 
 
 
-            _rpcSysts.Add(RpcMasterTypes.Build, (Action)new BuildMineMS().Run
+            _rpcSysts.Add(RpcMasterTypes.Build, 
+                (Action)new BuildMineMS().Run
                 + new BuildFarmMS().Run
                 + new BuildCityMS().Run);
             _rpcSysts.Add(RpcMasterTypes.DestroyBuild, new DestroyMS().Run);

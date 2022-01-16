@@ -2,11 +2,11 @@
 
 namespace Game.Game
 {
-    struct RiverCellSyncVS : IEcsRunSystem
+    struct RiverCellVS : IEcsRunSystem
     {
         public void Run()
         {
-            foreach (var idx_0 in CellE.Idxs)
+            foreach (var idx_0 in CellEs.Idxs)
             {
                 ref var river_0 = ref River<RiverC>(idx_0);
 
@@ -14,7 +14,7 @@ namespace Game.Game
                 {
                     foreach (var item_0 in river_0.DirectsDict)
                     {
-                        CellVEs.RiverCellVC<RiverVC>(idx_0).SetActiveRive(item_0.Key, item_0.Value);
+                        CellRiverVEs.River<SpriteRendererVC>(item_0.Key, idx_0).SetActive(item_0.Value);
                     }
                 }
             }

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
-using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 using static Game.Game.CellVEs;
+using static Game.Game.CellBlocksVEs;
+using static Game.Game.CellBarsVEs;
 
 namespace Game.Game
 {
@@ -19,75 +21,58 @@ namespace Game.Game
                 ref var water_0 = ref Unit<StepC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
-                ref var barsViewCom = ref ElseCellVE<BarsVC>(idx_0);
-                ref var blocksViewCom = ref ElseCellVE<BlocksVC>(idx_0);
+
+                Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
 
 
-                barsViewCom.DisableSR(CellBarTypes.Hp);
-
-                blocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
-                blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
-                blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
+                Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Disable();
+                Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).Disable();
+                Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
                 if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
                 {
                     if (unit_0.Have)
                     {
-
-                        barsViewCom.EnableSR(CellBarTypes.Hp);
-                        barsViewCom.SetColorHp(Color.red);
+                        Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
+                        Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
 
                         float maxHpUnit_0 = UnitCellEC.MAX_HP;
 
                         float xCordinate = (float)hpUnit_0.Hp / maxHpUnit_0;
-                        barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
+                        Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Unit<UnitCellEC>(idx_0).NeedWater);
+                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(Unit<UnitCellEC>(idx_0).HaveMaxSteps);
 
-                        if (Unit<UnitCellEC>(idx_0).NeedWater)
-                        {
-                            blocksViewCom.EnableBlockSR(CellBlockTypes.NeedWater);
-                        }
-                        else
-                        {
-                            blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
-                        }
-
-                        if (Unit<UnitCellEC>(idx_0).HaveMaxSteps)
-                        {
-                            blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
-                        }
-                        else
-                        {
-                            blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
-                        }
+                        
 
                         if (condUnit_0.Is(ConditionUnitTypes.Protected))
                         {
-                            blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
-                            blocksViewCom.SetColor(CellBlockTypes.Condition, Color.yellow);
+                            Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
+                            Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.yellow;
                         }
 
                         else if (condUnit_0.Is(ConditionUnitTypes.Relaxed))
                         {
-                            blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
-                            blocksViewCom.SetColor(CellBlockTypes.Condition, Color.green);
+                            Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
+                            Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.green;
                         }
 
                         else
                         {
-                            blocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
+                            Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Disable();
                         }
 
                         if (ownUnit_0.Is(PlayerTypes.First))
                         {
-                            barsViewCom.SetColorHp(Color.blue);
-                            blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
+                            Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.blue;
+                            Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).Color = Color.blue;
                         }
                         else
                         {
-                            barsViewCom.SetColorHp(Color.red);
-                            blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
+                            Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
+                            Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).Color = Color.red;
                         }
                     }
                 }

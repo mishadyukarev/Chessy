@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx in CellE.Idxs)
+            foreach (var idx in CellEs.Idxs)
             {
                 if (Fire<HaveEffectC>(idx).Have)
                 {

@@ -1,6 +1,6 @@
 ﻿using System;
-using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 using static Game.Game.CellVEs;
 
 namespace Game.Game
@@ -19,8 +19,8 @@ namespace Game.Game
                 ref var tw_0 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref CellUnitTWE.UnitTW<LevelTC>(idx_0);
 
-                ref var mainUnit_0 = ref CellUnitVEs.UnitMain<SpriteRendererVC>(idx_0);
-                ref var extraUnit_0 = ref CellUnitVEs.UnitExtra<SpriteRendererVC>(idx_0);
+                ref var mainUnit_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
+                ref var extraUnit_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);
 
 
                 mainUnit_0.Disable();
@@ -92,7 +92,7 @@ namespace Game.Game
 
         void SetMainSprite(in byte idx, in UnitTypes unit, in LevelTypes level, bool isCornered)
         {
-            ref var mainUnit_cur = ref CellUnitVEs.UnitMain<SpriteRendererVC>(idx);
+            ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx);
 
             switch (unit)
             {

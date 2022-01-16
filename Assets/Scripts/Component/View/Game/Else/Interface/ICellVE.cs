@@ -1,7 +1,4 @@
-﻿namespace Game.Game
-{
-    public interface ICellVE
-    {
+﻿//namespace Game.Game
+//{
 
-    }
-}
+//}

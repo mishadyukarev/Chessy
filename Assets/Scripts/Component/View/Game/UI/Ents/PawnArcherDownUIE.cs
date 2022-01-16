@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Game.Game
 {
-    public readonly struct UIEntDownPawnArcher
+    public readonly struct PawnArcherDownUIE
     {
         static readonly Dictionary<UnitTypes, Entity> _taker;
         static readonly Dictionary<UnitTypes, Entity> _create;
@@ -14,7 +14,7 @@ namespace Game.Game
         public static ref C Taker<C>(in UnitTypes unit) where C : struct => ref _taker[unit].Get<C>();
         public static ref C Create<C>(in UnitTypes unit) where C : struct => ref _create[unit].Get<C>();
 
-        static UIEntDownPawnArcher()
+        static PawnArcherDownUIE()
         {
             _taker = new Dictionary<UnitTypes, Entity>();
             _create = new Dictionary<UnitTypes, Entity>();
@@ -25,7 +25,7 @@ namespace Game.Game
                 _create.Add(unit, default);
             }
         }
-        public UIEntDownPawnArcher(in EcsWorld gameW, in Transform takeUnit)
+        public PawnArcherDownUIE(in EcsWorld gameW, in Transform takeUnit)
         {
             _create[UnitTypes.Pawn] = gameW.NewEntity()
                 .Add(new ButtonUIC(takeUnit.Find("CreatePawn_Button").GetComponent<Button>()));

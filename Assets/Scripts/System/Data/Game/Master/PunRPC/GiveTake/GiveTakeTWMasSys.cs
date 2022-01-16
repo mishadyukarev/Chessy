@@ -1,5 +1,5 @@
-﻿using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
+﻿using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 using static Game.Game.CellUnitTWE;
 
 namespace Game.Game

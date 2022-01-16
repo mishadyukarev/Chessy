@@ -1,4 +1,4 @@
-﻿namespace Game.Game
-{
-    public interface IRiverCellV { }
-}
+﻿//namespace Game.Game
+//{
+
+//}

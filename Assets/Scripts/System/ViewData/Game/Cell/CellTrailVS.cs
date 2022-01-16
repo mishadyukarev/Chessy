@@ -1,5 +1,5 @@
-﻿using static Game.Game.CellE;
-using static Game.Game.EntityCellTrailPool;
+﻿using static Game.Game.CellEs;
+using static Game.Game.CellTrailEs;
 
 namespace Game.Game
 {
@@ -15,9 +15,9 @@ namespace Game.Game
                 {
                     if (Trail<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
                     {
-                        CellTrailVE.TrailCellVC<SpriteRendererVC>(item.Key, idx_0).SetActive(trailData_0.Have(item.Key));
+                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(item.Key, idx_0).SetActive(trailData_0.Have(item.Key));
                     }
-                    else CellTrailVE.TrailCellVC<SpriteRendererVC>(item.Key, idx_0).Disable();
+                    else CellTrailVEs.TrailCellVC<SpriteRendererVC>(item.Key, idx_0).Disable();
                 }
             }
         }

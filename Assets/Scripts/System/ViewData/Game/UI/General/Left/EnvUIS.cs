@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellBuildE;
-using static Game.Game.CellEnvironmentE;
+using static Game.Game.CellEnvironmentEs;
 using static Game.Game.EntityPool;
 using static Game.Game.EntityLeftEnvUIPool;
 

@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellE;
+﻿using static Game.Game.CellEs;
 using static Game.Game.EntityCellCloudPool;
 
 namespace Game.Game

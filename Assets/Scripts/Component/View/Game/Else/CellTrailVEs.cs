@@ -5,13 +5,16 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct CellTrailVE
+    public struct CellTrailVEs
     {
         static Dictionary<DirectTypes, Entity[]> _trails;
 
         public static ref T TrailCellVC<T>(in DirectTypes dir, in byte idx) where T : struct, ITrailCellV => ref _trails[dir][idx].Get<T>();
 
-        public CellTrailVE(in EcsWorld gameW, in GameObject[] cells)
+        //public ref C this[in DirectTypes dir, in int idx] => ref _trails[dir][idx].Get<C>();
+
+
+        public CellTrailVEs(in EcsWorld gameW, in GameObject[] cells)
         {
             _trails = new Dictionary<DirectTypes, Entity[]>();
 

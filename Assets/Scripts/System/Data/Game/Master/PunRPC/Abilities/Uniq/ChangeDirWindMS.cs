@@ -1,5 +1,5 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {

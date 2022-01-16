@@ -7,7 +7,7 @@
         RunUpdate,
         RunFixedUpdate,
 
-        RunAfterUpdate,
+        RunAfterSyncRPC,
 
         End
     }

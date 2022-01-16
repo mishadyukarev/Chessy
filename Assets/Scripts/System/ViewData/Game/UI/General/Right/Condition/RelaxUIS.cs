@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game

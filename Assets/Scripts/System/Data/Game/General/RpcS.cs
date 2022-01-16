@@ -2,14 +2,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.EntityCellCloudPool;
-using static Game.Game.CellEnvironmentE;
+using static Game.Game.CellEnvironmentEs;
 using static Game.Game.EntityCellFirePool;
-using static Game.Game.CellE;
+using static Game.Game.CellEs;
 using static Game.Game.EntityCellRiverPool;
-using static Game.Game.EntityCellTrailPool;
+using static Game.Game.CellTrailEs;
 using static Game.Game.EntitySound;
 using static Game.Game.CellUnitTWE;
 
@@ -120,7 +120,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Shift:
-                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntityMPool.Shift<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.Attack:
@@ -140,8 +140,8 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
-                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
+                        EntityMPool.SetUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntityMPool.SetUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.BuyRes:
@@ -471,7 +471,7 @@ namespace Game.Game
         [PunRPC]
         void UpdateDataAndView(object[] objects)
         {
-            SystemDataManager.Run(DataSTypes.RunAfterUpdate);
+            SystemDataManager.Run(DataSTypes.RunAfterSyncRPC);
         }
 
         #endregion

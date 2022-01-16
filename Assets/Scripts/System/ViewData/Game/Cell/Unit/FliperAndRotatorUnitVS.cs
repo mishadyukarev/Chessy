@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -15,8 +15,8 @@ namespace Game.Game
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
 
-                ref var main_0 = ref CellUnitVEs.UnitMain<SpriteRendererVC>(idx_0);
-                ref var extra_0 = ref CellUnitVEs.UnitMain<SpriteRendererVC>(idx_0);
+                ref var main_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
+                ref var extra_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
 
 
 

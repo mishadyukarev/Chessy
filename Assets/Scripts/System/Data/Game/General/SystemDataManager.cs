@@ -21,10 +21,12 @@ namespace Game.Game
             _actions.Add(DataSTypes.RunFixedUpdate,
                 (Action)default);
 
-            _actions.Add(DataSTypes.RunAfterUpdate,
+            _actions.Add(DataSTypes.RunAfterSyncRPC,
                 (Action)new VisibElseS().Run
                 + new AbilSyncS().Run
-                + new GetAttackPawnCellsS().Run);
+                + new GetAttackPawnCellsS().Run
+                + new GetCellsForSetUnitS().Run
+                + new GetCellsForShiftUnitS().Run);
         }
 
 

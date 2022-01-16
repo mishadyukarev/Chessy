@@ -1,11 +1,9 @@
 ﻿using ECS;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
 
 namespace Game.Game
 {
-    public readonly struct EntityCellTrailPool
+    public readonly struct CellTrailEs
     {
         readonly static Dictionary<DirectTypes, Entity[]> _trails;
         readonly static Dictionary<PlayerTypes, Entity[]> _trailVisibleEnts;
@@ -13,7 +11,7 @@ namespace Game.Game
         public static ref T Trail<T>(in byte idx, in DirectTypes dir = default) where T : struct, ITrailCell => ref _trails[dir][idx].Get<T>();
         public static ref T Trail<T>(in PlayerTypes player, in byte idx) where T : struct, ITrailVisibledCellE => ref _trailVisibleEnts[player][idx].Get<T>();
 
-        static EntityCellTrailPool()
+        static CellTrailEs()
         {
             _trails = new Dictionary<DirectTypes, Entity[]>();
             _trailVisibleEnts = new Dictionary<PlayerTypes, Entity[]>();
@@ -28,7 +26,7 @@ namespace Game.Game
                 _trailVisibleEnts.Add(player, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
         }
-        public EntityCellTrailPool(in EcsWorld gameW)
+        public CellTrailEs(in EcsWorld gameW)
         {
             byte idx = 0;
 

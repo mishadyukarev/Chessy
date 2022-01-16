@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct CellUnitVEs
+    public struct UnitCellVEs
     {
         static Entity[] _main;
         static Entity[] _extra;
@@ -11,7 +11,7 @@ namespace Game.Game
         public static ref C UnitMain<C>(in byte idx) where C : struct, IUnitCellV => ref _main[idx].Get<C>();
         public static ref C UnitExtra<C>(in byte idx) where C : struct, IUnitCellV => ref _main[idx].Get<C>();
 
-        public CellUnitVEs(in EcsWorld gameW, GameObject[] cells)
+        public UnitCellVEs(in EcsWorld gameW, GameObject[] cells)
         {
             _main = new Entity[CellValues.ALL_CELLS_AMOUNT];
             _extra = new Entity[CellValues.ALL_CELLS_AMOUNT];

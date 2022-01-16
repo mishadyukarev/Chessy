@@ -11,7 +11,7 @@ namespace Game.Game
 
         static string Key(UnitTypes unit, LevelTypes level, PlayerTypes player) => unit.ToString() + level + player;
 
-        public static ref C Units<C>(UnitTypes unit, LevelTypes level, PlayerTypes player) where C : struct => ref _units[Key(unit, level, player)].Get<C>();
+        public static ref C Units<C>(in UnitTypes unit, in LevelTypes level, in PlayerTypes player) where C : struct => ref _units[Key(unit, level, player)].Get<C>();
         public static ref C Units<C>(in string key) where C : struct => ref _units[key].Get<C>();
 
         public static HashSet<string> Keys

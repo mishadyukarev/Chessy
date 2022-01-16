@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public struct IdxC : ISelectedIdx, ICurrectIdx, IPreVisionIdx, ICloud
     {
-        public byte Idx { get; set; }
+        public byte Idx;
 
         public bool Is(params byte[] idxs)
         {

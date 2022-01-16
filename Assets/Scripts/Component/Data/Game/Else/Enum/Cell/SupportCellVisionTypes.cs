@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public enum SupVisTypes
+    public enum SupportCellVisionTypes
     {
         None,
 

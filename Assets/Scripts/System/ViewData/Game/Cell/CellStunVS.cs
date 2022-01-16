@@ -1,6 +1,6 @@
-﻿using static Game.Game.CellUnitE;
-using static Game.Game.CellE;
-using static Game.Game.CellVEs;
+﻿using static Game.Game.CellUnitEs;
+using static Game.Game.CellEs;
+using static Game.Game.StunCellVEs;
 
 namespace Game.Game
 {
@@ -10,16 +10,15 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var stunView_0 = ref ElseCellVE<StunVC>(idx_0);
                 ref var stun_0 = ref Unit<NeedStepsForExitStunC>(idx_0);
 
                 if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
                 {
-                    stunView_0.SetEnabled(stun_0.IsStunned);
+                    Stun<SpriteRendererVC>(idx_0).SetActive(stun_0.IsStunned);
                 }
                 else
                 {
-                    stunView_0.SetEnabled(false);
+                    Stun<SpriteRendererVC>(idx_0).Disable();
                 }
             }
         }

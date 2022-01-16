@@ -1,9 +1,9 @@
 ﻿using System;
-using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
-using static Game.Game.EntityCellTrailPool;
+using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
+using static Game.Game.CellTrailEs;
 using static Game.Game.CellBuildE;
-using static Game.Game.CellEnvironmentE;
+using static Game.Game.CellEnvironmentEs;
 using static Game.Game.EntityCellFirePool;
 using static Game.Game.EntityCellRiverPool;
 
@@ -147,32 +147,32 @@ namespace Game.Game
 
         #region Else
 
-        public bool CanShift(in PlayerTypes whoseMove, in byte idx_to)
-        {
-            var idx_from = _idx;
+        //public bool CanShift(in PlayerTypes whoseMove, in byte idx_to)
+        //{
+        //    var idx_from = _idx;
 
-            if (idx_from == idx_to) return false;
+        //    if (idx_from == idx_to) return false;
 
-            ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
+        //    ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
 
-            if (!Unit<NeedStepsForExitStunC>(idx_from).IsStunned && Unit<UnitTC>(idx_from).Have && Unit<PlayerTC>(idx_from).Is(whoseMove))
-            {
-                CellSpaceC.TryGetIdxAround(idx_from, out var directs);
+        //    if (!Unit<NeedStepsForExitStunC>(idx_from).IsStunned && Unit<UnitTC>(idx_from).Have && Unit<PlayerTC>(idx_from).Is(whoseMove))
+        //    {
+        //        CellSpaceC.TryGetIdxAround(idx_from, out var directs);
 
-                foreach (var item_1 in directs)
-                {
-                    if (idx_to == item_1.Value && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_to).Have && !Unit<UnitTC>(idx_to).Have)
-                    {
-                        var one = stepUnit_from.HaveStepsForDoing(idx_to);
-                        var two = stepUnit_from.HaveMaxSteps;
+        //        foreach (var item_1 in directs)
+        //        {
+        //            if (idx_to == item_1.Value && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_to).Have && !Unit<UnitTC>(idx_to).Have)
+        //            {
+        //                var one = stepUnit_from.HaveStepsForDoing(idx_to);
+        //                var two = stepUnit_from.HaveMaxSteps;
 
-                        if (one || two) return true;
-                    }
-                }
-                return false;
-            }
-            else return false;
-        }
+        //                if (one || two) return true;
+        //            }
+        //        }
+        //        return false;
+        //    }
+        //    else return false;
+        //}
         public bool CanAttack(in PlayerTypes whoseMove, in byte idx_to, out AttackTypes attack)
         {
             attack = AttackTypes.None;

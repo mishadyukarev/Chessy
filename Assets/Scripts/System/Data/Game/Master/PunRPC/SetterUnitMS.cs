@@ -1,5 +1,5 @@
-﻿using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
+﻿using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 using static Game.Game.EntityCellFirePool;
 using static Game.Game.CellUnitTWE;
 
@@ -11,8 +11,8 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            UnitDoingMC.Get(out var unit);
-            IdxDoingMC.Get(out var idx_0);
+            var idx_0 = EntityMPool.SetUnit<IdxC>().Idx;
+            var unit = EntityMPool.SetUnit<UnitTC>().Unit;
 
 
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
@@ -33,7 +33,7 @@ namespace Game.Game
             var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
-            if (CellUnitE.CanSetUnit(idx_0, whoseMove))
+            if (CellsForSetUnitEs.CanSet<CanSetUnitC>(whoseMove, idx_0).Can)
             {
                 var levUnit = LevelTypes.None;
 

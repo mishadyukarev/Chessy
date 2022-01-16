@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellE
+    public readonly struct CellEs
     {
         static Entity[] _cells;
         static HashSet<byte> _idxs;
@@ -32,7 +32,7 @@ namespace Game.Game
             }
         }
 
-        public CellE(in EcsWorld gameW, in bool[] isActiveCells, in int[] idCells)
+        public CellEs(in EcsWorld gameW, in bool[] isActiveCells, in int[] idCells)
         {
             _cells = new Entity[CellValues.ALL_CELLS_AMOUNT];
 

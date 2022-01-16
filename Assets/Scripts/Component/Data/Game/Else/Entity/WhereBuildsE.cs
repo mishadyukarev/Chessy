@@ -24,9 +24,9 @@ namespace Game.Game
             }
         }
 
-        public static bool IsSetted(in BuildTypes build, in PlayerTypes owner)
+        public static bool IsSetted(in BuildTypes build, in PlayerTypes owner, out byte idx)
         {
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+            for (idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
                 if (HaveBuild<HaveBuildingC>(build, owner, idx).Have)
                 {
@@ -34,17 +34,6 @@ namespace Game.Game
                 }
             }
             return false;
-        }
-        public static byte IdxFirstBuilding(in BuildTypes build, in PlayerTypes owner)
-        {
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
-            {
-                if (HaveBuild<HaveBuildingC>(build, owner, idx).Have)
-                {
-                    return idx;
-                }
-            }
-            throw new Exception();
         }
 
         public WhereBuildsE(in EcsWorld gameW)

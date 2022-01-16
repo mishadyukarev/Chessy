@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx_0 in CellE.Idxs)
+            foreach (var idx_0 in CellEs.Idxs)
             {
                 CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx_0).SetActive(Cloud<HaveEffectC>(idx_0).Have);
             }

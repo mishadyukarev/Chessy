@@ -10,7 +10,7 @@ namespace Game.Game
         {
             var curPlayer = WhoseMoveE.CurPlayerI;
 
-            foreach (byte idx_0 in CellE.Idxs)
+            foreach (byte idx_0 in CellEs.Idxs)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
                 CellVEs.Cell<SpriteRendererVC>(idx_0).RotParent = curPlayer == PlayerTypes.First 
@@ -21,11 +21,11 @@ namespace Game.Game
                     case PlayerTypes.None: throw new Exception();
 
                     case PlayerTypes.First:
-                        CellTrailVE.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 0);
+                        CellTrailVEs.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 0);
                         break;
 
                     case PlayerTypes.Second:
-                        CellTrailVE.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 180);
+                        CellTrailVEs.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 180);
                         break;
 
                     default: throw new Exception();

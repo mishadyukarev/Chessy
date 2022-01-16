@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using static Game.Game.CellE;
+using static Game.Game.CellEs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game

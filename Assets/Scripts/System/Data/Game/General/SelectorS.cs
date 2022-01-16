@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 using System;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -45,7 +45,7 @@ namespace Game.Game
                                             Rpc<RpcC>().AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
 
-                                        else if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanShift(WhoseMoveE.CurPlayerI, CurIdx<IdxC>().Idx))
+                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(WhoseMoveE.CurPlayerI, SelIdx<IdxC>().Idx).Contains(CurIdx<IdxC>().Idx))
                                         {
                                             Rpc<RpcC>().ShiftUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }

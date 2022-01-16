@@ -1,12 +1,12 @@
-﻿using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
+﻿using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
-using static Game.Game.CellEnvironmentE;
+using static Game.Game.CellEnvironmentEs;
 using static Game.Game.EntityCellFirePool;
 
 namespace Game.Game
 {
-    struct SupportSyncVS : IEcsRunSystem
+    struct SupportCellVS : IEcsRunSystem
     {
         public void Run()
         {
@@ -19,16 +19,18 @@ namespace Game.Game
                 ref var lev_0 = ref Unit<LevelTC>(idx_0);
                 ref var own_0 = ref Unit<PlayerTC>(idx_0);
 
-                ref var supV_0 = ref CellVEs.ElseCellVE<SupportVC>(idx_0);
-
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
+                ref var supportC = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
-                supV_0.DisableSR();
+
+                supportC.Disable();
 
                 if (SelIdx<IdxC>().Is(idx_0))
                 {
-                    supV_0.EnableSR(SupVisTypes.Selector);
+                    supportC.Enable();
+                    supportC.Color = ColorsValues.Color(SupportCellVisionTypes.Selector);
+
                 }
 
                 if (fire_0.Have)
@@ -37,7 +39,8 @@ namespace Game.Game
                     {
                         if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirWind))
                         {
-                            supV_0.EnableSR(SupVisTypes.GivePawnTool);
+                            supportC.Enable();
+                            supportC.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
                         }
                     }
                 }
@@ -50,7 +53,8 @@ namespace Game.Game
                         {
                             if (unit_0.Is(UnitTypes.Pawn))
                             {
-                                supV_0.EnableSR(SupVisTypes.GivePawnTool);
+                                supportC.Enable();
+                                supportC.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
                             }
                         }
 
@@ -60,7 +64,8 @@ namespace Game.Game
                             {
                                 if (lev_0.Is(LevelTypes.First))
                                 {
-                                    supV_0.EnableSR(SupVisTypes.GivePawnTool);
+                                    supportC.Enable();
+                                    supportC.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
                                 }
                             }
                         }
@@ -69,7 +74,8 @@ namespace Game.Game
                         {
                             if (unit_0.Is(UnitTypes.Archer))
                             {
-                                supV_0.EnableSR(SupVisTypes.GivePawnTool);
+                                supportC.Enable();
+                                supportC.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
                             }
                         }
                     }
@@ -84,7 +90,8 @@ namespace Game.Game
                                 {
                                     if (SelUniqAbilC.Is(UniqueAbilityTypes.StunElfemale))
                                     {
-                                        supV_0.EnableSR(SupVisTypes.GivePawnTool);
+                                        supportC.Enable();
+                                        supportC.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
                                     }
                                 }
                             }
@@ -98,8 +105,20 @@ namespace Game.Game
                     {
                         if (unitE_0.CanArson(WhoseMoveE.CurPlayerI, idx_0))
                         {
-                            CellVEs.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.FireSelector);
+                            supportC.Enable();
+                            supportC.Color = ColorsValues.Color(SupportCellVisionTypes.FireSelector);
                         }
+                    }
+                }
+
+
+
+                if (cellClick.Is(CellClickTypes.SetUnit))
+                {        
+                    if (CellsForSetUnitEs.CanSet<CanSetUnitC>(WhoseMoveE.CurPlayerI, idx_0).Can)
+                    {
+                        SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
+                        SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                     }
                 }
             }
@@ -116,20 +135,16 @@ namespace Game.Game
                 }
             }
 
-            else if (cellClick.Is(CellClickTypes.SetUnit))
-            {
-                //foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI))
-                //{
-                //    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.Spawn);
-                //}
-            }
 
             else
             {
-                //foreach (var idx_0 in ShiftCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, SelIdx.Idx))
-                //{
-                //    EntityVPool.ElseCellVC<SupportVC>(idx_0).EnableSR(SupVisTypes.Shift);
-                //}
+                var idxs = CellsForShiftUnitsEs.CellsForShift<IdxsC>(WhoseMoveE.CurPlayerI, SelIdx<IdxC>().Idx).Idxs;
+
+                foreach (var idx_0 in idxs)
+                {
+                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
+                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                }
 
                 //foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, AttackTypes.Simple, SelIdx<IdxC>().Idx))
                 //{

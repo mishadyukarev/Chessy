@@ -11,6 +11,8 @@ namespace Game.Game
         public static ref C Build<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.Build].Get<C>();
         public static ref C ConditionUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.ConditionUnit].Get<C>();
         public static ref C BuyResources<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.BuyRes].Get<C>();
+        public static ref C Shift<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.Shift].Get<C>();
+        public static ref C SetUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.SetUnit].Get<C>();
 
         public static ref C Seed<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.Seed].Get<C>();
         public static ref C GrowAdultForest<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.GrowAdultForest].Get<C>();
@@ -33,6 +35,13 @@ namespace Game.Game
 
             _rpcEnts.Add(RpcMasterTypes.BuyRes, gameW.NewEntity()
                 .Add(new ResourceTypeC()));
+
+            _rpcEnts.Add(RpcMasterTypes.Shift, gameW.NewEntity()
+                .Add(new IdxFromToC()));
+
+            _rpcEnts.Add(RpcMasterTypes.SetUnit, gameW.NewEntity()
+                .Add(new IdxC())
+                .Add(new UnitTC()));
 
 
 

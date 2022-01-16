@@ -31,12 +31,12 @@ namespace Game.Game
                 + new EnvCellVS().Run
                 + new FireCellVS().Run
                 + new CloudCellVS().Run
-                + new RiverCellSyncVS().Run
+                + new RiverCellVS().Run
                 + new CellBarsEnvVS().Run
                 + new CellTrailVS().Run
                 + new CellStunVS().Run
                 + new SyncSelUnitCellVS().Run
-                + new SupportSyncVS().Run
+                + new SupportCellVS().Run
                 + new FliperAndRotatorUnitVS().Run
 
 

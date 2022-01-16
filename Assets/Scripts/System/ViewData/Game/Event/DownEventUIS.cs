@@ -15,13 +15,13 @@ namespace Game.Game
 
             UIEntDownDoner.Doner<ButtonUIC>().AddListener(Done);
 
-            UIEntDownPawnArcher.Create<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { CreateUnit(UnitTypes.Pawn); });
-            UIEntDownPawnArcher.Create<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { CreateUnit(UnitTypes.Archer); });
+            PawnArcherDownUIE.Create<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { CreateUnit(UnitTypes.Pawn); });
+            PawnArcherDownUIE.Create<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { CreateUnit(UnitTypes.Archer); });
 
 
             Button<ButtonUIC>().AddListener(delegate { GetUnit(UnitTypes.King); });
-            UIEntDownPawnArcher.Taker<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { GetUnit(UnitTypes.Pawn); });
-            UIEntDownPawnArcher.Taker<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { GetUnit(UnitTypes.Archer); });
+            PawnArcherDownUIE.Taker<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { GetUnit(UnitTypes.Pawn); });
+            PawnArcherDownUIE.Taker<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { GetUnit(UnitTypes.Archer); });
 
             UIEntDownUpgrade.Upgrade<ButtonUIC>().AddListener(ToggleUpgradeUnit);
 
@@ -88,7 +88,7 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                GetterUnitsC.GetterUnit<TimerC>(unitType).Reset();
+                GetterUnitsE.GetterUnit<TimerC>(unitType).Reset();
 
                 EntityPool.Rpc<RpcC>().CreateUnitToMaster(unitType);
             }
@@ -99,7 +99,7 @@ namespace Game.Game
         {
             SelIdx<IdxC>().Reset();
 
-            GetterUnitsC.GetterUnit<TimerC>(unitT).Reset();
+            GetterUnitsE.GetterUnit<TimerC>(unitT).Reset();
 
             if (WhoseMoveE.IsMyMove)
             {
@@ -121,7 +121,7 @@ namespace Game.Game
 
                 else
                 {
-                    GetterUnitsC.GetterUnit<IsActiveC>(unitT).IsActive = true;
+                    GetterUnitsE.GetterUnit<IsActiveC>(unitT).IsActive = true;
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct SpriteRendererVC : ICellVE, IUnitCellV, IFireCellVE, IEnvCellV, ITrailCellV, ICloudCellV
+    public struct SpriteRendererVC : ICellVE, IUnitCellV, IFireCellVE, IEnvCellV, ITrailCellV, ICloudCellV, IBuildCellV, IRiverCellVE, ISupportVE, IBlockCellVE, IBarCellVE, IStunCellVE
     {
         readonly SpriteRenderer _sr;
 
@@ -11,20 +11,31 @@ namespace Game.Game
             get => _sr.transform.parent.rotation;
             set => _sr.transform.parent.rotation = value;
         }
-        public Sprite Sprite
-        {
-            get => _sr.sprite;
-            set => _sr.sprite = value;
-        }
         public Vector3 LocalEulerAngles
         {
             get => _sr.transform.localEulerAngles;
             set => _sr.transform.localEulerAngles = value;
         }
+        public Vector3 LocalScale
+        {
+            get => _sr.transform.localScale;
+            set => _sr.transform.localScale = value;
+        }
+
+        public Sprite Sprite
+        {
+            get => _sr.sprite;
+            set => _sr.sprite = value;
+        }
         public bool FlipX
         {
             get => _sr.flipX;
             set => _sr.flipX = value;
+        }
+        public Color Color
+        {
+            get => _sr.color;
+            set => _sr.color = value;
         }
 
         internal SpriteRendererVC(in SpriteRenderer sr) => _sr = sr;

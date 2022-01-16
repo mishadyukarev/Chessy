@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellUnitE
+    public readonly struct CellUnitEs
     {
         static Entity[] _units;
         static Dictionary<PlayerTypes, Entity[]> _unitEnts;
@@ -70,73 +70,7 @@ namespace Game.Game
             }
         }
 
-        public static bool CanSetUnit(in byte _idx, in PlayerTypes whoWant)
-        {
-            ref var unit_0 = ref Unit<UnitTC>(_idx);
-            ref var buld_0 = ref CellBuildE.Build<BuildingC>(_idx);
-            ref var ownBuld_0 = ref CellBuildE.Build<PlayerTC>(_idx);
-
-            if (WhereBuildsE.IsSetted(BuildTypes.City, whoWant))
-            {
-                var idx_city = WhereBuildsE.IdxFirstBuilding(BuildTypes.City, whoWant);
-                ref var unit_city = ref CellBuildE.Build<BuildingC>(idx_city);
-
-                var list_1 = CellSpaceC.XyAround(CellE.Cell<XyC>(idx_city).Xy);
-
-                if (!unit_city.Have) return true;
-
-                foreach (var xy_1 in list_1)
-                {
-                    var idx_1 = CellE.IdxCell(xy_1);
-
-                    ref var unit_1 = ref Unit<UnitTC>(idx_1);
-
-                    if (!CellEnvironmentE.Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_1).Have && !unit_1.Have)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            else
-            {
-                var xy = CellE.Cell<XyC>(_idx).Xy;
-                var x = xy[0];
-                var y = xy[1];
-
-                ref var unit_cur = ref Unit<UnitTC>(_idx);
-
-                if (!unit_cur.Have)
-                {
-                    if (whoWant == PlayerTypes.First)
-                    {
-                        if (y < 3 && x > 3 && x < 12)
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (y > 7 && x > 3 && x < 12)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            if (buld_0.Is(BuildTypes.Camp))
-            {
-                if (!CellEnvironmentE.Environment<HaveEnvironmentC>(EnvTypes.Mountain, _idx).Have && !unit_0.Have)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public CellUnitE(in EcsWorld gameW)
+        public CellUnitEs(in EcsWorld gameW)
         {
             _units = new Entity[CellValues.ALL_CELLS_AMOUNT];
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.CellUnitE;
+using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -12,8 +12,8 @@ namespace Game.Game
             {
                 ref var unit_cur = ref Unit<UnitTC>(CurIdx<IdxC>().Idx);
 
-                ref var mainUnit_cur = ref CellUnitVEs.UnitMain<SpriteRendererVC>(CurIdx<IdxC>().Idx);
-                ref var mainUnit_pre = ref CellUnitVEs.UnitExtra<SpriteRendererVC>(PreVisIdx<IdxC>().Idx);
+                ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(CurIdx<IdxC>().Idx);
+                ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(PreVisIdx<IdxC>().Idx);
 
 
                 if (unit_cur.Have)
@@ -40,7 +40,7 @@ namespace Game.Game
 
         static void SetMainSprite(in UnitTypes unit, in LevelTypes level, bool isCornered)
         {
-            ref var mainUnit_cur = ref CellUnitVEs.UnitMain<SpriteRendererVC>(CurIdx<IdxC>().Idx);
+            ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(CurIdx<IdxC>().Idx);
 
             switch (unit)
             {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellEnvironmentE
+    public readonly struct CellEnvironmentEs
     {
         readonly static Dictionary<EnvTypes, Entity[]> _envEnts;
 
@@ -19,7 +19,7 @@ namespace Game.Game
             }
         }
 
-        static CellEnvironmentE()
+        static CellEnvironmentEs()
         {
             _envEnts = new Dictionary<EnvTypes, Entity[]>();
 
@@ -28,7 +28,7 @@ namespace Game.Game
                 _envEnts.Add(env, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
         }
-        public CellEnvironmentE(in EcsWorld gameW)
+        public CellEnvironmentEs(in EcsWorld gameW)
         {
             for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {

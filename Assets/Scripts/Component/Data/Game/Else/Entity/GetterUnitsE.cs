@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct GetterUnitsC
+    public struct GetterUnitsE
     {
-        static readonly Dictionary<UnitTypes, Entity> _getter;
+        static Dictionary<UnitTypes, Entity> _getter;
 
 
         public static ref C GetterUnit<C>(in UnitTypes unit) where C : struct => ref _getter[unit].Get<C>();
@@ -21,20 +21,17 @@ namespace Game.Game
             }
         }
 
-        static GetterUnitsC()
+        public GetterUnitsE(in EcsWorld gameW)
         {
             _getter = new Dictionary<UnitTypes, Entity>();
-            _getter.Add(UnitTypes.Pawn, default);
-            _getter.Add(UnitTypes.Archer, default);
-        }
-        public GetterUnitsC(in EcsWorld gameW)
-        {
-            foreach (var key in Keys)
-            {
-                _getter[key] = gameW.NewEntity()
+
+            _getter.Add(UnitTypes.Pawn, gameW.NewEntity()
                     .Add(new IsActiveC())
-                    .Add(new TimerC());
-            }
+                    .Add(new TimerC()));
+
+            _getter.Add(UnitTypes.Archer, gameW.NewEntity()
+                    .Add(new IsActiveC())
+                    .Add(new TimerC()));
         }
     }
 }

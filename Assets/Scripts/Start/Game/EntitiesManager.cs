@@ -4,10 +4,11 @@ using Photon.Pun;
 using System.Collections.Generic;
 using static Game.Game.CellBuildE;
 using static Game.Game.EntityCellCloudPool;
-using static Game.Game.CellEnvironmentE;
+using static Game.Game.CellEnvironmentEs;
 using static Game.Game.EntityCellRiverPool;
-using static Game.Game.CellUnitE;
-using static Game.Game.CellE;
+using static Game.Game.CellUnitEs;
+using static Game.Game.CellEs;
+using UnityEngine;
 
 namespace Game.Game
 {
@@ -20,12 +21,59 @@ namespace Game.Game
             CanvasC.SetCurZone(SceneTypes.Game);
 
             new EntityVPool(gameW, out var actions, out var sounds0, out var sounds1);
-            new CellVEs(gameW, CellValues.X_AMOUNT, CellValues.Y_AMOUNT, out var cells);
-            new CellUnitVEs(gameW, cells);
+
+
+
+
+            var parCells = new GameObject("Cells");
+            EntityVPool.GeneralZone<GeneralZoneVEC>().Attach(parCells.transform);
+
+            byte idx_cur = 0;
+
+            var cells = new GameObject[CellValues.ALL_CELLS_AMOUNT];
+
+            for (byte x = 0; x < CellValues.X_AMOUNT; x++)
+                for (byte y = 0; y < CellValues.Y_AMOUNT; y++)
+                {
+                    var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
+                        ? SpritesResC.Sprite(SpriteTypes.WhiteCell)
+                        : SpritesResC.Sprite(SpriteTypes.BlackCell);
+
+
+                    var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
+                    cell.name = "CellMain";
+                    cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
+
+                    if (y == 0 || y == 10 && x >= 0 && x < 15 ||
+                            y >= 1 && y < 10 && x >= 0 && x <= 2 || x >= 13 && x < 15 ||
+
+                            y == 1 && x == 3 || y == 1 && x == 12 ||
+                            y == 9 && x == 3 || y == 9 && x == 12)
+                    {
+                        cell.SetActive(false);
+                    }
+
+                    cell.transform.SetParent(parCells.transform);
+
+                    cells[idx_cur] = cell;
+
+                    ++idx_cur;
+                }
+
+            
+            new CellVEs(gameW, cells);
+            new UnitCellVEs(gameW, cells);
             new CellFireVEs(gameW, cells);
             new CellEnvVEs(gameW, cells);
-            new CellTrailVE(gameW, cells);
+            new CellTrailVEs(gameW, cells);
             new CellCloudVEs(gameW, cells);
+            new CellBuildingVEs(gameW, cells);
+            new CellRiverVEs(gameW, cells);
+            new SupportCellVEs(gameW, cells);
+            new CellBlocksVEs(gameW, cells);
+            new CellBarsVEs(gameW, cells);
+            new StunCellVEs(gameW, cells);
+
 
             ///Left
             var leftZone = CanvasC.FindUnderCurZone("LeftZone").transform;
@@ -51,7 +99,7 @@ namespace Game.Game
             new UIEntDownDoner(gameW, downZone);
             new UIEntDownUpgrade(gameW, downZone);
             var takeUnitZone = downZone.Find("TakeUnitZone");
-            new UIEntDownPawnArcher(gameW, takeUnitZone);
+            new PawnArcherDownUIE(gameW, takeUnitZone);
             new UIEntDownScout(gameW, takeUnitZone);
             new UIEntDownHero(gameW, takeUnitZone);
 
@@ -68,6 +116,7 @@ namespace Game.Game
             new UIEntRelax(gameW, conditionZone);
 
             #endregion
+
 
             var isActiveCells = new bool[CellValues.ALL_CELLS_AMOUNT];
             var idCells = new int[CellValues.ALL_CELLS_AMOUNT];
@@ -100,20 +149,22 @@ namespace Game.Game
             new EntInventorResources(gameW);
             new EntInventorToolWeapon(gameW);
 
-            new SetUnitCellsC(gameW);
-            new GetterUnitsC(gameW);
+            new CellsForSetUnitEs(gameW);
+            new CellsForShiftUnitsEs(gameW);
 
-            new CellUnitE(gameW);
+            new GetterUnitsE(gameW);
+
+            new CellUnitEs(gameW);
             new CellUnitTWE(gameW);
-            new EntityCellTrailPool(gameW);
+            new CellTrailEs(gameW);
             new CellBuildE(gameW);
-            new CellEnvironmentE(gameW);
+            new CellEnvironmentEs(gameW);
             new EntityCellFirePool(gameW);
             new EntityCellCloudPool(gameW);
             new EntityCellRiverPool(gameW);
-
-            new CellE(gameW, isActiveCells, idCells);
+            new CellEs(gameW, isActiveCells, idCells);
             new CellParentE(gameW);
+
 
 
             new WhoseMoveE(gameW);
@@ -122,11 +173,12 @@ namespace Game.Game
 
             new WindEnt(gameW);
             new CloudEnt(gameW);
-            
+
 
             #endregion
 
 
+ 
 
             var envValues = new EnvironmentValues();
 

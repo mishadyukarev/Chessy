@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitE;
+﻿using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -6,19 +6,19 @@ namespace Game.Game
     {
         public void Run()
         {
-            FromToDoingMC.Get(out var idx_from, out var idx_to);
+            EntityMPool.Shift<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
-            //if (Unit<UnitCellEC>(idx_from).CanShift(whoseMove, idx_to))
-            //{
-            //    Unit<UnitCellEC>(idx_from).TakeStepsForDoing(idx_to);
+            if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
+            {
+                Unit<UnitCellEC>(idx_from).TakeStepsForDoing(idx_to);
 
-            //    Unit<UnitCellEC>(idx_from).Shift(idx_to);
+                Unit<UnitCellEC>(idx_from).Shift(idx_to);
 
-            //    EntityPool.Rpc<RpcC>().SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
-            //}
+                EntityPool.Rpc<RpcC>().SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
+            }
         }
     }
 }

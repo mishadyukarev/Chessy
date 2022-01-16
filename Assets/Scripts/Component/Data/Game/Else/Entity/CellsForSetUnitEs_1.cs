@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct SetUnitCellsC
+    public readonly struct CellsForSetUnitEs
     {
         static Dictionary<string, Entity> _cells;
 
@@ -24,8 +24,7 @@ namespace Game.Game
             }
         }
 
-
-        static SetUnitCellsC()
+        public CellsForSetUnitEs(in EcsWorld gameW)
         {
             _cells = new Dictionary<string, Entity>();
 
@@ -33,17 +32,12 @@ namespace Game.Game
             {
                 for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
                 {
-                    _cells.Add(Key(player, idx), default);
+                    _cells.Add(Key(player, idx),gameW.NewEntity()
+                       .Add(new CanSetUnitC()));
                 }
             }
         }
-        public SetUnitCellsC(in EcsWorld gameW)
-        {
-            foreach (var key in Keys)
-            {
-                _cells[key] = gameW.NewEntity()
-                    .Add(new CanSetUnitC());
-            }
-        }
     }
+
+    public interface ICellForSetUnitE { }
 }

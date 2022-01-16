@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using static Game.Game.EntityCellTrailPool;
+using static Game.Game.CellTrailEs;
 
 namespace Game.Game
 {

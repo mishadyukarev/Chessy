@@ -1,8 +1,8 @@
-﻿using static Game.Game.CellE;
-using static Game.Game.CellUnitE;
-using static Game.Game.EntityCellTrailPool;
+﻿using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
+using static Game.Game.CellTrailEs;
 using static Game.Game.CellBuildE;
-using static Game.Game.CellEnvironmentE;
+using static Game.Game.CellEnvironmentEs;
 using Game.Common;
 
 namespace Game.Game
@@ -104,7 +104,7 @@ namespace Game.Game
 
                     foreach (var xy_1 in list)
                     {
-                        var idxCell_1 = CellE.IdxCell(xy_1);
+                        var idxCell_1 = CellEs.IdxCell(xy_1);
 
                         ref var unitCom_1 = ref Unit<UnitTC>(idxCell_1);
                         ref var ownUnit_1 = ref Unit<PlayerTC>(idxCell_1);
