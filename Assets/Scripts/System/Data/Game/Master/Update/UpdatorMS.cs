@@ -5,7 +5,7 @@ using static Game.Game.CellUnitEs;
 using static Game.Game.CellTrailEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellFireEs;
 
 namespace Game.Game
 {
@@ -30,12 +30,12 @@ namespace Game.Game
                 ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
-                ref var hp_0 = ref Unit<HpC>(idx_0);
+                ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var buil_0 = ref Build<BuildingC>(idx_0);
+                ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
@@ -48,7 +48,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    AmountStepsInCondition<StepC>(condUnit_0.Condition, idx_0).Add();
+                    AmountStepsInCondition<AmountC>(condUnit_0.Condition, idx_0).Add();
 
                     if (!unit_0.Is(UnitTypes.King)) InventorResourcesE.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Amount -= 1;
 
@@ -70,11 +70,11 @@ namespace Game.Game
                     {
                         if (condUnit_0.Is(ConditionUnitTypes.Protected))
                         {
-                            if (unitE_0.HaveMax)
+                            if (CellUnitHpEs.HaveMax(idx_0))
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
-                                    if (buil_0.Is(BuildTypes.Woodcutter) || !buil_0.Have)
+                                    if (buil_0.Is(BuildingTypes.Woodcutter) || !buil_0.Have)
                                     {
                                         if (GameModeC.IsGameMode(GameModes.TrainingOff))
                                         {
@@ -88,8 +88,7 @@ namespace Game.Game
                                                 //}
 
 
-
-                                                buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Player);
+                                                CellBuildE.SetNew(BuildingTypes.Camp, ownUnit_0.Player, idx_0);
                                             }
                                         }
                                         else
@@ -101,8 +100,7 @@ namespace Game.Game
                                             //    Build<BuildCellEC>(idxCamp).Remove();
                                             //}
 
-
-                                            buildCell_0.SetNew(BuildTypes.Camp, ownUnit_0.Player);
+                                            CellBuildE.SetNew(BuildingTypes.Camp, ownUnit_0.Player, idx_0);
                                         }
                                     }
                                 }
@@ -111,14 +109,14 @@ namespace Game.Game
 
                         else if (!condUnit_0.Is(ConditionUnitTypes.Relaxed))
                         {
-                            if (stepUnit_0.HaveMin)
+                            if (CellUnitStepEs.HaveMin(idx_0))
                             {
-                                condUnit_0.Set(ConditionUnitTypes.Protected);
+                                condUnit_0.Condition = ConditionUnitTypes.Protected;
                             }
                         }
                     }
 
-                    Unit<UnitCellEC>(idx_0).SetMaxSteps();
+                    CellUnitStepEs.SetMaxSteps(idx_0);
                 }
             }
 
@@ -139,15 +137,15 @@ namespace Game.Game
             {
                 foreach (byte idx_0 in Idxs)
                 {
-                    ref var build_0 = ref Build<BuildingC>(idx_0);
+                    ref var build_0 = ref Build<BuildingTC>(idx_0);
 
                     if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have)
                     {
-                        if (!build_0.Is(BuildTypes.Mine))
+                        if (!build_0.Is(BuildingTypes.Mine))
                         {
-                            if (!Environment<EnvCellEC>(EnvTypes.Hill, idx_0).HaveMax())
+                            if (Environment<AmountC>(EnvTypes.Hill, idx_0).Amount != Max(EnvTypes.Hill))
                             {
-                                Environment<AmountResourcesC>(EnvTypes.Hill, idx_0).Resources += 1;
+                                Environment<AmountC>(EnvTypes.Hill, idx_0).Amount += 1;
                             }
                         }
                     }

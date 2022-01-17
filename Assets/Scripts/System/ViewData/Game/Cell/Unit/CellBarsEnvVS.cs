@@ -19,9 +19,9 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Enable();
 
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).LocalScale
-                            = new Vector3(Environment<AmountResourcesC>(EnvTypes.Fertilizer, idx_0).Resources
-                            / (float)(Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Max()
-                            + Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Max()), 0.15f, 1);
+                            = new Vector3(Environment<AmountC>(EnvTypes.Fertilizer, idx_0).Amount
+                            / (float)Max(EnvTypes.Fertilizer)
+                            + Max(EnvTypes.Fertilizer), 0.15f, 1);
                     }
                     else
                     {
@@ -32,8 +32,8 @@ namespace Game.Game
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).LocalScale =
-                            new Vector3(Environment<AmountResourcesC>(EnvTypes.AdultForest, idx_0).Resources 
-                            / (float)Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Max(), 0.15f, 1);
+                            new Vector3(Environment<AmountC>(EnvTypes.AdultForest, idx_0).Amount 
+                            / (float)Max(EnvTypes.AdultForest), 0.15f, 1);
                     }
                     else
                     {
@@ -44,8 +44,8 @@ namespace Game.Game
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).LocalScale
-                            = new Vector3(Environment<AmountResourcesC>(EnvTypes.Hill, idx_0).Resources 
-                            / (float)Environment<EnvCellEC>(EnvTypes.Hill, idx_0).Max(), 0.15f, 1);
+                            = new Vector3(Environment<AmountC>(EnvTypes.Hill, idx_0).Amount 
+                            / (float)Max(EnvTypes.Hill), 0.15f, 1);
                     }
                     else
                     {

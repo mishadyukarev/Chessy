@@ -19,6 +19,7 @@ namespace Game.Game
             Ready<ButtonUIC>().AddListener(Ready);
             JoinDiscord<ButtonUIC>().AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
 
+            CenterKingUIE.Button<ButtonUIC>().AddListener(delegate { GetKing(); });
             Leave<ButtonUIC>().AddListener(delegate { PhotonNetwork.LeaveRoom(); });
             Friend<ButtonUIC>().AddListener(FriendReady);
             Hint<ButtonUIC>().AddListener(Hint);
@@ -28,9 +29,9 @@ namespace Game.Game
             Units<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { UpgradeUnit(UnitTypes.Archer); });
             Units<ButtonUIC>(UnitTypes.Scout).AddListener(delegate { UpgradeUnit(UnitTypes.Scout); });
 
-            Builds<ButtonUIC>(BuildTypes.Farm).AddListener(delegate { UpgradeBuild(BuildTypes.Farm); });
-            Builds<ButtonUIC>(BuildTypes.Woodcutter).AddListener(delegate { UpgradeBuild(BuildTypes.Woodcutter); });
-            Builds<ButtonUIC>(BuildTypes.Mine).AddListener(delegate { UpgradeBuild(BuildTypes.Mine); });
+            Builds<ButtonUIC>(BuildingTypes.Farm).AddListener(delegate { UpgradeBuild(BuildingTypes.Farm); });
+            Builds<ButtonUIC>(BuildingTypes.Woodcutter).AddListener(delegate { UpgradeBuild(BuildingTypes.Woodcutter); });
+            Builds<ButtonUIC>(BuildingTypes.Mine).AddListener(delegate { UpgradeBuild(BuildingTypes.Mine); });
 
             Water<ButtonUIC>().AddListener(UpgradeWater);
 
@@ -43,6 +44,23 @@ namespace Game.Game
         void FriendReady()
         {
             EntityPool.FriendZone<IsActiveC>().IsActive = false;
+        }
+        void GetKing()
+        {
+            EntityPool.SelIdx<IdxC>().Reset();
+
+
+            if (WhoseMoveE.IsMyMove)
+            {
+                if (EntInventorUnits.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+                {
+                    EntityPool.ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
+
+                    SelectedUnitE.SelUnit<UnitTC>().Unit = UnitTypes.King;
+                    SelectedUnitE.SelUnit<LevelTC>().Level = LevelTypes.First;
+                }
+            }
+            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
         void Hint()
         {
@@ -70,7 +88,7 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        private void UpgradeBuild(BuildTypes build)
+        void UpgradeBuild(BuildingTypes build)
         {
             if (WhoseMoveE.IsMyMove)
             {
@@ -81,7 +99,7 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        private void UpgradeWater()
+        void UpgradeWater()
         {
             if (WhoseMoveE.IsMyMove)
             {

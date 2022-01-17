@@ -27,12 +27,12 @@ namespace Game.Game
                                 if(EntWhereUnits.HaveUnit<HaveUnitC>(unit, levUnit, player, idx_0).Have)
                                 {
                                     ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                                    ref var build_0 = ref Build<BuildingC>(idx_0);
+                                    ref var build_0 = ref Build<BuildingTC>(idx_0);
 
 
-                                    if (build_0.Is(BuildTypes.Camp))
+                                    if (build_0.Is(BuildingTypes.Camp))
                                     {
-                                        buildCell_0.Remove();
+                                        CellBuildE.Remove(idx_0);
                                     }
 
                                     Unit<UnitCellEC>(idx_0).Kill();

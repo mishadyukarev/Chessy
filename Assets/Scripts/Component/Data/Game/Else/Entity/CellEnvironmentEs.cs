@@ -35,7 +35,7 @@ namespace Game.Game
                     _envEnts[env][idx] = gameW.NewEntity()
                         .Add(new EnvCellEC(idx, env))
                         .Add(new HaveEnvironmentC())
-                        .Add(new AmountResourcesC());
+                        .Add(new AmountC());
                 }
             }
 
@@ -60,11 +60,31 @@ namespace Game.Game
                 randAmountRes = (byte)(_values.MaxAmount(env) / forMin);
             }
 
-            Environment<AmountResourcesC>(env, idx).Resources = randAmountRes;
+            Environment<AmountC>(env, idx).Amount = randAmountRes;
 
 
             EntWhereEnviroments.HaveEnv<HaveEnvC>(env, idx).Have = true;
             Environment<HaveEnvironmentC>(env, idx).Have = true;
         }
+        public static void Remove(in EnvTypes env, in byte _idx)
+        {
+            if (env == default) throw new Exception();
+
+            if (Environment<HaveEnvironmentC>(env, _idx).Have)
+            {
+                if (env == EnvTypes.AdultForest)
+                {
+                    CellTrailEs.Trail<TrailCellEC>(_idx).ResetAll();
+                    CellFireEs.Fire<HaveEffectC>(_idx).Disable();
+                }
+
+                Environment<AmountC>(env, _idx).Amount = 0;
+
+                EntWhereEnviroments.HaveEnv<HaveEnvC>(env, _idx).Have = false;
+                Environment<HaveEnvironmentC>(env, _idx).Have = false;
+            }
+        }
+
+        public static byte Max(in EnvTypes env) => _values.MaxAmount(env);
     }
 }

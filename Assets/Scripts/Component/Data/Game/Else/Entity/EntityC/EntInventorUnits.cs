@@ -24,33 +24,22 @@ namespace Game.Game
             }
         }
 
-
-        static EntInventorUnits()
+        public EntInventorUnits(in EcsWorld gameW)
         {
             _units = new Dictionary<string, Entity>();
+            _values = new EconomyValues();
+
             for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
             {
                 for (var level = LevelTypes.First; level < LevelTypes.End; level++)
                 {
                     for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                     {
-                        _units.Add(Key(unit, level, player), default);
+                        _units.Add(Key(unit, level, player), gameW.NewEntity()
+                            .Add(new AmountC(_values.StartAmountUnits(unit, level))));
                     }
                 }
             }
-
-            _values = new EconomyValues();
-        }
-        public EntInventorUnits(in EcsWorld gameW)
-        {
-            foreach (var key in Keys)
-            {
-                _units[key] = gameW.NewEntity()
-                    .Add(new AmountC());
-            }
-
-            Units<AmountC>(UnitTypes.Pawn, LevelTypes.First, PlayerTypes.First).Amount += 1;
-            Units<AmountC>(UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second).Amount += 1;
         }
     }
 }

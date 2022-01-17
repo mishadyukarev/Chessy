@@ -2,19 +2,17 @@
 
 namespace Game.Game
 {
-    public readonly struct EntityCellFirePool
+    public readonly struct CellFireEs
     {
-        readonly static Entity[] _fires;
+        static Entity[] _fires;
 
         public static ref T Fire<T>(in byte idx) where T : struct, IFireCell => ref _fires[idx].Get<T>();
 
-        static EntityCellFirePool()
+        public CellFireEs(in EcsWorld gameW)
         {
             _fires = new Entity[CellValues.ALL_CELLS_AMOUNT];
-        }
-        public EntityCellFirePool(in EcsWorld gameW)
-        {
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+
+            for (byte idx = 0; idx < _fires.Length; idx++)
             {
                 _fires[idx] = gameW.NewEntity()
                     .Add(new HaveEffectC());

@@ -12,9 +12,9 @@ namespace Game.Game
 
             ref var hpUnitCell_0 = ref Unit<UnitCellEC>(idx_0);
 
-            if (hpUnitCell_0.HaveMax)
+            if (CellUnitHpEs.HaveMax(idx_0))
             {
-                if (Unit<UnitCellEC>(idx_0).HaveMaxSteps)
+                if (CellUnitStepEs.HaveMaxSteps(idx_0))
                 {
                     EntInventorUnits.Units<AmountC>(UnitTypes.Scout, LevelTypes.First, Unit<PlayerTC>(idx_0).Player).Amount -= 1;
                     Unit<UnitCellEC>(idx_0).SetScout();

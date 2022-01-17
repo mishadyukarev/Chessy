@@ -26,7 +26,7 @@ namespace Game.Game
             if (!_unitStatEnts.ContainsKey(stat)) throw new Exception();
             return ref _unitStatEnts[stat][idx].Get<C>();
         }
-        public static ref C AmountStepsInCondition<C>(in ConditionUnitTypes cond, in byte idx) where C : struct, IUnitConditionCellE
+        public static ref C AmountStepsInCondition<C>(in ConditionUnitTypes cond, in byte idx) where C : struct, ICellUnitConditionE
         {
             if (!_conditionUnitEnts.ContainsKey(cond)) throw new Exception();
             return ref _conditionUnitEnts[cond][idx].Get<C>();
@@ -114,10 +114,7 @@ namespace Game.Game
                     .Add(new PlayerTC())
                     .Add(new NeedStepsForExitStunC())
                     .Add(new ConditionUnitC())
-                    .Add(new IsCornedArcherC())
-                    .Add(new HpC())
-                    .Add(new StepC())
-                    .Add(new WaterC());
+                    .Add(new IsCornedArcherC());
 
 
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
@@ -141,18 +138,69 @@ namespace Game.Game
                 for (var cond = ConditionUnitTypes.Start; cond < ConditionUnitTypes.End; cond++)
                 {
                     _conditionUnitEnts[cond][idx] = gameW.NewEntity()
-                        .Add(new StepC());
+                        .Add(new AmountC());
                 }
 
                 for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
                 {
                     _buildButtonUnits[button][idx] = gameW.NewEntity()
-                        .Add(new BuildingC());
+                        .Add(new BuildingTC());
 
                     _uniqButtonUnitEnts[button][idx] = gameW.NewEntity()
                         .Add(new UniqueAbilityC());
                 }
             }
+        }
+        public static void Shift(in byte idx_from, in byte idx_to)
+        {
+            var dir = CellSpaceC.GetDirect(CellEs.Cell<XyC>(idx_from).Xy, CellEs.Cell<XyC>(idx_to).Xy);
+
+
+            CellTrailEs.Trail<TrailCellEC>(idx_to).TrySetNewTrail(dir.Invert(), CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_to).Have);
+            CellTrailEs.Trail<TrailCellEC>(idx_from).TrySetNewTrail(dir, CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_from).Have);
+
+            ref var unit_from = ref Unit<UnitTC>(idx_from);
+            ref var level_from = ref Unit<LevelTC>(idx_from);
+            ref var own_from = ref Unit<PlayerTC>(idx_from);
+
+
+            Unit<PlayerTC>(idx_to).Set(Unit<PlayerTC>(idx_from));
+            Unit<LevelTC>(idx_to).Set(Unit<LevelTC>(idx_from));
+
+
+            CellUnitHpEs.Hp<AmountC>(idx_to).Set(CellUnitHpEs.Hp<AmountC>(idx_from));
+            CellUnitStepEs.Steps<AmountC>(idx_to).Set(CellUnitStepEs.Steps<AmountC>(idx_from));
+            if (Unit<ConditionUnitC>(idx_to).HaveCondition) Unit<ConditionUnitC>(idx_to).Reset();
+
+            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_to).Set(idx_from);
+            CellUnitTWE.UnitTW<LevelTC>(idx_to).Set(CellUnitTWE.UnitTW<LevelTC>(idx_from));
+            CellUnitTWE.UnitTW<ProtectionC>(idx_to).Set(CellUnitTWE.UnitTW<ProtectionC>(idx_from));
+
+            foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_to).Have = Unit<HaveEffectC>(item, idx_from).Have;
+            CellUnitWaterEs.Water<AmountC>(idx_to).Set(CellUnitWaterEs.Water<AmountC>(idx_from));
+            foreach (var item in KeysCondition) AmountStepsInCondition<AmountC>(item, idx_to).Reset();
+            foreach (var unique in KeysUnique) Unit<CooldownC>(unique, idx_to).Cooldown = Unit<CooldownC>(unique, idx_from).Cooldown;
+            Unit<IsCornedArcherC>(idx_to).Set(Unit<IsCornedArcherC>(idx_from));
+
+
+
+            if (CellBuildE.Build<BuildingTC>(idx_to).Is(BuildingTypes.Camp))
+            {
+                if (!CellBuildE.Build<PlayerTC>(idx_to).Is(Unit<PlayerTC>(idx_to).Player))
+                {
+                    CellBuildE.Remove(idx_to);
+                }
+            }
+
+
+            Unit<UnitTC>(idx_to).Unit = Unit<UnitTC>(idx_from).Unit;
+            EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitTC>(idx_to).Unit, level_from.Level, own_from.Player, idx_to).Have = true;
+
+            EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitTC>(idx_from).Unit, level_from.Level, own_from.Player, idx_from).Have = false;
+            Unit<UnitTC>(idx_from).Reset();
+
+
+            if (EntityCellRiverPool.River<RiverC>(idx_to).HaveNearRiver) CellUnitWaterEs.Water<AmountC>(idx_to).Amount = 100;
         }
     }
 }

@@ -6,8 +6,6 @@
         Start = None,
 
         Protected,
-        First = Protected,
-
         Relaxed,
 
         End

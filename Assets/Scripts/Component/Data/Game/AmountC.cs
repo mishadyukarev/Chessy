@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct AmountC
+    public struct AmountC : IEnvCell, ICellUnitWaterE, ICellUnitHpE, ICellTrailE, ICellUnitStepE, ICellUnitConditionE
     {
         public int Amount;
 
@@ -17,6 +17,7 @@
         {
             Amount -= taking;
         }
+        public void Set(in AmountC amountC) => Amount = amountC.Amount;
         public void Reset() => Amount = 0;
     }
 }

@@ -18,7 +18,7 @@ namespace Game.Game
 
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
-            ref var build_0 = ref Build<BuildingC>(idx_0);
+            ref var build_0 = ref Build<BuildingTC>(idx_0);
 
 
             switch (env)
@@ -30,9 +30,9 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvTypes.YoungForest:
-                    if (stepUnit_0.Have(uniq_cur))
+                    if (CellUnitStepEs.Have(idx_0, uniq_cur))
                     {
-                        if (build_0.Have && !build_0.Is(BuildTypes.Camp))
+                        if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
                             EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }

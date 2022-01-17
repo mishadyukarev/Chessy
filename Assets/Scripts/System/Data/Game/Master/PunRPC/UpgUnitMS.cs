@@ -16,15 +16,15 @@ namespace Game.Game
 
 
             ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
-            ref var hpUnit_0 = ref Unit<HpC>(idx_0);
+            ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
 
             //var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (unitE_0.HaveMax)
+            if (CellUnitHpEs.HaveMax(idx_0))
             {
-                if (stepUnit_0.Have(unit_cur))
+                if (CellUnitStepEs.Have(idx_0, unit_cur))
                 {
                     //if (InvResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     //{

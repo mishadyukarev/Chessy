@@ -4,7 +4,18 @@ namespace Game.Game
 {
     public struct ConditionUnitC : IUnitCellE
     {
-        public ConditionUnitTypes Condition;
+        ConditionUnitTypes _condition;
+
+        public ConditionUnitTypes Condition
+        {
+            get => _condition;
+            set
+            {
+                if (value == ConditionUnitTypes.End) throw new Exception();
+                //if (value == _condition) throw new Exception();
+                _condition = value;
+            }
+        }
         public bool HaveCondition => Condition != default;
         public bool Is(params ConditionUnitTypes[] conds)
         {
@@ -15,13 +26,6 @@ namespace Game.Game
         }
 
 
-
-        public void Set(ConditionUnitTypes cond)
-        {
-            if (cond == default) throw new Exception();
-
-            Condition = cond;
-        }
         public void Set(ConditionUnitC condC)
         {
             Condition = condC.Condition;

@@ -11,7 +11,7 @@ namespace Game.Game
             var xy_0 = Cell<XyC>(CloudEnt.Cloud<IdxC>().Idx).Xy;
 
 
-            var aroundList = CellSpaceC.XyAround(xy_0);
+            var aroundList = CellSpaceC.GetXyAround(xy_0);
 
             weather_0.Have = false;
 

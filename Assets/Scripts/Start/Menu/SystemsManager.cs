@@ -1,20 +1,26 @@
 ﻿using System;
-using UnityEditor;
-using UnityEngine;
 
 namespace Game.Menu
 {
-    public sealed class SystemsManager
+    public struct SystemsManager
     {
-        public SystemsManager()
+        static Action _runUpdate;
+        static Action _launchLikeGame;
+        public SystemsManager(in bool def)
         {
             new EventSys();
 
-            new MenuSVC(new LaunchLikeGameAndShopSys().Run);
-            new DataSC((Action)new SyncSys().Run + new ConnectorMenuSys().Run);
+            _launchLikeGame 
+                = new LaunchLikeGameAndShopSys().Run;
+
+            _runUpdate =
+                (Action)new SyncSys().Run + new ConnectorMenuSys().Run;
 
 
-            MenuSVC.LaunchLikeGame.Invoke();
+            LaunchLikeGame();
         }
+
+        public static void RunUpdate() => _runUpdate.Invoke();
+        public static void LaunchLikeGame() => _launchLikeGame.Invoke();
     }
 }

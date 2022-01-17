@@ -8,9 +8,9 @@ namespace Game.Game
     {
         static Dictionary<string, Entity> _builds;
 
-        static string Key(in BuildTypes build, in PlayerTypes owner, in byte idx) => build.ToString() + owner + idx;
+        static string Key(in BuildingTypes build, in PlayerTypes owner, in byte idx) => build.ToString() + owner + idx;
 
-        public static ref C HaveBuild<C>(in BuildTypes build, in PlayerTypes owner, in byte idx) where C : struct, IWhereBuildsE => ref _builds[Key(build, owner, idx)].Get<C>();
+        public static ref C HaveBuild<C>(in BuildingTypes build, in PlayerTypes owner, in byte idx) where C : struct, IWhereBuildsE => ref _builds[Key(build, owner, idx)].Get<C>();
         public static ref C HaveBuild<C>(in string key) where C : struct, IWhereBuildsE => ref _builds[key].Get<C>();
 
 
@@ -24,7 +24,7 @@ namespace Game.Game
             }
         }
 
-        public static bool IsSetted(in BuildTypes build, in PlayerTypes owner, out byte idx)
+        public static bool IsSetted(in BuildingTypes build, in PlayerTypes owner, out byte idx)
         {
             for (idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
             {
@@ -40,7 +40,7 @@ namespace Game.Game
         {
             _builds = new Dictionary<string, Entity>();
 
-            for (var build = BuildTypes.First; build < BuildTypes.End; build++)
+            for (var build = BuildingTypes.Start + 1; build < BuildingTypes.End; build++)
             {
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {

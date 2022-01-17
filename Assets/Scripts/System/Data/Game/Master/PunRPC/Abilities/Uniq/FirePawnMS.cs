@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using System;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellFireEs;
 using static Game.Game.CellUnitEs;
 
 namespace Game.Game
@@ -20,7 +20,7 @@ namespace Game.Game
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
-            if (stepUnit_0.Have(uniq_cur))
+            if (CellUnitStepEs.Have(idx_0, uniq_cur))
             {
                 if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
                 {

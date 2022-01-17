@@ -13,7 +13,7 @@ namespace Game.Game
         const byte Y = 1;
 
 
-        public static List<byte[]> XyAround(in byte[] xy_start)
+        public static List<byte[]> GetXyAround(in byte[] xy_start)
         {
             var xyAvail = new List<byte[]>();
             var xyResult = new byte[XY_FOR_ARRAY];
@@ -33,7 +33,7 @@ namespace Game.Game
         public static List<byte> IdxAround(in byte idx_start)
         {
             var list = new List<byte>();
-            foreach (var item in XyAround(Cell<XyC>(idx_start).Xy)) list.Add(IdxCell(item));
+            foreach (var item in GetXyAround(Cell<XyC>(idx_start).Xy)) list.Add(IdxCell(item));
             return list;
         }
 

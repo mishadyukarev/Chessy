@@ -23,7 +23,7 @@ namespace Game.Game
 
             if (!Unit<CooldownC>(uniq, idx_0).HaveCooldown)
             {
-                if (stepUnit_0.Have(uniq))
+                if (CellUnitStepEs.Have(idx_0, uniq))
                 {
                     Unit<CooldownC>(uniq, idx_0).Cooldown = 3;
 
@@ -37,7 +37,7 @@ namespace Game.Game
                         Unit<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
                     }
 
-                    var around = CellSpaceC.XyAround(Cell<XyC>(idx_0).Xy);
+                    var around = CellSpaceC.GetXyAround(Cell<XyC>(idx_0).Xy);
                     foreach (var xy in around)
                     {
                         var idx_1 = IdxCell(xy);

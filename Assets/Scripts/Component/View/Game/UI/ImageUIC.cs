@@ -17,10 +17,15 @@ namespace Game.Game
             get => Image.color;
             set => Image.color = value;
         }
+        public float FillAmount
+        {
+            get => Image.fillAmount;
+            set => Image.fillAmount = value;
+        }
 
         public ImageUIC(in Image image) => Image = image;
 
         public void SetActive(in bool needActive) => Image.gameObject.SetActive(needActive);
-        public void SetActiveParent(in bool needActive) => Image.gameObject.SetActive(needActive);
+        public void SetActiveParent(in bool needActive) => Image.transform.parent.gameObject.SetActive(needActive);
     }
 }

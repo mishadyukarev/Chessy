@@ -30,7 +30,7 @@ namespace Game.Game
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (stepUnit_0.HaveMin)
+                    if (CellUnitStepEs.HaveMin(idx_0))
                     {
 
                         if (tw_0.HaveTW)
@@ -38,7 +38,7 @@ namespace Game.Game
                             EntInventorToolWeapon.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
                             UnitTW<UnitTWCellEC>(idx_0).Reset();
 
-                            stepUnit_0.TakeMin();
+                            CellUnitStepEs.TakeMin(idx_0);
 
                             EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -50,7 +50,7 @@ namespace Game.Game
 
                             UnitTW<UnitTWCellEC>(idx_0).SetNew(tWTypeForGive, levelTW);
 
-                            stepUnit_0.TakeMin();
+                            CellUnitStepEs.TakeMin(idx_0);
 
                             EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
                         }

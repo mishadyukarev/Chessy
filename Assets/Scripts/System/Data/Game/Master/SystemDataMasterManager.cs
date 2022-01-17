@@ -40,7 +40,7 @@ namespace Game.Game
             _rpcSysts.Add(RpcMasterTypes.Build, 
                 (Action)new BuildMineMS().Run
                 + new BuildFarmMS().Run
-                + new BuildCityMS().Run);
+                + new CityBuildMS().Run);
             _rpcSysts.Add(RpcMasterTypes.DestroyBuild, new DestroyMS().Run);
             _rpcSysts.Add(RpcMasterTypes.Shift, new ShiftUnitMS().Run);
             _rpcSysts.Add(RpcMasterTypes.Attack, new AttackMS().Run);
@@ -57,7 +57,7 @@ namespace Game.Game
             _rpcSysts.Add(RpcMasterTypes.GetHero, new GetHeroMS().Run);
             _rpcSysts.Add(RpcMasterTypes.FromToNewUnit, new FromToNewUnitMS().Run);
             _rpcSysts.Add(RpcMasterTypes.UpgUnits, new PickUpgUnitsMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.UpgBuilds, new PickUpgBuildsMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgCenterBuild, new PickUpgBuildsMS().Run);
             _rpcSysts.Add(RpcMasterTypes.UpgWater, new WaterUpgMS().Run);
 
 

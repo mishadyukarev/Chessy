@@ -6,13 +6,28 @@ namespace Game.Game
     {
         public void Run()
         {
-            var isActivatedZone = false/* PickUpgC.HaveUpgrade(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI)*/;
+            var curPlayer = WhoseMoveE.CurPlayerI;
+
+            var isActivatedZone = AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(curPlayer).Have
+                && !EntInventorUnits.Units<AmountC>(UnitTypes.King, LevelTypes.First, curPlayer).Have;
 
             Water<ButtonUIC>().SetActiveParent(isActivatedZone);
 
             if (isActivatedZone)
             {
-                //foreach (var item_0 in UnitAvailPickUpgC.Available_1)
+                for (var build = BuildingTypes.Farm; build <= BuildingTypes.Mine; build++)
+                {
+                    if (AvailableCenterUpgradeEs.HaveBuildUpgrade<HaveUpgradeC>(build, WhoseMoveE.CurPlayerI).Have)
+                    {
+                        Builds<ButtonUIC>(build).SetActive(true);
+                    }
+                    else
+                    {
+                        Builds<ButtonUIC>(build).SetActive(false);
+                    }
+                }
+
+                //foreach (var item_0 in AvailableUpgradeEs.Keys UnitAvailPickUpgC.Available_1)
                 //{
                 //    foreach (var item_1 in item_0.Value)
                 //    {

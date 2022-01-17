@@ -13,34 +13,34 @@ namespace Game.Game
             _build_SR = build.GetComponent<SpriteRenderer>();
         }
 
-        public void Set(BuildTypes build, bool isVisForMe, bool isVisForNext)
+        public void Set(BuildingTypes build, bool isVisForMe, bool isVisForNext)
         {
-            if (build != BuildTypes.None)
+            if (build != BuildingTypes.None)
             {
                 if (isVisForMe)
                 {
                     switch (build)
                     {
-                        case BuildTypes.None:
+                        case BuildingTypes.None:
                             throw new Exception();
 
-                        case BuildTypes.City:
+                        case BuildingTypes.City:
                             _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.City);
                             break;
 
-                        case BuildTypes.Farm:
+                        case BuildingTypes.Farm:
                             _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Farm);
                             break;
 
-                        case BuildTypes.Woodcutter:
+                        case BuildingTypes.Woodcutter:
                             _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Woodcutter);
                             break;
 
-                        case BuildTypes.Mine:
+                        case BuildingTypes.Mine:
                             _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Mine);
                             break;
 
-                        case BuildTypes.Camp:
+                        case BuildingTypes.Camp:
                             _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Camp);
                             break;
 

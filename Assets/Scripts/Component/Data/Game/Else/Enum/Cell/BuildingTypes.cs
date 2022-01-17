@@ -1,13 +1,11 @@
 ﻿namespace Game.Game
 {
-    public enum BuildTypes
+    public enum BuildingTypes
     {
         None,
         Start = None,
 
         City,
-        First = City,
-
         Farm,
         Woodcutter,
         Mine,

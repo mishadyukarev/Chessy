@@ -5,13 +5,14 @@ namespace Game.Game
 {
     public readonly struct CellTrailEs
     {
-        readonly static Dictionary<DirectTypes, Entity[]> _trails;
-        readonly static Dictionary<PlayerTypes, Entity[]> _trailVisibleEnts;
+        static Dictionary<DirectTypes, Entity[]> _trails;
+        static Dictionary<PlayerTypes, Entity[]> _trailVisibleEnts;
 
-        public static ref T Trail<T>(in byte idx, in DirectTypes dir = default) where T : struct, ITrailCell => ref _trails[dir][idx].Get<T>();
+        public static ref T Trail<T>(in byte idx, in DirectTypes dir = default) where T : struct, ICellTrailE => ref _trails[dir][idx].Get<T>();
         public static ref T Trail<T>(in PlayerTypes player, in byte idx) where T : struct, ITrailVisibledCellE => ref _trailVisibleEnts[player][idx].Get<T>();
 
-        static CellTrailEs()
+
+        public CellTrailEs(in EcsWorld gameW)
         {
             _trails = new Dictionary<DirectTypes, Entity[]>();
             _trailVisibleEnts = new Dictionary<PlayerTypes, Entity[]>();
@@ -25,9 +26,8 @@ namespace Game.Game
             {
                 _trailVisibleEnts.Add(player, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
-        }
-        public CellTrailEs(in EcsWorld gameW)
-        {
+
+
             byte idx = 0;
 
             for (idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
@@ -36,7 +36,7 @@ namespace Game.Game
                 {
                     _trails[dir][idx] = gameW.NewEntity()
                     .Add(new TrailCellEC(idx))
-                    .Add(new HpC());
+                    .Add(new AmountC());
                 }
 
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
@@ -47,4 +47,5 @@ namespace Game.Game
             }
         }
     }
+    public interface ICellTrailE { }
 }

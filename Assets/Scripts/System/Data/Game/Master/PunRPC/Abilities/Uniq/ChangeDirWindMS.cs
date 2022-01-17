@@ -1,9 +1,8 @@
-﻿using Photon.Pun;
-using static Game.Game.CellUnitEs;
+﻿using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
-    public sealed class ChangeDirWindMS : IEcsRunSystem
+    public struct ChangeDirWindMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -17,9 +16,9 @@ namespace Game.Game
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
 
 
-            if (unitE_from.HaveMax)
+            if (CellUnitHpEs.HaveMax(idx_from))
             {
-                if (stepUnit_from.Have(uniq_cur))
+                if (CellUnitStepEs.Have(idx_from, uniq_cur))
                 {
                     //if (WindC.Have(idx_to))
                     //{

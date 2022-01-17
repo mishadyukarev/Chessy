@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellEs;
 using static Game.Game.CellUnitEs;
 
 namespace Game.Game
@@ -8,11 +7,12 @@ namespace Game.Game
     {
         public void Run()
         {
-            FromToDoingMC.Get(out var idx_from, out var idx_to);
+            EntityMPool.Attack<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
             ref var unit_from = ref Unit<UnitTC>(idx_from);
+            ref var ownerUnit_from = ref Unit<PlayerTC>(idx_from);
             ref var hpUnitCell_from = ref Unit<UnitCellEC>(idx_from);
-            ref var hpUnit_from = ref Unit<HpC>(idx_from);
+            ref var hpUnit_from = ref CellUnitHpEs.Hp<AmountC>(idx_from);
             ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
             ref var condUnit_from = ref Unit<ConditionUnitC>(idx_from);
 
@@ -22,7 +22,7 @@ namespace Game.Game
             ref var unitE_to = ref Unit<UnitCellEC>(idx_to);
             ref var unit_to = ref Unit<UnitTC>(idx_to);
             ref var hpUnitCell_to = ref Unit<UnitCellEC>(idx_to);
-            ref var hpUnit_to = ref Unit<HpC>(idx_to);
+            ref var hpUnit_to = ref CellUnitHpEs.Hp<AmountC>(idx_to);
 
             ref var tw_to = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_to);
 
@@ -31,9 +31,9 @@ namespace Game.Game
             var playerSender = InfoC.Sender(MGOTypes.Master).GetPlayer();
 
 
-            if (Unit<UnitCellEC>(idx_from).CanAttack(playerSender, idx_to, out var attack))
+            if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, out var attack) && ownerUnit_from.Player == playerSender)
             {
-                stepUnit_from.Reset();
+                CellUnitStepEs.Steps<AmountC>(idx_from).Reset();
                 condUnit_from.Reset();
 
 
@@ -57,8 +57,8 @@ namespace Game.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = UnitCellEC.MAX_HP;
-                var minDamage = HpC.MIN;
+                var maxDamage = CellUnitHpEs.MAX_HP;
+                var minDamage = 0;
 
                 if (!unit_to.IsMelee) powerDam_to /= 2;
 
@@ -138,7 +138,7 @@ namespace Game.Game
                         else
                         {
 
-                            Unit<UnitCellEC>(idx_from).Shift(idx_to);
+                            CellUnitEs.Shift(idx_from, idx_to);
                         }
                     }
                 }

@@ -12,9 +12,9 @@ namespace Game.Game
 
             ref var unit_sel = ref Unit<UnitTC>(selIdx);
 
-            ref var hpUnit_sel = ref Unit<HpC>(selIdx);
-            ref var stepUnit_sel = ref Unit<StepC>(selIdx);
-            ref var waterUnit_sel = ref Unit<WaterC>(selIdx);
+            ref var hpUnit_sel = ref CellUnitHpEs.Hp<AmountC>(selIdx);
+            ref var stepUnit_sel = ref CellUnitStepEs.Steps<AmountC>(selIdx);
+            ref var waterUnit_sel = ref CellUnitWaterEs.Water<AmountC>(selIdx);
 
 
             if (unit_sel.Have)
@@ -25,22 +25,23 @@ namespace Game.Game
                 Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(true);
 
 
-                Stat<TextMPUGUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Hp.ToString();
+                Stat<TextMPUGUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Amount.ToString();
                 Stat<TextMPUGUIC>(UnitStatTypes.Damage).Text = Unit<UnitCellEC>(selIdx).DamageOnCell.ToString();
-                Stat<TextMPUGUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Steps.ToString();
-                Stat<TextMPUGUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Water.ToString();
-
-                //UIEntRightStats.FillAmount(UnitStatTypes.Hp, hpUnit_sel.Hp, UnitCellEC.MAX_HP);
+                Stat<TextMPUGUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Amount.ToString();
+                Stat<TextMPUGUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Amount.ToString();
 
 
 
-                //UIEntRightStats.FillAmount(UnitStatTypes.Damage, Unit<UnitCellEC>(selIdx).DamageOnCell,
-                //    Unit<UnitCellEC>(selIdx).DamageAttack(AttackTypes.Simple));
+
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Hp).FillAmount = hpUnit_sel.Amount / 100f;
 
 
 
-                //UIEntRightStats.FillAmount(UnitStatTypes.Steps, stepUnit_sel.Steps, Unit<UnitCellEC>(selIdx).MaxAmountSteps);
-                //UIEntRightStats.FillAmount(UnitStatTypes.Water, waterUnit_sel.Water, Unit<UnitCellEC>(selIdx).MaxWater);
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount 
+                    = (float)(Unit<UnitCellEC>(selIdx).DamageOnCell / (float)Unit<UnitCellEC>(selIdx).DamageAttack(AttackTypes.Simple));
+
+                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)CellUnitStepEs.MaxAmountSteps(selIdx);
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)CellUnitWaterEs.MaxWater;
             }
 
             else

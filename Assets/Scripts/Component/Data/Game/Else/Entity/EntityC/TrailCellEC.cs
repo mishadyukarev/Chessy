@@ -3,7 +3,7 @@ using static Game.Game.CellTrailEs;
 
 namespace Game.Game
 {
-    public struct TrailCellEC : ITrailCell
+    public struct TrailCellEC : ICellTrailE
     {
         readonly byte _idx;
 
@@ -15,7 +15,7 @@ namespace Game.Game
 
                 for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
                 {
-                    dict_0.Add(dir, Trail<HpC>(_idx, dir).Hp);
+                    dict_0.Add(dir, Trail<AmountC>(_idx, dir).Amount);
                 }
 
                 return dict_0;
@@ -46,31 +46,31 @@ namespace Game.Game
 
         public bool TrySetNewTrail(in DirectTypes dir, in bool haveAdultForest)
         {
-            if (haveAdultForest) Trail<HpC>(_idx, dir).Hp = 7;
+            if (haveAdultForest) Trail<AmountC>(_idx, dir).Amount = 7;
             return haveAdultForest;
         }
         public void SetAllTrail()
         {
             foreach (var item in Health)
             {
-                Trail<HpC>(_idx, item.Key).Hp = 7;
+                Trail<AmountC>(_idx, item.Key).Amount = 7;
             }
         }
         public void TakeHealth(in DirectTypes dir)
         {
-            Trail<HpC>(_idx, dir).Hp -= 1;
+            Trail<AmountC>(_idx, dir).Amount -= 1;
         }
         public void ResetAll()
         {
             foreach (var item in Health)
             {
-                Trail<HpC>(_idx, item.Key).Hp = 0;
+                Trail<AmountC>(_idx, item.Key).Amount = 0;
             }
         }
 
         public void SyncTrail(in DirectTypes dir, in int hp)
         {
-            Trail<HpC>(_idx, dir).Hp = hp;
+            Trail<AmountC>(_idx, dir).Amount = hp;
         }
     }
 }

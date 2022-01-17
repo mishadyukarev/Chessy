@@ -8,7 +8,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (!Button<ButtonUIC>().IsActiveParent && !Water<ButtonUIC>().IsActiveParent /*&& !WhereUnitsC.HaveMyHeroInGame*/)
+            if (!Button<ButtonUIC>().IsActiveParent && !Water<ButtonUIC>().IsActiveParent 
+                && AvailableCenterHeroEs.HaveAvailHero<HaveAvailableHeroC>(WhoseMoveE.CurPlayerI).Have)
             {
                 Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent
                     (!EntInventorUnits.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have);

@@ -12,7 +12,7 @@ namespace Game.Game
         static readonly Dictionary<UnitTypes, Entity> _create;
 
         public static ref C Taker<C>(in UnitTypes unit) where C : struct => ref _taker[unit].Get<C>();
-        public static ref C Create<C>(in UnitTypes unit) where C : struct => ref _create[unit].Get<C>();
+        public static ref C BuyUnit<C>(in UnitTypes unit) where C : struct => ref _create[unit].Get<C>();
 
         static PawnArcherDownUIE()
         {

@@ -15,22 +15,22 @@ namespace Game.Game
 
                 if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 {
-                    if (Environment<EnvCellEC>(env, idx_0).HaveMax())
+                    if (Environment<AmountC>(env, idx_0).Amount == Max(env))
                     {
-                        condUnit_0.Set(ConditionUnitTypes.Protected);
+                        condUnit_0.Condition = ConditionUnitTypes.Protected;
                     }
                     else
                     {
-                        Environment<AmountResourcesC>(env, idx_0).Resources += resume;
+                        Environment<AmountC>(env, idx_0).Amount += resume;
                     }
                 }
                 else if (!Unit<UnitCellEC>(idx_0).CanExtract(out resume, out env, out var res))
                 {
-                    if (Unit<UnitCellEC>(idx_0).HaveMax)
+                    if (CellUnitHpEs.HaveMax(idx_0))
                     {
-                        if (unit_0.Have && Unit<UnitCellEC>(idx_0).HaveMin)
+                        if (unit_0.Have && CellUnitStepEs.HaveMin(idx_0))
                         {
-                            condUnit_0.Set(ConditionUnitTypes.Protected);
+                            condUnit_0.Condition = ConditionUnitTypes.Protected;
                         }
                     }
                 }

@@ -13,9 +13,9 @@ namespace Game.Game
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
             {
-                Unit<UnitCellEC>(idx_from).TakeStepsForDoing(idx_to);
+                CellUnitStepEs.TakeStepsForDoing(idx_from, idx_to);
 
-                Unit<UnitCellEC>(idx_from).Shift(idx_to);
+                CellUnitEs.Shift(idx_from, idx_to);
 
                 EntityPool.Rpc<RpcC>().SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

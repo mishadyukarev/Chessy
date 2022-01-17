@@ -2,39 +2,39 @@
 using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellFireEs;
 
 namespace Game.Game
 {
-    struct BuildCityMS : IEcsRunSystem
+    struct CityBuildMS : IEcsRunSystem
     {
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var forBuildType = EntityMPool.Build<BuildingC>().Build;
+            var forBuildType = EntityMPool.Build<BuildingTC>().Build;
             var idx_0 = EntityMPool.Build<IdxC>().Idx;
 
 
 
-            if (forBuildType == BuildTypes.City)
+            if (forBuildType == BuildingTypes.City)
             {
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var build_0 = ref Build<BuildingC>(idx_0);
+                ref var build_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
-                //var whoseMove = WhoseMoveC.WhoseMove;
+                var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
-                if (stepUnit_0.Have(BuildTypes.City))
+                if (CellUnitStepEs.Have(idx_0, BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpaceC.XyAround(Cell<XyC>(idx_0).Xy))
+                    foreach (var xy in CellSpaceC.GetXyAround(Cell<XyC>(idx_0).Xy))
                     {
                         var curIdx = IdxCell(xy);
 
@@ -51,18 +51,18 @@ namespace Game.Game
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        //buildCell_0.SetNew(forBuildType, whoseMove);
+                        CellBuildE.SetNew(forBuildType, whoseMove, idx_0);
 
 
-                        stepUnit_0.Take(BuildTypes.City);
+                        CellUnitStepEs.Take(idx_0, BuildingTypes.City);
 
 
                         fire_0.Disable();
 
 
-                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Remove();
-                        Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Remove();
-                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
+                        Remove(EnvTypes.AdultForest, idx_0);
+                        Remove(EnvTypes.Fertilizer, idx_0);
+                        Remove(EnvTypes.YoungForest, idx_0);
                     }
 
                     else

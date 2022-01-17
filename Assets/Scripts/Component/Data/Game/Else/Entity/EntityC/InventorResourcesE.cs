@@ -40,7 +40,7 @@ namespace Game.Game
         }
 
 
-        public static bool CanCreateBuild(PlayerTypes player, BuildTypes build, out Dictionary<ResTypes, int> needRes)
+        public static bool CanCreateBuild(BuildingTypes build, PlayerTypes player,  out Dictionary<ResTypes, int> needRes)
         {
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
@@ -55,32 +55,32 @@ namespace Game.Game
 
             return canCreatBuild;
         }
-        public static void BuyBuild(in PlayerTypes player, in BuildTypes build)
+        public static void BuyBuild(in PlayerTypes player, in BuildingTypes build)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
                 Resource<AmountC>(resType, player).Amount -= _values.AmountResForBuild(build, resType);
         }
 
-        //public static bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType, out Dictionary<ResTypes, int> needRes)
-        //{
-        //    needRes = new Dictionary<ResTypes, int>();
-        //    var canCreatBuild = true;
+        public static bool CanCreateUnit(in PlayerTypes player, in UnitTypes unit, out Dictionary<ResTypes, int> needRes)
+        {
+            needRes = new Dictionary<ResTypes, int>();
+            var canCreatBuild = true;
 
-        //    for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
-        //    {
-        //        var difAmountRes = AmountRes(resType, playerType) - _values.AmountResForBuy(unitType, resType);
-        //        needRes.Add(resType, difAmountRes);
+            for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
+            {
+                var difAmountRes = Resource<AmountC>(resType, player).Amount - _values.AmountResForBuy(unit, resType);
+                needRes.Add(resType, difAmountRes);
 
-        //        if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
-        //    }
+                if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
+            }
 
-        //    return canCreatBuild;
-        //}
-        //public static void BuyCreateUnit(PlayerTypes playerType, UnitTypes unitType)
-        //{
-        //    for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
-        //        Set(resType, playerType, AmountRes(resType, playerType) - _values.AmountResForBuy(unitType, resType));
-        //}
+            return canCreatBuild;
+        }
+        public static void BuyCreateUnit(in PlayerTypes player, in UnitTypes unit)
+        {
+            for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
+                Resource<AmountC>(resType, player).Amount -= _values.AmountResForBuy(unit, resType);
+        }
 
         //public static bool CanMeltOre(PlayerTypes player, out Dictionary<ResTypes, int> needRes)
         //{

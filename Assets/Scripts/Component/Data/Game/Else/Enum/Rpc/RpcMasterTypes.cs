@@ -28,7 +28,7 @@
         BuyRes,
 
         UpgUnits,
-        UpgBuilds,
+        UpgCenterBuild,
         UpgWater,
 
         UniqAbil,

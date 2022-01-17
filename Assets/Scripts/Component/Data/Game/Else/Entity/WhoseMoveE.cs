@@ -14,9 +14,7 @@ namespace Game.Game
         public WhoseMoveE(in EcsWorld gameW)
         {
             _whoseMove = gameW.NewEntity()
-                .Add(new PlayerTC());
-
-            WhoseMove<PlayerTC>().Player = PlayerTypes.First;
+                .Add(new PlayerTC(PlayerTypes.First));
         }
 
         public static PlayerTypes CurPlayerI

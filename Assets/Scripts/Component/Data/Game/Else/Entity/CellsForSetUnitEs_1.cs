@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellsForSetUnitEs
+    public readonly struct CellsForSetUnitsEs
     {
         static Dictionary<string, Entity> _cells;
 
@@ -24,7 +24,7 @@ namespace Game.Game
             }
         }
 
-        public CellsForSetUnitEs(in EcsWorld gameW)
+        public CellsForSetUnitsEs(in EcsWorld gameW)
         {
             _cells = new Dictionary<string, Entity>();
 

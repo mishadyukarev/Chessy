@@ -42,7 +42,7 @@ namespace Game.Game
                 }
             }
 
-            UIEntRightProtect.Button<ImageUIC>().SetActive(isEnableButt);
+            UIEntRightProtect.Button<ImageUIC>().SetActiveParent(isEnableButt);
         }
     }
 }

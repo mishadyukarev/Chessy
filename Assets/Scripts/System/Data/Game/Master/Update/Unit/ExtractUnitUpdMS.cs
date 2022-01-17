@@ -16,33 +16,33 @@ namespace Game.Game
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var buil_0 = ref Build<BuildingC>(idx_0);
+                ref var buil_0 = ref Build<BuildingTC>(idx_0);
 
 
                 if (Unit<UnitCellEC>(idx_0).CanExtract(out var extract, out var env, out var res))
                 {
                     InventorResourcesE.Resource<AmountC>(res, ownUnit_0.Player).Amount += extract;
-                    Environment<AmountResourcesC>(env, idx_0).Resources -= extract;
+                    Environment<AmountC>(env, idx_0).Amount -= extract;
 
                     if (env == EnvTypes.AdultForest)
                     {
-                        if (Environment<AmountResourcesC>(env, idx_0).Have)
+                        if (Environment<AmountC>(env, idx_0).Have)
                         {
-                            if (buil_0.Is(BuildTypes.Camp) || !buil_0.Have)
+                            if (buil_0.Is(BuildingTypes.Camp) || !buil_0.Have)
                             {
-                                buildCell_0.SetNew(BuildTypes.Woodcutter, ownUnit_0.Player);
+                                CellBuildE.SetNew(BuildingTypes.Woodcutter, ownUnit_0.Player, idx_0);
                             }
 
-                            else if (!buil_0.Is(BuildTypes.Woodcutter))
+                            else if (!buil_0.Is(BuildingTypes.Woodcutter))
                             {
-                                condUnit_0.Set(ConditionUnitTypes.Protected);
+                                condUnit_0.Condition = ConditionUnitTypes.Protected;
                             }
                         }
 
                         else
                         {
-                            buildCell_0.Remove();
-                            Environment<EnvCellEC>(env, idx_0).Remove();
+                            CellBuildE.Remove(idx_0);
+                            Remove(env, idx_0);
 
                             if (UnityEngine.Random.Range(0, 100) < 50)
                             {
@@ -53,11 +53,11 @@ namespace Game.Game
                 }
                 else if (!Unit<UnitCellEC>(idx_0).CanResume(out extract, out env))
                 {
-                    if (Unit<UnitCellEC>(idx_0).HaveMax)
+                    if (CellUnitHpEs.HaveMax(idx_0))
                     {
-                        if (unit_0.Have && Unit<UnitCellEC>(idx_0).HaveMin)
+                        if (unit_0.Have && CellUnitStepEs.HaveMin(idx_0))
                         {
-                            condUnit_0.Set(ConditionUnitTypes.Protected);
+                            condUnit_0.Condition = ConditionUnitTypes.Protected;
                         }
                     }
                 }

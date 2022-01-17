@@ -17,25 +17,25 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
             ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-            ref var buildC_0 = ref Build<BuildingC>(idx_0);
+            ref var buildC_0 = ref Build<BuildingTC>(idx_0);
 
 
-            if (stepUnit_0.HaveMin)
+            if (CellUnitStepEs.HaveMin(idx_0))
             {
                 EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-                if (buildC_0.Is(BuildTypes.City))
+                if (buildC_0.Is(BuildingTypes.City))
                 {
                     EntityPool.Winner<PlayerTC>().Player = ownUnit_0.Player;
                 }
-                stepUnit_0.TakeMin();
+                CellUnitStepEs.TakeMin(idx_0);
 
-                if (buildC_0.Is(BuildTypes.Farm))
+                if (buildC_0.Is(BuildingTypes.Farm))
                 {
-                    Environment<EnvCellEC>(EnvTypes.Fertilizer, idx_0).Remove();
+                    Remove(EnvTypes.Fertilizer, idx_0);
                 }
 
-                buildCell_0.Remove();
+                CellBuildE.Remove(idx_0);
             }
             else
             {

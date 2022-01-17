@@ -59,7 +59,7 @@ namespace Game
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    Menu.DataSC.RunUpdate();
+                    SystemsManager.RunUpdate();
                     break;
 
                 case SceneTypes.Game:
@@ -76,7 +76,7 @@ namespace Game
         {
             if (CurSceneC.Is(newScene)) throw new Exception("Need other scene");
 
-            CurSceneC.Set(newScene);
+            CurSceneC.Scene = newScene;
             switch (newScene)
             {
                 case SceneTypes.None:
@@ -87,7 +87,7 @@ namespace Game
 
                     _menuW = new EcsWorld();
                     new EntitieManager(_menuW);
-                    new SystemsManager();
+                    new SystemsManager(default);
                     break;
 
                 case SceneTypes.Game:

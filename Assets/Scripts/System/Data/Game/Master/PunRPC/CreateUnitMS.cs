@@ -5,32 +5,32 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            UnitDoingMC.Get(out var unit);
+            var unit = EntityMPool.CreateUnit<UnitTC>().Unit;
 
 
-            //var playerSend = WhoseMoveC.WhoseMove;
+            var playerSend = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
-            //if (WhereBuildsC.IsSetted(BuildTypes.City, playerSend))
-            //{
-            //    if (InvResC.CanCreateUnit(playerSend, unit, out var needRes))
-            //    {
-            //        InvResC.BuyCreateUnit(playerSend, unit);
-            //        InvUnitsC.Add(unit, LevelTypes.First, playerSend);
+            if (WhereBuildsE.IsSetted(BuildingTypes.City, playerSend, out var idx_city))
+            {
+                if (InventorResourcesE.CanCreateUnit(playerSend, unit, out var needRes))
+                {
+                    InventorResourcesE.BuyCreateUnit(playerSend, unit);
+                    EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, playerSend).Add();
 
-            //        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.SoundGoldPack);
-            //    }
-            //    else
-            //    {
-            //        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
-            //        EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-            //    }
-            //}
-            //else
-            //{
-            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
-            //    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
-            //}
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                }
+                else
+                {
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
+                    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                }
+            }
+            else
+            {
+                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
+                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
+            }
         }
     }
 }

@@ -12,12 +12,12 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var build = EntityMPool.Build<BuildingC>().Build;
+            var build = EntityMPool.Build<BuildingTC>().Build;
             var idx_0 = EntityMPool.Build<IdxC>().Idx;
 
 
             ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-            ref var build_0 = ref Build<BuildingC>(idx_0);
+            ref var build_0 = ref Build<BuildingTC>(idx_0);
             ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
 
@@ -26,28 +26,28 @@ namespace Game.Game
 
             var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
-            if (build == BuildTypes.Mine)
+            if (build == BuildingTypes.Mine)
             {
-                if (stepUnitCell_0.Have(build))
+                if (CellUnitStepEs.Have(idx_0, build))
                 {
-                    if (!build_0.Have || build_0.Is(BuildTypes.Camp))
+                    if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                     {
                         if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have
-                            && Environment<AmountResourcesC>(EnvTypes.Hill, idx_0).Have)
+                            && Environment<AmountC>(EnvTypes.Hill, idx_0).Have)
                         {
-                            //if (InvResC.CanCreateBuild(whoseMove, build, out var needRes))
-                            //{
-                            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
+                            if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
+                            {
+                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
 
-                            //    InvResC.BuyBuild(whoseMove, build);
+                                InventorResourcesE.BuyBuild(whoseMove, build);
 
 
-                            //    buildCell_0.SetNew(build, whoseMove);
+                                CellBuildE.SetNew(build, whoseMove, idx_0);
 
-                            //    stepUnitCell_0.TakeForBuild();
-                            //}
+                                CellUnitStepEs.TakeForBuild(idx_0);
+                            }
 
-                            //else EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                            else EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
                         }
 
                         else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);

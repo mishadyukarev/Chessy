@@ -51,7 +51,7 @@ namespace Game.Game
                 _gameSprites.Add(SpriteTypes.WoodcutterBack, Resources.Load<Sprite>("WoodcutterBack_Sprite"));
 
                 _gameSprites.Add(SpriteTypes.Mine, Resources.Load<Sprite>("Mine_Sprite"));
-                _gameSprites.Add(SpriteTypes.MineBack, Resources.Load<Sprite>("Mine_Back"));
+                _gameSprites.Add(SpriteTypes.MineBack, Resources.Load<Sprite>("MineBack_Sprite"));
 
                 _gameSprites.Add(SpriteTypes.Camp, Resources.Load<Sprite>("Camp_Sprite"));
                 _gameSprites.Add(SpriteTypes.CampBack, Resources.Load<Sprite>("CampBack_Sprite"));

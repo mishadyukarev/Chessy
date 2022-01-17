@@ -29,11 +29,11 @@ namespace Game.Game
                         cond_0.Reset();
                     }
 
-                    else if (step_0.HaveMin)
+                    else if (CellUnitStepEs.HaveMin(idx_0))
                     {
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        step_0.TakeMin();
-                        cond_0.Set(cond);
+                        CellUnitStepEs.TakeMin(idx_0);
+                        cond_0.Condition = cond;
                     }
 
                     else
@@ -50,11 +50,11 @@ namespace Game.Game
                         cond_0.Reset();
                     }
 
-                    else if (step_0.HaveMin)
+                    else if (CellUnitStepEs.HaveMin(idx_0))
                     {
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        cond_0.Set(cond);
-                        step_0.TakeMin();
+                        cond_0.Condition = cond;
+                        CellUnitStepEs.TakeMin(idx_0);
                     }
 
                     else

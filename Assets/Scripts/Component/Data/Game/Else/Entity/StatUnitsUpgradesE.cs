@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct EntUnitUpgrades
+    public struct StatUnitsUpgradesE
     {
-        static readonly Dictionary<string, Entity> _upgrades;
+        static Dictionary<string, Entity> _upgrades;
         const string BETWEEN = "_";
 
         static string Key(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes level, in PlayerTypes player, in UpgradeTypes upg)
@@ -26,9 +26,7 @@ namespace Game.Game
             }
         }
 
-
-
-        static EntUnitUpgrades()
+        public StatUnitsUpgradesE(in EcsWorld gameW)
         {
             _upgrades = new Dictionary<string, Entity>();
 
@@ -42,27 +40,8 @@ namespace Game.Game
                         {
                             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                             {
-                                _upgrades.Add(Key(stat, unit, level, player, upg), default);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        public EntUnitUpgrades(in EcsWorld gameW)
-        {
-            for (var upg = UpgradeTypes.First; upg < UpgradeTypes.End; upg++)
-            {
-                for (var stat = UnitStatTypes.First; stat < UnitStatTypes.End; stat++)
-                {
-                    for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
-                    {
-                        for (var level = LevelTypes.First; level < LevelTypes.End; level++)
-                        {
-                            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
-                            {
-                                _upgrades[Key(stat, unit, level, player, upg)] = gameW.NewEntity()
-                                    .Add(new HaveUpgradeC());
+                                _upgrades.Add(Key(stat, unit, level, player, upg), gameW.NewEntity()
+                                    .Add(new HaveUpgradeC()));
                             }
                         }
                     }

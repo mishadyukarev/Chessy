@@ -124,7 +124,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal int AmountResForBuild(BuildTypes build, ResTypes resourceType)
+        internal int AmountResForBuild(BuildingTypes build, ResTypes resourceType)
         {
             switch (resourceType)
             {
@@ -133,51 +133,51 @@ namespace Game.Game
                 case ResTypes.Food:
                     switch (build)
                     {
-                        case BuildTypes.None: throw new Exception();
-                        case BuildTypes.City: throw new Exception();
-                        case BuildTypes.Farm: return 0;
-                        case BuildTypes.Woodcutter: throw new Exception();
-                        case BuildTypes.Mine: return 0;
+                        case BuildingTypes.None: throw new Exception();
+                        case BuildingTypes.City: throw new Exception();
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: throw new Exception();
+                        case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResTypes.Wood:
                     switch (build)
                     {
-                        case BuildTypes.None: throw new Exception();
-                        case BuildTypes.City: throw new Exception();
-                        case BuildTypes.Farm: return 50;
-                        case BuildTypes.Woodcutter: throw new Exception();
-                        case BuildTypes.Mine: return 50;
+                        case BuildingTypes.None: throw new Exception();
+                        case BuildingTypes.City: throw new Exception();
+                        case BuildingTypes.Farm: return 50;
+                        case BuildingTypes.Woodcutter: throw new Exception();
+                        case BuildingTypes.Mine: return 50;
                         default: throw new Exception();
                     }
                 case ResTypes.Ore:
                     switch (build)
                     {
-                        case BuildTypes.None: throw new Exception();
-                        case BuildTypes.City: throw new Exception();
-                        case BuildTypes.Farm: return 0;
-                        case BuildTypes.Woodcutter: throw new Exception();
-                        case BuildTypes.Mine: return 0;
+                        case BuildingTypes.None: throw new Exception();
+                        case BuildingTypes.City: throw new Exception();
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: throw new Exception();
+                        case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResTypes.Iron:
                     switch (build)
                     {
-                        case BuildTypes.None: throw new Exception();
-                        case BuildTypes.City: throw new Exception();
-                        case BuildTypes.Farm: return 0;
-                        case BuildTypes.Woodcutter: throw new Exception();
-                        case BuildTypes.Mine: return 0;
+                        case BuildingTypes.None: throw new Exception();
+                        case BuildingTypes.City: throw new Exception();
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: throw new Exception();
+                        case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResTypes.Gold:
                     switch (build)
                     {
-                        case BuildTypes.None: throw new Exception();
-                        case BuildTypes.City: throw new Exception();
-                        case BuildTypes.Farm: return 0;
-                        case BuildTypes.Woodcutter: throw new Exception();
-                        case BuildTypes.Mine: return 0;
+                        case BuildingTypes.None: throw new Exception();
+                        case BuildingTypes.City: throw new Exception();
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: throw new Exception();
+                        case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 default: throw new Exception();

@@ -40,7 +40,7 @@ namespace Game.Game
                                 {
                                     if (SelIdx<SelIdxEC>().IsSelCell)
                                     {
-                                        if (Unit<UnitCellEC>(SelIdx<IdxC>().Idx).CanAttack(WhoseMoveE.CurPlayerI, CurIdx<IdxC>().Idx, out var attack))
+                                        if (CellsForAttackUnitsEs.CanAttack(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx, out var attack))
                                         {
                                             Rpc<RpcC>().AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
@@ -62,11 +62,11 @@ namespace Game.Game
                                                     }
                                                     else if (unit_cur.IsMelee)
                                                     {
-                                                        //NeedSoundEffC.Clip = ClipTypes.PickMelee;
+                                                        EntitySound.Sound<ActionC>(ClipTypes.PickMelee).Invoke();
                                                     }
                                                     else
                                                     {
-                                                        //NeedSoundEffC.Clip = ClipTypes.PickArcher;
+                                                        EntitySound.Sound<ActionC>(ClipTypes.PickArcher).Invoke();
                                                     }
                                                 }
                                             }
@@ -87,11 +87,11 @@ namespace Game.Game
                                                 }
                                                 else if (unit_cur.IsMelee)
                                                 {
-                                                    //NeedSoundEffC.Clip = ClipTypes.PickMelee;
+                                                    EntitySound.Sound<ActionC>(ClipTypes.PickMelee).Invoke();
                                                 }
                                                 else
                                                 {
-                                                    //NeedSoundEffC.Clip = ClipTypes.PickArcher;
+                                                    EntitySound.Sound<ActionC>(ClipTypes.PickArcher).Invoke();
                                                 }
                                             }
                                         }
@@ -160,10 +160,10 @@ namespace Game.Game
                                             EntityPool.Rpc<RpcC>().FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                             cellClick.Click = CellClickTypes.SimpleClick;
 
-                                            //NeedSoundEffC.Clip = ClipTypes.PickArcher;
+                                            EntitySound.Sound<ActionC>(ClipTypes.PickArcher).Invoke();
                                         }
 
-                                        //NeedSoundEffC.Clip = ClipTypes.ClickToTable;
+                                        EntitySound.Sound<ActionC>(ClipTypes.ClickToTable).Invoke();
                                     }
                                     else
                                     {
@@ -232,8 +232,6 @@ namespace Game.Game
                         }
                     }
                 }
-
-                //NeedSoundEffC.Clip = default;
             }
         }
     }

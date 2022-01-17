@@ -9,96 +9,98 @@ namespace Game.Game
 
         public void Run()
         {
-            if (EntMistakeC.Mistake<MistakeC>().Mistake == MistakeTypes.None)
-            {
-                ResetAll();
-            }
-            else
-            {
-                EntMistakeC.Mistake<TimerC>().Timer += Time.deltaTime;
+            ResetAll();
 
-                if (EntMistakeC.Mistake<MistakeC>().Mistake == MistakeTypes.Economy)
-                {
-                    if (EntMistakeC.Mistake<TimerC>().Timer >= _neededTimeForFading)
-                    {
-                        EntMistakeC.Mistake<TimerC>().Timer = 0;
-                        //EntMistakeC.ResetMistakeType();
-                        //EntMistakeC.ClearAllNeeds();
+            //if (EntMistakeC.Mistake<MistakeC>().Mistake == MistakeTypes.None)
+            //{
+            //    ResetAll();
+            //}
+            //else
+            //{
+            //    EntMistakeC.Mistake<TimerC>().Timer += Time.deltaTime;
 
-                        for (var res = ResTypes.First; res < ResTypes.End; res++)
-                        {
-                            Economy<TextMPUGUIC>(res).Color = Color.white;
-                        }
-                    }
+            //    if (EntMistakeC.Mistake<MistakeC>().Mistake == MistakeTypes.Economy)
+            //    {
+            //        if (EntMistakeC.Mistake<TimerC>().Timer >= _neededTimeForFading)
+            //        {
+            //            EntMistakeC.Mistake<TimerC>().Timer = 0;
+            //            //EntMistakeC.ResetMistakeType();
+            //            //EntMistakeC.ClearAllNeeds();
 
-                    else
-                    {
-                        for (var res = ResTypes.First; res < ResTypes.End; res++)
-                        {
-                            //if (EntMistakeC.NeedRes(res))
-                            //{
-                            //    Economy<EconomyUpUIC>(res).Color = Color.red;
-                            //    MistakeUIC.SetActiveRes(res, true);
-                            //    MistakeUIC.SetText(res, ">= " + (-EntMistakeC.NeedResAmount(res)).ToString());
-                            //}
-                            //else
-                            //{
-                            //    Economy<EconomyUpUIC>(res).Color = Color.white;
-                            //    MistakeUIC.SetActiveRes(res, false);
-                            //}
-                        }
-                    }
-                }
+            //            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            //            {
+            //                Economy<TextMPUGUIC>(res).Color = Color.white;
+            //            }
+            //        }
 
-                else
-                {
-                    ResetAll();
+            //        else
+            //        {
+            //            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            //            {
+            //                //if (EntMistakeC.NeedRes(res))
+            //                //{
+            //                //    Economy<EconomyUpUIC>(res).Color = Color.red;
+            //                //    MistakeUIC.SetActiveRes(res, true);
+            //                //    MistakeUIC.SetText(res, ">= " + (-EntMistakeC.NeedResAmount(res)).ToString());
+            //                //}
+            //                //else
+            //                //{
+            //                //    Economy<EconomyUpUIC>(res).Color = Color.white;
+            //                //    MistakeUIC.SetActiveRes(res, false);
+            //                //}
+            //            }
+            //        }
+            //    }
 
-                    MistakeUIC.ActiveBackgroud(true);
+            //    else
+            //    {
+            //        ResetAll();
 
-                    //if (EntMistakeC.CurTime >= _neededTimeForFading)
-                    //{
-                    //    EntMistakeC.CurTime = 0;
-                    //    EntMistakeC.ResetMistakeType();
-                    //}
+            //        MistakeUIC.ActiveBackgroud(true);
 
-                    //switch (EntMistakeC.MistakeType)
-                    //{
-                    //    case MistakeTypes.None:
-                    //        break;
+            //        //if (EntMistakeC.CurTime >= _neededTimeForFading)
+            //        //{
+            //        //    EntMistakeC.CurTime = 0;
+            //        //    EntMistakeC.ResetMistakeType();
+            //        //}
 
-                    //    case MistakeTypes.Economy:
-                    //        throw new Exception();
+            //        //switch (EntMistakeC.MistakeType)
+            //        //{
+            //        //    case MistakeTypes.None:
+            //        //        break;
 
-                    //    case MistakeTypes.NeedMoreSteps:
-                    //        MistakeUIC.ActiveNeedSteps(true);
-                    //        break;
+            //        //    case MistakeTypes.Economy:
+            //        //        throw new Exception();
 
-                    //    case MistakeTypes.NeedOtherPlace:
-                    //        MistakeUIC.ActiveNeedOtherPlace(true);
-                    //        break;
+            //        //    case MistakeTypes.NeedMoreSteps:
+            //        //        MistakeUIC.ActiveNeedSteps(true);
+            //        //        break;
 
-                    //    case MistakeTypes.NeedMoreHp:
-                    //        MistakeUIC.ActiveNeedMoreHealth(true);
-                    //        break;
+            //        //    case MistakeTypes.NeedOtherPlace:
+            //        //        MistakeUIC.ActiveNeedOtherPlace(true);
+            //        //        break;
 
-                    //    case MistakeTypes.NeedCity:
-                    //        MistakeUIC.ActiveNeedCity(true);
-                    //        break;
+            //        //    case MistakeTypes.NeedMoreHp:
+            //        //        MistakeUIC.ActiveNeedMoreHealth(true);
+            //        //        break;
 
-                    //    case MistakeTypes.ThatIsForOtherUnit:
-                    //        MistakeUIC.ActiveThatsForOtherUnit(true);
-                    //        break;
+            //        //    case MistakeTypes.NeedCity:
+            //        //        MistakeUIC.ActiveNeedCity(true);
+            //        //        break;
 
-                    //    case MistakeTypes.NearBorder:
-                    //        MistakeUIC.ActiveNearBorderZone(true);
-                    //        break;
+            //        //    case MistakeTypes.ThatIsForOtherUnit:
+            //        //        MistakeUIC.ActiveThatsForOtherUnit(true);
+            //        //        break;
 
-                    //    default:
-                    //        throw new Exception();
-                    //}
-                }
-            }
+            //        //    case MistakeTypes.NearBorder:
+            //        //        MistakeUIC.ActiveNearBorderZone(true);
+            //        //        break;
+
+            //        //    default:
+            //        //        throw new Exception();
+            //        //}
+            //    }
+            //}
         }
 
         void ResetAll()

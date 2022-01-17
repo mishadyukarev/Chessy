@@ -1,15 +1,15 @@
-﻿using System;
+﻿//using System;
 
-namespace Game.Menu
-{
-    public struct MenuSVC
-    {
-        public static Action LaunchLikeGame { get; private set; }
+//namespace Game.Menu
+//{
+//    public struct MenuSVC
+//    {
 
-        public MenuSVC(Action launchLikeGame)
-        {
-            LaunchLikeGame = launchLikeGame;
-        }
-    }
-}
+
+//        public MenuSVC(Action launchLikeGame)
+//        {
+//            LaunchLikeGame = launchLikeGame;
+//        }
+//    }
+//}
 

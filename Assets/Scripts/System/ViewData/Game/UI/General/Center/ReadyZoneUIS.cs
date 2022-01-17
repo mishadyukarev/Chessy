@@ -5,7 +5,7 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    struct ReadyZoneUISystem : IEcsRunSystem
+    struct ReadyZoneUIS : IEcsRunSystem
     {
         public void Run()
         {

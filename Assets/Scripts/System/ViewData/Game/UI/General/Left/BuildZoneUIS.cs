@@ -8,11 +8,11 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Build<BuildingC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Build<BuildingTC>(SelIdx<IdxC>().Idx);
             ref var own_sel = ref Build<PlayerTC>(SelIdx<IdxC>().Idx);
 
 
-            if (SelIdx<SelIdxEC>().IsSelCell && unit_sel.Is(BuildTypes.City))
+            if (SelIdx<SelIdxEC>().IsSelCell && unit_sel.Is(BuildingTypes.City))
             {
                 if (own_sel.Is(WhoseMoveE.CurPlayerI))
                 {

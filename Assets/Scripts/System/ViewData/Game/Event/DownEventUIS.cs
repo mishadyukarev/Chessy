@@ -15,11 +15,10 @@ namespace Game.Game
 
             UIEntDownDoner.Doner<ButtonUIC>().AddListener(Done);
 
-            PawnArcherDownUIE.Create<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { CreateUnit(UnitTypes.Pawn); });
-            PawnArcherDownUIE.Create<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { CreateUnit(UnitTypes.Archer); });
+            PawnArcherDownUIE.BuyUnit<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
+            PawnArcherDownUIE.BuyUnit<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { BuyUnit(UnitTypes.Archer); });
 
 
-            Button<ButtonUIC>().AddListener(delegate { GetUnit(UnitTypes.King); });
             PawnArcherDownUIE.Taker<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { GetUnit(UnitTypes.Pawn); });
             PawnArcherDownUIE.Taker<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { GetUnit(UnitTypes.Archer); });
 
@@ -84,13 +83,13 @@ namespace Game.Game
             }
         }
 
-        void CreateUnit(UnitTypes unitType)
+        void BuyUnit(in UnitTypes unit)
         {
             if (WhoseMoveE.IsMyMove)
             {
-                GetterUnitsE.GetterUnit<TimerC>(unitType).Reset();
+                GetterUnitsE.GetterUnit<TimerC>(unit).Reset();
 
-                EntityPool.Rpc<RpcC>().CreateUnitToMaster(unitType);
+                EntityPool.Rpc<RpcC>().CreateUnitToMaster(unit);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }

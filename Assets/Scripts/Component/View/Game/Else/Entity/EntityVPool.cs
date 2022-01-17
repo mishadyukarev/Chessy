@@ -9,9 +9,9 @@ namespace Game.Game
 {
     public readonly struct EntityVPool
     {
-        static readonly Dictionary<string, Entity> _ents;
-        static readonly Dictionary<ClipTypes, Entity> _sounds0;
-        static readonly Dictionary<UniqueAbilityTypes, Entity> _sounds1;
+        static Dictionary<string, Entity> _ents;
+        static Dictionary<ClipTypes, Entity> _sounds0;
+        static Dictionary<UniqueAbilityTypes, Entity> _sounds1;
 
         public static ref C Background<C>() where C : struct, IBackgroundE => ref _ents[nameof(IBackgroundE)].Get<C>();
         public static ref C GeneralZone<C>() where C : struct => ref _ents[nameof(IGeneralZoneE)].Get<C>();
@@ -29,14 +29,13 @@ namespace Game.Game
         }
 
 
-        static EntityVPool()
+        public EntityVPool(in EcsWorld gameW, out List<object> actions, out Dictionary<ClipTypes, System.Action> action0, out Dictionary<UniqueAbilityTypes, System.Action> action1)
         {
             _ents = new Dictionary<string, Entity>();
             _sounds0 = new Dictionary<ClipTypes, Entity>();
             _sounds1 = new Dictionary<UniqueAbilityTypes, Entity>();
-        }
-        public EntityVPool(in EcsWorld gameW, out List<object> actions, out Dictionary<ClipTypes, System.Action> action0, out Dictionary<UniqueAbilityTypes, System.Action> action1)
-        {
+
+
             ToggleZoneVC.ReplaceZone(SceneTypes.Game);
 
             var genZone = new GameObject("GeneralZone");

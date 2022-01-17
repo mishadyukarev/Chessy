@@ -24,9 +24,11 @@ namespace Game.Game
             _actions.Add(DataSTypes.RunAfterSyncRPC,
                 (Action)new VisibElseS().Run
                 + new AbilSyncS().Run
-                + new GetAttackPawnCellsS().Run
+                + new GetAttackPawnKingCellsS().Run
+                + new GetAttackKingCellsS().Run
                 + new GetCellsForSetUnitS().Run
-                + new GetCellsForShiftUnitS().Run);
+                + new GetCellsForShiftUnitS().Run
+                + new GetCellsForArsonArcherS().Run);
         }
 
 

@@ -61,7 +61,7 @@ namespace Game.Game
     public interface IUnitPlayerCellE { }
     public interface IUnitUniqueCellE { }
     public interface IUnitStatCellE { }
-    public interface IUnitConditionCellE { }
+    public interface ICellUnitConditionE { }
     public interface IUnitUniqueButtonCellE { }
     public interface IBuildPlayerCellE { }
     public interface ITrailVisibledCellE { }

@@ -16,9 +16,9 @@ namespace Game.Game
             ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
 
 
-            if (unitE_0.HaveMax)
+            if (CellUnitHpEs.HaveMax(idx_0))
             {
-                if (stepUnit_0.Have(uniq))
+                if (CellUnitStepEs.Have(idx_0, uniq))
                 {
                     corner_0.ChangeCorner();
 

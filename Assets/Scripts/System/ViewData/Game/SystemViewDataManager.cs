@@ -27,7 +27,7 @@ namespace Game.Game
             _actions.Add(ViewDataSTypes.RunFixedUpdate,
                 (Action)new SyncCellUnitVS().Run
                 + new UnitStatCellSyncS().Run
-                + new BuildCellSyncVS().Run
+                + new BuildCellVS().Run
                 + new EnvCellVS().Run
                 + new FireCellVS().Run
                 + new CloudCellVS().Run
@@ -48,10 +48,10 @@ namespace Game.Game
                 + new StatsUIS().Run
                 + new ProtectUIS().Run
                 + new RelaxUIS().Run
-                + new UniqButSyncUISys().Run
+                + new UniqButSyncUIS().Run
                 + new FirstButtonBuildUIS().Run
                 + new SecButtonBuildUISys().Run
-                + new ThirdButtonBuildUIS().Run
+                + new ThirdBuildButtonUIS().Run
                 + new ShieldUIS().Run
                 + new EffectsUISys().Run
 
@@ -68,9 +68,9 @@ namespace Game.Game
 
                 ///Center
                 + new SelectorUIS().Run
-                + new TheEndGameUISystem().Run
+                + new TheEndGameUIS().Run
                 + new MotionCenterUIS().Run
-                + new ReadyZoneUISystem().Run
+                + new ReadyZoneUIS().Run
                 + new MistakeUIS().Run
                 + new KingZoneUISys().Run
                 + new FriendZoneUISys().Run

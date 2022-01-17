@@ -1,16 +1,16 @@
-﻿using System;
+﻿//using System;
 
-namespace Game.Menu
-{
-    public struct DataSC
-    {
-        private static Action _runUpdate;
+//namespace Game.Menu
+//{
+//    public struct DataSC
+//    {
+ 
 
-        public DataSC(Action runUpdate)
-        {
-            _runUpdate = runUpdate;
-        }
+//        public DataSC(Action runUpdate)
+//        {
+//            _runUpdate = runUpdate;
+//        }
 
-        public static void RunUpdate() => _runUpdate.Invoke();
-    }
-}
+
+//    }
+//}

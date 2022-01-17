@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public sealed class PickUpgMasSys : IEcsRunSystem
+    public struct PickUpgMS : IEcsRunSystem
     {
         public void Run()
         {

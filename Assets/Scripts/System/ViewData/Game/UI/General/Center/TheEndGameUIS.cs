@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    struct TheEndGameUISystem : IEcsRunSystem
+    struct TheEndGameUIS : IEcsRunSystem
     {
         public void Run()
         {

@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityCellFirePool;
+﻿using static Game.Game.CellFireEs;
 using static Game.Game.CellUnitEs;
 
 namespace Game.Game
@@ -14,13 +14,12 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (stepUnit_0.HaveMin)
+            if (CellUnitStepEs.HaveMin(idx_0))
             {
                 fire_0.Disable();
 
-                stepUnit_0.TakeMin();
+                CellUnitStepEs.TakeMin(idx_0);
             }
 
             else

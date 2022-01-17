@@ -16,9 +16,9 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitTC>(idx_0);
                 ref var level_0 = ref Unit<LevelTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var hpUnit_0 = ref Unit<HpC>(idx_0);
-                ref var step_0 = ref Unit<StepC>(idx_0);
-                ref var water_0 = ref Unit<StepC>(idx_0);
+                ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
+                ref var step_0 = ref CellUnitStepEs.Steps<AmountC>(idx_0);
+                ref var water_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
 
@@ -37,13 +37,11 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
 
-                        float maxHpUnit_0 = UnitCellEC.MAX_HP;
-
-                        float xCordinate = (float)hpUnit_0.Hp / maxHpUnit_0;
+                        float xCordinate = (float)hpUnit_0.Amount / CellUnitHpEs.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Unit<UnitCellEC>(idx_0).NeedWater);
-                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(Unit<UnitCellEC>(idx_0).HaveMaxSteps);
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(CellUnitWaterEs.NeedWater(idx_0));
+                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(CellUnitStepEs.HaveMaxSteps(idx_0));
 
                         
 

@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityCellFirePool;
+﻿using static Game.Game.CellFireEs;
 
 namespace Game.Game
 {

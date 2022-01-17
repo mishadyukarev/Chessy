@@ -9,16 +9,16 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var build_sel = ref Build<BuildingC>(SelIdx<IdxC>().Idx);
+            ref var build_sel = ref Build<BuildingTC>(SelIdx<IdxC>().Idx);
 
 
-            if (SelIdx<SelIdxEC>().IsSelCell && !build_sel.Is(BuildTypes.City))
+            if (SelIdx<SelIdxEC>().IsSelCell && !build_sel.Is(BuildingTypes.City))
             {
                 Info<ButtonUIC>().SetActiveParent(true);
 
-                Resources<TextMPUGUIC>(ResTypes.Food).Text = Environment<AmountResourcesC>(EnvTypes.Fertilizer, SelIdx<IdxC>().Idx).Resources.ToString();
-                Resources<TextMPUGUIC>(ResTypes.Wood).Text = Environment<AmountResourcesC>(EnvTypes.AdultForest, SelIdx<IdxC>().Idx).Resources.ToString();
-                Resources<TextMPUGUIC>(ResTypes.Ore).Text = Environment<AmountResourcesC>(EnvTypes.Hill, SelIdx<IdxC>().Idx).Resources.ToString();
+                Resources<TextMPUGUIC>(ResTypes.Food).Text = Environment<AmountC>(EnvTypes.Fertilizer, SelIdx<IdxC>().Idx).Amount.ToString();
+                Resources<TextMPUGUIC>(ResTypes.Wood).Text = Environment<AmountC>(EnvTypes.AdultForest, SelIdx<IdxC>().Idx).Amount.ToString();
+                Resources<TextMPUGUIC>(ResTypes.Ore).Text = Environment<AmountC>(EnvTypes.Hill, SelIdx<IdxC>().Idx).Amount.ToString();
             }
             else
             {

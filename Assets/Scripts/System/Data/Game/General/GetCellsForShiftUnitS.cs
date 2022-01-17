@@ -1,7 +1,5 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellUnitEs;
-using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
 {
@@ -20,7 +18,7 @@ namespace Game.Game
 
                         ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
 
-                        if (!Unit<NeedStepsForExitStunC>(idx_from).IsStunned && Unit<UnitTC>(idx_from).Have 
+                        if (!Unit<NeedStepsForExitStunC>(idx_from).IsStunned && Unit<UnitTC>(idx_from).Have
                             && Unit<PlayerTC>(idx_from).Is(player))
                         {
                             CellSpaceC.TryGetIdxAround(idx_from, out var directs);
@@ -31,8 +29,8 @@ namespace Game.Game
 
                                 if (idx_to == item_1.Value && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_to).Have && !Unit<UnitTC>(idx_to).Have)
                                 {
-                                    var one = stepUnit_from.HaveStepsForDoing(idx_to);
-                                    var two = stepUnit_from.HaveMaxSteps;
+                                    var one = CellUnitStepEs.HaveStepsForDoing(idx_from, idx_to);
+                                    var two = CellUnitStepEs.HaveMaxSteps(idx_from);
 
                                     if (one || two)
                                     {
@@ -42,7 +40,7 @@ namespace Game.Game
                             }
                         }
                     }
-                } 
+                }
             }
         }
     }

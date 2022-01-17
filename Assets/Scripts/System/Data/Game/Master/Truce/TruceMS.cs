@@ -5,7 +5,7 @@ using static Game.Game.CellUnitEs;
 using static Game.Game.CellTrailEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellFireEs;
 using static Game.Game.CellUnitTWE;
 
 namespace Game.Game
@@ -26,7 +26,7 @@ namespace Game.Game
                 ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var build_0 = ref Build<BuildingC>(idx_0);
+                ref var build_0 = ref Build<BuildingTC>(idx_0);
 
                 ref var curFireCom = ref Fire<HaveEffectC>(idx_0);
                 ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
@@ -68,9 +68,9 @@ namespace Game.Game
 
                 if (build_0.Have)
                 {
-                    if (build_0.Is(BuildTypes.Camp))
+                    if (build_0.Is(BuildingTypes.Camp))
                     {
-                        buildCell_0.Remove();
+                        CellBuildE.Remove(idx_0);
                     }
                 }
 
@@ -78,7 +78,7 @@ namespace Game.Game
                 {
                     if (Environment<HaveEnvironmentC>(EnvTypes.YoungForest, idx_0).Have)
                     {
-                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
+                        Remove(EnvTypes.YoungForest, idx_0);
 
                         SetNew(EnvTypes.AdultForest, idx_0);
                     }

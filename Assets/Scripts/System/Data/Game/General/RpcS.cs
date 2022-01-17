@@ -6,7 +6,7 @@ using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.EntityCellCloudPool;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellFireEs;
 using static Game.Game.CellEs;
 using static Game.Game.EntityCellRiverPool;
 using static Game.Game.CellTrailEs;
@@ -71,7 +71,8 @@ namespace Game.Game
                         break;
 
                     case UniqueAbilityTypes.FireArcher:
-                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntityMPool.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
+                        EntityMPool.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
                         break;
 
                     case UniqueAbilityTypes.GrowAdultForest:
@@ -112,7 +113,7 @@ namespace Game.Game
 
                     case RpcMasterTypes.Build:
                         EntityMPool.Build<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntityMPool.Build<BuildingC>().Build = (BuildTypes)objects[_idx_cur++];
+                        EntityMPool.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.DestroyBuild:
@@ -124,7 +125,8 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Attack:
-                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntityMPool.Attack<IdxFromToC>().From = (byte)objects[_idx_cur++];
+                        EntityMPool.Attack<IdxFromToC>().To = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
@@ -133,7 +135,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.CreateUnit:
-                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
+                        EntityMPool.CreateUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.MeltOre:
@@ -168,15 +170,15 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
+                        EntityMPool.GetHero<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgUnits:
                         UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
                         break;
 
-                    case RpcMasterTypes.UpgBuilds:
-                        //BuildDoingMC.Set((BuildTypes)objects[_idx_cur++]);
+                    case RpcMasterTypes.UpgCenterBuild:
+                        EntityMPool.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgWater:
@@ -264,9 +266,9 @@ namespace Game.Game
                 objs.Add(Unit<LevelTC>(idx_0).Level);
                 objs.Add(Unit<PlayerTC>(idx_0).Player);
 
-                objs.Add(Unit<HpC>(idx_0).Hp);
-                objs.Add(Unit<StepC>(idx_0).Steps);
-                objs.Add(Unit<WaterC>(idx_0).Water);
+                objs.Add(CellUnitHpEs.Hp<AmountC>(idx_0).Amount);
+                objs.Add(CellUnitStepEs.Steps<AmountC>(idx_0).Amount);
+                objs.Add(CellUnitWaterEs.Water<AmountC>(idx_0).Amount);
 
                 objs.Add(Unit<ConditionUnitC>(idx_0).Condition);
                 foreach (var item in KeysStat) objs.Add(Unit<HaveEffectC>(item, idx_0).Have);
@@ -286,7 +288,7 @@ namespace Game.Game
 
 
 
-                objs.Add(Build<BuildingC>(idx_0).Build);
+                objs.Add(Build<BuildingTC>(idx_0).Build);
                 objs.Add(Build<PlayerTC>(idx_0).Player);
 
 
@@ -294,7 +296,7 @@ namespace Game.Game
                 foreach (var env in Enviroments)
                 {
                     objs.Add(Environment<HaveEnvironmentC>(env, idx_0));
-                    objs.Add(Environment<AmountResourcesC>(env, idx_0));
+                    objs.Add(Environment<AmountC>(env, idx_0));
                 }
 
 
@@ -325,8 +327,8 @@ namespace Game.Game
 
 
 
-            foreach (var key in EntUnitUpgrades.Keys) objs.Add(EntUnitUpgrades.Upgrade<HaveUpgradeC>(key).Have);
-            foreach (var key in BuildingUpgradesEnt.Keys) objs.Add(BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have);
+            foreach (var key in StatUnitsUpgradesE.Keys) objs.Add(StatUnitsUpgradesE.Upgrade<HaveUpgradeC>(key).Have);
+            //foreach (var key in BuildingUpgradesEnt.Keys) objs.Add(BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have);
 
 
             foreach (var key in InventorResourcesE.Keys) objs.Add(InventorResourcesE.Resource<AmountC>(key).Amount);
@@ -394,15 +396,14 @@ namespace Game.Game
 
 
 
-
-
-                Build<BuildCellEC>(idx_0).Sync((BuildTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
+                Build<BuildingTC>(idx_0).Build = (BuildingTypes)objects[_idx_cur++];
+                Build<PlayerTC>(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
 
 
                 foreach (var item_0 in Enviroments)
                 {
                     Environment<HaveEnvironmentC>(item_0, idx_0).Have = (bool)objects[_idx_cur++];
-                    Environment<AmountResourcesC>(item_0, idx_0).Resources = (int)objects[_idx_cur++];
+                    Environment<AmountC>(item_0, idx_0).Amount = (int)objects[_idx_cur++];
                 }
 
                 ref var river_0 = ref River<RiverC>(idx_0);
@@ -430,8 +431,8 @@ namespace Game.Game
 
 
 
-            foreach (var key in EntUnitUpgrades.Keys) EntUnitUpgrades.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
-            foreach (var key in BuildingUpgradesEnt.Keys) BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
+            foreach (var key in StatUnitsUpgradesE.Keys) StatUnitsUpgradesE.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
+            //foreach (var key in BuildingUpgradesEnt.Keys) BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
 
 
             foreach (var key in InventorResourcesE.Keys) InventorResourcesE.Resource<AmountC>(key).Amount = (int)objects[_idx_cur++];

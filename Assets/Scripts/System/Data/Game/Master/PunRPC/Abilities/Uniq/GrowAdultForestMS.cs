@@ -20,11 +20,11 @@ namespace Game.Game
 
             if (!Unit<CooldownC>(uniq_cur, idx_0).HaveCooldown)
             {
-                if (stepUnit_0.Have(uniq_cur))
+                if (CellUnitStepEs.Have(idx_0, uniq_cur))
                 {
                     if (Environment<HaveEnvironmentC>(EnvTypes.YoungForest, idx_0).Have)
                     {
-                        Environment<EnvCellEC>(EnvTypes.YoungForest, idx_0).Remove();
+                        Remove(EnvTypes.YoungForest, idx_0);
 
                         SetNew(EnvTypes.AdultForest, idx_0);
 
@@ -38,7 +38,7 @@ namespace Game.Game
                         {
                             Unit<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have = true;
                         }
-                        var around = CellSpaceC.XyAround(Cell<XyC>(idx_0).Xy);
+                        var around = CellSpaceC.GetXyAround(Cell<XyC>(idx_0).Xy);
                         foreach (var xy_1 in around)
                         {
                             var idx_1 = IdxCell(xy_1);

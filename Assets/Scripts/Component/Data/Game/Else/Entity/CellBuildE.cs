@@ -1,4 +1,5 @@
 ﻿using ECS;
+using System;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -29,7 +30,7 @@ namespace Game.Game
             {
                 _builds[idx] = gameW.NewEntity()
                     .Add(new BuildCellEC(idx))
-                    .Add(new BuildingC())
+                    .Add(new BuildingTC())
                     .Add(new PlayerTC());
 
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
@@ -37,6 +38,28 @@ namespace Game.Game
                     _buildEnts[player][idx] = gameW.NewEntity()
                         .Add(new IsVisibledC());
                 }
+            }
+        }
+
+        public static void SetNew(in BuildingTypes build, in PlayerTypes owner, in byte idx)
+        {
+            if (build == default) throw new Exception("BuildType is None");
+            if (Build<BuildingTC>(idx).Is(build)) throw new Exception("It's got yet");
+            if (Build<BuildingTC>(idx).Have) Remove(idx);
+
+            Build<BuildingTC>(idx).Build = build;
+            Build<PlayerTC>(idx).Player = owner;
+            WhereBuildsE.HaveBuild<HaveBuildingC>(build, owner, idx).Have = true;
+        }
+
+        public static void Remove(in byte idx)
+        {
+            if (Build<BuildingTC>(idx).Have)
+            {
+                WhereBuildsE.HaveBuild<HaveBuildingC>(Build<BuildingTC>(idx).Build, Build<PlayerTC>(idx).Player, idx).Have = false;
+
+                Build<BuildingTC>(idx).Reset();
+                Build<PlayerTC>(idx).Reset();
             }
         }
     }

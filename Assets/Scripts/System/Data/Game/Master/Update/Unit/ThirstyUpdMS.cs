@@ -14,13 +14,13 @@ namespace Game.Game
             {
                 ref var unit_0 = ref Unit<UnitTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var hp_0 = ref Unit<HpC>(idx_0);
-                ref var water_0 = ref Unit<WaterC>(idx_0);
+                ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
+                ref var water_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
 
                 ref var riverC_0 = ref River<RiverC>(idx_0);
 
                 ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
-                ref var build_0 = ref Build<BuildingC>(idx_0);
+                ref var build_0 = ref Build<BuildingTC>(idx_0);
 
 
                 if (unit_0.Have)
@@ -37,20 +37,20 @@ namespace Game.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            Unit<UnitCellEC>(idx_0).SetMaxWater();
+                            CellUnitWaterEs.SetMaxWater(idx_0);
                         }
                         else
                         {
-                            Unit<UnitCellEC>(idx_0).TakeWater();
+                            CellUnitWaterEs.TakeWater(idx_0);
                             if (!water_0.Have)
                             {
-                                Unit<UnitCellEC>(idx_0).ExecuteThirsty();
+                                CellUnitWaterEs.ExecuteThirsty(idx_0);
 
                                 if (!hp_0.Have)
                                 {
-                                    if (build_0.Is(BuildTypes.Camp))
+                                    if (build_0.Is(BuildingTypes.Camp))
                                     {
-                                        buildCell_0.Remove();
+                                        CellBuildE.Remove(idx_0);
                                     }
 
                                     Unit<UnitCellEC>(idx_0).Kill();

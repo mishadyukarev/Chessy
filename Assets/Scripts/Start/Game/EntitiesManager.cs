@@ -134,12 +134,10 @@ namespace Game.Game
 
             new EntitySound(gameW, sounds0, sounds1);
             new EntityPool(gameW, EntityVPool.Background<GameObjectVC>().Name, actions, namesMethods);
-            new EntityMPool(gameW);
 
             new SelectedUnitE(gameW);
 
-            new BuildingUpgradesEnt(gameW);
-            new EntUnitUpgrades(gameW);
+            new StatUnitsUpgradesE(gameW);
 
             new EntWhereEnviroments(gameW);
             new EntWhereUnits(gameW);
@@ -149,23 +147,26 @@ namespace Game.Game
             new InventorResourcesE(gameW);
             new EntInventorToolWeapon(gameW);
 
-            new CellsForSetUnitEs(gameW);
+            new CellsForSetUnitsEs(gameW);
             new CellsForShiftUnitsEs(gameW);
+            new CellsForAttackUnitsEs(gameW);
+            new CellsForArsonArcherEs(gameW);
 
             new GetterUnitsE(gameW);
 
             new CellUnitEs(gameW);
+            new CellUnitWaterEs(gameW);
+            new CellUnitHpEs(gameW);
+            new CellUnitStepEs(gameW);
             new CellUnitTWE(gameW);
             new CellTrailEs(gameW);
             new CellBuildE(gameW);
             new CellEnvironmentEs(gameW);
-            new EntityCellFirePool(gameW);
+            new CellFireEs(gameW);
             new EntityCellCloudPool(gameW);
             new EntityCellRiverPool(gameW);
             new CellEs(gameW, isActiveCells, idCells);
             new CellParentE(gameW);
-
-
 
             new WhoseMoveE(gameW);
             new EntMistakeC(gameW);
@@ -173,12 +174,17 @@ namespace Game.Game
 
             new WindEs(gameW);
             new CloudEnt(gameW);
+            new AvailableCenterUpgradeEs(gameW);
+            new AvailableCenterHeroEs(gameW);
 
+
+
+            new EntityMPool(gameW);
 
             #endregion
 
 
- 
+
 
             var envValues = new EnvironmentValues();
 
@@ -305,40 +311,40 @@ namespace Game.Game
                     ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
                     ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
-                    ref var hp_0 = ref Unit<HpC>(idx_0);
+                    ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
                     ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
-                    ref var waterUnit_0 = ref Unit<WaterC>(idx_0);
+                    ref var waterUnit_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
 
 
                     ref var tw_0 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_0);
                     ref var twLevel_0 = ref CellUnitTWE.UnitTW<LevelTC>(idx_0);
                     ref var protShiel_0 = ref CellUnitTWE.UnitTW<ProtectionC>(idx_0);
 
-                    ref var build_0 = ref Build<BuildingC>(idx_0);
+                    ref var build_0 = ref Build<BuildingTC>(idx_0);
                     ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
                     if (x == 7 && y == 8)
                     {
-                        Environment<EnvCellEC>(EnvTypes.Mountain, idx_0).Remove();
-                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Remove();
+                        Remove(EnvTypes.Mountain, idx_0);
+                        Remove(EnvTypes.AdultForest, idx_0);
 
                         Unit<UnitCellEC>(idx_0).SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second));
 
-                        condUnit_0.Set(ConditionUnitTypes.Protected);
+                        condUnit_0.Condition = ConditionUnitTypes.Protected;
                     }
 
                     else if (x == 8 && y == 8)
                     {
-                        Environment<EnvCellEC>(EnvTypes.Mountain, idx_0).Remove();
-                        Environment<EnvCellEC>(EnvTypes.AdultForest, idx_0).Remove();
+                        Remove(EnvTypes.Mountain, idx_0);
+                        Remove(EnvTypes.AdultForest, idx_0);
 
 
-                        Build<BuildCellEC>(idx_0).SetNew(BuildTypes.City, PlayerTypes.Second);
+                        CellBuildE.SetNew(BuildingTypes.City, PlayerTypes.Second, idx_0);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
                     {
-                        Environment<EnvCellEC>(EnvTypes.Mountain, idx_0).Remove();
+                        Remove(EnvTypes.Mountain, idx_0);
 
                         int rand = UnityEngine.Random.Range(0, 100);
 
@@ -352,7 +358,7 @@ namespace Game.Game
                         }
 
                         Unit<UnitCellEC>(idx_0).SetNew((UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second));
-                        condUnit_0.Set(ConditionUnitTypes.Protected);
+                        condUnit_0.Condition = ConditionUnitTypes.Protected;
                     }
                 }
             }

@@ -14,13 +14,13 @@ namespace Game.Game
                 {
                     if (GetterUnitsE.GetterUnit<IsActiveC>(unitT_cur).IsActive)
                     {
-                        PawnArcherDownUIE.Create<ButtonUIC>(unitT_cur).SetActive(true);
+                        PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(true);
 
                         GetterUnitsE.GetterUnit<TimerC>(unitT_cur).Timer += Time.deltaTime;
 
                         if (GetterUnitsE.GetterUnit<TimerC>(unitT_cur).Timer >= NEEDED_TIME)
                         {
-                            PawnArcherDownUIE.Create<ButtonUIC>(unitT_cur).SetActive(false);
+                            PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(false);
                             GetterUnitsE.GetterUnit<IsActiveC>(unitT_cur).IsActive = false;
                             GetterUnitsE.GetterUnit<TimerC>(unitT_cur).Reset();
                         }
@@ -28,7 +28,7 @@ namespace Game.Game
 
                     else
                     {
-                        PawnArcherDownUIE.Create<ButtonUIC>(unitT_cur).SetActive(false);
+                        PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(false);
                     }
                 }
             }

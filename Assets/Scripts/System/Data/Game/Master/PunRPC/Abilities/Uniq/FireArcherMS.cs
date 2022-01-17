@@ -1,5 +1,5 @@
 ﻿using Photon.Pun;
-using static Game.Game.EntityCellFirePool;
+using static Game.Game.CellFireEs;
 using static Game.Game.CellUnitEs;
 
 namespace Game.Game
@@ -9,7 +9,9 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            FromToDoingMC.Get(out var idx_from, out var idx_to);
+
+
+            EntityMPool.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
             UniqueAbilityMC.Get(out var uniq_cur);
 
 
@@ -17,17 +19,17 @@ namespace Game.Game
 
             ref var fire_to = ref Fire<HaveEffectC>(idx_to);
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
-            if (Unit<UnitCellEC>(idx_from).HaveMaxSteps)
+            if (CellUnitStepEs.HaveMaxSteps(idx_from))
             {
-                //if (Unit<UnitCellEC>(idx_from).CanArson(whoseMove, idx_to))
-                //{
-                //    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
+                if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
+                {
+                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
 
-                //    stepUnit_from.Take(uniq_cur);
-                //    fire_to.Enable();
-                //}
+                    stepUnit_from.Take(uniq_cur);
+                    fire_to.Enable();
+                }
             }
 
             else

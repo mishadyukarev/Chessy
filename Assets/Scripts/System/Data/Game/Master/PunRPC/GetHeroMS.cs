@@ -5,9 +5,12 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            UnitDoingMC.Get(out var unit);
+            var unit = EntityMPool.GetHero<UnitTC>().Unit;
 
-            //EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, WhoseMoveC.WhoseMove).Amount += 1;
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
+
+            EntInventorUnits.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, whoseMove).Add();
+            AvailableCenterHeroEs.HaveAvailHero<HaveAvailableHeroC>(whoseMove).Have = false;
         }
     }
 }

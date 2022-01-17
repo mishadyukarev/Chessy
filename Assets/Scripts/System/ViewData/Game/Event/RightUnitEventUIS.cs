@@ -43,7 +43,7 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                ref var abil = ref UnitBuildButton<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
+                ref var abil = ref UnitUniqueButton<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
 
 
                 if (!Unit<CooldownC>(abil.Ability, SelIdx<IdxC>().Idx).HaveCooldown)
@@ -160,19 +160,19 @@ namespace Game.Game
                         throw new Exception();
 
                     case ButtonTypes.First:
-                        EntityPool.Rpc<RpcC>().BuildToMaster(idx_sel, BuildTypes.Farm);
+                        EntityPool.Rpc<RpcC>().BuildToMaster(idx_sel, BuildingTypes.Farm);
                         TryOnHint(VideoClipTypes.BuldFarms);
                         break;
 
                     case ButtonTypes.Second:
-                        EntityPool.Rpc<RpcC>().BuildToMaster(idx_sel, BuildTypes.Mine);
+                        EntityPool.Rpc<RpcC>().BuildToMaster(idx_sel, BuildingTypes.Mine);
                         TryOnHint(VideoClipTypes.BuildMine);
                         break;
 
                     case ButtonTypes.Third:
-                        var buildAbility = UnitBuildButton<BuildingC>(ButtonTypes.Third, idx_sel).Build;
-                        if (buildAbility == BuildTypes.None)Rpc<RpcC>().DestroyBuildingToMaster(idx_sel);
-                        else Rpc<RpcC>().BuildToMaster(idx_sel, UnitBuildButton<BuildingC>(ButtonTypes.Third, idx_sel).Build);
+                        var buildAbility = UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build;
+                        if (buildAbility == BuildingTypes.None)Rpc<RpcC>().DestroyBuildingToMaster(idx_sel);
+                        else Rpc<RpcC>().BuildToMaster(idx_sel, UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build);
 
                         //switch (BuildAbilC.AbilityType(buildBut))
                         //{
