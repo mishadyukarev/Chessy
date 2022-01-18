@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class ScoutOldNewSys : IEcsRunSystem
+    public struct ScoutOldNewSys : IEcsRunSystem
     {
         public void Run()
         {

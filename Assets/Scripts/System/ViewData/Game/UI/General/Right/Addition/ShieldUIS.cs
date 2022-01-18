@@ -10,10 +10,10 @@ namespace Game.Game
             ref var tw_sel = ref CellUnitTWE.UnitTW<ToolWeaponC>(SelIdx<IdxC>().Idx);
             ref var twLevel_sel = ref CellUnitTWE.UnitTW<LevelTC>(SelIdx<IdxC>().Idx);
 
-            UIEntExtraTW.Image<ImageUIC>(TWTypes.Pick, LevelTypes.Second).SetActive(false);
-            UIEntExtraTW.Image<ImageUIC>(TWTypes.Sword, LevelTypes.Second).SetActive(false);
-            UIEntExtraTW.Image<ImageUIC>(TWTypes.Shield, LevelTypes.First).SetActive(false);
-            UIEntExtraTW.Image<ImageUIC>(TWTypes.Shield, LevelTypes.Second).SetActive(false);
+            UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Pick, LevelTypes.Second).SetActive(false);
+            UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Sword, LevelTypes.Second).SetActive(false);
+            UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Shield, LevelTypes.First).SetActive(false);
+            UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Shield, LevelTypes.Second).SetActive(false);
 
             if (tw_sel.HaveTW)
             {

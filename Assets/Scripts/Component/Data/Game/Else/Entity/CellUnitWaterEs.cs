@@ -23,7 +23,7 @@ namespace Game.Game
             for (var idx = 0; idx < _units.Length; idx++)
             {
                 _units[idx] = gameW.NewEntity()
-                    .Add(new AmountC(idx));
+                    .Add(new AmountC());
             }
         }
 

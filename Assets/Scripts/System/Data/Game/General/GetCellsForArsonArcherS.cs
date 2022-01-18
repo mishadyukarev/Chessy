@@ -14,9 +14,9 @@ namespace Game.Game
 
                 ref var unit_from = ref Unit<UnitTC>(idx_0);
                 ref var ownUnit_from = ref Unit<PlayerTC>(idx_0);
-                ref var stun_from = ref Unit<NeedStepsForExitStunC>(idx_0);
+                ref var stun_from = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_0);
 
-                if (!stun_from.IsStunned)
+                if (!stun_from.Have)
                 {
                     if (unit_from.Is(UnitTypes.Archer))
                     {
@@ -26,7 +26,7 @@ namespace Game.Game
 
                             if (!fire_1.Have)
                             {
-                                if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_1).Have)
+                                if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_1).Have)
                                 {
                                     CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Add(idx_1);
                                 }

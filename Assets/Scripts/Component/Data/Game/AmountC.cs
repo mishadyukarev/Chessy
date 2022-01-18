@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct AmountC : IEnvCell, ICellUnitWaterE, ICellUnitHpE, ICellTrailE, ICellUnitStepE, ICellUnitConditionE
+    public struct AmountC : IEnvCell, ICellUnitWaterE, ICellUnitHpE, ICellTrailE, ICellUnitStepE, ICellUnitConditionE, ICellUnitStunE, IUnitUniqueCellE
     {
         public int Amount;
 

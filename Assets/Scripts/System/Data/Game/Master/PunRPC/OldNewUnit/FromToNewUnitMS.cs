@@ -8,48 +8,61 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            UnitDoingMC.Get(out var unit);
-            FromToDoingMC.Get(out var idx_from, out var idx_to);
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
+            var unit = EntityMPool.CreateHeroFromTo<UnitTC>().Unit;
+            EntityMPool.CreateHeroFromTo<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
-            //ref var unit_from = ref Unit<UnitC>(idx_from);
-            //ref var levUnit_from = ref Unit<LevelC>(idx_from);
-            //ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
-            //ref var unit_to = ref Unit<UnitC>(idx_to);
-            //ref var levUnit_to = ref Unit<LevelC>(idx_to);
-            //ref var ownUnit_to = ref Unit<PlayerC>(idx_to);
+            ref var unit_from = ref Unit<UnitTC>(idx_from);
+            ref var levUnit_from = ref Unit<LevelTC>(idx_from);
+            ref var ownUnit_from = ref Unit<PlayerTC>(idx_from);
 
-
-            //if (unit_from.Is(UnitTypes.Archer))
-            //{
-            //    if (unit_to.Is(UnitTypes.Archer))
-            //    {
-            //        if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
-            //        {
-            //            var xy_from = Cell<XyC>(idx_from).Xy;
-
-            //            var list_around = CellSpaceC.XyAround(xy_from);
+            ref var unit_to = ref Unit<UnitTC>(idx_to);
+            ref var levUnit_to = ref Unit<LevelTC>(idx_to);
+            ref var ownUnit_to = ref Unit<PlayerTC>(idx_to);
 
 
-            //            foreach (var xy_1 in list_around)
-            //            {
-            //                var idx_1 = IdxCell(xy_1);
+            if (unit_from.Is(UnitTypes.Archer))
+            {
+                if (unit_to.Is(UnitTypes.Archer))
+                {
+                    if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
+                    {
+                        var xy_from = Cell<XyC>(idx_from).Xy;
 
-            //                if (idx_1 == idx_to)
-            //                {
-            //                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.GetHero);
+                        var list_around = CellSpaceC.GetXyAround(xy_from);
 
-            //                    Unit<UnitCellEC>(idx_to).SetHero(idx_from, unit, LevelTypes.First);
 
-            //                    break;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                        foreach (var xy_1 in list_around)
+                        {
+                            var idx_1 = IdxCell(xy_1);
 
+                            if (idx_1 == idx_to)
+                            {
+                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.GetHero);
+
+                                EntWhereUnits.HaveUnit<HaveUnitC>(UnitTypes.Archer, Unit<LevelTC>(idx_from).Level, Unit<PlayerTC>(idx_from).Player, idx_from).Have = false;
+                                Unit<UnitTC>(idx_from).Reset();
+
+                                EntWhereUnits.HaveUnit<HaveUnitC>(UnitTypes.Archer, Unit<LevelTC>(idx_to).Level, Unit<PlayerTC>(idx_to).Player, idx_to).Have = false;
+                                Unit<UnitTC>(idx_to).Reset();
+
+
+                                Unit<UnitTC>(idx_to).Unit = unit;
+                                Unit<LevelTC>(idx_to).Level = LevelTypes.First;
+
+                                EntWhereUnits.HaveUnit<HaveUnitC>(unit, LevelTypes.First, Unit<PlayerTC>(idx_to).Player, idx_to).Have = true;
+
+
+                                EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, Unit<PlayerTC>(idx_to).Player).Amount -= 1;
+
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

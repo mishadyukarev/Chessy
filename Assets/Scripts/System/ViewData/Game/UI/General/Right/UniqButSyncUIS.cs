@@ -17,8 +17,8 @@ namespace Game.Game
                 }
                 else
                 {
-                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).SetActiveParent(Unit<CooldownC>(abil, SelIdx<IdxC>().Idx).HaveCooldown);
-                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).Text = Unit<CooldownC>(abil, SelIdx<IdxC>().Idx).Cooldown.ToString();
+                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).SetActiveParent(CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelIdx<IdxC>().Idx).HaveCooldown);
+                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).Text = CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelIdx<IdxC>().Idx).Cooldown.ToString();
 
                     UIEntRightUnique.Buttons<ButtonUIC>(button).SetActive(true);
 

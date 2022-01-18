@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public enum EnvTypes
+    public enum EnvironmentTypes
     {
         None,
         Start = None,

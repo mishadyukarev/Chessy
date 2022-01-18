@@ -16,7 +16,6 @@ namespace Game.Game
             var idx_0 = EntityMPool.Build<IdxC>().Idx;
 
 
-            ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
             ref var build_0 = ref Build<BuildingTC>(idx_0);
             ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
@@ -32,8 +31,8 @@ namespace Game.Game
                 {
                     if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                     {
-                        if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have
-                            && Environment<AmountC>(EnvTypes.Hill, idx_0).Have)
+                        if (Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx_0).Have
+                            && Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Have)
                         {
                             if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                             {

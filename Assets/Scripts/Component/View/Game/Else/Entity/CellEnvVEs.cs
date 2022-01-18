@@ -6,15 +6,15 @@ namespace Game.Game
 {
     public struct CellEnvVEs
     {
-        static Dictionary<EnvTypes, Entity[]> _envs;
+        static Dictionary<EnvironmentTypes, Entity[]> _envs;
 
-        public static ref C EnvCellVC<C>(in EnvTypes env, in byte idx) where C : struct, IEnvCellV => ref _envs[env][idx].Get<C>();
+        public static ref C EnvCellVC<C>(in EnvironmentTypes env, in byte idx) where C : struct, IEnvCellV => ref _envs[env][idx].Get<C>();
 
         public CellEnvVEs(in EcsWorld gameW, in GameObject[] cells)
         {
-            _envs = new Dictionary<EnvTypes, Entity[]>();
+            _envs = new Dictionary<EnvironmentTypes, Entity[]>();
 
-            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
+            for (var env = EnvironmentTypes.First; env < EnvironmentTypes.End; env++)
             {
                 _envs.Add(env, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
@@ -23,19 +23,19 @@ namespace Game.Game
             {
                 var parentGO = cells[idx].transform.Find("Environments").gameObject;
 
-                _envs[EnvTypes.Fertilizer][idx] = gameW.NewEntity()
+                _envs[EnvironmentTypes.Fertilizer][idx] = gameW.NewEntity()
                     .Add(new SpriteRendererVC(parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>()));
 
-                _envs[EnvTypes.YoungForest][idx] = gameW.NewEntity()
+                _envs[EnvironmentTypes.YoungForest][idx] = gameW.NewEntity()
                     .Add(new SpriteRendererVC(parentGO.transform.Find("YoungForest").GetComponent<SpriteRenderer>()));
 
-                _envs[EnvTypes.AdultForest][idx] = gameW.NewEntity()
+                _envs[EnvironmentTypes.AdultForest][idx] = gameW.NewEntity()
                     .Add(new SpriteRendererVC(parentGO.transform.Find("AdultForest").GetComponent<SpriteRenderer>()));
 
-                _envs[EnvTypes.Hill][idx] = gameW.NewEntity()
+                _envs[EnvironmentTypes.Hill][idx] = gameW.NewEntity()
                    .Add(new SpriteRendererVC(parentGO.transform.Find("Hill").GetComponent<SpriteRenderer>()));
 
-                _envs[EnvTypes.Mountain][idx] = gameW.NewEntity()
+                _envs[EnvironmentTypes.Mountain][idx] = gameW.NewEntity()
                     .Add(new SpriteRendererVC(parentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>()));
 
 

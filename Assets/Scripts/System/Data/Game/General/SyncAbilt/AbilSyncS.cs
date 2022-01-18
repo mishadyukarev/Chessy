@@ -33,7 +33,7 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Pawn:
-                                if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
+                                if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
                                 {
                                     if (fire_0.Have) UnitUniqueButton<UniqueAbilityC>(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.PutOutFirePawn;
                                     else UnitUniqueButton<UniqueAbilityC>(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.FirePawn;
@@ -61,7 +61,7 @@ namespace Game.Game
                             case UnitTypes.Elfemale:
                                 UnitUniqueButton<UniqueAbilityC>(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.GrowAdultForest;
                                 UnitUniqueButton<UniqueAbilityC>(ButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.StunElfemale;
-                                UnitUniqueButton<UniqueAbilityC>(ButtonTypes.Third, idx_0).Ability = UniqueAbilityTypes.ChangeDirWind;
+                                UnitUniqueButton<UniqueAbilityC>(ButtonTypes.Third, idx_0).Ability = UniqueAbilityTypes.ChangeDirectionWind;
                                 break;
 
                             default: throw new Exception();

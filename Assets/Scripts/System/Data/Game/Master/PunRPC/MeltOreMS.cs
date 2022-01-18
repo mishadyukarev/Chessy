@@ -6,17 +6,17 @@
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
-            //if (InvResC.CanMeltOre(whoseMove, out var needRes))
-            //{
-            //    InvResC.BuyMeltOre(whoseMove);
-            //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Melting);
-            //}
-            //else
-            //{
-            //    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-            //}
+            if (InventorResourcesE.CanMeltOre(whoseMove, out var needRes))
+            {
+                InventorResourcesE.BuyMeltOre(whoseMove);
+                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Melting);
+            }
+            else
+            {
+                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ECS;
+using System;
 
 namespace Game.Game
 {
@@ -20,9 +21,29 @@ namespace Game.Game
             for (var idx = 0; idx < _hps.Length; idx++)
             {
                 _hps[idx] = gameW.NewEntity()
-                    .Add(new AmountC(idx));
+                    .Add(new AmountC());
             }
         }
+
+        public static void SetMaxHp(in byte idx) => Hp<AmountC>(idx).Amount = 100;
+        public static void Take(in byte idx, in UniqueAbilityTypes uniq)
+        {
+            var damage = 0;
+
+            switch (uniq)
+            {
+                case UniqueAbilityTypes.CircularAttack: damage = 25; break;
+                default: throw new Exception();
+            }
+
+            Hp<AmountC>(idx).Take(damage);
+        }
+        public static void TakeAttack(in byte idx, in int damage)
+        {
+            Hp<AmountC>(idx).Take(damage);
+            if (IsHpDeathAfterAttack(idx)) Hp<AmountC>(idx).Reset();
+        }
+        public static void TakeFire(in byte idx) => Hp<AmountC>(idx).Take(40);
     }
 
     public interface ICellUnitHpE { }

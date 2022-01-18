@@ -31,7 +31,7 @@ namespace Game.Game
             var playerSender = InfoC.Sender(MGOTypes.Master).GetPlayer();
 
 
-            if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, out var attack) && ownerUnit_from.Player == playerSender)
+            if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))
             {
                 CellUnitStepEs.Steps<AmountC>(idx_from).Reset();
                 condUnit_from.Reset();
@@ -102,38 +102,38 @@ namespace Game.Game
 
                 if (unit_from.IsMelee)
                 {
-                    if (tw_from.Is(TWTypes.Shield))
+                    if (tw_from.Is(ToolWeaponTypes.Shield))
                     {
                         CellUnitTWE.UnitTW<ShieldEC>(idx_from).Take();
                     }
                     else if (minus_from > 0)
                     {
-                        hpUnitCell_from.TakeAttack((int)minus_from);
+                        CellUnitHpEs.TakeAttack(idx_from, (int)minus_from);
                     }
                 }
 
 
-                if (tw_to.Is(TWTypes.Shield))
+                if (tw_to.Is(ToolWeaponTypes.Shield))
                 {
                     CellUnitTWE.UnitTW<ShieldEC>(idx_to).Take();
                 }
                 else if (minus_to > 0)
                 {
-                    hpUnitCell_to.TakeAttack((int)minus_to);
+                    CellUnitHpEs.TakeAttack(idx_to, (int)minus_to);
                 }
 
 
 
                 if (!hpUnit_to.Have)
                 {
-                    unitE_to.Kill();
+                    CellUnitEs.Kill(idx_to);
 
 
                     if (unit_from.IsMelee)
                     {
                         if (!hpUnit_from.Have)
                         {
-                            Unit<UnitCellEC>(idx_from).Kill();
+                            CellUnitEs.Kill(idx_from);
                         }
                         else
                         {
@@ -145,7 +145,7 @@ namespace Game.Game
 
                 else if (!hpUnit_from.Have)
                 {
-                    Unit<UnitCellEC>(idx_from).Kill();
+                    CellUnitEs.Kill(idx_from);
                 }
 
                 foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_from).Disable();

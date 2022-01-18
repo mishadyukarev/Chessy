@@ -22,6 +22,11 @@ namespace Game.Game
             get => Image.fillAmount;
             set => Image.fillAmount = value;
         }
+        public bool IsEnabled
+        {
+            get => Image.enabled;
+            set => Image.enabled = value;
+        }
 
         public ImageUIC(in Image image) => Image = image;
 

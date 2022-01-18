@@ -35,9 +35,9 @@ namespace Game.Game
 
                 if (fire_0.Have)
                 {
-                    if (cellClick.Is(CellClickTypes.UniqAbil))
+                    if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
-                        if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirWind))
+                        if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                         {
                             support_0.Enable();
                             support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -82,11 +82,11 @@ namespace Game.Game
 
                     else
                     {
-                        if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
+                        if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                         {
-                            if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
+                            if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
                             {
-                                if (cellClick.Is(CellClickTypes.UniqAbil))
+                                if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
                                     if (SelUniqAbilC.Is(UniqueAbilityTypes.StunElfemale))
                                     {
@@ -99,7 +99,7 @@ namespace Game.Game
                     }
                 }
 
-                if (cellClick.Is(CellClickTypes.UniqAbil))
+                if (cellClick.Is(CellClickTypes.UniqueAbility))
                 {
                     if (SelUniqAbilC.Is(UniqueAbilityTypes.FireArcher))
                     {
@@ -124,14 +124,15 @@ namespace Game.Game
             }
 
 
-            if (cellClick.Is(CellClickTypes.UniqAbil))
+            if (cellClick.Is(CellClickTypes.UniqueAbility))
             {
-                if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirWind))
+                if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                 {
-                    //foreach (var item in WindC.Directs)
-                    //{
-                    //    EntityCellVPool.ElseCellVE<SupportVC>(item.Value).EnableSR(SupVisTypes.Spawn);
-                    //}
+                    foreach (var idx_0 in DirectsWindForElfemaleE.IdxsDirects)
+                    {
+                        SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
+                        SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                    }
                 }
             }
 
@@ -146,15 +147,17 @@ namespace Game.Game
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                 }
 
-                //foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, AttackTypes.Simple, SelIdx<IdxC>().Idx))
-                //{
-                //    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.SimpleAttack);
-                //}
+                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(SelIdx<IdxC>().Idx, AttackTypes.Simple, WhoseMoveE.CurPlayerI).Idxs)
+                {
+                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
+                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
+                }
 
-                //foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI, AttackTypes.Unique, SelIdx<IdxC>().Idx))
-                //{
-                //    EntityCellVPool.ElseCellVE<SupportVC>(idx_0).EnableSR(SupVisTypes.UniqueAttack);
-                //}
+                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(SelIdx<IdxC>().Idx, AttackTypes.Unique, WhoseMoveE.CurPlayerI).Idxs)
+                {
+                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
+                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                }
             }
         }
     }

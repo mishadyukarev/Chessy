@@ -21,13 +21,13 @@ namespace Game.Game
             ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
 
-            if (!Unit<CooldownC>(uniq_cur, idx_0).HaveCooldown)
+            if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_0).HaveCooldown)
             {
                 if (CellUnitStepEs.Have(idx_0, uniq_cur))
                 {
                     EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    Unit<CooldownC>(uniq_cur, idx_0).Cooldown = 2;
+                    CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_0).Cooldown = 2;
 
                     foreach (var xy1 in CellSpaceC.GetXyAround(Cell<XyC>(idx_0).Xy))
                     {
@@ -50,24 +50,24 @@ namespace Game.Game
                             {
                                 foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_1).Disable();
 
-                                if (tw_1.Is(TWTypes.Shield))
+                                if (tw_1.Is(ToolWeaponTypes.Shield))
                                 {
                                     shield_1.Take();
                                 }
                                 else
                                 {
-                                    Unit<UnitCellEC>(idx_1).Take(uniq_cur);
+                                    CellUnitHpEs.Take(idx_1, uniq_cur);
 
                                     if (CellUnitHpEs.IsHpDeathAfterAttack(idx_1) || !hpUnit_1.Have)
                                     {
-                                        Unit<UnitCellEC>(idx_1).Kill();
+                                        CellUnitEs.Kill(idx_1);
                                     }
                                 }
                             }
                         }
                     }
 
-                    stepUnit_0.Take(uniq_cur);
+                    CellUnitStepEs.Take(idx_0, uniq_cur);
                     foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_0).Disable();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AttackMelee);

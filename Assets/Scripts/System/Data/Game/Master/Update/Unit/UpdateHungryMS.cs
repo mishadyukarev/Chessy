@@ -1,10 +1,9 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellBuildE;
+﻿using static Game.Game.CellBuildE;
+using static Game.Game.CellEs;
 
 namespace Game.Game
 {
-    struct HungryUpdMS : IEcsRunSystem
+    struct UpdateHungryMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -24,9 +23,8 @@ namespace Game.Game
                         {
                             foreach (var idx_0 in Idxs)
                             {
-                                if(EntWhereUnits.HaveUnit<HaveUnitC>(unit, levUnit, player, idx_0).Have)
+                                if (EntWhereUnits.HaveUnit<HaveUnitC>(unit, levUnit, player, idx_0).Have)
                                 {
-                                    ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                                     ref var build_0 = ref Build<BuildingTC>(idx_0);
 
 
@@ -35,7 +33,7 @@ namespace Game.Game
                                         CellBuildE.Remove(idx_0);
                                     }
 
-                                    Unit<UnitCellEC>(idx_0).Kill();
+                                    CellUnitEs.Kill(idx_0);
 
                                     return;
 

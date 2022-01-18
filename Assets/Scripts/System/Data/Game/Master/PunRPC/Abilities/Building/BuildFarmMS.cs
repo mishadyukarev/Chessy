@@ -14,7 +14,6 @@ namespace Game.Game
             var build = EntityMPool.Build<BuildingTC>().Build;
             var idx_0 = EntityMPool.Build<IdxC>().Idx;
 
-            ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
             ref var build_0 = ref Build<BuildingTC>(idx_0);
             ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
@@ -26,21 +25,21 @@ namespace Game.Game
 
             if (build == BuildingTypes.Farm)
             {
-                if (buildCell_0.CanBuild(build, whoseMove, out var mistake))
+                if (CellBuildE.CanBuild(idx_0, build, whoseMove, out var mistake))
                 {
                     if (InventorResourcesE.CanCreateBuild(build, whoseMove,  out var needRes))
                     {
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
 
-                        Remove(EnvTypes.YoungForest, idx_0);
+                        Remove(EnvironmentTypes.YoungForest, idx_0);
 
-                        if (Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
+                        if (Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx_0).Have)
                         {
-                            Environment<AmountC>(EnvTypes.Fertilizer, idx_0).Amount = Max(EnvTypes.Fertilizer);
+                            Environment<AmountC>(EnvironmentTypes.Fertilizer, idx_0).Amount = Max(EnvironmentTypes.Fertilizer);
                         }
                         else
                         {
-                            SetNew(EnvTypes.Fertilizer, idx_0);
+                            SetNew(EnvironmentTypes.Fertilizer, idx_0);
                         }
 
                         InventorResourcesE.BuyBuild(whoseMove, build);

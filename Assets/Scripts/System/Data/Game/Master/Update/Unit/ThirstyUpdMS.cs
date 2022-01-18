@@ -19,7 +19,6 @@ namespace Game.Game
 
                 ref var riverC_0 = ref River<RiverC>(idx_0);
 
-                ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var build_0 = ref Build<BuildingTC>(idx_0);
 
 
@@ -52,8 +51,7 @@ namespace Game.Game
                                     {
                                         CellBuildE.Remove(idx_0);
                                     }
-
-                                    Unit<UnitCellEC>(idx_0).Kill();
+                                    CellUnitEs.Kill(idx_0);
                                 }
                             }
                         }

@@ -27,7 +27,7 @@ namespace Game.Game
                 {
                     EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
 
-                    stepUnit_from.Take(uniq_cur);
+                    CellUnitStepEs.Take(idx_from, uniq_cur);
                     fire_to.Enable();
                 }
             }

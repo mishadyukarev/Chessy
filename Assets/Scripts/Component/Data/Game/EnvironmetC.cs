@@ -2,6 +2,6 @@
 {
     public struct EnvironmetC
     {
-        public EnvTypes Environment;
+        public EnvironmentTypes Environment;
     }
 }

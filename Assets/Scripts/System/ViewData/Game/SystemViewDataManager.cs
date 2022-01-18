@@ -25,7 +25,8 @@ namespace Game.Game
 
 
             _actions.Add(ViewDataSTypes.RunFixedUpdate,
-                (Action)new SyncCellUnitVS().Run
+                (Action)
+                new CellUnitVS().Run
                 + new UnitStatCellSyncS().Run
                 + new BuildCellVS().Run
                 + new EnvCellVS().Run

@@ -10,11 +10,11 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var stun_0 = ref Unit<NeedStepsForExitStunC>(idx_0);
+                ref var stun_0 = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_0);
 
-                if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
+                if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                 {
-                    Stun<SpriteRendererVC>(idx_0).SetActive(stun_0.IsStunned);
+                    Stun<SpriteRendererVC>(idx_0).SetActive(stun_0.Have);
                 }
                 else
                 {

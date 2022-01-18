@@ -4,16 +4,16 @@ namespace Game.Game
 {
     internal readonly struct StepUnitValues
     {
-        internal int NeedAmountSteps(EnvTypes env)
+        internal int NeedAmountSteps(EnvironmentTypes env)
         {
             switch (env)
             {
-                case EnvTypes.None: throw new Exception();
-                case EnvTypes.Fertilizer: throw new Exception();
-                case EnvTypes.YoungForest: throw new Exception();
-                case EnvTypes.AdultForest: return 1;
-                case EnvTypes.Hill: return 1;
-                case EnvTypes.Mountain: throw new Exception();
+                case EnvironmentTypes.None: throw new Exception();
+                case EnvironmentTypes.Fertilizer: throw new Exception();
+                case EnvironmentTypes.YoungForest: throw new Exception();
+                case EnvironmentTypes.AdultForest: return 1;
+                case EnvironmentTypes.Hill: return 1;
+                case EnvironmentTypes.Mountain: throw new Exception();
                 default: throw new Exception();
             }
         }

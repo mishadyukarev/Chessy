@@ -18,14 +18,14 @@ namespace Game.Game
         {
             var needSteps = 1;
 
-            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_to).Have)
+            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_to).Have)
             {
-                needSteps += _values.NeedAmountSteps(EnvTypes.AdultForest);
+                needSteps += _values.NeedAmountSteps(EnvironmentTypes.AdultForest);
                 if (CellTrailEs.Trail<TrailCellEC>(idx_to).Have(CellSpaceC.GetDirect(idx_from, idx_to).Invert())) needSteps -= 1;
             }
 
-            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_to).Have)
-                needSteps += _values.NeedAmountSteps(EnvTypes.Hill);
+            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx_to).Have)
+                needSteps += _values.NeedAmountSteps(EnvironmentTypes.Hill);
 
             return needSteps;
         }
@@ -44,7 +44,7 @@ namespace Game.Game
                 case UniqueAbilityTypes.ChangeCornerArcher: return 1;
                 case UniqueAbilityTypes.GrowAdultForest: return 1;
                 case UniqueAbilityTypes.StunElfemale: return 1;
-                case UniqueAbilityTypes.ChangeDirWind: return 1;
+                case UniqueAbilityTypes.ChangeDirectionWind: return 1;
                 default: throw new Exception();
             }
         }
@@ -52,7 +52,6 @@ namespace Game.Game
         public static bool Have(in byte idx, in UniqueAbilityTypes uniq) => Steps<AmountC>(idx).Amount >= NeedSteps(uniq);
         public static bool Have(in byte idx, in BuildingTypes build) => Steps<AmountC>(idx).Amount >= NeedSteps(build);
         public static bool HaveMin(in byte idx) => Steps<AmountC>(idx).Amount >= 1;
-
 
         public CellUnitStepEs(in EcsWorld gameW)
         {

@@ -25,7 +25,6 @@ namespace Game.Game
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);
 
-                ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var build_0 = ref Build<BuildingTC>(idx_0);
 
                 ref var curFireCom = ref Fire<HaveEffectC>(idx_0);
@@ -45,7 +44,7 @@ namespace Game.Game
                         {
                             if (tw_0.HaveTW)
                             {
-                                EntInventorToolWeapon.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
+                                InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
                                 UnitTW<UnitTWCellEC>(idx_0).Reset();
                             }
 
@@ -57,7 +56,7 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            EntInventorToolWeapon.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
+                            InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
                             UnitTW<UnitTWCellEC>(idx_0).Reset();
                         }
 
@@ -76,22 +75,22 @@ namespace Game.Game
 
                 else
                 {
-                    if (Environment<HaveEnvironmentC>(EnvTypes.YoungForest, idx_0).Have)
+                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.YoungForest, idx_0).Have)
                     {
-                        Remove(EnvTypes.YoungForest, idx_0);
+                        Remove(EnvironmentTypes.YoungForest, idx_0);
 
-                        SetNew(EnvTypes.AdultForest, idx_0);
+                        SetNew(EnvironmentTypes.AdultForest, idx_0);
                     }
 
-                    if (!Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have
-                        && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_0).Have
-                        && !Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
+                    if (!Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx_0).Have
+                        && !Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_0).Have
+                        && !Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
                     {
                         random = Random.Range(0, 100);
 
                         if (random <= 3)
                         {
-                            SetNew(EnvTypes.Fertilizer, idx_0);
+                            SetNew(EnvironmentTypes.Fertilizer, idx_0);
                         }
                     }
                 }

@@ -5,8 +5,9 @@
         public LevelTypes Level;
         public bool Is(LevelTypes level) => Level == level;
 
+        public LevelTC(in LevelTypes level) => Level = level;
 
-        internal void Set(LevelTC levelC) => Level = levelC.Level;
-        internal void Reset() => Level = LevelTypes.None;
+        public void Set(LevelTC levelC) => Level = levelC.Level;
+        public void Reset() => Level = LevelTypes.None;
     }
 }

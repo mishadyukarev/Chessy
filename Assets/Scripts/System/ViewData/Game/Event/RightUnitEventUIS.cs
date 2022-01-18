@@ -46,7 +46,7 @@ namespace Game.Game
                 ref var abil = ref UnitUniqueButton<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
 
 
-                if (!Unit<CooldownC>(abil.Ability, SelIdx<IdxC>().Idx).HaveCooldown)
+                if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil.Ability, SelIdx<IdxC>().Idx).HaveCooldown)
                 {
                     switch (uniqBut)
                     {
@@ -69,12 +69,12 @@ namespace Game.Game
                                         break;
 
                                     case UniqueAbilityTypes.Seed:
-                                        EntityPool.Rpc<RpcC>().SeedEnvToMaster(SelIdx<IdxC>().Idx, EnvTypes.YoungForest);
+                                        EntityPool.Rpc<RpcC>().SeedEnvToMaster(SelIdx<IdxC>().Idx, EnvironmentTypes.YoungForest);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
                                     case UniqueAbilityTypes.FireArcher:
-                                        ClickerObject<CellClickC>().Click = CellClickTypes.UniqAbil;
+                                        ClickerObject<CellClickC>().Click = CellClickTypes.UniqueAbility;
                                         SelUniqAbilC.UniqAbil = UniqueAbilityTypes.FireArcher;
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
@@ -106,7 +106,7 @@ namespace Game.Game
 
                                     case UniqueAbilityTypes.StunElfemale:
                                         {
-                                            ClickerObject<CellClickC>().Click = CellClickTypes.UniqAbil;
+                                            ClickerObject<CellClickC>().Click = CellClickTypes.UniqueAbility;
                                             SelUniqAbilC.UniqAbil = UniqueAbilityTypes.StunElfemale;
                                             TryOnHint(VideoClipTypes.StunElfemale);
                                         }
@@ -128,11 +128,11 @@ namespace Game.Game
                                 switch (abil.Ability)
                                 {
                                     case UniqueAbilityTypes.None: throw new Exception();
-                                    case UniqueAbilityTypes.ChangeDirWind:
+                                    case UniqueAbilityTypes.ChangeDirectionWind:
                                         {
                                             TryOnHint(VideoClipTypes.PutOutElfemale);
-                                            ClickerObject<CellClickC>().Click = CellClickTypes.UniqAbil;
-                                            SelUniqAbilC.UniqAbil = UniqueAbilityTypes.ChangeDirWind;
+                                            ClickerObject<CellClickC>().Click = CellClickTypes.UniqueAbility;
+                                            SelUniqAbilC.UniqAbil = UniqueAbilityTypes.ChangeDirectionWind;
                                         }
                                         break;
                                     default: throw new Exception();

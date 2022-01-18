@@ -22,7 +22,7 @@ namespace Game.Game
                 {
                     corner_0.ChangeCorner();
 
-                    Unit<UnitCellEC>(idx_0).Take(uniq);
+                    CellUnitStepEs.Take(idx_0, uniq);
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickArcher);
                 }

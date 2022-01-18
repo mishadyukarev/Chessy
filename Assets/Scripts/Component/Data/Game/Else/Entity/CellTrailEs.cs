@@ -42,7 +42,7 @@ namespace Game.Game
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
                     _trailVisibleEnts[player][idx] = gameW.NewEntity()
-                        .Add(new IsVisibledC());
+                        .Add(new IsVisibleC());
                 }
             }
         }

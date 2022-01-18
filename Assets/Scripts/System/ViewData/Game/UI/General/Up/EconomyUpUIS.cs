@@ -17,32 +17,36 @@ namespace Game.Game
             var extracts = new Dictionary<ResTypes, int>();
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                extracts.Add(res, 0);
-                //extracts[res] += InvResC.StandartAdding(res);
+                extracts.Add(res, default);
             }
+            extracts[ResTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
+
 
             foreach (var idx_0 in Idxs)
             {
-                if (Unit<UnitCellEC>(idx_0).CanExtract(out var extract, out var env, out var res))
+                if (Unit<UnitTC>(idx_0).Have && Unit<PlayerTC>(idx_0).Is(WhoseMoveE.CurPlayerI))
                 {
-                    extracts[res] += extract;
-                }
-                if (Unit<PlayerTC>(idx_0).Is(WhoseMoveE.CurPlayerI))
-                {
-                    extracts[ResTypes.Food] -= Unit<UnitTC>(idx_0).CostFood;
-                }
+                    extracts[ResTypes.Food] -= EconomyValues.CostFood(Unit<UnitTC>(idx_0).Unit);
 
-                if (Build<BuildCellEC>(idx_0).CanExtract(out extract, out env, out res))
+                    if (CellUnitEs.CanExtract(idx_0, out var extract, out var env, out var res))
+                    {
+                        extracts[res] += extract;
+                    }
+                }
+                if (Build<BuildingTC>(idx_0).Have && Build<PlayerTC>(idx_0).Is(WhoseMoveE.CurPlayerI))
                 {
-                    extracts[res] += extract;
+                    if (CellBuildE.CanExtract(idx_0, out var extract, out var env, out var res))
+                    {
+                        extracts[res] += extract;
+                    }
                 }
             }
 
-            //if (extracts[ResTypes.Food] < 0) EconomyUIC.SetAddText(ResTypes.Food, extracts[ResTypes.Food].ToString());
-            //else EconomyUIC.SetAddText(ResTypes.Food, "+ " + extracts[ResTypes.Food].ToString());
+            if (extracts[ResTypes.Food] < 0) EconomyExtract<TextMPUGUIC>(ResTypes.Food).Text = extracts[ResTypes.Food].ToString();
+            else EconomyExtract<TextMPUGUIC>(ResTypes.Food).Text = "+ " + extracts[ResTypes.Food].ToString();
 
-            Economy<TextMPUGUIC>(ResTypes.Wood).Text = "+ " + extracts[ResTypes.Wood];
-            Economy<TextMPUGUIC>(ResTypes.Ore).Text = "+ " + extracts[ResTypes.Ore];
+            EconomyExtract<TextMPUGUIC>(ResTypes.Wood).Text = "+ " + extracts[ResTypes.Wood];
+            EconomyExtract<TextMPUGUIC>(ResTypes.Ore).Text = "+ " + extracts[ResTypes.Ore];
 
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)

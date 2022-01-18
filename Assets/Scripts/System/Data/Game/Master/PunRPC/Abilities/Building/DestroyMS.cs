@@ -16,7 +16,6 @@ namespace Game.Game
             ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
-            ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
             ref var buildC_0 = ref Build<BuildingTC>(idx_0);
 
 
@@ -32,7 +31,7 @@ namespace Game.Game
 
                 if (buildC_0.Is(BuildingTypes.Farm))
                 {
-                    Remove(EnvTypes.Fertilizer, idx_0);
+                    Remove(EnvironmentTypes.Fertilizer, idx_0);
                 }
 
                 CellBuildE.Remove(idx_0);

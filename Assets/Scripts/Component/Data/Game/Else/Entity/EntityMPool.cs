@@ -17,6 +17,9 @@ namespace Game.Game
         public static ref C GetHero<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.GetHero].Get<C>();
         public static ref C CreateUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.CreateUnit].Get<C>();
         public static ref C Attack<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.Attack].Get<C>();
+        public static ref C CreateHeroFromTo<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.CreateHeroFromTo].Get<C>();
+        public static ref C GiveTakeToolWeapon<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.GiveTakeToolWeapon].Get<C>();
+        public static ref C UpgradeUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.UpgradeCellUnit].Get<C>();
 
         public static ref C Seed<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.Seed].Get<C>();
         public static ref C GrowAdultForest<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.GrowAdultForest].Get<C>();
@@ -59,6 +62,20 @@ namespace Game.Game
 
             _rpcEnts.Add(RpcMasterTypes.Attack, gameW.NewEntity()
                 .Add(new IdxFromToC()));
+
+            _rpcEnts.Add(RpcMasterTypes.CreateHeroFromTo, gameW.NewEntity()
+                .Add(new UnitTC())
+                .Add(new IdxFromToC()));
+
+            _rpcEnts.Add(RpcMasterTypes.GiveTakeToolWeapon, gameW.NewEntity()
+                .Add(new ToolWeaponC())
+                .Add(new LevelTC())
+                .Add(new IdxC()));
+
+            _rpcEnts.Add(RpcMasterTypes.UpgradeCellUnit, gameW.NewEntity()
+                .Add(new IdxC()));
+
+
 
 
             _uniqEnts.Add(UniqueAbilityTypes.Seed, gameW.NewEntity()

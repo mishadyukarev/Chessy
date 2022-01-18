@@ -3,7 +3,7 @@ using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
-    struct HealingUnitUpdMS : IEcsRunSystem
+    struct UpdateHealingUnitMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -11,7 +11,7 @@ namespace Game.Game
             {
                 if (Unit<ConditionUnitC>(idx_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    Unit<UnitCellEC>(idx_0).SetMaxHp();
+                    CellUnitHpEs.SetMaxHp(idx_0);
                 }
             }
         }

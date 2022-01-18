@@ -67,7 +67,7 @@ namespace Game.Game
 
                     case UniqueAbilityTypes.Seed:
                         EntityMPool.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntityMPool.Seed<EnvironmetC>().Environment = (EnvTypes)objects[_idx_cur++];
+                        EntityMPool.Seed<EnvironmetC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
                         break;
 
                     case UniqueAbilityTypes.FireArcher:
@@ -83,7 +83,7 @@ namespace Game.Game
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.ChangeDirWind:
+                    case UniqueAbilityTypes.ChangeDirectionWind:
                         FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
@@ -155,18 +155,19 @@ namespace Game.Game
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case RpcMasterTypes.FromToNewUnit:
-                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
-                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                    case RpcMasterTypes.CreateHeroFromTo:
+                        EntityMPool.CreateHeroFromTo<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntityMPool.CreateHeroFromTo<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case RpcMasterTypes.UpgradeUnit:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                    case RpcMasterTypes.UpgradeCellUnit:
+                        EntityMPool.UpgradeUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        TWDoingMC.Set((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++]);
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        EntityMPool.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
+                        EntityMPool.GiveTakeToolWeapon<LevelTC>().Level = (LevelTypes)objects[_idx_cur++];
+                        EntityMPool.GiveTakeToolWeapon<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.GetHero:
@@ -208,26 +209,26 @@ namespace Game.Game
                     throw new Exception();
 
                 case RpcGeneralTypes.Mistake:
-                    var mistakeType = (MistakeTypes)objects[_idx_cur++];
-                    EntMistakeC.Mistake<MistakeC>().Mistake = mistakeType;
-                    EntMistakeC.Mistake<TimerC>().Reset();
+                    //var mistakeType = (MistakeTypes)objects[_idx_cur++];
+                    //EntMistakeC.Mistake<MistakeC>().Mistake = mistakeType;
+                    //EntMistakeC.Mistake<TimerC>().Reset();
 
-                    if (mistakeType == MistakeTypes.Economy)
-                    {
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = default;
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = default;
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = default;
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = default;
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = default;
+                    //if (mistakeType == MistakeTypes.Economy)
+                    //{
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = default;
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = default;
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = default;
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = default;
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = default;
 
-                        var needRes = (int[])objects[_idx_cur++];
+                    //    var needRes = (int[])objects[_idx_cur++];
 
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = needRes[0];
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = needRes[1];
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = needRes[2];
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = needRes[3];
-                        EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = needRes[4];
-                    }
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = needRes[0];
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = needRes[1];
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = needRes[2];
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = needRes[3];
+                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = needRes[4];
+                    //}
 
                     Sound<ActionC>(ClipTypes.Mistake).Invoke();
                     break;
@@ -278,11 +279,11 @@ namespace Game.Game
                 objs.Add(UnitTW<LevelTC>(idx_0).Level);
                 objs.Add(UnitTW<ProtectionC>(idx_0).Protection);
 
-                objs.Add(Unit<NeedStepsForExitStunC>(idx_0).Steps);
+                objs.Add(CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Amount);
 
                 objs.Add(Unit<IsCornedArcherC>(idx_0).IsCornered);
 
-                foreach (var item in KeysUnique) objs.Add(Unit<CooldownC>(item, idx_0).Cooldown);
+                foreach (var item in CellUnitAbilityUniqueEs.Keys) objs.Add(CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Cooldown);
 
 
 
@@ -333,7 +334,7 @@ namespace Game.Game
 
             foreach (var key in InventorResourcesE.Keys) objs.Add(InventorResourcesE.Resource<AmountC>(key).Amount);
             foreach (var key in EntInventorUnits.Keys) objs.Add(EntInventorUnits.Units<AmountC>(key).Amount);
-            foreach (var key in EntInventorToolWeapon.Keys) objs.Add(EntInventorToolWeapon.ToolWeapons<AmountC>(key).Amount);
+            foreach (var key in InventorToolWeaponE.Keys) objs.Add(InventorToolWeaponE.ToolWeapons<AmountC>(key).Amount);
 
 
             foreach (var key in EntWhereUnits.Keys) objs.Add(EntWhereUnits.HaveUnit<HaveUnitC>(key).Have);
@@ -356,7 +357,7 @@ namespace Game.Game
 
             objs.Add(EntityPool.GameInfo<AmountMotionsC>().Amount);
 
-            objs.Add(CloudEnt.Cloud<IdxC>().Idx);
+            objs.Add(CenterCloudEnt.CenterCloud<IdxC>().Idx);
             //foreach (var item in WindC.Directs) objs.Add(item.Value);
             //objs.Add(WindC.CurDirWind);
 
@@ -382,17 +383,17 @@ namespace Game.Game
             {
                 Unit<UnitCellEC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
-                Unit<ConditionUnitC>(idx_0).Sync((ConditionUnitTypes)objects[_idx_cur++]);
+                Unit<ConditionUnitC>(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
                 foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
-                UnitTW<UnitTWCellEC>(idx_0).Sync((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                UnitTW<UnitTWCellEC>(idx_0).Sync((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
 
 
-                Unit<NeedStepsForExitStunC>(idx_0).Steps = (int)objects[_idx_cur++];
+                CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
 
                 Unit<IsCornedArcherC>(idx_0).IsCornered = (bool)objects[_idx_cur++];
 
-                foreach (var item in KeysUnique) Unit<CooldownC>(item, idx_0).Cooldown = (int)objects[_idx_cur++];
+                foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Cooldown = (int)objects[_idx_cur++];
 
 
 
@@ -437,7 +438,7 @@ namespace Game.Game
 
             foreach (var key in InventorResourcesE.Keys) InventorResourcesE.Resource<AmountC>(key).Amount = (int)objects[_idx_cur++];
             foreach (var key in EntInventorUnits.Keys) EntInventorUnits.Units<AmountC>(key).Amount = (int)objects[_idx_cur++];
-            foreach (var key in EntInventorToolWeapon.Keys) EntInventorToolWeapon.ToolWeapons<AmountC>(key).Amount = (int)objects[_idx_cur++];
+            foreach (var key in InventorToolWeaponE.Keys) InventorToolWeaponE.ToolWeapons<AmountC>(key).Amount = (int)objects[_idx_cur++];
 
 
             foreach (var key in EntWhereUnits.Keys) EntWhereUnits.HaveUnit<HaveUnitC>(key).Have = (bool)objects[_idx_cur++];
@@ -461,7 +462,7 @@ namespace Game.Game
 
             EntityPool.GameInfo<AmountMotionsC>().Amount = (int)objects[_idx_cur++];
 
-            CloudEnt.Cloud<IdxC>().Idx = (byte)objects[_idx_cur++];
+            CenterCloudEnt.CenterCloud<IdxC>().Idx = (byte)objects[_idx_cur++];
             //foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
             //WindC.Sync((DirectTypes)objects[_idx_cur++]);
 

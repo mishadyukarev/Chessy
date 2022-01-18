@@ -13,27 +13,27 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitTC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
-                if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
-                {
-                    if (Environment<AmountC>(env, idx_0).Amount == Max(env))
-                    {
-                        condUnit_0.Condition = ConditionUnitTypes.Protected;
-                    }
-                    else
-                    {
-                        Environment<AmountC>(env, idx_0).Amount += resume;
-                    }
-                }
-                else if (!Unit<UnitCellEC>(idx_0).CanExtract(out resume, out env, out var res))
-                {
-                    if (CellUnitHpEs.HaveMax(idx_0))
-                    {
-                        if (unit_0.Have && CellUnitStepEs.HaveMin(idx_0))
-                        {
-                            condUnit_0.Condition = ConditionUnitTypes.Protected;
-                        }
-                    }
-                }
+                //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
+                //{
+                //    if (Environment<AmountC>(env, idx_0).Amount == Max(env))
+                //    {
+                //        condUnit_0.Condition = ConditionUnitTypes.Protected;
+                //    }
+                //    else
+                //    {
+                //        Environment<AmountC>(env, idx_0).Amount += resume;
+                //    }
+                //}
+                //else if (!Unit<UnitCellEC>(idx_0).CanExtract(out resume, out env, out var res))
+                //{
+                //    if (CellUnitHpEs.HaveMax(idx_0))
+                //    {
+                //        if (unit_0.Have && CellUnitStepEs.HaveMin(idx_0))
+                //        {
+                //            condUnit_0.Condition = ConditionUnitTypes.Protected;
+                //        }
+                //    }
+                //}
             }
         }
     }

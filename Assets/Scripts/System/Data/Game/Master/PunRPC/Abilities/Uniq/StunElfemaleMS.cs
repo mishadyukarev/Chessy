@@ -4,7 +4,7 @@ using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
-    public sealed class StunElfemaleMS : IEcsRunSystem
+    public struct StunElfemaleMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -12,50 +12,50 @@ namespace Game.Game
             UniqueAbilityMC.Get(out var uniq_cur);
 
             var sender = InfoC.Sender(MGOTypes.Master);
-            //var playerSend = WhoseMoveC.WhoseMove;
+            var playerSend = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
-            //ref var ownUnit_from = ref Unit<PlayerC>(idx_from);
+            ref var ownUnit_from = ref Unit<PlayerTC>(idx_from);
 
-            //ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
-            //ref var step_from = ref Unit<UnitCellEC>(idx_from);
+            ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
+            ref var step_from = ref Unit<UnitCellEC>(idx_from);
 
-            //ref var unit_to = ref Unit<UnitC>(idx_to);
-            //ref var ownUnit_to = ref Unit<PlayerC>(idx_to);
-            //ref var eff_to = ref Unit<StunC>(idx_to);
+            ref var unit_to = ref Unit<UnitTC>(idx_to);
+            ref var ownUnit_to = ref Unit<PlayerTC>(idx_to);
+            ref var eff_to = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_to);
 
 
-            //if (!Unit<CooldownC>(uniq_cur, idx_from).HaveCooldown)
-            //{
-            //    if (Unit<VisibledC>(playerSend, idx_to).IsVisibled)
-            //    {
-            //        if (unit_to.Have)
-            //        {
-            //            if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_to).Have)
-            //            {
-            //                if (unitE_from.HaveMax)
-            //                {
-            //                    if (step_from.Have(uniq_cur))
-            //                    {
-            //                        if (!ownUnit_from.Is(ownUnit_to.Player))
-            //                        {
-            //                            eff_to.SetNewStun();
-            //                            Unit<CooldownC>(uniq_cur, idx_from).Cooldown = 3;
+            if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_from).HaveCooldown)
+            {
+                if (Unit<IsVisibleC>(playerSend, idx_to).IsVisible)
+                {
+                    if (unit_to.Have)
+                    {
+                        if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_to).Have)
+                        {
+                            if (CellUnitHpEs.HaveMax(idx_from))
+                            {
+                                if (CellUnitStepEs.Have(idx_from, uniq_cur))
+                                {
+                                    if (!ownUnit_from.Is(ownUnit_to.Player))
+                                    {
+                                        eff_to.Amount = 3;
+                                        CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_from).Cooldown = 3;
 
-            //                            step_from.Take(uniq_cur);
+                                        CellUnitStepEs.Take(idx_from, uniq_cur);
 
-            //                            EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
-            //                        }
-            //                    }
+                                        EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
+                                    }
+                                }
 
-            //                    else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-            //                }
-            //                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
-            //            }
-            //        }
-            //    }
-            //}
+                                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            }
+                            else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                        }
+                    }
+                }
+            }
 
-            //else EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
+            else EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

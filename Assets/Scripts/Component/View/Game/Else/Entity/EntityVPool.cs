@@ -193,7 +193,7 @@ namespace Game.Game
                         case UniqueAbilityTypes.ChangeCornerArcher: throw new Exception();
                         case UniqueAbilityTypes.GrowAdultForest: volume = 0.3f; break;
                         case UniqueAbilityTypes.StunElfemale: volume = 0.3f; break;
-                        case UniqueAbilityTypes.ChangeDirWind: volume = 0.1f; break;
+                        case UniqueAbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
                         case UniqueAbilityTypes.End: throw new Exception();
                         default: throw new Exception();
                     }

@@ -95,7 +95,7 @@ namespace Game.Game
 
             ///Down
             var downZone = CanvasC.FindUnderCurZone("DownZone").transform;
-            new UIEntDownToolWeapon(gameW, downZone);
+            new DownToolWeaponUIEs(gameW, downZone);
             new UIEntDownDoner(gameW, downZone);
             new UIEntDownUpgrade(gameW, downZone);
             var takeUnitZone = downZone.Find("TakeUnitZone");
@@ -145,7 +145,7 @@ namespace Game.Game
 
             new EntInventorUnits(gameW);
             new InventorResourcesE(gameW);
-            new EntInventorToolWeapon(gameW);
+            new InventorToolWeaponE(gameW);
 
             new CellsForSetUnitsEs(gameW);
             new CellsForShiftUnitsEs(gameW);
@@ -158,6 +158,8 @@ namespace Game.Game
             new CellUnitWaterEs(gameW);
             new CellUnitHpEs(gameW);
             new CellUnitStepEs(gameW);
+            new CellUnitStunEs(gameW);
+            new CellUnitAbilityUniqueEs(gameW);
             new CellUnitTWE(gameW);
             new CellTrailEs(gameW);
             new CellBuildE(gameW);
@@ -172,11 +174,14 @@ namespace Game.Game
             new EntMistakeC(gameW);
             new EntHint(gameW);
 
-            new WindEs(gameW);
-            new CloudEnt(gameW);
+            new CurrentDirectWindE(gameW);
+            new CenterCloudEnt(gameW);
+            new DirectsWindForElfemaleE(gameW);
+
             new AvailableCenterUpgradeEs(gameW);
             new AvailableCenterHeroEs(gameW);
 
+            new SelectedToolWeaponE(gameW);
 
 
             new EntityMPool(gameW);
@@ -205,23 +210,23 @@ namespace Game.Game
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= envValues.StartPercent(EnvTypes.Mountain))
+                            if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
                             {
-                                SetNew(EnvTypes.Mountain, idx_0);
+                                SetNew(EnvironmentTypes.Mountain, idx_0);
                             }
 
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= envValues.StartPercent(EnvTypes.AdultForest))
+                                if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                                 {
-                                    SetNew(EnvTypes.AdultForest, idx_0);
+                                    SetNew(EnvironmentTypes.AdultForest, idx_0);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= envValues.StartPercent(EnvTypes.Hill))
+                                if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.Hill))
                                 {
-                                    SetNew(EnvTypes.Hill, idx_0);
+                                    SetNew(EnvironmentTypes.Hill, idx_0);
                                 }
                             }
                         }
@@ -229,16 +234,16 @@ namespace Game.Game
                         else
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= envValues.StartPercent(EnvTypes.AdultForest))
+                            if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                             {
-                                SetNew(EnvTypes.AdultForest, idx_0);
+                                SetNew(EnvironmentTypes.AdultForest, idx_0);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= envValues.StartPercent(EnvTypes.Fertilizer))
+                                if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.Fertilizer))
                                 {
-                                    SetNew(EnvTypes.Fertilizer, idx_0);
+                                    SetNew(EnvironmentTypes.Fertilizer, idx_0);
                                 }
                             }
                         }
@@ -246,7 +251,7 @@ namespace Game.Game
                         if (xy_0[0] == 5 && xy_0[1] == 5)
                         {
                             cloud_0.Have = true;
-                            CloudEnt.Cloud<IdxC>().Idx = idx_0;
+                            CenterCloudEnt.CenterCloud<IdxC>().Idx = idx_0;
 
                             CellSpaceC.TryGetXyAround(xy_0, out var dirs);
                             foreach (var item in dirs)
@@ -325,8 +330,8 @@ namespace Game.Game
 
                     if (x == 7 && y == 8)
                     {
-                        Remove(EnvTypes.Mountain, idx_0);
-                        Remove(EnvTypes.AdultForest, idx_0);
+                        Remove(EnvironmentTypes.Mountain, idx_0);
+                        Remove(EnvironmentTypes.AdultForest, idx_0);
 
                         Unit<UnitCellEC>(idx_0).SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second));
 
@@ -335,8 +340,8 @@ namespace Game.Game
 
                     else if (x == 8 && y == 8)
                     {
-                        Remove(EnvTypes.Mountain, idx_0);
-                        Remove(EnvTypes.AdultForest, idx_0);
+                        Remove(EnvironmentTypes.Mountain, idx_0);
+                        Remove(EnvironmentTypes.AdultForest, idx_0);
 
 
                         CellBuildE.SetNew(BuildingTypes.City, PlayerTypes.Second, idx_0);
@@ -344,17 +349,17 @@ namespace Game.Game
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
                     {
-                        Remove(EnvTypes.Mountain, idx_0);
+                        Remove(EnvironmentTypes.Mountain, idx_0);
 
                         int rand = UnityEngine.Random.Range(0, 100);
 
                         if (rand >= 50)
                         {
-                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(TWTypes.Sword, LevelTypes.Second);
+                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(ToolWeaponTypes.Sword, LevelTypes.Second);
                         }
                         else
                         {
-                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(TWTypes.Shield, LevelTypes.First);
+                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(ToolWeaponTypes.Shield, LevelTypes.First);
                         }
 
                         Unit<UnitCellEC>(idx_0).SetNew((UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second));

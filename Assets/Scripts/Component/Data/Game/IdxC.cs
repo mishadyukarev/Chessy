@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct IdxC : ISelectedIdx, ICurrectIdx, IPreVisionIdx, ICloud
+    public struct IdxC : ISelectedIdx, ICurrectIdx, IPreVisionIdx, ICenterCloud
     {
         public byte Idx;
 

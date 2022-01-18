@@ -19,10 +19,10 @@
         SetUnit,
         Sound,
         GetHero,
-        UpgradeUnit,
+        UpgradeCellUnit,
 
         ToNewUnit,
-        FromToNewUnit,
+        CreateHeroFromTo,
 
         GiveTakeToolWeapon,
         BuyRes,

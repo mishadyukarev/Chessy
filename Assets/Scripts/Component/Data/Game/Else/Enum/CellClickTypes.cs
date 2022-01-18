@@ -6,14 +6,13 @@
         Start = None,
 
         SimpleClick,
-        First = SimpleClick,
 
         SetUnit,
         GiveTakeTW,
         UpgradeUnit,
         GiveScout,
         GiveHero,
-        UniqAbil,
+        UniqueAbility,
 
         //FirstClick,
         //AllOtherClicks,

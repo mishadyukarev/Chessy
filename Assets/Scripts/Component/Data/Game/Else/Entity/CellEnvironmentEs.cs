@@ -6,16 +6,16 @@ namespace Game.Game
 {
     public readonly struct CellEnvironmentEs
     {
-        static Dictionary<EnvTypes, Entity[]> _envEnts;
+        static Dictionary<EnvironmentTypes, Entity[]> _envEnts;
         static EnvironmentValues _values;
 
-        public static ref T Environment<T>(in EnvTypes env, in byte idx) where T : struct, IEnvCell => ref _envEnts[env][idx].Get<T>();
+        public static ref T Environment<T>(in EnvironmentTypes env, in byte idx) where T : struct, IEnvCell => ref _envEnts[env][idx].Get<T>();
 
-        public static HashSet<EnvTypes> Enviroments
+        public static HashSet<EnvironmentTypes> Enviroments
         {
             get
             {
-                var hash = new HashSet<EnvTypes>();
+                var hash = new HashSet<EnvironmentTypes>();
                 foreach (var item in _envEnts) hash.Add(item.Key);
                 return hash;
             }
@@ -23,9 +23,9 @@ namespace Game.Game
 
         public CellEnvironmentEs(in EcsWorld gameW)
         {
-            _envEnts = new Dictionary<EnvTypes, Entity[]>();
+            _envEnts = new Dictionary<EnvironmentTypes, Entity[]>();
 
-            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
+            for (var env = EnvironmentTypes.First; env < EnvironmentTypes.End; env++)
             {
                 _envEnts.Add(env, new Entity[CellValues.ALL_CELLS_AMOUNT]);
 
@@ -42,7 +42,7 @@ namespace Game.Game
             _values = new EnvironmentValues();
         }
 
-        public static void SetNew(in EnvTypes env, in byte idx)
+        public static void SetNew(in EnvironmentTypes env, in byte idx)
         {
             if (env == default) throw new Exception();
 
@@ -51,11 +51,11 @@ namespace Game.Game
 
             var forMin = 3;
 
-            if (env == EnvTypes.Fertilizer || env == EnvTypes.AdultForest)
+            if (env == EnvironmentTypes.Fertilizer || env == EnvironmentTypes.AdultForest)
             {
                 randAmountRes = (byte)UnityEngine.Random.Range(_values.MaxAmount(env) / forMin, _values.MaxAmount(env) + 1);
             }
-            else if (env == EnvTypes.Hill)
+            else if (env == EnvironmentTypes.Hill)
             {
                 randAmountRes = (byte)(_values.MaxAmount(env) / forMin);
             }
@@ -66,13 +66,13 @@ namespace Game.Game
             EntWhereEnviroments.HaveEnv<HaveEnvC>(env, idx).Have = true;
             Environment<HaveEnvironmentC>(env, idx).Have = true;
         }
-        public static void Remove(in EnvTypes env, in byte _idx)
+        public static void Remove(in EnvironmentTypes env, in byte _idx)
         {
             if (env == default) throw new Exception();
 
             if (Environment<HaveEnvironmentC>(env, _idx).Have)
             {
-                if (env == EnvTypes.AdultForest)
+                if (env == EnvironmentTypes.AdultForest)
                 {
                     CellTrailEs.Trail<TrailCellEC>(_idx).ResetAll();
                     CellFireEs.Fire<HaveEffectC>(_idx).Disable();
@@ -85,6 +85,6 @@ namespace Game.Game
             }
         }
 
-        public static byte Max(in EnvTypes env) => _values.MaxAmount(env);
+        public static byte Max(in EnvironmentTypes env) => _values.MaxAmount(env);
     }
 }

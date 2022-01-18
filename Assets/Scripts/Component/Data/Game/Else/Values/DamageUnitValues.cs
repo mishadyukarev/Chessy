@@ -55,14 +55,14 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal float PercentTW(TWTypes tw)
+        internal float PercentTW(ToolWeaponTypes tw)
         {
             switch (tw)
             {
-                case TWTypes.None: return 0;
-                case TWTypes.Pick: return 0;
-                case TWTypes.Sword: return 0.5f;
-                case TWTypes.Shield: return 0;
+                case ToolWeaponTypes.None: return 0;
+                case ToolWeaponTypes.Pick: return 0;
+                case ToolWeaponTypes.Sword: return 0.5f;
+                case ToolWeaponTypes.Shield: return 0;
                 default: throw new Exception();
             }
         }
@@ -80,16 +80,16 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal float ProtectionPercent(EnvTypes env)
+        internal float ProtectionPercent(EnvironmentTypes env)
         {
             switch (env)
             {
-                case EnvTypes.None: throw new Exception();
-                case EnvTypes.Fertilizer: return -0.2f;
-                case EnvTypes.YoungForest: return 0;
-                case EnvTypes.AdultForest: return 0.2f;
-                case EnvTypes.Hill: return 0.2f;
-                case EnvTypes.Mountain: return 0;
+                case EnvironmentTypes.None: throw new Exception();
+                case EnvironmentTypes.Fertilizer: return -0.2f;
+                case EnvironmentTypes.YoungForest: return 0;
+                case EnvironmentTypes.AdultForest: return 0.2f;
+                case EnvironmentTypes.Hill: return 0.2f;
+                case EnvironmentTypes.Mountain: return 0;
                 default: throw new Exception();
             }
         }

@@ -1,8 +1,9 @@
-﻿using static Game.Game.CellUnitEs;
+﻿using Photon.Pun;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
-    public struct ChangeDirWindMS : IEcsRunSystem
+    public struct ChangeDirectionWindElfemaleMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -20,16 +21,18 @@ namespace Game.Game
             {
                 if (CellUnitStepEs.Have(idx_from, uniq_cur))
                 {
-                    //if (WindC.Have(idx_to))
-                    //{
-                    //    WindC.Set(idx_to);
+                    var newDir = CellSpaceC.GetDirect(CenterCloudEnt.CenterCloud<IdxC>().Idx, idx_to);
 
-                    //    Unit<UnitCellEC>(idx_from).Take(uniq_cur);
+                    if(newDir != DirectTypes.None)
+                    {
+                        CurrentDirectWindE.Direct<DirectTC>().Direct = newDir;
 
-                    //    Unit<CooldownC>(uniq_cur, idx_from).Cooldown = 6;
+                        CellUnitStepEs.Take(idx_from, uniq_cur);
 
-                    //    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
-                    //}
+                        CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_from).Cooldown = 6;
+
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
+                    }
                 }
 
                 else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);

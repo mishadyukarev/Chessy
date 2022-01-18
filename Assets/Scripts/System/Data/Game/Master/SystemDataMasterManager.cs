@@ -20,15 +20,14 @@ namespace Game.Game
         {
             var action =
                 (Action)new UpdatorMS().Run
-                + new UpdatorMS().Run
                 + new ExtractBuildUpdMS().Run
-                + new FireUpdMS().Run
+                + new UpdateFireMS().Run
                 + new CloudUpdMS().Run
 
-                + new ExtractUnitUpdMS().Run
+                + new UpdateExtractUnitMS().Run
                 + new ResumeUnitUpdMS().Run
-                + new HealingUnitUpdMS().Run
-                + new HungryUpdMS().Run
+                + new UpdateHealingUnitMS().Run
+                + new UpdateHungryMS().Run
                 + new ThirstyUpdMS().Run;
             _systems.Add(SystemDataMasterTypes.Update, action);
 
@@ -50,12 +49,12 @@ namespace Game.Game
             _rpcSysts.Add(RpcMasterTypes.CreateUnit, new CreateUnitMS().Run);
             _rpcSysts.Add(RpcMasterTypes.MeltOre, new MeltOreMS().Run);
             _rpcSysts.Add(RpcMasterTypes.SetUnit, new SetterUnitMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.BuyRes, new BuyResMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.UpgradeUnit, new UpgUnitMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.BuyRes, new BuyResourcesMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgradeCellUnit, new UpgradeUnitMS().Run);
             _rpcSysts.Add(RpcMasterTypes.ToNewUnit, new ScoutOldNewSys().Run);
-            _rpcSysts.Add(RpcMasterTypes.GiveTakeToolWeapon, new GiveTakeTWMasSys().Run);
+            _rpcSysts.Add(RpcMasterTypes.GiveTakeToolWeapon, new GiveTakeToolWeaponMS().Run);
             _rpcSysts.Add(RpcMasterTypes.GetHero, new GetHeroMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.FromToNewUnit, new FromToNewUnitMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.CreateHeroFromTo, new FromToNewUnitMS().Run);
             _rpcSysts.Add(RpcMasterTypes.UpgUnits, new PickUpgUnitsMS().Run);
             _rpcSysts.Add(RpcMasterTypes.UpgCenterBuild, new PickUpgBuildsMS().Run);
             _rpcSysts.Add(RpcMasterTypes.UpgWater, new WaterUpgMS().Run);
@@ -69,7 +68,7 @@ namespace Game.Game
             _uniqAbil.Add(UniqueAbilityTypes.GrowAdultForest, new GrowAdultForestMS().Run);
             _uniqAbil.Add(UniqueAbilityTypes.CircularAttack, new CircularAttackKingMS().Run);
             _uniqAbil.Add(UniqueAbilityTypes.BonusNear, new BonusNearUnitKingMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.ChangeDirWind, new ChangeDirWindMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.ChangeDirectionWind, new ChangeDirectionWindElfemaleMS().Run);
             _uniqAbil.Add(UniqueAbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS().Run);
         }
 

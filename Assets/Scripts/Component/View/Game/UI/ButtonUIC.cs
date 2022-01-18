@@ -16,6 +16,11 @@ namespace Game.Game
             set => _button.image.color = value;
         }
         public bool IsActiveParent => _button.transform.parent.gameObject.activeSelf;
+        public bool IsEnabled
+        {
+            get => _button.enabled;
+            set => _button.enabled = value;
+        }
 
         public ButtonUIC(Button button) => _button = button;
 

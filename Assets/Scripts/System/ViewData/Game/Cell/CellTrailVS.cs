@@ -13,7 +13,7 @@ namespace Game.Game
 
                 foreach (var item in trailData_0.DictTrail)
                 {
-                    if (Trail<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
+                    if (Trail<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                     {
                         CellTrailVEs.TrailCellVC<SpriteRendererVC>(item.Key, idx_0).SetActive(trailData_0.Have(item.Key));
                     }

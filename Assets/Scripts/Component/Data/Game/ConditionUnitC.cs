@@ -35,6 +35,5 @@ namespace Game.Game
         {
             Condition = default;
         }
-        public void Sync(ConditionUnitTypes cond) => Condition = cond;
     }
 }

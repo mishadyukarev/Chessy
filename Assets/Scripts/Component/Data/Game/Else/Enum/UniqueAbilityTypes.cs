@@ -22,7 +22,7 @@
         //Elfemale
         GrowAdultForest,
         StunElfemale,
-        ChangeDirWind,
+        ChangeDirectionWind,
 
         End
     }

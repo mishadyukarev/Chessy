@@ -7,45 +7,60 @@ namespace Game.Game
 {
     public readonly struct CenterSelectorUIE
     {
-        static readonly Dictionary<CellClickTypes, Entity> _sel;
-        static readonly Dictionary<UniqueAbilityTypes, Entity> _uniq;
+        static Dictionary<CellClickTypes, Entity> _sel;
+        static Dictionary<UniqueAbilityTypes, Entity> _uniq;
 
         public static ref C SelectorUI<C>(in CellClickTypes click) where C : struct => ref _sel[click].Get<C>();
         public static ref C SelectorUI<C>(in UniqueAbilityTypes uniq) where C : struct => ref _uniq[uniq].Get<C>();
 
 
-        static CenterSelectorUIE()
+        public static HashSet<CellClickTypes> KeysClick
+        {
+            get
+            {
+                var keys = new HashSet<CellClickTypes>();
+                foreach (var item in _sel) keys.Add(item.Key);
+                return keys;
+            }
+        }
+        public static HashSet<UniqueAbilityTypes> KeysUnique
+        {
+            get
+            {
+                var keys = new HashSet<UniqueAbilityTypes>();
+                foreach (var item in _uniq) keys.Add(item.Key);
+                return keys;
+            }
+        }
+
+        public CenterSelectorUIE(in EcsWorld gameW, in Transform centerZone)
         {
             _sel = new Dictionary<CellClickTypes, Entity>();
             _uniq = new Dictionary<UniqueAbilityTypes, Entity>();
 
-            for (var click = CellClickTypes.Start; click < CellClickTypes.End; click++) _sel.Add(click, default);
-            for (var uniq = UniqueAbilityTypes.Start; uniq < UniqueAbilityTypes.End; uniq++) _uniq.Add(uniq, default);
-        }
-        public CenterSelectorUIE(in EcsWorld gameW, in Transform centerZone)
-        {
-            var selZone = centerZone.transform.Find("SelectorTypeZone");
 
-            for (var click = CellClickTypes.SetUnit; click <= CellClickTypes.UniqAbil; click++)
+            var selZone = centerZone.transform.Find("SelectorType");
+
+            for (var click = CellClickTypes.SimpleClick; click <= CellClickTypes.UniqueAbility; click++)
             {
                 click = (CellClickTypes)((int)click);
                 var str = click.ToString();
                 var go = selZone.Find(str).gameObject;
 
-                _sel[click] = gameW.NewEntity()
-                    .Add(new GameObjectVC(go));
+                _sel.Add(click, gameW.NewEntity()
+                    .Add(new GameObjectVC(go)));
 
 
-                if (click == CellClickTypes.UniqAbil)
+                if (click == CellClickTypes.UniqueAbility)
                 {
-                    _uniq[UniqueAbilityTypes.FireArcher] = gameW.NewEntity()
-                        .Add(new GameObjectVC(go.transform.Find(UniqueAbilityTypes.FireArcher.ToString()).gameObject));
+                    _uniq.Add(UniqueAbilityTypes.FireArcher, gameW.NewEntity()
+                        .Add(new GameObjectVC(go.transform.Find(UniqueAbilityTypes.FireArcher.ToString()).gameObject)));
 
-                    _uniq[UniqueAbilityTypes.StunElfemale] = gameW.NewEntity()
-                        .Add(new GameObjectVC(go.transform.Find(UniqueAbilityTypes.StunElfemale.ToString()).gameObject));
+                    _uniq.Add(UniqueAbilityTypes.StunElfemale, gameW.NewEntity()
+                        .Add(new GameObjectVC(go.transform.Find(UniqueAbilityTypes.StunElfemale.ToString()).gameObject)));
 
-                    _uniq[UniqueAbilityTypes.ChangeDirWind] = gameW.NewEntity()
-                        .Add(new GameObjectVC(go.transform.Find(UniqueAbilityTypes.ChangeDirWind.ToString()).gameObject));
+                    _uniq.Add(UniqueAbilityTypes.ChangeDirectionWind, gameW.NewEntity()
+                        .Add(new GameObjectVC(go.transform.Find(UniqueAbilityTypes.ChangeDirectionWind.ToString()).gameObject)));
                 }
             }
         }

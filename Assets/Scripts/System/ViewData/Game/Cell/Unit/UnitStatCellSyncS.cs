@@ -30,7 +30,7 @@ namespace Game.Game
                 Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
-                if (Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_0).IsVisibled)
+                if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                 {
                     if (unit_0.Have)
                     {

@@ -7,7 +7,6 @@ namespace Game.Game
     public struct EntInventorUnits
     {
         static Dictionary<string, Entity> _units;
-        static EconomyValues _values;
 
         static string Key(UnitTypes unit, LevelTypes level, PlayerTypes player) => unit.ToString() + level + player;
 
@@ -27,7 +26,6 @@ namespace Game.Game
         public EntInventorUnits(in EcsWorld gameW)
         {
             _units = new Dictionary<string, Entity>();
-            _values = new EconomyValues();
 
             for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
             {
@@ -36,7 +34,7 @@ namespace Game.Game
                     for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                     {
                         _units.Add(Key(unit, level, player), gameW.NewEntity()
-                            .Add(new AmountC(_values.StartAmountUnits(unit, level))));
+                            .Add(new AmountC(EconomyValues.StartAmountUnits(unit, level))));
                     }
                 }
             }

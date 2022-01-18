@@ -18,7 +18,7 @@ namespace Game.Game
 
                         ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
 
-                        if (!Unit<NeedStepsForExitStunC>(idx_from).IsStunned && Unit<UnitTC>(idx_from).Have
+                        if (!CellUnitStunEs.StepsForExitStun<AmountC>(idx_from).Have && Unit<UnitTC>(idx_from).Have
                             && Unit<PlayerTC>(idx_from).Is(player))
                         {
                             CellSpaceC.TryGetIdxAround(idx_from, out var directs);
@@ -27,7 +27,7 @@ namespace Game.Game
                             {
                                 var idx_to = item_1.Value;
 
-                                if (idx_to == item_1.Value && !Environment<HaveEnvironmentC>(EnvTypes.Mountain, idx_to).Have && !Unit<UnitTC>(idx_to).Have)
+                                if (idx_to == item_1.Value && !Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_to).Have && !Unit<UnitTC>(idx_to).Have)
                                 {
                                     var one = CellUnitStepEs.HaveStepsForDoing(idx_from, idx_to);
                                     var two = CellUnitStepEs.HaveMaxSteps(idx_from);

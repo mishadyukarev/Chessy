@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct EntInventorToolWeapon
+    public struct InventorToolWeaponE
     {
         static Dictionary<string, Entity> _tWs;
 
-        static string Key(in TWTypes tw, in LevelTypes level, in PlayerTypes player) => tw.ToString() + level + player;
+        static string Key(in ToolWeaponTypes tw, in LevelTypes level, in PlayerTypes player) => tw.ToString() + level + player;
 
-        public static ref C ToolWeapons<C>(in TWTypes tw, in LevelTypes level, in PlayerTypes player) where C : struct => ref _tWs[Key(tw, level, player)].Get<C>();
+        public static ref C ToolWeapons<C>(in ToolWeaponTypes tw, in LevelTypes level, in PlayerTypes player) where C : struct => ref _tWs[Key(tw, level, player)].Get<C>();
         public static ref C ToolWeapons<C>(in string key) where C : struct => ref _tWs[key].Get<C>();
 
         public static HashSet<string> Keys
@@ -22,11 +22,11 @@ namespace Game.Game
             }
         }
 
-        static EntInventorToolWeapon()
+        static InventorToolWeaponE()
         {
             _tWs = new Dictionary<string, Entity>();
 
-            for (var tw = TWTypes.Pick; tw < TWTypes.End; tw++)
+            for (var tw = ToolWeaponTypes.Pick; tw < ToolWeaponTypes.End; tw++)
             {
                 for (var level = LevelTypes.First; level < LevelTypes.End; level++)
                 {
@@ -37,7 +37,7 @@ namespace Game.Game
                 }
             }
         }
-        public EntInventorToolWeapon(in EcsWorld gameW)
+        public InventorToolWeaponE(in EcsWorld gameW)
         {
             foreach (var key in Keys)
             {

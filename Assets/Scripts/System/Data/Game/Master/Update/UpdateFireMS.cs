@@ -7,7 +7,7 @@ using static Game.Game.EntityCellCloudPool;
 
 namespace Game.Game
 {
-    struct FireUpdMS : IEcsRunSystem
+    struct UpdateFireMS : IEcsRunSystem
     {
         public void Run()
         {
@@ -22,7 +22,6 @@ namespace Game.Game
                 ref var hpUnitCell_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
 
-                ref var buildE_0 = ref Build<BuildCellEC>(idx_0);
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
 
@@ -38,30 +37,29 @@ namespace Game.Game
 
                 if (fire_0.Have)
                 {
-                    Environment<AmountC>(EnvTypes.AdultForest, idx_0).Amount -= 2;
+                    Environment<AmountC>(EnvironmentTypes.AdultForest, idx_0).Amount -= 2;
 
                     if (unit_0.Have)
                     {
-                        hpUnitCell_0.TakeFire();
-
-                        if (!hpUnit_0.Have)
+                        CellUnitHpEs.TakeFire(idx_0);
+                        if (!CellUnitHpEs.Hp<AmountC>(idx_0).Have)
                         {
-                            Unit<UnitCellEC>(idx_0).Kill();
+                            CellUnitEs.Kill(idx_0);
                         }
                     }
 
 
 
-                    if (!Environment<AmountC>(EnvTypes.AdultForest, idx_0).Have)
+                    if (!Environment<AmountC>(EnvironmentTypes.AdultForest, idx_0).Have)
                     {
                         CellBuildE.Remove(idx_0);
 
-                        Remove(EnvTypes.AdultForest, idx_0);
+                        Remove(EnvironmentTypes.AdultForest, idx_0);
 
 
                         if (UnityEngine.Random.Range(0, 100) < 50)
                         {
-                            SetNew(EnvTypes.YoungForest, idx_0);
+                            SetNew(EnvironmentTypes.YoungForest, idx_0);
                         }
 
 
@@ -75,7 +73,7 @@ namespace Game.Game
 
                             if (Cell<IsActiveC>(curIdxCell1).IsActive)
                             {
-                                if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, curIdxCell1).Have)
+                                if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, curIdxCell1).Have)
                                 {
                                     Fire<HaveEffectC>(curIdxCell1).Enable();
                                 }

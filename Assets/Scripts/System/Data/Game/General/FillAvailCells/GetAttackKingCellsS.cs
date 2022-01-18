@@ -1,10 +1,10 @@
-﻿namespace Game.Game
-{
-    public struct GetAttackKingCellsS : IEcsRunSystem
-    {
-        public void Run()
-        {
+﻿//namespace Game.Game
+//{
+//    public struct GetAttackKingCellsS : IEcsRunSystem
+//    {
+//        public void Run()
+//        {
 
-        }
-    }
-}
+//        }
+//    }
+//}

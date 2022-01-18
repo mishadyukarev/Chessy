@@ -18,19 +18,19 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
 
-            if (!Unit<CooldownC>(uniq_cur, idx_0).HaveCooldown)
+            if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_0).HaveCooldown)
             {
                 if (CellUnitStepEs.Have(idx_0, uniq_cur))
                 {
-                    if (Environment<HaveEnvironmentC>(EnvTypes.YoungForest, idx_0).Have)
+                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.YoungForest, idx_0).Have)
                     {
-                        Remove(EnvTypes.YoungForest, idx_0);
+                        Remove(EnvironmentTypes.YoungForest, idx_0);
 
-                        SetNew(EnvTypes.AdultForest, idx_0);
+                        SetNew(EnvironmentTypes.AdultForest, idx_0);
 
-                        stepUnit_0.Take(uniq_cur);
+                        CellUnitStepEs.Take(idx_0, uniq_cur);
 
-                        Unit<CooldownC>(uniq_cur, idx_0).Cooldown = 5;
+                        CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_0).Cooldown = 5;
 
                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 

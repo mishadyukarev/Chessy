@@ -9,9 +9,9 @@ namespace Game.Game
         static Dictionary<string, Entity> _envs;
 
 
-        static string Key(in EnvTypes env, in byte idx) => env.ToString() + idx;
+        static string Key(in EnvironmentTypes env, in byte idx) => env.ToString() + idx;
 
-        public static ref C HaveEnv<C>(in EnvTypes env, in byte idx) where C : struct => ref _envs[Key(env, idx)].Get<C>();
+        public static ref C HaveEnv<C>(in EnvironmentTypes env, in byte idx) where C : struct => ref _envs[Key(env, idx)].Get<C>();
         public static ref C HaveEnv<C>(in string key) where C : struct => ref _envs[key].Get<C>();
 
         public static HashSet<string> Keys
@@ -29,7 +29,7 @@ namespace Game.Game
         {
             _envs = new Dictionary<string, Entity>();
 
-            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
+            for (var env = EnvironmentTypes.First; env < EnvironmentTypes.End; env++)
             {
                 for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
                 {

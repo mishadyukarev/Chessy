@@ -1,5 +1,6 @@
 ﻿using Game.Common;
 using System;
+using UnityEngine;
 using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
 
@@ -10,6 +11,7 @@ namespace Game.Game
         public void Run()
         {
             var idx_cur = CurIdx<IdxC>().Idx;
+            var idx_sel = SelIdx<IdxC>().Idx;
 
             ref var unit_cur = ref Unit<UnitTC>(idx_cur);
             ref var levUnit_cur = ref Unit<LevelTC>(idx_cur);
@@ -19,7 +21,6 @@ namespace Game.Game
 
             ref var raycast = ref ClickerObject<RayCastC>();
             ref var cellClick = ref ClickerObject<CellClickC>();
-
 
             if (Input<IsClickedC>().IsClicked)
             {
@@ -40,7 +41,7 @@ namespace Game.Game
                                 {
                                     if (SelIdx<SelIdxEC>().IsSelCell)
                                     {
-                                        if (CellsForAttackUnitsEs.CanAttack(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx, out var attack))
+                                        if (CellsForAttackUnitsEs.CanAttack(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx, WhoseMoveE.CurPlayerI, out var attack))
                                         {
                                             Rpc<RpcC>().AttackUnitToMaster(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                         }
@@ -112,7 +113,7 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                     {
-                                        //EntityPool.Rpc<RpcC>().GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx<IdxC>().Idx);
+                                        Rpc<RpcC>().GiveTakeToolWeapon(SelectedToolWeaponE.SelectedTW<ToolWeaponC>().ToolWeapon, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, CurIdx<IdxC>().Idx);
                                     }
                                     else
                                     {
@@ -153,37 +154,57 @@ namespace Game.Game
 
                             case CellClickTypes.GiveHero:
                                 {
-                                    if (unit_cur.Is(UnitTypes.Archer))
+                                    if (SelIdx<IdxC>().Idx == 0)
                                     {
-                                        if (unit_sel.Is(UnitTypes.Archer))
-                                        {
-                                            EntityPool.Rpc<RpcC>().FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
-                                            cellClick.Click = CellClickTypes.SimpleClick;
+                                        SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
 
+                                        if (unit_cur.Is(UnitTypes.Archer))
+                                        {
                                             EntitySound.Sound<ActionC>(ClipTypes.PickArcher).Invoke();
                                         }
-
-                                        EntitySound.Sound<ActionC>(ClipTypes.ClickToTable).Invoke();
+                                        else
+                                        {
+                                            cellClick.Click = CellClickTypes.SimpleClick;
+                                        }
                                     }
                                     else
                                     {
-                                        cellClick.Click = CellClickTypes.SimpleClick;
-                                    }
+                                        if (idx_cur != idx_sel)
+                                        {
+                                            if (unit_cur.Is(UnitTypes.Archer))
+                                            {
+                                                if (unit_sel.Is(UnitTypes.Archer))
+                                                {
+                                                    EntityPool.Rpc<RpcC>().FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                                    cellClick.Click = CellClickTypes.SimpleClick;
+                                                }
 
-                                    SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
+                                                EntitySound.Sound<ActionC>(ClipTypes.ClickToTable).Invoke();
+                                            }
+                                            else
+                                            {
+                                                cellClick.Click = CellClickTypes.SimpleClick;
+                                            }
+
+                                            SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
+                                        }
+                                    }
                                 }
                                 break;
 
-                            case CellClickTypes.UniqAbil:
+                            case CellClickTypes.UniqueAbility:
                                 {
                                     if (SelUniqAbilC.Is(UniqueAbilityTypes.FireArcher))
                                     {
                                         EntityPool.Rpc<RpcC>().FireArcherToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
                                     }
 
-                                    else if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirWind))
+                                    else if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                                     {
-                                        EntityPool.Rpc<RpcC>().PutOutFireElffToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                        if (DirectsWindForElfemaleE.IdxsDirects.Contains(CurIdx<IdxC>().Idx))
+                                        {
+                                            EntityPool.Rpc<RpcC>().PutOutFireElffToMas(SelIdx<IdxC>().Idx, CurIdx<IdxC>().Idx);
+                                        }    
                                     }
 
                                     else if (SelUniqAbilC.Is(UniqueAbilityTypes.StunElfemale))
@@ -192,7 +213,6 @@ namespace Game.Game
                                     }
 
                                     cellClick.Click = CellClickTypes.SimpleClick;
-                                    //cellClick.Set(CellClickTypes.FirstClick);
                                     SelIdx<IdxC>().Idx = CurIdx<IdxC>().Idx;
                                 }
                                 break;
@@ -219,7 +239,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !Unit<IsVisibledC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisibled)
+                        if (!unit_cur.Have || !Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
                         {
                             if (CurIdx<CurIdxC>().IsStartDirectToCell)
                             {

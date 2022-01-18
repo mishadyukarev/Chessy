@@ -13,13 +13,12 @@ namespace Game.Game
     {
         public void Run()
         {
-            //InvResC.AddStandartValues();
-
-
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
                 EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, player).Cooldown -= 1;
                 EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, player).Cooldown -= 1;
+
+                InventorResourcesE.Resource<AmountC>(ResTypes.Food, player).Add(EconomyValues.ADDING_FOOD_AFTER_MOVE);
             }
 
             foreach (byte idx_0 in Idxs)
@@ -34,7 +33,6 @@ namespace Game.Game
                 ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
-                ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
@@ -42,21 +40,21 @@ namespace Game.Game
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
-                foreach (var item in KeysUnique) Unit<CooldownC>(item, idx_0).Take();
-                Unit<NeedStepsForExitStunC>(idx_0).Steps -= 1;
+                foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Take();
+                CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Take();
 
 
                 if (unit_0.Have)
                 {
                     AmountStepsInCondition<AmountC>(condUnit_0.Condition, idx_0).Add();
 
-                    if (!unit_0.Is(UnitTypes.King)) InventorResourcesE.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Amount -= 1;
+                    InventorResourcesE.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Take(EconomyValues.CostFood(unit_0.Unit));
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
                         if (ownUnit_0.Is(PlayerTypes.Second))
                         {
-                            unitE_0.SetMaxHp();
+                            CellUnitHpEs.SetMaxHp(idx_0);
                         }
                     }
 
@@ -80,12 +78,10 @@ namespace Game.Game
                                         {
                                             if (ownUnit_0.Is(PlayerTypes.First))
                                             {
-                                                //if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
-                                                //{
-                                                //    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
-
-                                                //    Build<BuildCellEC>(idxCamp).Remove();
-                                                //}
+                                                if (WhereBuildsE.IsSetted(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
+                                                {
+                                                    Build<BuildingTC>(idx_camp).Reset();
+                                                }
 
 
                                                 CellBuildE.SetNew(BuildingTypes.Camp, ownUnit_0.Player, idx_0);
@@ -93,12 +89,10 @@ namespace Game.Game
                                         }
                                         else
                                         {
-                                            //if (WhereBuildsC.IsSetted(BuildTypes.Camp, ownUnit_0.Player))
-                                            //{
-                                            //    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, ownUnit_0.Player);
-
-                                            //    Build<BuildCellEC>(idxCamp).Remove();
-                                            //}
+                                            if (WhereBuildsE.IsSetted(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
+                                            {
+                                                Build<BuildingTC>(idx_camp).Reset();
+                                            }
 
                                             CellBuildE.SetNew(BuildingTypes.Camp, ownUnit_0.Player, idx_0);
                                         }
@@ -123,7 +117,7 @@ namespace Game.Game
             var amountAdultForest = 0;
             foreach (var idx in Idxs)
             {
-                if (EntWhereEnviroments.HaveEnv<HaveEnvC>(EnvTypes.AdultForest, idx).Have)
+                if (EntWhereEnviroments.HaveEnv<HaveEnvC>(EnvironmentTypes.AdultForest, idx).Have)
                     amountAdultForest += 1;
             }
 
@@ -139,13 +133,13 @@ namespace Game.Game
                 {
                     ref var build_0 = ref Build<BuildingTC>(idx_0);
 
-                    if (Environment<HaveEnvironmentC>(EnvTypes.Hill, idx_0).Have)
+                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx_0).Have)
                     {
                         if (!build_0.Is(BuildingTypes.Mine))
                         {
-                            if (Environment<AmountC>(EnvTypes.Hill, idx_0).Amount != Max(EnvTypes.Hill))
+                            if (Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Amount != Max(EnvironmentTypes.Hill))
                             {
-                                Environment<AmountC>(EnvTypes.Hill, idx_0).Amount += 1;
+                                Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Amount += 1;
                             }
                         }
                     }

@@ -45,19 +45,6 @@ namespace Game.Game
                 }
             }
         }
-        public int CostFood
-        {
-            get
-            {
-                if (Have)
-                {
-                    if (!Is(UnitTypes.King)) return 10;
-                    return 0;
-                }
-
-                return 0;
-            }
-        }
 
         internal UnitTC(in UnitTypes unit) => Unit = unit;
 

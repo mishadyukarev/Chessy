@@ -22,12 +22,12 @@ namespace Game.Game
 
             if (CellUnitStepEs.Have(idx_0, uniq_cur))
             {
-                if (Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
+                if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
                 {
                     EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 
                     fire_0.Enable();
-                    stepUnit_0.Take(uniq_cur);
+                    CellUnitStepEs.Take(idx_0, uniq_cur);
                 }
                 else
                 {

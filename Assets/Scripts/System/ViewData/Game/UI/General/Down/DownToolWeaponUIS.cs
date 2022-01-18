@@ -1,5 +1,6 @@
 ﻿using Game.Common;
-using static Game.Game.UIEntDownToolWeapon;
+using UnityEngine;
+using static Game.Game.DownToolWeaponUIEs;
 
 namespace Game.Game
 {
@@ -7,23 +8,41 @@ namespace Game.Game
     {
         public void Run()
         {
-            //Button<ButtonUIC>(TWTypes.Pick).SetActive(false);
-            //Button<ButtonUIC>(TWTypes.Sword).SetActive(false);
-            //Button<ButtonUIC>(TWTypes.Shield).SetActive(false);
+            var color = Button<ImageUIC>(ToolWeaponTypes.Pick).Color;
+            color.a = 0;
+            Button<ImageUIC>(ToolWeaponTypes.Pick).Color = color;
 
-            //if (ClickerObject<CellClickC>().Is(CellClickTypes.GiveTakeTW))
-            //    if (TwGiveTakeC.TWTypeForGive != default)
-            //    {
-            //        UIEntityDownTW.SetView_ButtonImage(TwGiveTakeC.TWTypeForGive, true);
-            //        UIEntityDownTW.SetImage(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive));
+            color = Button<ImageUIC>(ToolWeaponTypes.Sword).Color;
+            color.a = 0;
+            Button<ImageUIC>(ToolWeaponTypes.Sword).Color = color;
+
+            color = Button<ImageUIC>(ToolWeaponTypes.Shield).Color;
+            color.a = 0;
+            Button<ImageUIC>(ToolWeaponTypes.Shield).Color = color;
 
 
-            //    }
+            var tw_sel = SelectedToolWeaponE.SelectedTW<ToolWeaponC>().ToolWeapon;
+            var levTw_sel = SelectedToolWeaponE.SelectedTW<LevelTC>().Level;
+
+            color = Button<ImageUIC>(tw_sel).Color;
+            color.a = 1;
+            Button<ImageUIC>(tw_sel).Color = color;
 
 
-            //Button<TextUIC>(TWTypes.Pick).Text = EntInventorToolWeapon.ToolWeapons<AmountC>(TWTypes.Pick, LevelTypes.Second, EntWhoseMove.CurPlayerI).Amount.ToString();
-            //Button<TextUIC>(TWTypes.Sword).Text = EntInventorToolWeapon.ToolWeapons<AmountC>(TWTypes.Sword, LevelTypes.Second, EntWhoseMove.CurPlayerI).Amount.ToString();
-            //Button<TextUIC>(TWTypes.Shield).Text = EntInventorToolWeapon.ToolWeapons<AmountC>(TWTypes.Shield, TwGiveTakeC.Level(TWTypes.Shield), EntWhoseMove.CurPlayerI).Amount.ToString();
+            Image<ImageUIC>(tw_sel, levTw_sel).SetActive(true);
+
+            if (levTw_sel == LevelTypes.First)
+            {
+                Image<ImageUIC>(tw_sel, LevelTypes.Second).SetActive(false);
+            }
+            else
+            {
+                Image<ImageUIC>(tw_sel, LevelTypes.First).SetActive(false);
+            }   
+
+            Button<TextMPUGUIC>(ToolWeaponTypes.Pick).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Pick, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount.ToString();
+            Button<TextMPUGUIC>(ToolWeaponTypes.Sword).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Sword, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount.ToString();
+            Button<TextMPUGUIC>(ToolWeaponTypes.Shield).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Shield, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, WhoseMoveE.CurPlayerI).Amount.ToString();
         }
     }
 }

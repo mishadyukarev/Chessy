@@ -72,7 +72,7 @@ namespace Game.Game
         public void FireArcherToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.FireArcher, fromIdx, toIdx });
         public void FirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.FirePawn, idx });
         public void PutOutFirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.PutOutFirePawn, idx });
-        public void SeedEnvToMaster(byte idxCell, EnvTypes env) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.Seed, idxCell, env });
+        public void SeedEnvToMaster(byte idxCell, EnvironmentTypes env) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.Seed, idxCell, env });
         public void ChangeCornerArchToMas(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.ChangeCornerArcher, idxCell });
 
         public void BonusNearUnits(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.BonusNear, idxCell });
@@ -80,7 +80,7 @@ namespace Game.Game
         public void StunElfemaleToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.StunElfemale, fromIdx, toIdx });
 
         public void GrowAdultForest(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.GrowAdultForest, idx });
-        public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.ChangeDirWind, fromIdx, toIdx });
+        public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.ChangeDirectionWind, fromIdx, toIdx });
 
         public void CircularAttackKingToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqAbil, UniqueAbilityTypes.CircularAttack, idxCell });
 
@@ -113,9 +113,9 @@ namespace Game.Game
         public void ConditionUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, neededCondtionType, idxCell });
 
         public void FromNewUnitToMas(UnitTypes unitType, byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ToNewUnit, unitType, idxCell });
-        public void FromToNewUnitToMas(UnitTypes unitType, byte idxFrom, byte idxTo) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.FromToNewUnit, unitType, idxFrom, idxTo });
-        public void UpgradeUnitToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgradeUnit, idxCell });
-        public void GiveTakeToolWeapon(TWTypes tw, LevelTypes level, byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, tw, level, idx });
+        public void FromToNewUnitToMas(UnitTypes unitType, byte idxFrom, byte idxTo) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.CreateHeroFromTo, unitType, idxFrom, idxTo });
+        public void UpgradeUnitToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgradeCellUnit, idxCell });
+        public void GiveTakeToolWeapon(ToolWeaponTypes tw, LevelTypes level, byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, tw, level, idx });
 
         public void CreateUnitToMaster(UnitTypes unitType) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.CreateUnit, unitType });
 

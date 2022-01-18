@@ -24,11 +24,12 @@ namespace Game.Game
             _actions.Add(DataSTypes.RunAfterSyncRPC,
                 (Action)new VisibElseS().Run
                 + new AbilSyncS().Run
-                + new GetAttackPawnKingCellsS().Run
-                + new GetAttackKingCellsS().Run
                 + new GetCellsForSetUnitS().Run
                 + new GetCellsForShiftUnitS().Run
-                + new GetCellsForArsonArcherS().Run);
+                + new GetCellsForArsonArcherS().Run
+
+                + new GetAttackPawnKingCellsS().Run
+                + new GetCellsForAttackArcherS().Run);
         }
 
 

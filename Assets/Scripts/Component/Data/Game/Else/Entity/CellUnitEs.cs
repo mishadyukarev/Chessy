@@ -8,7 +8,6 @@ namespace Game.Game
     {
         static Entity[] _units;
         static Dictionary<PlayerTypes, Entity[]> _unitEnts;
-        static Dictionary<UniqueAbilityTypes, Entity[]> _uniqueAbilEnts;
         static Dictionary<UnitStatTypes, Entity[]> _unitStatEnts;
         static Dictionary<ConditionUnitTypes, Entity[]> _conditionUnitEnts;
         static Dictionary<ButtonTypes, Entity[]> _uniqButtonUnitEnts;
@@ -16,11 +15,6 @@ namespace Game.Game
 
         public static ref C Unit<C>(in byte idx) where C : struct, IUnitCellE => ref _units[idx].Get<C>();
         public static ref C Unit<C>(in PlayerTypes player, in byte idx) where C : struct, IUnitPlayerCellE => ref _unitEnts[player][idx].Get<C>();
-        public static ref C Unit<C>(in UniqueAbilityTypes uniq, in byte idx) where C : struct, IUnitUniqueCellE
-        {
-            if (!_uniqueAbilEnts.ContainsKey(uniq)) throw new Exception();
-            return ref _uniqueAbilEnts[uniq][idx].Get<C>();
-        }
         public static ref C Unit<C>(in UnitStatTypes stat, in byte idx) where C : struct, IUnitStatCellE
         {
             if (!_unitStatEnts.ContainsKey(stat)) throw new Exception();
@@ -42,15 +36,7 @@ namespace Game.Game
             return ref _buildButtonUnits[button][idx].Get<C>();
         }
 
-        public static HashSet<UniqueAbilityTypes> KeysUnique
-        {
-            get
-            {
-                var hash = new HashSet<UniqueAbilityTypes>();
-                foreach (var item in _uniqueAbilEnts) hash.Add(item.Key);
-                return hash;
-            }
-        }
+
         public static HashSet<UnitStatTypes> KeysStat
         {
             get
@@ -75,7 +61,8 @@ namespace Game.Game
             _units = new Entity[CellValues.ALL_CELLS_AMOUNT];
 
             _unitEnts = new Dictionary<PlayerTypes, Entity[]>();
-            _uniqueAbilEnts = new Dictionary<UniqueAbilityTypes, Entity[]>();
+
+
             _unitStatEnts = new Dictionary<UnitStatTypes, Entity[]>();
             _conditionUnitEnts = new Dictionary<ConditionUnitTypes, Entity[]>();
             _uniqButtonUnitEnts = new Dictionary<ButtonTypes, Entity[]>();
@@ -85,10 +72,7 @@ namespace Game.Game
             {
                 _unitEnts.Add(player, new Entity[CellValues.ALL_CELLS_AMOUNT]);
             }
-            for (var uniqAbil = UniqueAbilityTypes.First; uniqAbil < UniqueAbilityTypes.End; uniqAbil++)
-            {
-                _uniqueAbilEnts.Add(uniqAbil, new Entity[CellValues.ALL_CELLS_AMOUNT]);
-            }
+
             for (var unitStat = UnitStatTypes.First; unitStat < UnitStatTypes.End; unitStat++)
             {
                 _unitStatEnts.Add(unitStat, new Entity[CellValues.ALL_CELLS_AMOUNT]);
@@ -112,7 +96,6 @@ namespace Game.Game
                     .Add(new UnitTC())
                     .Add(new LevelTC())
                     .Add(new PlayerTC())
-                    .Add(new NeedStepsForExitStunC())
                     .Add(new ConditionUnitC())
                     .Add(new IsCornedArcherC());
 
@@ -120,14 +103,11 @@ namespace Game.Game
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
                     _unitEnts[player][idx] = gameW.NewEntity()
-                        .Add(new IsVisibledC());
+                        .Add(new IsVisibleC());
                 }
 
-                for (var uniqAbil = UniqueAbilityTypes.First; uniqAbil < UniqueAbilityTypes.End; uniqAbil++)
-                {
-                    _uniqueAbilEnts[uniqAbil][idx] = gameW.NewEntity()
-                        .Add(new CooldownC());
-                }
+
+
 
                 for (var unitStat = UnitStatTypes.First; unitStat < UnitStatTypes.End; unitStat++)
                 {
@@ -156,8 +136,8 @@ namespace Game.Game
             var dir = CellSpaceC.GetDirect(CellEs.Cell<XyC>(idx_from).Xy, CellEs.Cell<XyC>(idx_to).Xy);
 
 
-            CellTrailEs.Trail<TrailCellEC>(idx_to).TrySetNewTrail(dir.Invert(), CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_to).Have);
-            CellTrailEs.Trail<TrailCellEC>(idx_from).TrySetNewTrail(dir, CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_from).Have);
+            CellTrailEs.Trail<TrailCellEC>(idx_to).TrySetNewTrail(dir.Invert(), CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_to).Have);
+            CellTrailEs.Trail<TrailCellEC>(idx_from).TrySetNewTrail(dir, CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_from).Have);
 
             ref var unit_from = ref Unit<UnitTC>(idx_from);
             ref var level_from = ref Unit<LevelTC>(idx_from);
@@ -179,7 +159,7 @@ namespace Game.Game
             foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_to).Have = Unit<HaveEffectC>(item, idx_from).Have;
             CellUnitWaterEs.Water<AmountC>(idx_to).Set(CellUnitWaterEs.Water<AmountC>(idx_from));
             foreach (var item in KeysCondition) AmountStepsInCondition<AmountC>(item, idx_to).Reset();
-            foreach (var unique in KeysUnique) Unit<CooldownC>(unique, idx_to).Cooldown = Unit<CooldownC>(unique, idx_from).Cooldown;
+            foreach (var unique in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(unique, idx_to).Cooldown = CellUnitAbilityUniqueEs.Cooldown<CooldownC>(unique, idx_from).Cooldown;
             Unit<IsCornedArcherC>(idx_to).Set(Unit<IsCornedArcherC>(idx_from));
 
 
@@ -199,8 +179,113 @@ namespace Game.Game
             EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitTC>(idx_from).Unit, level_from.Level, own_from.Player, idx_from).Have = false;
             Unit<UnitTC>(idx_from).Reset();
 
-
             if (EntityCellRiverPool.River<RiverC>(idx_to).HaveNearRiver) CellUnitWaterEs.Water<AmountC>(idx_to).Amount = 100;
+        }
+
+        public static void Kill(in byte idx)
+        {
+            ref var unit = ref Unit<UnitTC>(idx);
+            ref var ownUnit = ref Unit<PlayerTC>(idx);
+            ref var levUnit = ref Unit<LevelTC>(idx);
+
+            if (!unit.Have) throw new Exception("It's not got unit");
+
+            if (unit.Is(UnitTypes.King))
+            {
+                EntityPool.Winner<PlayerTC>().Player = ownUnit.Player;
+            }
+            else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
+            {
+                EntityPool.ScoutHeroCooldown<CooldownC>(unit.Unit, ownUnit.Player).Cooldown = 3;
+                EntInventorUnits.Units<AmountC>(unit.Unit, levUnit.Level, ownUnit.Player).Amount += 1;
+            }
+
+
+            EntWhereUnits.HaveUnit<HaveUnitC>(unit.Unit, levUnit.Level, ownUnit.Player, idx).Have = false;
+            unit.Reset();
+        }
+
+        public static bool CanExtract(in byte idx, out int extract, out EnvironmentTypes env, out ResTypes res)
+        {
+            extract = 0;
+            env = EnvironmentTypes.None;
+            res = ResTypes.None;
+
+
+            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx).Have)
+            {
+                env = EnvironmentTypes.AdultForest;
+                res = ResTypes.Wood;
+            }
+            else return false;
+
+
+            if (!Unit<UnitTC>(idx).Is(UnitTypes.Pawn) || !Unit<ConditionUnitC>(idx).Is(ConditionUnitTypes.Relaxed)
+                || !CellUnitHpEs.HaveMax(idx)) return false;
+
+
+            var ration = 0f;
+
+            switch (Unit<LevelTC>(idx).Level)
+            {
+                case LevelTypes.First: ration = 0.1f; break;
+                case LevelTypes.Second: ration = 0.2f; break;
+                default: throw new Exception();
+            }
+
+
+            var envResC = CellEnvironmentEs.Environment<EnvCellEC>(env, idx);
+
+            extract = (int)(CellEnvironmentEs.Max(env) * ration);
+
+            if (extract > CellEnvironmentEs.Environment<AmountC>(env, idx).Amount) extract = CellEnvironmentEs.Environment<AmountC>(env, idx).Amount;
+
+            return true;
+        }
+        public static bool CanResume(in byte idx, out int resume, out EnvironmentTypes env)
+        {
+            resume = 0;
+            env = EnvironmentTypes.None;
+
+            var twC = CellUnitTWE.UnitTW<ToolWeaponC>(idx);
+
+            if (CellBuildE.Build<BuildingTC>(idx).Have || !Unit<ConditionUnitC>(idx).Is(ConditionUnitTypes.Relaxed) || !CellUnitHpEs.HaveMax(idx)) return false;
+
+
+
+            var ration = 0f;
+
+            switch (Unit<UnitTC>(idx).Unit)
+            {
+                case UnitTypes.Pawn:
+                    if (!CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx).Have && !twC.Is(ToolWeaponTypes.Pick)) return false;
+
+                    env = EnvironmentTypes.Hill;
+
+                    switch (Unit<LevelTC>(idx).Level)
+                    {
+                        case LevelTypes.First: ration = 0.3f; break;
+                        case LevelTypes.Second: ration = 0.6f; break;
+                        default: throw new Exception();
+                    }
+                    break;
+
+                case UnitTypes.Elfemale:
+                    ration = 0.3f;
+                    env = EnvironmentTypes.AdultForest;
+                    break;
+
+                default: return false;
+            }
+
+
+
+            resume = (int)(CellEnvironmentEs.Max(env) * ration);
+
+            if (resume > CellEnvironmentEs.Environment<AmountC>(env, idx).Amount) 
+                resume = CellEnvironmentEs.Environment<AmountC>(env, idx).Amount;
+
+            return true;
         }
     }
 }

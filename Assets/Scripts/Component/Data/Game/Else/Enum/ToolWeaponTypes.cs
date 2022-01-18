@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public enum TWTypes
+    public enum ToolWeaponTypes
     {
         None,
         Start = None,

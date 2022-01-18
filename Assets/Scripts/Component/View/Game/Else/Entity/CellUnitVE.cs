@@ -9,7 +9,7 @@ namespace Game.Game
         static Entity[] _extra;
 
         public static ref C UnitMain<C>(in byte idx) where C : struct, IUnitCellV => ref _main[idx].Get<C>();
-        public static ref C UnitExtra<C>(in byte idx) where C : struct, IUnitCellV => ref _main[idx].Get<C>();
+        public static ref C UnitExtra<C>(in byte idx) where C : struct, IUnitCellV => ref _extra[idx].Get<C>();
 
         public UnitCellVEs(in EcsWorld gameW, GameObject[] cells)
         {

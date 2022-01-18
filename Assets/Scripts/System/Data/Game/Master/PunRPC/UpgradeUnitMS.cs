@@ -2,13 +2,12 @@
 
 namespace Game.Game
 {
-    struct UpgUnitMS : IEcsRunSystem
+    struct UpgradeUnitMS : IEcsRunSystem
     {
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            IdxDoingMC.Get(out var idx_0);
-            UniqueAbilityMC.Get(out var unit_cur);
+            var idx_0 = EntityMPool.UpgradeUnit<IdxC>().Idx;
 
             ref var unit_0 = ref Unit<UnitTC>(idx_0);
             ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
@@ -20,28 +19,27 @@ namespace Game.Game
             ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
 
-            //var whoseMove = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
             if (CellUnitHpEs.HaveMax(idx_0))
             {
-                if (CellUnitStepEs.Have(idx_0, unit_cur))
+                if (CellUnitStepEs.Steps<AmountC>(idx_0).Have)
                 {
-                    //if (InvResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
-                    //{
-                    //    InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
+                    if (InventorResourcesE.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
+                    {
+                        InventorResourcesE.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                    //    Unit<UnitCellEC>(idx_0).Upgrade();
+                        Unit<LevelTC>(idx_0).Level = LevelTypes.Second;
+                        CellUnitStepEs.Steps<AmountC>(idx_0).Take();
 
-                    //    stepUnit_0.Take(unit_cur);
+                        CellUnitHpEs.SetMaxHp(idx_0);
 
-                    //    Unit<UnitCellEC>(idx_0).SetMaxHp();
-
-                    //    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.UpgradeMelee);
-                    //}
-                    //else
-                    //{
-                    //    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
-                    //}
+                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.UpgradeMelee);
+                    }
+                    else
+                    {
+                        EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                    }
                 }
                 else
                 {

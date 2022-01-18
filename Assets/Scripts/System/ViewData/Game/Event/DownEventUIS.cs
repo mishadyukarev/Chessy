@@ -1,7 +1,7 @@
 ﻿using static Game.Game.EntityPool;
 using static Game.Game.EntityVPool;
 using static Game.Game.CenterKingUIE;
-using static Game.Game.UIEntDownToolWeapon;
+using static Game.Game.DownToolWeaponUIEs;
 using Game.Common;
 
 namespace Game.Game
@@ -24,9 +24,9 @@ namespace Game.Game
 
             UIEntDownUpgrade.Upgrade<ButtonUIC>().AddListener(ToggleUpgradeUnit);
 
-            Button<ButtonUIC>(TWTypes.Pick).AddListener( delegate { ToggleToolWeapon(TWTypes.Pick); });
-            Button<ButtonUIC>(TWTypes.Sword).AddListener(delegate { ToggleToolWeapon(TWTypes.Sword); });
-            Button<ButtonUIC>(TWTypes.Shield).AddListener(delegate { ToggleToolWeapon(TWTypes.Shield); });
+            Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener( delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
+            Button<ButtonUIC>(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
         }
 
         void ExecuteScout()
@@ -126,13 +126,16 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        void ToggleToolWeapon(TWTypes tWType)
+        void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
             SelIdx<IdxC>().Reset();
 
+            ref var selToolWeaponC = ref SelectedToolWeaponE.SelectedTW<ToolWeaponC>();
+            ref var selLevelTWC = ref SelectedToolWeaponE.SelectedTW<LevelTC>();
+
             if (WhoseMoveE.IsMyMove)
             {
-                if (tWType == TWTypes.Pick)
+                if (tw == ToolWeaponTypes.Pick)
                 {
                     TryOnHint(VideoClipTypes.Pick);
                 }
@@ -141,38 +144,42 @@ namespace Game.Game
                     TryOnHint(VideoClipTypes.UpgToolWeapon);
                 }
 
+
                 if (ClickerObject<CellClickC>().Is(CellClickTypes.GiveTakeTW))
                 {
-                    //if (tWType == TWTypes.Shield)
-                    //{
-                    //    if (TwGiveTakeC.TWTypeForGive == tWType)
-                    //    {
-                    //        if (TwGiveTakeC.Level(tWType) == LevelTypes.First) TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
-                    //        else TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
-                    //    }
-                    //    else
-                    //    {
-                    //        TwGiveTakeC.Set(tWType);
-                    //        TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    TwGiveTakeC.Set(tWType);
-                    //    TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
-                    //}
+                    if (tw == ToolWeaponTypes.Shield)
+                    {
+                        if (selToolWeaponC.ToolWeapon == tw)
+                        {
+                            if (selLevelTWC.Is(LevelTypes.First)) selLevelTWC.Level = LevelTypes.Second;
+                            else selLevelTWC.Level = LevelTypes.First;
+                        }
+                        else
+                        {
+                            selToolWeaponC.ToolWeapon = tw;
+                            selLevelTWC.Level = LevelTypes.First;
+                        }
+                    }
+                    else
+                    {
+                        selToolWeaponC.ToolWeapon = tw;
+                        selLevelTWC.Level = LevelTypes.Second;
+                    }
                 }
                 else
                 {
-                    //ClickerObject<CellClickC>().Set(CellClickTypes.GiveTakeTW);
-                    //TwGiveTakeC.Set(tWType);
+                    ClickerObject<CellClickC>().Click = CellClickTypes.GiveTakeTW;
 
-                    //if (tWType == TWTypes.Shield)
-                    //{
-                    //    //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
-                    //    //SelectorC.LevelTWType = LevelTWTypes.Wood;
-                    //}
-                    //else TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
+                    selToolWeaponC.ToolWeapon = tw;
+
+                    if (tw == ToolWeaponTypes.Shield)
+                    {
+                        if (selLevelTWC.Is(LevelTypes.First))
+                            selLevelTWC.Level = LevelTypes.Second;
+
+                        else selLevelTWC.Level = LevelTypes.First;
+                    }
+                    else selLevelTWC.Level = LevelTypes.Second;
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();

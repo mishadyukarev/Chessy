@@ -23,13 +23,13 @@ namespace Game.Game
 
             switch (env)
             {
-                case EnvTypes.None:
+                case EnvironmentTypes.None:
                     throw new Exception();
 
-                case EnvTypes.Fertilizer:
+                case EnvironmentTypes.Fertilizer:
                     throw new Exception();
 
-                case EnvTypes.YoungForest:
+                case EnvironmentTypes.YoungForest:
                     if (CellUnitStepEs.Have(idx_0, uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
@@ -38,17 +38,17 @@ namespace Game.Game
                         }
                         else
                         {
-                            if (!Environment<HaveEnvironmentC>(EnvTypes.Fertilizer, idx_0).Have)
+                            if (!Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx_0).Have)
                             {
-                                if (!Environment<HaveEnvironmentC>(EnvTypes.AdultForest, idx_0).Have)
+                                if (!Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
 
-                                    if (!Environment<HaveEnvironmentC>(EnvTypes.YoungForest, idx_0).Have)
+                                    if (!Environment<HaveEnvironmentC>(EnvironmentTypes.YoungForest, idx_0).Have)
                                     {
                                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 
-                                        SetNew(EnvTypes.YoungForest, idx_0);
+                                        SetNew(EnvironmentTypes.YoungForest, idx_0);
 
-                                        stepUnit_0.Take(uniq_cur);
+                                        CellUnitStepEs.Take(idx_0, uniq_cur);
                                     }
                                     else
                                     {
@@ -73,13 +73,13 @@ namespace Game.Game
                     }
                     break;
 
-                case EnvTypes.AdultForest:
+                case EnvironmentTypes.AdultForest:
                     throw new Exception();
 
-                case EnvTypes.Hill:
+                case EnvironmentTypes.Hill:
                     throw new Exception();
 
-                case EnvTypes.Mountain:
+                case EnvironmentTypes.Mountain:
                     throw new Exception();
 
                 default:

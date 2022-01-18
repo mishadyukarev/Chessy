@@ -21,13 +21,13 @@ namespace Game.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            if (!Unit<CooldownC>(uniq, idx_0).HaveCooldown)
+            if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq, idx_0).HaveCooldown)
             {
                 if (CellUnitStepEs.Have(idx_0, uniq))
                 {
-                    Unit<CooldownC>(uniq, idx_0).Cooldown = 3;
+                    CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq, idx_0).Cooldown = 3;
 
-                    stepUnit_0.Take(uniq);
+                    CellUnitStepEs.Take(idx_0, uniq);
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq);

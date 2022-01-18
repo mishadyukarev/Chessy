@@ -16,7 +16,7 @@ namespace Game.Game
                 ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
 
                 ref var main_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
-                ref var extra_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
+                ref var extra_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);
 
 
 

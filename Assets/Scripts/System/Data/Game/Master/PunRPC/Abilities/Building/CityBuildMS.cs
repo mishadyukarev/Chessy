@@ -19,7 +19,6 @@ namespace Game.Game
 
             if (forBuildType == BuildingTypes.City)
             {
-                ref var buildCell_0 = ref Build<BuildCellEC>(idx_0);
                 ref var build_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
@@ -60,9 +59,9 @@ namespace Game.Game
                         fire_0.Disable();
 
 
-                        Remove(EnvTypes.AdultForest, idx_0);
-                        Remove(EnvTypes.Fertilizer, idx_0);
-                        Remove(EnvTypes.YoungForest, idx_0);
+                        Remove(EnvironmentTypes.AdultForest, idx_0);
+                        Remove(EnvironmentTypes.Fertilizer, idx_0);
+                        Remove(EnvironmentTypes.YoungForest, idx_0);
                     }
 
                     else

@@ -9,7 +9,7 @@ namespace Game.Game
         {
             foreach (var idx in Idxs)
             {
-                for (var env_0 = EnvTypes.First; env_0 < EnvTypes.End; env_0++)
+                for (var env_0 = EnvironmentTypes.First; env_0 < EnvironmentTypes.End; env_0++)
                 {
                     if (Environment<HaveEnvironmentC>(env_0, idx).Have)
                     {

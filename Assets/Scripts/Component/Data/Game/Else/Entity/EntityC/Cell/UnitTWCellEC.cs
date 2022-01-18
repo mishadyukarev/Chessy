@@ -26,19 +26,19 @@ namespace Game.Game
 
             UnitTW<ProtectionC>(_idx).Reset();
         }
-        public void Sync(in TWTypes tw, in LevelTypes lev, in int shieldProt)
+        public void Sync(in ToolWeaponTypes tw, in LevelTypes lev, in int shieldProt)
         {
             UnitTW<ToolWeaponC>(_idx).ToolWeapon = tw;
             UnitTW<LevelTC>(_idx).Level = lev;
             UnitTW<ProtectionC>(_idx).Protection = shieldProt;
         }
 
-        public void SetNew(in TWTypes tw, in LevelTypes level)
+        public void SetNew(in ToolWeaponTypes tw, in LevelTypes level)
         {
             UnitTW<ToolWeaponC>(_idx).ToolWeapon = tw;
             UnitTW<LevelTC>(_idx).Level = level;
 
-            if (tw == TWTypes.Shield)
+            if (tw == ToolWeaponTypes.Shield)
             {
                 switch (level)
                 {
