@@ -17,7 +17,7 @@ namespace Game.Game
 
         public CellUnitHpEs(in EcsWorld gameW)
         {
-            _hps = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _hps = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
             for (var idx = 0; idx < _hps.Length; idx++)
             {
                 _hps[idx] = gameW.NewEntity()

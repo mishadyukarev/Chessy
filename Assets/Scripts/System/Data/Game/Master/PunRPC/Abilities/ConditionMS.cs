@@ -12,7 +12,6 @@ namespace Game.Game
             var cond = EntityMPool.ConditionUnit<ConditionUnitC>().Condition;
             var idx_0 = EntityMPool.ConditionUnit<IdxC>().Idx;
 
-            ref var step_0 = ref Unit<UnitCellEC>(idx_0);
             ref var cond_0 = ref Unit<ConditionUnitC>(idx_0);
 
 

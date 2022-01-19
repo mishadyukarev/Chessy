@@ -10,14 +10,13 @@ namespace Game.Game
         static Dictionary<UniqueAbilityTypes, Action> _uniqAbil;
 
 
-        static SystemDataMasterManager()
+        public SystemDataMasterManager(in bool def)
         {
             _systems = new Dictionary<SystemDataMasterTypes, Action>();
             _rpcSysts = new Dictionary<RpcMasterTypes, Action>();
             _uniqAbil = new Dictionary<UniqueAbilityTypes, Action>();
-        }
-        public SystemDataMasterManager(in bool def)
-        {
+
+
             var action =
                 (Action)new UpdatorMS().Run
                 + new ExtractBuildUpdMS().Run
@@ -29,7 +28,7 @@ namespace Game.Game
                 + new UpdateHealingUnitMS().Run
                 + new UpdateHungryMS().Run
                 + new ThirstyUpdMS().Run;
-            _systems.Add(SystemDataMasterTypes.Update, action);
+            _systems.Add(SystemDataMasterTypes.UpdateMove, action);
 
             action = new TruceMS().Run;
             _systems.Add(SystemDataMasterTypes.Truce, action);
@@ -55,9 +54,9 @@ namespace Game.Game
             _rpcSysts.Add(RpcMasterTypes.GiveTakeToolWeapon, new GiveTakeToolWeaponMS().Run);
             _rpcSysts.Add(RpcMasterTypes.GetHero, new GetHeroMS().Run);
             _rpcSysts.Add(RpcMasterTypes.CreateHeroFromTo, new FromToNewUnitMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.UpgUnits, new PickUpgUnitsMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.UpgCenterBuild, new PickUpgBuildsMS().Run);
-            _rpcSysts.Add(RpcMasterTypes.UpgWater, new WaterUpgMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgCenterUnits, new PickCenterUpgradeUnitsMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgCenterBuild, new PickCenterUpgradeBuildsMS().Run);
+            _rpcSysts.Add(RpcMasterTypes.UpgWater, new CenterUpgradeUnitWaterMS().Run);
 
 
             _uniqAbil.Add(UniqueAbilityTypes.Seed, new SeedingMS().Run);

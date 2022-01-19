@@ -12,7 +12,7 @@ namespace Game.Game
                 && AvailableCenterHeroEs.HaveAvailHero<HaveAvailableHeroC>(WhoseMoveE.CurPlayerI).Have)
             {
                 Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent
-                    (!EntInventorUnits.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have);
+                    (!InventorUnitsE.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have);
             }
             else
             {

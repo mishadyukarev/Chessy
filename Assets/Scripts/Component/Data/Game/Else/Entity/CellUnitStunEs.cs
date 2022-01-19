@@ -10,7 +10,7 @@ namespace Game.Game
 
         public CellUnitStunEs(in EcsWorld gameW)
         {
-            _units = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _units = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
             for (var idx = 0; idx < _units.Length; idx++)
             {
                 _units[idx] = gameW.NewEntity()

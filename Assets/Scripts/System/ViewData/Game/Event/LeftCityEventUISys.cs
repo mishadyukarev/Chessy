@@ -9,8 +9,8 @@ namespace Game.Game
         {
             Melt<ButtonUIC>().AddListener(delegate { MeltOre(); });
 
-            Resources<ButtonUIC>(ResTypes.Food).AddListener(delegate { BuyRes(ResTypes.Food); });
-            Resources<ButtonUIC>(ResTypes.Wood).AddListener(delegate { BuyRes(ResTypes.Wood); });
+            Resources<ButtonUIC>(ResourceTypes.Food).AddListener(delegate { BuyRes(ResourceTypes.Food); });
+            Resources<ButtonUIC>(ResourceTypes.Wood).AddListener(delegate { BuyRes(ResourceTypes.Wood); });
         }
 
         void MeltOre()
@@ -18,7 +18,7 @@ namespace Game.Game
             if (WhoseMoveE.IsMyMove) EntityPool.Rpc<RpcC>().MeltOreToMaster();
         }
 
-        void BuyRes(ResTypes res)
+        void BuyRes(ResourceTypes res)
         {
             if (WhoseMoveE.IsMyMove) EntityPool.Rpc<RpcC>().BuyResToMaster(res);
         }

@@ -3,6 +3,7 @@ using static Game.Game.CellEs;
 using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.EntityCellRiverPool;
+using System;
 
 namespace Game.Game
 {
@@ -40,10 +41,24 @@ namespace Game.Game
                         }
                         else
                         {
-                            CellUnitWaterEs.TakeWater(idx_0);
+                            CellUnitWaterEs.Water<AmountC>(idx_0).Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f));
+
+
                             if (!water_0.Have)
                             {
-                                CellUnitWaterEs.ExecuteThirsty(idx_0);
+                                float percent = 0;
+                                switch (CellUnitEs.Unit<UnitTC>(idx_0).Unit)
+                                {
+                                    case UnitTypes.None: throw new Exception();
+                                    case UnitTypes.King: percent = 0.4f; break;
+                                    case UnitTypes.Pawn: percent = 0.5f; break;
+                                    case UnitTypes.Archer: percent = 0.5f; break;
+                                    case UnitTypes.Scout: percent = 0.5f; break;
+                                    case UnitTypes.Elfemale: percent = 0.5f; break;
+                                    default: throw new Exception();
+                                }
+                                CellUnitHpEs.Hp<AmountC>(idx_0).Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
+
 
                                 if (!hp_0.Have)
                                 {

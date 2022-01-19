@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var isActive = EntInventorUnits.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have;
+            var isActive = InventorUnitsE.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have;
             var cooldown = EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, WhoseMoveE.CurPlayerI).Cooldown;
 
 

@@ -11,24 +11,20 @@ namespace Game.Game
 
             ref var unit_from = ref Unit<UnitTC>(idx_from);
             ref var ownerUnit_from = ref Unit<PlayerTC>(idx_from);
-            ref var hpUnitCell_from = ref Unit<UnitCellEC>(idx_from);
             ref var hpUnit_from = ref CellUnitHpEs.Hp<AmountC>(idx_from);
-            ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
             ref var condUnit_from = ref Unit<ConditionUnitC>(idx_from);
 
             ref var tw_from = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_from);
 
 
-            ref var unitE_to = ref Unit<UnitCellEC>(idx_to);
             ref var unit_to = ref Unit<UnitTC>(idx_to);
-            ref var hpUnitCell_to = ref Unit<UnitCellEC>(idx_to);
             ref var hpUnit_to = ref CellUnitHpEs.Hp<AmountC>(idx_to);
 
             ref var tw_to = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_to);
 
 
 
-            var playerSender = InfoC.Sender(MGOTypes.Master).GetPlayer();
+            var playerSender = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))
@@ -41,7 +37,7 @@ namespace Game.Game
                 float powerDam_to = 0;
 
 
-                powerDam_from += Unit<UnitCellEC>(idx_from).DamageAttack(attack);
+                powerDam_from += DamageAttack(idx_from, attack);
 
                 if (unit_from.IsMelee)
                     EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
@@ -49,7 +45,7 @@ namespace Game.Game
 
 
 
-                powerDam_to += Unit<UnitCellEC>(idx_to).DamageOnCell;
+                powerDam_to += DamageOnCell(idx_to);
 
 
                 float min_limit = 0;
@@ -104,7 +100,7 @@ namespace Game.Game
                 {
                     if (tw_from.Is(ToolWeaponTypes.Shield))
                     {
-                        CellUnitTWE.UnitTW<ShieldEC>(idx_from).Take();
+                        CellUnitTWE.Take(idx_from);
                     }
                     else if (minus_from > 0)
                     {
@@ -115,7 +111,7 @@ namespace Game.Game
 
                 if (tw_to.Is(ToolWeaponTypes.Shield))
                 {
-                    CellUnitTWE.UnitTW<ShieldEC>(idx_to).Take();
+                    CellUnitTWE.Take(idx_to);
                 }
                 else if (minus_to > 0)
                 {
@@ -148,8 +144,8 @@ namespace Game.Game
                     CellUnitEs.Kill(idx_from);
                 }
 
-                foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_from).Disable();
-                foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_to).Disable();
+                foreach (var item in CellUnitEffectsEs.KeysStat) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();
+                foreach (var item in CellUnitEffectsEs.KeysStat) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Disable();
             }
         }
     }

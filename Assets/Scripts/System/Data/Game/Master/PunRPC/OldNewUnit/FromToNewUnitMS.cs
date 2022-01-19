@@ -55,7 +55,7 @@ namespace Game.Game
                                 EntWhereUnits.HaveUnit<HaveUnitC>(unit, LevelTypes.First, Unit<PlayerTC>(idx_to).Player, idx_to).Have = true;
 
 
-                                EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, Unit<PlayerTC>(idx_to).Player).Amount -= 1;
+                                InventorUnitsE.Units<AmountC>(unit, LevelTypes.First, Unit<PlayerTC>(idx_to).Player).Amount -= 1;
 
                                 break;
                             }

@@ -10,16 +10,28 @@ namespace Game.Game
         public static ref C Water<C>(in byte idx) where C : struct, ICellUnitWaterE => ref _units[idx].Get<C>();
 
 
-        //float UpgadeWaterPercent => UnitUpgC.UpgWaterPercent(Unit, Level, Owner);
-
         public static bool NeedWater(in byte idx) => Water<AmountC>(idx).Amount <= 100 * 0.4f;
-        public static int MaxWater => (int)(100 + 100 /** UpgadeWaterPercent*/);
-        public static bool HaveMaxWater(in byte idx) => Water<AmountC>(idx).Amount >= MaxWater;
+        public static int MaxWater(in byte idx)
+        {
+            var unitT = CellUnitEs.Unit<UnitTC>(idx).Unit;
+            var levelT = CellUnitEs.Unit<LevelTC>(idx).Level;
+            var playerT = CellUnitEs.Unit<PlayerTC>(idx).Player;
+
+            var maxWater = 100;
+
+            if (UnitStatUpgradesEs.HaveUpgrade<HaveUpgradeC>(UnitStatTypes.Water, unitT, levelT, playerT, UpgradeTypes.PickCenter).Have)
+            {
+                return maxWater = (int)(maxWater * 0.5f);
+            }
+
+            return maxWater;
+        }
+        public static bool HaveMaxWater(in byte idx) => Water<AmountC>(idx).Amount >= MaxWater(idx);
 
 
         public CellUnitWaterEs(in EcsWorld gameW)
         {
-            _units = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _units = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
             for (var idx = 0; idx < _units.Length; idx++)
             {
                 _units[idx] = gameW.NewEntity()
@@ -27,23 +39,7 @@ namespace Game.Game
             }
         }
 
-        public static void SetMaxWater(in byte idx) => Water<AmountC>(idx).Amount = MaxWater;
-        public static void ExecuteThirsty(in byte idx)
-        {
-            float percent = 0;
-            switch (CellUnitEs.Unit<UnitTC>(idx).Unit)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: percent = 0.4f; break;
-                case UnitTypes.Pawn: percent = 0.5f; break;
-                case UnitTypes.Archer: percent = 0.5f; break;
-                case UnitTypes.Scout: percent = 0.5f; break;
-                case UnitTypes.Elfemale: percent = 0.5f; break;
-                default: throw new Exception();
-            }
-
-            CellUnitHpEs.Hp<AmountC>(idx).Take((int)(100 * percent));
-        }
+        public static void SetMaxWater(in byte idx) => Water<AmountC>(idx).Amount = MaxWater(idx);
         public static void TakeWater(in byte idx) => Water<AmountC>(idx).Take((int)(100 * 0.15f));
     }
 

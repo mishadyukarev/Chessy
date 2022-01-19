@@ -28,13 +28,12 @@ namespace Game.Game
                 ref var build_0 = ref Build<BuildingTC>(idx_0);
 
                 ref var curFireCom = ref Fire<HaveEffectC>(idx_0);
-                ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
 
 
                 curFireCom.Disable();
 
 
-                trail_0.ResetAll();
+                ResetAll(idx_0);
 
                 if (unit_0.Have)
                 {
@@ -45,10 +44,10 @@ namespace Game.Game
                             if (tw_0.HaveTW)
                             {
                                 InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
-                                UnitTW<UnitTWCellEC>(idx_0).Reset();
+                                CellUnitTWE.Reset(idx_0);
                             }
 
-                            Unit<UnitCellEC>(idx_0).AddToInventor();
+                            AddToInventor(idx_0);
                         }
                     }
                     else
@@ -57,10 +56,10 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
-                            UnitTW<UnitTWCellEC>(idx_0).Reset();
+                            CellUnitTWE.Reset(idx_0);
                         }
 
-                        Unit<UnitCellEC>(idx_0).AddToInventor();
+                        AddToInventor(idx_0);
                     }
                 }
 

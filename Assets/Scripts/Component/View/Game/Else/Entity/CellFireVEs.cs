@@ -11,7 +11,7 @@ namespace Game.Game
 
         public CellFireVEs(in EcsWorld gameW, in GameObject[] cells)
         {
-            _fires = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _fires = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
 
             for (byte idx = 0; idx < _fires.Length; idx++)
             {

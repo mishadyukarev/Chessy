@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using static Game.Game.CellEs;
 using static Game.Game.CellUnitEs;
 
@@ -27,7 +28,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
+                    if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                     {
                         mainUnit_0.Enable();
 
@@ -128,19 +129,26 @@ namespace Game.Game
                                 throw new Exception();
                         }
 
-                        //mainUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI), idx_0).IsVisibled);
-                        //extraUnit_0.SetAlpha(Unit<VisibledC>(WhoseMoveC.NextPlayerFrom(WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI), idx_0).IsVisibled);
+                        if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(WhoseMoveE.CurPlayerI), idx_0).IsVisible)
+                        {
+                            mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 1);
+                        }
+                        else
+                        {
+                            mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 0.6f);
+                        }
+
+                        if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(WhoseMoveE.CurPlayerI), idx_0).IsVisible)
+                        {
+                            extraUnit_0.Color = new Color(extraUnit_0.Color.r, extraUnit_0.Color.g, extraUnit_0.Color.b, 1);
+                        }
+                        else
+                        {
+                            extraUnit_0.Color = new Color(extraUnit_0.Color.r, extraUnit_0.Color.g, extraUnit_0.Color.b, 0.6f);
+                        }
                     }
                 }
             }
         }
-        
-
-        //public void SetAlpha(bool isVisible)
-        //{
-        //    if (isVisible) _extraUnit.color = new Color(_extraUnit.color.r, _extraUnit.color.g, _extraUnit.color.b, 1);
-        //    else _extraUnit.color = new Color(_extraUnit.color.r, _extraUnit.color.g, _extraUnit.color.b, 0.8f);
-        //}
-        //public void SetFlipX(bool isFliped) => _extraUnit.flipX = isFliped;
     }
 }

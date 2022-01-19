@@ -14,8 +14,6 @@ namespace Game.Game
             ref var unit_0 = ref Unit<UnitTC>(idx_0);
             ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-
             ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
 
@@ -32,9 +30,9 @@ namespace Game.Game
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq);
 
-                    if (!Unit<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have)
+                    if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have)
                     {
-                        Unit<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
+                        CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
                     }
 
                     var around = CellSpaceC.GetXyAround(Cell<XyC>(idx_0).Xy);
@@ -49,9 +47,9 @@ namespace Game.Game
                         {
                             if (ownUnit_1.Is(ownUnit_0.Player))
                             {
-                                if (!Unit<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
+                                if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
                                 {
-                                    Unit<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have = true;
+                                    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have = true;
                                 }
                             }
                         }

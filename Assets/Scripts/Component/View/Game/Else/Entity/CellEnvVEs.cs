@@ -16,10 +16,10 @@ namespace Game.Game
 
             for (var env = EnvironmentTypes.First; env < EnvironmentTypes.End; env++)
             {
-                _envs.Add(env, new Entity[CellValues.ALL_CELLS_AMOUNT]);
+                _envs.Add(env, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
             }
 
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+            for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
                 var parentGO = cells[idx].transform.Find("Environments").gameObject;
 

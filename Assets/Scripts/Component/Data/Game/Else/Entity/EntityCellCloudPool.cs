@@ -10,11 +10,11 @@ namespace Game.Game
 
         static EntityCellCloudPool()
         {
-            _clouds = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _clouds = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
         }
         public EntityCellCloudPool(in EcsWorld gameW)
         {
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+            for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
                 _clouds[idx] = gameW.NewEntity()
                     .Add(new HaveEffectC());

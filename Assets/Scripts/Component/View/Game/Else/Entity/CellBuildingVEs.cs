@@ -13,8 +13,8 @@ namespace Game.Game
 
         public CellBuildingVEs(in EcsWorld gameW, in GameObject[] cells)
         {
-            _buildingsFront = new Entity[CellValues.ALL_CELLS_AMOUNT];
-            _buildingsBack = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _buildingsFront = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
+            _buildingsBack = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
 
             for (byte idx = 0; idx < _buildingsFront.Length; idx++)
             {

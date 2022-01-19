@@ -9,7 +9,7 @@
 
             var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
-            EntInventorUnits.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, whoseMove).Add();
+            InventorUnitsE.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, whoseMove).Add();
             AvailableCenterHeroEs.HaveAvailHero<HaveAvailableHeroC>(whoseMove).Have = false;
         }
     }

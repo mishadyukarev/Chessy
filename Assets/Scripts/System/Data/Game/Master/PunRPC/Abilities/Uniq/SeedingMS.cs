@@ -16,8 +16,6 @@ namespace Game.Game
             var idx_0 = EntityMPool.Seed<IdxC>().Idx;
             UniqueAbilityMC.Get(out var uniq_cur);
 
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-
             ref var build_0 = ref Build<BuildingTC>(idx_0);
 
 

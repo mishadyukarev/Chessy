@@ -43,7 +43,7 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                ref var abil = ref UnitUniqueButton<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
+                ref var abil = ref CellUnitUniqueButtonEs.UniqueAbility<UniqueAbilityC>(uniqBut, SelIdx<IdxC>().Idx);
 
 
                 if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil.Ability, SelIdx<IdxC>().Idx).HaveCooldown)
@@ -170,9 +170,9 @@ namespace Game.Game
                         break;
 
                     case ButtonTypes.Third:
-                        var buildAbility = UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build;
+                        var buildAbility = CellUnitBuildingButtonEs.UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build;
                         if (buildAbility == BuildingTypes.None)Rpc<RpcC>().DestroyBuildingToMaster(idx_sel);
-                        else Rpc<RpcC>().BuildToMaster(idx_sel, UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build);
+                        else Rpc<RpcC>().BuildToMaster(idx_sel, CellUnitBuildingButtonEs.UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build);
 
                         //switch (BuildAbilC.AbilityType(buildBut))
                         //{

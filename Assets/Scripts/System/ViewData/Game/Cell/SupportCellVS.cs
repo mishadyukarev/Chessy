@@ -15,7 +15,6 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var lev_0 = ref Unit<LevelTC>(idx_0);
                 ref var own_0 = ref Unit<PlayerTC>(idx_0);
 
@@ -82,7 +81,7 @@ namespace Game.Game
 
                     else
                     {
-                        if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
+                        if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                         {
                             if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
                             {

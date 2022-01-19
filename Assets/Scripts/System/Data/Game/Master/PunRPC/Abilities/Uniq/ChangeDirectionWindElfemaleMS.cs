@@ -13,9 +13,6 @@ namespace Game.Game
 
             ref var unit_from = ref Unit<UnitTC>(idx_from);
 
-            ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
-            ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
-
 
             if (CellUnitHpEs.HaveMax(idx_from))
             {

@@ -4,7 +4,7 @@
     {
         None,
 
-        Update,
+        UpdateMove,
         Truce,
 
         RunUpdate,

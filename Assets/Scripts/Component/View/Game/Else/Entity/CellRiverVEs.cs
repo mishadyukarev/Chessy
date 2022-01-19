@@ -18,7 +18,7 @@ namespace Game.Game
             {
                 if (dir == DirectTypes.Up || dir == DirectTypes.Right || dir == DirectTypes.Down || dir == DirectTypes.Left)
                 {
-                    _rivers.Add(dir, new Entity[CellValues.ALL_CELLS_AMOUNT]);
+                    _rivers.Add(dir, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
                     for (byte idx = 0; idx < _rivers[dir].Length; idx++)
                     {
                         var river = cells[idx].transform.Find("River");

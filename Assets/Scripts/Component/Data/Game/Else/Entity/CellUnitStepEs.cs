@@ -12,7 +12,7 @@ namespace Game.Game
 
 
 
-        public static int MaxAmountSteps(in byte idx) => _values.MaxAmountSteps(CellUnitEs.Unit<UnitTC>(idx).Unit, CellUnitEs.Unit<HaveEffectC>(UnitStatTypes.Steps, idx).Have/*, UnitUpgC.Steps(Unit, Level, Owner)*/);
+        public static int MaxAmountSteps(in byte idx) => _values.MaxAmountSteps(CellUnitEs.Unit<UnitTC>(idx).Unit, CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx).Have/*, UnitUpgC.Steps(Unit, Level, Owner)*/);
         public static bool HaveMaxSteps(in byte idx) => Steps<AmountC>(idx).Amount >= MaxAmountSteps(idx);
         public static int StepsForDoing(in byte idx_from, in byte idx_to)
         {
@@ -21,7 +21,7 @@ namespace Game.Game
             if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_to).Have)
             {
                 needSteps += _values.NeedAmountSteps(EnvironmentTypes.AdultForest);
-                if (CellTrailEs.Trail<TrailCellEC>(idx_to).Have(CellSpaceC.GetDirect(idx_from, idx_to).Invert())) needSteps -= 1;
+                if (CellTrailEs.Have(idx_to, CellSpaceC.GetDirect(idx_from, idx_to).Invert())) needSteps -= 1;
             }
 
             if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx_to).Have)
@@ -55,7 +55,7 @@ namespace Game.Game
 
         public CellUnitStepEs(in EcsWorld gameW)
         {
-            _hps = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _hps = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
             for (var idx = 0; idx < _hps.Length; idx++)
             {
                 _hps[idx] = gameW.NewEntity()

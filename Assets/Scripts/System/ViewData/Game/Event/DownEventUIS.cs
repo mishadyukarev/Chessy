@@ -73,7 +73,7 @@ namespace Game.Game
 
         void Done()
         {
-            if (!EntInventorUnits.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+            if (!InventorUnitsE.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
             {
                 EntityPool.Rpc<RpcC>().DoneToMaster();
             }
@@ -87,7 +87,7 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                GetterUnitsE.GetterUnit<TimerC>(unit).Reset();
+                GetterUnitsEs.GetterUnit<TimerC>(unit).Reset();
 
                 EntityPool.Rpc<RpcC>().CreateUnitToMaster(unit);
             }
@@ -98,11 +98,11 @@ namespace Game.Game
         {
             SelIdx<IdxC>().Reset();
 
-            GetterUnitsE.GetterUnit<TimerC>(unitT).Reset();
+            GetterUnitsEs.GetterUnit<TimerC>(unitT).Reset();
 
             if (WhoseMoveE.IsMyMove)
             {
-                if (EntInventorUnits.Units<AmountC>(unitT, LevelTypes.Second, WhoseMoveE.CurPlayerI).Have)
+                if (InventorUnitsE.Units<AmountC>(unitT, LevelTypes.Second, WhoseMoveE.CurPlayerI).Have)
                 {
                     ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
 
@@ -110,7 +110,7 @@ namespace Game.Game
                     SelectedUnitE.SelUnit<LevelTC>().Level = LevelTypes.Second;
                 }
 
-                else if (EntInventorUnits.Units<AmountC>(unitT, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+                else if (InventorUnitsE.Units<AmountC>(unitT, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
                 {
                     ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
 
@@ -120,7 +120,7 @@ namespace Game.Game
 
                 else
                 {
-                    GetterUnitsE.GetterUnit<IsActiveC>(unitT).IsActive = true;
+                    GetterUnitsEs.GetterUnit<IsActiveC>(unitT).IsActive = true;
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();

@@ -26,7 +26,7 @@ namespace Game.Game
 
 
                 Stat<TextMPUGUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Amount.ToString();
-                Stat<TextMPUGUIC>(UnitStatTypes.Damage).Text = Unit<UnitCellEC>(selIdx).DamageOnCell.ToString();
+                Stat<TextMPUGUIC>(UnitStatTypes.Damage).Text = DamageOnCell(selIdx).ToString();
                 Stat<TextMPUGUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Amount.ToString();
                 Stat<TextMPUGUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Amount.ToString();
 
@@ -38,10 +38,10 @@ namespace Game.Game
 
 
                 UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount 
-                    = (float)(Unit<UnitCellEC>(selIdx).DamageOnCell / (float)Unit<UnitCellEC>(selIdx).DamageAttack(AttackTypes.Simple));
+                    = (float)(DamageOnCell(selIdx) / (float)DamageAttack(selIdx, AttackTypes.Simple));
 
                 Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)CellUnitStepEs.MaxAmountSteps(selIdx);
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)CellUnitWaterEs.MaxWater;
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)CellUnitWaterEs.MaxWater(selIdx);
             }
 
             else

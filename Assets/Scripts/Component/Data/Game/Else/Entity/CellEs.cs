@@ -34,16 +34,16 @@ namespace Game.Game
 
         public CellEs(in EcsWorld gameW, in bool[] isActiveCells, in int[] idCells)
         {
-            _cells = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _cells = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
 
             _idxs = new HashSet<byte>();
 
             byte idx = 0;
-            for (idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++) _idxs.Add(idx);
+            for (idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++) _idxs.Add(idx);
             idx = 0;
 
-            for (byte x = 0; x < CellValues.X_AMOUNT; x++)
-                for (byte y = 0; y < CellValues.Y_AMOUNT; y++)
+            for (byte x = 0; x < CellStartValues.X_AMOUNT; x++)
+                for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
                     _cells[idx] = gameW.NewEntity()
                         .Add(new XyC(new byte[] { x, y }))
@@ -58,11 +58,7 @@ namespace Game.Game
     }
     public interface ICell { }
     public interface IUnitCellE { }
-    public interface IUnitPlayerCellE { }
     public interface IUnitUniqueCellE { }
-    public interface IUnitStatCellE { }
-    public interface ICellUnitConditionE { }
-    public interface IUnitUniqueButtonCellE { }
     public interface IBuildPlayerCellE { }
     public interface ITrailVisibledCellE { }
 }

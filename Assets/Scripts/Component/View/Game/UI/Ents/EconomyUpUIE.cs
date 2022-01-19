@@ -9,26 +9,26 @@ namespace Game.Game
     public readonly struct EconomyUpUIE
     {
         static Dictionary<UpEntTypes, Entity> _ents;
-        static Dictionary<ResTypes, Entity> _economy;
-        static Dictionary<ResTypes, Entity> _economyExtract;
+        static Dictionary<ResourceTypes, Entity> _economy;
+        static Dictionary<ResourceTypes, Entity> _economyExtract;
 
         public static ref T Alpha<T>() where T : struct => ref _ents[UpEntTypes.Alpha].Get<T>();
         public static ref T Leave<T>() where T : struct => ref _ents[UpEntTypes.Leave].Get<T>();
         public static ref T DirectWind<T>() where T : struct => ref _ents[UpEntTypes.DirectWind].Get<T>();
 
-        public static ref T Economy<T>(in ResTypes res) where T : struct => ref _economy[res].Get<T>();
-        public static ref T EconomyExtract<T>(in ResTypes res) where T : struct => ref _economyExtract[res].Get<T>();
+        public static ref T Economy<T>(in ResourceTypes res) where T : struct => ref _economy[res].Get<T>();
+        public static ref T EconomyExtract<T>(in ResourceTypes res) where T : struct => ref _economyExtract[res].Get<T>();
 
         public EconomyUpUIE(in EcsWorld curGameW)
         {
             _ents = new Dictionary<UpEntTypes, Entity>();
-            _economy = new Dictionary<ResTypes, Entity>();
-            _economyExtract = new Dictionary<ResTypes, Entity>();
+            _economy = new Dictionary<ResourceTypes, Entity>();
+            _economyExtract = new Dictionary<ResourceTypes, Entity>();
 
 
             var upZone_GO = CanvasC.FindUnderCurZone("UpZone").transform;
 
-            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
             {
                 var resZone = upZone_GO.Find("ResourcesZone").Find(res.ToString());
 
@@ -36,7 +36,7 @@ namespace Game.Game
                     .Add(new TextMPUGUIC(resZone.Find(res.ToString() + "_TMP").GetComponent<TextMeshProUGUI>())));
 
 
-                if (res != ResTypes.Gold && res != ResTypes.Iron)
+                if (res != ResourceTypes.Gold && res != ResourceTypes.Iron)
                 {
                     _economyExtract.Add(res, curGameW.NewEntity()
                         .Add(new TextMPUGUIC(resZone.Find(res.ToString() + "Adding_TMP").GetComponent<TextMeshProUGUI>())));

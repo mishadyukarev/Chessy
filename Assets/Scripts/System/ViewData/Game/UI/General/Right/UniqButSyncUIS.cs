@@ -9,7 +9,7 @@ namespace Game.Game
         {
             for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
-                ref var abil = ref UnitUniqueButton<UniqueAbilityC>(button, SelIdx<IdxC>().Idx).Ability;
+                ref var abil = ref CellUnitUniqueButtonEs.UniqueAbility<UniqueAbilityC>(button, SelIdx<IdxC>().Idx).Ability;
 
                 if (abil == default)
                 {

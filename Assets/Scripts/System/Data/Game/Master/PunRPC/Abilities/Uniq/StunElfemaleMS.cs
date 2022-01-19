@@ -16,9 +16,6 @@ namespace Game.Game
 
             ref var ownUnit_from = ref Unit<PlayerTC>(idx_from);
 
-            ref var unitE_from = ref Unit<UnitCellEC>(idx_from);
-            ref var step_from = ref Unit<UnitCellEC>(idx_from);
-
             ref var unit_to = ref Unit<UnitTC>(idx_to);
             ref var ownUnit_to = ref Unit<PlayerTC>(idx_to);
             ref var eff_to = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_to);
@@ -26,7 +23,7 @@ namespace Game.Game
 
             if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_from).HaveCooldown)
             {
-                if (Unit<IsVisibleC>(playerSend, idx_to).IsVisible)
+                if (CellUnitVisibleEs.Visible<IsVisibleC>(playerSend, idx_to).IsVisible)
                 {
                     if (unit_to.Have)
                     {

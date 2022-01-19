@@ -17,7 +17,6 @@ namespace Game.Game
             ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
             ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
             ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
 
@@ -35,11 +34,9 @@ namespace Game.Game
 
                         ref var unit_1 = ref Unit<UnitTC>(idx_1);
                         ref var ownUnit_1 = ref Unit<PlayerTC>(idx_1);
-                        ref var waterUnit_1 = ref Unit<UnitCellEC>(idx_1);
                         ref var hpUnit_1 = ref CellUnitHpEs.Hp<AmountC>(idx_1);
 
                         ref var tw_1 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_1);
-                        ref var shield_1 = ref CellUnitTWE.UnitTW<ShieldEC>(idx_1);
 
                         ref var buildC_1 = ref Build<BuildingTC>(idx_1);
 
@@ -48,11 +45,12 @@ namespace Game.Game
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Player))
                             {
-                                foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_1).Disable();
+                                foreach (var item in CellUnitEffectsEs.KeysStat) 
+                                    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_1).Disable();
 
                                 if (tw_1.Is(ToolWeaponTypes.Shield))
                                 {
-                                    shield_1.Take();
+                                    CellUnitTWE.Take(idx_1);
                                 }
                                 else
                                 {
@@ -68,7 +66,8 @@ namespace Game.Game
                     }
 
                     CellUnitStepEs.Take(idx_0, uniq_cur);
-                    foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_0).Disable();
+                    foreach (var item in CellUnitEffectsEs.KeysStat) 
+                        CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AttackMelee);
 

@@ -14,19 +14,19 @@ namespace Game.Game
             var curPlayer = WhoseMoveE.CurPlayerI;
 
 
-            var extracts = new Dictionary<ResTypes, int>();
-            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            var extracts = new Dictionary<ResourceTypes, int>();
+            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
             {
                 extracts.Add(res, default);
             }
-            extracts[ResTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
+            extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
 
 
             foreach (var idx_0 in Idxs)
             {
                 if (Unit<UnitTC>(idx_0).Have && Unit<PlayerTC>(idx_0).Is(WhoseMoveE.CurPlayerI))
                 {
-                    extracts[ResTypes.Food] -= EconomyValues.CostFood(Unit<UnitTC>(idx_0).Unit);
+                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Unit<UnitTC>(idx_0).Unit);
 
                     if (CellUnitEs.CanExtract(idx_0, out var extract, out var env, out var res))
                     {
@@ -42,14 +42,14 @@ namespace Game.Game
                 }
             }
 
-            if (extracts[ResTypes.Food] < 0) EconomyExtract<TextMPUGUIC>(ResTypes.Food).Text = extracts[ResTypes.Food].ToString();
-            else EconomyExtract<TextMPUGUIC>(ResTypes.Food).Text = "+ " + extracts[ResTypes.Food].ToString();
+            if (extracts[ResourceTypes.Food] < 0) EconomyExtract<TextMPUGUIC>(ResourceTypes.Food).Text = extracts[ResourceTypes.Food].ToString();
+            else EconomyExtract<TextMPUGUIC>(ResourceTypes.Food).Text = "+ " + extracts[ResourceTypes.Food].ToString();
 
-            EconomyExtract<TextMPUGUIC>(ResTypes.Wood).Text = "+ " + extracts[ResTypes.Wood];
-            EconomyExtract<TextMPUGUIC>(ResTypes.Ore).Text = "+ " + extracts[ResTypes.Ore];
+            EconomyExtract<TextMPUGUIC>(ResourceTypes.Wood).Text = "+ " + extracts[ResourceTypes.Wood];
+            EconomyExtract<TextMPUGUIC>(ResourceTypes.Ore).Text = "+ " + extracts[ResourceTypes.Ore];
 
 
-            for (var res = ResTypes.First; res < ResTypes.End; res++)
+            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
             {
                 Economy<TextMPUGUIC>(res).Text = InventorResourcesE.Resource<AmountC>(res, curPlayer).Amount.ToString();
             }

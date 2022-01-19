@@ -46,16 +46,16 @@ namespace Game.Game
             }
         }
 
-        internal static int AmountResources(ResTypes res)
+        internal static int AmountResources(ResourceTypes res)
         {
             switch (res)
             {
-                case ResTypes.None: throw new Exception();
-                case ResTypes.Food: return 250;
-                case ResTypes.Wood: return 250;
-                case ResTypes.Ore: return 0;
-                case ResTypes.Iron: return 5;
-                case ResTypes.Gold: return 5;
+                case ResourceTypes.None: throw new Exception();
+                case ResourceTypes.Food: return 250;
+                case ResourceTypes.Wood: return 250;
+                case ResourceTypes.Ore: return 0;
+                case ResourceTypes.Iron: return 5;
+                case ResourceTypes.Gold: return 5;
                 default: throw new Exception();
             }
         }
@@ -63,7 +63,7 @@ namespace Game.Game
 
         #region Costs
 
-        internal static int AmountResForBuy(UnitTypes unit, ResTypes res)
+        internal static int AmountResForBuy(UnitTypes unit, ResourceTypes res)
         {
             switch (unit)
             {
@@ -72,61 +72,61 @@ namespace Game.Game
                 case UnitTypes.Pawn:
                     switch (res)
                     {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 50;
-                        case ResTypes.Wood: return 0;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 0;
-                        case ResTypes.Gold: return 0;
+                        case ResourceTypes.None: throw new Exception();
+                        case ResourceTypes.Food: return 50;
+                        case ResourceTypes.Wood: return 0;
+                        case ResourceTypes.Ore: return 0;
+                        case ResourceTypes.Iron: return 0;
+                        case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Archer:
                     switch (res)
                     {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 50;
-                        case ResTypes.Wood: return 50;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 0;
-                        case ResTypes.Gold: return 0;
+                        case ResourceTypes.None: throw new Exception();
+                        case ResourceTypes.Food: return 50;
+                        case ResourceTypes.Wood: return 50;
+                        case ResourceTypes.Ore: return 0;
+                        case ResourceTypes.Iron: return 0;
+                        case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
                 default: throw new Exception();
             }
         }
-        internal static int AmountResForBuyRes(ResTypes res)
+        internal static int AmountResForBuyRes(ResourceTypes res)
         {
             switch (res)
             {
-                case ResTypes.None: throw new Exception();
-                case ResTypes.Food: return 0;
-                case ResTypes.Wood: return 0;
-                case ResTypes.Ore: return 0;
-                case ResTypes.Iron: return 0;
-                case ResTypes.Gold: return 1;
+                case ResourceTypes.None: throw new Exception();
+                case ResourceTypes.Food: return 0;
+                case ResourceTypes.Wood: return 0;
+                case ResourceTypes.Ore: return 0;
+                case ResourceTypes.Iron: return 0;
+                case ResourceTypes.Gold: return 1;
                 default: throw new Exception();
             }
         }
-        internal static int AmountResForMelting(ResTypes res)
+        internal static int AmountResForMelting(ResourceTypes res)
         {
             switch (res)
             {
-                case ResTypes.None: throw new Exception();
-                case ResTypes.Food: return 0;
-                case ResTypes.Wood: return 50;
-                case ResTypes.Ore: return 50;
-                case ResTypes.Iron: return 0;
-                case ResTypes.Gold: return 0;
+                case ResourceTypes.None: throw new Exception();
+                case ResourceTypes.Food: return 0;
+                case ResourceTypes.Wood: return 50;
+                case ResourceTypes.Ore: return 50;
+                case ResourceTypes.Iron: return 0;
+                case ResourceTypes.Gold: return 0;
                 default: throw new Exception();
             }
         }
-        internal static int AmountResForBuild(BuildingTypes build, ResTypes resourceType)
+        internal static int AmountResForBuild(BuildingTypes build, ResourceTypes resourceType)
         {
             switch (resourceType)
             {
-                case ResTypes.None: throw new Exception();
+                case ResourceTypes.None: throw new Exception();
 
-                case ResTypes.Food:
+                case ResourceTypes.Food:
                     switch (build)
                     {
                         case BuildingTypes.None: throw new Exception();
@@ -136,7 +136,7 @@ namespace Game.Game
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
-                case ResTypes.Wood:
+                case ResourceTypes.Wood:
                     switch (build)
                     {
                         case BuildingTypes.None: throw new Exception();
@@ -146,7 +146,7 @@ namespace Game.Game
                         case BuildingTypes.Mine: return 50;
                         default: throw new Exception();
                     }
-                case ResTypes.Ore:
+                case ResourceTypes.Ore:
                     switch (build)
                     {
                         case BuildingTypes.None: throw new Exception();
@@ -156,7 +156,7 @@ namespace Game.Game
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
-                case ResTypes.Iron:
+                case ResourceTypes.Iron:
                     switch (build)
                     {
                         case BuildingTypes.None: throw new Exception();
@@ -166,7 +166,7 @@ namespace Game.Game
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
-                case ResTypes.Gold:
+                case ResourceTypes.Gold:
                     switch (build)
                     {
                         case BuildingTypes.None: throw new Exception();
@@ -181,7 +181,7 @@ namespace Game.Game
 
 
         }
-        internal static int AmountResForUpgradeUnit(UnitTypes unitType, ResTypes resourceType)
+        internal static int AmountResForUpgradeUnit(UnitTypes unitType, ResourceTypes resourceType)
         {
             switch (unitType)
             {
@@ -190,29 +190,29 @@ namespace Game.Game
                 case UnitTypes.Pawn:
                     switch (resourceType)
                     {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 0;
-                        case ResTypes.Wood: return 0;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 1;
-                        case ResTypes.Gold: return 0;
+                        case ResourceTypes.None: throw new Exception();
+                        case ResourceTypes.Food: return 0;
+                        case ResourceTypes.Wood: return 0;
+                        case ResourceTypes.Ore: return 0;
+                        case ResourceTypes.Iron: return 1;
+                        case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Archer:
                     switch (resourceType)
                     {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 0;
-                        case ResTypes.Wood: return 0;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 1;
-                        case ResTypes.Gold: return 0;
+                        case ResourceTypes.None: throw new Exception();
+                        case ResourceTypes.Food: return 0;
+                        case ResourceTypes.Wood: return 0;
+                        case ResourceTypes.Ore: return 0;
+                        case ResourceTypes.Iron: return 1;
+                        case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
                 default: throw new Exception();
             }
         }
-        internal static int AmountResForBuyTW(ToolWeaponTypes tW, LevelTypes level, ResTypes res)
+        internal static int AmountResForBuyTW(ToolWeaponTypes tW, LevelTypes level, ResourceTypes res)
         {
             switch (level)
             {
@@ -226,12 +226,12 @@ namespace Game.Game
                         case ToolWeaponTypes.Shield:
                             switch (res)
                             {
-                                case ResTypes.None: throw new Exception();
-                                case ResTypes.Food: return 0;
-                                case ResTypes.Wood: return 10;
-                                case ResTypes.Ore: return 0;
-                                case ResTypes.Iron: return 0;
-                                case ResTypes.Gold: return 0;
+                                case ResourceTypes.None: throw new Exception();
+                                case ResourceTypes.Food: return 0;
+                                case ResourceTypes.Wood: return 10;
+                                case ResourceTypes.Ore: return 0;
+                                case ResourceTypes.Iron: return 0;
+                                case ResourceTypes.Gold: return 0;
                                 default: throw new Exception();
                             }
                         default: throw new Exception();
@@ -243,34 +243,34 @@ namespace Game.Game
                         case ToolWeaponTypes.Pick:
                             switch (res)
                             {
-                                case ResTypes.None: throw new Exception();
-                                case ResTypes.Food: return 0;
-                                case ResTypes.Wood: return 0;
-                                case ResTypes.Ore: return 0;
-                                case ResTypes.Iron: return 1;
-                                case ResTypes.Gold: return 0;
+                                case ResourceTypes.None: throw new Exception();
+                                case ResourceTypes.Food: return 0;
+                                case ResourceTypes.Wood: return 0;
+                                case ResourceTypes.Ore: return 0;
+                                case ResourceTypes.Iron: return 1;
+                                case ResourceTypes.Gold: return 0;
                                 default: throw new Exception();
                             }
                         case ToolWeaponTypes.Sword:
                             switch (res)
                             {
-                                case ResTypes.None: throw new Exception();
-                                case ResTypes.Food: return 0;
-                                case ResTypes.Wood: return 0;
-                                case ResTypes.Ore: return 0;
-                                case ResTypes.Iron: return 2;
-                                case ResTypes.Gold: return 0;
+                                case ResourceTypes.None: throw new Exception();
+                                case ResourceTypes.Food: return 0;
+                                case ResourceTypes.Wood: return 0;
+                                case ResourceTypes.Ore: return 0;
+                                case ResourceTypes.Iron: return 1;
+                                case ResourceTypes.Gold: return 0;
                                 default: throw new Exception();
                             }
                         case ToolWeaponTypes.Shield:
                             switch (res)
                             {
-                                case ResTypes.None: throw new Exception();
-                                case ResTypes.Food: return 0;
-                                case ResTypes.Wood: return 0;
-                                case ResTypes.Ore: return 0;
-                                case ResTypes.Iron: return 3;
-                                case ResTypes.Gold: return 0;
+                                case ResourceTypes.None: throw new Exception();
+                                case ResourceTypes.Food: return 0;
+                                case ResourceTypes.Wood: return 0;
+                                case ResourceTypes.Ore: return 0;
+                                case ResourceTypes.Iron: return 1;
+                                case ResourceTypes.Gold: return 0;
                                 default: throw new Exception();
                             }
                         default: throw new Exception();

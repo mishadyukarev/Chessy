@@ -52,7 +52,7 @@ namespace Game.Game
 
             if (WhoseMoveE.IsMyMove)
             {
-                if (EntInventorUnits.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+                if (InventorUnitsE.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
                 {
                     EntityPool.ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
 

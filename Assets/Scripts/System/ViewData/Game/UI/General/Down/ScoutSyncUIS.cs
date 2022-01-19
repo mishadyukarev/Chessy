@@ -8,7 +8,7 @@ namespace Game.Game
         {
             var curPlayer = WhoseMoveE.CurPlayerI;
 
-            var isActive = EntInventorUnits.Units<AmountC>(UnitTypes.Scout, LevelTypes.First, curPlayer).Have;
+            var isActive = InventorUnitsE.Units<AmountC>(UnitTypes.Scout, LevelTypes.First, curPlayer).Have;
             var cooldown = EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, curPlayer).Cooldown;
 
 

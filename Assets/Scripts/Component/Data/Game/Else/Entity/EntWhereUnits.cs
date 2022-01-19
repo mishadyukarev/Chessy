@@ -35,7 +35,7 @@ namespace Game.Game
                 {
                     for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                     {
-                        for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+                        for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                         {
                             _units.Add(Key((unit, lev, player), idx), default);
                         }

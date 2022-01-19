@@ -38,9 +38,6 @@ namespace Game.Game
                             ref var unit_1 = ref Unit<UnitTC>(idx_1);
                             ref var own_1 = ref Unit<PlayerTC>(idx_1);
 
-                            ref var trail_1 = ref Trail<TrailCellEC>(idx_1);
-
-
                             if (!Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_1).Have)
                             {
                                 if (CellUnitStepEs.HaveStepsForDoing(idx_0, idx_1)

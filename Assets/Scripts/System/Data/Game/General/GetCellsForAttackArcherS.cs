@@ -60,6 +60,10 @@ namespace Game.Game
                                                     else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, ownUnit_0.Player).Add(idx_1);
                                                 }
                                             }
+                                            else
+                                            {
+                                                CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, ownUnit_0.Player).Add(idx_1);
+                                            }
                                         }
                                     }
 
@@ -74,7 +78,7 @@ namespace Game.Game
 
 
                                     if (CellEs.Cell<IsActiveC>(idx_2).IsActive && unit_2.Have
-                                        && Unit<IsVisibleC>(ownUnit_0.Player, idx_2).IsVisible && !ownUnit_2.Is(ownUnit_0.Player))
+                                        && CellUnitVisibleEs.Visible<IsVisibleC>(ownUnit_0.Player, idx_2).IsVisible && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
                                         if (unit_0.Is(UnitTypes.Archer))
                                         {

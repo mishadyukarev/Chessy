@@ -27,7 +27,7 @@
         GiveTakeToolWeapon,
         BuyRes,
 
-        UpgUnits,
+        UpgCenterUnits,
         UpgCenterBuild,
         UpgWater,
 

@@ -11,8 +11,6 @@ namespace Game.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
 
 

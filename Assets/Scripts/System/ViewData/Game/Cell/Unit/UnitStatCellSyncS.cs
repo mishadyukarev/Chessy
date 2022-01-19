@@ -30,7 +30,7 @@ namespace Game.Game
                 Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
-                if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
+                if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                 {
                     if (unit_0.Have)
                     {
@@ -40,7 +40,7 @@ namespace Game.Game
                         float xCordinate = (float)hpUnit_0.Amount / CellUnitHpEs.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(CellUnitWaterEs.NeedWater(idx_0));
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(CellUnitWaterEs.Water<AmountC>(idx_0).Amount <= CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
                         Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(CellUnitStepEs.HaveMaxSteps(idx_0));
 
                         

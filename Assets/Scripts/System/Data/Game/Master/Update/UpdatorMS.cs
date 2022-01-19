@@ -18,7 +18,7 @@ namespace Game.Game
                 EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, player).Cooldown -= 1;
                 EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, player).Cooldown -= 1;
 
-                InventorResourcesE.Resource<AmountC>(ResTypes.Food, player).Add(EconomyValues.ADDING_FOOD_AFTER_MOVE);
+                InventorResourcesE.Resource<AmountC>(ResourceTypes.Food, player).Add(EconomyValues.ADDING_FOOD_AFTER_MOVE);
             }
 
             foreach (byte idx_0 in Idxs)
@@ -28,27 +28,23 @@ namespace Game.Game
                 ref var unit_0 = ref Unit<UnitTC>(idx_0);
                 ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
-                ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
-                ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
 
-
-                foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
+                foreach (var item in DictTrail(idx_0)) TakeHealth(idx_0, item.Key);
                 foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Take();
                 CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Take();
 
 
                 if (unit_0.Have)
                 {
-                    AmountStepsInCondition<AmountC>(condUnit_0.Condition, idx_0).Add();
+                    CellUnitStepsInConditionEs.Steps<AmountC>(condUnit_0.Condition, idx_0).Add();
 
-                    InventorResourcesE.Resource<AmountC>(ResTypes.Food, ownUnit_0.Player).Take(EconomyValues.CostFood(unit_0.Unit));
+                    InventorResourcesE.Resource<AmountC>(ResourceTypes.Food, ownUnit_0.Player).Take(EconomyValues.CostFood(unit_0.Unit));
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -137,7 +133,7 @@ namespace Game.Game
                     {
                         if (!build_0.Is(BuildingTypes.Mine))
                         {
-                            if (Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Amount != Max(EnvironmentTypes.Hill))
+                            if (Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Amount != EnvironmentValues.MaxAmount(EnvironmentTypes.Hill))
                             {
                                 Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Amount += 1;
                             }

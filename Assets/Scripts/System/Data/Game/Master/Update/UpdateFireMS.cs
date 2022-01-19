@@ -19,7 +19,6 @@ namespace Game.Game
                 ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
-                ref var hpUnitCell_0 = ref Unit<UnitCellEC>(idx_0);
                 ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);

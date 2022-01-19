@@ -2,12 +2,12 @@
 
 namespace Game.Game
 {
-    internal readonly struct DamageUnitValues
+    internal static class DamageUnitValues
     {
         internal const float UNIQUE_PERCENT_DAMAGE = 0.5f;
         internal const int HP_FOR_DEATH_AFTER_ATTACK = 15;
 
-        internal int StandDamage(UnitTypes unit, LevelTypes lev)
+        internal static int StandDamage(UnitTypes unit, LevelTypes lev)
         {
             switch (unit)
             {
@@ -55,7 +55,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal float PercentTW(ToolWeaponTypes tw)
+        internal static float PercentTW(ToolWeaponTypes tw)
         {
             switch (tw)
             {
@@ -70,7 +70,7 @@ namespace Game.Game
 
         #region Protection
 
-        internal float ProtRelaxPercent(ConditionUnitTypes cond)
+        internal static float ProtRelaxPercent(ConditionUnitTypes cond)
         {
             switch (cond)
             {
@@ -80,7 +80,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal float ProtectionPercent(EnvironmentTypes env)
+        internal static float ProtectionPercent(EnvironmentTypes env)
         {
             switch (env)
             {
@@ -93,7 +93,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal float ProtectionPercent(BuildingTypes build)
+        internal static float ProtectionPercent(BuildingTypes build)
         {
             switch (build)
             {

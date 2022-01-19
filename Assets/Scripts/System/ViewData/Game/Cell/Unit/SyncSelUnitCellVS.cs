@@ -23,7 +23,7 @@ namespace Game.Game
 
                 if (unitC_cur.Have)
                 {
-                    if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
+                    if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
                     {
                         mainUnit_pre.Enable();
                     }

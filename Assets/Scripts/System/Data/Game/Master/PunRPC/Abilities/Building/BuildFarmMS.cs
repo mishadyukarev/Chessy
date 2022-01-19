@@ -17,8 +17,6 @@ namespace Game.Game
             ref var build_0 = ref Build<BuildingTC>(idx_0);
             ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-
             var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
@@ -35,7 +33,7 @@ namespace Game.Game
 
                         if (Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx_0).Have)
                         {
-                            Environment<AmountC>(EnvironmentTypes.Fertilizer, idx_0).Amount = Max(EnvironmentTypes.Fertilizer);
+                            Environment<AmountC>(EnvironmentTypes.Fertilizer, idx_0).Amount = EnvironmentValues.MaxAmount(EnvironmentTypes.Fertilizer);
                         }
                         else
                         {

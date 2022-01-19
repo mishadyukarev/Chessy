@@ -30,7 +30,7 @@ namespace Game.Game
         {
             _upgrades = new Dictionary<string, Entity>();
 
-            for (var upg = UpgradeTypes.First; upg < UpgradeTypes.End; upg++)
+            for (var upg = UpgradeTypes.None + 1; upg < UpgradeTypes.End; upg++)
             {
                 for (var stat = UnitStatTypes.First; stat < UnitStatTypes.End; stat++)
                 {

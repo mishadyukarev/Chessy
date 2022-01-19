@@ -1441,7 +1441,7 @@ GameObject:
   - component: {fileID: 6139976698442616085}
   - component: {fileID: 8291226600927741172}
   m_Layer: 5
-  m_Name: NeedFood_Image
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1830,7 +1830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7751629886384494515}
   m_Layer: 5
-  m_Name: NeedOtherPlaceZone
+  m_Name: NeedOtherPlace
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7705,8 +7705,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 9014726737011267298}
-  m_RootOrder: 0
+  m_Father: {fileID: 5206338208674133807}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11987,7 +11987,7 @@ GameObject:
   - component: {fileID: 23969737226736741}
   - component: {fileID: 3703144696794769278}
   m_Layer: 5
-  m_Name: NeedOre_Image
+  m_Name: Ore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16736,7 +16736,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1752501171309736232}
   m_Layer: 5
-  m_Name: ThatsForOtherUnitZone
+  m_Name: ThatIsForOtherUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17255,7 +17255,7 @@ GameObject:
   - component: {fileID: 7658755055465981479}
   - component: {fileID: 2009675997361722269}
   m_Layer: 5
-  m_Name: NeedWood_Image
+  m_Name: Wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17527,7 +17527,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5206338208674133807}
   m_Layer: 5
-  m_Name: MistakeZone
+  m_Name: Mistake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17545,7 +17545,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8580482946597353371}
-  - {fileID: 9014726737011267298}
+  - {fileID: 2898540546911823914}
   - {fileID: 6894308872491995918}
   - {fileID: 6474281841640472019}
   - {fileID: 7751629886384494515}
@@ -22571,42 +22571,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &4601535434814509245
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9014726737011267298}
-  m_Layer: 5
-  m_Name: TextZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &9014726737011267298
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4601535434814509245}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2898540546911823914}
-  m_Father: {fileID: 5206338208674133807}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4617346223136526856
 GameObject:
   m_ObjectHideFlags: 0
@@ -22824,7 +22788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6474281841640472019}
   m_Layer: 5
-  m_Name: NeedMoreHealthZone
+  m_Name: NeedMoreHp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24134,7 +24098,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6477989688435516159}
   m_Layer: 5
-  m_Name: NeedMoreResourcesZone
+  m_Name: Economy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24249,7 +24213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6894308872491995918}
   m_Layer: 5
-  m_Name: NeedStepsZone
+  m_Name: NeedMoreSteps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24401,7 +24365,7 @@ GameObject:
   - component: {fileID: 3263021335736208613}
   - component: {fileID: 4002103096873066399}
   m_Layer: 5
-  m_Name: NeedIron_Image
+  m_Name: Iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30109,7 +30073,7 @@ GameObject:
   m_Component:
   - component: {fileID: 271593695555393445}
   m_Layer: 5
-  m_Name: NeedCityZone
+  m_Name: NeedCity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36109,7 +36073,7 @@ GameObject:
   - component: {fileID: 9099477717124717447}
   - component: {fileID: 1620821994762587120}
   m_Layer: 5
-  m_Name: NeedGold_Image
+  m_Name: Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36333,7 +36297,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6384889202703687998}
   m_Layer: 5
-  m_Name: NearBorderZone
+  m_Name: NearBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

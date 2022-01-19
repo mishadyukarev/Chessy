@@ -37,17 +37,17 @@ namespace Game.Game
             {
                 var levUnit = LevelTypes.None;
 
-                if (EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Have)
+                if (InventorUnitsE.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Have)
                 {
-                    EntInventorUnits.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Amount -= 1;
+                    InventorUnitsE.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Amount -= 1;
                     levUnit = LevelTypes.Second;
                 }
                 else
                 {
-                    EntInventorUnits.Units<AmountC>(unit, LevelTypes.First, whoseMove).Amount -= 1;
+                    InventorUnitsE.Units<AmountC>(unit, LevelTypes.First, whoseMove).Amount -= 1;
                     levUnit = LevelTypes.First;
                 }
-                Unit<UnitCellEC>(idx_0).SetNew((unit, levUnit, whoseMove));
+                SetNew(idx_0, (unit, levUnit, whoseMove));
 
 
                 //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);

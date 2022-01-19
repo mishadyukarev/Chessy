@@ -10,7 +10,7 @@ namespace Game.Game
 
         public CellFireEs(in EcsWorld gameW)
         {
-            _fires = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _fires = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
 
             for (byte idx = 0; idx < _fires.Length; idx++)
             {

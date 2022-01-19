@@ -25,5 +25,6 @@ namespace Game.Game
         public TextMPUGUIC(in TextMeshProUGUI text) => TextUI = text;
 
         public void SetActiveParent(in bool isActive) => Parent_T.gameObject.SetActive(isActive);
+        public void SetActive(in bool needActive) => TextUI.gameObject.SetActive(needActive);
     }
 }

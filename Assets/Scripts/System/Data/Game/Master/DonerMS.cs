@@ -16,27 +16,27 @@ namespace Game.Game
             {
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
-                    SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
+                    SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
                     EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
-                    //var curPlayer = WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI;
-                    //var nextPlayer = WhoseMoveC.NextPlayerFrom(curPlayer);
+                    var curPlayer = WhoseMoveE.CurPlayerI;
+                    var nextPlayer = WhoseMoveE.NextPlayerFrom(curPlayer);
 
-                    //if (nextPlayer == PlayerTypes.First)
-                    //{
-                    //    SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
-                    //    EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
-                    //}
+                    if (nextPlayer == PlayerTypes.First)
+                    {
+                        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
+                    }
 
-                    //WhoseMoveC.SetWhoseMove(nextPlayer);
+                    WhoseMoveE.WhoseMove<PlayerTC>().Player = nextPlayer;
 
 
-                    //curPlayer = WhoseMoveC.WhoseMove<WhoseMoveEC>().CurPlayerI;
+                    curPlayer = WhoseMoveE.CurPlayerI;
 
-                    //ViewDataSC.RotateAll.Invoke(); 
+                    //ViewDataSC.RotateAll.Invoke();
 
                     EntityPool.FriendZone<IsActiveC>().IsActive = true;
                 }

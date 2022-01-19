@@ -13,8 +13,8 @@ namespace Game.Game
 
         public UnitCellVEs(in EcsWorld gameW, GameObject[] cells)
         {
-            _main = new Entity[CellValues.ALL_CELLS_AMOUNT];
-            _extra = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _main = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
+            _extra = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
 
             for (byte idx = 0; idx < _main.Length; idx++)
             {

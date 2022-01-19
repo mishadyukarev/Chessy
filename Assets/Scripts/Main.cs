@@ -42,6 +42,7 @@ namespace Game
                 case SceneTypes.Game:
                     SystemDataManager.Run(DataSTypes.RunUpdate);
                     SystemViewDataManager.Run(ViewDataSTypes.RunUpdate);
+                    SystemViewDataUIManager.Run(UITypes.RunUpdate);
                     break;
 
                 default:
@@ -65,6 +66,7 @@ namespace Game
                 case SceneTypes.Game:
                     SystemDataManager.Run(DataSTypes.RunFixedUpdate);
                     SystemViewDataManager.Run(ViewDataSTypes.RunFixedUpdate);
+                    SystemViewDataUIManager.Run(UITypes.RunFixedUpdate);
                     break;
 
                 default:
@@ -102,7 +104,9 @@ namespace Game
                     new SystemDataMasterManager(default);
                     new SystemDataOtherManager(default);
 
+                    new EventUIManager(default);
                     new SystemViewDataManager(default);
+                    new SystemViewDataUIManager(default);    
 
                     RpcS.SyncAllMaster();
 

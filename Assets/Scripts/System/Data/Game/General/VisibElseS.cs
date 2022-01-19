@@ -18,7 +18,8 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    Unit<IsVisibleC>(ownUnit_0.Player, idx_0).IsVisible = true;
+                    CellUnitVisibleEs.Visible<IsVisibleC>(ownUnit_0.Player, idx_0).IsVisible = true;
+
 
                     if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
                     {
@@ -39,11 +40,11 @@ namespace Game.Game
                             }
                         }
 
-                        Unit<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = isVisibledNextPlayer;
+                        CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = isVisibledNextPlayer;
                     }
                     else
                     {
-                        Unit<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = true;
+                        CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = true;
                     }
 
                 }
@@ -84,10 +85,7 @@ namespace Game.Game
                     else IsVisible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisible = true;
                 }
 
-
-                ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
-
-                if (trail_0.HaveAnyTrail)
+                if (HaveAnyTrail(idx_0))
                 {
                     Trail<IsVisibleC>(PlayerTypes.First, idx_0).IsVisible = false;
                     Trail<IsVisibleC>(PlayerTypes.Second, idx_0).IsVisible = false;

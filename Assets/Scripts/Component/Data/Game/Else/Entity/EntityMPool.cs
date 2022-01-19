@@ -13,6 +13,7 @@ namespace Game.Game
         public static ref C BuyResources<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.BuyRes].Get<C>();
         public static ref C Shift<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.Shift].Get<C>();
         public static ref C SetUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.SetUnit].Get<C>();
+        public static ref C UpgradeCenterUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.UpgCenterUnits].Get<C>();
         public static ref C UpgradeCenterBuild<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.UpgCenterBuild].Get<C>();
         public static ref C GetHero<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.GetHero].Get<C>();
         public static ref C CreateUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.CreateUnit].Get<C>();
@@ -50,7 +51,10 @@ namespace Game.Game
             _rpcEnts.Add(RpcMasterTypes.SetUnit, gameW.NewEntity()
                 .Add(new IdxC())
                 .Add(new UnitTC()));
- 
+
+            _rpcEnts.Add(RpcMasterTypes.UpgCenterUnits, gameW.NewEntity()
+                .Add(new UnitTC()));
+
             _rpcEnts.Add(RpcMasterTypes.UpgCenterBuild, gameW.NewEntity()
                 .Add(new BuildingTC()));
 

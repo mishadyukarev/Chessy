@@ -89,7 +89,7 @@ namespace Game.Game
 
         #region Upgrades
 
-        public void PickUpgUnitToMas(UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgUnits, unit });
+        public void PickUpgUnitToMas(UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterUnits, unit });
         public void PickUpgBuildToMas(BuildingTypes build) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterBuild, build });
         public void UpgWater() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgWater });
 
@@ -100,7 +100,7 @@ namespace Game.Game
 
         public void DoneToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Done, });
 
-        public void BuyResToMaster(ResTypes res) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyRes, res });
+        public void BuyResToMaster(ResourceTypes res) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyRes, res });
 
         public void GetHero(UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GetHero, unit });
 
@@ -128,14 +128,14 @@ namespace Game.Game
 
         #region General
 
-        public void MistakeEconomyToGeneral(Player playerTo, Dictionary<ResTypes, int> needRes)
+        public void MistakeEconomyToGeneral(Player playerTo, Dictionary<ResourceTypes, int> needRes)
         {
-            int[] needRes2 = new int[(int)ResTypes.End];
-            needRes2[0] = needRes[ResTypes.Food];
-            needRes2[1] = needRes[ResTypes.Wood];
-            needRes2[2] = needRes[ResTypes.Ore];
-            needRes2[3] = needRes[ResTypes.Iron];
-            needRes2[4] = needRes[ResTypes.Gold];
+            int[] needRes2 = new int[(int)ResourceTypes.End];
+            needRes2[0] = needRes[ResourceTypes.Food];
+            needRes2[1] = needRes[ResourceTypes.Wood];
+            needRes2[2] = needRes[ResourceTypes.Ore];
+            needRes2[3] = needRes[ResourceTypes.Iron];
+            needRes2[4] = needRes[ResourceTypes.Gold];
 
             _action1(_generalRPCName, playerTo, new object[] { RpcGeneralTypes.Mistake, MistakeTypes.Economy, needRes2 });
         }

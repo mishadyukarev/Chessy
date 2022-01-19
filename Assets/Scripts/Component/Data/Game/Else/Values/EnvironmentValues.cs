@@ -2,9 +2,11 @@
 
 namespace Game.Game
 {
-    public struct EnvironmentValues
+    public static class EnvironmentValues
     {
-        public byte MaxAmount(in EnvironmentTypes env)
+        #region StartGame
+
+        public static byte MaxAmount(in EnvironmentTypes env)
         {
             switch (env)
             {
@@ -17,7 +19,7 @@ namespace Game.Game
             }
         }
 
-        public byte StartPercentForSpawn(in EnvironmentTypes env)
+        public static byte StartPercentForSpawn(in EnvironmentTypes env)
         {
             switch (env)
             {
@@ -29,5 +31,9 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
+
+        #endregion
+
+
     }
 }

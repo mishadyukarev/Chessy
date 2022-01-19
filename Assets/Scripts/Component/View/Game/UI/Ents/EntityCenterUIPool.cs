@@ -9,7 +9,7 @@ namespace Game.Game
 {
     public readonly struct EntityCenterUIPool
     {
-        readonly static Dictionary<CenterEntTypes, Entity> _ents;
+        static Dictionary<CenterEntTypes, Entity> _ents;
 
         public static ref T EndGame<T>() where T : struct => ref _ents[CenterEntTypes.EndGame].Get<T>();
         public static ref T Motion<T>() where T : struct => ref _ents[CenterEntTypes.Motion].Get<T>();
@@ -17,7 +17,7 @@ namespace Game.Game
         public static ref T Ready<T>() where T : struct => ref _ents[CenterEntTypes.Ready].Get<T>();
 
 
-        static EntityCenterUIPool()
+        public EntityCenterUIPool(in EcsWorld curGameW, in Transform centerZone)
         {
             _ents = new Dictionary<CenterEntTypes, Entity>();
 
@@ -25,9 +25,8 @@ namespace Game.Game
             {
                 _ents.Add(type, default);
             }
-        }
-        public EntityCenterUIPool(in EcsWorld curGameW, in Transform centerZone)
-        {
+
+
             _ents[CenterEntTypes.EndGame] = curGameW.NewEntity()
                 .Add(new EndGameUIEC())
                 .Add(new TextMPUGUIC(centerZone.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>()));
@@ -45,8 +44,6 @@ namespace Game.Game
             _ents[CenterEntTypes.Ready] = curGameW.NewEntity()
                 .Add(new ButtonUIC(readyZone.Find("ReadyButton").GetComponent<Button>()));
 
-
-            new MistakeUIC(centerZone.gameObject);
         }
 
         enum CenterEntTypes

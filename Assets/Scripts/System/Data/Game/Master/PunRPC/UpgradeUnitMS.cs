@@ -14,9 +14,7 @@ namespace Game.Game
             ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
 
-            ref var unitE_0 = ref Unit<UnitCellEC>(idx_0);
             ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
 
 
             var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;

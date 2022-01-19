@@ -12,17 +12,17 @@ namespace Game.Game
             {
                 if (unitT_cur == UnitTypes.Pawn || unitT_cur == UnitTypes.Archer)
                 {
-                    if (GetterUnitsE.GetterUnit<IsActiveC>(unitT_cur).IsActive)
+                    if (GetterUnitsEs.GetterUnit<IsActiveC>(unitT_cur).IsActive)
                     {
                         PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(true);
 
-                        GetterUnitsE.GetterUnit<TimerC>(unitT_cur).Timer += Time.deltaTime;
+                        GetterUnitsEs.GetterUnit<TimerC>(unitT_cur).Timer += Time.deltaTime;
 
-                        if (GetterUnitsE.GetterUnit<TimerC>(unitT_cur).Timer >= NEEDED_TIME)
+                        if (GetterUnitsEs.GetterUnit<TimerC>(unitT_cur).Timer >= NEEDED_TIME)
                         {
                             PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(false);
-                            GetterUnitsE.GetterUnit<IsActiveC>(unitT_cur).IsActive = false;
-                            GetterUnitsE.GetterUnit<TimerC>(unitT_cur).Reset();
+                            GetterUnitsEs.GetterUnit<IsActiveC>(unitT_cur).IsActive = false;
+                            GetterUnitsEs.GetterUnit<TimerC>(unitT_cur).Reset();
                         }
                     }
 
@@ -33,11 +33,11 @@ namespace Game.Game
                 }
             }
 
-            var amountPawns = EntInventorUnits.Units<AmountC>(UnitTypes.Pawn, LevelTypes.First, WhoseMoveE.CurPlayerI).Amount
-                + EntInventorUnits.Units<AmountC>(UnitTypes.Pawn, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount;
+            var amountPawns = InventorUnitsE.Units<AmountC>(UnitTypes.Pawn, LevelTypes.First, WhoseMoveE.CurPlayerI).Amount
+                + InventorUnitsE.Units<AmountC>(UnitTypes.Pawn, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount;
 
-            var amountArchers = EntInventorUnits.Units<AmountC>(UnitTypes.Archer, LevelTypes.First, WhoseMoveE.CurPlayerI).Amount
-                + EntInventorUnits.Units<AmountC>(UnitTypes.Archer, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount;
+            var amountArchers = InventorUnitsE.Units<AmountC>(UnitTypes.Archer, LevelTypes.First, WhoseMoveE.CurPlayerI).Amount
+                + InventorUnitsE.Units<AmountC>(UnitTypes.Archer, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount;
 
             PawnArcherDownUIE.Taker<TextMPUGUIC>(UnitTypes.Pawn).Text = amountPawns.ToString();
             PawnArcherDownUIE.Taker<TextMPUGUIC>(UnitTypes.Archer).Text = amountArchers.ToString();

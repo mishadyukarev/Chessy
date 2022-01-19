@@ -20,9 +20,6 @@ namespace Game.Game
             ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
 
-            ref var stepUnitCell_0 = ref Unit<UnitCellEC>(idx_0);
-
-
             var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
             if (build == BuildingTypes.Mine)

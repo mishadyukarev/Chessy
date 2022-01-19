@@ -22,8 +22,6 @@ namespace Game.Game
                 ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 
-                ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
-
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);
                 ref var twShield_0 = ref UnitTW<ProtectionC>(idx_0);
@@ -37,7 +35,7 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
-                            UnitTW<UnitTWCellEC>(idx_0).Reset();
+                            CellUnitTWE.Reset(idx_0);
 
                             CellUnitStepEs.TakeMin(idx_0);
 
@@ -49,7 +47,7 @@ namespace Game.Game
                         {
                             InventorToolWeaponE.ToolWeapons<AmountC>(tWForGive, levelTW, ownUnit_0.Player).Take();
 
-                            UnitTW<UnitTWCellEC>(idx_0).SetNew(tWForGive, levelTW);
+                            CellUnitTWE.SetNew(idx_0, tWForGive, levelTW);
 
                             CellUnitStepEs.TakeMin(idx_0);
 
@@ -62,7 +60,7 @@ namespace Game.Game
                             {
                                 InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                UnitTW<UnitTWCellEC>(idx_0).SetNew(tWForGive, levelTW);
+                                CellUnitTWE.SetNew(idx_0, tWForGive, levelTW);
 
                                 CellUnitStepEs.TakeMin(idx_0);
 
@@ -80,7 +78,7 @@ namespace Game.Game
                             {
                                 InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                UnitTW<UnitTWCellEC>(idx_0).SetNew(tWForGive, levelTW);
+                                CellUnitTWE.SetNew(idx_0, tWForGive, levelTW);
 
                                 CellUnitStepEs.TakeMin(idx_0);
 
@@ -98,7 +96,7 @@ namespace Game.Game
                             {
                                 InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                UnitTW<UnitTWCellEC>(idx_0).SetNew(tWForGive, levelTW);
+                                CellUnitTWE.SetNew(idx_0, tWForGive, levelTW);
 
                                 CellUnitStepEs.TakeMin(idx_0);
 

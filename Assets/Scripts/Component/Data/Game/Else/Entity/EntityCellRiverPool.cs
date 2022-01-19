@@ -10,11 +10,11 @@ namespace Game.Game
 
         static EntityCellRiverPool()
         {
-            _rivers = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _rivers = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
         }
         public EntityCellRiverPool(in EcsWorld gameW)
         {
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+            for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
                 _rivers[idx] = gameW.NewEntity()
                     .Add(new RiverC(true));

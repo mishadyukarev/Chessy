@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (EntInventorUnits.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+            if (InventorUnitsE.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
             {
                 Button<ButtonUIC>().SetActiveParent(true);
             }

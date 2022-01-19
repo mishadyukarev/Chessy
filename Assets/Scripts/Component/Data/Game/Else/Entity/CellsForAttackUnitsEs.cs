@@ -26,7 +26,7 @@ namespace Game.Game
         public CellsForAttackUnitsEs(in EcsWorld gameW)
         {
             _cells = new Dictionary<string, Entity>();
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+            for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
                 for (var attack = AttackTypes.Start + 1; attack < AttackTypes.End; attack++)
                 {

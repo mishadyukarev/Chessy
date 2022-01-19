@@ -15,7 +15,7 @@ namespace Game.Game
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                _ents.Add(player, new Entity[CellValues.ALL_CELLS_AMOUNT]);
+                _ents.Add(player, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
 
                 for (var idx = 0; idx < _ents[player].Length; idx++)
                 {

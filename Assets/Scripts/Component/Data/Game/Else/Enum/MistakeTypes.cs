@@ -6,10 +6,12 @@
 
         Economy,
         NeedMoreSteps,
-        NeedOtherPlace,
         NeedMoreHp,
-        NeedCity,
+        NeedOtherPlace,
         ThatIsForOtherUnit,
+        NeedCity,    
         NearBorder,
+
+        End,
     }
 }

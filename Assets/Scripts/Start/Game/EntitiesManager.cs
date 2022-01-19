@@ -30,10 +30,10 @@ namespace Game.Game
 
             byte idx_cur = 0;
 
-            var cells = new GameObject[CellValues.ALL_CELLS_AMOUNT];
+            var cells = new GameObject[CellStartValues.ALL_CELLS_AMOUNT];
 
-            for (byte x = 0; x < CellValues.X_AMOUNT; x++)
-                for (byte y = 0; y < CellValues.Y_AMOUNT; y++)
+            for (byte x = 0; x < CellStartValues.X_AMOUNT; x++)
+                for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
                     var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
                         ? SpritesResC.Sprite(SpriteTypes.WhiteCell)
@@ -89,6 +89,7 @@ namespace Game.Game
             new CenterHintUIE(gameW, centerZone);
             new CenterSelectorUIE(gameW, centerZone);
             new CenterKingUIE(gameW, centerZone);
+            new MistakeUIE(gameW, centerZone);
 
             ///Up
             new EconomyUpUIE(gameW);
@@ -118,10 +119,10 @@ namespace Game.Game
             #endregion
 
 
-            var isActiveCells = new bool[CellValues.ALL_CELLS_AMOUNT];
-            var idCells = new int[CellValues.ALL_CELLS_AMOUNT];
+            var isActiveCells = new bool[CellStartValues.ALL_CELLS_AMOUNT];
+            var idCells = new int[CellStartValues.ALL_CELLS_AMOUNT];
 
-            for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+            for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
                 isActiveCells[idx] = CellVEs.Cell<GameObjectVC>(idx).IsActiveSelf;
                 idCells[idx] = CellVEs.Cell<GameObjectVC>(idx).InstanceID;
@@ -143,7 +144,7 @@ namespace Game.Game
             new EntWhereUnits(gameW);
             new WhereBuildsE(gameW);
 
-            new EntInventorUnits(gameW);
+            new InventorUnitsE(gameW);
             new InventorResourcesE(gameW);
             new InventorToolWeaponE(gameW);
 
@@ -152,15 +153,21 @@ namespace Game.Game
             new CellsForAttackUnitsEs(gameW);
             new CellsForArsonArcherEs(gameW);
 
-            new GetterUnitsE(gameW);
+            new GetterUnitsEs(gameW);
 
             new CellUnitEs(gameW);
+            new CellUnitEffectsEs(gameW);
+            new CellUnitBuildingButtonEs(gameW);
+            new CellUnitStepsInConditionEs(gameW);
+            new CellUnitVisibleEs(gameW);
+            new CellUnitUniqueButtonEs(gameW);
             new CellUnitWaterEs(gameW);
             new CellUnitHpEs(gameW);
             new CellUnitStepEs(gameW);
             new CellUnitStunEs(gameW);
             new CellUnitAbilityUniqueEs(gameW);
             new CellUnitTWE(gameW);
+
             new CellTrailEs(gameW);
             new CellBuildE(gameW);
             new CellEnvironmentEs(gameW);
@@ -171,7 +178,7 @@ namespace Game.Game
             new CellParentE(gameW);
 
             new WhoseMoveE(gameW);
-            new EntMistakeC(gameW);
+            new MistakeE(gameW);
             new EntHint(gameW);
 
             new CurrentDirectWindE(gameW);
@@ -180,8 +187,11 @@ namespace Game.Game
 
             new AvailableCenterUpgradeEs(gameW);
             new AvailableCenterHeroEs(gameW);
+            new UnitStatUpgradesEs(gameW);
+            new BuildingUpgradesEs(gameW);
 
             new SelectedToolWeaponE(gameW);
+
 
 
             new EntityMPool(gameW);
@@ -189,9 +199,6 @@ namespace Game.Game
             #endregion
 
 
-
-
-            var envValues = new EnvironmentValues();
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -210,7 +217,7 @@ namespace Game.Game
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
+                            if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
                             {
                                 SetNew(EnvironmentTypes.Mountain, idx_0);
                             }
@@ -218,13 +225,13 @@ namespace Game.Game
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                                if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                                 {
                                     SetNew(EnvironmentTypes.AdultForest, idx_0);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.Hill))
+                                if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Hill))
                                 {
                                     SetNew(EnvironmentTypes.Hill, idx_0);
                                 }
@@ -234,14 +241,14 @@ namespace Game.Game
                         else
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                            if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                             {
                                 SetNew(EnvironmentTypes.AdultForest, idx_0);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= envValues.StartPercentForSpawn(EnvironmentTypes.Fertilizer))
+                                if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Fertilizer))
                                 {
                                     SetNew(EnvironmentTypes.Fertilizer, idx_0);
                                 }
@@ -304,7 +311,7 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                InventorResourcesE.Resource<AmountC>(ResTypes.Food, PlayerTypes.Second).Amount = 999999;
+                InventorResourcesE.Resource<AmountC>(ResourceTypes.Food, PlayerTypes.Second).Amount = 999999;
 
                 foreach (byte idx_0 in Idxs)
                 {
@@ -333,7 +340,7 @@ namespace Game.Game
                         Remove(EnvironmentTypes.Mountain, idx_0);
                         Remove(EnvironmentTypes.AdultForest, idx_0);
 
-                        Unit<UnitCellEC>(idx_0).SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second));
+                        CellUnitEs.SetNew(idx_0, (UnitTypes.King, LevelTypes.First, PlayerTypes.Second));
 
                         condUnit_0.Condition = ConditionUnitTypes.Protected;
                     }
@@ -355,14 +362,14 @@ namespace Game.Game
 
                         if (rand >= 50)
                         {
-                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(ToolWeaponTypes.Sword, LevelTypes.Second);
+                            CellUnitTWE.SetNew(idx_0, ToolWeaponTypes.Sword, LevelTypes.Second);
                         }
                         else
                         {
-                            CellUnitTWE.UnitTW<UnitTWCellEC>(idx_0).SetNew(ToolWeaponTypes.Shield, LevelTypes.First);
+                            CellUnitTWE.SetNew(idx_0, ToolWeaponTypes.Shield, LevelTypes.First);
                         }
 
-                        Unit<UnitCellEC>(idx_0).SetNew((UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second));
+                        SetNew(idx_0, (UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second));
                         condUnit_0.Condition = ConditionUnitTypes.Protected;
                     }
                 }

@@ -11,7 +11,6 @@ namespace Game.Game
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 

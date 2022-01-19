@@ -2,6 +2,6 @@
 {
     public struct ResourceTypeC
     {
-        public ResTypes Resource;
+        public ResourceTypes Resource;
     }
 }

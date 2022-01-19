@@ -12,7 +12,7 @@ namespace Game.Game
             {
                 ref var stun_0 = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_0);
 
-                if (Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
+                if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                 {
                     Stun<SpriteRendererVC>(idx_0).SetActive(stun_0.Have);
                 }

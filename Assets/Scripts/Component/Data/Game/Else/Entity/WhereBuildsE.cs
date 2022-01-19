@@ -26,7 +26,7 @@ namespace Game.Game
 
         public static bool IsSetted(in BuildingTypes build, in PlayerTypes owner, out byte idx)
         {
-            for (idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+            for (idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
                 if (HaveBuild<HaveBuildingC>(build, owner, idx).Have)
                 {
@@ -44,7 +44,7 @@ namespace Game.Game
             {
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    for (byte idx = 0; idx < CellValues.ALL_CELLS_AMOUNT; idx++)
+                    for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                     {
                         _builds.Add(Key(build, player, idx), gameW.NewEntity()
                             .Add(new HaveBuildingC()));

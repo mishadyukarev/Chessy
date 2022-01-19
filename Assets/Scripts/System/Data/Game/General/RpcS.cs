@@ -147,7 +147,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.BuyRes:
-                        EntityMPool.BuyResources<ResourceTypeC>().Resource = (ResTypes)objects[_idx_cur++];
+                        EntityMPool.BuyResources<ResourceTypeC>().Resource = (ResourceTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ToNewUnit:
@@ -174,8 +174,8 @@ namespace Game.Game
                         EntityMPool.GetHero<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
-                    case RpcMasterTypes.UpgUnits:
-                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
+                    case RpcMasterTypes.UpgCenterUnits:
+                        EntityMPool.UpgradeCenterUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgCenterBuild:
@@ -209,26 +209,26 @@ namespace Game.Game
                     throw new Exception();
 
                 case RpcGeneralTypes.Mistake:
-                    //var mistakeType = (MistakeTypes)objects[_idx_cur++];
-                    //EntMistakeC.Mistake<MistakeC>().Mistake = mistakeType;
-                    //EntMistakeC.Mistake<TimerC>().Reset();
+                    var mistakeT = (MistakeTypes)objects[_idx_cur++];
+                    MistakeE.Mistake<MistakeC>().Mistake = mistakeT;
+                    MistakeE.Mistake<TimerC>().Reset();
 
-                    //if (mistakeType == MistakeTypes.Economy)
-                    //{
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = default;
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = default;
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = default;
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = default;
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = default;
+                    if (mistakeT == MistakeTypes.Economy)
+                    {
+                        //MistakeE.Mistake<AmountC>(ResourceTypes.Food).Amount = default;
+                        //MistakeE.Mistake<AmountC>(ResourceTypes.Wood).Amount = default;
+                        //MistakeE.Mistake<AmountC>(ResourceTypes.Ore).Amount = default;
+                        //MistakeE.Mistake<AmountC>(ResourceTypes.Iron).Amount = default;
+                        //MistakeE.Mistake<AmountC>(ResourceTypes.Gold).Amount = default;
 
-                    //    var needRes = (int[])objects[_idx_cur++];
+                        var needRes = (int[])objects[_idx_cur++];
 
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Food).Resources = needRes[0];
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Wood).Resources = needRes[1];
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Ore).Resources = needRes[2];
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Iron).Resources = needRes[3];
-                    //    EntMistakeC.Mistake<NeedResourcesC>(ResTypes.Gold).Resources = needRes[4];
-                    //}
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Food).Amount = needRes[0];
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Wood).Amount = needRes[1];
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Ore).Amount = needRes[2];
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Iron).Amount = needRes[3];
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Gold).Amount = needRes[4];
+                    }
 
                     Sound<ActionC>(ClipTypes.Mistake).Invoke();
                     break;
@@ -272,7 +272,7 @@ namespace Game.Game
                 objs.Add(CellUnitWaterEs.Water<AmountC>(idx_0).Amount);
 
                 objs.Add(Unit<ConditionUnitC>(idx_0).Condition);
-                foreach (var item in KeysStat) objs.Add(Unit<HaveEffectC>(item, idx_0).Have);
+                foreach (var item in CellUnitEffectsEs.KeysStat) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
                 objs.Add(UnitTW<ToolWeaponC>(idx_0).ToolWeapon);
@@ -308,7 +308,7 @@ namespace Game.Game
                     objs.Add(item_0.Value);
 
 
-                foreach (var item_0 in Trail<TrailCellEC>(idx_0).Health)
+                foreach (var item_0 in Health(idx_0))
                     objs.Add(item_0.Value);
 
 
@@ -333,7 +333,7 @@ namespace Game.Game
 
 
             foreach (var key in InventorResourcesE.Keys) objs.Add(InventorResourcesE.Resource<AmountC>(key).Amount);
-            foreach (var key in EntInventorUnits.Keys) objs.Add(EntInventorUnits.Units<AmountC>(key).Amount);
+            foreach (var key in InventorUnitsE.Keys) objs.Add(InventorUnitsE.Units<AmountC>(key).Amount);
             foreach (var key in InventorToolWeaponE.Keys) objs.Add(InventorToolWeaponE.ToolWeapons<AmountC>(key).Amount);
 
 
@@ -381,12 +381,20 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                Unit<UnitCellEC>(idx_0).Sync((UnitTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++], (int)objects[_idx_cur++]);
+                Unit<UnitTC>(idx_0).Unit = (UnitTypes)objects[_idx_cur++];
+                Unit<LevelTC>(idx_0).Level = (LevelTypes)objects[_idx_cur++];
+                Unit<PlayerTC>(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
+                CellUnitHpEs.Hp<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
+                CellUnitStepEs.Steps<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
+                CellUnitWaterEs.Water<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
 
                 Unit<ConditionUnitC>(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
-                foreach (var item in KeysStat) Unit<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
+                foreach (var item in CellUnitEffectsEs.KeysStat) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
-                UnitTW<UnitTWCellEC>(idx_0).Sync((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], (int)objects[_idx_cur++]);
+
+                UnitTW<ToolWeaponC>(idx_0).ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
+                UnitTW<LevelTC>(idx_0).Level = (LevelTypes)objects[_idx_cur++];
+                UnitTW<ProtectionC>(idx_0).Protection = (int)objects[_idx_cur++];
 
 
                 CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
@@ -414,9 +422,8 @@ namespace Game.Game
 
 
 
-                ref var trail_0 = ref Trail<TrailCellEC>(idx_0);
-                foreach (var item_0 in trail_0.Health)
-                    trail_0.SyncTrail(item_0.Key, (int)objects[_idx_cur++]);
+                foreach (var item_0 in Health(idx_0))
+                    Trail<AmountC>(idx_0, item_0.Key).Amount = (int)objects[_idx_cur++];
 
 
 
@@ -437,7 +444,7 @@ namespace Game.Game
 
 
             foreach (var key in InventorResourcesE.Keys) InventorResourcesE.Resource<AmountC>(key).Amount = (int)objects[_idx_cur++];
-            foreach (var key in EntInventorUnits.Keys) EntInventorUnits.Units<AmountC>(key).Amount = (int)objects[_idx_cur++];
+            foreach (var key in InventorUnitsE.Keys) InventorUnitsE.Units<AmountC>(key).Amount = (int)objects[_idx_cur++];
             foreach (var key in InventorToolWeaponE.Keys) InventorToolWeaponE.ToolWeapons<AmountC>(key).Amount = (int)objects[_idx_cur++];
 
 

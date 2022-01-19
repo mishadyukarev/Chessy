@@ -16,12 +16,12 @@ namespace Game.Game
 
         public CellBuildE(in EcsWorld gameW)
         {
-            _builds = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _builds = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
             _buildEnts = new Dictionary<PlayerTypes, Entity[]>();
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                _buildEnts.Add(player, new Entity[CellValues.ALL_CELLS_AMOUNT]);
+                _buildEnts.Add(player, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
             }
 
             for (byte idx = 0; idx < _builds.Length; idx++)
@@ -94,25 +94,26 @@ namespace Game.Game
             }
         }
 
-        public static bool CanExtract(in byte idx, out int extract, out EnvironmentTypes env, out ResTypes res)
+        public static bool CanExtract(in byte idx, out int extract, out EnvironmentTypes env, out ResourceTypes res)
         {
+            var buildC = Build<BuildingTC>(idx);
             var ownC = Build<PlayerTC>(idx);
 
 
             if (Build<BuildingTC>(idx).Is(BuildingTypes.Farm) && CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx).Have)
             {
                 env = EnvironmentTypes.Fertilizer;
-                res = ResTypes.Food;
+                res = ResourceTypes.Food;
             }
             else if (Build<BuildingTC>(idx).Is(BuildingTypes.Woodcutter) && CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx).Have)
             {
                 env = EnvironmentTypes.AdultForest;
-                res = ResTypes.Wood;
+                res = ResourceTypes.Wood;
             }
             else if (Build<BuildingTC>(idx).Is(BuildingTypes.Mine) && CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx).Have)
             {
                 env = EnvironmentTypes.Hill;
-                res = ResTypes.Ore;
+                res = ResourceTypes.Ore;
             }
             else
             {
@@ -126,7 +127,12 @@ namespace Game.Game
 
 
             extract = 10;
-            //extract += (int)(extract * BuildsUpgC.PercUpg(Build<BuildingC>(_idx).Build, ownC.Player));
+
+
+            if (BuildingUpgradesEs.HaveUpgrade<HaveUpgradeC>(buildC.Build, ownC.Player, UpgradeTypes.PickCenter).Have)
+            {
+                extract += (int)(extract *  0.5f);
+            }
 
 
             if (extract > CellEnvironmentEs.Environment<AmountC>(env, idx).Amount) extract = CellEnvironmentEs.Environment<AmountC>(env, idx).Amount;

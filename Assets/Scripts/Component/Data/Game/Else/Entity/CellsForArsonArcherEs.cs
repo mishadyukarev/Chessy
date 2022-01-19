@@ -11,7 +11,7 @@ namespace Game.Game
 
         public CellsForArsonArcherEs(in EcsWorld gameW)
         {
-            _cells = new Entity[CellValues.ALL_CELLS_AMOUNT];
+            _cells = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
 
             for (byte idx = 0; idx < _cells.Length; idx++)
             {

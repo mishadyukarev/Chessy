@@ -2,11 +2,9 @@
 {
     public enum UpgradeTypes
     {
-        Start,
-        None = Start,
+        None,
 
         PickCenter,
-        First = PickCenter,
 
         End,
     }

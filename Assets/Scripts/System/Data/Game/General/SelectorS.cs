@@ -239,7 +239,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !Unit<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
+                        if (!unit_cur.Have || !CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
                         {
                             if (CurIdx<CurIdxC>().IsStartDirectToCell)
                             {

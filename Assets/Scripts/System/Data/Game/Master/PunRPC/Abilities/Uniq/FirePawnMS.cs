@@ -16,7 +16,6 @@ namespace Game.Game
             UniqueAbilityMC.Get(out var uniq_cur);
 
 
-            ref var stepUnit_0 = ref Unit<UnitCellEC>(idx_0);
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 

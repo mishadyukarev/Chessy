@@ -15,9 +15,6 @@ namespace Game.Game
                     {
                         CellsForShiftUnitsEs.CellsForShift<IdxsC>(player, idx_from).Clear();
 
-
-                        ref var stepUnit_from = ref Unit<UnitCellEC>(idx_from);
-
                         if (!CellUnitStunEs.StepsForExitStun<AmountC>(idx_from).Have && Unit<UnitTC>(idx_from).Have
                             && Unit<PlayerTC>(idx_from).Is(player))
                         {
