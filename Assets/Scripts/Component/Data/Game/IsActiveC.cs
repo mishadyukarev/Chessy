@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct IsActiveC : ICell
+    public struct IsActiveC
     {
         public bool IsActive;
 

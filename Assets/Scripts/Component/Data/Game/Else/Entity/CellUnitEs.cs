@@ -16,7 +16,7 @@ namespace Game.Game
             res = ResourceTypes.None;
 
 
-            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx).Have)
+            if (CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx).Have)
             {
                 env = EnvironmentTypes.AdultForest;
                 res = ResourceTypes.Wood;
@@ -38,9 +38,9 @@ namespace Game.Game
             }
 
 
-            extract = (int)(EnvironmentValues.MaxAmount(env) * ration);
+            extract = (int)(EnvironmentValues.MaxResources(env) * ration);
 
-            if (extract > CellEnvironmentEs.Environment<AmountC>(env, idx).Amount) extract = CellEnvironmentEs.Environment<AmountC>(env, idx).Amount;
+            if (extract > CellEnvironmentEs.Resources(env, idx).Amount) extract = CellEnvironmentEs.Resources(env, idx).Amount;
 
             return true;
         }
@@ -60,7 +60,7 @@ namespace Game.Game
             switch (Unit<UnitTC>(idx).Unit)
             {
                 case UnitTypes.Pawn:
-                    if (!CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx).Have && !twC.Is(ToolWeaponTypes.Pick)) return false;
+                    if (!CellEnvironmentEs.Resources(EnvironmentTypes.Hill, idx).Have && !twC.Is(ToolWeaponTypes.Pick)) return false;
 
                     env = EnvironmentTypes.Hill;
 
@@ -82,10 +82,10 @@ namespace Game.Game
 
 
 
-            resume = (int)(EnvironmentValues.MaxAmount(env) * ration);
+            resume = (int)(EnvironmentValues.MaxResources(env) * ration);
 
-            if (resume > CellEnvironmentEs.Environment<AmountC>(env, idx).Amount)
-                resume = CellEnvironmentEs.Environment<AmountC>(env, idx).Amount;
+            if (resume > CellEnvironmentEs.Resources(env, idx).Amount)
+                resume = CellEnvironmentEs.Resources(env, idx).Amount;
 
             return true;
         }
@@ -128,7 +128,7 @@ namespace Game.Game
 
             powerDamege += standDamage * DamageUnitValues.ProtRelaxPercent(condition);
             powerDamege += standDamage * DamageUnitValues.ProtectionPercent(build);
-            foreach (var item in CellEnvironmentEs.Enviroments) if (CellEnvironmentEs.Environment<HaveEnvironmentC>(item, idx).Have) powerDamege += standDamage * DamageUnitValues.ProtectionPercent(item);
+            foreach (var item in CellEnvironmentEs.Keys) if (CellEnvironmentEs.Resources(item, idx).Have) powerDamege += standDamage * DamageUnitValues.ProtectionPercent(item);
             return (int)powerDamege;
         }
 
@@ -153,8 +153,8 @@ namespace Game.Game
             var dir = CellSpaceC.GetDirect(CellEs.Cell<XyC>(idx_from).Xy, CellEs.Cell<XyC>(idx_to).Xy);
 
 
-            CellTrailEs.TrySetNewTrail(idx_to, dir.Invert(), CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_to).Have);
-            CellTrailEs.TrySetNewTrail(idx_from, dir, CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_from).Have);
+            CellTrailEs.TrySetNewTrail(idx_to, dir.Invert(), CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx_to).Have);
+            CellTrailEs.TrySetNewTrail(idx_from, dir, CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx_from).Have);
 
             ref var unit_from = ref Unit<UnitTC>(idx_from);
             ref var level_from = ref Unit<LevelTC>(idx_from);
@@ -173,13 +173,15 @@ namespace Game.Game
             CellUnitTWE.UnitTW<LevelTC>(idx_to).Set(CellUnitTWE.UnitTW<LevelTC>(idx_from));
             CellUnitTWE.UnitTW<ProtectionC>(idx_to).Set(CellUnitTWE.UnitTW<ProtectionC>(idx_from));
 
-            foreach (var item in CellUnitEffectsEs.KeysStat)
+            foreach (var item in CellUnitEffectsEs.Keys)
                 CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Have = CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Have;
             CellUnitWaterEs.Water<AmountC>(idx_to).Set(CellUnitWaterEs.Water<AmountC>(idx_from));
-            foreach (var item in CellUnitStepsInConditionEs.KeysCondition) CellUnitStepsInConditionEs.Steps<AmountC>(item, idx_to).Reset();
+            foreach (var item in CellUnitStepsInConditionEs.Keys) CellUnitStepsInConditionEs.Steps<AmountC>(item, idx_to).Reset();
             foreach (var unique in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(unique, idx_to).Cooldown = CellUnitAbilityUniqueEs.Cooldown<CooldownC>(unique, idx_from).Cooldown;
             Unit<IsCornedArcherC>(idx_to).Set(Unit<IsCornedArcherC>(idx_from));
 
+
+            CellUnitStunEs.StepsForExitStun(idx_to).Reset();
 
 
             if (CellBuildE.Build<BuildingTC>(idx_to).Is(BuildingTypes.Camp))
@@ -197,7 +199,7 @@ namespace Game.Game
             EntWhereUnits.HaveUnit<HaveUnitC>(Unit<UnitTC>(idx_from).Unit, level_from.Level, own_from.Player, idx_from).Have = false;
             Unit<UnitTC>(idx_from).Reset();
 
-            if (EntityCellRiverPool.River<RiverC>(idx_to).HaveNearRiver) CellUnitWaterEs.Water<AmountC>(idx_to).Amount = 100;
+            if (EntityCellRiverPool.River<RiverC>(idx_to).HaveNearRiver) CellUnitWaterEs.SetMaxWater(idx_to);
         }
         public static void Kill(in byte idx)
         {
@@ -221,7 +223,7 @@ namespace Game.Game
             EntWhereUnits.HaveUnit<HaveUnitC>(unit.Unit, levUnit.Level, ownUnit.Player, idx).Have = false;
             unit.Reset();
         }
-        public static void SetNew(in byte idx, in (UnitTypes, LevelTypes, PlayerTypes) unit)
+        public static void SetNew(in (UnitTypes, LevelTypes, PlayerTypes, ToolWeaponTypes, LevelTypes) unit, in byte idx)
         {
             if (unit.Item1 == UnitTypes.None) throw new Exception();
             if (Unit<UnitTC>(idx).Have) throw new Exception("It's got unit");
@@ -229,18 +231,18 @@ namespace Game.Game
             Unit<UnitTC>(idx).Unit = unit.Item1;
             Unit<LevelTC>(idx).Level = unit.Item2;
             Unit<PlayerTC>(idx).Player = unit.Item3;
+            CellUnitTWE.UnitTW<ToolWeaponC>(idx).ToolWeapon = unit.Item4;
+            CellUnitTWE.UnitTW<LevelTC>(idx).Level = unit.Item5;
 
             CellUnitHpEs.SetMaxHp(idx);
             CellUnitWaterEs.SetMaxWater(idx);
             CellUnitStepEs.SetMaxSteps(idx);
 
-            foreach (var item in CellUnitEffectsEs.KeysStat) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx).Disable();
+            foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx).Disable();
             Unit<ConditionUnitC>(idx).Reset();
-            foreach (var item in CellUnitStepsInConditionEs.KeysCondition) CellUnitStepsInConditionEs.Steps<AmountC>(item, idx).Reset();
+            foreach (var item in CellUnitStepsInConditionEs.Keys) CellUnitStepsInConditionEs.Steps<AmountC>(item, idx).Reset();
 
-            CellUnitTWE.Reset(idx);
-
-            EntWhereUnits.HaveUnit<HaveUnitC>(unit, idx).Have = true;
+            EntWhereUnits.HaveUnit<HaveUnitC>(unit.Item1, unit.Item2, unit.Item3, idx).Have = true;
         }
         public static void AddToInventor(in byte idx)
         {

@@ -8,10 +8,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
-            ref var selOnUnitCom = ref Unit<PlayerTC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitTC>(SelectedIdxE.IdxC.Idx);
+            ref var selOnUnitCom = ref Unit<PlayerTC>(SelectedIdxE.IdxC.Idx);
 
-            ref var selCondUnitC = ref Unit<ConditionUnitC>(SelIdx<IdxC>().Idx);
+            ref var selCondUnitC = ref Unit<ConditionUnitC>(SelectedIdxE.IdxC.Idx);
 
 
             var activeButt = false;
@@ -24,24 +24,24 @@ namespace Game.Game
 
                     if (selCondUnitC.Is(ConditionUnitTypes.Relaxed))
                     {
-                        UIEntRelax.Button<ImageUIC>().Color = Color.green;
+                        RightRelaxUIE.Button<ImageUIC>().Color = Color.green;
                     }
                     else
                     {
-                        UIEntRelax.Button<ImageUIC>().Color = Color.white;
+                        RightRelaxUIE.Button<ImageUIC>().Color = Color.white;
                     }
 
-                    UIEntRelax.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
-                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
-                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
-                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
-                    UIEntRelax.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
+                    RightRelaxUIE.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
+                    RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
+                    RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
+                    RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
+                    RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
 
-                    UIEntRelax.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
+                    RightRelaxUIE.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
                 }
             }
 
-            UIEntRelax.Button<ButtonUIC>().SetActive(activeButt);
+            RightRelaxUIE.Button<ButtonUIC>().SetActive(activeButt);
         }
     }
 }

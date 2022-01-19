@@ -47,7 +47,7 @@ namespace Game.Game
                     InventorUnitsE.Units<AmountC>(unit, LevelTypes.First, whoseMove).Amount -= 1;
                     levUnit = LevelTypes.First;
                 }
-                SetNew(idx_0, (unit, levUnit, whoseMove));
+                SetNew((unit, levUnit, whoseMove, default, default), idx_0);
 
 
                 //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);

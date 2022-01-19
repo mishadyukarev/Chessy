@@ -10,7 +10,7 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var stun_0 = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_0);
+                ref var stun_0 = ref CellUnitStunEs.StepsForExitStun(idx_0);
 
                 if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                 {

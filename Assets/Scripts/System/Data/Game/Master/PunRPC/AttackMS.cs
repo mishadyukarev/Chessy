@@ -144,8 +144,8 @@ namespace Game.Game
                     CellUnitEs.Kill(idx_from);
                 }
 
-                foreach (var item in CellUnitEffectsEs.KeysStat) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();
-                foreach (var item in CellUnitEffectsEs.KeysStat) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Disable();
+                foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();
+                foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Disable();
             }
         }
     }

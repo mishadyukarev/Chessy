@@ -36,7 +36,10 @@ namespace Game.Game
 
                 if (fire_0.Have)
                 {
-                    Environment<AmountC>(EnvironmentTypes.AdultForest, idx_0).Amount -= 2;
+                    
+
+                    Resources(EnvironmentTypes.AdultForest, idx_0)
+                        .Take(EnvironmentValues.MaxResources(EnvironmentTypes.AdultForest) / 5);
 
                     if (unit_0.Have)
                     {
@@ -49,7 +52,7 @@ namespace Game.Game
 
 
 
-                    if (!Environment<AmountC>(EnvironmentTypes.AdultForest, idx_0).Have)
+                    if (!Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                     {
                         CellBuildE.Remove(idx_0);
 
@@ -65,16 +68,13 @@ namespace Game.Game
                         fire_0.Disable();
 
 
-                        var aroundXYList = CellSpaceC.GetXyAround(Cell<XyC>(idx_0).Xy);
-                        foreach (var xy1 in aroundXYList)
+                        foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
                         {
-                            var curIdxCell1 = IdxCell(xy1);
-
-                            if (Cell<IsActiveC>(curIdxCell1).IsActive)
+                            if (CellParent<IsActiveC>(idx_1).IsActive)
                             {
-                                if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, curIdxCell1).Have)
+                                if (Resources(EnvironmentTypes.AdultForest, idx_1).Have)
                                 {
-                                    Fire<HaveEffectC>(curIdxCell1).Enable();
+                                    Fire<HaveEffectC>(idx_1).Enable();
                                 }
                             }
                         }

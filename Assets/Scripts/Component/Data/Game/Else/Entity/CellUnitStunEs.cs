@@ -6,7 +6,7 @@ namespace Game.Game
     {
         static Entity[] _units;
 
-        public static ref C StepsForExitStun<C>(in byte idx) where C : struct, ICellUnitStunE => ref _units[idx].Get<C>();
+        public static ref AmountC StepsForExitStun(in byte idx)=> ref _units[idx].Get<AmountC>();
 
         public CellUnitStunEs(in EcsWorld gameW)
         {

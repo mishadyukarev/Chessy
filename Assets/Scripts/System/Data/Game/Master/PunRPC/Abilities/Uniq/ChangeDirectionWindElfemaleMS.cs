@@ -8,8 +8,9 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            FromToDoingMC.Get(out var idx_from, out var idx_to);
-            UniqueAbilityMC.Get(out var uniq_cur);
+
+            EntityMPool.ChangeDirectionWind<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
             ref var unit_from = ref Unit<UnitTC>(idx_from);
 

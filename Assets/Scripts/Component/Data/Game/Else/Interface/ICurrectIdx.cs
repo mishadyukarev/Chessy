@@ -1,7 +1,7 @@
-﻿namespace Game.Game
-{
-    public interface ICurrectIdx
-    {
+﻿//namespace Game.Game
+//{
+//    public interface ICurrectIdx
+//    {
 
-    }
-}
+//    }
+//}

@@ -9,9 +9,9 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
-            ref var ownUnit_sel = ref Unit<PlayerTC>(SelIdx<IdxC>().Idx);
-            ref var cond_sel = ref Unit<ConditionUnitC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitTC>(SelectedIdxE.IdxC.Idx);
+            ref var ownUnit_sel = ref Unit<PlayerTC>(SelectedIdxE.IdxC.Idx);
+            ref var cond_sel = ref Unit<ConditionUnitC>(SelectedIdxE.IdxC.Idx);
 
 
             var isEnableButt = false;
@@ -22,27 +22,27 @@ namespace Game.Game
                 {
                     isEnableButt = true;
 
-                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
-                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
-                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
-                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
-                    UIEntRightProtect.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
+                    RightProtectUIE.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
+                    RightProtectUIE.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
+                    RightProtectUIE.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
+                    RightProtectUIE.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
+                    RightProtectUIE.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
 
-                    UIEntRightProtect.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
+                    RightProtectUIE.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
 
                     if (cond_sel.Is(ConditionUnitTypes.Protected))
                     {
-                        UIEntRightProtect.Button<ImageUIC>().Color = Color.yellow;
+                        RightProtectUIE.Button<ImageUIC>().Color = Color.yellow;
                     }
 
                     else
                     {
-                        UIEntRightProtect.Button<ImageUIC>().Color = Color.white;
+                        RightProtectUIE.Button<ImageUIC>().Color = Color.white;
                     }
                 }
             }
 
-            UIEntRightProtect.Button<ImageUIC>().SetActiveParent(isEnableButt);
+            RightProtectUIE.Button<ImageUIC>().SetActiveParent(isEnableButt);
         }
     }
 }

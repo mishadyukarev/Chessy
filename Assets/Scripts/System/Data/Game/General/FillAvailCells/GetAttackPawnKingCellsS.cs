@@ -20,7 +20,7 @@ namespace Game.Game
                 ref var level_0 = ref Unit<LevelTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var step_0 = ref CellUnitStepEs.Steps<AmountC>(idx_0);
-                ref var stunUnit_0 = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_0);
+                ref var stunUnit_0 = ref CellUnitStunEs.StepsForExitStun(idx_0);
 
                 if (!stunUnit_0.Have)
                 {
@@ -38,7 +38,7 @@ namespace Game.Game
                             ref var unit_1 = ref Unit<UnitTC>(idx_1);
                             ref var own_1 = ref Unit<PlayerTC>(idx_1);
 
-                            if (!Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_1).Have)
+                            if (!Resources(EnvironmentTypes.Mountain, idx_1).Have)
                             {
                                 if (CellUnitStepEs.HaveStepsForDoing(idx_0, idx_1)
                                     || CellUnitStepEs.HaveMaxSteps(idx_0))

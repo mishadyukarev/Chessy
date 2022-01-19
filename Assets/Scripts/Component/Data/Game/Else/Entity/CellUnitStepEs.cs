@@ -18,13 +18,13 @@ namespace Game.Game
         {
             var needSteps = 1;
 
-            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_to).Have)
+            if (CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx_to).Have)
             {
                 needSteps += _values.NeedAmountSteps(EnvironmentTypes.AdultForest);
-                if (CellTrailEs.Have(idx_to, CellSpaceC.GetDirect(idx_from, idx_to).Invert())) needSteps -= 1;
+                if (CellTrailEs.Health(CellSpaceC.GetDirect(idx_from, idx_to).Invert(), idx_to).Have) needSteps -= 1;
             }
 
-            if (CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx_to).Have)
+            if (CellEnvironmentEs.Resources(EnvironmentTypes.Hill, idx_to).Have)
                 needSteps += _values.NeedAmountSteps(EnvironmentTypes.Hill);
 
             return needSteps;
@@ -50,7 +50,7 @@ namespace Game.Game
         }
 
         public static bool Have(in byte idx, in UniqueAbilityTypes uniq) => Steps<AmountC>(idx).Amount >= NeedSteps(uniq);
-        public static bool Have(in byte idx, in BuildingTypes build) => Steps<AmountC>(idx).Amount >= NeedSteps(build);
+        public static bool HaveForBuilding(in byte idx, in BuildingTypes build) => Steps<AmountC>(idx).Amount >= NeedSteps(build);
         public static bool HaveMin(in byte idx) => Steps<AmountC>(idx).Amount >= 1;
 
         public CellUnitStepEs(in EcsWorld gameW)

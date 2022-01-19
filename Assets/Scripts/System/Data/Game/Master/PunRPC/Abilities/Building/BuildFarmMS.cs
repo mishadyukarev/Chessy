@@ -31,9 +31,9 @@ namespace Game.Game
 
                         Remove(EnvironmentTypes.YoungForest, idx_0);
 
-                        if (Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx_0).Have)
+                        if (Resources(EnvironmentTypes.Fertilizer, idx_0).Have)
                         {
-                            Environment<AmountC>(EnvironmentTypes.Fertilizer, idx_0).Amount = EnvironmentValues.MaxAmount(EnvironmentTypes.Fertilizer);
+                            Resources(EnvironmentTypes.Fertilizer, idx_0).Amount = EnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer);
                         }
                         else
                         {

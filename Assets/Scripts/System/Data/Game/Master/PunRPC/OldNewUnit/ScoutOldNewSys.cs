@@ -7,8 +7,8 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            IdxDoingMC.Get(out var idx_0);
-            UnitDoingMC.Get(out var unit);
+            var idx_0 = EntityMPool.ScoutOldNew<IdxC>().Idx;
+            var unit = EntityMPool.ScoutOldNew<UnitTC>().Unit;
 
             if (CellUnitHpEs.HaveMax(idx_0))
             {

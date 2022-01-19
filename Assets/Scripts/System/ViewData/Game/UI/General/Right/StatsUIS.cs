@@ -8,7 +8,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var selIdx = SelIdx<IdxC>().Idx;
+            var selIdx = SelectedIdxE.IdxC.Idx;
 
             ref var unit_sel = ref Unit<UnitTC>(selIdx);
 

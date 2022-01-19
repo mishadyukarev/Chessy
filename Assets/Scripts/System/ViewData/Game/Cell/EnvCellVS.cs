@@ -11,7 +11,7 @@ namespace Game.Game
             {
                 for (var env_0 = EnvironmentTypes.First; env_0 < EnvironmentTypes.End; env_0++)
                 {
-                    if (Environment<HaveEnvironmentC>(env_0, idx).Have)
+                    if (Resources(env_0, idx).Have)
                     {
                         CellEnvVEs.EnvCellVC<SpriteRendererVC>(env_0, idx).Enable();
                     }

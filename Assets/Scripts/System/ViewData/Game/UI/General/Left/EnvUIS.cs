@@ -9,16 +9,16 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var build_sel = ref Build<BuildingTC>(SelIdx<IdxC>().Idx);
+            ref var build_sel = ref Build<BuildingTC>(SelectedIdxE.IdxC.Idx);
 
 
-            if (SelIdx<SelIdxEC>().IsSelCell && !build_sel.Is(BuildingTypes.City))
+            if (SelectedIdxE.IsSelCell && !build_sel.Is(BuildingTypes.City))
             {
                 Info<ButtonUIC>().SetActiveParent(true);
 
-                Resources<TextMPUGUIC>(ResourceTypes.Food).Text = Environment<AmountC>(EnvironmentTypes.Fertilizer, SelIdx<IdxC>().Idx).Amount.ToString();
-                Resources<TextMPUGUIC>(ResourceTypes.Wood).Text = Environment<AmountC>(EnvironmentTypes.AdultForest, SelIdx<IdxC>().Idx).Amount.ToString();
-                Resources<TextMPUGUIC>(ResourceTypes.Ore).Text = Environment<AmountC>(EnvironmentTypes.Hill, SelIdx<IdxC>().Idx).Amount.ToString();
+                Resources<TextMPUGUIC>(ResourceTypes.Food).Text = Resources(EnvironmentTypes.Fertilizer, SelectedIdxE.IdxC.Idx).Amount.ToString();
+                Resources<TextMPUGUIC>(ResourceTypes.Wood).Text = Resources(EnvironmentTypes.AdultForest, SelectedIdxE.IdxC.Idx).Amount.ToString();
+                Resources<TextMPUGUIC>(ResourceTypes.Ore).Text = Resources(EnvironmentTypes.Hill, SelectedIdxE.IdxC.Idx).Amount.ToString();
             }
             else
             {

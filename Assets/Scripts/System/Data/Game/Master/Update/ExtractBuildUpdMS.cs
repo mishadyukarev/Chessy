@@ -15,10 +15,10 @@ namespace Game.Game
 
                 if (CellBuildE.CanExtract(idx_0, out var extract, out var env, out var res))
                 {
-                    Environment<AmountC>(env, idx_0).Amount -= extract;
+                    Resources(env, idx_0).Amount -= extract;
                     InventorResourcesE.Resource<AmountC>(res, ownBuild_0.Player).Amount += extract;
 
-                    if (!Environment<AmountC>(env, idx_0).Have)
+                    if (!Resources(env, idx_0).Have)
                     {
                         CellBuildE.Remove(idx_0);
 

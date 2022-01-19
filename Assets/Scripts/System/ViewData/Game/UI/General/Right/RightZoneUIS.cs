@@ -7,16 +7,16 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
+            ref var unit_sel = ref Unit<UnitTC>(SelectedIdxE.IdxC.Idx);
 
             var activeParent = false;
 
 
-            if (SelIdx<SelIdxEC>().IsSelCell)
+            if (SelectedIdxE.IsSelCell)
             {
                 if (unit_sel.Have)
                 {
-                    if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, SelIdx<IdxC>().Idx).IsVisible)
+                    if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, SelectedIdxE.IdxC.Idx).IsVisible)
                     {
                         activeParent = true;
                     }

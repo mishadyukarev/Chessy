@@ -15,7 +15,7 @@ namespace Game.Game
             return ref _ents[stat][idx].Get<C>();
         }
 
-        public static HashSet<UnitStatTypes> KeysStat
+        public static HashSet<UnitStatTypes> Keys
         {
             get
             {

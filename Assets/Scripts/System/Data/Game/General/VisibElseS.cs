@@ -21,7 +21,7 @@ namespace Game.Game
                     CellUnitVisibleEs.Visible<IsVisibleC>(ownUnit_0.Player, idx_0).IsVisible = true;
 
 
-                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
+                    if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                     {
                         var isVisibledNextPlayer = false;
 
@@ -53,16 +53,16 @@ namespace Game.Game
 
                 ref var build_0 = ref Build<BuildingTC>(idx_0);
 
-                IsVisible<IsVisibleC>(PlayerTypes.First, idx_0).IsVisible = true;
-                IsVisible<IsVisibleC>(PlayerTypes.Second, idx_0).IsVisible = true;
+                CellBuildE.IsVisible<IsVisibleC>(PlayerTypes.First, idx_0).IsVisible = true;
+                CellBuildE.IsVisible<IsVisibleC>(PlayerTypes.Second, idx_0).IsVisible = true;
 
                 if (build_0.Have)
                 {
                     ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
 
-                    IsVisible<IsVisibleC>(ownBuild_0.Player, idx_0).IsVisible = true;
+                    CellBuildE.IsVisible<IsVisibleC>(ownBuild_0.Player, idx_0).IsVisible = true;
 
-                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
+                    if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                     {
                         var isVisibledNextPlayer = false;
 
@@ -80,17 +80,17 @@ namespace Game.Game
                                 }
                             }
                         }
-                        IsVisible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisible = isVisibledNextPlayer;
+                        CellBuildE.IsVisible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisible = isVisibledNextPlayer;
                     }
-                    else IsVisible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisible = true;
+                    else CellBuildE.IsVisible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisible = true;
                 }
 
                 if (HaveAnyTrail(idx_0))
                 {
-                    Trail<IsVisibleC>(PlayerTypes.First, idx_0).IsVisible = false;
-                    Trail<IsVisibleC>(PlayerTypes.Second, idx_0).IsVisible = false;
+                    CellTrailEs.IsVisible(PlayerTypes.First, idx_0).IsVisible = false;
+                    CellTrailEs.IsVisible(PlayerTypes.Second, idx_0).IsVisible = false;
 
-                    if (unit_0.Have) Trail<IsVisibleC>(ownUnit_0.Player, idx_0).IsVisible = true;
+                    if (unit_0.Have) CellTrailEs.IsVisible(ownUnit_0.Player, idx_0).IsVisible = true;
 
 
                     foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
@@ -101,7 +101,7 @@ namespace Game.Game
 
                         if (unit_1.Have)
                         {
-                            Trail<IsVisibleC>(ownUnit_1.Player, idx_0).IsVisible = true;
+                            CellTrailEs.IsVisible(ownUnit_1.Player, idx_0).IsVisible = true;
                         }
                     }
                 }

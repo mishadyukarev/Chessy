@@ -35,9 +35,9 @@ namespace Game.Game
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
-                foreach (var item in DictTrail(idx_0)) TakeHealth(idx_0, item.Key);
+                foreach (var item in CellTrailEs.Keys) CellTrailEs.Health(item, idx_0).Take();
                 foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Take();
-                CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Take();
+                CellUnitStunEs.StepsForExitStun(idx_0).Take();
 
 
                 if (unit_0.Have)
@@ -129,13 +129,13 @@ namespace Game.Game
                 {
                     ref var build_0 = ref Build<BuildingTC>(idx_0);
 
-                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx_0).Have)
+                    if (Resources(EnvironmentTypes.Hill, idx_0).Have)
                     {
                         if (!build_0.Is(BuildingTypes.Mine))
                         {
-                            if (Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Amount != EnvironmentValues.MaxAmount(EnvironmentTypes.Hill))
+                            if (Resources(EnvironmentTypes.Hill, idx_0).Amount != EnvironmentValues.MaxResources(EnvironmentTypes.Hill))
                             {
-                                Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Amount += 1;
+                                Resources(EnvironmentTypes.Hill, idx_0).Amount += 1;
                             }
                         }
                     }

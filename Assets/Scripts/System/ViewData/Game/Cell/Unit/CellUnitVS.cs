@@ -38,15 +38,15 @@ namespace Game.Game
                                 throw new Exception();
 
                             case UnitTypes.King:
-                                mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.King);
+                                mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.King).Sprite;
                                 break;
 
                             case UnitTypes.Pawn:
                                 switch (levelUnit_0.Level)
                                 {
                                     case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.PawnWood); break;
-                                    case LevelTypes.Second: mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.PawnIron); break;
+                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.PawnWood).Sprite; break;
+                                    case LevelTypes.Second: mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.PawnIron).Sprite; break;
                                     default: throw new Exception();
                                 }
 
@@ -61,7 +61,7 @@ namespace Game.Game
                                             {
                                                 case LevelTypes.None: throw new Exception();
                                                 case LevelTypes.First: throw new Exception();
-                                                case LevelTypes.Second: extraUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.PickWood); break;
+                                                case LevelTypes.Second: extraUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.PickWood).Sprite; break;
                                                 default: throw new Exception();
                                             }
                                             break;
@@ -70,7 +70,7 @@ namespace Game.Game
                                             {
                                                 case LevelTypes.None: throw new Exception();
                                                 case LevelTypes.First: throw new Exception();
-                                                case LevelTypes.Second: extraUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.SwordIron); break;
+                                                case LevelTypes.Second: extraUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.SwordIron).Sprite; break;
                                                 default: throw new Exception();
                                             }
                                             break;
@@ -78,8 +78,8 @@ namespace Game.Game
                                             switch (twLevel_0.Level)
                                             {
                                                 case LevelTypes.None: throw new Exception();
-                                                case LevelTypes.First: extraUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.ShieldWood); break;
-                                                case LevelTypes.Second: extraUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.ShieldIron); break;
+                                                case LevelTypes.First: extraUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.ShieldWood).Sprite; break;
+                                                case LevelTypes.Second: extraUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.ShieldIron).Sprite; break;
                                                 default: throw new Exception();
                                             }
                                             break;
@@ -94,14 +94,14 @@ namespace Game.Game
                                     case LevelTypes.None: throw new Exception();
                                     case LevelTypes.First:
                                         {
-                                            if (corner_0.IsCornered) mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.RookBow);
-                                            else mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.BishopBow);
+                                            if (corner_0.IsCornered) mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.RookBow).Sprite;
+                                            else mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.BishopBow).Sprite;
                                         }
                                         break;
                                     case LevelTypes.Second:
                                         {
-                                            if (corner_0.IsCornered) mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.RookCrossbow);
-                                            else mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.BishopCrossbow);
+                                            if (corner_0.IsCornered) mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.RookCrossbow).Sprite;
+                                            else mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.BishopCrossbow).Sprite;
                                         }
                                         break;
                                     default: throw new Exception();
@@ -111,7 +111,7 @@ namespace Game.Game
                                 switch (levelUnit_0.Level)
                                 {
                                     case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.Scout); break;
+                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Scout).Sprite; break;
                                     case LevelTypes.Second: throw new Exception();
                                     default: throw new Exception();
                                 }
@@ -120,12 +120,11 @@ namespace Game.Game
                                 switch (levelUnit_0.Level)
                                 {
                                     case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = SpritesResC.Sprite(SpriteTypes.Elfemale); break;
+                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Elfemale).Sprite; break;
                                     case LevelTypes.Second: throw new Exception();
                                     default: throw new Exception();
                                 }
                                 break;
-                            default:
                                 throw new Exception();
                         }
 

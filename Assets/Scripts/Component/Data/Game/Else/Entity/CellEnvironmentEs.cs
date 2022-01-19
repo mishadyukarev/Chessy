@@ -8,9 +8,9 @@ namespace Game.Game
     {
         static Dictionary<EnvironmentTypes, Entity[]> _envEnts;
 
-        public static ref T Environment<T>(in EnvironmentTypes env, in byte idx) where T : struct, IEnvCell => ref _envEnts[env][idx].Get<T>();
+        public static ref AmountC Resources(in EnvironmentTypes env, in byte idx) => ref _envEnts[env][idx].Get<AmountC>();
 
-        public static HashSet<EnvironmentTypes> Enviroments
+        public static HashSet<EnvironmentTypes> Keys
         {
             get
             {
@@ -31,7 +31,6 @@ namespace Game.Game
                 for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                 {
                     _envEnts[env][idx] = gameW.NewEntity()
-                        .Add(new HaveEnvironmentC())
                         .Add(new AmountC());
                 }
             }
@@ -41,43 +40,23 @@ namespace Game.Game
         {
             if (env == default) throw new Exception();
 
-            byte randAmountRes = 0;
-
-
-            var forMin = 3;
-
-            if (env == EnvironmentTypes.Fertilizer || env == EnvironmentTypes.AdultForest)
-            {
-                randAmountRes = (byte)UnityEngine.Random.Range(EnvironmentValues.MaxAmount(env) / forMin, EnvironmentValues.MaxAmount(env) + 1);
-            }
-            else if (env == EnvironmentTypes.Hill)
-            {
-                randAmountRes = (byte)(EnvironmentValues.MaxAmount(env) / forMin);
-            }
-
-            Environment<AmountC>(env, idx).Amount = randAmountRes;
-
+            Resources(env, idx).Amount = EnvironmentValues.RandomResources(env);
 
             EntWhereEnviroments.HaveEnv<HaveEnvC>(env, idx).Have = true;
-            Environment<HaveEnvironmentC>(env, idx).Have = true;
         }
         public static void Remove(in EnvironmentTypes env, in byte idx)
         {
             if (env == default) throw new Exception();
 
-            if (Environment<HaveEnvironmentC>(env, idx).Have)
+            if (env == EnvironmentTypes.AdultForest)
             {
-                if (env == EnvironmentTypes.AdultForest)
-                {
-                    CellTrailEs.ResetAll(idx);
-                    CellFireEs.Fire<HaveEffectC>(idx).Disable();
-                }
-
-                Environment<AmountC>(env, idx).Amount = 0;
-
-                EntWhereEnviroments.HaveEnv<HaveEnvC>(env, idx).Have = false;
-                Environment<HaveEnvironmentC>(env, idx).Have = false;
+                CellTrailEs.ResetAll(idx);
+                CellFireEs.Fire<HaveEffectC>(idx).Disable();
             }
+
+            Resources(env, idx).Reset();
+
+            EntWhereEnviroments.HaveEnv<HaveEnvC>(env, idx).Have = false;
         }
     }
 }

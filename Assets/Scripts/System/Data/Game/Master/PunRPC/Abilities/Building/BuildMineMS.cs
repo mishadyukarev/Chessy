@@ -24,12 +24,12 @@ namespace Game.Game
 
             if (build == BuildingTypes.Mine)
             {
-                if (CellUnitStepEs.Have(idx_0, build))
+                if (CellUnitStepEs.HaveForBuilding(idx_0, build))
                 {
                     if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                     {
-                        if (Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx_0).Have
-                            && Environment<AmountC>(EnvironmentTypes.Hill, idx_0).Have)
+                        if (Resources(EnvironmentTypes.Hill, idx_0).Have
+                            && Resources(EnvironmentTypes.Hill, idx_0).Have)
                         {
                             if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                             {

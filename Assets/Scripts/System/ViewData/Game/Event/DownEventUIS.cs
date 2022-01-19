@@ -31,7 +31,7 @@ namespace Game.Game
 
         void ExecuteScout()
         {
-            SelIdx<IdxC>().Reset();
+            SelectedIdxE.IdxC.Reset();
 
             TryOnHint(VideoClipTypes.CreatingScout);
 
@@ -53,7 +53,7 @@ namespace Game.Game
         }
         void Hero()
         {
-            SelIdx<IdxC>().Reset();
+            SelectedIdxE.IdxC.Reset();
             TryOnHint(VideoClipTypes.CreatingHero);
 
             if (WhoseMoveE.IsMyMove)
@@ -96,7 +96,7 @@ namespace Game.Game
 
         void GetUnit(UnitTypes unitT)
         {
-            SelIdx<IdxC>().Reset();
+            SelectedIdxE.IdxC.Reset();
 
             GetterUnitsEs.GetterUnit<TimerC>(unitT).Reset();
 
@@ -128,7 +128,7 @@ namespace Game.Game
 
         void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
-            SelIdx<IdxC>().Reset();
+            SelectedIdxE.IdxC.Reset();
 
             ref var selToolWeaponC = ref SelectedToolWeaponE.SelectedTW<ToolWeaponC>();
             ref var selLevelTWC = ref SelectedToolWeaponE.SelectedTW<LevelTC>();
@@ -187,7 +187,7 @@ namespace Game.Game
 
         void ToggleUpgradeUnit()
         {
-            SelIdx<IdxC>().Reset();
+            SelectedIdxE.IdxC.Reset();
 
             if (WhoseMoveE.IsMyMove)
             {

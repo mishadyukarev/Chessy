@@ -14,7 +14,7 @@ namespace Game.Game
 
             var env = EntityMPool.Seed<EnvironmetC>().Environment;
             var idx_0 = EntityMPool.Seed<IdxC>().Idx;
-            UniqueAbilityMC.Get(out var uniq_cur);
+            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
             ref var build_0 = ref Build<BuildingTC>(idx_0);
 
@@ -36,11 +36,11 @@ namespace Game.Game
                         }
                         else
                         {
-                            if (!Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx_0).Have)
+                            if (!Resources(EnvironmentTypes.Fertilizer, idx_0).Have)
                             {
-                                if (!Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
+                                if (!Resources(EnvironmentTypes.AdultForest, idx_0).Have)
 
-                                    if (!Environment<HaveEnvironmentC>(EnvironmentTypes.YoungForest, idx_0).Have)
+                                    if (!Resources(EnvironmentTypes.YoungForest, idx_0).Have)
                                     {
                                         EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
 

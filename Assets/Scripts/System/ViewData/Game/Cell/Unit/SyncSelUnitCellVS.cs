@@ -10,7 +10,7 @@ namespace Game.Game
         {
             if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
             {
-                var idx_cur = CurIdx<IdxC>().Idx;
+                var idx_cur = CurrentIdxE.IdxC.Idx;
 
                 ref var unitC_cur = ref Unit<UnitTC>(idx_cur);
                 ref var levUnitC_cur = ref Unit<LevelTC>(idx_cur);
@@ -46,15 +46,15 @@ namespace Game.Game
                         throw new Exception();
 
                     case UnitTypes.King:
-                        mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.King);
+                        mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.King).Sprite;
                         break;
 
                     case UnitTypes.Pawn:
                         switch (SelectedUnitE.SelUnit<LevelTC>().Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.PawnWood); break;
-                            case LevelTypes.Second: mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.PawnIron); break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.PawnWood).Sprite; break;
+                            case LevelTypes.Second: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.PawnIron).Sprite; break;
                             default: throw new Exception();
                         }
                         break;
@@ -64,14 +64,14 @@ namespace Game.Game
                             case LevelTypes.None: throw new Exception();
                             case LevelTypes.First:
                                 {
-                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.RookBow);
-                                    else mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.BishopBow);
+                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.RookBow).Sprite;
+                                    else mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.BishopBow).Sprite;
                                 }
                                 break;
                             case LevelTypes.Second:
                                 {
-                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.RookCrossbow);
-                                    else mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.BishopCrossbow);
+                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.RookCrossbow).Sprite;
+                                    else mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.BishopCrossbow).Sprite;
                                 }
                                 break;
                             default: throw new Exception();
@@ -81,7 +81,7 @@ namespace Game.Game
                         switch (SelectedUnitE.SelUnit<LevelTC>().Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.Scout); break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Scout).Sprite; break;
                             case LevelTypes.Second: throw new Exception();
                             default: throw new Exception();
                         }
@@ -90,7 +90,7 @@ namespace Game.Game
                         switch (levUnitC_cur.Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = SpritesResC.Sprite(SpriteTypes.Elfemale); break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Elfemale).Sprite; break;
                             case LevelTypes.Second: throw new Exception();
                             default: throw new Exception();
                         }

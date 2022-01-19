@@ -7,7 +7,7 @@ namespace Game.Game
         public void Run()
         {
             IdxDoingMC.Get(out var idx_0);
-            UniqueAbilityMC.Get(out var uniq);
+            var uniq = EntityMPool.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 

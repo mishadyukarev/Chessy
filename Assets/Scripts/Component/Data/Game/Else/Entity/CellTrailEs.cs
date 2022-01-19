@@ -8,33 +8,24 @@ namespace Game.Game
         static Dictionary<DirectTypes, Entity[]> _trails;
         static Dictionary<PlayerTypes, Entity[]> _trailVisibleEnts;
 
-        public static ref T Trail<T>(in byte idx, in DirectTypes dir = default) where T : struct, ICellTrailE => ref _trails[dir][idx].Get<T>();
-        public static ref T Trail<T>(in PlayerTypes player, in byte idx) where T : struct, ITrailVisibledCellE => ref _trailVisibleEnts[player][idx].Get<T>();
+        public static ref AmountC Health(in DirectTypes dir, in byte idx) => ref _trails[dir][idx].Get<AmountC>();
+        public static ref IsVisibleC IsVisible(in PlayerTypes player, in byte idx) => ref _trailVisibleEnts[player][idx].Get<IsVisibleC>();
 
 
-        public static Dictionary<DirectTypes, int> Health(in byte idx)
+        public static HashSet<DirectTypes> Keys
         {
-            var dict_0 = new Dictionary<DirectTypes, int>();
-
-            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
+            get
             {
-                dict_0.Add(dir, Trail<AmountC>(idx, dir).Amount);
+                var keys = new HashSet<DirectTypes>();
+                foreach (var item in _trails) keys.Add(item.Key);
+                return keys;
             }
-
-            return dict_0;
-        }
-        public static Dictionary<DirectTypes, bool> DictTrail(in byte idx)
-        {
-            var dict = new Dictionary<DirectTypes, bool>();
-            foreach (var item in Health(idx)) dict[item.Key] = item.Value > 0;
-            return dict;
         }
         public static bool HaveAnyTrail(in byte idx)
         {
-            foreach (var item in DictTrail(idx)) if (item.Value) return true;
+            foreach (var item in Keys) if (Health(item, idx).Have) return true;
             return false;
         }
-        public static bool Have(in byte idx, in DirectTypes dir) => Health(idx)[dir] > 0;
 
 
         public CellTrailEs(in EcsWorld gameW)
@@ -42,7 +33,7 @@ namespace Game.Game
             _trails = new Dictionary<DirectTypes, Entity[]>();
             _trailVisibleEnts = new Dictionary<PlayerTypes, Entity[]>();
 
-            for (var dir = DirectTypes.Start; dir < DirectTypes.End; dir++)
+            for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
                 _trails.Add(dir, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
             }
@@ -57,7 +48,7 @@ namespace Game.Game
 
             for (idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
-                for (var dir = DirectTypes.Start; dir < DirectTypes.End; dir++)
+                for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
                 {
                     _trails[dir][idx] = gameW.NewEntity()
                     .Add(new AmountC());
@@ -73,27 +64,26 @@ namespace Game.Game
 
         public static bool TrySetNewTrail(in byte idx, in DirectTypes dir, in bool haveAdultForest)
         {
-            if (haveAdultForest) Trail<AmountC>(idx, dir).Amount = 7;
+            if (haveAdultForest) Health(dir, idx).Amount = 7;
             return haveAdultForest;
         }
         public static void SetAllTrail(in byte idx)
         {
-            foreach (var item in Health(idx))
+            foreach (var item in Keys)
             {
-                Trail<AmountC>(idx, item.Key).Amount = 7;
+                Health(item, idx).Amount = 7;
             }
         }
         public static void TakeHealth(in byte idx, in DirectTypes dir)
         {
-            Trail<AmountC>(idx, dir).Amount -= 1;
+            Health(dir, idx).Amount -= 1;
         }
         public static void ResetAll(in byte idx)
         {
-            foreach (var item in Health(idx))
+            foreach (var item in Keys)
             {
-                Trail<AmountC>(idx, item.Key).Amount = 0;
+                Health(item, idx).Amount = 0;
             }
         }
     }
-    public interface ICellTrailE { }
 }

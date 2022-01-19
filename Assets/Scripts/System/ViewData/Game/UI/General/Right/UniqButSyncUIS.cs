@@ -9,7 +9,7 @@ namespace Game.Game
         {
             for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
-                ref var abil = ref CellUnitUniqueButtonEs.UniqueAbility<UniqueAbilityC>(button, SelIdx<IdxC>().Idx).Ability;
+                ref var abil = ref CellUnitUniqueButtonEs.UniqueAbility<UniqueAbilityC>(button, SelectedIdxE.IdxC.Idx).Ability;
 
                 if (abil == default)
                 {
@@ -17,8 +17,8 @@ namespace Game.Game
                 }
                 else
                 {
-                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).SetActiveParent(CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelIdx<IdxC>().Idx).HaveCooldown);
-                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).Text = CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelIdx<IdxC>().Idx).Cooldown.ToString();
+                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).SetActiveParent(CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelectedIdxE.IdxC.Idx).HaveCooldown);
+                    UIEntRightUnique.Buttons<TextMPUGUIC>(button).Text = CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelectedIdxE.IdxC.Idx).Cooldown.ToString();
 
                     UIEntRightUnique.Buttons<ButtonUIC>(button).SetActive(true);
 

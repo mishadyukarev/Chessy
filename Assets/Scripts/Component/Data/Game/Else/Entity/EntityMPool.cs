@@ -5,8 +5,11 @@ namespace Game.Game
 {
     public struct EntityMPool
     {
+        static Entity _else;
         static Dictionary<RpcMasterTypes, Entity> _rpcEnts;
         static Dictionary<UniqueAbilityTypes, Entity> _uniqEnts;
+
+        public static ref UniqueAbilityC UniqueAbilityC => ref _else.Get<UniqueAbilityC>();
 
         public static ref C Build<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.Build].Get<C>();
         public static ref C ConditionUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.ConditionUnit].Get<C>();
@@ -21,10 +24,14 @@ namespace Game.Game
         public static ref C CreateHeroFromTo<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.CreateHeroFromTo].Get<C>();
         public static ref C GiveTakeToolWeapon<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.GiveTakeToolWeapon].Get<C>();
         public static ref C UpgradeUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.UpgradeCellUnit].Get<C>();
+        public static ref C ScoutOldNew<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.ToNewUnit].Get<C>();
+        public static ref IdxC DestroyIdxC => ref _rpcEnts[RpcMasterTypes.DestroyBuild].Get<IdxC>();
 
         public static ref C Seed<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.Seed].Get<C>();
         public static ref C GrowAdultForest<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.GrowAdultForest].Get<C>();
         public static ref C FireArcher<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.FireArcher].Get<C>();
+        public static ref C ChangeDirectionWind<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.ChangeDirectionWind].Get<C>();
+        public static ref C StunElfemale<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.StunElfemale].Get<C>();
 
 
         public EntityMPool(in EcsWorld gameW)
@@ -32,6 +39,9 @@ namespace Game.Game
             _rpcEnts = new Dictionary<RpcMasterTypes, Entity>();
             _uniqEnts = new Dictionary<UniqueAbilityTypes, Entity>();
 
+
+            _else = gameW.NewEntity()
+                .Add(new UniqueAbilityC());
 
 
             _rpcEnts.Add(RpcMasterTypes.Build, gameW.NewEntity()
@@ -79,6 +89,13 @@ namespace Game.Game
             _rpcEnts.Add(RpcMasterTypes.UpgradeCellUnit, gameW.NewEntity()
                 .Add(new IdxC()));
 
+            _rpcEnts.Add(RpcMasterTypes.ToNewUnit, gameW.NewEntity()
+                .Add(new UnitTC())
+                .Add(new IdxC()));
+
+            _rpcEnts.Add(RpcMasterTypes.DestroyBuild, gameW.NewEntity()
+                .Add(new IdxC()));
+
 
 
 
@@ -90,6 +107,12 @@ namespace Game.Game
                 .Add(new IdxC()));
 
             _uniqEnts.Add(UniqueAbilityTypes.FireArcher, gameW.NewEntity()
+                .Add(new IdxFromToC()));
+
+            _uniqEnts.Add(UniqueAbilityTypes.ChangeDirectionWind, gameW.NewEntity()
+                .Add(new IdxFromToC()));
+
+            _uniqEnts.Add(UniqueAbilityTypes.StunElfemale, gameW.NewEntity()
                 .Add(new IdxFromToC()));
         }
     }

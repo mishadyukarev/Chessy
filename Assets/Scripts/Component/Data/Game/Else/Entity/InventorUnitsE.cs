@@ -27,7 +27,7 @@ namespace Game.Game
         {
             _units = new Dictionary<string, Entity>();
 
-            for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
+            for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
             {
                 for (var level = LevelTypes.First; level < LevelTypes.End; level++)
                 {

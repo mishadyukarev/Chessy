@@ -67,11 +67,11 @@ namespace Game.Game
             var buildC = Build<BuildingTC>(idx);
 
 
-            if (CellUnitStepEs.Have(idx, build))
+            if (CellUnitStepEs.HaveForBuilding(idx, build))
             {
                 if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
                 {
-                    if (!CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx).Have)
+                    if (!CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx).Have)
                     {
                         return true;
                     }
@@ -100,17 +100,17 @@ namespace Game.Game
             var ownC = Build<PlayerTC>(idx);
 
 
-            if (Build<BuildingTC>(idx).Is(BuildingTypes.Farm) && CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx).Have)
+            if (Build<BuildingTC>(idx).Is(BuildingTypes.Farm) && CellEnvironmentEs.Resources(EnvironmentTypes.Fertilizer, idx).Have)
             {
                 env = EnvironmentTypes.Fertilizer;
                 res = ResourceTypes.Food;
             }
-            else if (Build<BuildingTC>(idx).Is(BuildingTypes.Woodcutter) && CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx).Have)
+            else if (Build<BuildingTC>(idx).Is(BuildingTypes.Woodcutter) && CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx).Have)
             {
                 env = EnvironmentTypes.AdultForest;
                 res = ResourceTypes.Wood;
             }
-            else if (Build<BuildingTC>(idx).Is(BuildingTypes.Mine) && CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Hill, idx).Have)
+            else if (Build<BuildingTC>(idx).Is(BuildingTypes.Mine) && CellEnvironmentEs.Resources(EnvironmentTypes.Hill, idx).Have)
             {
                 env = EnvironmentTypes.Hill;
                 res = ResourceTypes.Ore;
@@ -135,7 +135,7 @@ namespace Game.Game
             }
 
 
-            if (extract > CellEnvironmentEs.Environment<AmountC>(env, idx).Amount) extract = CellEnvironmentEs.Environment<AmountC>(env, idx).Amount;
+            if (extract > CellEnvironmentEs.Resources(env, idx).Amount) extract = CellEnvironmentEs.Resources(env, idx).Amount;
 
             return true;
         }

@@ -9,7 +9,7 @@ namespace Game.Game
         public void Run()
         {
             var idx_0 = EntityMPool.GrowAdultForest<IdxC>().Idx;
-            UniqueAbilityMC.Get(out var uniq_cur);
+            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
@@ -20,7 +20,7 @@ namespace Game.Game
             {
                 if (CellUnitStepEs.Have(idx_0, uniq_cur))
                 {
-                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.YoungForest, idx_0).Have)
+                    if (Resources(EnvironmentTypes.YoungForest, idx_0).Have)
                     {
                         Remove(EnvironmentTypes.YoungForest, idx_0);
 

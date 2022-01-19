@@ -8,7 +8,7 @@ namespace Game.Game
         public void Run()
         {
             IdxDoingMC.Get(out var idx_0);
-            UniqueAbilityMC.Get(out var uniq);
+            var uniq = EntityMPool.UniqueAbilityC.Ability;
 
 
             ref var unit_0 = ref Unit<UnitTC>(idx_0);

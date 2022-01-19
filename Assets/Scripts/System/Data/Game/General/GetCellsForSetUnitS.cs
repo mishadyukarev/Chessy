@@ -32,7 +32,7 @@
 
                         ref var unit_2 = ref CellUnitEs.Unit<UnitTC>(idx_2);
 
-                        if (!CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_2).Have && !unit_2.Have)
+                        if (!CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_2).Have && !unit_2.Have)
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -54,7 +54,7 @@
 
                         if (buld_0.Is(BuildingTypes.Camp))
                         {
-                            if (!CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_0).Have && !unit_0.Have)
+                            if (!CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_0).Have && !unit_0.Have)
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }

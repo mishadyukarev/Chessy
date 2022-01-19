@@ -33,7 +33,7 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Pawn:
-                                if (Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
+                                if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                                 {
                                     if (fire_0.Have) CellUnitUniqueButtonEs.UniqueAbility<UniqueAbilityC>(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.PutOutFirePawn;
                                     else CellUnitUniqueButtonEs.UniqueAbility<UniqueAbilityC>(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.FirePawn;

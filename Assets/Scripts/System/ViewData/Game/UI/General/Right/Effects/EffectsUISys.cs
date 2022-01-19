@@ -8,14 +8,14 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, SelIdx<IdxC>().Idx).Have) 
+            if (CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, SelectedIdxE.IdxC.Idx).Have) 
             {
                 UIEntRightEffects.Image<ImageUIC>(UnitStatTypes.Damage).Color = Color.green;
             }
             else UIEntRightEffects.Image<ImageUIC>(UnitStatTypes.Damage).Color = Color.white;
 
 
-            if (CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, SelIdx<IdxC>().Idx).Have)
+            if (CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, SelectedIdxE.IdxC.Idx).Have)
             {
                 UIEntRightEffects.Image<ImageUIC>(UnitStatTypes.Steps).Color = Color.green;
             }

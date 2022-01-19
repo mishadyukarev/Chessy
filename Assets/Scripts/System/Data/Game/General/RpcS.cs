@@ -80,11 +80,11 @@ namespace Game.Game
                         break;
 
                     case UniqueAbilityTypes.StunElfemale:
-                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntityMPool.StunElfemale<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqueAbilityTypes.ChangeDirectionWind:
-                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntityMPool.ChangeDirectionWind<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqueAbilityTypes.ChangeCornerArcher:
@@ -94,7 +94,7 @@ namespace Game.Game
                     default: throw new Exception();
                 }
 
-                UniqueAbilityMC.Set(uniqAbil);
+                EntityMPool.UniqueAbilityC.Ability = uniqAbil;
                 SystemDataMasterManager.InvokeRun(uniqAbil);
             }
 
@@ -117,7 +117,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.DestroyBuild:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        EntityMPool.DestroyIdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.Shift:
@@ -151,8 +151,8 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.ToNewUnit:
-                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        EntityMPool.ScoutOldNew<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntityMPool.ScoutOldNew<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.CreateHeroFromTo:
@@ -215,11 +215,11 @@ namespace Game.Game
 
                     if (mistakeT == MistakeTypes.Economy)
                     {
-                        //MistakeE.Mistake<AmountC>(ResourceTypes.Food).Amount = default;
-                        //MistakeE.Mistake<AmountC>(ResourceTypes.Wood).Amount = default;
-                        //MistakeE.Mistake<AmountC>(ResourceTypes.Ore).Amount = default;
-                        //MistakeE.Mistake<AmountC>(ResourceTypes.Iron).Amount = default;
-                        //MistakeE.Mistake<AmountC>(ResourceTypes.Gold).Amount = default;
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Food).Amount = default;
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Wood).Amount = default;
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Ore).Amount = default;
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Iron).Amount = default;
+                        MistakeE.Mistake<AmountC>(ResourceTypes.Gold).Amount = default;
 
                         var needRes = (int[])objects[_idx_cur++];
 
@@ -230,15 +230,15 @@ namespace Game.Game
                         MistakeE.Mistake<AmountC>(ResourceTypes.Gold).Amount = needRes[4];
                     }
 
-                    Sound<ActionC>(ClipTypes.Mistake).Invoke();
+                    Sound(ClipTypes.Mistake).Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundEff:
-                    Sound<ActionC>((ClipTypes)objects[_idx_cur++]).Invoke();
+                    Sound((ClipTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundUniq:
-                    Sound<ActionC>((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
+                    Sound((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -272,14 +272,14 @@ namespace Game.Game
                 objs.Add(CellUnitWaterEs.Water<AmountC>(idx_0).Amount);
 
                 objs.Add(Unit<ConditionUnitC>(idx_0).Condition);
-                foreach (var item in CellUnitEffectsEs.KeysStat) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
+                foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
                 objs.Add(UnitTW<ToolWeaponC>(idx_0).ToolWeapon);
                 objs.Add(UnitTW<LevelTC>(idx_0).Level);
                 objs.Add(UnitTW<ProtectionC>(idx_0).Protection);
 
-                objs.Add(CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Amount);
+                objs.Add(CellUnitStunEs.StepsForExitStun(idx_0).Amount);
 
                 objs.Add(Unit<IsCornedArcherC>(idx_0).IsCornered);
 
@@ -294,10 +294,9 @@ namespace Game.Game
 
 
 
-                foreach (var env in Enviroments)
+                foreach (var env in CellEnvironmentEs.Keys)
                 {
-                    objs.Add(Environment<HaveEnvironmentC>(env, idx_0));
-                    objs.Add(Environment<AmountC>(env, idx_0));
+                    objs.Add(Resources(env, idx_0));
                 }
 
 
@@ -308,8 +307,8 @@ namespace Game.Game
                     objs.Add(item_0.Value);
 
 
-                foreach (var item_0 in Health(idx_0))
-                    objs.Add(item_0.Value);
+                foreach (var item_0 in CellTrailEs.Keys)
+                    objs.Add(Health(item_0, idx_0));
 
 
                 objs.Add(Cloud<HaveEffectC>(idx_0).Have);
@@ -389,7 +388,7 @@ namespace Game.Game
                 CellUnitWaterEs.Water<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
 
                 Unit<ConditionUnitC>(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
-                foreach (var item in CellUnitEffectsEs.KeysStat) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
+                foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
 
                 UnitTW<ToolWeaponC>(idx_0).ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
@@ -397,7 +396,7 @@ namespace Game.Game
                 UnitTW<ProtectionC>(idx_0).Protection = (int)objects[_idx_cur++];
 
 
-                CellUnitStunEs.StepsForExitStun<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
+                CellUnitStunEs.StepsForExitStun(idx_0).Amount = (int)objects[_idx_cur++];
 
                 Unit<IsCornedArcherC>(idx_0).IsCornered = (bool)objects[_idx_cur++];
 
@@ -409,10 +408,9 @@ namespace Game.Game
                 Build<PlayerTC>(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
 
 
-                foreach (var item_0 in Enviroments)
+                foreach (var item_0 in CellEnvironmentEs.Keys)
                 {
-                    Environment<HaveEnvironmentC>(item_0, idx_0).Have = (bool)objects[_idx_cur++];
-                    Environment<AmountC>(item_0, idx_0).Amount = (int)objects[_idx_cur++];
+                    Resources(item_0, idx_0).Amount = (int)objects[_idx_cur++];
                 }
 
                 ref var river_0 = ref River<RiverC>(idx_0);
@@ -422,8 +420,8 @@ namespace Game.Game
 
 
 
-                foreach (var item_0 in Health(idx_0))
-                    Trail<AmountC>(idx_0, item_0.Key).Amount = (int)objects[_idx_cur++];
+                foreach (var item_0 in CellTrailEs.Keys)
+                    Health(item_0, idx_0).Amount = (int)objects[_idx_cur++];
 
 
 

@@ -27,7 +27,9 @@ namespace Game.Game
                 + new ResumeUnitUpdMS().Run
                 + new UpdateHealingUnitMS().Run
                 + new UpdateHungryMS().Run
-                + new ThirstyUpdMS().Run;
+                + new ThirstyUpdMS().Run
+
+                + new UpdateAnimalsMS().Run;
             _systems.Add(SystemDataMasterTypes.UpdateMove, action);
 
             action = new TruceMS().Run;

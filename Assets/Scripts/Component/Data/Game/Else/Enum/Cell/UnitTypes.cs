@@ -7,11 +7,11 @@
 
         King,
         First = King,
-
         Pawn,
         Archer,
-
         Scout,
+
+        //Heros
         Elfemale,
 
         End,

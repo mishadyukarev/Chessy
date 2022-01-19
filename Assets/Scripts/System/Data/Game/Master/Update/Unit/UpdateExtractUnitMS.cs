@@ -21,11 +21,11 @@ namespace Game.Game
                 if (CellUnitEs.CanExtract(idx_0, out var resume, out var env, out var res))
                 {
                     InventorResourcesE.Resource<AmountC>(res, ownUnit_0.Player).Amount += resume;
-                    Environment<AmountC>(env, idx_0).Amount -= resume;
+                    Resources(env, idx_0).Amount -= resume;
 
                     if (env == EnvironmentTypes.AdultForest)
                     {
-                        if (Environment<AmountC>(env, idx_0).Have)
+                        if (Resources(env, idx_0).Have)
                         {
                             if (buil_0.Is(BuildingTypes.Camp) || !buil_0.Have)
                             {

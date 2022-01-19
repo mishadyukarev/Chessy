@@ -12,7 +12,7 @@ namespace Game.Game
 
 
             EntityMPool.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            UniqueAbilityMC.Get(out var uniq_cur);
+            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
             ref var fire_to = ref Fire<HaveEffectC>(idx_to);
 

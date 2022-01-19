@@ -11,7 +11,7 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            IdxDoingMC.Get(out var idx_0);
+            var idx_0 = EntityMPool.DestroyIdxC.Idx;
 
             ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
 

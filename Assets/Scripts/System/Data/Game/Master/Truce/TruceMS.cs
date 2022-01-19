@@ -74,16 +74,16 @@ namespace Game.Game
 
                 else
                 {
-                    if (Environment<HaveEnvironmentC>(EnvironmentTypes.YoungForest, idx_0).Have)
+                    if (Resources(EnvironmentTypes.YoungForest, idx_0).Have)
                     {
                         Remove(EnvironmentTypes.YoungForest, idx_0);
 
                         SetNew(EnvironmentTypes.AdultForest, idx_0);
                     }
 
-                    if (!Environment<HaveEnvironmentC>(EnvironmentTypes.Fertilizer, idx_0).Have
-                        && !Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_0).Have
-                        && !Environment<HaveEnvironmentC>(EnvironmentTypes.AdultForest, idx_0).Have)
+                    if (!Resources(EnvironmentTypes.Fertilizer, idx_0).Have
+                        && !Resources(EnvironmentTypes.Mountain, idx_0).Have
+                        && !Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                     {
                         random = Random.Range(0, 100);
 

@@ -6,7 +6,7 @@ namespace Game.Game
 {
     public readonly struct EntityPool
     {
-        readonly static Dictionary<string, Entity> _ents;
+        static Dictionary<string, Entity> _ents;
         static Entity _background;
 
         static Entity _winner;
@@ -18,8 +18,7 @@ namespace Game.Game
         static Dictionary<string, Entity> _scoutHeroCooldown;
 
 
-        public static ref C SelIdx<C>() where C : struct, ISelectedIdx => ref _ents[nameof(ISelectedIdx)].Get<C>();
-        public static ref C CurIdx<C>() where C : struct, ICurrectIdx => ref _ents[nameof(ICurrectIdx)].Get<C>();
+      
         public static ref C PreVisIdx<C>() where C : struct, IPreVisionIdx => ref _ents[nameof(IPreVisionIdx)].Get<C>();
         public static ref C Input<C>() where C : struct, IInputE => ref _ents[nameof(IInputE)].Get<C>();
         public static ref C ClickerObject<C>() where C : struct, IClickerObjectE => ref _ents[nameof(IClickerObjectE)].Get<C>();
@@ -33,7 +32,8 @@ namespace Game.Game
         public static ref C EnvironmentInfo<C>() where C : struct => ref _infoEnvironment.Get<C>();
         public static ref C ScoutHeroCooldown<C>(in UnitTypes unit, in PlayerTypes player) where C : struct => ref _scoutHeroCooldown[unit.ToString() + player].Get<C>();
         
-        static EntityPool()
+
+        public EntityPool(in EcsWorld gameW, in string nameBackground, in List<object> actions, in List<string> namesMethods)
         {
             _ents = new Dictionary<string, Entity>();
             _ready = new Dictionary<PlayerTypes, Entity>();
@@ -48,17 +48,7 @@ namespace Game.Game
                 _scoutHeroCooldown.Add(UnitTypes.Scout.ToString() + player, default);
                 _scoutHeroCooldown.Add(UnitTypes.Elfemale.ToString() + player, default);
             }
-        }
 
-        public EntityPool(in EcsWorld gameW, in string nameBackground, in List<object> actions, in List<string> namesMethods)
-        {
-            _ents[nameof(ISelectedIdx)] = gameW.NewEntity()
-                .Add(new SelIdxEC())
-                .Add(new IdxC(0));
-
-            _ents[nameof(ICurrectIdx)] = gameW.NewEntity()
-                .Add(new CurIdxC())
-                .Add(new IdxC(0));
 
             _ents[nameof(IPreVisionIdx)] = gameW.NewEntity()
                 .Add(new IdxC(0));

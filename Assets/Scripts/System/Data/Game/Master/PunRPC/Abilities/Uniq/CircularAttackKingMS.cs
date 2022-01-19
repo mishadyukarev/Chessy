@@ -12,7 +12,7 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
-            UniqueAbilityMC.Get(out var uniq_cur);
+            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
             ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
             ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
@@ -45,7 +45,7 @@ namespace Game.Game
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Player))
                             {
-                                foreach (var item in CellUnitEffectsEs.KeysStat) 
+                                foreach (var item in CellUnitEffectsEs.Keys) 
                                     CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_1).Disable();
 
                                 if (tw_1.Is(ToolWeaponTypes.Shield))
@@ -66,7 +66,7 @@ namespace Game.Game
                     }
 
                     CellUnitStepEs.Take(idx_0, uniq_cur);
-                    foreach (var item in CellUnitEffectsEs.KeysStat) 
+                    foreach (var item in CellUnitEffectsEs.Keys) 
                         CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 
                     EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AttackMelee);

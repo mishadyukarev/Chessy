@@ -20,6 +20,7 @@ namespace Game.Game
 
             CanvasC.SetCurZone(SceneTypes.Game);
 
+            new ResourcesSpriteVEs(gameW);
             new EntityVPool(gameW, out var actions, out var sounds0, out var sounds1);
 
 
@@ -36,8 +37,8 @@ namespace Game.Game
                 for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
                     var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
-                        ? SpritesResC.Sprite(SpriteTypes.WhiteCell)
-                        : SpritesResC.Sprite(SpriteTypes.BlackCell);
+                        ? ResourcesSpriteVEs.SpriteVC(SpriteTypes.WhiteCell).Sprite
+                        : ResourcesSpriteVEs.SpriteVC(SpriteTypes.BlackCell).Sprite;
 
 
                     var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
@@ -113,18 +114,18 @@ namespace Game.Game
             new UIEntExtraTW(gameW, rightZone);
             new UIEntRightEffects(gameW, rightZone);
             var conditionZone = rightZone.Find("ConditionZone");
-            new UIEntRightProtect(gameW, conditionZone);
-            new UIEntRelax(gameW, conditionZone);
+            new RightProtectUIE(gameW, conditionZone);
+            new RightRelaxUIE(gameW, conditionZone);
 
             #endregion
 
 
-            var isActiveCells = new bool[CellStartValues.ALL_CELLS_AMOUNT];
+            var isActiveParenCells = new bool[CellStartValues.ALL_CELLS_AMOUNT];
             var idCells = new int[CellStartValues.ALL_CELLS_AMOUNT];
 
             for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
-                isActiveCells[idx] = CellVEs.Cell<GameObjectVC>(idx).IsActiveSelf;
+                isActiveParenCells[idx] = CellVEs.CellParent<GameObjectVC>(idx).IsActiveSelf;
                 idCells[idx] = CellVEs.Cell<GameObjectVC>(idx).InstanceID;
             }
 
@@ -135,6 +136,8 @@ namespace Game.Game
 
             new EntitySound(gameW, sounds0, sounds1);
             new EntityPool(gameW, EntityVPool.Background<GameObjectVC>().Name, actions, namesMethods);
+            new SelectedIdxE(gameW);
+            new CurrentIdxE(gameW);
 
             new SelectedUnitE(gameW);
 
@@ -168,13 +171,15 @@ namespace Game.Game
             new CellUnitAbilityUniqueEs(gameW);
             new CellUnitTWE(gameW);
 
+            new CellAnimalEs(gameW);
+
             new CellTrailEs(gameW);
             new CellBuildE(gameW);
             new CellEnvironmentEs(gameW);
             new CellFireEs(gameW);
             new EntityCellCloudPool(gameW);
             new EntityCellRiverPool(gameW);
-            new CellEs(gameW, isActiveCells, idCells);
+            new CellEs(gameW, isActiveParenCells, idCells);
             new CellParentE(gameW);
 
             new WhoseMoveE(gameW);
@@ -212,7 +217,7 @@ namespace Game.Game
 
                     ref var cloud_0 = ref Cloud<HaveEffectC>(idx_0);
 
-                    if (Cell<IsActiveC>(idx_0).IsActive)
+                    if (CellParent<IsActiveC>(idx_0).IsActive)
                     {
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
@@ -340,7 +345,7 @@ namespace Game.Game
                         Remove(EnvironmentTypes.Mountain, idx_0);
                         Remove(EnvironmentTypes.AdultForest, idx_0);
 
-                        CellUnitEs.SetNew(idx_0, (UnitTypes.King, LevelTypes.First, PlayerTypes.Second));
+                        CellUnitEs.SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second, default, default), idx_0);
 
                         condUnit_0.Condition = ConditionUnitTypes.Protected;
                     }
@@ -358,6 +363,9 @@ namespace Game.Game
                     {
                         Remove(EnvironmentTypes.Mountain, idx_0);
 
+                        SetNew((UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second, default, default), idx_0);
+
+
                         int rand = UnityEngine.Random.Range(0, 100);
 
                         if (rand >= 50)
@@ -369,7 +377,6 @@ namespace Game.Game
                             CellUnitTWE.SetNew(idx_0, ToolWeaponTypes.Shield, LevelTypes.First);
                         }
 
-                        SetNew(idx_0, (UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second));
                         condUnit_0.Condition = ConditionUnitTypes.Protected;
                     }
                 }

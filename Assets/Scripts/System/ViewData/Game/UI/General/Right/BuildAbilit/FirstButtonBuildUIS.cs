@@ -9,13 +9,13 @@ namespace Game.Game
         {
             var needActiveButton = false;
 
-            if (SelIdx<SelIdxEC>().IsSelCell)
+            if (SelectedIdxE.IsSelCell)
             {
-                ref var selUnitDatCom = ref Unit<UnitTC>(SelIdx<IdxC>().Idx);
+                ref var selUnitDatCom = ref Unit<UnitTC>(SelectedIdxE.IdxC.Idx);
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var selOnUnitCom = ref Unit<PlayerTC>(SelIdx<IdxC>().Idx);
+                    ref var selOnUnitCom = ref Unit<PlayerTC>(SelectedIdxE.IdxC.Idx);
 
                     if (selOnUnitCom.Is(WhoseMoveE.CurPlayerI))
                     {

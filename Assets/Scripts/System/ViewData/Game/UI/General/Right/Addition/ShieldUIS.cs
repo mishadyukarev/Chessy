@@ -7,8 +7,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var tw_sel = ref CellUnitTWE.UnitTW<ToolWeaponC>(SelIdx<IdxC>().Idx);
-            ref var twLevel_sel = ref CellUnitTWE.UnitTW<LevelTC>(SelIdx<IdxC>().Idx);
+            ref var tw_sel = ref CellUnitTWE.UnitTW<ToolWeaponC>(SelectedIdxE.IdxC.Idx);
+            ref var twLevel_sel = ref CellUnitTWE.UnitTW<LevelTC>(SelectedIdxE.IdxC.Idx);
 
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Pick, LevelTypes.Second).SetActive(false);
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Sword, LevelTypes.Second).SetActive(false);

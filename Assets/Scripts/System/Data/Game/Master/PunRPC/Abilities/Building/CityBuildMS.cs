@@ -28,15 +28,13 @@ namespace Game.Game
                 var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
 
-                if (CellUnitStepEs.Have(idx_0, BuildingTypes.City))
+                if (CellUnitStepEs.HaveForBuilding(idx_0, BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpaceC.GetXyAround(Cell<XyC>(idx_0).Xy))
+                    foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
                     {
-                        var curIdx = IdxCell(xy);
-
-                        if (!Cell<IsActiveC>(curIdx).IsActive)
+                        if (!CellParent<IsActiveC>(idx_1).IsActive)
                         {
                             haveNearBorder = true;
                             break;

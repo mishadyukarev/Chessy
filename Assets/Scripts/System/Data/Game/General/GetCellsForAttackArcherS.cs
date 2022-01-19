@@ -12,7 +12,7 @@ namespace Game.Game
                 ref var level_0 = ref Unit<LevelTC>(idx_0);
                 ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
                 ref var stepUnit_0 = ref CellUnitStepEs.Steps<AmountC>(idx_0);
-                ref var stunUnit_0 = ref CellUnitStunEs.StepsForExitStun<AmountC>(idx_0);
+                ref var stunUnit_0 = ref CellUnitStunEs.StepsForExitStun(idx_0);
                 ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
 
                 if (!stunUnit_0.Have)
@@ -35,7 +35,7 @@ namespace Game.Game
 
 
 
-                                if (CellEs.Cell<IsActiveC>(idx_1).IsActive && !CellEnvironmentEs.Environment<HaveEnvironmentC>(EnvironmentTypes.Mountain, idx_1).Have)
+                                if (CellEs.CellParent<IsActiveC>(idx_1).IsActive && !CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_1).Have)
                                 {
                                     if (unit_1.Have)
                                     {
@@ -77,7 +77,7 @@ namespace Game.Game
 
 
 
-                                    if (CellEs.Cell<IsActiveC>(idx_2).IsActive && unit_2.Have
+                                    if (CellEs.CellParent<IsActiveC>(idx_2).IsActive && unit_2.Have
                                         && CellUnitVisibleEs.Visible<IsVisibleC>(ownUnit_0.Player, idx_2).IsVisible && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
                                         if (unit_0.Is(UnitTypes.Archer))

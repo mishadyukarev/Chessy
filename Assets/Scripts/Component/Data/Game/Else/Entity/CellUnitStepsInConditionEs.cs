@@ -14,7 +14,7 @@ namespace Game.Game
             return ref _ents[cond][idx].Get<C>();
         }
 
-        public static HashSet<ConditionUnitTypes> KeysCondition
+        public static HashSet<ConditionUnitTypes> Keys
         {
             get
             {

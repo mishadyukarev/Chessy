@@ -9,15 +9,15 @@ namespace Game.Game
         static Dictionary<ClipTypes, Entity> _sounds0;
         static Dictionary<UniqueAbilityTypes, Entity> _sounds1;
 
-        public static ref C Sound<C>(in ClipTypes clip) where C : struct
+        public static ref ActionC Sound(in ClipTypes clip)
         {
             if (!_sounds0.ContainsKey(clip)) throw new Exception();
-            return ref _sounds0[clip].Get<C>();
+            return ref _sounds0[clip].Get<ActionC>();
         }
-        public static ref C Sound<C>(in UniqueAbilityTypes clip) where C : struct
+        public static ref ActionC Sound(in UniqueAbilityTypes clip)
         {
             if (!_sounds1.ContainsKey(clip)) throw new Exception();
-            return ref _sounds1[clip].Get<C>();
+            return ref _sounds1[clip].Get<ActionC>();
         }
 
         public EntitySound(in EcsWorld gameW, in Dictionary<ClipTypes, Action> action0, in Dictionary<UniqueAbilityTypes, Action> action1)

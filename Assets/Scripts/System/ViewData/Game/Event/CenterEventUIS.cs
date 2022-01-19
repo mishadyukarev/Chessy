@@ -47,7 +47,7 @@ namespace Game.Game
         }
         void GetKing()
         {
-            EntityPool.SelIdx<IdxC>().Reset();
+            SelectedIdxE.IdxC.Reset();
 
 
             if (WhoseMoveE.IsMyMove)

@@ -25,23 +25,23 @@ namespace Game.Game
                             throw new Exception();
 
                         case BuildingTypes.City:
-                            _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.City);
+                            _build_SR.sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.City).Sprite;
                             break;
 
                         case BuildingTypes.Farm:
-                            _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Farm);
+                            _build_SR.sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Farm).Sprite;
                             break;
 
                         case BuildingTypes.Woodcutter:
-                            _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Woodcutter);
+                            _build_SR.sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Woodcutter).Sprite;
                             break;
 
                         case BuildingTypes.Mine:
-                            _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Mine);
+                            _build_SR.sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Mine).Sprite;
                             break;
 
                         case BuildingTypes.Camp:
-                            _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Camp);
+                            _build_SR.sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Camp).Sprite;
                             break;
 
                         default:

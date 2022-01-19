@@ -46,7 +46,6 @@ namespace Game.Game
 
 
             new VideoClipsResC(true);
-            new SpritesResC(true);
 
             SoundC.SavedVolume = SoundC.Volume;
 

@@ -11,7 +11,7 @@ namespace Game.Game
                 EndGame<EndGameUIEC>().SetActiveZone(false);
             }
 
-            else if (EntityPool.Winner<PlayerTC>().Player == WhoseMoveE.CurPlayerI)
+            else if (EntityPool.Winner<PlayerTC>().Player != WhoseMoveE.CurPlayerI)
             {
                 EndGame<EndGameUIEC>().SetText(true);
                 EndGame<EndGameUIEC>().SetActiveZone(true);
