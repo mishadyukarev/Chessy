@@ -8,7 +8,7 @@ namespace Game.Game
         {
             var curPlayer = WhoseMoveE.CurPlayerI;
 
-            var isActive = InventorUnitsE.Units<AmountC>(UnitTypes.Scout, LevelTypes.First, curPlayer).Have;
+            var isActive = InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, curPlayer).Have;
             var cooldown = EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, curPlayer).Cooldown;
 
 
@@ -16,12 +16,12 @@ namespace Game.Game
 
             if (isActive && cooldown > 0)
             {
-                Cooldown<TextMPUGUIC>().SetActiveParent(true);
-                Cooldown<TextMPUGUIC>().Text = cooldown.ToString();
+                Cooldown<TextUIC>().SetActiveParent(true);
+                Cooldown<TextUIC>().Text = cooldown.ToString();
             }
             else
             {
-                Cooldown<TextMPUGUIC>().SetActiveParent(false);
+                Cooldown<TextUIC>().SetActiveParent(false);
             }
         }
     }

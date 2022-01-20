@@ -16,7 +16,7 @@ namespace Game.Game
             var friendZone = centerZone.Find("FriendZone");
 
             _entity = gameW.NewEntity()
-                .Add(new TextMPUGUIC(friendZone.Find("WhoseMotion_TextMP").GetComponent<TextMeshProUGUI>()))
+                .Add(new TextUIC(friendZone.Find("WhoseMotion_TextMP").GetComponent<TextMeshProUGUI>()))
                 .Add(new ButtonUIC(friendZone.Find("Ready_Button").GetComponent<Button>()));
         }
     }

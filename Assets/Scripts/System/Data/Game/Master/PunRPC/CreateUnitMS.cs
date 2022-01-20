@@ -16,20 +16,20 @@
                 if (InventorResourcesE.CanCreateUnit(playerSend, unit, out var needRes))
                 {
                     InventorResourcesE.BuyCreateUnit(playerSend, unit);
-                    InventorUnitsE.Units<AmountC>(unit, LevelTypes.First, playerSend).Add();
+                    InventorUnitsE.Units(unit, LevelTypes.First, playerSend).Add();
 
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }
                 else
                 {
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
-                    EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                    EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
-                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
+                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }
     }

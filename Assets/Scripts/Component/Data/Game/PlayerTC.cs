@@ -12,8 +12,6 @@
 
         public PlayerTC(in PlayerTypes player) => Player = player;
 
-
-        public void Set(PlayerTC playerC) => Player = playerC.Player;
         public void Reset() => Player = PlayerTypes.None;
     }
 }

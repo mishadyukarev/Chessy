@@ -23,7 +23,7 @@
             AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(whoseMove).Have = false;
             AvailableCenterUpgradeEs.HaveUnitUpgrade<HaveUpgradeC>(unit, whoseMove).Have = false;
 
-            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

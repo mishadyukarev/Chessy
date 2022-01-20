@@ -23,7 +23,7 @@ namespace Game.Game
             {
                 if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                 {
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
+                    EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 
                     fire_0.Enable();
                     CellUnitStepEs.Take(idx_0, uniq_cur);
@@ -36,7 +36,7 @@ namespace Game.Game
 
             else
             {
-                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

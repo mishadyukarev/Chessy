@@ -16,9 +16,9 @@ namespace Game.Game
             {
                 Info<ButtonUIC>().SetActiveParent(true);
 
-                Resources<TextMPUGUIC>(ResourceTypes.Food).Text = Resources(EnvironmentTypes.Fertilizer, SelectedIdxE.IdxC.Idx).Amount.ToString();
-                Resources<TextMPUGUIC>(ResourceTypes.Wood).Text = Resources(EnvironmentTypes.AdultForest, SelectedIdxE.IdxC.Idx).Amount.ToString();
-                Resources<TextMPUGUIC>(ResourceTypes.Ore).Text = Resources(EnvironmentTypes.Hill, SelectedIdxE.IdxC.Idx).Amount.ToString();
+                Resources<TextUIC>(ResourceTypes.Food).Text = Resources(EnvironmentTypes.Fertilizer, SelectedIdxE.IdxC.Idx).Amount.ToString();
+                Resources<TextUIC>(ResourceTypes.Wood).Text = Resources(EnvironmentTypes.AdultForest, SelectedIdxE.IdxC.Idx).Amount.ToString();
+                Resources<TextUIC>(ResourceTypes.Ore).Text = Resources(EnvironmentTypes.Hill, SelectedIdxE.IdxC.Idx).Amount.ToString();
             }
             else
             {

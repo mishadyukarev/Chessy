@@ -13,7 +13,7 @@
 
                 if (WhereBuildsE.IsSetted(BuildingTypes.City, player, out var idx_1))
                 {
-                    ref var unit_1 = ref CellUnitEs.Unit<UnitTC>(idx_1);
+                    ref var unit_1 = ref CellUnitEs.Unit(idx_1);
 
                     if (unit_1.Have)
                     {
@@ -24,13 +24,13 @@
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = true;
                     }
 
-                    var list_2 = CellSpaceC.GetXyAround(CellEs.Cell<XyC>(idx_1).Xy);
+                    var list_2 = CellSpaceSupport.GetXyAround(CellEs.Cell<XyC>(idx_1).Xy);
 
                     foreach (var xy_2 in list_2)
                     {
                         var idx_2 = CellEs.IdxCell(xy_2);
 
-                        ref var unit_2 = ref CellUnitEs.Unit<UnitTC>(idx_2);
+                        ref var unit_2 = ref CellUnitEs.Unit(idx_2);
 
                         if (!CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_2).Have && !unit_2.Have)
                         {
@@ -47,7 +47,7 @@
                 {
                     foreach (var idx_0 in CellEs.Idxs)
                     {
-                        ref var unit_0 = ref CellUnitEs.Unit<UnitTC>(idx_0);
+                        ref var unit_0 = ref CellUnitEs.Unit(idx_0);
                         ref var buld_0 = ref CellBuildE.Build<BuildingTC>(idx_0);
                         ref var ownBuld_0 = ref CellBuildE.Build<PlayerTC>(idx_0);
 

@@ -9,9 +9,9 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitTC>(SelectedIdxE.IdxC.Idx);
-            ref var ownUnit_sel = ref Unit<PlayerTC>(SelectedIdxE.IdxC.Idx);
-            ref var cond_sel = ref Unit<ConditionUnitC>(SelectedIdxE.IdxC.Idx);
+            ref var unit_sel = ref Unit(SelectedIdxE.IdxC.Idx);
+            ref var ownUnit_sel = ref CellUnitElseEs.Owner(SelectedIdxE.IdxC.Idx);
+            ref var cond_sel = ref CellUnitElseEs.Condition(SelectedIdxE.IdxC.Idx);
 
 
             var isEnableButt = false;

@@ -32,9 +32,9 @@ namespace Game.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
+                    foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
                     {
-                        if (!CellParent<IsActiveC>(idx_1).IsActive)
+                        if (!IsActiveC(idx_1).IsActive)
                         {
                             haveNearBorder = true;
                             break;
@@ -43,8 +43,8 @@ namespace Game.Game
 
                     if (!haveNearBorder)
                     {
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.AfterBuildTown);
+                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
                         CellBuildE.SetNew(forBuildType, whoseMove, idx_0);
@@ -63,12 +63,12 @@ namespace Game.Game
 
                     else
                     {
-                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
+                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                     }
                 }
                 else
                 {
-                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

@@ -47,7 +47,7 @@ namespace Game.Game
 
             _background = gameW.NewEntity()
                 .Add(new GameObjectVC(mistakeZone.Find("BackgroudZone").gameObject))
-                .Add(new TextMPUGUIC(mistakeZone.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
+                .Add(new TextUIC(mistakeZone.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
 
 
 
@@ -62,7 +62,7 @@ namespace Game.Game
                 var economy = mistakeZone.transform.Find(MistakeTypes.Economy.ToString());
 
                 _needAmountRes.Add(res, gameW.NewEntity()
-                    .Add(new TextMPUGUIC(economy.Find(res.ToString()).Find("TMP").GetComponent<TextMeshProUGUI>())));
+                    .Add(new TextUIC(economy.Find(res.ToString()).Find("TMP").GetComponent<TextMeshProUGUI>())));
             }
         }
     }

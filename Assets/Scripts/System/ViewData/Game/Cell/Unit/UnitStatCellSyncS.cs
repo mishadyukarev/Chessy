@@ -13,13 +13,13 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var level_0 = ref Unit<LevelTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var hpUnit_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
-                ref var step_0 = ref CellUnitStepEs.Steps<AmountC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var level_0 = ref CellUnitElseEs.Level(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var hpUnit_0 = ref CellUnitHpEs.Hp(idx_0);
+                ref var step_0 = ref CellUnitStepEs.Steps(idx_0);
                 ref var water_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
+                ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
 
 
                 Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
@@ -30,7 +30,7 @@ namespace Game.Game
                 Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
-                if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
+                if (CellUnitVisibleEs.Visible(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
                 {
                     if (unit_0.Have)
                     {

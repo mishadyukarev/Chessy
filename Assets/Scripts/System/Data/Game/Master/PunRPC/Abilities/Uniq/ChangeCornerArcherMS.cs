@@ -11,7 +11,7 @@ namespace Game.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var corner_0 = ref Unit<IsCornedArcherC>(idx_0);
+            ref var corner_0 = ref CellUnitElseEs.Corned(idx_0);
 
 
             if (CellUnitHpEs.HaveMax(idx_0))
@@ -22,16 +22,16 @@ namespace Game.Game
 
                     CellUnitStepEs.Take(idx_0, uniq);
 
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickArcher);
+                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
                 else
                 {
-                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

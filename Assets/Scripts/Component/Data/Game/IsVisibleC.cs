@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct IsVisibleC : IUnitPlayerCellE, IBuildPlayerCellE, ITrailVisibledCellE
+    public struct IsVisibleC : IBuildPlayerCellE, ITrailVisibledCellE
     {
         public bool IsVisible;
     }

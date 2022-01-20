@@ -17,11 +17,11 @@ namespace Game.Game
 
                     if (WhoseMoveE.CurPlayerI == PlayerTypes.First)
                     {
-                        Friend<TextMPUGUIC>().Text = "1";
+                        Friend<TextUIC>().Text = "1";
                     }
                     else
                     {
-                        Friend<TextMPUGUIC>().Text = "2";
+                        Friend<TextUIC>().Text = "2";
                     }
                 }
             }

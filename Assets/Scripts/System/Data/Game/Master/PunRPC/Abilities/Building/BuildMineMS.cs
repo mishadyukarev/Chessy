@@ -33,7 +33,7 @@ namespace Game.Game
                         {
                             if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                             {
-                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
+                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
                                 InventorResourcesE.BuyBuild(whoseMove, build);
 
@@ -43,16 +43,16 @@ namespace Game.Game
                                 CellUnitStepEs.TakeForBuild(idx_0);
                             }
 
-                            else EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                            else EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
                         }
 
-                        else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
-                    else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
                 else
                 {
-                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

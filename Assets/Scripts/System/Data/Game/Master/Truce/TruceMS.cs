@@ -18,9 +18,9 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);

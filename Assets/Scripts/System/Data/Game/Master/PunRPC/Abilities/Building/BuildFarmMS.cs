@@ -27,13 +27,13 @@ namespace Game.Game
                 {
                     if (InventorResourcesE.CanCreateBuild(build, whoseMove,  out var needRes))
                     {
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Building);
+                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
                         Remove(EnvironmentTypes.YoungForest, idx_0);
 
                         if (Resources(EnvironmentTypes.Fertilizer, idx_0).Have)
                         {
-                            Resources(EnvironmentTypes.Fertilizer, idx_0).Amount = EnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer);
+                            Resources(EnvironmentTypes.Fertilizer, idx_0).Amount = CellEnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer);
                         }
                         else
                         {
@@ -48,13 +48,13 @@ namespace Game.Game
                     }
                     else
                     {
-                        EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                        EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
                     }
                 }
 
                 else
                 {
-                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(mistake, sender);
+                    EntityPool.Rpc.SimpleMistakeToGeneral(mistake, sender);
                 }
             }
         }

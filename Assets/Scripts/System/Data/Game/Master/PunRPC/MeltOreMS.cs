@@ -11,11 +11,11 @@
             if (InventorResourcesE.CanMeltOre(whoseMove, out var needRes))
             {
                 InventorResourcesE.BuyMeltOre(whoseMove);
-                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Melting);
+                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

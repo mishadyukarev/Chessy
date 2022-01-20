@@ -8,10 +8,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit<UnitTC>(SelectedIdxE.IdxC.Idx);
-            ref var selOnUnitCom = ref Unit<PlayerTC>(SelectedIdxE.IdxC.Idx);
+            ref var unit_sel = ref Unit(SelectedIdxE.IdxC.Idx);
+            ref var selOnUnitCom = ref CellUnitElseEs.Owner(SelectedIdxE.IdxC.Idx);
 
-            ref var selCondUnitC = ref Unit<ConditionUnitC>(SelectedIdxE.IdxC.Idx);
+            ref var selCondUnitC = ref CellUnitElseEs.Condition(SelectedIdxE.IdxC.Idx);
 
 
             var activeButt = false;

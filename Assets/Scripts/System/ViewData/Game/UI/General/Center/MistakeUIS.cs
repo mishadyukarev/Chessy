@@ -9,7 +9,7 @@ namespace Game.Game
         public void Run()
         {
             MistakeUIE.Background<GameObjectVC>().SetActive(false);
-            MistakeUIE.Background<TextMPUGUIC>().SetActive(false);
+            MistakeUIE.Background<TextUIC>().SetActive(false);
 
 
             foreach (var key in MistakeUIE.KeysMistake)
@@ -19,7 +19,7 @@ namespace Game.Game
 
             foreach (var key in MistakeUIE.KeysResource)
             {
-                MistakeUIE.NeedAmountResources<TextMPUGUIC>(key).SetActive(false);
+                MistakeUIE.NeedAmountResources<TextUIC>(key).SetActive(false);
             }
 
 
@@ -49,9 +49,9 @@ namespace Game.Game
                         {
                             if (MistakeE.Mistake<AmountC>(res).Have)
                             {
-                                MistakeUIE.NeedAmountResources<TextMPUGUIC>(res).SetActive(true);
+                                MistakeUIE.NeedAmountResources<TextUIC>(res).SetActive(true);
 
-                                MistakeUIE.NeedAmountResources<TextMPUGUIC>(res).Text
+                                MistakeUIE.NeedAmountResources<TextUIC>(res).Text
                                     = ">= " + MistakeE.Mistake<AmountC>(res).Amount;
 
                                 //Economy<EconomyUpUIC>(res).Color = Color.red;

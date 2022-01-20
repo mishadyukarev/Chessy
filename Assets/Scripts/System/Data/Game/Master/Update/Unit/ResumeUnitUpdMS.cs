@@ -10,8 +10,8 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
 
                 //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 //{

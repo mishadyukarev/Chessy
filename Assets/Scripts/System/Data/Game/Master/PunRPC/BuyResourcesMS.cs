@@ -15,11 +15,11 @@
             {
                 InventorResourcesE.BuyRes(whoseMove, res);
 
-                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

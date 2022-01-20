@@ -11,7 +11,7 @@ namespace Game.Game
         internal DownEventUIS()
         {
             UIEntDownScout.Scout<ButtonUIC>().AddListener(ExecuteScout);
-            UIEntDownHero.Scout<ButtonUIC>().AddListener(Hero);
+            DownHeroUIE.ButtonC.AddListener(Hero);
 
             UIEntDownDoner.Doner<ButtonUIC>().AddListener(Done);
 
@@ -73,9 +73,9 @@ namespace Game.Game
 
         void Done()
         {
-            if (!InventorUnitsE.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+            if (!InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
             {
-                EntityPool.Rpc<RpcC>().DoneToMaster();
+                EntityPool.Rpc.DoneToMaster();
             }
             else
             {
@@ -89,7 +89,7 @@ namespace Game.Game
             {
                 GetterUnitsEs.GetterUnit<TimerC>(unit).Reset();
 
-                EntityPool.Rpc<RpcC>().CreateUnitToMaster(unit);
+                EntityPool.Rpc.CreateUnitToMaster(unit);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -102,7 +102,7 @@ namespace Game.Game
 
             if (WhoseMoveE.IsMyMove)
             {
-                if (InventorUnitsE.Units<AmountC>(unitT, LevelTypes.Second, WhoseMoveE.CurPlayerI).Have)
+                if (InventorUnitsE.Units(unitT, LevelTypes.Second, WhoseMoveE.CurPlayerI).Have)
                 {
                     ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
 
@@ -110,7 +110,7 @@ namespace Game.Game
                     SelectedUnitE.SelUnit<LevelTC>().Level = LevelTypes.Second;
                 }
 
-                else if (InventorUnitsE.Units<AmountC>(unitT, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+                else if (InventorUnitsE.Units(unitT, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
                 {
                     ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
 

@@ -37,8 +37,8 @@ namespace Game.Game
                 for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
                     var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
-                        ? ResourcesSpriteVEs.SpriteVC(SpriteTypes.WhiteCell).Sprite
-                        : ResourcesSpriteVEs.SpriteVC(SpriteTypes.BlackCell).Sprite;
+                        ? ResourcesSpriteVEs.Sprite(SpriteTypes.WhiteCell).Sprite
+                        : ResourcesSpriteVEs.Sprite(SpriteTypes.BlackCell).Sprite;
 
 
                     var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
@@ -84,7 +84,7 @@ namespace Game.Game
             ///Center
             var centerZone = CanvasC.FindUnderCurZone("CenterZone").transform;
             new EntityCenterUIPool(gameW, centerZone);
-            new CenterHeroUIE(gameW, centerZone);
+            new CenterHerosUIE(gameW, centerZone);
             new CenterFriendUIE(gameW, centerZone);
             new CenterUpgradeUIE(gameW, centerZone);
             new CenterHintUIE(gameW, centerZone);
@@ -93,7 +93,9 @@ namespace Game.Game
             new MistakeUIE(gameW, centerZone);
 
             ///Up
-            new EconomyUpUIE(gameW);
+            var upZone = CanvasC.FindUnderCurZone("UpZone").transform;
+            new EconomyUpUIE(gameW, upZone);
+            new UpSunsUIEs(gameW, upZone);
 
             ///Down
             var downZone = CanvasC.FindUnderCurZone("DownZone").transform;
@@ -103,7 +105,7 @@ namespace Game.Game
             var takeUnitZone = downZone.Find("TakeUnitZone");
             new PawnArcherDownUIE(gameW, takeUnitZone);
             new UIEntDownScout(gameW, takeUnitZone);
-            new UIEntDownHero(gameW, takeUnitZone);
+            new DownHeroUIE(gameW, takeUnitZone);
 
             ///Right
             var rightZone = CanvasC.FindUnderCurZone("RightZone").transform;
@@ -134,17 +136,45 @@ namespace Game.Game
 
             #region Data
 
-            new EntitySound(gameW, sounds0, sounds1);
             new EntityPool(gameW, EntityVPool.Background<GameObjectVC>().Name, actions, namesMethods);
+
+            new CellUnitEs(gameW);
+            new CellUnitElseEs(gameW);
+            new CellUnitEffectsEs(gameW);
+            new CellUnitBuildingButtonEs(gameW);
+            new CellUnitStepsInConditionEs(gameW);
+            new CellUnitVisibleEs(gameW);
+            new CellUnitUniqueButtonsEs(gameW);
+            new CellUnitWaterEs(gameW);
+            new CellUnitHpEs(gameW);
+            new CellUnitStepEs(gameW);
+            new CellUnitStunEs(gameW);
+            new CellUnitAbilityUniqueEs(gameW);
+            new CellUnitTWE(gameW);
+
+            new CellTrailEs(gameW);
+            new CellBuildE(gameW);
+            new CellEnvironmentEs(gameW);
+            new CellFireEs(gameW);
+            new EntityCellCloudPool(gameW);
+            new EntityCellRiverPool(gameW);
+            new CellEs(gameW, isActiveParenCells, idCells);
+            new CellParentE(gameW);
+
+            new CurrentDirectWindE(gameW);
+            new CenterCloudEnt(gameW);
+            new DirectsWindForElfemaleE(gameW);
+
+            new AvailableCenterUpgradeEs(gameW);
+            new AvailableCenterHeroEs(gameW);
+            new UnitStatUpgradesEs(gameW);
+            new BuildingUpgradesEs(gameW);
+
             new SelectedIdxE(gameW);
             new CurrentIdxE(gameW);
 
-            new SelectedUnitE(gameW);
-
-            new StatUnitsUpgradesE(gameW);
-
             new EntWhereEnviroments(gameW);
-            new EntWhereUnits(gameW);
+            new WhereUnitsE(gameW);
             new WhereBuildsE(gameW);
 
             new InventorUnitsE(gameW);
@@ -156,46 +186,15 @@ namespace Game.Game
             new CellsForAttackUnitsEs(gameW);
             new CellsForArsonArcherEs(gameW);
 
-            new GetterUnitsEs(gameW);
-
-            new CellUnitEs(gameW);
-            new CellUnitEffectsEs(gameW);
-            new CellUnitBuildingButtonEs(gameW);
-            new CellUnitStepsInConditionEs(gameW);
-            new CellUnitVisibleEs(gameW);
-            new CellUnitUniqueButtonEs(gameW);
-            new CellUnitWaterEs(gameW);
-            new CellUnitHpEs(gameW);
-            new CellUnitStepEs(gameW);
-            new CellUnitStunEs(gameW);
-            new CellUnitAbilityUniqueEs(gameW);
-            new CellUnitTWE(gameW);
-
-            new CellAnimalEs(gameW);
-
-            new CellTrailEs(gameW);
-            new CellBuildE(gameW);
-            new CellEnvironmentEs(gameW);
-            new CellFireEs(gameW);
-            new EntityCellCloudPool(gameW);
-            new EntityCellRiverPool(gameW);
-            new CellEs(gameW, isActiveParenCells, idCells);
-            new CellParentE(gameW);
-
+            new SelectedToolWeaponE(gameW);
             new WhoseMoveE(gameW);
             new MistakeE(gameW);
             new EntHint(gameW);
-
-            new CurrentDirectWindE(gameW);
-            new CenterCloudEnt(gameW);
-            new DirectsWindForElfemaleE(gameW);
-
-            new AvailableCenterUpgradeEs(gameW);
-            new AvailableCenterHeroEs(gameW);
-            new UnitStatUpgradesEs(gameW);
-            new BuildingUpgradesEs(gameW);
-
-            new SelectedToolWeaponE(gameW);
+            new SelectedUnitE(gameW);
+            new StatUnitsUpgradesE(gameW);
+            new GetterUnitsEs(gameW);
+            new EntitySound(gameW, sounds0, sounds1);
+            new SunSidesE(gameW);
 
 
 
@@ -217,12 +216,12 @@ namespace Game.Game
 
                     ref var cloud_0 = ref Cloud<HaveEffectC>(idx_0);
 
-                    if (CellParent<IsActiveC>(idx_0).IsActive)
+                    if (IsActiveC(idx_0).IsActive)
                     {
                         if (xy_0[1] >= 4 && xy_0[1] <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
+                            if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
                             {
                                 SetNew(EnvironmentTypes.Mountain, idx_0);
                             }
@@ -230,13 +229,13 @@ namespace Game.Game
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                                if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                                 {
                                     SetNew(EnvironmentTypes.AdultForest, idx_0);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Hill))
+                                if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Hill))
                                 {
                                     SetNew(EnvironmentTypes.Hill, idx_0);
                                 }
@@ -246,14 +245,14 @@ namespace Game.Game
                         else
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                            if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                             {
                                 SetNew(EnvironmentTypes.AdultForest, idx_0);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Fertilizer))
+                                if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Fertilizer))
                                 {
                                     SetNew(EnvironmentTypes.Fertilizer, idx_0);
                                 }
@@ -265,7 +264,7 @@ namespace Game.Game
                             cloud_0.Have = true;
                             CenterCloudEnt.CenterCloud<IdxC>().Idx = idx_0;
 
-                            CellSpaceC.TryGetXyAround(xy_0, out var dirs);
+                            CellSpaceSupport.TryGetXyAround(xy_0, out var dirs);
                             foreach (var item in dirs)
                             {
                                 var idx_1 = IdxCell(item.Value);
@@ -297,7 +296,7 @@ namespace Game.Game
 
                         foreach (var dir in river_0.Directs)
                         {
-                            var xy_next = CellSpaceC.GetXyCellByDirect(Cell<XyC>(idx_0).Xy, dir);
+                            var xy_next = CellSpaceSupport.GetXyCellByDirect(Cell<XyC>(idx_0).Xy, dir);
                             var idx_next = IdxCell(xy_next);
 
                             River<RiverC>(idx_next).SetEnd(dir.Invert());
@@ -305,7 +304,7 @@ namespace Game.Game
 
                         foreach (var dir in corners)
                         {
-                            var xy_next = CellSpaceC.GetXyCellByDirect(Cell<XyC>(idx_0).Xy, dir);
+                            var xy_next = CellSpaceSupport.GetXyCellByDirect(Cell<XyC>(idx_0).Xy, dir);
                             var idx_next = IdxCell(xy_next);
 
                             River<RiverC>(idx_next).SetCorner();
@@ -316,20 +315,20 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                InventorResourcesE.Resource<AmountC>(ResourceTypes.Food, PlayerTypes.Second).Amount = 999999;
+                InventorResourcesE.Resource(ResourceTypes.Food, PlayerTypes.Second).Amount = 999999;
 
                 foreach (byte idx_0 in Idxs)
                 {
-                    var curXyCell = Cell<XyC>(idx_0).Xy;
-                    var x = curXyCell[0];
-                    var y = curXyCell[1];
+                    var xy_0 = Cell<XyC>(idx_0).Xy;
+                    var x = xy_0[0];
+                    var y = xy_0[1];
 
-                    ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                    ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
-                    ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
+                    ref var unit_0 = ref Unit(idx_0);
+                    ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
+                    ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
 
-                    ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
-                    ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
+                    ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
+                    ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
                     ref var waterUnit_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
 
 

@@ -40,6 +40,7 @@ namespace Game.Game
                 ///Up
                 + new EconomyUpUIS().Run
                 + new WindUIS().Run
+                + new UpSunsUIS().Run
 
                 ///Center
                 + new SelectorUIS().Run

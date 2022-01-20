@@ -13,9 +13,9 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
                 ref var water_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
 
                 ref var riverC_0 = ref River<RiverC>(idx_0);
@@ -23,7 +23,7 @@ namespace Game.Game
                 ref var build_0 = ref Build<BuildingTC>(idx_0);
 
 
-                if (unit_0.Have)
+                if (unit_0.Have && !unit_0.IsAnimal)
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
@@ -47,7 +47,7 @@ namespace Game.Game
                             if (!water_0.Have)
                             {
                                 float percent = 0;
-                                switch (CellUnitEs.Unit<UnitTC>(idx_0).Unit)
+                                switch (CellUnitEs.Unit(idx_0).Unit)
                                 {
                                     case UnitTypes.None: throw new Exception();
                                     case UnitTypes.King: percent = 0.4f; break;
@@ -57,7 +57,7 @@ namespace Game.Game
                                     case UnitTypes.Elfemale: percent = 0.5f; break;
                                     default: throw new Exception();
                                 }
-                                CellUnitHpEs.Hp<AmountC>(idx_0).Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
+                                CellUnitHpEs.Hp(idx_0).Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
 
 
                                 if (!hp_0.Have)

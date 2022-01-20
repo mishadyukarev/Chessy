@@ -12,14 +12,14 @@ namespace Game.Game
             EntityMPool.ChangeDirectionWind<IdxFromToC>().Get(out var idx_from, out var idx_to);
             var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
-            ref var unit_from = ref Unit<UnitTC>(idx_from);
+            ref var unit_from = ref Unit(idx_from);
 
 
             if (CellUnitHpEs.HaveMax(idx_from))
             {
                 if (CellUnitStepEs.Have(idx_from, uniq_cur))
                 {
-                    var newDir = CellSpaceC.GetDirect(CenterCloudEnt.CenterCloud<IdxC>().Idx, idx_to);
+                    var newDir = CellSpaceSupport.GetDirect(CenterCloudEnt.CenterCloud<IdxC>().Idx, idx_to);
 
                     if(newDir != DirectTypes.None)
                     {
@@ -29,13 +29,13 @@ namespace Game.Game
 
                         CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_from).Cooldown = 6;
 
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
+                        EntityPool.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
                     }
                 }
 
-                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+            else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
 
         }
     }

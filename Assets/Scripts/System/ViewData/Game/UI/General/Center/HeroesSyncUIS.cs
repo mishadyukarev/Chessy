@@ -1,4 +1,4 @@
-﻿using static Game.Game.CenterHeroUIE;
+﻿using static Game.Game.CenterHerosUIE;
 using static Game.Game.CenterUpgradeUIE;
 using static Game.Game.CenterKingUIE;
 
@@ -11,12 +11,11 @@ namespace Game.Game
             if (!Button<ButtonUIC>().IsActiveParent && !Water<ButtonUIC>().IsActiveParent 
                 && AvailableCenterHeroEs.HaveAvailHero<HaveAvailableHeroC>(WhoseMoveE.CurPlayerI).Have)
             {
-                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent
-                    (!InventorUnitsE.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have);
+                Parent.SetActive(!InventorUnitsE.Units(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have);
             }
             else
             {
-                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent(false);
+                Parent.SetActive(false);
             }
         }
     }

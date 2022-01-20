@@ -125,8 +125,8 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Attack:
-                        EntityMPool.Attack<IdxFromToC>().From = (byte)objects[_idx_cur++];
-                        EntityMPool.Attack<IdxFromToC>().To = (byte)objects[_idx_cur++];
+                        EntityMPool.Attack.From = (byte)objects[_idx_cur++];
+                        EntityMPool.Attack.To = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
@@ -171,7 +171,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        EntityMPool.GetHero<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntityMPool.ForGetHero.Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgCenterUnits:
@@ -251,7 +251,7 @@ namespace Game.Game
         }
 
         [PunRPC]
-        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => EntityPool.Rpc<RpcC>().OtherRpc(objects, infoFrom);
+        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => EntityPool.Rpc.OtherRpc(objects, infoFrom);
 
 
         #region SyncData
@@ -263,15 +263,15 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                objs.Add(Unit<UnitTC>(idx_0).Unit);
-                objs.Add(Unit<LevelTC>(idx_0).Level);
-                objs.Add(Unit<PlayerTC>(idx_0).Player);
+                objs.Add(Unit(idx_0).Unit);
+                objs.Add(CellUnitElseEs.Level(idx_0).Level);
+                objs.Add(CellUnitElseEs.Owner(idx_0).Player);
 
-                objs.Add(CellUnitHpEs.Hp<AmountC>(idx_0).Amount);
-                objs.Add(CellUnitStepEs.Steps<AmountC>(idx_0).Amount);
+                objs.Add(CellUnitHpEs.Hp(idx_0).Amount);
+                objs.Add(CellUnitStepEs.Steps(idx_0).Amount);
                 objs.Add(CellUnitWaterEs.Water<AmountC>(idx_0).Amount);
 
-                objs.Add(Unit<ConditionUnitC>(idx_0).Condition);
+                objs.Add(CellUnitElseEs.Condition(idx_0).Condition);
                 foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
@@ -281,7 +281,7 @@ namespace Game.Game
 
                 objs.Add(CellUnitStunEs.StepsForExitStun(idx_0).Amount);
 
-                objs.Add(Unit<IsCornedArcherC>(idx_0).IsCornered);
+                objs.Add(CellUnitElseEs.Corned(idx_0).IsCornered);
 
                 foreach (var item in CellUnitAbilityUniqueEs.Keys) objs.Add(CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Cooldown);
 
@@ -331,14 +331,14 @@ namespace Game.Game
             //foreach (var key in BuildingUpgradesEnt.Keys) objs.Add(BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have);
 
 
-            foreach (var key in InventorResourcesE.Keys) objs.Add(InventorResourcesE.Resource<AmountC>(key).Amount);
-            foreach (var key in InventorUnitsE.Keys) objs.Add(InventorUnitsE.Units<AmountC>(key).Amount);
+            foreach (var key in InventorResourcesE.Keys) objs.Add(InventorResourcesE.Resource(key).Amount);
+            foreach (var key in InventorUnitsE.Keys) objs.Add(InventorUnitsE.Units(key).Amount);
             foreach (var key in InventorToolWeaponE.Keys) objs.Add(InventorToolWeaponE.ToolWeapons<AmountC>(key).Amount);
 
 
-            foreach (var key in EntWhereUnits.Keys) objs.Add(EntWhereUnits.HaveUnit<HaveUnitC>(key).Have);
+            foreach (var key in WhereUnitsE.Keys) objs.Add(WhereUnitsE.HaveUnit(key).Have);
             foreach (var key in WhereBuildsE.Keys) objs.Add(WhereBuildsE.HaveBuild<HaveBuildingC>(key).Have);
-            foreach (var key in EntWhereEnviroments.Keys) objs.Add(EntWhereEnviroments.HaveEnv<HaveEnvC>(key).Have);
+            foreach (var key in EntWhereEnviroments.Keys) objs.Add(EntWhereEnviroments.HaveEnv(key).Have);
 
 
             //foreach (var item in PickUpgC.HaveUpgrades) objs.Add(item.Value);
@@ -350,7 +350,7 @@ namespace Game.Game
             #region Other
 
             objs.Add(WhoseMoveE.WhoseMove<PlayerTC>().Player);
-            objs.Add(EntityPool.Winner<PlayerTC>().Player);
+            objs.Add(EntityPool.Winner.Player);
             objs.Add(EntityPool.GameInfo<IsStartedGameC>().IsStartedGame);
             objs.Add(EntityPool.Ready<IsReadyC>(PlayerTypes.Second).IsReady);
 
@@ -367,9 +367,9 @@ namespace Game.Game
             for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
 
-            EntityPool.Rpc<RpcC>().RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            EntityPool.Rpc.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
 
-            EntityPool.Rpc<RpcC>().RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
+            EntityPool.Rpc.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
         }
 
         [PunRPC]
@@ -380,14 +380,14 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                Unit<UnitTC>(idx_0).Unit = (UnitTypes)objects[_idx_cur++];
-                Unit<LevelTC>(idx_0).Level = (LevelTypes)objects[_idx_cur++];
-                Unit<PlayerTC>(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
-                CellUnitHpEs.Hp<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
-                CellUnitStepEs.Steps<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
+                Unit(idx_0).Unit = (UnitTypes)objects[_idx_cur++];
+                CellUnitElseEs.Level(idx_0).Level = (LevelTypes)objects[_idx_cur++];
+                CellUnitElseEs.Owner(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
+                CellUnitHpEs.Hp(idx_0).Amount = (int)objects[_idx_cur++];
+                CellUnitStepEs.Steps(idx_0).Amount = (int)objects[_idx_cur++];
                 CellUnitWaterEs.Water<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
 
-                Unit<ConditionUnitC>(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                CellUnitElseEs.Condition(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
                 foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
 
@@ -398,7 +398,7 @@ namespace Game.Game
 
                 CellUnitStunEs.StepsForExitStun(idx_0).Amount = (int)objects[_idx_cur++];
 
-                Unit<IsCornedArcherC>(idx_0).IsCornered = (bool)objects[_idx_cur++];
+                CellUnitElseEs.Corned(idx_0).IsCornered = (bool)objects[_idx_cur++];
 
                 foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Cooldown = (int)objects[_idx_cur++];
 
@@ -425,7 +425,7 @@ namespace Game.Game
 
 
 
-                Cloud<HaveEffectC>(idx_0).Sync((bool)objects[_idx_cur++]);
+                Cloud<HaveEffectC>(idx_0).Have = (bool)objects[_idx_cur++];
                 Fire<HaveEffectC>(idx_0).Have = (bool)objects[_idx_cur++];
             }
 
@@ -441,14 +441,14 @@ namespace Game.Game
             //foreach (var key in BuildingUpgradesEnt.Keys) BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
 
 
-            foreach (var key in InventorResourcesE.Keys) InventorResourcesE.Resource<AmountC>(key).Amount = (int)objects[_idx_cur++];
-            foreach (var key in InventorUnitsE.Keys) InventorUnitsE.Units<AmountC>(key).Amount = (int)objects[_idx_cur++];
+            foreach (var key in InventorResourcesE.Keys) InventorResourcesE.Resource(key).Amount = (int)objects[_idx_cur++];
+            foreach (var key in InventorUnitsE.Keys) InventorUnitsE.Units(key).Amount = (int)objects[_idx_cur++];
             foreach (var key in InventorToolWeaponE.Keys) InventorToolWeaponE.ToolWeapons<AmountC>(key).Amount = (int)objects[_idx_cur++];
 
 
-            foreach (var key in EntWhereUnits.Keys) EntWhereUnits.HaveUnit<HaveUnitC>(key).Have = (bool)objects[_idx_cur++];
+            foreach (var key in WhereUnitsE.Keys) WhereUnitsE.HaveUnit(key).Have = (bool)objects[_idx_cur++];
             foreach (var key in WhereBuildsE.Keys) WhereBuildsE.HaveBuild<HaveBuildingC>(key).Have = (bool)objects[_idx_cur++];
-            foreach (var key in EntWhereEnviroments.Keys) EntWhereEnviroments.HaveEnv<HaveEnvC>(key).Have = (bool)objects[_idx_cur++];
+            foreach (var key in EntWhereEnviroments.Keys) EntWhereEnviroments.HaveEnv(key).Have = (bool)objects[_idx_cur++];
 
 
             //foreach (var item in PickUpgC.HaveUpgrades) PickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
@@ -460,7 +460,7 @@ namespace Game.Game
             #region Other
 
             WhoseMoveE.WhoseMove<PlayerTC>().Player = (PlayerTypes)objects[_idx_cur++];
-            EntityPool.Winner<PlayerTC>().Player = (PlayerTypes)objects[_idx_cur++];
+            EntityPool.Winner.Player = (PlayerTypes)objects[_idx_cur++];
             EntityPool.GameInfo<IsStartedGameC>().IsStartedGame = (bool)objects[_idx_cur++];
             EntityPool.Ready<IsReadyC>(WhoseMoveE.CurPlayerI).IsReady = (bool)objects[_idx_cur++];
 

@@ -12,10 +12,10 @@ namespace Game.Game
             {
                 var idx_cur = CurrentIdxE.IdxC.Idx;
 
-                ref var unitC_cur = ref Unit<UnitTC>(idx_cur);
-                ref var levUnitC_cur = ref Unit<LevelTC>(idx_cur);
+                ref var unitC_cur = ref Unit(idx_cur);
+                ref var levUnitC_cur = ref CellUnitElseEs.Level(idx_cur);
 
-                ref var corner_cur = ref Unit<IsCornedArcherC>(idx_cur);
+                ref var corner_cur = ref CellUnitElseEs.Corned(idx_cur);
 
                 ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_cur);
                 ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(PreVisIdx<IdxC>().Idx);
@@ -23,7 +23,7 @@ namespace Game.Game
 
                 if (unitC_cur.Have)
                 {
-                    if (CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
+                    if (CellUnitVisibleEs.Visible(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
                     {
                         mainUnit_pre.Enable();
                     }
@@ -46,15 +46,15 @@ namespace Game.Game
                         throw new Exception();
 
                     case UnitTypes.King:
-                        mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.King).Sprite;
+                        mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.King).Sprite;
                         break;
 
                     case UnitTypes.Pawn:
                         switch (SelectedUnitE.SelUnit<LevelTC>().Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.PawnWood).Sprite; break;
-                            case LevelTypes.Second: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.PawnIron).Sprite; break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.PawnWood).Sprite; break;
+                            case LevelTypes.Second: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.PawnIron).Sprite; break;
                             default: throw new Exception();
                         }
                         break;
@@ -64,14 +64,14 @@ namespace Game.Game
                             case LevelTypes.None: throw new Exception();
                             case LevelTypes.First:
                                 {
-                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.RookBow).Sprite;
-                                    else mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.BishopBow).Sprite;
+                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.RookBow).Sprite;
+                                    else mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.BishopBow).Sprite;
                                 }
                                 break;
                             case LevelTypes.Second:
                                 {
-                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.RookCrossbow).Sprite;
-                                    else mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.BishopCrossbow).Sprite;
+                                    if (corner_cur.IsCornered) mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.RookCrossbow).Sprite;
+                                    else mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.BishopCrossbow).Sprite;
                                 }
                                 break;
                             default: throw new Exception();
@@ -81,7 +81,7 @@ namespace Game.Game
                         switch (SelectedUnitE.SelUnit<LevelTC>().Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Scout).Sprite; break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Scout).Sprite; break;
                             case LevelTypes.Second: throw new Exception();
                             default: throw new Exception();
                         }
@@ -90,7 +90,7 @@ namespace Game.Game
                         switch (levUnitC_cur.Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.SpriteVC(SpriteTypes.Elfemale).Sprite; break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Elfemale).Sprite; break;
                             case LevelTypes.Second: throw new Exception();
                             default: throw new Exception();
                         }

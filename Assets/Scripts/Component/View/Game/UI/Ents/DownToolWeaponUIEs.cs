@@ -30,7 +30,7 @@ namespace Game.Game
                 _ents.Add(tw, gameW.NewEntity()
                     .Add(new ButtonUIC(button))
                     .Add(new ImageUIC(button.GetComponent<Image>()))
-                    .Add(new TextMPUGUIC(zone.Find("Amount_TextMP").GetComponent<TextMeshProUGUI>())));
+                    .Add(new TextUIC(zone.Find("Amount_TextMP").GetComponent<TextMeshProUGUI>())));
 
                 for (var level = LevelTypes.First; level < LevelTypes.End; level++)
                 {

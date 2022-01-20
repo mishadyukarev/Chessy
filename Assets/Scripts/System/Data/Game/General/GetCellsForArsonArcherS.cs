@@ -12,15 +12,15 @@ namespace Game.Game
             {
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
-                ref var unit_from = ref Unit<UnitTC>(idx_0);
-                ref var ownUnit_from = ref Unit<PlayerTC>(idx_0);
+                ref var unit_from = ref Unit(idx_0);
+                ref var ownUnit_from = ref CellUnitElseEs.Owner(idx_0);
                 ref var stun_from = ref CellUnitStunEs.StepsForExitStun(idx_0);
 
                 if (!stun_from.Have)
                 {
                     if (unit_from.Is(UnitTypes.Archer))
                     {
-                        foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
+                        foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
                         {
                             ref var fire_1 = ref Fire<HaveEffectC>(idx_1);
 

@@ -7,7 +7,6 @@
 
         public LevelTC(in LevelTypes level) => Level = level;
 
-        public void Set(LevelTC levelC) => Level = levelC.Level;
         public void Reset() => Level = LevelTypes.None;
     }
 }

@@ -14,15 +14,15 @@ namespace Game.Game
             {
                 if (CellUnitStepEs.HaveMaxSteps(idx_0))
                 {
-                    InventorUnitsE.Units<AmountC>(UnitTypes.Scout, LevelTypes.First, Unit<PlayerTC>(idx_0).Player).Amount -= 1;
+                    InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, CellUnitElseEs.Owner(idx_0).Player).Amount -= 1;
                     SetScout(idx_0);
 
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }
 
-                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+            else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct UniqueAbilityC : IUnitUniqueButtonCellE
+    public struct UniqueAbilityC
     {
         public UniqueAbilityTypes Ability;
 

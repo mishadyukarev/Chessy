@@ -15,9 +15,9 @@ namespace Game.Game
             {
                 CellUnitStepEs.TakeStepsForDoing(idx_from, idx_to);
 
-                CellUnitEs.Shift(idx_from, idx_to);
+                CellUnitEs.Shift(idx_from, idx_to, true);
 
-                EntityPool.Rpc<RpcC>().SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
+                EntityPool.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }
         }
     }

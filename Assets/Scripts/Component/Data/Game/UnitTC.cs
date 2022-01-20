@@ -19,6 +19,7 @@ namespace Game.Game
                     case UnitTypes.Archer: return false;
                     case UnitTypes.Scout: return true;
                     case UnitTypes.Elfemale: return false;
+                    case UnitTypes.Camel: return false;
                     default: throw new Exception();
                 }
             }
@@ -35,18 +36,34 @@ namespace Game.Game
             {
                 switch (Unit)
                 {
-                    case UnitTypes.None: throw new Exception();
                     case UnitTypes.King: return false;
                     case UnitTypes.Pawn: return false;
                     case UnitTypes.Archer: return false;
                     case UnitTypes.Scout: return false;
                     case UnitTypes.Elfemale: return true;
+                    case UnitTypes.Camel: return false;
+                    default: throw new Exception();
+                }
+            }
+        }
+        public bool IsAnimal
+        {
+            get
+            {
+                switch (Unit)
+                {
+                    case UnitTypes.King: return false;
+                    case UnitTypes.Pawn: return false;
+                    case UnitTypes.Archer: return false;
+                    case UnitTypes.Scout: return false;
+                    case UnitTypes.Elfemale: return false;
+                    case UnitTypes.Camel: return true;
                     default: throw new Exception();
                 }
             }
         }
 
-        internal UnitTC(in UnitTypes unit) => Unit = unit;
+        public UnitTC(in UnitTypes unit) => Unit = unit;
 
         public void Reset() => Unit = UnitTypes.None;
     }

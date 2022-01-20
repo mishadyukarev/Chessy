@@ -21,7 +21,7 @@ namespace Game.Game
                 .Add(new ButtonUIC(button));
 
             _cooldown = gameW.NewEntity()
-                .Add(new TextMPUGUIC(button.transform.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
+                .Add(new TextUIC(button.transform.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
         }
     }
 }

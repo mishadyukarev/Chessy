@@ -4,7 +4,7 @@ using UnityEngine;
 using static Game.Game.EntityVPool;
 using static Game.Game.EconomyUpUIE;
 using static Game.Game.EntityCenterUIPool;
-using static Game.Game.CenterHeroUIE;
+using static Game.Game.CenterHerosUIE;
 using static Game.Game.CenterFriendUIE;
 
 using static Game.Game.CenterUpgradeUIE;
@@ -36,11 +36,12 @@ namespace Game.Game
             Water<ButtonUIC>().AddListener(UpgradeWater);
 
 
-            Unit<ButtonUIC>(UnitTypes.Elfemale).AddListener(Elf);
-            Unit<ButtonUIC>(UnitTypes.None).AddListener(OpenShop);
+            ButtonC(UnitTypes.Elfemale).AddListener(delegate { GetHero(UnitTypes.Elfemale); });
+            ButtonC(UnitTypes.Snowy).AddListener(delegate { GetHero(UnitTypes.Snowy); });
+            ButtonC(UnitTypes.None).AddListener(OpenShop);
         }
 
-        void Ready() => EntityPool.Rpc<RpcC>().ReadyToMaster();
+        void Ready() => EntityPool.Rpc.ReadyToMaster();
         void FriendReady()
         {
             EntityPool.FriendZone<IsActiveC>().IsActive = false;
@@ -52,7 +53,7 @@ namespace Game.Game
 
             if (WhoseMoveE.IsMyMove)
             {
-                if (InventorUnitsE.Units<AmountC>(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
+                if (InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
                 {
                     EntityPool.ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
 
@@ -81,9 +82,9 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc<RpcC>().PickUpgUnitToMas(unit);
+                EntityPool.Rpc.PickUpgUnitToMas(unit);
 
-                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent(true);
+                Parent.SetActive(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -92,9 +93,9 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc<RpcC>().PickUpgBuildToMas(build);
+                EntityPool.Rpc.PickUpgBuildToMas(build);
 
-                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent(true);
+                Parent.SetActive(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -103,18 +104,18 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc<RpcC>().UpgWater();
+                EntityPool.Rpc.UpgWater();
 
-                Unit<ButtonUIC>(UnitTypes.Elfemale).SetActiveParent(true);
+                Parent.SetActive(true);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        private void Elf()
+        void GetHero(in UnitTypes unit)
         {
             if (WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc<RpcC>().GetHero(UnitTypes.Elfemale);
+                EntityPool.Rpc.GetHero(unit);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }

@@ -9,7 +9,7 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
 
             if (PhotonNetwork.OfflineMode)
@@ -17,7 +17,7 @@ namespace Game.Game
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
                     SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                    EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
+                    EntityPool.Rpc.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
@@ -28,7 +28,7 @@ namespace Game.Game
                     if (nextPlayer == PlayerTypes.First)
                     {
                         SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(sender);
+                        EntityPool.Rpc.ActiveMotionZoneToGen(sender);
                     }
 
                     WhoseMoveE.WhoseMove<PlayerTC>().Player = nextPlayer;
@@ -53,8 +53,8 @@ namespace Game.Game
                 //    //    {
                 //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
 
-                //    //        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                //    //        EntityPool.Rpc<RpcC>().ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                //    //        EntityPool.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                //    //        EntityPool.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
                 //    //    }
 
                 //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

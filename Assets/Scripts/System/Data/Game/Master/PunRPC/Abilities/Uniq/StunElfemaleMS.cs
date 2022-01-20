@@ -14,16 +14,16 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = WhoseMoveE.WhoseMove<PlayerTC>().Player;
 
-            ref var ownUnit_from = ref Unit<PlayerTC>(idx_from);
+            ref var ownUnit_from = ref CellUnitElseEs.Owner(idx_from);
 
-            ref var unit_to = ref Unit<UnitTC>(idx_to);
-            ref var ownUnit_to = ref Unit<PlayerTC>(idx_to);
+            ref var unit_to = ref Unit(idx_to);
+            ref var ownUnit_to = ref CellUnitElseEs.Owner(idx_to);
             ref var eff_to = ref CellUnitStunEs.StepsForExitStun(idx_to);
 
 
             if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(uniq_cur, idx_from).HaveCooldown)
             {
-                if (CellUnitVisibleEs.Visible<IsVisibleC>(playerSend, idx_to).IsVisible)
+                if (CellUnitVisibleEs.Visible(playerSend, idx_to).IsVisible)
                 {
                     if (unit_to.Have)
                     {
@@ -40,19 +40,19 @@ namespace Game.Game
 
                                         CellUnitStepEs.Take(idx_from, uniq_cur);
 
-                                        EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, uniq_cur);
+                                        EntityPool.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
                                     }
                                 }
 
-                                else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
-                            else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                            else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                         }
                     }
                 }
             }
 
-            else EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.Mistake);
+            else EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

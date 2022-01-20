@@ -13,9 +13,9 @@ namespace Game.Game
 
 
 
-                if (InventorResourcesE.Resource<AmountC>(res, player).IsMinus)
+                if (InventorResourcesE.Resource(res, player).IsMinus)
                 {
-                    InventorResourcesE.Resource<AmountC>(res, player).Reset();
+                    InventorResourcesE.Resource(res, player).Reset();
 
                     for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
                     {
@@ -23,7 +23,7 @@ namespace Game.Game
                         {
                             foreach (var idx_0 in Idxs)
                             {
-                                if (EntWhereUnits.HaveUnit<HaveUnitC>(unit, levUnit, player, idx_0).Have)
+                                if (WhereUnitsE.HaveUnit(unit, levUnit, player, idx_0).Have)
                                 {
                                     ref var build_0 = ref Build<BuildingTC>(idx_0);
 

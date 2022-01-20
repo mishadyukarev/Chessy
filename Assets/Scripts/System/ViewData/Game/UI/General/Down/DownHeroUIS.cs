@@ -1,4 +1,4 @@
-﻿using static Game.Game.UIEntDownHero;
+﻿using static Game.Game.DownHeroUIE;
 
 namespace Game.Game
 {
@@ -6,20 +6,20 @@ namespace Game.Game
     {
         public void Run()
         {
-            var isActive = InventorUnitsE.Units<AmountC>(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have;
+            var isActive = InventorUnitsE.Units(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have;
             var cooldown = EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, WhoseMoveE.CurPlayerI).Cooldown;
 
 
-            Scout<ButtonUIC>().SetActive(isActive);
+            Parent.SetActive(isActive);
 
             if (isActive && cooldown > 0)
             {
-                Cooldown<TextMPUGUIC>().SetActiveParent(true);
-                Cooldown<TextMPUGUIC>().Text = cooldown.ToString();
+                Cooldown.SetActiveParent(true);
+                Cooldown.Text = cooldown.ToString();
             }
             else
             {
-                Cooldown<TextMPUGUIC>().SetActiveParent(false);
+                Cooldown.SetActiveParent(false);
             }
         }
     }

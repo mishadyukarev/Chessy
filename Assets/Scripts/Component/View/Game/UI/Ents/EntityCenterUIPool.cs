@@ -29,11 +29,11 @@ namespace Game.Game
 
             _ents[CenterEntTypes.EndGame] = curGameW.NewEntity()
                 .Add(new EndGameUIEC())
-                .Add(new TextMPUGUIC(centerZone.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>()));
+                .Add(new TextUIC(centerZone.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>()));
 
             _ents[CenterEntTypes.Motion] = curGameW.NewEntity()
                 .Add(new MotionsUIEC())
-                .Add(new TextMPUGUIC(centerZone.Find("MotionZone").Find("MotionText").GetComponent<TextMeshProUGUI>()));
+                .Add(new TextUIC(centerZone.Find("MotionZone").Find("MotionText").GetComponent<TextMeshProUGUI>()));
 
 
             var readyZone = centerZone.Find("ReadyZone");

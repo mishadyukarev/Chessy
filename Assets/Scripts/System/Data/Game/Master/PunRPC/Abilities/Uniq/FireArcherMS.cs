@@ -22,7 +22,7 @@ namespace Game.Game
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
+                    EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
 
                     CellUnitStepEs.Take(idx_from, uniq_cur);
                     fire_to.Enable();
@@ -31,7 +31,7 @@ namespace Game.Game
 
             else
             {
-                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

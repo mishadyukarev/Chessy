@@ -15,7 +15,7 @@
             BuildingUpgradesEs.HaveUpgrade<HaveUpgradeC>(build, whoseMove, UpgradeTypes.PickCenter).Have = true;
             AvailableCenterUpgradeEs.HaveBuildUpgrade<HaveUpgradeC>(build, whoseMove).Have = false;
 
-            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

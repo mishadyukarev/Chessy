@@ -6,12 +6,12 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (EntityPool.Winner<PlayerTC>().Player == default)
+            if (EntityPool.Winner.Player == default)
             {
                 EndGame<EndGameUIEC>().SetActiveZone(false);
             }
 
-            else if (EntityPool.Winner<PlayerTC>().Player != WhoseMoveE.CurPlayerI)
+            else if (EntityPool.Winner.Player != WhoseMoveE.CurPlayerI)
             {
                 EndGame<EndGameUIEC>().SetText(true);
                 EndGame<EndGameUIEC>().SetActiveZone(true);

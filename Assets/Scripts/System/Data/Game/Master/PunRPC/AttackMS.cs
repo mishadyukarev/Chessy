@@ -7,18 +7,18 @@ namespace Game.Game
     {
         public void Run()
         {
-            EntityMPool.Attack<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            EntityMPool.Attack.Get(out var idx_from, out var idx_to);
 
-            ref var unit_from = ref Unit<UnitTC>(idx_from);
-            ref var ownerUnit_from = ref Unit<PlayerTC>(idx_from);
-            ref var hpUnit_from = ref CellUnitHpEs.Hp<AmountC>(idx_from);
-            ref var condUnit_from = ref Unit<ConditionUnitC>(idx_from);
+            ref var unit_from = ref Unit(idx_from);
+            ref var ownerUnit_from = ref CellUnitElseEs.Owner(idx_from);
+            ref var hpUnit_from = ref CellUnitHpEs.Hp(idx_from);
+            ref var condUnit_from = ref CellUnitElseEs.Condition(idx_from);
 
             ref var tw_from = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_from);
 
 
-            ref var unit_to = ref Unit<UnitTC>(idx_to);
-            ref var hpUnit_to = ref CellUnitHpEs.Hp<AmountC>(idx_to);
+            ref var unit_to = ref Unit(idx_to);
+            ref var hpUnit_to = ref CellUnitHpEs.Hp(idx_to);
 
             ref var tw_to = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_to);
 
@@ -29,7 +29,7 @@ namespace Game.Game
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))
             {
-                CellUnitStepEs.Steps<AmountC>(idx_from).Reset();
+                CellUnitStepEs.Steps(idx_from).Reset();
                 condUnit_from.Reset();
 
 
@@ -40,12 +40,33 @@ namespace Game.Game
                 powerDam_from += DamageAttack(idx_from, attack);
 
                 if (unit_from.IsMelee)
-                    EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-                else EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
-
-
+                    EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                else EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
                 powerDam_to += DamageOnCell(idx_to);
+
+
+                var dirAttack = CellSpaceSupport.GetDirect(idx_from, idx_to);
+
+
+                if (SunSidesE.SunSideTC.IsAcitveSun)
+                {
+                    var isSunnedUnit = true;
+
+                    foreach (var dir in SunSidesE.SunSideTC.RaysSun)
+                    {
+                        if (dirAttack == dir) isSunnedUnit = false;
+                    }
+
+                    if (isSunnedUnit)
+                    {
+                        powerDam_from *= 0.9f;
+                    }
+                }
+                
+
+
+
 
 
                 float min_limit = 0;
@@ -122,6 +143,11 @@ namespace Game.Game
 
                 if (!hpUnit_to.Have)
                 {
+                    if (CellUnitEs.Unit(idx_to).IsAnimal)
+                    {
+                        InventorResourcesE.Resource(ResourceTypes.Food, ownerUnit_from.Player).Add(EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
+                    }
+
                     CellUnitEs.Kill(idx_to);
 
 
@@ -134,7 +160,7 @@ namespace Game.Game
                         else
                         {
 
-                            CellUnitEs.Shift(idx_from, idx_to);
+                            CellUnitEs.Shift(idx_from, idx_to, true);
                         }
                     }
                 }

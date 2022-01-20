@@ -37,12 +37,12 @@ namespace Game.Game
             var button = takeUnit.Find(UnitTypes.Pawn.ToString()).GetComponent<Button>();
             _taker[UnitTypes.Pawn] =  gameW.NewEntity()
                 .Add(new ButtonUIC(button))
-                .Add(new TextMPUGUIC(button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
+                .Add(new TextUIC(button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
 
             button = takeUnit.Find(UnitTypes.Archer.ToString()).GetComponent<Button>();
             _taker[UnitTypes.Archer] = gameW.NewEntity()
                 .Add(new ButtonUIC(button))
-                .Add(new TextMPUGUIC(button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
+                .Add(new TextUIC(button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
         }
     }
 }

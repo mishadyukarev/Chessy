@@ -29,7 +29,7 @@ namespace Game.Game
 
                 _buttons.Add(uniqBut, gameW.NewEntity()
                     .Add(new ButtonUIC(button))
-                    .Add(new TextMPUGUIC(button.transform.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>())));
+                    .Add(new TextUIC(button.transform.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>())));
 
                 for (var uniq = UniqueAbilityTypes.First; uniq < UniqueAbilityTypes.End; uniq++)
                 {

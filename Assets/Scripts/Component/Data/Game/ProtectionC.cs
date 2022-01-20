@@ -13,7 +13,6 @@ namespace Game.Game
 
             Protection -= taking;
         }
-        public void Set(ProtectionC shieldC) => Protection = shieldC.Protection;
         public void Reset() => Protection = 0;
     }
 }

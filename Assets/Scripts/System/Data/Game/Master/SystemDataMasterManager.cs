@@ -29,7 +29,8 @@ namespace Game.Game
                 + new UpdateHungryMS().Run
                 + new ThirstyUpdMS().Run
 
-                + new UpdateAnimalsMS().Run;
+                + new UpdateCamelShiftMS().Run
+                + new UpdateSpawnCamelMS().Run;
             _systems.Add(SystemDataMasterTypes.UpdateMove, action);
 
             action = new TruceMS().Run;

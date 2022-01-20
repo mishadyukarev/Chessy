@@ -11,16 +11,16 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
 
 
                 if (CellUnitEs.CanExtract(idx_0, out var resume, out var env, out var res))
                 {
-                    InventorResourcesE.Resource<AmountC>(res, ownUnit_0.Player).Amount += resume;
+                    InventorResourcesE.Resource(res, ownUnit_0.Player).Amount += resume;
                     Resources(env, idx_0).Amount -= resume;
 
                     if (env == EnvironmentTypes.AdultForest)

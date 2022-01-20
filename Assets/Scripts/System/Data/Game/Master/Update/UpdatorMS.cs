@@ -18,18 +18,18 @@ namespace Game.Game
                 EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, player).Cooldown -= 1;
                 EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, player).Cooldown -= 1;
 
-                InventorResourcesE.Resource<AmountC>(ResourceTypes.Food, player).Add(EconomyValues.ADDING_FOOD_AFTER_MOVE);
+                InventorResourcesE.Resource(ResourceTypes.Food, player).Add(EconomyValues.ADDING_FOOD_AFTER_MOVE);
             }
 
             foreach (byte idx_0 in Idxs)
             {
                 ref var cell_0 = ref Cell<InstanceIDC>(idx_0);
 
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
-                ref var condUnit_0 = ref Unit<ConditionUnitC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
+                ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
@@ -40,11 +40,11 @@ namespace Game.Game
                 CellUnitStunEs.StepsForExitStun(idx_0).Take();
 
 
-                if (unit_0.Have)
+                if (unit_0.Have && !unit_0.IsAnimal)
                 {
-                    CellUnitStepsInConditionEs.Steps<AmountC>(condUnit_0.Condition, idx_0).Add();
+                    CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0).Add();
 
-                    InventorResourcesE.Resource<AmountC>(ResourceTypes.Food, ownUnit_0.Player).Take(EconomyValues.CostFood(unit_0.Unit));
+                    InventorResourcesE.Resource(ResourceTypes.Food, ownUnit_0.Player).Take(EconomyValues.CostFood(unit_0.Unit));
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -113,13 +113,13 @@ namespace Game.Game
             var amountAdultForest = 0;
             foreach (var idx in Idxs)
             {
-                if (EntWhereEnviroments.HaveEnv<HaveEnvC>(EnvironmentTypes.AdultForest, idx).Have)
+                if (EntWhereEnviroments.HaveEnv(EnvironmentTypes.AdultForest, idx).Have)
                     amountAdultForest += 1;
             }
 
             if (amountAdultForest <= 8)
             {
-                EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Truce);
             }
 
@@ -133,7 +133,7 @@ namespace Game.Game
                     {
                         if (!build_0.Is(BuildingTypes.Mine))
                         {
-                            if (Resources(EnvironmentTypes.Hill, idx_0).Amount != EnvironmentValues.MaxResources(EnvironmentTypes.Hill))
+                            if (Resources(EnvironmentTypes.Hill, idx_0).Amount != CellEnvironmentValues.MaxResources(EnvironmentTypes.Hill))
                             {
                                 Resources(EnvironmentTypes.Hill, idx_0).Amount += 1;
                             }
@@ -143,6 +143,10 @@ namespace Game.Game
             }
 
             EntityPool.GameInfo<AmountMotionsC>().Amount += 1;
+
+
+
+            SunSidesE.SunSideTC.ToggleNext();
         }
     }
 }

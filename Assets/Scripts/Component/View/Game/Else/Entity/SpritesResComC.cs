@@ -10,12 +10,12 @@ namespace Game.Game
         static Dictionary<SpriteTypes, Entity> _gameSprites;
         static Dictionary<UnitTypes, Entity> _units;
 
-        public static ref SpriteVC SpriteVC(in SpriteTypes sprite)
+        public static ref SpriteVC Sprite(in SpriteTypes sprite)
         {
             if (!_gameSprites.ContainsKey(sprite)) throw new Exception();
             return ref _gameSprites[sprite].Get<SpriteVC>();
         }
-        public static ref SpriteVC UnitSpriteVC(in UnitTypes unit)
+        public static ref SpriteVC Unit(in UnitTypes unit)
         {
             if (!_units.ContainsKey(unit)) throw new Exception();
             return ref _units[unit].Get<SpriteVC>();
@@ -67,11 +67,11 @@ namespace Game.Game
             _gameSprites.Add(SpriteTypes.ShieldIron, gameW.NewEntity()
                 .Add(new SpriteVC(Resources.Load<Sprite>("ShieldIron_Sprite"))));
 
-            //for (var unit = UnitTypes.Camel; unit <= UnitTypes.End; unit++)
-            //{
-            //    _units.Add(unit, gameW.NewEntity()
-            //        .Add(new SpriteVC(Resources.Load<Sprite>(unit +"_Sprite"))));
-            //}
+            for (var unit = UnitTypes.Camel; unit <= UnitTypes.Camel; unit++)
+            {
+                _units.Add(unit, gameW.NewEntity()
+                    .Add(new SpriteVC(Resources.Load<Sprite>(unit + "_Sprite"))));
+            }
 
 
 

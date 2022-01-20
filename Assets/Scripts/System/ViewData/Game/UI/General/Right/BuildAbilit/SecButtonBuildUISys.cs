@@ -11,11 +11,11 @@ namespace Game.Game
 
             if (SelectedIdxE.IsSelCell)
             {
-                ref var selUnitDatCom = ref Unit<UnitTC>(SelectedIdxE.IdxC.Idx);
+                ref var selUnitDatCom = ref Unit(SelectedIdxE.IdxC.Idx);
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var sellOnUnitCom = ref Unit<PlayerTC>(SelectedIdxE.IdxC.Idx);
+                    ref var sellOnUnitCom = ref CellUnitElseEs.Owner(SelectedIdxE.IdxC.Idx);
 
                     if (sellOnUnitCom.Is(WhoseMoveE.CurPlayerI))
                     {

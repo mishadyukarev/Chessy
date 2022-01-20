@@ -28,9 +28,9 @@ namespace Game.Game
 
             _ents[LeftEnvEntType.Info] = gameW.NewEntity().Add(new ButtonUIC(envZone.Find("EnvironmentInfoButton").GetComponent<Button>()));
 
-            _envs[ResourceTypes.Food] = gameW.NewEntity().Add(new TextMPUGUIC(envZone.Find("FertilizerResources_TextMP").GetComponent<TextMeshProUGUI>()));
-            _envs[ResourceTypes.Wood] = gameW.NewEntity().Add(new TextMPUGUIC(envZone.Find("ForestResources_TextMP").GetComponent<TextMeshProUGUI>()));
-            _envs[ResourceTypes.Ore] = gameW.NewEntity().Add(new TextMPUGUIC(envZone.Find("OreResources_TextMP").GetComponent<TextMeshProUGUI>()));
+            _envs[ResourceTypes.Food] = gameW.NewEntity().Add(new TextUIC(envZone.Find("FertilizerResources_TextMP").GetComponent<TextMeshProUGUI>()));
+            _envs[ResourceTypes.Wood] = gameW.NewEntity().Add(new TextUIC(envZone.Find("ForestResources_TextMP").GetComponent<TextMeshProUGUI>()));
+            _envs[ResourceTypes.Ore] = gameW.NewEntity().Add(new TextUIC(envZone.Find("OreResources_TextMP").GetComponent<TextMeshProUGUI>()));
         }
 
         enum LeftEnvEntType

@@ -10,10 +10,10 @@ namespace Game.Game
         {
             var selIdx = SelectedIdxE.IdxC.Idx;
 
-            ref var unit_sel = ref Unit<UnitTC>(selIdx);
+            ref var unit_sel = ref Unit(selIdx);
 
-            ref var hpUnit_sel = ref CellUnitHpEs.Hp<AmountC>(selIdx);
-            ref var stepUnit_sel = ref CellUnitStepEs.Steps<AmountC>(selIdx);
+            ref var hpUnit_sel = ref CellUnitHpEs.Hp(selIdx);
+            ref var stepUnit_sel = ref CellUnitStepEs.Steps(selIdx);
             ref var waterUnit_sel = ref CellUnitWaterEs.Water<AmountC>(selIdx);
 
 
@@ -25,10 +25,10 @@ namespace Game.Game
                 Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(true);
 
 
-                Stat<TextMPUGUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Amount.ToString();
-                Stat<TextMPUGUIC>(UnitStatTypes.Damage).Text = DamageOnCell(selIdx).ToString();
-                Stat<TextMPUGUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Amount.ToString();
-                Stat<TextMPUGUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Amount.ToString();
+                Stat<TextUIC>(UnitStatTypes.Hp).Text = hpUnit_sel.Amount.ToString();
+                Stat<TextUIC>(UnitStatTypes.Damage).Text = DamageOnCell(selIdx).ToString();
+                Stat<TextUIC>(UnitStatTypes.Steps).Text = stepUnit_sel.Amount.ToString();
+                Stat<TextUIC>(UnitStatTypes.Water).Text = waterUnit_sel.Amount.ToString();
 
 
 

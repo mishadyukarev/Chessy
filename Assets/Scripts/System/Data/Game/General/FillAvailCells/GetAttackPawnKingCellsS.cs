@@ -16,10 +16,10 @@ namespace Game.Game
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var level_0 = ref Unit<LevelTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
-                ref var step_0 = ref CellUnitStepEs.Steps<AmountC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var level_0 = ref CellUnitElseEs.Level(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var step_0 = ref CellUnitStepEs.Steps(idx_0);
                 ref var stunUnit_0 = ref CellUnitStunEs.StepsForExitStun(idx_0);
 
                 if (!stunUnit_0.Have)
@@ -28,15 +28,15 @@ namespace Game.Game
                     {
                         DirectTypes dir_cur = default;
 
-                        CellSpaceC.TryGetXyAround(Cell<XyC>(idx_0).Xy, out var dirs);
+                        CellSpaceSupport.TryGetXyAround(Cell<XyC>(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             dir_cur += 1;
                             var idx_1 = IdxCell(item_1.Value);
 
-                            ref var unit_1 = ref Unit<UnitTC>(idx_1);
-                            ref var own_1 = ref Unit<PlayerTC>(idx_1);
+                            ref var unit_1 = ref Unit(idx_1);
+                            ref var own_1 = ref CellUnitElseEs.Owner(idx_1);
 
                             if (!Resources(EnvironmentTypes.Mountain, idx_1).Have)
                             {

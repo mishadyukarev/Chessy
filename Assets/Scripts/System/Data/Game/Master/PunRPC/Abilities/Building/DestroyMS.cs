@@ -13,18 +13,18 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var idx_0 = EntityMPool.DestroyIdxC.Idx;
 
-            ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
+            ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
 
             ref var buildC_0 = ref Build<BuildingTC>(idx_0);
 
 
             if (CellUnitStepEs.HaveMin(idx_0))
             {
-                EntityPool.Rpc<RpcC>().SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 if (buildC_0.Is(BuildingTypes.City))
                 {
-                    EntityPool.Winner<PlayerTC>().Player = ownUnit_0.Player;
+                    EntityPool.Winner.Player = ownUnit_0.Player;
                 }
                 CellUnitStepEs.TakeMin(idx_0);
 
@@ -37,7 +37,7 @@ namespace Game.Game
             }
             else
             {
-                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

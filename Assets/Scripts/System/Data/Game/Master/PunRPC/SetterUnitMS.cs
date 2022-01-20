@@ -17,15 +17,15 @@ namespace Game.Game
 
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
-            ref var unit_0 = ref Unit<UnitTC>(idx_0);
-            ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
-            ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
+            ref var unit_0 = ref Unit(idx_0);
+            ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
+            ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
 
-            ref var hp_0 = ref CellUnitHpEs.Hp<AmountC>(idx_0);
-            ref var step_0 = ref CellUnitStepEs.Steps<AmountC>(idx_0);
+            ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
+            ref var step_0 = ref CellUnitStepEs.Steps(idx_0);
             ref var water_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
 
-            ref var cond_0 = ref Unit<ConditionUnitC>(idx_0);
+            ref var cond_0 = ref CellUnitElseEs.Condition(idx_0);
 
             ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
 
@@ -37,14 +37,14 @@ namespace Game.Game
             {
                 var levUnit = LevelTypes.None;
 
-                if (InventorUnitsE.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Have)
+                if (InventorUnitsE.Units(unit, LevelTypes.Second, whoseMove).Have)
                 {
-                    InventorUnitsE.Units<AmountC>(unit, LevelTypes.Second, whoseMove).Amount -= 1;
+                    InventorUnitsE.Units(unit, LevelTypes.Second, whoseMove).Amount -= 1;
                     levUnit = LevelTypes.Second;
                 }
                 else
                 {
-                    InventorUnitsE.Units<AmountC>(unit, LevelTypes.First, whoseMove).Amount -= 1;
+                    InventorUnitsE.Units(unit, LevelTypes.First, whoseMove).Amount -= 1;
                     levUnit = LevelTypes.First;
                 }
                 SetNew((unit, levUnit, whoseMove, default, default), idx_0);
@@ -52,7 +52,7 @@ namespace Game.Game
 
                 //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
-                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

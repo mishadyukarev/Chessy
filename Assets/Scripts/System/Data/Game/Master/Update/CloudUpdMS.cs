@@ -10,19 +10,14 @@ namespace Game.Game
             var weather_0 = Cloud<HaveEffectC>(CenterCloudEnt.CenterCloud<IdxC>().Idx);
             var xy_0 = Cell<XyC>(CenterCloudEnt.CenterCloud<IdxC>().Idx).Xy;
 
-
-            var aroundList = CellSpaceC.GetXyAround(xy_0);
-
             weather_0.Have = false;
 
-            foreach (var xyArount in aroundList)
+            foreach (var idx_1 in CellSpaceSupport.GetIdxAround(CenterCloudEnt.CenterCloud<IdxC>().Idx))
             {
-                var idx_1 = IdxCell(xyArount);
-
                 Cloud<HaveEffectC>(idx_1).Have = false;
             }
 
-            var xy_next = CellSpaceC.GetXyCellByDirect(xy_0, CurrentDirectWindE.Direct<DirectTC>().Direct);
+            var xy_next = CellSpaceSupport.GetXyCellByDirect(xy_0, CurrentDirectWindE.Direct<DirectTC>().Direct);
 
             
 
@@ -44,11 +39,13 @@ namespace Game.Game
                 CurrentDirectWindE.Direct<DirectTC>().Direct = (DirectTypes)newDirInt;
             }
 
-            CellSpaceC.TryGetXyAround(xy_next, out var dirs);
+            CellSpaceSupport.TryGetXyAround(xy_next, out var dirs);
 
             foreach (var item in dirs)
             {
                 var idx_1 = IdxCell(item.Value);
+
+                CellTrailEs.ResetAll(idx_1);
 
                 Cloud<HaveEffectC>(idx_1).Have = true;
 

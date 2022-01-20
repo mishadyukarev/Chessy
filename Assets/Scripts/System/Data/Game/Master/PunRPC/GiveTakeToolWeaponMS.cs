@@ -17,10 +17,10 @@ namespace Game.Game
             {
                 var sender = InfoC.Sender(MGOTypes.Master);
 
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
 
-                ref var levUnit_0 = ref Unit<LevelTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
+                ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);
@@ -39,7 +39,7 @@ namespace Game.Game
 
                             CellUnitStepEs.TakeMin(idx_0);
 
-                            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
 
@@ -51,7 +51,7 @@ namespace Game.Game
 
                             CellUnitStepEs.TakeMin(idx_0);
 
-                            EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
                         else if (tWForGive == ToolWeaponTypes.Pick)
@@ -64,11 +64,11 @@ namespace Game.Game
 
                                 CellUnitStepEs.TakeMin(idx_0);
 
-                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -82,11 +82,11 @@ namespace Game.Game
 
                                 CellUnitStepEs.TakeMin(idx_0);
 
-                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -100,15 +100,15 @@ namespace Game.Game
 
                                 CellUnitStepEs.TakeMin(idx_0);
 
-                                EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.PickMelee);
+                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                EntityPool.Rpc<RpcC>().MistakeEconomyToGeneral(sender, needRes);
+                                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
                     }
-                    else EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

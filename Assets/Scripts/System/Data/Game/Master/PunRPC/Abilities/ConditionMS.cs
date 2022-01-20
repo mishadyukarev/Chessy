@@ -12,7 +12,7 @@ namespace Game.Game
             var cond = EntityMPool.ConditionUnit<ConditionUnitC>().Condition;
             var idx_0 = EntityMPool.ConditionUnit<IdxC>().Idx;
 
-            ref var cond_0 = ref Unit<ConditionUnitC>(idx_0);
+            ref var cond_0 = ref CellUnitElseEs.Condition(idx_0);
 
 
             switch (cond)
@@ -24,20 +24,20 @@ namespace Game.Game
                 case ConditionUnitTypes.Protected:
                     if (cond_0.Is(ConditionUnitTypes.Protected))
                     {
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
                     else if (CellUnitStepEs.HaveMin(idx_0))
                     {
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         CellUnitStepEs.TakeMin(idx_0);
                         cond_0.Condition = cond;
                     }
 
                     else
                     {
-                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 
@@ -45,20 +45,20 @@ namespace Game.Game
                 case ConditionUnitTypes.Relaxed:
                     if (cond_0.Is(ConditionUnitTypes.Relaxed))
                     {
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
                     else if (CellUnitStepEs.HaveMin(idx_0))
                     {
-                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Condition = cond;
                         CellUnitStepEs.TakeMin(idx_0);
                     }
 
                     else
                     {
-                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

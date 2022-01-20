@@ -9,7 +9,7 @@ namespace Game.Game
             var curPlayer = WhoseMoveE.CurPlayerI;
 
             var isActivatedZone = AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(curPlayer).Have
-                && !InventorUnitsE.Units<AmountC>(UnitTypes.King, LevelTypes.First, curPlayer).Have;
+                && !InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, curPlayer).Have;
 
             Water<ButtonUIC>().SetActiveParent(isActivatedZone);
 

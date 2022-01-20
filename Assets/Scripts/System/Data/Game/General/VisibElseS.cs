@@ -12,41 +12,65 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit<UnitTC>(idx_0);
-                ref var ownUnit_0 = ref Unit<PlayerTC>(idx_0);
+                ref var unit_0 = ref Unit(idx_0);
+                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
 
 
                 if (unit_0.Have)
                 {
-                    CellUnitVisibleEs.Visible<IsVisibleC>(ownUnit_0.Player, idx_0).IsVisible = true;
-
-
-                    if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
+                    if (unit_0.IsAnimal)
                     {
-                        var isVisibledNextPlayer = false;
+                        var isVisForFirst = true;
+                        var isVisForSecond = true;
 
-                        foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
+                        if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                         {
-                            ref var unit_1 = ref Unit<UnitTC>(idx_1);
-                            ref var ownUnit_1 = ref Unit<PlayerTC>(idx_1);
+                            isVisForFirst = false;
+                            isVisForSecond = false;
 
-                            if (unit_1.Have)
+                            foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
                             {
-                                if (!ownUnit_1.Is(ownUnit_0.Player))
+                                if (CellUnitEs.Unit(idx_1).Have)
                                 {
-                                    isVisibledNextPlayer = true;
-                                    break;
-                                }
-                            }
+                                    if (CellUnitElseEs.Owner(idx_1).Is(PlayerTypes.First)) isVisForFirst = true;
+                                    if (CellUnitElseEs.Owner(idx_1).Is(PlayerTypes.Second)) isVisForSecond = true;
+                                }    
+                            } 
                         }
 
-                        CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = isVisibledNextPlayer;
+                        CellUnitVisibleEs.Visible(PlayerTypes.First, idx_0).IsVisible = isVisForFirst;
+                        CellUnitVisibleEs.Visible(PlayerTypes.Second, idx_0).IsVisible = isVisForSecond;
                     }
                     else
                     {
-                        CellUnitVisibleEs.Visible<IsVisibleC>(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = true;
-                    }
+                        CellUnitVisibleEs.Visible(ownUnit_0.Player, idx_0).IsVisible = true;
 
+                        if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
+                        {
+                            var isVisibledNextPlayer = false;
+
+                            foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                            {
+                                ref var unit_1 = ref Unit(idx_1);
+                                ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);
+
+                                if (unit_1.Have)
+                                {
+                                    if (!ownUnit_1.Is(ownUnit_0.Player))
+                                    {
+                                        isVisibledNextPlayer = true;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            CellUnitVisibleEs.Visible(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = isVisibledNextPlayer;
+                        }
+                        else
+                        {
+                            CellUnitVisibleEs.Visible(WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisible = true;
+                        }
+                    }
                 }
 
 
@@ -66,10 +90,10 @@ namespace Game.Game
                     {
                         var isVisibledNextPlayer = false;
 
-                        foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
+                        foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
                         {
-                            ref var unit_1 = ref Unit<UnitTC>(idx_1);
-                            ref var ownUnit_1 = ref Unit<PlayerTC>(idx_1);
+                            ref var unit_1 = ref Unit(idx_1);
+                            ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);
 
                             if (unit_1.Have)
                             {
@@ -90,20 +114,26 @@ namespace Game.Game
                     CellTrailEs.IsVisible(PlayerTypes.First, idx_0).IsVisible = false;
                     CellTrailEs.IsVisible(PlayerTypes.Second, idx_0).IsVisible = false;
 
-                    if (unit_0.Have) CellTrailEs.IsVisible(ownUnit_0.Player, idx_0).IsVisible = true;
+                    //if (unit_0.Have)
+                    //{
+                    //if (!unit_0.IsAnimal)
+                    //{
+                    //    CellTrailEs.IsVisible(ownUnit_0.Player, idx_0).IsVisible = true;
+                    //}
 
 
-                    foreach (var idx_1 in CellSpaceC.IdxAround(idx_0))
+                    foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
                     {
-                        ref var unit_1 = ref Unit<UnitTC>(idx_1);
-                        ref var ownUnit_1 = ref Unit<PlayerTC>(idx_1);
+                        ref var unit_1 = ref Unit(idx_1);
+                        ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);
 
 
-                        if (unit_1.Have)
+                        if (unit_1.Have && !unit_1.IsAnimal)
                         {
                             CellTrailEs.IsVisible(ownUnit_1.Player, idx_0).IsVisible = true;
                         }
                     }
+                    //}
                 }
             }
         }

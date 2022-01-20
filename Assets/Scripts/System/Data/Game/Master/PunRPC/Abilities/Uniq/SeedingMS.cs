@@ -32,7 +32,7 @@ namespace Game.Game
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
-                            EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                         else
                         {
@@ -42,7 +42,7 @@ namespace Game.Game
 
                                     if (!Resources(EnvironmentTypes.YoungForest, idx_0).Have)
                                     {
-                                        EntityPool.Rpc<RpcC>().SoundToGeneral(sender, uniq_cur);
+                                        EntityPool.Rpc.SoundToGeneral(sender, uniq_cur);
 
                                         SetNew(EnvironmentTypes.YoungForest, idx_0);
 
@@ -50,16 +50,16 @@ namespace Game.Game
                                     }
                                     else
                                     {
-                                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                     }
                                 else
                                 {
-                                    EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                 }
                             }
                             else
                             {
-                                EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                             }
 
                         }
@@ -67,7 +67,7 @@ namespace Game.Game
 
                     else
                     {
-                        EntityPool.Rpc<RpcC>().SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

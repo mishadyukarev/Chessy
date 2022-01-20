@@ -6,7 +6,5 @@
 
         public void Disable() => Have = false;
         public void Enable() => Have = true;
-
-        public void Sync(in bool have) => Have = have;
     }
 }

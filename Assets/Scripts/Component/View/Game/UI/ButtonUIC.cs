@@ -27,6 +27,5 @@ namespace Game.Game
         public void AddListener(UnityAction action) => _button.onClick.AddListener(action);
         public void SetActive(in bool needActive) => _button.gameObject.SetActive(needActive);
         public void SetActiveParent(in bool needActive) => _button.transform.parent.gameObject.SetActive(needActive);
-        public Transform Find(in string name) => _button.transform.Find(name);
     }
 }
