@@ -111,7 +111,7 @@ namespace Game.Game
                                 switch (levelUnit_0.Level)
                                 {
                                     case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Scout).Sprite; break;
+                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Scout).Sprite; break;
                                     case LevelTypes.Second: throw new Exception();
                                     default: throw new Exception();
                                 }
@@ -120,13 +120,22 @@ namespace Game.Game
                                 switch (levelUnit_0.Level)
                                 {
                                     case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Elfemale).Sprite; break;
+                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Elfemale).Sprite; break;
+                                    case LevelTypes.Second: throw new Exception();
+                                    default: throw new Exception();
+                                }
+                                break;
+                            case UnitTypes.Snowy:
+                                switch (levelUnit_0.Level)
+                                {
+                                    case LevelTypes.None: throw new Exception();
+                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Snowy).Sprite; break;
                                     case LevelTypes.Second: throw new Exception();
                                     default: throw new Exception();
                                 }
                                 break;
                             case UnitTypes.Camel:
-                                mainUnit_0.Sprite = ResourcesSpriteVEs.Unit(UnitTypes.Camel).Sprite; break;
+                                mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Camel).Sprite; break;
                                 throw new Exception();
                         }
 

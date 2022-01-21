@@ -14,13 +14,13 @@ namespace Game.Game
 
                 ref var unit_from = ref Unit(idx_0);
                 ref var ownUnit_from = ref CellUnitElseEs.Owner(idx_0);
-                ref var stun_from = ref CellUnitStunEs.StepsForExitStun(idx_0);
+                ref var stun_from = ref CellUnitStunEs.ForExitStun(idx_0);
 
                 if (!stun_from.Have)
                 {
                     if (unit_from.Is(UnitTypes.Archer))
                     {
-                        foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                        foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
                             ref var fire_1 = ref Fire<HaveEffectC>(idx_1);
 

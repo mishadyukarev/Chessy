@@ -30,7 +30,7 @@ namespace Game.Game
 
             return xyAvail;
         }
-        public static List<byte> GetIdxAround(in byte idx_start)
+        public static List<byte> GetIdxsAround(in byte idx_start)
         {
             var list = new List<byte>();
             foreach (var item in GetXyAround(Cell<XyC>(idx_start).Xy)) list.Add(IdxCell(item));

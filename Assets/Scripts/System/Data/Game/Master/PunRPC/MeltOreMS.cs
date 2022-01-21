@@ -6,7 +6,7 @@
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
+            var whoseMove = WhoseMoveE.WhoseMove.Player;
 
             if (InventorResourcesE.CanMeltOre(whoseMove, out var needRes))
             {

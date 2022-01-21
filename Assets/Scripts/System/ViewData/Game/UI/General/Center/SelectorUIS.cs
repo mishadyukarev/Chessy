@@ -8,7 +8,7 @@ namespace Game.Game
         public void Run()
         {
             var click_cur = ClickerObject<CellClickC>().Click;
-            var uniq = SelUniqAbilC.UniqAbil;
+            var uniq = SelectedUniqueAbilityC.AbilityC.Ability;
 
 
             SelectorUI<GameObjectVC>(click_cur).SetActiveParent(false);

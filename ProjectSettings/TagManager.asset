@@ -68,8 +68,11 @@ TagManager:
   - name: SupportVision
     uniqueID: 3301346089
     locked: 0
-  - name: SupportEnvStatic
+  - name: SupportEnvironmentStatic
     uniqueID: 4170661099
+    locked: 0
+  - name: IceWall
+    uniqueID: 4214796319
     locked: 0
   - name: Unit
     uniqueID: 1121464767

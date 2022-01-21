@@ -7,28 +7,25 @@ namespace Game.Game
     {
         public void Run()
         {
-            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            foreach (var idx_0 in CellEs.Idxs)
             {
-                foreach (var idx_0 in CellEs.Idxs)
+                CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.First, idx_0).Clear();
+                CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.Second, idx_0).Clear();
+
+                if (CellEs.IsActiveC(idx_0).IsActive)
                 {
-                    if (CellEs.IsActiveC(idx_0).IsActive)
+                    if (!CellUnitStunEs.ForExitStun(idx_0).Have && Unit(idx_0).Have && !Unit(idx_0).IsAnimal)
                     {
-                        CellsForShiftUnitsEs.CellsForShift<IdxsC>(player, idx_0).Clear();
-
-                        if (!CellUnitStunEs.StepsForExitStun(idx_0).Have && Unit(idx_0).Have
-                            && CellUnitElseEs.Owner(idx_0).Is(player))
+                        foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                            if (!Resources(EnvironmentTypes.Mountain, idx_1).Have && !Unit(idx_1).Have)
                             {
-                                if (!Resources(EnvironmentTypes.Mountain, idx_1).Have && !Unit(idx_1).Have)
-                                {
-                                    var one = CellUnitStepEs.HaveStepsForDoing(idx_0, idx_1);
-                                    var two = CellUnitStepEs.HaveMaxSteps(idx_0);
+                                var one = CellUnitStepEs.HaveStepsForDoing(idx_0, idx_1);
+                                var two = CellUnitStepEs.HaveMaxSteps(idx_0);
 
-                                    if (one || two)
-                                    {
-                                        CellsForShiftUnitsEs.CellsForShift<IdxsC>(player, idx_0).Add(idx_1);
-                                    }
+                                if (one || two)
+                                {
+                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(CellUnitElseEs.Owner(idx_0).Player, idx_0).Add(idx_1);
                                 }
                             }
                         }

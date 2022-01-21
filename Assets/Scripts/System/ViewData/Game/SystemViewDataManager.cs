@@ -5,18 +5,18 @@ namespace Game.Game
 {
     public readonly struct SystemViewDataManager
     {
-        static Dictionary<ViewDataSTypes, Action> _actions;
+        static Dictionary<ViewDataSystemTypes, Action> _actions;
 
 
         public SystemViewDataManager(in bool def)
         {
-            _actions = new Dictionary<ViewDataSTypes, Action>();
+            _actions = new Dictionary<ViewDataSystemTypes, Action>();
 
 
-            _actions.Add(ViewDataSTypes.RunUpdate, default);
+            _actions.Add(ViewDataSystemTypes.RunUpdate, default);
 
 
-            _actions.Add(ViewDataSTypes.RunFixedUpdate,
+            _actions.Add(ViewDataSystemTypes.RunFixedUpdate,
                 (Action)
                 new CellUnitVS().Run
                 + new UnitStatCellSyncS().Run
@@ -31,12 +31,13 @@ namespace Game.Game
                 + new SyncSelUnitCellVS().Run
                 + new SupportCellVS().Run
                 + new FliperAndRotatorUnitVS().Run
+                + new CellIceWallVS().Run
 
                 + new RotateAllVS().Run
                 + new SoundVS().Run);
         }
 
-        public static void Run(in ViewDataSTypes type)
+        public static void Run(in ViewDataSystemTypes type)
         {
             if (!_actions.ContainsKey(type)) throw new Exception();
 

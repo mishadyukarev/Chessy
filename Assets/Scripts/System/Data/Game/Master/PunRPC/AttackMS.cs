@@ -24,7 +24,7 @@ namespace Game.Game
 
 
 
-            var playerSender = WhoseMoveE.WhoseMove<PlayerTC>().Player;
+            var playerSender = WhoseMoveE.WhoseMove.Player;
 
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))

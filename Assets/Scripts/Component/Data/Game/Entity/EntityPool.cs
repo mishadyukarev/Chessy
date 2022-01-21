@@ -22,7 +22,7 @@ namespace Game.Game
         public static ref C PreVisIdx<C>() where C : struct, IPreVisionIdx => ref _ents[nameof(IPreVisionIdx)].Get<C>();
         public static ref C Input<C>() where C : struct, IInputE => ref _ents[nameof(IInputE)].Get<C>();
         public static ref C ClickerObject<C>() where C : struct, IClickerObjectE => ref _ents[nameof(IClickerObjectE)].Get<C>();
-        public static ref RpcC Rpc => ref _ents[nameof(Rpc)].Get<RpcC>();
+        public static ref RpcE Rpc => ref _ents[nameof(Rpc)].Get<RpcE>();
         public static ref C Background<C>() where C : struct => ref _background.Get<C>();
         public static ref PlayerTC Winner => ref _winner.Get<PlayerTC>();
         public static ref C Ready<C>(in PlayerTypes player) where C : struct => ref _ready[player].Get<C>();
@@ -30,23 +30,28 @@ namespace Game.Game
         public static ref C MotionZone<C>() where C : struct => ref _motionZone.Get<C>();
         public static ref C FriendZone<C>() where C : struct => ref _friendZone.Get<C>();
         public static ref C EnvironmentInfo<C>() where C : struct => ref _infoEnvironment.Get<C>();
-        public static ref C ScoutHeroCooldown<C>(in UnitTypes unit, in PlayerTypes player) where C : struct => ref _scoutHeroCooldown[unit.ToString() + player].Get<C>();
+        public static ref AmountC ScoutHeroCooldown(in UnitTypes unit, in PlayerTypes player) => ref _scoutHeroCooldown[unit.ToString() + player].Get<AmountC>();
         
 
         public EntityPool(in EcsWorld gameW, in string nameBackground, in List<object> actions, in List<string> namesMethods)
         {
             _ents = new Dictionary<string, Entity>();
+
+
+
             _ready = new Dictionary<PlayerTypes, Entity>();
             _scoutHeroCooldown = new Dictionary<string, Entity>();
 
-
-
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                _ready.Add(player, default);
+                _ready.Add(player, gameW.NewEntity()
+                    .Add(new IsReadyC()));
 
-                _scoutHeroCooldown.Add(UnitTypes.Scout.ToString() + player, default);
-                _scoutHeroCooldown.Add(UnitTypes.Elfemale.ToString() + player, default);
+                for (var unit = UnitTypes.Scout; unit <= UnitTypes.Snowy; unit++)
+                {
+                    _scoutHeroCooldown.Add(unit.ToString() + player, gameW.NewEntity()
+                        .Add(new AmountC()));
+                }
             }
 
 
@@ -61,20 +66,13 @@ namespace Game.Game
                 .Add(new RayCastC());
 
             _ents[nameof(Rpc)] = gameW.NewEntity()
-                .Add(new RpcC(actions, namesMethods));
+                .Add(new RpcE(actions, namesMethods));
 
             _background = gameW.NewEntity()
                 .Add(new NameC(nameBackground));
 
             _winner = gameW.NewEntity()
                 .Add(new PlayerTC());
-
-            _ready[PlayerTypes.First] = gameW.NewEntity()
-                .Add(new IsStartedGameC())
-                .Add(new IsReadyC());
-
-            _ready[PlayerTypes.Second] = gameW.NewEntity()
-                .Add(new IsReadyC());
 
             _gameInfo = gameW.NewEntity()
                 .Add(new IsStartedGameC())
@@ -89,17 +87,6 @@ namespace Game.Game
             _infoEnvironment = gameW.NewEntity()
                 .Add(new IsActiveC(false));
 
-
-            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
-            {
-                _scoutHeroCooldown[UnitTypes.Scout.ToString() + player] = gameW.NewEntity()
-                    .Add(new CooldownC());
-
-                _scoutHeroCooldown[UnitTypes.Elfemale.ToString() + player] = gameW.NewEntity()
-                    .Add(new CooldownC());
-            }
         }
     }
-
-    public interface IRpc { }
 }

@@ -21,7 +21,7 @@ namespace Game.Game
 
             _uniq = new Dictionary<UniqueAbilityTypes, AudioClip>();
 
-            for (var uniq = UniqueAbilityTypes.First; uniq < UniqueAbilityTypes.End; uniq++)
+            for (var uniq = UniqueAbilityTypes.None + 1; uniq < UniqueAbilityTypes.End; uniq++)
             {
                 string name = "Uniq/";
 

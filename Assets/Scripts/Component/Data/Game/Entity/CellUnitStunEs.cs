@@ -6,7 +6,7 @@ namespace Game.Game
     {
         static Entity[] _units;
 
-        public static ref AmountC StepsForExitStun(in byte idx)=> ref _units[idx].Get<AmountC>();
+        public static ref AmountC ForExitStun(in byte idx)=> ref _units[idx].Get<AmountC>();
 
         public CellUnitStunEs(in EcsWorld gameW)
         {
@@ -18,6 +18,4 @@ namespace Game.Game
             }
         }
     }
-
-    public interface ICellUnitStunE { }
 }

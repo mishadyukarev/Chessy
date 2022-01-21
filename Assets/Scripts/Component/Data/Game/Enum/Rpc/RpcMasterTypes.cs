@@ -31,7 +31,7 @@
         UpgCenterBuild,
         UpgWater,
 
-        UniqAbil,
+        UniqueAbility,
 
         End
     }

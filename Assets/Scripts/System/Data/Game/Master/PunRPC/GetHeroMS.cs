@@ -7,10 +7,10 @@
             var sender = InfoC.Sender(MGOTypes.Master);
             var unit = EntityMPool.ForGetHero.Unit;
 
-            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
+            var whoseMove = WhoseMoveE.WhoseMove.Player;
 
             InventorUnitsE.Units(unit, LevelTypes.First, whoseMove).Add();
-            AvailableCenterHeroEs.HaveAvailHero<HaveAvailableHeroC>(whoseMove).Have = false;
+            AvailableCenterHeroEs.HaveAvailHero(whoseMove).Have = false;
         }
     }
 }

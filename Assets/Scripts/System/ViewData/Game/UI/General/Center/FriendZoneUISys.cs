@@ -7,21 +7,21 @@ namespace Game.Game
     {
         public void Run()
         {
-            Friend<ButtonUIC>().SetActiveParent(false);
+            ButtonC.SetActiveParent(false);
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
                 if (EntityPool.FriendZone<IsActiveC>().IsActive)
                 {
-                    Friend<ButtonUIC>().SetActiveParent(true);
+                    TextC.SetActiveParent(true);
 
                     if (WhoseMoveE.CurPlayerI == PlayerTypes.First)
                     {
-                        Friend<TextUIC>().Text = "1";
+                        TextC.Text = "1";
                     }
                     else
                     {
-                        Friend<TextUIC>().Text = "2";
+                        TextC.Text = "2";
                     }
                 }
             }

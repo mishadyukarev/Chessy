@@ -7,19 +7,17 @@ namespace Game.Game
     {
         static Dictionary<PlayerTypes, Entity> _availHero;
 
-        public static ref C HaveAvailHero<C>(in PlayerTypes player) where C : struct, IAvailableHeroE => ref _availHero[player].Get<C>();
+        public static ref HaveC HaveAvailHero(in PlayerTypes player) => ref _availHero[player].Get<HaveC>();
 
         public AvailableCenterHeroEs(in EcsWorld gameW)
         {
             _availHero = new Dictionary<PlayerTypes, Entity>();
 
-            for (var player = PlayerTypes.Start + 1; player < PlayerTypes.End; player++)
+            for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
                 _availHero.Add(player, gameW.NewEntity()
-                    .Add(new HaveAvailableHeroC(true)));
+                    .Add(new HaveC(true)));
             }
         }
     }
-
-    public interface IAvailableHeroE { }
 }

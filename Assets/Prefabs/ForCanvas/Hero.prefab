@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5183025126056823202}
   - component: {fileID: 1472336579364426337}
   m_Layer: 5
-  m_Name: Elfemalel
+  m_Name: Elfemale
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4244743816568623602
 RectTransform:
   m_ObjectHideFlags: 0
@@ -167,7 +167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4673330571599768380
 RectTransform:
   m_ObjectHideFlags: 0
@@ -542,7 +542,7 @@ RectTransform:
   m_GameObject: {fileID: 7515812095572338184}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 7260862779638785731}
   - {fileID: 875235301646759182}
@@ -555,7 +555,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 110.20999, y: 104.64012}
+  m_SizeDelta: {x: 110.20999, y: 104.64014}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8891422716347586785
 GameObject:

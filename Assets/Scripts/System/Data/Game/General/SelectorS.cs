@@ -63,11 +63,11 @@ namespace Game.Game
                                                     }
                                                     else if (unit_cur.IsMelee)
                                                     {
-                                                        EntitySound.Sound(ClipTypes.PickMelee).Invoke();
+                                                        SoundE.Sound(ClipTypes.PickMelee).Invoke();
                                                     }
                                                     else
                                                     {
-                                                        EntitySound.Sound(ClipTypes.PickArcher).Invoke();
+                                                        SoundE.Sound(ClipTypes.PickArcher).Invoke();
                                                     }
                                                 }
                                             }
@@ -88,11 +88,11 @@ namespace Game.Game
                                                 }
                                                 else if (unit_cur.IsMelee)
                                                 {
-                                                    EntitySound.Sound(ClipTypes.PickMelee).Invoke();
+                                                    SoundE.Sound(ClipTypes.PickMelee).Invoke();
                                                 }
                                                 else
                                                 {
-                                                    EntitySound.Sound(ClipTypes.PickArcher).Invoke();
+                                                    SoundE.Sound(ClipTypes.PickArcher).Invoke();
                                                 }
                                             }
                                         }
@@ -113,7 +113,7 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                     {
-                                        Rpc.GiveTakeToolWeapon(SelectedToolWeaponE.SelectedTW<ToolWeaponC>().ToolWeapon, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, CurrentIdxE.IdxC.Idx);
+                                        Rpc.GiveTakeToolWeaponToMaster(SelectedToolWeaponE.SelectedTW<ToolWeaponC>().ToolWeapon, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, CurrentIdxE.IdxC.Idx);
                                     }
                                     else
                                     {
@@ -154,52 +154,62 @@ namespace Game.Game
 
                             case CellClickTypes.GiveHero:
                                 {
-                                    if (SelectedIdxE.IdxC.Idx == 0)
+                                    if(InventorUnitsE.HaveHero(WhoseMoveE.CurPlayerI, out var hero))
                                     {
-                                        SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                        if(hero == UnitTypes.Elfemale || hero == UnitTypes.Snowy)
+                                        {
+                                            if (SelectedIdxE.IdxC.Idx == 0)
+                                            {
+                                                SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
 
-                                        if (unit_cur.Is(UnitTypes.Archer))
-                                        {
-                                            EntitySound.Sound(ClipTypes.PickArcher).Invoke();
-                                        }
-                                        else
-                                        {
-                                            cellClick.Click = CellClickTypes.SimpleClick;
+                                                if (unit_cur.Is(UnitTypes.Archer))
+                                                {
+                                                    SoundE.Sound(ClipTypes.PickArcher).Invoke();
+                                                }
+                                                else
+                                                {
+                                                    cellClick.Click = CellClickTypes.SimpleClick;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (idx_cur != idx_sel)
+                                                {
+                                                    if (unit_cur.Is(UnitTypes.Archer))
+                                                    {
+                                                        if (unit_sel.Is(UnitTypes.Archer))
+                                                        {
+                                                            EntityPool.Rpc.FromToNewUnitToMas(hero, SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                                            cellClick.Click = CellClickTypes.SimpleClick;
+                                                        }
+
+                                                        SoundE.Sound(ClipTypes.ClickToTable).Invoke();
+                                                    }
+                                                    else
+                                                    {
+                                                        cellClick.Click = CellClickTypes.SimpleClick;
+                                                    }
+
+                                                    SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                                }
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        if (idx_cur != idx_sel)
-                                        {
-                                            if (unit_cur.Is(UnitTypes.Archer))
-                                            {
-                                                if (unit_sel.Is(UnitTypes.Archer))
-                                                {
-                                                    EntityPool.Rpc.FromToNewUnitToMas(UnitTypes.Elfemale, SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
-                                                    cellClick.Click = CellClickTypes.SimpleClick;
-                                                }
-
-                                                EntitySound.Sound(ClipTypes.ClickToTable).Invoke();
-                                            }
-                                            else
-                                            {
-                                                cellClick.Click = CellClickTypes.SimpleClick;
-                                            }
-
-                                            SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
-                                        }
-                                    }
+                                        throw new Exception();
+                                    }              
                                 }
                                 break;
 
                             case CellClickTypes.UniqueAbility:
                                 {
-                                    if (SelUniqAbilC.Is(UniqueAbilityTypes.FireArcher))
+                                    if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.FireArcher))
                                     {
                                         EntityPool.Rpc.FireArcherToMas(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
                                     }
 
-                                    else if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirectionWind))
+                                    else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                                     {
                                         if (DirectsWindForElfemaleE.IdxsDirects.Contains(CurrentIdxE.IdxC.Idx))
                                         {
@@ -207,9 +217,14 @@ namespace Game.Game
                                         }    
                                     }
 
-                                    else if (SelUniqAbilC.Is(UniqueAbilityTypes.StunElfemale))
+                                    else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.StunElfemale))
                                     {
                                         EntityPool.Rpc.StunElfemaleToMas(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                    }
+
+                                    else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.FreezeDirectEnemy))
+                                    {
+                                        EntityPool.Rpc.FreezeDirectEnemyToMaster(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
                                     }
 
                                     cellClick.Click = CellClickTypes.SimpleClick;

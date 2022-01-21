@@ -52,6 +52,14 @@ namespace Game.Game
                         case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
+                case UnitTypes.Snowy:
+                    switch (lev)
+                    {
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 200;
+                        case LevelTypes.Second: throw new Exception();
+                        default: throw new Exception();
+                    }
                 case UnitTypes.Camel: return 0;
                 default: throw new Exception();
             }

@@ -1,6 +1,5 @@
 ﻿using static Game.Game.CenterHerosUIE;
 using static Game.Game.CenterUpgradeUIE;
-using static Game.Game.CenterKingUIE;
 
 namespace Game.Game
 {
@@ -8,10 +7,13 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (!Button<ButtonUIC>().IsActiveParent && !Water<ButtonUIC>().IsActiveParent 
-                && AvailableCenterHeroEs.HaveAvailHero<HaveAvailableHeroC>(WhoseMoveE.CurPlayerI).Have)
+            var isActiveKingZone = CenterKingUIE.Paren.IsActiveSelf;
+            var curPlayerI = WhoseMoveE.CurPlayerI;
+
+            if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
+                && AvailableCenterHeroEs.HaveAvailHero(curPlayerI).Have)
             {
-                Parent.SetActive(!InventorUnitsE.Units(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have);
+                Parent.SetActive(!InventorUnitsE.HaveHero(curPlayerI, out var hero));
             }
             else
             {

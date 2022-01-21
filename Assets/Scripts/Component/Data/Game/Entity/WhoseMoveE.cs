@@ -9,7 +9,7 @@ namespace Game.Game
     {
         static Entity _whoseMove;
 
-        public static ref C WhoseMove<C>() where C : struct, IWhoseMoveE => ref _whoseMove.Get<C>();
+        public static ref PlayerTC WhoseMove => ref _whoseMove.Get<PlayerTC>();
 
         public WhoseMoveE(in EcsWorld gameW)
         {
@@ -25,7 +25,7 @@ namespace Game.Game
                 {
                     case GameModes.TrainingOff: return PlayerTypes.First;
                     case GameModes.WithFriendOff:
-                        return WhoseMove<PlayerTC>().Player;
+                        return WhoseMove.Player;
 
                     case GameModes.PublicOn:
                         if (PhotonNetwork.IsMasterClient) return PlayerTypes.First;
@@ -40,7 +40,7 @@ namespace Game.Game
             }
 
         }
-        public static bool IsMyMove => CurPlayerI == WhoseMove<PlayerTC>().Player;
+        public static bool IsMyMove => CurPlayerI == WhoseMove.Player;
         public static PlayerTypes NextPlayerFrom(PlayerTypes player)
         {
             if (player == PlayerTypes.First) return PlayerTypes.Second;

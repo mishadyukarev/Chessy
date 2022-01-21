@@ -11,7 +11,7 @@ namespace Game.Game
             var isActivatedZone = AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(curPlayer).Have
                 && !InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, curPlayer).Have;
 
-            Water<ButtonUIC>().SetActiveParent(isActivatedZone);
+            Paren.SetActive(isActivatedZone);
 
             if (isActivatedZone)
             {
@@ -19,11 +19,11 @@ namespace Game.Game
                 {
                     if (AvailableCenterUpgradeEs.HaveBuildUpgrade<HaveUpgradeC>(build, WhoseMoveE.CurPlayerI).Have)
                     {
-                        Builds<ButtonUIC>(build).SetActive(true);
+                        Builds(build).SetActive(true);
                     }
                     else
                     {
-                        Builds<ButtonUIC>(build).SetActive(false);
+                        Builds(build).SetActive(false);
                     }
                 }
 

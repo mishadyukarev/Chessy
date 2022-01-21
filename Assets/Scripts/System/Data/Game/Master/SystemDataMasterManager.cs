@@ -26,8 +26,9 @@ namespace Game.Game
                 + new UpdateExtractUnitMS().Run
                 + new ResumeUnitUpdMS().Run
                 + new UpdateHealingUnitMS().Run
+                + new UpdateRelaxSnowyMS().Run
                 + new UpdateHungryMS().Run
-                + new ThirstyUpdMS().Run
+                + new UpdateThirstyMS().Run
 
                 + new UpdateCamelShiftMS().Run
                 + new UpdateSpawnCamelMS().Run;
@@ -72,6 +73,8 @@ namespace Game.Game
             _uniqAbil.Add(UniqueAbilityTypes.BonusNear, new BonusNearUnitKingMS().Run);
             _uniqAbil.Add(UniqueAbilityTypes.ChangeDirectionWind, new ChangeDirectionWindElfemaleMS().Run);
             _uniqAbil.Add(UniqueAbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.FreezeDirectEnemy, new FreezeDirectEnemyMS().Run);
+            _uniqAbil.Add(UniqueAbilityTypes.IceWall, new IceWallMS().Run);
         }
 
         public static void InvokeRun(SystemDataMasterTypes mastDataSys) => _systems[mastDataSys].Invoke();

@@ -6,13 +6,12 @@ namespace Game.Game
     public struct CellUnitStepEs
     {
         static Entity[] _hps;
-        static StepUnitValues _values;
 
         public static ref AmountC Steps(in byte idx) => ref _hps[idx].Get<AmountC>();
 
 
 
-        public static int MaxAmountSteps(in byte idx) => _values.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx).Have/*, UnitUpgC.Steps(Unit, Level, Owner)*/);
+        public static int MaxAmountSteps(in byte idx) => StepUnitValues.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx).Have/*, UnitUpgC.Steps(Unit, Level, Owner)*/);
         public static bool HaveMaxSteps(in byte idx) => Steps(idx).Amount >= MaxAmountSteps(idx);
         public static int StepsForDoing(in byte idx_from, in byte idx_to)
         {
@@ -20,12 +19,12 @@ namespace Game.Game
 
             if (CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx_to).Have)
             {
-                needSteps += _values.NeedAmountSteps(EnvironmentTypes.AdultForest);
+                needSteps += StepUnitValues.NeedAmountSteps(EnvironmentTypes.AdultForest);
                 if (CellTrailEs.Health(CellSpaceSupport.GetDirect(idx_from, idx_to).Invert(), idx_to).Have) needSteps -= 1;
             }
 
             if (CellEnvironmentEs.Resources(EnvironmentTypes.Hill, idx_to).Have)
-                needSteps += _values.NeedAmountSteps(EnvironmentTypes.Hill);
+                needSteps += StepUnitValues.NeedAmountSteps(EnvironmentTypes.Hill);
 
             return needSteps;
         }
@@ -40,11 +39,12 @@ namespace Game.Game
                 case UniqueAbilityTypes.FirePawn: return 1;
                 case UniqueAbilityTypes.PutOutFirePawn: return 1;
                 case UniqueAbilityTypes.Seed: return 1;
-                case UniqueAbilityTypes.FireArcher: return 1;
+                case UniqueAbilityTypes.FireArcher: return 2;
                 case UniqueAbilityTypes.ChangeCornerArcher: return 1;
                 case UniqueAbilityTypes.GrowAdultForest: return 1;
                 case UniqueAbilityTypes.StunElfemale: return 1;
                 case UniqueAbilityTypes.ChangeDirectionWind: return 1;
+                case UniqueAbilityTypes.IceWall: return 1;
                 default: throw new Exception();
             }
         }
@@ -61,12 +61,10 @@ namespace Game.Game
                 _hps[idx] = gameW.NewEntity()
                     .Add(new AmountC(idx));
             }
-
-            _values = new StepUnitValues();
         }
 
 
-        public static void SetMaxSteps(in byte idx) => Steps(idx).Amount = _values.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, false);
+        public static void SetMaxSteps(in byte idx) => Steps(idx).Amount = StepUnitValues.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, false);
 
         public static void TakeStepsForDoing(in byte idx_from, in byte idx_to) => Steps(idx_from).Take(StepsForDoing(idx_from, idx_to));
         public static void TakeForBuild(in byte idx) => Steps(idx).Take();

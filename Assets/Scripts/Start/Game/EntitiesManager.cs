@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using static Game.Game.CellBuildE;
 using static Game.Game.EntityCellCloudPool;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityCellRiverPool;
+using static Game.Game.CellRiverE;
 using static Game.Game.CellUnitEs;
 using static Game.Game.CellEs;
 using UnityEngine;
@@ -21,6 +21,8 @@ namespace Game.Game
             CanvasC.SetCurZone(SceneTypes.Game);
 
             new ResourcesSpriteVEs(gameW);
+            new VideoClipsResC(true);
+
             new EntityVPool(gameW, out var actions, out var sounds0, out var sounds1);
 
 
@@ -74,6 +76,7 @@ namespace Game.Game
             new CellBlocksVEs(gameW, cells);
             new CellBarsVEs(gameW, cells);
             new StunCellVEs(gameW, cells);
+            new CellIceWallVEs(gameW, cells);
 
 
             ///Left
@@ -111,7 +114,7 @@ namespace Game.Game
             var rightZone = CanvasC.FindUnderCurZone("RightZone").transform;
             new UIEntRight(gameW, rightZone.gameObject);
             new UIEntRightStats(gameW, rightZone.gameObject);
-            new UIEntRightUnique(gameW, rightZone);
+            new RightUniqueUIE(gameW, rightZone);
             new UIEntBuild(gameW, rightZone);
             new UIEntExtraTW(gameW, rightZone);
             new UIEntRightEffects(gameW, rightZone);
@@ -150,6 +153,7 @@ namespace Game.Game
             new CellUnitStepEs(gameW);
             new CellUnitStunEs(gameW);
             new CellUnitAbilityUniqueEs(gameW);
+            new CellUnitDefendEffectEs(gameW);
             new CellUnitTWE(gameW);
 
             new CellTrailEs(gameW);
@@ -157,9 +161,10 @@ namespace Game.Game
             new CellEnvironmentEs(gameW);
             new CellFireEs(gameW);
             new EntityCellCloudPool(gameW);
-            new EntityCellRiverPool(gameW);
+            new CellRiverE(gameW);
             new CellEs(gameW, isActiveParenCells, idCells);
             new CellParentE(gameW);
+            new CellIceWallEs(gameW);
 
             new CurrentDirectWindE(gameW);
             new CenterCloudEnt(gameW);
@@ -193,16 +198,23 @@ namespace Game.Game
             new SelectedUnitE(gameW);
             new StatUnitsUpgradesE(gameW);
             new GetterUnitsEs(gameW);
-            new EntitySound(gameW, sounds0, sounds1);
+            new SoundE(gameW, sounds0, sounds1);
             new SunSidesE(gameW);
+            new SelectedUniqueAbilityC(gameW);
 
 
 
             new EntityMPool(gameW);
+            new FreezeDirectEnemyME(gameW);
+            new IceWallME(gameW);
 
             #endregion
 
 
+
+
+
+            #region Spawn
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -273,33 +285,36 @@ namespace Game.Game
                         }
 
 
-                        ref var river_0 = ref River<RiverC>(idx_0);
+                        ref var river_0 = ref River(idx_0);
 
 
                         var corners = new List<DirectTypes>();
 
                         if (x >= 3 && x <= 6 && y == 5)
                         {
-                            river_0.SetStart(DirectTypes.Up);
+                            CellRiverE.SetStart(idx_0, DirectTypes.Up);
                         }
                         else if (x == 7 && y == 5)
                         {
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
-                            river_0.SetStart(DirectTypes.Up, DirectTypes.Right);
+                            CellRiverE.SetStart(idx_0, DirectTypes.Up, DirectTypes.Right);
                         }
                         else if (x >= 8 && x <= 12 && y == 4)
                         {
-                            river_0.SetStart(DirectTypes.Up);
+                            CellRiverE.SetStart(idx_0, DirectTypes.Up);
                         }
 
 
-                        foreach (var dir in river_0.Directs)
+                        foreach (var dir in CellRiverE.Keys)
                         {
-                            var xy_next = CellSpaceSupport.GetXyCellByDirect(Cell<XyC>(idx_0).Xy, dir);
-                            var idx_next = IdxCell(xy_next);
+                            if(CellRiverE.HaveRive(dir, idx_0).Have)
+                            {
+                                var xy_next = CellSpaceSupport.GetXyCellByDirect(Cell<XyC>(idx_0).Xy, dir);
+                                var idx_next = IdxCell(xy_next);
 
-                            River<RiverC>(idx_next).SetEnd(dir.Invert());
+                                CellRiverE.River(idx_next).River = RiverTypes.End;
+                            }
                         }
 
                         foreach (var dir in corners)
@@ -307,7 +322,7 @@ namespace Game.Game
                             var xy_next = CellSpaceSupport.GetXyCellByDirect(Cell<XyC>(idx_0).Xy, dir);
                             var idx_next = IdxCell(xy_next);
 
-                            River<RiverC>(idx_next).SetCorner();
+                            CellRiverE.River(idx_next).River = RiverTypes.Corner;
                         }
                     }
                 }
@@ -329,7 +344,7 @@ namespace Game.Game
 
                     ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
                     ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
-                    ref var waterUnit_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
+                    ref var waterUnit_0 = ref CellUnitWaterEs.Water(idx_0);
 
 
                     ref var tw_0 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_0);
@@ -381,6 +396,7 @@ namespace Game.Game
                 }
             }
 
+            #endregion
         }
     }
 }

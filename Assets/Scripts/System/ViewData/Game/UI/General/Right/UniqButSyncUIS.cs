@@ -10,20 +10,20 @@
 
                 if (abil == default)
                 {
-                    UIEntRightUnique.Buttons<ButtonUIC>(button).SetActive(false);
+                    RightUniqueUIE.Paren(button).SetActive(false);
                 }
                 else
                 {
-                    UIEntRightUnique.Buttons<TextUIC>(button).SetActiveParent(CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelectedIdxE.IdxC.Idx).HaveCooldown);
-                    UIEntRightUnique.Buttons<TextUIC>(button).Text = CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil, SelectedIdxE.IdxC.Idx).Cooldown.ToString();
+                    RightUniqueUIE.Text(button).SetActiveParent(CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Have);
+                    RightUniqueUIE.Text(button).Text = CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Amount.ToString();
 
-                    UIEntRightUnique.Buttons<ButtonUIC>(button).SetActive(true);
+                    RightUniqueUIE.Paren(button).SetActive(true);
 
-                    for (var unique = UniqueAbilityTypes.Start + 1; unique < UniqueAbilityTypes.End; unique++)
+                    for (var unique = UniqueAbilityTypes.None + 1; unique < UniqueAbilityTypes.End; unique++)
                     {
-                        UIEntRightUnique.Zones<GameObjectVC>(button, unique).SetActive(false);
+                        RightUniqueUIE.Zone(button, unique).SetActive(false);
                     }
-                    UIEntRightUnique.Zones<GameObjectVC>(button, abil).SetActive(true);
+                    RightUniqueUIE.Zone(button, abil).SetActive(true);
                 }
             }
         }

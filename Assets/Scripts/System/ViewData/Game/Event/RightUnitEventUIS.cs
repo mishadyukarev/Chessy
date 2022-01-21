@@ -9,9 +9,9 @@ namespace Game.Game
     {
         internal RightUnitEventUIS()
         {
-            UIEntRightUnique.Buttons<ButtonUIC>(ButtonTypes.First).AddListener(delegate { UniqBut(ButtonTypes.First); });
-            UIEntRightUnique.Buttons<ButtonUIC>(ButtonTypes.Second).AddListener(delegate { UniqBut(ButtonTypes.Second); });
-            UIEntRightUnique.Buttons<ButtonUIC>(ButtonTypes.Third).AddListener(delegate { UniqBut(ButtonTypes.Third); });
+            RightUniqueUIE.Button(ButtonTypes.First).AddListener(delegate { Unique(ButtonTypes.First); });
+            RightUniqueUIE.Button(ButtonTypes.Second).AddListener(delegate { Unique(ButtonTypes.Second); });
+            RightUniqueUIE.Button(ButtonTypes.Third).AddListener(delegate { Unique(ButtonTypes.Third); });
 
             UIEntBuild.Button<ButtonUIC>(ButtonTypes.First).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
             UIEntBuild.Button<ButtonUIC>(ButtonTypes.Second).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
@@ -39,13 +39,13 @@ namespace Game.Game
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
 
-        void UniqBut(ButtonTypes uniqBut)
+        void Unique(ButtonTypes uniqueButton)
         {
             if (WhoseMoveE.IsMyMove)
             {
-                ref var abil = ref CellUnitUniqueButtonsEs.Ability(uniqBut, SelectedIdxE.IdxC.Idx);
+                ref var abil = ref CellUnitUniqueButtonsEs.Ability(uniqueButton, SelectedIdxE.IdxC.Idx);
 
-                if (!CellUnitAbilityUniqueEs.Cooldown<CooldownC>(abil.Ability, SelectedIdxE.IdxC.Idx).HaveCooldown)
+                if (!CellUnitAbilityUniqueEs.Cooldown(abil.Ability, SelectedIdxE.IdxC.Idx).Have)
                 {
                     switch (abil.Ability)
                     {
@@ -66,7 +66,7 @@ namespace Game.Game
 
                         case UniqueAbilityTypes.FireArcher:
                             ClickerObject<CellClickC>().Click = CellClickTypes.UniqueAbility;
-                            SelUniqAbilC.UniqAbil = UniqueAbilityTypes.FireArcher;
+                            SelectedUniqueAbilityC.AbilityC.Ability = UniqueAbilityTypes.FireArcher;
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
@@ -78,7 +78,7 @@ namespace Game.Game
                         case UniqueAbilityTypes.StunElfemale:
                             {
                                 ClickerObject<CellClickC>().Click = CellClickTypes.UniqueAbility;
-                                SelUniqAbilC.UniqAbil = UniqueAbilityTypes.StunElfemale;
+                                SelectedUniqueAbilityC.AbilityC.Ability = UniqueAbilityTypes.StunElfemale;
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
                             break;
@@ -103,7 +103,20 @@ namespace Game.Game
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
                                 ClickerObject<CellClickC>().Click = CellClickTypes.UniqueAbility;
-                                SelUniqAbilC.UniqAbil = UniqueAbilityTypes.ChangeDirectionWind;
+                                SelectedUniqueAbilityC.AbilityC.Ability = UniqueAbilityTypes.ChangeDirectionWind;
+                            }
+                            break;
+
+                        case UniqueAbilityTypes.FreezeDirectEnemy:
+                            {
+                                ClickerObject<CellClickC>().Click = CellClickTypes.UniqueAbility;
+                                SelectedUniqueAbilityC.AbilityC.Ability = UniqueAbilityTypes.FreezeDirectEnemy;
+                            }
+                            break;
+
+                        case UniqueAbilityTypes.IceWall:
+                            {
+                                EntityPool.Rpc.IceWallToMaster(SelectedIdxE.IdxC.Idx);
                             }
                             break;
 

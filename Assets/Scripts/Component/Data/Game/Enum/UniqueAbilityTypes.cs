@@ -3,11 +3,9 @@
     public enum UniqueAbilityTypes
     {
         None,
-        Start = None,
 
         //King
         CircularAttack,
-        First = CircularAttack,
         BonusNear,
 
         //Pawn
@@ -23,6 +21,11 @@
         GrowAdultForest,
         StunElfemale,
         ChangeDirectionWind,
+
+        //Snowy
+        FreezeDirectEnemy,
+        IceWall,
+        //DefendAround,
 
         End
     }

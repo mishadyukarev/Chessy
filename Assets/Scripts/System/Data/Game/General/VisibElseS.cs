@@ -28,7 +28,7 @@ namespace Game.Game
                             isVisForFirst = false;
                             isVisForSecond = false;
 
-                            foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                            foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                             {
                                 if (CellUnitEs.Unit(idx_1).Have)
                                 {
@@ -49,7 +49,7 @@ namespace Game.Game
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                            foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                             {
                                 ref var unit_1 = ref Unit(idx_1);
                                 ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);
@@ -90,7 +90,7 @@ namespace Game.Game
                     {
                         var isVisibledNextPlayer = false;
 
-                        foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                        foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
                             ref var unit_1 = ref Unit(idx_1);
                             ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);
@@ -122,7 +122,7 @@ namespace Game.Game
                     //}
 
 
-                    foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                    foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                     {
                         ref var unit_1 = ref Unit(idx_1);
                         ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);

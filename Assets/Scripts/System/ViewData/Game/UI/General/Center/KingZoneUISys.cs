@@ -8,11 +8,11 @@ namespace Game.Game
         {
             if (InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, WhoseMoveE.CurPlayerI).Have)
             {
-                Button<ButtonUIC>().SetActiveParent(true);
+                Paren.SetActive(true);
             }
             else
             {
-                Button<ButtonUIC>().SetActiveParent(false);
+                Paren.SetActive(false);
             }
         }
     }

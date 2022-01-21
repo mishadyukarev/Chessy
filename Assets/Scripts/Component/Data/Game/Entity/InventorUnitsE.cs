@@ -21,10 +21,22 @@ namespace Game.Game
                 return hash;
             }
         }
-        public static bool HaveHero(out UnitTypes hero)
+        public static bool HaveHero(in PlayerTypes owner, out UnitTypes hero)
         {
+            for (var unit = UnitTypes.Elfemale; unit <= UnitTypes.Snowy; unit++)
+            {
+                for (var level = LevelTypes.First; level < LevelTypes.End; level++)
+                {
+                    if (Units(Key(unit, level, owner)).Have)
+                    {
+                        hero = unit;
+                        return true;
+                    }
+                }
+            }
+
             hero = default;
-            return default;
+            return false;
         }
 
         public InventorUnitsE(in EcsWorld gameW)

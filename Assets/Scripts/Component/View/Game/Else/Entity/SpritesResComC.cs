@@ -15,7 +15,7 @@ namespace Game.Game
             if (!_gameSprites.ContainsKey(sprite)) throw new Exception();
             return ref _gameSprites[sprite].Get<SpriteVC>();
         }
-        public static ref SpriteVC Unit(in UnitTypes unit)
+        public static ref SpriteVC Sprite(in UnitTypes unit)
         {
             if (!_units.ContainsKey(unit)) throw new Exception();
             return ref _units[unit].Get<SpriteVC>();
@@ -53,11 +53,6 @@ namespace Game.Game
             _gameSprites.Add(SpriteTypes.BishopCrossbow, gameW.NewEntity()
                 .Add(new SpriteVC(Resources.Load<Sprite>("BishopCrossbow_Sprite"))));
 
-            _gameSprites.Add(SpriteTypes.Scout, gameW.NewEntity()
-                .Add(new SpriteVC(Resources.Load<Sprite>("Scout_Sprite"))));
-            _gameSprites.Add(SpriteTypes.Elfemale, gameW.NewEntity()
-                .Add(new SpriteVC(Resources.Load<Sprite>("Elfemale_Sprite"))));
-
             _gameSprites.Add(SpriteTypes.PickWood, gameW.NewEntity()
                 .Add(new SpriteVC(Resources.Load<Sprite>("Pick_Sprite"))));
             _gameSprites.Add(SpriteTypes.SwordIron, gameW.NewEntity()
@@ -67,7 +62,7 @@ namespace Game.Game
             _gameSprites.Add(SpriteTypes.ShieldIron, gameW.NewEntity()
                 .Add(new SpriteVC(Resources.Load<Sprite>("ShieldIron_Sprite"))));
 
-            for (var unit = UnitTypes.Camel; unit <= UnitTypes.Camel; unit++)
+            for (var unit = UnitTypes.Scout; unit <= UnitTypes.Camel; unit++)
             {
                 _units.Add(unit, gameW.NewEntity()
                     .Add(new SpriteVC(Resources.Load<Sprite>(unit + "_Sprite"))));

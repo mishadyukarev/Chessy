@@ -36,7 +36,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
-                        if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirectionWind))
+                        if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                         {
                             support_0.Enable();
                             support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -87,7 +87,7 @@ namespace Game.Game
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
-                                    if (SelUniqAbilC.Is(UniqueAbilityTypes.StunElfemale))
+                                    if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.StunElfemale))
                                     {
                                         support_0.Enable();
                                         support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -112,7 +112,7 @@ namespace Game.Game
 
             if (cellClick.Is(CellClickTypes.UniqueAbility))
             {
-                if (SelUniqAbilC.Is(UniqueAbilityTypes.ChangeDirectionWind))
+                if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                 {
                     foreach (var idx_0 in DirectsWindForElfemaleE.IdxsDirects)
                     {
@@ -120,7 +120,7 @@ namespace Game.Game
                         SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                     }
                 }
-                else if (SelUniqAbilC.Is(UniqueAbilityTypes.FireArcher))
+                else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.FireArcher))
                 {
                     foreach (var idx in CellsForArsonArcherEs.Idxs<IdxsC>(SelectedIdxE.IdxC.Idx).Idxs)
                     {

@@ -19,7 +19,7 @@ namespace Game.Game
 
                         bool haveNearUnit = false;
 
-                        foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                        foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
                             if (CellUnitEs.Unit(idx_1).Have)
                             {

@@ -7,7 +7,7 @@ namespace Game.Game
     {
         static Entity[] _units;
 
-        public static ref C Water<C>(in byte idx) where C : struct, ICellUnitWaterE => ref _units[idx].Get<C>();
+        public static ref AmountC Water(in byte idx) => ref _units[idx].Get<AmountC>();
 
 
         public static int MaxWater(in byte idx)
@@ -28,7 +28,7 @@ namespace Game.Game
 
             return maxWater;
         }
-        public static bool HaveMaxWater(in byte idx) => Water<AmountC>(idx).Amount >= MaxWater(idx);
+        public static bool HaveMaxWater(in byte idx) => Water(idx).Amount >= MaxWater(idx);
 
 
         public CellUnitWaterEs(in EcsWorld gameW)
@@ -41,8 +41,6 @@ namespace Game.Game
             }
         }
 
-        public static void SetMaxWater(in byte idx) => Water<AmountC>(idx).Amount = MaxWater(idx);
+        public static void SetMaxWater(in byte idx) => Water(idx).Amount = MaxWater(idx);
     }
-
-    public interface ICellUnitWaterE { }
 }

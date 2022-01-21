@@ -41,7 +41,7 @@ namespace Game
 
                 case SceneTypes.Game:
                     SystemDataManager.Run(DataSTypes.RunUpdate);
-                    SystemViewDataManager.Run(ViewDataSTypes.RunUpdate);
+                    SystemViewDataManager.Run(ViewDataSystemTypes.RunUpdate);
                     SystemViewDataUIManager.Run(UITypes.RunUpdate);
                     break;
 
@@ -65,7 +65,7 @@ namespace Game
 
                 case SceneTypes.Game:
                     SystemDataManager.Run(DataSTypes.RunFixedUpdate);
-                    SystemViewDataManager.Run(ViewDataSTypes.RunFixedUpdate);
+                    SystemViewDataManager.Run(ViewDataSystemTypes.RunFixedUpdate);
                     SystemViewDataUIManager.Run(UITypes.RunFixedUpdate);
                     break;
 

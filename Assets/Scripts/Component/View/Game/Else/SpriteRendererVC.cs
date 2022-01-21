@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct SpriteRendererVC : ICellVE, IUnitCellV, IFireCellVE, IEnvCellV, ITrailCellV, ICloudCellV, IBuildCellV, IRiverCellVE, ISupportVE, IBlockCellVE, IBarCellVE, IStunCellVE
+    public readonly struct SpriteRendererVC : ICellVE, IUnitCellV, IFireCellVE, IEnvCellV, ITrailCellV, ICloudCellV, IBuildCellV, ISupportVE, IBlockCellVE, IBarCellVE, IStunCellVE
     {
         readonly SpriteRenderer _sr;
 
@@ -37,8 +37,13 @@ namespace Game.Game
             get => _sr.color;
             set => _sr.color = value;
         }
+        public bool Enabled
+        {
+            get => _sr.enabled;
+            set => _sr.enabled = value;
+        }
 
-        internal SpriteRendererVC(in SpriteRenderer sr) => _sr = sr;
+        public SpriteRendererVC(in SpriteRenderer sr) => _sr = sr;
 
         public void SetActive(in bool needActive) => _sr.enabled = needActive;
         public void Enable() => _sr.enabled = true;

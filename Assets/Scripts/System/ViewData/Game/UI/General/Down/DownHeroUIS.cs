@@ -6,21 +6,36 @@ namespace Game.Game
     {
         public void Run()
         {
-            var isActive = InventorUnitsE.Units(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveE.CurPlayerI).Have;
-            var cooldown = EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, WhoseMoveE.CurPlayerI).Cooldown;
+            var curPlayerI = WhoseMoveE.CurPlayerI;
 
-
-            Parent.SetActive(isActive);
-
-            if (isActive && cooldown > 0)
+            if (InventorUnitsE.HaveHero(curPlayerI, out var hero))
             {
-                Cooldown.SetActiveParent(true);
-                Cooldown.Text = cooldown.ToString();
+                Parent.SetActive(true);
+
+                var cooldown = EntityPool.ScoutHeroCooldown(hero, curPlayerI).Amount;
+
+                for (var unit = UnitTypes.Elfemale; unit <= UnitTypes.Snowy; unit++)
+                {
+                    Image(unit).SetActive(false);
+                }
+
+                Image(hero).SetActive(true);
+
+                if (cooldown > 0)
+                {
+                    Cooldown.SetActiveParent(true);
+                    Cooldown.Text = cooldown.ToString();
+                }
+                else
+                {
+                    Cooldown.SetActiveParent(false);
+                }
             }
             else
             {
-                Cooldown.SetActiveParent(false);
+                Parent.SetActive(false);
             }
+            
         }
     }
 }

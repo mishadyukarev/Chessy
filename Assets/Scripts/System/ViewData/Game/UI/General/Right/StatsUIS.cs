@@ -14,7 +14,7 @@ namespace Game.Game
 
             ref var hpUnit_sel = ref CellUnitHpEs.Hp(selIdx);
             ref var stepUnit_sel = ref CellUnitStepEs.Steps(selIdx);
-            ref var waterUnit_sel = ref CellUnitWaterEs.Water<AmountC>(selIdx);
+            ref var waterUnit_sel = ref CellUnitWaterEs.Water(selIdx);
 
 
             if (unit_sel.Have)

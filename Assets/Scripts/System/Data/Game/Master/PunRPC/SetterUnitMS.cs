@@ -23,14 +23,13 @@ namespace Game.Game
 
             ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
             ref var step_0 = ref CellUnitStepEs.Steps(idx_0);
-            ref var water_0 = ref CellUnitWaterEs.Water<AmountC>(idx_0);
 
             ref var cond_0 = ref CellUnitElseEs.Condition(idx_0);
 
             ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
 
 
-            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
+            var whoseMove = WhoseMoveE.WhoseMove.Player;
 
 
             if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(whoseMove, idx_0).Can)

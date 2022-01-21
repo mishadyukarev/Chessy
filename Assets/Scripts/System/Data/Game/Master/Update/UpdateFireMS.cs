@@ -68,7 +68,7 @@ namespace Game.Game
                         fire_0.Disable();
 
 
-                        foreach (var idx_1 in CellSpaceSupport.GetIdxAround(idx_0))
+                        foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
                             if (IsActiveC(idx_1).IsActive)
                             {

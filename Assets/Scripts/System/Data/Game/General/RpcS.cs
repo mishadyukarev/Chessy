@@ -8,9 +8,8 @@ using static Game.Game.EntityCellCloudPool;
 using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellFireEs;
 using static Game.Game.CellEs;
-using static Game.Game.EntityCellRiverPool;
 using static Game.Game.CellTrailEs;
-using static Game.Game.EntitySound;
+using static Game.Game.SoundE;
 using static Game.Game.CellUnitTWE;
 
 namespace Game.Game
@@ -41,7 +40,7 @@ namespace Game.Game
 
             InfoC.AddInfo(MGOTypes.Master, infoFrom);
 
-            if (rpcT == RpcMasterTypes.UniqAbil)
+            if (rpcT == RpcMasterTypes.UniqueAbility)
             {
                 var uniqAbil = (UniqueAbilityTypes)objects[_idx_cur++];
 
@@ -89,6 +88,14 @@ namespace Game.Game
 
                     case UniqueAbilityTypes.ChangeCornerArcher:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        break;
+
+                    case UniqueAbilityTypes.FreezeDirectEnemy:
+                        FreezeDirectEnemyME.IdxFromToC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        break;
+
+                    case UniqueAbilityTypes.IceWall:
+                        IceWallME.IdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
                     default: throw new Exception();
@@ -237,8 +244,12 @@ namespace Game.Game
                     Sound((ClipTypes)objects[_idx_cur++]).Invoke();
                     break;
 
-                case RpcGeneralTypes.SoundUniq:
+                case RpcGeneralTypes.SoundUniqueAbility:
                     Sound((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
+                    break;
+
+                case RpcGeneralTypes.SoundRpcMaster:
+                    //Sound((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -269,7 +280,7 @@ namespace Game.Game
 
                 objs.Add(CellUnitHpEs.Hp(idx_0).Amount);
                 objs.Add(CellUnitStepEs.Steps(idx_0).Amount);
-                objs.Add(CellUnitWaterEs.Water<AmountC>(idx_0).Amount);
+                objs.Add(CellUnitWaterEs.Water(idx_0).Amount);
 
                 objs.Add(CellUnitElseEs.Condition(idx_0).Condition);
                 foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
@@ -279,11 +290,11 @@ namespace Game.Game
                 objs.Add(UnitTW<LevelTC>(idx_0).Level);
                 objs.Add(UnitTW<ProtectionC>(idx_0).Protection);
 
-                objs.Add(CellUnitStunEs.StepsForExitStun(idx_0).Amount);
+                objs.Add(CellUnitStunEs.ForExitStun(idx_0).Amount);
 
                 objs.Add(CellUnitElseEs.Corned(idx_0).IsCornered);
 
-                foreach (var item in CellUnitAbilityUniqueEs.Keys) objs.Add(CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Cooldown);
+                foreach (var item in CellUnitAbilityUniqueEs.Keys) objs.Add(CellUnitAbilityUniqueEs.Cooldown(item, idx_0).Amount);
 
 
 
@@ -302,9 +313,9 @@ namespace Game.Game
 
 
 
-                objs.Add(River<RiverC>(idx_0).River);
-                foreach (var item_0 in River<RiverC>(idx_0).DirectsDict)
-                    objs.Add(item_0.Value);
+                objs.Add(CellRiverE.River(idx_0).River);
+                foreach (var item_0 in CellRiverE.Keys)
+                   objs.Add(CellRiverE.HaveRive(item_0, idx_0).Have);
 
 
                 foreach (var item_0 in CellTrailEs.Keys)
@@ -320,10 +331,10 @@ namespace Game.Game
 
             }
 
-            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.First));
-            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.Second));
-            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.First));
-            objs.Add(EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.Second));
+            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.First).Amount);
+            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.Second).Amount);
+            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.First).Amount);
+            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.Second).Amount);
 
 
 
@@ -349,7 +360,7 @@ namespace Game.Game
 
             #region Other
 
-            objs.Add(WhoseMoveE.WhoseMove<PlayerTC>().Player);
+            objs.Add(WhoseMoveE.WhoseMove.Player);
             objs.Add(EntityPool.Winner.Player);
             objs.Add(EntityPool.GameInfo<IsStartedGameC>().IsStartedGame);
             objs.Add(EntityPool.Ready<IsReadyC>(PlayerTypes.Second).IsReady);
@@ -385,7 +396,7 @@ namespace Game.Game
                 CellUnitElseEs.Owner(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
                 CellUnitHpEs.Hp(idx_0).Amount = (int)objects[_idx_cur++];
                 CellUnitStepEs.Steps(idx_0).Amount = (int)objects[_idx_cur++];
-                CellUnitWaterEs.Water<AmountC>(idx_0).Amount = (int)objects[_idx_cur++];
+                CellUnitWaterEs.Water(idx_0).Amount = (int)objects[_idx_cur++];
 
                 CellUnitElseEs.Condition(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
                 foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
@@ -396,11 +407,11 @@ namespace Game.Game
                 UnitTW<ProtectionC>(idx_0).Protection = (int)objects[_idx_cur++];
 
 
-                CellUnitStunEs.StepsForExitStun(idx_0).Amount = (int)objects[_idx_cur++];
+                CellUnitStunEs.ForExitStun(idx_0).Amount = (int)objects[_idx_cur++];
 
                 CellUnitElseEs.Corned(idx_0).IsCornered = (bool)objects[_idx_cur++];
 
-                foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Cooldown = (int)objects[_idx_cur++];
+                foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown(item, idx_0).Amount = (int)objects[_idx_cur++];
 
 
 
@@ -413,10 +424,9 @@ namespace Game.Game
                     Resources(item_0, idx_0).Amount = (int)objects[_idx_cur++];
                 }
 
-                ref var river_0 = ref River<RiverC>(idx_0);
-                river_0.Sync((RiverTypes)objects[_idx_cur++]);
-                foreach (var item_0 in river_0.DirectsDict)
-                    river_0.Sync(item_0.Key, (bool)objects[_idx_cur++]);
+                CellRiverE.River(idx_0).River = (RiverTypes)objects[_idx_cur++];
+                foreach (var dir in CellRiverE.Keys)
+                    CellRiverE.HaveRive(dir, idx_0).Have = (bool)objects[_idx_cur++];
 
 
 
@@ -430,10 +440,10 @@ namespace Game.Game
             }
 
 
-            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.First).Cooldown = (int)objects[_idx_cur++];
-            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, PlayerTypes.Second).Cooldown = (int)objects[_idx_cur++];
-            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.First).Cooldown = (int)objects[_idx_cur++];
-            EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, PlayerTypes.Second).Cooldown = (int)objects[_idx_cur++];
+            EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.First).Amount = (int)objects[_idx_cur++];
+            EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.Second).Amount = (int)objects[_idx_cur++];
+            EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.First).Amount = (int)objects[_idx_cur++];
+            EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.Second).Amount = (int)objects[_idx_cur++];
 
 
 
@@ -459,7 +469,7 @@ namespace Game.Game
 
             #region Other
 
-            WhoseMoveE.WhoseMove<PlayerTC>().Player = (PlayerTypes)objects[_idx_cur++];
+            WhoseMoveE.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
             EntityPool.Winner.Player = (PlayerTypes)objects[_idx_cur++];
             EntityPool.GameInfo<IsStartedGameC>().IsStartedGame = (bool)objects[_idx_cur++];
             EntityPool.Ready<IsReadyC>(WhoseMoveE.CurPlayerI).IsReady = (bool)objects[_idx_cur++];

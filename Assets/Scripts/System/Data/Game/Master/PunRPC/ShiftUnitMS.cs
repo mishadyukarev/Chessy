@@ -8,7 +8,7 @@ namespace Game.Game
         {
             EntityMPool.Shift<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
-            var whoseMove = WhoseMoveE.WhoseMove<PlayerTC>().Player;
+            var whoseMove = WhoseMoveE.WhoseMove.Player;
 
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))

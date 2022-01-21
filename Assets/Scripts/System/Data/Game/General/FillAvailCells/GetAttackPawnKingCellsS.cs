@@ -20,7 +20,7 @@ namespace Game.Game
                 ref var level_0 = ref CellUnitElseEs.Level(idx_0);
                 ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
                 ref var step_0 = ref CellUnitStepEs.Steps(idx_0);
-                ref var stunUnit_0 = ref CellUnitStunEs.StepsForExitStun(idx_0);
+                ref var stunUnit_0 = ref CellUnitStunEs.ForExitStun(idx_0);
 
                 if (!stunUnit_0.Have)
                 {

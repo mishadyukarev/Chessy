@@ -6,13 +6,23 @@ namespace Game.Game
 {
     public struct CellRiverVEs
     {
+        static Entity[] _parents;
         static Dictionary<DirectTypes, Entity[]> _rivers;
 
-        public static ref C River<C>(in DirectTypes dir, in byte idx) where C : struct, IRiverCellVE => ref _rivers[dir][idx].Get<C>();
+        public static ref TransformVC Parent(in byte idx) => ref _parents[idx].Get<TransformVC>();
+        public static ref SpriteRendererVC River(in DirectTypes dir, in byte idx) => ref _rivers[dir][idx].Get<SpriteRendererVC>();
 
         public CellRiverVEs(in EcsWorld gameW, in GameObject[] cells)
         {
             _rivers = new Dictionary<DirectTypes, Entity[]>();
+
+            _parents = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
+            for (var idx = 0; idx < _parents.Length; idx++)
+            {
+                _parents[idx] = gameW.NewEntity()
+                    .Add(new TransformVC(cells[idx].transform.Find("River")));
+            }
+
 
             for (var dir = DirectTypes.Up; dir < DirectTypes.End; dir++)
             {
@@ -29,23 +39,4 @@ namespace Game.Game
             }
         }
     }
-    //    public void Rotate(PlayerTypes player)
-    //    {
-    //        switch (player)
-    //        {
-    //            case PlayerTypes.None: throw new Exception();
-    //            case PlayerTypes.First:
-    //                _parent_Trans.localEulerAngles = new Vector3(0, 0, 0);
-    //                break;
-    //            case PlayerTypes.Second:
-    //                _parent_Trans.localEulerAngles = new Vector3(0, 0, 180);
-    //                break;
-    //            default: throw new Exception();
-    //        }
-
-    //    }
-    //}
-
-
-    public interface IRiverCellVE { }
 }

@@ -8,12 +8,7 @@ namespace Game.Game
     {
         static Dictionary<UniqueAbilityTypes, Entity[]> _abils;
 
-        public static ref C Cooldown<C>(in UniqueAbilityTypes uniq, in byte idx) where C : struct
-        {
-            if (!_abils.ContainsKey(uniq)) throw new Exception();
-            return ref _abils[uniq][idx].Get<C>();
-        }
-
+        public static ref AmountC Cooldown(in UniqueAbilityTypes uniq, in byte idx) => ref _abils[uniq][idx].Get<AmountC>();
         public static HashSet<UniqueAbilityTypes> Keys
         {
             get
@@ -28,14 +23,14 @@ namespace Game.Game
         public CellUnitAbilityUniqueEs(in EcsWorld gameW)
         {
             _abils = new Dictionary<UniqueAbilityTypes, Entity[]>();
-            for (var uniqAbil = UniqueAbilityTypes.First; uniqAbil < UniqueAbilityTypes.End; uniqAbil++)
+            for (var uniqAbil = UniqueAbilityTypes.None + 1; uniqAbil < UniqueAbilityTypes.End; uniqAbil++)
             {
                 _abils.Add(uniqAbil, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
 
                 for (var idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                 {
                     _abils[uniqAbil][idx] = gameW.NewEntity()
-                        .Add(new CooldownC());
+                        .Add(new AmountC());
                 }
             }
         }

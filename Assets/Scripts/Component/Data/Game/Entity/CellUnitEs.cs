@@ -174,13 +174,13 @@ namespace Game.Game
 
             foreach (var item in CellUnitEffectsEs.Keys)
                 CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Have = CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Have;
-            CellUnitWaterEs.Water<AmountC>(idx_to).Set(CellUnitWaterEs.Water<AmountC>(idx_from));
+            CellUnitWaterEs.Water(idx_to).Set(CellUnitWaterEs.Water(idx_from));
             foreach (var item in CellUnitStepsInConditionEs.Keys) CellUnitStepsInConditionEs.Steps(item, idx_to).Reset();
-            foreach (var unique in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(unique, idx_to).Cooldown = CellUnitAbilityUniqueEs.Cooldown<CooldownC>(unique, idx_from).Cooldown;
+            foreach (var unique in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown(unique, idx_to).Amount = CellUnitAbilityUniqueEs.Cooldown(unique, idx_from).Amount;
             CellUnitElseEs.Corned(idx_to).Set(CellUnitElseEs.Corned(idx_from));
 
 
-            CellUnitStunEs.StepsForExitStun(idx_to).Reset();
+            CellUnitStunEs.ForExitStun(idx_to).Reset();
 
             if (!Unit(idx_from).IsAnimal)
             {
@@ -201,7 +201,7 @@ namespace Game.Game
             WhereUnitsE.HaveUnit(Unit(idx_from).Unit, level_from.Level, own_from.Player, idx_from).Have = false;
             Unit(idx_from).Reset();
 
-            if (EntityCellRiverPool.River<RiverC>(idx_to).HaveNearRiver) CellUnitWaterEs.SetMaxWater(idx_to);
+            if (CellRiverE.River(idx_to).HaveRiver) CellUnitWaterEs.SetMaxWater(idx_to);
         }
         public static void Kill(in byte idx)
         {
@@ -217,7 +217,7 @@ namespace Game.Game
             }
             else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {
-                EntityPool.ScoutHeroCooldown<CooldownC>(unit.Unit, ownUnit.Player).Cooldown = 3;
+                EntityPool.ScoutHeroCooldown(unit.Unit, ownUnit.Player).Amount = 3;
                 InventorUnitsE.Units(unit.Unit, levUnit.Level, ownUnit.Player).Amount += 1;
             }
 

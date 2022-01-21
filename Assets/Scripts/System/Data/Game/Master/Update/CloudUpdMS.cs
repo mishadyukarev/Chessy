@@ -12,7 +12,7 @@ namespace Game.Game
 
             weather_0.Have = false;
 
-            foreach (var idx_1 in CellSpaceSupport.GetIdxAround(CenterCloudEnt.CenterCloud<IdxC>().Idx))
+            foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(CenterCloudEnt.CenterCloud<IdxC>().Idx))
             {
                 Cloud<HaveEffectC>(idx_1).Have = false;
             }

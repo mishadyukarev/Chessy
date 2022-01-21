@@ -81,7 +81,7 @@ namespace Game.Game
                         switch (SelectedUnitE.SelUnit<LevelTC>().Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Scout).Sprite; break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Scout).Sprite; break;
                             case LevelTypes.Second: throw new Exception();
                             default: throw new Exception();
                         }
@@ -90,7 +90,7 @@ namespace Game.Game
                         switch (levUnitC_cur.Level)
                         {
                             case LevelTypes.None: throw new Exception();
-                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Elfemale).Sprite; break;
+                            case LevelTypes.First: mainUnit_cur.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Elfemale).Sprite; break;
                             case LevelTypes.Second: throw new Exception();
                             default: throw new Exception();
                         }

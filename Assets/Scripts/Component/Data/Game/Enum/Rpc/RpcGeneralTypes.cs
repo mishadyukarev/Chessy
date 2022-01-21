@@ -6,8 +6,11 @@
 
         Mistake,
         GetUnit,
+
         SoundEff,
-        SoundUniq,
+        SoundUniqueAbility,
+        SoundRpcMaster,
+
         ActiveMotion,
         Sync,
     }

@@ -16,12 +16,23 @@ namespace Game.Game
             {
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
+                    foreach (byte idx_0 in CellEs.Idxs)
+                    {
+                        CellUnitStunEs.ForExitStun(idx_0).Take(2);
+                        CellIceWallEs.Hp(idx_0).Take(2);
+                    }
                     SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
                     EntityPool.Rpc.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
+                    foreach (byte idx_0 in CellEs.Idxs)
+                    {
+                        CellUnitStunEs.ForExitStun(idx_0).Take();
+                        CellIceWallEs.Hp(idx_0).Take();
+                    }
+
                     var curPlayer = WhoseMoveE.CurPlayerI;
                     var nextPlayer = WhoseMoveE.NextPlayerFrom(curPlayer);
 
@@ -31,7 +42,7 @@ namespace Game.Game
                         EntityPool.Rpc.ActiveMotionZoneToGen(sender);
                     }
 
-                    WhoseMoveE.WhoseMove<PlayerTC>().Player = nextPlayer;
+                    WhoseMoveE.WhoseMove.Player = nextPlayer;
 
 
                     curPlayer = WhoseMoveE.CurPlayerI;

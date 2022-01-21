@@ -15,8 +15,8 @@ namespace Game.Game
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Scout, player).Cooldown -= 1;
-                EntityPool.ScoutHeroCooldown<CooldownC>(UnitTypes.Elfemale, player).Cooldown -= 1;
+                EntityPool.ScoutHeroCooldown(UnitTypes.Scout, player).Amount -= 1;
+                EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, player).Amount -= 1;
 
                 InventorResourcesE.Resource(ResourceTypes.Food, player).Add(EconomyValues.ADDING_FOOD_AFTER_MOVE);
             }
@@ -36,8 +36,7 @@ namespace Game.Game
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
                 foreach (var item in CellTrailEs.Keys) CellTrailEs.Health(item, idx_0).Take();
-                foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown<CooldownC>(item, idx_0).Take();
-                CellUnitStunEs.StepsForExitStun(idx_0).Take();
+                foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown(item, idx_0).Take();
 
 
                 if (unit_0.Have && !unit_0.IsAnimal)

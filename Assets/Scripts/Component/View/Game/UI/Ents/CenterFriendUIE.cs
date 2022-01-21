@@ -9,7 +9,8 @@ namespace Game.Game
     {
         static Entity _entity;
 
-        public static ref C Friend<C>() where C : struct => ref _entity.Get<C>();
+        public static ref TextUIC TextC => ref _entity.Get<TextUIC>();
+        public static ref ButtonUIC ButtonC => ref _entity.Get<ButtonUIC>();
 
         public CenterFriendUIE(in EcsWorld gameW, in Transform centerZone)
         {

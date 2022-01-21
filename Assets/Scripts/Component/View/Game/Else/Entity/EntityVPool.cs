@@ -44,9 +44,6 @@ namespace Game.Game
                 .Add(new GeneralZoneVEC())
                 .Add(new GameObjectVC(genZone));
 
-
-            new VideoClipsResC(true);
-
             SoundC.SavedVolume = SoundC.Volume;
 
 
@@ -168,7 +165,7 @@ namespace Game.Game
 
 
 
-            for (var uniq = UniqueAbilityTypes.First; uniq < UniqueAbilityTypes.End; uniq++)
+            for (var uniq = UniqueAbilityTypes.None + 1; uniq < UniqueAbilityTypes.End; uniq++)
             {
                 if (uniq != UniqueAbilityTypes.CircularAttack
                     && uniq != UniqueAbilityTypes.PutOutFirePawn
@@ -182,7 +179,6 @@ namespace Game.Game
                     var volume = 0f;
                     switch (uniq)
                     {
-                        case UniqueAbilityTypes.None: throw new Exception();
                         case UniqueAbilityTypes.CircularAttack: throw new Exception();
                         case UniqueAbilityTypes.BonusNear: volume = 0.3f; break;
                         case UniqueAbilityTypes.FirePawn: volume = 0.2f; break;
@@ -193,7 +189,8 @@ namespace Game.Game
                         case UniqueAbilityTypes.GrowAdultForest: volume = 0.3f; break;
                         case UniqueAbilityTypes.StunElfemale: volume = 0.3f; break;
                         case UniqueAbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
-                        case UniqueAbilityTypes.End: throw new Exception();
+                        case UniqueAbilityTypes.FreezeDirectEnemy: volume = 0.1f; break;
+                        case UniqueAbilityTypes.IceWall: volume = 0.1f; break;
                         default: throw new Exception();
                     }
 

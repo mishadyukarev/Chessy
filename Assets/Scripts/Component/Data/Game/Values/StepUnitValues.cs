@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    internal readonly struct StepUnitValues
+    internal static class StepUnitValues
     {
-        internal int NeedAmountSteps(EnvironmentTypes env)
+        internal static int NeedAmountSteps(EnvironmentTypes env)
         {
             switch (env)
             {
@@ -17,7 +17,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal int MaxAmountSteps(in UnitTypes unit, in bool haveEffect/*, in int upgradeSteps*/)
+        internal static int MaxAmountSteps(in UnitTypes unit, in bool haveEffect/*, in int upgradeSteps*/)
         {
             var steps = 0;
 
@@ -29,6 +29,7 @@ namespace Game.Game
                 case UnitTypes.Archer: steps = 3; break;
                 case UnitTypes.Scout: steps = 5; break;
                 case UnitTypes.Elfemale: steps = 3; break;
+                case UnitTypes.Snowy: steps = 3; break;
                 case UnitTypes.Camel: steps = 3; break;
                 default: throw new Exception();
             }
