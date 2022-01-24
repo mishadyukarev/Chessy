@@ -24,7 +24,7 @@ namespace Game.Game
 
             if (build == BuildingTypes.Mine)
             {
-                if (CellUnitStepEs.HaveForBuilding(idx_0, build))
+                if (EntitiesPool.UnitStep.HaveForBuilding(idx_0, build))
                 {
                     if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                     {
@@ -40,7 +40,7 @@ namespace Game.Game
 
                                 CellBuildE.SetNew(build, whoseMove, idx_0);
 
-                                CellUnitStepEs.TakeForBuild(idx_0);
+                                EntitiesPool.UnitStep.TakeForBuild(idx_0);
                             }
 
                             else EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);

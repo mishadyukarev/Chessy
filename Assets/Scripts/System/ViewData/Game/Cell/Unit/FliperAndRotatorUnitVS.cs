@@ -12,8 +12,8 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
-                ref var corner_0 = ref CellUnitElseEs.Corned(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var corner_0 = ref EntitiesPool.UnitElse.Corned(idx_0);
 
                 ref var main_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
                 ref var extra_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);

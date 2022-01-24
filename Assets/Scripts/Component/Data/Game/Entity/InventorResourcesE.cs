@@ -101,8 +101,8 @@ namespace Game.Game
             for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
                 Resource(res, player).Take(EconomyValues.AmountResForMelting(res));
 
-            Resource(ResourceTypes.Iron, player).Add(4);
-            Resource(ResourceTypes.Gold, player).Add();
+            Resource(ResourceTypes.Iron, player) += 4;
+            Resource(ResourceTypes.Gold, player)++;
         }
 
         public static bool CanBuy(PlayerTypes player, ResourceTypes res, out Dictionary<ResourceTypes, int> needRes)
@@ -140,7 +140,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            Resource(res, player).Add(amount);
+            Resource(res, player) += amount;
         }
 
 

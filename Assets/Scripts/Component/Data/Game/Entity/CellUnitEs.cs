@@ -3,10 +3,11 @@ using System;
 
 namespace Game.Game
 {
-    public readonly struct CellUnitEs
+    public struct CellUnitEs
     {
-        static Entity[] _units;
-        public static ref UnitTC Unit(in byte idx) => ref _units[idx].Get<UnitTC>();
+        static Entity[] Ents;
+
+        public static ref UnitTC Unit(in byte idx) => ref Ents[idx].Get<UnitTC>();
 
 
         public static bool CanExtract(in byte idx, out int extract, out EnvironmentTypes env, out ResourceTypes res)
@@ -24,13 +25,13 @@ namespace Game.Game
             else return false;
 
 
-            if (!Unit(idx).Is(UnitTypes.Pawn) || !CellUnitElseEs.Condition(idx).Is(ConditionUnitTypes.Relaxed)
-                || !CellUnitHpEs.HaveMax(idx)) return false;
+            if (!Unit(idx).Is(UnitTypes.Pawn) || !EntitiesPool.UnitElse.Condition(idx).Is(ConditionUnitTypes.Relaxed)
+                || !EntitiesPool.UnitHps[idx].HaveMax) return false;
 
 
             var ration = 0f;
 
-            switch (CellUnitElseEs.Level(idx).Level)
+            switch (EntitiesPool.UnitElse.Level(idx).Level)
             {
                 case LevelTypes.First: ration = 0.1f; break;
                 case LevelTypes.Second: ration = 0.2f; break;
@@ -51,7 +52,7 @@ namespace Game.Game
 
             var twC = CellUnitTWE.UnitTW<ToolWeaponC>(idx);
 
-            if (CellBuildE.Build<BuildingTC>(idx).Have || !CellUnitElseEs.Condition(idx).Is(ConditionUnitTypes.Relaxed) || !CellUnitHpEs.HaveMax(idx)) return false;
+            if (CellBuildE.Build<BuildingTC>(idx).Have || !EntitiesPool.UnitElse.Condition(idx).Is(ConditionUnitTypes.Relaxed) || !EntitiesPool.UnitHps[idx].HaveMax) return false;
 
 
 
@@ -64,7 +65,7 @@ namespace Game.Game
 
                     env = EnvironmentTypes.Hill;
 
-                    switch (CellUnitElseEs.Level(idx).Level)
+                    switch (EntitiesPool.UnitElse.Level(idx).Level)
                     {
                         case LevelTypes.First: ration = 0.3f; break;
                         case LevelTypes.Second: ration = 0.6f; break;
@@ -95,11 +96,11 @@ namespace Game.Game
             var haveEff = CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx).Have;
             var upgPerc = 0f;
 
-            var standDamage = DamageUnitValues.StandDamage(Unit(idx).Unit, CellUnitElseEs.Level(idx).Level);
+            var standDamage = UnitDamageValues.StandDamage(Unit(idx).Unit, EntitiesPool.UnitElse.Level(idx).Level);
 
 
             if (!Unit(idx).IsAnimal)
-                if (UnitStatUpgradesEs.HaveUpgrade<HaveUpgradeC>(UnitStatTypes.Damage, Unit(idx).Unit, CellUnitElseEs.Level(idx).Level, CellUnitElseEs.Owner(idx).Player, UpgradeTypes.PickCenter).Have)
+                if (UnitStatUpgradesEs.HaveUpgrade<HaveUpgradeC>(UnitStatTypes.Damage, Unit(idx).Unit, EntitiesPool.UnitElse.Level(idx).Level, EntitiesPool.UnitElse.Owner(idx).Player, UpgradeTypes.PickCenter).Have)
                 {
                     upgPerc = 0.3f;
                 }
@@ -108,8 +109,8 @@ namespace Game.Game
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * DamageUnitValues.PercentTW(tw);
-            if (attack == AttackTypes.Unique) powerDamege += standDamage * DamageUnitValues.UNIQUE_PERCENT_DAMAGE;
+            powerDamege += standDamage * UnitDamageValues.PercentTW(tw);
+            if (attack == AttackTypes.Unique) powerDamege += standDamage * UnitDamageValues.UNIQUE_PERCENT_DAMAGE;
 
             if (haveEff) powerDamege += standDamage * 0.2f;
 
@@ -119,28 +120,27 @@ namespace Game.Game
         }
         public static int DamageOnCell(in byte idx)
         {
-            var condition = CellUnitElseEs.Condition(idx).Condition;
+            var condition = EntitiesPool.UnitElse.Condition(idx).Condition;
 
             var build = CellBuildE.Build<BuildingTC>(idx).Build;
 
             float powerDamege = DamageAttack(idx, AttackTypes.Simple);
 
-            var standDamage = DamageUnitValues.StandDamage(Unit(idx).Unit, CellUnitElseEs.Level(idx).Level);
+            var standDamage = UnitDamageValues.StandDamage(Unit(idx).Unit, EntitiesPool.UnitElse.Level(idx).Level);
 
-            powerDamege += standDamage * DamageUnitValues.ProtRelaxPercent(condition);
-            powerDamege += standDamage * DamageUnitValues.ProtectionPercent(build);
-            foreach (var item in CellEnvironmentEs.Keys) if (CellEnvironmentEs.Resources(item, idx).Have) powerDamege += standDamage * DamageUnitValues.ProtectionPercent(item);
+            powerDamege += standDamage * UnitDamageValues.ProtRelaxPercent(condition);
+            powerDamege += standDamage * UnitDamageValues.ProtectionPercent(build);
+            foreach (var item in CellEnvironmentEs.Keys) if (CellEnvironmentEs.Resources(item, idx).Have) powerDamege += standDamage * UnitDamageValues.ProtectionPercent(item);
             return (int)powerDamege;
         }
 
 
         public CellUnitEs(in EcsWorld gameW)
         {
-            _units = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
-
-            for (byte idx = 0; idx < _units.Length; idx++)
+            Ents = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
+            for (byte idx = 0; idx < Ents.Length; idx++)
             {
-                _units[idx] = gameW.NewEntity()
+                Ents[idx] = gameW.NewEntity()
                     .Add(new UnitTC());
             }
         }
@@ -156,17 +156,17 @@ namespace Game.Game
             }
 
             ref var unit_from = ref Unit(idx_from);
-            ref var level_from = ref CellUnitElseEs.Level(idx_from);
-            ref var own_from = ref CellUnitElseEs.Owner(idx_from);
+            ref var level_from = ref EntitiesPool.UnitElse.Level(idx_from);
+            ref var own_from = ref EntitiesPool.UnitElse.Owner(idx_from);
 
 
-            CellUnitElseEs.Owner(idx_to) = CellUnitElseEs.Owner(idx_from);
-            CellUnitElseEs.Level(idx_to) = CellUnitElseEs.Level(idx_from);
+            EntitiesPool.UnitElse.Owner(idx_to) = EntitiesPool.UnitElse.Owner(idx_from);
+            EntitiesPool.UnitElse.Level(idx_to) = EntitiesPool.UnitElse.Level(idx_from);
 
 
-            CellUnitHpEs.Hp(idx_to).Set(CellUnitHpEs.Hp(idx_from));
-            CellUnitStepEs.Steps(idx_to).Set(CellUnitStepEs.Steps(idx_from));
-            if (CellUnitElseEs.Condition(idx_to).HaveCondition) CellUnitElseEs.Condition(idx_to).Reset();
+            EntitiesPool.UnitHps[idx_to].Hp = EntitiesPool.UnitHps[idx_from].Hp;
+            EntitiesPool.UnitStep.Steps(idx_to) = EntitiesPool.UnitStep.Steps(idx_from);
+            if (EntitiesPool.UnitElse.Condition(idx_to).HaveCondition) EntitiesPool.UnitElse.Condition(idx_to).Reset();
 
             CellUnitTWE.Set(idx_from, idx_to);
             CellUnitTWE.UnitTW<LevelTC>(idx_to) = CellUnitTWE.UnitTW<LevelTC>(idx_from);
@@ -174,19 +174,19 @@ namespace Game.Game
 
             foreach (var item in CellUnitEffectsEs.Keys)
                 CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Have = CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Have;
-            CellUnitWaterEs.Water(idx_to).Set(CellUnitWaterEs.Water(idx_from));
+            EntitiesPool.UnitWaters[idx_to].Water = EntitiesPool.UnitWaters[idx_from].Water;
             foreach (var item in CellUnitStepsInConditionEs.Keys) CellUnitStepsInConditionEs.Steps(item, idx_to).Reset();
             foreach (var unique in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown(unique, idx_to).Amount = CellUnitAbilityUniqueEs.Cooldown(unique, idx_from).Amount;
-            CellUnitElseEs.Corned(idx_to).Set(CellUnitElseEs.Corned(idx_from));
+            EntitiesPool.UnitElse.Corned(idx_to).Set(EntitiesPool.UnitElse.Corned(idx_from));
 
 
-            CellUnitStunEs.ForExitStun(idx_to).Reset();
+            EntitiesPool.UnitStuns[idx_to].ForExitStun.Reset();
 
             if (!Unit(idx_from).IsAnimal)
             {
                 if (CellBuildE.Build<BuildingTC>(idx_to).Is(BuildingTypes.Camp))
                 {
-                    if (!CellBuildE.Build<PlayerTC>(idx_to).Is(CellUnitElseEs.Owner(idx_to).Player))
+                    if (!CellBuildE.Build<PlayerTC>(idx_to).Is(EntitiesPool.UnitElse.Owner(idx_to).Player))
                     {
                         CellBuildE.Remove(idx_to);
                     }
@@ -201,13 +201,13 @@ namespace Game.Game
             WhereUnitsE.HaveUnit(Unit(idx_from).Unit, level_from.Level, own_from.Player, idx_from).Have = false;
             Unit(idx_from).Reset();
 
-            if (CellRiverE.River(idx_to).HaveRiver) CellUnitWaterEs.SetMaxWater(idx_to);
+            if (CellRiverE.River(idx_to).HaveRiver) EntitiesPool.UnitWaters[idx_to].SetMaxWater();
         }
         public static void Kill(in byte idx)
         {
             ref var unit = ref Unit(idx);
-            ref var ownUnit = ref CellUnitElseEs.Owner(idx);
-            ref var levUnit = ref CellUnitElseEs.Level(idx);
+            ref var ownUnit = ref EntitiesPool.UnitElse.Owner(idx);
+            ref var levUnit = ref EntitiesPool.UnitElse.Level(idx);
 
             if (!unit.Have) throw new Exception("It's not got unit");
 
@@ -231,25 +231,25 @@ namespace Game.Game
             if (Unit(idx).Have) throw new Exception("It's got unit");
 
             Unit(idx).Unit = unit.Item1;
-            CellUnitElseEs.Level(idx).Level = unit.Item2;
-            CellUnitElseEs.Owner(idx).Player = unit.Item3;
+            EntitiesPool.UnitElse.Level(idx).Level = unit.Item2;
+            EntitiesPool.UnitElse.Owner(idx).Player = unit.Item3;
             CellUnitTWE.UnitTW<ToolWeaponC>(idx).ToolWeapon = unit.Item4;
             CellUnitTWE.UnitTW<LevelTC>(idx).Level = unit.Item5;
 
-            CellUnitHpEs.SetMaxHp(idx);
-            CellUnitWaterEs.SetMaxWater(idx);
-            CellUnitStepEs.SetMaxSteps(idx);
+            EntitiesPool.UnitHps[idx].Hp.Amount = UnitHpValues.MAX_HP;
+            EntitiesPool.UnitWaters[idx].SetMaxWater();
+            EntitiesPool.UnitStep.SetMaxSteps(idx);
 
             foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx).Disable();
-            CellUnitElseEs.Condition(idx).Reset();
+            EntitiesPool.UnitElse.Condition(idx).Reset();
             foreach (var item in CellUnitStepsInConditionEs.Keys) CellUnitStepsInConditionEs.Steps(item, idx).Reset();
 
             WhereUnitsE.HaveUnit(unit.Item1, unit.Item2, unit.Item3, idx).Have = true;
         }
         public static void AddToInventor(in byte idx)
         {
-            var level = CellUnitElseEs.Level(idx).Level;
-            var owner = CellUnitElseEs.Owner(idx).Player;
+            var level = EntitiesPool.UnitElse.Level(idx).Level;
+            var owner = EntitiesPool.UnitElse.Owner(idx).Player;
 
             InventorUnitsE.Units(Unit(idx).Unit, level, owner).Amount += 1;
 
@@ -258,23 +258,23 @@ namespace Game.Game
         }
         public static void SetScout(in byte idx)
         {
-            ref var ownUnitC = ref CellUnitElseEs.Owner(idx);
+            ref var ownUnitC = ref EntitiesPool.UnitElse.Owner(idx);
 
             ref var twC = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx);
             ref var levTWC = ref CellUnitTWE.UnitTW<LevelTC>(idx);
 
 
-            WhereUnitsE.HaveUnit(Unit(idx).Unit, CellUnitElseEs.Level(idx).Level, ownUnitC.Player, idx).Have = false;
+            WhereUnitsE.HaveUnit(Unit(idx).Unit, EntitiesPool.UnitElse.Level(idx).Level, ownUnitC.Player, idx).Have = false;
 
             Unit(idx).Unit = UnitTypes.Scout;
-            CellUnitElseEs.Level(idx).Level = LevelTypes.First;
+            EntitiesPool.UnitElse.Level(idx).Level = LevelTypes.First;
             if (twC.HaveTW)
             {
                 InventorToolWeaponE.ToolWeapons<AmountC>(twC.ToolWeapon, levTWC.Level, ownUnitC.Player).Amount += 1;
                 CellUnitTWE.Reset(idx);
             }
 
-            WhereUnitsE.HaveUnit(UnitTypes.Scout, LevelTypes.First, CellUnitElseEs.Owner(idx).Player, idx).Have = true;
+            WhereUnitsE.HaveUnit(UnitTypes.Scout, LevelTypes.First, EntitiesPool.UnitElse.Owner(idx).Player, idx).Have = true;
         }
     }
 }

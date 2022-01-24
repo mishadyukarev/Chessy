@@ -12,8 +12,8 @@ namespace Game.Game
             foreach (var idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
-                ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
 
@@ -52,9 +52,9 @@ namespace Game.Game
                 }
                 //else if (!Unit<UnitCellEC>(idx_0).CanResume(out resume, out env))
                 //{
-                //    if (CellUnitHpEs.HaveMax(idx_0))
+                //    if (EntPool.CellUnitHpEs.HaveMax(idx_0))
                 //    {
-                //        if (unit_0.Have && CellUnitStepEs.HaveMin(idx_0))
+                //        if (unit_0.Have && EntitiesPool.CellUnitStepEs.HaveMin(idx_0))
                 //        {
                 //            condUnit_0.Condition = ConditionUnitTypes.Protected;
                 //        }

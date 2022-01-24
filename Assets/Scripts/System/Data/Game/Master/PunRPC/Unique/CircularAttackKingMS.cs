@@ -14,15 +14,15 @@ namespace Game.Game
             IdxDoingMC.Get(out var idx_0);
             var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
-            ref var hpUnit_0 = ref CellUnitHpEs.Hp(idx_0);
-            ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
-            ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
-            ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
+            ref var hpUnit_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
+            ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
+            ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+            ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
 
 
             if (!CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_0).Have)
             {
-                if (CellUnitStepEs.Have(idx_0, uniq_cur))
+                if (EntitiesPool.UnitStep.Have(idx_0, uniq_cur))
                 {
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
@@ -33,8 +33,8 @@ namespace Game.Game
                         var idx_1 = IdxCell(xy1);
 
                         ref var unit_1 = ref Unit(idx_1);
-                        ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);
-                        ref var hpUnit_1 = ref CellUnitHpEs.Hp(idx_1);
+                        ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
+                        ref var hpUnit_1 = ref EntitiesPool.UnitHps[idx_1].Hp;
 
                         ref var tw_1 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_1);
 
@@ -54,9 +54,9 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    CellUnitHpEs.Take(idx_1, uniq_cur);
+                                    EntitiesPool.UnitHps[idx_1].Hp.Take(UnitDamageValues.Damage(uniq_cur));
 
-                                    if (CellUnitHpEs.IsHpDeathAfterAttack(idx_1) || !hpUnit_1.Have)
+                                    if (EntitiesPool.UnitHps[idx_1].Hp.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK || !hpUnit_1.Have)
                                     {
                                         CellUnitEs.Kill(idx_1);
                                     }
@@ -65,7 +65,7 @@ namespace Game.Game
                         }
                     }
 
-                    CellUnitStepEs.Take(idx_0, uniq_cur);
+                    EntitiesPool.UnitStep.Take(idx_0, uniq_cur);
                     foreach (var item in CellUnitEffectsEs.Keys) 
                         CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 

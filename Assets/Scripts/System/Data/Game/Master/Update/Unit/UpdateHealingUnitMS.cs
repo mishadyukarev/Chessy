@@ -9,9 +9,9 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                if (CellUnitElseEs.Condition(idx_0).Is(ConditionUnitTypes.Relaxed))
+                if (EntitiesPool.UnitElse.Condition(idx_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    CellUnitHpEs.SetMaxHp(idx_0);
+                    EntitiesPool.UnitHps[idx_0].Hp.Amount = UnitHpValues.MAX_HP;
                 }
             }
         }

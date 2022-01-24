@@ -9,7 +9,7 @@
 
             var whoseMove = WhoseMoveE.WhoseMove.Player;
 
-            InventorUnitsE.Units(unit, LevelTypes.First, whoseMove).Add();
+            InventorUnitsE.Units(unit, LevelTypes.First, whoseMove)++;
             AvailableCenterHeroEs.HaveAvailHero(whoseMove).Have = false;
         }
     }

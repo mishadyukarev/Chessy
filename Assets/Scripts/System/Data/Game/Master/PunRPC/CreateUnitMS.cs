@@ -16,7 +16,7 @@
                 if (InventorResourcesE.CanCreateUnit(playerSend, unit, out var needRes))
                 {
                     InventorResourcesE.BuyCreateUnit(playerSend, unit);
-                    InventorUnitsE.Units(unit, LevelTypes.First, playerSend).Add();
+                    InventorUnitsE.Units(unit, LevelTypes.First, playerSend)++;
 
                     EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }

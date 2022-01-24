@@ -8,7 +8,10 @@ namespace ECS
         readonly Dictionary<int, Entity> _ents;
 
         public EcsWorld() => _ents = new Dictionary<int, Entity>();
-        ~EcsWorld() => _ents.Clear();
+        ~EcsWorld()
+        {
+            _ents.Clear();
+        }
 
         public Entity NewEntity()
         {
@@ -22,7 +25,7 @@ namespace ECS
     {
         readonly int _numberEnt;
 
-        internal Entity(in int numberEnt)
+        internal Entity(in int numberEnt) : this()
         {
             _numberEnt = numberEnt;
         }
@@ -32,9 +35,18 @@ namespace ECS
             ComponentPool<C>.AddComponent(_numberEnt, component);
             return this;
         }
+
         public ref C Get<C>() where C : struct
         {
-            return ref ComponentPool<C>.Component(_numberEnt);
+            if (ComponentPool<C>.ContainComponent(_numberEnt))
+            {
+                return ref ComponentPool<C>.Component(_numberEnt);
+            }
+            else
+            {
+                ComponentPool<C>.AddComponent(_numberEnt, new C());
+                return ref ComponentPool<C>.Component(_numberEnt);
+            }
         }
     }
 
@@ -42,6 +54,12 @@ namespace ECS
     {
         static C[] _components;
         static Dictionary<int, int> _numbers;
+
+        internal static bool ContainComponent(int idxEnt)
+        {
+            return _numbers.ContainsKey(idxEnt);
+        }
+        internal static ref C Component(int idxEnt) => ref _components[_numbers[idxEnt]];
 
         static ComponentPool()
         {
@@ -77,7 +95,5 @@ namespace ECS
                 _components[idx] = component;
             }
         }
-
-        internal static ref C Component(int idxEnt) => ref _components[_numbers[idxEnt]];
     }
 }

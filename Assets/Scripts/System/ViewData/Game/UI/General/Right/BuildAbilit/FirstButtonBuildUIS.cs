@@ -15,7 +15,7 @@ namespace Game.Game
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var selOnUnitCom = ref CellUnitElseEs.Owner(SelectedIdxE.IdxC.Idx);
+                    ref var selOnUnitCom = ref EntitiesPool.UnitElse.Owner(SelectedIdxE.IdxC.Idx);
 
                     if (selOnUnitCom.Is(WhoseMoveE.CurPlayerI))
                     {
@@ -24,7 +24,7 @@ namespace Game.Game
                 }
             }
 
-            UIEntBuild.Button<ButtonUIC>(ButtonTypes.First).SetActive(needActiveButton);
+            RightUIEntities.Building(ButtonTypes.First).Parent.SetActive(needActiveButton);
         }
     }
 }

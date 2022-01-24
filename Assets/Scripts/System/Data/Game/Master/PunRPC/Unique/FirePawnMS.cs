@@ -19,14 +19,14 @@ namespace Game.Game
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
-            if (CellUnitStepEs.Have(idx_0, uniq_cur))
+            if (EntitiesPool.UnitStep.Have(idx_0, uniq_cur))
             {
                 if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                 {
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 
                     fire_0.Enable();
-                    CellUnitStepEs.Take(idx_0, uniq_cur);
+                    EntitiesPool.UnitStep.Take(idx_0, uniq_cur);
                 }
                 else
                 {

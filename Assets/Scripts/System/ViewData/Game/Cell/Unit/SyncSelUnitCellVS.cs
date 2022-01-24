@@ -13,9 +13,9 @@ namespace Game.Game
                 var idx_cur = CurrentIdxE.IdxC.Idx;
 
                 ref var unitC_cur = ref Unit(idx_cur);
-                ref var levUnitC_cur = ref CellUnitElseEs.Level(idx_cur);
+                ref var levUnitC_cur = ref EntitiesPool.UnitElse.Level(idx_cur);
 
-                ref var corner_cur = ref CellUnitElseEs.Corned(idx_cur);
+                ref var corner_cur = ref EntitiesPool.UnitElse.Corned(idx_cur);
 
                 ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_cur);
                 ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(PreVisIdx<IdxC>().Idx);

@@ -28,7 +28,7 @@ namespace Game.Game
                 var whoseMove = WhoseMoveE.WhoseMove.Player;
 
 
-                if (CellUnitStepEs.HaveForBuilding(idx_0, BuildingTypes.City))
+                if (EntitiesPool.UnitStep.HaveForBuilding(idx_0, BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
@@ -50,7 +50,7 @@ namespace Game.Game
                         CellBuildE.SetNew(forBuildType, whoseMove, idx_0);
 
 
-                        CellUnitStepEs.Take(idx_0, BuildingTypes.City);
+                        EntitiesPool.UnitStep.Take(idx_0, BuildingTypes.City);
 
 
                         fire_0.Disable();

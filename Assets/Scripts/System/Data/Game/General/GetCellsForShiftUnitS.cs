@@ -1,5 +1,6 @@
 ﻿using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellUnitEs;
+using static Game.Game.EntitiesPool;
 
 namespace Game.Game
 {
@@ -14,18 +15,18 @@ namespace Game.Game
 
                 if (CellEs.IsActiveC(idx_0).IsActive)
                 {
-                    if (!CellUnitStunEs.ForExitStun(idx_0).Have && Unit(idx_0).Have && !Unit(idx_0).IsAnimal)
+                    if (!EntitiesPool.UnitStuns[idx_0].ForExitStun.Have && Unit(idx_0).Have && !Unit(idx_0).IsAnimal)
                     {
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
                             if (!Resources(EnvironmentTypes.Mountain, idx_1).Have && !Unit(idx_1).Have)
                             {
-                                var one = CellUnitStepEs.HaveStepsForDoing(idx_0, idx_1);
-                                var two = CellUnitStepEs.HaveMaxSteps(idx_0);
+                                var one = UnitStep.HaveStepsForDoing(idx_0, idx_1);
+                                var two = UnitStep.HaveMaxSteps(idx_0);
 
                                 if (one || two)
                                 {
-                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(CellUnitElseEs.Owner(idx_0).Player, idx_0).Add(idx_1);
+                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(EntitiesPool.UnitElse.Owner(idx_0).Player, idx_0).Add(idx_1);
                                 }
                             }
                         }

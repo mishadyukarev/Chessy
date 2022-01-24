@@ -13,8 +13,8 @@ namespace Game.Game
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
                 ref var unit_from = ref Unit(idx_0);
-                ref var ownUnit_from = ref CellUnitElseEs.Owner(idx_0);
-                ref var stun_from = ref CellUnitStunEs.ForExitStun(idx_0);
+                ref var ownUnit_from = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var stun_from = ref EntitiesPool.UnitStuns[idx_0].ForExitStun;
 
                 if (!stun_from.Have)
                 {

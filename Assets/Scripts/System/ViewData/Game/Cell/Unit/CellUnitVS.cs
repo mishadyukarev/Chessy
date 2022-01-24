@@ -12,9 +12,9 @@ namespace Game.Game
             foreach (var idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit(idx_0);
-                ref var levelUnit_0 = ref CellUnitElseEs.Level(idx_0);
+                ref var levelUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
 
-                ref var corner_0 = ref CellUnitElseEs.Corned(idx_0);
+                ref var corner_0 = ref EntitiesPool.UnitElse.Corned(idx_0);
 
                 ref var tw_0 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref CellUnitTWE.UnitTW<LevelTC>(idx_0);

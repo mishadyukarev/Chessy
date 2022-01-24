@@ -9,13 +9,13 @@ namespace Game.Game
     {
         internal RightUnitEventUIS()
         {
-            RightUniqueUIE.Button(ButtonTypes.First).AddListener(delegate { Unique(ButtonTypes.First); });
-            RightUniqueUIE.Button(ButtonTypes.Second).AddListener(delegate { Unique(ButtonTypes.Second); });
-            RightUniqueUIE.Button(ButtonTypes.Third).AddListener(delegate { Unique(ButtonTypes.Third); });
+            RightUIEntities.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
+            RightUIEntities.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
+            RightUIEntities.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
 
-            UIEntBuild.Button<ButtonUIC>(ButtonTypes.First).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
-            UIEntBuild.Button<ButtonUIC>(ButtonTypes.Second).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
-            UIEntBuild.Button<ButtonUIC>(ButtonTypes.Third).AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Third); });
+            RightUIEntities.Building(ButtonTypes.First).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
+            RightUIEntities.Building(ButtonTypes.Second).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
+            RightUIEntities.Building(ButtonTypes.Third).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Third); });
 
             RightProtectUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
             RightRelaxUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
@@ -27,7 +27,7 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (CellUnitElseEs.Condition(SelectedIdxE.IdxC.Idx).Is(condUnitType))
+                if (EntitiesPool.UnitElse.Condition(SelectedIdxE.IdxC.Idx).Is(condUnitType))
                 {
                     EntityPool.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, SelectedIdxE.IdxC.Idx);
                 }

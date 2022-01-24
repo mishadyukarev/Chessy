@@ -14,19 +14,19 @@
 
             if (CellUnitVisibleEs.Visible(player, idx_to).IsVisible && unitC_to.Have && CellRiverE.River(idx_to).HaveRiver)
             {
-                ref var ownerUnitC_0 = ref CellUnitElseEs.Owner(idx_to);
+                ref var ownerUnitC_0 = ref EntitiesPool.UnitElse.Owner(idx_to);
 
-                if (!CellUnitElseEs.Owner(idx_from).Is(ownerUnitC_0.Player))
+                if (!EntitiesPool.UnitElse.Owner(idx_from).Is(ownerUnitC_0.Player))
                 {
-                    CellUnitStunEs.ForExitStun(idx_to).Amount = 2;
+                    EntitiesPool.UnitStuns[idx_to].ForExitStun.Amount = 2;
 
-                    CellUnitAbilityUniqueEs.Cooldown(EntityMPool.UniqueAbilityC.Ability, idx_from).Add(5);
+                    CellUnitAbilityUniqueEs.Cooldown(EntityMPool.UniqueAbilityC.Ability, idx_from) += 5;
 
                     foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_to))
                     {
-                        if (CellUnitEs.Unit(idx_1).Have && CellUnitElseEs.Owner(idx_1).Is(ownerUnitC_0.Player))
+                        if (CellUnitEs.Unit(idx_1).Have && EntitiesPool.UnitElse.Owner(idx_1).Is(ownerUnitC_0.Player))
                         {
-                            CellUnitStunEs.ForExitStun(idx_1).Amount = 2;
+                            EntitiesPool.UnitStuns[idx_1].ForExitStun.Amount = 2;
                         }
                     }
                 }

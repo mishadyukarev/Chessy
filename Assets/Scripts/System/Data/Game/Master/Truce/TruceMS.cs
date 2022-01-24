@@ -19,8 +19,8 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit(idx_0);
-                ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);
@@ -43,7 +43,7 @@ namespace Game.Game
                         {
                             if (tw_0.HaveTW)
                             {
-                                InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
+                                InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player)++;
                                 CellUnitTWE.Reset(idx_0);
                             }
 
@@ -55,7 +55,7 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).Add();
+                            InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player)++;
                             CellUnitTWE.Reset(idx_0);
                         }
 

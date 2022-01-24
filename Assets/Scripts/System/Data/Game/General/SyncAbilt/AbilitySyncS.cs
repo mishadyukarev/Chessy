@@ -13,7 +13,7 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 

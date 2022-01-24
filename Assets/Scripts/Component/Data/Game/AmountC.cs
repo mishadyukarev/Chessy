@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct AmountC : IEnvCell, ICellUnitHpE, IUnitUniqueCellE
+    public struct AmountC : IEnvCell, IUnitUniqueCellE
     {
         public int Amount;
 
@@ -9,10 +9,28 @@
 
         public AmountC(in int amount) => Amount = amount;
 
-        public void Add(in int adding = 1)
+        public static AmountC operator +(AmountC amountC, in int amount)
         {
-            Amount += adding;
+            amountC.Amount += amount;
+            return amountC;
         }
+        public static AmountC operator -(AmountC amountC, in int amount)
+        {
+            if (amountC.Amount > 0)
+            {
+                amountC.Amount -= amount;
+                if (amountC.Amount < 0) amountC.Amount = 0;
+
+                return amountC;
+            }
+            return amountC;
+        }
+        public static AmountC operator ++(AmountC amountC)
+        {
+            amountC.Amount += 1;
+            return amountC;
+        }
+
         public void Take(in int taking = 1)
         {
             if(Amount > 0)
@@ -21,7 +39,6 @@
                 if (Amount < 0) Amount = 0;
             }
         }
-        public void Set(in AmountC amountC) => Amount = amountC.Amount;
         public void Reset() => Amount = 0;
     }
 }

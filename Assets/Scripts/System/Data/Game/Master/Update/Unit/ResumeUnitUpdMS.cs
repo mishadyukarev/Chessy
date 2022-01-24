@@ -11,7 +11,7 @@ namespace Game.Game
             foreach (var idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit(idx_0);
-                ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
+                ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
 
                 //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 //{
@@ -26,9 +26,9 @@ namespace Game.Game
                 //}
                 //else if (!Unit<UnitCellEC>(idx_0).CanExtract(out resume, out env, out var res))
                 //{
-                //    if (CellUnitHpEs.HaveMax(idx_0))
+                //    if (EntPool.CellUnitHpEs.HaveMax(idx_0))
                 //    {
-                //        if (unit_0.Have && CellUnitStepEs.HaveMin(idx_0))
+                //        if (unit_0.Have && EntitiesPool.CellUnitStepEs.HaveMin(idx_0))
                 //        {
                 //            condUnit_0.Condition = ConditionUnitTypes.Protected;
                 //        }

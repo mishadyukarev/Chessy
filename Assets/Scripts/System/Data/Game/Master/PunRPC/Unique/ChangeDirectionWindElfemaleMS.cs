@@ -15,9 +15,9 @@ namespace Game.Game
             ref var unit_from = ref Unit(idx_from);
 
 
-            if (CellUnitHpEs.HaveMax(idx_from))
+            if (EntitiesPool.UnitHps[idx_from].HaveMax)
             {
-                if (CellUnitStepEs.Have(idx_from, uniq_cur))
+                if (EntitiesPool.UnitStep.Have(idx_from, uniq_cur))
                 {
                     var newDir = CellSpaceSupport.GetDirect(CenterCloudEnt.CenterCloud<IdxC>().Idx, idx_to);
 
@@ -25,7 +25,7 @@ namespace Game.Game
                     {
                         CurrentDirectWindE.Direct<DirectTC>().Direct = newDir;
 
-                        CellUnitStepEs.Take(idx_from, uniq_cur);
+                        EntitiesPool.UnitStep.Take(idx_from, uniq_cur);
 
                         CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_from).Amount = 6;
 

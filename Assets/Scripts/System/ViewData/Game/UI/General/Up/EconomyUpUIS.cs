@@ -24,7 +24,7 @@ namespace Game.Game
 
             foreach (var idx_0 in Idxs)
             {
-                if (Unit(idx_0).Have && CellUnitElseEs.Owner(idx_0).Is(WhoseMoveE.CurPlayerI))
+                if (Unit(idx_0).Have && EntitiesPool.UnitElse.Owner(idx_0).Is(WhoseMoveE.CurPlayerI))
                 {
                     extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Unit(idx_0).Unit);
 

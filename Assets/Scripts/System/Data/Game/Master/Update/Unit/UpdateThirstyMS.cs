@@ -14,9 +14,9 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Unit(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
-                ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
-                ref var water_0 = ref CellUnitWaterEs.Water(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var hp_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
+                ref var water_0 = ref EntitiesPool.UnitWaters[idx_0].Water;
 
                 ref var build_0 = ref Build<BuildingTC>(idx_0);
 
@@ -35,11 +35,11 @@ namespace Game.Game
                     {
                         if (River(idx_0).HaveRiver)
                         {
-                            CellUnitWaterEs.SetMaxWater(idx_0);
+                            EntitiesPool.UnitWaters[idx_0].SetMaxWater();
                         }
                         else
                         {
-                            CellUnitWaterEs.Water(idx_0).Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f));
+                            EntitiesPool.UnitWaters[idx_0].Water.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f));
 
 
                             if (!water_0.Have)
@@ -56,7 +56,7 @@ namespace Game.Game
                                     case UnitTypes.Snowy: percent = 0.5f; break;
                                     default: throw new Exception();
                                 }
-                                CellUnitHpEs.Hp(idx_0).Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
+                                EntitiesPool.UnitHps[idx_0].Hp.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
 
 
                                 if (!hp_0.Have)

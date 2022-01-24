@@ -28,7 +28,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (CellUnitStepEs.Have(idx_0, uniq_cur))
+                    if (EntitiesPool.UnitStep.Have(idx_0, uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
@@ -46,7 +46,7 @@ namespace Game.Game
 
                                         SetNew(EnvironmentTypes.YoungForest, idx_0);
 
-                                        CellUnitStepEs.Take(idx_0, uniq_cur);
+                                        EntitiesPool.UnitStep.Take(idx_0, uniq_cur);
                                     }
                                     else
                                     {

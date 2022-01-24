@@ -3,17 +3,13 @@ using System;
 
 namespace Game.Game
 {
-    public struct CellUnitStepEs
+    public sealed class CellUnitStepEs : CellAbstractEs
     {
-        static Entity[] _hps;
+        public ref AmountC Steps(in byte idx) => ref Cells[idx].Get<AmountC>();
 
-        public static ref AmountC Steps(in byte idx) => ref _hps[idx].Get<AmountC>();
-
-
-
-        public static int MaxAmountSteps(in byte idx) => StepUnitValues.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx).Have/*, UnitUpgC.Steps(Unit, Level, Owner)*/);
-        public static bool HaveMaxSteps(in byte idx) => Steps(idx).Amount >= MaxAmountSteps(idx);
-        public static int StepsForDoing(in byte idx_from, in byte idx_to)
+        public int MaxAmountSteps(in byte idx) => StepUnitValues.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx).Have/*, UnitUpgC.Steps(Unit, Level, Owner)*/);
+        public bool HaveMaxSteps(in byte idx) => Steps(idx).Amount >= MaxAmountSteps(idx);
+        public int StepsForDoing(in byte idx_from, in byte idx_to)
         {
             var needSteps = 1;
 
@@ -28,9 +24,9 @@ namespace Game.Game
 
             return needSteps;
         }
-        public static bool HaveStepsForDoing(in byte idx_from, in byte idx_to) => Steps(idx_from).Amount >= StepsForDoing(idx_from, idx_to);
+        public bool HaveStepsForDoing(in byte idx_from, in byte idx_to) => Steps(idx_from).Amount >= StepsForDoing(idx_from, idx_to);
 
-        public static int NeedSteps(in UniqueAbilityTypes uniq)
+        public int NeedSteps(in UniqueAbilityTypes uniq)
         {
             switch (uniq)
             {
@@ -49,29 +45,21 @@ namespace Game.Game
             }
         }
 
-        public static bool Have(in byte idx, in UniqueAbilityTypes uniq) => Steps(idx).Amount >= NeedSteps(uniq);
-        public static bool HaveForBuilding(in byte idx, in BuildingTypes build) => Steps(idx).Amount >= NeedSteps(build);
-        public static bool HaveMin(in byte idx) => Steps(idx).Amount >= 1;
+        public bool Have(in byte idx, in UniqueAbilityTypes uniq) => Steps(idx).Amount >= NeedSteps(uniq);
+        public bool HaveForBuilding(in byte idx, in BuildingTypes build) => Steps(idx).Amount >= NeedSteps(build);
+        public bool HaveMin(in byte idx) => Steps(idx).Amount >= 1;
 
-        public CellUnitStepEs(in EcsWorld gameW)
-        {
-            _hps = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
-            for (var idx = 0; idx < _hps.Length; idx++)
-            {
-                _hps[idx] = gameW.NewEntity()
-                    .Add(new AmountC(idx));
-            }
-        }
+        public CellUnitStepEs(in EcsWorld gameW) : base(gameW) { }
 
 
-        public static void SetMaxSteps(in byte idx) => Steps(idx).Amount = StepUnitValues.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, false);
+        public void SetMaxSteps(in byte idx) => Steps(idx).Amount = StepUnitValues.MaxAmountSteps(CellUnitEs.Unit(idx).Unit, false);
 
-        public static void TakeStepsForDoing(in byte idx_from, in byte idx_to) => Steps(idx_from).Take(StepsForDoing(idx_from, idx_to));
-        public static void TakeForBuild(in byte idx) => Steps(idx).Take();
-        public static void Take(in byte idx, in UniqueAbilityTypes uniq) => Steps(idx).Take(NeedSteps(uniq));
-        public static void Take(in byte idx, in BuildingTypes build) => Steps(idx).Take(NeedSteps(build));
-        public static void TakeMin(in byte idx) => Steps(idx).Take();
-        public static int NeedSteps(BuildingTypes build)
+        public void TakeStepsForDoing(in byte idx_from, in byte idx_to) => Steps(idx_from).Take(StepsForDoing(idx_from, idx_to));
+        public void TakeForBuild(in byte idx) => Steps(idx).Take();
+        public void Take(in byte idx, in UniqueAbilityTypes uniq) => Steps(idx).Take(NeedSteps(uniq));
+        public void Take(in byte idx, in BuildingTypes build) => Steps(idx).Take(NeedSteps(build));
+        public void TakeMin(in byte idx) => Steps(idx).Take();
+        public int NeedSteps(BuildingTypes build)
         {
             return 1;
         }

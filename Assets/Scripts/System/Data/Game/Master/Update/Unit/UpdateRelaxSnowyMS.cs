@@ -8,17 +8,17 @@
             {
                 if (CellUnitEs.Unit(idx_0).Is(UnitTypes.Snowy))
                 {
-                    if (CellUnitElseEs.Condition(idx_0).Is(ConditionUnitTypes.Relaxed))
+                    if (EntitiesPool.UnitElse.Condition(idx_0).Is(ConditionUnitTypes.Relaxed))
                     {
-                        var maxWater_0 = CellUnitWaterEs.MaxWater(idx_0);
+                        var maxWater_0 = EntitiesPool.UnitWaters[idx_0].MaxWater;
 
-                        CellUnitWaterEs.SetMaxWater(idx_0);
+                        EntitiesPool.UnitWaters[idx_0].SetMaxWater();
 
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            if (CellUnitEs.Unit(idx_1).Have && CellUnitElseEs.Owner(idx_0).Is(CellUnitElseEs.Owner(idx_1).Player))
+                            if (CellUnitEs.Unit(idx_1).Have && EntitiesPool.UnitElse.Owner(idx_0).Is(EntitiesPool.UnitElse.Owner(idx_1).Player))
                             {
-                                CellUnitWaterEs.SetMaxWater(idx_1);
+                                EntitiesPool.UnitWaters[idx_1].SetMaxWater();
                             }
                         }
                     }

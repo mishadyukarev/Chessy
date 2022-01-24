@@ -3,7 +3,6 @@
     public enum ButtonTypes
     {
         None,
-        Start = None,
 
         First,
         Second,

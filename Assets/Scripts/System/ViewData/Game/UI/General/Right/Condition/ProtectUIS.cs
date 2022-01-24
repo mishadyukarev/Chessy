@@ -10,8 +10,8 @@ namespace Game.Game
         public void Run()
         {
             ref var unit_sel = ref Unit(SelectedIdxE.IdxC.Idx);
-            ref var ownUnit_sel = ref CellUnitElseEs.Owner(SelectedIdxE.IdxC.Idx);
-            ref var cond_sel = ref CellUnitElseEs.Condition(SelectedIdxE.IdxC.Idx);
+            ref var ownUnit_sel = ref EntitiesPool.UnitElse.Owner(SelectedIdxE.IdxC.Idx);
+            ref var cond_sel = ref EntitiesPool.UnitElse.Condition(SelectedIdxE.IdxC.Idx);
 
 
             var isEnableButt = false;

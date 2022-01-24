@@ -11,16 +11,16 @@ namespace Game.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var corner_0 = ref CellUnitElseEs.Corned(idx_0);
+            ref var corner_0 = ref EntitiesPool.UnitElse.Corned(idx_0);
 
 
-            if (CellUnitHpEs.HaveMax(idx_0))
+            if (EntitiesPool.UnitHps[idx_0].HaveMax)
             {
-                if (CellUnitStepEs.Have(idx_0, uniq))
+                if (EntitiesPool.UnitStep.Have(idx_0, uniq))
                 {
                     corner_0.ChangeCorner();
 
-                    CellUnitStepEs.Take(idx_0, uniq);
+                    EntitiesPool.UnitStep.Take(idx_0, uniq);
 
                     EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }

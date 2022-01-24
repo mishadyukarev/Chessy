@@ -18,13 +18,13 @@ namespace Game.Game
 
             var whoseMove = WhoseMoveE.WhoseMove.Player;
 
-            if (CellUnitStepEs.Steps(idx_from).Amount >= 2)
+            if (EntitiesPool.UnitStep.Steps(idx_from).Amount >= 2)
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
 
-                    CellUnitStepEs.Take(idx_from, uniq_cur);
+                    EntitiesPool.UnitStep.Take(idx_from, uniq_cur);
                     fire_to.Enable();
                 }
             }

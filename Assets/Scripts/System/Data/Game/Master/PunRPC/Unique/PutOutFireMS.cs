@@ -14,11 +14,11 @@ namespace Game.Game
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
-            if (CellUnitStepEs.HaveMin(idx_0))
+            if (EntitiesPool.UnitStep.HaveMin(idx_0))
             {
                 fire_0.Disable();
 
-                CellUnitStepEs.TakeMin(idx_0);
+                EntitiesPool.UnitStep.TakeMin(idx_0);
             }
 
             else

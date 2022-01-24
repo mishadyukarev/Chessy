@@ -13,7 +13,7 @@ namespace Game.Game
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
             {
-                CellUnitStepEs.TakeStepsForDoing(idx_from, idx_to);
+                EntitiesPool.UnitStep.TakeStepsForDoing(idx_from, idx_to);
 
                 CellUnitEs.Shift(idx_from, idx_to, true);
 

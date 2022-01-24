@@ -16,10 +16,10 @@ namespace Game.Game
                 var xy_0 = Cell<XyC>(idx_0).Xy;
 
                 ref var unit_0 = ref Unit(idx_0);
-                ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+                ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
 
-                ref var hpUnit_0 = ref CellUnitHpEs.Hp(idx_0);
+                ref var hpUnit_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
@@ -43,8 +43,8 @@ namespace Game.Game
 
                     if (unit_0.Have)
                     {
-                        CellUnitHpEs.TakeFire(idx_0);
-                        if (!CellUnitHpEs.Hp(idx_0).Have)
+                        EntitiesPool.UnitHps[idx_0].Hp.Take(UnitDamageValues.FIRE_DAMAGE);
+                        if (!EntitiesPool.UnitHps[idx_0].Hp.Have)
                         {
                             CellUnitEs.Kill(idx_0);
                         }

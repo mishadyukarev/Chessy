@@ -18,8 +18,8 @@ namespace Game.Game
                 {
                     foreach (byte idx_0 in CellEs.Idxs)
                     {
-                        CellUnitStunEs.ForExitStun(idx_0).Take(2);
-                        CellIceWallEs.Hp(idx_0).Take(2);
+                        EntitiesPool.UnitStuns[idx_0].ForExitStun.Take(2);
+                        EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
                     SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
                     EntityPool.Rpc.ActiveMotionZoneToGen(sender);
@@ -29,8 +29,8 @@ namespace Game.Game
                 {
                     foreach (byte idx_0 in CellEs.Idxs)
                     {
-                        CellUnitStunEs.ForExitStun(idx_0).Take();
-                        CellIceWallEs.Hp(idx_0).Take();
+                        EntitiesPool.UnitStuns[idx_0].ForExitStun.Take();
+                        EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 
                     var curPlayer = WhoseMoveE.CurPlayerI;

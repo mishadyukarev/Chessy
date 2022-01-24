@@ -12,7 +12,7 @@ namespace Game.Game
             var cond = EntityMPool.ConditionUnit<ConditionUnitC>().Condition;
             var idx_0 = EntityMPool.ConditionUnit<IdxC>().Idx;
 
-            ref var cond_0 = ref CellUnitElseEs.Condition(idx_0);
+            ref var cond_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
 
 
             switch (cond)
@@ -28,10 +28,10 @@ namespace Game.Game
                         cond_0.Reset();
                     }
 
-                    else if (CellUnitStepEs.HaveMin(idx_0))
+                    else if (EntitiesPool.UnitStep.HaveMin(idx_0))
                     {
                         EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        CellUnitStepEs.TakeMin(idx_0);
+                        EntitiesPool.UnitStep.TakeMin(idx_0);
                         cond_0.Condition = cond;
                     }
 
@@ -49,11 +49,11 @@ namespace Game.Game
                         cond_0.Reset();
                     }
 
-                    else if (CellUnitStepEs.HaveMin(idx_0))
+                    else if (EntitiesPool.UnitStep.HaveMin(idx_0))
                     {
                         EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Condition = cond;
-                        CellUnitStepEs.TakeMin(idx_0);
+                        EntitiesPool.UnitStep.TakeMin(idx_0);
                     }
 
                     else

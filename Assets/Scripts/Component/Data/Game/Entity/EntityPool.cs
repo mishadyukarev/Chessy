@@ -7,7 +7,7 @@ namespace Game.Game
     public readonly struct EntityPool
     {
         static Dictionary<string, Entity> _ents;
-        static Entity _background;
+        //static Entity _background;
 
         static Entity _winner;
         static Dictionary<PlayerTypes, Entity> _ready;
@@ -23,7 +23,7 @@ namespace Game.Game
         public static ref C Input<C>() where C : struct, IInputE => ref _ents[nameof(IInputE)].Get<C>();
         public static ref C ClickerObject<C>() where C : struct, IClickerObjectE => ref _ents[nameof(IClickerObjectE)].Get<C>();
         public static ref RpcE Rpc => ref _ents[nameof(Rpc)].Get<RpcE>();
-        public static ref C Background<C>() where C : struct => ref _background.Get<C>();
+        //public static ref C Background<C>() where C : struct => ref _background.Get<C>();
         public static ref PlayerTC Winner => ref _winner.Get<PlayerTC>();
         public static ref C Ready<C>(in PlayerTypes player) where C : struct => ref _ready[player].Get<C>();
         public static ref C GameInfo<C>() where C : struct => ref _gameInfo.Get<C>();
@@ -33,7 +33,7 @@ namespace Game.Game
         public static ref AmountC ScoutHeroCooldown(in UnitTypes unit, in PlayerTypes player) => ref _scoutHeroCooldown[unit.ToString() + player].Get<AmountC>();
         
 
-        public EntityPool(in EcsWorld gameW, in string nameBackground, in List<object> actions, in List<string> namesMethods)
+        public EntityPool(in EcsWorld gameW, in List<object> actions, in List<string> namesMethods)
         {
             _ents = new Dictionary<string, Entity>();
 
@@ -68,8 +68,8 @@ namespace Game.Game
             _ents[nameof(Rpc)] = gameW.NewEntity()
                 .Add(new RpcE(actions, namesMethods));
 
-            _background = gameW.NewEntity()
-                .Add(new NameC(nameBackground));
+            //_background = gameW.NewEntity()
+            //    .Add(new NameC(nameBackground));
 
             _winner = gameW.NewEntity()
                 .Add(new PlayerTC());

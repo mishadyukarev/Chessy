@@ -10,20 +10,20 @@
 
                 if (abil == default)
                 {
-                    RightUniqueUIE.Paren(button).SetActive(false);
+                    RightUIEntities.Unique(button).Paren.SetActive(false);
                 }
                 else
                 {
-                    RightUniqueUIE.Text(button).SetActiveParent(CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Have);
-                    RightUniqueUIE.Text(button).Text = CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Amount.ToString();
+                    RightUIEntities.Unique(button).Text.SetActiveParent(CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Have);
+                    RightUIEntities.Unique(button).Text.Text = CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Amount.ToString();
 
-                    RightUniqueUIE.Paren(button).SetActive(true);
+                    RightUIEntities.Unique(button).Paren.SetActive(true);
 
                     for (var unique = UniqueAbilityTypes.None + 1; unique < UniqueAbilityTypes.End; unique++)
                     {
-                        RightUniqueUIE.Zone(button, unique).SetActive(false);
+                        RightUIEntities.UniqueZone(button, unique).Zone.SetActive(false);
                     }
-                    RightUniqueUIE.Zone(button, abil).SetActive(true);
+                    RightUIEntities.UniqueZone(button, abil).Zone.SetActive(true);
                 }
             }
         }

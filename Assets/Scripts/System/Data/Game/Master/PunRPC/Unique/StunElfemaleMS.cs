@@ -14,10 +14,10 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = WhoseMoveE.WhoseMove.Player;
 
-            ref var ownUnit_from = ref CellUnitElseEs.Owner(idx_from);
+            ref var ownUnit_from = ref EntitiesPool.UnitElse.Owner(idx_from);
 
             ref var unit_to = ref Unit(idx_to);
-            ref var ownUnit_to = ref CellUnitElseEs.Owner(idx_to);
+            ref var ownUnit_to = ref EntitiesPool.UnitElse.Owner(idx_to);
 
 
             if (!CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_from).Have)
@@ -28,16 +28,16 @@ namespace Game.Game
                     {
                         if (Resources(EnvironmentTypes.AdultForest, idx_to).Have)
                         {
-                            if (CellUnitHpEs.HaveMax(idx_from))
+                            if (EntitiesPool.UnitHps[idx_from].HaveMax)
                             {
-                                if (CellUnitStepEs.Have(idx_from, uniq_cur))
+                                if (EntitiesPool.UnitStep.Have(idx_from, uniq_cur))
                                 {
                                     if (!ownUnit_from.Is(ownUnit_to.Player))
                                     {
-                                        CellUnitStunEs.ForExitStun(idx_to).Amount = 4;
+                                        EntitiesPool.UnitStuns[idx_to].ForExitStun.Amount = 4;
                                         CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_from).Amount = 5;
 
-                                        CellUnitStepEs.Take(idx_from, uniq_cur);
+                                        EntitiesPool.UnitStep.Take(idx_from, uniq_cur);
 
                                         EntityPool.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
 
@@ -46,9 +46,9 @@ namespace Game.Game
                                         {
                                             if(CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx_1).Have)
                                             {
-                                                if (CellUnitEs.Unit(idx_1).Have && CellUnitElseEs.Owner(idx_1).Is(CellUnitElseEs.Owner(idx_to).Player))
+                                                if (CellUnitEs.Unit(idx_1).Have && EntitiesPool.UnitElse.Owner(idx_1).Is(EntitiesPool.UnitElse.Owner(idx_to).Player))
                                                 {
-                                                    CellUnitStunEs.ForExitStun(idx_1).Amount = 4;
+                                                    EntitiesPool.UnitStuns[idx_1].ForExitStun.Amount = 4;
                                                 }
                                             }
                                         }

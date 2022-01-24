@@ -6,7 +6,7 @@ using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
-    struct SelectorS : IEcsRunSystem
+    readonly struct SelectorS : IEcsRunSystem
     {
         public void Run()
         {
@@ -14,8 +14,8 @@ namespace Game.Game
             var idx_sel = SelectedIdxE.IdxC.Idx;
 
             ref var unit_cur = ref Unit(idx_cur);
-            ref var levUnit_cur = ref CellUnitElseEs.Level(idx_cur);
-            ref var ownUnit_cur = ref CellUnitElseEs.Owner(idx_cur);
+            ref var levUnit_cur = ref EntitiesPool.UnitElse.Level(idx_cur);
+            ref var ownUnit_cur = ref EntitiesPool.UnitElse.Owner(idx_cur);
 
             ref var unit_sel = ref Unit(idx_cur);
 

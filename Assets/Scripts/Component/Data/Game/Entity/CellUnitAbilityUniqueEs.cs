@@ -23,13 +23,13 @@ namespace Game.Game
         public CellUnitAbilityUniqueEs(in EcsWorld gameW)
         {
             _abils = new Dictionary<UniqueAbilityTypes, Entity[]>();
-            for (var uniqAbil = UniqueAbilityTypes.None + 1; uniqAbil < UniqueAbilityTypes.End; uniqAbil++)
+            for (var unique = UniqueAbilityTypes.None + 1; unique < UniqueAbilityTypes.End; unique++)
             {
-                _abils.Add(uniqAbil, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
+                _abils.Add(unique, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
 
                 for (var idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                 {
-                    _abils[uniqAbil][idx] = gameW.NewEntity()
+                    _abils[unique][idx] = gameW.NewEntity()
                         .Add(new AmountC());
                 }
             }

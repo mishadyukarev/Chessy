@@ -10,15 +10,15 @@ namespace Game.Game
             EntityMPool.Attack.Get(out var idx_from, out var idx_to);
 
             ref var unit_from = ref Unit(idx_from);
-            ref var ownerUnit_from = ref CellUnitElseEs.Owner(idx_from);
-            ref var hpUnit_from = ref CellUnitHpEs.Hp(idx_from);
-            ref var condUnit_from = ref CellUnitElseEs.Condition(idx_from);
+            ref var ownerUnit_from = ref EntitiesPool.UnitElse.Owner(idx_from);
+            ref var hpUnit_from = ref EntitiesPool.UnitHps[idx_from].Hp;
+            ref var condUnit_from = ref EntitiesPool.UnitElse.Condition(idx_from);
 
             ref var tw_from = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_from);
 
 
             ref var unit_to = ref Unit(idx_to);
-            ref var hpUnit_to = ref CellUnitHpEs.Hp(idx_to);
+            ref var hpUnit_to = ref EntitiesPool.UnitHps[idx_to].Hp;
 
             ref var tw_to = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_to);
 
@@ -29,7 +29,7 @@ namespace Game.Game
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))
             {
-                CellUnitStepEs.Steps(idx_from).Reset();
+                EntitiesPool.UnitStep.Steps(idx_from).Reset();
                 condUnit_from.Reset();
 
 
@@ -74,7 +74,7 @@ namespace Game.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = CellUnitHpEs.MAX_HP;
+                var maxDamage = UnitHpValues.MAX_HP;
                 var minDamage = 0;
 
                 if (!unit_to.IsMelee) powerDam_to /= 2;
@@ -125,7 +125,7 @@ namespace Game.Game
                     }
                     else if (minus_from > 0)
                     {
-                        CellUnitHpEs.TakeAttack(idx_from, (int)minus_from);
+                        EntitiesPool.UnitHps[idx_from].TakeAttack((int)minus_from);
                     }
                 }
 
@@ -136,7 +136,7 @@ namespace Game.Game
                 }
                 else if (minus_to > 0)
                 {
-                    CellUnitHpEs.TakeAttack(idx_to, (int)minus_to);
+                    EntitiesPool.UnitHps[idx_to].TakeAttack((int)minus_to);
                 }
 
 
@@ -145,7 +145,7 @@ namespace Game.Game
                 {
                     if (CellUnitEs.Unit(idx_to).IsAnimal)
                     {
-                        InventorResourcesE.Resource(ResourceTypes.Food, ownerUnit_from.Player).Add(EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
+                        InventorResourcesE.Resource(ResourceTypes.Food, ownerUnit_from.Player) += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                     }
 
                     CellUnitEs.Kill(idx_to);

@@ -275,14 +275,14 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 objs.Add(Unit(idx_0).Unit);
-                objs.Add(CellUnitElseEs.Level(idx_0).Level);
-                objs.Add(CellUnitElseEs.Owner(idx_0).Player);
+                objs.Add(EntitiesPool.UnitElse.Level(idx_0).Level);
+                objs.Add(EntitiesPool.UnitElse.Owner(idx_0).Player);
 
-                objs.Add(CellUnitHpEs.Hp(idx_0).Amount);
-                objs.Add(CellUnitStepEs.Steps(idx_0).Amount);
-                objs.Add(CellUnitWaterEs.Water(idx_0).Amount);
+                objs.Add(EntitiesPool.UnitHps[idx_0].Hp.Amount);
+                objs.Add(EntitiesPool.UnitStep.Steps(idx_0).Amount);
+                objs.Add(EntitiesPool.UnitWaters[idx_0].Water.Amount);
 
-                objs.Add(CellUnitElseEs.Condition(idx_0).Condition);
+                objs.Add(EntitiesPool.UnitElse.Condition(idx_0).Condition);
                 foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
@@ -290,9 +290,9 @@ namespace Game.Game
                 objs.Add(UnitTW<LevelTC>(idx_0).Level);
                 objs.Add(UnitTW<ProtectionC>(idx_0).Protection);
 
-                objs.Add(CellUnitStunEs.ForExitStun(idx_0).Amount);
+                objs.Add(EntitiesPool.UnitStuns[idx_0].ForExitStun.Amount);
 
-                objs.Add(CellUnitElseEs.Corned(idx_0).IsCornered);
+                objs.Add(EntitiesPool.UnitElse.Corned(idx_0).IsCornered);
 
                 foreach (var item in CellUnitAbilityUniqueEs.Keys) objs.Add(CellUnitAbilityUniqueEs.Cooldown(item, idx_0).Amount);
 
@@ -392,13 +392,13 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 Unit(idx_0).Unit = (UnitTypes)objects[_idx_cur++];
-                CellUnitElseEs.Level(idx_0).Level = (LevelTypes)objects[_idx_cur++];
-                CellUnitElseEs.Owner(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
-                CellUnitHpEs.Hp(idx_0).Amount = (int)objects[_idx_cur++];
-                CellUnitStepEs.Steps(idx_0).Amount = (int)objects[_idx_cur++];
-                CellUnitWaterEs.Water(idx_0).Amount = (int)objects[_idx_cur++];
+                EntitiesPool.UnitElse.Level(idx_0).Level = (LevelTypes)objects[_idx_cur++];
+                EntitiesPool.UnitElse.Owner(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
+                EntitiesPool.UnitHps[idx_0].Hp.Amount = (int)objects[_idx_cur++];
+                EntitiesPool.UnitStep.Steps(idx_0).Amount = (int)objects[_idx_cur++];
+                EntitiesPool.UnitWaters[idx_0].Water.Amount = (int)objects[_idx_cur++];
 
-                CellUnitElseEs.Condition(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                EntitiesPool.UnitElse.Condition(idx_0).Condition = (ConditionUnitTypes)objects[_idx_cur++];
                 foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
 
@@ -407,9 +407,9 @@ namespace Game.Game
                 UnitTW<ProtectionC>(idx_0).Protection = (int)objects[_idx_cur++];
 
 
-                CellUnitStunEs.ForExitStun(idx_0).Amount = (int)objects[_idx_cur++];
+                EntitiesPool.UnitStuns[idx_0].ForExitStun.Amount = (int)objects[_idx_cur++];
 
-                CellUnitElseEs.Corned(idx_0).IsCornered = (bool)objects[_idx_cur++];
+                EntitiesPool.UnitElse.Corned(idx_0).IsCornered = (bool)objects[_idx_cur++];
 
                 foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown(item, idx_0).Amount = (int)objects[_idx_cur++];
 

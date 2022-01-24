@@ -10,11 +10,11 @@ namespace Game.Game
             var idx_0 = EntityMPool.ScoutOldNew<IdxC>().Idx;
             var unit = EntityMPool.ScoutOldNew<UnitTC>().Unit;
 
-            if (CellUnitHpEs.HaveMax(idx_0))
+            if (EntitiesPool.UnitHps[idx_0].HaveMax)
             {
-                if (CellUnitStepEs.HaveMaxSteps(idx_0))
+                if (EntitiesPool.UnitStep.HaveMaxSteps(idx_0))
                 {
-                    InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, CellUnitElseEs.Owner(idx_0).Player).Amount -= 1;
+                    InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, EntitiesPool.UnitElse.Owner(idx_0).Player).Amount -= 1;
                     SetScout(idx_0);
 
                     EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);

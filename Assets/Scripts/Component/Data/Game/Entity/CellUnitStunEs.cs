@@ -2,20 +2,10 @@
 
 namespace Game.Game
 {
-    public struct CellUnitStunEs
+    public sealed class CellUnitStunEs : CellAbstE
     {
-        static Entity[] _units;
+        public ref AmountC ForExitStun=> ref Ent.Get<AmountC>();
 
-        public static ref AmountC ForExitStun(in byte idx)=> ref _units[idx].Get<AmountC>();
-
-        public CellUnitStunEs(in EcsWorld gameW)
-        {
-            _units = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
-            for (var idx = 0; idx < _units.Length; idx++)
-            {
-                _units[idx] = gameW.NewEntity()
-                    .Add(new AmountC());
-            }
-        }
+        public CellUnitStunEs(in EcsWorld gameW, in byte idx) : base(gameW, idx) { }
     }
 }

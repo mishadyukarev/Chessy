@@ -1,7 +1,6 @@
-﻿using static Game.Game.CellEs;
+﻿using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellEs;
 using static Game.Game.CellUnitEs;
-using static Game.Game.CellTrailEs;
-using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
 {
@@ -17,10 +16,10 @@ namespace Game.Game
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
                 ref var unit_0 = ref Unit(idx_0);
-                ref var level_0 = ref CellUnitElseEs.Level(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
-                ref var step_0 = ref CellUnitStepEs.Steps(idx_0);
-                ref var stunUnit_0 = ref CellUnitStunEs.ForExitStun(idx_0);
+                ref var level_0 = ref EntitiesPool.UnitElse.Level(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var step_0 = ref EntitiesPool.UnitStep.Steps(idx_0);
+                ref var stunUnit_0 = ref EntitiesPool.UnitStuns[idx_0].ForExitStun;
 
                 if (!stunUnit_0.Have)
                 {
@@ -36,12 +35,12 @@ namespace Game.Game
                             var idx_1 = IdxCell(item_1.Value);
 
                             ref var unit_1 = ref Unit(idx_1);
-                            ref var own_1 = ref CellUnitElseEs.Owner(idx_1);
+                            ref var own_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
 
                             if (!Resources(EnvironmentTypes.Mountain, idx_1).Have)
                             {
-                                if (CellUnitStepEs.HaveStepsForDoing(idx_0, idx_1)
-                                    || CellUnitStepEs.HaveMaxSteps(idx_0))
+                                if (EntitiesPool.UnitStep.HaveStepsForDoing(idx_0, idx_1)
+                                    || EntitiesPool.UnitStep.HaveMaxSteps(idx_0))
                                 {
                                     if (unit_1.Have)
                                     {
@@ -59,7 +58,7 @@ namespace Game.Game
                                                     CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, ownUnit_0.Player).Add(idx_1);
                                                 }
                                                 else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, ownUnit_0.Player).Add(idx_1);
-                                            }    
+                                            }
                                         }
                                     }
                                 }

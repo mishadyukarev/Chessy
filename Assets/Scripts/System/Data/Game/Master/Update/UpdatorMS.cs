@@ -18,7 +18,7 @@ namespace Game.Game
                 EntityPool.ScoutHeroCooldown(UnitTypes.Scout, player).Amount -= 1;
                 EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, player).Amount -= 1;
 
-                InventorResourcesE.Resource(ResourceTypes.Food, player).Add(EconomyValues.ADDING_FOOD_AFTER_MOVE);
+                InventorResourcesE.Resource(ResourceTypes.Food, player) += EconomyValues.ADDING_FOOD_AFTER_MOVE;
             }
 
             foreach (byte idx_0 in Idxs)
@@ -26,10 +26,10 @@ namespace Game.Game
                 ref var cell_0 = ref Cell<InstanceIDC>(idx_0);
 
                 ref var unit_0 = ref Unit(idx_0);
-                ref var levUnit_0 = ref CellUnitElseEs.Level(idx_0);
-                ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
-                ref var hp_0 = ref CellUnitHpEs.Hp(idx_0);
-                ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
+                ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
+                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var hp_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
+                ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
@@ -41,7 +41,7 @@ namespace Game.Game
 
                 if (unit_0.Have && !unit_0.IsAnimal)
                 {
-                    CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0).Add();
+                    CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
                     InventorResourcesE.Resource(ResourceTypes.Food, ownUnit_0.Player).Take(EconomyValues.CostFood(unit_0.Unit));
 
@@ -49,7 +49,7 @@ namespace Game.Game
                     {
                         if (ownUnit_0.Is(PlayerTypes.Second))
                         {
-                            CellUnitHpEs.SetMaxHp(idx_0);
+                            EntitiesPool.UnitHps[idx_0].Hp.Amount = UnitHpValues.MAX_HP;
                         }
                     }
 
@@ -63,7 +63,7 @@ namespace Game.Game
                     {
                         if (condUnit_0.Is(ConditionUnitTypes.Protected))
                         {
-                            if (CellUnitHpEs.HaveMax(idx_0))
+                            if (EntitiesPool.UnitHps[idx_0].HaveMax)
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
@@ -98,14 +98,14 @@ namespace Game.Game
 
                         else if (!condUnit_0.Is(ConditionUnitTypes.Relaxed))
                         {
-                            if (CellUnitStepEs.HaveMin(idx_0))
+                            if (EntitiesPool.UnitStep.HaveMin(idx_0))
                             {
                                 condUnit_0.Condition = ConditionUnitTypes.Protected;
                             }
                         }
                     }
 
-                    CellUnitStepEs.SetMaxSteps(idx_0);
+                    EntitiesPool.UnitStep.SetMaxSteps(idx_0);
                 }
             }
 

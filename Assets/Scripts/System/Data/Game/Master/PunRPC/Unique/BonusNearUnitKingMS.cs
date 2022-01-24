@@ -12,20 +12,20 @@ namespace Game.Game
 
 
             ref var unit_0 = ref Unit(idx_0);
-            ref var ownUnit_0 = ref CellUnitElseEs.Owner(idx_0);
+            ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
 
-            ref var condUnit_0 = ref CellUnitElseEs.Condition(idx_0);
+            ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
 
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
             if (!CellUnitAbilityUniqueEs.Cooldown(uniq, idx_0).Have)
             {
-                if (CellUnitStepEs.Have(idx_0, uniq))
+                if (EntitiesPool.UnitStep.Have(idx_0, uniq))
                 {
                     CellUnitAbilityUniqueEs.Cooldown(uniq, idx_0).Amount = 3;
 
-                    CellUnitStepEs.Take(idx_0, uniq);
+                    EntitiesPool.UnitStep.Take(idx_0, uniq);
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
                     EntityPool.Rpc.SoundToGeneral(sender, uniq);
@@ -41,7 +41,7 @@ namespace Game.Game
                         var idx_1 = IdxCell(xy);
 
                         ref var unit_1 = ref Unit(idx_1);
-                        ref var ownUnit_1 = ref CellUnitElseEs.Owner(idx_1);
+                        ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
 
                         if (unit_1.Have)
                         {

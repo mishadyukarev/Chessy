@@ -97,14 +97,19 @@ namespace Game
 
                     _gameW = new EcsWorld();
 
-                    new EntitiesManager(_gameW);
+                    new EntitiesVPool(_gameW, out var forData);
+                    new RightUIEntities(_gameW);
+                    new EventUIManager(default);
+
+
+                    new EntitiesPool(_gameW, forData, RpcS.NamesMethods);
+
 
                     EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>();
                     new SystemDataManager(default);
                     new SystemDataMasterManager(default);
                     new SystemDataOtherManager(default);
 
-                    new EventUIManager(default);
                     new SystemViewDataManager(default);
                     new SystemViewDataUIManager(default);    
 
