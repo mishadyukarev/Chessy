@@ -10,8 +10,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            var idx_cur = CurrentIdxE.IdxC.Idx;
-            var idx_sel = SelectedIdxE.IdxC.Idx;
+            var idx_cur = EntitiesPool.CurrentIdxE.IdxC.Idx;
+            var idx_sel = EntitiesPool.SelectedIdxE.IdxC.Idx;
 
             ref var unit_cur = ref Unit(idx_cur);
             ref var levUnit_cur = ref EntitiesPool.UnitElse.Level(idx_cur);
@@ -28,7 +28,7 @@ namespace Game.Game
                 {
                     if (!WhoseMoveE.IsMyMove)
                     {
-                        SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                        EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                     }
 
                     else
@@ -39,16 +39,16 @@ namespace Game.Game
 
                             case CellClickTypes.SimpleClick:
                                 {
-                                    if (SelectedIdxE.IsSelCell)
+                                    if (EntitiesPool.SelectedIdxE.IsSelCell)
                                     {
-                                        if (CellsForAttackUnitsEs.CanAttack(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx, WhoseMoveE.CurPlayerI, out var attack))
+                                        if (CellsForAttackUnitsEs.CanAttack(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx, WhoseMoveE.CurPlayerI, out var attack))
                                         {
-                                            Rpc.AttackUnitToMaster(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                            Rpc.AttackUnitToMaster(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                         }
 
-                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(WhoseMoveE.CurPlayerI, SelectedIdxE.IdxC.Idx).Contains(CurrentIdxE.IdxC.Idx))
+                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(WhoseMoveE.CurPlayerI, EntitiesPool.SelectedIdxE.IdxC.Idx).Contains(EntitiesPool.CurrentIdxE.IdxC.Idx))
                                         {
-                                            Rpc.ShiftUnitToMaster(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                            Rpc.ShiftUnitToMaster(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                         }
 
                                         else
@@ -73,7 +73,7 @@ namespace Game.Game
                                             }
                                         }
 
-                                        SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                        EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                                     }
 
                                     else
@@ -97,14 +97,14 @@ namespace Game.Game
                                             }
                                         }
 
-                                        SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                        EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                                     }
                                 }
                                 break;
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    EntityPool.Rpc.SetUniToMaster(CurrentIdxE.IdxC.Idx, SelectedUnitE.SelUnit<UnitTC>().Unit);
+                                    EntityPool.Rpc.SetUniToMaster(EntitiesPool.CurrentIdxE.IdxC.Idx, SelectedUnitE.SelUnit<UnitTC>().Unit);
                                     cellClick.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
@@ -113,12 +113,12 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                     {
-                                        Rpc.GiveTakeToolWeaponToMaster(SelectedToolWeaponE.SelectedTW<ToolWeaponC>().ToolWeapon, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, CurrentIdxE.IdxC.Idx);
+                                        Rpc.GiveTakeToolWeaponToMaster(SelectedToolWeaponE.SelectedTW<ToolWeaponC>().ToolWeapon, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                     }
                                     else
                                     {
                                         cellClick.Click = CellClickTypes.SimpleClick;
-                                        SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                        EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                                     }
                                 }
                                 break;
@@ -129,12 +129,12 @@ namespace Game.Game
                                         && ownUnit_cur.Is(WhoseMoveE.CurPlayerI)
                                         && !levUnit_cur.Is(LevelTypes.Second))
                                     {
-                                        EntityPool.Rpc.UpgradeUnitToMaster(CurrentIdxE.IdxC.Idx);
+                                        EntityPool.Rpc.UpgradeUnitToMaster(EntitiesPool.CurrentIdxE.IdxC.Idx);
                                     }
                                     else
                                     {
                                         cellClick.Click = CellClickTypes.SimpleClick;
-                                        SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                        EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                                     }
                                 }
                                 break;
@@ -144,11 +144,11 @@ namespace Game.Game
                                     if (unit_cur.Is(UnitTypes.Pawn)
                                         && ownUnit_cur.Is(WhoseMoveE.CurPlayerI))
                                     {
-                                        EntityPool.Rpc.FromNewUnitToMas(UnitTypes.Scout, CurrentIdxE.IdxC.Idx);
+                                        EntityPool.Rpc.FromNewUnitToMas(UnitTypes.Scout, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                     }
 
                                     cellClick.Click = CellClickTypes.SimpleClick;
-                                    SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                    EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                                 }
                                 break;
 
@@ -158,9 +158,9 @@ namespace Game.Game
                                     {
                                         if(hero == UnitTypes.Elfemale || hero == UnitTypes.Snowy)
                                         {
-                                            if (SelectedIdxE.IdxC.Idx == 0)
+                                            if (EntitiesPool.SelectedIdxE.IdxC.Idx == 0)
                                             {
-                                                SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                                EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
 
                                                 if (unit_cur.Is(UnitTypes.Archer))
                                                 {
@@ -179,7 +179,7 @@ namespace Game.Game
                                                     {
                                                         if (unit_sel.Is(UnitTypes.Archer))
                                                         {
-                                                            EntityPool.Rpc.FromToNewUnitToMas(hero, SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                                            EntityPool.Rpc.FromToNewUnitToMas(hero, EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                                             cellClick.Click = CellClickTypes.SimpleClick;
                                                         }
 
@@ -190,7 +190,7 @@ namespace Game.Game
                                                         cellClick.Click = CellClickTypes.SimpleClick;
                                                     }
 
-                                                    SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                                    EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                                                 }
                                             }
                                         }
@@ -206,29 +206,29 @@ namespace Game.Game
                                 {
                                     if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.FireArcher))
                                     {
-                                        EntityPool.Rpc.FireArcherToMas(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                        EntityPool.Rpc.FireArcherToMas(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                     }
 
                                     else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                                     {
-                                        if (DirectsWindForElfemaleE.IdxsDirects.Contains(CurrentIdxE.IdxC.Idx))
+                                        if (DirectsWindForElfemaleE.IdxsDirects.Contains(EntitiesPool.CurrentIdxE.IdxC.Idx))
                                         {
-                                            EntityPool.Rpc.PutOutFireElffToMas(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                            EntityPool.Rpc.PutOutFireElffToMas(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                         }    
                                     }
 
                                     else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.StunElfemale))
                                     {
-                                        EntityPool.Rpc.StunElfemaleToMas(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                        EntityPool.Rpc.StunElfemaleToMas(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                     }
 
                                     else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.FreezeDirectEnemy))
                                     {
-                                        EntityPool.Rpc.FreezeDirectEnemyToMaster(SelectedIdxE.IdxC.Idx, CurrentIdxE.IdxC.Idx);
+                                        EntityPool.Rpc.FreezeDirectEnemyToMaster(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
                                     }
 
                                     cellClick.Click = CellClickTypes.SimpleClick;
-                                    SelectedIdxE.IdxC.Idx = CurrentIdxE.IdxC.Idx;
+                                    EntitiesPool.SelectedIdxE.IdxC.Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                                 }
                                 break;
 
@@ -256,13 +256,13 @@ namespace Game.Game
                     {
                         if (!unit_cur.Have || !CellUnitVisibleEs.Visible(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
                         {
-                            if (CurrentIdxE.IsStartDirectToCell)
+                            if (EntitiesPool.CurrentIdxE.IsStartDirectToCell)
                             {
-                                PreVisIdx<IdxC>().Idx = CurrentIdxE.IdxC.Idx;
+                                PreVisIdx<IdxC>().Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                             }
                             else
                             {
-                                PreVisIdx<IdxC>().Idx = CurrentIdxE.IdxC.Idx;
+                                PreVisIdx<IdxC>().Idx = EntitiesPool.CurrentIdxE.IdxC.Idx;
                             }
                         }
                     }

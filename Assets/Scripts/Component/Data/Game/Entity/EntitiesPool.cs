@@ -19,8 +19,10 @@ namespace Game.Game
         public static CellUnitStunEs[] UnitStuns { get; private set; }
         public static CellUnitElseEs UnitElse { get; private set; }
         public static CellUnitDefendEffectEs UnitDefendEffect { get; private set; }
-
         public static CellIceWallEs[] IceWalls { get; private set; }
+
+        public static SelectedIdxE SelectedIdxE { get; private set; }
+        public static CurrentIdxE CurrentIdxE { get; private set; }
 
         public EntitiesPool(in EcsWorld gameW, in List<object> forData, in List<string> namesMethods)
         {
@@ -84,8 +86,8 @@ namespace Game.Game
             new UnitStatUpgradesEs(gameW);
             new BuildingUpgradesEs(gameW);
 
-            new SelectedIdxE(gameW);
-            new CurrentIdxE(gameW);
+            SelectedIdxE = new SelectedIdxE(gameW);
+            CurrentIdxE = new CurrentIdxE(gameW);
 
             new EntWhereEnviroments(gameW);
             new WhereUnitsE(gameW);

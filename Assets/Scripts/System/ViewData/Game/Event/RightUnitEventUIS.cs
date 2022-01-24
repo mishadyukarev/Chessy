@@ -27,13 +27,13 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (EntitiesPool.UnitElse.Condition(SelectedIdxE.IdxC.Idx).Is(condUnitType))
+                if (EntitiesPool.UnitElse.Condition(EntitiesPool.SelectedIdxE.IdxC.Idx).Is(condUnitType))
                 {
-                    EntityPool.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, SelectedIdxE.IdxC.Idx);
+                    EntityPool.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, EntitiesPool.SelectedIdxE.IdxC.Idx);
                 }
                 else
                 {
-                    EntityPool.Rpc.ConditionUnitToMaster(condUnitType, SelectedIdxE.IdxC.Idx);
+                    EntityPool.Rpc.ConditionUnitToMaster(condUnitType, EntitiesPool.SelectedIdxE.IdxC.Idx);
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
@@ -43,24 +43,24 @@ namespace Game.Game
         {
             if (WhoseMoveE.IsMyMove)
             {
-                ref var abil = ref CellUnitUniqueButtonsEs.Ability(uniqueButton, SelectedIdxE.IdxC.Idx);
+                ref var abil = ref CellUnitUniqueButtonsEs.Ability(uniqueButton, EntitiesPool.SelectedIdxE.IdxC.Idx);
 
-                if (!CellUnitAbilityUniqueEs.Cooldown(abil.Ability, SelectedIdxE.IdxC.Idx).Have)
+                if (!CellUnitAbilityUniqueEs.Cooldown(abil.Ability, EntitiesPool.SelectedIdxE.IdxC.Idx).Have)
                 {
                     switch (abil.Ability)
                     {
                         case UniqueAbilityTypes.FirePawn:
-                            EntityPool.Rpc.FirePawnToMas(SelectedIdxE.IdxC.Idx);
+                            EntityPool.Rpc.FirePawnToMas(EntitiesPool.SelectedIdxE.IdxC.Idx);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
                         case UniqueAbilityTypes.PutOutFirePawn:
-                            EntityPool.Rpc.PutOutFirePawnToMas(SelectedIdxE.IdxC.Idx);
+                            EntityPool.Rpc.PutOutFirePawnToMas(EntitiesPool.SelectedIdxE.IdxC.Idx);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
                         case UniqueAbilityTypes.Seed:
-                            EntityPool.Rpc.SeedEnvToMaster(SelectedIdxE.IdxC.Idx, EnvironmentTypes.YoungForest);
+                            EntityPool.Rpc.SeedEnvToMaster(EntitiesPool.SelectedIdxE.IdxC.Idx, EnvironmentTypes.YoungForest);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
@@ -71,7 +71,7 @@ namespace Game.Game
                             break;
 
                         case UniqueAbilityTypes.CircularAttack:
-                            EntityPool.Rpc.CircularAttackKingToMaster(SelectedIdxE.IdxC.Idx);
+                            EntityPool.Rpc.CircularAttackKingToMaster(EntitiesPool.SelectedIdxE.IdxC.Idx);
                             TryOnHint(VideoClipTypes.CircularAttack);
                             break;
 
@@ -84,18 +84,18 @@ namespace Game.Game
                             break;
 
                         case UniqueAbilityTypes.BonusNear:
-                            EntityPool.Rpc.BonusNearUnits(SelectedIdxE.IdxC.Idx);
+                            EntityPool.Rpc.BonusNearUnits(EntitiesPool.SelectedIdxE.IdxC.Idx);
                             TryOnHint(VideoClipTypes.BonusKing);
                             break;
 
                         case UniqueAbilityTypes.ChangeCornerArcher:
                             {
-                                EntityPool.Rpc.ChangeCornerArchToMas(SelectedIdxE.IdxC.Idx);
+                                EntityPool.Rpc.ChangeCornerArchToMas(EntitiesPool.SelectedIdxE.IdxC.Idx);
                             }
                             break;
 
                         case UniqueAbilityTypes.GrowAdultForest:
-                            EntityPool.Rpc.GrowAdultForest(SelectedIdxE.IdxC.Idx);
+                            EntityPool.Rpc.GrowAdultForest(EntitiesPool.SelectedIdxE.IdxC.Idx);
                             TryOnHint(VideoClipTypes.GrowingAdForesElfemale);
                             break;
 
@@ -116,7 +116,7 @@ namespace Game.Game
 
                         case UniqueAbilityTypes.IceWall:
                             {
-                                EntityPool.Rpc.IceWallToMaster(SelectedIdxE.IdxC.Idx);
+                                EntityPool.Rpc.IceWallToMaster(EntitiesPool.SelectedIdxE.IdxC.Idx);
                             }
                             break;
 
@@ -131,7 +131,7 @@ namespace Game.Game
 
         void ExecuteBuild_Button(ButtonTypes buildBut)
         {
-            var idx_sel = SelectedIdxE.IdxC.Idx;
+            var idx_sel = EntitiesPool.SelectedIdxE.IdxC.Idx;
 
             if (WhoseMoveE.IsMyMove)
             {
@@ -161,7 +161,7 @@ namespace Game.Game
                         //    case BuildAbilityTypes.FarmBuild: throw new Exception();
                         //    case BuildAbilityTypes.MineBuild: throw new Exception();
                         //    case BuildAbilityTypes.CityBuild:
-                        //        EntityPool.Rpc.BuildToMaster(SelectedIdxE.SelIdx<IdxC>().Idx, BuildTypes.City);
+                        //        EntityPool.Rpc.BuildToMaster(EntitiesPool.SelectedIdxE.SelIdx<IdxC>().Idx, BuildTypes.City);
                         //        break;
 
                         //    case BuildAbilityTypes.Destroy:

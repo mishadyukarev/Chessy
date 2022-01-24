@@ -10,7 +10,7 @@ namespace Game.Game
         {
             if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
             {
-                var idx_cur = CurrentIdxE.IdxC.Idx;
+                var idx_cur = EntitiesPool.CurrentIdxE.IdxC.Idx;
 
                 ref var unitC_cur = ref Unit(idx_cur);
                 ref var levUnitC_cur = ref EntitiesPool.UnitElse.Level(idx_cur);

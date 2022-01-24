@@ -7,24 +7,35 @@ namespace Game.Game
     {
         public void Run()
         {
-            var needActiveButton = false;
+            var buildT = BuildingTypes.None;
 
-            if (SelectedIdxE.IsSelCell)
+            if (EntitiesPool.SelectedIdxE.IsSelCell)
             {
-                ref var selUnitDatCom = ref Unit(SelectedIdxE.IdxC.Idx);
+                ref var selUnitDatCom = ref Unit(EntitiesPool.SelectedIdxE.IdxC.Idx);
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var sellOnUnitCom = ref EntitiesPool.UnitElse.Owner(SelectedIdxE.IdxC.Idx);
+                    ref var sellOnUnitCom = ref EntitiesPool.UnitElse.Owner(EntitiesPool.SelectedIdxE.IdxC.Idx);
 
                     if (sellOnUnitCom.Is(WhoseMoveE.CurPlayerI))
                     {
-                        needActiveButton = true;
+                        buildT = BuildingTypes.Mine;
                     }
                 }
             }
 
-            RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(needActiveButton);
+            if (buildT == BuildingTypes.None)
+            {
+                RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(false);
+            }
+            else
+            {
+                RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(true);
+                RightUIEntities.BuildingZone(ButtonTypes.Second, buildT).Parent.SetActive(true);
+
+                RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.Farm).Parent.SetActive(false);      
+                RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.City).Parent.SetActive(false);
+            }
         }
     }
 }

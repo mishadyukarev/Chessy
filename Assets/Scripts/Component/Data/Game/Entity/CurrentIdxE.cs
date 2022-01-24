@@ -2,18 +2,12 @@
 
 namespace Game.Game
 {
-    public struct CurrentIdxE
+    public sealed class CurrentIdxE : EntityAbtract
     {
-        static Entity _ent;
+        public ref IdxC IdxC => ref Ent.Get<IdxC>();
 
-        public static ref IdxC IdxC => ref _ent.Get<IdxC>();
+        public bool IsStartDirectToCell => IdxC.Idx == default;
 
-        public static bool IsStartDirectToCell => IdxC.Idx == default;
-
-        public CurrentIdxE(in EcsWorld gameW)
-        {
-            _ent = gameW.NewEntity()
-                .Add(new IdxC());
-        }
+        public CurrentIdxE(in EcsWorld gameW) : base(gameW) { }
     }
 }

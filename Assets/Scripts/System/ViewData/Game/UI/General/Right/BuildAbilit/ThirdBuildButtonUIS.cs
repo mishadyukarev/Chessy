@@ -9,15 +9,15 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (SelectedIdxE.IsSelCell)
+            if (EntitiesPool.SelectedIdxE.IsSelCell)
             {
-                var idx_sel = SelectedIdxE.IdxC.Idx;
+                var idx_sel = EntitiesPool.SelectedIdxE.IdxC.Idx;
 
-                ref var unit_sel = ref Unit(SelectedIdxE.IdxC.Idx);
-                ref var ownUnit_sel = ref EntitiesPool.UnitElse.Owner(SelectedIdxE.IdxC.Idx);
+                ref var unit_sel = ref Unit(EntitiesPool.SelectedIdxE.IdxC.Idx);
+                ref var ownUnit_sel = ref EntitiesPool.UnitElse.Owner(EntitiesPool.SelectedIdxE.IdxC.Idx);
 
-                ref var build_sel = ref Build<BuildingTC>(SelectedIdxE.IdxC.Idx);
-                ref var ownBuild_sel = ref Build<PlayerTC>(SelectedIdxE.IdxC.Idx);
+                ref var build_sel = ref Build<BuildingTC>(EntitiesPool.SelectedIdxE.IdxC.Idx);
+                ref var ownBuild_sel = ref Build<PlayerTC>(EntitiesPool.SelectedIdxE.IdxC.Idx);
 
                 var needActiveThirdButt = false;
 
@@ -59,6 +59,7 @@ namespace Game.Game
 
                 RightUIEntities.Building(ButtonTypes.Third).Parent.SetActive(needActiveThirdButt);
                 RightUIEntities.BuildingZone(ButtonTypes.Third, BuildingTypes.City).Parent.SetActive(needActiveThirdButt);
+                RightUIEntities.BuildingZone(ButtonTypes.Third, BuildingTypes.Mine).Parent.SetActive(false);
                 RightUIEntities.BuildingZone(ButtonTypes.Third, BuildingTypes.Farm).Parent.SetActive(false);
             }
         }

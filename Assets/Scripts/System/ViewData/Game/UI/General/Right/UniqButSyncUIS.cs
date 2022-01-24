@@ -6,7 +6,7 @@
         {
             for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
-                ref var abil = ref CellUnitUniqueButtonsEs.Ability(button, SelectedIdxE.IdxC.Idx).Ability;
+                ref var abil = ref CellUnitUniqueButtonsEs.Ability(button, EntitiesPool.SelectedIdxE.IdxC.Idx).Ability;
 
                 if (abil == default)
                 {
@@ -14,8 +14,8 @@
                 }
                 else
                 {
-                    RightUIEntities.Unique(button).Text.SetActiveParent(CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Have);
-                    RightUIEntities.Unique(button).Text.Text = CellUnitAbilityUniqueEs.Cooldown(abil, SelectedIdxE.IdxC.Idx).Amount.ToString();
+                    RightUIEntities.Unique(button).Text.SetActiveParent(CellUnitAbilityUniqueEs.Cooldown(abil, EntitiesPool.SelectedIdxE.IdxC.Idx).Have);
+                    RightUIEntities.Unique(button).Text.Text = CellUnitAbilityUniqueEs.Cooldown(abil, EntitiesPool.SelectedIdxE.IdxC.Idx).Amount.ToString();
 
                     RightUIEntities.Unique(button).Paren.SetActive(true);
 

@@ -25,7 +25,7 @@ namespace Game.Game
                 main_0.FlipX = false;
                 extra_0.FlipX = false;
 
-                if (SelectedIdxE.IdxC.Is(idx_0))
+                if (EntitiesPool.SelectedIdxE.IdxC.Is(idx_0))
                 {
                     if (unit_0.Have)
                     {

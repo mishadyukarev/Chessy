@@ -44,7 +44,7 @@ namespace Game.Game
 
                     if (one == two)
                     {
-                        CurrentIdxE.IdxC.Idx = idx_0;
+                        EntitiesPool.CurrentIdxE.IdxC.Idx = idx_0;
                         raycastC.Raycast = RaycastTypes.Cell;
                         return;
                     }

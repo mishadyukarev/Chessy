@@ -8,7 +8,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var selIdx = SelectedIdxE.IdxC.Idx;
+            var selIdx = EntitiesPool.SelectedIdxE.IdxC.Idx;
 
             ref var unit_sel = ref Unit(selIdx);
 

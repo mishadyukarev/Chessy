@@ -18,6 +18,10 @@ namespace Game.Game
         public static RightBuildUIE Building(in ButtonTypes but) => _buildings[but];
         public static RightBuildingZoneUIE BuildingZone(in ButtonTypes but, in BuildingTypes build) => _buildingZones[but.ToString() + build];
 
+
+
+
+
         public RightUIEntities(in EcsWorld gameW)
         {
             var rightZone = CanvasC.FindUnderCurZone("RightZone").transform;
@@ -45,28 +49,26 @@ namespace Game.Game
             for (var buttonT = ButtonTypes.First; buttonT < ButtonTypes.End; buttonT++)
             {
                 var button = uniqueZone.Find(buttonT.ToString());
+                button.Find("Building").gameObject.SetActive(false);
 
                 _uniques.Add(buttonT, new RightUniqueUIE(gameW, button));
                 for (var ability = UniqueAbilityTypes.None + 1; ability < UniqueAbilityTypes.End; ability++)
                 {
                     var zone = button.Find("Unique");
-                    zone.gameObject.SetActive(true);
-
                     _uniqueZones.Add(buttonT.ToString() + ability, new RightUniqueZoneUIE(gameW, zone.Find(ability.ToString())));
                 }
 
 
                 button = buildingZone.Find(buttonT.ToString());
                 button.Find("Cooldown").gameObject.SetActive(false);
+                button.Find("Unique").gameObject.SetActive(false);
 
                 _buildings.Add(buttonT, new RightBuildUIE(gameW, button));
                 for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)
                 {
-                    if (buildT == BuildingTypes.Farm || buildT == BuildingTypes.Woodcutter || buildT == BuildingTypes.City)
+                    if (buildT == BuildingTypes.Farm || buildT == BuildingTypes.Mine || buildT == BuildingTypes.City)
                     {
                         var zone = button.Find("Building");
-                        zone.gameObject.SetActive(true);
-
                         _buildingZones.Add(buttonT.ToString() + buildT, new RightBuildingZoneUIE(gameW, zone.Find(buildT.ToString())));
                     }
                 }

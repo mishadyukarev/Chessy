@@ -2,18 +2,12 @@
 
 namespace Game.Game
 {
-    public struct SelectedIdxE
+    public sealed class SelectedIdxE : EntityAbtract
     {
-        static Entity _ent;
+        public ref IdxC IdxC => ref Ent.Get<IdxC>();
 
-        public static ref IdxC IdxC => ref _ent.Get<IdxC>();
+        public bool IsSelCell => IdxC.Idx != 0;
 
-        public static bool IsSelCell => IdxC.Idx != 0;
-
-        public SelectedIdxE(in EcsWorld gameW)
-        {
-            _ent = gameW.NewEntity()
-                .Add(new IdxC(0));
-        }
+        public SelectedIdxE(in EcsWorld gameW) : base(gameW) { }
     }
 }
