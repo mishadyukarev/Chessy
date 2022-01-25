@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEs;
+﻿using static Game.Game.CellUnitEntities;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit(EntitiesPool.SelectedIdxE.IdxC.Idx);
+            ref var unit_sel = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).UnitC;
 
             var activeParent = false;
 

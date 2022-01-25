@@ -20,7 +20,7 @@ namespace Game.Game
             {
                 for (var unit = UnitTypes.Start + 1; unit < UnitTypes.End; unit++)
                 {
-                    for (var lev = LevelTypes.Start + 1; lev < LevelTypes.End; lev++)
+                    for (var lev = LevelTypes.None + 1; lev < LevelTypes.End; lev++)
                     {
                         for (var player = PlayerTypes.Start + 1; player < PlayerTypes.End; player++)
                         {

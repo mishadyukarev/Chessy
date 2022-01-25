@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Game.Game
 {
-    public sealed class RightBuildUIE : EntityAbtract
+    public sealed class RightBuildUIE : EntityAbstract
     {
         public ref GameObjectVC Parent => ref Ent.Get<GameObjectVC>();
         public ref ButtonUIC Button => ref Ent.Get<ButtonUIC>();

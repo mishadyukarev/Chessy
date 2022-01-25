@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.EntitiesPool;
 
 namespace Game.Game
@@ -15,18 +15,18 @@ namespace Game.Game
 
                 if (CellEs.IsActiveC(idx_0).IsActive)
                 {
-                    if (!EntitiesPool.UnitStuns[idx_0].ForExitStun.Have && Unit(idx_0).Have && !Unit(idx_0).IsAnimal)
+                    if (!CellUnitEntities.Stun(idx_0).ForExitStun.Have && Else(idx_0).UnitC.Have && !Else(idx_0).UnitC.IsAnimal)
                     {
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            if (!Resources(EnvironmentTypes.Mountain, idx_1).Have && !Unit(idx_1).Have)
+                            if (!Resources(EnvironmentTypes.Mountain, idx_1).Have && !Else(idx_1).UnitC.Have)
                             {
-                                var one = UnitStep.HaveStepsForDoing(idx_0, idx_1);
-                                var two = UnitStep.HaveMaxSteps(idx_0);
+                                var one = CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.StepsForDoing(idx_0, idx_1);
+                                var two = CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.MaxAmountSteps(idx_0);
 
                                 if (one || two)
                                 {
-                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(EntitiesPool.UnitElse.Owner(idx_0).Player, idx_0).Add(idx_1);
+                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(CellUnitEntities.Else(idx_0).OwnerC.Player, idx_0).Add(idx_1);
                                 }
                             }
                         }

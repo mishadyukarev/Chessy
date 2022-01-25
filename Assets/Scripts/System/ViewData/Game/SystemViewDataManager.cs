@@ -31,7 +31,6 @@ namespace Game.Game
                 + new SyncSelUnitCellVS().Run
                 + new SupportCellVS().Run
                 + new FliperAndRotatorUnitVS().Run
-                + new CellIceWallVS().Run
 
                 + new RotateAllVS().Run
                 + new SoundVS().Run);

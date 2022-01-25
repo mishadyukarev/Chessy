@@ -16,7 +16,7 @@ namespace Game.Game
         {
             _tw_Images = new Dictionary<string, Entity>();
             for (var tw = ToolWeaponTypes.Start; tw <= ToolWeaponTypes.End; tw++)
-                for (var level = LevelTypes.Start; level <= LevelTypes.End; level++)
+                for (var level = LevelTypes.None; level <= LevelTypes.End; level++)
                     _tw_Images.Add(tw.ToString() + level, default);
         }
         public UIEntExtraTW(in EcsWorld gameW, in Transform rightZone)

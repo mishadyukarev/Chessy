@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildE;
 
 namespace Game.Game
@@ -14,27 +13,27 @@ namespace Game.Game
             IdxDoingMC.Get(out var idx_0);
             var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
-            ref var hpUnit_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
-            ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-            ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
-            ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+            ref var hpUnit_0 = ref CellUnitEntities.Hp(idx_0).AmountC;
+            ref var levUnit_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+            ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+            ref var condUnit_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
 
-            if (!CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_0).Have)
+            if (!CellUnitEntities.CooldownUnique(uniq_cur, idx_0).Cooldown.Have)
             {
-                if (EntitiesPool.UnitStep.Have(idx_0, uniq_cur))
+                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                 {
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_0).Amount = 2;
+                    CellUnitEntities.CooldownUnique(uniq_cur, idx_0).Cooldown.Amount = 2;
 
                     foreach (var xy1 in CellSpaceSupport.GetXyAround(Cell<XyC>(idx_0).Xy))
                     {
                         var idx_1 = IdxCell(xy1);
 
-                        ref var unit_1 = ref Unit(idx_1);
-                        ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
-                        ref var hpUnit_1 = ref EntitiesPool.UnitHps[idx_1].Hp;
+                        ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                        ref var ownUnit_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
+                        ref var hpUnit_1 = ref CellUnitEntities.Hp(idx_1).AmountC;
 
                         ref var tw_1 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_1);
 
@@ -45,8 +44,8 @@ namespace Game.Game
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Player))
                             {
-                                foreach (var item in CellUnitEffectsEs.Keys) 
-                                    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_1).Disable();
+                                //foreach (var item in CellUnitEffectsEs.Keys) 
+                                //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_1).Disable();
 
                                 if (tw_1.Is(ToolWeaponTypes.Shield))
                                 {
@@ -54,20 +53,20 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    EntitiesPool.UnitHps[idx_1].Hp.Take(UnitDamageValues.Damage(uniq_cur));
+                                    CellUnitEntities.Hp(idx_1).AmountC.Take(UnitDamageValues.Damage(uniq_cur));
 
-                                    if (EntitiesPool.UnitHps[idx_1].Hp.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK || !hpUnit_1.Have)
+                                    if (CellUnitEntities.Hp(idx_1).AmountC.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK || !hpUnit_1.Have)
                                     {
-                                        CellUnitEs.Kill(idx_1);
+                                        CellUnitEntities.Kill(idx_1);
                                     }
                                 }
                             }
                         }
                     }
 
-                    EntitiesPool.UnitStep.Take(idx_0, uniq_cur);
-                    foreach (var item in CellUnitEffectsEs.Keys) 
-                        CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
+                    CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    //foreach (var item in CellUnitEffectsEs.Keys) 
+                    //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 
                     EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.AttackMelee);
 

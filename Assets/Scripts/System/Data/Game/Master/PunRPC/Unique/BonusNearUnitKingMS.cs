@@ -1,5 +1,4 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -11,46 +10,46 @@ namespace Game.Game
             var uniq = EntityMPool.UniqueAbilityC.Ability;
 
 
-            ref var unit_0 = ref Unit(idx_0);
-            ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+            ref var unit_0 = ref CellUnitEntities.Else(idx_0).UnitC;
+            ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
 
-            ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+            ref var condUnit_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            if (!CellUnitAbilityUniqueEs.Cooldown(uniq, idx_0).Have)
+            if (!CellUnitEntities.CooldownUnique(uniq, idx_0).Cooldown.Have)
             {
-                if (EntitiesPool.UnitStep.Have(idx_0, uniq))
+                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq))
                 {
-                    CellUnitAbilityUniqueEs.Cooldown(uniq, idx_0).Amount = 3;
+                    CellUnitEntities.CooldownUnique(uniq, idx_0).Cooldown.Amount = 3;
 
-                    EntitiesPool.UnitStep.Take(idx_0, uniq);
+                    CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq));
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
                     EntityPool.Rpc.SoundToGeneral(sender, uniq);
 
-                    if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have)
-                    {
-                        CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
-                    }
+                    //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have)
+                    //{
+                    //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
+                    //}
 
                     var around = CellSpaceSupport.GetXyAround(Cell<XyC>(idx_0).Xy);
                     foreach (var xy in around)
                     {
                         var idx_1 = IdxCell(xy);
 
-                        ref var unit_1 = ref Unit(idx_1);
-                        ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
+                        ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                        ref var ownUnit_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
 
                         if (unit_1.Have)
                         {
                             if (ownUnit_1.Is(ownUnit_0.Player))
                             {
-                                if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
-                                {
-                                    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have = true;
-                                }
+                                //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
+                                //{
+                                //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have = true;
+                                //}
                             }
                         }
                     }

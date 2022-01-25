@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
@@ -10,8 +10,8 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var condUnit_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
                 //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 //{

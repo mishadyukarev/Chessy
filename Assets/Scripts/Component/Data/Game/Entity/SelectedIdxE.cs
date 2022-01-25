@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class SelectedIdxE : EntityAbtract
+    public sealed class SelectedIdxE : EntityAbstract
     {
         public ref IdxC IdxC => ref Ent.Get<IdxC>();
 

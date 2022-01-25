@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellFireEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
@@ -12,9 +12,9 @@ namespace Game.Game
             {
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
-                ref var unit_from = ref Unit(idx_0);
-                ref var ownUnit_from = ref EntitiesPool.UnitElse.Owner(idx_0);
-                ref var stun_from = ref EntitiesPool.UnitStuns[idx_0].ForExitStun;
+                ref var unit_from = ref Else(idx_0).UnitC;
+                ref var ownUnit_from = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var stun_from = ref CellUnitEntities.Stun(idx_0).ForExitStun;
 
                 if (!stun_from.Have)
                 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -11,10 +11,10 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var levelUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var levelUnit_0 = ref CellUnitEntities.Else(idx_0).LevelC;
 
-                ref var corner_0 = ref EntitiesPool.UnitElse.Corned(idx_0);
+                ref var corner_0 = ref CellUnitEntities.Else(idx_0).CornedC;
 
                 ref var tw_0 = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref CellUnitTWE.UnitTW<LevelTC>(idx_0);
@@ -38,104 +38,37 @@ namespace Game.Game
                                 throw new Exception();
 
                             case UnitTypes.King:
-                                mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.King).Sprite;
+                                mainUnit_0.Sprite = ResourceSpriteVPool.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
                                 break;
 
                             case UnitTypes.Pawn:
-                                switch (levelUnit_0.Level)
-                                {
-                                    case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.PawnWood).Sprite; break;
-                                    case LevelTypes.Second: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.PawnIron).Sprite; break;
-                                    default: throw new Exception();
-                                }
+                                mainUnit_0.Sprite = ResourceSpriteVPool.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
 
                                 if (tw_0.HaveTW)
                                 {
                                     extraUnit_0.Enable();
-                                    switch (tw_0.ToolWeapon)
-                                    {
-                                        case ToolWeaponTypes.None: throw new Exception();
-                                        case ToolWeaponTypes.Pick:
-                                            switch (twLevel_0.Level)
-                                            {
-                                                case LevelTypes.None: throw new Exception();
-                                                case LevelTypes.First: throw new Exception();
-                                                case LevelTypes.Second: extraUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.PickWood).Sprite; break;
-                                                default: throw new Exception();
-                                            }
-                                            break;
-                                        case ToolWeaponTypes.Sword:
-                                            switch (twLevel_0.Level)
-                                            {
-                                                case LevelTypes.None: throw new Exception();
-                                                case LevelTypes.First: throw new Exception();
-                                                case LevelTypes.Second: extraUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.SwordIron).Sprite; break;
-                                                default: throw new Exception();
-                                            }
-                                            break;
-                                        case ToolWeaponTypes.Shield:
-                                            switch (twLevel_0.Level)
-                                            {
-                                                case LevelTypes.None: throw new Exception();
-                                                case LevelTypes.First: extraUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.ShieldWood).Sprite; break;
-                                                case LevelTypes.Second: extraUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.ShieldIron).Sprite; break;
-                                                default: throw new Exception();
-                                            }
-                                            break;
-                                        default: throw new Exception();
-                                    }
+                                    extraUnit_0.Sprite = ResourceSpriteVPool.Sprite(tw_0.ToolWeapon, twLevel_0.Level).SpriteC.Sprite;
                                 }
+                                break;
 
-                                break;
                             case UnitTypes.Archer:
-                                switch (levelUnit_0.Level)
-                                {
-                                    case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First:
-                                        {
-                                            if (corner_0.IsCornered) mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.RookBow).Sprite;
-                                            else mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.BishopBow).Sprite;
-                                        }
-                                        break;
-                                    case LevelTypes.Second:
-                                        {
-                                            if (corner_0.IsCornered) mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.RookCrossbow).Sprite;
-                                            else mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.BishopCrossbow).Sprite;
-                                        }
-                                        break;
-                                    default: throw new Exception();
-                                }
+                                mainUnit_0.Sprite = ResourceSpriteVPool.Sprite(corner_0.IsCornered, levelUnit_0.Level).SpriteC.Sprite;
                                 break;
+
                             case UnitTypes.Scout:
-                                switch (levelUnit_0.Level)
-                                {
-                                    case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Scout).Sprite; break;
-                                    case LevelTypes.Second: throw new Exception();
-                                    default: throw new Exception();
-                                }
+                                mainUnit_0.Sprite = ResourceSpriteVPool.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
                                 break;
+
                             case UnitTypes.Elfemale:
-                                switch (levelUnit_0.Level)
-                                {
-                                    case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Elfemale).Sprite; break;
-                                    case LevelTypes.Second: throw new Exception();
-                                    default: throw new Exception();
-                                }
+                                mainUnit_0.Sprite = ResourceSpriteVPool.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
                                 break;
+
                             case UnitTypes.Snowy:
-                                switch (levelUnit_0.Level)
-                                {
-                                    case LevelTypes.None: throw new Exception();
-                                    case LevelTypes.First: mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Snowy).Sprite; break;
-                                    case LevelTypes.Second: throw new Exception();
-                                    default: throw new Exception();
-                                }
+                                mainUnit_0.Sprite = ResourceSpriteVPool.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
                                 break;
+
                             case UnitTypes.Camel:
-                                mainUnit_0.Sprite = ResourcesSpriteVEs.Sprite(UnitTypes.Camel).Sprite; break;
+                                mainUnit_0.Sprite = ResourceSpriteVPool.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite; break;
                                 throw new Exception();
                         }
 

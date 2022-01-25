@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public abstract class CellAbstE : EntityAbtract
+    public abstract class CellAbstE : EntityAbstract
     {
         protected readonly byte Idx;
 

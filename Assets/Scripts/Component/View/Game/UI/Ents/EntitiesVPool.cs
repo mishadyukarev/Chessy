@@ -11,10 +11,9 @@ namespace Game.Game
         {
             #region View
 
+
             CanvasC.SetCurZone(SceneTypes.Game);
 
-            new ResourcesSpriteVEs(gameW);
-            new VideoClipsResC(true);
 
             new EntityVPool(gameW, out var actions, out var sounds0, out var sounds1);
 
@@ -29,8 +28,8 @@ namespace Game.Game
                 for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
                     var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
-                        ? ResourcesSpriteVEs.Sprite(SpriteTypes.WhiteCell).Sprite
-                        : ResourcesSpriteVEs.Sprite(SpriteTypes.BlackCell).Sprite;
+                        ? ResourceSpriteVPool.Sprite(true).SpriteC.Sprite
+                        : ResourceSpriteVPool.Sprite(false).SpriteC.Sprite;
 
 
                     var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
@@ -66,7 +65,6 @@ namespace Game.Game
             new CellBlocksVEs(gameW, cells);
             new CellBarsVEs(gameW, cells);
             new StunCellVEs(gameW, cells);
-            new CellIceWallVEs(gameW, cells);
 
 
             ///Left

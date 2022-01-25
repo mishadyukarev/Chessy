@@ -1,6 +1,4 @@
-﻿using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct ShiftUnitMS : IEcsRunSystem
     {
@@ -13,9 +11,9 @@ namespace Game.Game
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
             {
-                EntitiesPool.UnitStep.TakeStepsForDoing(idx_from, idx_to);
+                CellUnitEntities.Step(idx_from).AmountC.Take(CellUnitEntities.StepsForDoing(idx_from, idx_to));
 
-                CellUnitEs.Shift(idx_from, idx_to, true);
+                CellUnitEntities.Shift(idx_from, idx_to, true);
 
                 EntityPool.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

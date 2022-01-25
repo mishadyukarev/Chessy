@@ -1,6 +1,6 @@
 ﻿using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -15,11 +15,11 @@ namespace Game.Game
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
-                ref var unit_0 = ref Unit(idx_0);
-                ref var level_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
-                ref var step_0 = ref EntitiesPool.UnitStep.Steps(idx_0);
-                ref var stunUnit_0 = ref EntitiesPool.UnitStuns[idx_0].ForExitStun;
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var level_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var step_0 = ref CellUnitEntities.Step(idx_0).AmountC;
+                ref var stunUnit_0 = ref CellUnitEntities.Stun(idx_0).ForExitStun;
 
                 if (!stunUnit_0.Have)
                 {
@@ -34,13 +34,13 @@ namespace Game.Game
                             dir_cur += 1;
                             var idx_1 = IdxCell(item_1.Value);
 
-                            ref var unit_1 = ref Unit(idx_1);
-                            ref var own_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
+                            ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                            ref var own_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
 
                             if (!Resources(EnvironmentTypes.Mountain, idx_1).Have)
                             {
-                                if (EntitiesPool.UnitStep.HaveStepsForDoing(idx_0, idx_1)
-                                    || EntitiesPool.UnitStep.HaveMaxSteps(idx_0))
+                                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.StepsForDoing(idx_0, idx_1)
+                                    || CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.MaxAmountSteps(idx_0))
                                 {
                                     if (unit_1.Have)
                                     {

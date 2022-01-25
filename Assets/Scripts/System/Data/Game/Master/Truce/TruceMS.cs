@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using UnityEngine;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellTrailEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
@@ -18,9 +18,9 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var levUnit_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
 
                 ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
                 ref var twLevel_0 = ref UnitTW<LevelTC>(idx_0);

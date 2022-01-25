@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellVEs;
 using static Game.Game.CellBlocksVEs;
 using static Game.Game.CellBarsVEs;
@@ -13,13 +13,13 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var level_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
-                ref var hpUnit_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
-                ref var step_0 = ref EntitiesPool.UnitStep.Steps(idx_0);
-                ref var water_0 = ref EntitiesPool.UnitWaters[idx_0].Water;
-                ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var level_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var hpUnit_0 = ref CellUnitEntities.Hp(idx_0).AmountC;
+                ref var step_0 = ref CellUnitEntities.Step(idx_0).AmountC;
+                ref var water_0 = ref CellUnitEntities.Water(idx_0).AmountC;
+                ref var condUnit_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
 
                 Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
@@ -40,8 +40,8 @@ namespace Game.Game
                         float xCordinate = (float)hpUnit_0.Amount / UnitHpValues.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(EntitiesPool.UnitWaters[idx_0].Water.Amount <= CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
-                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(EntitiesPool.UnitStep.HaveMaxSteps(idx_0));
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(CellUnitEntities.Water(idx_0).AmountC.Amount <= CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
+                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.MaxAmountSteps(idx_0));
 
                         
 

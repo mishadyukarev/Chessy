@@ -1,7 +1,6 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellBuildE;
+﻿using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -25,7 +24,7 @@ namespace Game.Game
             {
                 if (CellBuildE.CanBuild(idx_0, build, whoseMove, out var mistake))
                 {
-                    if (InventorResourcesE.CanCreateBuild(build, whoseMove,  out var needRes))
+                    if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                     {
                         EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
@@ -44,7 +43,7 @@ namespace Game.Game
 
                         CellBuildE.SetNew(build, whoseMove, idx_0);
 
-                        EntitiesPool.UnitStep.Take(idx_0, build);
+                        CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(build));
                     }
                     else
                     {

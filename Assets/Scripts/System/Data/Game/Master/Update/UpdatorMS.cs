@@ -1,7 +1,6 @@
 ﻿using Game.Common;
 using Photon.Pun;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
 using static Game.Game.CellTrailEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
@@ -25,18 +24,18 @@ namespace Game.Game
             {
                 ref var cell_0 = ref Cell<InstanceIDC>(idx_0);
 
-                ref var unit_0 = ref Unit(idx_0);
-                ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
-                ref var hp_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
-                ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+                ref var unit_0 = ref CellUnitEntities.Else(idx_0).UnitC;
+                ref var levUnit_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var hp_0 = ref CellUnitEntities.Hp(idx_0).AmountC;
+                ref var condUnit_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
                 ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
                 foreach (var item in CellTrailEs.Keys) CellTrailEs.Health(item, idx_0).Take();
-                foreach (var item in CellUnitAbilityUniqueEs.Keys) CellUnitAbilityUniqueEs.Cooldown(item, idx_0).Take();
+                foreach (var item in CellUnitEntities.CooldownKeys) CellUnitEntities.CooldownUnique(item, idx_0).Cooldown.Take();
 
 
                 if (unit_0.Have && !unit_0.IsAnimal)
@@ -49,7 +48,7 @@ namespace Game.Game
                     {
                         if (ownUnit_0.Is(PlayerTypes.Second))
                         {
-                            EntitiesPool.UnitHps[idx_0].Hp.Amount = UnitHpValues.MAX_HP;
+                            CellUnitEntities.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
                         }
                     }
 
@@ -63,7 +62,7 @@ namespace Game.Game
                     {
                         if (condUnit_0.Is(ConditionUnitTypes.Protected))
                         {
-                            if (EntitiesPool.UnitHps[idx_0].HaveMax)
+                            if (CellUnitEntities.Hp(idx_0).HaveMax)
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
@@ -98,14 +97,13 @@ namespace Game.Game
 
                         else if (!condUnit_0.Is(ConditionUnitTypes.Relaxed))
                         {
-                            if (EntitiesPool.UnitStep.HaveMin(idx_0))
+                            if (CellUnitEntities.Step(idx_0).AmountC.Have)
                             {
                                 condUnit_0.Condition = ConditionUnitTypes.Protected;
                             }
                         }
                     }
-
-                    EntitiesPool.UnitStep.SetMaxSteps(idx_0);
+                    CellUnitEntities.Step(idx_0).AmountC.Amount = CellUnitEntities.MaxAmountSteps(idx_0);
                 }
             }
 

@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
 
@@ -11,14 +11,14 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
-                ref var condUnit_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var condUnit_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
                 ref var buil_0 = ref Build<BuildingTC>(idx_0);
 
 
-                if (CellUnitEs.CanExtract(idx_0, out var resume, out var env, out var res))
+                if (CellUnitEntities.CanExtract(idx_0, out var resume, out var env, out var res))
                 {
                     InventorResourcesE.Resource(res, ownUnit_0.Player).Amount += resume;
                     Resources(env, idx_0).Amount -= resume;

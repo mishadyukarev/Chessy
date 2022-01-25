@@ -23,7 +23,7 @@ namespace Game.Game
                 + new StatsUIS().Run
                 + new ProtectUIS().Run
                 + new RelaxUIS().Run
-                + new UniqButSyncUIS().Run
+                + new UniqueButtonUIS().Run
                 + new FirstButtonBuildUIS().Run
                 + new SecButtonBuildUISys().Run
                 + new ThirdBuildButtonUIS().Run

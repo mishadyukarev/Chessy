@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -11,9 +11,9 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
-                ref var corner_0 = ref EntitiesPool.UnitElse.Corned(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var corner_0 = ref CellUnitEntities.Else(idx_0).CornedC;
 
                 ref var main_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
                 ref var extra_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);

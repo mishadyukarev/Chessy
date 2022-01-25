@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
 
@@ -28,7 +28,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (EntitiesPool.UnitStep.Have(idx_0, uniq_cur))
+                    if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
@@ -46,7 +46,7 @@ namespace Game.Game
 
                                         SetNew(EnvironmentTypes.YoungForest, idx_0);
 
-                                        EntitiesPool.UnitStep.Take(idx_0, uniq_cur);
+                                        CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                                     }
                                     else
                                     {

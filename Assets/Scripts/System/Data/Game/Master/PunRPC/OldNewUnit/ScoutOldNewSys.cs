@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEs;
+﻿using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -10,11 +10,11 @@ namespace Game.Game
             var idx_0 = EntityMPool.ScoutOldNew<IdxC>().Idx;
             var unit = EntityMPool.ScoutOldNew<UnitTC>().Unit;
 
-            if (EntitiesPool.UnitHps[idx_0].HaveMax)
+            if (CellUnitEntities.Hp(idx_0).HaveMax)
             {
-                if (EntitiesPool.UnitStep.HaveMaxSteps(idx_0))
+                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.MaxAmountSteps(idx_0))
                 {
-                    InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, EntitiesPool.UnitElse.Owner(idx_0).Player).Amount -= 1;
+                    InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, CellUnitEntities.Else(idx_0).OwnerC.Player).Amount -= 1;
                     SetScout(idx_0);
 
                     EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);

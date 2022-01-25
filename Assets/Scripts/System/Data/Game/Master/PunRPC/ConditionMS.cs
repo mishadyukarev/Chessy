@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -12,7 +12,7 @@ namespace Game.Game
             var cond = EntityMPool.ConditionUnit<ConditionUnitC>().Condition;
             var idx_0 = EntityMPool.ConditionUnit<IdxC>().Idx;
 
-            ref var cond_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+            ref var cond_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
 
             switch (cond)
@@ -28,10 +28,10 @@ namespace Game.Game
                         cond_0.Reset();
                     }
 
-                    else if (EntitiesPool.UnitStep.HaveMin(idx_0))
+                    else if (CellUnitEntities.Step(idx_0).AmountC.Have)
                     {
                         EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        EntitiesPool.UnitStep.TakeMin(idx_0);
+                        CellUnitEntities.Step(idx_0).AmountC.Take();
                         cond_0.Condition = cond;
                     }
 
@@ -49,11 +49,11 @@ namespace Game.Game
                         cond_0.Reset();
                     }
 
-                    else if (EntitiesPool.UnitStep.HaveMin(idx_0))
+                    else if (CellUnitEntities.Step(idx_0).AmountC.Have)
                     {
                         EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Condition = cond;
-                        EntitiesPool.UnitStep.TakeMin(idx_0);
+                        CellUnitEntities.Step(idx_0).AmountC.Take();
                     }
 
                     else

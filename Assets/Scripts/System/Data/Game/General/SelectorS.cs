@@ -1,7 +1,4 @@
-﻿using Game.Common;
-using System;
-using UnityEngine;
-using static Game.Game.CellUnitEs;
+﻿using System;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -13,11 +10,11 @@ namespace Game.Game
             var idx_cur = EntitiesPool.CurrentIdxE.IdxC.Idx;
             var idx_sel = EntitiesPool.SelectedIdxE.IdxC.Idx;
 
-            ref var unit_cur = ref Unit(idx_cur);
-            ref var levUnit_cur = ref EntitiesPool.UnitElse.Level(idx_cur);
-            ref var ownUnit_cur = ref EntitiesPool.UnitElse.Owner(idx_cur);
+            ref var unit_cur = ref CellUnitEntities.Else(idx_cur).UnitC;
+            ref var levUnit_cur = ref CellUnitEntities.Else(idx_cur).LevelC;
+            ref var ownUnit_cur = ref CellUnitEntities.Else(idx_cur).OwnerC;
 
-            ref var unit_sel = ref Unit(idx_cur);
+            ref var unit_sel = ref CellUnitEntities.Else(idx_cur).UnitC;
 
             ref var raycast = ref ClickerObject<RayCastC>();
             ref var cellClick = ref ClickerObject<CellClickC>();
@@ -154,9 +151,9 @@ namespace Game.Game
 
                             case CellClickTypes.GiveHero:
                                 {
-                                    if(InventorUnitsE.HaveHero(WhoseMoveE.CurPlayerI, out var hero))
+                                    if (InventorUnitsE.HaveHero(WhoseMoveE.CurPlayerI, out var hero))
                                     {
-                                        if(hero == UnitTypes.Elfemale || hero == UnitTypes.Snowy)
+                                        if (hero == UnitTypes.Elfemale || hero == UnitTypes.Snowy)
                                         {
                                             if (EntitiesPool.SelectedIdxE.IdxC.Idx == 0)
                                             {
@@ -198,7 +195,7 @@ namespace Game.Game
                                     else
                                     {
                                         throw new Exception();
-                                    }              
+                                    }
                                 }
                                 break;
 
@@ -214,7 +211,7 @@ namespace Game.Game
                                         if (DirectsWindForElfemaleE.IdxsDirects.Contains(EntitiesPool.CurrentIdxE.IdxC.Idx))
                                         {
                                             EntityPool.Rpc.PutOutFireElffToMas(EntitiesPool.SelectedIdxE.IdxC.Idx, EntitiesPool.CurrentIdxE.IdxC.Idx);
-                                        }    
+                                        }
                                     }
 
                                     else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.StunElfemale))

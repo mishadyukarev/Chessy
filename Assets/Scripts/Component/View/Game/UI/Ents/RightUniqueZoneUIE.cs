@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class RightUniqueZoneUIE : EntityAbtract
+    public sealed class RightUniqueZoneUIE : EntityAbstract
     {
         public ref GameObjectVC Zone => ref Ent.Get<GameObjectVC>();
 

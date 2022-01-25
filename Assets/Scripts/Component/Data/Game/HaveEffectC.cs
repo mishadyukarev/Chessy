@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct HaveEffectC : IUnitCellE, IFireCell, ICloudCell, IUnitStatCellE
+    public struct HaveEffectC : IUnitCellE, IFireCell, ICloudCell
     {
         public bool Have;
 

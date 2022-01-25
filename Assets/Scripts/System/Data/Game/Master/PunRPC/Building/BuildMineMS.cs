@@ -1,5 +1,4 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
 using Game.Common;
@@ -24,7 +23,7 @@ namespace Game.Game
 
             if (build == BuildingTypes.Mine)
             {
-                if (EntitiesPool.UnitStep.HaveForBuilding(idx_0, build))
+                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(build))
                 {
                     if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                     {
@@ -40,7 +39,7 @@ namespace Game.Game
 
                                 CellBuildE.SetNew(build, whoseMove, idx_0);
 
-                                EntitiesPool.UnitStep.TakeForBuild(idx_0);
+                                CellUnitEntities.Step(idx_0).AmountC.Take();
                             }
 
                             else EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);

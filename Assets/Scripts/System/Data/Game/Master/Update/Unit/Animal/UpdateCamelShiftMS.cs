@@ -16,9 +16,9 @@ namespace Game.Game
 
                 if (CellEs.IsActiveC(idx_1).IsActive 
                     && !CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_1).Have 
-                    && !CellUnitEs.Unit(idx_1).Have)
+                    && !CellUnitEntities.Else(idx_1).UnitC.Have)
                 {
-                    CellUnitEs.Shift(idx_0, idx_1, false);
+                    CellUnitEntities.Shift(idx_0, idx_1, false);
                 }
             }
         }

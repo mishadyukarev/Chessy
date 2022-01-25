@@ -2,7 +2,6 @@
 using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellEs;
 using static Game.Game.CellTrailEs;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -12,8 +11,8 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var unit_0 = ref CellUnitEntities.Else(idx_0).UnitC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
 
 
                 if (unit_0.Have)
@@ -30,12 +29,12 @@ namespace Game.Game
 
                             foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                             {
-                                if (CellUnitEs.Unit(idx_1).Have)
+                                if (CellUnitEntities.Else(idx_1).UnitC.Have)
                                 {
-                                    if (EntitiesPool.UnitElse.Owner(idx_1).Is(PlayerTypes.First)) isVisForFirst = true;
-                                    if (EntitiesPool.UnitElse.Owner(idx_1).Is(PlayerTypes.Second)) isVisForSecond = true;
-                                }    
-                            } 
+                                    if (CellUnitEntities.Else(idx_1).OwnerC.Is(PlayerTypes.First)) isVisForFirst = true;
+                                    if (CellUnitEntities.Else(idx_1).OwnerC.Is(PlayerTypes.Second)) isVisForSecond = true;
+                                }
+                            }
                         }
 
                         CellUnitVisibleEs.Visible(PlayerTypes.First, idx_0).IsVisible = isVisForFirst;
@@ -51,8 +50,8 @@ namespace Game.Game
 
                             foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                             {
-                                ref var unit_1 = ref Unit(idx_1);
-                                ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
+                                ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                                ref var ownUnit_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
 
                                 if (unit_1.Have)
                                 {
@@ -92,8 +91,8 @@ namespace Game.Game
 
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            ref var unit_1 = ref Unit(idx_1);
-                            ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
+                            ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                            ref var ownUnit_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
 
                             if (unit_1.Have)
                             {
@@ -124,8 +123,8 @@ namespace Game.Game
 
                     foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                     {
-                        ref var unit_1 = ref Unit(idx_1);
-                        ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
+                        ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                        ref var ownUnit_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
 
 
                         if (unit_1.Have && !unit_1.IsAnimal)

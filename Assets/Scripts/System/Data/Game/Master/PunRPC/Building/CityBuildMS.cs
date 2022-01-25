@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellFireEs;
@@ -28,7 +28,7 @@ namespace Game.Game
                 var whoseMove = WhoseMoveE.WhoseMove.Player;
 
 
-                if (EntitiesPool.UnitStep.HaveForBuilding(idx_0, BuildingTypes.City))
+                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
@@ -50,7 +50,7 @@ namespace Game.Game
                         CellBuildE.SetNew(forBuildType, whoseMove, idx_0);
 
 
-                        EntitiesPool.UnitStep.Take(idx_0, BuildingTypes.City);
+                        CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
 
 
                         fire_0.Disable();

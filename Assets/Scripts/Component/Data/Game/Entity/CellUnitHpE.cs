@@ -1,23 +1,20 @@
 ﻿using ECS;
-using System;
 
 namespace Game.Game
 {
-    public sealed class CellUnitHpE : CellAbstE
+    public sealed class CellUnitHpE : EntityAbstract
     {
-        public ref AmountC Hp => ref Ent.Get<AmountC>();
+        public ref AmountC AmountC => ref Ent.Get<AmountC>();
 
-        public bool IsHpDeathAfterAttack => Hp.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
-        public bool HaveMax => Hp.Amount >= UnitHpValues.MAX_HP;
+        public bool IsHpDeathAfterAttack => AmountC.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
+        public bool HaveMax => AmountC.Amount >= UnitHpValues.MAX_HP;
 
-        public CellUnitHpE(in EcsWorld gameW, in byte idx) : base(gameW, idx) { }
+        public CellUnitHpE(in EcsWorld gameW) : base(gameW) { }
 
         public void TakeAttack(in int damage)
         {
-            Hp.Take(damage);
-            if (IsHpDeathAfterAttack) Hp.Reset();
+            AmountC.Take(damage);
+            if (IsHpDeathAfterAttack) AmountC.Reset();
         }
-
-
     }
 }

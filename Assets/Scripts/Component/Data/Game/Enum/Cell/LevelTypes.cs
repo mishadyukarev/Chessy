@@ -3,7 +3,6 @@
     public enum LevelTypes
     {
         None,
-        Start = None,
 
         First,
         Second,

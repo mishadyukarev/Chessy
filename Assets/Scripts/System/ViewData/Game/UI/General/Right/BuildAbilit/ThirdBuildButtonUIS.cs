@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.EntityPool;
 using static Game.Game.CellBuildE;
 
@@ -13,8 +13,8 @@ namespace Game.Game
             {
                 var idx_sel = EntitiesPool.SelectedIdxE.IdxC.Idx;
 
-                ref var unit_sel = ref Unit(EntitiesPool.SelectedIdxE.IdxC.Idx);
-                ref var ownUnit_sel = ref EntitiesPool.UnitElse.Owner(EntitiesPool.SelectedIdxE.IdxC.Idx);
+                ref var unit_sel = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).UnitC;
+                ref var ownUnit_sel = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).OwnerC;
 
                 ref var build_sel = ref Build<BuildingTC>(EntitiesPool.SelectedIdxE.IdxC.Idx);
                 ref var ownBuild_sel = ref Build<PlayerTC>(EntitiesPool.SelectedIdxE.IdxC.Idx);
@@ -34,14 +34,14 @@ namespace Game.Game
                                 {
                                     needActiveThirdButt = true;
                                     //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
-                                    CellUnitBuildingButtonEs.UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build = BuildingTypes.City;
+                                    CellUnitEntities.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
                                 }
                             }
                             else
                             {
                                 needActiveThirdButt = true;
                                 //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.CityNone).Sprite;
-                                CellUnitBuildingButtonEs.UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build = BuildingTypes.None;
+                                CellUnitEntities.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.None;
                             }
                         }
 
@@ -51,7 +51,7 @@ namespace Game.Game
                             {
                                 needActiveThirdButt = true;
                                 //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
-                                CellUnitBuildingButtonEs.UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build = BuildingTypes.City;
+                                CellUnitEntities.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
                             }
                         }
                     }

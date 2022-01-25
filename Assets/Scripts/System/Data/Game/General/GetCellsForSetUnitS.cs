@@ -13,7 +13,7 @@
 
                 if (WhereBuildsE.IsSetted(BuildingTypes.City, player, out var idx_1))
                 {
-                    ref var unit_1 = ref CellUnitEs.Unit(idx_1);
+                    ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
 
                     if (unit_1.Have)
                     {
@@ -30,7 +30,7 @@
                     {
                         var idx_2 = CellEs.IdxCell(xy_2);
 
-                        ref var unit_2 = ref CellUnitEs.Unit(idx_2);
+                        ref var unit_2 = ref CellUnitEntities.Else(idx_2).UnitC;
 
                         if (!CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_2).Have && !unit_2.Have)
                         {
@@ -47,7 +47,7 @@
                 {
                     foreach (var idx_0 in CellEs.Idxs)
                     {
-                        ref var unit_0 = ref CellUnitEs.Unit(idx_0);
+                        ref var unit_0 = ref CellUnitEntities.Else(idx_0).UnitC;
                         ref var buld_0 = ref CellBuildE.Build<BuildingTC>(idx_0);
                         ref var ownBuld_0 = ref CellBuildE.Build<PlayerTC>(idx_0);
 

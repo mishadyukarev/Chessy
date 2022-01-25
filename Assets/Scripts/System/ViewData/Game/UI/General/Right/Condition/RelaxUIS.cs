@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -8,10 +6,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref Unit(EntitiesPool.SelectedIdxE.IdxC.Idx);
-            ref var selOnUnitCom = ref EntitiesPool.UnitElse.Owner(EntitiesPool.SelectedIdxE.IdxC.Idx);
+            ref var unit_sel = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).UnitC;
+            ref var selOnUnitCom = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).OwnerC;
 
-            ref var selCondUnitC = ref EntitiesPool.UnitElse.Condition(EntitiesPool.SelectedIdxE.IdxC.Idx);
+            ref var selCondUnitC = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).ConditionC;
 
 
             var activeButt = false;

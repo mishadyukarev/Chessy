@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -14,13 +13,13 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = WhoseMoveE.WhoseMove.Player;
 
-            ref var ownUnit_from = ref EntitiesPool.UnitElse.Owner(idx_from);
+            ref var ownUnit_from = ref CellUnitEntities.Else(idx_from).OwnerC;
 
-            ref var unit_to = ref Unit(idx_to);
-            ref var ownUnit_to = ref EntitiesPool.UnitElse.Owner(idx_to);
+            ref var unit_to = ref CellUnitEntities.Else(idx_to).UnitC;
+            ref var ownUnit_to = ref CellUnitEntities.Else(idx_to).OwnerC;
 
 
-            if (!CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_from).Have)
+            if (!CellUnitEntities.CooldownUnique(uniq_cur, idx_from).Cooldown.Have)
             {
                 if (CellUnitVisibleEs.Visible(playerSend, idx_to).IsVisible)
                 {
@@ -28,16 +27,16 @@ namespace Game.Game
                     {
                         if (Resources(EnvironmentTypes.AdultForest, idx_to).Have)
                         {
-                            if (EntitiesPool.UnitHps[idx_from].HaveMax)
+                            if (CellUnitEntities.Hp(idx_from).HaveMax)
                             {
-                                if (EntitiesPool.UnitStep.Have(idx_from, uniq_cur))
+                                if (CellUnitEntities.Step(idx_from).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                                 {
                                     if (!ownUnit_from.Is(ownUnit_to.Player))
                                     {
-                                        EntitiesPool.UnitStuns[idx_to].ForExitStun.Amount = 4;
-                                        CellUnitAbilityUniqueEs.Cooldown(uniq_cur, idx_from).Amount = 5;
+                                        CellUnitEntities.Stun(idx_to).ForExitStun.Amount = 4;
+                                        CellUnitEntities.CooldownUnique(uniq_cur, idx_from).Cooldown.Amount = 5;
 
-                                        EntitiesPool.UnitStep.Take(idx_from, uniq_cur);
+                                        CellUnitEntities.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
 
                                         EntityPool.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
 
@@ -46,9 +45,9 @@ namespace Game.Game
                                         {
                                             if(CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx_1).Have)
                                             {
-                                                if (CellUnitEs.Unit(idx_1).Have && EntitiesPool.UnitElse.Owner(idx_1).Is(EntitiesPool.UnitElse.Owner(idx_to).Player))
+                                                if (CellUnitEntities.Else(idx_1).UnitC.Have && CellUnitEntities.Else(idx_1).OwnerC.Is(CellUnitEntities.Else(idx_to).OwnerC.Player))
                                                 {
-                                                    EntitiesPool.UnitStuns[idx_1].ForExitStun.Amount = 4;
+                                                    CellUnitEntities.Stun(idx_1).ForExitStun.Amount = 4;
                                                 }
                                             }
                                         }

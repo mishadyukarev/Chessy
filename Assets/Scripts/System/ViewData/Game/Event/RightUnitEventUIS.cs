@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.EntityPool;
 using static Game.Game.EntityVPool;
 
@@ -27,7 +27,7 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (EntitiesPool.UnitElse.Condition(EntitiesPool.SelectedIdxE.IdxC.Idx).Is(condUnitType))
+                if (CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).ConditionC.Is(condUnitType))
                 {
                     EntityPool.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, EntitiesPool.SelectedIdxE.IdxC.Idx);
                 }
@@ -45,7 +45,7 @@ namespace Game.Game
             {
                 ref var abil = ref CellUnitUniqueButtonsEs.Ability(uniqueButton, EntitiesPool.SelectedIdxE.IdxC.Idx);
 
-                if (!CellUnitAbilityUniqueEs.Cooldown(abil.Ability, EntitiesPool.SelectedIdxE.IdxC.Idx).Have)
+                if (!CellUnitEntities.CooldownUnique(abil.Ability, EntitiesPool.SelectedIdxE.IdxC.Idx).Cooldown.Have)
                 {
                     switch (abil.Ability)
                     {
@@ -151,9 +151,9 @@ namespace Game.Game
                         break;
 
                     case ButtonTypes.Third:
-                        var buildAbility = CellUnitBuildingButtonEs.UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build;
+                        var buildAbility = CellUnitEntities.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build;
                         if (buildAbility == BuildingTypes.None)Rpc.DestroyBuildingToMaster(idx_sel);
-                        else Rpc.BuildToMaster(idx_sel, CellUnitBuildingButtonEs.UnitBuildButton<BuildingTC>(ButtonTypes.Third, idx_sel).Build);
+                        else Rpc.BuildToMaster(idx_sel, CellUnitEntities.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build);
 
                         //switch (BuildAbilC.AbilityType(buildBut))
                         //{

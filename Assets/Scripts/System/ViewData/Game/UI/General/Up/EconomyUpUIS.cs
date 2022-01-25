@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellBuildE;
 
 using static Game.Game.EconomyUpUIE;
@@ -24,11 +24,11 @@ namespace Game.Game
 
             foreach (var idx_0 in Idxs)
             {
-                if (Unit(idx_0).Have && EntitiesPool.UnitElse.Owner(idx_0).Is(WhoseMoveE.CurPlayerI))
+                if (Else(idx_0).UnitC.Have && CellUnitEntities.Else(idx_0).OwnerC.Is(WhoseMoveE.CurPlayerI))
                 {
-                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Unit(idx_0).Unit);
+                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Else(idx_0).UnitC.Unit);
 
-                    if (CellUnitEs.CanExtract(idx_0, out var extract, out var env, out var res))
+                    if (CellUnitEntities.CanExtract(idx_0, out var extract, out var env, out var res))
                     {
                         extracts[res] += extract;
                     }

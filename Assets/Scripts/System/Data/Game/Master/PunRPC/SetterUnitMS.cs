@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.CellFireEs;
 using static Game.Game.CellUnitTWE;
 
@@ -17,14 +17,14 @@ namespace Game.Game
 
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
-            ref var unit_0 = ref Unit(idx_0);
-            ref var levUnit_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-            ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+            ref var unit_0 = ref Else(idx_0).UnitC;
+            ref var levUnit_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+            ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
 
-            ref var hp_0 = ref EntitiesPool.UnitHps[idx_0].Hp;
-            ref var step_0 = ref EntitiesPool.UnitStep.Steps(idx_0);
+            ref var hp_0 = ref CellUnitEntities.Hp(idx_0).AmountC;
+            ref var step_0 = ref CellUnitEntities.Step(idx_0).AmountC;
 
-            ref var cond_0 = ref EntitiesPool.UnitElse.Condition(idx_0);
+            ref var cond_0 = ref CellUnitEntities.Else(idx_0).ConditionC;
 
             ref var tw_0 = ref UnitTW<ToolWeaponC>(idx_0);
 

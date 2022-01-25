@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellFireEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -14,11 +14,11 @@ namespace Game.Game
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
-            if (EntitiesPool.UnitStep.HaveMin(idx_0))
+            if (CellUnitEntities.Step(idx_0).AmountC.Have)
             {
                 fire_0.Disable();
 
-                EntitiesPool.UnitStep.TakeMin(idx_0);
+                CellUnitEntities.Step(idx_0).AmountC.Take();
             }
 
             else

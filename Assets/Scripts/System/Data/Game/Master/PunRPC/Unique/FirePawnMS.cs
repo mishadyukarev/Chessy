@@ -2,7 +2,7 @@
 using System;
 using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellFireEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -19,14 +19,14 @@ namespace Game.Game
             ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 
 
-            if (EntitiesPool.UnitStep.Have(idx_0, uniq_cur))
+            if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
             {
                 if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
                 {
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 
                     fire_0.Enable();
-                    EntitiesPool.UnitStep.Take(idx_0, uniq_cur);
+                    CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                 }
                 else
                 {

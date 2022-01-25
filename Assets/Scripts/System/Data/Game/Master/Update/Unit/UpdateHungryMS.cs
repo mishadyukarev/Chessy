@@ -33,7 +33,7 @@ namespace Game.Game
                                         CellBuildE.Remove(idx_0);
                                     }
 
-                                    CellUnitEs.Kill(idx_0);
+                                    CellUnitEntities.Kill(idx_0);
 
                                     return;
 

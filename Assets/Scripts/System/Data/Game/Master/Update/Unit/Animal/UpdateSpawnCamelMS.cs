@@ -12,16 +12,16 @@ namespace Game.Game
 
                 if (CellEs.IsActiveC(idx_0).IsActive)
                 {
-                    if (!CellUnitEs.Unit(idx_0).Have && !CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_0).Have)
+                    if (!CellUnitEntities.Else(idx_0).UnitC.Have && !CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_0).Have)
                     {
-                        ref var unitC_0 = ref CellUnitEs.Unit(idx_0);
+                        ref var unitC_0 = ref CellUnitEntities.Else(idx_0).UnitC;
 
 
                         bool haveNearUnit = false;
 
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            if (CellUnitEs.Unit(idx_1).Have)
+                            if (CellUnitEntities.Else(idx_1).UnitC.Have)
                             {
                                 haveNearUnit = true;
                                 break;
@@ -30,7 +30,7 @@ namespace Game.Game
 
                         if (!haveNearUnit)
                         {
-                            CellUnitEs.SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ToolWeaponTypes.None, LevelTypes.None), idx_0);
+                            CellUnitEntities.SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ToolWeaponTypes.None, LevelTypes.None), idx_0);
                             return;
                         }
                     }

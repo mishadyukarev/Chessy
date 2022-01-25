@@ -30,28 +30,28 @@ namespace Game.Game
                                 throw new Exception();
 
                             case BuildingTypes.City:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.CityBack).Sprite;
+                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.Sprite(BuildingTypes.City).SpriteC.Sprite;
+                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.SpriteBack(BuildingTypes.City).SpriteC.Sprite;
                                 break;
 
                             case BuildingTypes.Farm:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Farm).Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.FarmBack).Sprite;
+                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.Sprite(BuildingTypes.Farm).SpriteC.Sprite;
+                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.SpriteBack(BuildingTypes.Farm).SpriteC.Sprite;
                                 break;
 
                             case BuildingTypes.Woodcutter:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Woodcutter).Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.WoodcutterBack).Sprite;
+                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.Sprite(BuildingTypes.Woodcutter).SpriteC.Sprite;
+                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.SpriteBack(BuildingTypes.Woodcutter).SpriteC.Sprite;
                                 break;
 
                             case BuildingTypes.Mine:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Mine).Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.MineBack).Sprite;
+                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.Sprite(BuildingTypes.Mine).SpriteC.Sprite;
+                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.SpriteBack(BuildingTypes.Mine).SpriteC.Sprite;
                                 break;
 
                             case BuildingTypes.Camp:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.Camp).Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.CampBack).Sprite;
+                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.Sprite(BuildingTypes.Camp).SpriteC.Sprite;
+                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVPool.SpriteBack(BuildingTypes.Camp).SpriteC.Sprite;
                                 break;
 
                             default:

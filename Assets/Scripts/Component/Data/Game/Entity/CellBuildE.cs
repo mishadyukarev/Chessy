@@ -67,7 +67,7 @@ namespace Game.Game
             var buildC = Build<BuildingTC>(idx);
 
 
-            if (EntitiesPool.UnitStep.HaveForBuilding(idx, build))
+            if (CellUnitEntities.Step(idx).AmountC.Amount >= CellUnitStepValues.NeedSteps(build))
             {
                 if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
                 {

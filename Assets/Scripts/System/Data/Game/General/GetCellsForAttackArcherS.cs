@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEs;
+﻿using static Game.Game.CellUnitEntities;
 
 namespace Game.Game
 {
@@ -8,16 +8,16 @@ namespace Game.Game
         {
             foreach (var idx_0 in CellEs.Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var level_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-                ref var ownUnit_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
-                ref var stepUnit_0 = ref EntitiesPool.UnitStep.Steps(idx_0);
-                ref var stunUnit_0 = ref EntitiesPool.UnitStuns[idx_0].ForExitStun;
-                ref var corner_0 = ref EntitiesPool.UnitElse.Corned(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var level_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var stepUnit_0 = ref CellUnitEntities.Step(idx_0).AmountC;
+                ref var stunUnit_0 = ref CellUnitEntities.Stun(idx_0).ForExitStun;
+                ref var corner_0 = ref CellUnitEntities.Else(idx_0).CornedC;
 
                 if (!stunUnit_0.Have)
                 {
-                    if (EntitiesPool.UnitStep.HaveMin(idx_0))
+                    if (CellUnitEntities.Step(idx_0).AmountC.Have)
                     {
                         if (unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale))
                         {
@@ -29,8 +29,8 @@ namespace Game.Game
                                 var idx_1 = CellEs.IdxCell(xy_1);
 
 
-                                ref var unit_1 = ref Unit(idx_1);
-                                ref var ownUnit_1 = ref EntitiesPool.UnitElse.Owner(idx_1);
+                                ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                                ref var ownUnit_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
 
 
 
@@ -72,8 +72,8 @@ namespace Game.Game
                                     var idx_2 = CellEs.IdxCell(xy_2);
 
 
-                                    ref var unit_2 = ref Unit(idx_2);
-                                    ref var ownUnit_2 = ref EntitiesPool.UnitElse.Owner(idx_2);
+                                    ref var unit_2 = ref CellUnitEntities.Else(idx_2).UnitC;
+                                    ref var ownUnit_2 = ref CellUnitEntities.Else(idx_2).OwnerC;
 
 
 

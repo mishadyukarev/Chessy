@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -9,16 +8,16 @@ namespace Game.Game
         {
             EntityMPool.Attack.Get(out var idx_from, out var idx_to);
 
-            ref var unit_from = ref Unit(idx_from);
-            ref var ownerUnit_from = ref EntitiesPool.UnitElse.Owner(idx_from);
-            ref var hpUnit_from = ref EntitiesPool.UnitHps[idx_from].Hp;
-            ref var condUnit_from = ref EntitiesPool.UnitElse.Condition(idx_from);
+            ref var unit_from = ref CellUnitEntities.Else(idx_from).UnitC;
+            ref var ownerUnit_from = ref CellUnitEntities.Else(idx_from).OwnerC;
+            ref var hpUnit_from = ref CellUnitEntities.Hp(idx_from).AmountC;
+            ref var condUnit_from = ref CellUnitEntities.Else(idx_from).ConditionC;
 
             ref var tw_from = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_from);
 
 
-            ref var unit_to = ref Unit(idx_to);
-            ref var hpUnit_to = ref EntitiesPool.UnitHps[idx_to].Hp;
+            ref var unit_to = ref CellUnitEntities.Else(idx_to).UnitC;
+            ref var hpUnit_to = ref CellUnitEntities.Hp(idx_to).AmountC;
 
             ref var tw_to = ref CellUnitTWE.UnitTW<ToolWeaponC>(idx_to);
 
@@ -29,7 +28,7 @@ namespace Game.Game
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))
             {
-                EntitiesPool.UnitStep.Steps(idx_from).Reset();
+                CellUnitEntities.Step(idx_from).AmountC.Reset();
                 condUnit_from.Reset();
 
 
@@ -37,13 +36,13 @@ namespace Game.Game
                 float powerDam_to = 0;
 
 
-                powerDam_from += DamageAttack(idx_from, attack);
+                powerDam_from += CellUnitEntities.DamageAttack(idx_from, attack);
 
                 if (unit_from.IsMelee)
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 else EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
-                powerDam_to += DamageOnCell(idx_to);
+                powerDam_to += CellUnitEntities.DamageOnCell(idx_to);
 
 
                 var dirAttack = CellSpaceSupport.GetDirect(idx_from, idx_to);
@@ -125,7 +124,7 @@ namespace Game.Game
                     }
                     else if (minus_from > 0)
                     {
-                        EntitiesPool.UnitHps[idx_from].TakeAttack((int)minus_from);
+                        CellUnitEntities.Hp(idx_from).TakeAttack((int)minus_from);
                     }
                 }
 
@@ -136,42 +135,42 @@ namespace Game.Game
                 }
                 else if (minus_to > 0)
                 {
-                    EntitiesPool.UnitHps[idx_to].TakeAttack((int)minus_to);
+                    CellUnitEntities.Hp(idx_to).TakeAttack((int)minus_to);
                 }
 
 
 
                 if (!hpUnit_to.Have)
                 {
-                    if (CellUnitEs.Unit(idx_to).IsAnimal)
+                    if (CellUnitEntities.Else(idx_to).UnitC.IsAnimal)
                     {
                         InventorResourcesE.Resource(ResourceTypes.Food, ownerUnit_from.Player) += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                     }
 
-                    CellUnitEs.Kill(idx_to);
+                    CellUnitEntities.Kill(idx_to);
 
 
                     if (unit_from.IsMelee)
                     {
                         if (!hpUnit_from.Have)
                         {
-                            CellUnitEs.Kill(idx_from);
+                            CellUnitEntities.Kill(idx_from);
                         }
                         else
                         {
 
-                            CellUnitEs.Shift(idx_from, idx_to, true);
+                            CellUnitEntities.Shift(idx_from, idx_to, true);
                         }
                     }
                 }
 
                 else if (!hpUnit_from.Have)
                 {
-                    CellUnitEs.Kill(idx_from);
+                    CellUnitEntities.Kill(idx_from);
                 }
 
-                foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();
-                foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Disable();
+                //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();
+                //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_to).Disable();
             }
         }
     }

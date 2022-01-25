@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
+using static Game.Game.CellUnitEntities;
 using static Game.Game.EntityPool;
 using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellFireEs;
@@ -14,9 +14,9 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                ref var unit_0 = ref Unit(idx_0);
-                ref var lev_0 = ref EntitiesPool.UnitElse.Level(idx_0);
-                ref var own_0 = ref EntitiesPool.UnitElse.Owner(idx_0);
+                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var lev_0 = ref CellUnitEntities.Else(idx_0).LevelC;
+                ref var own_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
 
                 ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
 

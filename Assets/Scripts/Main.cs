@@ -97,12 +97,29 @@ namespace Game
 
                     _gameW = new EcsWorld();
 
+
+                    #region Resources
+
+                    new ResourceSpriteVPool(_gameW);
+                    new VideoClipsResC(true);
+
+                    #endregion
+
+
+                    #region Entities
+
                     new EntitiesVPool(_gameW, out var forData);
+
                     new RightUIEntities(_gameW);
                     new EventUIManager(default);
 
-
                     new EntitiesPool(_gameW, forData, RpcS.NamesMethods);
+                    new CellUnitEntities(_gameW);
+
+
+                    #endregion
+
+                    new FillCellsS();
 
 
                     EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>();

@@ -7,6 +7,5 @@ namespace Game.Game
         public readonly Sprite Sprite;
 
         public SpriteVC(in Sprite sprite) => Sprite = sprite;
-
     }
 }
