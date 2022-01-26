@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct ToolWeaponC : ITWCellE
+    public struct ToolWeaponC
     {
         public ToolWeaponTypes ToolWeapon;
         public bool Is(in ToolWeaponTypes tW) => ToolWeapon == tW;

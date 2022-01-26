@@ -4,59 +4,54 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellBuildE
+    public readonly struct CellBuildEs
     {
-        static Entity[] _builds;
+        static CellBuildingE[] _builds;
+        static Dictionary<PlayerTypes, CellBuildingVisibleE[]> _owners;
 
-        static Dictionary<PlayerTypes, Entity[]> _buildEnts;
-
-        public static ref T Build<T>(in byte idx) where T : struct, IBuildCell => ref _builds[idx].Get<T>();
-        public static ref T IsVisible<T>(in PlayerTypes player, in byte idx) where T : struct, IBuildPlayerCellE => ref _buildEnts[player][idx].Get<T>();
+        public static CellBuildingE Build(in byte idx) => _builds[idx];
+        public static CellBuildingVisibleE IsVisible(in PlayerTypes player, in byte idx) => _owners[player][idx];
 
 
-        public CellBuildE(in EcsWorld gameW)
+        public CellBuildEs(in EcsWorld gameW)
         {
-            _builds = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
-            _buildEnts = new Dictionary<PlayerTypes, Entity[]>();
+            var cells = CellStartValues.ALL_CELLS_AMOUNT;
+
+            _builds = new CellBuildingE[cells];
+            _owners = new Dictionary<PlayerTypes, CellBuildingVisibleE[]>();
 
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                _buildEnts.Add(player, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
+                _owners.Add(player, new CellBuildingVisibleE[cells]);
             }
 
             for (byte idx = 0; idx < _builds.Length; idx++)
             {
-                _builds[idx] = gameW.NewEntity()
-                    .Add(new BuildingTC())
-                    .Add(new PlayerTC());
+                _builds[idx] = new CellBuildingE(gameW);
 
-                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
-                {
-                    _buildEnts[player][idx] = gameW.NewEntity()
-                        .Add(new IsVisibleC());
-                }
+                foreach (var item in _owners) _owners[item.Key][idx] = new CellBuildingVisibleE(gameW);
             }
         }
 
         public static void SetNew(in BuildingTypes build, in PlayerTypes owner, in byte idx)
         {
             if (build == default) throw new Exception("BuildType is None");
-            if (Build<BuildingTC>(idx).Is(build)) throw new Exception("It's got yet");
-            if (Build<BuildingTC>(idx).Have) Remove(idx);
+            if (Build(idx).BuildTC.Is(build)) throw new Exception("It's got yet");
+            if (Build(idx).BuildTC.Have) Remove(idx);
 
-            Build<BuildingTC>(idx).Build = build;
-            Build<PlayerTC>(idx).Player = owner;
+            Build(idx).BuildTC.Build = build;
+            Build(idx).PlayerTC.Player = owner;
             WhereBuildsE.HaveBuild<HaveBuildingC>(build, owner, idx).Have = true;
         }
 
         public static void Remove(in byte idx)
         {
-            if (Build<BuildingTC>(idx).Have)
+            if (Build(idx).BuildTC.Have)
             {
-                WhereBuildsE.HaveBuild<HaveBuildingC>(Build<BuildingTC>(idx).Build, Build<PlayerTC>(idx).Player, idx).Have = false;
+                WhereBuildsE.HaveBuild<HaveBuildingC>(Build(idx).BuildTC.Build, Build(idx).PlayerTC.Player, idx).Have = false;
 
-                Build<BuildingTC>(idx).Reset();
-                Build<PlayerTC>(idx).Reset();
+                Build(idx).BuildTC.Reset();
+                Build(idx).PlayerTC.Reset();
             }
         }
 
@@ -64,14 +59,14 @@ namespace Game.Game
         {
             mistake = default;
 
-            var buildC = Build<BuildingTC>(idx);
+            var buildC = Build(idx).BuildTC;
 
 
-            if (CellUnitEntities.Step(idx).AmountC.Amount >= CellUnitStepValues.NeedSteps(build))
+            if (CellUnitEs.Step(idx).AmountC.Amount >= CellUnitStepValues.NeedSteps(build))
             {
                 if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
                 {
-                    if (!CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx).Have)
+                    if (!CellEnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx).Resources.Have)
                     {
                         return true;
                     }
@@ -96,21 +91,21 @@ namespace Game.Game
 
         public static bool CanExtract(in byte idx, out int extract, out EnvironmentTypes env, out ResourceTypes res)
         {
-            var buildC = Build<BuildingTC>(idx);
-            var ownC = Build<PlayerTC>(idx);
+            var buildC = Build(idx).BuildTC;
+            var ownC = Build(idx).PlayerTC;
 
 
-            if (Build<BuildingTC>(idx).Is(BuildingTypes.Farm) && CellEnvironmentEs.Resources(EnvironmentTypes.Fertilizer, idx).Have)
+            if (Build(idx).BuildTC.Is(BuildingTypes.Farm) && CellEnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx).Resources.Have)
             {
                 env = EnvironmentTypes.Fertilizer;
                 res = ResourceTypes.Food;
             }
-            else if (Build<BuildingTC>(idx).Is(BuildingTypes.Woodcutter) && CellEnvironmentEs.Resources(EnvironmentTypes.AdultForest, idx).Have)
+            else if (Build(idx).BuildTC.Is(BuildingTypes.Woodcutter) && CellEnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx).Resources.Have)
             {
                 env = EnvironmentTypes.AdultForest;
                 res = ResourceTypes.Wood;
             }
-            else if (Build<BuildingTC>(idx).Is(BuildingTypes.Mine) && CellEnvironmentEs.Resources(EnvironmentTypes.Hill, idx).Have)
+            else if (Build(idx).BuildTC.Is(BuildingTypes.Mine) && CellEnvironmentEs.Environment(EnvironmentTypes.Hill, idx).Resources.Have)
             {
                 env = EnvironmentTypes.Hill;
                 res = ResourceTypes.Ore;
@@ -135,7 +130,7 @@ namespace Game.Game
             }
 
 
-            if (extract > CellEnvironmentEs.Resources(env, idx).Amount) extract = CellEnvironmentEs.Resources(env, idx).Amount;
+            if (extract > CellEnvironmentEs.Environment(env, idx).Resources.Amount) extract = CellEnvironmentEs.Environment(env, idx).Resources.Amount;
 
             return true;
         }

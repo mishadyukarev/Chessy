@@ -19,7 +19,7 @@ namespace Game.Game
             _trails = new Dictionary<DirectTypes, Entity[]>();
 
 
-            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
+            for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
                 _trails.Add(dir, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
 

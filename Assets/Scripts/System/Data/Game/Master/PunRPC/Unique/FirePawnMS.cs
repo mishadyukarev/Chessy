@@ -1,8 +1,8 @@
 ﻿using Photon.Pun;
 using System;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireEs;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellFireE;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -16,17 +16,17 @@ namespace Game.Game
             var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
 
-            ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
+            ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
 
 
-            if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+            if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
             {
-                if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
+                if (Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
                 {
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 
                     fire_0.Enable();
-                    CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                 }
                 else
                 {

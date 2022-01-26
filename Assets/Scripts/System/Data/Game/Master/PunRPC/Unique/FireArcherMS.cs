@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellFireEs;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellFireE;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -14,17 +14,17 @@ namespace Game.Game
             EntityMPool.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
             var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
-            ref var fire_to = ref Fire<HaveEffectC>(idx_to);
+            ref var fire_to = ref CellFireEs.Fire(idx_to).Fire;
 
-            var whoseMove = WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
-            if (CellUnitEntities.Step(idx_from).AmountC.Amount >= 2)
+            if (CellUnitEs.Step(idx_from).AmountC.Amount >= 2)
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
                     EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
 
-                    CellUnitEntities.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    CellUnitEs.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                     fire_to.Enable();
                 }
             }

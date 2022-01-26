@@ -1,8 +1,8 @@
 ﻿using System;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellUnitEs;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireEs;
+using static Game.Game.CellFireE;
 
 namespace Game.Game
 {
@@ -13,12 +13,12 @@ namespace Game.Game
             foreach (byte idx_0 in Idxs)
             {
                 ref var unit_0 = ref Else(idx_0).UnitC;
-                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
 
-                ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
+                ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
 
 
-                if (ownUnit_0.Is(WhoseMoveE.CurPlayerI))
+                if (ownUnit_0.Is(Entities.WhoseMoveE.CurPlayerI))
                 {
                     if (unit_0.Have)
                     {
@@ -27,53 +27,53 @@ namespace Game.Game
                             case UnitTypes.None: throw new Exception();
 
                             case UnitTypes.King:
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.CircularAttack;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.BonusNear;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Ability = UniqueAbilityTypes.CircularAttack;
+                                CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Ability = UniqueAbilityTypes.BonusNear;
+                                CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Reset();
                                 break;
 
                             case UnitTypes.Pawn:
-                                if (Resources(EnvironmentTypes.AdultForest, idx_0).Have)
+                                if (Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
                                 {
-                                    if (fire_0.Have) CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.PutOutFirePawn;
-                                    else CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.FirePawn;
+                                    if (fire_0.Have) CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Ability = UniqueAbilityTypes.PutOutFirePawn;
+                                    else CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Ability = UniqueAbilityTypes.FirePawn;
                                 }
                                 else
                                 {
-                                    CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.Seed;
+                                    CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Ability = UniqueAbilityTypes.Seed;
                                 }
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Reset();
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Reset();
                                 break;
 
                             case UnitTypes.Archer:
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.FireArcher;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.ChangeCornerArcher;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Ability = UniqueAbilityTypes.FireArcher;
+                                CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Ability = UniqueAbilityTypes.ChangeCornerArcher;
+                                CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Reset();
                                 break;
 
                             case UnitTypes.Scout:
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Reset();
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Reset();
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Reset();
                                 break;
 
                             case UnitTypes.Elfemale:
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.StunElfemale;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.GrowAdultForest;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Ability = UniqueAbilityTypes.ChangeDirectionWind;
+                                CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Ability = UniqueAbilityTypes.StunElfemale;
+                                CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Ability = UniqueAbilityTypes.GrowAdultForest;
+                                CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Ability = UniqueAbilityTypes.ChangeDirectionWind;
                                 break;
 
                             case UnitTypes.Snowy:
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Ability = UniqueAbilityTypes.FreezeDirectEnemy;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Ability = UniqueAbilityTypes.IceWall;
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Ability = UniqueAbilityTypes.FreezeDirectEnemy;
+                                CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Ability = UniqueAbilityTypes.IceWall;
+                                CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Reset();
                                 break;
 
                             case UnitTypes.Camel:
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Reset();
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Reset();
-                                CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Reset();
+                                CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Reset();
                                 break;
 
                             default: throw new Exception();
@@ -82,9 +82,9 @@ namespace Game.Game
                 }
                 else
                 {
-                    CellUnitUniqueButtonsEs.Ability(ButtonTypes.First, idx_0).Reset();
-                    CellUnitUniqueButtonsEs.Ability(ButtonTypes.Second, idx_0).Reset();
-                    CellUnitUniqueButtonsEs.Ability(ButtonTypes.Third, idx_0).Reset();
+                    CellUnitEs.UniqueButton(ButtonTypes.First, idx_0).AbilityC.Reset();
+                    CellUnitEs.UniqueButton(ButtonTypes.Second, idx_0).AbilityC.Reset();
+                    CellUnitEs.UniqueButton(ButtonTypes.Third, idx_0).AbilityC.Reset();
                 }
             }
         }

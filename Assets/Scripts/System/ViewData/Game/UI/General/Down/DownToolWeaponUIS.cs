@@ -40,9 +40,9 @@ namespace Game.Game
                 Image<ImageUIC>(tw_sel, LevelTypes.First).SetActive(false);
             }   
 
-            Button<TextUIC>(ToolWeaponTypes.Pick).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Pick, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Sword).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Sword, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Shield).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Shield, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, WhoseMoveE.CurPlayerI).Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Pick).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Pick, LevelTypes.Second, Entities.WhoseMoveE.CurPlayerI).Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Sword).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Sword, LevelTypes.Second, Entities.WhoseMoveE.CurPlayerI).Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Shield).Text = InventorToolWeaponE.ToolWeapons<AmountC>(ToolWeaponTypes.Shield, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, Entities.WhoseMoveE.CurPlayerI).Amount.ToString();
         }
     }
 }

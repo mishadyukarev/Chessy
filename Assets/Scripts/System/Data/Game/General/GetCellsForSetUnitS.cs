@@ -13,7 +13,7 @@
 
                 if (WhereBuildsE.IsSetted(BuildingTypes.City, player, out var idx_1))
                 {
-                    ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
+                    ref var unit_1 = ref CellUnitEs.Else(idx_1).UnitC;
 
                     if (unit_1.Have)
                     {
@@ -24,15 +24,15 @@
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = true;
                     }
 
-                    var list_2 = CellSpaceSupport.GetXyAround(CellEs.Cell<XyC>(idx_1).Xy);
+                    var list_2 = CellSpaceSupport.GetXyAround(CellEs.Cell(idx_1).XyC.Xy);
 
                     foreach (var xy_2 in list_2)
                     {
                         var idx_2 = CellEs.IdxCell(xy_2);
 
-                        ref var unit_2 = ref CellUnitEntities.Else(idx_2).UnitC;
+                        ref var unit_2 = ref CellUnitEs.Else(idx_2).UnitC;
 
-                        if (!CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_2).Have && !unit_2.Have)
+                        if (!CellEnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_2).Resources.Have && !unit_2.Have)
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -47,21 +47,21 @@
                 {
                     foreach (var idx_0 in CellEs.Idxs)
                     {
-                        ref var unit_0 = ref CellUnitEntities.Else(idx_0).UnitC;
-                        ref var buld_0 = ref CellBuildE.Build<BuildingTC>(idx_0);
-                        ref var ownBuld_0 = ref CellBuildE.Build<PlayerTC>(idx_0);
+                        ref var unit_0 = ref CellUnitEs.Else(idx_0).UnitC;
+                        ref var buld_0 = ref CellBuildEs.Build(idx_0).BuildTC;
+                        ref var ownBuld_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
 
 
                         if (buld_0.Is(BuildingTypes.Camp))
                         {
-                            if (!CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_0).Have && !unit_0.Have)
+                            if (!CellEnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_0).Resources.Have && !unit_0.Have)
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }
                         }
                         else
                         {
-                            var xy = CellEs.Cell<XyC>(idx_0).Xy;
+                            var xy = CellEs.Cell(idx_0).XyC.Xy;
                             var x = xy[0];
                             var y = xy[1];
 

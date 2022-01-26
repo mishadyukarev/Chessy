@@ -3,47 +3,37 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct EntitiesPool
+    public struct Entities
     {
-
-
         public static SelectedIdxE SelectedIdxE { get; private set; }
         public static CurrentIdxE CurrentIdxE { get; private set; }
+        public static WindE WindE { get; private set; }
+        public static WinnerE WinnerE { get; private set; }
+        public static WhoseMoveE WhoseMoveE { get; private set; }
 
 
-        public EntitiesPool(in EcsWorld gameW, in List<object> forData, in List<string> namesMethods)
+        public Entities(in EcsWorld gameW, in List<object> forData, in List<string> namesMethods, out int i)
         {
-            var i = 0;
+            i = 0;
 
             var actions = (List<object>)forData[i++];
-            var isActiveParenCells = (bool[])forData[i++];
-            var idCells = (int[])forData[i++];
             var sounds0 = (Dictionary<ClipTypes, System.Action>)forData[i++];
             var sounds1 = (Dictionary<UniqueAbilityTypes, System.Action>)forData[i++];
 
 
             new EntityPool(gameW, actions, namesMethods);
 
-            new CellTrailEs(gameW);
-            new CellBuildE(gameW);
-            new CellEnvironmentEs(gameW);
-            new CellFireEs(gameW);
-            new EntityCellCloudPool(gameW);
-            new CellRiverE(gameW);
-            new CellEs(gameW, isActiveParenCells, idCells);
-            new CellParentE(gameW);
-
-            new CurrentDirectWindE(gameW);
-            new CenterCloudEnt(gameW);
-            new DirectsWindForElfemaleE(gameW);
+            WindE = new WindE(gameW);
+            WinnerE = new WinnerE(gameW);
+            WhoseMoveE = new WhoseMoveE(gameW);
+            SelectedIdxE = new SelectedIdxE(gameW);
+            CurrentIdxE = new CurrentIdxE(gameW);
 
             new AvailableCenterUpgradeEs(gameW);
             new AvailableCenterHeroEs(gameW);
             new UnitStatUpgradesEs(gameW);
             new BuildingUpgradesEs(gameW);
 
-            SelectedIdxE = new SelectedIdxE(gameW);
-            CurrentIdxE = new CurrentIdxE(gameW);
 
             new EntWhereEnviroments(gameW);
             new WhereUnitsE(gameW);
@@ -59,7 +49,7 @@ namespace Game.Game
             new CellsForArsonArcherEs(gameW);
 
             new SelectedToolWeaponE(gameW);
-            new WhoseMoveE(gameW);
+
             new MistakeE(gameW);
             new EntHint(gameW);
             new SelectedUnitE(gameW);

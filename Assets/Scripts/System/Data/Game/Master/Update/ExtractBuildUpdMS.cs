@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellBuildE;
+using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
@@ -10,17 +10,17 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                ref var build_0 = ref Build<BuildingTC>(idx_0);
-                ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
+                ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
+                ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
 
-                if (CellBuildE.CanExtract(idx_0, out var extract, out var env, out var res))
+                if (CellBuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
                 {
-                    Resources(env, idx_0).Amount -= extract;
+                    Environment(env, idx_0).Resources.Amount -= extract;
                     InventorResourcesE.Resource(res, ownBuild_0.Player).Amount += extract;
 
-                    if (!Resources(env, idx_0).Have)
+                    if (!Environment(env, idx_0).Resources.Have)
                     {
-                        CellBuildE.Remove(idx_0);
+                        CellBuildEs.Remove(idx_0);
 
                         if (env != EnvironmentTypes.Hill) Remove(env, idx_0);
 

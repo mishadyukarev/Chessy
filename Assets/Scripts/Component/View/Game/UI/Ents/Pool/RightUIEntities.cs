@@ -12,6 +12,8 @@ namespace Game.Game
         static Dictionary<ButtonTypes, RightBuildUIE> _buildings;
         static Dictionary<string, RightBuildingZoneUIE> _buildingZones;
 
+        public static RightZoneUIE Zone { get; private set; }
+
         public static RightUniqueUIE Unique(in ButtonTypes but) => _uniques[but];
         public static RightUniqueZoneUIE UniqueZone(in ButtonTypes but, in UniqueAbilityTypes ability) => _uniqueZones[but.ToString() + ability];
 
@@ -20,12 +22,10 @@ namespace Game.Game
 
 
 
-
-
         public RightUIEntities(in EcsWorld gameW)
         {
             var rightZone = CanvasC.FindUnderCurZone("RightZone").transform;
-            new UIEntRight(gameW, rightZone.gameObject);
+            Zone = new RightZoneUIE(gameW, rightZone.gameObject);
             new UIEntRightStats(gameW, rightZone.gameObject);
 
 

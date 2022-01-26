@@ -8,7 +8,7 @@ namespace Game.Game
         public void Run()
         {
             var isActiveKingZone = CenterKingUIE.Paren.IsActiveSelf;
-            var curPlayerI = WhoseMoveE.CurPlayerI;
+            var curPlayerI = Entities.WhoseMoveE.CurPlayerI;
 
             if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
                 && AvailableCenterHeroEs.HaveAvailHero(curPlayerI).Have)

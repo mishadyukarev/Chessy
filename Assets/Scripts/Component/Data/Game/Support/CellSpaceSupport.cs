@@ -18,7 +18,7 @@ namespace Game.Game
             var xyAvail = new List<byte[]>();
             var xyResult = new byte[XY_FOR_ARRAY];
 
-            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
+            for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
                 var xyDirectCell = _directs[dir];
 
@@ -33,7 +33,7 @@ namespace Game.Game
         public static List<byte> GetIdxsAround(in byte idx_start)
         {
             var list = new List<byte>();
-            foreach (var item in GetXyAround(Cell<XyC>(idx_start).Xy)) list.Add(IdxCell(item));
+            foreach (var item in GetXyAround(Cell(idx_start).XyC.Xy)) list.Add(IdxCell(item));
             return list;
         }
 
@@ -43,7 +43,7 @@ namespace Game.Game
             directs = new Dictionary<DirectTypes, byte[]>();
             var xyResult = new byte[XY_FOR_ARRAY];
 
-            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
+            for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
                 var xyDirect = _directs[dir];
 
@@ -55,7 +55,7 @@ namespace Game.Game
         }
         public static void TryGetIdxAround(in byte idx_start, out Dictionary<DirectTypes, byte> directs)
         {
-            TryGetXyAround(Cell<XyC>(idx_start).Xy, out var dirs);
+            TryGetXyAround(Cell(idx_start).XyC.Xy, out var dirs);
 
             directs = new Dictionary<DirectTypes, byte>();
             foreach (var item in dirs) directs.Add(item.Key, IdxCell(item.Value));
@@ -72,7 +72,7 @@ namespace Game.Game
 
             return DirectTypes.None;
         }
-        public static DirectTypes GetDirect(byte idx_from, byte idx_to) => GetDirect(Cell<XyC>(idx_from).Xy, Cell<XyC>(idx_to).Xy);
+        public static DirectTypes GetDirect(byte idx_from, byte idx_to) => GetDirect(Cell(idx_from).XyC.Xy, Cell(idx_to).XyC.Xy);
 
         public static byte[] GetXyCellByDirect(byte[] xyStart, DirectTypes directType)
         {
@@ -87,14 +87,14 @@ namespace Game.Game
         }
         public static byte GetIdxCellByDirect(in byte idx, in DirectTypes dir)
         {
-            return IdxCell(GetXyCellByDirect(Cell<XyC>(idx).Xy, dir));
+            return IdxCell(GetXyCellByDirect(Cell(idx).XyC.Xy, dir));
         }
 
         static CellSpaceSupport()
         {
             _directs = new Dictionary<DirectTypes, sbyte[]>();
 
-            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
+            for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
                 var xyDirect = new sbyte[XY_FOR_ARRAY];
 

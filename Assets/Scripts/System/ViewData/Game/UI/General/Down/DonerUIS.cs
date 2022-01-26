@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMoveE.IsMyMove)
             {
                 UIEntDownDoner.Wait<GameObjectVC>().SetActive(false);
                 UIEntDownDoner.Doner<ButtonUIC>().Color = Color.white;

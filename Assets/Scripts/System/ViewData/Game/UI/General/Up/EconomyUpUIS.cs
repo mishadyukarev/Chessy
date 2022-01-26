@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEntities;
-using static Game.Game.CellBuildE;
+using static Game.Game.CellUnitEs;
+using static Game.Game.CellBuildEs;
 
 using static Game.Game.EconomyUpUIE;
 
@@ -11,7 +11,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayer = WhoseMoveE.CurPlayerI;
+            var curPlayer = Entities.WhoseMoveE.CurPlayerI;
 
 
             var extracts = new Dictionary<ResourceTypes, int>();
@@ -24,18 +24,18 @@ namespace Game.Game
 
             foreach (var idx_0 in Idxs)
             {
-                if (Else(idx_0).UnitC.Have && CellUnitEntities.Else(idx_0).OwnerC.Is(WhoseMoveE.CurPlayerI))
+                if (Else(idx_0).UnitC.Have && CellUnitEs.Else(idx_0).OwnerC.Is(Entities.WhoseMoveE.CurPlayerI))
                 {
                     extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Else(idx_0).UnitC.Unit);
 
-                    if (CellUnitEntities.CanExtract(idx_0, out var extract, out var env, out var res))
+                    if (CellUnitEs.CanExtract(idx_0, out var extract, out var env, out var res))
                     {
                         extracts[res] += extract;
                     }
                 }
-                if (Build<BuildingTC>(idx_0).Have && Build<PlayerTC>(idx_0).Is(WhoseMoveE.CurPlayerI))
+                if (CellBuildEs.Build(idx_0).BuildTC.Have && CellBuildEs.Build(idx_0).PlayerTC.Is(Entities.WhoseMoveE.CurPlayerI))
                 {
-                    if (CellBuildE.CanExtract(idx_0, out var extract, out var env, out var res))
+                    if (CellBuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
                     {
                         extracts[res] += extract;
                     }

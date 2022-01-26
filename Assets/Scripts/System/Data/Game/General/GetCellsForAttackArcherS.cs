@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEntities;
+﻿using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -9,33 +9,33 @@ namespace Game.Game
             foreach (var idx_0 in CellEs.Idxs)
             {
                 ref var unit_0 = ref Else(idx_0).UnitC;
-                ref var level_0 = ref CellUnitEntities.Else(idx_0).LevelC;
-                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
-                ref var stepUnit_0 = ref CellUnitEntities.Step(idx_0).AmountC;
-                ref var stunUnit_0 = ref CellUnitEntities.Stun(idx_0).ForExitStun;
-                ref var corner_0 = ref CellUnitEntities.Else(idx_0).CornedC;
+                ref var level_0 = ref CellUnitEs.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
+                ref var stepUnit_0 = ref CellUnitEs.Step(idx_0).AmountC;
+                ref var stunUnit_0 = ref CellUnitEs.Stun(idx_0).ForExitStun;
+                ref var corner_0 = ref CellUnitEs.Else(idx_0).CornedC;
 
                 if (!stunUnit_0.Have)
                 {
-                    if (CellUnitEntities.Step(idx_0).AmountC.Have)
+                    if (CellUnitEs.Step(idx_0).AmountC.Have)
                     {
                         if (unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale))
                         {
-                            var xy_from = CellEs.Cell<XyC>(idx_0).Xy;
+                            var xy_from = CellEs.Cell(idx_0).XyC.Xy;
 
-                            for (var dir_1 = DirectTypes.First; dir_1 < DirectTypes.End; dir_1++)
+                            for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                             {
                                 var xy_1 = CellSpaceSupport.GetXyCellByDirect(xy_from, dir_1);
                                 var idx_1 = CellEs.IdxCell(xy_1);
 
 
-                                ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
-                                ref var ownUnit_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
+                                ref var unit_1 = ref CellUnitEs.Else(idx_1).UnitC;
+                                ref var ownUnit_1 = ref CellUnitEs.Else(idx_1).OwnerC;
 
 
 
 
-                                if (CellEs.IsActiveC(idx_1).IsActive && !CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_1).Have)
+                                if (CellEs.Parent(idx_1).IsActiveSelf.IsActive && !CellEnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_1).Resources.Have)
                                 {
                                     if (unit_1.Have)
                                     {
@@ -72,13 +72,13 @@ namespace Game.Game
                                     var idx_2 = CellEs.IdxCell(xy_2);
 
 
-                                    ref var unit_2 = ref CellUnitEntities.Else(idx_2).UnitC;
-                                    ref var ownUnit_2 = ref CellUnitEntities.Else(idx_2).OwnerC;
+                                    ref var unit_2 = ref CellUnitEs.Else(idx_2).UnitC;
+                                    ref var ownUnit_2 = ref CellUnitEs.Else(idx_2).OwnerC;
 
 
 
                                     if (unit_2.Have && !unit_2.IsAnimal 
-                                        && CellUnitVisibleEs.Visible(ownUnit_0.Player, idx_2).IsVisible 
+                                        && CellUnitEs.VisibleE(ownUnit_0.Player, idx_2).VisibleC.IsVisible 
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
                                         if (unit_0.Is(UnitTypes.Archer))

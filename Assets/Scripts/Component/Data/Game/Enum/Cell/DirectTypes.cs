@@ -3,11 +3,8 @@
     public enum DirectTypes : byte
     {
         None,
-        Start = None,
 
         Up,
-        First = Up,
-
         UpRight,
         Right,
         DownRight,

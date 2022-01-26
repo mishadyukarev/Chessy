@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -9,9 +9,9 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                if (CellUnitEntities.Else(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
+                if (CellUnitEs.Else(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
                 {
-                    CellUnitEntities.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
+                    CellUnitEs.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
                 }
             }
         }

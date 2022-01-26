@@ -1,5 +1,5 @@
-﻿using static Game.Game.CellFireEs;
-using static Game.Game.CellUnitEntities;
+﻿using static Game.Game.CellFireE;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -11,14 +11,14 @@ namespace Game.Game
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
+            ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
 
 
-            if (CellUnitEntities.Step(idx_0).AmountC.Have)
+            if (CellUnitEs.Step(idx_0).AmountC.Have)
             {
                 fire_0.Disable();
 
-                CellUnitEntities.Step(idx_0).AmountC.Take();
+                CellUnitEs.Step(idx_0).AmountC.Take();
             }
 
             else

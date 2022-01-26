@@ -1,6 +1,6 @@
-﻿using static Game.Game.CellBuildE;
+﻿using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -13,16 +13,16 @@ namespace Game.Game
             var build = EntityMPool.Build<BuildingTC>().Build;
             var idx_0 = EntityMPool.Build<IdxC>().Idx;
 
-            ref var build_0 = ref Build<BuildingTC>(idx_0);
-            ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
+            ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
+            ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
 
-            var whoseMove = WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
 
 
             if (build == BuildingTypes.Farm)
             {
-                if (CellBuildE.CanBuild(idx_0, build, whoseMove, out var mistake))
+                if (CellBuildEs.CanBuild(idx_0, build, whoseMove, out var mistake))
                 {
                     if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                     {
@@ -30,9 +30,9 @@ namespace Game.Game
 
                         Remove(EnvironmentTypes.YoungForest, idx_0);
 
-                        if (Resources(EnvironmentTypes.Fertilizer, idx_0).Have)
+                        if (Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Have)
                         {
-                            Resources(EnvironmentTypes.Fertilizer, idx_0).Amount = CellEnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer);
+                            Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Amount = CellEnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer);
                         }
                         else
                         {
@@ -41,9 +41,9 @@ namespace Game.Game
 
                         InventorResourcesE.BuyBuild(whoseMove, build);
 
-                        CellBuildE.SetNew(build, whoseMove, idx_0);
+                        CellBuildEs.SetNew(build, whoseMove, idx_0);
 
-                        CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(build));
+                        CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(build));
                     }
                     else
                     {

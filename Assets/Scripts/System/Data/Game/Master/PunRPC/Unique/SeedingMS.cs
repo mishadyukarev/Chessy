@@ -1,6 +1,6 @@
 ﻿using System;
-using static Game.Game.CellUnitEntities;
-using static Game.Game.CellBuildE;
+using static Game.Game.CellUnitEs;
+using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
@@ -16,7 +16,7 @@ namespace Game.Game
             var idx_0 = EntityMPool.Seed<IdxC>().Idx;
             var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
 
-            ref var build_0 = ref Build<BuildingTC>(idx_0);
+            ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
 
 
             switch (env)
@@ -28,7 +28,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                    if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
@@ -36,17 +36,17 @@ namespace Game.Game
                         }
                         else
                         {
-                            if (!Resources(EnvironmentTypes.Fertilizer, idx_0).Have)
+                            if (!Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Have)
                             {
-                                if (!Resources(EnvironmentTypes.AdultForest, idx_0).Have)
+                                if (!Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
 
-                                    if (!Resources(EnvironmentTypes.YoungForest, idx_0).Have)
+                                    if (!Environment(EnvironmentTypes.YoungForest, idx_0).Resources.Have)
                                     {
                                         EntityPool.Rpc.SoundToGeneral(sender, uniq_cur);
 
                                         SetNew(EnvironmentTypes.YoungForest, idx_0);
 
-                                        CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                                        CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                                     }
                                     else
                                     {

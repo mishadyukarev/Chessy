@@ -1,9 +1,7 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEntities;
-using static Game.Game.CellBuildE;
+﻿using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireEs;
-using static Game.Game.EntityCellCloudPool;
+using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -11,50 +9,48 @@ namespace Game.Game
     {
         public void Run()
         {
+            CellSpaceSupport.TryGetIdxAround(Entities.WindE.CenterCloud.Idx, out var directs);
+
+            foreach (var item in directs)
+            {
+                CellFireEs.Fire(item.Value).Fire.Disable();
+            }
+
+
             foreach (byte idx_0 in Idxs)
             {
-                var xy_0 = Cell<XyC>(idx_0).Xy;
+                var xy_0 = Cell(idx_0).XyC.Xy;
 
                 ref var unit_0 = ref Else(idx_0).UnitC;
-                ref var levUnit_0 = ref CellUnitEntities.Else(idx_0).LevelC;
-                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+                ref var levUnit_0 = ref CellUnitEs.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
 
-                ref var hpUnit_0 = ref CellUnitEntities.Hp(idx_0).AmountC;
+                ref var hpUnit_0 = ref CellUnitEs.Hp(idx_0).AmountC;
 
-                ref var buil_0 = ref Build<BuildingTC>(idx_0);
-                ref var ownBuil_0 = ref Build<PlayerTC>(idx_0);
+                ref var buil_0 = ref CellBuildEs.Build(idx_0).BuildTC;
+                ref var ownBuil_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
 
-                ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
-
-                ref var cloud_0 = ref Cloud<HaveEffectC>(idx_0);
-
-
-                if (cloud_0.Have)
-                {
-                    fire_0.Disable();
-                }
+                ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
 
                 if (fire_0.Have)
                 {
-                    
-
-                    Resources(EnvironmentTypes.AdultForest, idx_0)
-                        .Take(CellEnvironmentValues.MaxResources(EnvironmentTypes.AdultForest) / 5);
+                    Environment(EnvironmentTypes.AdultForest, idx_0)
+                        .Resources.Take(CellEnvironmentValues.MaxResources(EnvironmentTypes.AdultForest) / 5);
 
                     if (unit_0.Have)
                     {
-                        CellUnitEntities.Hp(idx_0).AmountC.Take(UnitDamageValues.FIRE_DAMAGE);
-                        if (!CellUnitEntities.Hp(idx_0).AmountC.Have)
+                        CellUnitEs.Hp(idx_0).AmountC.Take(UnitDamageValues.FIRE_DAMAGE);
+                        if (!CellUnitEs.Hp(idx_0).AmountC.Have)
                         {
-                            CellUnitEntities.Kill(idx_0);
+                            CellUnitEs.Kill(idx_0);
                         }
                     }
 
 
 
-                    if (!Resources(EnvironmentTypes.AdultForest, idx_0).Have)
+                    if (!Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
                     {
-                        CellBuildE.Remove(idx_0);
+                        CellBuildEs.Remove(idx_0);
 
                         Remove(EnvironmentTypes.AdultForest, idx_0);
 
@@ -70,11 +66,11 @@ namespace Game.Game
 
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            if (IsActiveC(idx_1).IsActive)
+                            if (Parent(idx_1).IsActiveSelf.IsActive)
                             {
-                                if (Resources(EnvironmentTypes.AdultForest, idx_1).Have)
+                                if (Environment(EnvironmentTypes.AdultForest, idx_1).Resources.Have)
                                 {
-                                    Fire<HaveEffectC>(idx_1).Enable();
+                                    CellFireEs.Fire(idx_1).Fire.Enable();
                                 }
                             }
                         }

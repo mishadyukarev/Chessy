@@ -18,7 +18,7 @@ namespace Game.Game
                 {
                     foreach (byte idx_0 in CellEs.Idxs)
                     {
-                        CellUnitEntities.Stun(idx_0).ForExitStun.Take(2);
+                        CellUnitEs.Stun(idx_0).ForExitStun.Take(2);
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
                     SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
@@ -29,12 +29,12 @@ namespace Game.Game
                 {
                     foreach (byte idx_0 in CellEs.Idxs)
                     {
-                        CellUnitEntities.Stun(idx_0).ForExitStun.Take();
+                        CellUnitEs.Stun(idx_0).ForExitStun.Take();
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 
-                    var curPlayer = WhoseMoveE.CurPlayerI;
-                    var nextPlayer = WhoseMoveE.NextPlayerFrom(curPlayer);
+                    var curPlayer = Entities.WhoseMoveE.CurPlayerI;
+                    var nextPlayer = Entities.WhoseMoveE.NextPlayerFrom(curPlayer);
 
                     if (nextPlayer == PlayerTypes.First)
                     {
@@ -42,10 +42,10 @@ namespace Game.Game
                         EntityPool.Rpc.ActiveMotionZoneToGen(sender);
                     }
 
-                    WhoseMoveE.WhoseMove.Player = nextPlayer;
+                    Entities.WhoseMoveE.WhoseMove.Player = nextPlayer;
 
 
-                    curPlayer = WhoseMoveE.CurPlayerI;
+                    curPlayer = Entities.WhoseMoveE.CurPlayerI;
 
                     //ViewDataSC.RotateAll.Invoke();
 

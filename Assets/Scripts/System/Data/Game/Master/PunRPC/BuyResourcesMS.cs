@@ -9,7 +9,7 @@
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            var whoseMove = WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
             if (InventorResourcesE.CanBuy(whoseMove, res, out var needRes))
             {

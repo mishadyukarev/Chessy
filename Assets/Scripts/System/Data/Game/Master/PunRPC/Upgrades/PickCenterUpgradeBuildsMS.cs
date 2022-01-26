@@ -8,7 +8,7 @@
             var build = EntityMPool.Build<BuildingTC>().Build;
 
 
-            var whoseMove = WhoseMoveE.CurPlayerI;
+            var whoseMove = Entities.WhoseMoveE.CurPlayerI;
 
 
             AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(whoseMove).Have = false;

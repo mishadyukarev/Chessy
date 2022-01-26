@@ -1,4 +1,4 @@
-﻿namespace Game.Game
-{
-    public interface ITWCellE { }
-}
+﻿//namespace Game.Game
+//{
+//    public interface ITWCellE { }
+//}

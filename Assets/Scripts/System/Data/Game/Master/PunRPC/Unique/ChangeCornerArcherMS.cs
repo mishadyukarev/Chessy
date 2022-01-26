@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEntities;
+﻿using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -11,16 +11,16 @@ namespace Game.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var corner_0 = ref CellUnitEntities.Else(idx_0).CornedC;
+            ref var corner_0 = ref CellUnitEs.Else(idx_0).CornedC;
 
 
-            if (CellUnitEntities.Hp(idx_0).HaveMax)
+            if (CellUnitEs.Hp(idx_0).HaveMax)
             {
-                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq))
+                if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq))
                 {
                     corner_0.ChangeCorner();
 
-                    CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq));
+                    CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq));
 
                     EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }

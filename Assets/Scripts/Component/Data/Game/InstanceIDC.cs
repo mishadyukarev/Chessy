@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public readonly struct InstanceIDC : ICell
+    public readonly struct InstanceIDC
     {
         public readonly int InstanceID;
 

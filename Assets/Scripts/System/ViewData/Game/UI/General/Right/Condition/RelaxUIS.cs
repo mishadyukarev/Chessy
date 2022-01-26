@@ -6,17 +6,17 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).UnitC;
-            ref var selOnUnitCom = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).OwnerC;
+            ref var unit_sel = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
+            ref var selOnUnitCom = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
 
-            ref var selCondUnitC = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).ConditionC;
+            ref var selCondUnitC = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).ConditionC;
 
 
             var activeButt = false;
 
             if (unit_sel.Have)
             {
-                if (selOnUnitCom.Is(WhoseMoveE.CurPlayerI))
+                if (selOnUnitCom.Is(Entities.WhoseMoveE.CurPlayerI))
                 {
                     activeButt = true;
 

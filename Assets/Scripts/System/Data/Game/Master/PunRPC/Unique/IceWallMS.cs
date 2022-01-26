@@ -9,11 +9,11 @@
             var curAbility = EntityMPool.UniqueAbilityC.Ability;
 
 
-            if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(curAbility))
+            if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(curAbility))
             {
-                CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(curAbility));
+                CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(curAbility));
 
-                CellUnitEntities.CooldownUnique(curAbility, idx_0).Cooldown += 5;
+                CellUnitEs.CooldownUnique(curAbility, idx_0).Cooldown += 5;
 
                 //EntitiesPool.IceWalls[idx_0].Hp += 4;
             }

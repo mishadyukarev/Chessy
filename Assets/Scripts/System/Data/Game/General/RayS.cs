@@ -39,12 +39,12 @@ namespace Game.Game
             {
                 foreach (byte idx_0 in Idxs)
                 {
-                    int one = Cell<InstanceIDC>(idx_0).InstanceID;
+                    int one = Cell(idx_0).InstanceIDC.InstanceID;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        EntitiesPool.CurrentIdxE.IdxC.Idx = idx_0;
+                        Entities.CurrentIdxE.IdxC.Idx = idx_0;
                         raycastC.Raycast = RaycastTypes.Cell;
                         return;
                     }

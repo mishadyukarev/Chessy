@@ -1,6 +1,4 @@
-﻿using static Game.Game.CellFireEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct FireCellVS : IEcsRunSystem
     {
@@ -8,7 +6,7 @@ namespace Game.Game
         {
             foreach (var idx in CellEs.Idxs)
             {
-                if (Fire<HaveEffectC>(idx).Have)
+                if (CellFireEs.Fire(idx).Fire.Have)
                 {
                     CellFireVEs.FireCellVC<SpriteRendererVC>(idx).Enable();
                 }

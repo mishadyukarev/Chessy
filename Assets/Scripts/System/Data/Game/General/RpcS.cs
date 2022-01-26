@@ -2,13 +2,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Game.Game.CellBuildE;
 using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellEs;
-using static Game.Game.CellFireEs;
 using static Game.Game.CellTrailEs;
-using static Game.Game.CellUnitTWE;
-using static Game.Game.EntityCellCloudPool;
 using static Game.Game.SoundE;
 
 namespace Game.Game
@@ -273,61 +269,54 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                objs.Add(CellUnitEntities.Else(idx_0).UnitC.Unit);
-                objs.Add(CellUnitEntities.Else(idx_0).LevelC.Level);
-                objs.Add(CellUnitEntities.Else(idx_0).OwnerC.Player);
+                objs.Add(CellUnitEs.Else(idx_0).UnitC.Unit);
+                objs.Add(CellUnitEs.Else(idx_0).LevelC.Level);
+                objs.Add(CellUnitEs.Else(idx_0).OwnerC.Player);
 
-                objs.Add(CellUnitEntities.Hp(idx_0).AmountC.Amount);
-                objs.Add(CellUnitEntities.Step(idx_0).AmountC.Amount);
-                objs.Add(CellUnitEntities.Water(idx_0).AmountC.Amount);
+                objs.Add(CellUnitEs.Hp(idx_0).AmountC.Amount);
+                objs.Add(CellUnitEs.Step(idx_0).AmountC.Amount);
+                objs.Add(CellUnitEs.Water(idx_0).AmountC.Amount);
 
-                objs.Add(CellUnitEntities.Else(idx_0).ConditionC.Condition);
+                objs.Add(CellUnitEs.Else(idx_0).ConditionC.Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
-                objs.Add(UnitTW<ToolWeaponC>(idx_0).ToolWeapon);
-                objs.Add(UnitTW<LevelTC>(idx_0).Level);
-                objs.Add(UnitTW<ProtectionC>(idx_0).Protection);
+                objs.Add(CellUnitEs.ToolWeapon(idx_0).ToolWeaponC.ToolWeapon);
+                objs.Add(CellUnitEs.ToolWeapon(idx_0).LevelC.Level);
+                objs.Add(CellUnitEs.ToolWeapon(idx_0).Protection.Amount);
 
-                objs.Add(CellUnitEntities.Stun(idx_0).ForExitStun.Amount);
+                objs.Add(CellUnitEs.Stun(idx_0).ForExitStun.Amount);
 
-                objs.Add(CellUnitEntities.Else(idx_0).CornedC.IsCornered);
+                objs.Add(CellUnitEs.Else(idx_0).CornedC.IsCornered);
 
-                foreach (var item in CellUnitEntities.CooldownKeys) objs.Add(CellUnitEntities.CooldownUnique(item, idx_0).Cooldown.Amount);
-
-
+                foreach (var item in CellUnitEs.CooldownKeys) objs.Add(CellUnitEs.CooldownUnique(item, idx_0).Cooldown.Amount);
 
 
 
-                objs.Add(Build<BuildingTC>(idx_0).Build);
-                objs.Add(Build<PlayerTC>(idx_0).Player);
+
+
+                objs.Add(CellBuildEs.Build(idx_0).BuildTC.Build);
+                objs.Add(CellBuildEs.Build(idx_0).PlayerTC.Player);
 
 
 
-                foreach (var env in CellEnvironmentEs.Keys)
+                foreach (var env in CellEnvironmentEs.KeysEnvironment)
                 {
-                    objs.Add(Resources(env, idx_0));
+                    objs.Add(Environment(env, idx_0));
                 }
 
 
 
 
-                objs.Add(CellRiverE.River(idx_0).River);
-                foreach (var item_0 in CellRiverE.Keys)
-                    objs.Add(CellRiverE.HaveRive(item_0, idx_0).Have);
+                objs.Add(CellRiverEs.River(idx_0).RiverTC.River);
+                foreach (var item_0 in CellRiverEs.Keys)
+                    objs.Add(CellRiverEs.HaveRive(item_0, idx_0).HaveRiver.Have);
 
 
                 foreach (var item_0 in CellTrailEs.Keys)
-                    objs.Add(Health(item_0, idx_0));
+                    objs.Add(Trail(item_0, idx_0));
 
-
-                objs.Add(Cloud<HaveEffectC>(idx_0).Have);
-
-
-                objs.Add(Fire<HaveEffectC>(idx_0).Have);
-
-
-
+                objs.Add(CellFireEs.Fire(idx_0).Fire.Have);
             }
 
             objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.First).Amount);
@@ -359,14 +348,14 @@ namespace Game.Game
 
             #region Other
 
-            objs.Add(WhoseMoveE.WhoseMove.Player);
-            objs.Add(EntityPool.Winner.Player);
+            objs.Add(Entities.WhoseMoveE.WhoseMove.Player);
+            objs.Add(Entities.WinnerE.Winner.Player);
             objs.Add(EntityPool.GameInfo<IsStartedGameC>().IsStartedGame);
             objs.Add(EntityPool.Ready<IsReadyC>(PlayerTypes.Second).IsReady);
 
             objs.Add(EntityPool.GameInfo<AmountMotionsC>().Amount);
 
-            objs.Add(CenterCloudEnt.CenterCloud<IdxC>().Idx);
+            objs.Add(Entities.WindE.CenterCloud.Idx);
             //foreach (var item in WindC.Directs) objs.Add(item.Value);
             //objs.Add(WindC.CurDirWind);
 
@@ -390,52 +379,51 @@ namespace Game.Game
 
             foreach (byte idx_0 in Idxs)
             {
-                CellUnitEntities.Else(idx_0).UnitC.Unit = (UnitTypes)objects[_idx_cur++];
-                CellUnitEntities.Else(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
-                CellUnitEntities.Else(idx_0).OwnerC.Player = (PlayerTypes)objects[_idx_cur++];
-                CellUnitEntities.Hp(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
-                CellUnitEntities.Step(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
-                CellUnitEntities.Water(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
+                CellUnitEs.Else(idx_0).UnitC.Unit = (UnitTypes)objects[_idx_cur++];
+                CellUnitEs.Else(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
+                CellUnitEs.Else(idx_0).OwnerC.Player = (PlayerTypes)objects[_idx_cur++];
+                CellUnitEs.Hp(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
+                CellUnitEs.Step(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
+                CellUnitEs.Water(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
 
-                CellUnitEntities.Else(idx_0).ConditionC.Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                CellUnitEs.Else(idx_0).ConditionC.Condition = (ConditionUnitTypes)objects[_idx_cur++];
                 //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
 
-                UnitTW<ToolWeaponC>(idx_0).ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
-                UnitTW<LevelTC>(idx_0).Level = (LevelTypes)objects[_idx_cur++];
-                UnitTW<ProtectionC>(idx_0).Protection = (int)objects[_idx_cur++];
+                CellUnitEs.ToolWeapon(idx_0).ToolWeaponC.ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
+                CellUnitEs.ToolWeapon(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
+                CellUnitEs.ToolWeapon(idx_0).Protection.Amount = (int)objects[_idx_cur++];
 
 
-                CellUnitEntities.Stun(idx_0).ForExitStun.Amount = (int)objects[_idx_cur++];
+                CellUnitEs.Stun(idx_0).ForExitStun.Amount = (int)objects[_idx_cur++];
 
-                CellUnitEntities.Else(idx_0).CornedC.IsCornered = (bool)objects[_idx_cur++];
+                CellUnitEs.Else(idx_0).CornedC.IsCornered = (bool)objects[_idx_cur++];
 
-                foreach (var item in CellUnitEntities.CooldownKeys) CellUnitEntities.CooldownUnique(item, idx_0).Cooldown.Amount = (int)objects[_idx_cur++];
-
-
-
-                Build<BuildingTC>(idx_0).Build = (BuildingTypes)objects[_idx_cur++];
-                Build<PlayerTC>(idx_0).Player = (PlayerTypes)objects[_idx_cur++];
+                foreach (var item in CellUnitEs.CooldownKeys) CellUnitEs.CooldownUnique(item, idx_0).Cooldown.Amount = (int)objects[_idx_cur++];
 
 
-                foreach (var item_0 in CellEnvironmentEs.Keys)
+
+                CellBuildEs.Build(idx_0).BuildTC.Build = (BuildingTypes)objects[_idx_cur++];
+                CellBuildEs.Build(idx_0).PlayerTC.Player = (PlayerTypes)objects[_idx_cur++];
+
+
+                foreach (var item_0 in CellEnvironmentEs.KeysEnvironment)
                 {
-                    Resources(item_0, idx_0).Amount = (int)objects[_idx_cur++];
+                    Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
                 }
 
-                CellRiverE.River(idx_0).River = (RiverTypes)objects[_idx_cur++];
-                foreach (var dir in CellRiverE.Keys)
-                    CellRiverE.HaveRive(dir, idx_0).Have = (bool)objects[_idx_cur++];
+                CellRiverEs.River(idx_0).RiverTC.River = (RiverTypes)objects[_idx_cur++];
+                foreach (var dir in CellRiverEs.Keys)
+                    CellRiverEs.HaveRive(dir, idx_0).HaveRiver.Have = (bool)objects[_idx_cur++];
 
 
 
                 foreach (var item_0 in CellTrailEs.Keys)
-                    Health(item_0, idx_0).Amount = (int)objects[_idx_cur++];
+                    Trail(item_0, idx_0).Health.Amount = (int)objects[_idx_cur++];
 
 
 
-                Cloud<HaveEffectC>(idx_0).Have = (bool)objects[_idx_cur++];
-                Fire<HaveEffectC>(idx_0).Have = (bool)objects[_idx_cur++];
+                CellFireEs.Fire(idx_0).Fire.Have = (bool)objects[_idx_cur++];
             }
 
 
@@ -468,15 +456,15 @@ namespace Game.Game
 
             #region Other
 
-            WhoseMoveE.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
-            EntityPool.Winner.Player = (PlayerTypes)objects[_idx_cur++];
+            Entities.WhoseMoveE.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
+            Entities.WinnerE.Winner.Player = (PlayerTypes)objects[_idx_cur++];
             EntityPool.GameInfo<IsStartedGameC>().IsStartedGame = (bool)objects[_idx_cur++];
-            EntityPool.Ready<IsReadyC>(WhoseMoveE.CurPlayerI).IsReady = (bool)objects[_idx_cur++];
+            EntityPool.Ready<IsReadyC>(Entities.WhoseMoveE.CurPlayerI).IsReady = (bool)objects[_idx_cur++];
 
 
             EntityPool.GameInfo<AmountMotionsC>().Amount = (int)objects[_idx_cur++];
 
-            CenterCloudEnt.CenterCloud<IdxC>().Idx = (byte)objects[_idx_cur++];
+            Entities.WindE.CenterCloud.Idx = (byte)objects[_idx_cur++];
             //foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
             //WindC.Sync((DirectTypes)objects[_idx_cur++]);
 

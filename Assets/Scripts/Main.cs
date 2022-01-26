@@ -100,7 +100,7 @@ namespace Game
 
                     #region Resources
 
-                    new ResourceSpriteVPool(_gameW);
+                    new ResourceSpriteVEs(_gameW);
                     new VideoClipsResC(true);
 
                     #endregion
@@ -113,11 +113,22 @@ namespace Game
                     new RightUIEntities(_gameW);
                     new EventUIManager(default);
 
-                    new EntitiesPool(_gameW, forData, RpcS.NamesMethods);
-                    new CellUnitEntities(_gameW);
 
+                    new Entities(_gameW, forData, RpcS.NamesMethods, out var i);
+
+                    var isActiveParenCells = (bool[])forData[i++];
+                    var idCells = (int[])forData[i++];
+
+                    new CellEs(_gameW, isActiveParenCells, idCells);
+                    new CellUnitEs(_gameW);
+                    new CellBuildEs(_gameW);
+                    new CellTrailEs(_gameW);
+                    new CellEnvironmentEs(_gameW);
+                    new CellFireEs(_gameW);
+                    new CellRiverEs(_gameW);
 
                     #endregion
+
 
                     new FillCellsS();
 

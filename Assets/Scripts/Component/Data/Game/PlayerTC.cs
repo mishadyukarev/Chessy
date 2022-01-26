@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct PlayerTC : IUnitCellE, IBuildCell, IWhoseMoveE
+    public struct PlayerTC : IUnitCellE, IBuildCell
     {
         public PlayerTypes Player;
 

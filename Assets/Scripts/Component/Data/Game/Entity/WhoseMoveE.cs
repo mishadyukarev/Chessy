@@ -5,19 +5,16 @@ using System;
 
 namespace Game.Game
 {
-    public struct WhoseMoveE
+    public sealed class WhoseMoveE : EntityAbstract
     {
-        static Entity _whoseMove;
+        public ref PlayerTC WhoseMove => ref Ent.Get<PlayerTC>();
 
-        public static ref PlayerTC WhoseMove => ref _whoseMove.Get<PlayerTC>();
-
-        public WhoseMoveE(in EcsWorld gameW)
+        public WhoseMoveE(in EcsWorld gameW) : base(gameW)
         {
-            _whoseMove = gameW.NewEntity()
-                .Add(new PlayerTC(PlayerTypes.First));
+
         }
 
-        public static PlayerTypes CurPlayerI
+        public PlayerTypes CurPlayerI
         {
             get
             {
@@ -40,13 +37,11 @@ namespace Game.Game
             }
 
         }
-        public static bool IsMyMove => CurPlayerI == WhoseMove.Player;
-        public static PlayerTypes NextPlayerFrom(PlayerTypes player)
+        public bool IsMyMove => CurPlayerI == WhoseMove.Player;
+        public PlayerTypes NextPlayerFrom(PlayerTypes player)
         {
             if (player == PlayerTypes.First) return PlayerTypes.Second;
             else return PlayerTypes.First;
         }
     }
-
-    public interface IWhoseMoveE { }
 }

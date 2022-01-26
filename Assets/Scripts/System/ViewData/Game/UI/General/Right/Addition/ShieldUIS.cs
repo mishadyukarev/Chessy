@@ -1,14 +1,12 @@
-﻿using static Game.Game.CellUnitEntities;
-using static Game.Game.EntityPool;
-
+﻿
 namespace Game.Game
 {
     struct ShieldUIS : IEcsRunSystem
     {
         public void Run()
         {
-            ref var tw_sel = ref CellUnitTWE.UnitTW<ToolWeaponC>(EntitiesPool.SelectedIdxE.IdxC.Idx);
-            ref var twLevel_sel = ref CellUnitTWE.UnitTW<LevelTC>(EntitiesPool.SelectedIdxE.IdxC.Idx);
+            ref var tw_sel = ref CellUnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).ToolWeaponC;
+            ref var twLevel_sel = ref CellUnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).LevelC;
 
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Pick, LevelTypes.Second).SetActive(false);
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Sword, LevelTypes.Second).SetActive(false);

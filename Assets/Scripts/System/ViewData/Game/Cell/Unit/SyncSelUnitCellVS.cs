@@ -1,5 +1,5 @@
 ﻿using System;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -10,12 +10,12 @@ namespace Game.Game
         {
             if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
             {
-                var idx_cur = EntitiesPool.CurrentIdxE.IdxC.Idx;
+                var idx_cur = Entities.CurrentIdxE.IdxC.Idx;
 
-                ref var unitC_cur = ref CellUnitEntities.Else(idx_cur).UnitC;
-                ref var levUnitC_cur = ref CellUnitEntities.Else(idx_cur).LevelC;
+                ref var unitC_cur = ref CellUnitEs.Else(idx_cur).UnitC;
+                ref var levUnitC_cur = ref CellUnitEs.Else(idx_cur).LevelC;
 
-                ref var corner_cur = ref CellUnitEntities.Else(idx_cur).CornedC;
+                ref var corner_cur = ref CellUnitEs.Else(idx_cur).CornedC;
 
                 ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_cur);
                 ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(PreVisIdx<IdxC>().Idx);
@@ -23,7 +23,7 @@ namespace Game.Game
 
                 if (unitC_cur.Have)
                 {
-                    if (CellUnitVisibleEs.Visible(WhoseMoveE.CurPlayerI, idx_cur).IsVisible)
+                    if (CellUnitEs.VisibleE(Entities.WhoseMoveE.CurPlayerI, idx_cur).VisibleC.IsVisible)
                     {
                         mainUnit_pre.Enable();
                     }
@@ -50,23 +50,23 @@ namespace Game.Game
                         throw new Exception();
 
                     case UnitTypes.King:
-                        mainUnit_cur.Sprite = ResourceSpriteVPool.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
+                        mainUnit_cur.Sprite = ResourceSpriteVEs.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
                         break;
 
                     case UnitTypes.Pawn:
-                        mainUnit_cur.Sprite = ResourceSpriteVPool.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
+                        mainUnit_cur.Sprite = ResourceSpriteVEs.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
                         break;
 
                     case UnitTypes.Archer:
-                        mainUnit_cur.Sprite = ResourceSpriteVPool.Sprite(corner_cur.IsCornered, selLevelUnitT).SpriteC.Sprite;
+                        mainUnit_cur.Sprite = ResourceSpriteVEs.Sprite(corner_cur.IsCornered, selLevelUnitT).SpriteC.Sprite;
                         break;
 
                     case UnitTypes.Scout:
-                        mainUnit_cur.Sprite = ResourceSpriteVPool.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
+                        mainUnit_cur.Sprite = ResourceSpriteVEs.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
                         break;
 
                     case UnitTypes.Elfemale:
-                        mainUnit_cur.Sprite = ResourceSpriteVPool.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
+                        mainUnit_cur.Sprite = ResourceSpriteVEs.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
                         break;
 
                     default:

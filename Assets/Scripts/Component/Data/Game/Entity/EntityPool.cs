@@ -9,7 +9,6 @@ namespace Game.Game
         static Dictionary<string, Entity> _ents;
         //static Entity _background;
 
-        static Entity _winner;
         static Dictionary<PlayerTypes, Entity> _ready;
         static Entity _gameInfo;
         static Entity _motionZone;
@@ -24,7 +23,6 @@ namespace Game.Game
         public static ref C ClickerObject<C>() where C : struct, IClickerObjectE => ref _ents[nameof(IClickerObjectE)].Get<C>();
         public static ref RpcE Rpc => ref _ents[nameof(Rpc)].Get<RpcE>();
         //public static ref C Background<C>() where C : struct => ref _background.Get<C>();
-        public static ref PlayerTC Winner => ref _winner.Get<PlayerTC>();
         public static ref C Ready<C>(in PlayerTypes player) where C : struct => ref _ready[player].Get<C>();
         public static ref C GameInfo<C>() where C : struct => ref _gameInfo.Get<C>();
         public static ref C MotionZone<C>() where C : struct => ref _motionZone.Get<C>();
@@ -71,8 +69,6 @@ namespace Game.Game
             //_background = gameW.NewEntity()
             //    .Add(new NameC(nameBackground));
 
-            _winner = gameW.NewEntity()
-                .Add(new PlayerTC());
 
             _gameInfo = gameW.NewEntity()
                 .Add(new IsStartedGameC())

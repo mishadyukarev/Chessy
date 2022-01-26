@@ -1,8 +1,8 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEntities;
-using static Game.Game.CellBuildE;
+using static Game.Game.CellUnitEs;
+using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireEs;
+using static Game.Game.CellFireE;
 
 namespace Game.Game
 {
@@ -19,22 +19,22 @@ namespace Game.Game
 
             if (forBuildType == BuildingTypes.City)
             {
-                ref var build_0 = ref Build<BuildingTC>(idx_0);
-                ref var ownBuild_0 = ref Build<PlayerTC>(idx_0);
+                ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
+                ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
 
-                ref var fire_0 = ref Fire<HaveEffectC>(idx_0);
-
-
-                var whoseMove = WhoseMoveE.WhoseMove.Player;
+                ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
 
 
-                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
+                var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+
+
+                if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
                     foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                     {
-                        if (!IsActiveC(idx_1).IsActive)
+                        if (!Parent(idx_1).IsActiveSelf.IsActive)
                         {
                             haveNearBorder = true;
                             break;
@@ -47,10 +47,10 @@ namespace Game.Game
                         EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        CellBuildE.SetNew(forBuildType, whoseMove, idx_0);
+                        CellBuildEs.SetNew(forBuildType, whoseMove, idx_0);
 
 
-                        CellUnitEntities.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
+                        CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
 
 
                         fire_0.Disable();

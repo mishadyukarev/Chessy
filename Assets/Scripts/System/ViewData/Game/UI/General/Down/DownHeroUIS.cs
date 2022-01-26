@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayerI = WhoseMoveE.CurPlayerI;
+            var curPlayerI = Entities.WhoseMoveE.CurPlayerI;
 
             if (InventorUnitsE.HaveHero(curPlayerI, out var hero))
             {

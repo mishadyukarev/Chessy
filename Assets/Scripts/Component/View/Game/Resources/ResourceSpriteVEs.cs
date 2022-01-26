@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct ResourceSpriteVPool
+    public struct ResourceSpriteVEs
     {
         static Dictionary<bool, ResourceSpriteVE> _cells;
         static Dictionary<string, ResourceSpriteVE> _units;
@@ -24,7 +24,7 @@ namespace Game.Game
         public static ResourceSpriteVE SpriteBack(in BuildingTypes build) => _buildingsBack[build];
 
 
-        public ResourceSpriteVPool(in EcsWorld gameW)
+        public ResourceSpriteVEs(in EcsWorld gameW)
         {
             _cells = new Dictionary<bool, ResourceSpriteVE>();
             _cells.Add(false, new ResourceSpriteVE(gameW, "Black_Sprite"));

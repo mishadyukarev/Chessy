@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellBuildE;
+﻿using static Game.Game.CellBuildEs;
 using static Game.Game.CellEs;
 
 namespace Game.Game
@@ -25,15 +25,15 @@ namespace Game.Game
                             {
                                 if (WhereUnitsE.HaveUnit(unit, levUnit, player, idx_0).Have)
                                 {
-                                    ref var build_0 = ref Build<BuildingTC>(idx_0);
+                                    ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
 
 
                                     if (build_0.Is(BuildingTypes.Camp))
                                     {
-                                        CellBuildE.Remove(idx_0);
+                                        CellBuildEs.Remove(idx_0);
                                     }
 
-                                    CellUnitEntities.Kill(idx_0);
+                                    CellUnitEs.Kill(idx_0);
 
                                     return;
 

@@ -6,18 +6,18 @@ namespace Game.Game
 {
     public readonly struct CellEs
     {
-        static Entity[] _cellParents;
-        static Entity[] _cells;
+        static CellParenE[] _cellParents;
+        static CellE[] _cells;
         static HashSet<byte> _idxs;
 
-        public static ref IsActiveC IsActiveC(in byte idx) => ref _cellParents[idx].Get<IsActiveC>();
-        public static ref C Cell<C>(in byte idx) where C : struct, ICell => ref _cells[idx].Get<C>();
+        public static CellParenE Parent(in byte idx) => _cellParents[idx];
+        public static CellE Cell(in byte idx) => _cells[idx];
 
         public static byte IdxCell(in byte[] xy)
         {
             for (byte idx = 0; idx < _cells.Length; idx++)
             {
-                if (Cell<XyC>(idx).Xy.Compare(xy))
+                if (Cell(idx).XyC.Xy.Compare(xy))
                 {
                     return idx;
                 }
@@ -36,8 +36,8 @@ namespace Game.Game
 
         public CellEs(in EcsWorld gameW, in bool[] isActiveParentCells, in int[] idCells)
         {
-            _cellParents = new Entity[isActiveParentCells.Length];
-            _cells = new Entity[isActiveParentCells.Length];
+            _cellParents = new CellParenE[isActiveParentCells.Length];
+            _cells = new CellE[isActiveParentCells.Length];
 
             _idxs = new HashSet<byte>();
 
@@ -48,12 +48,8 @@ namespace Game.Game
             for (byte x = 0; x < CellStartValues.X_AMOUNT; x++)
                 for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
-                    _cellParents[idx] = gameW.NewEntity()
-                        .Add(new IsActiveC(isActiveParentCells[idx]));
-
-                    _cells[idx] = gameW.NewEntity()
-                        .Add(new XyC(new byte[] { x, y }))
-                        .Add(new InstanceIDC(idCells[idx]));
+                    _cellParents[idx] = new CellParenE(gameW, isActiveParentCells[idx]);
+                    _cells[idx] = new CellE(gameW, new byte[] { x, y }, idCells[idx]);
 
                     ++idx;
                 }
@@ -61,9 +57,5 @@ namespace Game.Game
 
 
     }
-    public interface ICell { }
     public interface IUnitCellE { }
-    public interface IUnitUniqueCellE { }
-    public interface IBuildPlayerCellE { }
-    public interface ITrailVisibledCellE { }
 }

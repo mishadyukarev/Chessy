@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct LevelTC : IUnitCellE, ITWCellE, ISelectedUnitE
+    public struct LevelTC : IUnitCellE, ISelectedUnitE
     {
         public LevelTypes Level;
         public bool Is(LevelTypes level) => Level == level;

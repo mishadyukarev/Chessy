@@ -8,7 +8,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            switch (CurrentDirectWindE.Direct<DirectTC>().Direct)
+            switch (Entities.WindE.DirectWind.Direct)
             {
                 case DirectTypes.None: throw new Exception();
                 case DirectTypes.Right: DirectWind<TransformVC>().EulerAngles = new Vector3(); break;
@@ -22,7 +22,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            if (WhoseMoveE.CurPlayerI == PlayerTypes.Second)
+            if (Entities.WhoseMoveE.CurPlayerI == PlayerTypes.Second)
                 DirectWind<TransformVC>().EulerAngles += new Vector3(0, 0, 180);
         }
     }

@@ -6,32 +6,31 @@ namespace Game.Game
 {
     public readonly struct CellEnvironmentEs
     {
-        static Dictionary<EnvironmentTypes, Entity[]> _envEnts;
+        static Dictionary<EnvironmentTypes, CellEnvironmentE[]> _env;
 
-        public static ref AmountC Resources(in EnvironmentTypes env, in byte idx) => ref _envEnts[env][idx].Get<AmountC>();
+        public static CellEnvironmentE Environment(in EnvironmentTypes env, in byte idx) => _env[env][idx];
 
-        public static HashSet<EnvironmentTypes> Keys
+        public static HashSet<EnvironmentTypes> KeysEnvironment
         {
             get
             {
                 var hash = new HashSet<EnvironmentTypes>();
-                foreach (var item in _envEnts) hash.Add(item.Key);
+                foreach (var item in _env) hash.Add(item.Key);
                 return hash;
             }
         }
 
         public CellEnvironmentEs(in EcsWorld gameW)
         {
-            _envEnts = new Dictionary<EnvironmentTypes, Entity[]>();
+            _env = new Dictionary<EnvironmentTypes, CellEnvironmentE[]>();
 
-            for (var env = EnvironmentTypes.First; env < EnvironmentTypes.End; env++)
+            for (var env = EnvironmentTypes.None + 1; env < EnvironmentTypes.End; env++)
             {
-                _envEnts.Add(env, new Entity[CellStartValues.ALL_CELLS_AMOUNT]);
+                _env.Add(env, new CellEnvironmentE[CellStartValues.ALL_CELLS_AMOUNT]);
 
                 for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                 {
-                    _envEnts[env][idx] = gameW.NewEntity()
-                        .Add(new AmountC());
+                    _env[env][idx] = new CellEnvironmentE(gameW);
                 }
             }
         }
@@ -40,7 +39,7 @@ namespace Game.Game
         {
             if (env == default) throw new Exception();
 
-            Resources(env, idx).Amount = CellEnvironmentValues.RandomResources(env);
+            Environment(env, idx).Resources.Amount = CellEnvironmentValues.RandomResources(env);
 
             EntWhereEnviroments.HaveEnv(env, idx).Have = true;
         }
@@ -51,10 +50,10 @@ namespace Game.Game
             if (env == EnvironmentTypes.AdultForest)
             {
                 CellTrailEs.ResetAll(idx);
-                CellFireEs.Fire<HaveEffectC>(idx).Disable();
+                CellFireEs.Fire(idx).Fire.Disable();
             }
 
-            Resources(env, idx).Reset();
+            Environment(env, idx).Resources.Reset();
 
             EntWhereEnviroments.HaveEnv(env, idx).Have = false;
         }

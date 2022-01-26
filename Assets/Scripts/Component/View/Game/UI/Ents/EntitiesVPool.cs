@@ -28,8 +28,8 @@ namespace Game.Game
                 for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
                     var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
-                        ? ResourceSpriteVPool.Sprite(true).SpriteC.Sprite
-                        : ResourceSpriteVPool.Sprite(false).SpriteC.Sprite;
+                        ? ResourceSpriteVEs.Sprite(true).SpriteC.Sprite
+                        : ResourceSpriteVEs.Sprite(false).SpriteC.Sprite;
 
 
                     var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
@@ -112,10 +112,10 @@ namespace Game.Game
 
             forData = new List<object>();
             forData.Add(actions);
-            forData.Add(isActiveParenCells);
-            forData.Add(idCells);
             forData.Add(sounds0);
             forData.Add(sounds1);
+            forData.Add(isActiveParenCells);
+            forData.Add(idCells);
         }
     }
 }

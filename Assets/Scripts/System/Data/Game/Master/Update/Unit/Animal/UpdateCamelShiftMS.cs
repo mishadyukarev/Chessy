@@ -14,11 +14,11 @@ namespace Game.Game
 
                 var idx_1 = CellSpaceSupport.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
 
-                if (CellEs.IsActiveC(idx_1).IsActive 
-                    && !CellEnvironmentEs.Resources(EnvironmentTypes.Mountain, idx_1).Have 
-                    && !CellUnitEntities.Else(idx_1).UnitC.Have)
+                if (CellEs.Parent(idx_1).IsActiveSelf.IsActive 
+                    && !CellEnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_1).Resources.Have 
+                    && !CellUnitEs.Else(idx_1).UnitC.Have)
                 {
-                    CellUnitEntities.Shift(idx_0, idx_1, false);
+                    CellUnitEs.Shift(idx_0, idx_1, false);
                 }
             }
         }

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct ProtectionC : ITWCellE
+    public struct ProtectionC
     {
         public int Protection;
         public bool Have => Protection > 0;

@@ -1,5 +1,5 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -12,15 +12,15 @@ namespace Game.Game
             var unit = EntityMPool.CreateHeroFromTo<UnitTC>().Unit;
             EntityMPool.CreateHeroFromTo<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
-            var whoseMove = WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
-            ref var unit_from = ref CellUnitEntities.Else(idx_from).UnitC;
-            ref var levUnit_from = ref CellUnitEntities.Else(idx_from).LevelC;
-            ref var ownUnit_from = ref CellUnitEntities.Else(idx_from).OwnerC;
+            ref var unit_from = ref CellUnitEs.Else(idx_from).UnitC;
+            ref var levUnit_from = ref CellUnitEs.Else(idx_from).LevelC;
+            ref var ownUnit_from = ref CellUnitEs.Else(idx_from).OwnerC;
 
-            ref var unit_to = ref CellUnitEntities.Else(idx_to).UnitC;
-            ref var levUnit_to = ref CellUnitEntities.Else(idx_to).LevelC;
-            ref var ownUnit_to = ref CellUnitEntities.Else(idx_to).OwnerC;
+            ref var unit_to = ref CellUnitEs.Else(idx_to).UnitC;
+            ref var levUnit_to = ref CellUnitEs.Else(idx_to).LevelC;
+            ref var ownUnit_to = ref CellUnitEs.Else(idx_to).OwnerC;
 
 
             if (unit == UnitTypes.Elfemale || unit == UnitTypes.Snowy)
@@ -37,20 +37,20 @@ namespace Game.Game
                                 {
                                     EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.GetHero);
 
-                                    WhereUnitsE.HaveUnit(UnitTypes.Archer, CellUnitEntities.Else(idx_from).LevelC.Level, CellUnitEntities.Else(idx_from).OwnerC.Player, idx_from).Have = false;
-                                    CellUnitEntities.Else(idx_from).UnitC.Reset();
+                                    WhereUnitsE.HaveUnit(UnitTypes.Archer, CellUnitEs.Else(idx_from).LevelC.Level, CellUnitEs.Else(idx_from).OwnerC.Player, idx_from).Have = false;
+                                    CellUnitEs.Else(idx_from).UnitC.Reset();
 
-                                    WhereUnitsE.HaveUnit(UnitTypes.Archer, CellUnitEntities.Else(idx_to).LevelC.Level, CellUnitEntities.Else(idx_to).OwnerC.Player, idx_to).Have = false;
-                                    CellUnitEntities.Else(idx_to).UnitC.Reset();
-
-
-                                    CellUnitEntities.Else(idx_to).UnitC.Unit = unit;
-                                    CellUnitEntities.Else(idx_to).LevelC.Level = LevelTypes.First;
-
-                                    WhereUnitsE.HaveUnit(unit, LevelTypes.First, CellUnitEntities.Else(idx_to).OwnerC.Player, idx_to).Have = true;
+                                    WhereUnitsE.HaveUnit(UnitTypes.Archer, CellUnitEs.Else(idx_to).LevelC.Level, CellUnitEs.Else(idx_to).OwnerC.Player, idx_to).Have = false;
+                                    CellUnitEs.Else(idx_to).UnitC.Reset();
 
 
-                                    InventorUnitsE.Units(unit, LevelTypes.First, CellUnitEntities.Else(idx_to).OwnerC.Player).Amount -= 1;
+                                    CellUnitEs.Else(idx_to).UnitC.Unit = unit;
+                                    CellUnitEs.Else(idx_to).LevelC.Level = LevelTypes.First;
+
+                                    WhereUnitsE.HaveUnit(unit, LevelTypes.First, CellUnitEs.Else(idx_to).OwnerC.Player, idx_to).Have = true;
+
+
+                                    InventorUnitsE.Units(unit, LevelTypes.First, CellUnitEs.Else(idx_to).OwnerC.Player).Amount -= 1;
 
                                     break;
                                 }

@@ -6,7 +6,7 @@
         {
             for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
-                ref var ability = ref CellUnitUniqueButtonsEs.Ability(button, EntitiesPool.SelectedIdxE.IdxC.Idx).Ability;
+                ref var ability = ref CellUnitEs.UniqueButton(button, Entities.SelectedIdxE.IdxC.Idx).AbilityC.Ability;
 
                 if (ability == default)
                 {
@@ -14,12 +14,12 @@
                 }
                 else
                 {
-                    RightUIEntities.Unique(button).Text.SetActiveParent(CellUnitEntities.CooldownUnique(ability, EntitiesPool.SelectedIdxE.IdxC.Idx).Cooldown.Have);
-                    RightUIEntities.Unique(button).Text.Text = CellUnitEntities.CooldownUnique(ability, EntitiesPool.SelectedIdxE.IdxC.Idx).Cooldown.Amount.ToString();
+                    RightUIEntities.Unique(button).Text.SetActiveParent(CellUnitEs.CooldownUnique(ability, Entities.SelectedIdxE.IdxC.Idx).Cooldown.Have);
+                    RightUIEntities.Unique(button).Text.Text = CellUnitEs.CooldownUnique(ability, Entities.SelectedIdxE.IdxC.Idx).Cooldown.Amount.ToString();
 
                     RightUIEntities.Unique(button).Paren.SetActive(true);
 
-                    RightUIEntities.Unique(button).ImageC.Sprite = ResourceSpriteVPool.Sprite(ability).SpriteC.Sprite;
+                    RightUIEntities.Unique(button).ImageC.Sprite = ResourceSpriteVEs.Sprite(ability).SpriteC.Sprite;
 
 
 

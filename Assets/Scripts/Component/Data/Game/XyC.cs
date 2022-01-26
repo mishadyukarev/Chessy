@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct XyC : ICell
+    public struct XyC
     {
         readonly byte[] _xy;
 

@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEntities;
+﻿using static Game.Game.CellUnitEs;
 using static Game.Game.CellEs;
 using static Game.Game.StunCellVEs;
 
@@ -10,9 +10,9 @@ namespace Game.Game
         {
             foreach (byte idx_0 in Idxs)
             {
-                ref var stun_0 = ref CellUnitEntities.Stun(idx_0).ForExitStun;
+                ref var stun_0 = ref CellUnitEs.Stun(idx_0).ForExitStun;
 
-                if (CellUnitVisibleEs.Visible(WhoseMoveE.CurPlayerI, idx_0).IsVisible)
+                if (CellUnitEs.VisibleE(Entities.WhoseMoveE.CurPlayerI, idx_0).VisibleC.IsVisible)
                 {
                     Stun<SpriteRendererVC>(idx_0).SetActive(stun_0.Have);
                 }

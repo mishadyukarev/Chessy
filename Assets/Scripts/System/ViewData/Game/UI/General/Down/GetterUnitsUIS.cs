@@ -33,11 +33,11 @@ namespace Game.Game
                 }
             }
 
-            var amountPawns = InventorUnitsE.Units(UnitTypes.Pawn, LevelTypes.First, WhoseMoveE.CurPlayerI).Amount
-                + InventorUnitsE.Units(UnitTypes.Pawn, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount;
+            var amountPawns = InventorUnitsE.Units(UnitTypes.Pawn, LevelTypes.First, Entities.WhoseMoveE.CurPlayerI).Amount
+                + InventorUnitsE.Units(UnitTypes.Pawn, LevelTypes.Second, Entities.WhoseMoveE.CurPlayerI).Amount;
 
-            var amountArchers = InventorUnitsE.Units(UnitTypes.Archer, LevelTypes.First, WhoseMoveE.CurPlayerI).Amount
-                + InventorUnitsE.Units(UnitTypes.Archer, LevelTypes.Second, WhoseMoveE.CurPlayerI).Amount;
+            var amountArchers = InventorUnitsE.Units(UnitTypes.Archer, LevelTypes.First, Entities.WhoseMoveE.CurPlayerI).Amount
+                + InventorUnitsE.Units(UnitTypes.Archer, LevelTypes.Second, Entities.WhoseMoveE.CurPlayerI).Amount;
 
             PawnArcherDownUIE.Taker<TextUIC>(UnitTypes.Pawn).Text = amountPawns.ToString();
             PawnArcherDownUIE.Taker<TextUIC>(UnitTypes.Archer).Text = amountArchers.ToString();

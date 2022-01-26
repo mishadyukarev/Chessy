@@ -1,6 +1,6 @@
 ﻿using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellEs;
-using static Game.Game.CellUnitEntities;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -16,10 +16,10 @@ namespace Game.Game
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
                 ref var unit_0 = ref Else(idx_0).UnitC;
-                ref var level_0 = ref CellUnitEntities.Else(idx_0).LevelC;
-                ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
-                ref var step_0 = ref CellUnitEntities.Step(idx_0).AmountC;
-                ref var stunUnit_0 = ref CellUnitEntities.Stun(idx_0).ForExitStun;
+                ref var level_0 = ref CellUnitEs.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
+                ref var step_0 = ref CellUnitEs.Step(idx_0).AmountC;
+                ref var stunUnit_0 = ref CellUnitEs.Stun(idx_0).ForExitStun;
 
                 if (!stunUnit_0.Have)
                 {
@@ -27,20 +27,20 @@ namespace Game.Game
                     {
                         DirectTypes dir_cur = default;
 
-                        CellSpaceSupport.TryGetXyAround(Cell<XyC>(idx_0).Xy, out var dirs);
+                        CellSpaceSupport.TryGetXyAround(Cell(idx_0).XyC.Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             dir_cur += 1;
                             var idx_1 = IdxCell(item_1.Value);
 
-                            ref var unit_1 = ref CellUnitEntities.Else(idx_1).UnitC;
-                            ref var own_1 = ref CellUnitEntities.Else(idx_1).OwnerC;
+                            ref var unit_1 = ref CellUnitEs.Else(idx_1).UnitC;
+                            ref var own_1 = ref CellUnitEs.Else(idx_1).OwnerC;
 
-                            if (!Resources(EnvironmentTypes.Mountain, idx_1).Have)
+                            if (!Environment(EnvironmentTypes.Mountain, idx_1).Resources.Have)
                             {
-                                if (CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.StepsForDoing(idx_0, idx_1)
-                                    || CellUnitEntities.Step(idx_0).AmountC.Amount >= CellUnitEntities.MaxAmountSteps(idx_0))
+                                if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitEs.StepsForDoing(idx_0, idx_1)
+                                    || CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitEs.MaxAmountSteps(idx_0))
                                 {
                                     if (unit_1.Have)
                                     {

@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEntities;
+﻿using static Game.Game.CellUnitEs;
 using static Game.Game.EntityPool;
 
 namespace Game.Game
@@ -9,15 +9,15 @@ namespace Game.Game
         {
             var buildT = BuildingTypes.None;
 
-            if (EntitiesPool.SelectedIdxE.IsSelCell)
+            if (Entities.SelectedIdxE.IsSelCell)
             {
-                ref var selUnitDatCom = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).UnitC;
+                ref var selUnitDatCom = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var sellOnUnitCom = ref CellUnitEntities.Else(EntitiesPool.SelectedIdxE.IdxC.Idx).OwnerC;
+                    ref var sellOnUnitCom = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
 
-                    if (sellOnUnitCom.Is(WhoseMoveE.CurPlayerI))
+                    if (sellOnUnitCom.Is(Entities.WhoseMoveE.CurPlayerI))
                     {
                         buildT = BuildingTypes.Mine;
                     }

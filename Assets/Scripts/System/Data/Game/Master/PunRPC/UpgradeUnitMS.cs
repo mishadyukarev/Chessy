@@ -1,4 +1,4 @@
-﻿using static Game.Game.CellUnitEntities;
+﻿using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -10,27 +10,27 @@ namespace Game.Game
             var idx_0 = EntityMPool.UpgradeUnit<IdxC>().Idx;
 
             ref var unit_0 = ref Else(idx_0).UnitC;
-            ref var levUnit_0 = ref CellUnitEntities.Else(idx_0).LevelC;
-            ref var ownUnit_0 = ref CellUnitEntities.Else(idx_0).OwnerC;
+            ref var levUnit_0 = ref CellUnitEs.Else(idx_0).LevelC;
+            ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
 
 
-            ref var hpUnit_0 = ref CellUnitEntities.Hp(idx_0).AmountC;
+            ref var hpUnit_0 = ref CellUnitEs.Hp(idx_0).AmountC;
 
 
-            var whoseMove = WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
-            if (CellUnitEntities.Hp(idx_0).HaveMax)
+            if (CellUnitEs.Hp(idx_0).HaveMax)
             {
-                if (CellUnitEntities.Step(idx_0).AmountC.Have)
+                if (CellUnitEs.Step(idx_0).AmountC.Have)
                 {
                     if (InventorResourcesE.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     {
                         InventorResourcesE.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                        CellUnitEntities.Else(idx_0).LevelC.Level = LevelTypes.Second;
-                        CellUnitEntities.Step(idx_0).AmountC.Take();
+                        CellUnitEs.Else(idx_0).LevelC.Level = LevelTypes.Second;
+                        CellUnitEs.Step(idx_0).AmountC.Take();
 
-                        CellUnitEntities.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
+                        CellUnitEs.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
 
                         EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                     }

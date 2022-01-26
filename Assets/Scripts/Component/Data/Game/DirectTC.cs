@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct DirectTC : IDirectWindE
+    public struct DirectTC
     {
         public DirectTypes Direct;
 
