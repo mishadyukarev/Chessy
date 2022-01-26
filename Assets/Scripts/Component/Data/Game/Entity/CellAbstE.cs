@@ -1,6 +1,4 @@
 ﻿using ECS;
-using UnityEditor;
-using UnityEngine;
 
 namespace Game.Game
 {

@@ -2,19 +2,14 @@
 
 namespace Game.Game
 {
-    public struct SelectedUnitE
+    public sealed class SelectedUnitE : EntityAbstract
     {
-        static Entity _selUnit;
+        public ref UnitTC UnitTC => ref Ent.Get<UnitTC>();
+        public ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
 
-        public static ref C SelUnit<C>() where C : struct => ref _selUnit.Get<C>();
-
-        public SelectedUnitE(in EcsWorld gameW)
+        public SelectedUnitE(in EcsWorld gameW) : base(gameW)
         {
-            _selUnit = gameW.NewEntity()
-                .Add(new UnitTC())
-                .Add(new LevelTC());
+
         }
     }
-
-    public interface ISelectedUnitE { }
 }

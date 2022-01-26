@@ -11,7 +11,7 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
-                if (EntityPool.FriendZone<IsActiveC>().IsActive)
+                if (Entities.FriendZoneE.IsActiveC.IsActive)
                 {
                     TextC.SetActiveParent(true);
 

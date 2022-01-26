@@ -1,7 +1,4 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellBuildEs;
-using static Game.Game.CellEnvironmentEs;
-using Game.Common;
+﻿using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
 {
@@ -11,8 +8,8 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var build = EntityMPool.Build<BuildingTC>().Build;
-            var idx_0 = EntityMPool.Build<IdxC>().Idx;
+            var build = EntitiesMaster.Build<BuildingTC>().Build;
+            var idx_0 = EntitiesMaster.Build<IdxC>().Idx;
 
 
             ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
@@ -32,7 +29,7 @@ namespace Game.Game
                         {
                             if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                             {
-                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
                                 InventorResourcesE.BuyBuild(whoseMove, build);
 
@@ -42,16 +39,16 @@ namespace Game.Game
                                 CellUnitEs.Step(idx_0).AmountC.Take();
                             }
 
-                            else EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                            else Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
                         }
 
-                        else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
-                    else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
                 else
                 {
-                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

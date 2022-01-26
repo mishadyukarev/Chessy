@@ -1,5 +1,5 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellEnvironmentEs;
+﻿using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellEs;
 
 namespace Game.Game
 {
@@ -7,8 +7,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            var idx_0 = EntityMPool.GrowAdultForest<IdxC>().Idx;
-            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
+            var idx_0 = EntitiesMaster.GrowAdultForest<IdxC>().Idx;
+            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
@@ -29,7 +29,7 @@ namespace Game.Game
 
                         CellUnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Amount = 5;
 
-                        EntityPool.Rpc.SoundToGeneral(sender, uniq_cur);
+                        Entities.Rpc.SoundToGeneral(sender, uniq_cur);
 
                         //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have)
                         //{
@@ -57,13 +57,13 @@ namespace Game.Game
 
                     }
 
-                    else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
-                else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
             else
             {
-                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

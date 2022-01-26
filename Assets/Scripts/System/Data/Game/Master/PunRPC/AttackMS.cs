@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            EntityMPool.Attack.Get(out var idx_from, out var idx_to);
+            EntitiesMaster.Attack.Get(out var idx_from, out var idx_to);
 
             ref var unit_from = ref CellUnitEs.Else(idx_from).UnitC;
             ref var ownerUnit_from = ref CellUnitEs.Else(idx_from).OwnerC;
@@ -39,8 +39,8 @@ namespace Game.Game
                 powerDam_from += CellUnitEs.DamageAttack(idx_from, attack);
 
                 if (unit_from.IsMelee)
-                    EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-                else EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+                    Entities.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                else Entities.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
                 powerDam_to += CellUnitEs.DamageOnCell(idx_to);
 
@@ -48,11 +48,11 @@ namespace Game.Game
                 var dirAttack = CellSpaceSupport.GetDirect(idx_from, idx_to);
 
 
-                if (SunSidesE.SunSideTC.IsAcitveSun)
+                if (Entities.SunSidesE.SunSideTC.IsAcitveSun)
                 {
                     var isSunnedUnit = true;
 
-                    foreach (var dir in SunSidesE.SunSideTC.RaysSun)
+                    foreach (var dir in Entities.SunSidesE.SunSideTC.RaysSun)
                     {
                         if (dirAttack == dir) isSunnedUnit = false;
                     }
@@ -62,7 +62,7 @@ namespace Game.Game
                         powerDam_from *= 0.9f;
                     }
                 }
-                
+
 
 
 

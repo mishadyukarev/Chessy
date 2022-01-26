@@ -1,5 +1,4 @@
 ﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {

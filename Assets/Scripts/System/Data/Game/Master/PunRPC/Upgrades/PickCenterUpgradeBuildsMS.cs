@@ -5,17 +5,17 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var build = EntityMPool.Build<BuildingTC>().Build;
+            var build = EntitiesMaster.Build<BuildingTC>().Build;
 
 
             var whoseMove = Entities.WhoseMoveE.CurPlayerI;
 
 
-            AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(whoseMove).Have = false;
+            AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
             BuildingUpgradesEs.HaveUpgrade<HaveUpgradeC>(build, whoseMove, UpgradeTypes.PickCenter).Have = true;
-            AvailableCenterUpgradeEs.HaveBuildUpgrade<HaveUpgradeC>(build, whoseMove).Have = false;
+            AvailableCenterUpgradeEs.HaveBuildUpgrade(build, whoseMove).HaveUpgrade.Have = false;
 
-            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

@@ -9,7 +9,7 @@
         NeedMoreHp,
         NeedOtherPlace,
         ThatIsForOtherUnit,
-        NeedCity,    
+        NeedCity,
         NearBorder,
 
         End,

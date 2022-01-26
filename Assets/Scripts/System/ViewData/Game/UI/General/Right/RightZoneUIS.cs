@@ -1,7 +1,4 @@
-﻿using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct RightZoneUIS : IEcsRunSystem
     {

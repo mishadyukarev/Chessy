@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct HaveUpgradeC : IUpgradeE
+    public struct HaveUpgradeC
     {
         public bool Have;
 

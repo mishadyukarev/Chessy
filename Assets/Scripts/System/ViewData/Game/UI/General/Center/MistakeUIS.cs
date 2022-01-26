@@ -47,12 +47,12 @@ namespace Game.Game
 
                         for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
                         {
-                            if (MistakeE.Mistake<AmountC>(res).Have)
+                            if (MistakeE.Mistake(res).Have)
                             {
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).SetActive(true);
 
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).Text
-                                    = ">= " + MistakeE.Mistake<AmountC>(res).Amount;
+                                    = ">= " + MistakeE.Mistake(res).Amount;
 
                                 //Economy<EconomyUpUIC>(res).Color = Color.red;
                                 //MistakeUIC.SetActiveRes(res, true);

@@ -7,8 +7,8 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var idx_0 = EntityMPool.ScoutOldNew<IdxC>().Idx;
-            var unit = EntityMPool.ScoutOldNew<UnitTC>().Unit;
+            var idx_0 = EntitiesMaster.ScoutOldNew<IdxC>().Idx;
+            var unit = EntitiesMaster.ScoutOldNew<UnitTC>().Unit;
 
             if (CellUnitEs.Hp(idx_0).HaveMax)
             {
@@ -17,12 +17,12 @@ namespace Game.Game
                     InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, CellUnitEs.Else(idx_0).OwnerC.Player).Amount -= 1;
                     SetScout(idx_0);
 
-                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }
 
-                else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+            else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
         }
     }
 }

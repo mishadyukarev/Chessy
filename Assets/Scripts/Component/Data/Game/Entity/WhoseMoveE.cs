@@ -9,9 +9,9 @@ namespace Game.Game
     {
         public ref PlayerTC WhoseMove => ref Ent.Get<PlayerTC>();
 
-        public WhoseMoveE(in EcsWorld gameW) : base(gameW)
+        public WhoseMoveE(in PlayerTypes whoseMove, in EcsWorld gameW) : base(gameW)
         {
-
+            Ent.Add(new PlayerTC(whoseMove));
         }
 
         public PlayerTypes CurPlayerI

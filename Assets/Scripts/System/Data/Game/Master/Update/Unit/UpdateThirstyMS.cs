@@ -1,9 +1,8 @@
 ﻿using Game.Common;
-using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellBuildEs;
-using static Game.Game.CellRiverEs;
 using System;
+using static Game.Game.CellEs;
+using static Game.Game.CellRiverEs;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {

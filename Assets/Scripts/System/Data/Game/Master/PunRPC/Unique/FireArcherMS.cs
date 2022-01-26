@@ -1,6 +1,4 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellFireE;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -11,8 +9,8 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            EntityMPool.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
+            EntitiesMaster.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
 
             ref var fire_to = ref CellFireEs.Fire(idx_to).Fire;
 
@@ -22,7 +20,7 @@ namespace Game.Game
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
-                    EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
+                    Entities.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
 
                     CellUnitEs.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                     fire_to.Enable();
@@ -31,7 +29,7 @@ namespace Game.Game
 
             else
             {
-                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

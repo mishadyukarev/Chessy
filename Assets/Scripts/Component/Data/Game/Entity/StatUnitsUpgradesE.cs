@@ -1,5 +1,4 @@
 ﻿using ECS;
-using System;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -10,7 +9,7 @@ namespace Game.Game
         const string BETWEEN = "_";
 
         static string Key(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes level, in PlayerTypes player, in UpgradeTypes upg)
-            =>stat.ToString() + BETWEEN + unit + BETWEEN + level + BETWEEN + player + BETWEEN + upg;
+            => stat.ToString() + BETWEEN + unit + BETWEEN + level + BETWEEN + player + BETWEEN + upg;
 
         public static ref C Upgrade<C>(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes level, in PlayerTypes player, in UpgradeTypes upg) where C : struct => ref _upgrades[Key(stat, unit, level, player, upg)].Get<C>();
         public static ref C Upgrade<C>(in string key) where C : struct => ref _upgrades[key].Get<C>();

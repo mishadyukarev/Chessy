@@ -7,7 +7,7 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var idx_0 = EntityMPool.UpgradeUnit<IdxC>().Idx;
+            var idx_0 = EntitiesMaster.UpgradeUnit<IdxC>().Idx;
 
             ref var unit_0 = ref Else(idx_0).UnitC;
             ref var levUnit_0 = ref CellUnitEs.Else(idx_0).LevelC;
@@ -32,21 +32,21 @@ namespace Game.Game
 
                         CellUnitEs.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
 
-                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
+                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                     }
                     else
                     {
-                        EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                        Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
                     }
                 }
                 else
                 {
-                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

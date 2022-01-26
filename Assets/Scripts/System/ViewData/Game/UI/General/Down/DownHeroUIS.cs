@@ -12,7 +12,7 @@ namespace Game.Game
             {
                 Parent.SetActive(true);
 
-                var cooldown = EntityPool.ScoutHeroCooldown(hero, curPlayerI).Amount;
+                var cooldown = Entities.ScoutHeroCooldownE(hero, curPlayerI).Cooldown.Amount;
 
                 for (var unit = UnitTypes.Elfemale; unit <= UnitTypes.Snowy; unit++)
                 {

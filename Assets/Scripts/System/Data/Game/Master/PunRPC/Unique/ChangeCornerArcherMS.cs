@@ -1,13 +1,11 @@
-﻿using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct ChangeCornerArcherMS : IEcsRunSystem
     {
         public void Run()
         {
             IdxDoingMC.Get(out var idx_0);
-            var uniq = EntityMPool.UniqueAbilityC.Ability;
+            var uniq = EntitiesMaster.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
@@ -22,16 +20,16 @@ namespace Game.Game
 
                     CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq));
 
-                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
+                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
                 else
                 {
-                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

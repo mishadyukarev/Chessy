@@ -1,6 +1,5 @@
 ﻿using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellUnitEs;
-using static Game.Game.Entities;
 
 namespace Game.Game
 {

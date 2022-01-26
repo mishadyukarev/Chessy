@@ -39,7 +39,7 @@ namespace Game.Game
 
 
 
-            _rpcSysts.Add(RpcMasterTypes.Build, 
+            _rpcSysts.Add(RpcMasterTypes.Build,
                 (Action)new BuildMineMS().Run
                 + new BuildFarmMS().Run
                 + new CityBuildMS().Run);

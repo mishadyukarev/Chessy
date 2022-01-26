@@ -12,7 +12,7 @@ namespace Game.Game
         {
             foreach (var idx_0 in Idxs)
             {
-                if (EntityPool.EnvironmentInfo<IsActiveC>().IsActive)
+                if (Entities.InfoEnvironment.IsActiveC.IsActive)
                 {
                     if (Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Have)
                     {

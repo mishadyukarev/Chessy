@@ -1,6 +1,4 @@
-﻿using static Game.Game.CellBuildEs;
-using static Game.Game.EntityLeftCityUIPool;
-using static Game.Game.EntityPool;
+﻿using static Game.Game.EntityLeftCityUIPool;
 
 namespace Game.Game
 {

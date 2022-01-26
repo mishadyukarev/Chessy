@@ -33,7 +33,7 @@
 
         public void Take(in int taking = 1)
         {
-            if(Amount > 0)
+            if (Amount > 0)
             {
                 Amount -= taking;
                 if (Amount < 0) Amount = 0;

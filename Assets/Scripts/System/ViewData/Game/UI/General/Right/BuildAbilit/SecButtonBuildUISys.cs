@@ -1,7 +1,4 @@
-﻿using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct SecButtonBuildUISys : IEcsRunSystem
     {
@@ -33,7 +30,7 @@ namespace Game.Game
                 RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(true);
                 RightUIEntities.BuildingZone(ButtonTypes.Second, buildT).Parent.SetActive(true);
 
-                RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.Farm).Parent.SetActive(false);      
+                RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.Farm).Parent.SetActive(false);
                 RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.City).Parent.SetActive(false);
             }
         }

@@ -9,7 +9,7 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+            Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
 
             if (PhotonNetwork.OfflineMode)
@@ -22,7 +22,7 @@ namespace Game.Game
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
                     SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                    EntityPool.Rpc.ActiveMotionZoneToGen(sender);
+                    Entities.Rpc.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
@@ -39,7 +39,7 @@ namespace Game.Game
                     if (nextPlayer == PlayerTypes.First)
                     {
                         SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                        EntityPool.Rpc.ActiveMotionZoneToGen(sender);
+                        Entities.Rpc.ActiveMotionZoneToGen(sender);
                     }
 
                     Entities.WhoseMoveE.WhoseMove.Player = nextPlayer;
@@ -49,7 +49,7 @@ namespace Game.Game
 
                     //ViewDataSC.RotateAll.Invoke();
 
-                    EntityPool.FriendZone<IsActiveC>().IsActive = true;
+                    Entities.FriendZoneE.IsActiveC.IsActive = true;
                 }
             }
             else
@@ -64,8 +64,8 @@ namespace Game.Game
                 //    //    {
                 //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
 
-                //    //        EntityPool.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                //    //        EntityPool.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                //    //        Entities.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                //    //        Entities.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
                 //    //    }
 
                 //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

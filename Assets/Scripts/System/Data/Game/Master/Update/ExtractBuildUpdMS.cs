@@ -1,6 +1,6 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellBuildEs;
+﻿using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellEs;
 
 namespace Game.Game
 {

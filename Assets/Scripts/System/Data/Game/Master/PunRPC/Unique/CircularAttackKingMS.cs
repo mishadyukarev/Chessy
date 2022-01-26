@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using static Game.Game.CellEs;
-using static Game.Game.CellBuildEs;
 
 namespace Game.Game
 {
@@ -11,7 +10,7 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
-            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
+            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
 
             ref var hpUnit_0 = ref CellUnitEs.Hp(idx_0).AmountC;
             ref var levUnit_0 = ref CellUnitEs.Else(idx_0).LevelC;
@@ -23,7 +22,7 @@ namespace Game.Game
             {
                 if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                 {
-                    EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    Entities.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     CellUnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Amount = 2;
 
@@ -68,17 +67,17 @@ namespace Game.Game
                     //foreach (var item in CellUnitEffectsEs.Keys) 
                     //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 
-                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.AttackMelee);
 
 
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
                 }
                 else
                 {
-                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
-            else EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

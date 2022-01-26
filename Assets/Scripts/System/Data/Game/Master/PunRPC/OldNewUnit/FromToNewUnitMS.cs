@@ -1,7 +1,4 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct FromToNewUnitMS : IEcsRunSystem
     {
@@ -9,8 +6,8 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var unit = EntityMPool.CreateHeroFromTo<UnitTC>().Unit;
-            EntityMPool.CreateHeroFromTo<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var unit = EntitiesMaster.CreateHeroFromTo<UnitTC>().Unit;
+            EntitiesMaster.CreateHeroFromTo<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
             var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
@@ -35,7 +32,7 @@ namespace Game.Game
                             {
                                 if (idx_1 == idx_to)
                                 {
-                                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.GetHero);
+                                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.GetHero);
 
                                     WhereUnitsE.HaveUnit(UnitTypes.Archer, CellUnitEs.Else(idx_from).LevelC.Level, CellUnitEs.Else(idx_from).OwnerC.Player, idx_from).Have = false;
                                     CellUnitEs.Else(idx_from).UnitC.Reset();

@@ -4,7 +4,7 @@
     {
         public void Run()
         {
-            EntityMPool.Shift<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            EntitiesMaster.Shift<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
             var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
@@ -15,7 +15,7 @@
 
                 CellUnitEs.Shift(idx_from, idx_to, true);
 
-                EntityPool.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
+                Entities.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }
         }
     }

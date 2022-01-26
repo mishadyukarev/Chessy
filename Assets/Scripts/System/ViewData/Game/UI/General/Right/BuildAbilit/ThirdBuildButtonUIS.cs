@@ -1,9 +1,4 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
-using static Game.Game.CellBuildEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct ThirdBuildButtonUIS : IEcsRunSystem
     {

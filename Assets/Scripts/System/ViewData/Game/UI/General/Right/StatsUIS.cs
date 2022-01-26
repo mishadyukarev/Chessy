@@ -1,5 +1,4 @@
 ﻿using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
 using static Game.Game.UIEntRightStats;
 
 namespace Game.Game
@@ -37,7 +36,7 @@ namespace Game.Game
 
 
 
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount 
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount
                     = (float)(DamageOnCell(selIdx) / (float)DamageAttack(selIdx, AttackTypes.Simple));
 
                 Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)CellUnitEs.MaxAmountSteps(selIdx);

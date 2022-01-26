@@ -1,5 +1,4 @@
-﻿using static Game.Game.EntityPool;
-using static Game.Game.CenterSelectorUIE;
+﻿using static Game.Game.CenterSelectorUIE;
 
 namespace Game.Game
 {
@@ -7,8 +6,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            var click_cur = ClickerObject<CellClickC>().Click;
-            var uniq = SelectedUniqueAbilityC.AbilityC.Ability;
+            var click_cur = Entities.ClickerObject.CellClickC.Click;
+            var uniq = Entities.SelectedUniqueAbilityE.AbilityC.Ability;
 
 
             SelectorUI<GameObjectVC>(click_cur).SetActiveParent(false);
@@ -23,8 +22,8 @@ namespace Game.Game
                 SelectorUI<GameObjectVC>(unique).SetActive(false);
             }
 
-            if (click_cur != CellClickTypes.None 
-                && click_cur != CellClickTypes.SimpleClick 
+            if (click_cur != CellClickTypes.None
+                && click_cur != CellClickTypes.SimpleClick
                 && click_cur != CellClickTypes.SetUnit)
             {
                 SelectorUI<GameObjectVC>(click_cur).SetActiveParent(true);

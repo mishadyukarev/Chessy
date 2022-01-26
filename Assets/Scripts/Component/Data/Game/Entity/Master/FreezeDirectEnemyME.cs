@@ -2,16 +2,13 @@
 
 namespace Game.Game
 {
-    public struct FreezeDirectEnemyME
+    public sealed class FreezeDirectEnemyME : EntityAbstract
     {
-        static Entity _ent;
+        public ref IdxFromToC IdxFromToC => ref Ent.Get<IdxFromToC>();
 
-        public static ref IdxFromToC IdxFromToC => ref _ent.Get<IdxFromToC>();
-
-        public FreezeDirectEnemyME(in EcsWorld gameW)
+        public FreezeDirectEnemyME(in EcsWorld gameW) : base(gameW)
         {
-            _ent = gameW.NewEntity()
-                .Add(new IdxFromToC());
+
         }
     }
 }

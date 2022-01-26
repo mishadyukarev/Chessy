@@ -1,7 +1,4 @@
-﻿using Game.Common;
-using UnityEngine;
-using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
+﻿using UnityEngine;
 
 namespace Game.Game
 {

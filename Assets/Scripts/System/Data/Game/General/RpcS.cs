@@ -60,25 +60,25 @@ namespace Game.Game
                         break;
 
                     case UniqueAbilityTypes.Seed:
-                        EntityMPool.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntityMPool.Seed<EnvironmetC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
+                        EntitiesMaster.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.Seed<EnvironmetC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
                         break;
 
                     case UniqueAbilityTypes.FireArcher:
-                        EntityMPool.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
-                        EntityMPool.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
+                        EntitiesMaster.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
+                        EntitiesMaster.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
                         break;
 
                     case UniqueAbilityTypes.GrowAdultForest:
-                        EntityMPool.GrowAdultForest<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.GrowAdultForest<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case UniqueAbilityTypes.StunElfemale:
-                        EntityMPool.StunElfemale<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntitiesMaster.StunElfemale<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqueAbilityTypes.ChangeDirectionWind:
-                        EntityMPool.ChangeDirectionWind<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntitiesMaster.ChangeDirectionWind<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqueAbilityTypes.ChangeCornerArcher:
@@ -86,17 +86,17 @@ namespace Game.Game
                         break;
 
                     case UniqueAbilityTypes.FreezeDirectEnemy:
-                        FreezeDirectEnemyME.IdxFromToC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntitiesMaster.FreezeDirectEnemy.IdxFromToC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqueAbilityTypes.IceWall:
-                        IceWallME.IdxC.Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.IceWall.IdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
                     default: throw new Exception();
                 }
 
-                EntityMPool.UniqueAbilityC.Ability = uniqAbil;
+                EntitiesMaster.UniqueAbilityC.Ability = uniqAbil;
                 SystemDataMasterManager.InvokeRun(uniqAbil);
             }
 
@@ -114,74 +114,74 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Build:
-                        EntityMPool.Build<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntityMPool.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
+                        EntitiesMaster.Build<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.DestroyBuild:
-                        EntityMPool.DestroyIdxC.Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.DestroyIdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.Shift:
-                        EntityMPool.Shift<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntitiesMaster.Shift<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        EntityMPool.Attack.From = (byte)objects[_idx_cur++];
-                        EntityMPool.Attack.To = (byte)objects[_idx_cur++];
+                        EntitiesMaster.Attack.From = (byte)objects[_idx_cur++];
+                        EntitiesMaster.Attack.To = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        EntityMPool.ConditionUnit<ConditionUnitC>().Condition = (ConditionUnitTypes)objects[_idx_cur++];
-                        EntityMPool.ConditionUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.ConditionUnit<ConditionUnitC>().Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                        EntitiesMaster.ConditionUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.CreateUnit:
-                        EntityMPool.CreateUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntitiesMaster.CreateUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.MeltOre:
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        EntityMPool.SetUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntityMPool.SetUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntitiesMaster.SetUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.SetUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.BuyRes:
-                        EntityMPool.BuyResources<ResourceTypeC>().Resource = (ResourceTypes)objects[_idx_cur++];
+                        EntitiesMaster.BuyResources<ResourceTypeC>().Resource = (ResourceTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ToNewUnit:
-                        EntityMPool.ScoutOldNew<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
-                        EntityMPool.ScoutOldNew<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.ScoutOldNew<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntitiesMaster.ScoutOldNew<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.CreateHeroFromTo:
-                        EntityMPool.CreateHeroFromTo<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
-                        EntityMPool.CreateHeroFromTo<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        EntitiesMaster.CreateHeroFromTo<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntitiesMaster.CreateHeroFromTo<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.UpgradeCellUnit:
-                        EntityMPool.UpgradeUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.UpgradeUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        EntityMPool.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
-                        EntityMPool.GiveTakeToolWeapon<LevelTC>().Level = (LevelTypes)objects[_idx_cur++];
-                        EntityMPool.GiveTakeToolWeapon<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        EntitiesMaster.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
+                        EntitiesMaster.GiveTakeToolWeapon<LevelTC>().Level = (LevelTypes)objects[_idx_cur++];
+                        EntitiesMaster.GiveTakeToolWeapon<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        EntityMPool.ForGetHero.Unit = (UnitTypes)objects[_idx_cur++];
+                        EntitiesMaster.ForGetHero.Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgCenterUnits:
-                        EntityMPool.UpgradeCenterUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        EntitiesMaster.UpgradeCenterUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgCenterBuild:
-                        EntityMPool.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
+                        EntitiesMaster.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgWater:
@@ -217,30 +217,30 @@ namespace Game.Game
 
                     if (mistakeT == MistakeTypes.Economy)
                     {
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Food).Amount = default;
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Wood).Amount = default;
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Ore).Amount = default;
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Iron).Amount = default;
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Gold).Amount = default;
+                        MistakeE.Mistake(ResourceTypes.Food).Amount = default;
+                        MistakeE.Mistake(ResourceTypes.Wood).Amount = default;
+                        MistakeE.Mistake(ResourceTypes.Ore).Amount = default;
+                        MistakeE.Mistake(ResourceTypes.Iron).Amount = default;
+                        MistakeE.Mistake(ResourceTypes.Gold).Amount = default;
 
                         var needRes = (int[])objects[_idx_cur++];
 
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Food).Amount = needRes[0];
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Wood).Amount = needRes[1];
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Ore).Amount = needRes[2];
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Iron).Amount = needRes[3];
-                        MistakeE.Mistake<AmountC>(ResourceTypes.Gold).Amount = needRes[4];
+                        MistakeE.Mistake(ResourceTypes.Food).Amount = needRes[0];
+                        MistakeE.Mistake(ResourceTypes.Wood).Amount = needRes[1];
+                        MistakeE.Mistake(ResourceTypes.Ore).Amount = needRes[2];
+                        MistakeE.Mistake(ResourceTypes.Iron).Amount = needRes[3];
+                        MistakeE.Mistake(ResourceTypes.Gold).Amount = needRes[4];
                     }
 
-                    Sound(ClipTypes.Mistake).Invoke();
+                    Entities.Sound(ClipTypes.Mistake).Sound.Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundEff:
-                    Sound((ClipTypes)objects[_idx_cur++]).Invoke();
+                    Entities.Sound((ClipTypes)objects[_idx_cur++]).Sound.Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundUniqueAbility:
-                    Sound((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
+                    Entities.Sound((UniqueAbilityTypes)objects[_idx_cur++]).Sound.Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundRpcMaster:
@@ -248,7 +248,7 @@ namespace Game.Game
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
-                    EntityPool.MotionZone<IsActiveC>().IsActive = true;
+                    Entities.Motion.IsActiveC.IsActive = true;
                     break;
 
                 default:
@@ -257,7 +257,7 @@ namespace Game.Game
         }
 
         [PunRPC]
-        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => EntityPool.Rpc.OtherRpc(objects, infoFrom);
+        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => Entities.Rpc.OtherRpc(objects, infoFrom);
 
 
         #region SyncData
@@ -319,10 +319,10 @@ namespace Game.Game
                 objs.Add(CellFireEs.Fire(idx_0).Fire.Have);
             }
 
-            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.First).Amount);
-            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.Second).Amount);
-            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.First).Amount);
-            objs.Add(EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.Second).Amount);
+            objs.Add(Entities.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).Cooldown.Amount);
+            objs.Add(Entities.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).Cooldown.Amount);
+            objs.Add(Entities.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).Cooldown.Amount);
+            objs.Add(Entities.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).Cooldown.Amount);
 
 
 
@@ -350,10 +350,10 @@ namespace Game.Game
 
             objs.Add(Entities.WhoseMoveE.WhoseMove.Player);
             objs.Add(Entities.WinnerE.Winner.Player);
-            objs.Add(EntityPool.GameInfo<IsStartedGameC>().IsStartedGame);
-            objs.Add(EntityPool.Ready<IsReadyC>(PlayerTypes.Second).IsReady);
+            objs.Add(Entities.GameInfo.IsStartedGameC.IsStartedGame);
+            objs.Add(Entities.Ready(PlayerTypes.Second).IsReadyC.IsReady);
 
-            objs.Add(EntityPool.GameInfo<AmountMotionsC>().Amount);
+            objs.Add(Entities.Motion.AmountMotions.Amount);
 
             objs.Add(Entities.WindE.CenterCloud.Idx);
             //foreach (var item in WindC.Directs) objs.Add(item.Value);
@@ -366,9 +366,9 @@ namespace Game.Game
             for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
 
-            EntityPool.Rpc.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            Entities.Rpc.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
 
-            EntityPool.Rpc.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
+            Entities.Rpc.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
         }
 
         [PunRPC]
@@ -427,10 +427,10 @@ namespace Game.Game
             }
 
 
-            EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.First).Amount = (int)objects[_idx_cur++];
-            EntityPool.ScoutHeroCooldown(UnitTypes.Scout, PlayerTypes.Second).Amount = (int)objects[_idx_cur++];
-            EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.First).Amount = (int)objects[_idx_cur++];
-            EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, PlayerTypes.Second).Amount = (int)objects[_idx_cur++];
+            Entities.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).Cooldown.Amount = (int)objects[_idx_cur++];
+            Entities.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).Cooldown.Amount = (int)objects[_idx_cur++];
+            Entities.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).Cooldown.Amount = (int)objects[_idx_cur++];
+            Entities.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).Cooldown.Amount = (int)objects[_idx_cur++];
 
 
 
@@ -458,11 +458,11 @@ namespace Game.Game
 
             Entities.WhoseMoveE.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
             Entities.WinnerE.Winner.Player = (PlayerTypes)objects[_idx_cur++];
-            EntityPool.GameInfo<IsStartedGameC>().IsStartedGame = (bool)objects[_idx_cur++];
-            EntityPool.Ready<IsReadyC>(Entities.WhoseMoveE.CurPlayerI).IsReady = (bool)objects[_idx_cur++];
+            Entities.GameInfo.IsStartedGameC.IsStartedGame = (bool)objects[_idx_cur++];
+            Entities.Ready(Entities.WhoseMoveE.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
 
 
-            EntityPool.GameInfo<AmountMotionsC>().Amount = (int)objects[_idx_cur++];
+            Entities.Motion.AmountMotions.Amount = (int)objects[_idx_cur++];
 
             Entities.WindE.CenterCloud.Idx = (byte)objects[_idx_cur++];
             //foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);

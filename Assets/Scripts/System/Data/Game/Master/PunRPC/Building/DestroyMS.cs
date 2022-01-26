@@ -1,6 +1,4 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
 
@@ -11,7 +9,7 @@ namespace Game.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var idx_0 = EntityMPool.DestroyIdxC.Idx;
+            var idx_0 = EntitiesMaster.DestroyIdxC.Idx;
 
             ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
 
@@ -20,7 +18,7 @@ namespace Game.Game
 
             if (CellUnitEs.Step(idx_0).AmountC.Have)
             {
-                EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                Entities.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 if (buildC_0.Is(BuildingTypes.City))
                 {
@@ -37,7 +35,7 @@ namespace Game.Game
             }
             else
             {
-                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

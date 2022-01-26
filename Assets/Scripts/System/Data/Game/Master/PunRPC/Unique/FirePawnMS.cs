@@ -1,8 +1,6 @@
 ﻿using Photon.Pun;
 using System;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireE;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -13,7 +11,7 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
-            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
+            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
 
 
             ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
@@ -23,7 +21,7 @@ namespace Game.Game
             {
                 if (Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
                 {
-                    EntityPool.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
+                    Entities.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
 
                     fire_0.Enable();
                     CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
@@ -36,7 +34,7 @@ namespace Game.Game
 
             else
             {
-                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

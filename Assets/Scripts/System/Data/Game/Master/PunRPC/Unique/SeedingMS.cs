@@ -1,7 +1,7 @@
 ﻿using System;
-using static Game.Game.CellUnitEs;
 using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -12,9 +12,9 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            var env = EntityMPool.Seed<EnvironmetC>().Environment;
-            var idx_0 = EntityMPool.Seed<IdxC>().Idx;
-            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
+            var env = EntitiesMaster.Seed<EnvironmetC>().Environment;
+            var idx_0 = EntitiesMaster.Seed<IdxC>().Idx;
+            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
 
             ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
 
@@ -32,7 +32,7 @@ namespace Game.Game
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
-                            EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                         else
                         {
@@ -42,7 +42,7 @@ namespace Game.Game
 
                                     if (!Environment(EnvironmentTypes.YoungForest, idx_0).Resources.Have)
                                     {
-                                        EntityPool.Rpc.SoundToGeneral(sender, uniq_cur);
+                                        Entities.Rpc.SoundToGeneral(sender, uniq_cur);
 
                                         SetNew(EnvironmentTypes.YoungForest, idx_0);
 
@@ -50,16 +50,16 @@ namespace Game.Game
                                     }
                                     else
                                     {
-                                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                     }
                                 else
                                 {
-                                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                 }
                             }
                             else
                             {
-                                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                             }
 
                         }
@@ -67,7 +67,7 @@ namespace Game.Game
 
                     else
                     {
-                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

@@ -11,7 +11,7 @@ namespace Game.Game
 
         private void EnvironmentInfo()
         {
-            EntityPool.EnvironmentInfo<IsActiveC>().Toggle();
+            Entities.InfoEnvironment.IsActiveC.Toggle();
         }
     }
 }

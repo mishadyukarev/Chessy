@@ -5,7 +5,7 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var unit = EntityMPool.CreateUnit<UnitTC>().Unit;
+            var unit = EntitiesMaster.CreateUnit<UnitTC>().Unit;
 
 
             var playerSend = Entities.WhoseMoveE.WhoseMove.Player;
@@ -18,18 +18,18 @@
                     InventorResourcesE.BuyCreateUnit(playerSend, unit);
                     InventorUnitsE.Units(unit, LevelTypes.First, playerSend)++;
 
-                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }
                 else
                 {
-                    EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
-                    EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                    Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
-                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
+                Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }
     }

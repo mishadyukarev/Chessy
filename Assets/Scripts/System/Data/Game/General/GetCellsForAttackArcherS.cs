@@ -77,8 +77,8 @@ namespace Game.Game
 
 
 
-                                    if (unit_2.Have && !unit_2.IsAnimal 
-                                        && CellUnitEs.VisibleE(ownUnit_0.Player, idx_2).VisibleC.IsVisible 
+                                    if (unit_2.Have && !unit_2.IsAnimal
+                                        && CellUnitEs.VisibleE(ownUnit_0.Player, idx_2).VisibleC.IsVisible
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
                                         if (unit_0.Is(UnitTypes.Archer))

@@ -23,9 +23,9 @@ namespace Game.Game
         }
 
         public CellRiverEs(in EcsWorld gameW)
-        {  
+        {
             _directs = new Dictionary<DirectTypes, CellRiverDirectE[]>();
-            
+
             for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
                 _directs.Add(dir, new CellRiverDirectE[CellStartValues.ALL_CELLS_AMOUNT]);

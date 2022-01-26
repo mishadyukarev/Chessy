@@ -65,7 +65,7 @@ namespace Game.Game
         {
             if (unit != UnitTypes.King) return 10;
             else return 0;
-        } 
+        }
 
 
         #region Costs

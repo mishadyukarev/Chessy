@@ -39,10 +39,10 @@ namespace Game.Game
             ButtonC(UnitTypes.None).AddListener(OpenShop);
         }
 
-        void Ready() => EntityPool.Rpc.ReadyToMaster();
+        void Ready() => Entities.Rpc.ReadyToMaster();
         void FriendReady()
         {
-            EntityPool.FriendZone<IsActiveC>().IsActive = false;
+            Entities.FriendZoneE.IsActiveC.IsActive = false;
         }
         void GetKing()
         {
@@ -53,10 +53,10 @@ namespace Game.Game
             {
                 if (InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, Entities.WhoseMoveE.CurPlayerI).Have)
                 {
-                    EntityPool.ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
+                    Entities.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 
-                    SelectedUnitE.SelUnit<UnitTC>().Unit = UnitTypes.King;
-                    SelectedUnitE.SelUnit<LevelTC>().Level = LevelTypes.First;
+                    Entities.SelectedUnitE.UnitTC.Unit = UnitTypes.King;
+                    Entities.SelectedUnitE.LevelTC.Level = LevelTypes.First;
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
@@ -80,7 +80,7 @@ namespace Game.Game
         {
             if (Entities.WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc.PickUpgUnitToMas(unit);
+                Entities.Rpc.PickUpgUnitToMas(unit);
 
                 Parent.SetActive(true);
             }
@@ -91,7 +91,7 @@ namespace Game.Game
         {
             if (Entities.WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc.PickUpgBuildToMas(build);
+                Entities.Rpc.PickUpgBuildToMas(build);
 
                 Parent.SetActive(true);
             }
@@ -102,7 +102,7 @@ namespace Game.Game
         {
             if (Entities.WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc.UpgWater();
+                Entities.Rpc.UpgWater();
 
                 Parent.SetActive(true);
             }
@@ -113,7 +113,7 @@ namespace Game.Game
         {
             if (Entities.WhoseMoveE.IsMyMove)
             {
-                EntityPool.Rpc.GetHeroToMaster(unit);
+                Entities.Rpc.GetHeroToMaster(unit);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }

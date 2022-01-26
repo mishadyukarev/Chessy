@@ -1,8 +1,6 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellBuildEs;
+﻿using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireE;
+using static Game.Game.CellEs;
 
 namespace Game.Game
 {
@@ -12,8 +10,8 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var forBuildType = EntityMPool.Build<BuildingTC>().Build;
-            var idx_0 = EntityMPool.Build<IdxC>().Idx;
+            var forBuildType = EntitiesMaster.Build<BuildingTC>().Build;
+            var idx_0 = EntitiesMaster.Build<IdxC>().Idx;
 
 
 
@@ -43,8 +41,8 @@ namespace Game.Game
 
                     if (!haveNearBorder)
                     {
-                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Building);
-                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
+                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
                         CellBuildEs.SetNew(forBuildType, whoseMove, idx_0);
@@ -63,12 +61,12 @@ namespace Game.Game
 
                     else
                     {
-                        EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
+                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                     }
                 }
                 else
                 {
-                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

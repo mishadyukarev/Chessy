@@ -1,8 +1,5 @@
-﻿using static Game.Game.EntityPool;
+﻿using static Game.Game.DownToolWeaponUIEs;
 using static Game.Game.EntityVPool;
-using static Game.Game.CenterKingUIE;
-using static Game.Game.DownToolWeaponUIEs;
-using Game.Common;
 
 namespace Game.Game
 {
@@ -24,7 +21,7 @@ namespace Game.Game
 
             UIEntDownUpgrade.Upgrade<ButtonUIC>().AddListener(ToggleUpgradeUnit);
 
-            Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener( delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
             Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
             Button<ButtonUIC>(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
         }
@@ -37,11 +34,11 @@ namespace Game.Game
 
             if (Entities.WhoseMoveE.IsMyMove)
             {
-                if (!ScoutHeroCooldown(UnitTypes.Scout, Entities.WhoseMoveE.CurPlayerI).Have)
+                if (!Entities.ScoutHeroCooldownE(UnitTypes.Scout, Entities.WhoseMoveE.CurPlayerI).Cooldown.Have)
                 {
                     if (Entities.WhoseMoveE.IsMyMove)
                     {
-                        ClickerObject<CellClickC>().Click = CellClickTypes.GiveScout;
+                        Entities.ClickerObject.CellClickC.Click = CellClickTypes.GiveScout;
                     }
                 }
                 else
@@ -58,9 +55,9 @@ namespace Game.Game
 
             if (Entities.WhoseMoveE.IsMyMove)
             {
-                if (!ScoutHeroCooldown(UnitTypes.Elfemale, Entities.WhoseMoveE.CurPlayerI).Have)
+                if (!Entities.ScoutHeroCooldownE(UnitTypes.Elfemale, Entities.WhoseMoveE.CurPlayerI).Cooldown.Have)
                 {
-                    ClickerObject<CellClickC>().Click = CellClickTypes.GiveHero;
+                    Entities.ClickerObject.CellClickC.Click = CellClickTypes.GiveHero;
                 }
                 else
                 {
@@ -75,7 +72,7 @@ namespace Game.Game
         {
             if (!InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, Entities.WhoseMoveE.CurPlayerI).Have)
             {
-                EntityPool.Rpc.DoneToMaster();
+                Entities.Rpc.DoneToMaster();
             }
             else
             {
@@ -89,7 +86,7 @@ namespace Game.Game
             {
                 GetterUnitsEs.GetterUnit<TimerC>(unit).Reset();
 
-                EntityPool.Rpc.CreateUnitToMaster(unit);
+                Entities.Rpc.CreateUnitToMaster(unit);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }
@@ -104,18 +101,18 @@ namespace Game.Game
             {
                 if (InventorUnitsE.Units(unitT, LevelTypes.Second, Entities.WhoseMoveE.CurPlayerI).Have)
                 {
-                    ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
+                    Entities.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 
-                    SelectedUnitE.SelUnit<UnitTC>().Unit = unitT;
-                    SelectedUnitE.SelUnit<LevelTC>().Level = LevelTypes.Second;
+                    Entities.SelectedUnitE.UnitTC.Unit = unitT;
+                    Entities.SelectedUnitE.LevelTC.Level = LevelTypes.Second;
                 }
 
                 else if (InventorUnitsE.Units(unitT, LevelTypes.First, Entities.WhoseMoveE.CurPlayerI).Have)
                 {
-                    ClickerObject<CellClickC>().Click = CellClickTypes.SetUnit;
+                    Entities.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 
-                    SelectedUnitE.SelUnit<UnitTC>().Unit = unitT;
-                    SelectedUnitE.SelUnit<LevelTC>().Level = LevelTypes.First;
+                    Entities.SelectedUnitE.UnitTC.Unit = unitT;
+                    Entities.SelectedUnitE.LevelTC.Level = LevelTypes.First;
                 }
 
                 else
@@ -145,7 +142,7 @@ namespace Game.Game
                 }
 
 
-                if (ClickerObject<CellClickC>().Is(CellClickTypes.GiveTakeTW))
+                if (Entities.ClickerObject.CellClickC.Is(CellClickTypes.GiveTakeTW))
                 {
                     if (tw == ToolWeaponTypes.Shield)
                     {
@@ -168,7 +165,7 @@ namespace Game.Game
                 }
                 else
                 {
-                    ClickerObject<CellClickC>().Click = CellClickTypes.GiveTakeTW;
+                    Entities.ClickerObject.CellClickC.Click = CellClickTypes.GiveTakeTW;
 
                     selToolWeaponC.ToolWeapon = tw;
 
@@ -192,7 +189,7 @@ namespace Game.Game
             if (Entities.WhoseMoveE.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
-                ClickerObject<CellClickC>().Click = CellClickTypes.UpgradeUnit;
+                Entities.ClickerObject.CellClickC.Click = CellClickTypes.UpgradeUnit;
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }

@@ -232,12 +232,12 @@ namespace Game.Game
 
             _hps = new CellUnitHpE[CellStartValues.ALL_CELLS_AMOUNT];
             _steps = new CellUnitStepE[CellStartValues.ALL_CELLS_AMOUNT];
-            _waters = new CellUnitWaterE[CellStartValues.ALL_CELLS_AMOUNT];   
+            _waters = new CellUnitWaterE[CellStartValues.ALL_CELLS_AMOUNT];
             _stuns = new CellUnitStunEs[CellStartValues.ALL_CELLS_AMOUNT];
             _defendEffect = new CellUnitDefendEffectE[CellStartValues.ALL_CELLS_AMOUNT];
             _else = new CellUnitElseE[CellStartValues.ALL_CELLS_AMOUNT];
             _toolWeapons = new CellUnitTWE[CellStartValues.ALL_CELLS_AMOUNT];
-           
+
 
             for (byte idx = 0; idx < _waters.Length; idx++)
             {
@@ -325,7 +325,7 @@ namespace Game.Game
             }
             else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {
-                EntityPool.ScoutHeroCooldown(unit.Unit, ownUnit.Player).Amount = 3;
+                Entities.ScoutHeroCooldownE(unit.Unit, ownUnit.Player).Cooldown.Amount = 3;
                 InventorUnitsE.Units(unit.Unit, levUnit.Level, ownUnit.Player).Amount += 1;
             }
 

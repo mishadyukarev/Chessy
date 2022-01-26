@@ -9,9 +9,6 @@ namespace Game.Game
     {
         public EntitiesVPool(in EcsWorld gameW, out List<object> forData)
         {
-            #region View
-
-
             CanvasC.SetCurZone(SceneTypes.Game);
 
 
@@ -97,8 +94,6 @@ namespace Game.Game
             new PawnArcherDownUIE(gameW, takeUnitZone);
             new UIEntDownScout(gameW, takeUnitZone);
             new DownHeroUIE(gameW, takeUnitZone);
-
-            #endregion
 
 
             var isActiveParenCells = new bool[CellStartValues.ALL_CELLS_AMOUNT];

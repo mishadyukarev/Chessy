@@ -31,7 +31,7 @@ namespace Game.Game
                 {
                     for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                     {
-                        if (HaveUnit(unit, level, player, idx).Have) return true;       
+                        if (HaveUnit(unit, level, player, idx).Have) return true;
                     }
                 }
             }

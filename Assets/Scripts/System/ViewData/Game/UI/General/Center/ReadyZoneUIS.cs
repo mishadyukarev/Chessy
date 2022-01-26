@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 using static Game.Game.EntityCenterUIPool;
-using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -11,9 +10,9 @@ namespace Game.Game
         {
             ref var readyBut = ref Ready<ButtonUIC>();
 
-            readyBut.Color = Ready<IsReadyC>(Entities.WhoseMoveE.CurPlayerI).IsReady ? Color.red : Color.white;
+            readyBut.Color = Entities.Ready(Entities.WhoseMoveE.CurPlayerI).IsReadyC.IsReady ? Color.red : Color.white;
 
-            if (GameInfo<IsStartedGameC>().IsStartedGame || PhotonNetwork.OfflineMode)
+            if (Entities.GameInfo.IsStartedGameC.IsStartedGame || PhotonNetwork.OfflineMode)
             {
                 readyBut.SetActiveParent(false);
             }

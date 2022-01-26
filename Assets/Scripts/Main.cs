@@ -97,6 +97,9 @@ namespace Game
 
                     _gameW = new EcsWorld();
 
+                    #region Entities
+
+                    #region View
 
                     #region Resources
 
@@ -106,15 +109,18 @@ namespace Game
                     #endregion
 
 
-                    #region Entities
-
                     new EntitiesVPool(_gameW, out var forData);
 
                     new RightUIEntities(_gameW);
                     new EventUIManager(default);
 
+                    #endregion
+
+
+                    #region Data
 
                     new Entities(_gameW, forData, RpcS.NamesMethods, out var i);
+                    new EntitiesMaster(_gameW);
 
                     var isActiveParenCells = (bool[])forData[i++];
                     var idCells = (int[])forData[i++];
@@ -126,6 +132,10 @@ namespace Game
                     new CellEnvironmentEs(_gameW);
                     new CellFireEs(_gameW);
                     new CellRiverEs(_gameW);
+
+                    new AvailableCenterUpgradeEs(_gameW);
+
+                    #endregion
 
                     #endregion
 

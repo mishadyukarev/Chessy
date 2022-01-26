@@ -10,8 +10,8 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var build = EntityMPool.Build<BuildingTC>().Build;
-            var idx_0 = EntityMPool.Build<IdxC>().Idx;
+            var build = EntitiesMaster.Build<BuildingTC>().Build;
+            var idx_0 = EntitiesMaster.Build<IdxC>().Idx;
 
             ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
             ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
@@ -26,7 +26,7 @@ namespace Game.Game
                 {
                     if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                     {
-                        EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
                         Remove(EnvironmentTypes.YoungForest, idx_0);
 
@@ -47,13 +47,13 @@ namespace Game.Game
                     }
                     else
                     {
-                        EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                        Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
                     }
                 }
 
                 else
                 {
-                    EntityPool.Rpc.SimpleMistakeToGeneral(mistake, sender);
+                    Entities.Rpc.SimpleMistakeToGeneral(mistake, sender);
                 }
             }
         }

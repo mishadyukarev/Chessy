@@ -4,7 +4,7 @@
     {
         public void Run()
         {
-            var res = EntityMPool.BuyResources<ResourceTypeC>().Resource;
+            var res = EntitiesMaster.BuyResources<ResourceTypeC>().Resource;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
@@ -15,11 +15,11 @@
             {
                 InventorResourcesE.BuyRes(whoseMove, res);
 
-                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                Entities.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

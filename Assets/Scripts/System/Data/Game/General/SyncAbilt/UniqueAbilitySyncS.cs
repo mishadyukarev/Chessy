@@ -1,8 +1,7 @@
 ﻿using System;
+using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellEs;
 using static Game.Game.CellUnitEs;
-using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireE;
 
 namespace Game.Game
 {

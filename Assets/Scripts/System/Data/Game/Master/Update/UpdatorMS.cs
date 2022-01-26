@@ -1,7 +1,7 @@
 ﻿using Game.Common;
 using Photon.Pun;
-using static Game.Game.CellEs;
 using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellEs;
 
 namespace Game.Game
 {
@@ -11,8 +11,8 @@ namespace Game.Game
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                EntityPool.ScoutHeroCooldown(UnitTypes.Scout, player).Amount -= 1;
-                EntityPool.ScoutHeroCooldown(UnitTypes.Elfemale, player).Amount -= 1;
+                Entities.ScoutHeroCooldownE(UnitTypes.Scout, player).Cooldown.Amount -= 1;
+                Entities.ScoutHeroCooldownE(UnitTypes.Elfemale, player).Cooldown.Amount -= 1;
 
                 InventorResourcesE.Resource(ResourceTypes.Food, player) += EconomyValues.ADDING_FOOD_AFTER_MOVE;
             }
@@ -113,11 +113,11 @@ namespace Game.Game
 
             if (amountAdultForest <= 8)
             {
-                EntityPool.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                Entities.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Truce);
             }
 
-            if (EntityPool.GameInfo<AmountMotionsC>().Amount % 3 == 0)
+            if (Entities.Motion.AmountMotions.Amount % 3 == 0)
             {
                 foreach (byte idx_0 in Idxs)
                 {
@@ -136,11 +136,11 @@ namespace Game.Game
                 }
             }
 
-            EntityPool.GameInfo<AmountMotionsC>().Amount += 1;
+            Entities.Motion.AmountMotions.Amount += 1;
 
 
 
-            SunSidesE.SunSideTC.ToggleNext();
+            Entities.SunSidesE.SunSideTC.ToggleNext();
         }
     }
 }

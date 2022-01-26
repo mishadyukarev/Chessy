@@ -1,5 +1,4 @@
 ﻿using ECS;
-using System;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -32,7 +31,7 @@ namespace Game.Game
             {
                 for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                 {
-                    _cells.Add(Key(player, idx),gameW.NewEntity()
+                    _cells.Add(Key(player, idx), gameW.NewEntity()
                        .Add(new CanSetUnitC()));
                 }
             }

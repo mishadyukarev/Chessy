@@ -7,8 +7,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            EntityMPool.StunElfemale<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = EntityMPool.UniqueAbilityC.Ability;
+            EntitiesMaster.StunElfemale<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = Entities.WhoseMoveE.WhoseMove.Player;
@@ -38,12 +38,12 @@ namespace Game.Game
 
                                         CellUnitEs.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
 
-                                        EntityPool.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
+                                        Entities.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
 
 
                                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_to))
                                         {
-                                            if(CellEnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_1).Resources.Have)
+                                            if (CellEnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_1).Resources.Have)
                                             {
                                                 if (CellUnitEs.Else(idx_1).UnitC.Have && CellUnitEs.Else(idx_1).OwnerC.Is(CellUnitEs.Else(idx_to).OwnerC.Player))
                                                 {
@@ -54,15 +54,15 @@ namespace Game.Game
                                     }
                                 }
 
-                                else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
-                            else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                            else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                         }
                     }
                 }
             }
 
-            else EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

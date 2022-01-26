@@ -9,9 +9,9 @@ namespace Game.Game
 
         public void Run()
         {
-            if (EntityPool.MotionZone<IsActiveC>().IsActive)
+            if (Entities.Motion.IsActiveC.IsActive)
             {
-                Motion<MotionsUIEC>().Text = EntityPool.GameInfo<AmountMotionsC>().Amount.ToString();
+                Motion<MotionsUIEC>().Text = Entities.Motion.AmountMotions.Amount.ToString();
                 Motion<MotionsUIEC>().SetActiveParent(true);
 
                 _timer += Time.deltaTime;
@@ -19,7 +19,7 @@ namespace Game.Game
                 if (_timer >= 1)
                 {
                     Motion<MotionsUIEC>().SetActiveParent(false);
-                    EntityPool.MotionZone<IsActiveC>().IsActive = false;
+                    Entities.Motion.IsActiveC.IsActive = false;
                     _timer = 0;
                 }
             }

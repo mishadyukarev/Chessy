@@ -4,9 +4,9 @@
     {
         public void Run()
         {
-            var idx_0 = IceWallME.IdxC.Idx;
+            var idx_0 = EntitiesMaster.IceWall.IdxC.Idx;
 
-            var curAbility = EntityMPool.UniqueAbilityC.Ability;
+            var curAbility = EntitiesMaster.UniqueAbilityC.Ability;
 
 
             if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(curAbility))

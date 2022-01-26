@@ -6,9 +6,9 @@ namespace Game.Game
     {
         public void Run()
         {
-            var tWForGive = EntityMPool.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon;
-            var levelTW = EntityMPool.GiveTakeToolWeapon<LevelTC>().Level;
-            var idx_0 = EntityMPool.GiveTakeToolWeapon<IdxC>().Idx;
+            var tWForGive = EntitiesMaster.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon;
+            var levelTW = EntitiesMaster.GiveTakeToolWeapon<LevelTC>().Level;
+            var idx_0 = EntitiesMaster.GiveTakeToolWeapon<IdxC>().Idx;
 
 
             if (idx_0 != default)
@@ -32,12 +32,12 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player) ++;
+                            InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player)++;
                             CellUnitEs.Reset(idx_0);
 
                             CellUnitEs.Step(idx_0).AmountC.Take();
 
-                            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
 
@@ -49,7 +49,7 @@ namespace Game.Game
 
                             CellUnitEs.Step(idx_0).AmountC.Take();
 
-                            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
                         else if (tWForGive == ToolWeaponTypes.Pick)
@@ -62,11 +62,11 @@ namespace Game.Game
 
                                 CellUnitEs.Step(idx_0).AmountC.Take();
 
-                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -80,11 +80,11 @@ namespace Game.Game
 
                                 CellUnitEs.Step(idx_0).AmountC.Take();
 
-                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -98,15 +98,15 @@ namespace Game.Game
 
                                 CellUnitEs.Step(idx_0).AmountC.Take();
 
-                                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                EntityPool.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
                     }
-                    else EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

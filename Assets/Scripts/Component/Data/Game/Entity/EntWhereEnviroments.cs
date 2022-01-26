@@ -1,5 +1,4 @@
 ﻿using ECS;
-using System;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -12,7 +11,7 @@ namespace Game.Game
         static string Key(in EnvironmentTypes env, in byte idx) => env.ToString() + idx;
 
         public static ref HaveEnvC HaveEnv(in EnvironmentTypes env, in byte idx) => ref _envs[Key(env, idx)].Get<HaveEnvC>();
-        public static ref HaveEnvC HaveEnv(in string key)  => ref _envs[key].Get<HaveEnvC>();
+        public static ref HaveEnvC HaveEnv(in string key) => ref _envs[key].Get<HaveEnvC>();
 
         public static HashSet<string> Keys
         {

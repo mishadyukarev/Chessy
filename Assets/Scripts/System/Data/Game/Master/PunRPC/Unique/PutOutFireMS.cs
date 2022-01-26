@@ -1,7 +1,4 @@
-﻿using static Game.Game.CellFireE;
-using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct PutOutFireMS : IEcsRunSystem
     {
@@ -23,7 +20,7 @@ namespace Game.Game
 
             else
             {
-                EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

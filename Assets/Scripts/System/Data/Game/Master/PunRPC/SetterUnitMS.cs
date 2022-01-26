@@ -1,7 +1,4 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellFireE;
-using static Game.Game.CellUnitTWE;
+﻿using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
@@ -11,8 +8,8 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var idx_0 = EntityMPool.SetUnit<IdxC>().Idx;
-            var unit = EntityMPool.SetUnit<UnitTC>().Unit;
+            var idx_0 = EntitiesMaster.SetUnit<IdxC>().Idx;
+            var unit = EntitiesMaster.SetUnit<UnitTC>().Unit;
 
 
             ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
@@ -51,7 +48,7 @@ namespace Game.Game
 
                 //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
-                EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

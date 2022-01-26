@@ -1,12 +1,10 @@
 ﻿using Game.Common;
 using UnityEngine;
-using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellTrailEs;
 using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireE;
-using static Game.Game.CellUnitTWE;
+using static Game.Game.CellEs;
+using static Game.Game.CellTrailEs;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {

@@ -38,7 +38,7 @@ namespace Game.Game
         }
 
 
-        public static bool CanCreateBuild(BuildingTypes build, PlayerTypes player,  out Dictionary<ResourceTypes, int> needRes)
+        public static bool CanCreateBuild(BuildingTypes build, PlayerTypes player, out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
             var canCreatBuild = true;

@@ -2,16 +2,13 @@
 
 namespace Game.Game
 {
-    public struct SunSidesE
+    public sealed class SunSidesE : EntityAbstract
     {
-        static Entity _sunSide;
+        public ref SunSideTC SunSideTC => ref Ent.Get<SunSideTC>();
 
-        public static ref SunSideTC SunSideTC => ref _sunSide.Get<SunSideTC>();
-
-        public SunSidesE(in EcsWorld gameW)
+        public SunSidesE(in SunSideTypes sunSide, in EcsWorld gameW) : base(gameW)
         {
-            _sunSide = gameW.NewEntity()
-                .Add(new SunSideTC(SunSideTypes.Dawn));
+            Ent.Add(new SunSideTC(sunSide));
         }
     }
 }

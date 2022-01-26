@@ -1,8 +1,6 @@
-﻿using static Game.Game.CellEs;
+﻿using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellEs;
 using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
-using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellFireE;
 
 namespace Game.Game
 {
@@ -10,7 +8,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var cellClick = ref ClickerObject<CellClickC>();
+            ref var cellClick = ref Entities.ClickerObject.CellClickC;
 
             foreach (byte idx_0 in Idxs)
             {
@@ -36,7 +34,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
-                        if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
+                        if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                         {
                             support_0.Enable();
                             support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -87,7 +85,7 @@ namespace Game.Game
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
-                                    if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.StunElfemale))
+                                    if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.StunElfemale))
                                     {
                                         support_0.Enable();
                                         support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -113,7 +111,7 @@ namespace Game.Game
             {
                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                 {
-                    if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
+                    if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
                     {
                         CellSpaceSupport.TryGetIdxAround(Entities.WindE.CenterCloud.Idx, out var dirs);
 
@@ -125,7 +123,7 @@ namespace Game.Game
                     }
                 }
 
-                else if (SelectedUniqueAbilityC.AbilityC.Is(UniqueAbilityTypes.FireArcher))
+                else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.FireArcher))
                 {
                     foreach (var idx in CellsForArsonArcherEs.Idxs<IdxsC>(Entities.SelectedIdxE.IdxC.Idx).Idxs)
                     {

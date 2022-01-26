@@ -1,7 +1,7 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellBuildEs;
+﻿using static Game.Game.CellBuildEs;
 using static Game.Game.CellEnvironmentEs;
+using static Game.Game.CellEs;
+using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {

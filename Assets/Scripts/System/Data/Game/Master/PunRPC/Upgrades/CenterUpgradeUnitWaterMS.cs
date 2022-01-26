@@ -14,10 +14,10 @@
                     UnitStatUpgradesEs.HaveUpgrade<HaveUpgradeC>(UnitStatTypes.Water, unit, level, whoseMove, UpgradeTypes.PickCenter).Have = true;
                 }
             }
-            AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(whoseMove).Have = false;
-            AvailableCenterUpgradeEs.HaveWaterUpgrade<HaveUpgradeC>(whoseMove).Have = false;
+            AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
+            AvailableCenterUpgradeEs.HaveWaterUpgrade(whoseMove).HaveUpgrade.Have = false;
 
-            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

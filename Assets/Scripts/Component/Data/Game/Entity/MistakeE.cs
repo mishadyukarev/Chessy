@@ -6,10 +6,10 @@ namespace Game.Game
     public struct MistakeE
     {
         static Entity _mistake;
-        static readonly Dictionary<ResourceTypes, Entity> _needRes;
+        static Dictionary<ResourceTypes, Entity> _needRes;
 
         public static ref C Mistake<C>() where C : struct => ref _mistake.Get<C>();
-        public static ref C Mistake<C>(in ResourceTypes res) where C : struct => ref _needRes[res].Get<C>();
+        public static ref AmountC Mistake(in ResourceTypes res) => ref _needRes[res].Get<AmountC>();
 
 
         public static HashSet<ResourceTypes> Keys
@@ -22,22 +22,17 @@ namespace Game.Game
             }
         }
 
-        static MistakeE()
-        {
-            _needRes = new Dictionary<ResourceTypes, Entity>();
-            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++) _needRes.Add(res, default);
-        }
         public MistakeE(in EcsWorld gameW)
         {
+            _needRes = new Dictionary<ResourceTypes, Entity>();
+
             _mistake = gameW.NewEntity()
                 .Add(new MistakeC())
                 .Add(new TimerC());
 
-            foreach (var key in Keys)
-            {
-                _needRes[key] = gameW.NewEntity()
-                    .Add(new AmountC());
-            }
+            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++) 
+                _needRes.Add(res, gameW.NewEntity()
+                    .Add(new AmountC()));
         }
     }
 }

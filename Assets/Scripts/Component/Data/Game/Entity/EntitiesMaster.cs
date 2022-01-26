@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct EntityMPool
+    public struct EntitiesMaster
     {
         static Entity _else;
         static Dictionary<RpcMasterTypes, Entity> _rpcEnts;
@@ -33,8 +33,11 @@ namespace Game.Game
         public static ref C ChangeDirectionWind<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.ChangeDirectionWind].Get<C>();
         public static ref C StunElfemale<C>() where C : struct => ref _uniqEnts[UniqueAbilityTypes.StunElfemale].Get<C>();
 
+        public static IceWallME IceWall { get; private set; }
+        public static FreezeDirectEnemyME FreezeDirectEnemy { get; private set; }
 
-        public EntityMPool(in EcsWorld gameW)
+
+        public EntitiesMaster(in EcsWorld gameW)
         {
             _rpcEnts = new Dictionary<RpcMasterTypes, Entity>();
             _uniqEnts = new Dictionary<UniqueAbilityTypes, Entity>();
@@ -114,6 +117,10 @@ namespace Game.Game
 
             _uniqEnts.Add(UniqueAbilityTypes.StunElfemale, gameW.NewEntity()
                 .Add(new IdxFromToC()));
+
+
+            IceWall = new IceWallME(gameW);
+            FreezeDirectEnemy = new FreezeDirectEnemyME(gameW);
         }
     }
 }

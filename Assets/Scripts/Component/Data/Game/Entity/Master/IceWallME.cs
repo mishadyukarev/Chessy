@@ -2,16 +2,13 @@
 
 namespace Game.Game
 {
-    public struct IceWallME
+    public sealed class IceWallME : EntityAbstract
     {
-        static Entity _ent;
+        public ref IdxC IdxC => ref Ent.Get<IdxC>();
 
-        public static ref IdxC IdxC => ref _ent.Get<IdxC>();
-
-        public IceWallME(in EcsWorld gameW)
+        public IceWallME(in EcsWorld gameW) : base(gameW)
         {
-            _ent = gameW.NewEntity()
-                .Add(new IdxC());
+
         }
     }
 }

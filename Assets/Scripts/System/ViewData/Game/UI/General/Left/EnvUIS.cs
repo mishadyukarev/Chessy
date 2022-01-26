@@ -1,6 +1,4 @@
-﻿using static Game.Game.CellBuildEs;
-using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityPool;
+﻿using static Game.Game.CellEnvironmentEs;
 using static Game.Game.EntityLeftEnvUIPool;
 
 namespace Game.Game

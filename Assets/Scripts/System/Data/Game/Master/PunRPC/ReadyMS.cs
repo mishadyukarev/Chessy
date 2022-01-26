@@ -1,6 +1,4 @@
-﻿using static Game.Game.EntityPool;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct ReadyMS : IEcsRunSystem
     {
@@ -10,17 +8,17 @@ namespace Game.Game
 
             var playerSend = sender.GetPlayer();
 
-            Ready<IsReadyC>(playerSend).IsReady = !Ready<IsReadyC>(playerSend).IsReady;
+            Entities.Ready(playerSend).IsReadyC.IsReady = !Entities.Ready(playerSend).IsReadyC.IsReady;
 
-            if (Ready<IsReadyC>(PlayerTypes.First).IsReady 
-                && Ready<IsReadyC>(PlayerTypes.Second).IsReady)
+            if (Entities.Ready(PlayerTypes.First).IsReadyC.IsReady
+                && Entities.Ready(PlayerTypes.Second).IsReadyC.IsReady)
             {
-                GameInfo<IsStartedGameC>().IsStartedGame = true;
+                Entities.GameInfo.IsStartedGameC.IsStartedGame = true;
             }
 
             else
             {
-                GameInfo<IsStartedGameC>().IsStartedGame = false;
+                Entities.GameInfo.IsStartedGameC.IsStartedGame = false;
             }
         }
     }

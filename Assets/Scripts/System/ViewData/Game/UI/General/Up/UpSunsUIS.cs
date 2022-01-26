@@ -1,6 +1,4 @@
 ﻿using System;
-using UnityEditor;
-using UnityEngine;
 
 namespace Game.Game
 {
@@ -8,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            switch (SunSidesE.SunSideTC.SunSide)
+            switch (Entities.SunSidesE.SunSideTC.SunSide)
             {
                 case SunSideTypes.Dawn:
                     UpSunsUIEs.ImageC(true).SetActive(false);

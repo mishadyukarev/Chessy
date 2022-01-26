@@ -14,8 +14,8 @@ namespace Game.Game
 
                 var idx_1 = CellSpaceSupport.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
 
-                if (CellEs.Parent(idx_1).IsActiveSelf.IsActive 
-                    && !CellEnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_1).Resources.Have 
+                if (CellEs.Parent(idx_1).IsActiveSelf.IsActive
+                    && !CellEnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_1).Resources.Have
                     && !CellUnitEs.Else(idx_1).UnitC.Have)
                 {
                     CellUnitEs.Shift(idx_0, idx_1, false);

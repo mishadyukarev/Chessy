@@ -7,7 +7,7 @@ namespace Game.Game
         public void Run()
         {
             IdxDoingMC.Get(out var idx_0);
-            var uniq = EntityMPool.UniqueAbilityC.Ability;
+            var uniq = EntitiesMaster.UniqueAbilityC.Ability;
 
 
             ref var unit_0 = ref CellUnitEs.Else(idx_0).UnitC;
@@ -27,7 +27,7 @@ namespace Game.Game
                     CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq));
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
-                    EntityPool.Rpc.SoundToGeneral(sender, uniq);
+                    Entities.Rpc.SoundToGeneral(sender, uniq);
 
                     //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have)
                     //{
@@ -56,11 +56,11 @@ namespace Game.Game
                 }
                 else
                 {
-                    EntityPool.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

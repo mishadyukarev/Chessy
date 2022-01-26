@@ -5,7 +5,7 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var unit = EntityMPool.UpgradeCenterUnit<UnitTC>().Unit;
+            var unit = EntitiesMaster.UpgradeCenterUnit<UnitTC>().Unit;
             var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
 
 
@@ -20,10 +20,10 @@
                 UnitStatUpgradesEs.HaveUpgrade<HaveUpgradeC>(UnitStatTypes.Damage, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).Have = true;
             }
 
-            AvailableCenterUpgradeEs.HaveUpgrade<HaveUpgradeC>(whoseMove).Have = false;
-            AvailableCenterUpgradeEs.HaveUnitUpgrade<HaveUpgradeC>(unit, whoseMove).Have = false;
+            AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
+            AvailableCenterUpgradeEs.HaveUnitUpgrade(unit, whoseMove).HaveUpgrade.Have = false;
 
-            EntityPool.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

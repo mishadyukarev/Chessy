@@ -1,6 +1,4 @@
 ﻿using System;
-using static Game.Game.CellUnitEs;
-using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -8,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (ClickerObject<CellClickC>().Is(CellClickTypes.SetUnit))
+            if (Entities.ClickerObject.CellClickC.Is(CellClickTypes.SetUnit))
             {
                 var idx_cur = Entities.CurrentIdxE.IdxC.Idx;
 
@@ -18,7 +16,7 @@ namespace Game.Game
                 ref var corner_cur = ref CellUnitEs.Else(idx_cur).CornedC;
 
                 ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_cur);
-                ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(PreVisIdx<IdxC>().Idx);
+                ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(Entities.PreviousVisionIdxE.IdxC.Idx);
 
 
                 if (unitC_cur.Have)
@@ -37,12 +35,12 @@ namespace Game.Game
                 else
                 {
                     mainUnit_cur.Enable();
-                    
+
                 }
 
 
-                var selUnitT = SelectedUnitE.SelUnit<UnitTC>().Unit;
-                var selLevelUnitT = SelectedUnitE.SelUnit<LevelTC>().Level;
+                var selUnitT = Entities.SelectedUnitE.UnitTC.Unit;
+                var selLevelUnitT = Entities.SelectedUnitE.LevelTC.Level;
 
                 switch (selUnitT)
                 {

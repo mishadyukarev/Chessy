@@ -126,7 +126,7 @@ namespace Game.Game
 
             if (BuildingUpgradesEs.HaveUpgrade<HaveUpgradeC>(buildC.Build, ownC.Player, UpgradeTypes.PickCenter).Have)
             {
-                extract += (int)(extract *  0.5f);
+                extract += (int)(extract * 0.5f);
             }
 
 

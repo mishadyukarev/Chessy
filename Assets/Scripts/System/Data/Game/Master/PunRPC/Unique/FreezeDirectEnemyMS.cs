@@ -4,7 +4,7 @@
     {
         public void Run()
         {
-            FreezeDirectEnemyME.IdxFromToC.Get(out var idx_from, out var idx_to);
+            EntitiesMaster.FreezeDirectEnemy.IdxFromToC.Get(out var idx_from, out var idx_to);
 
             ref var unitC_from = ref CellUnitEs.Else(idx_from).UnitC;
             ref var unitC_to = ref CellUnitEs.Else(idx_to).UnitC;
@@ -20,7 +20,7 @@
                 {
                     CellUnitEs.Stun(idx_to).ForExitStun.Amount = 2;
 
-                    CellUnitEs.CooldownUnique(EntityMPool.UniqueAbilityC.Ability, idx_from).Cooldown += 5;
+                    CellUnitEs.CooldownUnique(EntitiesMaster.UniqueAbilityC.Ability, idx_from).Cooldown += 5;
 
                     foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_to))
                     {

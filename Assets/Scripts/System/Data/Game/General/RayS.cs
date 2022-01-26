@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using static Game.Game.CellEs;
-using static Game.Game.EntityPool;
 
 namespace Game.Game
 {
@@ -16,7 +15,7 @@ namespace Game.Game
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 
-            ref var raycastC = ref ClickerObject<RayCastC>();
+            ref var raycastC = ref Entities.ClickerObject.RayCastTC;
 
 
             if (EventSystem.current.IsPointerOverGameObject())
@@ -25,15 +24,15 @@ namespace Game.Game
                 return;
             }
 
-//#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+            //#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
 
-//            if (EventSystem.current.IsPointerOverGameObject())
-//            {
-//                raycastC.Raycast = RaycastTypes.UI;
-//                return;
-//            }
+            //            if (EventSystem.current.IsPointerOverGameObject())
+            //            {
+            //                raycastC.Raycast = RaycastTypes.UI;
+            //                return;
+            //            }
 
-//#endif
+            //#endif
 
             if (raycast)
             {
