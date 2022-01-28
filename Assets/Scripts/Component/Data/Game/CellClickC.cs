@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct CellClickC : IClickerObjectE
+    public struct CellClickC
     {
         public CellClickTypes Click;
         public bool Is(params CellClickTypes[] clicks)

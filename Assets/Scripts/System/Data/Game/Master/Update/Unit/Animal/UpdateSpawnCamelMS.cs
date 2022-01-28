@@ -8,20 +8,20 @@ namespace Game.Game
         {
             if (!WhereUnitsE.HaveUnit(UnitTypes.Camel))
             {
-                byte idx_0 = (byte)Random.Range(0, CellEs.Idxs.Count);
+                byte idx_0 = (byte)Random.Range(0, Entities.CellEs.Idxs.Count);
 
-                if (CellEs.Parent(idx_0).IsActiveSelf.IsActive)
+                if (Entities.CellEs.ParentE(idx_0).IsActiveSelf.IsActive)
                 {
-                    if (!CellUnitEs.Else(idx_0).UnitC.Have && !CellEnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_0).Resources.Have)
+                    if (!Entities.CellEs.UnitEs.Else(idx_0).UnitC.Have && !Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_0).Resources.Have)
                     {
-                        ref var unitC_0 = ref CellUnitEs.Else(idx_0).UnitC;
+                        ref var unitC_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
 
 
                         bool haveNearUnit = false;
 
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            if (CellUnitEs.Else(idx_1).UnitC.Have)
+                            if (Entities.CellEs.UnitEs.Else(idx_1).UnitC.Have)
                             {
                                 haveNearUnit = true;
                                 break;
@@ -30,7 +30,7 @@ namespace Game.Game
 
                         if (!haveNearUnit)
                         {
-                            CellUnitEs.SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ToolWeaponTypes.None, LevelTypes.None), idx_0);
+                            Entities.CellEs.UnitEs.SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ToolWeaponTypes.None, LevelTypes.None), idx_0);
                             return;
                         }
                     }

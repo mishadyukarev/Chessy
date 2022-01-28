@@ -5,8 +5,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var tw_sel = ref CellUnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).ToolWeaponC;
-            ref var twLevel_sel = ref CellUnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).LevelC;
+            ref var tw_sel = ref Entities.CellEs.UnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).ToolWeaponC;
+            ref var twLevel_sel = ref Entities.CellEs.UnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).LevelC;
 
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Pick, LevelTypes.Second).SetActive(false);
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Sword, LevelTypes.Second).SetActive(false);

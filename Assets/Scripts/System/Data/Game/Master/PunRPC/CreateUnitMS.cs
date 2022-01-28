@@ -5,13 +5,13 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var unit = EntitiesMaster.CreateUnit<UnitTC>().Unit;
+            var unit = Entities.MasterEs.CreateUnit<UnitTC>().Unit;
 
 
             var playerSend = Entities.WhoseMove.WhoseMove.Player;
 
 
-            if (WhereBuildsE.IsSetted(BuildingTypes.City, playerSend, out var idx_city))
+            if (Entities.WhereBuildingEs.IsSetted(BuildingTypes.City, playerSend, out var idx_city))
             {
                 if (InventorResourcesE.CanCreateUnit(playerSend, unit, out var needRes))
                 {

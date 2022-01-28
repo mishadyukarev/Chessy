@@ -36,9 +36,9 @@ namespace Game.Game
 
             if (raycast)
             {
-                foreach (byte idx_0 in Idxs)
+                foreach (byte idx_0 in Entities.CellEs.Idxs)
                 {
-                    int one = Cell(idx_0).InstanceIDC.InstanceID;
+                    int one = Entities.CellEs.CellE(idx_0).InstanceIDC.InstanceID;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)

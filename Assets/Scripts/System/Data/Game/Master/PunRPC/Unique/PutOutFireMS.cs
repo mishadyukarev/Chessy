@@ -8,14 +8,14 @@
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
+            ref var fire_0 = ref Entities.CellEs.FireEs.Fire(idx_0).Fire;
 
 
-            if (CellUnitEs.Step(idx_0).AmountC.Have)
+            if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Have)
             {
                 fire_0.Disable();
 
-                CellUnitEs.Step(idx_0).AmountC.Take();
+                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
             }
 
             else

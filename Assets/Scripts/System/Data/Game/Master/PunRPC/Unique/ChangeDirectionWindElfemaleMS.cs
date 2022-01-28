@@ -8,15 +8,15 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            EntitiesMaster.ChangeDirectionWind<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
+            Entities.MasterEs.ChangeDirectionWind<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
 
-            ref var unit_from = ref CellUnitEs.Else(idx_from).UnitC;
+            ref var unit_from = ref Entities.CellEs.UnitEs.Else(idx_from).UnitC;
 
 
-            if (CellUnitEs.Hp(idx_from).HaveMax)
+            if (Entities.CellEs.UnitEs.Hp(idx_from).HaveMax)
             {
-                if (CellUnitEs.Step(idx_from).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                if (Entities.CellEs.UnitEs.Step(idx_from).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                 {
                     var newDir = CellSpaceSupport.GetDirect(Entities.WindE.CenterCloud.Idx, idx_to);
 
@@ -24,9 +24,9 @@ namespace Game.Game
                     {
                         Entities.WindE.DirectWind.Direct = newDir;
 
-                        CellUnitEs.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                        Entities.CellEs.UnitEs.Step(idx_from).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
 
-                        CellUnitEs.CooldownUnique(uniq_cur, idx_from).Cooldown.Amount = 6;
+                        Entities.CellEs.UnitEs.CooldownUnique(uniq_cur, idx_from).Cooldown.Amount = 6;
 
                         Entities.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
                     }

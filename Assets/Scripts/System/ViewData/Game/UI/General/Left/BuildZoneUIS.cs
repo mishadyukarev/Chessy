@@ -6,8 +6,8 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref CellBuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
-            ref var own_sel = ref CellBuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).PlayerTC;
+            ref var unit_sel = ref Entities.CellEs.BuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
+            ref var own_sel = ref Entities.CellEs.BuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).PlayerTC;
 
 
             if (Entities.SelectedIdxE.IsSelCell && unit_sel.Is(BuildingTypes.City))

@@ -20,19 +20,20 @@ namespace Game.Game
                     {
                         for (var levUnit = LevelTypes.Second; levUnit > LevelTypes.None; levUnit--)
                         {
-                            foreach (var idx_0 in Idxs)
+                            foreach (var idx_0 in Entities.CellEs.Idxs)
                             {
                                 if (WhereUnitsE.HaveUnit(unit, levUnit, player, idx_0).Have)
                                 {
-                                    ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
+                                    ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
 
 
                                     if (build_0.Is(BuildingTypes.Camp))
                                     {
-                                        CellBuildEs.Remove(idx_0);
+                                        Entities.WhereBuildingEs.HaveBuild(Entities.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
+                                        Entities.CellEs.BuildEs.Build(idx_0).Remove();
                                     }
 
-                                    CellUnitEs.Kill(idx_0);
+                                    Entities.CellEs.UnitEs.Kill(idx_0);
 
                                     return;
 

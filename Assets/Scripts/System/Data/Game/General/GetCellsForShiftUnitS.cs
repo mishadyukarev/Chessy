@@ -1,31 +1,28 @@
-﻿using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public struct GetCellsForShiftUnitS : IEcsRunSystem
     {
         public void Run()
         {
-            foreach (var idx_0 in CellEs.Idxs)
+            foreach (var idx_0 in Entities.CellEs.Idxs)
             {
                 CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.First, idx_0).Clear();
                 CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.Second, idx_0).Clear();
 
-                if (CellEs.Parent(idx_0).IsActiveSelf.IsActive)
+                if (Entities.CellEs.ParentE(idx_0).IsActiveSelf.IsActive)
                 {
-                    if (!CellUnitEs.Stun(idx_0).ForExitStun.Have && Else(idx_0).UnitC.Have && !Else(idx_0).UnitC.IsAnimal)
+                    if (!Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun.Have && Entities.CellEs.UnitEs.Else(idx_0).UnitC.Have && !Entities.CellEs.UnitEs.Else(idx_0).UnitC.IsAnimal)
                     {
                         foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                         {
-                            if (!Environment(EnvironmentTypes.Mountain, idx_1).Resources.Have && !Else(idx_1).UnitC.Have)
+                            if (!Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Mountain, idx_1).Resources.Have && !Entities.CellEs.UnitEs.Else(idx_1).UnitC.Have)
                             {
-                                var one = CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitEs.StepsForDoing(idx_0, idx_1);
-                                var two = CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitEs.MaxAmountSteps(idx_0);
+                                var one = Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= Entities.CellEs.UnitEs.Step(idx_1).StepsForShiftOrAttack(CellSpaceSupport.GetDirect(idx_0, idx_1), Entities.CellEs.EnvironmentEs.Environments(idx_1), Entities.CellEs.TrailEs.Trails(idx_1));
+                                var two = Entities.CellEs.UnitEs.Step(idx_0).HaveMax(Entities.CellEs.UnitEs.Else(idx_0));
 
                                 if (one || two)
                                 {
-                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(CellUnitEs.Else(idx_0).OwnerC.Player, idx_0).Add(idx_1);
+                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(Entities.CellEs.UnitEs.Else(idx_0).OwnerC.Player, idx_0).Add(idx_1);
                                 }
                             }
                         }

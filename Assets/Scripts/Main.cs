@@ -100,47 +100,8 @@ namespace Game
 
                         _gameW = new EcsWorld();
 
-
-                        #region Entities
-
-                        #region View
-
-                        #region Resources
-
-                        new ResourceSpriteVEs(_gameW);
-                        new VideoClipsResC(true);
-
-                        #endregion
-
-                        new EntitiesVPool(_gameW, out var forData);
-
-                        new RightUIEntities(_gameW);
-                        new EventUIManager(default);
-
-                        #endregion
-
-
-                        #region Data
-
+                        new EntitiesView(_gameW, out var forData);
                         new Entities(_gameW, forData, RpcS.NamesMethods, out var i);
-                        new EntitiesMaster(_gameW);
-
-                        var isActiveParenCells = (bool[])forData[i++];
-                        var idCells = (int[])forData[i++];
-
-                        new CellEs(_gameW, isActiveParenCells, idCells);
-                        new CellUnitEs(_gameW);
-                        new CellBuildEs(_gameW);
-                        new CellTrailEs(_gameW);
-                        new CellEnvironmentEs(_gameW);
-                        new CellFireEs(_gameW);
-                        new CellRiverEs(_gameW);
-
-                        new AvailableCenterUpgradeEs(_gameW);
-
-                        #endregion
-
-                        #endregion
 
 
                         new FillCellsS();
@@ -148,6 +109,8 @@ namespace Game
 
 
                         #region Systems
+
+                        new EventUIManager(default);
 
                         new SystemDataManager(default);
                         new SystemDataMasterManager(default);

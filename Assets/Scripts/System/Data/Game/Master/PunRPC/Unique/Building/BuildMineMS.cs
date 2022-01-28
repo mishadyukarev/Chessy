@@ -8,24 +8,24 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var build = EntitiesMaster.Build<BuildingTC>().Build;
-            var idx_0 = EntitiesMaster.Build<IdxC>().Idx;
+            var build = Entities.MasterEs.Build<BuildingTC>().Build;
+            var idx_0 = Entities.MasterEs.Build<IdxC>().Idx;
 
 
-            ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
-            ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
+            ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+            ref var ownBuild_0 = ref Entities.CellEs.BuildEs.Build(idx_0).PlayerTC;
 
 
             var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
             if (build == BuildingTypes.Mine)
             {
-                if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(build))
+                if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
                 {
                     if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                     {
-                        if (Environment(EnvironmentTypes.Hill, idx_0).Resources.Have
-                            && Environment(EnvironmentTypes.Hill, idx_0).Resources.Have)
+                        if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Hill, idx_0).Resources.Have
+                            && Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Hill, idx_0).Resources.Have)
                         {
                             if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
                             {
@@ -34,9 +34,10 @@ namespace Game.Game
                                 InventorResourcesE.BuyBuild(whoseMove, build);
 
 
-                                CellBuildEs.SetNew(build, whoseMove, idx_0);
+                                Entities.CellEs.BuildEs.Build(idx_0).SetNew(build, whoseMove);
+                                Entities.WhereBuildingEs.HaveBuild(build, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                                CellUnitEs.Step(idx_0).AmountC.Take();
+                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
                             }
 
                             else Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);

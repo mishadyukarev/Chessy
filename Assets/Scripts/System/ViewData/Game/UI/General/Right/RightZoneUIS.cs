@@ -4,7 +4,7 @@
     {
         public void Run()
         {
-            ref var unit_sel = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
+            ref var unit_sel = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
 
             var activeParent = false;
 
@@ -13,14 +13,14 @@
             {
                 if (unit_sel.Have)
                 {
-                    if (CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, Entities.SelectedIdxE.IdxC.Idx).VisibleC.IsVisible)
+                    if (Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, Entities.SelectedIdxE.IdxC.Idx).VisibleC.IsVisible)
                     {
                         activeParent = true;
                     }
                 }
             }
 
-            RightUIEntities.Zone.Zone.SetActive(activeParent);
+            EntitiesView.UIEs.RightEs.Zone.Zone.SetActive(activeParent);
         }
     }
 }

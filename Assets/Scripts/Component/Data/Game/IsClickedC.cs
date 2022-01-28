@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct IsClickedC : IInputE
+    public struct IsClickedC
     {
         public bool IsClicked;
     }

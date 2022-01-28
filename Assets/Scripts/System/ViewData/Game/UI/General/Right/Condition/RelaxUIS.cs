@@ -6,10 +6,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var unit_sel = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
-            ref var selOnUnitCom = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
+            ref var unit_sel = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
+            ref var selOnUnitCom = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
 
-            ref var selCondUnitC = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).ConditionC;
+            ref var selCondUnitC = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).ConditionC;
 
 
             var activeButt = false;

@@ -6,11 +6,11 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx_0 in Idxs)
+            foreach (var idx_0 in Entities.CellEs.Idxs)
             {
-                if (CellUnitEs.Else(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
+                if (Entities.CellEs.UnitEs.Else(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
                 {
-                    CellUnitEs.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
+                    Entities.CellEs.UnitEs.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
                 }
             }
         }

@@ -1,7 +1,7 @@
-﻿namespace Game.Game
-{
-    public struct HaveBuildingC : IWhereBuildsE
-    {
-        public bool Have;
-    }
-}
+﻿//namespace Game.Game
+//{
+//    public struct HaveBuildingC
+//    {
+//        public bool Have;
+//    }
+//}

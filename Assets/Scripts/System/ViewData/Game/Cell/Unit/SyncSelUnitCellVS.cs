@@ -10,10 +10,10 @@ namespace Game.Game
             {
                 var idx_cur = Entities.CurrentIdxE.IdxC.Idx;
 
-                ref var unitC_cur = ref CellUnitEs.Else(idx_cur).UnitC;
-                ref var levUnitC_cur = ref CellUnitEs.Else(idx_cur).LevelC;
+                ref var unitC_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).UnitC;
+                ref var levUnitC_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).LevelC;
 
-                ref var corner_cur = ref CellUnitEs.Else(idx_cur).CornedC;
+                ref var corner_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).CornedC;
 
                 ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_cur);
                 ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(Entities.PreviousVisionIdxE.IdxC.Idx);
@@ -21,7 +21,7 @@ namespace Game.Game
 
                 if (unitC_cur.Have)
                 {
-                    if (CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
+                    if (Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
                     {
                         mainUnit_pre.Enable();
                     }

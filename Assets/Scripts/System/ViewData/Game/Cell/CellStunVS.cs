@@ -8,11 +8,11 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
-                ref var stun_0 = ref CellUnitEs.Stun(idx_0).ForExitStun;
+                ref var stun_0 = ref Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun;
 
-                if (CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
+                if (Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
                 {
                     Stun<SpriteRendererVC>(idx_0).SetActive(stun_0.Have);
                 }

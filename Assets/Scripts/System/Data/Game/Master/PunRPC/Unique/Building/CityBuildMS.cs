@@ -10,29 +10,29 @@ namespace Game.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var forBuildType = EntitiesMaster.Build<BuildingTC>().Build;
-            var idx_0 = EntitiesMaster.Build<IdxC>().Idx;
+            var forBuildType = Entities.MasterEs.Build<BuildingTC>().Build;
+            var idx_0 = Entities.MasterEs.Build<IdxC>().Idx;
 
 
 
             if (forBuildType == BuildingTypes.City)
             {
-                ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
-                ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
+                ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+                ref var ownBuild_0 = ref Entities.CellEs.BuildEs.Build(idx_0).PlayerTC;
 
-                ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
+                ref var fire_0 = ref Entities.CellEs.FireEs.Fire(idx_0).Fire;
 
 
                 var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
 
-                if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
+                if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
                     foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
                     {
-                        if (!Parent(idx_1).IsActiveSelf.IsActive)
+                        if (!Entities.CellEs.ParentE(idx_1).IsActiveSelf.IsActive)
                         {
                             haveNearBorder = true;
                             break;
@@ -45,18 +45,18 @@ namespace Game.Game
                         Entities.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        CellBuildEs.SetNew(forBuildType, whoseMove, idx_0);
+                        Entities.CellEs.BuildEs.Build(idx_0).SetNew(forBuildType, whoseMove);
+                        Entities.WhereBuildingEs.HaveBuild(forBuildType, whoseMove, idx_0).HaveBuilding.Have = true;
 
-
-                        CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
+                        Entities.CellEs.UnitEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
 
 
                         fire_0.Disable();
 
 
-                        Remove(EnvironmentTypes.AdultForest, idx_0);
-                        Remove(EnvironmentTypes.Fertilizer, idx_0);
-                        Remove(EnvironmentTypes.YoungForest, idx_0);
+                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Remove();
+                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Remove();
+                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).Remove();
                     }
 
                     else

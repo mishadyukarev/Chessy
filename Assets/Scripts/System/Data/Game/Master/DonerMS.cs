@@ -16,9 +16,9 @@ namespace Game.Game
             {
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
-                    foreach (byte idx_0 in CellEs.Idxs)
+                    foreach (byte idx_0 in Entities.CellEs.Idxs)
                     {
-                        CellUnitEs.Stun(idx_0).ForExitStun.Take(2);
+                        Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun.Take(2);
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
                     SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
@@ -27,9 +27,9 @@ namespace Game.Game
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
-                    foreach (byte idx_0 in CellEs.Idxs)
+                    foreach (byte idx_0 in Entities.CellEs.Idxs)
                     {
-                        CellUnitEs.Stun(idx_0).ForExitStun.Take();
+                        Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun.Take();
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 

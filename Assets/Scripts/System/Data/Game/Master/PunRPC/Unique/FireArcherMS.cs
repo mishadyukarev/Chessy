@@ -9,20 +9,20 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            EntitiesMaster.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
+            Entities.MasterEs.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
 
-            ref var fire_to = ref CellFireEs.Fire(idx_to).Fire;
+            ref var fire_to = ref Entities.CellEs.FireEs.Fire(idx_to).Fire;
 
             var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
-            if (CellUnitEs.Step(idx_from).AmountC.Amount >= 2)
+            if (Entities.CellEs.UnitEs.Step(idx_from).Steps.Amount >= 2)
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
                     Entities.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    CellUnitEs.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    Entities.CellEs.UnitEs.Step(idx_from).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                     fire_to.Enable();
                 }
             }

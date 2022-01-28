@@ -4,9 +4,9 @@ namespace Game.Game
 {
     public struct CellFireEs
     {
-        static CellFireE[] _fires;
+        CellFireE[] _fires;
 
-        public static CellFireE Fire(in byte idx) => _fires[idx];
+        public CellFireE Fire(in byte idx) => _fires[idx];
 
         public CellFireEs(in EcsWorld gameW)
         {

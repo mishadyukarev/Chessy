@@ -7,27 +7,27 @@ namespace Game.Game
     {
         public void Run()
         {
-            var idx_0 = EntitiesMaster.GrowAdultForest<IdxC>().Idx;
-            var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
+            var idx_0 = Entities.MasterEs.GrowAdultForest<IdxC>().Idx;
+            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
+            ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
 
 
-            if (!CellUnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Have)
+            if (!Entities.CellEs.UnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Have)
             {
-                if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                 {
-                    if (Environment(EnvironmentTypes.YoungForest, idx_0).Resources.Have)
+                    if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).Resources.Have)
                     {
-                        Remove(EnvironmentTypes.YoungForest, idx_0);
+                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).Remove();
 
-                        SetNew(EnvironmentTypes.AdultForest, idx_0);
+                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).SetNew();
 
-                        CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                        Entities.CellEs.UnitEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
 
-                        CellUnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Amount = 5;
+                        Entities.CellEs.UnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Amount = 5;
 
                         Entities.Rpc.SoundToGeneral(sender, uniq_cur);
 
@@ -35,13 +35,13 @@ namespace Game.Game
                         //{
                         //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have = true;
                         //}
-                        var around = CellSpaceSupport.GetXyAround(Cell(idx_0).XyC.Xy);
+                        var around = CellSpaceSupport.GetXyAround(Entities.CellEs.CellE(idx_0).XyC.Xy);
                         foreach (var xy_1 in around)
                         {
-                            var idx_1 = IdxCell(xy_1);
+                            var idx_1 = Entities.CellEs.IdxCell(xy_1);
 
-                            ref var unit_1 = ref CellUnitEs.Else(idx_1).UnitC;
-                            ref var ownUnit_1 = ref CellUnitEs.Else(idx_1).OwnerC;
+                            ref var unit_1 = ref Entities.CellEs.UnitEs.Else(idx_1).UnitC;
+                            ref var ownUnit_1 = ref Entities.CellEs.UnitEs.Else(idx_1).OwnerC;
 
                             if (unit_1.Have)
                             {

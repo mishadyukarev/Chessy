@@ -9,11 +9,11 @@ namespace Game.Game
             var idx_cur = Entities.CurrentIdxE.IdxC.Idx;
             var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
 
-            ref var unit_cur = ref CellUnitEs.Else(idx_cur).UnitC;
-            ref var levUnit_cur = ref CellUnitEs.Else(idx_cur).LevelC;
-            ref var ownUnit_cur = ref CellUnitEs.Else(idx_cur).OwnerC;
+            ref var unit_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).UnitC;
+            ref var levUnit_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).LevelC;
+            ref var ownUnit_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).OwnerC;
 
-            ref var unit_sel = ref CellUnitEs.Else(idx_cur).UnitC;
+            ref var unit_sel = ref Entities.CellEs.UnitEs.Else(idx_cur).UnitC;
 
             ref var raycast = ref Entities.ClickerObject.RayCastTC;
             ref var cellClick = ref Entities.ClickerObject.CellClickC;
@@ -255,7 +255,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
+                        if (!unit_cur.Have || !Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
                         {
                             if (Entities.CurrentIdxE.IsStartDirectToCell)
                             {

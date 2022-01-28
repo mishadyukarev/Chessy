@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct IdxC : ISelectedIdx, IPreVisionIdx
+    public struct IdxC
     {
         public byte Idx;
 

@@ -4,7 +4,7 @@
     {
         public void Run()
         {
-            var res = EntitiesMaster.BuyResources<ResourceTypeC>().Resource;
+            var res = Entities.MasterEs.BuyResources<ResourceTypeC>().Resource;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 

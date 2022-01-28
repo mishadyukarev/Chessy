@@ -10,14 +10,14 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
-                ref var unit_0 = ref Else(idx_0).UnitC;
-                ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
-                ref var hp_0 = ref CellUnitEs.Hp(idx_0).AmountC;
-                ref var water_0 = ref CellUnitEs.Water(idx_0).AmountC;
+                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
+                ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
+                ref var hp_0 = ref Entities.CellEs.UnitEs.Hp(idx_0).AmountC;
+                ref var water_0 = ref Entities.CellEs.UnitEs.Water(idx_0).AmountC;
 
-                ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
+                ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
 
 
                 if (unit_0.Have && !unit_0.IsAnimal)
@@ -32,19 +32,19 @@ namespace Game.Game
 
                     if (canExecute)
                     {
-                        if (River(idx_0).RiverTC.HaveRiver)
+                        if (Entities.CellEs.RiverEs.River(idx_0).RiverTC.HaveRiver)
                         {
-                            CellUnitEs.Water(idx_0).AmountC.Amount = CellUnitEs.MaxWater(idx_0);
+                            Entities.CellEs.UnitEs.Water(idx_0).AmountC.Amount = Entities.CellEs.UnitEs.MaxWater(idx_0);
                         }
                         else
                         {
-                            CellUnitEs.Water(idx_0).AmountC.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f));
+                            Entities.CellEs.UnitEs.Water(idx_0).AmountC.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f));
 
 
                             if (!water_0.Have)
                             {
                                 float percent = 0;
-                                switch (CellUnitEs.Else(idx_0).UnitC.Unit)
+                                switch (Entities.CellEs.UnitEs.Else(idx_0).UnitC.Unit)
                                 {
                                     case UnitTypes.None: throw new Exception();
                                     case UnitTypes.King: percent = 0.4f; break;
@@ -55,16 +55,17 @@ namespace Game.Game
                                     case UnitTypes.Snowy: percent = 0.5f; break;
                                     default: throw new Exception();
                                 }
-                                CellUnitEs.Hp(idx_0).AmountC.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
+                                Entities.CellEs.UnitEs.Hp(idx_0).AmountC.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
 
 
                                 if (!hp_0.Have)
                                 {
                                     if (build_0.Is(BuildingTypes.Camp))
                                     {
-                                        CellBuildEs.Remove(idx_0);
+                                        Entities.WhereBuildingEs.HaveBuild(Entities.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
+                                        Entities.CellEs.BuildEs.Build(idx_0).Remove();
                                     }
-                                    CellUnitEs.Kill(idx_0);
+                                    Entities.CellEs.UnitEs.Kill(idx_0);
                                 }
                             }
                         }

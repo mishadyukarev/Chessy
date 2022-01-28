@@ -4,7 +4,7 @@
     {
         public void Run()
         {
-            foreach (var idx_0 in CellEs.Idxs)
+            foreach (var idx_0 in Entities.CellEs.Idxs)
             {
                 CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx_0).SetActive(false);
             }

@@ -1,17 +1,14 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellEnvironmentEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     struct EnvCellVS : IEcsRunSystem
     {
         public void Run()
         {
-            foreach (var idx in Idxs)
+            foreach (var idx in Entities.CellEs.Idxs)
             {
                 for (var env_0 = EnvironmentTypes.First; env_0 < EnvironmentTypes.End; env_0++)
                 {
-                    if (Environment(env_0, idx).Resources.Have)
+                    if (Entities.CellEs.EnvironmentEs.Environment(env_0, idx).Resources.Have)
                     {
                         CellEnvVEs.EnvCellVC<SpriteRendererVC>(env_0, idx).Enable();
                     }

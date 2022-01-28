@@ -33,7 +33,7 @@ namespace Game.Game
         public static List<byte> GetIdxsAround(in byte idx_start)
         {
             var list = new List<byte>();
-            foreach (var item in GetXyAround(Cell(idx_start).XyC.Xy)) list.Add(IdxCell(item));
+            foreach (var item in GetXyAround(Entities.CellEs.CellE(idx_start).XyC.Xy)) list.Add(Entities.CellEs.IdxCell(item));
             return list;
         }
 
@@ -55,10 +55,10 @@ namespace Game.Game
         }
         public static void TryGetIdxAround(in byte idx_start, out Dictionary<DirectTypes, byte> directs)
         {
-            TryGetXyAround(Cell(idx_start).XyC.Xy, out var dirs);
+            TryGetXyAround(Entities.CellEs.CellE(idx_start).XyC.Xy, out var dirs);
 
             directs = new Dictionary<DirectTypes, byte>();
-            foreach (var item in dirs) directs.Add(item.Key, IdxCell(item.Value));
+            foreach (var item in dirs) directs.Add(item.Key, Entities.CellEs.IdxCell(item.Value));
         }
 
         public static DirectTypes GetDirect(byte[] xy_from, byte[] xy_to)
@@ -72,7 +72,7 @@ namespace Game.Game
 
             return DirectTypes.None;
         }
-        public static DirectTypes GetDirect(byte idx_from, byte idx_to) => GetDirect(Cell(idx_from).XyC.Xy, Cell(idx_to).XyC.Xy);
+        public static DirectTypes GetDirect(byte idx_from, byte idx_to) => GetDirect(Entities.CellEs.CellE(idx_from).XyC.Xy, Entities.CellEs.CellE(idx_to).XyC.Xy);
 
         public static byte[] GetXyCellByDirect(byte[] xyStart, DirectTypes directType)
         {
@@ -87,7 +87,7 @@ namespace Game.Game
         }
         public static byte GetIdxCellByDirect(in byte idx, in DirectTypes dir)
         {
-            return IdxCell(GetXyCellByDirect(Cell(idx).XyC.Xy, dir));
+            return Entities.CellEs.IdxCell(GetXyCellByDirect(Entities.CellEs.CellE(idx).XyC.Xy, dir));
         }
 
         static CellSpaceSupport()

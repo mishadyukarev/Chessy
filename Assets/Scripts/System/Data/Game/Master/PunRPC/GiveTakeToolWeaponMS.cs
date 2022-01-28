@@ -6,36 +6,36 @@ namespace Game.Game
     {
         public void Run()
         {
-            var tWForGive = EntitiesMaster.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon;
-            var levelTW = EntitiesMaster.GiveTakeToolWeapon<LevelTC>().Level;
-            var idx_0 = EntitiesMaster.GiveTakeToolWeapon<IdxC>().Idx;
+            var tWForGive = Entities.MasterEs.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon;
+            var levelTW = Entities.MasterEs.GiveTakeToolWeapon<LevelTC>().Level;
+            var idx_0 = Entities.MasterEs.GiveTakeToolWeapon<IdxC>().Idx;
 
 
             if (idx_0 != default)
             {
                 var sender = InfoC.Sender(MGOTypes.Master);
 
-                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
 
-                ref var levUnit_0 = ref CellUnitEs.Else(idx_0).LevelC;
-                ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
+                ref var levUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).LevelC;
+                ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
 
-                ref var tw_0 = ref CellUnitEs.ToolWeapon(idx_0).ToolWeaponC;
-                ref var twLevel_0 = ref CellUnitEs.ToolWeapon(idx_0).LevelC;
-                ref var twShield_0 = ref CellUnitEs.ToolWeapon(idx_0).Protection;
+                ref var tw_0 = ref Entities.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeaponC;
+                ref var twLevel_0 = ref Entities.CellEs.UnitEs.ToolWeapon(idx_0).LevelC;
+                ref var twShield_0 = ref Entities.CellEs.UnitEs.ToolWeapon(idx_0).Protection;
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (CellUnitEs.Step(idx_0).AmountC.Have)
+                    if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Have)
                     {
 
                         if (tw_0.HaveTW)
                         {
                             InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player)++;
-                            CellUnitEs.Reset(idx_0);
+                            Entities.CellEs.UnitEs.Reset(idx_0);
 
-                            CellUnitEs.Step(idx_0).AmountC.Take();
+                            Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
 
                             Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -45,9 +45,9 @@ namespace Game.Game
                         {
                             InventorToolWeaponE.ToolWeapons<AmountC>(tWForGive, levelTW, ownUnit_0.Player).Take();
 
-                            CellUnitEs.SetNew(idx_0, tWForGive, levelTW);
+                            Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
 
-                            CellUnitEs.Step(idx_0).AmountC.Take();
+                            Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
 
                             Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -58,9 +58,9 @@ namespace Game.Game
                             {
                                 InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                CellUnitEs.SetNew(idx_0, tWForGive, levelTW);
+                                Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
 
-                                CellUnitEs.Step(idx_0).AmountC.Take();
+                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
 
                                 Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -76,9 +76,9 @@ namespace Game.Game
                             {
                                 InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                CellUnitEs.SetNew(idx_0, tWForGive, levelTW);
+                                Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
 
-                                CellUnitEs.Step(idx_0).AmountC.Take();
+                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
 
                                 Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -94,9 +94,9 @@ namespace Game.Game
                             {
                                 InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                CellUnitEs.SetNew(idx_0, tWForGive, levelTW);
+                                Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
 
-                                CellUnitEs.Step(idx_0).AmountC.Take();
+                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
 
                                 Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }

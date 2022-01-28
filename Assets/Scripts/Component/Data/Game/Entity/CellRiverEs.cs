@@ -4,15 +4,15 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellRiverEs
+    public struct CellRiverEs
     {
-        static CellRiverE[] _rivers;
-        static Dictionary<DirectTypes, CellRiverDirectE[]> _directs;
+        CellRiverE[] _rivers;
+        Dictionary<DirectTypes, CellRiverDirectE[]> _directs;
 
-        public static CellRiverE River(in byte idx) => _rivers[idx];
-        public static CellRiverDirectE HaveRive(in DirectTypes dir, in byte idx) => _directs[dir][idx];
+        public CellRiverE River(in byte idx) => _rivers[idx];
+        public CellRiverDirectE HaveRive(in DirectTypes dir, in byte idx) => _directs[dir][idx];
 
-        public static HashSet<DirectTypes> Keys
+        public HashSet<DirectTypes> Keys
         {
             get
             {
@@ -42,7 +42,7 @@ namespace Game.Game
             }
         }
 
-        public static void SetStart(in byte idx, params DirectTypes[] dirs)
+        public void SetStart(in byte idx, params DirectTypes[] dirs)
         {
             if (dirs == default) throw new Exception();
 

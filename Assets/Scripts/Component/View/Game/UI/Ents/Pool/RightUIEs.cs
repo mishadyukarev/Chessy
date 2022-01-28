@@ -4,17 +4,18 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct RightUIEntities
+    public struct RightUIEs
     {
-        static Dictionary<ButtonTypes, RightUniqueUIE> _uniques;
-        static Dictionary<string, RightUniqueZoneUIE> _uniqueZones;
+        Dictionary<ButtonTypes, RightUniqueUIE> _uniques;
+        Dictionary<string, RightUniqueZoneUIE> _uniqueZones;
 
-        public static RightZoneUIE Zone { get; private set; }
+        public RightZoneUIE Zone { get; private set; }
 
-        public static RightUniqueUIE Unique(in ButtonTypes but) => _uniques[but];
-        public static RightUniqueZoneUIE UniqueZone(in ButtonTypes but, in AbilityTypes ability) => _uniqueZones[but.ToString() + ability];
+        public RightUniqueUIE Unique(in ButtonTypes but) => _uniques[but];
+        public RightUniqueZoneUIE UniqueZone(in ButtonTypes but, in AbilityTypes ability) => _uniqueZones[but.ToString() + ability];
 
-        public RightUIEntities(in EcsWorld gameW)
+
+        public RightUIEs(in EcsWorld gameW)
         {
             var rightZone = CanvasC.FindUnderCurZone("RightZone").transform;
             Zone = new RightZoneUIE(gameW, rightZone.gameObject);

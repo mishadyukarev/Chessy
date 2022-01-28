@@ -7,10 +7,10 @@ namespace Game.Game
     {
         internal RightUnitEventUIS()
         {
-            RightUIEntities.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
-            RightUIEntities.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
-            RightUIEntities.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
-            RightUIEntities.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
+            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
+            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
+            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
+            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
 
             //RightUIEntities.Building(ButtonTypes.First).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
             //RightUIEntities.Building(ButtonTypes.Second).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
@@ -26,7 +26,7 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).ConditionC.Is(condUnitType))
+                if (Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).ConditionC.Is(condUnitType))
                 {
                     Entities.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, Entities.SelectedIdxE.IdxC.Idx);
                 }
@@ -44,9 +44,9 @@ namespace Game.Game
             {
                 var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
 
-                ref var abil = ref CellUnitEs.UniqueButton(uniqueButton, idx_sel).AbilityC;
+                ref var abil = ref Entities.CellEs.UnitEs.UniqueButton(uniqueButton, idx_sel).AbilityC;
 
-                if (!CellUnitEs.CooldownUnique(abil.Ability, idx_sel).Cooldown.Have)
+                if (!Entities.CellEs.UnitEs.CooldownUnique(abil.Ability, idx_sel).Cooldown.Have)
                 {
                     switch (abil.Ability)
                     {

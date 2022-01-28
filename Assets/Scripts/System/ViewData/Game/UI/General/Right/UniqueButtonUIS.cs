@@ -6,28 +6,28 @@
         {
             for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
-                ref var ability = ref CellUnitEs.UniqueButton(button, Entities.SelectedIdxE.IdxC.Idx).AbilityC.Ability;
+                ref var ability = ref Entities.CellEs.UnitEs.UniqueButton(button, Entities.SelectedIdxE.IdxC.Idx).AbilityC.Ability;
 
                 if (ability == default)
                 {
-                    RightUIEntities.Unique(button).Paren.SetActive(false);
+                    EntitiesView.UIEs.RightEs.Unique(button).Paren.SetActive(false);
                 }
                 else
                 {
-                    RightUIEntities.Unique(button).Text.SetActiveParent(CellUnitEs.CooldownUnique(ability, Entities.SelectedIdxE.IdxC.Idx).Cooldown.Have);
-                    RightUIEntities.Unique(button).Text.Text = CellUnitEs.CooldownUnique(ability, Entities.SelectedIdxE.IdxC.Idx).Cooldown.Amount.ToString();
+                    EntitiesView.UIEs.RightEs.Unique(button).Text.SetActiveParent(Entities.CellEs.UnitEs.CooldownUnique(ability, Entities.SelectedIdxE.IdxC.Idx).Cooldown.Have);
+                    EntitiesView.UIEs.RightEs.Unique(button).Text.Text = Entities.CellEs.UnitEs.CooldownUnique(ability, Entities.SelectedIdxE.IdxC.Idx).Cooldown.Amount.ToString();
 
-                    RightUIEntities.Unique(button).Paren.SetActive(true);
+                    EntitiesView.UIEs.RightEs.Unique(button).Paren.SetActive(true);
 
-                    RightUIEntities.Unique(button).ImageC.Sprite = ResourceSpriteVEs.Sprite(ability).SpriteC.Sprite;
+                    EntitiesView.UIEs.RightEs.Unique(button).ImageC.Sprite = ResourceSpriteVEs.Sprite(ability).SpriteC.Sprite;
 
 
 
                     for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
                     {
-                        RightUIEntities.UniqueZone(button, unique).Zone.SetActive(false);
+                        EntitiesView.UIEs.RightEs.UniqueZone(button, unique).Zone.SetActive(false);
                     }
-                    RightUIEntities.UniqueZone(button, ability).Zone.SetActive(true);
+                    EntitiesView.UIEs.RightEs.UniqueZone(button, ability).Zone.SetActive(true);
 
 
 

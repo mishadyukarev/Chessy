@@ -8,8 +8,8 @@
             //{
             //    var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
 
-            //    ref var unit_sel = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
-            //    ref var ownUnit_sel = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
+            //    ref var unit_sel = ref Entities.CellEs.CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
+            //    ref var ownUnit_sel = ref Entities.CellEs.CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
 
             //    ref var build_sel = ref CellBuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
             //    ref var ownBuild_sel = ref CellBuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).PlayerTC;
@@ -29,14 +29,14 @@
             //                    {
             //                        needActiveThirdButt = true;
             //                        //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
-            //                        CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
+            //                        Entities.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
             //                    }
             //                }
             //                else
             //                {
             //                    needActiveThirdButt = true;
             //                    //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.CityNone).Sprite;
-            //                    CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.None;
+            //                    Entities.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.None;
             //                }
             //            }
 
@@ -46,7 +46,7 @@
             //                {
             //                    needActiveThirdButt = true;
             //                    //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
-            //                    CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
+            //                    Entities.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
             //                }
             //            }
             //        }

@@ -10,13 +10,13 @@ namespace Game.Game
         {
             ref var cellClick = ref Entities.ClickerObject.CellClickC;
 
-            foreach (byte idx_0 in Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
-                ref var unit_0 = ref Else(idx_0).UnitC;
-                ref var lev_0 = ref CellUnitEs.Else(idx_0).LevelC;
-                ref var own_0 = ref CellUnitEs.Else(idx_0).OwnerC;
+                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
+                ref var lev_0 = ref Entities.CellEs.UnitEs.Else(idx_0).LevelC;
+                ref var own_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
 
-                ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
+                ref var fire_0 = ref Entities.CellEs.FireEs.Fire(idx_0).Fire;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
@@ -79,9 +79,9 @@ namespace Game.Game
 
                     else
                     {
-                        if (CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
+                        if (Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
                         {
-                            if (Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
+                            if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {

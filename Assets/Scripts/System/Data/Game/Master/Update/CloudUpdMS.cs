@@ -6,13 +6,13 @@ namespace Game.Game
     {
         public void Run()
         {
-            var xy_0 = Cell(Entities.WindE.CenterCloud.Idx).XyC.Xy;
+            var xy_0 = Entities.CellEs.CellE(Entities.WindE.CenterCloud.Idx).XyC.Xy;
             var xy_next = CellSpaceSupport.GetXyCellByDirect(xy_0, Entities.WindE.DirectWind.Direct);
 
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                Entities.WindE.CenterCloud.Idx = IdxCell(xy_next);
+                Entities.WindE.CenterCloud.Idx = Entities.CellEs.IdxCell(xy_next);
             }
             else
             {
@@ -31,9 +31,9 @@ namespace Game.Game
 
             foreach (var item in dirs)
             {
-                var idx_1 = IdxCell(item.Value);
+                var idx_1 = Entities.CellEs.IdxCell(item.Value);
 
-                CellTrailEs.ResetAll(idx_1);
+                Entities.CellEs.TrailEs.ResetAll(idx_1);
             }
         }
     }

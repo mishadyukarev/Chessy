@@ -7,10 +7,10 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx_0 in Idxs)
+            foreach (var idx_0 in Entities.CellEs.Idxs)
             {
-                ref var unit_0 = ref Else(idx_0).UnitC;
-                ref var condUnit_0 = ref CellUnitEs.Else(idx_0).ConditionC;
+                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
+                ref var condUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).ConditionC;
 
                 //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 //{

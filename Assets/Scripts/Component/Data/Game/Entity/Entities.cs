@@ -10,6 +10,7 @@ namespace Game.Game
         static Dictionary<PlayerTypes, ReadyE> _ready;
         static Dictionary<ClipTypes, SoundE> _sounds0;
         static Dictionary<AbilityTypes, SoundE> _sounds1;
+        static Dictionary<string, BuildingUpgradesE> _haveUpgrades;
 
         public static SelectedIdxE SelectedIdxE { get; private set; }
         public static CurrentIdxE CurrentIdxE { get; private set; }
@@ -28,10 +29,20 @@ namespace Game.Game
         public static SelectedUnitE SelectedUnitE { get; private set; }
         public static SelectedUniqueAbilityE SelectedUniqueAbilityE { get; private set; }
 
+        public static WhereBuildingEs WhereBuildingEs { get; private set; }
+        public static UnitStatUpgradesEs UnitStatUpgradesEs { get; private set; }
+        public static CellEs CellEs { get; private set; }
+        public static AvailableCenterUpgradeEs AvailableCenterUpgradeEs { get; private set; }
+        public static MasterEs MasterEs { get; private set; }
+
         public static ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
         public static ReadyE Ready(in PlayerTypes player) => _ready[player];
         public static SoundE Sound(in ClipTypes clip) => _sounds0[clip];
         public static SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
+
+
+        static string Key(in BuildingTypes build, in PlayerTypes player, in UpgradeTypes upg) => build.ToString() + player + upg;
+        public static BuildingUpgradesE HaveUpgrade(in BuildingTypes build, in PlayerTypes player, in UpgradeTypes upg) => _haveUpgrades[Key(build, player, upg)];
 
 
         public Entities(in EcsWorld gameW, in List<object> forData, in List<string> namesMethods, out int i)
@@ -41,7 +52,8 @@ namespace Game.Game
             var actions = (List<object>)forData[i++];
             var sounds0 = (Dictionary<ClipTypes, System.Action>)forData[i++];
             var sounds1 = (Dictionary<AbilityTypes, System.Action>)forData[i++];
-
+            var isActiveParenCells = (bool[])forData[i++];
+            var idCells = (int[])forData[i++];
 
             SelectedIdxE = new SelectedIdxE(gameW);
             CurrentIdxE = new CurrentIdxE(gameW);
@@ -79,14 +91,31 @@ namespace Game.Game
             foreach (var item in sounds1) _sounds1.Add(item.Key, new SoundE(item.Value, gameW));
 
 
-            new AvailableCenterHeroEs(gameW);
-            new UnitStatUpgradesEs(gameW);
-            new BuildingUpgradesEs(gameW);
 
+
+            _haveUpgrades = new Dictionary<string, BuildingUpgradesE>();
+            for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
+            {
+                for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
+                {
+                    for (var upg = UpgradeTypes.None + 1; upg < UpgradeTypes.End; upg++)
+                    {
+                        _haveUpgrades.Add(Key(build, player, upg), new BuildingUpgradesE(gameW));
+                    }
+                }
+            }
+
+            WhereBuildingEs = new WhereBuildingEs(gameW);
+            UnitStatUpgradesEs = new UnitStatUpgradesEs(gameW);
+            CellEs = new CellEs(gameW, isActiveParenCells, idCells);
+            AvailableCenterUpgradeEs = new AvailableCenterUpgradeEs(gameW);
+
+            MasterEs = new MasterEs(gameW);
+
+            new AvailableCenterHeroEs(gameW);
 
             new EntWhereEnviroments(gameW);
             new WhereUnitsE(gameW);
-            new WhereBuildsE(gameW);
 
             new InventorUnitsE(gameW);
             new InventorResourcesE(gameW);
@@ -102,7 +131,7 @@ namespace Game.Game
             new EntHint(gameW);
            
             new StatUnitsUpgradesE(gameW);
-            new GetterUnitsEs(gameW);    
+            new GetterUnitsEs(gameW);
         }
     }
 }

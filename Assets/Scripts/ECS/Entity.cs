@@ -5,94 +5,125 @@ namespace ECS
 {
     public sealed class EcsWorld
     {
+        readonly List<object> _poolsComponents;
         readonly Dictionary<int, Entity> _ents;
 
-        public EcsWorld() => _ents = new Dictionary<int, Entity>();
+        public EcsWorld()
+        {
+            _poolsComponents = new List<object>();
+            _ents = new Dictionary<int, Entity>();
+        }
         ~EcsWorld()
         {
             _ents.Clear();
+            _poolsComponents.Clear();
         }
 
         public Entity NewEntity()
         {
             var idx = _ents.Count;
-            _ents.Add(idx, new Entity(_ents.Count));
+            _ents.Add(idx, new Entity(this, _ents.Count));
             return _ents[idx];
+        }
+
+        internal bool GetPool<C>(out ComponentPool<C> pool) where C : struct
+        {
+            for (int i = 0; i < _poolsComponents.Count; i++)
+            {
+                if(_poolsComponents[i] is ComponentPool<C> p)
+                {
+                    pool = p;
+                    return true;
+                }
+            }
+
+            pool = default;
+            return false;
+        }
+
+        internal ComponentPool<C> AddPool<C>() where C : struct
+        {
+            var pool = new ComponentPool<C>(new Dictionary<int, int>());
+            _poolsComponents.Add(pool);
+            return pool;
         }
     }
 
+
+    class ComponentPool<C> where C : struct
+    {
+        Dictionary<int, int> _numbersEntity;
+        C[] _components;
+
+        internal bool ContainComponent(int idxEnt) => _numbersEntity.ContainsKey(idxEnt);
+        internal ref C Component(int idxEnt) => ref _components[_numbersEntity[idxEnt]];
+
+        internal ComponentPool(in Dictionary<int, int> numbersEntity)
+        {
+            _numbersEntity = numbersEntity;
+            _components = new C[0];
+        }
+
+        internal void AddComponent(in int idxEnt, in C component)
+        {
+            var idxE_key = idxEnt;
+            var idxC_value = _components.Length;
+
+            _numbersEntity.Add(idxE_key, idxC_value);
+            Array.Resize(ref _components, _components.Length + 1);
+
+            _components[idxC_value] = component;
+        }
+    }
+
+
     public readonly struct Entity
     {
+        readonly EcsWorld _curWorld;
         readonly int _numberEnt;
 
-        internal Entity(in int numberEnt) : this()
+        internal Entity(in EcsWorld world, in int numberEnt) : this()
         {
+            _curWorld = world;
             _numberEnt = numberEnt;
         }
 
         public Entity Add<C>(in C component) where C : struct
         {
-            ComponentPool<C>.AddComponent(_numberEnt, component);
+            if (_curWorld.GetPool<C>(out var pool))
+            {
+                pool.AddComponent(_numberEnt, component);
+            }
+            else
+            {
+                pool = _curWorld.AddPool<C>();
+                pool.AddComponent(_numberEnt, component);
+            }
+            
             return this;
         }
 
         public ref C Get<C>() where C : struct
         {
-            if (ComponentPool<C>.ContainComponent(_numberEnt))
+            if (_curWorld.GetPool<C>(out var pool))
             {
-                return ref ComponentPool<C>.Component(_numberEnt);
-            }
-            else
-            {
-                ComponentPool<C>.AddComponent(_numberEnt, new C());
-                return ref ComponentPool<C>.Component(_numberEnt);
-            }
-        }
-    }
-
-    struct ComponentPool<C> where C : struct
-    {
-        static C[] _components;
-        static Dictionary<int, int> _numbers;
-
-        internal static bool ContainComponent(int idxEnt)
-        {
-            return _numbers.ContainsKey(idxEnt);
-        }
-        internal static ref C Component(int idxEnt) => ref _components[_numbers[idxEnt]];
-
-        static ComponentPool()
-        {
-            _numbers = new Dictionary<int, int>();
-        }
-
-        internal static void AddComponent(in int idxEnt, in C component)
-        {
-            var key = idxEnt;
-
-            if (_numbers.ContainsKey(key))
-            {
-                _components[_numbers[key]] = component;
-            }
-
-            else
-            {
-                var idx = 0;
-                foreach (var item in _numbers) idx++;
-
-                _numbers[key] = idx;
-
-                if (_components == default)
+                if (pool.ContainComponent(_numberEnt))
                 {
-                    _components = new C[1];
+                    return ref pool.Component(_numberEnt);
                 }
                 else
                 {
-                    idx = _components.Length;
-                    Array.Resize(ref _components, idx + 1);
+                    pool.AddComponent(_numberEnt, new C());
+                    return ref pool.Component(_numberEnt);
                 }
+            }
+            else
+            {
+                pool = _curWorld.AddPool<C>();
+                C component = new C();
+                pool.AddComponent(_numberEnt, component);
 
-                _components[idx] = component;
+                return ref pool.Component(_numberEnt);
             }
         }
     }

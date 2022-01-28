@@ -10,7 +10,7 @@ namespace Game.Game
         {
             var curPlayer = Entities.WhoseMove.CurPlayerI;
 
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
                 CellVEs.Cell<SpriteRendererVC>(idx_0).RotParent = curPlayer == PlayerTypes.First 

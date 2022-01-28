@@ -5,17 +5,17 @@ namespace Game.Game
 {
     public struct AvailableCenterUpgradeEs
     {
-        static Dictionary<PlayerTypes, HaveUpgradeE> _haveUpgrades;
-        static Dictionary<string, HaveUpgradeE> _build;
-        static Dictionary<string, HaveUpgradeE> _unit;
-        static Dictionary<PlayerTypes, HaveUpgradeE> _water;
+        Dictionary<PlayerTypes, HaveUpgradeE> _haveUpgrades;
+        Dictionary<string, HaveUpgradeE> _build;
+        Dictionary<string, HaveUpgradeE> _unit;
+        Dictionary<PlayerTypes, HaveUpgradeE> _water;
 
-        public static HaveUpgradeE HaveUpgrade(in PlayerTypes player) => _haveUpgrades[player];
-        public static HaveUpgradeE HaveBuildUpgrade(in BuildingTypes build, in PlayerTypes player) => _build[build.ToString() + player];
-        public static HaveUpgradeE HaveUnitUpgrade(in UnitTypes unit, in PlayerTypes player) => _unit[unit.ToString() + player];
-        public static HaveUpgradeE HaveWaterUpgrade(in PlayerTypes player) => _water[player];
+        public HaveUpgradeE HaveUpgrade(in PlayerTypes player) => _haveUpgrades[player];
+        public HaveUpgradeE HaveBuildUpgrade(in BuildingTypes build, in PlayerTypes player) => _build[build.ToString() + player];
+        public HaveUpgradeE HaveUnitUpgrade(in UnitTypes unit, in PlayerTypes player) => _unit[unit.ToString() + player];
+        public HaveUpgradeE HaveWaterUpgrade(in PlayerTypes player) => _water[player];
 
-        public static HashSet<PlayerTypes> Keys
+        public HashSet<PlayerTypes> Keys
         {
             get
             {

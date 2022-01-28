@@ -4,27 +4,36 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellEs
+    public struct CellEs
     {
-        static CellParenE[] _cellParents;
-        static CellE[] _cells;
-        static HashSet<byte> _idxs;
+        CellParenE[] _cellParents;
+        CellE[] _cells;
+        HashSet<byte> _idxs;
 
-        public static CellParenE Parent(in byte idx) => _cellParents[idx];
-        public static CellE Cell(in byte idx) => _cells[idx];
+        public CellParenE ParentE(in byte idx) => _cellParents[idx];
+        public CellE CellE(in byte idx) => _cells[idx];
 
-        public static byte IdxCell(in byte[] xy)
+
+        public CellBuildEs BuildEs { get; private set; }
+        public CellTrailEs TrailEs { get; private set; }
+        public CellUnitEs UnitEs { get; private set; }
+        public CellEnvironmentEs EnvironmentEs { get; private set; }
+        public CellFireEs FireEs { get; private set; }
+        public CellRiverEs RiverEs { get; private set; }
+
+
+        public byte IdxCell(in byte[] xy)
         {
             for (byte idx = 0; idx < _cells.Length; idx++)
             {
-                if (Cell(idx).XyC.Xy.Compare(xy))
+                if (CellE(idx).XyC.Xy.Compare(xy))
                 {
                     return idx;
                 }
             }
             throw new Exception();
         }
-        public static HashSet<byte> Idxs
+        public HashSet<byte> Idxs
         {
             get
             {
@@ -53,8 +62,14 @@ namespace Game.Game
 
                     ++idx;
                 }
+
+
+            BuildEs = new CellBuildEs(gameW);
+            TrailEs = new CellTrailEs(gameW);
+            UnitEs = new CellUnitEs(gameW);
+            EnvironmentEs = new CellEnvironmentEs(gameW);
+            FireEs = new CellFireEs(gameW);
+            RiverEs = new CellRiverEs(gameW);
         }
-
-
     }
 }

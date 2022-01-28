@@ -10,9 +10,7 @@ namespace Game.Game
 
         public SelectedToolWeaponE(in EcsWorld gameW)
         {
-            _selectedTW = new Entity();
-
-            _selectedTW
+            _selectedTW = gameW.NewEntity()
                 .Add(new ToolWeaponC(ToolWeaponTypes.Pick))
                 .Add(new LevelTC(LevelTypes.Second));
         }

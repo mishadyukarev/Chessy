@@ -3,15 +3,23 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellTrailEs
+    public struct CellTrailEs
     {
-        static Dictionary<DirectTypes, CellTrailE[]> _trails;
-        static Dictionary<PlayerTypes, CellTrailPlayerE[]> _players;
+        Dictionary<DirectTypes, CellTrailE[]> _trails;
+        Dictionary<PlayerTypes, CellTrailPlayerE[]> _players;
 
-        public static CellTrailE Trail(in DirectTypes dir, in byte idx) => _trails[dir][idx];
-        public static CellTrailPlayerE IsVisible(in PlayerTypes player, in byte idx) => _players[player][idx];
+        public CellTrailE Trail(in DirectTypes dir, in byte idx) => _trails[dir][idx];
+        public CellTrailPlayerE IsVisible(in PlayerTypes player, in byte idx) => _players[player][idx];
 
-        public static HashSet<DirectTypes> Keys
+        public CellTrailE[] Trails(in byte idx)
+        {
+            var trails = new CellTrailE[_trails.Keys.Count];
+            var i = 0;
+            foreach (var trailT in _trails.Keys) trails[i++] = _trails[trailT][idx];
+            return trails;
+        }
+
+        public HashSet<DirectTypes> Keys
         {
             get
             {
@@ -20,7 +28,7 @@ namespace Game.Game
                 return keys;
             }
         }
-        public static bool HaveAnyTrail(in byte idx)
+        public bool HaveAnyTrail(in byte idx)
         {
             foreach (var item in Keys) if (Trail(item, idx).Health.Have) return true;
             return false;
@@ -47,28 +55,24 @@ namespace Game.Game
 
             for (idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
-                foreach (var item in _trails) _trails[item.Key][idx] = new CellTrailE(gameW);
+                foreach (var item in _trails) _trails[item.Key][idx] = new CellTrailE(item.Key, gameW);
                 foreach (var item in _players) _players[item.Key][idx] = new CellTrailPlayerE(gameW);
             }
         }
 
-        public static bool TrySetNewTrail(in byte idx, in DirectTypes dir, in bool haveAdultForest)
+        public bool TrySetNewTrail(in byte idx, in DirectTypes dir, in bool haveAdultForest)
         {
             if (haveAdultForest) Trail(dir, idx).Health.Amount = 7;
             return haveAdultForest;
         }
-        public static void SetAllTrail(in byte idx)
+        public void SetAllTrail(in byte idx)
         {
             foreach (var item in Keys)
             {
                 Trail(item, idx).Health.Amount = 7;
             }
         }
-        public static void TakeHealth(in byte idx, in DirectTypes dir)
-        {
-            Trail(dir, idx).Health.Amount -= 1;
-        }
-        public static void ResetAll(in byte idx)
+        public void ResetAll(in byte idx)
         {
             foreach (var item in Keys)
             {

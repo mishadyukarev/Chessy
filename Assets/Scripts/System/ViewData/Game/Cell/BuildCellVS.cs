@@ -10,53 +10,23 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (byte idx_0 in Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
-                ref var build_cur = ref CellBuildEs.Build(idx_0).BuildTC;
-                ref var ownBuild_cur = ref CellBuildEs.Build(idx_0).PlayerTC;
+                ref var build_cur = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+                ref var ownBuild_cur = ref Entities.CellEs.BuildEs.Build(idx_0).PlayerTC;
 
 
                 var buildT = build_cur.Build;
-                var isVisForMe = IsVisible(Entities.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
-                var isVisForNext = IsVisible(Entities.WhoseMove.NextPlayerFrom(Entities.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
+                var isVisForMe = Entities.CellEs.BuildEs.IsVisible(Entities.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
+                var isVisForNext = Entities.CellEs.BuildEs.IsVisible(Entities.WhoseMove.NextPlayerFrom(Entities.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
 
                 if (buildT != BuildingTypes.None)
                 {
                     if (isVisForMe)
                     {
-                        switch (buildT)
-                        {
-                            case BuildingTypes.None:
-                                throw new Exception();
+                        BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.Sprite(buildT).SpriteC.Sprite;
+                        BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(buildT).SpriteC.Sprite;
 
-                            case BuildingTypes.City:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.Sprite(BuildingTypes.City).SpriteC.Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(BuildingTypes.City).SpriteC.Sprite;
-                                break;
-
-                            case BuildingTypes.Farm:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.Sprite(BuildingTypes.Farm).SpriteC.Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(BuildingTypes.Farm).SpriteC.Sprite;
-                                break;
-
-                            case BuildingTypes.Woodcutter:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.Sprite(BuildingTypes.Woodcutter).SpriteC.Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(BuildingTypes.Woodcutter).SpriteC.Sprite;
-                                break;
-
-                            case BuildingTypes.Mine:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.Sprite(BuildingTypes.Mine).SpriteC.Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(BuildingTypes.Mine).SpriteC.Sprite;
-                                break;
-
-                            case BuildingTypes.Camp:
-                                BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.Sprite(BuildingTypes.Camp).SpriteC.Sprite;
-                                BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(BuildingTypes.Camp).SpriteC.Sprite;
-                                break;
-
-                            default:
-                                throw new Exception();
-                        }
                         BuildFront<SpriteRendererVC>(idx_0).Enable();
                         BuildBack<SpriteRendererVC>(idx_0).Enable();
 

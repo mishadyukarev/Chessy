@@ -8,27 +8,29 @@ namespace Game.Game
     {
         public void Run()
         {
-            foreach (var idx_0 in Idxs)
+            foreach (var idx_0 in Entities.CellEs.Idxs)
             {
-                ref var build_0 = ref CellBuildEs.Build(idx_0).BuildTC;
-                ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
+                ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+                ref var ownBuild_0 = ref Entities.CellEs.BuildEs.Build(idx_0).PlayerTC;
 
-                if (CellBuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
+                if (Entities.CellEs.BuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
                 {
-                    Environment(env, idx_0).Resources.Amount -= extract;
+                    Entities.CellEs.EnvironmentEs.Environment(env, idx_0).Resources.Amount -= extract;
                     InventorResourcesE.Resource(res, ownBuild_0.Player).Amount += extract;
 
-                    if (!Environment(env, idx_0).Resources.Have)
+                    if (!Entities.CellEs.EnvironmentEs.Environment(env, idx_0).Resources.Have)
                     {
-                        CellBuildEs.Remove(idx_0);
+                        Entities.WhereBuildingEs.HaveBuild(Entities.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
+                        Entities.CellEs.BuildEs.Build(idx_0).Remove();
 
-                        if (env != EnvironmentTypes.Hill) Remove(env, idx_0);
+
+                        if (env != EnvironmentTypes.Hill) Entities.CellEs.EnvironmentEs.Environment(env, idx_0).Remove();
 
                         if (env == EnvironmentTypes.AdultForest)
                         {
                             if (UnityEngine.Random.Range(0, 100) < 50)
                             {
-                                SetNew(EnvironmentTypes.YoungForest, idx_0);
+                                Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).SetNew();
                             }
                         }
                     }

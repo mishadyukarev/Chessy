@@ -8,11 +8,11 @@
 
             if (Entities.SelectedIdxE.IsSelCell)
             {
-                ref var selUnitDatCom = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
+                ref var selUnitDatCom = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var selOnUnitCom = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
+                    ref var selOnUnitCom = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
 
                     if (selOnUnitCom.Is(Entities.WhoseMove.CurPlayerI))
                     {

@@ -4,9 +4,9 @@
     {
         public void Run()
         {
-            foreach (var idx in CellEs.Idxs)
+            foreach (var idx in Entities.CellEs.Idxs)
             {
-                if (CellFireEs.Fire(idx).Fire.Have)
+                if (Entities.CellEs.FireEs.Fire(idx).Fire.Have)
                 {
                     CellFireVEs.FireCellVC<SpriteRendererVC>(idx).Enable();
                 }

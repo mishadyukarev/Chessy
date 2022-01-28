@@ -5,7 +5,7 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var unit = EntitiesMaster.ForGetHero.Unit;
+            var unit = Entities.MasterEs.ForGetHero.Unit;
 
             var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 

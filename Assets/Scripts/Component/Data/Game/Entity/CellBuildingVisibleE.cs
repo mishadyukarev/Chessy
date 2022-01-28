@@ -6,8 +6,6 @@ namespace Game.Game
     {
         public ref IsVisibleC IsVisibleC => ref Ent.Get<IsVisibleC>();
 
-        public CellBuildingVisibleE(in EcsWorld world) : base(world)
-        {
-        }
+        public CellBuildingVisibleE(in EcsWorld world) : base(world) { }
     }
 }

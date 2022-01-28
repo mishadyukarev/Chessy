@@ -4,7 +4,7 @@
     {
         public void Run()
         {
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
                 //ref var unit_0 = ref UnitDataEnt<UnitC>.Component(idx_0);
                 //ref var owUnit_0 = ref UnitDataEnt<OwnerC>.Component(idx_0);

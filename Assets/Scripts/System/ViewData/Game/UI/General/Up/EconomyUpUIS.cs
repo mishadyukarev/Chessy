@@ -22,20 +22,20 @@ namespace Game.Game
             extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
 
 
-            foreach (var idx_0 in Idxs)
+            foreach (var idx_0 in Entities.CellEs.Idxs)
             {
-                if (Else(idx_0).UnitC.Have && CellUnitEs.Else(idx_0).OwnerC.Is(Entities.WhoseMove.CurPlayerI))
+                if (Entities.CellEs.UnitEs.Else(idx_0).UnitC.Have && Entities.CellEs.UnitEs.Else(idx_0).OwnerC.Is(Entities.WhoseMove.CurPlayerI))
                 {
-                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Else(idx_0).UnitC.Unit);
+                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Entities.CellEs.UnitEs.Else(idx_0).UnitC.Unit);
 
-                    if (CellUnitEs.CanExtract(idx_0, out var extract, out var env, out var res))
+                    if (Entities.CellEs.UnitEs.CanExtract(idx_0, out var extract, out var env, out var res))
                     {
                         extracts[res] += extract;
                     }
                 }
-                if (CellBuildEs.Build(idx_0).BuildTC.Have && CellBuildEs.Build(idx_0).PlayerTC.Is(Entities.WhoseMove.CurPlayerI))
+                if (Entities.CellEs.BuildEs.Build(idx_0).BuildTC.Have && Entities.CellEs.BuildEs.Build(idx_0).PlayerTC.Is(Entities.WhoseMove.CurPlayerI))
                 {
-                    if (CellBuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
+                    if (Entities.CellEs.BuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
                     {
                         extracts[res] += extract;
                     }

@@ -7,16 +7,16 @@ namespace Game.Game
     {
         public void Run()
         {
-            ref var build_sel = ref CellBuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
+            ref var build_sel = ref Entities.CellEs.BuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
 
 
             if (Entities.SelectedIdxE.IsSelCell && !build_sel.Is(BuildingTypes.City))
             {
                 Info<ButtonUIC>().SetActiveParent(true);
 
-                Resources<TextUIC>(ResourceTypes.Food).Text = Environment(EnvironmentTypes.Fertilizer, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
-                Resources<TextUIC>(ResourceTypes.Wood).Text = Environment(EnvironmentTypes.AdultForest, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
-                Resources<TextUIC>(ResourceTypes.Ore).Text = Environment(EnvironmentTypes.Hill, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
+                Resources<TextUIC>(ResourceTypes.Food).Text = Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
+                Resources<TextUIC>(ResourceTypes.Wood).Text = Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
+                Resources<TextUIC>(ResourceTypes.Ore).Text = Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Hill, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
             }
             else
             {

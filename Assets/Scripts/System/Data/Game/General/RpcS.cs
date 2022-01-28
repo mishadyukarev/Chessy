@@ -60,25 +60,25 @@ namespace Game.Game
                         break;
 
                     case AbilityTypes.Seed:
-                        EntitiesMaster.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntitiesMaster.Seed<EnvironmetC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
+                        Entities.MasterEs.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.Seed<EnvironmetC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
                         break;
 
                     case AbilityTypes.FireArcher:
-                        EntitiesMaster.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
-                        EntitiesMaster.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
                         break;
 
                     case AbilityTypes.GrowAdultForest:
-                        EntitiesMaster.GrowAdultForest<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.GrowAdultForest<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case AbilityTypes.StunElfemale:
-                        EntitiesMaster.StunElfemale<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        Entities.MasterEs.StunElfemale<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case AbilityTypes.ChangeDirectionWind:
-                        EntitiesMaster.ChangeDirectionWind<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        Entities.MasterEs.ChangeDirectionWind<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case AbilityTypes.ChangeCornerArcher:
@@ -86,17 +86,17 @@ namespace Game.Game
                         break;
 
                     case AbilityTypes.FreezeDirectEnemy:
-                        EntitiesMaster.FreezeDirectEnemy.IdxFromToC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        Entities.MasterEs.FreezeDirectEnemy.IdxFromToC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case AbilityTypes.IceWall:
-                        EntitiesMaster.IceWall.IdxC.Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.IceWall.IdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
                     default: throw new Exception();
                 }
 
-                EntitiesMaster.UniqueAbilityC.Ability = uniqAbil;
+                Entities.MasterEs.UniqueAbilityC.Ability = uniqAbil;
                 SystemDataMasterManager.InvokeRun(uniqAbil);
             }
 
@@ -114,74 +114,74 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Build:
-                        EntitiesMaster.Build<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntitiesMaster.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
+                        Entities.MasterEs.Build<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.DestroyBuild:
-                        EntitiesMaster.DestroyIdxC.Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.DestroyIdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.Shift:
-                        EntitiesMaster.Shift<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        Entities.MasterEs.Shift<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        EntitiesMaster.Attack.From = (byte)objects[_idx_cur++];
-                        EntitiesMaster.Attack.To = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.Attack.From = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.Attack.To = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        EntitiesMaster.ConditionUnit<ConditionUnitC>().Condition = (ConditionUnitTypes)objects[_idx_cur++];
-                        EntitiesMaster.ConditionUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.ConditionUnit<ConditionUnitC>().Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                        Entities.MasterEs.ConditionUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.CreateUnit:
-                        EntitiesMaster.CreateUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        Entities.MasterEs.CreateUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.MeltOre:
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        EntitiesMaster.SetUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        EntitiesMaster.SetUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        Entities.MasterEs.SetUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.SetUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.BuyRes:
-                        EntitiesMaster.BuyResources<ResourceTypeC>().Resource = (ResourceTypes)objects[_idx_cur++];
+                        Entities.MasterEs.BuyResources<ResourceTypeC>().Resource = (ResourceTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ToNewUnit:
-                        EntitiesMaster.ScoutOldNew<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
-                        EntitiesMaster.ScoutOldNew<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.ScoutOldNew<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        Entities.MasterEs.ScoutOldNew<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.CreateHeroFromTo:
-                        EntitiesMaster.CreateHeroFromTo<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
-                        EntitiesMaster.CreateHeroFromTo<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        Entities.MasterEs.CreateHeroFromTo<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        Entities.MasterEs.CreateHeroFromTo<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.UpgradeCellUnit:
-                        EntitiesMaster.UpgradeUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.UpgradeUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        EntitiesMaster.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
-                        EntitiesMaster.GiveTakeToolWeapon<LevelTC>().Level = (LevelTypes)objects[_idx_cur++];
-                        EntitiesMaster.GiveTakeToolWeapon<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        Entities.MasterEs.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
+                        Entities.MasterEs.GiveTakeToolWeapon<LevelTC>().Level = (LevelTypes)objects[_idx_cur++];
+                        Entities.MasterEs.GiveTakeToolWeapon<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        EntitiesMaster.ForGetHero.Unit = (UnitTypes)objects[_idx_cur++];
+                        Entities.MasterEs.ForGetHero.Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgCenterUnits:
-                        EntitiesMaster.UpgradeCenterUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        Entities.MasterEs.UpgradeCenterUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgCenterBuild:
-                        EntitiesMaster.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
+                        Entities.MasterEs.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgWater:
@@ -267,56 +267,56 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (byte idx_0 in Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
-                objs.Add(CellUnitEs.Else(idx_0).UnitC.Unit);
-                objs.Add(CellUnitEs.Else(idx_0).LevelC.Level);
-                objs.Add(CellUnitEs.Else(idx_0).OwnerC.Player);
+                objs.Add(Entities.CellEs.UnitEs.Else(idx_0).UnitC.Unit);
+                objs.Add(Entities.CellEs.UnitEs.Else(idx_0).LevelC.Level);
+                objs.Add(Entities.CellEs.UnitEs.Else(idx_0).OwnerC.Player);
 
-                objs.Add(CellUnitEs.Hp(idx_0).AmountC.Amount);
-                objs.Add(CellUnitEs.Step(idx_0).AmountC.Amount);
-                objs.Add(CellUnitEs.Water(idx_0).AmountC.Amount);
+                objs.Add(Entities.CellEs.UnitEs.Hp(idx_0).AmountC.Amount);
+                objs.Add(Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount);
+                objs.Add(Entities.CellEs.UnitEs.Water(idx_0).AmountC.Amount);
 
-                objs.Add(CellUnitEs.Else(idx_0).ConditionC.Condition);
+                objs.Add(Entities.CellEs.UnitEs.Else(idx_0).ConditionC.Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
-                objs.Add(CellUnitEs.ToolWeapon(idx_0).ToolWeaponC.ToolWeapon);
-                objs.Add(CellUnitEs.ToolWeapon(idx_0).LevelC.Level);
-                objs.Add(CellUnitEs.ToolWeapon(idx_0).Protection.Amount);
+                objs.Add(Entities.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeaponC.ToolWeapon);
+                objs.Add(Entities.CellEs.UnitEs.ToolWeapon(idx_0).LevelC.Level);
+                objs.Add(Entities.CellEs.UnitEs.ToolWeapon(idx_0).Protection.Amount);
 
-                objs.Add(CellUnitEs.Stun(idx_0).ForExitStun.Amount);
+                objs.Add(Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun.Amount);
 
-                objs.Add(CellUnitEs.Else(idx_0).CornedC.IsCornered);
+                objs.Add(Entities.CellEs.UnitEs.Else(idx_0).CornedC.IsCornered);
 
-                foreach (var item in CellUnitEs.CooldownKeys) objs.Add(CellUnitEs.CooldownUnique(item, idx_0).Cooldown.Amount);
-
-
+                foreach (var item in Entities.CellEs.UnitEs.CooldownKeys) objs.Add(Entities.CellEs.UnitEs.CooldownUnique(item, idx_0).Cooldown.Amount);
 
 
 
-                objs.Add(CellBuildEs.Build(idx_0).BuildTC.Build);
-                objs.Add(CellBuildEs.Build(idx_0).PlayerTC.Player);
+
+
+                objs.Add(Entities.CellEs.BuildEs.Build(idx_0).BuildTC.Build);
+                objs.Add(Entities.CellEs.BuildEs.Build(idx_0).PlayerTC.Player);
 
 
 
-                foreach (var env in CellEnvironmentEs.KeysEnvironment)
+                foreach (var env in Entities.CellEs.EnvironmentEs.Keys)
                 {
-                    objs.Add(Environment(env, idx_0));
+                    objs.Add(Entities.CellEs.EnvironmentEs.Environment(env, idx_0));
                 }
 
 
 
 
-                objs.Add(CellRiverEs.River(idx_0).RiverTC.River);
-                foreach (var item_0 in CellRiverEs.Keys)
-                    objs.Add(CellRiverEs.HaveRive(item_0, idx_0).HaveRiver.Have);
+                objs.Add(Entities.CellEs.RiverEs.River(idx_0).RiverTC.River);
+                foreach (var item_0 in Entities.CellEs.RiverEs.Keys)
+                    objs.Add(Entities.CellEs.RiverEs.HaveRive(item_0, idx_0).HaveRiver.Have);
 
 
-                foreach (var item_0 in CellTrailEs.Keys)
-                    objs.Add(Trail(item_0, idx_0));
+                foreach (var item_0 in Entities.CellEs.TrailEs.Keys)
+                    objs.Add(Entities.CellEs.TrailEs.Trail(item_0, idx_0));
 
-                objs.Add(CellFireEs.Fire(idx_0).Fire.Have);
+                objs.Add(Entities.CellEs.FireEs.Fire(idx_0).Fire.Have);
             }
 
             objs.Add(Entities.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).Cooldown.Amount);
@@ -336,7 +336,7 @@ namespace Game.Game
 
 
             foreach (var key in WhereUnitsE.Keys) objs.Add(WhereUnitsE.HaveUnit(key).Have);
-            foreach (var key in WhereBuildsE.Keys) objs.Add(WhereBuildsE.HaveBuild<HaveBuildingC>(key).Have);
+            foreach (var key in Entities.WhereBuildingEs.Keys) objs.Add(Entities.WhereBuildingEs.HaveBuild(key).HaveBuilding.Have);
             foreach (var key in EntWhereEnviroments.Keys) objs.Add(EntWhereEnviroments.HaveEnv(key).Have);
 
 
@@ -377,53 +377,53 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (byte idx_0 in Idxs)
+            foreach (byte idx_0 in Entities.CellEs.Idxs)
             {
-                CellUnitEs.Else(idx_0).UnitC.Unit = (UnitTypes)objects[_idx_cur++];
-                CellUnitEs.Else(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
-                CellUnitEs.Else(idx_0).OwnerC.Player = (PlayerTypes)objects[_idx_cur++];
-                CellUnitEs.Hp(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
-                CellUnitEs.Step(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
-                CellUnitEs.Water(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Else(idx_0).UnitC.Unit = (UnitTypes)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Else(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Else(idx_0).OwnerC.Player = (PlayerTypes)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Hp(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount = (int)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Water(idx_0).AmountC.Amount = (int)objects[_idx_cur++];
 
-                CellUnitEs.Else(idx_0).ConditionC.Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Else(idx_0).ConditionC.Condition = (ConditionUnitTypes)objects[_idx_cur++];
                 //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
 
-                CellUnitEs.ToolWeapon(idx_0).ToolWeaponC.ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
-                CellUnitEs.ToolWeapon(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
-                CellUnitEs.ToolWeapon(idx_0).Protection.Amount = (int)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeaponC.ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.ToolWeapon(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.ToolWeapon(idx_0).Protection.Amount = (int)objects[_idx_cur++];
 
 
-                CellUnitEs.Stun(idx_0).ForExitStun.Amount = (int)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun.Amount = (int)objects[_idx_cur++];
 
-                CellUnitEs.Else(idx_0).CornedC.IsCornered = (bool)objects[_idx_cur++];
+                Entities.CellEs.UnitEs.Else(idx_0).CornedC.IsCornered = (bool)objects[_idx_cur++];
 
-                foreach (var item in CellUnitEs.CooldownKeys) CellUnitEs.CooldownUnique(item, idx_0).Cooldown.Amount = (int)objects[_idx_cur++];
-
-
-
-                CellBuildEs.Build(idx_0).BuildTC.Build = (BuildingTypes)objects[_idx_cur++];
-                CellBuildEs.Build(idx_0).PlayerTC.Player = (PlayerTypes)objects[_idx_cur++];
+                foreach (var item in Entities.CellEs.UnitEs.CooldownKeys) Entities.CellEs.UnitEs.CooldownUnique(item, idx_0).Cooldown.Amount = (int)objects[_idx_cur++];
 
 
-                foreach (var item_0 in CellEnvironmentEs.KeysEnvironment)
+
+                Entities.CellEs.BuildEs.Build(idx_0).BuildTC.Build = (BuildingTypes)objects[_idx_cur++];
+                Entities.CellEs.BuildEs.Build(idx_0).PlayerTC.Player = (PlayerTypes)objects[_idx_cur++];
+
+
+                foreach (var item_0 in Entities.CellEs.EnvironmentEs.Keys)
                 {
-                    Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
+                    Entities.CellEs.EnvironmentEs.Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
                 }
 
-                CellRiverEs.River(idx_0).RiverTC.River = (RiverTypes)objects[_idx_cur++];
-                foreach (var dir in CellRiverEs.Keys)
-                    CellRiverEs.HaveRive(dir, idx_0).HaveRiver.Have = (bool)objects[_idx_cur++];
+                Entities.CellEs.RiverEs.River(idx_0).RiverTC.River = (RiverTypes)objects[_idx_cur++];
+                foreach (var dir in Entities.CellEs.RiverEs.Keys)
+                    Entities.CellEs.RiverEs.HaveRive(dir, idx_0).HaveRiver.Have = (bool)objects[_idx_cur++];
 
 
 
-                foreach (var item_0 in CellTrailEs.Keys)
-                    Trail(item_0, idx_0).Health.Amount = (int)objects[_idx_cur++];
+                foreach (var item_0 in Entities.CellEs.TrailEs.Keys)
+                    Entities.CellEs.TrailEs.Trail(item_0, idx_0).Health.Amount = (int)objects[_idx_cur++];
 
 
 
-                CellFireEs.Fire(idx_0).Fire.Have = (bool)objects[_idx_cur++];
+                Entities.CellEs.FireEs.Fire(idx_0).Fire.Have = (bool)objects[_idx_cur++];
             }
 
 
@@ -444,7 +444,7 @@ namespace Game.Game
 
 
             foreach (var key in WhereUnitsE.Keys) WhereUnitsE.HaveUnit(key).Have = (bool)objects[_idx_cur++];
-            foreach (var key in WhereBuildsE.Keys) WhereBuildsE.HaveBuild<HaveBuildingC>(key).Have = (bool)objects[_idx_cur++];
+            foreach (var key in Entities.WhereBuildingEs.Keys) Entities.WhereBuildingEs.HaveBuild(key).HaveBuilding.Have = (bool)objects[_idx_cur++];
             foreach (var key in EntWhereEnviroments.Keys) EntWhereEnviroments.HaveEnv(key).Have = (bool)objects[_idx_cur++];
 
 

@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct RayCastTC : IClickerObjectE
+    public struct RayCastTC
     {
         public RaycastTypes Raycast;
 
