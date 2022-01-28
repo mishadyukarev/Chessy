@@ -11,7 +11,7 @@ namespace Game.Game
     {
         static Dictionary<string, Entity> _ents;
         static Dictionary<ClipTypes, Entity> _sounds0;
-        static Dictionary<UniqueAbilityTypes, Entity> _sounds1;
+        static Dictionary<AbilityTypes, Entity> _sounds1;
 
         public static ref C Background<C>() where C : struct, IBackgroundE => ref _ents[nameof(IBackgroundE)].Get<C>();
         public static ref C GeneralZone<C>() where C : struct => ref _ents[nameof(IGeneralZoneE)].Get<C>();
@@ -22,18 +22,18 @@ namespace Game.Game
             if (!_sounds0.ContainsKey(clip)) throw new Exception();
             return ref _sounds0[clip].Get<C>();
         }
-        public static ref C SoundV<C>(in UniqueAbilityTypes clip) where C : struct, ISoundE
+        public static ref C SoundV<C>(in AbilityTypes clip) where C : struct, ISoundE
         {
             if (!_sounds1.ContainsKey(clip)) throw new Exception();
             return ref _sounds1[clip].Get<C>();
         }
 
 
-        public EntityVPool(in EcsWorld gameW, out List<object> actions, out Dictionary<ClipTypes, System.Action> action0, out Dictionary<UniqueAbilityTypes, System.Action> action1)
+        public EntityVPool(in EcsWorld gameW, out List<object> actions, out Dictionary<ClipTypes, System.Action> action0, out Dictionary<AbilityTypes, System.Action> action1)
         {
             _ents = new Dictionary<string, Entity>();
             _sounds0 = new Dictionary<ClipTypes, Entity>();
-            _sounds1 = new Dictionary<UniqueAbilityTypes, Entity>();
+            _sounds1 = new Dictionary<AbilityTypes, Entity>();
 
 
             ToggleZoneVC.ReplaceZone(SceneTypes.Game);
@@ -165,12 +165,12 @@ namespace Game.Game
 
 
 
-            for (var uniq = UniqueAbilityTypes.None + 1; uniq < UniqueAbilityTypes.End; uniq++)
+            for (var uniq = AbilityTypes.None + 1; uniq < AbilityTypes.End; uniq++)
             {
-                if (uniq != UniqueAbilityTypes.CircularAttack
-                    && uniq != UniqueAbilityTypes.PutOutFirePawn
-                    && uniq != UniqueAbilityTypes.PutOutFirePawn
-                    && uniq != UniqueAbilityTypes.ChangeCornerArcher)
+                if (uniq != AbilityTypes.CircularAttack
+                    && uniq != AbilityTypes.PutOutFirePawn
+                    && uniq != AbilityTypes.PutOutFirePawn
+                    && uniq != AbilityTypes.ChangeCornerArcher)
                 {
                     cur_AS = aSParent.AddComponent<AudioSource>();
                     cur_AS.clip = ClipResourcesVC.AudioClip(uniq);
@@ -179,18 +179,22 @@ namespace Game.Game
                     var volume = 0f;
                     switch (uniq)
                     {
-                        case UniqueAbilityTypes.CircularAttack: throw new Exception();
-                        case UniqueAbilityTypes.BonusNear: volume = 0.3f; break;
-                        case UniqueAbilityTypes.FirePawn: volume = 0.2f; break;
-                        case UniqueAbilityTypes.PutOutFirePawn: throw new Exception();
-                        case UniqueAbilityTypes.Seed: volume = 0.2f; break;
-                        case UniqueAbilityTypes.FireArcher: volume = 0.2f; break;
-                        case UniqueAbilityTypes.ChangeCornerArcher: throw new Exception();
-                        case UniqueAbilityTypes.GrowAdultForest: volume = 0.3f; break;
-                        case UniqueAbilityTypes.StunElfemale: volume = 0.3f; break;
-                        case UniqueAbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
-                        case UniqueAbilityTypes.FreezeDirectEnemy: volume = 0.1f; break;
-                        case UniqueAbilityTypes.IceWall: volume = 0.1f; break;
+                        case AbilityTypes.CircularAttack: throw new Exception();
+                        case AbilityTypes.BonusNear: volume = 0.3f; break;
+                        case AbilityTypes.FirePawn: volume = 0.2f; break;
+                        case AbilityTypes.PutOutFirePawn: throw new Exception();
+                        case AbilityTypes.Seed: volume = 0.2f; break;
+                        case AbilityTypes.FireArcher: volume = 0.2f; break;
+                        case AbilityTypes.ChangeCornerArcher: throw new Exception();
+                        case AbilityTypes.GrowAdultForest: volume = 0.3f; break;
+                        case AbilityTypes.StunElfemale: volume = 0.3f; break;
+                        case AbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
+                        case AbilityTypes.FreezeDirectEnemy: volume = 0.1f; break;
+                        case AbilityTypes.IceWall: volume = 0.1f; break;
+                        case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
+                        case AbilityTypes.Farm: volume = 0.1f; break;
+                        case AbilityTypes.Mine: volume = 0.1f; break;
+                        case AbilityTypes.City: volume = 0.1f; break;
                         default: throw new Exception();
                     }
 
@@ -201,7 +205,7 @@ namespace Game.Game
 
             action0 = new Dictionary<ClipTypes, Action>();
             foreach (var item in _sounds0) action0.Add(item.Key, item.Value.Get<AudioSourceVC>().Play);
-            action1 = new Dictionary<UniqueAbilityTypes, Action>();
+            action1 = new Dictionary<AbilityTypes, Action>();
             foreach (var item in _sounds1) action1.Add(item.Key, item.Value.Get<AudioSourceVC>().Play);
         }
     }

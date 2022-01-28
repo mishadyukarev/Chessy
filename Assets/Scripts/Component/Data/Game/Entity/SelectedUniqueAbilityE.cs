@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public sealed class SelectedUniqueAbilityE : EntityAbstract
     {
-        public ref UniqueAbilityC AbilityC => ref Ent.Get<UniqueAbilityC>();
+        public ref AbilityC AbilityC => ref Ent.Get<AbilityC>();
 
         public SelectedUniqueAbilityE(in EcsWorld gameW) : base(gameW)
         {

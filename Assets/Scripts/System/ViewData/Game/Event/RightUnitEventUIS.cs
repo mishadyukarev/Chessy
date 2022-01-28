@@ -10,10 +10,11 @@ namespace Game.Game
             RightUIEntities.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
             RightUIEntities.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
             RightUIEntities.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
+            RightUIEntities.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
 
-            RightUIEntities.Building(ButtonTypes.First).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
-            RightUIEntities.Building(ButtonTypes.Second).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
-            RightUIEntities.Building(ButtonTypes.Third).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Third); });
+            //RightUIEntities.Building(ButtonTypes.First).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
+            //RightUIEntities.Building(ButtonTypes.Second).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
+            //RightUIEntities.Building(ButtonTypes.Third).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Third); });
 
             RightProtectUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
             RightRelaxUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
@@ -21,7 +22,7 @@ namespace Game.Game
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
@@ -39,82 +40,110 @@ namespace Game.Game
 
         void Unique(ButtonTypes uniqueButton)
         {
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
-                ref var abil = ref CellUnitEs.UniqueButton(uniqueButton, Entities.SelectedIdxE.IdxC.Idx).AbilityC;
+                var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
 
-                if (!CellUnitEs.CooldownUnique(abil.Ability, Entities.SelectedIdxE.IdxC.Idx).Cooldown.Have)
+                ref var abil = ref CellUnitEs.UniqueButton(uniqueButton, idx_sel).AbilityC;
+
+                if (!CellUnitEs.CooldownUnique(abil.Ability, idx_sel).Cooldown.Have)
                 {
                     switch (abil.Ability)
                     {
-                        case UniqueAbilityTypes.FirePawn:
-                            Entities.Rpc.FirePawnToMas(Entities.SelectedIdxE.IdxC.Idx);
+                        case AbilityTypes.FirePawn:
+                            Entities.Rpc.FirePawnToMas(idx_sel);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
-                        case UniqueAbilityTypes.PutOutFirePawn:
-                            Entities.Rpc.PutOutFirePawnToMas(Entities.SelectedIdxE.IdxC.Idx);
+                        case AbilityTypes.PutOutFirePawn:
+                            Entities.Rpc.PutOutFirePawnToMas(idx_sel);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
-                        case UniqueAbilityTypes.Seed:
-                            Entities.Rpc.SeedEnvToMaster(Entities.SelectedIdxE.IdxC.Idx, EnvironmentTypes.YoungForest);
+                        case AbilityTypes.Seed:
+                            Entities.Rpc.SeedEnvToMaster(idx_sel, EnvironmentTypes.YoungForest);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
-                        case UniqueAbilityTypes.FireArcher:
+                        case AbilityTypes.FireArcher:
                             Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                            Entities.SelectedUniqueAbilityE.AbilityC.Ability = UniqueAbilityTypes.FireArcher;
+                            Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.FireArcher;
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
-                        case UniqueAbilityTypes.CircularAttack:
-                            Entities.Rpc.CircularAttackKingToMaster(Entities.SelectedIdxE.IdxC.Idx);
+                        case AbilityTypes.CircularAttack:
+                            Entities.Rpc.CircularAttackKingToMaster(idx_sel);
                             TryOnHint(VideoClipTypes.CircularAttack);
                             break;
 
-                        case UniqueAbilityTypes.StunElfemale:
+                        case AbilityTypes.StunElfemale:
                             {
                                 Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = UniqueAbilityTypes.StunElfemale;
+                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.StunElfemale;
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
                             break;
 
-                        case UniqueAbilityTypes.BonusNear:
-                            Entities.Rpc.BonusNearUnits(Entities.SelectedIdxE.IdxC.Idx);
+                        case AbilityTypes.BonusNear:
+                            Entities.Rpc.BonusNearUnits(idx_sel);
                             TryOnHint(VideoClipTypes.BonusKing);
                             break;
 
-                        case UniqueAbilityTypes.ChangeCornerArcher:
+                        case AbilityTypes.ChangeCornerArcher:
                             {
-                                Entities.Rpc.ChangeCornerArchToMas(Entities.SelectedIdxE.IdxC.Idx);
+                                Entities.Rpc.ChangeCornerArchToMas(idx_sel);
                             }
                             break;
 
-                        case UniqueAbilityTypes.GrowAdultForest:
-                            Entities.Rpc.GrowAdultForest(Entities.SelectedIdxE.IdxC.Idx);
+                        case AbilityTypes.GrowAdultForest:
+                            Entities.Rpc.GrowAdultForest(idx_sel);
                             TryOnHint(VideoClipTypes.GrowingAdForesElfemale);
                             break;
 
-                        case UniqueAbilityTypes.ChangeDirectionWind:
+                        case AbilityTypes.ChangeDirectionWind:
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
                                 Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = UniqueAbilityTypes.ChangeDirectionWind;
+                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.ChangeDirectionWind;
                             }
                             break;
 
-                        case UniqueAbilityTypes.FreezeDirectEnemy:
+                        case AbilityTypes.FreezeDirectEnemy:
                             {
                                 Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = UniqueAbilityTypes.FreezeDirectEnemy;
+                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.FreezeDirectEnemy;
                             }
                             break;
 
-                        case UniqueAbilityTypes.IceWall:
+                        case AbilityTypes.IceWall:
                             {
-                                Entities.Rpc.IceWallToMaster(Entities.SelectedIdxE.IdxC.Idx);
+                                Entities.Rpc.IceWallToMaster(idx_sel);
+                            }
+                            break;
+
+                        case AbilityTypes.Farm:
+                            {
+                                Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.Farm);
+                                TryOnHint(VideoClipTypes.BuldFarms);
+                            }
+                            break;
+
+                        case AbilityTypes.Mine:
+                            {
+                                Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.Mine);
+                                TryOnHint(VideoClipTypes.BuildMine);
+                            }
+                            break;
+
+                        case AbilityTypes.City:
+                            {
+                                Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.City);
+                            }
+                            break;
+
+                        case AbilityTypes.DestroyBuilding:
+                            {
+                                Entities.Rpc.DestroyBuildingToMaster(idx_sel);
                             }
                             break;
 
@@ -131,7 +160,7 @@ namespace Game.Game
         {
             var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
 
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
                 switch (buildBut)
                 {
@@ -139,20 +168,15 @@ namespace Game.Game
                         throw new Exception();
 
                     case ButtonTypes.First:
-                        Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.Farm);
-                        TryOnHint(VideoClipTypes.BuldFarms);
+
                         break;
 
                     case ButtonTypes.Second:
-                        Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.Mine);
-                        TryOnHint(VideoClipTypes.BuildMine);
+
                         break;
 
                     case ButtonTypes.Third:
-                        var buildAbility = CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build;
-                        if (buildAbility == BuildingTypes.None) Entities.Rpc.DestroyBuildingToMaster(idx_sel);
-                        else Entities.Rpc.BuildToMaster(idx_sel, CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build);
-
+                        
                         //switch (BuildAbilC.AbilityType(buildBut))
                         //{
                         //    case BuildAbilityTypes.None: throw new Exception();

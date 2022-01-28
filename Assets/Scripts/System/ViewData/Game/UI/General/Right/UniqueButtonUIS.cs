@@ -23,7 +23,7 @@
 
 
 
-                    for (var unique = UniqueAbilityTypes.None + 1; unique < UniqueAbilityTypes.End; unique++)
+                    for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
                     {
                         RightUIEntities.UniqueZone(button, unique).Zone.SetActive(false);
                     }

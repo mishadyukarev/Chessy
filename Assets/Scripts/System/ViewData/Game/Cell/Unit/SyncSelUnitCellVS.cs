@@ -21,7 +21,7 @@ namespace Game.Game
 
                 if (unitC_cur.Have)
                 {
-                    if (CellUnitEs.VisibleE(Entities.WhoseMoveE.CurPlayerI, idx_cur).VisibleC.IsVisible)
+                    if (CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
                     {
                         mainUnit_pre.Enable();
                     }

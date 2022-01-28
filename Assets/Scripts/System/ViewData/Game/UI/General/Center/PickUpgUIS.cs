@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayer = Entities.WhoseMoveE.CurPlayerI;
+            var curPlayer = Entities.WhoseMove.CurPlayerI;
 
             var isActivatedZone = AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).HaveUpgrade.Have
                 && !InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, curPlayer).Have;
@@ -17,7 +17,7 @@ namespace Game.Game
             {
                 for (var build = BuildingTypes.Farm; build <= BuildingTypes.Mine; build++)
                 {
-                    if (AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Entities.WhoseMoveE.CurPlayerI).HaveUpgrade.Have)
+                    if (AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Entities.WhoseMove.CurPlayerI).HaveUpgrade.Have)
                     {
                         Builds(build).SetActive(true);
                     }

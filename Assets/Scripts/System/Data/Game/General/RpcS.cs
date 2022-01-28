@@ -37,59 +37,59 @@ namespace Game.Game
 
             if (rpcT == RpcMasterTypes.UniqueAbility)
             {
-                var uniqAbil = (UniqueAbilityTypes)objects[_idx_cur++];
+                var uniqAbil = (AbilityTypes)objects[_idx_cur++];
 
                 switch (uniqAbil)
                 {
-                    case UniqueAbilityTypes.None: throw new Exception();
+                    case AbilityTypes.None: throw new Exception();
 
-                    case UniqueAbilityTypes.CircularAttack:
+                    case AbilityTypes.CircularAttack:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.BonusNear:
+                    case AbilityTypes.BonusNear:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.FirePawn:
+                    case AbilityTypes.FirePawn:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.PutOutFirePawn:
+                    case AbilityTypes.PutOutFirePawn:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.Seed:
+                    case AbilityTypes.Seed:
                         EntitiesMaster.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
                         EntitiesMaster.Seed<EnvironmetC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
                         break;
 
-                    case UniqueAbilityTypes.FireArcher:
+                    case AbilityTypes.FireArcher:
                         EntitiesMaster.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
                         EntitiesMaster.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
                         break;
 
-                    case UniqueAbilityTypes.GrowAdultForest:
+                    case AbilityTypes.GrowAdultForest:
                         EntitiesMaster.GrowAdultForest<IdxC>().Idx = (byte)objects[_idx_cur++];
                         break;
 
-                    case UniqueAbilityTypes.StunElfemale:
+                    case AbilityTypes.StunElfemale:
                         EntitiesMaster.StunElfemale<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.ChangeDirectionWind:
+                    case AbilityTypes.ChangeDirectionWind:
                         EntitiesMaster.ChangeDirectionWind<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.ChangeCornerArcher:
+                    case AbilityTypes.ChangeCornerArcher:
                         IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.FreezeDirectEnemy:
+                    case AbilityTypes.FreezeDirectEnemy:
                         EntitiesMaster.FreezeDirectEnemy.IdxFromToC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
-                    case UniqueAbilityTypes.IceWall:
+                    case AbilityTypes.IceWall:
                         EntitiesMaster.IceWall.IdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
@@ -240,7 +240,7 @@ namespace Game.Game
                     break;
 
                 case RpcGeneralTypes.SoundUniqueAbility:
-                    Entities.Sound((UniqueAbilityTypes)objects[_idx_cur++]).Sound.Invoke();
+                    Entities.Sound((AbilityTypes)objects[_idx_cur++]).Sound.Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundRpcMaster:
@@ -348,7 +348,7 @@ namespace Game.Game
 
             #region Other
 
-            objs.Add(Entities.WhoseMoveE.WhoseMove.Player);
+            objs.Add(Entities.WhoseMove.WhoseMove.Player);
             objs.Add(Entities.WinnerE.Winner.Player);
             objs.Add(Entities.GameInfo.IsStartedGameC.IsStartedGame);
             objs.Add(Entities.Ready(PlayerTypes.Second).IsReadyC.IsReady);
@@ -456,10 +456,10 @@ namespace Game.Game
 
             #region Other
 
-            Entities.WhoseMoveE.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
+            Entities.WhoseMove.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
             Entities.WinnerE.Winner.Player = (PlayerTypes)objects[_idx_cur++];
             Entities.GameInfo.IsStartedGameC.IsStartedGame = (bool)objects[_idx_cur++];
-            Entities.Ready(Entities.WhoseMoveE.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
+            Entities.Ready(Entities.WhoseMove.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
 
 
             Entities.Motion.AmountMotions.Amount = (int)objects[_idx_cur++];

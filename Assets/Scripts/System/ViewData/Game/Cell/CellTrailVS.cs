@@ -11,7 +11,7 @@ namespace Game.Game
             {
                 foreach (var dir in Keys)
                 {
-                    if (IsVisible(Entities.WhoseMoveE.CurPlayerI, idx_0).IsVisibleC.IsVisible)
+                    if (IsVisible(Entities.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
                     {
                         CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(Trail(dir, idx_0).Health.Have);
                     }

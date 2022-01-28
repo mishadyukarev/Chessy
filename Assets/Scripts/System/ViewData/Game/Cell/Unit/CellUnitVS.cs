@@ -28,7 +28,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (CellUnitEs.VisibleE(Entities.WhoseMoveE.CurPlayerI, idx_0).VisibleC.IsVisible)
+                    if (CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
                     {
                         mainUnit_0.Enable();
 
@@ -72,7 +72,7 @@ namespace Game.Game
                                 throw new Exception();
                         }
 
-                        if (CellUnitEs.VisibleE(Entities.WhoseMoveE.NextPlayerFrom(Entities.WhoseMoveE.CurPlayerI), idx_0).VisibleC.IsVisible)
+                        if (CellUnitEs.VisibleE(Entities.WhoseMove.NextPlayerFrom(Entities.WhoseMove.CurPlayerI), idx_0).VisibleC.IsVisible)
                         {
                             mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 1);
                         }
@@ -81,7 +81,7 @@ namespace Game.Game
                             mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 0.6f);
                         }
 
-                        if (CellUnitEs.VisibleE(Entities.WhoseMoveE.NextPlayerFrom(Entities.WhoseMoveE.CurPlayerI), idx_0).VisibleC.IsVisible)
+                        if (CellUnitEs.VisibleE(Entities.WhoseMove.NextPlayerFrom(Entities.WhoseMove.CurPlayerI), idx_0).VisibleC.IsVisible)
                         {
                             extraUnit_0.Color = new Color(extraUnit_0.Color.r, extraUnit_0.Color.g, extraUnit_0.Color.b, 1);
                         }

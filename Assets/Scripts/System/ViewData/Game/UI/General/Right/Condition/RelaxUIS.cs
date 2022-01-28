@@ -16,7 +16,7 @@ namespace Game.Game
 
             if (unit_sel.Have)
             {
-                if (selOnUnitCom.Is(Entities.WhoseMoveE.CurPlayerI))
+                if (selOnUnitCom.Is(Entities.WhoseMove.CurPlayerI))
                 {
                     activeButt = true;
 

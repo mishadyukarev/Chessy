@@ -8,7 +8,7 @@ namespace Game.Game
         {
             foreach (var idx_0 in CellEs.Idxs)
             {
-                ref var unit_0 = ref Else(idx_0).UnitC;
+                ref var unit_0 = ref CellUnitEs.Else(idx_0).UnitC;
                 ref var level_0 = ref CellUnitEs.Else(idx_0).LevelC;
                 ref var ownUnit_0 = ref CellUnitEs.Else(idx_0).OwnerC;
                 ref var stepUnit_0 = ref CellUnitEs.Step(idx_0).AmountC;
@@ -19,7 +19,7 @@ namespace Game.Game
                 {
                     if (CellUnitEs.Step(idx_0).AmountC.Have)
                     {
-                        if (unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale))
+                        if (unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale, UnitTypes.Snowy))
                         {
                             var xy_from = CellEs.Cell(idx_0).XyC.Xy;
 

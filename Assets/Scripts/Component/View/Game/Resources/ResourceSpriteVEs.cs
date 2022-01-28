@@ -11,7 +11,7 @@ namespace Game.Game
         static Dictionary<string, ResourceSpriteVE> _units;
         static Dictionary<string, ResourceSpriteVE> _archers;
         static Dictionary<string, ResourceSpriteVE> _toolWeapons;
-        static Dictionary<UniqueAbilityTypes, ResourceSpriteVE> _abilities;
+        static Dictionary<AbilityTypes, ResourceSpriteVE> _abilities;
         static Dictionary<BuildingTypes, ResourceSpriteVE> _buildings;
         static Dictionary<BuildingTypes, ResourceSpriteVE> _buildingsBack;
 
@@ -19,7 +19,7 @@ namespace Game.Game
         public static ResourceSpriteVE Sprite(in UnitTypes unit, in LevelTypes level) => _units[unit.ToString() + level];
         public static ResourceSpriteVE Sprite(in bool isRook, in LevelTypes level) => _archers[isRook.ToString() + level];
         public static ResourceSpriteVE Sprite(in ToolWeaponTypes tw, in LevelTypes level) => _toolWeapons[tw.ToString() + level];
-        public static ResourceSpriteVE Sprite(in UniqueAbilityTypes ability) => _abilities[ability];
+        public static ResourceSpriteVE Sprite(in AbilityTypes ability) => _abilities[ability];
         public static ResourceSpriteVE Sprite(in BuildingTypes build) => _buildings[build];
         public static ResourceSpriteVE SpriteBack(in BuildingTypes build) => _buildingsBack[build];
 
@@ -67,9 +67,9 @@ namespace Game.Game
 
 
             folder = "Unique/";
-            _abilities = new Dictionary<UniqueAbilityTypes, ResourceSpriteVE>();
+            _abilities = new Dictionary<AbilityTypes, ResourceSpriteVE>();
 
-            for (var unique = UniqueAbilityTypes.None + 1; unique < UniqueAbilityTypes.End; unique++)
+            for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
             {
                 _abilities.Add(unique, new ResourceSpriteVE(gameW, folder + unique + spriteName));
             }

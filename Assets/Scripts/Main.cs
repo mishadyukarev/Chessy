@@ -85,76 +85,83 @@ namespace Game
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    if (_gameW != default) _gameW = default;
+                    {
+                        if (_gameW != default) _gameW = default;
 
-                    _menuW = new EcsWorld();
-                    new EntitieManager(_menuW);
-                    new SystemsManager(default);
-                    break;
+                        _menuW = new EcsWorld();
+                        new EntitieManager(_menuW);
+                        new SystemsManager(default);
+                        break;
+                    }
 
                 case SceneTypes.Game:
-                    if (_menuW != default) _menuW = default;
+                    {
+                        if (_menuW != default) _menuW = default;
 
-                    _gameW = new EcsWorld();
-
-                    #region Entities
-
-                    #region View
-
-                    #region Resources
-
-                    new ResourceSpriteVEs(_gameW);
-                    new VideoClipsResC(true);
-
-                    #endregion
+                        _gameW = new EcsWorld();
 
 
-                    new EntitiesVPool(_gameW, out var forData);
+                        #region Entities
 
-                    new RightUIEntities(_gameW);
-                    new EventUIManager(default);
+                        #region View
 
-                    #endregion
+                        #region Resources
 
+                        new ResourceSpriteVEs(_gameW);
+                        new VideoClipsResC(true);
 
-                    #region Data
+                        #endregion
 
-                    new Entities(_gameW, forData, RpcS.NamesMethods, out var i);
-                    new EntitiesMaster(_gameW);
+                        new EntitiesVPool(_gameW, out var forData);
 
-                    var isActiveParenCells = (bool[])forData[i++];
-                    var idCells = (int[])forData[i++];
+                        new RightUIEntities(_gameW);
+                        new EventUIManager(default);
 
-                    new CellEs(_gameW, isActiveParenCells, idCells);
-                    new CellUnitEs(_gameW);
-                    new CellBuildEs(_gameW);
-                    new CellTrailEs(_gameW);
-                    new CellEnvironmentEs(_gameW);
-                    new CellFireEs(_gameW);
-                    new CellRiverEs(_gameW);
-
-                    new AvailableCenterUpgradeEs(_gameW);
-
-                    #endregion
-
-                    #endregion
+                        #endregion
 
 
-                    new FillCellsS();
+                        #region Data
+
+                        new Entities(_gameW, forData, RpcS.NamesMethods, out var i);
+                        new EntitiesMaster(_gameW);
+
+                        var isActiveParenCells = (bool[])forData[i++];
+                        var idCells = (int[])forData[i++];
+
+                        new CellEs(_gameW, isActiveParenCells, idCells);
+                        new CellUnitEs(_gameW);
+                        new CellBuildEs(_gameW);
+                        new CellTrailEs(_gameW);
+                        new CellEnvironmentEs(_gameW);
+                        new CellFireEs(_gameW);
+                        new CellRiverEs(_gameW);
+
+                        new AvailableCenterUpgradeEs(_gameW);
+
+                        #endregion
+
+                        #endregion
 
 
-                    EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>();
-                    new SystemDataManager(default);
-                    new SystemDataMasterManager(default);
-                    new SystemDataOtherManager(default);
+                        new FillCellsS();
+                        EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>();
 
-                    new SystemViewDataManager(default);
-                    new SystemViewDataUIManager(default);    
 
-                    RpcS.SyncAllMaster();
+                        #region Systems
 
-                    break;
+                        new SystemDataManager(default);
+                        new SystemDataMasterManager(default);
+                        new SystemDataOtherManager(default);
 
+                        new SystemViewDataManager(default);
+                        new SystemViewDataUIManager(default);
+
+                        RpcS.SyncAllMaster();
+
+                        #endregion
+
+                        break;
+                    }
                 default: throw new Exception();
             }
         }

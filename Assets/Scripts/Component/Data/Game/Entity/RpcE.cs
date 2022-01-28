@@ -69,22 +69,22 @@ namespace Game.Game
 
         #region Unique
 
-        public void FireArcherToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.FireArcher, fromIdx, toIdx });
-        public void FirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.FirePawn, idx });
-        public void PutOutFirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.PutOutFirePawn, idx });
-        public void SeedEnvToMaster(byte idxCell, EnvironmentTypes env) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.Seed, idxCell, env });
-        public void ChangeCornerArchToMas(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.ChangeCornerArcher, idxCell });
+        public void FireArcherToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.FireArcher, fromIdx, toIdx });
+        public void FirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.FirePawn, idx });
+        public void PutOutFirePawnToMas(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.PutOutFirePawn, idx });
+        public void SeedEnvToMaster(byte idxCell, EnvironmentTypes env) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.Seed, idxCell, env });
+        public void ChangeCornerArchToMas(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.ChangeCornerArcher, idxCell });
 
-        public void BonusNearUnits(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.BonusNear, idxCell });
+        public void BonusNearUnits(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.BonusNear, idxCell });
 
-        public void StunElfemaleToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.StunElfemale, fromIdx, toIdx });
+        public void StunElfemaleToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.StunElfemale, fromIdx, toIdx });
 
-        public void GrowAdultForest(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.GrowAdultForest, idx });
-        public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.ChangeDirectionWind, fromIdx, toIdx });
+        public void GrowAdultForest(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.GrowAdultForest, idx });
+        public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.ChangeDirectionWind, fromIdx, toIdx });
 
-        public void CircularAttackKingToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.CircularAttack, idxCell });
-        public void FreezeDirectEnemyToMaster(in byte idx_from, in byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.FreezeDirectEnemy, idx_from, idx_to });
-        public void IceWallToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, UniqueAbilityTypes.IceWall, idx });
+        public void CircularAttackKingToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.CircularAttack, idxCell });
+        public void FreezeDirectEnemyToMaster(in byte idx_from, in byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.FreezeDirectEnemy, idx_from, idx_to });
+        public void IceWallToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.IceWall, idx });
 
         #endregion
 
@@ -148,10 +148,10 @@ namespace Game.Game
         public void ActiveMotionZoneToGen(Player player) => _action1(_generalRPCName, player, new object[] { RpcGeneralTypes.ActiveMotion, });
 
         public void SoundToGeneral(RpcTarget rpcTarget, ClipTypes soundEffectType) => _action0(_generalRPCName, rpcTarget, new object[] { RpcGeneralTypes.SoundEff, soundEffectType });
-        public void SoundToGeneral(RpcTarget rpcTarget, UniqueAbilityTypes uniq) => _action0(_generalRPCName, rpcTarget, new object[] { RpcGeneralTypes.SoundUniqueAbility, uniq });
+        public void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes uniq) => _action0(_generalRPCName, rpcTarget, new object[] { RpcGeneralTypes.SoundUniqueAbility, uniq });
         public void SoundToGeneral(Player playerTo, ClipTypes eff) => _action1(_generalRPCName, playerTo, new object[] { RpcGeneralTypes.SoundEff, eff });
         public void SoundToGeneral(in RpcMasterTypes rpc, Player playerTo) => _action1(_generalRPCName, playerTo, new object[] { RpcGeneralTypes.SoundEff, rpc });
-        public void SoundToGeneral(Player playerTo, UniqueAbilityTypes uniq) => _action1(_generalRPCName, playerTo, new object[] { RpcGeneralTypes.SoundUniqueAbility, uniq });
+        public void SoundToGeneral(Player playerTo, AbilityTypes uniq) => _action1(_generalRPCName, playerTo, new object[] { RpcGeneralTypes.SoundUniqueAbility, uniq });
 
         #endregion
     }

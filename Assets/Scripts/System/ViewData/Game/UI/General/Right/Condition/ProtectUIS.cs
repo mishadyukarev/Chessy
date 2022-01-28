@@ -15,7 +15,7 @@ namespace Game.Game
 
             if (unit_sel.Have)
             {
-                if (ownUnit_sel.Is(Entities.WhoseMoveE.CurPlayerI))
+                if (ownUnit_sel.Is(Entities.WhoseMove.CurPlayerI))
                 {
                     isEnableButt = true;
 

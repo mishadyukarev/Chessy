@@ -9,7 +9,7 @@
             var unit = EntitiesMaster.CreateHeroFromTo<UnitTC>().Unit;
             EntitiesMaster.CreateHeroFromTo<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
-            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
             ref var unit_from = ref CellUnitEs.Else(idx_from).UnitC;
             ref var levUnit_from = ref CellUnitEs.Else(idx_from).LevelC;

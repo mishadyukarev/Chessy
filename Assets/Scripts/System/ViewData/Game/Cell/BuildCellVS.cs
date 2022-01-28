@@ -17,8 +17,8 @@ namespace Game.Game
 
 
                 var buildT = build_cur.Build;
-                var isVisForMe = IsVisible(Entities.WhoseMoveE.CurPlayerI, idx_0).IsVisibleC.IsVisible;
-                var isVisForNext = IsVisible(Entities.WhoseMoveE.NextPlayerFrom(Entities.WhoseMoveE.CurPlayerI), idx_0).IsVisibleC.IsVisible;
+                var isVisForMe = IsVisible(Entities.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
+                var isVisForNext = IsVisible(Entities.WhoseMove.NextPlayerFrom(Entities.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
 
                 if (buildT != BuildingTypes.None)
                 {

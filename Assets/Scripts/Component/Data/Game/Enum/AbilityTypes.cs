@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public enum UniqueAbilityTypes
+    public enum AbilityTypes
     {
         None,
 
@@ -12,6 +12,11 @@
         FirePawn,
         PutOutFirePawn,
         Seed,
+        ///Building
+        Farm,
+        Mine,
+        City,
+        DestroyBuilding,
 
         //Archer
         FireArcher,

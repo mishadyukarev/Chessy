@@ -26,7 +26,7 @@ namespace Game.Game
             _actions.Add(DataSTypes.RunAfterSyncRPC,
                 (Action)
                 new VisibElseS().Run
-                + new UniqueAbilitySyncS().Run
+                + new AbilitySyncS().Run
                 + new GetCellsForSetUnitS().Run
                 + new GetCellsForShiftUnitS().Run
                 + new GetCellsForArsonArcherS().Run

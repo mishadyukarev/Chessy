@@ -75,11 +75,11 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        public static int Damage(in UniqueAbilityTypes uniq)
+        public static int Damage(in AbilityTypes uniq)
         {
             switch (uniq)
             {
-                case UniqueAbilityTypes.CircularAttack: return 25;
+                case AbilityTypes.CircularAttack: return 25;
                 default: throw new Exception();
             }
         }

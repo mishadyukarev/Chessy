@@ -14,13 +14,13 @@ namespace Game.Game
 
             ref var fire_to = ref CellFireEs.Fire(idx_to).Fire;
 
-            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
             if (CellUnitEs.Step(idx_from).AmountC.Amount >= 2)
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
-                    Entities.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FireArcher);
+                    Entities.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
                     CellUnitEs.Step(idx_from).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                     fire_to.Enable();

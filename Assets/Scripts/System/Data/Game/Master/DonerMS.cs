@@ -33,8 +33,8 @@ namespace Game.Game
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 
-                    var curPlayer = Entities.WhoseMoveE.CurPlayerI;
-                    var nextPlayer = Entities.WhoseMoveE.NextPlayerFrom(curPlayer);
+                    var curPlayer = Entities.WhoseMove.CurPlayerI;
+                    var nextPlayer = Entities.WhoseMove.NextPlayerFrom(curPlayer);
 
                     if (nextPlayer == PlayerTypes.First)
                     {
@@ -42,10 +42,10 @@ namespace Game.Game
                         Entities.Rpc.ActiveMotionZoneToGen(sender);
                     }
 
-                    Entities.WhoseMoveE.WhoseMove.Player = nextPlayer;
+                    Entities.WhoseMove.WhoseMove.Player = nextPlayer;
 
 
-                    curPlayer = Entities.WhoseMoveE.CurPlayerI;
+                    curPlayer = Entities.WhoseMove.CurPlayerI;
 
                     //ViewDataSC.RotateAll.Invoke();
 

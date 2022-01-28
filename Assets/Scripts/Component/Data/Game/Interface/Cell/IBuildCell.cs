@@ -1,7 +1,7 @@
-﻿namespace Game.Game
-{
-    public interface IBuildCell
-    {
+﻿//namespace Game.Game
+//{
+//    public interface IBuildCell
+//    {
 
-    }
-}
+//    }
+//}

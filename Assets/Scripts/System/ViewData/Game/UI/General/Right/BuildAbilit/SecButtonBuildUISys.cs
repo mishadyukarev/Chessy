@@ -14,25 +14,25 @@
                 {
                     ref var sellOnUnitCom = ref CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
 
-                    if (sellOnUnitCom.Is(Entities.WhoseMoveE.CurPlayerI))
+                    if (sellOnUnitCom.Is(Entities.WhoseMove.CurPlayerI))
                     {
                         buildT = BuildingTypes.Mine;
                     }
                 }
             }
 
-            if (buildT == BuildingTypes.None)
-            {
-                RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(false);
-            }
-            else
-            {
-                RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(true);
-                RightUIEntities.BuildingZone(ButtonTypes.Second, buildT).Parent.SetActive(true);
+            //if (buildT == BuildingTypes.None)
+            //{
+            //    RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(false);
+            //}
+            //else
+            //{
+            //    RightUIEntities.Building(ButtonTypes.Second).Parent.SetActive(true);
+            //    RightUIEntities.BuildingZone(ButtonTypes.Second, buildT).Parent.SetActive(true);
 
-                RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.Farm).Parent.SetActive(false);
-                RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.City).Parent.SetActive(false);
-            }
+            //    RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.Farm).Parent.SetActive(false);
+            //    RightUIEntities.BuildingZone(ButtonTypes.Second, BuildingTypes.City).Parent.SetActive(false);
+            //}
         }
     }
 }

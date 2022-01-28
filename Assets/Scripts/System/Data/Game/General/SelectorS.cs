@@ -22,7 +22,7 @@ namespace Game.Game
             {
                 if (raycast.Is(RaycastTypes.Cell))
                 {
-                    if (!Entities.WhoseMoveE.IsMyMove)
+                    if (!Entities.WhoseMove.IsMyMove)
                     {
                         Entities.SelectedIdxE.IdxC.Idx = Entities.CurrentIdxE.IdxC.Idx;
                     }
@@ -37,12 +37,12 @@ namespace Game.Game
                                 {
                                     if (Entities.SelectedIdxE.IsSelCell)
                                     {
-                                        if (CellsForAttackUnitsEs.CanAttack(Entities.SelectedIdxE.IdxC.Idx, Entities.CurrentIdxE.IdxC.Idx, Entities.WhoseMoveE.CurPlayerI, out var attack))
+                                        if (CellsForAttackUnitsEs.CanAttack(Entities.SelectedIdxE.IdxC.Idx, Entities.CurrentIdxE.IdxC.Idx, Entities.WhoseMove.CurPlayerI, out var attack))
                                         {
                                             Entities.Rpc.AttackUnitToMaster(Entities.SelectedIdxE.IdxC.Idx, Entities.CurrentIdxE.IdxC.Idx);
                                         }
 
-                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(Entities.WhoseMoveE.CurPlayerI, Entities.SelectedIdxE.IdxC.Idx).Contains(Entities.CurrentIdxE.IdxC.Idx))
+                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(Entities.WhoseMove.CurPlayerI, Entities.SelectedIdxE.IdxC.Idx).Contains(Entities.CurrentIdxE.IdxC.Idx))
                                         {
                                             Entities.Rpc.ShiftUnitToMaster(Entities.SelectedIdxE.IdxC.Idx, Entities.CurrentIdxE.IdxC.Idx);
                                         }
@@ -51,7 +51,7 @@ namespace Game.Game
                                         {
                                             if (unit_cur.Have)
                                             {
-                                                if (ownUnit_cur.Is(Entities.WhoseMoveE.CurPlayerI))
+                                                if (ownUnit_cur.Is(Entities.WhoseMove.CurPlayerI))
                                                 {
                                                     if (unit_cur.Is(UnitTypes.Scout))
                                                     {
@@ -76,7 +76,7 @@ namespace Game.Game
                                     {
                                         if (unit_cur.Have)
                                         {
-                                            if (ownUnit_cur.Is(Entities.WhoseMoveE.CurPlayerI))
+                                            if (ownUnit_cur.Is(Entities.WhoseMove.CurPlayerI))
                                             {
                                                 if (unit_cur.Is(UnitTypes.Scout))
                                                 {
@@ -107,7 +107,7 @@ namespace Game.Game
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(Entities.WhoseMoveE.CurPlayerI))
+                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(Entities.WhoseMove.CurPlayerI))
                                     {
                                         Entities.Rpc.GiveTakeToolWeaponToMaster(SelectedToolWeaponE.SelectedTW<ToolWeaponC>().ToolWeapon, SelectedToolWeaponE.SelectedTW<LevelTC>().Level, Entities.CurrentIdxE.IdxC.Idx);
                                     }
@@ -122,7 +122,7 @@ namespace Game.Game
                             case CellClickTypes.UpgradeUnit:
                                 {
                                     if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
-                                        && ownUnit_cur.Is(Entities.WhoseMoveE.CurPlayerI)
+                                        && ownUnit_cur.Is(Entities.WhoseMove.CurPlayerI)
                                         && !levUnit_cur.Is(LevelTypes.Second))
                                     {
                                         Entities.Rpc.UpgradeUnitToMaster(Entities.CurrentIdxE.IdxC.Idx);
@@ -138,7 +138,7 @@ namespace Game.Game
                             case CellClickTypes.GiveScout:
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn)
-                                        && ownUnit_cur.Is(Entities.WhoseMoveE.CurPlayerI))
+                                        && ownUnit_cur.Is(Entities.WhoseMove.CurPlayerI))
                                     {
                                         Entities.Rpc.FromNewUnitToMas(UnitTypes.Scout, Entities.CurrentIdxE.IdxC.Idx);
                                     }
@@ -150,7 +150,7 @@ namespace Game.Game
 
                             case CellClickTypes.GiveHero:
                                 {
-                                    if (InventorUnitsE.HaveHero(Entities.WhoseMoveE.CurPlayerI, out var hero))
+                                    if (InventorUnitsE.HaveHero(Entities.WhoseMove.CurPlayerI, out var hero))
                                     {
                                         if (hero == UnitTypes.Elfemale || hero == UnitTypes.Snowy)
                                         {
@@ -200,12 +200,12 @@ namespace Game.Game
 
                             case CellClickTypes.UniqueAbility:
                                 {
-                                    if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.FireArcher))
+                                    if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.FireArcher))
                                     {
                                         Entities.Rpc.FireArcherToMas(Entities.SelectedIdxE.IdxC.Idx, Entities.CurrentIdxE.IdxC.Idx);
                                     }
 
-                                    else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.ChangeDirectionWind))
+                                    else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
                                     {
                                         CellSpaceSupport.TryGetIdxAround(Entities.CurrentIdxE.IdxC.Idx, out var directs);
 
@@ -218,12 +218,12 @@ namespace Game.Game
                                         }
                                     }
 
-                                    else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.StunElfemale))
+                                    else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.StunElfemale))
                                     {
                                         Entities.Rpc.StunElfemaleToMas(Entities.SelectedIdxE.IdxC.Idx, Entities.CurrentIdxE.IdxC.Idx);
                                     }
 
-                                    else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(UniqueAbilityTypes.FreezeDirectEnemy))
+                                    else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.FreezeDirectEnemy))
                                     {
                                         Entities.Rpc.FreezeDirectEnemyToMaster(Entities.SelectedIdxE.IdxC.Idx, Entities.CurrentIdxE.IdxC.Idx);
                                     }
@@ -255,7 +255,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !CellUnitEs.VisibleE(Entities.WhoseMoveE.CurPlayerI, idx_cur).VisibleC.IsVisible)
+                        if (!unit_cur.Have || !CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
                         {
                             if (Entities.CurrentIdxE.IsStartDirectToCell)
                             {

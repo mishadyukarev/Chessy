@@ -15,7 +15,7 @@ namespace Game.Game
                 {
                     TextC.SetActiveParent(true);
 
-                    if (Entities.WhoseMoveE.CurPlayerI == PlayerTypes.First)
+                    if (Entities.WhoseMove.CurPlayerI == PlayerTypes.First)
                     {
                         TextC.Text = "1";
                     }

@@ -28,7 +28,7 @@ namespace Game.Game
                 {
                     if (unit_0.Have)
                     {
-                        if (ownUnit_0.Is(Entities.WhoseMoveE.CurPlayerI))
+                        if (ownUnit_0.Is(Entities.WhoseMove.CurPlayerI))
                         {
                             if (unit_0.Is(UnitTypes.Archer))
                             {

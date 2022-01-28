@@ -23,7 +23,7 @@ namespace Game.Game
                 ref var fire_0 = ref CellFireEs.Fire(idx_0).Fire;
 
 
-                var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+                var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
 
                 if (CellUnitEs.Step(idx_0).AmountC.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))

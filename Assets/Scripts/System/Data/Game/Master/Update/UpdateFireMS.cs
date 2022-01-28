@@ -35,7 +35,7 @@ namespace Game.Game
                 if (fire_0.Have)
                 {
                     Environment(EnvironmentTypes.AdultForest, idx_0)
-                        .Resources.Take(CellEnvironmentValues.MaxResources(EnvironmentTypes.AdultForest) / 5);
+                        .Resources.Take(CellEnvironmentValues.MaxResources(EnvironmentTypes.AdultForest) / 2);
 
                     if (unit_0.Have)
                     {

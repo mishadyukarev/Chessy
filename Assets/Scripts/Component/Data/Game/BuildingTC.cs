@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct BuildingTC : IBuildCell
+    public struct BuildingTC
     {
         public BuildingTypes Build;
 

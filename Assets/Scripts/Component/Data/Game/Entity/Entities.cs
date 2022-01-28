@@ -9,14 +9,14 @@ namespace Game.Game
         static Dictionary<string, ScoutHeroCooldownE> _scoutHeroCooldownEs;
         static Dictionary<PlayerTypes, ReadyE> _ready;
         static Dictionary<ClipTypes, SoundE> _sounds0;
-        static Dictionary<UniqueAbilityTypes, SoundE> _sounds1;
+        static Dictionary<AbilityTypes, SoundE> _sounds1;
 
         public static SelectedIdxE SelectedIdxE { get; private set; }
         public static CurrentIdxE CurrentIdxE { get; private set; }
         public static PreviousVisionIdxE PreviousVisionIdxE { get; private set; }
         public static WindE WindE { get; private set; }
         public static WinnerE WinnerE { get; private set; }
-        public static WhoseMoveE WhoseMoveE { get; private set; }
+        public static WhoseMoveE WhoseMove { get; private set; }
         public static InputE InputE { get; private set; }
         public static FriendZoneE FriendZoneE { get; private set; }
         public static RpcE Rpc { get; private set; }
@@ -31,7 +31,7 @@ namespace Game.Game
         public static ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
         public static ReadyE Ready(in PlayerTypes player) => _ready[player];
         public static SoundE Sound(in ClipTypes clip) => _sounds0[clip];
-        public static SoundE Sound(in UniqueAbilityTypes unique) => _sounds1[unique];
+        public static SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
 
 
         public Entities(in EcsWorld gameW, in List<object> forData, in List<string> namesMethods, out int i)
@@ -40,7 +40,7 @@ namespace Game.Game
 
             var actions = (List<object>)forData[i++];
             var sounds0 = (Dictionary<ClipTypes, System.Action>)forData[i++];
-            var sounds1 = (Dictionary<UniqueAbilityTypes, System.Action>)forData[i++];
+            var sounds1 = (Dictionary<AbilityTypes, System.Action>)forData[i++];
 
 
             SelectedIdxE = new SelectedIdxE(gameW);
@@ -49,7 +49,7 @@ namespace Game.Game
 
             WindE = new WindE(gameW);
             WinnerE = new WinnerE(gameW);
-            WhoseMoveE = new WhoseMoveE(PlayerTypes.First, gameW);
+            WhoseMove = new WhoseMoveE(PlayerTypes.First, gameW);
             InputE = new InputE(gameW);
             FriendZoneE = new FriendZoneE(GameModeC.IsGameMode(GameModes.WithFriendOff), gameW);
             Rpc = new RpcE(actions, namesMethods);
@@ -74,7 +74,7 @@ namespace Game.Game
             }
 
             _sounds0 = new Dictionary<ClipTypes, SoundE>();
-            _sounds1 = new Dictionary<UniqueAbilityTypes, SoundE>();
+            _sounds1 = new Dictionary<AbilityTypes, SoundE>();
             foreach (var item in sounds0) _sounds0.Add(item.Key, new SoundE(item.Value, gameW));
             foreach (var item in sounds1) _sounds1.Add(item.Key, new SoundE(item.Value, gameW));
 

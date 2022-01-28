@@ -62,11 +62,11 @@ namespace Game.Game
                                 }
                             }
 
-                            CellUnitEs.VisibleE(Entities.WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).VisibleC.IsVisible = isVisibledNextPlayer;
+                            CellUnitEs.VisibleE(Entities.WhoseMove.NextPlayerFrom(ownUnit_0.Player), idx_0).VisibleC.IsVisible = isVisibledNextPlayer;
                         }
                         else
                         {
-                            CellUnitEs.VisibleE(Entities.WhoseMoveE.NextPlayerFrom(ownUnit_0.Player), idx_0).VisibleC.IsVisible = true;
+                            CellUnitEs.VisibleE(Entities.WhoseMove.NextPlayerFrom(ownUnit_0.Player), idx_0).VisibleC.IsVisible = true;
                         }
                     }
                 }
@@ -102,9 +102,9 @@ namespace Game.Game
                                 }
                             }
                         }
-                        CellBuildEs.IsVisible(Entities.WhoseMoveE.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisibleC.IsVisible = isVisibledNextPlayer;
+                        CellBuildEs.IsVisible(Entities.WhoseMove.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisibleC.IsVisible = isVisibledNextPlayer;
                     }
-                    else CellBuildEs.IsVisible(Entities.WhoseMoveE.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisibleC.IsVisible = true;
+                    else CellBuildEs.IsVisible(Entities.WhoseMove.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisibleC.IsVisible = true;
                 }
 
                 if (HaveAnyTrail(idx_0))

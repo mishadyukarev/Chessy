@@ -13,7 +13,7 @@
             {
                 if (unit_sel.Have)
                 {
-                    if (CellUnitEs.VisibleE(Entities.WhoseMoveE.CurPlayerI, Entities.SelectedIdxE.IdxC.Idx).VisibleC.IsVisible)
+                    if (CellUnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, Entities.SelectedIdxE.IdxC.Idx).VisibleC.IsVisible)
                     {
                         activeParent = true;
                     }

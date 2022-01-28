@@ -11,7 +11,7 @@ namespace Game.Game
             var uniq_cur = EntitiesMaster.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
-            var playerSend = Entities.WhoseMoveE.WhoseMove.Player;
+            var playerSend = Entities.WhoseMove.WhoseMove.Player;
 
             ref var ownUnit_from = ref CellUnitEs.Else(idx_from).OwnerC;
 

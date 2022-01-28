@@ -10,7 +10,7 @@
             ref var unitC_to = ref CellUnitEs.Else(idx_to).UnitC;
 
 
-            var player = Entities.WhoseMoveE.WhoseMove.Player;
+            var player = Entities.WhoseMove.WhoseMove.Player;
 
             if (CellUnitEs.VisibleE(player, idx_to).VisibleC.IsVisible && unitC_to.Have && CellRiverEs.River(idx_to).RiverTC.HaveRiver)
             {

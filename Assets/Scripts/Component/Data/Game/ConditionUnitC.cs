@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct ConditionUnitC : IUnitCellE
+    public struct ConditionUnitC
     {
         ConditionUnitTypes _condition;
 

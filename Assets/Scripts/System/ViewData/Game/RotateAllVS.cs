@@ -8,7 +8,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayer = Entities.WhoseMoveE.CurPlayerI;
+            var curPlayer = Entities.WhoseMove.CurPlayerI;
 
             foreach (byte idx_0 in CellEs.Idxs)
             {

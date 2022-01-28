@@ -11,7 +11,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            var curPlayer = Entities.WhoseMoveE.CurPlayerI;
+            var curPlayer = Entities.WhoseMove.CurPlayerI;
 
 
             var extracts = new Dictionary<ResourceTypes, int>();
@@ -24,7 +24,7 @@ namespace Game.Game
 
             foreach (var idx_0 in Idxs)
             {
-                if (Else(idx_0).UnitC.Have && CellUnitEs.Else(idx_0).OwnerC.Is(Entities.WhoseMoveE.CurPlayerI))
+                if (Else(idx_0).UnitC.Have && CellUnitEs.Else(idx_0).OwnerC.Is(Entities.WhoseMove.CurPlayerI))
                 {
                     extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Else(idx_0).UnitC.Unit);
 
@@ -33,7 +33,7 @@ namespace Game.Game
                         extracts[res] += extract;
                     }
                 }
-                if (CellBuildEs.Build(idx_0).BuildTC.Have && CellBuildEs.Build(idx_0).PlayerTC.Is(Entities.WhoseMoveE.CurPlayerI))
+                if (CellBuildEs.Build(idx_0).BuildTC.Have && CellBuildEs.Build(idx_0).PlayerTC.Is(Entities.WhoseMove.CurPlayerI))
                 {
                     if (CellBuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
                     {

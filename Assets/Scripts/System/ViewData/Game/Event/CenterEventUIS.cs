@@ -49,9 +49,9 @@ namespace Game.Game
             Entities.SelectedIdxE.IdxC.Reset();
 
 
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
-                if (InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, Entities.WhoseMoveE.CurPlayerI).Have)
+                if (InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, Entities.WhoseMove.CurPlayerI).Have)
                 {
                     Entities.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 
@@ -78,7 +78,7 @@ namespace Game.Game
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
                 Entities.Rpc.PickUpgUnitToMas(unit);
 
@@ -89,7 +89,7 @@ namespace Game.Game
 
         void UpgradeBuild(BuildingTypes build)
         {
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
                 Entities.Rpc.PickUpgBuildToMas(build);
 
@@ -100,7 +100,7 @@ namespace Game.Game
 
         void UpgradeWater()
         {
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
                 Entities.Rpc.UpgWater();
 
@@ -111,7 +111,7 @@ namespace Game.Game
 
         void GetHero(in UnitTypes unit)
         {
-            if (Entities.WhoseMoveE.IsMyMove)
+            if (Entities.WhoseMove.IsMyMove)
             {
                 Entities.Rpc.GetHeroToMaster(unit);
             }

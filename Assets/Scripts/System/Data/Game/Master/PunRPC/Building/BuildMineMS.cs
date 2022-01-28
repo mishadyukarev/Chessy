@@ -16,7 +16,7 @@ namespace Game.Game
             ref var ownBuild_0 = ref CellBuildEs.Build(idx_0).PlayerTC;
 
 
-            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
             if (build == BuildingTypes.Mine)
             {

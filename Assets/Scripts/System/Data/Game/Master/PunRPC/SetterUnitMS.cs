@@ -26,7 +26,7 @@ namespace Game.Game
             ref var tw_0 = ref CellUnitEs.ToolWeapon(idx_0).ToolWeaponC;
 
 
-            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
 
             if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(whoseMove, idx_0).Can)

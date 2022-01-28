@@ -6,7 +6,7 @@
         {
             EntitiesMaster.Shift<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
-            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))

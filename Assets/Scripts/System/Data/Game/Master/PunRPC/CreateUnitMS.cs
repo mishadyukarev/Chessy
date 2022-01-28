@@ -8,7 +8,7 @@
             var unit = EntitiesMaster.CreateUnit<UnitTC>().Unit;
 
 
-            var playerSend = Entities.WhoseMoveE.WhoseMove.Player;
+            var playerSend = Entities.WhoseMove.WhoseMove.Player;
 
 
             if (WhereBuildsE.IsSetted(BuildingTypes.City, playerSend, out var idx_city))

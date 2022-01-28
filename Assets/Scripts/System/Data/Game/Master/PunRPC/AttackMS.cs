@@ -23,7 +23,7 @@ namespace Game.Game
 
 
 
-            var playerSender = Entities.WhoseMoveE.WhoseMove.Player;
+            var playerSender = Entities.WhoseMove.WhoseMove.Player;
 
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))

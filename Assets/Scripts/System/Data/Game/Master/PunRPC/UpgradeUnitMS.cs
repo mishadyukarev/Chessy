@@ -17,7 +17,7 @@ namespace Game.Game
             ref var hpUnit_0 = ref CellUnitEs.Hp(idx_0).AmountC;
 
 
-            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
             if (CellUnitEs.Hp(idx_0).HaveMax)
             {

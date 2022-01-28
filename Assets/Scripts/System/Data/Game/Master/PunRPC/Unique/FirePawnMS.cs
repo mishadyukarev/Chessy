@@ -21,7 +21,7 @@ namespace Game.Game
             {
                 if (Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
                 {
-                    Entities.Rpc.SoundToGeneral(RpcTarget.All, UniqueAbilityTypes.FirePawn);
+                    Entities.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                     fire_0.Enable();
                     CellUnitEs.Step(idx_0).AmountC.Take(CellUnitStepValues.NeedSteps(uniq_cur));

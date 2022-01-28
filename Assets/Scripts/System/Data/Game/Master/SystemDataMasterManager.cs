@@ -7,14 +7,14 @@ namespace Game.Game
     {
         static Dictionary<SystemDataMasterTypes, Action> _systems;
         static Dictionary<RpcMasterTypes, Action> _rpcSysts;
-        static Dictionary<UniqueAbilityTypes, Action> _uniqAbil;
+        static Dictionary<AbilityTypes, Action> _uniqAbil;
 
 
         public SystemDataMasterManager(in bool def)
         {
             _systems = new Dictionary<SystemDataMasterTypes, Action>();
             _rpcSysts = new Dictionary<RpcMasterTypes, Action>();
-            _uniqAbil = new Dictionary<UniqueAbilityTypes, Action>();
+            _uniqAbil = new Dictionary<AbilityTypes, Action>();
 
 
             var action =
@@ -63,18 +63,18 @@ namespace Game.Game
             _rpcSysts.Add(RpcMasterTypes.UpgWater, new CenterUpgradeUnitWaterMS().Run);
 
 
-            _uniqAbil.Add(UniqueAbilityTypes.Seed, new SeedingMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.StunElfemale, new StunElfemaleMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.FirePawn, new FirePawnMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.PutOutFirePawn, new PutOutFireMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.FireArcher, new FireArcherMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.GrowAdultForest, new GrowAdultForestMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.CircularAttack, new CircularAttackKingMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.BonusNear, new BonusNearUnitKingMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.ChangeDirectionWind, new ChangeDirectionWindElfemaleMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.FreezeDirectEnemy, new FreezeDirectEnemyMS().Run);
-            _uniqAbil.Add(UniqueAbilityTypes.IceWall, new IceWallMS().Run);
+            _uniqAbil.Add(AbilityTypes.Seed, new SeedingMS().Run);
+            _uniqAbil.Add(AbilityTypes.StunElfemale, new StunElfemaleMS().Run);
+            _uniqAbil.Add(AbilityTypes.FirePawn, new FirePawnMS().Run);
+            _uniqAbil.Add(AbilityTypes.PutOutFirePawn, new PutOutFireMS().Run);
+            _uniqAbil.Add(AbilityTypes.FireArcher, new FireArcherMS().Run);
+            _uniqAbil.Add(AbilityTypes.GrowAdultForest, new GrowAdultForestMS().Run);
+            _uniqAbil.Add(AbilityTypes.CircularAttack, new CircularAttackKingMS().Run);
+            _uniqAbil.Add(AbilityTypes.BonusNear, new BonusNearUnitKingMS().Run);
+            _uniqAbil.Add(AbilityTypes.ChangeDirectionWind, new ChangeDirectionWindElfemaleMS().Run);
+            _uniqAbil.Add(AbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS().Run);
+            _uniqAbil.Add(AbilityTypes.FreezeDirectEnemy, new FreezeDirectEnemyMS().Run);
+            _uniqAbil.Add(AbilityTypes.IceWall, new IceWallMS().Run);
         }
 
         public static void InvokeRun(SystemDataMasterTypes mastDataSys) => _systems[mastDataSys].Invoke();
@@ -83,6 +83,6 @@ namespace Game.Game
             if (_rpcSysts.ContainsKey(rpc)) _rpcSysts[rpc].Invoke();
             else throw new System.Exception();
         }
-        public static void InvokeRun(UniqueAbilityTypes uniqAbil) => _uniqAbil[uniqAbil].Invoke();
+        public static void InvokeRun(AbilityTypes uniqAbil) => _uniqAbil[uniqAbil].Invoke();
     }
 }

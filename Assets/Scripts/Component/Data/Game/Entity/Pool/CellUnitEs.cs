@@ -13,9 +13,8 @@ namespace Game.Game
         static CellUnitDefendEffectE[] _defendEffect;
         static CellUnitElseE[] _else;
         static CellUnitTWE[] _toolWeapons;
-        static Dictionary<ButtonTypes, CellUnitBuildingButtonE[]> _buildingButtons;
         static Dictionary<ButtonTypes, CellUnitUniqueButtonsE[]> _uniqueButtons;
-        static Dictionary<UniqueAbilityTypes, CellUnitUniqueAbilityE[]> _cooldownUniques;
+        static Dictionary<AbilityTypes, CellUnitUniqueAbilityE[]> _cooldownUniques;
         static Dictionary<PlayerTypes, CellUnitVisibleE[]> _cellUnitVisibles;
 
 
@@ -26,18 +25,17 @@ namespace Game.Game
         public static CellUnitDefendEffectE DefendEffect(in byte idx) => _defendEffect[idx];
         public static CellUnitElseE Else(in byte idx) => _else[idx];
         public static CellUnitTWE ToolWeapon(in byte idx) => _toolWeapons[idx];
-        public static CellUnitBuildingButtonE BuildingButton(in ButtonTypes button, in byte idx) => _buildingButtons[button][idx];
         public static CellUnitUniqueButtonsE UniqueButton(in ButtonTypes button, in byte idx) => _uniqueButtons[button][idx];
-        public static CellUnitUniqueAbilityE CooldownUnique(in UniqueAbilityTypes ability, in byte idx) => _cooldownUniques[ability][idx];
+        public static CellUnitUniqueAbilityE CooldownUnique(in AbilityTypes ability, in byte idx) => _cooldownUniques[ability][idx];
         public static CellUnitVisibleE VisibleE(in PlayerTypes player, in byte idx) => _cellUnitVisibles[player][idx];
 
 
 
-        public static HashSet<UniqueAbilityTypes> CooldownKeys
+        public static HashSet<AbilityTypes> CooldownKeys
         {
             get
             {
-                var keys = new HashSet<UniqueAbilityTypes>();
+                var keys = new HashSet<AbilityTypes>();
                 foreach (var item in _cooldownUniques) keys.Add(item.Key);
                 return keys;
             }
@@ -207,16 +205,14 @@ namespace Game.Game
         public CellUnitEs(in EcsWorld gameW)
         {
             _uniqueButtons = new Dictionary<ButtonTypes, CellUnitUniqueButtonsE[]>();
-            _buildingButtons = new Dictionary<ButtonTypes, CellUnitBuildingButtonE[]>();
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
                 _uniqueButtons.Add(buttonT, new CellUnitUniqueButtonsE[CellStartValues.ALL_CELLS_AMOUNT]);
-                _buildingButtons.Add(buttonT, new CellUnitBuildingButtonE[CellStartValues.ALL_CELLS_AMOUNT]);
             }
 
 
-            _cooldownUniques = new Dictionary<UniqueAbilityTypes, CellUnitUniqueAbilityE[]>();
-            for (var ability = UniqueAbilityTypes.None + 1; ability < UniqueAbilityTypes.End; ability++)
+            _cooldownUniques = new Dictionary<AbilityTypes, CellUnitUniqueAbilityE[]>();
+            for (var ability = AbilityTypes.None + 1; ability < AbilityTypes.End; ability++)
             {
                 _cooldownUniques.Add(ability, new CellUnitUniqueAbilityE[CellStartValues.ALL_CELLS_AMOUNT]);
             }
@@ -249,7 +245,6 @@ namespace Game.Game
                 _else[idx] = new CellUnitElseE(gameW);
                 _toolWeapons[idx] = new CellUnitTWE(gameW);
 
-                foreach (var item in _buildingButtons) _buildingButtons[item.Key][idx] = new CellUnitBuildingButtonE(gameW);
                 foreach (var item in _uniqueButtons) _uniqueButtons[item.Key][idx] = new CellUnitUniqueButtonsE(gameW);
                 foreach (var item in _cooldownUniques) _cooldownUniques[item.Key][idx] = new CellUnitUniqueAbilityE(gameW);
                 foreach (var item in _cellUnitVisibles) _cellUnitVisibles[item.Key][idx] = new CellUnitVisibleE(gameW);

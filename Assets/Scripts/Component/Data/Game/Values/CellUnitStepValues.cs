@@ -40,21 +40,21 @@ namespace Game.Game
 
             return steps;
         }
-        public static int NeedSteps(in UniqueAbilityTypes uniq)
+        public static int NeedSteps(in AbilityTypes uniq)
         {
             switch (uniq)
             {
-                case UniqueAbilityTypes.CircularAttack: return 1;
-                case UniqueAbilityTypes.BonusNear: return 1;
-                case UniqueAbilityTypes.FirePawn: return 1;
-                case UniqueAbilityTypes.PutOutFirePawn: return 1;
-                case UniqueAbilityTypes.Seed: return 1;
-                case UniqueAbilityTypes.FireArcher: return 2;
-                case UniqueAbilityTypes.ChangeCornerArcher: return 1;
-                case UniqueAbilityTypes.GrowAdultForest: return 1;
-                case UniqueAbilityTypes.StunElfemale: return 1;
-                case UniqueAbilityTypes.ChangeDirectionWind: return 1;
-                case UniqueAbilityTypes.IceWall: return 1;
+                case AbilityTypes.CircularAttack: return 1;
+                case AbilityTypes.BonusNear: return 1;
+                case AbilityTypes.FirePawn: return 1;
+                case AbilityTypes.PutOutFirePawn: return 1;
+                case AbilityTypes.Seed: return 1;
+                case AbilityTypes.FireArcher: return 2;
+                case AbilityTypes.ChangeCornerArcher: return 1;
+                case AbilityTypes.GrowAdultForest: return 1;
+                case AbilityTypes.StunElfemale: return 1;
+                case AbilityTypes.ChangeDirectionWind: return 1;
+                case AbilityTypes.IceWall: return 1;
                 default: throw new Exception();
             }
         }

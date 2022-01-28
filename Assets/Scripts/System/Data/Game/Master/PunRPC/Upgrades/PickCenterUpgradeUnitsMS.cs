@@ -6,7 +6,7 @@
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             var unit = EntitiesMaster.UpgradeCenterUnit<UnitTC>().Unit;
-            var whoseMove = Entities.WhoseMoveE.WhoseMove.Player;
+            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
 
 
             if (unit == UnitTypes.Scout)
