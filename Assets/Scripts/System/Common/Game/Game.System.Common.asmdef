@@ -1,0 +1,17 @@
+{
+    "name": "Game.System.Common",
+    "rootNamespace": "",
+    "references": [
+        "GUID:66389d1629e584b4991940abdcbafb00",
+        "GUID:86c7db8b64f68154790c800543dc5ec6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

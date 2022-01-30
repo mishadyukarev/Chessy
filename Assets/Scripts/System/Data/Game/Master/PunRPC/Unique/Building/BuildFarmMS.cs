@@ -1,76 +1,76 @@
-﻿using static Game.Game.CellBuildEs;
-using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct BuildFarmMS : IEcsRunSystem
+    sealed class BuildFarmMS : SystemCellAbstract, IEcsRunSystem
     {
+        public BuildFarmMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var build = Entities.MasterEs.Build<BuildingTC>().Build;
-            var idx_0 = Entities.MasterEs.Build<IdxC>().Idx;
+            var build = Es.MasterEs.Build<BuildingTC>().Build;
+            var idx_0 = Es.MasterEs.Build<IdxC>().Idx;
 
-            ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
-            ref var ownBuild_0 = ref Entities.CellEs.BuildEs.Build(idx_0).PlayerTC;
+            ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
+            ref var ownBuild_0 = ref Es.CellEs.BuildEs.Build(idx_0).PlayerTC;
 
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
 
 
             if (build == BuildingTypes.Farm)
             {
-                var buildC = Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+                var buildC = Es.CellEs.BuildEs.Build(idx_0).BuildTC;
 
-                if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
+                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
                 {
                     if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
                     {
-                        if (!Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
+                        if (!Es.CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
                         {
-                            if (InventorResourcesE.CanCreateBuild(build, whoseMove, out var needRes))
+                            if (Es.InventorResourcesEs.CanCreateBuild(build, whoseMove, out var needRes))
                             {
-                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                                Es.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
-                                Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).Remove();
+                                Es.CellEs.EnvironmentEs.YoungForest( idx_0).Destroy(Es.WhereEnviromentEs);
 
-                                if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Have)
+                                if (Es.CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
                                 {
-                                    Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Amount = CellEnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer);
+                                    Es.CellEs.EnvironmentEs.Fertilizer( idx_0).SetMax();
                                 }
                                 else
                                 {
-                                    Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).SetNew();
+                                    Es.CellEs.EnvironmentEs.Fertilizer( idx_0).SetNew();
                                 }
 
-                                InventorResourcesE.BuyBuild(whoseMove, build);
+                                Es.InventorResourcesEs.BuyBuild(whoseMove, build);
 
-                                Entities.CellEs.BuildEs.Build(idx_0).SetNew(build, whoseMove);
-                                Entities.WhereBuildingEs.HaveBuild(build, whoseMove, idx_0).HaveBuilding.Have = true;
+                                Es.CellEs.BuildEs.Build(idx_0).SetNew(build, whoseMove);
+                                Es.WhereBuildingEs.HaveBuild(build, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(build));
+                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(build));
                             }
                             else
                             {
-                                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
                         else
                         {
-                            Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                     }
                     else
                     {
-                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
                 }
 
                 else
                 {
-                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

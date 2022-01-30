@@ -1,112 +1,114 @@
-﻿using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct GiveTakeToolWeaponMS : IEcsRunSystem
+    sealed class GiveTakeToolWeaponMS : SystemCellAbstract, IEcsRunSystem
     {
+        public GiveTakeToolWeaponMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
-            var tWForGive = Entities.MasterEs.GiveTakeToolWeapon<ToolWeaponC>().ToolWeapon;
-            var levelTW = Entities.MasterEs.GiveTakeToolWeapon<LevelTC>().Level;
-            var idx_0 = Entities.MasterEs.GiveTakeToolWeapon<IdxC>().Idx;
+            var tWForGive = Es.MasterEs.GiveTakeToolWeapon<ToolWeaponTC>().ToolWeapon;
+            var levelTW = Es.MasterEs.GiveTakeToolWeapon<LevelTC>().Level;
+            var idx_0 = Es.MasterEs.GiveTakeToolWeapon<IdxC>().Idx;
 
 
             if (idx_0 != default)
             {
                 var sender = InfoC.Sender(MGOTypes.Master);
 
-                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
+                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
 
-                ref var levUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).LevelC;
-                ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
+                ref var levUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
+                ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
 
-                ref var tw_0 = ref Entities.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeaponC;
-                ref var twLevel_0 = ref Entities.CellEs.UnitEs.ToolWeapon(idx_0).LevelC;
-                ref var twShield_0 = ref Entities.CellEs.UnitEs.ToolWeapon(idx_0).Protection;
+                ref var tw_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeapon;
+                ref var twLevel_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).LevelTW;
+                ref var twShield_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).Protection;
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Have)
+                    if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
                     {
 
                         if (tw_0.HaveTW)
                         {
-                            InventorToolWeaponE.ToolWeapons<AmountC>(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player)++;
-                            Entities.CellEs.UnitEs.Reset(idx_0);
+                            Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons++;
+                            UnitEs.ToolWeapon(idx_0).Reset();
 
-                            Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                            UnitEs.StatEs.Step(idx_0).Steps.Take();
 
-                            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
 
-                        else if (InventorToolWeaponE.ToolWeapons<AmountC>(tWForGive, levelTW, ownUnit_0.Player).Have)
+                        else if (Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Have)
                         {
-                            InventorToolWeaponE.ToolWeapons<AmountC>(tWForGive, levelTW, ownUnit_0.Player).Take();
+                            Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Take();
 
-                            Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
+                            Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                            Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                            Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
 
-                            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
                         else if (tWForGive == ToolWeaponTypes.Pick)
                         {
-                            if (InventorResourcesE.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
+                            if (Es.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
                             {
-                                InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
+                                Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
+                                Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
 
-                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
                         else if (tWForGive == ToolWeaponTypes.Sword)
                         {
-                            if (InventorResourcesE.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
+                            if (Es.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
                             {
-                                InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
+                                Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
+                                Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
 
-                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
                         else if (tWForGive == ToolWeaponTypes.Shield)
                         {
-                            if (InventorResourcesE.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
+                            if (Es.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
                             {
-                                InventorResourcesE.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
+                                Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                Entities.CellEs.UnitEs.SetNew(idx_0, tWForGive, levelTW);
+                                Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
 
-                                Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
                     }
-                    else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    else Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

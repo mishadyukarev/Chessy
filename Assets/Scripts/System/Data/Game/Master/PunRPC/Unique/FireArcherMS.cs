@@ -2,34 +2,38 @@
 
 namespace Game.Game
 {
-    struct FireArcherMS : IEcsRunSystem
+    sealed class FireArcherMS : SystemAbstract, IEcsRunSystem
     {
+        public FireArcherMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            Entities.MasterEs.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
+            Es.MasterEs.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
-            ref var fire_to = ref Entities.CellEs.FireEs.Fire(idx_to).Fire;
+            ref var fire_to = ref Es.CellEs.FireEs.Fire(idx_to).Fire;
 
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            if (Entities.CellEs.UnitEs.Step(idx_from).Steps.Amount >= 2)
+            if (Es.CellEs.UnitEs.StatEs.Step(idx_from).Steps.Amount >= 2)
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
-                    Entities.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
+                    Es.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    Entities.CellEs.UnitEs.Step(idx_from).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    Es.CellEs.UnitEs.StatEs.Step(idx_from).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                     fire_to.Enable();
                 }
             }
 
             else
             {
-                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

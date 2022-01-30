@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct EntitiesView
+    public readonly struct EntitiesView
     {
         public static UIEs UIEs { get; private set; }
 

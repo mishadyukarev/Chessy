@@ -1,13 +1,12 @@
 ﻿using ECS;
-using System;
 using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct CellBuildEs
+    public readonly struct CellBuildEs
     {
-        CellBuildingE[] _builds;
-        Dictionary<PlayerTypes, CellBuildingVisibleE[]> _owners;
+        readonly CellBuildingE[] _builds;
+        readonly Dictionary<PlayerTypes, CellBuildingVisibleE[]> _owners;
 
         public CellBuildingE Build(in byte idx) => _builds[idx];
         public CellBuildingVisibleE IsVisible(in PlayerTypes player, in byte idx) => _owners[player][idx];
@@ -39,42 +38,42 @@ namespace Game.Game
             var ownC = Build(idx).PlayerTC;
 
 
-            if (Build(idx).BuildTC.Is(BuildingTypes.Farm) && Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx).Resources.Have)
-            {
-                env = EnvironmentTypes.Fertilizer;
-                res = ResourceTypes.Food;
-            }
-            else if (Build(idx).BuildTC.Is(BuildingTypes.Woodcutter) && Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx).Resources.Have)
-            {
-                env = EnvironmentTypes.AdultForest;
-                res = ResourceTypes.Wood;
-            }
-            else if (Build(idx).BuildTC.Is(BuildingTypes.Mine) && Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Hill, idx).Resources.Have)
-            {
-                env = EnvironmentTypes.Hill;
-                res = ResourceTypes.Ore;
-            }
-            else
-            {
+            //if (Build(idx).BuildTC.Is(BuildingTypes.Farm) && Ents.CellEs.EnvironmentEs.Fertilizer( idx).HaveEnvironment)
+            //{
+            //    env = EnvironmentTypes.Fertilizer;
+            //    res = ResourceTypes.Food;
+            //}
+            //else if (Build(idx).BuildTC.Is(BuildingTypes.Woodcutter) && Ents.CellEs.EnvironmentEs.AdultForest( idx).HaveEnvironment)
+            //{
+            //    env = EnvironmentTypes.AdultForest;
+            //    res = ResourceTypes.Wood;
+            //}
+            //else if (Build(idx).BuildTC.Is(BuildingTypes.Mine) && Ents.CellEs.EnvironmentEs.Hill( idx).HaveEnvironment)
+            //{
+            //    env = EnvironmentTypes.Hill;
+            //    res = ResourceTypes.Ore;
+            //}
+            //else
+            //{
                 extract = default;
                 env = default;
                 res = default;
 
                 return false;
-            }
+            //}
 
 
 
             extract = 10;
 
 
-            if (Entities.HaveUpgrade(buildC.Build, ownC.Player, UpgradeTypes.PickCenter).HaveUpgrade.Have)
-            {
-                extract += (int)(extract * 0.5f);
-            }
+            //if (Ents.HaveUpgrade(buildC.Build, ownC.Player, UpgradeTypes.PickCenter).HaveUpgrade.Have)
+            //{
+            //    extract += (int)(extract * 0.5f);
+            //}
 
 
-            if (extract > Entities.CellEs.EnvironmentEs.Environment(env, idx).Resources.Amount) extract = Entities.CellEs.EnvironmentEs.Environment(env, idx).Resources.Amount;
+            //if (extract > Ents.CellEs.EnvironmentEs.Environment(env, idx).Resources.Amount) extract = Ents.CellEs.EnvironmentEs.Environment(env, idx).Resources.Amount;
 
             return true;
         }

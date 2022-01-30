@@ -1,42 +1,48 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellEs;
 
 namespace Game.Game
 {
-    struct CircularAttackKingMS : IEcsRunSystem
+    sealed class CircularAttackKingMS : SystemCellAbstract, IEcsRunSystem
     {
+        public CircularAttackKingMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
+            var unitEs = Es.CellEs.UnitEs;
+
+
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
-            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
+            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
-            ref var hpUnit_0 = ref Entities.CellEs.UnitEs.Hp(idx_0).AmountC;
-            ref var levUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).LevelC;
-            ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
-            ref var condUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).ConditionC;
+            ref var hpUnit_0 = ref Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health;
+            ref var levUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
+            ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
+            ref var condUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).ConditionC;
 
 
-            if (!Entities.CellEs.UnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Have)
+            if (!Es.CellEs.UnitEs.Unique(uniq_cur, idx_0).Cooldown.Have)
             {
-                if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                 {
-                    Entities.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    Entities.CellEs.UnitEs.CooldownUnique(uniq_cur, idx_0).Cooldown.Amount = 2;
+                    Es.CellEs.UnitEs.Unique(uniq_cur, idx_0).Cooldown.Amount = 2;
 
-                    foreach (var xy1 in CellSpaceSupport.GetXyAround(Entities.CellEs.CellE(idx_0).XyC.Xy))
+                    foreach (var xy1 in Es.CellEs.GetXyAround(Es.CellEs.CellE(idx_0).XyC.Xy))
                     {
-                        var idx_1 = Entities.CellEs.IdxCell(xy1);
+                        var idx_1 = Es.CellEs.GetIdxCell(xy1);
 
-                        ref var unit_1 = ref Entities.CellEs.UnitEs.Else(idx_1).UnitC;
-                        ref var ownUnit_1 = ref Entities.CellEs.UnitEs.Else(idx_1).OwnerC;
-                        ref var hpUnit_1 = ref Entities.CellEs.UnitEs.Hp(idx_1).AmountC;
+                        ref var unit_1 = ref Es.CellEs.UnitEs.Main(idx_1).UnitC;
+                        ref var ownUnit_1 = ref Es.CellEs.UnitEs.Main(idx_1).OwnerC;
+                        ref var hpUnit_1 = ref Es.CellEs.UnitEs.StatEs.Hp(idx_1).Health;
 
-                        ref var tw_1 = ref Entities.CellEs.UnitEs.ToolWeapon(idx_1).ToolWeaponC;
+                        ref var tw_1 = ref Es.CellEs.UnitEs.ToolWeapon(idx_1).ToolWeapon;
 
-                        ref var buildC_1 = ref Entities.CellEs.BuildEs.Build(idx_1).BuildTC;
+                        ref var buildC_1 = ref Es.CellEs.BuildEs.Build(idx_1).BuildTC;
 
 
                         if (unit_1.Have)
@@ -48,36 +54,36 @@ namespace Game.Game
 
                                 if (tw_1.Is(ToolWeaponTypes.Shield))
                                 {
-                                    Entities.CellEs.UnitEs.Take(idx_1);
+                                    UnitEs.ToolWeapon(idx_1).BreakShield();
                                 }
                                 else
                                 {
-                                    Entities.CellEs.UnitEs.Hp(idx_1).AmountC.Take(UnitDamageValues.Damage(uniq_cur));
+                                    Es.CellEs.UnitEs.StatEs.Hp(idx_1).Health.Take(UnitDamageValues.Damage(uniq_cur));
 
-                                    if (Entities.CellEs.UnitEs.Hp(idx_1).AmountC.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK || !hpUnit_1.Have)
+                                    if (Es.CellEs.UnitEs.StatEs.Hp(idx_1).Health.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK || !hpUnit_1.Have)
                                     {
-                                        Entities.CellEs.UnitEs.Kill(idx_1);
+                                        unitEs.Kill(idx_1, Es);
                                     }
                                 }
                             }
                         }
                     }
 
-                    Entities.CellEs.UnitEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                     //foreach (var item in CellUnitEffectsEs.Keys) 
                     //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 
-                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    Es.Rpc.SoundToGeneral(sender, ClipTypes.AttackMelee);
 
 
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
                 }
                 else
                 {
-                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
-            else Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else Es.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

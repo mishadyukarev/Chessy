@@ -1,29 +1,29 @@
-﻿using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct SupportCellVS : IEcsRunSystem
+    sealed class SupportCellVS : SystemViewAbstract, IEcsRunSystem
     {
+        public SupportCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            ref var cellClick = ref Entities.ClickerObject.CellClickC;
+            ref var cellClick = ref Es.ClickerObject.CellClickC;
 
-            foreach (byte idx_0 in Entities.CellEs.Idxs)
+            foreach (byte idx_0 in Es.CellEs.Idxs)
             {
-                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
-                ref var lev_0 = ref Entities.CellEs.UnitEs.Else(idx_0).LevelC;
-                ref var own_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
+                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
+                ref var lev_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
+                ref var own_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
 
-                ref var fire_0 = ref Entities.CellEs.FireEs.Fire(idx_0).Fire;
+                ref var fire_0 = ref Es.CellEs.FireEs.Fire(idx_0).Fire;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
 
                 support_0.Disable();
 
-                if (Entities.SelectedIdxE.IdxC.Is(idx_0))
+                if (Es.SelectedIdxE.IdxC.Is(idx_0))
                 {
                     support_0.Enable();
                     support_0.Color = ColorsValues.Color(SupportCellVisionTypes.Selector);
@@ -34,7 +34,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
-                        if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
+                        if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
                         {
                             support_0.Enable();
                             support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -44,7 +44,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (own_0.Is(Entities.WhoseMove.CurPlayerI))
+                    if (own_0.Is(Es.WhoseMove.CurPlayerI))
                     {
                         if (cellClick.Is(CellClickTypes.GiveTakeTW, CellClickTypes.GiveScout))
                         {
@@ -79,13 +79,13 @@ namespace Game.Game
 
                     else
                     {
-                        if (Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
+                        if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
                         {
-                            if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
+                            if (Es.CellEs.EnvironmentEs.AdultForest(idx_0).HaveEnvironment)
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
-                                    if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.StunElfemale))
+                                    if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.StunElfemale))
                                     {
                                         support_0.Enable();
                                         support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -99,7 +99,7 @@ namespace Game.Game
 
                 if (cellClick.Is(CellClickTypes.SetUnit))
                 {
-                    if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(Entities.WhoseMove.CurPlayerI, idx_0).Can)
+                    if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(Es.WhoseMove.CurPlayerI, idx_0).Can)
                     {
                         SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                         SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
@@ -111,9 +111,9 @@ namespace Game.Game
             {
                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                 {
-                    if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
+                    if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
                     {
-                        CellSpaceSupport.TryGetIdxAround(Entities.WindE.CenterCloud.Idx, out var dirs);
+                        Es.CellEs.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
 
                         foreach (var item in dirs)
                         {
@@ -123,9 +123,9 @@ namespace Game.Game
                     }
                 }
 
-                else if (Entities.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.FireArcher))
+                else if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.FireArcher))
                 {
-                    foreach (var idx in CellsForArsonArcherEs.Idxs<IdxsC>(Entities.SelectedIdxE.IdxC.Idx).Idxs)
+                    foreach (var idx in CellsForArsonArcherEs.Idxs<IdxsC>(Es.SelectedIdxE.IdxC.Idx).Idxs)
                     {
                         SupportCellVEs.Support<SpriteRendererVC>(idx).Enable();
                         SupportCellVEs.Support<SpriteRendererVC>(idx).Color = ColorsValues.Color(SupportCellVisionTypes.FireSelector);
@@ -136,7 +136,7 @@ namespace Game.Game
 
             else
             {
-                var idxs = CellsForShiftUnitsEs.CellsForShift<IdxsC>(Entities.WhoseMove.CurPlayerI, Entities.SelectedIdxE.IdxC.Idx).Idxs;
+                var idxs = CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.WhoseMove.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).Idxs;
 
                 foreach (var idx_0 in idxs)
                 {
@@ -144,13 +144,13 @@ namespace Game.Game
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                 }
 
-                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Entities.SelectedIdxE.IdxC.Idx, AttackTypes.Simple, Entities.WhoseMove.CurPlayerI).Idxs)
+                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Es.SelectedIdxE.IdxC.Idx, AttackTypes.Simple, Es.WhoseMove.CurPlayerI).Idxs)
                 {
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
                 }
 
-                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Entities.SelectedIdxE.IdxC.Idx, AttackTypes.Unique, Entities.WhoseMove.CurPlayerI).Idxs)
+                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Es.SelectedIdxE.IdxC.Idx, AttackTypes.Unique, Es.WhoseMove.CurPlayerI).Idxs)
                 {
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);

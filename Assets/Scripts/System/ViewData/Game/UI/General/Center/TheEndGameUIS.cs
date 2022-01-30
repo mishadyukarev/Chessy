@@ -2,16 +2,20 @@
 
 namespace Game.Game
 {
-    struct TheEndGameUIS : IEcsRunSystem
+    sealed class TheEndGameUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public TheEndGameUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            if (Entities.WinnerE.Winner.Player == default)
+            if (Es.WinnerE.Winner.Player == default)
             {
                 EndGame<EndGameUIEC>().SetActiveZone(false);
             }
 
-            else if (Entities.WinnerE.Winner.Player != Entities.WhoseMove.CurPlayerI)
+            else if (Es.WinnerE.Winner.Player != Es.WhoseMove.CurPlayerI)
             {
                 EndGame<EndGameUIEC>().SetText(true);
                 EndGame<EndGameUIEC>().SetActiveZone(true);

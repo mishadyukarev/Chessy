@@ -1,68 +1,71 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
 {
-    public struct StunElfemaleMS : IEcsRunSystem
+    sealed class StunElfemaleMS : SystemAbstract, IEcsRunSystem
     {
+        public StunElfemaleMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
-            Entities.MasterEs.StunElfemale<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
+            Es.MasterEs.StunElfemale<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
-            var playerSend = Entities.WhoseMove.WhoseMove.Player;
+            var playerSend = Es.WhoseMove.WhoseMove.Player;
 
-            ref var ownUnit_from = ref Entities.CellEs.UnitEs.Else(idx_from).OwnerC;
+            ref var ownUnit_from = ref Es.CellEs.UnitEs.Main(idx_from).OwnerC;
 
-            ref var unit_to = ref Entities.CellEs.UnitEs.Else(idx_to).UnitC;
-            ref var ownUnit_to = ref Entities.CellEs.UnitEs.Else(idx_to).OwnerC;
+            ref var unit_to = ref Es.CellEs.UnitEs.Main(idx_to).UnitC;
+            ref var ownUnit_to = ref Es.CellEs.UnitEs.Main(idx_to).OwnerC;
 
 
-            if (!Entities.CellEs.UnitEs.CooldownUnique(uniq_cur, idx_from).Cooldown.Have)
+            if (!Es.CellEs.UnitEs.Unique(uniq_cur, idx_from).Cooldown.Have)
             {
-                if (Entities.CellEs.UnitEs.VisibleE(playerSend, idx_to).VisibleC.IsVisible)
+                if (Es.CellEs.UnitEs.VisibleE(playerSend, idx_to).VisibleC.IsVisible)
                 {
                     if (unit_to.Have)
                     {
-                        if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_to).Resources.Have)
+                        if (Es.CellEs.EnvironmentEs.AdultForest( idx_to).HaveEnvironment)
                         {
-                            if (Entities.CellEs.UnitEs.Hp(idx_from).HaveMax)
+                            if (Es.CellEs.UnitEs.StatEs.Hp(idx_from).HaveMax)
                             {
-                                if (Entities.CellEs.UnitEs.Step(idx_from).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                                if (Es.CellEs.UnitEs.StatEs.Step(idx_from).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                                 {
                                     if (!ownUnit_from.Is(ownUnit_to.Player))
                                     {
-                                        Entities.CellEs.UnitEs.Stun(idx_to).ForExitStun.Amount = 4;
-                                        Entities.CellEs.UnitEs.CooldownUnique(uniq_cur, idx_from).Cooldown.Amount = 5;
+                                        Es.CellEs.UnitEs.Stun(idx_to).ForExitStun.Amount = 4;
+                                        Es.CellEs.UnitEs.Unique(uniq_cur, idx_from).Cooldown.Amount = 5;
 
-                                        Entities.CellEs.UnitEs.Step(idx_from).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                                        Es.CellEs.UnitEs.StatEs.Step(idx_from).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
 
-                                        Entities.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
+                                        Es.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
 
 
-                                        foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_to))
+                                        foreach (var idx_1 in Es.CellEs.GetIdxsAround(idx_to))
                                         {
-                                            if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_1).Resources.Have)
+                                            if (Es.CellEs.EnvironmentEs.AdultForest( idx_1).HaveEnvironment)
                                             {
-                                                if (Entities.CellEs.UnitEs.Else(idx_1).UnitC.Have && Entities.CellEs.UnitEs.Else(idx_1).OwnerC.Is(Entities.CellEs.UnitEs.Else(idx_to).OwnerC.Player))
+                                                if (Es.CellEs.UnitEs.Main(idx_1).UnitC.Have && Es.CellEs.UnitEs.Main(idx_1).OwnerC.Is(Es.CellEs.UnitEs.Main(idx_to).OwnerC.Player))
                                                 {
-                                                    Entities.CellEs.UnitEs.Stun(idx_1).ForExitStun.Amount = 4;
+                                                    Es.CellEs.UnitEs.Stun(idx_1).ForExitStun.Amount = 4;
                                                 }
                                             }
                                         }
                                     }
                                 }
 
-                                else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
-                            else Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                            else Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                         }
                     }
                 }
             }
 
-            else Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else Es.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

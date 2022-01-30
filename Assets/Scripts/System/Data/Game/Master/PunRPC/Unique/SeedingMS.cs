@@ -1,22 +1,23 @@
 ﻿using System;
-using static Game.Game.CellBuildEs;
-using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
-    struct SeedingMS : IEcsRunSystem
+    sealed class SeedingMS : SystemAbstract, IEcsRunSystem
     {
+        public SeedingMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            var env = Entities.MasterEs.Seed<EnvironmetC>().Environment;
-            var idx_0 = Entities.MasterEs.Seed<IdxC>().Idx;
-            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
+            var env = Es.MasterEs.Seed<EnvironmetTC>().Environment;
+            var idx_0 = Es.MasterEs.Seed<IdxC>().Idx;
+            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
-            ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+            ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
 
 
             switch (env)
@@ -28,38 +29,38 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                    if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
-                            Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                         else
                         {
-                            if (!Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Have)
+                            if (!Es.CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
                             {
-                                if (!Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
+                                if (!Es.CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
 
-                                    if (!Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).Resources.Have)
+                                    if (!Es.CellEs.EnvironmentEs.YoungForest( idx_0).HaveEnvironment)
                                     {
-                                        Entities.Rpc.SoundToGeneral(sender, uniq_cur);
+                                        Es.Rpc.SoundToGeneral(sender, uniq_cur);
 
-                                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).SetNew();
+                                        Es.CellEs.EnvironmentEs.YoungForest( idx_0).SetNew(Es.WhereEnviromentEs);
 
-                                        Entities.CellEs.UnitEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                                     }
                                     else
                                     {
-                                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                     }
                                 else
                                 {
-                                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                 }
                             }
                             else
                             {
-                                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                             }
 
                         }
@@ -67,7 +68,7 @@ namespace Game.Game
 
                     else
                     {
-                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

@@ -1,21 +1,25 @@
 ﻿namespace Game.Game
 {
-    struct PickCenterUpgradeBuildsMS : IEcsRunSystem
+    sealed class PickCenterUpgradeBuildsMS : SystemAbstract, IEcsRunSystem
     {
+        public PickCenterUpgradeBuildsMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var build = Entities.MasterEs.Build<BuildingTC>().Build;
+            var build = Es.MasterEs.Build<BuildingTC>().Build;
 
 
-            var whoseMove = Entities.WhoseMove.CurPlayerI;
+            var whoseMove = Es.WhoseMove.CurPlayerI;
 
 
-            Entities.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
-            Entities.HaveUpgrade(build, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
-            Entities.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, whoseMove).HaveUpgrade.Have = false;
+            Es.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
+            Es.BuildingUpgradeEs.HaveUpgrade(build, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+            Es.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, whoseMove).HaveUpgrade.Have = false;
 
-            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            Es.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

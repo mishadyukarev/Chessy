@@ -8,8 +8,8 @@ namespace Game.Game
         static Entity[] _buildingsFront;
         static Entity[] _buildingsBack;
 
-        public static ref C BuildFront<C>(in byte idx) where C : struct, IBuildCellV => ref _buildingsFront[idx].Get<C>();
-        public static ref C BuildBack<C>(in byte idx) where C : struct, IBuildCellV => ref _buildingsBack[idx].Get<C>();
+        public static ref SpriteRendererVC BuildFront(in byte idx) => ref _buildingsFront[idx].Get<SpriteRendererVC>();
+        public static ref SpriteRendererVC BuildBack(in byte idx) => ref _buildingsBack[idx].Get<SpriteRendererVC>();
 
         public CellBuildingVEs(in EcsWorld gameW, in GameObject[] cells)
         {
@@ -28,6 +28,4 @@ namespace Game.Game
             }
         }
     }
-
-    public interface IBuildCellV { }
 }

@@ -1,38 +1,38 @@
-﻿using static Game.Game.CellBuildEs;
-using static Game.Game.CellEnvironmentEs;
-using static Game.Game.CellEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct CityBuildMS : IEcsRunSystem
+    sealed class CityBuildMS : SystemCellAbstract, IEcsRunSystem
     {
+        public CityBuildMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var forBuildType = Entities.MasterEs.Build<BuildingTC>().Build;
-            var idx_0 = Entities.MasterEs.Build<IdxC>().Idx;
+            var forBuildType = Es.MasterEs.Build<BuildingTC>().Build;
+            var idx_0 = Es.MasterEs.Build<IdxC>().Idx;
 
 
 
             if (forBuildType == BuildingTypes.City)
             {
-                ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
-                ref var ownBuild_0 = ref Entities.CellEs.BuildEs.Build(idx_0).PlayerTC;
+                ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
+                ref var ownBuild_0 = ref Es.CellEs.BuildEs.Build(idx_0).PlayerTC;
 
-                ref var fire_0 = ref Entities.CellEs.FireEs.Fire(idx_0).Fire;
-
-
-                var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+                ref var fire_0 = ref Es.CellEs.FireEs.Fire(idx_0).Fire;
 
 
-                if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
+                var whoseMove = Es.WhoseMove.WhoseMove.Player;
+
+
+                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var idx_1 in CellSpaceSupport.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in Es.CellEs.GetIdxsAround(idx_0))
                     {
-                        if (!Entities.CellEs.ParentE(idx_1).IsActiveSelf.IsActive)
+                        if (!Es.CellEs.ParentE(idx_1).IsActiveSelf.IsActive)
                         {
                             haveNearBorder = true;
                             break;
@@ -41,32 +41,32 @@ namespace Game.Game
 
                     if (!haveNearBorder)
                     {
-                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.Building);
-                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
+                        Es.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                        Es.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        Entities.CellEs.BuildEs.Build(idx_0).SetNew(forBuildType, whoseMove);
-                        Entities.WhereBuildingEs.HaveBuild(forBuildType, whoseMove, idx_0).HaveBuilding.Have = true;
+                        Es.CellEs.BuildEs.Build(idx_0).SetNew(forBuildType, whoseMove);
+                        Es.WhereBuildingEs.HaveBuild(forBuildType, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                        Entities.CellEs.UnitEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
+                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
 
 
                         fire_0.Disable();
 
 
-                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Remove();
-                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Remove();
-                        Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.YoungForest, idx_0).Remove();
+                        EnvironmentEs.AdultForest(idx_0).Destroy(TrailEs.Trails(idx_0), Es.WhereEnviromentEs);
+                        EnvironmentEs.Fertilizer(idx_0).Destroy(Es.WhereEnviromentEs);
+                        EnvironmentEs.YoungForest(idx_0).Destroy(Es.WhereEnviromentEs);
                     }
 
                     else
                     {
-                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
+                        Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                     }
                 }
                 else
                 {
-                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

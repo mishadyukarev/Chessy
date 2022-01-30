@@ -189,7 +189,6 @@ namespace Game.Game
                         case AbilityTypes.GrowAdultForest: volume = 0.3f; break;
                         case AbilityTypes.StunElfemale: volume = 0.3f; break;
                         case AbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
-                        case AbilityTypes.FreezeDirectEnemy: volume = 0.1f; break;
                         case AbilityTypes.IceWall: volume = 0.1f; break;
                         case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
                         case AbilityTypes.Farm: volume = 0.1f; break;

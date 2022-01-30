@@ -1,35 +1,39 @@
 ﻿namespace Game.Game
 {
-    struct CreateUnitMS : IEcsRunSystem
+    sealed class CreateUnitMS : SystemAbstract, IEcsRunSystem
     {
+        public CreateUnitMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var unit = Entities.MasterEs.CreateUnit<UnitTC>().Unit;
+            var unit = Es.MasterEs.CreateUnit<UnitTC>().Unit;
 
 
-            var playerSend = Entities.WhoseMove.WhoseMove.Player;
+            var playerSend = Es.WhoseMove.WhoseMove.Player;
 
 
-            if (Entities.WhereBuildingEs.IsSetted(BuildingTypes.City, playerSend, out var idx_city))
+            if (Es.WhereBuildingEs.IsSetted(BuildingTypes.City, playerSend, out var idx_city))
             {
-                if (InventorResourcesE.CanCreateUnit(playerSend, unit, out var needRes))
+                if (Es.InventorResourcesEs.CanCreateUnit(playerSend, unit, out var needRes))
                 {
-                    InventorResourcesE.BuyCreateUnit(playerSend, unit);
-                    InventorUnitsE.Units(unit, LevelTypes.First, playerSend)++;
+                    Es.InventorResourcesEs.BuyCreateUnit(playerSend, unit);
+                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, playerSend).Units++;
 
-                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                    Es.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }
                 else
                 {
-                    Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
-                    Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                    Es.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                    Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                Entities.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
-                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
+                Es.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }
     }

@@ -1,21 +1,25 @@
 ﻿namespace Game.Game
 {
-    struct MeltOreMS : IEcsRunSystem
+    sealed class MeltOreMS : SystemAbstract, IEcsRunSystem
     {
+        public MeltOreMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            if (InventorResourcesE.CanMeltOre(whoseMove, out var needRes))
+            if (Es.InventorResourcesEs.CanMeltOre(whoseMove, out var needRes))
             {
-                InventorResourcesE.BuyMeltOre(whoseMove);
-                Entities.Rpc.SoundToGeneral(sender, ClipTypes.Melting);
+                Es.InventorResourcesEs.BuyMeltOre(whoseMove);
+                Es.Rpc.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

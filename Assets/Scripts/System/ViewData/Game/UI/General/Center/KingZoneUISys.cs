@@ -2,11 +2,15 @@
 
 namespace Game.Game
 {
-    struct KingZoneUISys : IEcsRunSystem
+    sealed class KingZoneUISys : SystemViewAbstract, IEcsRunSystem
     {
+        public KingZoneUISys(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            if (InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, Entities.WhoseMove.CurPlayerI).Have)
+            if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).Units.Have)
             {
                 Paren.SetActive(true);
             }

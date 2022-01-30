@@ -1,44 +1,41 @@
 ﻿using ECS;
-using System;
-using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct CellEnvironmentEs
+    public readonly struct CellEnvironmentEs
     {
-        Dictionary<EnvironmentTypes, CellEnvironmentE[]> _env;
+        readonly CellEnvFertilizerE[] _fertilizers;
+        readonly CellEnvYoungForestE[] _youngForests;
+        readonly CellEnvAdultForestE[] _adultForests;
+        readonly CellEnvHillE[] _hills;
+        readonly CellEnvMountainE[] _mountains;
 
-        public CellEnvironmentE Environment(in EnvironmentTypes env, in byte idx) => _env[env][idx];
-        public CellEnvironmentE[] Environments(in byte idx)
-        {
-            var envs = new CellEnvironmentE[_env.Keys.Count];
-            var i = 0;
-            foreach (var envT in _env.Keys) envs[i++] = _env[envT][idx];
-            return envs;
-        }
+        public CellEnvFertilizerE Fertilizer(in byte idx) => _fertilizers[idx];
+        public CellEnvYoungForestE YoungForest(in byte idx) => _youngForests[idx];
+        public CellEnvAdultForestE AdultForest(in byte idx) => _adultForests[idx];
+        public CellEnvHillE Hill(in byte idx) => _hills[idx];
+        public CellEnvMountainE Mountain(in byte idx) => _mountains[idx];
 
-        public HashSet<EnvironmentTypes> Keys
-        {
-            get
-            {
-                var hash = new HashSet<EnvironmentTypes>();
-                foreach (var item in _env) hash.Add(item.Key);
-                return hash;
-            }
-        }
+
+
 
         public CellEnvironmentEs(in EcsWorld gameW)
         {
-            _env = new Dictionary<EnvironmentTypes, CellEnvironmentE[]>();
+            var cells = CellStartValues.ALL_CELLS_AMOUNT;
 
-            for (var env = EnvironmentTypes.None + 1; env < EnvironmentTypes.End; env++)
+            _fertilizers = new CellEnvFertilizerE[cells];
+            _youngForests = new CellEnvYoungForestE[cells];
+            _adultForests = new CellEnvAdultForestE[cells];
+            _hills = new CellEnvHillE[cells];
+            _mountains = new CellEnvMountainE[cells];
+
+            for (byte idx = 0; idx < cells; idx++)
             {
-                _env.Add(env, new CellEnvironmentE[CellStartValues.ALL_CELLS_AMOUNT]);
-
-                for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
-                {
-                    _env[env][idx] = new CellEnvironmentE(env, gameW);
-                }
+                _fertilizers[idx] = new CellEnvFertilizerE(idx, gameW);
+                _youngForests[idx] = new CellEnvYoungForestE(idx, gameW);
+                _adultForests[idx] = new CellEnvAdultForestE(idx, gameW);
+                _hills[idx] = new CellEnvHillE(idx, gameW);
+                _mountains[idx] = new CellEnvMountainE(idx, gameW);
             }
         }
     }

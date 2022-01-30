@@ -4,49 +4,49 @@
     {
         public void Run()
         {
-            //if (Entities.SelectedIdxE.IsSelCell)
+            //if (Ents.SelectedIdxE.IsSelCell)
             //{
-            //    var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
+            //    var idx_sel = Ents.SelectedIdxE.IdxC.Idx;
 
-            //    ref var unit_sel = ref Entities.CellEs.CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
-            //    ref var ownUnit_sel = ref Entities.CellEs.CellUnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
+            //    ref var unit_sel = ref Ents.CellEs.CellUnitEs.Else(Ents.SelectedIdxE.IdxC.Idx).UnitC;
+            //    ref var ownUnit_sel = ref Ents.CellEs.CellUnitEs.Else(Ents.SelectedIdxE.IdxC.Idx).OwnerC;
 
-            //    ref var build_sel = ref CellBuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
-            //    ref var ownBuild_sel = ref CellBuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).PlayerTC;
+            //    ref var build_sel = ref CellBuildEs.Build(Ents.SelectedIdxE.IdxC.Idx).BuildTC;
+            //    ref var ownBuild_sel = ref CellBuildEs.Build(Ents.SelectedIdxE.IdxC.Idx).PlayerTC;
 
             //    var needActiveThirdButt = false;
 
 
             //    if (unit_sel.Is(UnitTypes.Pawn))
             //    {
-            //        if (ownUnit_sel.Is(Entities.WhoseMove.CurPlayerI))
+            //        if (ownUnit_sel.Is(Ents.WhoseMove.CurPlayerI))
             //        {
             //            if (build_sel.Have)
             //            {
-            //                if (ownBuild_sel.Is(Entities.WhoseMove.CurPlayerI))
+            //                if (ownBuild_sel.Is(Ents.WhoseMove.CurPlayerI))
             //                {
-            //                    if (!WhereBuildsE.IsSetted(BuildingTypes.City, Entities.WhoseMove.CurPlayerI, out var idx_city))
+            //                    if (!WhereBuildsE.IsSetted(BuildingTypes.City, Ents.WhoseMove.CurPlayerI, out var idx_city))
             //                    {
             //                        needActiveThirdButt = true;
             //                        //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
-            //                        Entities.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
+            //                        Ents.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
             //                    }
             //                }
             //                else
             //                {
             //                    needActiveThirdButt = true;
             //                    //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.CityNone).Sprite;
-            //                    Entities.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.None;
+            //                    Ents.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.None;
             //                }
             //            }
 
             //            else
             //            {
-            //                if (!WhereBuildsE.IsSetted(BuildingTypes.City, Entities.WhoseMove.CurPlayerI, out var idx_city))
+            //                if (!WhereBuildsE.IsSetted(BuildingTypes.City, Ents.WhoseMove.CurPlayerI, out var idx_city))
             //                {
             //                    needActiveThirdButt = true;
             //                    //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
-            //                    Entities.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
+            //                    Ents.CellEs.CellUnitEs.BuildingButton(ButtonTypes.Third, idx_sel).BuildingTC.Build = BuildingTypes.City;
             //                }
             //            }
             //        }

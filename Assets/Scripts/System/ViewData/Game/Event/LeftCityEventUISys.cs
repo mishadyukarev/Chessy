@@ -1,11 +1,10 @@
-﻿using Game.Common;
-using static Game.Game.EntityLeftCityUIPool;
+﻿using static Game.Game.EntityLeftCityUIPool;
 
 namespace Game.Game
 {
-    sealed class LeftCityEventUISys
+    sealed class LeftCityEventUISys : SystemViewAbstract
     {
-        internal LeftCityEventUISys()
+        public LeftCityEventUISys(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
             Melt<ButtonUIC>().AddListener(delegate { MeltOre(); });
 
@@ -15,12 +14,12 @@ namespace Game.Game
 
         void MeltOre()
         {
-            if (Entities.WhoseMove.IsMyMove) Entities.Rpc.MeltOreToMaster();
+            if (Es.WhoseMove.IsMyMove) Es.Rpc.MeltOreToMaster();
         }
 
         void BuyRes(ResourceTypes res)
         {
-            if (Entities.WhoseMove.IsMyMove) Entities.Rpc.BuyResToMaster(res);
+            if (Es.WhoseMove.IsMyMove) Es.Rpc.BuyResToMaster(res);
         }
     }
 }

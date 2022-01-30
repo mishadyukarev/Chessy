@@ -1,21 +1,23 @@
 ﻿namespace Game.Game
 {
-    struct ShiftUnitMS : IEcsRunSystem
+    sealed class ShiftUnitMS : SystemCellAbstract, IEcsRunSystem
     {
+        public ShiftUnitMS(in Entities ents) : base(ents) { }
+
         public void Run()
         {
-            Entities.MasterEs.Shift<IdxFromToC>().Get(out var idx_from, out var idx_to);
+            Es.MasterEs.Shift<IdxFromToC>().Get(out var idx_from, out var idx_to);
 
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
             {
-                Entities.CellEs.UnitEs.Step(idx_from).Steps.Take(Entities.CellEs.UnitEs.Step(idx_to).StepsForShiftOrAttack(CellSpaceSupport.GetDirect(idx_from, idx_to), Entities.CellEs.EnvironmentEs.Environments(idx_to), Entities.CellEs.TrailEs.Trails(idx_to)));
+                UnitEs.StatEs.Step(idx_from).Steps.Take(UnitEs.StepsForShiftOrAttack(idx_to, Es.CellEs.GetDirect(idx_from, idx_to), EnvironmentEs, Es.CellEs.TrailEs));
 
-                Entities.CellEs.UnitEs.Shift(idx_from, idx_to, true);
+                UnitEs.Shift(idx_from, idx_to, Es);
 
-                Entities.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
+                Es.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }
         }
     }

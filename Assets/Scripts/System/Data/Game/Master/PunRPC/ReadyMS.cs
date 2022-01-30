@@ -1,24 +1,28 @@
 ﻿namespace Game.Game
 {
-    struct ReadyMS : IEcsRunSystem
+    sealed class ReadyMS : SystemAbstract, IEcsRunSystem
     {
+        public ReadyMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
             var playerSend = sender.GetPlayer();
 
-            Entities.Ready(playerSend).IsReadyC.IsReady = !Entities.Ready(playerSend).IsReadyC.IsReady;
+            Es.Ready(playerSend).IsReadyC.IsReady = !Es.Ready(playerSend).IsReadyC.IsReady;
 
-            if (Entities.Ready(PlayerTypes.First).IsReadyC.IsReady
-                && Entities.Ready(PlayerTypes.Second).IsReadyC.IsReady)
+            if (Es.Ready(PlayerTypes.First).IsReadyC.IsReady
+                && Es.Ready(PlayerTypes.Second).IsReadyC.IsReady)
             {
-                Entities.GameInfo.IsStartedGameC.IsStartedGame = true;
+                Es.GameInfo.IsStartedGameC.IsStartedGame = true;
             }
 
             else
             {
-                Entities.GameInfo.IsStartedGameC.IsStartedGame = false;
+                Es.GameInfo.IsStartedGameC.IsStartedGame = false;
             }
         }
     }

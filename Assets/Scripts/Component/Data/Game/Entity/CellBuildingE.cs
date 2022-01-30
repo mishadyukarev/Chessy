@@ -1,5 +1,4 @@
 ﻿using ECS;
-using System;
 
 namespace Game.Game
 {

@@ -2,16 +2,16 @@
 
 namespace Game.Game
 {
-    sealed class LeftEnvEventUISys
+    sealed class LeftEnvEventUISys : SystemViewAbstract
     {
-        internal LeftEnvEventUISys()
+        public LeftEnvEventUISys(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
             Info<ButtonUIC>().AddListener(EnvironmentInfo);
         }
 
         private void EnvironmentInfo()
         {
-            Entities.InfoEnvironment.IsActiveC.Toggle();
+            Es.InfoEnvironment.IsActiveC.Toggle();
         }
     }
 }

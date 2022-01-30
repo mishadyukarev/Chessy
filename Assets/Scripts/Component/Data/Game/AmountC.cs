@@ -39,6 +39,10 @@
                 if (Amount < 0) Amount = 0;
             }
         }
+        public void Add(in int adding = 1)
+        {
+            Amount += adding;
+        }
         public void Reset() => Amount = 0;
     }
 }

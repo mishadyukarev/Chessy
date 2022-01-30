@@ -1,25 +1,29 @@
 ﻿namespace Game.Game
 {
-    struct BuyResourcesMS : IEcsRunSystem
+    sealed class BuyResourcesMS : SystemAbstract, IEcsRunSystem
     {
+        public BuyResourcesMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
-            var res = Entities.MasterEs.BuyResources<ResourceTypeC>().Resource;
+            var res = Es.MasterEs.BuyResources<ResourceTC>().Resource;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            if (InventorResourcesE.CanBuy(whoseMove, res, out var needRes))
+            if (Es.InventorResourcesEs.CanBuy(whoseMove, res, out var needRes))
             {
-                InventorResourcesE.BuyRes(whoseMove, res);
+                Es.InventorResourcesEs.BuyRes(whoseMove, res);
 
-                Entities.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                Es.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

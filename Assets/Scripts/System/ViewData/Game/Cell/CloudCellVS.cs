@@ -1,17 +1,21 @@
 ﻿namespace Game.Game
 {
-    struct CloudCellVS : IEcsRunSystem
+    sealed class CloudCellVS : SystemViewAbstract, IEcsRunSystem
     {
+        public CloudCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            foreach (var idx_0 in Entities.CellEs.Idxs)
+            foreach (var idx_0 in Es.CellEs.Idxs)
             {
                 CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx_0).SetActive(false);
             }
 
-            var centerCloud = Entities.WindE.CenterCloud.Idx;
+            var centerCloud = Es.WindE.CenterCloud.Idx;
 
-            foreach (var idx in CellSpaceSupport.GetIdxsAround(centerCloud))
+            foreach (var idx in Es.CellEs.GetIdxsAround(centerCloud))
             {
                 CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx).SetActive(true);
             }

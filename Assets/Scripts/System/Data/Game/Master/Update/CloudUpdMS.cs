@@ -1,22 +1,24 @@
-﻿using static Game.Game.CellEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct CloudUpdMS : IEcsRunSystem
+    sealed class CloudUpdMS : SystemAbstract, IEcsRunSystem
     {
+        public CloudUpdMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
-            var xy_0 = Entities.CellEs.CellE(Entities.WindE.CenterCloud.Idx).XyC.Xy;
-            var xy_next = CellSpaceSupport.GetXyCellByDirect(xy_0, Entities.WindE.DirectWind.Direct);
+            var xy_0 = Es.CellEs.CellE(Es.WindE.CenterCloud.Idx).XyC.Xy;
+            var xy_next = Es.CellEs.GetXyCellByDirect(xy_0, Es.WindE.DirectWind.Direct);
 
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                Entities.WindE.CenterCloud.Idx = Entities.CellEs.IdxCell(xy_next);
+                Es.WindE.CenterCloud.Idx = Es.CellEs.GetIdxCell(xy_next);
             }
             else
             {
-                var newDir = Entities.WindE.DirectWind.Direct;
+                var newDir = Es.WindE.DirectWind.Direct;
 
                 newDir = newDir.Invert();
                 var newDirInt = (int)newDir;
@@ -24,16 +26,16 @@ namespace Game.Game
 
                 if (newDirInt <= 0) newDirInt = 1;
                 else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                Entities.WindE.DirectWind.Direct = (DirectTypes)newDirInt;
+                Es.WindE.DirectWind.Direct = (DirectTypes)newDirInt;
             }
 
-            CellSpaceSupport.TryGetXyAround(xy_next, out var dirs);
+            Es.CellEs.TryGetXyAround(xy_next, out var dirs);
 
             foreach (var item in dirs)
             {
-                var idx_1 = Entities.CellEs.IdxCell(item.Value);
+                var idx_1 = Es.CellEs.GetIdxCell(item.Value);
 
-                Entities.CellEs.TrailEs.ResetAll(idx_1);
+                Es.CellEs.TrailEs.ResetAll(idx_1);
             }
         }
     }

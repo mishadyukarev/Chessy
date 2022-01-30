@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using static Game.Game.CellEs;
 
 namespace Game.Game
 {
-    struct RayS : IEcsRunSystem
+    sealed class RayS : SystemAbstract, IEcsRunSystem
     {
         Ray _ray;
         const float RAY_DISTANCE = 100;
+
+        public RayS(in Entities ents) : base(ents)
+        {
+        }
 
         public void Run()
         {
@@ -15,7 +18,7 @@ namespace Game.Game
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 
-            ref var raycastC = ref Entities.ClickerObject.RayCastTC;
+            ref var raycastC = ref Es.ClickerObject.RayCastTC;
 
 
             if (EventSystem.current.IsPointerOverGameObject())
@@ -36,14 +39,14 @@ namespace Game.Game
 
             if (raycast)
             {
-                foreach (byte idx_0 in Entities.CellEs.Idxs)
+                foreach (byte idx_0 in Es.CellEs.Idxs)
                 {
-                    int one = Entities.CellEs.CellE(idx_0).InstanceIDC.InstanceID;
+                    int one = Es.CellEs.CellE(idx_0).InstanceIDC.InstanceID;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        Entities.CurrentIdxE.IdxC.Idx = idx_0;
+                        Es.CurrentIdxE.IdxC.Idx = idx_0;
                         raycastC.Raycast = RaycastTypes.Cell;
                         return;
                     }

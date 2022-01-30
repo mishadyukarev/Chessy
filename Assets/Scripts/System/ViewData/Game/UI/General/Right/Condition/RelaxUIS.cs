@@ -2,21 +2,25 @@
 
 namespace Game.Game
 {
-    struct RelaxUIS : IEcsRunSystem
+    sealed class RelaxUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public RelaxUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            ref var unit_sel = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
-            ref var selOnUnitCom = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
+            ref var unit_sel = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitC;
+            ref var selOnUnitCom = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).OwnerC;
 
-            ref var selCondUnitC = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).ConditionC;
+            ref var selCondUnitC = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).ConditionC;
 
 
             var activeButt = false;
 
             if (unit_sel.Have)
             {
-                if (selOnUnitCom.Is(Entities.WhoseMove.CurPlayerI))
+                if (selOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
                 {
                     activeButt = true;
 

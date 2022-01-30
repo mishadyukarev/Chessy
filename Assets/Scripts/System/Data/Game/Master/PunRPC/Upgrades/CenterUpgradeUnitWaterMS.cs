@@ -1,23 +1,25 @@
 ﻿namespace Game.Game
 {
-    struct CenterUpgradeUnitWaterMS : IEcsRunSystem
+    sealed class CenterUpgradeUnitWaterMS : SystemAbstract, IEcsRunSystem
     {
+        public CenterUpgradeUnitWaterMS(in Entities ents) : base(ents) { }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
             {
                 for (var level = LevelTypes.None + 1; level < LevelTypes.End; level++)
                 {
-                    Entities.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Water, unit, level, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+                    Es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Water, unit, level, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
                 }
             }
-            Entities.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
-            Entities.AvailableCenterUpgradeEs.HaveWaterUpgrade(whoseMove).HaveUpgrade.Have = false;
+            Es.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
+            Es.AvailableCenterUpgradeEs.HaveWaterUpgrade(whoseMove).HaveUpgrade.Have = false;
 
-            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            Es.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

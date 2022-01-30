@@ -3,53 +3,60 @@ using Photon.Pun;
 
 namespace Game.Game
 {
-    struct DonerMS : IEcsRunSystem
+    sealed class DonerMS : SystemAbstract, IEcsRunSystem
     {
+        readonly SystemsMaster _systemsMaster;
+
+        public DonerMS(in SystemsMaster systemsM, in Entities ents) : base(ents)
+        {
+            _systemsMaster = systemsM;
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+            Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
 
             if (PhotonNetwork.OfflineMode)
             {
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
-                    foreach (byte idx_0 in Entities.CellEs.Idxs)
+                    foreach (byte idx_0 in Es.CellEs.Idxs)
                     {
-                        Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun.Take(2);
+                        Es.CellEs.UnitEs.Stun(idx_0).ForExitStun.Take(2);
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
-                    SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                    Entities.Rpc.ActiveMotionZoneToGen(sender);
+                    _systemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                    Es.Rpc.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
-                    foreach (byte idx_0 in Entities.CellEs.Idxs)
+                    foreach (byte idx_0 in Es.CellEs.Idxs)
                     {
-                        Entities.CellEs.UnitEs.Stun(idx_0).ForExitStun.Take();
+                        Es.CellEs.UnitEs.Stun(idx_0).ForExitStun.Take();
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 
-                    var curPlayer = Entities.WhoseMove.CurPlayerI;
-                    var nextPlayer = Entities.WhoseMove.NextPlayerFrom(curPlayer);
+                    var curPlayer = Es.WhoseMove.CurPlayerI;
+                    var nextPlayer = Es.WhoseMove.NextPlayerFrom(curPlayer);
 
                     if (nextPlayer == PlayerTypes.First)
                     {
-                        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                        Entities.Rpc.ActiveMotionZoneToGen(sender);
+                        _systemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                        Es.Rpc.ActiveMotionZoneToGen(sender);
                     }
 
-                    Entities.WhoseMove.WhoseMove.Player = nextPlayer;
+                    Es.WhoseMove.WhoseMove.Player = nextPlayer;
 
 
-                    curPlayer = Entities.WhoseMove.CurPlayerI;
+                    curPlayer = Es.WhoseMove.CurPlayerI;
 
                     //ViewDataSC.RotateAll.Invoke();
 
-                    Entities.FriendZoneE.IsActiveC.IsActive = true;
+                    Es.FriendZoneE.IsActiveC.IsActive = true;
                 }
             }
             else
@@ -64,8 +71,8 @@ namespace Game.Game
                 //    //    {
                 //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
 
-                //    //        Entities.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                //    //        Entities.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
                 //    //    }
 
                 //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

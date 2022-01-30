@@ -56,7 +56,7 @@ namespace Game.Game
                 .Add(new IdxC()));
 
             _rpcEnts.Add(RpcMasterTypes.BuyRes, gameW.NewEntity()
-                .Add(new ResourceTypeC()));
+                .Add(new ResourceTC()));
 
             _rpcEnts.Add(RpcMasterTypes.Shift, gameW.NewEntity()
                 .Add(new IdxFromToC()));
@@ -85,7 +85,7 @@ namespace Game.Game
                 .Add(new IdxFromToC()));
 
             _rpcEnts.Add(RpcMasterTypes.GiveTakeToolWeapon, gameW.NewEntity()
-                .Add(new ToolWeaponC())
+                .Add(new ToolWeaponTC())
                 .Add(new LevelTC())
                 .Add(new IdxC()));
 
@@ -103,7 +103,7 @@ namespace Game.Game
 
 
             _uniqEnts.Add(AbilityTypes.Seed, gameW.NewEntity()
-                .Add(new EnvironmetC())
+                .Add(new EnvironmetTC())
                 .Add(new IdxC()));
 
             _uniqEnts.Add(AbilityTypes.GrowAdultForest, gameW.NewEntity()

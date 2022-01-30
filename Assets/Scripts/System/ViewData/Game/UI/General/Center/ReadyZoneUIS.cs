@@ -4,15 +4,19 @@ using static Game.Game.EntityCenterUIPool;
 
 namespace Game.Game
 {
-    struct ReadyZoneUIS : IEcsRunSystem
+    sealed class ReadyZoneUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public ReadyZoneUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
             ref var readyBut = ref Ready<ButtonUIC>();
 
-            readyBut.Color = Entities.Ready(Entities.WhoseMove.CurPlayerI).IsReadyC.IsReady ? Color.red : Color.white;
+            readyBut.Color = Es.Ready(Es.WhoseMove.CurPlayerI).IsReadyC.IsReady ? Color.red : Color.white;
 
-            if (Entities.GameInfo.IsStartedGameC.IsStartedGame || PhotonNetwork.OfflineMode)
+            if (Es.GameInfo.IsStartedGameC.IsStartedGame || PhotonNetwork.OfflineMode)
             {
                 readyBut.SetActiveParent(false);
             }

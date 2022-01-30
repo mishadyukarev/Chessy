@@ -3,15 +3,19 @@ using static Game.Game.EntityCenterUIPool;
 
 namespace Game.Game
 {
-    struct MotionCenterUIS : IEcsRunSystem
+    sealed class MotionCenterUIS : SystemViewAbstract, IEcsRunSystem
     {
         float _timer;
 
+        public MotionCenterUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            if (Entities.Motion.IsActiveC.IsActive)
+            if (Es.Motion.IsActiveC.IsActive)
             {
-                Motion<MotionsUIEC>().Text = Entities.Motion.AmountMotions.Amount.ToString();
+                Motion<MotionsUIEC>().Text = Es.Motion.AmountMotions.Amount.ToString();
                 Motion<MotionsUIEC>().SetActiveParent(true);
 
                 _timer += Time.deltaTime;
@@ -19,7 +23,7 @@ namespace Game.Game
                 if (_timer >= 1)
                 {
                     Motion<MotionsUIEC>().SetActiveParent(false);
-                    Entities.Motion.IsActiveC.IsActive = false;
+                    Es.Motion.IsActiveC.IsActive = false;
                     _timer = 0;
                 }
             }

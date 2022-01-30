@@ -2,11 +2,15 @@
 
 namespace Game.Game
 {
-    public struct UpSunsUIS : IEcsRunSystem
+    sealed class UpSunsUIS : SystemViewAbstract, IEcsRunSystem
     {
+        internal UpSunsUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            switch (Entities.SunSidesE.SunSideTC.SunSide)
+            switch (Es.SunSidesE.SunSideTC.SunSide)
             {
                 case SunSideTypes.Dawn:
                     UpSunsUIEs.ImageC(true).SetActive(false);

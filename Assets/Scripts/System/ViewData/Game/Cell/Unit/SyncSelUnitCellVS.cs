@@ -2,26 +2,28 @@
 
 namespace Game.Game
 {
-    struct SyncSelUnitCellVS : IEcsRunSystem
+    sealed class SyncSelUnitCellVS : SystemViewAbstract, IEcsRunSystem
     {
+        internal SyncSelUnitCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView) { }
+
         public void Run()
         {
-            if (Entities.ClickerObject.CellClickC.Is(CellClickTypes.SetUnit))
+            if (Es.ClickerObject.CellClickC.Is(CellClickTypes.SetUnit))
             {
-                var idx_cur = Entities.CurrentIdxE.IdxC.Idx;
+                var idx_cur = Es.CurrentIdxE.IdxC.Idx;
 
-                ref var unitC_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).UnitC;
-                ref var levUnitC_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).LevelC;
+                ref var unitC_cur = ref Es.CellEs.UnitEs.Main(idx_cur).UnitC;
+                ref var levUnitC_cur = ref Es.CellEs.UnitEs.Main(idx_cur).LevelC;
 
-                ref var corner_cur = ref Entities.CellEs.UnitEs.Else(idx_cur).CornedC;
+                ref var corner_cur = ref Es.CellEs.UnitEs.Main(idx_cur).IsCorned;
 
                 ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_cur);
-                ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(Entities.PreviousVisionIdxE.IdxC.Idx);
+                ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(Es.PreviousVisionIdxE.IdxC.Idx);
 
 
                 if (unitC_cur.Have)
                 {
-                    if (Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
+                    if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
                     {
                         mainUnit_pre.Enable();
                     }
@@ -39,8 +41,8 @@ namespace Game.Game
                 }
 
 
-                var selUnitT = Entities.SelectedUnitE.UnitTC.Unit;
-                var selLevelUnitT = Entities.SelectedUnitE.LevelTC.Level;
+                var selUnitT = Es.SelectedUnitE.UnitTC.Unit;
+                var selLevelUnitT = Es.SelectedUnitE.LevelTC.Level;
 
                 switch (selUnitT)
                 {
@@ -56,7 +58,7 @@ namespace Game.Game
                         break;
 
                     case UnitTypes.Archer:
-                        mainUnit_cur.Sprite = ResourceSpriteVEs.Sprite(corner_cur.IsCornered, selLevelUnitT).SpriteC.Sprite;
+                        mainUnit_cur.Sprite = ResourceSpriteVEs.Sprite(corner_cur.Is, selLevelUnitT).SpriteC.Sprite;
                         break;
 
                     case UnitTypes.Scout:

@@ -1,30 +1,33 @@
 ﻿using Photon.Pun;
 using System;
-using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
 {
-    struct FirePawnMS : IEcsRunSystem
+    sealed class FirePawnMS : SystemAbstract, IEcsRunSystem
     {
+        public FirePawnMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
-            var uniq_cur = Entities.MasterEs.UniqueAbilityC.Ability;
+            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
 
-            ref var fire_0 = ref Entities.CellEs.FireEs.Fire(idx_0).Fire;
+            ref var fire_0 = ref Es.CellEs.FireEs.Fire(idx_0).Fire;
 
 
-            if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+            if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
             {
-                if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
+                if (Es.CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
                 {
-                    Entities.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
+                    Es.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                     fire_0.Enable();
-                    Entities.CellEs.UnitEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
                 }
                 else
                 {
@@ -34,7 +37,7 @@ namespace Game.Game
 
             else
             {
-                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

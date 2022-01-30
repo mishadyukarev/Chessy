@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct SystemViewDataUIManager
+    public sealed class SystemViewDataUIManager
     {
         static Dictionary<UITypes, Action> _actions;
 
-        public SystemViewDataUIManager(in bool def)
+        public SystemViewDataUIManager(in Entities ents, in EntitiesView entsView)
         {
             _actions = new Dictionary<UITypes, Action>();
 
@@ -19,43 +19,43 @@ namespace Game.Game
                 (Action)
 
                 ///Right
-                new RightZoneUIS().Run
-                + new StatsUIS().Run
-                + new ProtectUIS().Run
-                + new RelaxUIS().Run
-                + new UniqueButtonUIS().Run
-                + new FirstButtonBuildUIS().Run
-                + new SecButtonBuildUISys().Run
+                new RightZoneUIS(ents, entsView).Run
+                + new StatsUIS(ents, entsView).Run
+                + new ProtectUIS(ents, entsView).Run
+                + new RelaxUIS(ents, entsView).Run
+                + new UniqueButtonUIS(ents, entsView).Run
+                + new FirstButtonBuildUIS(ents, entsView).Run
+                + new SecButtonBuildUISys(ents, entsView).Run
                 + new ThirdBuildButtonUIS().Run
-                + new ShieldUIS().Run
+                + new ShieldUIS(ents, entsView).Run
                 + new EffectsUISys().Run
 
                 ///Down
-                + new DonerUIS().Run
-                + new GetterUnitsUIS().Run
-                + new DownToolWeaponUIS().Run
-                + new ScoutSyncUIS().Run
-                + new DownHeroUIS().Run
+                + new DonerUIS(ents, entsView).Run
+                + new GetterUnitsUIS(ents, entsView).Run
+                + new DownToolWeaponUIS(ents, entsView).Run
+                + new ScoutSyncUIS(ents, entsView).Run
+                + new DownHeroUIS(ents, entsView).Run
 
                 ///Up
-                + new EconomyUpUIS().Run
-                + new WindUIS().Run
-                + new UpSunsUIS().Run
+                + new EconomyUpUIS(ents, entsView).Run
+                + new WindUIS(ents, entsView).Run
+                + new UpSunsUIS(ents, entsView).Run
 
                 ///Center
-                + new SelectorUIS().Run
-                + new TheEndGameUIS().Run
-                + new MotionCenterUIS().Run
-                + new ReadyZoneUIS().Run
+                + new SelectorUIS(ents, entsView).Run
+                + new TheEndGameUIS(ents, entsView).Run
+                + new MotionCenterUIS(ents, entsView).Run
+                + new ReadyZoneUIS(ents, entsView).Run
                 + new MistakeUIS().Run
-                + new KingZoneUISys().Run
-                + new FriendZoneUISys().Run
-                + new PickUpgUIS().Run
-                + new HeroesSyncUIS().Run
+                + new KingZoneUISys(ents, entsView).Run
+                + new FriendZoneUISys(ents, entsView).Run
+                + new PickUpgUIS(ents, entsView).Run
+                + new HeroesSyncUIS(ents, entsView).Run
 
 
-                + new BuildZoneUIS().Run
-                + new EnvUIS().Run);
+                + new BuildZoneUIS(ents, entsView).Run
+                + new EnvUIS(ents, entsView).Run);
 
 
             _actions.Add(UITypes.RunAfterRPCSync, default);

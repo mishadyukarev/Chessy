@@ -1,52 +1,54 @@
-﻿using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct UpgradeUnitMS : IEcsRunSystem
+    sealed class UpgradeUnitMS : SystemAbstract, IEcsRunSystem
     {
+        public UpgradeUnitMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var idx_0 = Entities.MasterEs.UpgradeUnit<IdxC>().Idx;
+            var idx_0 = Es.MasterEs.UpgradeUnit<IdxC>().Idx;
 
-            ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
-            ref var levUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).LevelC;
-            ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
-
-
-            ref var hpUnit_0 = ref Entities.CellEs.UnitEs.Hp(idx_0).AmountC;
+            ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
+            ref var levUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
+            ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
 
 
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            ref var hpUnit_0 = ref Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health;
 
-            if (Entities.CellEs.UnitEs.Hp(idx_0).HaveMax)
+
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
+
+            if (Es.CellEs.UnitEs.StatEs.Hp(idx_0).HaveMax)
             {
-                if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Have)
+                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
                 {
-                    if (InventorResourcesE.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
+                    if (Es.InventorResourcesEs.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     {
-                        InventorResourcesE.BuyUpgradeUnit(whoseMove, unit_0.Unit);
+                        Es.InventorResourcesEs.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                        Entities.CellEs.UnitEs.Else(idx_0).LevelC.Level = LevelTypes.Second;
-                        Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                        Es.CellEs.UnitEs.Main(idx_0).LevelC.Level = LevelTypes.Second;
+                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
 
-                        Entities.CellEs.UnitEs.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
+                        Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health.Amount = CellUnitHpValues.MAX_HP;
 
-                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
+                        Es.Rpc.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                     }
                     else
                     {
-                        Entities.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                        Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                     }
                 }
                 else
                 {
-                    Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

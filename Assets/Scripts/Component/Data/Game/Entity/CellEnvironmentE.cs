@@ -3,22 +3,49 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class CellEnvironmentE : EntityAbstract
+    public abstract class CellEnvironmentE : EntityAbstract
     {
-        public ref EnvironmetC EnvironmentC => ref Ent.Get<EnvironmetC>();
-        public ref AmountC Resources => ref Ent.Get<AmountC>();
+        IdxC IdxC => Ent.Get<IdxC>();
+        protected EnvironmetTC EnvironmentTC => Ent.Get<EnvironmetTC>();
+        protected ResourceTC ResourceTC => Ent.Get<ResourceTC>();
+        protected ref AmountC Resources => ref Ent.Get<AmountC>();
 
-        public CellEnvironmentE(in EnvironmentTypes env, in EcsWorld world) : base(world)
+        public int AmountResources => Resources.Amount;
+        public bool HaveEnvironment => Resources.Have;
+        public bool HaveMaxResources => Resources.Amount >= CellEnvironmentValues.MaxResources(EnvironmentTC.Environment);
+        public float ProtectionPercent => UnitDamageValues.ProtectionPercent(EnvironmentTC.Environment);
+        public int NeedStepsShiftAttackUnit
         {
-            Ent.Add(new EnvironmetC(env));
+            get
+            {
+                switch (EnvironmentTC.Environment)
+                {
+                    case EnvironmentTypes.Fertilizer: return 0;
+                    case EnvironmentTypes.YoungForest: return 0;
+                    case EnvironmentTypes.AdultForest: return 1;
+                    case EnvironmentTypes.Hill: return 1;
+                    default: throw new Exception();
+                }
+            }
         }
 
-        public void SetNew()
+
+        public CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld world) : base(world)
         {
-            Resources.Amount = CellEnvironmentValues.RandomResources(EnvironmentC.Environment);
+            Ent
+                .Add(new EnvironmetTC(envT))
+                .Add(new ResourceTC(resT))
+                .Add(new IdxC(idx));
         }
-        public void Remove()
+
+        public virtual void SetNew(in WhereEnviromentEs whereEnviromentEs)
         {
+            whereEnviromentEs.Info(EnvironmentTC.Environment, IdxC.Idx).HaveEnv.Have = true;
+            Resources.Amount = CellEnvironmentValues.RandomResources(EnvironmentTC.Environment);
+        }
+        public virtual void Destroy(in WhereEnviromentEs whereEnviromentEs)
+        {
+            whereEnviromentEs.Info(EnvironmentTC.Environment, IdxC.Idx).HaveEnv.Have = false;
             Resources.Reset();
         }
     }

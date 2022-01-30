@@ -1,19 +1,22 @@
 ﻿using static Game.Game.CenterHerosUIE;
-using static Game.Game.CenterUpgradeUIE;
 
 namespace Game.Game
 {
-    struct HeroesSyncUIS : IEcsRunSystem
+    sealed class HeroesSyncUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public HeroesSyncUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
             var isActiveKingZone = CenterKingUIE.Paren.IsActiveSelf;
-            var curPlayerI = Entities.WhoseMove.CurPlayerI;
+            var curPlayerI = Es.WhoseMove.CurPlayerI;
 
             if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
-                && AvailableCenterHeroEs.HaveAvailHero(curPlayerI).Have)
+                && Es.AvailableCenterHero(curPlayerI).HaveCenterHero.Have)
             {
-                Parent.SetActive(!InventorUnitsE.HaveHero(curPlayerI, out var hero));
+                Parent.SetActive(!Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero));
             }
             else
             {

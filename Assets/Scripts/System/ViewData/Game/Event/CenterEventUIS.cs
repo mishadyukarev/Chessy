@@ -1,18 +1,18 @@
 ﻿using Game.Common;
 using Photon.Pun;
 using UnityEngine;
-using static Game.Game.EntityVPool;
+using static Game.Game.CenterHerosUIE;
+using static Game.Game.CenterHintUIE;
+using static Game.Game.CenterUpgradeUIE;
 using static Game.Game.EconomyUpUIE;
 using static Game.Game.EntityCenterUIPool;
-using static Game.Game.CenterHerosUIE;
-using static Game.Game.CenterUpgradeUIE;
-using static Game.Game.CenterHintUIE;
+using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
-    sealed class CenterEventUIS
+    sealed class CenterEventUIS : SystemViewAbstract
     {
-        internal CenterEventUIS()
+        internal CenterEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
             Ready<ButtonUIC>().AddListener(Ready);
             JoinDiscord<ButtonUIC>().AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
@@ -39,24 +39,24 @@ namespace Game.Game
             ButtonC(UnitTypes.None).AddListener(OpenShop);
         }
 
-        void Ready() => Entities.Rpc.ReadyToMaster();
+        void Ready() => Es.Rpc.ReadyToMaster();
         void FriendReady()
         {
-            Entities.FriendZoneE.IsActiveC.IsActive = false;
+            Es.FriendZoneE.IsActiveC.IsActive = false;
         }
         void GetKing()
         {
-            Entities.SelectedIdxE.IdxC.Reset();
+            Es.SelectedIdxE.IdxC.Reset();
 
 
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
-                if (InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, Entities.WhoseMove.CurPlayerI).Have)
+                if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).Units.Have)
                 {
-                    Entities.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
+                    Es.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 
-                    Entities.SelectedUnitE.UnitTC.Unit = UnitTypes.King;
-                    Entities.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+                    Es.SelectedUnitE.UnitTC.Unit = UnitTypes.King;
+                    Es.SelectedUnitE.LevelTC.Level = LevelTypes.First;
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
@@ -78,9 +78,9 @@ namespace Game.Game
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
-                Entities.Rpc.PickUpgUnitToMas(unit);
+                Es.Rpc.PickUpgUnitToMas(unit);
 
                 Parent.SetActive(true);
             }
@@ -89,9 +89,9 @@ namespace Game.Game
 
         void UpgradeBuild(BuildingTypes build)
         {
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
-                Entities.Rpc.PickUpgBuildToMas(build);
+                Es.Rpc.PickUpgBuildToMas(build);
 
                 Parent.SetActive(true);
             }
@@ -100,9 +100,9 @@ namespace Game.Game
 
         void UpgradeWater()
         {
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
-                Entities.Rpc.UpgWater();
+                Es.Rpc.UpgWater();
 
                 Parent.SetActive(true);
             }
@@ -111,9 +111,9 @@ namespace Game.Game
 
         void GetHero(in UnitTypes unit)
         {
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
-                Entities.Rpc.GetHeroToMaster(unit);
+                Es.Rpc.GetHeroToMaster(unit);
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
         }

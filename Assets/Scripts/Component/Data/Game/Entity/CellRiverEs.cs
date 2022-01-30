@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct CellRiverEs
+    public readonly struct CellRiverEs
     {
-        CellRiverE[] _rivers;
-        Dictionary<DirectTypes, CellRiverDirectE[]> _directs;
+        readonly CellRiverE[] _rivers;
+        readonly Dictionary<DirectTypes, CellRiverDirectE[]> _directs;
 
         public CellRiverE River(in byte idx) => _rivers[idx];
         public CellRiverDirectE HaveRive(in DirectTypes dir, in byte idx) => _directs[dir][idx];

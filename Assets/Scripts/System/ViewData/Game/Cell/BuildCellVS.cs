@@ -1,58 +1,60 @@
 ﻿using System;
 using UnityEngine;
-using static Game.Game.CellBuildEs;
 using static Game.Game.CellBuildingVEs;
-using static Game.Game.CellEs;
 
 namespace Game.Game
 {
-    struct BuildCellVS : IEcsRunSystem
+    sealed class BuildCellVS : SystemViewAbstract, IEcsRunSystem
     {
+        public BuildCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            foreach (byte idx_0 in Entities.CellEs.Idxs)
+            foreach (byte idx_0 in Es.CellEs.Idxs)
             {
-                ref var build_cur = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
-                ref var ownBuild_cur = ref Entities.CellEs.BuildEs.Build(idx_0).PlayerTC;
+                ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
+                ref var ownBuild_0 = ref Es.CellEs.BuildEs.Build(idx_0).PlayerTC;
 
 
-                var buildT = build_cur.Build;
-                var isVisForMe = Entities.CellEs.BuildEs.IsVisible(Entities.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
-                var isVisForNext = Entities.CellEs.BuildEs.IsVisible(Entities.WhoseMove.NextPlayerFrom(Entities.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
+                var buildT = build_0.Build;
+                var isVisForMe = Es.CellEs.BuildEs.IsVisible(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
+                var isVisForNext = Es.CellEs.BuildEs.IsVisible(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
 
-                if (buildT != BuildingTypes.None)
+                if (Es.CellEs.BuildEs.Build(idx_0).Health.Have)
                 {
                     if (isVisForMe)
                     {
-                        BuildFront<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.Sprite(buildT).SpriteC.Sprite;
-                        BuildBack<SpriteRendererVC>(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(buildT).SpriteC.Sprite;
+                        BuildFront(idx_0).Sprite = ResourceSpriteVEs.Sprite(buildT).SpriteC.Sprite;
+                        BuildBack(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(buildT).SpriteC.Sprite;
 
-                        BuildFront<SpriteRendererVC>(idx_0).Enable();
-                        BuildBack<SpriteRendererVC>(idx_0).Enable();
+                        BuildFront(idx_0).Enable();
+                        BuildBack(idx_0).Enable();
 
-                        var color = BuildFront<SpriteRendererVC>(idx_0).Color;
+                        var color = BuildFront(idx_0).Color;
                         color.a = isVisForNext ? 1 : 0.7f;
-                        BuildFront<SpriteRendererVC>(idx_0).Color = color;
-                        BuildBack<SpriteRendererVC>(idx_0).Color = color;
+                        BuildFront(idx_0).Color = color;
+                        BuildBack(idx_0).Color = color;
 
-                        switch (ownBuild_cur.Player)
+                        switch (ownBuild_0.Player)
                         {
                             case PlayerTypes.None: throw new Exception();
-                            case PlayerTypes.First: BuildBack<SpriteRendererVC>(idx_0).Color = Color.blue; break;
-                            case PlayerTypes.Second: BuildBack<SpriteRendererVC>(idx_0).Color = Color.red; break;
+                            case PlayerTypes.First: BuildBack(idx_0).Color = Color.blue; break;
+                            case PlayerTypes.Second: BuildBack(idx_0).Color = Color.red; break;
                             default: throw new Exception();
                         }
                     }
                     else
                     {
-                        BuildFront<SpriteRendererVC>(idx_0).Disable();
-                        BuildBack<SpriteRendererVC>(idx_0).Disable();
+                        BuildFront(idx_0).Disable();
+                        BuildBack(idx_0).Disable();
                     }
                 }
                 else
                 {
-                    BuildFront<SpriteRendererVC>(idx_0).Disable();
-                    BuildBack<SpriteRendererVC>(idx_0).Disable();
+                    BuildFront(idx_0).Disable();
+                    BuildBack(idx_0).Disable();
                 }
             }
         }

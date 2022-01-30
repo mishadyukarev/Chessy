@@ -55,7 +55,7 @@
 //            //PickUpgC.SetHaveUpgrade(whoseMove, false);
 //            //PickUpgC.SetHave_But(whoseMove, ForPickUpgMasC.UpgButType, false);
 
-//            Entities.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+//            Ents.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
 //            //}
 //        }
 //    }

@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct CanSetUnitC : ICellForSetUnitE
+    public struct CanSetUnitC
     {
         public bool Can;
     }

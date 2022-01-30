@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
-using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-using static Game.Game.CellBuildEs;
-
 using static Game.Game.EconomyUpUIE;
 
 namespace Game.Game
 {
-    struct EconomyUpUIS : IEcsRunSystem
+    sealed class EconomyUpUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public EconomyUpUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            var curPlayer = Entities.WhoseMove.CurPlayerI;
+            var unitEs = Es.CellEs.UnitEs;
+            var envEs = Es.CellEs.EnvironmentEs;
+
+
+            var curPlayer = Es.WhoseMove.CurPlayerI;
 
 
             var extracts = new Dictionary<ResourceTypes, int>();
@@ -22,20 +26,20 @@ namespace Game.Game
             extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
 
 
-            foreach (var idx_0 in Entities.CellEs.Idxs)
+            foreach (var idx_0 in Es.CellEs.Idxs)
             {
-                if (Entities.CellEs.UnitEs.Else(idx_0).UnitC.Have && Entities.CellEs.UnitEs.Else(idx_0).OwnerC.Is(Entities.WhoseMove.CurPlayerI))
+                if (Es.CellEs.UnitEs.Main(idx_0).UnitC.Have && Es.CellEs.UnitEs.Main(idx_0).OwnerC.Is(Es.WhoseMove.CurPlayerI))
                 {
-                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Entities.CellEs.UnitEs.Else(idx_0).UnitC.Unit);
+                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Es.CellEs.UnitEs.Main(idx_0).UnitC.Unit);
 
-                    if (Entities.CellEs.UnitEs.CanExtract(idx_0, out var extract, out var env, out var res))
+                    if (unitEs.CanExtract(idx_0, envEs, out var extract, out var env, out var res))
                     {
                         extracts[res] += extract;
                     }
                 }
-                if (Entities.CellEs.BuildEs.Build(idx_0).BuildTC.Have && Entities.CellEs.BuildEs.Build(idx_0).PlayerTC.Is(Entities.WhoseMove.CurPlayerI))
+                if (Es.CellEs.BuildEs.Build(idx_0).BuildTC.Have && Es.CellEs.BuildEs.Build(idx_0).PlayerTC.Is(Es.WhoseMove.CurPlayerI))
                 {
-                    if (Entities.CellEs.BuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
+                    if (Es.CellEs.BuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
                     {
                         extracts[res] += extract;
                     }
@@ -51,7 +55,7 @@ namespace Game.Game
 
             for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
             {
-                Economy<TextUIC>(res).Text = InventorResourcesE.Resource(res, curPlayer).Amount.ToString();
+                Economy<TextUIC>(res).Text = Es.InventorResourcesEs.Resource(res, curPlayer).Resources.Amount.ToString();
             }
         }
     }

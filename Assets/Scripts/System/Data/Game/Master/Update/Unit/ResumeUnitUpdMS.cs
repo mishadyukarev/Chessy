@@ -1,16 +1,17 @@
-﻿using static Game.Game.CellEs;
-using static Game.Game.CellUnitEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct ResumeUnitUpdMS : IEcsRunSystem
+    sealed class ResumeUnitUpdMS : SystemAbstract, IEcsRunSystem
     {
+        public ResumeUnitUpdMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
-            foreach (var idx_0 in Entities.CellEs.Idxs)
+            foreach (var idx_0 in Es.CellEs.Idxs)
             {
-                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
-                ref var condUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).ConditionC;
+                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
+                ref var condUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).ConditionC;
 
                 //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 //{

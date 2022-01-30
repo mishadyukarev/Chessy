@@ -2,17 +2,21 @@
 
 namespace Game.Game
 {
-    struct BuildZoneUIS : IEcsRunSystem
+    sealed class BuildZoneUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public BuildZoneUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            ref var unit_sel = ref Entities.CellEs.BuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
-            ref var own_sel = ref Entities.CellEs.BuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).PlayerTC;
+            ref var unit_sel = ref Es.CellEs.BuildEs.Build(Es.SelectedIdxE.IdxC.Idx).BuildTC;
+            ref var own_sel = ref Es.CellEs.BuildEs.Build(Es.SelectedIdxE.IdxC.Idx).PlayerTC;
 
 
-            if (Entities.SelectedIdxE.IsSelCell && unit_sel.Is(BuildingTypes.City))
+            if (Es.SelectedIdxE.IsSelCell && unit_sel.Is(BuildingTypes.City))
             {
-                if (own_sel.Is(Entities.WhoseMove.CurPlayerI))
+                if (own_sel.Is(Es.WhoseMove.CurPlayerI))
                 {
                     Melt<ButtonUIC>().SetActiveParent(true);
                 }

@@ -1,20 +1,24 @@
 ﻿namespace Game.Game
 {
-    struct FirstButtonBuildUIS : IEcsRunSystem
+    sealed class FirstButtonBuildUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public FirstButtonBuildUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
             var buildT = BuildingTypes.None;
 
-            if (Entities.SelectedIdxE.IsSelCell)
+            if (Es.SelectedIdxE.IsSelCell)
             {
-                ref var selUnitDatCom = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).UnitC;
+                ref var selUnitDatCom = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitC;
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var selOnUnitCom = ref Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).OwnerC;
+                    ref var selOnUnitCom = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).OwnerC;
 
-                    if (selOnUnitCom.Is(Entities.WhoseMove.CurPlayerI))
+                    if (selOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
                     {
                         buildT = BuildingTypes.Farm;
                     }

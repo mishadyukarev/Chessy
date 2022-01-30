@@ -3,9 +3,9 @@ using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
-    sealed class RightUnitEventUIS
+    sealed class RightUnitEventUIS : SystemViewAbstract
     {
-        internal RightUnitEventUIS()
+        public RightUnitEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
             EntitiesView.UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
             EntitiesView.UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
@@ -22,17 +22,17 @@ namespace Game.Game
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (Entities.CellEs.UnitEs.Else(Entities.SelectedIdxE.IdxC.Idx).ConditionC.Is(condUnitType))
+                if (Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).ConditionC.Is(condUnitType))
                 {
-                    Entities.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, Entities.SelectedIdxE.IdxC.Idx);
+                    Es.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, Es.SelectedIdxE.IdxC.Idx);
                 }
                 else
                 {
-                    Entities.Rpc.ConditionUnitToMaster(condUnitType, Entities.SelectedIdxE.IdxC.Idx);
+                    Es.Rpc.ConditionUnitToMaster(condUnitType, Es.SelectedIdxE.IdxC.Idx);
                 }
             }
             else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
@@ -40,110 +40,103 @@ namespace Game.Game
 
         void Unique(ButtonTypes uniqueButton)
         {
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
-                var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
+                var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-                ref var abil = ref Entities.CellEs.UnitEs.UniqueButton(uniqueButton, idx_sel).AbilityC;
+                ref var abil = ref Es.CellEs.UnitEs.UniqueButton(uniqueButton, idx_sel).AbilityC;
 
-                if (!Entities.CellEs.UnitEs.CooldownUnique(abil.Ability, idx_sel).Cooldown.Have)
+                if (!Es.CellEs.UnitEs.Unique(abil.Ability, idx_sel).Cooldown.Have)
                 {
                     switch (abil.Ability)
                     {
                         case AbilityTypes.FirePawn:
-                            Entities.Rpc.FirePawnToMas(idx_sel);
+                            Es.Rpc.FirePawnToMas(idx_sel);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
                         case AbilityTypes.PutOutFirePawn:
-                            Entities.Rpc.PutOutFirePawnToMas(idx_sel);
+                            Es.Rpc.PutOutFirePawnToMas(idx_sel);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
                         case AbilityTypes.Seed:
-                            Entities.Rpc.SeedEnvToMaster(idx_sel, EnvironmentTypes.YoungForest);
+                            Es.Rpc.SeedEnvToMaster(idx_sel, EnvironmentTypes.YoungForest);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
                         case AbilityTypes.FireArcher:
-                            Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                            Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.FireArcher;
+                            Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
+                            Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.FireArcher;
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
                         case AbilityTypes.CircularAttack:
-                            Entities.Rpc.CircularAttackKingToMaster(idx_sel);
+                            Es.Rpc.CircularAttackKingToMaster(idx_sel);
                             TryOnHint(VideoClipTypes.CircularAttack);
                             break;
 
                         case AbilityTypes.StunElfemale:
                             {
-                                Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.StunElfemale;
+                                Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
+                                Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.StunElfemale;
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
                             break;
 
                         case AbilityTypes.BonusNear:
-                            Entities.Rpc.BonusNearUnits(idx_sel);
+                            Es.Rpc.BonusNearUnits(idx_sel);
                             TryOnHint(VideoClipTypes.BonusKing);
                             break;
 
                         case AbilityTypes.ChangeCornerArcher:
                             {
-                                Entities.Rpc.ChangeCornerArchToMas(idx_sel);
+                                Es.Rpc.ChangeCornerArchToMas(idx_sel);
                             }
                             break;
 
                         case AbilityTypes.GrowAdultForest:
-                            Entities.Rpc.GrowAdultForest(idx_sel);
+                            Es.Rpc.GrowAdultForest(idx_sel);
                             TryOnHint(VideoClipTypes.GrowingAdForesElfemale);
                             break;
 
                         case AbilityTypes.ChangeDirectionWind:
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
-                                Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.ChangeDirectionWind;
-                            }
-                            break;
-
-                        case AbilityTypes.FreezeDirectEnemy:
-                            {
-                                Entities.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Entities.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.FreezeDirectEnemy;
+                                Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
+                                Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.ChangeDirectionWind;
                             }
                             break;
 
                         case AbilityTypes.IceWall:
                             {
-                                Entities.Rpc.IceWallToMaster(idx_sel);
+                                Es.Rpc.IceWallToMaster(idx_sel);
                             }
                             break;
 
                         case AbilityTypes.Farm:
                             {
-                                Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.Farm);
+                                Es.Rpc.BuildToMaster(idx_sel, BuildingTypes.Farm);
                                 TryOnHint(VideoClipTypes.BuldFarms);
                             }
                             break;
 
                         case AbilityTypes.Mine:
                             {
-                                Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.Mine);
+                                Es.Rpc.BuildToMaster(idx_sel, BuildingTypes.Mine);
                                 TryOnHint(VideoClipTypes.BuildMine);
                             }
                             break;
 
                         case AbilityTypes.City:
                             {
-                                Entities.Rpc.BuildToMaster(idx_sel, BuildingTypes.City);
+                                Es.Rpc.BuildToMaster(idx_sel, BuildingTypes.City);
                             }
                             break;
 
                         case AbilityTypes.DestroyBuilding:
                             {
-                                Entities.Rpc.DestroyBuildingToMaster(idx_sel);
+                                Es.Rpc.DestroyBuildingToMaster(idx_sel);
                             }
                             break;
 
@@ -158,9 +151,9 @@ namespace Game.Game
 
         void ExecuteBuild_Button(ButtonTypes buildBut)
         {
-            var idx_sel = Entities.SelectedIdxE.IdxC.Idx;
+            var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
                 switch (buildBut)
                 {
@@ -176,14 +169,14 @@ namespace Game.Game
                         break;
 
                     case ButtonTypes.Third:
-                        
+
                         //switch (BuildAbilC.AbilityType(buildBut))
                         //{
                         //    case BuildAbilityTypes.None: throw new Exception();
                         //    case BuildAbilityTypes.FarmBuild: throw new Exception();
                         //    case BuildAbilityTypes.MineBuild: throw new Exception();
                         //    case BuildAbilityTypes.CityBuild:
-                        //        Entities.Rpc.BuildToMaster(EntitiesPool.SelectedIdxE.SelIdx<IdxC>().Idx, BuildTypes.City);
+                        //        Ents.Rpc.BuildToMaster(EntitiesPool.SelectedIdxE.SelIdx<IdxC>().Idx, BuildTypes.City);
                         //        break;
 
                         //    case BuildAbilityTypes.Destroy:

@@ -2,14 +2,18 @@
 
 namespace Game.Game
 {
-    struct PickUpgUIS : IEcsRunSystem
+    sealed class PickUpgUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public PickUpgUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            var curPlayer = Entities.WhoseMove.CurPlayerI;
+            var curPlayer = Es.WhoseMove.CurPlayerI;
 
-            var isActivatedZone = Entities.AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).HaveUpgrade.Have
-                && !InventorUnitsE.Units(UnitTypes.King, LevelTypes.First, curPlayer).Have;
+            var isActivatedZone = Es.AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).HaveUpgrade.Have
+                && !Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, curPlayer).Units.Have;
 
             Paren.SetActive(isActivatedZone);
 
@@ -17,7 +21,7 @@ namespace Game.Game
             {
                 for (var build = BuildingTypes.Farm; build <= BuildingTypes.Mine; build++)
                 {
-                    if (Entities.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Entities.WhoseMove.CurPlayerI).HaveUpgrade.Have)
+                    if (Es.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Es.WhoseMove.CurPlayerI).HaveUpgrade.Have)
                     {
                         Builds(build).SetActive(true);
                     }

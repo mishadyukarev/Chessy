@@ -1,13 +1,16 @@
-﻿using Game.Common;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Game
 {
-    struct DonerUIS : IEcsRunSystem
+    sealed class DonerUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public DonerUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            if (Entities.WhoseMove.IsMyMove)
+            if (Es.WhoseMove.IsMyMove)
             {
                 UIEntDownDoner.Wait<GameObjectVC>().SetActive(false);
                 UIEntDownDoner.Doner<ButtonUIC>().Color = Color.white;

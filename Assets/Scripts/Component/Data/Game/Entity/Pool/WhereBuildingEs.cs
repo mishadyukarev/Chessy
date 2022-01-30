@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct WhereBuildingEs
+    public readonly struct WhereBuildingEs
     {
-        Dictionary<string, HaveBuildE> _builds;
+        readonly Dictionary<string, HaveBuildE> _builds;
 
         string Key(in BuildingTypes build, in PlayerTypes owner, in byte idx) => build.ToString() + owner + idx;
 
@@ -41,7 +41,7 @@ namespace Game.Game
 
             for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
             {
-                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
                 {
                     for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                     {

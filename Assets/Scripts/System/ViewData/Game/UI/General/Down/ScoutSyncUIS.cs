@@ -2,14 +2,18 @@
 
 namespace Game.Game
 {
-    struct ScoutSyncUIS : IEcsRunSystem
+    sealed class ScoutSyncUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public ScoutSyncUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            var curPlayer = Entities.WhoseMove.CurPlayerI;
+            var curPlayer = Es.WhoseMove.CurPlayerI;
 
-            var isActive = InventorUnitsE.Units(UnitTypes.Scout, LevelTypes.First, curPlayer).Have;
-            var cooldown = Entities.ScoutHeroCooldownE(UnitTypes.Scout, curPlayer).Cooldown.Amount;
+            var isActive = Es.InventorUnitsEs.Units(UnitTypes.Scout, LevelTypes.First, curPlayer).Units.Have;
+            var cooldown = Es.ScoutHeroCooldownE(UnitTypes.Scout, curPlayer).Cooldown.Amount;
 
 
             Scout<ButtonUIC>().SetActive(isActive);

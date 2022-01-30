@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct CellTrailEs
+    public readonly struct CellTrailEs
     {
-        Dictionary<DirectTypes, CellTrailE[]> _trails;
-        Dictionary<PlayerTypes, CellTrailPlayerE[]> _players;
+        readonly Dictionary<DirectTypes, CellTrailE[]> _trails;
+        readonly Dictionary<PlayerTypes, CellTrailPlayerE[]> _players;
 
         public CellTrailE Trail(in DirectTypes dir, in byte idx) => _trails[dir][idx];
         public CellTrailPlayerE IsVisible(in PlayerTypes player, in byte idx) => _players[player][idx];
@@ -60,18 +60,6 @@ namespace Game.Game
             }
         }
 
-        public bool TrySetNewTrail(in byte idx, in DirectTypes dir, in bool haveAdultForest)
-        {
-            if (haveAdultForest) Trail(dir, idx).Health.Amount = 7;
-            return haveAdultForest;
-        }
-        public void SetAllTrail(in byte idx)
-        {
-            foreach (var item in Keys)
-            {
-                Trail(item, idx).Health.Amount = 7;
-            }
-        }
         public void ResetAll(in byte idx)
         {
             foreach (var item in Keys)

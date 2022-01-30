@@ -1,16 +1,18 @@
-﻿using static Game.Game.CellEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    struct UpdateHealingUnitMS : IEcsRunSystem
+    sealed class UpdateHealingUnitMS : SystemAbstract, IEcsRunSystem
     {
+        public UpdateHealingUnitMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
-            foreach (var idx_0 in Entities.CellEs.Idxs)
+            foreach (var idx_0 in Es.CellEs.Idxs)
             {
-                if (Entities.CellEs.UnitEs.Else(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
+                if (Es.CellEs.UnitEs.Main(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
                 {
-                    Entities.CellEs.UnitEs.Hp(idx_0).AmountC.Amount = UnitHpValues.MAX_HP;
+                    Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health.Amount = CellUnitHpValues.MAX_HP;
                 }
             }
         }

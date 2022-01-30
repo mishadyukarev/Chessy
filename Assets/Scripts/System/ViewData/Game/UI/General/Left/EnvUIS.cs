@@ -1,22 +1,25 @@
-﻿using static Game.Game.CellEnvironmentEs;
-using static Game.Game.EntityLeftEnvUIPool;
+﻿using static Game.Game.EntityLeftEnvUIPool;
 
 namespace Game.Game
 {
-    struct EnvUIS : IEcsRunSystem
+    sealed class EnvUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public EnvUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            ref var build_sel = ref Entities.CellEs.BuildEs.Build(Entities.SelectedIdxE.IdxC.Idx).BuildTC;
+            ref var build_sel = ref Es.CellEs.BuildEs.Build(Es.SelectedIdxE.IdxC.Idx).BuildTC;
 
 
-            if (Entities.SelectedIdxE.IsSelCell && !build_sel.Is(BuildingTypes.City))
+            if (Es.SelectedIdxE.IsSelCell && !build_sel.Is(BuildingTypes.City))
             {
                 Info<ButtonUIC>().SetActiveParent(true);
 
-                Resources<TextUIC>(ResourceTypes.Food).Text = Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
-                Resources<TextUIC>(ResourceTypes.Wood).Text = Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
-                Resources<TextUIC>(ResourceTypes.Ore).Text = Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Hill, Entities.SelectedIdxE.IdxC.Idx).Resources.Amount.ToString();
+                Resources<TextUIC>(ResourceTypes.Food).Text = Es.CellEs.EnvironmentEs.Fertilizer(Es.SelectedIdxE.IdxC.Idx).AmountResources.ToString();
+                Resources<TextUIC>(ResourceTypes.Wood).Text = Es.CellEs.EnvironmentEs.AdultForest(Es.SelectedIdxE.IdxC.Idx).AmountResources.ToString();
+                Resources<TextUIC>(ResourceTypes.Ore).Text = Es.CellEs.EnvironmentEs.Hill(Es.SelectedIdxE.IdxC.Idx).AmountResources.ToString();
             }
             else
             {

@@ -3,19 +3,23 @@ using static Game.Game.CenterFriendUIE;
 
 namespace Game.Game
 {
-    struct FriendZoneUISys : IEcsRunSystem
+    sealed class FriendZoneUISys : SystemViewAbstract, IEcsRunSystem
     {
+        public FriendZoneUISys(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
             ButtonC.SetActiveParent(false);
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
-                if (Entities.FriendZoneE.IsActiveC.IsActive)
+                if (Es.FriendZoneE.IsActiveC.IsActive)
                 {
                     TextC.SetActiveParent(true);
 
-                    if (Entities.WhoseMove.CurPlayerI == PlayerTypes.First)
+                    if (Es.WhoseMove.CurPlayerI == PlayerTypes.First)
                     {
                         TextC.Text = "1";
                     }

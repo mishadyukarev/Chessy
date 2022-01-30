@@ -1,16 +1,20 @@
 ﻿namespace Game.Game
 {
-    struct GetHeroMS : IEcsRunSystem
+    sealed class GetHeroMS : SystemAbstract, IEcsRunSystem
     {
+        public GetHeroMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var unit = Entities.MasterEs.ForGetHero.Unit;
+            var unit = Es.MasterEs.ForGetHero.Unit;
 
-            var whoseMove = Entities.WhoseMove.WhoseMove.Player;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            InventorUnitsE.Units(unit, LevelTypes.First, whoseMove)++;
-            AvailableCenterHeroEs.HaveAvailHero(whoseMove).Have = false;
+            Es.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).Units++;
+            Es.AvailableCenterHero(whoseMove).HaveCenterHero.Have = false;
         }
     }
 }

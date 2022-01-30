@@ -4,11 +4,15 @@ using static Game.Game.EconomyUpUIE;
 
 namespace Game.Game
 {
-    struct WindUIS : IEcsRunSystem
+    sealed class WindUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public WindUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            switch (Entities.WindE.DirectWind.Direct)
+            switch (Es.WindE.DirectWind.Direct)
             {
                 case DirectTypes.None: throw new Exception();
                 case DirectTypes.Right: DirectWind<TransformVC>().EulerAngles = new Vector3(); break;
@@ -22,7 +26,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            if (Entities.WhoseMove.CurPlayerI == PlayerTypes.Second)
+            if (Es.WhoseMove.CurPlayerI == PlayerTypes.Second)
                 DirectWind<TransformVC>().EulerAngles += new Vector3(0, 0, 180);
         }
     }

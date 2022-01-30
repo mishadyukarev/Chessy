@@ -1,23 +1,26 @@
 ﻿using Game.Common;
 using System;
-using static Game.Game.CellEs;
-using static Game.Game.CellRiverEs;
-using static Game.Game.CellUnitEs;
 
 namespace Game.Game
 {
-    struct UpdateThirstyMS : IEcsRunSystem
+    sealed class UpdateThirstyMS : SystemAbstract, IEcsRunSystem
     {
+        public UpdateThirstyMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
-            foreach (byte idx_0 in Entities.CellEs.Idxs)
-            {
-                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
-                ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
-                ref var hp_0 = ref Entities.CellEs.UnitEs.Hp(idx_0).AmountC;
-                ref var water_0 = ref Entities.CellEs.UnitEs.Water(idx_0).AmountC;
+            var unitEs = Es.CellEs.UnitEs;
 
-                ref var build_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+            foreach (byte idx_0 in Es.CellEs.Idxs)
+            {
+                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
+                ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
+                ref var hp_0 = ref Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health;
+                ref var water_0 = ref Es.CellEs.UnitEs.StatEs.Water(idx_0).Water;
+
+                ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
 
 
                 if (unit_0.Have && !unit_0.IsAnimal)
@@ -32,19 +35,19 @@ namespace Game.Game
 
                     if (canExecute)
                     {
-                        if (Entities.CellEs.RiverEs.River(idx_0).RiverTC.HaveRiver)
+                        if (Es.CellEs.RiverEs.River(idx_0).RiverTC.HaveRiver)
                         {
-                            Entities.CellEs.UnitEs.Water(idx_0).AmountC.Amount = Entities.CellEs.UnitEs.MaxWater(idx_0);
+                            Es.CellEs.UnitEs.StatEs.Water(idx_0).SetMax(Es.CellEs.UnitEs.Main(idx_0), Es.UnitStatUpgradesEs);
                         }
                         else
                         {
-                            Entities.CellEs.UnitEs.Water(idx_0).AmountC.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f));
+                            Es.CellEs.UnitEs.StatEs.Water(idx_0).Water.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f));
 
 
                             if (!water_0.Have)
                             {
                                 float percent = 0;
-                                switch (Entities.CellEs.UnitEs.Else(idx_0).UnitC.Unit)
+                                switch (Es.CellEs.UnitEs.Main(idx_0).UnitC.Unit)
                                 {
                                     case UnitTypes.None: throw new Exception();
                                     case UnitTypes.King: percent = 0.4f; break;
@@ -55,17 +58,17 @@ namespace Game.Game
                                     case UnitTypes.Snowy: percent = 0.5f; break;
                                     default: throw new Exception();
                                 }
-                                Entities.CellEs.UnitEs.Hp(idx_0).AmountC.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
+                                Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health.Take((int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent));
 
 
                                 if (!hp_0.Have)
                                 {
                                     if (build_0.Is(BuildingTypes.Camp))
                                     {
-                                        Entities.WhereBuildingEs.HaveBuild(Entities.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
-                                        Entities.CellEs.BuildEs.Build(idx_0).Remove();
+                                        Es.WhereBuildingEs.HaveBuild(Es.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
+                                        Es.CellEs.BuildEs.Build(idx_0).Remove();
                                     }
-                                    Entities.CellEs.UnitEs.Kill(idx_0);
+                                    unitEs.Kill(idx_0, Es);
                                 }
                             }
                         }

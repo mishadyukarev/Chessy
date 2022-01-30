@@ -4,19 +4,23 @@ using static Game.Game.CellBlocksVEs;
 
 namespace Game.Game
 {
-    struct UnitStatCellSyncS : IEcsRunSystem
+    sealed class UnitStatCellSyncS : SystemViewAbstract, IEcsRunSystem
     {
+        public UnitStatCellSyncS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            foreach (byte idx_0 in Entities.CellEs.Idxs)
+            foreach (byte idx_0 in Es.CellEs.Idxs)
             {
-                ref var unit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).UnitC;
-                ref var level_0 = ref Entities.CellEs.UnitEs.Else(idx_0).LevelC;
-                ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
-                ref var hpUnit_0 = ref Entities.CellEs.UnitEs.Hp(idx_0).AmountC;
-                ref var step_0 = ref Entities.CellEs.UnitEs.Step(idx_0).Steps;
-                ref var water_0 = ref Entities.CellEs.UnitEs.Water(idx_0).AmountC;
-                ref var condUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).ConditionC;
+                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
+                ref var level_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
+                ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
+                ref var hpUnit_0 = ref Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health;
+                ref var step_0 = ref Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps;
+                ref var water_0 = ref Es.CellEs.UnitEs.StatEs.Water(idx_0).Water;
+                ref var condUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).ConditionC;
 
 
                 Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
@@ -27,18 +31,18 @@ namespace Game.Game
                 Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
-                if (Entities.CellEs.UnitEs.VisibleE(Entities.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
+                if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
                 {
                     if (unit_0.Have)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
 
-                        float xCordinate = (float)hpUnit_0.Amount / UnitHpValues.MAX_HP;
+                        float xCordinate = (float)hpUnit_0.Amount / CellUnitHpValues.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Entities.CellEs.UnitEs.Water(idx_0).AmountC.Amount <= CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
-                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(Entities.CellEs.UnitEs.Step(idx_0).HaveMax(Entities.CellEs.UnitEs.Else(idx_0)));
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Es.CellEs.UnitEs.StatEs.Water(idx_0).Water.Amount <= CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
+                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(Es.CellEs.UnitEs.StatEs.Step(idx_0).HaveMax(Es.CellEs.UnitEs.Main(idx_0)));
 
 
 

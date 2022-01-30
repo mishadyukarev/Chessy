@@ -2,16 +2,20 @@
 
 namespace Game.Game
 {
-    struct ConditionMS : IEcsRunSystem
+    sealed class ConditionMS : SystemAbstract, IEcsRunSystem
     {
+        public ConditionMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var cond = Entities.MasterEs.ConditionUnit<ConditionUnitC>().Condition;
-            var idx_0 = Entities.MasterEs.ConditionUnit<IdxC>().Idx;
+            var cond = Es.MasterEs.ConditionUnit<ConditionUnitC>().Condition;
+            var idx_0 = Es.MasterEs.ConditionUnit<IdxC>().Idx;
 
-            ref var cond_0 = ref Entities.CellEs.UnitEs.Else(idx_0).ConditionC;
+            ref var cond_0 = ref Es.CellEs.UnitEs.Main(idx_0).ConditionC;
 
 
             switch (cond)
@@ -23,20 +27,20 @@ namespace Game.Game
                 case ConditionUnitTypes.Protected:
                     if (cond_0.Is(ConditionUnitTypes.Protected))
                     {
-                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
-                    else if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Have)
+                    else if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
                     {
-                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                        Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
                         cond_0.Condition = cond;
                     }
 
                     else
                     {
-                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 
@@ -44,20 +48,20 @@ namespace Game.Game
                 case ConditionUnitTypes.Relaxed:
                     if (cond_0.Is(ConditionUnitTypes.Relaxed))
                     {
-                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Reset();
                     }
 
-                    else if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Have)
+                    else if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
                     {
-                        Entities.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         cond_0.Condition = cond;
-                        Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
                     }
 
                     else
                     {
-                        Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

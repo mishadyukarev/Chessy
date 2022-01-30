@@ -27,7 +27,7 @@ namespace Game.Game
         {
             _cells = new Dictionary<string, Entity>();
 
-            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
                 for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                 {
@@ -37,6 +37,4 @@ namespace Game.Game
             }
         }
     }
-
-    public interface ICellForSetUnitE { }
 }

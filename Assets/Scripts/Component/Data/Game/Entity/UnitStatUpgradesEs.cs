@@ -3,12 +3,24 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct UnitStatUpgradesEs
+    public readonly struct UnitStatUpgradesEs
     {
-        Dictionary<string, HaveUpgradeE> _ents;
+        readonly Dictionary<string, HaveUpgradeE> _ents;
 
         string Key(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, in UpgradeTypes upg) => stat.ToString() + unit + lev + player + upg;
         public HaveUpgradeE Upgrade(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, in UpgradeTypes upg) => _ents[Key(stat, unit, lev, player, upg)];
+        public HaveUpgradeE Upgrade(in UnitStatTypes stat, in CellUnitMainE unitElseE, in UpgradeTypes upg) => _ents[Key(stat, unitElseE.UnitC.Unit, unitElseE.LevelC.Level, unitElseE.OwnerC.Player, upg)];
+        public HaveUpgradeE Upgrade(in string key) => _ents[key];
+
+        public HashSet<string> Keys
+        {
+            get
+            {
+                var hash = new HashSet<string>();
+                foreach (var item in _ents) hash.Add(item.Key);
+                return hash;
+            }
+        }
 
         public UnitStatUpgradesEs(in EcsWorld gameW)
         {

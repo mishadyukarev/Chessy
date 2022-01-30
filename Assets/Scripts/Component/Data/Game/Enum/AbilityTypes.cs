@@ -28,7 +28,6 @@
         ChangeDirectionWind,
 
         //Snowy
-        FreezeDirectEnemy,
         IceWall,
         //DefendAround,
 

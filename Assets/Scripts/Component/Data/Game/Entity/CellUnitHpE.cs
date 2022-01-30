@@ -4,17 +4,28 @@ namespace Game.Game
 {
     public sealed class CellUnitHpE : EntityAbstract
     {
-        public ref AmountC AmountC => ref Ent.Get<AmountC>();
+        public ref AmountC Health => ref Ent.Get<AmountC>();
 
-        public bool IsHpDeathAfterAttack => AmountC.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
-        public bool HaveMax => AmountC.Amount >= UnitHpValues.MAX_HP;
+        public bool IsHpDeathAfterAttack => Health.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
+        public bool HaveMax => Health.Amount >= CellUnitHpValues.MAX_HP;
 
         public CellUnitHpE(in EcsWorld gameW) : base(gameW) { }
 
         public void TakeAttack(in int damage)
         {
-            AmountC.Take(damage);
-            if (IsHpDeathAfterAttack) AmountC.Reset();
+            Health.Take(damage);
+            if (IsHpDeathAfterAttack) Health.Reset();
+        }
+
+        public void Shift(in CellUnitHpE hpE_from)
+        {
+            Health = hpE_from.Health;
+            hpE_from.Health.Reset();
+        }
+
+        public void SetMax()
+        {
+            Health.Amount = CellUnitHpValues.MAX_HP;
         }
     }
 }

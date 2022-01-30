@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    public struct CellFireEs
+    public readonly struct CellFireEs
     {
-        CellFireE[] _fires;
+        readonly CellFireE[] _fires;
 
         public CellFireE Fire(in byte idx) => _fires[idx];
 

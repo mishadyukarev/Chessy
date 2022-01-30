@@ -3,8 +3,12 @@ using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
-    public struct SoundVS : IEcsRunSystem
+    sealed class SoundVS : SystemViewAbstract, IEcsRunSystem
     {
+        public SoundVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
             if (SoundV<AudioSourceVC>(ClipTypes.Truce).IsPlaying

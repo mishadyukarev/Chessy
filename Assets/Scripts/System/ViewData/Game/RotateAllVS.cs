@@ -4,16 +4,20 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    struct RotateAllVS : IEcsRunSystem
+    sealed class RotateAllVS : SystemViewAbstract, IEcsRunSystem
     {
+        public RotateAllVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            var curPlayer = Entities.WhoseMove.CurPlayerI;
+            var curPlayer = Es.WhoseMove.CurPlayerI;
 
-            foreach (byte idx_0 in Entities.CellEs.Idxs)
+            foreach (byte idx_0 in Es.CellEs.Idxs)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
-                CellVEs.Cell<SpriteRendererVC>(idx_0).RotParent = curPlayer == PlayerTypes.First 
+                CellVEs.Cell<SpriteRendererVC>(idx_0).RotParent = curPlayer == PlayerTypes.First
                     ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
                 switch (curPlayer)
@@ -37,7 +41,7 @@ namespace Game.Game
 
         public void SetRotForClient(PlayerTypes player)
         {
-            
+
         }
     }
 }

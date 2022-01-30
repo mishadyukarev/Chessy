@@ -1,12 +1,16 @@
 ﻿
 namespace Game.Game
 {
-    struct ShieldUIS : IEcsRunSystem
+    sealed class ShieldUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public ShieldUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            ref var tw_sel = ref Entities.CellEs.UnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).ToolWeaponC;
-            ref var twLevel_sel = ref Entities.CellEs.UnitEs.ToolWeapon(Entities.SelectedIdxE.IdxC.Idx).LevelC;
+            ref var tw_sel = ref Es.CellEs.UnitEs.ToolWeapon(Es.SelectedIdxE.IdxC.Idx).ToolWeapon;
+            ref var twLevel_sel = ref Es.CellEs.UnitEs.ToolWeapon(Es.SelectedIdxE.IdxC.Idx).LevelTW;
 
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Pick, LevelTypes.Second).SetActive(false);
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Sword, LevelTypes.Second).SetActive(false);

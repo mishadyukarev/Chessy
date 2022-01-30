@@ -15,6 +15,8 @@ namespace Game
         EcsWorld _menuW;
         EcsWorld _gameW;
 
+        Systems _systems;
+
 
         void Start()
         {
@@ -40,8 +42,8 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    SystemDataManager.Run(DataSTypes.RunUpdate);
-                    SystemViewDataManager.Run(ViewDataSystemTypes.RunUpdate);
+                    _systems.Run(DataSTypes.RunUpdate);
+                    SystemsView.Run(ViewDataSystemTypes.RunUpdate);
                     SystemViewDataUIManager.Run(UITypes.RunUpdate);
                     break;
 
@@ -64,8 +66,8 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    SystemDataManager.Run(DataSTypes.RunFixedUpdate);
-                    SystemViewDataManager.Run(ViewDataSystemTypes.RunFixedUpdate);
+                    _systems.Run(DataSTypes.RunFixedUpdate);
+                    SystemsView.Run(ViewDataSystemTypes.RunFixedUpdate);
                     SystemViewDataUIManager.Run(UITypes.RunFixedUpdate);
                     break;
 
@@ -100,28 +102,17 @@ namespace Game
 
                         _gameW = new EcsWorld();
 
-                        new EntitiesView(_gameW, out var forData);
-                        new Entities(_gameW, forData, RpcS.NamesMethods, out var i);
+                        var entsView = new EntitiesView(_gameW, out var forData);
+                        var ents = new Entities(_gameW, forData, RpcS.NamesMethods);
 
+                        new FillCellsS(ents);
 
-                        new FillCellsS();
-                        EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>();
+                        new Events(ents, entsView);
+                        _systems = new Systems(ents);
+                        new SystemsView(ents, entsView);
 
-
-                        #region Systems
-
-                        new EventUIManager(default);
-
-                        new SystemDataManager(default);
-                        new SystemDataMasterManager(default);
-                        new SystemDataOtherManager(default);
-
-                        new SystemViewDataManager(default);
-                        new SystemViewDataUIManager(default);
-
+                        EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>().GiveData(ents, _systems);
                         RpcS.SyncAllMaster();
-
-                        #endregion
 
                         break;
                     }

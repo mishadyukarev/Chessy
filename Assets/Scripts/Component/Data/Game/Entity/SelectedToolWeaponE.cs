@@ -2,16 +2,15 @@
 
 namespace Game.Game
 {
-    public struct SelectedToolWeaponE
+    public sealed class SelectedToolWeaponE : EntityAbstract
     {
-        static Entity _selectedTW;
+        public ref ToolWeaponTC ToolWeaponTC => ref Ent.Get<ToolWeaponTC>();
+        public ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
 
-        public static ref C SelectedTW<C>() where C : struct => ref _selectedTW.Get<C>();
-
-        public SelectedToolWeaponE(in EcsWorld gameW)
+        public SelectedToolWeaponE(in EcsWorld gameW) : base(gameW)
         {
-            _selectedTW = gameW.NewEntity()
-                .Add(new ToolWeaponC(ToolWeaponTypes.Pick))
+            Ent
+                .Add(new ToolWeaponTC(ToolWeaponTypes.Pick))
                 .Add(new LevelTC(LevelTypes.Second));
         }
 

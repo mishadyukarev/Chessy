@@ -1,18 +1,21 @@
 ﻿using System;
 using UnityEngine;
-using static Game.Game.CellRiverEs;
 
 namespace Game.Game
 {
-    struct RiverCellVS : IEcsRunSystem
+    sealed class RiverCellVS : SystemViewAbstract, IEcsRunSystem
     {
+        public RiverCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            foreach (var idx_0 in Entities.CellEs.Idxs)
+            foreach (var idx_0 in Es.CellEs.Idxs)
             {
-                ref var river_0 = ref Entities.CellEs.RiverEs.River(idx_0).RiverTC;
+                ref var river_0 = ref Es.CellEs.RiverEs.River(idx_0).RiverTC;
 
-                switch (Entities.WhoseMove.CurPlayerI)
+                switch (Es.WhoseMove.CurPlayerI)
                 {
                     case PlayerTypes.None: throw new Exception();
                     case PlayerTypes.First:
@@ -29,11 +32,11 @@ namespace Game.Game
 
                 if (river_0.River == RiverTypes.Start)
                 {
-                    foreach (var dir_1 in Entities.CellEs.RiverEs.Keys)
+                    foreach (var dir_1 in Es.CellEs.RiverEs.Keys)
                     {
                         if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                         {
-                            CellRiverVEs.River(dir_1, idx_0).SetActive(Entities.CellEs.RiverEs.HaveRive(dir_1, idx_0).HaveRiver.Have);
+                            CellRiverVEs.River(dir_1, idx_0).SetActive(Es.CellEs.RiverEs.HaveRive(dir_1, idx_0).HaveRiver.Have);
                         }
                     }
                 }

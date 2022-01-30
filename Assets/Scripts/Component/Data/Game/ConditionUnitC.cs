@@ -25,12 +25,6 @@ namespace Game.Game
             return false;
         }
 
-
-        public void Set(ConditionUnitC condC)
-        {
-            Condition = condC.Condition;
-        }
-
         public void Reset()
         {
             Condition = default;

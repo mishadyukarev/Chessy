@@ -1,36 +1,37 @@
 ﻿using UnityEngine;
-using static Game.Game.CellEs;
-using static Game.Game.CellVEs;
-using static Game.Game.CellEnvironmentEs;
 using static Game.Game.CellBarsVEs;
 
 namespace Game.Game
 {
-    struct CellBarsEnvVS : IEcsRunSystem
+    sealed class CellBarsEnvVS : SystemViewAbstract, IEcsRunSystem
     {
+        internal CellBarsEnvVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            foreach (var idx_0 in Entities.CellEs.Idxs)
+            foreach (var idx_0 in Es.CellEs.Idxs)
             {
-                if (Entities.InfoEnvironment.IsActiveC.IsActive)
+                if (Es.InfoEnvironment.IsActiveC.IsActive)
                 {
-                    if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Have)
+                    if (Es.CellEs.EnvironmentEs.Fertilizer(idx_0).HaveEnvironment)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Enable();
 
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).LocalScale
-                            = new Vector3(Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Resources.Amount / (float)CellEnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer), 0.15f, 1);
+                            = new Vector3(Es.CellEs.EnvironmentEs.Fertilizer(idx_0).AmountResources / (float)CellEnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer), 0.15f, 1);
                     }
                     else
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Disable();
                     }
 
-                    if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Have)
+                    if (Es.CellEs.EnvironmentEs.AdultForest(idx_0).HaveEnvironment)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).LocalScale =
-                            new Vector3(Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.AdultForest, idx_0).Resources.Amount 
+                            new Vector3(Es.CellEs.EnvironmentEs.AdultForest(idx_0).AmountResources
                             / (float)CellEnvironmentValues.MaxResources(EnvironmentTypes.AdultForest), 0.15f, 1);
                     }
                     else
@@ -38,11 +39,11 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Disable();
                     }
 
-                    if (Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Hill, idx_0).Resources.Have)
+                    if (Es.CellEs.EnvironmentEs.Hill(idx_0).HaveEnvironment)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).LocalScale
-                            = new Vector3(Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Hill, idx_0).Resources.Amount 
+                            = new Vector3(Es.CellEs.EnvironmentEs.Hill(idx_0).AmountResources
                             / (float)CellEnvironmentValues.MaxResources(EnvironmentTypes.Hill), 0.15f, 1);
                     }
                     else

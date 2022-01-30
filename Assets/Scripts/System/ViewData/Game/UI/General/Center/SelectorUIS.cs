@@ -2,12 +2,16 @@
 
 namespace Game.Game
 {
-    struct SelectorUIS : IEcsRunSystem
+    sealed class SelectorUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public SelectorUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            var click_cur = Entities.ClickerObject.CellClickC.Click;
-            var uniq = Entities.SelectedUniqueAbilityE.AbilityC.Ability;
+            var click_cur = Es.ClickerObject.CellClickC.Click;
+            var uniq = Es.SelectedUniqueAbilityE.AbilityC.Ability;
 
 
             SelectorUI<GameObjectVC>(click_cur).SetActiveParent(false);

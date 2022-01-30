@@ -1,42 +1,44 @@
 ﻿using Photon.Pun;
-using static Game.Game.CellBuildEs;
-using static Game.Game.CellEnvironmentEs;
 
 namespace Game.Game
 {
-    struct DestroyMS : IEcsRunSystem
+    sealed class DestroyMS : SystemCellAbstract, IEcsRunSystem
     {
+        public DestroyMS(in Entities ents) : base(ents)
+        {
+        }
+
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var idx_0 = Entities.MasterEs.DestroyIdxC.Idx;
+            var idx_0 = Es.MasterEs.DestroyIdxC.Idx;
 
-            ref var ownUnit_0 = ref Entities.CellEs.UnitEs.Else(idx_0).OwnerC;
+            ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
 
-            ref var buildC_0 = ref Entities.CellEs.BuildEs.Build(idx_0).BuildTC;
+            ref var buildC_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
 
 
-            if (Entities.CellEs.UnitEs.Step(idx_0).Steps.Have)
+            if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
             {
-                Entities.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 if (buildC_0.Is(BuildingTypes.City))
                 {
-                    Entities.WinnerE.Winner.Player = ownUnit_0.Player;
+                    Es.WinnerE.Winner.Player = ownUnit_0.Player;
                 }
-                Entities.CellEs.UnitEs.Step(idx_0).Steps.Take();
+                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
 
                 if (buildC_0.Is(BuildingTypes.Farm))
                 {
-                    Entities.CellEs.EnvironmentEs.Environment(EnvironmentTypes.Fertilizer, idx_0).Remove();
+                    Es.CellEs.EnvironmentEs.Fertilizer( idx_0).Destroy(Es.WhereEnviromentEs);
                 }
 
-                Entities.WhereBuildingEs.HaveBuild(Entities.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
-                Entities.CellEs.BuildEs.Build(idx_0).Remove();
+                Es.WhereBuildingEs.HaveBuild(Es.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
+                Es.CellEs.BuildEs.Build(idx_0).Remove();
             }
             else
             {
-                Entities.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

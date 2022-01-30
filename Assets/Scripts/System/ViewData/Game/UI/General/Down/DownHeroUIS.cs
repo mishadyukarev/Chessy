@@ -2,17 +2,21 @@
 
 namespace Game.Game
 {
-    struct DownHeroUIS : IEcsRunSystem
+    sealed class DownHeroUIS : SystemViewAbstract, IEcsRunSystem
     {
+        public DownHeroUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
+
         public void Run()
         {
-            var curPlayerI = Entities.WhoseMove.CurPlayerI;
+            var curPlayerI = Es.WhoseMove.CurPlayerI;
 
-            if (InventorUnitsE.HaveHero(curPlayerI, out var hero))
+            if (Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero))
             {
                 Parent.SetActive(true);
 
-                var cooldown = Entities.ScoutHeroCooldownE(hero, curPlayerI).Cooldown.Amount;
+                var cooldown = Es.ScoutHeroCooldownE(hero, curPlayerI).Cooldown.Amount;
 
                 for (var unit = UnitTypes.Elfemale; unit <= UnitTypes.Snowy; unit++)
                 {
@@ -35,7 +39,7 @@ namespace Game.Game
             {
                 Parent.SetActive(false);
             }
-            
+
         }
     }
 }

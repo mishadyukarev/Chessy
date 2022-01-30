@@ -2,9 +2,13 @@
 
 namespace Game.Game
 {
-    struct GetterUnitsUIS : IEcsRunSystem
+    sealed class GetterUnitsUIS : SystemViewAbstract, IEcsRunSystem
     {
         const float NEEDED_TIME = 1;
+
+        public GetterUnitsUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        {
+        }
 
         public void Run()
         {
@@ -33,11 +37,11 @@ namespace Game.Game
                 }
             }
 
-            var amountPawns = InventorUnitsE.Units(UnitTypes.Pawn, LevelTypes.First, Entities.WhoseMove.CurPlayerI).Amount
-                + InventorUnitsE.Units(UnitTypes.Pawn, LevelTypes.Second, Entities.WhoseMove.CurPlayerI).Amount;
+            var amountPawns = Es.InventorUnitsEs.Units(UnitTypes.Pawn, LevelTypes.First, Es.WhoseMove.CurPlayerI).Units.Amount
+                + Es.InventorUnitsEs.Units(UnitTypes.Pawn, LevelTypes.Second, Es.WhoseMove.CurPlayerI).Units.Amount;
 
-            var amountArchers = InventorUnitsE.Units(UnitTypes.Archer, LevelTypes.First, Entities.WhoseMove.CurPlayerI).Amount
-                + InventorUnitsE.Units(UnitTypes.Archer, LevelTypes.Second, Entities.WhoseMove.CurPlayerI).Amount;
+            var amountArchers = Es.InventorUnitsEs.Units(UnitTypes.Archer, LevelTypes.First, Es.WhoseMove.CurPlayerI).Units.Amount
+                + Es.InventorUnitsEs.Units(UnitTypes.Archer, LevelTypes.Second, Es.WhoseMove.CurPlayerI).Units.Amount;
 
             PawnArcherDownUIE.Taker<TextUIC>(UnitTypes.Pawn).Text = amountPawns.ToString();
             PawnArcherDownUIE.Taker<TextUIC>(UnitTypes.Archer).Text = amountArchers.ToString();
