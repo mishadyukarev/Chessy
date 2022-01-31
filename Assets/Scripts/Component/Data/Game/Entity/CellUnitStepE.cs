@@ -7,7 +7,7 @@ namespace Game.Game
         public ref AmountC Steps => ref Ent.Get<AmountC>();
 
         public bool HaveMax(in CellUnitMainE unitElseE) => Steps.Amount >= MaxAmountSteps(unitElseE);
-        public int MaxAmountSteps(in CellUnitMainE cellUnitElse) => CellUnitStepValues.MaxAmountSteps(cellUnitElse.UnitC.Unit, false); 
+        public int MaxAmountSteps(in CellUnitMainE cellUnitElse) => CellUnitStepValues.MaxAmountSteps(cellUnitElse.UnitTC.Unit, false); 
 
         public CellUnitStepE(in EcsWorld gameW) : base(gameW) { }
 
@@ -15,7 +15,7 @@ namespace Game.Game
         public void Shift(in CellUnitStepE stepE_from)
         {
             Steps = stepE_from.Steps;
-            stepE_from.Steps.Reset();
+            stepE_from.Steps.Amount = 0;
         }
     }
 }

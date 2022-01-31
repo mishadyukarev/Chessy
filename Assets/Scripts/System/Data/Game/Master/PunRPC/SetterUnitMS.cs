@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            var unitEs = Es.CellEs.UnitEs;
+            var unitEs = UnitEs;
 
 
             var sender = InfoC.Sender(MGOTypes.Master);
@@ -33,7 +33,7 @@
                     Es.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).Units.Amount -= 1;
                     levUnit = LevelTypes.First;
                 }
-                unitEs.SetNew((unit, levUnit, whoseMove), Es, idx_0);
+                unitEs.Main(idx_0).SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), Es);
 
 
                 //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);

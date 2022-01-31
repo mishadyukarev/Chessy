@@ -5,33 +5,37 @@ namespace Game.Game
 {
     public sealed class CellUnitTWE : EntityAbstract
     {
-        public ref ToolWeaponTC ToolWeapon => ref Ent.Get<ToolWeaponTC>();
-        public ref LevelTC LevelTW => ref Ent.Get<LevelTC>();
-        public ref AmountC Protection => ref Ent.Get<AmountC>();
+        ref ToolWeaponTC ToolWeaponTCRef => ref Ent.Get<ToolWeaponTC>();
+        ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
+        ref AmountC ProtectionRef => ref Ent.Get<AmountC>();
+
+        public ToolWeaponTC ToolWeaponTC => Ent.Get<ToolWeaponTC>();
+        public LevelTC LevelTC => Ent.Get<LevelTC>();
+        public AmountC Protection =>Ent.Get<AmountC>();
 
         public CellUnitTWE(in EcsWorld gameW) : base(gameW) { }
 
-        public void Shift(in CellUnitTWE twE_from)
+        internal void Set(in CellUnitTWE twE)
         {
-            ToolWeapon = twE_from.ToolWeapon;
-            LevelTW = twE_from.LevelTW;
-            Protection = twE_from.Protection;
+            ToolWeaponTCRef = twE.ToolWeaponTC;
+            LevelTCRef = twE.LevelTC;
+            ProtectionRef = twE.Protection;
         }
         public void SetNew(in ToolWeaponTypes tw, in LevelTypes level)
         {
-            ToolWeapon.ToolWeapon = tw;
-            LevelTW.Level = level;
+            ToolWeaponTCRef.ToolWeapon = tw;
+            LevelTCRef.Level = level;
 
             if (tw == ToolWeaponTypes.Shield)
             {
                 switch (level)
                 {
                     case LevelTypes.First:
-                        Protection.Amount = 1;
+                        ProtectionRef.Amount = 1;
                         break;
 
                     case LevelTypes.Second:
-                        Protection.Amount = 3;
+                        ProtectionRef.Amount = 3;
                         break;
 
                     default: throw new Exception();
@@ -42,19 +46,19 @@ namespace Game.Game
 
         public void BreakShield(in int taking = 1)
         {
-            if (!ToolWeapon.IsShield) throw new Exception();
+            if (!ToolWeaponTC.IsShield) throw new Exception();
             if (!Protection.Have) throw new Exception();
 
-            Protection.Take(taking);
+            ProtectionRef.Amount -= taking;
 
-            if (!Protection.Have) ToolWeapon.Reset();
+            if (!Protection.Have) ToolWeaponTCRef.ToolWeapon = ToolWeaponTypes.None;
         }
 
         public void Reset()
         {
-            ToolWeapon.Reset();
-            LevelTW.Reset();
-            Protection.Reset();
+            ToolWeaponTCRef.ToolWeapon = ToolWeaponTypes.None;
+            LevelTCRef.Level = LevelTypes.None;
+            ProtectionRef.Amount = 0;
         }
     }
 }

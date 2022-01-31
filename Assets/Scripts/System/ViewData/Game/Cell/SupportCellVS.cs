@@ -10,13 +10,12 @@
         {
             ref var cellClick = ref Es.ClickerObject.CellClickC;
 
-            foreach (byte idx_0 in Es.CellEs.Idxs)
+            foreach (byte idx_0 in CellEs.Idxs)
             {
-                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
-                ref var lev_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
-                ref var own_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
+                var unit_0 = UnitEs.Main(idx_0).UnitTC;
+                var own_0 = UnitEs.Main(idx_0).OwnerC;
 
-                ref var fire_0 = ref Es.CellEs.FireEs.Fire(idx_0).Fire;
+                ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
@@ -59,7 +58,7 @@
                         {
                             if (unit_0.Is(UnitTypes.Pawn, UnitTypes.Archer))
                             {
-                                if (lev_0.Is(LevelTypes.First))
+                                if (UnitEs.Main(idx_0).LevelTC.Is(LevelTypes.First))
                                 {
                                     support_0.Enable();
                                     support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -79,9 +78,9 @@
 
                     else
                     {
-                        if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
+                        if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
                         {
-                            if (Es.CellEs.EnvironmentEs.AdultForest(idx_0).HaveEnvironment)
+                            if (CellEs.EnvironmentEs.AdultForest(idx_0).HaveEnvironment)
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
@@ -113,7 +112,7 @@
                 {
                     if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
                     {
-                        Es.CellEs.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
+                        CellEs.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
 
                         foreach (var item in dirs)
                         {

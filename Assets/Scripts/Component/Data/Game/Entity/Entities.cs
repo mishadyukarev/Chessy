@@ -13,7 +13,7 @@ namespace Game.Game
         readonly Dictionary<PlayerTypes, AvailableCenterHeroE> _availHero;
 
         public ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
-        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitMainE unitMainE) => _scoutHeroCooldownEs[unitMainE.UnitC.Unit.ToString() + unitMainE.OwnerC.Player];
+        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitMainE unitMainE) => _scoutHeroCooldownEs[unitMainE.UnitTC.Unit.ToString() + unitMainE.OwnerC.Player];
         public ReadyE Ready(in PlayerTypes player) => _ready[player];
         public SoundE Sound(in ClipTypes clip) => _sounds0[clip];
         public SoundE Sound(in AbilityTypes unique) => _sounds1[unique];

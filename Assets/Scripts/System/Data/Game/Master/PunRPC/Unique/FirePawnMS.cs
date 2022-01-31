@@ -17,17 +17,17 @@ namespace Game.Game
             var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
 
-            ref var fire_0 = ref Es.CellEs.FireEs.Fire(idx_0).Fire;
+            ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
 
 
-            if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+            if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
             {
-                if (Es.CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                if (CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
                 {
                     Es.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                     fire_0.Enable();
-                    Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                    UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq_cur);
                 }
                 else
                 {

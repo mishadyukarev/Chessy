@@ -14,20 +14,20 @@
             var idx_0 = Es.MasterEs.Build<IdxC>().Idx;
 
 
-            ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
-            ref var ownBuild_0 = ref Es.CellEs.BuildEs.Build(idx_0).PlayerTC;
+            var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
+            var ownBuild_0 = BuildEs.BuildingE(idx_0).Owner;
 
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
             if (build == BuildingTypes.Mine)
             {
-                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
+                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
                 {
                     if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                     {
-                        if (Es.CellEs.EnvironmentEs.Hill( idx_0).HaveEnvironment
-                            && Es.CellEs.EnvironmentEs.Hill( idx_0).HaveEnvironment)
+                        if (CellEs.EnvironmentEs.Hill( idx_0).HaveEnvironment
+                            && CellEs.EnvironmentEs.Hill( idx_0).HaveEnvironment)
                         {
                             if (Es.InventorResourcesEs.CanCreateBuild(build, whoseMove, out var needRes))
                             {
@@ -36,10 +36,10 @@
                                 Es.InventorResourcesEs.BuyBuild(whoseMove, build);
 
 
-                                Es.CellEs.BuildEs.Build(idx_0).SetNew(build, whoseMove);
+                                BuildEs.BuildingE(idx_0).SetNew(build, whoseMove, BuildEs, Es.WhereBuildingEs);
                                 Es.WhereBuildingEs.HaveBuild(build, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
+                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
                             }
 
                             else Es.Rpc.MistakeEconomyToGeneral(sender, needRes);

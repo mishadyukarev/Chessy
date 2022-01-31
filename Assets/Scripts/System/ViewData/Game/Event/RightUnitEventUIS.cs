@@ -26,7 +26,7 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).ConditionC.Is(condUnitType))
+                if (UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).ConditionTC.Is(condUnitType))
                 {
                     Es.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, Es.SelectedIdxE.IdxC.Idx);
                 }
@@ -44,9 +44,9 @@ namespace Game.Game
             {
                 var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-                ref var abil = ref Es.CellEs.UnitEs.UniqueButton(uniqueButton, idx_sel).AbilityC;
+                var abil = UnitEs.AbilityButton(uniqueButton, idx_sel).AbilityC;
 
-                if (!Es.CellEs.UnitEs.Unique(abil.Ability, idx_sel).Cooldown.Have)
+                if (!UnitEs.CooldownAbility(abil.Ability, idx_sel).Cooldown.Have)
                 {
                     switch (abil.Ability)
                     {

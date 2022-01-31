@@ -17,22 +17,19 @@
 
             if (forBuildType == BuildingTypes.City)
             {
-                ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
-                ref var ownBuild_0 = ref Es.CellEs.BuildEs.Build(idx_0).PlayerTC;
-
-                ref var fire_0 = ref Es.CellEs.FireEs.Fire(idx_0).Fire;
+                ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
 
 
                 var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
 
-                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
+                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(BuildingTypes.City))
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var idx_1 in Es.CellEs.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
                     {
-                        if (!Es.CellEs.ParentE(idx_1).IsActiveSelf.IsActive)
+                        if (!CellEs.ParentE(idx_1).IsActiveSelf.IsActive)
                         {
                             haveNearBorder = true;
                             break;
@@ -45,10 +42,10 @@
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        Es.CellEs.BuildEs.Build(idx_0).SetNew(forBuildType, whoseMove);
+                        BuildEs.BuildingE(idx_0).SetNew(forBuildType, whoseMove, BuildEs, Es.WhereBuildingEs);
                         Es.WhereBuildingEs.HaveBuild(forBuildType, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(BuildingTypes.City));
+                        UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(BuildingTypes.City);
 
 
                         fire_0.Disable();

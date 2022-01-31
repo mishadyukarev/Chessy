@@ -11,9 +11,9 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in Es.CellEs.Idxs)
+            foreach (var idx_0 in CellEs.Idxs)
             {
-                ref var river_0 = ref Es.CellEs.RiverEs.River(idx_0).RiverTC;
+                ref var river_0 = ref CellEs.RiverEs.River(idx_0).RiverTC;
 
                 switch (Es.WhoseMove.CurPlayerI)
                 {
@@ -32,11 +32,11 @@ namespace Game.Game
 
                 if (river_0.River == RiverTypes.Start)
                 {
-                    foreach (var dir_1 in Es.CellEs.RiverEs.Keys)
+                    foreach (var dir_1 in CellEs.RiverEs.Keys)
                     {
                         if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                         {
-                            CellRiverVEs.River(dir_1, idx_0).SetActive(Es.CellEs.RiverEs.HaveRive(dir_1, idx_0).HaveRiver.Have);
+                            CellRiverVEs.River(dir_1, idx_0).SetActive(CellEs.RiverEs.HaveRive(dir_1, idx_0).HaveRiver.Have);
                         }
                     }
                 }

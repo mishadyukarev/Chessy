@@ -12,24 +12,21 @@ namespace Game.Game
         {
             var cellEs = Es.CellEs;
             var unitEs = cellEs.UnitEs;
-            var buildEs = cellEs.BuildEs;
-            var envEs = cellEs.EnvironmentEs;
-
 
 
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            ref var unit_sel = ref Es.CellEs.UnitEs.Main(idx_sel).UnitC;
+            var unit_sel = UnitEs.Main(idx_sel).UnitTC;
 
-            ref var hpUnit_sel = ref Es.CellEs.UnitEs.StatEs.Hp(idx_sel).Health;
-            ref var stepUnit_sel = ref Es.CellEs.UnitEs.StatEs.Step(idx_sel).Steps;
-            ref var waterUnit_sel = ref Es.CellEs.UnitEs.StatEs.Water(idx_sel).Water;
+            var hpUnit_sel = UnitEs.StatEs.Hp(idx_sel).Health;
+            var stepUnit_sel = UnitEs.StatEs.Step(idx_sel).Steps;
+            var waterUnit_sel = UnitEs.StatEs.Water(idx_sel).Water;
 
 
             if (unit_sel.Have)
             {
-                var damageOnCell = unitEs.DamageOnCell(idx_sel, cellEs, Es.UnitStatUpgradesEs);
-                var damageAttack = unitEs.DamageAttack(idx_sel, Es.UnitStatUpgradesEs, AttackTypes.Simple);
+                var damageOnCell = unitEs.Main(idx_sel).DamageOnCell(CellEs, Es.UnitStatUpgradesEs);
+                var damageAttack = unitEs.Main(idx_sel).DamageAttack(CellEs, Es.UnitStatUpgradesEs, AttackTypes.Simple);
 
 
                 Stat<ImageUIC>(UnitStatTypes.Hp).SetActiveParent(true);
@@ -52,8 +49,8 @@ namespace Game.Game
 
                 UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)Es.CellEs.UnitEs.StatEs.Step(idx_sel).MaxAmountSteps(Es.CellEs.UnitEs.Main(idx_sel));
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)Es.CellEs.UnitEs.StatEs.Water(idx_sel).MaxWater(Es.CellEs.UnitEs.Main(idx_sel), Es.UnitStatUpgradesEs);
+                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)UnitEs.StatEs.Step(idx_sel).MaxAmountSteps(UnitEs.Main(idx_sel));
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)UnitEs.StatEs.Water(idx_sel).MaxWater(UnitEs.Main(idx_sel), Es.UnitStatUpgradesEs);
             }
 
             else

@@ -17,7 +17,7 @@ namespace Game.Game
             var idx_0 = Es.MasterEs.Seed<IdxC>().Idx;
             var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
-            ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
+            var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
 
 
             switch (env)
@@ -29,7 +29,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                    if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
@@ -37,17 +37,17 @@ namespace Game.Game
                         }
                         else
                         {
-                            if (!Es.CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
+                            if (!CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
                             {
-                                if (!Es.CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                                if (!CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
 
-                                    if (!Es.CellEs.EnvironmentEs.YoungForest( idx_0).HaveEnvironment)
+                                    if (!CellEs.EnvironmentEs.YoungForest( idx_0).HaveEnvironment)
                                     {
                                         Es.Rpc.SoundToGeneral(sender, uniq_cur);
 
-                                        Es.CellEs.EnvironmentEs.YoungForest( idx_0).SetNew(Es.WhereEnviromentEs);
+                                        CellEs.EnvironmentEs.YoungForest( idx_0).SetNew(Es.WhereEnviromentEs);
 
-                                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq_cur));
+                                        UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq_cur);
                                     }
                                     else
                                     {

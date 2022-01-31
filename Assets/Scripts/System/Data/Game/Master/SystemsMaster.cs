@@ -19,7 +19,8 @@ namespace Game.Game
 
             var action =
                 (Action)new UpdatorMS(this, ents).Run
-                + new ExtractBuildUpdMS(ents).Run
+                + new UpdExtractWoodcutterMS(ents).Run
+                + new UpdExtractFarmMS(ents).Run
                 + new UpdateFireMS(ents).Run
                 + new CloudUpdMS(ents).Run
                 + new UpdateIceWallMS(ents).Run
@@ -54,7 +55,7 @@ namespace Game.Game
             _rpcSysts.Add(RpcMasterTypes.SetUnit, new SetterUnitMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.BuyRes, new BuyResourcesMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.UpgradeCellUnit, new UpgradeUnitMS(ents).Run);
-            _rpcSysts.Add(RpcMasterTypes.ToNewUnit, new ScoutOldNewSys(ents).Run);
+            _rpcSysts.Add(RpcMasterTypes.ToNewUnit, new ScoutOldNewMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.GiveTakeToolWeapon, new GiveTakeToolWeaponMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.GetHero, new GetHeroMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.CreateHeroFromTo, new FromToNewUnitMS(ents).Run);

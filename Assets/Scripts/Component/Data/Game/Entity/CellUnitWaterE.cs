@@ -11,7 +11,7 @@ namespace Game.Game
         {
             var maxWater = CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS;
 
-            if (!unitElseE.UnitC.IsAnimal)
+            if (!unitElseE.UnitTC.IsAnimal)
             {
                 if (statUpgEs.Upgrade(UnitStatTypes.Water, unitElseE, UpgradeTypes.PickCenter).HaveUpgrade.Have)
                 {
@@ -29,7 +29,7 @@ namespace Game.Game
         public void Shift(in CellUnitWaterE waterE_from)
         {
             Water = waterE_from.Water;
-            waterE_from.Water.Reset();
+            waterE_from.Water.Amount = 0;
         }
 
         public void SetMax(in CellUnitMainE unitElse, in UnitStatUpgradesEs statUpgEs) => Water.Amount = MaxWater(unitElse, statUpgEs);

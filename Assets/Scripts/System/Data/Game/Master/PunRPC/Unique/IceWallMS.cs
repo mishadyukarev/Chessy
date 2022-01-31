@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    sealed class IceWallMS : SystemAbstract, IEcsRunSystem
+    sealed class IceWallMS : SystemCellAbstract, IEcsRunSystem
     {
         public IceWallMS(in Entities ents) : base(ents)
         {
@@ -13,14 +13,14 @@
             var curAbility = Es.MasterEs.UniqueAbilityC.Ability;
 
 
-            if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(curAbility))
+            if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(curAbility))
             {
-                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(curAbility));
+                UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(curAbility);
 
-                Es.CellEs.UnitEs.Unique(curAbility, idx_0).Cooldown += 5;
+                UnitEs.CooldownAbility(curAbility, idx_0).SetAfterAbility();
 
-                Es.CellEs.BuildEs.Build(idx_0).SetNew(BuildingTypes.IceWall, Es.CellEs.UnitEs.Main(idx_0).OwnerC.Player);
-                Es.WhereBuildingEs.HaveBuild(BuildingTypes.IceWall, Es.CellEs.UnitEs.Main(idx_0).OwnerC.Player, idx_0).HaveBuilding.Have = true;
+                BuildEs.BuildingE(idx_0).SetNew(BuildingTypes.IceWall, UnitEs.Main(idx_0).OwnerC.Player, BuildEs, Es.WhereBuildingEs);
+                Es.WhereBuildingEs.HaveBuild(BuildingTypes.IceWall, UnitEs.Main(idx_0).OwnerC.Player, idx_0).HaveBuilding.Have = true;
             }
         }
     }

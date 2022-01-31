@@ -13,7 +13,7 @@
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            Es.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).Units++;
+            Es.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).Units.Amount++;
             Es.AvailableCenterHero(whoseMove).HaveCenterHero.Have = false;
         }
     }

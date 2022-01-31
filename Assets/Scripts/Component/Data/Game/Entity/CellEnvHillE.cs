@@ -9,7 +9,7 @@ namespace Game.Game
         }
         public void AddEveryMove()
         {
-            Resources.Add();
+            ResourcesRef.Amount++;
         }
     }
 }

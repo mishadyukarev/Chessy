@@ -17,27 +17,26 @@
             {
                 var sender = InfoC.Sender(MGOTypes.Master);
 
-                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
+                var unit_0 = UnitEs.Main(idx_0).UnitTC;
 
-                ref var levUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
-                ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
+                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
 
-                ref var tw_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeapon;
-                ref var twLevel_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).LevelTW;
-                ref var twShield_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).Protection;
+                var tw_0 = UnitEs.ToolWeapon(idx_0).ToolWeaponTC;
+                var twLevel_0 = UnitEs.ToolWeapon(idx_0).LevelTC;
+                var twShield_0 = UnitEs.ToolWeapon(idx_0).Protection;
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
+                    if (UnitEs.StatEs.Step(idx_0).Steps.Have)
                     {
 
                         if (tw_0.HaveTW)
                         {
-                            Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons++;
+                            Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
                             UnitEs.ToolWeapon(idx_0).Reset();
 
-                            UnitEs.StatEs.Step(idx_0).Steps.Take();
+                            UnitEs.StatEs.Step(idx_0).Steps.Amount--;
 
                             Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -45,11 +44,11 @@
 
                         else if (Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Have)
                         {
-                            Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Take();
+                            Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Amount--;
 
-                            Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                            UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                            Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
+                            UnitEs.StatEs.Step(idx_0).Steps.Amount--;
 
                             Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -60,9 +59,9 @@
                             {
                                 Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                                UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
+                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
 
                                 Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -78,9 +77,9 @@
                             {
                                 Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                                UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
+                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
 
                                 Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -96,9 +95,9 @@
                             {
                                 Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                Es.CellEs.UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                                UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
 
-                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
+                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
 
                                 Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }

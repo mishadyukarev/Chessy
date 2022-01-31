@@ -12,7 +12,5 @@
         }
 
         public BuildingTC(in BuildingTypes build) => Build = build;
-
-        public void Reset() => Build = default;
     }
 }

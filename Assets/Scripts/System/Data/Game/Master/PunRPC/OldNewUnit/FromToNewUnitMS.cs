@@ -15,13 +15,11 @@
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            ref var unit_from = ref Es.CellEs.UnitEs.Main(idx_from).UnitC;
-            ref var levUnit_from = ref Es.CellEs.UnitEs.Main(idx_from).LevelC;
-            ref var ownUnit_from = ref Es.CellEs.UnitEs.Main(idx_from).OwnerC;
+            var unit_from = UnitEs.Main(idx_from).UnitTC;
+            var ownUnit_from = UnitEs.Main(idx_from).OwnerC;
 
-            ref var unit_to = ref Es.CellEs.UnitEs.Main(idx_to).UnitC;
-            ref var levUnit_to = ref Es.CellEs.UnitEs.Main(idx_to).LevelC;
-            ref var ownUnit_to = ref Es.CellEs.UnitEs.Main(idx_to).OwnerC;
+            var unit_to = UnitEs.Main(idx_to).UnitTC;
+            var ownUnit_to = UnitEs.Main(idx_to).OwnerC;
 
 
             if (unit == UnitTypes.Elfemale || unit == UnitTypes.Snowy)
@@ -32,26 +30,17 @@
                     {
                         if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
                         {
-                            foreach (var idx_1 in Es.CellEs.GetIdxsAround(idx_from))
+                            foreach (var idx_1 in CellEs.GetIdxsAround(idx_from))
                             {
                                 if (idx_1 == idx_to)
                                 {
                                     Es.Rpc.SoundToGeneral(sender, ClipTypes.GetHero);
 
-                                    Es.WhereUnitsEs.WhereUnit(UnitTypes.Archer, Es.CellEs.UnitEs.Main(idx_from).LevelC.Level, Es.CellEs.UnitEs.Main(idx_from).OwnerC.Player, idx_from).HaveUnit.Have = false;
-                                    Es.CellEs.UnitEs.Main(idx_from).UnitC.Reset();
+                                    UnitEs.Main(idx_from).Clear(Es.WhereUnitsEs);
+                                    UnitEs.Main(idx_to).Clear(Es.WhereUnitsEs);
 
-                                    Es.WhereUnitsEs.WhereUnit(UnitTypes.Archer, Es.CellEs.UnitEs.Main(idx_to).LevelC.Level, Es.CellEs.UnitEs.Main(idx_to).OwnerC.Player, idx_to).HaveUnit.Have = false;
-                                    Es.CellEs.UnitEs.Main(idx_to).UnitC.Reset();
-
-
-                                    Es.CellEs.UnitEs.Main(idx_to).UnitC.Unit = unit;
-                                    Es.CellEs.UnitEs.Main(idx_to).LevelC.Level = LevelTypes.First;
-
-                                    Es.WhereUnitsEs.WhereUnit(unit, LevelTypes.First, Es.CellEs.UnitEs.Main(idx_to).OwnerC.Player, idx_to).HaveUnit.Have = true;
-
-
-                                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, Es.CellEs.UnitEs.Main(idx_to).OwnerC.Player).Units.Amount -= 1;
+                                    UnitEs.Main(idx_to).SetNew((unit, LevelTypes.First, whoseMove, ConditionUnitTypes.None, false), Es);
+                                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, UnitEs.Main(idx_to).OwnerC.Player).Units.Amount -= 1;
 
                                     break;
                                 }

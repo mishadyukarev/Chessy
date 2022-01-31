@@ -4,14 +4,14 @@ namespace Game.Game
 {
     public sealed class CellTrailE : EntityAbstract
     {
-        public DirectTC DirectTC => Ent.Get<DirectTC>();
+        readonly DirectTypes _direct;
         public ref AmountC Health => ref Ent.Get<AmountC>();
 
         public bool HaveTrail => Health.Have;
 
         public CellTrailE(in DirectTypes dir, in EcsWorld gameW) : base(gameW)
         {
-            Ent.Add(new DirectTC(dir));
+            _direct = dir;
         }
 
         public void SetNew()
@@ -21,7 +21,7 @@ namespace Game.Game
 
         public void Destroy()
         {
-            Health.Reset();
+            Health.Amount = 0;
         }
     }
 }

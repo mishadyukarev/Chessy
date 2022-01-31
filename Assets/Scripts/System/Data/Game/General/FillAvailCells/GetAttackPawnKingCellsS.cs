@@ -8,18 +8,17 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in Es.CellEs.Idxs)
+            foreach (byte idx_0 in CellEs.Idxs)
             {
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.Second).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
-                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
-                ref var level_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
-                ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
-                ref var step_0 = ref Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps;
-                ref var stunUnit_0 = ref Es.CellEs.UnitEs.Stun(idx_0).ForExitStun;
+                var unit_0 = UnitEs.Main(idx_0).UnitTC;
+                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
+                var step_0 = UnitEs.StatEs.Step(idx_0).Steps;
+                var stunUnit_0 = UnitEs.Stun(idx_0).ForExitStun;
 
                 if (!stunUnit_0.Have)
                 {
@@ -27,22 +26,22 @@
                     {
                         DirectTypes dir_cur = default;
 
-                        Es.CellEs.TryGetIdxAround(idx_0, out var dirs);
+                        CellEs.TryGetIdxAround(idx_0, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             dir_cur += 1;
                             var idx_1 = item_1.Value;
 
-                            ref var unit_1 = ref Es.CellEs.UnitEs.Main(idx_1).UnitC;
-                            ref var own_1 = ref Es.CellEs.UnitEs.Main(idx_1).OwnerC;
+                            var unit_1 = UnitEs.Main(idx_1).UnitTC;
+                            var own_1 = UnitEs.Main(idx_1).OwnerC;
 
-                            if (!Es.CellEs.EnvironmentEs.Mountain(idx_1).HaveEnvironment)
+                            if (!CellEs.EnvironmentEs.Mountain(idx_1).HaveEnvironment)
                             {
-                                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >=
-                                    Es.CellEs.UnitEs.StepsForShiftOrAttack(idx_1, Es.CellEs.GetDirect(idx_0, idx_1), Es.CellEs.EnvironmentEs, Es.CellEs.TrailEs)
+                                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >=
+                                    UnitEs.Main(idx_1).StepsForShiftOrAttack(CellEs.GetDirect(idx_0, idx_1), CellEs.EnvironmentEs, CellEs.TrailEs)
 
-                                    || Es.CellEs.UnitEs.StatEs.Step(idx_0).HaveMax(Es.CellEs.UnitEs.Main(idx_0)))
+                                    || UnitEs.StatEs.Step(idx_0).HaveMax(UnitEs.Main(idx_0)))
                                 {
                                     if (unit_1.Have)
                                     {

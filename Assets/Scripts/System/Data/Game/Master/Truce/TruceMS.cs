@@ -13,24 +13,23 @@ namespace Game.Game
         {
             int random;
 
-            foreach (byte idx_0 in Es.CellEs.Idxs)
+            foreach (byte idx_0 in CellEs.Idxs)
             {
-                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
-                ref var levUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
-                ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
+                var unit_0 = UnitEs.Main(idx_0).UnitTC;
+                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
 
-                ref var tw_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeapon;
-                ref var twLevel_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).LevelTW;
+                var tw_0 = UnitEs.ToolWeapon(idx_0).ToolWeaponTC;
+                var twLevel_0 = UnitEs.ToolWeapon(idx_0).LevelTC;
 
-                ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
+                var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
 
-                ref var curFireCom = ref Es.CellEs.FireEs.Fire(idx_0).Fire;
+                ref var curFireCom = ref CellEs.FireEs.Fire(idx_0).Fire;
 
 
                 curFireCom.Disable();
 
 
-                Es.CellEs.TrailEs.ResetAll(idx_0);
+                CellEs.TrailEs.ResetAll(idx_0);
 
                 if (unit_0.Have)
                 {
@@ -40,11 +39,11 @@ namespace Game.Game
                         {
                             if (tw_0.HaveTW)
                             {
-                                Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons++;
+                                Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
                                 UnitEs.ToolWeapon(idx_0).Reset();
                             }
 
-                            UnitEs.AddToInventorAndRemove(idx_0, Es.InventorUnitsEs, Es.WhereUnitsEs);
+                            UnitEs.Main(idx_0).AddToInventorAndRemove(Es.InventorUnitsEs, Es.WhereUnitsEs);
                         }
                     }
                     else
@@ -52,11 +51,11 @@ namespace Game.Game
 
                         if (tw_0.HaveTW)
                         {
-                            Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons++;
+                            Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
                             UnitEs.ToolWeapon(idx_0).Reset();
                         }
 
-                        UnitEs.AddToInventorAndRemove(idx_0, Es.InventorUnitsEs, Es.WhereUnitsEs);
+                        UnitEs.Main(idx_0).AddToInventorAndRemove(Es.InventorUnitsEs, Es.WhereUnitsEs);
                     }
                 }
 
@@ -65,29 +64,29 @@ namespace Game.Game
                 {
                     if (build_0.Is(BuildingTypes.Camp))
                     {
-                        Es.WhereBuildingEs.HaveBuild(Es.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
-                        Es.CellEs.BuildEs.Build(idx_0).Remove();
+                        Es.WhereBuildingEs.HaveBuild(BuildEs.BuildingE(idx_0), idx_0).HaveBuilding.Have = false;
+                        BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
                     }
                 }
 
                 else
                 {
-                    if (Es.CellEs.EnvironmentEs.YoungForest( idx_0).HaveEnvironment)
+                    if (CellEs.EnvironmentEs.YoungForest( idx_0).HaveEnvironment)
                     {
-                        Es.CellEs.EnvironmentEs.YoungForest( idx_0).Destroy(Es.WhereEnviromentEs);
+                        CellEs.EnvironmentEs.YoungForest( idx_0).Destroy(Es.WhereEnviromentEs);
 
-                        Es.CellEs.EnvironmentEs.AdultForest( idx_0).SetNew(Es.WhereEnviromentEs);
+                        CellEs.EnvironmentEs.AdultForest( idx_0).SetNew(Es.WhereEnviromentEs);
                     }
 
-                    if (!Es.CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment
-                        && !Es.CellEs.EnvironmentEs.Mountain( idx_0).HaveEnvironment
-                        && !Es.CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                    if (!CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment
+                        && !CellEs.EnvironmentEs.Mountain( idx_0).HaveEnvironment
+                        && !CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
                     {
                         random = Random.Range(0, 100);
 
                         if (random <= 3)
                         {
-                            Es.CellEs.EnvironmentEs.Fertilizer( idx_0).SetNew();
+                            CellEs.EnvironmentEs.Fertilizer( idx_0).SetNew();
                         }
                     }
                 }

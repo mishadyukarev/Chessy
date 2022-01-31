@@ -67,7 +67,5 @@ namespace Game.Game
         }
 
         public UnitTC(in UnitTypes unit) => Unit = unit;
-
-        public void Reset() => Unit = UnitTypes.None;
     }
 }

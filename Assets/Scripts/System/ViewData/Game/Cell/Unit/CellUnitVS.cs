@@ -11,15 +11,15 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in Es.CellEs.Idxs)
+            foreach (var idx_0 in CellEs.Idxs)
             {
-                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
-                ref var levelUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).LevelC;
+                var unit_0 = UnitEs.Main(idx_0).UnitTC;
+                var levelUnit_0 = UnitEs.Main(idx_0).LevelTC.Level;
 
-                ref var corner_0 = ref Es.CellEs.UnitEs.Main(idx_0).IsCorned;
+                var corner_0 = UnitEs.Main(idx_0).IsCorned;
 
-                ref var tw_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeapon;
-                ref var twLevel_0 = ref Es.CellEs.UnitEs.ToolWeapon(idx_0).LevelTW;
+                var tw_0 = UnitEs.ToolWeapon(idx_0).ToolWeaponTC;
+                var twLevel_0 = UnitEs.ToolWeapon(idx_0).LevelTC;
 
                 ref var mainUnit_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
                 ref var extraUnit_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);
@@ -30,7 +30,7 @@ namespace Game.Game
 
                 if (unit_0.Have)
                 {
-                    if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).VisibleC.IsVisible)
+                    if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
                     {
                         mainUnit_0.Enable();
 
@@ -40,11 +40,11 @@ namespace Game.Game
                                 throw new Exception();
 
                             case UnitTypes.King:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
+                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
                                 break;
 
                             case UnitTypes.Pawn:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
+                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
 
                                 if (tw_0.HaveTW)
                                 {
@@ -54,27 +54,27 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Archer:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(corner_0.Is, levelUnit_0.Level).SpriteC.Sprite;
+                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(corner_0.Is, levelUnit_0).SpriteC.Sprite;
                                 break;
 
                             case UnitTypes.Scout:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
+                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
                                 break;
 
                             case UnitTypes.Elfemale:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
+                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
                                 break;
 
                             case UnitTypes.Snowy:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite;
+                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
                                 break;
 
                             case UnitTypes.Camel:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0.Level).SpriteC.Sprite; break;
+                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite; break;
                                 throw new Exception();
                         }
 
-                        if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).VisibleC.IsVisible)
+                        if (UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible)
                         {
                             mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 1);
                         }
@@ -83,7 +83,7 @@ namespace Game.Game
                             mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 0.6f);
                         }
 
-                        if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).VisibleC.IsVisible)
+                        if (UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible)
                         {
                             extraUnit_0.Color = new Color(extraUnit_0.Color.r, extraUnit_0.Color.g, extraUnit_0.Color.b, 1);
                         }

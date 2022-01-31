@@ -6,7 +6,7 @@ namespace Game.Game
     {
         protected readonly byte Idx;
 
-        public CellAbstE(in EcsWorld gameW, in byte idx) : base(gameW)
+        public CellAbstE(in byte idx, in EcsWorld gameW) : base(gameW)
         {
             Idx = idx;
         }

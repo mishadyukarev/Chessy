@@ -20,7 +20,7 @@
                 if (Es.InventorResourcesEs.CanCreateUnit(playerSend, unit, out var needRes))
                 {
                     Es.InventorResourcesEs.BuyCreateUnit(playerSend, unit);
-                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, playerSend).Units++;
+                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, playerSend).Units.Amount++;
 
                     Es.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }

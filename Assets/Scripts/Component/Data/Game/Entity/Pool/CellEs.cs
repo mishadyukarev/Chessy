@@ -40,7 +40,7 @@ namespace Game.Game
                 return hash;
             }
         }
-        public int Count => _idxs.Count;
+        public byte Count => (byte)_idxs.Count;
 
 
         #region Pools

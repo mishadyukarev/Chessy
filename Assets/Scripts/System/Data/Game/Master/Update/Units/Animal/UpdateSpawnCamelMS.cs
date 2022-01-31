@@ -12,20 +12,17 @@ namespace Game.Game
         {
             if (!Es.WhereUnitsEs.HaveUnit(UnitTypes.Camel))
             {
-                byte idx_0 = (byte)Random.Range(0, Es.CellEs.Idxs.Count);
+                byte idx_0 = (byte)Random.Range(0, CellEs.Idxs.Count);
 
                 if (CellEs.ParentE(idx_0).IsActiveSelf.IsActive)
                 {
-                    if (!UnitEs.Main(idx_0).UnitC.Have && !EnvironmentEs.Mountain( idx_0).HaveEnvironment)
+                    if (!UnitEs.Main(idx_0).UnitTC.Have && !EnvironmentEs.Mountain( idx_0).HaveEnvironment)
                     {
-                        ref var unitC_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
-
-
                         bool haveNearUnit = false;
 
-                        foreach (var idx_1 in Es.CellEs.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
                         {
-                            if (UnitEs.Main(idx_1).UnitC.Have)
+                            if (UnitEs.Main(idx_1).UnitTC.Have)
                             {
                                 haveNearUnit = true;
                                 break;
@@ -34,7 +31,7 @@ namespace Game.Game
 
                         if (!haveNearUnit)
                         {
-                            UnitEs.SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None), Es, idx_0);
+                            UnitEs.Main(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
                         }
                     }

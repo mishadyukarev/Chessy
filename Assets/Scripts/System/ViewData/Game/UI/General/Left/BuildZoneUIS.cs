@@ -10,8 +10,8 @@ namespace Game.Game
 
         public void Run()
         {
-            ref var unit_sel = ref Es.CellEs.BuildEs.Build(Es.SelectedIdxE.IdxC.Idx).BuildTC;
-            ref var own_sel = ref Es.CellEs.BuildEs.Build(Es.SelectedIdxE.IdxC.Idx).PlayerTC;
+            var unit_sel = BuildEs.BuildingE(Es.SelectedIdxE.IdxC.Idx).BuildTC;
+            var own_sel = BuildEs.BuildingE(Es.SelectedIdxE.IdxC.Idx).Owner;
 
 
             if (Es.SelectedIdxE.IsSelCell && unit_sel.Is(BuildingTypes.City))

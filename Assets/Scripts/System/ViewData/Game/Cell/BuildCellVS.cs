@@ -12,17 +12,17 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in Es.CellEs.Idxs)
+            foreach (byte idx_0 in CellEs.Idxs)
             {
-                ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
-                ref var ownBuild_0 = ref Es.CellEs.BuildEs.Build(idx_0).PlayerTC;
+                var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
+                var ownBuild_0 = BuildEs.BuildingE(idx_0).Owner;
 
 
                 var buildT = build_0.Build;
-                var isVisForMe = Es.CellEs.BuildEs.IsVisible(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
-                var isVisForNext = Es.CellEs.BuildEs.IsVisible(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
+                var isVisForMe = BuildEs.BuildingE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
+                var isVisForNext = BuildEs.BuildingE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
 
-                if (Es.CellEs.BuildEs.Build(idx_0).Health.Have)
+                if (BuildEs.BuildingE(idx_0).Health.Have)
                 {
                     if (isVisForMe)
                     {

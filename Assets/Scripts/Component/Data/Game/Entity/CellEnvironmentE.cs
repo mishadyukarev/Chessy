@@ -5,20 +5,22 @@ namespace Game.Game
 {
     public abstract class CellEnvironmentE : EntityAbstract
     {
-        IdxC IdxC => Ent.Get<IdxC>();
-        protected EnvironmetTC EnvironmentTC => Ent.Get<EnvironmetTC>();
-        protected ResourceTC ResourceTC => Ent.Get<ResourceTC>();
-        protected ref AmountC Resources => ref Ent.Get<AmountC>();
+        protected readonly byte Idx;
+        public readonly EnvironmentTypes EnvT;
+        public readonly ResourceTypes ResourceT;
 
-        public int AmountResources => Resources.Amount;
-        public bool HaveEnvironment => Resources.Have;
-        public bool HaveMaxResources => Resources.Amount >= CellEnvironmentValues.MaxResources(EnvironmentTC.Environment);
-        public float ProtectionPercent => UnitDamageValues.ProtectionPercent(EnvironmentTC.Environment);
+        protected ref AmountC ResourcesRef => ref Ent.Get<AmountC>();
+        public AmountC Resources => Ent.Get<AmountC>();
+
+        public bool HaveEnvironment => ResourcesRef.Have;
+        public bool HaveMaxResources => ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT);
+        public int MaxResources => CellEnvironmentValues.MaxResources(EnvT);
+        public float ProtectionPercent => UnitDamageValues.ProtectionPercent(EnvT);
         public int NeedStepsShiftAttackUnit
         {
             get
             {
-                switch (EnvironmentTC.Environment)
+                switch (EnvT)
                 {
                     case EnvironmentTypes.Fertilizer: return 0;
                     case EnvironmentTypes.YoungForest: return 0;
@@ -32,21 +34,20 @@ namespace Game.Game
 
         public CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld world) : base(world)
         {
-            Ent
-                .Add(new EnvironmetTC(envT))
-                .Add(new ResourceTC(resT))
-                .Add(new IdxC(idx));
+            Idx = idx;
+            EnvT = envT;
+            ResourceT = resT;
         }
 
-        public virtual void SetNew(in WhereEnviromentEs whereEnviromentEs)
+        public void SetNew(in WhereEnviromentEs whereEnviromentEs)
         {
-            whereEnviromentEs.Info(EnvironmentTC.Environment, IdxC.Idx).HaveEnv.Have = true;
-            Resources.Amount = CellEnvironmentValues.RandomResources(EnvironmentTC.Environment);
+            whereEnviromentEs.Info(EnvT, Idx).HaveEnv.Have = true;
+            ResourcesRef.Amount = CellEnvironmentValues.RandomResources(EnvT);
         }
         public virtual void Destroy(in WhereEnviromentEs whereEnviromentEs)
         {
-            whereEnviromentEs.Info(EnvironmentTC.Environment, IdxC.Idx).HaveEnv.Have = false;
-            Resources.Reset();
+            whereEnviromentEs.Info(EnvT, Idx).HaveEnv.Have = false;
+            ResourcesRef.Amount = 0;
         }
     }
 }

@@ -19,7 +19,7 @@
                 {
                     UnitEs.Main(idx_0).ChangeCorner();
 
-                    UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(uniq));
+                    UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq);
 
                     Es.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }

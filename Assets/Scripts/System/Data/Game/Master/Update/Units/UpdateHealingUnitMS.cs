@@ -8,11 +8,11 @@
 
         public void Run()
         {
-            foreach (var idx_0 in Es.CellEs.Idxs)
+            foreach (var idx_0 in CellEs.Idxs)
             {
-                if (Es.CellEs.UnitEs.Main(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
+                if (UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Relaxed))
                 {
-                    Es.CellEs.UnitEs.StatEs.Hp(idx_0).Health.Amount = CellUnitHpValues.MAX_HP;
+                    UnitEs.StatEs.Hp(idx_0).Health.Amount = CellUnitHpValues.MAX_HP;
                 }
             }
         }

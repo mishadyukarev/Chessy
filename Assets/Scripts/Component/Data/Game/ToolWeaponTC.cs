@@ -8,8 +8,5 @@
         public bool HaveTW => ToolWeapon != default;
 
         public ToolWeaponTC(in ToolWeaponTypes tw) => ToolWeapon = tw;
-
-        public void Set(ToolWeaponTC twC) => ToolWeapon = twC.ToolWeapon;
-        public void Reset() => ToolWeapon = default;
     }
 }

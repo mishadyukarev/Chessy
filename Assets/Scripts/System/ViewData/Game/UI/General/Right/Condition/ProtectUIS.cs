@@ -10,9 +10,10 @@ namespace Game.Game
 
         public void Run()
         {
-            ref var unit_sel = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitC;
-            ref var ownUnit_sel = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).OwnerC;
-            ref var cond_sel = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).ConditionC;
+            var idx_sel = Es.SelectedIdxE.IdxC.Idx;
+
+            var unit_sel = UnitEs.Main(idx_sel).UnitTC;
+            var ownUnit_sel = UnitEs.Main(idx_sel).OwnerC;
 
 
             var isEnableButt = false;
@@ -31,7 +32,7 @@ namespace Game.Game
 
                     RightProtectUIE.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
 
-                    if (cond_sel.Is(ConditionUnitTypes.Protected))
+                    if (UnitEs.Main(idx_sel).ConditionTC.Is(ConditionUnitTypes.Protected))
                     {
                         RightProtectUIE.Button<ImageUIC>().Color = Color.yellow;
                     }

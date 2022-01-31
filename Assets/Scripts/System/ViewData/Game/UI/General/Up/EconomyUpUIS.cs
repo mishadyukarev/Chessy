@@ -11,10 +11,6 @@ namespace Game.Game
 
         public void Run()
         {
-            var unitEs = Es.CellEs.UnitEs;
-            var envEs = Es.CellEs.EnvironmentEs;
-
-
             var curPlayer = Es.WhoseMove.CurPlayerI;
 
 
@@ -26,25 +22,27 @@ namespace Game.Game
             extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
 
 
-            foreach (var idx_0 in Es.CellEs.Idxs)
+            for (byte idx_0 = 0; idx_0 < CellEs.Count; idx_0++)
             {
-                if (Es.CellEs.UnitEs.Main(idx_0).UnitC.Have && Es.CellEs.UnitEs.Main(idx_0).OwnerC.Is(Es.WhoseMove.CurPlayerI))
+                if (UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs) && UnitEs.Main(idx_0).OwnerC.Is(Es.WhoseMove.CurPlayerI))
                 {
-                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(Es.CellEs.UnitEs.Main(idx_0).UnitC.Unit);
+                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(UnitEs.Main(idx_0).UnitTC.Unit);
 
-                    if (unitEs.CanExtract(idx_0, envEs, out var extract, out var env, out var res))
+                    if (UnitEs.Main(idx_0).CanExtractPawnAdultForest(UnitEs.StatEs, EnvironmentEs))
                     {
-                        extracts[res] += extract;
+                        extracts[EnvironmentEs.AdultForest(idx_0).ResourceT] += EnvironmentEs.AdultForest(idx_0).AmountExtractPawn(UnitEs);
                     }
                 }
-                if (Es.CellEs.BuildEs.Build(idx_0).BuildTC.Have && Es.CellEs.BuildEs.Build(idx_0).PlayerTC.Is(Es.WhoseMove.CurPlayerI))
+                if (BuildEs.BuildingE(idx_0).CanExtractAdultForest(BuildEs, EnvironmentEs))
                 {
-                    if (Es.CellEs.BuildEs.CanExtract(idx_0, out var extract, out var env, out var res))
-                    {
-                        extracts[res] += extract;
-                    }
+                    extracts[EnvironmentEs.AdultForest(idx_0).ResourceT] += EnvironmentEs.AdultForest(idx_0).AmountExtractWoodcutter(Es.BuildingUpgradeEs, BuildEs);
+                }
+                if (BuildEs.BuildingE(idx_0).CanExtractFertilizer(EnvironmentEs))
+                {
+                    extracts[EnvironmentEs.Fertilizer(idx_0).ResourceT] += EnvironmentEs.Fertilizer(idx_0).AmountExtractFarm(Es.BuildingUpgradeEs, BuildEs);
                 }
             }
+
 
             if (extracts[ResourceTypes.Food] < 0) EconomyExtract<TextUIC>(ResourceTypes.Food).Text = extracts[ResourceTypes.Food].ToString();
             else EconomyExtract<TextUIC>(ResourceTypes.Food).Text = "+ " + extracts[ResourceTypes.Food].ToString();

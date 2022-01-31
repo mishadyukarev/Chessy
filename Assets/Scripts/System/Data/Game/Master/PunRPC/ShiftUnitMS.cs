@@ -13,7 +13,7 @@
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
             {
-                UnitEs.StatEs.Step(idx_from).Steps.Take(UnitEs.StepsForShiftOrAttack(idx_to, Es.CellEs.GetDirect(idx_from, idx_to), EnvironmentEs, Es.CellEs.TrailEs));
+                UnitEs.StatEs.Step(idx_from).Steps.Amount -= UnitEs.Main(idx_to).StepsForShiftOrAttack(CellEs.GetDirect(idx_from, idx_to), EnvironmentEs, CellEs.TrailEs);
 
                 UnitEs.Shift(idx_from, idx_to, Es);
 

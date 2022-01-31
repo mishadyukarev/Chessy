@@ -13,44 +13,41 @@
             var build = Es.MasterEs.Build<BuildingTC>().Build;
             var idx_0 = Es.MasterEs.Build<IdxC>().Idx;
 
-            ref var build_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
-            ref var ownBuild_0 = ref Es.CellEs.BuildEs.Build(idx_0).PlayerTC;
-
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
 
 
             if (build == BuildingTypes.Farm)
             {
-                var buildC = Es.CellEs.BuildEs.Build(idx_0).BuildTC;
+                var buildC = BuildEs.BuildingE(idx_0).BuildTC;
 
-                if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
+                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
                 {
                     if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
                     {
-                        if (!Es.CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                        if (!CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
                         {
                             if (Es.InventorResourcesEs.CanCreateBuild(build, whoseMove, out var needRes))
                             {
                                 Es.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
-                                Es.CellEs.EnvironmentEs.YoungForest( idx_0).Destroy(Es.WhereEnviromentEs);
+                                CellEs.EnvironmentEs.YoungForest( idx_0).Destroy(Es.WhereEnviromentEs);
 
-                                if (Es.CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
+                                if (CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
                                 {
-                                    Es.CellEs.EnvironmentEs.Fertilizer( idx_0).SetMax();
+                                    CellEs.EnvironmentEs.Fertilizer( idx_0).SetMax();
                                 }
                                 else
                                 {
-                                    Es.CellEs.EnvironmentEs.Fertilizer( idx_0).SetNew();
+                                    CellEs.EnvironmentEs.Fertilizer( idx_0).SetNew();
                                 }
 
                                 Es.InventorResourcesEs.BuyBuild(whoseMove, build);
 
-                                Es.CellEs.BuildEs.Build(idx_0).SetNew(build, whoseMove);
+                                BuildEs.BuildingE(idx_0).SetNew(build, whoseMove, BuildEs, Es.WhereBuildingEs);
                                 Es.WhereBuildingEs.HaveBuild(build, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take(CellUnitStepValues.NeedSteps(build));
+                                UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(build);
                             }
                             else
                             {

@@ -1,7 +1,5 @@
 ﻿using ECS;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
 
 namespace Game.Game
 {
@@ -10,10 +8,12 @@ namespace Game.Game
         readonly Dictionary<string, HaveUpgradeE> _haveUpgrades;
 
         public HaveUpgradeE HaveUpgrade(in BuildingTypes build, in PlayerTypes player, in UpgradeTypes upg) => _haveUpgrades[build.ToString() + player + upg];
+        public HaveUpgradeE HaveUpgrade(in CellBuildingE buildE, in UpgradeTypes upg) => _haveUpgrades[buildE.BuildTC.Build.ToString() + buildE.Owner.Player + upg];
 
         public BuildingUpgradeEs(in EcsWorld gameW)
         {
             _haveUpgrades = new Dictionary<string, HaveUpgradeE>();
+
             for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
             {
                 for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)

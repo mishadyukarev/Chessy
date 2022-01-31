@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            ref var unit_sel = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitC;
+            var unit_sel = UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitTC;
 
             var activeParent = false;
 
@@ -17,7 +17,7 @@
             {
                 if (unit_sel.Have)
                 {
-                    if (Es.CellEs.UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).VisibleC.IsVisible)
+                    if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).IsVisibleC.IsVisible)
                     {
                         activeParent = true;
                     }

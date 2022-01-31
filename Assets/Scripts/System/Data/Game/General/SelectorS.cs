@@ -14,11 +14,10 @@ namespace Game.Game
             var idx_cur = Es.CurrentIdxE.IdxC.Idx;
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            ref var unit_cur = ref UnitEs.Main(idx_cur).UnitC;
-            ref var levUnit_cur = ref UnitEs.Main(idx_cur).LevelC;
-            ref var ownUnit_cur = ref UnitEs.Main(idx_cur).OwnerC;
+            var unit_cur = UnitEs.Main(idx_cur).UnitTC;
+            var ownUnit_cur = UnitEs.Main(idx_cur).OwnerC;
 
-            ref var unit_sel = ref UnitEs.Main(idx_cur).UnitC;
+            var unit_sel = UnitEs.Main(idx_cur).UnitTC;
 
             ref var raycastTC = ref Es.ClickerObject.RayCastTC;
             ref var cellClick = ref Es.ClickerObject.CellClickC;
@@ -128,7 +127,7 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
                                         && ownUnit_cur.Is(Es.WhoseMove.CurPlayerI)
-                                        && !levUnit_cur.Is(LevelTypes.Second))
+                                        && !UnitEs.Main(idx_cur).LevelTC.Is(LevelTypes.Second))
                                     {
                                         Es.Rpc.UpgradeUnitToMaster(Es.CurrentIdxE.IdxC.Idx);
                                     }
@@ -255,7 +254,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_cur).VisibleC.IsVisible)
+                        if (!unit_cur.Have || !UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_cur).IsVisibleC.IsVisible)
                         {
                             if (Es.CurrentIdxE.IsStartDirectToCell)
                             {

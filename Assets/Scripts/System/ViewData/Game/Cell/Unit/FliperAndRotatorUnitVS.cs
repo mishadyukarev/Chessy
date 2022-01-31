@@ -10,11 +10,11 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in Es.CellEs.Idxs)
+            foreach (byte idx_0 in CellEs.Idxs)
             {
-                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
-                ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
-                ref var corner_0 = ref Es.CellEs.UnitEs.Main(idx_0).IsCorned;
+                var unit_0 = UnitEs.Main(idx_0).UnitTC;
+                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
+                var corner_0 = UnitEs.Main(idx_0).IsCorned;
 
                 ref var main_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
                 ref var extra_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);

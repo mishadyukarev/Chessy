@@ -15,27 +15,25 @@ namespace Game.Game
             var cond = Es.MasterEs.ConditionUnit<ConditionUnitC>().Condition;
             var idx_0 = Es.MasterEs.ConditionUnit<IdxC>().Idx;
 
-            ref var cond_0 = ref Es.CellEs.UnitEs.Main(idx_0).ConditionC;
-
 
             switch (cond)
             {
                 case ConditionUnitTypes.None:
-                    cond_0.Reset();
+                    UnitEs.Main(idx_0).ResetCondition();
                     break;
 
                 case ConditionUnitTypes.Protected:
-                    if (cond_0.Is(ConditionUnitTypes.Protected))
+                    if (UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Protected))
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        cond_0.Reset();
+                        UnitEs.Main(idx_0).ResetCondition();
                     }
 
-                    else if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
+                    else if (UnitEs.StatEs.Step(idx_0).Steps.Have)
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
-                        cond_0.Condition = cond;
+                        UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                        UnitEs.Main(idx_0).SetCondition(cond);
                     }
 
                     else
@@ -46,17 +44,17 @@ namespace Game.Game
 
 
                 case ConditionUnitTypes.Relaxed:
-                    if (cond_0.Is(ConditionUnitTypes.Relaxed))
+                    if (UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Relaxed))
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        cond_0.Reset();
+                        UnitEs.Main(idx_0).ResetCondition();
                     }
 
-                    else if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
+                    else if (UnitEs.StatEs.Step(idx_0).Steps.Have)
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        cond_0.Condition = cond;
-                        Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
+                        UnitEs.Main(idx_0).SetCondition(cond);
+                        UnitEs.StatEs.Step(idx_0).Steps.Amount--;
                     }
 
                     else

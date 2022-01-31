@@ -8,10 +8,10 @@
 
         public void Run()
         {
-            foreach (var idx_0 in Es.CellEs.Idxs)
+            foreach (var idx_0 in CellEs.Idxs)
             {
-                ref var unit_0 = ref Es.CellEs.UnitEs.Main(idx_0).UnitC;
-                ref var condUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).ConditionC;
+                //var unit_0 = UnitEs.Main(idx_0).UnitC;
+                //ref var condUnit_0 = UnitEs.Main(idx_0).ConditionTC;
 
                 //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
                 //{

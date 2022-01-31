@@ -1,26 +1,73 @@
 ﻿using ECS;
+using System;
 
 namespace Game.Game
 {
-    public sealed class CellBuildingE : EntityAbstract
+    public sealed class CellBuildingE : CellAbstE
     {
-        public ref BuildingTC BuildTC => ref Ent.Get<BuildingTC>();
-        public ref PlayerTC PlayerTC => ref Ent.Get<PlayerTC>();
-        public ref AmountC Health => ref Ent.Get<AmountC>();
+        ref AmountC HealthRef => ref Ent.Get<AmountC>();
+        ref BuildingTC BuildTCRef => ref Ent.Get<BuildingTC>();
+        ref PlayerTC PlayerTCRef => ref Ent.Get<PlayerTC>();
 
-        public CellBuildingE(in EcsWorld world) : base(world) { }
+        public AmountC Health => Ent.Get<AmountC>();
+        public BuildingTC BuildTC => Ent.Get<BuildingTC>();
+        public PlayerTC Owner => Ent.Get<PlayerTC>();
 
-        public void SetNew(in BuildingTypes build, in PlayerTypes owner)
+        public bool HaveBuilding => Health.Have && BuildTC.Have;
+
+        public bool CanExtractAdultForest(in CellBuildEs buildEs, in CellEnvironmentEs envEs)
         {
-            BuildTC.Build = build;
-            PlayerTC.Player = owner;
-            Health.Amount = CellBuildingValues.MaxAmountHealth(build);
+            if (buildEs.BuildingE(Idx).HaveBuilding
+                && buildEs.BuildingE(Idx).BuildTC.Is(BuildingTypes.Woodcutter)
+                && envEs.AdultForest(Idx).HaveEnvironment) return true;
+            else return false;
         }
-        public void Remove()
+        public bool CanExtractFertilizer(in CellEnvironmentEs envEs)
         {
-            BuildTC.Reset();
-            PlayerTC.Reset();
-            Health.Reset();
+            if (HaveBuilding && BuildTC.Is(BuildingTypes.Farm)
+                && envEs.Fertilizer(Idx).HaveEnvironment) return true;
+            else return false;
+        }
+
+        internal CellBuildingE(in byte idx, in EcsWorld world) : base(idx, world)
+        {
+        }
+
+        public void SetNew(in BuildingTypes build, in PlayerTypes owner, in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
+        {
+            if (buildEs.BuildingE(Idx).HaveBuilding) throw new Exception("There's got building on cell");
+
+            BuildTCRef.Build = build;
+            PlayerTCRef.Player = owner;
+            HealthRef.Amount = CellBuildingValues.MaxAmountHealth(build);
+
+            whereBuildingEs.HaveBuild(build, owner, Idx).HaveBuilding.Have = true;
+        }
+        public void Destroy(in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
+        {
+            if (!buildEs.BuildingE(Idx).HaveBuilding) throw new Exception("There's not got building on cell");
+
+            whereBuildingEs.HaveBuild(buildEs.BuildingE(Idx), Idx).HaveBuilding.Have = false;
+
+            BuildTCRef.Build = BuildingTypes.None;
+            PlayerTCRef.Player = PlayerTypes.None;
+            HealthRef.Amount = 0;
+        }
+
+        public void Defrost(in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
+        {
+            if (!buildEs.BuildingE(Idx).HaveBuilding) throw new Exception("There's not got building on cell");
+            if (!buildEs.BuildingE(Idx).BuildTC.Is(BuildingTypes.IceWall)) throw new Exception("Need Ice Wall on cell");
+
+            HealthRef.Amount--;
+            if (!buildEs.BuildingE(Idx).Health.Have) Destroy(buildEs, whereBuildingEs);
+        }
+
+        public void Sync(in int health, in BuildingTypes build, in PlayerTypes player)
+        {
+            HealthRef.Amount = health;
+            BuildTCRef.Build = build;
+            PlayerTCRef.Player = player;
         }
     }
 }

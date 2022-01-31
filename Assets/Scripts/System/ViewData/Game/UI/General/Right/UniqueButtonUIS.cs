@@ -10,7 +10,7 @@
         {
             for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
-                ref var ability = ref Es.CellEs.UnitEs.UniqueButton(button, Es.SelectedIdxE.IdxC.Idx).AbilityC.Ability;
+                var ability = UnitEs.AbilityButton(button, Es.SelectedIdxE.IdxC.Idx).AbilityC.Ability;
 
                 if (ability == default)
                 {
@@ -18,8 +18,8 @@
                 }
                 else
                 {
-                    EntitiesView.UIEs.RightEs.Unique(button).Text.SetActiveParent(Es.CellEs.UnitEs.Unique(ability, Es.SelectedIdxE.IdxC.Idx).Cooldown.Have);
-                    EntitiesView.UIEs.RightEs.Unique(button).Text.Text = Es.CellEs.UnitEs.Unique(ability, Es.SelectedIdxE.IdxC.Idx).Cooldown.Amount.ToString();
+                    EntitiesView.UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs.CooldownAbility(ability, Es.SelectedIdxE.IdxC.Idx).Cooldown.Have);
+                    EntitiesView.UIEs.RightEs.Unique(button).Text.Text = UnitEs.CooldownAbility(ability, Es.SelectedIdxE.IdxC.Idx).Cooldown.Amount.ToString();
 
                     EntitiesView.UIEs.RightEs.Unique(button).Paren.SetActive(true);
 

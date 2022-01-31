@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    sealed class AttackMS : SystemCellAbstract, IEcsRunSystem
+    sealed class AttackMS : SystemAbstract, IEcsRunSystem
     {
         public AttackMS(in Entities ents) : base(ents)
         {
@@ -10,49 +10,28 @@ namespace Game.Game
 
         public void Run()
         {
-            var cellEs = Es.CellEs;
-            var unitEs = cellEs.UnitEs;
-            var buildEs = cellEs.BuildEs;
-            var envEs = cellEs.EnvironmentEs;
-
-
             Es.MasterEs.Attack.Get(out var idx_from, out var idx_to);
 
-            ref var unit_from = ref UnitEs.Main(idx_from).UnitC;
-            ref var ownerUnit_from = ref UnitEs.Main(idx_from).OwnerC;
-            ref var hpUnit_from = ref UnitEs.StatEs.Hp(idx_from).Health;
-            ref var condUnit_from = ref UnitEs.Main(idx_from).ConditionC;
-
-            ref var tw_from = ref UnitEs.ToolWeapon(idx_from).ToolWeapon;
+            var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
 
-            ref var unit_to = ref UnitEs.Main(idx_to).UnitC;
-            ref var hpUnit_to = ref UnitEs.StatEs.Hp(idx_to).Health;
-
-            ref var tw_to = ref UnitEs.ToolWeapon(idx_to).ToolWeapon;
-
-
-
-            var playerSender = Es.WhoseMove.WhoseMove.Player;
-
-
-            if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, playerSender, out var attack))
+            if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, whoseMove, out var attack))
             {
-                UnitEs.StatEs.Step(idx_from).Steps.Reset();
-                condUnit_from.Reset();
+                UnitEs.StatEs.Step(idx_from).Steps.Amount = 0;
+                UnitEs.Main(idx_from).ResetCondition();
 
 
                 float powerDam_from = 0;
                 float powerDam_to = 0;
 
 
-                powerDam_from += unitEs.DamageAttack(idx_from, Es.UnitStatUpgradesEs, attack);
+                powerDam_from += UnitEs.Main(idx_from).DamageAttack(CellEs, Es.UnitStatUpgradesEs, attack);
 
-                if (unit_from.IsMelee)
+                if (UnitEs.Main(idx_from).UnitTC.IsMelee)
                     Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 else Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
-                powerDam_to += unitEs.DamageOnCell(idx_to, CellEs, Es.UnitStatUpgradesEs);
+                powerDam_to += UnitEs.Main(idx_to).DamageOnCell(CellEs, Es.UnitStatUpgradesEs);
 
 
                 var dirAttack = CellEs.GetDirect(idx_from, idx_to);
@@ -86,7 +65,7 @@ namespace Game.Game
                 var maxDamage = CellUnitHpValues.MAX_HP;
                 var minDamage = 0;
 
-                if (!unit_to.IsMelee) powerDam_to /= 2;
+                if (!UnitEs.Main(idx_to).UnitTC.IsMelee) powerDam_to /= 2;
 
                 if (powerDam_to > powerDam_from)
                 {
@@ -126,45 +105,45 @@ namespace Game.Game
                 }
 
 
-                if (unit_from.IsMelee)
+                if (UnitEs.Main(idx_from).UnitTC.IsMelee)
                 {
-                    if (tw_from.Is(ToolWeaponTypes.Shield))
+                    if (UnitEs.ToolWeapon(idx_from).ToolWeaponTC.Is(ToolWeaponTypes.Shield))
                     {
                         UnitEs.ToolWeapon(idx_from).BreakShield();
                     }
                     else if (minus_from > 0)
                     {
-                        UnitEs.StatEs.Hp(idx_from).TakeAttack((int)minus_from);
+                        UnitEs.StatEs.Hp(idx_from).Attack((int)minus_from);
                     }
                 }
 
 
-                if (tw_to.Is(ToolWeaponTypes.Shield))
+                if (UnitEs.ToolWeapon(idx_to).ToolWeaponTC.Is(ToolWeaponTypes.Shield))
                 {
                     UnitEs.ToolWeapon(idx_to).BreakShield();
                 }
                 else if (minus_to > 0)
                 {
-                    UnitEs.StatEs.Hp(idx_to).TakeAttack((int)minus_to);
+                    UnitEs.StatEs.Hp(idx_to).Attack((int)minus_to);
                 }
 
 
 
-                if (!hpUnit_to.Have)
+                if (!UnitEs.StatEs.Hp(idx_to).IsAlive)
                 {
-                    if (UnitEs.Main(idx_to).UnitC.IsAnimal)
+                    if (UnitEs.Main(idx_to).UnitTC.IsAnimal)
                     {
-                        Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownerUnit_from.Player).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                        Es.InventorResourcesEs.Resource(ResourceTypes.Food, UnitEs.Main(idx_from).OwnerC.Player).Resources.Amount += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                     }
 
-                    UnitEs.Kill(idx_to, Es);
+                    UnitEs.Main(idx_to).Kill(Es);
 
 
-                    if (unit_from.IsMelee)
+                    if (UnitEs.Main(idx_from).UnitTC.IsMelee)
                     {
-                        if (!hpUnit_from.Have)
+                        if (!UnitEs.StatEs.Hp(idx_from).IsAlive)
                         {
-                            UnitEs.Kill(idx_from, Es);
+                            UnitEs.Main(idx_from).Kill(Es);
                         }
                         else
                         {
@@ -173,9 +152,9 @@ namespace Game.Game
                     }
                 }
 
-                else if (!hpUnit_from.Have)
+                else if (!UnitEs.StatEs.Hp(idx_from).IsAlive)
                 {
-                    UnitEs.Kill(idx_from, Es);
+                    UnitEs.Main(idx_from).Kill(Es);
                 }
 
                 //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();

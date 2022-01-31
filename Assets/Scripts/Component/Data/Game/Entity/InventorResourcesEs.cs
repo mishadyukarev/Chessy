@@ -98,10 +98,10 @@ namespace Game.Game
         public void BuyMeltOre(PlayerTypes player)
         {
             for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
-                Resource(res, player).Resources.Take(EconomyValues.AmountResForMelting(res));
+                Resource(res, player).Resources.Amount -= EconomyValues.AmountResForMelting(res);
 
-            Resource(ResourceTypes.Iron, player).Resources += 4;
-            Resource(ResourceTypes.Gold, player).Resources++;
+            Resource(ResourceTypes.Iron, player).Resources.Amount += 4;
+            Resource(ResourceTypes.Gold, player).Resources.Amount++;
         }
 
         public bool CanBuy(PlayerTypes player, ResourceTypes res, out Dictionary<ResourceTypes, int> needRes)
@@ -139,7 +139,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            Resource(res, player).Resources += amount;
+            Resource(res, player).Resources.Amount += amount;
         }
 
 

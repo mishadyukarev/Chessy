@@ -10,10 +10,10 @@ namespace Game.Game
 
         public void Run()
         {
-            ref var unit_sel = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitC;
-            ref var selOnUnitCom = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).OwnerC;
+            var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            ref var selCondUnitC = ref Es.CellEs.UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).ConditionC;
+            var unit_sel = UnitEs.Main(idx_sel).UnitTC;
+            var selOnUnitCom = UnitEs.Main(idx_sel).OwnerC;
 
 
             var activeButt = false;
@@ -24,7 +24,7 @@ namespace Game.Game
                 {
                     activeButt = true;
 
-                    if (selCondUnitC.Is(ConditionUnitTypes.Relaxed))
+                    if (UnitEs.Main(idx_sel).ConditionTC.Is(ConditionUnitTypes.Relaxed))
                     {
                         RightRelaxUIE.Button<ImageUIC>().Color = Color.green;
                     }

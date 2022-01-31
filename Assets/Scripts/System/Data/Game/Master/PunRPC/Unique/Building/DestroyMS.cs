@@ -13,12 +13,12 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var idx_0 = Es.MasterEs.DestroyIdxC.Idx;
 
-            ref var ownUnit_0 = ref Es.CellEs.UnitEs.Main(idx_0).OwnerC;
+            var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
 
-            ref var buildC_0 = ref Es.CellEs.BuildEs.Build(idx_0).BuildTC;
+            var buildC_0 = BuildEs.BuildingE(idx_0).BuildTC;
 
 
-            if (Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Have)
+            if (UnitEs.StatEs.Step(idx_0).Steps.Have)
             {
                 Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
@@ -26,15 +26,15 @@ namespace Game.Game
                 {
                     Es.WinnerE.Winner.Player = ownUnit_0.Player;
                 }
-                Es.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Take();
+                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
 
                 if (buildC_0.Is(BuildingTypes.Farm))
                 {
-                    Es.CellEs.EnvironmentEs.Fertilizer( idx_0).Destroy(Es.WhereEnviromentEs);
+                    CellEs.EnvironmentEs.Fertilizer( idx_0).Destroy(Es.WhereEnviromentEs);
                 }
 
-                Es.WhereBuildingEs.HaveBuild(Es.CellEs.BuildEs.Build(idx_0), idx_0).HaveBuilding.Have = false;
-                Es.CellEs.BuildEs.Build(idx_0).Remove();
+                Es.WhereBuildingEs.HaveBuild(BuildEs.BuildingE(idx_0), idx_0).HaveBuilding.Have = false;
+                BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
             }
             else
             {
