@@ -13,7 +13,9 @@ namespace Game.Game
         public BuildingTC BuildTC => Ent.Get<BuildingTC>();
         public PlayerTC Owner => Ent.Get<PlayerTC>();
 
-        public bool HaveBuilding => Health.Have && BuildTC.Have;
+        public bool HaveBuilding => IsAlive && HaveBuildingT;
+        public bool IsAlive => Health.Amount > 0;
+        public bool HaveBuildingT => BuildTC.Have;
 
         public bool CanExtractAdultForest(in CellBuildEs buildEs, in CellEnvironmentEs envEs)
         {
@@ -45,7 +47,7 @@ namespace Game.Game
         }
         public void Destroy(in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
         {
-            if (!buildEs.BuildingE(Idx).HaveBuilding) throw new Exception("There's not got building on cell");
+            //if (!buildEs.BuildingE(Idx).HaveBuilding) throw new Exception("There's not got building on cell");
 
             whereBuildingEs.HaveBuild(buildEs.BuildingE(Idx), Idx).HaveBuilding.Have = false;
 
@@ -60,7 +62,7 @@ namespace Game.Game
             if (!buildEs.BuildingE(Idx).BuildTC.Is(BuildingTypes.IceWall)) throw new Exception("Need Ice Wall on cell");
 
             HealthRef.Amount--;
-            if (!buildEs.BuildingE(Idx).Health.Have) Destroy(buildEs, whereBuildingEs);
+            if (!buildEs.BuildingE(Idx).IsAlive) Destroy(buildEs, whereBuildingEs);
         }
 
         public void Sync(in int health, in BuildingTypes build, in PlayerTypes player)

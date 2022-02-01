@@ -16,7 +16,7 @@
             {
                 if (UnitEs.StatEs.Step(idx_0).HaveMax(UnitEs.Main(idx_0)))
                 {
-                    Es.InventorUnitsEs.Units(UnitTypes.Scout, LevelTypes.First, UnitEs.Main(idx_0).OwnerC.Player).Units.Amount--;
+                    Es.InventorUnitsEs.Units(UnitTypes.Scout, LevelTypes.First, UnitEs.Main(idx_0).OwnerC.Player).TakeUnit();
 
                     var ownerUnit = UnitEs.Main(idx_0).OwnerC.Player;
                     var twC = UnitEs.ToolWeapon(idx_0).ToolWeaponTC;

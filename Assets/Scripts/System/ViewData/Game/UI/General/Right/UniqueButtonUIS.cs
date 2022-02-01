@@ -18,7 +18,7 @@
                 }
                 else
                 {
-                    EntitiesView.UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs.CooldownAbility(ability, Es.SelectedIdxE.IdxC.Idx).Cooldown.Have);
+                    EntitiesView.UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs.CooldownAbility(ability, Es.SelectedIdxE.IdxC.Idx).HaveCooldown);
                     EntitiesView.UIEs.RightEs.Unique(button).Text.Text = UnitEs.CooldownAbility(ability, Es.SelectedIdxE.IdxC.Idx).Cooldown.Amount.ToString();
 
                     EntitiesView.UIEs.RightEs.Unique(button).Paren.SetActive(true);

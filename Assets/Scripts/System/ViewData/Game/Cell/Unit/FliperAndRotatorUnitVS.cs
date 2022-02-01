@@ -28,7 +28,7 @@ namespace Game.Game
 
                 if (Es.SelectedIdxE.IdxC.Is(idx_0))
                 {
-                    if (unit_0.Have)
+                    if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
                     {
                         if (ownUnit_0.Is(Es.WhoseMove.CurPlayerI))
                         {

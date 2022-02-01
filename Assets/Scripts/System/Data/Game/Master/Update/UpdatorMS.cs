@@ -28,10 +28,8 @@ namespace Game.Game
 
                 var unit_0 = UnitEs.Main(idx_0).UnitTC;
                 var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
-                var hp_0 = UnitEs.StatEs.Hp(idx_0).Health;
 
                 var buil_0 = BuildEs.BuildingE(idx_0).BuildTC;
-                var ownBuil_0 = BuildEs.BuildingE(idx_0).Owner;
                 ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
 
                 foreach (var item in CellEs.TrailEs.Keys) CellEs.TrailEs.Trail(item, idx_0).Health.Amount--;
@@ -39,7 +37,7 @@ namespace Game.Game
 
 
 
-                if (unit_0.Have && !unit_0.IsAnimal)
+                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs) && !unit_0.IsAnimal)
                 {
                     //CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
@@ -100,7 +98,7 @@ namespace Game.Game
 
                         else if (!UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Relaxed))
                         {
-                            if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+                            if (UnitEs.StatEs.Step(idx_0).HaveSteps)
                             {
                                 UnitEs.Main(idx_0).SetCondition(ConditionUnitTypes.Protected);
                             }

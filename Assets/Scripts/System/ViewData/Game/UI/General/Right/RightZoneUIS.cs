@@ -8,16 +8,16 @@
 
         public void Run()
         {
-            var unit_sel = UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitTC;
+            var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
             var activeParent = false;
 
 
             if (Es.SelectedIdxE.IsSelCell)
             {
-                if (unit_sel.Have)
+                if (UnitEs.Main(idx_sel).HaveUnit(UnitStatEs))
                 {
-                    if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).IsVisibleC.IsVisible)
+                    if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_sel).IsVisibleC.IsVisible)
                     {
                         activeParent = true;
                     }

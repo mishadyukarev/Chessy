@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public UnitTypes Unit;
 
-        public bool Have => Unit != UnitTypes.None;
+        //public bool Have => Unit != UnitTypes.None;
         public bool IsMelee
         {
             get

@@ -29,7 +29,7 @@ namespace Game.Game
                         UnitEs.Main(idx_0).ResetCondition();
                     }
 
-                    else if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+                    else if (UnitEs.StatEs.Step(idx_0).HaveSteps)
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         UnitEs.StatEs.Step(idx_0).Steps.Amount--;
@@ -50,7 +50,7 @@ namespace Game.Game
                         UnitEs.Main(idx_0).ResetCondition();
                     }
 
-                    else if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+                    else if (UnitEs.StatEs.Step(idx_0).HaveSteps)
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         UnitEs.Main(idx_0).SetCondition(cond);

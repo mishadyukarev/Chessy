@@ -23,14 +23,14 @@
             {
                 var levUnit = LevelTypes.None;
 
-                if (Es.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).Units.Have)
+                if (Es.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).HaveUnits)
                 {
-                    Es.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).Units.Amount -= 1;
+                    Es.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).TakeUnit();
                     levUnit = LevelTypes.Second;
                 }
                 else
                 {
-                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).Units.Amount -= 1;
+                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).TakeUnit();
                     levUnit = LevelTypes.First;
                 }
                 unitEs.Main(idx_0).SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), Es);

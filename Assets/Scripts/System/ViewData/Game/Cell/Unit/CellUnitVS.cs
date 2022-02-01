@@ -28,7 +28,7 @@ namespace Game.Game
                 mainUnit_0.Disable();
                 extraUnit_0.Disable();
 
-                if (unit_0.Have)
+                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
                 {
                     if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
                     {

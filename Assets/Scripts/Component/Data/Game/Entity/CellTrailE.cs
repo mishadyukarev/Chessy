@@ -7,7 +7,7 @@ namespace Game.Game
         readonly DirectTypes _direct;
         public ref AmountC Health => ref Ent.Get<AmountC>();
 
-        public bool HaveTrail => Health.Have;
+        public bool HaveTrail => Health.Amount > 0;
 
         public CellTrailE(in DirectTypes dir, in EcsWorld gameW) : base(gameW)
         {

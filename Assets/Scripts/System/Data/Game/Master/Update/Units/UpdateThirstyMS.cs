@@ -17,13 +17,11 @@ namespace Game.Game
             {
                 var unit_0 = UnitEs.Main(idx_0).UnitTC;
                 var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
-                var hp_0 = UnitEs.StatEs.Hp(idx_0).Health;
-                var water_0 = UnitEs.StatEs.Water(idx_0).Water;
 
                 var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
 
 
-                if (unit_0.Have && !unit_0.IsAnimal)
+                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs) && !unit_0.IsAnimal)
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
@@ -44,7 +42,7 @@ namespace Game.Game
                             UnitEs.StatEs.Water(idx_0).Water.Amount -= (int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f);
 
 
-                            if (!water_0.Have)
+                            if (!UnitEs.StatEs.Water(idx_0).HaveWater)
                             {
                                 float percent = 0;
                                 switch (UnitEs.Main(idx_0).UnitTC.Unit)
@@ -61,7 +59,7 @@ namespace Game.Game
                                 UnitEs.StatEs.Hp(idx_0).Health.Amount -=(int)(CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent);
 
 
-                                if (!hp_0.Have)
+                                if (!UnitEs.StatEs.Hp(idx_0).IsAlive)
                                 {
                                     if (build_0.Is(BuildingTypes.Camp))
                                     {

@@ -46,7 +46,7 @@ namespace Game.Game
 
                 var abil = UnitEs.AbilityButton(uniqueButton, idx_sel).AbilityC;
 
-                if (!UnitEs.CooldownAbility(abil.Ability, idx_sel).Cooldown.Have)
+                if (!UnitEs.CooldownAbility(abil.Ability, idx_sel).HaveCooldown)
                 {
                     switch (abil.Ability)
                     {

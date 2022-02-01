@@ -18,7 +18,7 @@ namespace Game.Game
 
             var activeButt = false;
 
-            if (unit_sel.Have)
+            if (UnitEs.Main(idx_sel).HaveUnit(UnitStatEs))
             {
                 if (selOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
                 {

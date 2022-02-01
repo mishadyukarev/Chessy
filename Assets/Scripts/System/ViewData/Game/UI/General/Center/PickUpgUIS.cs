@@ -13,7 +13,7 @@ namespace Game.Game
             var curPlayer = Es.WhoseMove.CurPlayerI;
 
             var isActivatedZone = Es.AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).HaveUpgrade.Have
-                && !Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, curPlayer).Units.Have;
+                && !Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, curPlayer).HaveUnits;
 
             Paren.SetActive(isActivatedZone);
 

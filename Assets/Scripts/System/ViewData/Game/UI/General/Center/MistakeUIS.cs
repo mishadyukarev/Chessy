@@ -47,7 +47,7 @@ namespace Game.Game
 
                         for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
                         {
-                            if (MistakeE.Mistake(res).Have)
+                            if (MistakeE.Mistake(res).Amount > 0)
                             {
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).SetActive(true);
 

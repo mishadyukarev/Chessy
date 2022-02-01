@@ -2,7 +2,7 @@
 {
     sealed class GetCellsForSetUnitS : SystemAbstract, IEcsRunSystem
     {
-        public GetCellsForSetUnitS(in Entities ents) : base(ents)
+        internal GetCellsForSetUnitS(in Entities ents) : base(ents)
         {
         }
 
@@ -17,9 +17,7 @@
 
                 if (Es.WhereBuildingEs.IsSetted(BuildingTypes.City, player, out var idx_1))
                 {
-                    var unit_1 = UnitEs.Main(idx_1).UnitTC;
-
-                    if (unit_1.Have)
+                    if (UnitEs.Main(idx_1).HaveUnit(UnitEs.StatEs))
                     {
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = false;
                     }
@@ -36,7 +34,7 @@
 
                         var unit_2 = UnitEs.Main(idx_2).UnitTC;
 
-                        if (!CellEs.EnvironmentEs.Mountain(idx_2).HaveEnvironment && !unit_2.Have)
+                        if (!CellEs.EnvironmentEs.Mountain(idx_2).HaveEnvironment && !UnitEs.Main(idx_2).HaveUnit(UnitEs.StatEs))
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -58,7 +56,7 @@
 
                         if (buld_0.Is(BuildingTypes.Camp))
                         {
-                            if (!CellEs.EnvironmentEs.Mountain(idx_0).HaveEnvironment && !unit_0.Have)
+                            if (!CellEs.EnvironmentEs.Mountain(idx_0).HaveEnvironment && !UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs))
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }
@@ -71,7 +69,7 @@
 
                             var canSet = false;
 
-                            if (!unit_0.Have)
+                            if (!UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs))
                             {
                                 if (player == PlayerTypes.First)
                                 {

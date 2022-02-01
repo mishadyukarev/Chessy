@@ -40,7 +40,7 @@
                                     UnitEs.Main(idx_to).Clear(Es.WhereUnitsEs);
 
                                     UnitEs.Main(idx_to).SetNew((unit, LevelTypes.First, whoseMove, ConditionUnitTypes.None, false), Es);
-                                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, UnitEs.Main(idx_to).OwnerC.Player).Units.Amount -= 1;
+                                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, UnitEs.Main(idx_to).OwnerC.Player).TakeUnit();
 
                                     break;
                                 }

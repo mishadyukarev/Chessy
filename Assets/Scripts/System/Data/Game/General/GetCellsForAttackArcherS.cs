@@ -16,7 +16,7 @@
 
                 if (!UnitEs.Stun(idx_0).IsStunned)
                 {
-                    if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+                    if (UnitEs.StatEs.Step(idx_0).HaveSteps)
                     {
                         if (unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale, UnitTypes.Snowy))
                         {
@@ -27,16 +27,12 @@
                                 var xy_1 = CellEs.GetXyCellByDirect(xy_from, dir_1);
                                 var idx_1 = CellEs.GetIdxCell(xy_1);
 
-
-                                var unit_1 = UnitEs.Main(idx_1).UnitTC;
                                 var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
-
-
 
 
                                 if (CellEs.ParentE(idx_1).IsActiveSelf.IsActive && !CellEs.EnvironmentEs.Mountain(idx_1).HaveEnvironment)
                                 {
-                                    if (unit_1.Have)
+                                    if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Player))
                                         {
@@ -76,7 +72,7 @@
 
 
 
-                                    if (unit_2.Have && !unit_2.IsAnimal
+                                    if (UnitEs.Main(idx_2).HaveUnit(UnitStatEs) && !unit_2.IsAnimal
                                         && UnitEs.VisibleE(ownUnit_0.Player, idx_2).IsVisibleC.IsVisible
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {

@@ -10,19 +10,15 @@ namespace Game.Game
 
         public void Run()
         {
-            var unitEs = UnitEs;
-
-
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
             var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
 
-            var hpUnit_0 = UnitEs.StatEs.Hp(idx_0).Health;
             var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
 
 
-            if (!UnitEs.CooldownAbility(uniq_cur, idx_0).Cooldown.Have)
+            if (!UnitEs.CooldownAbility(uniq_cur, idx_0).HaveCooldown)
             {
                 if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
                 {
@@ -34,14 +30,11 @@ namespace Game.Game
                     {
                         var idx_1 = CellEs.GetIdxCell(xy1);
 
-                        var unit_1 = UnitEs.Main(idx_1).UnitTC;
                         var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
-                        var hpUnit_1 = UnitEs.StatEs.Hp(idx_1).Health;
-
                         var tw_1 = UnitEs.ToolWeapon(idx_1).ToolWeaponTC;
 
 
-                        if (unit_1.Have)
+                        if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Player))
                             {
@@ -56,9 +49,9 @@ namespace Game.Game
                                 {
                                     UnitEs.StatEs.Hp(idx_1).Health.Amount -= UnitDamageValues.Damage(uniq_cur);
 
-                                    if (UnitEs.StatEs.Hp(idx_1).Health.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK || !hpUnit_1.Have)
+                                    if (UnitEs.StatEs.Hp(idx_1).Health.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK || !UnitEs.StatEs.Hp(idx_1).IsAlive)
                                     {
-                                        unitEs.Main(idx_1).Kill(Es);
+                                        UnitEs.Main(idx_1).Kill(Es);
                                     }
                                 }
                             }

@@ -22,7 +22,7 @@ namespace Game.Game
                 var isVisForMe = BuildEs.BuildingE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible;
                 var isVisForNext = BuildEs.BuildingE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible;
 
-                if (BuildEs.BuildingE(idx_0).Health.Have)
+                if (BuildEs.BuildingE(idx_0).HaveBuilding)
                 {
                     if (isVisForMe)
                     {

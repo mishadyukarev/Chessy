@@ -13,9 +13,8 @@
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
                 var unit_from = UnitEs.Main(idx_0).UnitTC;
-                var stun_from = UnitEs.Stun(idx_0).ForExitStun;
 
-                if (!stun_from.Have)
+                if (!UnitEs.Stun(idx_0).IsStunned)
                 {
                     if (unit_from.Is(UnitTypes.Archer))
                     {

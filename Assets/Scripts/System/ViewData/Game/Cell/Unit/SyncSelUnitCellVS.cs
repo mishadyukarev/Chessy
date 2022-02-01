@@ -12,15 +12,13 @@ namespace Game.Game
             {
                 var idx_cur = Es.CurrentIdxE.IdxC.Idx;
 
-                var unitC_cur = UnitEs.Main(idx_cur).UnitTC;
-
                 var corner_cur = UnitEs.Main(idx_cur).IsCorned;
 
                 ref var mainUnit_cur = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_cur);
                 ref var mainUnit_pre = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(Es.PreviousVisionIdxE.IdxC.Idx);
 
 
-                if (unitC_cur.Have)
+                if (UnitEs.Main(idx_cur).HaveUnit(UnitStatEs))
                 {
                     if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_cur).IsVisibleC.IsVisible)
                     {

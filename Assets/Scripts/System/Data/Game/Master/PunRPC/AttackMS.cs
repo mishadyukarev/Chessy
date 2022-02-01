@@ -147,7 +147,7 @@ namespace Game.Game
                         }
                         else
                         {
-                            UnitEs.Shift(idx_from, idx_to, Es);
+                            UnitEs.Main(idx_from).Shift(idx_to, Es);
                         }
                     }
                 }

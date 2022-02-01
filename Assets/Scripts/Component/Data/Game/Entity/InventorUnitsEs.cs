@@ -5,12 +5,12 @@ namespace Game.Game
 {
     public readonly struct InventorUnitsEs
     {
-        readonly Dictionary<string, AmountUnitsE> _units;
+        readonly Dictionary<string, AmountUnitsInInventorE> _units;
 
         string Key(UnitTypes unit, LevelTypes level, PlayerTypes player) => unit.ToString() + level + player;
 
-        public AmountUnitsE Units(in UnitTypes unit, in LevelTypes level, in PlayerTypes player) => _units[Key(unit, level, player)];
-        public AmountUnitsE Units(in string key) => _units[key];
+        public AmountUnitsInInventorE Units(in UnitTypes unit, in LevelTypes level, in PlayerTypes player) => _units[Key(unit, level, player)];
+        public AmountUnitsInInventorE Units(in string key) => _units[key];
 
         public HashSet<string> Keys
         {
@@ -27,7 +27,7 @@ namespace Game.Game
             {
                 for (var level = LevelTypes.First; level < LevelTypes.End; level++)
                 {
-                    if (Units(Key(unit, level, owner)).Units.Have)
+                    if (Units(Key(unit, level, owner)).HaveUnits)
                     {
                         hero = unit;
                         return true;
@@ -41,7 +41,7 @@ namespace Game.Game
 
         public InventorUnitsEs(in EcsWorld gameW)
         {
-            _units = new Dictionary<string, AmountUnitsE>();
+            _units = new Dictionary<string, AmountUnitsInInventorE>();
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.Camel; unit++)
             {
@@ -49,7 +49,7 @@ namespace Game.Game
                 {
                     for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
                     {
-                        _units.Add(Key(unit, level, player), new AmountUnitsE(EconomyValues.StartAmountUnits(unit, level), gameW));
+                        _units.Add(Key(unit, level, player), new AmountUnitsInInventorE(EconomyValues.StartAmountUnits(unit, level), gameW));
                     }
                 }
             }

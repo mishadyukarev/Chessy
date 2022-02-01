@@ -34,7 +34,7 @@ namespace Game.Game
 
             if (Es.WhoseMove.IsMyMove)
             {
-                if (!Es.ScoutHeroCooldownE(UnitTypes.Scout, Es.WhoseMove.CurPlayerI).Cooldown.Have)
+                if (!Es.ScoutHeroCooldownE(UnitTypes.Scout, Es.WhoseMove.CurPlayerI).HaveCooldown)
                 {
                     if (Es.WhoseMove.IsMyMove)
                     {
@@ -55,7 +55,7 @@ namespace Game.Game
 
             if (Es.WhoseMove.IsMyMove)
             {
-                if (!Es.ScoutHeroCooldownE(UnitTypes.Elfemale, Es.WhoseMove.CurPlayerI).Cooldown.Have)
+                if (!Es.ScoutHeroCooldownE(UnitTypes.Elfemale, Es.WhoseMove.CurPlayerI).HaveCooldown)
                 {
                     Es.ClickerObject.CellClickC.Click = CellClickTypes.GiveHero;
                 }
@@ -70,7 +70,7 @@ namespace Game.Game
 
         void Done()
         {
-            if (!Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).Units.Have)
+            if (!Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
             {
                 Es.Rpc.DoneToMaster();
             }
@@ -99,7 +99,7 @@ namespace Game.Game
 
             if (Es.WhoseMove.IsMyMove)
             {
-                if (Es.InventorUnitsEs.Units(unitT, LevelTypes.Second, Es.WhoseMove.CurPlayerI).Units.Have)
+                if (Es.InventorUnitsEs.Units(unitT, LevelTypes.Second, Es.WhoseMove.CurPlayerI).HaveUnits)
                 {
                     Es.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 
@@ -107,7 +107,7 @@ namespace Game.Game
                     Es.SelectedUnitE.LevelTC.Level = LevelTypes.Second;
                 }
 
-                else if (Es.InventorUnitsEs.Units(unitT, LevelTypes.First, Es.WhoseMove.CurPlayerI).Units.Have)
+                else if (Es.InventorUnitsEs.Units(unitT, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
                 {
                     Es.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 

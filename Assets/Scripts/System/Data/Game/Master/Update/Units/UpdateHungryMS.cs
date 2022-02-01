@@ -14,7 +14,7 @@
             {
                 var res = ResourceTypes.Food;
 
-                if (Es.InventorResourcesEs.Resource(res, player).Resources.IsMinus)
+                if (Es.InventorResourcesEs.Resource(res, player).IsMinus)
                 {
                     Es.InventorResourcesEs.Resource(res, player).Resources.Amount = 0;
 

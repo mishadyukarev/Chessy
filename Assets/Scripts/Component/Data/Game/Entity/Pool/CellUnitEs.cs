@@ -80,40 +80,5 @@ namespace Game.Game
 
             StatEs = new CellUnitStatEs(gameW);
         }
-
-        public void Shift(byte idx_from, in byte idx_to, in Entities ents)
-        {
-            var statEs = ents.UnitStatUpgradesEs;
-            var whereUnitsEs = ents.WhereUnitsEs;
-            var cellEs = ents.CellEs;
-
-
-            whereUnitsEs.WhereUnit(Main(idx_from), idx_from).HaveUnit.Have = false;
-
-            Main(idx_to).Shift(Main(idx_from));
-            StatEs.Hp(idx_to).Shift(StatEs.Hp(idx_from));
-            StatEs.Step(idx_to).Shift(StatEs.Step(idx_from));
-            StatEs.Water(idx_to).Shift(StatEs.Water(idx_from));
-            Stun(idx_to).Shift(Stun(idx_from));
-
-            ToolWeapon(idx_to).Set(ToolWeapon(idx_from));
-            foreach (var abilityT in CooldownKeys) CooldownAbility(abilityT, idx_to).Shift(CooldownAbility(abilityT, idx_from));
-
-            if (cellEs.EnvironmentEs.AdultForest(idx_from).HaveEnvironment)
-            {
-                cellEs.TrailEs.Trail(cellEs.GetDirect(idx_from, idx_to), idx_from).SetNew();
-            }
-            if (cellEs.EnvironmentEs.AdultForest(idx_to).HaveEnvironment)
-            {
-                cellEs.TrailEs.Trail(cellEs.GetDirect(idx_from, idx_to).Invert(), idx_to).SetNew();
-            }
-
-            if (cellEs.RiverEs.River(idx_to).RiverTC.HaveRiver)
-            {
-                StatEs.Water(idx_to).SetMax(Main(idx_to), statEs);
-            }
-
-            whereUnitsEs.WhereUnit(Main(idx_to), idx_to).HaveUnit.Have = true;
-        }
     }
 }

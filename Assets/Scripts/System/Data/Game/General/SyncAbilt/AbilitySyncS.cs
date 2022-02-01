@@ -26,7 +26,7 @@ namespace Game.Game
 
                 if (ownUnit_0.Is(Es.WhoseMove.CurPlayerI))
                 {
-                    if (unit_0.Have)
+                    if (UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs))
                     {
                         switch (unit_0.Unit)
                         {

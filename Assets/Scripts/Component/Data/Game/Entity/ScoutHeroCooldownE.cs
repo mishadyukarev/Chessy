@@ -6,6 +6,8 @@ namespace Game.Game
     {
         public ref AmountC Cooldown => ref Ent.Get<AmountC>();
 
+        public bool HaveCooldown => Cooldown.Amount > 0;
+
         public ScoutHeroCooldownE(in EcsWorld gameW) : base(gameW)
         {
         }

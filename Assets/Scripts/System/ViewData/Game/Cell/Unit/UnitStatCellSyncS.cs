@@ -14,12 +14,8 @@ namespace Game.Game
         {
             foreach (byte idx_0 in CellEs.Idxs)
             {
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
                 var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
                 var hpUnit_0 = UnitEs.StatEs.Hp(idx_0).Health;
-                var step_0 = UnitEs.StatEs.Step(idx_0).Steps;
-                var water_0 = UnitEs.StatEs.Water(idx_0).Water;
-
 
                 Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
 
@@ -31,7 +27,7 @@ namespace Game.Game
 
                 if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
                 {
-                    if (unit_0.Have)
+                    if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;

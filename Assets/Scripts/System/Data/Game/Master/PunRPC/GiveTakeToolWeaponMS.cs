@@ -28,7 +28,7 @@
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+                    if (UnitEs.StatEs.Step(idx_0).HaveSteps)
                     {
 
                         if (tw_0.HaveTW)
@@ -42,7 +42,7 @@
                         }
 
 
-                        else if (Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Have)
+                        else if (Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).HaveTW)
                         {
                             Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Amount--;
 

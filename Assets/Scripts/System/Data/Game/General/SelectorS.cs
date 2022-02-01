@@ -53,7 +53,7 @@ namespace Game.Game
 
                                         else
                                         {
-                                            if (unit_cur.Have)
+                                            if (UnitEs.Main(idx_cur).HaveUnit(UnitEs.StatEs))
                                             {
                                                 if (ownUnit_cur.Is(Es.WhoseMove.CurPlayerI))
                                                 {
@@ -78,7 +78,7 @@ namespace Game.Game
 
                                     else
                                     {
-                                        if (unit_cur.Have)
+                                        if (UnitEs.Main(idx_cur).HaveUnit(UnitEs.StatEs))
                                         {
                                             if (ownUnit_cur.Is(Es.WhoseMove.CurPlayerI))
                                             {
@@ -254,7 +254,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!unit_cur.Have || !UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_cur).IsVisibleC.IsVisible)
+                        if (!UnitEs.Main(idx_cur).HaveUnit(UnitEs.StatEs) || !UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_cur).IsVisibleC.IsVisible)
                         {
                             if (Es.CurrentIdxE.IsStartDirectToCell)
                             {

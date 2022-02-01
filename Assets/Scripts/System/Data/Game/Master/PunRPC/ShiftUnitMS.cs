@@ -15,7 +15,7 @@
             {
                 UnitEs.StatEs.Step(idx_from).Steps.Amount -= UnitEs.Main(idx_to).StepsForShiftOrAttack(CellEs.GetDirect(idx_from, idx_to), EnvironmentEs, CellEs.TrailEs);
 
-                UnitEs.Shift(idx_from, idx_to, Es);
+                UnitEs.Main(idx_from).Shift(idx_to, Es);
 
                 Es.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

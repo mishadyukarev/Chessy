@@ -14,7 +14,7 @@
                 {
                     if (CellEs.TrailEs.IsVisible(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
                     {
-                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(CellEs.TrailEs.Trail(dir, idx_0).Health.Have);
+                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(CellEs.TrailEs.Trail(dir, idx_0).HaveTrail);
                     }
                     else CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).Disable();
                 }

@@ -17,7 +17,7 @@
 
             if (UnitEs.StatEs.Hp(idx_0).HaveMax)
             {
-                if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+                if (UnitEs.StatEs.Step(idx_0).HaveSteps)
                 {
                     if (Es.InventorResourcesEs.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     {

@@ -15,11 +15,11 @@
 
                 if (CellEs.ParentE(idx_0).IsActiveSelf.IsActive)
                 {
-                    if (!UnitEs.Stun(idx_0).IsStunned && UnitEs.Main(idx_0).UnitTC.Have && !UnitEs.Main(idx_0).UnitTC.IsAnimal)
+                    if (!UnitEs.Stun(idx_0).IsStunned && UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs) && !UnitEs.Main(idx_0).UnitTC.IsAnimal)
                     {
                         foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
                         {
-                            if (!EnvironmentEs.Mountain(idx_1).HaveEnvironment && !UnitEs.Main(idx_1).UnitTC.Have)
+                            if (!EnvironmentEs.Mountain(idx_1).HaveEnvironment && !UnitEs.Main(idx_1).HaveUnit(UnitEs.StatEs))
                             {
                                 var one = UnitEs.StatEs.Step(idx_0).Steps.Amount >= UnitEs.Main(idx_1).StepsForShiftOrAttack(CellEs.GetDirect(idx_0, idx_1), EnvironmentEs, TrailEs);
                                 var two = UnitEs.StatEs.Step(idx_0).HaveMax(UnitEs.Main(idx_0));

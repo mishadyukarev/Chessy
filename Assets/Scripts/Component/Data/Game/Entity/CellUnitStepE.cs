@@ -6,6 +6,7 @@ namespace Game.Game
     {
         public ref AmountC Steps => ref Ent.Get<AmountC>();
 
+        public bool HaveSteps => Steps.Amount > 0;
         public bool HaveMax(in CellUnitMainE unitElseE) => Steps.Amount >= MaxAmountSteps(unitElseE);
         public int MaxAmountSteps(in CellUnitMainE cellUnitElse) => CellUnitStepValues.MaxAmountSteps(cellUnitElse.UnitTC.Unit, false); 
 

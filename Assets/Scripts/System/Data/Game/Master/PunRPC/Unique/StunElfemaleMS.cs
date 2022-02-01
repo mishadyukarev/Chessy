@@ -18,15 +18,14 @@ namespace Game.Game
 
             var ownUnit_from = UnitEs.Main(idx_from).OwnerC;
 
-            var unit_to = UnitEs.Main(idx_to).UnitTC;
             var ownUnit_to = UnitEs.Main(idx_to).OwnerC;
 
 
-            if (!UnitEs.CooldownAbility(uniq_cur, idx_from).Cooldown.Have)
+            if (!UnitEs.CooldownAbility(uniq_cur, idx_from).HaveCooldown)
             {
                 if (UnitEs.VisibleE(playerSend, idx_to).IsVisibleC.IsVisible)
                 {
-                    if (unit_to.Have)
+                    if (UnitEs.Main(idx_to).HaveUnit(UnitStatEs))
                     {
                         if (CellEs.EnvironmentEs.AdultForest( idx_to).HaveEnvironment)
                         {
@@ -48,7 +47,7 @@ namespace Game.Game
                                         {
                                             if (CellEs.EnvironmentEs.AdultForest( idx_1).HaveEnvironment)
                                             {
-                                                if (UnitEs.Main(idx_1).UnitTC.Have && UnitEs.Main(idx_1).OwnerC.Is(UnitEs.Main(idx_to).OwnerC.Player))
+                                                if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs) && UnitEs.Main(idx_1).OwnerC.Is(UnitEs.Main(idx_to).OwnerC.Player))
                                                 {
                                                     UnitEs.Stun(idx_1).Set(uniq_cur);
                                                 }

@@ -41,7 +41,7 @@
                     }
                 }
 
-                if (unit_0.Have)
+                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
                 {
                     if (own_0.Is(Es.WhoseMove.CurPlayerI))
                     {

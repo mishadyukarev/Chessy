@@ -12,7 +12,7 @@ namespace Game.Game
         protected ref AmountC ResourcesRef => ref Ent.Get<AmountC>();
         public AmountC Resources => Ent.Get<AmountC>();
 
-        public bool HaveEnvironment => ResourcesRef.Have;
+        public bool HaveEnvironment => ResourcesRef.Amount > 0;
         public bool HaveMaxResources => ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT);
         public int MaxResources => CellEnvironmentValues.MaxResources(EnvT);
         public float ProtectionPercent => UnitDamageValues.ProtectionPercent(EnvT);

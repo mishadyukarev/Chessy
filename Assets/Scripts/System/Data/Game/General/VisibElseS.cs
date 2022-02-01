@@ -14,7 +14,7 @@
                 var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
 
 
-                if (unit_0.Have)
+                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
                 {
                     if (unit_0.IsAnimal)
                     {
@@ -28,7 +28,7 @@
 
                             foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
                             {
-                                if (UnitEs.Main(idx_1).UnitTC.Have)
+                                if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                                 {
                                     if (UnitEs.Main(idx_1).OwnerC.Is(PlayerTypes.First)) isVisForFirst = true;
                                     if (UnitEs.Main(idx_1).OwnerC.Is(PlayerTypes.Second)) isVisForSecond = true;
@@ -52,7 +52,7 @@
                                 var unit_1 = UnitEs.Main(idx_1).UnitTC;
                                 var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
 
-                                if (unit_1.Have)
+                                if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                                 {
                                     if (!ownUnit_1.Is(ownUnit_0.Player))
                                     {
@@ -93,7 +93,7 @@
                             var unit_1 = UnitEs.Main(idx_1).UnitTC;
                             var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
 
-                            if (unit_1.Have)
+                            if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                             {
                                 if (!ownUnit_1.Is(ownBuild_0.Player))
                                 {
@@ -126,7 +126,7 @@
                         var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
 
 
-                        if (unit_1.Have && !unit_1.IsAnimal)
+                        if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs) && !unit_1.IsAnimal)
                         {
                             CellEs.TrailEs.IsVisible(ownUnit_1.Player, idx_0).IsVisibleC.IsVisible = true;
                         }

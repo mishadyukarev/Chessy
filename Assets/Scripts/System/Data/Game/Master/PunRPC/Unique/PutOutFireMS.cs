@@ -15,7 +15,7 @@
             ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
 
 
-            if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+            if (UnitEs.StatEs.Step(idx_0).HaveSteps)
             {
                 fire_0.Disable();
 

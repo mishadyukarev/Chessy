@@ -36,10 +36,10 @@
                 {
                     CellEs.EnvironmentEs.AdultForest(idx_0).Fire();
 
-                    if (unit_0.Have)
+                    if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
                     {
                         UnitEs.StatEs.Hp(idx_0).Health.Amount -= UnitDamageValues.FIRE_DAMAGE;
-                        if (!UnitEs.StatEs.Hp(idx_0).Health.Have)
+                        if (!UnitEs.StatEs.Hp(idx_0).IsAlive)
                         {
                             unitEs.Main(idx_0).Kill(Es);
                         }

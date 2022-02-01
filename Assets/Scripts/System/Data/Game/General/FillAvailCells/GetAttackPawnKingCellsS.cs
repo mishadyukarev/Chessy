@@ -18,9 +18,8 @@
                 var unit_0 = UnitEs.Main(idx_0).UnitTC;
                 var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
                 var step_0 = UnitEs.StatEs.Step(idx_0).Steps;
-                var stunUnit_0 = UnitEs.Stun(idx_0).ForExitStun;
 
-                if (!stunUnit_0.Have)
+                if (!UnitEs.Stun(idx_0).IsStunned)
                 {
                     if (unit_0.Is(UnitTypes.Pawn) || unit_0.Is(UnitTypes.King))
                     {
@@ -43,7 +42,7 @@
 
                                     || UnitEs.StatEs.Step(idx_0).HaveMax(UnitEs.Main(idx_0)))
                                 {
-                                    if (unit_1.Have)
+                                    if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                                     {
                                         if (!own_1.Is(ownUnit_0.Player))
                                         {

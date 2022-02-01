@@ -18,7 +18,7 @@
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            if (!UnitEs.CooldownAbility(uniq, idx_0).Cooldown.Have)
+            if (!UnitEs.CooldownAbility(uniq, idx_0).HaveCooldown)
             {
                 if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq))
                 {
@@ -39,10 +39,9 @@
                     {
                         var idx_1 = CellEs.GetIdxCell(xy);
 
-                        var unit_1 = UnitEs.Main(idx_1).UnitTC;
                         var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
 
-                        if (unit_1.Have)
+                        if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                         {
                             if (ownUnit_1.Is(ownUnit_0.Player))
                             {

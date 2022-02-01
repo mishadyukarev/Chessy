@@ -7,6 +7,8 @@
         protected CellEs CellEs => Es.CellEs;
 
         protected CellUnitEs UnitEs => CellEs.UnitEs;
+        protected CellUnitStatEs UnitStatEs => UnitEs.StatEs;
+
         protected CellBuildEs BuildEs => CellEs.BuildEs;
         protected CellEnvironmentEs EnvironmentEs => CellEs.EnvironmentEs;
         protected CellRiverEs RiverEs => CellEs.RiverEs;

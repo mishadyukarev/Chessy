@@ -6,6 +6,8 @@ namespace Game.Game
     {
         public ref AmountC Resources => ref Ent.Get<AmountC>();
 
+        public bool IsMinus => Resources.Amount < 0;
+
         public AmountResourcesInInventorE(in int resources, in EcsWorld gameW) : base(gameW)
         {
             Ent.Add(new AmountC(resources));

@@ -30,7 +30,7 @@ namespace Game.Game
         }
         public bool HaveAnyTrail(in byte idx)
         {
-            foreach (var item in Keys) if (Trail(item, idx).Health.Have) return true;
+            foreach (var item in Keys) if (Trail(item, idx).HaveTrail) return true;
             return false;
         }
 

@@ -31,7 +31,7 @@ namespace Game.Game
 
                 CellEs.TrailEs.ResetAll(idx_0);
 
-                if (unit_0.Have)
+                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
                 {
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {

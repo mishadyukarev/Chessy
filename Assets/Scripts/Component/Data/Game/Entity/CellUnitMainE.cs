@@ -17,7 +17,8 @@ namespace Game.Game
         public ConditionUnitC ConditionTC => Ent.Get<ConditionUnitC>();
         public IsC IsCorned => Ent.Get<IsC>();
 
-        public bool HaveUnit(in CellUnitStatEs statEs) => statEs.Hp(Idx).IsAlive && UnitTC.Have;
+        public bool HaveUnit(in CellUnitStatEs statEs) => statEs.Hp(Idx).IsAlive && HaveUnitT;
+        public bool HaveUnitT => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
 
 
         public int StepsForShiftOrAttack(in DirectTypes dirMove, in CellEnvironmentEs envEs, in CellTrailEs trailsEs)
@@ -113,7 +114,7 @@ namespace Game.Game
             var standDamage = UnitDamageValues.StandDamage(UnitTC.Unit, LevelTC.Level);
 
             powerDamege += standDamage * UnitDamageValues.ProtRelaxPercent(ConditionTC.Condition);
-            if (cellEs.BuildEs.BuildingE(Idx).Health.Have) powerDamege += standDamage * CellBuildingValues.ProtectionPercent(cellEs.BuildEs.BuildingE(Idx).BuildTC.Build);
+            if (cellEs.BuildEs.BuildingE(Idx).HaveBuilding) powerDamege += standDamage * CellBuildingValues.ProtectionPercent(cellEs.BuildEs.BuildingE(Idx).BuildTC.Build);
 
             float protectionPercent = 0;
 
@@ -148,7 +149,7 @@ namespace Game.Game
 
         }
 
-        internal void Shift(CellUnitMainE unitElse_from)
+        void Shift(CellUnitMainE unitElse_from)
         {
             OwnerCRef = unitElse_from.OwnerC;
             LevelTCRef = unitElse_from.LevelTC;
@@ -158,7 +159,7 @@ namespace Game.Game
             UnitTCRef.Unit = unitElse_from.UnitTC.Unit;
             unitElse_from.UnitTCRef.Unit = UnitTypes.None;
         }
-        internal void Set(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unit)
+        void Set(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unit)
         {
             UnitTCRef.Unit = unit.Item1;
             LevelTCRef.Level = unit.Item2;
@@ -166,7 +167,7 @@ namespace Game.Game
             ConditionTCRef.Condition = unit.Item4;
             IsCornedRef.Is = unit.Item5;
         }
-        internal void Reset()
+        void Reset()
         {
             UnitTCRef.Unit = UnitTypes.None;
             LevelTCRef.Level = LevelTypes.None;
@@ -191,7 +192,7 @@ namespace Game.Game
             var unit = UnitTC;
             var ownUnit = OwnerC;
 
-            if (!unit.Have) throw new Exception("It's not got unit");
+            if (!HaveUnit(ents.CellEs.UnitEs.StatEs)) throw new Exception("It's not got unit");
 
             if (unit.Is(UnitTypes.King))
             {
@@ -200,7 +201,7 @@ namespace Game.Game
             else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {
                 ents.ScoutHeroCooldownE(this).Cooldown.Amount = 3;
-                ents.InventorUnitsEs.Units(unit.Unit, LevelTC.Level, ownUnit.Player).Units.Amount += 1;
+                ents.InventorUnitsEs.Units(unit.Unit, LevelTC.Level, ownUnit.Player).AddUnit();
             }
 
             ents.WhereUnitsEs.WhereUnit(this, Idx).HaveUnit.Have = false;
@@ -212,12 +213,49 @@ namespace Game.Game
             Reset();
         }
 
+        public void Shift(in byte idx_to, in Entities ents)
+        {
+            var statEs = ents.UnitStatUpgradesEs;
+            var whereUnitsEs = ents.WhereUnitsEs;
+            var cellEs = ents.CellEs;
+            var unitEs = cellEs.UnitEs;
+
+
+            whereUnitsEs.WhereUnit(this, Idx).HaveUnit.Have = false;
+
+            unitEs.Main(idx_to).Shift(this);
+            unitEs.StatEs.Hp(idx_to).Shift(unitEs.StatEs.Hp(Idx));
+            unitEs.StatEs.Step(idx_to).Shift(unitEs.StatEs.Step(Idx));
+            unitEs.StatEs.Water(idx_to).Shift(unitEs.StatEs.Water(Idx));
+            unitEs.Stun(idx_to).Shift(unitEs.Stun(Idx));
+
+            unitEs.ToolWeapon(idx_to).Set(unitEs.ToolWeapon(Idx));
+            foreach (var abilityT in unitEs.CooldownKeys) 
+                unitEs.CooldownAbility(abilityT, idx_to).Shift(unitEs.CooldownAbility(abilityT, Idx));
+
+            if (cellEs.EnvironmentEs.AdultForest(Idx).HaveEnvironment)
+            {
+                cellEs.TrailEs.Trail(cellEs.GetDirect(Idx, idx_to), Idx).SetNew();
+            }
+            if (cellEs.EnvironmentEs.AdultForest(idx_to).HaveEnvironment)
+            {
+                cellEs.TrailEs.Trail(cellEs.GetDirect(Idx, idx_to).Invert(), idx_to).SetNew();
+            }
+
+            if (cellEs.RiverEs.River(idx_to).RiverTC.HaveRiver)
+            {
+                unitEs.StatEs.Water(idx_to).SetMax(unitEs.Main(idx_to), statEs);
+            }
+
+            whereUnitsEs.WhereUnit(unitEs.Main(idx_to), idx_to).HaveUnit.Have = true;
+        }
+
         public void AddToInventorAndRemove(in InventorUnitsEs invUnits, in WhereUnitsEs whereUnits)
         {
             var level = LevelTC.Level;
             var owner = OwnerC.Player;
 
-            invUnits.Units(UnitTC.Unit, level, owner).Units.Amount++;
+            invUnits.Units(UnitTC.Unit, level, owner).AddUnit();
 
             whereUnits.WhereUnit(UnitTC.Unit, level, owner, Idx).HaveUnit.Have = false;
 

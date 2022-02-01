@@ -11,7 +11,9 @@ namespace Game.Game
 
         public ToolWeaponTC ToolWeaponTC => Ent.Get<ToolWeaponTC>();
         public LevelTC LevelTC => Ent.Get<LevelTC>();
-        public AmountC Protection =>Ent.Get<AmountC>();
+        public AmountC Protection => Ent.Get<AmountC>();
+
+        public bool HaveProtection => Protection.Amount > 0;
 
         public CellUnitTWE(in EcsWorld gameW) : base(gameW) { }
 
@@ -47,11 +49,11 @@ namespace Game.Game
         public void BreakShield(in int taking = 1)
         {
             if (!ToolWeaponTC.IsShield) throw new Exception();
-            if (!Protection.Have) throw new Exception();
+            if (!HaveProtection) throw new Exception();
 
             ProtectionRef.Amount -= taking;
 
-            if (!Protection.Have) ToolWeaponTCRef.ToolWeapon = ToolWeaponTypes.None;
+            if (!HaveProtection) ToolWeaponTCRef.ToolWeapon = ToolWeaponTypes.None;
         }
 
         public void Reset()

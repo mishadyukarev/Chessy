@@ -51,7 +51,7 @@ namespace Game.Game
 
             if (Es.WhoseMove.IsMyMove)
             {
-                if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).Units.Have)
+                if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
                 {
                     Es.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
 

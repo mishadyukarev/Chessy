@@ -4,9 +4,6 @@
     {
         public int Amount;
 
-        public bool Have => Amount > 0;
-        public bool IsMinus => Amount < 0;
-
         public AmountC(in int amount) => Amount = amount;
     }
 }

@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class UpdateCamelShiftMS : SystemCellAbstract, IEcsRunSystem
     {
-        public UpdateCamelShiftMS(in Entities ents) : base(ents)
+        internal UpdateCamelShiftMS(in Entities ents) : base(ents)
         {
         }
 
@@ -20,9 +20,9 @@ namespace Game.Game
 
                 if (CellEs.ParentE(idx_1).IsActiveSelf.IsActive
                     && !EnvironmentEs.Mountain( idx_1).HaveEnvironment
-                    && !UnitEs.Main(idx_1).UnitTC.Have)
+                    && !UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
                 {
-                    UnitEs.Shift(idx_0, idx_1, Es);
+                    UnitEs.Main(idx_0).Shift(idx_1, Es);
                 }
             }
         }

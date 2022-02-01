@@ -9,6 +9,8 @@ namespace Game.Game
         ref AmountC CooldownRef => ref Ent.Get<AmountC>();
         public AmountC Cooldown => Ent.Get<AmountC>();
 
+        public bool HaveCooldown => Cooldown.Amount > 0;
+
         internal CellUnitCooldownAbilityE(in AbilityTypes ability, in EcsWorld gameW) : base(gameW)
         {
             _ability = ability;

@@ -7,7 +7,7 @@ namespace Game.Game
         ref AmountC ForExitStunRef => ref Ent.Get<AmountC>();
         public AmountC ForExitStun => Ent.Get<AmountC>();
 
-        public bool IsStunned => ForExitStun.Have;
+        public bool IsStunned => ForExitStun.Amount > 0;
 
         internal CellUnitStunEs(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
 

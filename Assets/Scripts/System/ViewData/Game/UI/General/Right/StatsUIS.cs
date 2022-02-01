@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class StatsUIS : SystemViewAbstract, IEcsRunSystem
     {
-        public StatsUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal StatsUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
@@ -16,14 +16,12 @@ namespace Game.Game
 
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var unit_sel = UnitEs.Main(idx_sel).UnitTC;
-
             var hpUnit_sel = UnitEs.StatEs.Hp(idx_sel).Health;
             var stepUnit_sel = UnitEs.StatEs.Step(idx_sel).Steps;
             var waterUnit_sel = UnitEs.StatEs.Water(idx_sel).Water;
 
 
-            if (unit_sel.Have)
+            if (UnitEs.Main(idx_sel).HaveUnit(UnitStatEs))
             {
                 var damageOnCell = unitEs.Main(idx_sel).DamageOnCell(CellEs, Es.UnitStatUpgradesEs);
                 var damageAttack = unitEs.Main(idx_sel).DamageAttack(CellEs, Es.UnitStatUpgradesEs, AttackTypes.Simple);

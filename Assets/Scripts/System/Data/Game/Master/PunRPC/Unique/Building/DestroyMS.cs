@@ -18,7 +18,7 @@ namespace Game.Game
             var buildC_0 = BuildEs.BuildingE(idx_0).BuildTC;
 
 
-            if (UnitEs.StatEs.Step(idx_0).Steps.Have)
+            if (UnitEs.StatEs.Step(idx_0).HaveSteps)
             {
                 Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 

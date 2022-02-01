@@ -6,6 +6,7 @@ namespace Game.Game
     {
         public ref AmountC Water => ref Ent.Get<AmountC>();
 
+        public bool HaveWater => Water.Amount > 0;
 
         public int MaxWater(in CellUnitMainE unitElseE, in UnitStatUpgradesEs statUpgEs)
         {
