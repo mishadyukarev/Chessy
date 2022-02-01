@@ -29,6 +29,7 @@
 
         //Snowy
         IceWall,
+        ActiveIceWall,
         //DefendAround,
 
         End

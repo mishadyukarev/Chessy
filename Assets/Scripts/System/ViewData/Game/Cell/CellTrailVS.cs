@@ -8,13 +8,13 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
-                foreach (var dir in CellEs.TrailEs.Keys)
+                foreach (var dir in TrailEs(idx_0).Keys)
                 {
-                    if (CellEs.TrailEs.IsVisible(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
+                    if (TrailEs(idx_0).IsVisible(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                     {
-                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(CellEs.TrailEs.Trail(dir, idx_0).HaveTrail);
+                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(CellEs(idx_0).TrailEs.Trail(dir).HaveTrail);
                     }
                     else CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).Disable();
                 }

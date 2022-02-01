@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct GameObjectVC : IBackgroundE, IGeneralZoneE, ICellVE
+    public struct GameObjectVC : IBackgroundE, IGeneralZoneE
     {
         readonly GameObject _gO;
 

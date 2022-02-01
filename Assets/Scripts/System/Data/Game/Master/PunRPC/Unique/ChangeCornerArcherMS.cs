@@ -9,17 +9,17 @@
         public void Run()
         {
             IdxDoingMC.Get(out var idx_0);
-            var uniq = Es.MasterEs.UniqueAbilityC.Ability;
+            var uniq = Es.MasterEs.AbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            if (UnitEs.StatEs.Hp(idx_0).HaveMax)
+            if (UnitStatEs(idx_0).Hp.HaveMax)
             {
-                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq))
+                if (UnitStatEs(idx_0).StepE.Have(uniq))
                 {
-                    UnitEs.Main(idx_0).ChangeCorner();
+                    UnitEs(idx_0).MainE.ChangeCorner();
 
-                    UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq);
+                    UnitStatEs(idx_0).StepE.Take(uniq);
 
                     Es.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }

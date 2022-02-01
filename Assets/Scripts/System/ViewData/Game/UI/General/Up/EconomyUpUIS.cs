@@ -22,24 +22,24 @@ namespace Game.Game
             extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
 
 
-            for (byte idx_0 = 0; idx_0 < CellEs.Count; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs) && UnitEs.Main(idx_0).OwnerC.Is(Es.WhoseMove.CurPlayerI))
+                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && UnitEs(idx_0).MainE.OwnerC.Is(Es.WhoseMove.CurPlayerI))
                 {
-                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(UnitEs.Main(idx_0).UnitTC.Unit);
+                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(UnitEs(idx_0).MainE.UnitTC.Unit);
 
-                    if (UnitEs.Main(idx_0).CanExtractPawnAdultForest(UnitEs.StatEs, EnvironmentEs))
+                    if (UnitEs(idx_0).MainE.CanExtractPawnAdultForest(UnitStatEs(idx_0), EnvironmentEs(idx_0)))
                     {
-                        extracts[EnvironmentEs.AdultForest(idx_0).ResourceT] += EnvironmentEs.AdultForest(idx_0).AmountExtractPawn(UnitEs);
+                        extracts[EnvironmentEs(idx_0).AdultForest.ResourceT] += EnvironmentEs(idx_0).AdultForest.AmountExtractPawn(UnitEs(idx_0));
                     }
                 }
-                if (BuildEs.BuildingE(idx_0).CanExtractAdultForest(BuildEs, EnvironmentEs))
+                if (BuildEs(idx_0).BuildingE.CanExtractAdultForest(BuildEs(idx_0), EnvironmentEs(idx_0)))
                 {
-                    extracts[EnvironmentEs.AdultForest(idx_0).ResourceT] += EnvironmentEs.AdultForest(idx_0).AmountExtractWoodcutter(Es.BuildingUpgradeEs, BuildEs);
+                    extracts[EnvironmentEs(idx_0).AdultForest.ResourceT] += EnvironmentEs(idx_0).AdultForest.AmountExtractWoodcutter(Es.BuildingUpgradeEs, BuildEs(idx_0));
                 }
-                if (BuildEs.BuildingE(idx_0).CanExtractFertilizer(EnvironmentEs))
+                if (BuildEs(idx_0).BuildingE.CanExtractFertilizer(EnvironmentEs(idx_0)))
                 {
-                    extracts[EnvironmentEs.Fertilizer(idx_0).ResourceT] += EnvironmentEs.Fertilizer(idx_0).AmountExtractFarm(Es.BuildingUpgradeEs, BuildEs);
+                    extracts[EnvironmentEs(idx_0).Fertilizer.ResourceT] += EnvironmentEs(idx_0).Fertilizer.AmountExtractFarm(Es.BuildingUpgradeEs, BuildEs(idx_0));
                 }
             }
 

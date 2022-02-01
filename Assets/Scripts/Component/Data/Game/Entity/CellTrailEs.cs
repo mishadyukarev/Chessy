@@ -5,18 +5,22 @@ namespace Game.Game
 {
     public readonly struct CellTrailEs
     {
-        readonly Dictionary<DirectTypes, CellTrailE[]> _trails;
-        readonly Dictionary<PlayerTypes, CellTrailPlayerE[]> _players;
+        readonly Dictionary<DirectTypes, CellTrailE> _trails;
+        readonly Dictionary<PlayerTypes, CellTrailPlayerE> _players;
 
-        public CellTrailE Trail(in DirectTypes dir, in byte idx) => _trails[dir][idx];
-        public CellTrailPlayerE IsVisible(in PlayerTypes player, in byte idx) => _players[player][idx];
+        public CellTrailE Trail(in DirectTypes dir) => _trails[dir];
+        public CellTrailPlayerE IsVisible(in PlayerTypes player) => _players[player];
 
-        public CellTrailE[] Trails(in byte idx)
+        public CellTrailE[] Trails
         {
-            var trails = new CellTrailE[_trails.Keys.Count];
-            var i = 0;
-            foreach (var trailT in _trails.Keys) trails[i++] = _trails[trailT][idx];
-            return trails;
+            get
+            {
+                var trails = new CellTrailE[_trails.Keys.Count];
+                var i = 0;
+                foreach (var trailT in _trails.Keys) trails[i++] = _trails[trailT];
+                return trails;
+
+            }
         }
 
         public HashSet<DirectTypes> Keys
@@ -28,44 +32,34 @@ namespace Game.Game
                 return keys;
             }
         }
-        public bool HaveAnyTrail(in byte idx)
+        public bool HaveAnyTrail
         {
-            foreach (var item in Keys) if (Trail(item, idx).HaveTrail) return true;
-            return false;
+            get
+            {
+                foreach (var item in Keys) if (Trail(item).HaveTrail) return true;
+                return false;
+            }
         }
 
 
         public CellTrailEs(in EcsWorld gameW)
         {
-            _trails = new Dictionary<DirectTypes, CellTrailE[]>();
-            _players = new Dictionary<PlayerTypes, CellTrailPlayerE[]>();
+            _trails = new Dictionary<DirectTypes, CellTrailE>();
+            _players = new Dictionary<PlayerTypes, CellTrailPlayerE>();
 
             for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
-                _trails.Add(dir, new CellTrailE[CellStartValues.ALL_CELLS_AMOUNT]);
+                _trails.Add(dir, new CellTrailE(dir, gameW));
             }
-
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _players.Add(player, new CellTrailPlayerE[CellStartValues.ALL_CELLS_AMOUNT]);
-            }
-
-
-            byte idx = 0;
-
-            for (idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
-            {
-                foreach (var item in _trails) _trails[item.Key][idx] = new CellTrailE(item.Key, gameW);
-                foreach (var item in _players) _players[item.Key][idx] = new CellTrailPlayerE(gameW);
+                _players.Add(player, new CellTrailPlayerE(gameW));
             }
         }
 
-        public void ResetAll(in byte idx)
+        public void DestroyAll()
         {
-            foreach (var item in Keys)
-            {
-                Trail(item, idx).Health.Amount = 0;
-            }
+            foreach (var item in Keys) Trail(item).Destroy();
         }
     }
 }

@@ -10,11 +10,11 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
-                if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
+                if (UnitEs(idx_0).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                 {
-                    Stun<SpriteRendererVC>(idx_0).SetActive(UnitEs.Stun(idx_0).IsStunned);
+                    Stun<SpriteRendererVC>(idx_0).SetActive(UnitEffectEs(idx_0).StunE.IsStunned);
                 }
                 else
                 {

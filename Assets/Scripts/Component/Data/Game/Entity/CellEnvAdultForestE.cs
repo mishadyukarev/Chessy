@@ -9,7 +9,7 @@ namespace Game.Game
         {
             var extract = 10;
 
-            if (buildUpgEs.HaveUpgrade(buildEs.BuildingE(Idx), UpgradeTypes.PickCenter).HaveUpgrade.Have)
+            if (buildUpgEs.HaveUpgrade(buildEs.BuildingE, UpgradeTypes.PickCenter).HaveUpgrade.Have)
             {
                 extract += (int)(extract * 0.5f);
             }
@@ -24,7 +24,7 @@ namespace Game.Game
         {
             var ration = 0f;
 
-            switch (unitEs.Main(Idx).LevelTC.Level)
+            switch (unitEs.MainE.LevelTC.Level)
             {
                 case LevelTypes.First: ration = 0.1f; break;
                 case LevelTypes.Second: ration = 0.2f; break;
@@ -51,17 +51,18 @@ namespace Game.Game
         }
         public void Fire()
         {
-            ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvT) / 2;
+            ResourcesRef.Amount -= CellEnvironmentValues.MaxResources(EnvT) / 2;
         }
         public void ExtractWoodcutter(in CellEs cellEs, in BuildingUpgradeEs buildUpgEs, in InventorResourcesEs invResEs)
         {
-            invResEs.Resource(ResourceT, cellEs.UnitEs.Main(Idx).OwnerC.Player).AddWoodcutterExtractAdultForest(this, buildUpgEs, cellEs.BuildEs);
+            invResEs.Resource(ResourceT, cellEs.UnitEs.MainE.OwnerC.Player).AddWoodcutterExtractAdultForest(this, buildUpgEs, cellEs.BuildEs);
 
             ResourcesRef.Amount -= AmountExtractWoodcutter(buildUpgEs, cellEs.BuildEs);
+            if(!HaveEnvironment) cellEs.TrailEs.DestroyAll();
         }
         public void ExtractPawn(in CellUnitEs unitEs, in InventorResourcesEs invResEs)
         {
-            invResEs.Resource(ResourceT, unitEs.Main(Idx).OwnerC.Player).AddPawnExtractAdultForest(unitEs, this);
+            invResEs.Resource(ResourceT, unitEs.MainE.OwnerC.Player).AddPawnExtractAdultForest(unitEs, this);
             ResourcesRef.Amount -= AmountExtractPawn(unitEs);
         }
     }

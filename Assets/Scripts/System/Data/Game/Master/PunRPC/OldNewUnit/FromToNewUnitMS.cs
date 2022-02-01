@@ -15,11 +15,11 @@
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            var unit_from = UnitEs.Main(idx_from).UnitTC;
-            var ownUnit_from = UnitEs.Main(idx_from).OwnerC;
+            var unit_from = UnitEs(idx_from).MainE.UnitTC;
+            var ownUnit_from = UnitEs(idx_from).MainE.OwnerC;
 
-            var unit_to = UnitEs.Main(idx_to).UnitTC;
-            var ownUnit_to = UnitEs.Main(idx_to).OwnerC;
+            var unit_to = UnitEs(idx_to).MainE.UnitTC;
+            var ownUnit_to = UnitEs(idx_to).MainE.OwnerC;
 
 
             if (unit == UnitTypes.Elfemale || unit == UnitTypes.Snowy)
@@ -30,17 +30,17 @@
                     {
                         if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
                         {
-                            foreach (var idx_1 in CellEs.GetIdxsAround(idx_from))
+                            foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_from))
                             {
                                 if (idx_1 == idx_to)
                                 {
                                     Es.Rpc.SoundToGeneral(sender, ClipTypes.GetHero);
 
-                                    UnitEs.Main(idx_from).Clear(Es.WhereUnitsEs);
-                                    UnitEs.Main(idx_to).Clear(Es.WhereUnitsEs);
+                                    UnitEs(idx_from).MainE.Clear(Es.WhereUnitsEs);
+                                    UnitEs(idx_to).MainE.Clear(Es.WhereUnitsEs);
 
-                                    UnitEs.Main(idx_to).SetNew((unit, LevelTypes.First, whoseMove, ConditionUnitTypes.None, false), Es);
-                                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, UnitEs.Main(idx_to).OwnerC.Player).TakeUnit();
+                                    UnitEs(idx_to).MainE.SetNew((unit, LevelTypes.First, whoseMove, ConditionUnitTypes.None, false), Es);
+                                    Es.InventorUnitsEs.Units(unit, LevelTypes.First, UnitEs(idx_to).MainE.OwnerC.Player).TakeUnit();
 
                                     break;
                                 }

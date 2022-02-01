@@ -5,10 +5,7 @@
         None,
 
         Ready,
-        First = Ready,
-
         Done,
-        Build,
         DestroyBuild,
         Shift,
         Attack,

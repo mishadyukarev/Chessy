@@ -14,10 +14,10 @@ namespace Game.Game
             var idx_cur = Es.CurrentIdxE.IdxC.Idx;
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var unit_cur = UnitEs.Main(idx_cur).UnitTC;
-            var ownUnit_cur = UnitEs.Main(idx_cur).OwnerC;
+            var unit_cur = UnitEs(idx_cur).MainE.UnitTC;
+            var ownUnit_cur = UnitEs(idx_cur).MainE.OwnerC;
 
-            var unit_sel = UnitEs.Main(idx_cur).UnitTC;
+            var unit_sel = UnitEs(idx_cur).MainE.UnitTC;
 
             ref var raycastTC = ref Es.ClickerObject.RayCastTC;
             ref var cellClick = ref Es.ClickerObject.CellClickC;
@@ -53,7 +53,7 @@ namespace Game.Game
 
                                         else
                                         {
-                                            if (UnitEs.Main(idx_cur).HaveUnit(UnitEs.StatEs))
+                                            if (UnitEs(idx_cur).MainE.HaveUnit(UnitStatEs(idx_cur)))
                                             {
                                                 if (ownUnit_cur.Is(Es.WhoseMove.CurPlayerI))
                                                 {
@@ -78,7 +78,7 @@ namespace Game.Game
 
                                     else
                                     {
-                                        if (UnitEs.Main(idx_cur).HaveUnit(UnitEs.StatEs))
+                                        if (UnitEs(idx_cur).MainE.HaveUnit(UnitStatEs(idx_cur)))
                                         {
                                             if (ownUnit_cur.Is(Es.WhoseMove.CurPlayerI))
                                             {
@@ -127,7 +127,7 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
                                         && ownUnit_cur.Is(Es.WhoseMove.CurPlayerI)
-                                        && !UnitEs.Main(idx_cur).LevelTC.Is(LevelTypes.Second))
+                                        && !UnitEs(idx_cur).MainE.LevelTC.Is(LevelTypes.Second))
                                     {
                                         Es.Rpc.UpgradeUnitToMaster(Es.CurrentIdxE.IdxC.Idx);
                                     }
@@ -211,7 +211,7 @@ namespace Game.Game
 
                                     else if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
                                     {
-                                        CellEs.TryGetIdxAround(Es.CurrentIdxE.IdxC.Idx, out var directs);
+                                        CellEsWorker.TryGetIdxAround(Es.CurrentIdxE.IdxC.Idx, out var directs);
 
                                         foreach (var item in directs)
                                         {
@@ -254,7 +254,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!UnitEs.Main(idx_cur).HaveUnit(UnitEs.StatEs) || !UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_cur).IsVisibleC.IsVisible)
+                        if (!UnitEs(idx_cur).MainE.HaveUnit(UnitStatEs(idx_cur)) || !UnitEs(idx_cur).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                         {
                             if (Es.CurrentIdxE.IsStartDirectToCell)
                             {

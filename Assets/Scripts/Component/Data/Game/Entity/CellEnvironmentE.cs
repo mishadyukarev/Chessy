@@ -32,7 +32,7 @@ namespace Game.Game
         }
 
 
-        public CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld world) : base(world)
+        protected CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld world) : base(world)
         {
             Idx = idx;
             EnvT = envT;

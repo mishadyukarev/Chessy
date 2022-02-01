@@ -17,26 +17,25 @@
             {
                 var sender = InfoC.Sender(MGOTypes.Master);
 
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
 
-                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
+                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
 
-                var tw_0 = UnitEs.ToolWeapon(idx_0).ToolWeaponTC;
-                var twLevel_0 = UnitEs.ToolWeapon(idx_0).LevelTC;
-                var twShield_0 = UnitEs.ToolWeapon(idx_0).Protection;
+                var tw_0 = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
+                var twLevel_0 = UnitEs(idx_0).ToolWeaponE.LevelTC;
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (UnitEs.StatEs.Step(idx_0).HaveSteps)
+                    if (UnitStatEs(idx_0).StepE.HaveSteps)
                     {
 
                         if (tw_0.HaveTW)
                         {
                             Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
-                            UnitEs.ToolWeapon(idx_0).Reset();
+                            UnitEs(idx_0).ToolWeaponE.Reset();
 
-                            UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                            UnitStatEs(idx_0).StepE.Take(tWForGive);
 
                             Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -46,9 +45,9 @@
                         {
                             Es.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Amount--;
 
-                            UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                            UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
 
-                            UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                            UnitStatEs(idx_0).StepE.Take(tWForGive);
 
                             Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -59,9 +58,9 @@
                             {
                                 Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                                UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                                UnitStatEs(idx_0).StepE.Take(tWForGive);
 
                                 Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -77,9 +76,9 @@
                             {
                                 Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                                UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                                UnitStatEs(idx_0).StepE.Take(tWForGive);
 
                                 Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -95,9 +94,9 @@
                             {
                                 Es.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                UnitEs.ToolWeapon(idx_0).SetNew(tWForGive, levelTW);
+                                UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                                UnitStatEs(idx_0).StepE.Take(tWForGive);
 
                                 Es.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }

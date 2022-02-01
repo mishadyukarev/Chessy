@@ -15,16 +15,16 @@
 
             if (Es.SelectedIdxE.IsSelCell)
             {
-                if (UnitEs.Main(idx_sel).HaveUnit(UnitStatEs))
+                if (UnitEs(idx_sel).MainE.HaveUnit(UnitStatEs(idx_sel)))
                 {
-                    if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_sel).IsVisibleC.IsVisible)
+                    if (UnitEs(idx_sel).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                     {
                         activeParent = true;
                     }
                 }
             }
 
-            EntitiesView.UIEs.RightEs.Zone.Zone.SetActive(activeParent);
+            VEs.UIEs.RightEs.Zone.Zone.SetActive(activeParent);
         }
     }
 }

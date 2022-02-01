@@ -10,12 +10,10 @@
         {
             ref var cellClick = ref Es.ClickerObject.CellClickC;
 
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                var own_0 = UnitEs.Main(idx_0).OwnerC;
-
-                ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var own_0 = UnitEs(idx_0).MainE.OwnerC;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
@@ -29,7 +27,7 @@
 
                 }
 
-                if (fire_0.Have)
+                if (EffectEs(idx_0).FireE.HaveFireC.Have)
                 {
                     if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
@@ -41,7 +39,7 @@
                     }
                 }
 
-                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
+                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                 {
                     if (own_0.Is(Es.WhoseMove.CurPlayerI))
                     {
@@ -58,7 +56,7 @@
                         {
                             if (unit_0.Is(UnitTypes.Pawn, UnitTypes.Archer))
                             {
-                                if (UnitEs.Main(idx_0).LevelTC.Is(LevelTypes.First))
+                                if (UnitEs(idx_0).MainE.LevelTC.Is(LevelTypes.First))
                                 {
                                     support_0.Enable();
                                     support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -78,9 +76,9 @@
 
                     else
                     {
-                        if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
+                        if (UnitEs(idx_0).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                         {
-                            if (CellEs.EnvironmentEs.AdultForest(idx_0).HaveEnvironment)
+                            if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
@@ -112,7 +110,7 @@
                 {
                     if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
                     {
-                        CellEs.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
+                        CellEsWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
 
                         foreach (var item in dirs)
                         {

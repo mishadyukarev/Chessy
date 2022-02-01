@@ -11,26 +11,26 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in CellEs.Idxs)
+            foreach (var idx_0 in CellEsWorker.Idxs)
             {
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                var levelUnit_0 = UnitEs.Main(idx_0).LevelTC.Level;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var levelUnit_0 = UnitEs(idx_0).MainE.LevelTC.Level;
 
-                var corner_0 = UnitEs.Main(idx_0).IsCorned;
+                var corner_0 = UnitEs(idx_0).MainE.IsCorned;
 
-                var tw_0 = UnitEs.ToolWeapon(idx_0).ToolWeaponTC;
-                var twLevel_0 = UnitEs.ToolWeapon(idx_0).LevelTC;
+                var tw_0 = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
+                var twLevel_0 = UnitEs(idx_0).ToolWeaponE.LevelTC;
 
-                ref var mainUnit_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
-                ref var extraUnit_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);
+                ref var mainUnit_0 = ref CellVEs(idx_0).UnitVEs.UnitMainSR;
+                ref var extraUnit_0 = ref CellVEs(idx_0).UnitVEs.UnitExtraSR;
 
 
                 mainUnit_0.Disable();
                 extraUnit_0.Disable();
 
-                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
+                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                 {
-                    if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
+                    if (UnitEs(idx_0).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                     {
                         mainUnit_0.Enable();
 
@@ -74,7 +74,7 @@ namespace Game.Game
                                 throw new Exception();
                         }
 
-                        if (UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible)
+                        if (UnitEs(idx_0).VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI)).IsVisibleC.IsVisible)
                         {
                             mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 1);
                         }
@@ -83,7 +83,7 @@ namespace Game.Game
                             mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 0.6f);
                         }
 
-                        if (UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI), idx_0).IsVisibleC.IsVisible)
+                        if (UnitEs(idx_0).VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI)).IsVisibleC.IsVisible)
                         {
                             extraUnit_0.Color = new Color(extraUnit_0.Color.r, extraUnit_0.Color.g, extraUnit_0.Color.b, 1);
                         }

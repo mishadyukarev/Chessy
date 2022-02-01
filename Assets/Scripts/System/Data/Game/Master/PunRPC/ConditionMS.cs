@@ -19,21 +19,21 @@ namespace Game.Game
             switch (cond)
             {
                 case ConditionUnitTypes.None:
-                    UnitEs.Main(idx_0).ResetCondition();
+                    UnitEs(idx_0).MainE.ResetCondition();
                     break;
 
                 case ConditionUnitTypes.Protected:
-                    if (UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Protected))
+                    if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Protected))
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        UnitEs.Main(idx_0).ResetCondition();
+                        UnitEs(idx_0).MainE.ResetCondition();
                     }
 
-                    else if (UnitEs.StatEs.Step(idx_0).HaveSteps)
+                    else if (UnitStatEs(idx_0).StepE.HaveSteps)
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        UnitEs.StatEs.Step(idx_0).Steps.Amount--;
-                        UnitEs.Main(idx_0).SetCondition(cond);
+                        UnitStatEs(idx_0).StepE.Take(cond);
+                        UnitEs(idx_0).MainE.SetCondition(cond);
                     }
 
                     else
@@ -44,17 +44,17 @@ namespace Game.Game
 
 
                 case ConditionUnitTypes.Relaxed:
-                    if (UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                    if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        UnitEs.Main(idx_0).ResetCondition();
+                        UnitEs(idx_0).MainE.ResetCondition();
                     }
 
-                    else if (UnitEs.StatEs.Step(idx_0).HaveSteps)
+                    else if (UnitStatEs(idx_0).StepE.HaveSteps)
                     {
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        UnitEs.Main(idx_0).SetCondition(cond);
-                        UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                        UnitEs(idx_0).MainE.SetCondition(cond);
+                        UnitStatEs(idx_0).StepE.Take(cond);
                     }
 
                     else

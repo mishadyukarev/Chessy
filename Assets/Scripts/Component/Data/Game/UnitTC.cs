@@ -6,7 +6,14 @@ namespace Game.Game
     {
         public UnitTypes Unit;
 
-        //public bool Have => Unit != UnitTypes.None;
+        public bool Is(params UnitTypes[] units)
+        {
+            if (units == default) throw new Exception();
+
+            foreach (var unit in units) if (unit == Unit) return true;
+            return false;
+        }
+
         public bool IsMelee
         {
             get
@@ -24,12 +31,6 @@ namespace Game.Game
                     default: throw new Exception();
                 }
             }
-        }
-        public bool Is(params UnitTypes[] units)
-        {
-            foreach (var unit in units)
-                if (unit == Unit) return true;
-            return false;
         }
         public bool IsHero
         {

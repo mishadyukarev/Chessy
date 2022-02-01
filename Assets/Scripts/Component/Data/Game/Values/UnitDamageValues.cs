@@ -75,15 +75,6 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        public static int Damage(in AbilityTypes uniq)
-        {
-            switch (uniq)
-            {
-                case AbilityTypes.CircularAttack: return 25;
-                default: throw new Exception();
-            }
-        }
-        public static int FIRE_DAMAGE = 40;
 
 
         #region Protection

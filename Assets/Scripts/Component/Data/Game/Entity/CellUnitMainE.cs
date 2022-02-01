@@ -3,7 +3,7 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class CellUnitMainE : CellAbstE
+    public sealed class CellUnitMainE : CellEntityAbstract
     {
         ref UnitTC UnitTCRef => ref Ent.Get<UnitTC>();
         ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
@@ -17,7 +17,7 @@ namespace Game.Game
         public ConditionUnitC ConditionTC => Ent.Get<ConditionUnitC>();
         public IsC IsCorned => Ent.Get<IsC>();
 
-        public bool HaveUnit(in CellUnitStatEs statEs) => statEs.Hp(Idx).IsAlive && HaveUnitT;
+        public bool HaveUnit(in CellUnitStatEs statEs) => statEs.Hp.IsAlive && HaveUnitT;
         public bool HaveUnitT => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
 
 
@@ -25,12 +25,12 @@ namespace Game.Game
         {
             var needSteps = 1;
 
-            if (envEs.Fertilizer(Idx).HaveEnvironment) needSteps += envEs.Fertilizer(Idx).NeedStepsShiftAttackUnit;
-            if (envEs.YoungForest(Idx).HaveEnvironment) needSteps += envEs.YoungForest(Idx).NeedStepsShiftAttackUnit;
-            if (envEs.AdultForest(Idx).HaveEnvironment) needSteps += envEs.AdultForest(Idx).NeedStepsShiftAttackUnit;
-            if (envEs.Hill(Idx).HaveEnvironment) needSteps += envEs.Fertilizer(Idx).NeedStepsShiftAttackUnit;
+            if (envEs.Fertilizer.HaveEnvironment) needSteps += envEs.Fertilizer.NeedStepsShiftAttackUnit;
+            if (envEs.YoungForest.HaveEnvironment) needSteps += envEs.YoungForest.NeedStepsShiftAttackUnit;
+            if (envEs.AdultForest.HaveEnvironment) needSteps += envEs.AdultForest.NeedStepsShiftAttackUnit;
+            if (envEs.Hill.HaveEnvironment) needSteps += envEs.Fertilizer.NeedStepsShiftAttackUnit;
 
-            if (trailsEs.Trail(dirMove.Invert(), Idx).HaveTrail) needSteps--;
+            if (trailsEs.Trail(dirMove.Invert()).HaveTrail) needSteps--;
 
             return needSteps;
         }
@@ -50,7 +50,7 @@ namespace Game.Game
         //    switch (Else(idx).UnitC.Unit)
         //    {
         //        case UnitTypes.Pawn:
-        //            if (!Ents.CellEs.EnvironmentEs.Hill( idx).HaveEnvironment && !twC.Is(ToolWeaponTypes.Pick)) return false;
+        //            if (!Ents.EnvironmentEs.Hill( idx).HaveEnvironment && !twC.Is(ToolWeaponTypes.Pick)) return false;
 
         //            env = EnvironmentTypes.Hill;
 
@@ -74,8 +74,8 @@ namespace Game.Game
 
         //    resume = (int)(CellEnvironmentValues.MaxResources(env) * ration);
 
-        //    if (resume > Ents.CellEs.EnvironmentEs.Environment(env, idx).Resources.Amount)
-        //        resume = Ents.CellEs.EnvironmentEs.Environment(env, idx).Resources.Amount;
+        //    if (resume > Ents.EnvironmentEs.Environment(env, idx).Resources.Amount)
+        //        resume = Ents.EnvironmentEs.Environment(env, idx).Resources.Amount;
 
         //    return true;
         //}
@@ -97,7 +97,7 @@ namespace Game.Game
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * UnitDamageValues.PercentTW(cellEs.UnitEs.ToolWeapon(Idx).ToolWeaponTC.ToolWeapon);
+            powerDamege += standDamage * UnitDamageValues.PercentTW(cellEs.UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
             if (attack == AttackTypes.Unique) powerDamege += standDamage * UnitDamageValues.UNIQUE_PERCENT_DAMAGE;
 
             //if (haveEff) powerDamege += standDamage * 0.2f;
@@ -114,17 +114,17 @@ namespace Game.Game
             var standDamage = UnitDamageValues.StandDamage(UnitTC.Unit, LevelTC.Level);
 
             powerDamege += standDamage * UnitDamageValues.ProtRelaxPercent(ConditionTC.Condition);
-            if (cellEs.BuildEs.BuildingE(Idx).HaveBuilding) powerDamege += standDamage * CellBuildingValues.ProtectionPercent(cellEs.BuildEs.BuildingE(Idx).BuildTC.Build);
+            if (cellEs.BuildEs.BuildingE.HaveBuilding) powerDamege += standDamage * CellBuildingValues.ProtectionPercent(cellEs.BuildEs.BuildingE.BuildTC.Build);
 
             float protectionPercent = 0;
 
             var envEs = cellEs.EnvironmentEs;
 
-            if (envEs.Fertilizer(Idx).HaveEnvironment) protectionPercent += envEs.Fertilizer(Idx).ProtectionPercent;
-            if (envEs.YoungForest(Idx).HaveEnvironment) protectionPercent += envEs.YoungForest(Idx).ProtectionPercent;
-            if (envEs.AdultForest(Idx).HaveEnvironment) protectionPercent += envEs.AdultForest(Idx).ProtectionPercent;
-            if (envEs.Hill(Idx).HaveEnvironment) protectionPercent += envEs.Hill(Idx).ProtectionPercent;
-            if (envEs.Mountain(Idx).HaveEnvironment) protectionPercent += envEs.Mountain(Idx).ProtectionPercent;
+            if (envEs.Fertilizer.HaveEnvironment) protectionPercent += envEs.Fertilizer.ProtectionPercent;
+            if (envEs.YoungForest.HaveEnvironment) protectionPercent += envEs.YoungForest.ProtectionPercent;
+            if (envEs.AdultForest.HaveEnvironment) protectionPercent += envEs.AdultForest.ProtectionPercent;
+            if (envEs.Hill.HaveEnvironment) protectionPercent += envEs.Hill.ProtectionPercent;
+            if (envEs.Mountain.HaveEnvironment) protectionPercent += envEs.Mountain.ProtectionPercent;
 
             powerDamege += standDamage * protectionPercent;
 
@@ -133,10 +133,10 @@ namespace Game.Game
 
         public bool CanExtractPawnAdultForest(in CellUnitStatEs statE, in CellEnvironmentEs cellEnvEs)
         {
-            if (cellEnvEs.AdultForest(Idx).HaveEnvironment
+            if (cellEnvEs.AdultForest.HaveEnvironment
                 && UnitTC.Is(UnitTypes.Pawn)
                 && ConditionTC.Is(ConditionUnitTypes.Relaxed)
-                && statE.Hp(Idx).HaveMax)
+                && statE.Hp.HaveMax)
             {
                 return true;
             }
@@ -179,30 +179,31 @@ namespace Game.Game
         public void SetNew(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unit, in Entities ents, in (ToolWeaponTypes, LevelTypes) tw = default)
         {
             Set(unit);
-            ents.CellEs.UnitEs.StatEs.Hp(Idx).SetMax();
-            ents.CellEs.UnitEs.StatEs.Step(Idx).SetMax(this);
-            ents.CellEs.UnitEs.StatEs.Water(Idx).SetMax(this, ents.UnitStatUpgradesEs);
-            ents.CellEs.UnitEs.Stun(Idx).Reset();
-            ents.CellEs.UnitEs.ToolWeapon(Idx).SetNew(tw);
-            foreach (var item in ents.CellEs.UnitEs.CooldownKeys) ents.CellEs.UnitEs.CooldownAbility(item, Idx).SetNew();
+            ents.CellEs(Idx).UnitEs.StatEs.Hp.SetMax();
+            ents.CellEs(Idx).UnitEs.StatEs.StepE.SetMax(this);
+            ents.CellEs(Idx).UnitEs.StatEs.Water.SetMax(this, ents.UnitStatUpgradesEs);
+            ents.UnitEffectEs(Idx).StunE.Reset();
+            ents.CellEs(Idx).UnitEs.ToolWeaponE.SetNew(tw);
+            foreach (var item in ents.CellEs(Idx).UnitEs.CooldownKeys) ents.CellEs(Idx).UnitEs.CooldownAbility(item).SetNew();
             ents.WhereUnitsEs.WhereUnit(unit.Item1, unit.Item2, unit.Item3, Idx).HaveUnit.Have = true;
         }
         public void Kill(in Entities ents)
         {
-            var unit = UnitTC;
-            var ownUnit = OwnerC;
+            if (!HaveUnitT) throw new Exception("There's not unit");
 
-            if (!HaveUnit(ents.CellEs.UnitEs.StatEs)) throw new Exception("It's not got unit");
-
-            if (unit.Is(UnitTypes.King))
+            if (UnitTC.Is(UnitTypes.King))
             {
-                ents.WinnerE.Winner.Player = ownUnit.Player;
+                ents.WinnerE.Winner.Player = OwnerC.Player;
             }
-            else if (unit.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
+            else if (UnitTC.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
             {
                 ents.ScoutHeroCooldownE(this).Cooldown.Amount = 3;
-                ents.InventorUnitsEs.Units(unit.Unit, LevelTC.Level, ownUnit.Player).AddUnit();
+                ents.InventorUnitsEs.Units(UnitTC.Unit, LevelTC.Level, OwnerC.Player).AddUnit();
             }
+            //else if (UnitTC.IsAnimal)
+            //{
+            //    ents.InventorResourcesEs.Resource(ResourceTypes.Food, whoKill).Resources.Amount += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+            //}
 
             ents.WhereUnitsEs.WhereUnit(this, Idx).HaveUnit.Have = false;
             Reset();
@@ -217,37 +218,37 @@ namespace Game.Game
         {
             var statEs = ents.UnitStatUpgradesEs;
             var whereUnitsEs = ents.WhereUnitsEs;
-            var cellEs = ents.CellEs;
-            var unitEs = cellEs.UnitEs;
 
 
             whereUnitsEs.WhereUnit(this, Idx).HaveUnit.Have = false;
 
-            unitEs.Main(idx_to).Shift(this);
-            unitEs.StatEs.Hp(idx_to).Shift(unitEs.StatEs.Hp(Idx));
-            unitEs.StatEs.Step(idx_to).Shift(unitEs.StatEs.Step(Idx));
-            unitEs.StatEs.Water(idx_to).Shift(unitEs.StatEs.Water(Idx));
-            unitEs.Stun(idx_to).Shift(unitEs.Stun(Idx));
+            ents.CellEs(idx_to).UnitEs.MainE.Shift(this);
+            ents.CellEs(idx_to).UnitEs.StatEs.Hp.Shift(ents.CellEs(Idx).UnitEs.StatEs.Hp);
+            ents.CellEs(idx_to).UnitEs.StatEs.StepE.Shift(ents.CellEs(Idx).UnitEs.StatEs.StepE);
+            ents.CellEs(idx_to).UnitEs.StatEs.Water.Shift(ents.CellEs(Idx).UnitEs.StatEs.Water);
+            ents.UnitEffectEs(idx_to).StunE.Shift(ents.UnitEffectEs(Idx).StunE);
+            ents.UnitEffectEs(idx_to).ShieldE.Shift(ents.UnitEffectEs(Idx).ShieldE);
 
-            unitEs.ToolWeapon(idx_to).Set(unitEs.ToolWeapon(Idx));
-            foreach (var abilityT in unitEs.CooldownKeys) 
-                unitEs.CooldownAbility(abilityT, idx_to).Shift(unitEs.CooldownAbility(abilityT, Idx));
+            ents.CellEs(idx_to).UnitEs.ToolWeaponE.Set(ents.CellEs(Idx).UnitEs.ToolWeaponE);
 
-            if (cellEs.EnvironmentEs.AdultForest(Idx).HaveEnvironment)
+            foreach (var abilityT in ents.CellEs(Idx).UnitEs.CooldownKeys)
+                ents.CellEs(idx_to).UnitEs.CooldownAbility(abilityT).Shift(ents.CellEs(Idx).UnitEs.CooldownAbility(abilityT));
+
+            if (ents.CellEs(Idx).EnvironmentEs.AdultForest.HaveEnvironment)
             {
-                cellEs.TrailEs.Trail(cellEs.GetDirect(Idx, idx_to), Idx).SetNew();
+                ents.CellEs(Idx).TrailEs.Trail(ents.CellEsWorker.GetDirect(Idx, idx_to)).SetNew();
             }
-            if (cellEs.EnvironmentEs.AdultForest(idx_to).HaveEnvironment)
+            if (ents.CellEs(idx_to).EnvironmentEs.AdultForest.HaveEnvironment)
             {
-                cellEs.TrailEs.Trail(cellEs.GetDirect(Idx, idx_to).Invert(), idx_to).SetNew();
-            }
-
-            if (cellEs.RiverEs.River(idx_to).RiverTC.HaveRiver)
-            {
-                unitEs.StatEs.Water(idx_to).SetMax(unitEs.Main(idx_to), statEs);
+                ents.CellEs(idx_to).TrailEs.Trail(ents.CellEsWorker.GetDirect(Idx, idx_to).Invert()).SetNew();
             }
 
-            whereUnitsEs.WhereUnit(unitEs.Main(idx_to), idx_to).HaveUnit.Have = true;
+            if (ents.CellEs(idx_to).RiverEs.River.RiverTC.HaveRiver)
+            {
+                ents.CellEs(idx_to).UnitEs.StatEs.Water.SetMax(ents.CellEs(idx_to).UnitEs.MainE, statEs);
+            }
+
+            whereUnitsEs.WhereUnit(ents.CellEs(idx_to).UnitEs.MainE, idx_to).HaveUnit.Have = true;
         }
 
         public void AddToInventorAndRemove(in InventorUnitsEs invUnits, in WhereUnitsEs whereUnits)

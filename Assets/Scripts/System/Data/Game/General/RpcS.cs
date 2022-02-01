@@ -69,6 +69,18 @@ namespace Game.Game
                         _ents.MasterEs.Seed<EnvironmetTC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
                         break;
 
+                    case AbilityTypes.Farm:
+                        _ents.MasterEs.BuildingFarmME.IdxC.Idx = (byte)objects[_idx_cur++];
+                        break;
+
+                    case AbilityTypes.Mine:
+                        _ents.MasterEs.BuildingMineME.WhereBuildMine.Idx = (byte)objects[_idx_cur++];
+                        break;
+
+                    case AbilityTypes.City:
+                        _ents.MasterEs.BuildingCityME.WhereBuildCity.Idx = (byte)objects[_idx_cur++];
+                        break;
+
                     case AbilityTypes.FireArcher:
                         _ents.MasterEs.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
                         _ents.MasterEs.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
@@ -94,10 +106,14 @@ namespace Game.Game
                         _ents.MasterEs.IceWall.IdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
+                    case AbilityTypes.ActiveIceWall:
+                        //_ents.MasterEs.ActiveIceWallME.WhereActiveIceWall.Idx = (byte)objects[_idx_cur++];
+                        break;
+
                     default: throw new Exception();
                 }
 
-                _ents.MasterEs.UniqueAbilityC.Ability = uniqAbil;
+                _ents.MasterEs.AbilityC.Ability = uniqAbil;
                 _systems.SystemsMaster.InvokeRun(uniqAbil);
             }
 
@@ -112,11 +128,6 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Done:
-                        break;
-
-                    case RpcMasterTypes.Build:
-                        _ents.MasterEs.Build<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        _ents.MasterEs.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.DestroyBuild:
@@ -182,7 +193,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.UpgCenterBuild:
-                        _ents.MasterEs.Build<BuildingTC>().Build = (BuildingTypes)objects[_idx_cur++];
+                        _ents.MasterEs.CenterUpgradeME.BuildingForUpgrade.Build = (BuildingTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.UpgWater:
@@ -192,6 +203,7 @@ namespace Game.Game
                         throw new Exception();
                 }
 
+                _ents.MasterEs.RpcMasterTC.RpcMasterT = rpcT;
                 _systems.SystemsMaster.InvokeRun(rpcT);
             }
 
@@ -268,56 +280,56 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (byte idx_0 in _ents.CellEs.Idxs)
+            foreach (byte idx_0 in _ents.CellEsWorker.Idxs)
             {
-                objs.Add(_ents.CellEs.UnitEs.Main(idx_0).UnitTC.Unit);
-                objs.Add(_ents.CellEs.UnitEs.Main(idx_0).LevelTC.Level);
-                objs.Add(_ents.CellEs.UnitEs.Main(idx_0).OwnerC.Player);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.UnitTC.Unit);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.OwnerC.Player);
 
-                objs.Add(_ents.CellEs.UnitEs.StatEs.Hp(idx_0).Health.Amount);
-                objs.Add(_ents.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount);
-                objs.Add(_ents.CellEs.UnitEs.StatEs.Water(idx_0).Water.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Hp.Health.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.StepE.Steps.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Water.Water.Amount);
 
-                objs.Add(_ents.CellEs.UnitEs.Main(idx_0).ConditionTC.Condition);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.ConditionTC.Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
-                objs.Add(_ents.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeaponTC.ToolWeapon);
-                objs.Add(_ents.CellEs.UnitEs.ToolWeapon(idx_0).LevelTC.Level);
-                objs.Add(_ents.CellEs.UnitEs.ToolWeapon(idx_0).Protection.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.LevelTC.Level);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.Protection.Amount);
 
-                objs.Add(_ents.CellEs.UnitEs.Stun(idx_0).ForExitStun.Amount);
+                objs.Add(_ents.UnitEffectEs(idx_0).StunE.ForExitStun.Amount);
 
-                objs.Add(_ents.CellEs.UnitEs.Main(idx_0).IsCorned.Is);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.IsCorned.Is);
 
-                foreach (var item in _ents.CellEs.UnitEs.CooldownKeys) objs.Add(_ents.CellEs.UnitEs.CooldownAbility(item, idx_0).Cooldown.Amount);
-
-
+                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.CooldownAbility(item).Cooldown.Amount);
 
 
 
-                objs.Add(_ents.CellEs.BuildEs.BuildingE(idx_0).BuildTC.Build);
-                objs.Add(_ents.CellEs.BuildEs.BuildingE(idx_0).Owner.Player);
+
+
+                objs.Add(_ents.CellEs(idx_0).BuildEs.BuildingE.BuildTC.Build);
+                objs.Add(_ents.CellEs(idx_0).BuildEs.BuildingE.Owner.Player);
 
 
 
-                //foreach (var env in _ents.CellEs.EnvironmentEs.Keys)
+                //foreach (var env in _ents.EnvironmentEs.Keys)
                 //{
-                //    objs.Add(_ents.CellEs.EnvironmentEs.Environment(env, idx_0));
+                //    objs.Add(_ents.EnvironmentEs.Environment(env, idx_0));
                 //}
 
 
 
 
-                objs.Add(_ents.CellEs.RiverEs.River(idx_0).RiverTC.River);
-                foreach (var item_0 in _ents.CellEs.RiverEs.Keys)
-                    objs.Add(_ents.CellEs.RiverEs.HaveRive(item_0, idx_0).HaveRiver.Have);
+                objs.Add(_ents.CellEs(idx_0).RiverEs.River.RiverTC.River);
+                foreach (var item_0 in _ents.CellEs(idx_0).RiverEs.Keys)
+                    objs.Add(_ents.CellEs(idx_0).RiverEs.HaveRive(item_0).HaveRiver.Have);
 
 
-                foreach (var item_0 in _ents.CellEs.TrailEs.Keys)
-                    objs.Add(_ents.CellEs.TrailEs.Trail(item_0, idx_0));
+                foreach (var item_0 in _ents.CellEs(idx_0).TrailEs.Keys)
+                    objs.Add(_ents.CellEs(idx_0).TrailEs.Trail(item_0));
 
-                objs.Add(_ents.CellEs.FireEs.Fire(idx_0).Fire.Have);
+                objs.Add(_ents.CellEs(idx_0).EffectEs.FireE.HaveFireC.Have);
             }
 
             objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).Cooldown.Amount);
@@ -378,55 +390,55 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (byte idx_0 in _ents.CellEs.Idxs)
+            foreach (byte idx_0 in _ents.CellEsWorker.Idxs)
             {
-                //_ents.CellEs.UnitEs.Main(idx_0).UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
-                //_ents.CellEs.UnitEs.Main(idx_0).LevelC.Level = (LevelTypes)objects[_idx_cur++];
-                //_ents.CellEs.UnitEs.Main(idx_0).OwnerC.Player = (PlayerTypes)objects[_idx_cur++];
-                //_ents.CellEs.UnitEs.Main(idx_0).ConditionTC.Condition = (ConditionUnitTypes)objects[_idx_cur++];
-                //_ents.CellEs.UnitEs.Main(idx_0).IsCorned.Is = (bool)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.Main.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.Main.LevelC.Level = (LevelTypes)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.Main.OwnerC.Player = (PlayerTypes)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.Main.ConditionTC.Condition = (ConditionUnitTypes)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.Main.IsCorned.Is = (bool)objects[_idx_cur++];
 
-                _ents.CellEs.UnitEs.StatEs.Hp(idx_0).Health.Amount = (int)objects[_idx_cur++];
-                _ents.CellEs.UnitEs.StatEs.Step(idx_0).Steps.Amount = (int)objects[_idx_cur++];
-                _ents.CellEs.UnitEs.StatEs.Water(idx_0).Water.Amount = (int)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.StatEs.Hp.Health.Amount = (int)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.StatEs.Step.Steps.Amount = (int)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.StatEs.Water.Water.Amount = (int)objects[_idx_cur++];
 
                
                 //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have = (bool)objects[_idx_cur++];
 
 
-                //_ents.CellEs.UnitEs.ToolWeapon(idx_0).ToolWeaponTC.ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
-                //_ents.CellEs.UnitEs.ToolWeapon(idx_0).LevelTC.Level = (LevelTypes)objects[_idx_cur++];
-                //_ents.CellEs.UnitEs.ToolWeapon(idx_0).Protection.Amount = (int)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.ToolWeapon.ToolWeaponTC.ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.ToolWeapon.LevelTC.Level = (LevelTypes)objects[_idx_cur++];
+                //_ents.CellEs(idx_0).UnitEs.ToolWeapon.Protection.Amount = (int)objects[_idx_cur++];
 
 
-                _ents.CellEs.UnitEs.Stun(idx_0).SyncRpc((int)objects[_idx_cur++]);
+                _ents.UnitEffectEs(idx_0).StunE.SyncRpc((int)objects[_idx_cur++]);
 
                 
 
-                foreach (var item in _ents.CellEs.UnitEs.CooldownKeys) _ents.CellEs.UnitEs.CooldownAbility(item, idx_0).SyncRpc((int)objects[_idx_cur++]);
+                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) _ents.CellEs(idx_0).UnitEs.CooldownAbility(item).SyncRpc((int)objects[_idx_cur++]);
 
 
 
-                _ents.CellEs.BuildEs.BuildingE(idx_0)
+                _ents.CellEs(idx_0).BuildEs.BuildingE
                     .Sync((int)objects[_idx_cur++], (BuildingTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
 
-                //foreach (var item_0 in _ents.CellEs.EnvironmentEs.Keys)
+                //foreach (var item_0 in _ents.EnvironmentEs.Keys)
                 //{
-                //    _ents.CellEs.EnvironmentEs.Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
+                //    _ents.EnvironmentEs.Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
                 //}
 
-                _ents.CellEs.RiverEs.River(idx_0).RiverTC.River = (RiverTypes)objects[_idx_cur++];
-                foreach (var dir in _ents.CellEs.RiverEs.Keys)
-                    _ents.CellEs.RiverEs.HaveRive(dir, idx_0).HaveRiver.Have = (bool)objects[_idx_cur++];
+                _ents.CellEs(idx_0).RiverEs.River.RiverTC.River = (RiverTypes)objects[_idx_cur++];
+                foreach (var dir in _ents.CellEs(idx_0).RiverEs.Keys)
+                    _ents.CellEs(idx_0).RiverEs.HaveRive(dir).HaveRiver.Have = (bool)objects[_idx_cur++];
 
 
 
-                foreach (var item_0 in _ents.CellEs.TrailEs.Keys)
-                    _ents.CellEs.TrailEs.Trail(item_0, idx_0).Health.Amount = (int)objects[_idx_cur++];
+                foreach (var item_0 in _ents.CellEs(idx_0).TrailEs.Keys)
+                    _ents.TrailEs(idx_0).Trail(item_0).Sync((int)objects[_idx_cur++]);
 
 
 
-                _ents.CellEs.FireEs.Fire(idx_0).Fire.Have = (bool)objects[_idx_cur++];
+                _ents.CellEs(idx_0).EffectEs.FireE.SyncRpc((bool)objects[_idx_cur++]);
             }
 
 

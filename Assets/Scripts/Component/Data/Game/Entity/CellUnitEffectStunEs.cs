@@ -2,16 +2,16 @@
 
 namespace Game.Game
 {
-    public sealed class CellUnitStunEs : CellAbstE
+    public sealed class CellUnitEffectStunEs : CellEntityAbstract
     {
         ref AmountC ForExitStunRef => ref Ent.Get<AmountC>();
         public AmountC ForExitStun => Ent.Get<AmountC>();
 
         public bool IsStunned => ForExitStun.Amount > 0;
 
-        internal CellUnitStunEs(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
+        internal CellUnitEffectStunEs(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
 
-        internal void Shift(in CellUnitStunEs stunE_from)
+        internal void Shift(in CellUnitEffectStunEs stunE_from)
         {
             ForExitStunRef.Amount = stunE_from.ForExitStun.Amount;
             stunE_from.ForExitStunRef.Amount = 0;
@@ -28,6 +28,10 @@ namespace Game.Game
             {
                 case AbilityTypes.StunElfemale:
                     ForExitStunRef.Amount = 4;
+                    break;
+
+                case AbilityTypes.ActiveIceWall:
+                    ForExitStunRef.Amount = 2;
                     break;
 
                 default: throw new System.Exception();

@@ -14,20 +14,16 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
             IdxDoingMC.Get(out var idx_0);
-            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
+            var uniq_cur = Es.MasterEs.AbilityC.Ability;
 
-
-            ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
-
-
-            if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+            if (UnitStatEs(idx_0).StepE.Have(uniq_cur))
             {
-                if (CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                 {
                     Es.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
-                    fire_0.Enable();
-                    UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq_cur);
+                    EffectEs(idx_0).FireE.Enable();
+                    UnitStatEs(idx_0).StepE.Take(uniq_cur);
                 }
                 else
                 {

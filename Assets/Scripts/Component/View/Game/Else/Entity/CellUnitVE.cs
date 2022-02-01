@@ -3,27 +3,21 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct UnitCellVEs
+    public struct CellUnitVEs
     {
-        static Entity[] _main;
-        static Entity[] _extra;
+        readonly Entity _main;
+        readonly Entity _extra;
 
-        public static ref C UnitMain<C>(in byte idx) where C : struct, IUnitCellV => ref _main[idx].Get<C>();
-        public static ref C UnitExtra<C>(in byte idx) where C : struct, IUnitCellV => ref _extra[idx].Get<C>();
+        public ref SpriteRendererVC UnitMainSR => ref _main.Get<SpriteRendererVC>();
+        public ref SpriteRendererVC UnitExtraSR => ref _extra.Get<SpriteRendererVC>();
 
-        public UnitCellVEs(in EcsWorld gameW, GameObject[] cells)
+        public CellUnitVEs(GameObject cell, in EcsWorld gameW)
         {
-            _main = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
-            _extra = new Entity[CellStartValues.ALL_CELLS_AMOUNT];
+            _main = gameW.NewEntity()
+                .Add(new SpriteRendererVC(cell.transform.Find("MainUnit_SR").GetComponent<SpriteRenderer>()));
 
-            for (byte idx = 0; idx < _main.Length; idx++)
-            {
-                _main[idx] = gameW.NewEntity()
-                    .Add(new SpriteRendererVC(cells[idx].transform.Find("MainUnit_SR").GetComponent<SpriteRenderer>()));
-
-                _extra[idx] = gameW.NewEntity()
-                    .Add(new SpriteRendererVC(cells[idx].transform.Find("ExtraUnit_SR").GetComponent<SpriteRenderer>()));
-            }
+            _extra = gameW.NewEntity()
+                .Add(new SpriteRendererVC(cell.transform.Find("ExtraUnit_SR").GetComponent<SpriteRenderer>()));
         }
 
         //public void SetAlpha(bool isVisible)
@@ -32,5 +26,4 @@ namespace Game.Game
         //    else _main_SR.color = new Color(_main_SR.color.r, _main_SR.color.g, _main_SR.color.b, 0.8f);
         //}
     }
-    public interface IUnitCellV { }
 }

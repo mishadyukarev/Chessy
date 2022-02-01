@@ -12,17 +12,17 @@ namespace Game.Game
         {
             if (!Es.WhereUnitsEs.HaveUnit(UnitTypes.Camel))
             {
-                byte idx_0 = (byte)Random.Range(0, CellEs.Idxs.Count);
+                byte idx_0 = (byte)Random.Range(0, CellEsWorker.Idxs.Count);
 
-                if (CellEs.ParentE(idx_0).IsActiveSelf.IsActive)
+                if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
-                    if (!UnitEs.Main(idx_0).HaveUnit(UnitStatEs) && !EnvironmentEs.Mountain( idx_0).HaveEnvironment)
+                    if (!UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && !EnvironmentEs(idx_0).Mountain.HaveEnvironment)
                     {
                         bool haveNearUnit = false;
 
-                        foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
                         {
-                            if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                            if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                             {
                                 haveNearUnit = true;
                                 break;
@@ -31,7 +31,7 @@ namespace Game.Game
 
                         if (!haveNearUnit)
                         {
-                            UnitEs.Main(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
+                            UnitEs(idx_0).MainE.SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
                         }
                     }

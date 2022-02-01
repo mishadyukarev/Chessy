@@ -12,9 +12,9 @@ namespace Game.Game
         public HaveBuildE HaveBuild(in BuildingTypes build, in PlayerTypes owner, in byte idx) => _builds[Key(build, owner, idx)];
         public HaveBuildE HaveBuild(in string key) => _builds[key];
         public HaveBuildE HaveBuild(in CellBuildingE cellBuildingE, in byte idx) => _builds[Key(cellBuildingE.BuildTC.Build, cellBuildingE.Owner.Player, idx)];
-        public HaveBuildE HaveBuild(in CellBuildEs buildEs, in byte idx) => _builds[Key(buildEs.BuildingE(idx).BuildTC.Build, buildEs.BuildingE(idx).Owner.Player, idx)];
+        public HaveBuildE HaveBuild(in CellBuildEs buildEs) => _builds[Key(buildEs.BuildingE.BuildTC.Build, buildEs.BuildingE.Owner.Player, buildEs.BuildingE.Idx)];
 
-        public bool IsSetted(in BuildingTypes build, in PlayerTypes owner, out byte idx)
+        public bool TryGetBuilding(in BuildingTypes build, in PlayerTypes owner, out byte idx)
         {
             for (idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {

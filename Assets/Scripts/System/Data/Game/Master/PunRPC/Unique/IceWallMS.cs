@@ -10,17 +10,17 @@
         {
             var idx_0 = Es.MasterEs.IceWall.IdxC.Idx;
 
-            var curAbility = Es.MasterEs.UniqueAbilityC.Ability;
+            var curAbility = Es.MasterEs.AbilityC.Ability;
 
 
-            if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(curAbility))
+            if (UnitStatEs(idx_0).StepE.Have(curAbility))
             {
-                UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(curAbility);
+                UnitStatEs(idx_0).StepE.Take(curAbility);
 
-                UnitEs.CooldownAbility(curAbility, idx_0).SetAfterAbility();
+                UnitEs(idx_0).CooldownAbility(curAbility).SetAfterAbility();
 
-                BuildEs.BuildingE(idx_0).SetNew(BuildingTypes.IceWall, UnitEs.Main(idx_0).OwnerC.Player, BuildEs, Es.WhereBuildingEs);
-                Es.WhereBuildingEs.HaveBuild(BuildingTypes.IceWall, UnitEs.Main(idx_0).OwnerC.Player, idx_0).HaveBuilding.Have = true;
+                BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.IceWall, UnitEs(idx_0).MainE.OwnerC.Player, BuildEs(idx_0), Es.WhereBuildingEs);
+                Es.WhereBuildingEs.HaveBuild(BuildingTypes.IceWall, UnitEs(idx_0).MainE.OwnerC.Player, idx_0).HaveBuilding.Have = true;
             }
         }
     }

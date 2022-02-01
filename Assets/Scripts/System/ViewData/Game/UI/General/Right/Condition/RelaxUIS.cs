@@ -12,19 +12,19 @@ namespace Game.Game
         {
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var unit_sel = UnitEs.Main(idx_sel).UnitTC;
-            var selOnUnitCom = UnitEs.Main(idx_sel).OwnerC;
+            var unit_sel = UnitEs(idx_sel).MainE.UnitTC;
+            var selOnUnitCom = UnitEs(idx_sel).MainE.OwnerC;
 
 
             var activeButt = false;
 
-            if (UnitEs.Main(idx_sel).HaveUnit(UnitStatEs))
+            if (UnitEs(idx_sel).MainE.HaveUnit(UnitStatEs(idx_sel)))
             {
                 if (selOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
                 {
                     activeButt = true;
 
-                    if (UnitEs.Main(idx_sel).ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                    if (UnitEs(idx_sel).MainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                     {
                         RightRelaxUIE.Button<ImageUIC>().Color = Color.green;
                     }

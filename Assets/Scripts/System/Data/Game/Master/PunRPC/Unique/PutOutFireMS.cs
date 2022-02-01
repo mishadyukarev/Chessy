@@ -12,14 +12,15 @@
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
+            var ability = Es.MasterEs.AbilityC.Ability;
 
 
-            if (UnitEs.StatEs.Step(idx_0).HaveSteps)
+
+            if (UnitStatEs(idx_0).StepE.Have(ability))
             {
-                fire_0.Disable();
+                EffectEs(idx_0).FireE.Disable();
 
-                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                UnitStatEs(idx_0).StepE.Take(ability);
             }
 
             else

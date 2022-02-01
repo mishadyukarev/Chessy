@@ -7,10 +7,10 @@ namespace Game.Game
     {
         public RightUnitEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
-            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
-            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
-            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
-            EntitiesView.UIEs.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
+            VEs.UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
+            VEs.UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
+            VEs.UIEs.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
+            VEs.UIEs.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
 
             //RightUIEntities.Building(ButtonTypes.First).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.First); });
             //RightUIEntities.Building(ButtonTypes.Second).Button.AddListener(delegate { ExecuteBuild_Button(ButtonTypes.Second); });
@@ -26,7 +26,7 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).ConditionTC.Is(condUnitType))
+                if (UnitEs(Es.SelectedIdxE.IdxC.Idx).MainE.ConditionTC.Is(condUnitType))
                 {
                     Es.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, Es.SelectedIdxE.IdxC.Idx);
                 }
@@ -44,9 +44,9 @@ namespace Game.Game
             {
                 var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-                var abil = UnitEs.AbilityButton(uniqueButton, idx_sel).AbilityC;
+                var abil = UnitEs(idx_sel).AbilityButton(uniqueButton).AbilityC;
 
-                if (!UnitEs.CooldownAbility(abil.Ability, idx_sel).HaveCooldown)
+                if (!UnitEs(idx_sel).CooldownAbility(abil.Ability).HaveCooldown)
                 {
                     switch (abil.Ability)
                     {
@@ -108,35 +108,41 @@ namespace Game.Game
                             }
                             break;
 
-                        case AbilityTypes.IceWall:
-                            {
-                                Es.Rpc.IceWallToMaster(idx_sel);
-                            }
-                            break;
-
                         case AbilityTypes.Farm:
                             {
-                                Es.Rpc.BuildToMaster(idx_sel, BuildingTypes.Farm);
+                                Es.Rpc.BuildFarmToMaster(idx_sel);
                                 TryOnHint(VideoClipTypes.BuldFarms);
                             }
                             break;
 
                         case AbilityTypes.Mine:
                             {
-                                Es.Rpc.BuildToMaster(idx_sel, BuildingTypes.Mine);
+                                Es.Rpc.BuildMineToMaster(idx_sel);
                                 TryOnHint(VideoClipTypes.BuildMine);
                             }
                             break;
 
                         case AbilityTypes.City:
                             {
-                                Es.Rpc.BuildToMaster(idx_sel, BuildingTypes.City);
+                                Es.Rpc.BuildCityToMaster(idx_sel);
                             }
                             break;
 
                         case AbilityTypes.DestroyBuilding:
                             {
                                 Es.Rpc.DestroyBuildingToMaster(idx_sel);
+                            }
+                            break;
+
+                        case AbilityTypes.IceWall:
+                            {
+                                Es.Rpc.IceWallToMaster(idx_sel);
+                            }
+                            break;
+
+                        case AbilityTypes.ActiveIceWall:
+                            {
+                                Es.Rpc.ActiveIceWallToMaster(idx_sel);
                             }
                             break;
 

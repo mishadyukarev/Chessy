@@ -8,19 +8,19 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < CellEs.Count; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (BuildEs.BuildingE(idx_0).CanExtractAdultForest(BuildEs, EnvironmentEs))
+                if (BuildEs(idx_0).BuildingE.CanExtractAdultForest(BuildEs(idx_0), EnvironmentEs(idx_0)))
                 {
-                    EnvironmentEs.AdultForest(idx_0).ExtractWoodcutter(CellEs, Es.BuildingUpgradeEs, Es.InventorResourcesEs);
+                    EnvironmentEs(idx_0).AdultForest.ExtractWoodcutter(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
 
-                    if (!EnvironmentEs.AdultForest(idx_0).HaveEnvironment)
+                    if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
+                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {
-                            EnvironmentEs.YoungForest(idx_0).SetNew(Es.WhereEnviromentEs);
+                            EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
                         }
                     }
                 }

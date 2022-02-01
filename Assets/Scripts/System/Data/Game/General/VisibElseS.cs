@@ -8,51 +8,51 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
 
 
-                if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
+                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                 {
                     if (unit_0.IsAnimal)
                     {
                         var isVisForFirst = true;
                         var isVisForSecond = true;
 
-                        if (CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                        if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                         {
                             isVisForFirst = false;
                             isVisForSecond = false;
 
-                            foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
+                            foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
                             {
-                                if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                                if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                                 {
-                                    if (UnitEs.Main(idx_1).OwnerC.Is(PlayerTypes.First)) isVisForFirst = true;
-                                    if (UnitEs.Main(idx_1).OwnerC.Is(PlayerTypes.Second)) isVisForSecond = true;
+                                    if (UnitEs(idx_1).MainE.OwnerC.Is(PlayerTypes.First)) isVisForFirst = true;
+                                    if (UnitEs(idx_1).MainE.OwnerC.Is(PlayerTypes.Second)) isVisForSecond = true;
                                 }
                             }
                         }
 
-                        UnitEs.VisibleE(PlayerTypes.First, idx_0).IsVisibleC.IsVisible = isVisForFirst;
-                        UnitEs.VisibleE(PlayerTypes.Second, idx_0).IsVisibleC.IsVisible = isVisForSecond;
+                        UnitEs(idx_0).VisibleE(PlayerTypes.First).IsVisibleC.IsVisible = isVisForFirst;
+                        UnitEs(idx_0).VisibleE(PlayerTypes.Second).IsVisibleC.IsVisible = isVisForSecond;
                     }
                     else
                     {
-                        UnitEs.VisibleE(ownUnit_0.Player, idx_0).IsVisibleC.IsVisible = true;
+                        UnitEs(idx_0).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible = true;
 
-                        if (CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                        if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
+                            foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
                             {
-                                var unit_1 = UnitEs.Main(idx_1).UnitTC;
-                                var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
+                                var unit_1 = UnitEs(idx_1).MainE.UnitTC;
+                                var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 
-                                if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                                if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                                 {
                                     if (!ownUnit_1.Is(ownUnit_0.Player))
                                     {
@@ -62,38 +62,38 @@
                                 }
                             }
 
-                            UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisibleC.IsVisible = isVisibledNextPlayer;
+                            UnitEs(idx_0).VisibleE(Es.WhoseMove.NextPlayerFrom(ownUnit_0.Player)).IsVisibleC.IsVisible = isVisibledNextPlayer;
                         }
                         else
                         {
-                            UnitEs.VisibleE(Es.WhoseMove.NextPlayerFrom(ownUnit_0.Player), idx_0).IsVisibleC.IsVisible = true;
+                            UnitEs(idx_0).VisibleE(Es.WhoseMove.NextPlayerFrom(ownUnit_0.Player)).IsVisibleC.IsVisible = true;
                         }
                     }
                 }
 
 
 
-                var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
+                var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
 
-                BuildEs.BuildingE(PlayerTypes.First, idx_0).IsVisibleC.IsVisible = true;
-                BuildEs.BuildingE(PlayerTypes.Second, idx_0).IsVisibleC.IsVisible = true;
+                BuildEs(idx_0).BuildingVisE(PlayerTypes.First).IsVisibleC.IsVisible = true;
+                BuildEs(idx_0).BuildingVisE(PlayerTypes.Second).IsVisibleC.IsVisible = true;
 
                 if (build_0.Have)
                 {
-                    var ownBuild_0 = BuildEs.BuildingE(idx_0).Owner;
+                    var ownBuild_0 = BuildEs(idx_0).BuildingE.Owner;
 
-                    BuildEs.BuildingE(ownBuild_0.Player, idx_0).IsVisibleC.IsVisible = true;
+                    BuildEs(idx_0).BuildingVisE(ownBuild_0.Player).IsVisibleC.IsVisible = true;
 
-                    if (CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                    if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
                         var isVisibledNextPlayer = false;
 
-                        foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
                         {
-                            var unit_1 = UnitEs.Main(idx_1).UnitTC;
-                            var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
+                            var unit_1 = UnitEs(idx_1).MainE.UnitTC;
+                            var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 
-                            if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                            if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                             {
                                 if (!ownUnit_1.Is(ownBuild_0.Player))
                                 {
@@ -102,15 +102,15 @@
                                 }
                             }
                         }
-                        BuildEs.BuildingE(Es.WhoseMove.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisibleC.IsVisible = isVisibledNextPlayer;
+                        BuildEs(idx_0).BuildingVisE(Es.WhoseMove.NextPlayerFrom(ownBuild_0.Player)).IsVisibleC.IsVisible = isVisibledNextPlayer;
                     }
-                    else BuildEs.BuildingE(Es.WhoseMove.NextPlayerFrom(ownBuild_0.Player), idx_0).IsVisibleC.IsVisible = true;
+                    else BuildEs(idx_0).BuildingVisE(Es.WhoseMove.NextPlayerFrom(ownBuild_0.Player)).IsVisibleC.IsVisible = true;
                 }
 
-                if (CellEs.TrailEs.HaveAnyTrail(idx_0))
+                if (TrailEs(idx_0).HaveAnyTrail)
                 {
-                    CellEs.TrailEs.IsVisible(PlayerTypes.First, idx_0).IsVisibleC.IsVisible = false;
-                    CellEs.TrailEs.IsVisible(PlayerTypes.Second, idx_0).IsVisibleC.IsVisible = false;
+                    TrailEs(idx_0).IsVisible(PlayerTypes.First).SetVisible(false);
+                    TrailEs(idx_0).IsVisible(PlayerTypes.Second).SetVisible(false);
 
                     //if (unit_0.Have)
                     //{
@@ -120,15 +120,15 @@
                     //}
 
 
-                    foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
                     {
-                        var unit_1 = UnitEs.Main(idx_1).UnitTC;
-                        var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
+                        var unit_1 = UnitEs(idx_1).MainE.UnitTC;
+                        var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 
 
-                        if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs) && !unit_1.IsAnimal)
+                        if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)) && !unit_1.IsAnimal)
                         {
-                            CellEs.TrailEs.IsVisible(ownUnit_1.Player, idx_0).IsVisibleC.IsVisible = true;
+                            TrailEs(idx_0).IsVisible(ownUnit_1.Player).SetVisible(true);
                         }
                     }
                     //}

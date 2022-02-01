@@ -12,10 +12,10 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
-                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
-                var hpUnit_0 = UnitEs.StatEs.Hp(idx_0).Health;
+                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var hpUnit_0 = UnitStatEs(idx_0).Hp.Health;
 
                 Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
 
@@ -25,28 +25,28 @@ namespace Game.Game
                 Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
-                if (UnitEs.VisibleE(Es.WhoseMove.CurPlayerI, idx_0).IsVisibleC.IsVisible)
+                if (UnitEs(idx_0).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                 {
-                    if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
+                    if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
 
-                        float xCordinate = (float)hpUnit_0.Amount / CellUnitHpValues.MAX_HP;
+                        float xCordinate = (float)hpUnit_0.Amount / CellUnitStatHpE.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(UnitEs.StatEs.Water(idx_0).Water.Amount <= CellUnitWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
-                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(UnitEs.StatEs.Step(idx_0).HaveMax(UnitEs.Main(idx_0)));
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(UnitStatEs(idx_0).Water.Water.Amount <= CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
+                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).MainE));
 
 
 
-                        if (UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Protected))
+                        if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Protected))
                         {
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.yellow;
                         }
 
-                        else if (UnitEs.Main(idx_0).ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                        else if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                         {
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.green;

@@ -12,24 +12,24 @@
             var idx_0 = Es.MasterEs.ScoutOldNew<IdxC>().Idx;
             var unit = Es.MasterEs.ScoutOldNew<UnitTC>().Unit;
 
-            if (UnitEs.StatEs.Hp(idx_0).HaveMax)
+            if (UnitStatEs(idx_0).Hp.HaveMax)
             {
-                if (UnitEs.StatEs.Step(idx_0).HaveMax(UnitEs.Main(idx_0)))
+                if (UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).MainE))
                 {
-                    Es.InventorUnitsEs.Units(UnitTypes.Scout, LevelTypes.First, UnitEs.Main(idx_0).OwnerC.Player).TakeUnit();
+                    Es.InventorUnitsEs.Units(UnitTypes.Scout, LevelTypes.First, UnitEs(idx_0).MainE.OwnerC.Player).TakeUnit();
 
-                    var ownerUnit = UnitEs.Main(idx_0).OwnerC.Player;
-                    var twC = UnitEs.ToolWeapon(idx_0).ToolWeaponTC;
-                    var levTWC = UnitEs.ToolWeapon(idx_0).LevelTC;
+                    var ownerUnit = UnitEs(idx_0).MainE.OwnerC.Player;
+                    var twC = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
+                    var levTWC = UnitEs(idx_0).ToolWeaponE.LevelTC;
 
                     if (twC.HaveTW)
                     {
                         Es.InventorToolWeaponEs.ToolWeapons(twC.ToolWeapon, levTWC.Level, ownerUnit).ToolWeapons.Amount += 1;
-                        UnitEs.ToolWeapon(idx_0).Reset();
+                        UnitEs(idx_0).ToolWeaponE.Reset();
                     }
-                    UnitEs.Main(idx_0).Clear(Es.WhereUnitsEs);
+                    UnitEs(idx_0).MainE.Clear(Es.WhereUnitsEs);
 
-                    UnitEs.Main(idx_0).SetNew((UnitTypes.Scout, LevelTypes.First, ownerUnit, ConditionUnitTypes.None, false), Es);
+                    UnitEs(idx_0).MainE.SetNew((UnitTypes.Scout, LevelTypes.First, ownerUnit, ConditionUnitTypes.None, false), Es);
 
                     Es.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }

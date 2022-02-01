@@ -19,8 +19,11 @@ namespace Game.Game
 
             var action =
                 (Action)new UpdatorMS(this, ents).Run
+
                 + new UpdExtractWoodcutterMS(ents).Run
                 + new UpdExtractFarmMS(ents).Run
+                + new UpdExtractMineMS(ents).Run
+
                 + new UpdateFireMS(ents).Run
                 + new CloudUpdMS(ents).Run
                 + new UpdateIceWallMS(ents).Run
@@ -30,6 +33,7 @@ namespace Game.Game
                 + new UpdateHealingUnitMS(ents).Run
                 + new UpdateHungryMS(ents).Run
                 + new UpdateThirstyMS(ents).Run
+                + new UpdGiveWaterSnowyMS(ents).Run
 
                 + new UpdateCamelShiftMS(ents).Run
                 + new UpdateSpawnCamelMS(ents).Run;
@@ -39,11 +43,6 @@ namespace Game.Game
             _systems.Add(SystemDataMasterTypes.Truce, action);
 
 
-
-            _rpcSysts.Add(RpcMasterTypes.Build,
-                (Action)new BuildMineMS(ents).Run
-                + new BuildFarmMS(ents).Run
-                + new CityBuildMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.DestroyBuild, new DestroyMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.Shift, new ShiftUnitMS(ents).Run);
             _rpcSysts.Add(RpcMasterTypes.Attack, new AttackMS(ents).Run);
@@ -66,15 +65,22 @@ namespace Game.Game
 
             _uniqAbil.Add(AbilityTypes.Seed, new SeedingMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.StunElfemale, new StunElfemaleMS(ents).Run);
+
             _uniqAbil.Add(AbilityTypes.FirePawn, new FirePawnMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.PutOutFirePawn, new PutOutFireMS(ents).Run);
+            _uniqAbil.Add(AbilityTypes.Farm, new BuildFarmMS(ents).Run);
+            _uniqAbil.Add(AbilityTypes.Mine, new BuildMineMS(ents).Run);
+            _uniqAbil.Add(AbilityTypes.City, new CityBuildMS(ents).Run);
+
             _uniqAbil.Add(AbilityTypes.FireArcher, new FireArcherMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.GrowAdultForest, new GrowAdultForestMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.CircularAttack, new CircularAttackKingMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.BonusNear, new BonusNearUnitKingMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.ChangeDirectionWind, new ChangeDirectionWindElfemaleMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS(ents).Run);
+
             _uniqAbil.Add(AbilityTypes.IceWall, new IceWallMS(ents).Run);
+            _uniqAbil.Add(AbilityTypes.ActiveIceWall, new ActiveIceWallMS(ents).Run);
         }
 
         public void InvokeRun(SystemDataMasterTypes mastDataSys) => _systems[mastDataSys].Invoke();

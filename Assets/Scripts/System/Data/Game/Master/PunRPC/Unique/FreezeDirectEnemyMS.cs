@@ -18,15 +18,15 @@
 
 //                if (!Ents.CellEs.UnitEs.Else(idx_from).OwnerC.Is(ownerUnitC_0.Player))
 //                {
-//                    Ents.CellEs.UnitEs.Stun(idx_to).ForExitStun.Amount = 2;
+//                    Ents.CellEs.UnitEs(idx_to).Stun.ForExitStun.Amount = 2;
 
 //                    Ents.CellEs.UnitEs.CooldownUnique(Ents.MasterEs.UniqueAbilityC.Ability, idx_from).Cooldown += 5;
 
-//                    foreach (var idx_1 in Ents.CellEs.GetIdxsAround(idx_to))
+//                    foreach (var idx_1 in Ents.CellEsWorker.GetIdxsAround(idx_to))
 //                    {
 //                        if (Ents.CellEs.UnitEs.Else(idx_1).UnitC.Have && Ents.CellEs.UnitEs.Else(idx_1).OwnerC.Is(ownerUnitC_0.Player))
 //                        {
-//                            Ents.CellEs.UnitEs.Stun(idx_1).ForExitStun.Amount = 2;
+//                            Ents.CellEs.UnitEs(idx_1).Stun.ForExitStun.Amount = 2;
 //                        }
 //                    }
 //                }

@@ -8,23 +8,21 @@
 
         public void Run()
         {
-            foreach (var idx_0 in CellEs.Idxs)
+            foreach (var idx_0 in CellEsWorker.Idxs)
             {
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
-                var unit_from = UnitEs.Main(idx_0).UnitTC;
+                var unit_from = UnitEs(idx_0).MainE.UnitTC;
 
-                if (!UnitEs.Stun(idx_0).IsStunned)
+                if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
                     if (unit_from.Is(UnitTypes.Archer))
                     {
-                        foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
                         {
-                            ref var fire_1 = ref CellEs.FireEs.Fire(idx_1).Fire;
-
-                            if (!fire_1.Have)
+                            if (!EffectEs(idx_1).FireE.HaveFireC.Have)
                             {
-                                if (EnvironmentEs.AdultForest(idx_1).HaveEnvironment)
+                                if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                 {
                                     CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Add(idx_1);
                                 }

@@ -2,30 +2,30 @@
 {
     sealed class BonusNearUnitKingMS : SystemCellAbstract, IEcsRunSystem
     {
-        public BonusNearUnitKingMS(in Entities ents) : base(ents)
+        internal BonusNearUnitKingMS(in Entities ents) : base(ents)
         {
         }
 
         public void Run()
         {
             IdxDoingMC.Get(out var idx_0);
-            var uniq = Es.MasterEs.UniqueAbilityC.Ability;
+            var uniq = Es.MasterEs.AbilityC.Ability;
 
 
-            var unit_0 = UnitEs.Main(idx_0).UnitTC;
-            var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
+            var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+            var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
 
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            if (!UnitEs.CooldownAbility(uniq, idx_0).HaveCooldown)
+            if (!UnitEs(idx_0).CooldownAbility(uniq).HaveCooldown)
             {
-                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq))
+                if (UnitStatEs(idx_0).StepE.Have(uniq))
                 {
-                    UnitEs.CooldownAbility(uniq, idx_0).SetAfterAbility();
+                    UnitEs(idx_0).CooldownAbility(uniq).SetAfterAbility();
 
-                    UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq);
-                    UnitEs.Main(idx_0).ResetCondition();
+                    UnitStatEs(idx_0).StepE.Take(uniq);
+                    UnitEs(idx_0).MainE.ResetCondition();
 
                     Es.Rpc.SoundToGeneral(sender, uniq);
 
@@ -34,14 +34,14 @@
                     //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
                     //}
 
-                    var around = CellEs.GetXyAround(CellEs.CellE(idx_0).XyC.Xy);
+                    var around = CellEsWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy);
                     foreach (var xy in around)
                     {
-                        var idx_1 = CellEs.GetIdxCell(xy);
+                        var idx_1 = CellEsWorker.GetIdxCell(xy);
 
-                        var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
+                        var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 
-                        if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                        if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                         {
                             if (ownUnit_1.Is(ownUnit_0.Player))
                             {

@@ -74,6 +74,9 @@ TagManager:
   - name: IceWall
     uniqueID: 4214796319
     locked: 0
+  - name: ShieldEffect
+    uniqueID: 1898758555
+    locked: 0
   - name: Unit
     uniqueID: 1121464767
     locked: 0

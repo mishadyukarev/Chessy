@@ -8,15 +8,15 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < CellEs.Count; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (BuildEs.BuildingE(idx_0).CanExtractFertilizer(EnvironmentEs))
+                if (BuildEs(idx_0).BuildingE.CanExtractFertilizer(EnvironmentEs(idx_0)))
                 {
-                    EnvironmentEs.Fertilizer(idx_0).ExtractFarm(CellEs, Es.BuildingUpgradeEs, Es.InventorResourcesEs);
+                    EnvironmentEs(idx_0).Fertilizer.ExtractFarm(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
 
-                    if (!EnvironmentEs.Fertilizer(idx_0).HaveEnvironment)
+                    if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
                     {
-                        BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
+                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
                     }
                 }
             }

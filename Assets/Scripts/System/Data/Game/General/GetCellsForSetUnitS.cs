@@ -10,14 +10,14 @@
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                foreach (var idx_0 in CellEs.Idxs)
+                foreach (var idx_0 in CellEsWorker.Idxs)
                 {
                     CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = false;
                 }
 
-                if (Es.WhereBuildingEs.IsSetted(BuildingTypes.City, player, out var idx_1))
+                if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.City, player, out var idx_1))
                 {
-                    if (UnitEs.Main(idx_1).HaveUnit(UnitEs.StatEs))
+                    if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                     {
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = false;
                     }
@@ -26,15 +26,15 @@
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = true;
                     }
 
-                    var list_2 = CellEs.GetXyAround(CellEs.CellE(idx_1).XyC.Xy);
+                    var list_2 = CellEsWorker.GetXyAround(CellEs(idx_1).CellE.XyC.Xy);
 
                     foreach (var xy_2 in list_2)
                     {
-                        var idx_2 = CellEs.GetIdxCell(xy_2);
+                        var idx_2 = CellEsWorker.GetIdxCell(xy_2);
 
-                        var unit_2 = UnitEs.Main(idx_2).UnitTC;
+                        var unit_2 = UnitEs(idx_2).MainE.UnitTC;
 
-                        if (!CellEs.EnvironmentEs.Mountain(idx_2).HaveEnvironment && !UnitEs.Main(idx_2).HaveUnit(UnitEs.StatEs))
+                        if (!EnvironmentEs(idx_2).Mountain.HaveEnvironment && !UnitEs(idx_2).MainE.HaveUnit(UnitStatEs(idx_2)))
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -47,29 +47,29 @@
 
                 else
                 {
-                    foreach (var idx_0 in CellEs.Idxs)
+                    foreach (var idx_0 in CellEsWorker.Idxs)
                     {
-                        var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                        var buld_0 = BuildEs.BuildingE(idx_0).BuildTC;
-                        var ownBuld_0 = BuildEs.BuildingE(idx_0).Owner;
+                        var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                        var buld_0 = BuildEs(idx_0).BuildingE.BuildTC;
+                        var ownBuld_0 = BuildEs(idx_0).BuildingE.Owner;
 
 
                         if (buld_0.Is(BuildingTypes.Camp))
                         {
-                            if (!CellEs.EnvironmentEs.Mountain(idx_0).HaveEnvironment && !UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs))
+                            if (!EnvironmentEs(idx_0).Mountain.HaveEnvironment && !UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }
                         }
                         else
                         {
-                            var xy = CellEs.CellE(idx_0).XyC.Xy;
+                            var xy = CellEs(idx_0).CellE.XyC.Xy;
                             var x = xy[0];
                             var y = xy[1];
 
                             var canSet = false;
 
-                            if (!UnitEs.Main(idx_0).HaveUnit(UnitEs.StatEs))
+                            if (!UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                             {
                                 if (player == PlayerTypes.First)
                                 {

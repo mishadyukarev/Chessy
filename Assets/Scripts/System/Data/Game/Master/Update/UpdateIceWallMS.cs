@@ -8,11 +8,11 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < CellEs.Count; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (BuildEs.BuildingE(idx_0).BuildTC.Is(BuildingTypes.IceWall))
+                if (BuildEs(idx_0).BuildingE.HaveBuilding && BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.IceWall))
                 {
-                    BuildEs.BuildingE(idx_0).Defrost(BuildEs, Es.WhereBuildingEs);
+                    BuildEs(idx_0).BuildingE.Defrost(BuildEs(idx_0), Es.WhereBuildingEs);
                 }
             }
         }

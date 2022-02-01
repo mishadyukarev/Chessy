@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class FireArcherMS : SystemAbstract, IEcsRunSystem
     {
-        public FireArcherMS(in Entities ents) : base(ents)
+        internal FireArcherMS(in Entities ents) : base(ents)
         {
         }
 
@@ -14,20 +14,18 @@ namespace Game.Game
 
 
             Es.MasterEs.FireArcher<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
-
-            ref var fire_to = ref CellEs.FireEs.Fire(idx_to).Fire;
+            var uniq_cur = Es.MasterEs.AbilityC.Ability;
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            if (UnitEs.StatEs.Step(idx_from).Steps.Amount >= 2)
+            if (UnitStatEs(idx_from).StepE.Have(uniq_cur))
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
                     Es.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    UnitEs.StatEs.Step(idx_from).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq_cur);
-                    fire_to.Enable();
+                    UnitStatEs(idx_from).StepE.Take(uniq_cur);
+                    EffectEs(idx_to).FireE.Enable();
                 }
             }
 

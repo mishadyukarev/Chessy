@@ -8,41 +8,41 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.Second).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
-                var step_0 = UnitEs.StatEs.Step(idx_0).Steps;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var step_0 = UnitStatEs(idx_0).StepE.Steps;
 
-                if (!UnitEs.Stun(idx_0).IsStunned)
+                if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
                     if (unit_0.Is(UnitTypes.Pawn) || unit_0.Is(UnitTypes.King))
                     {
                         DirectTypes dir_cur = default;
 
-                        CellEs.TryGetIdxAround(idx_0, out var dirs);
+                        CellEsWorker.TryGetIdxAround(idx_0, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             dir_cur += 1;
                             var idx_1 = item_1.Value;
 
-                            var unit_1 = UnitEs.Main(idx_1).UnitTC;
-                            var own_1 = UnitEs.Main(idx_1).OwnerC;
+                            var unit_1 = UnitEs(idx_1).MainE.UnitTC;
+                            var own_1 = UnitEs(idx_1).MainE.OwnerC;
 
-                            if (!CellEs.EnvironmentEs.Mountain(idx_1).HaveEnvironment)
+                            if (!EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                             {
-                                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >=
-                                    UnitEs.Main(idx_1).StepsForShiftOrAttack(CellEs.GetDirect(idx_0, idx_1), CellEs.EnvironmentEs, CellEs.TrailEs)
+                                if (UnitStatEs(idx_0).StepE.Steps.Amount >=
+                                    UnitEs(idx_1).MainE.StepsForShiftOrAttack(CellEsWorker.GetDirect(idx_0, idx_1), CellEs(idx_1).EnvironmentEs, CellEs(idx_1).TrailEs)
 
-                                    || UnitEs.StatEs.Step(idx_0).HaveMax(UnitEs.Main(idx_0)))
+                                    || UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).MainE))
                                 {
-                                    if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                                    if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                                     {
                                         if (!own_1.Is(ownUnit_0.Player))
                                         {

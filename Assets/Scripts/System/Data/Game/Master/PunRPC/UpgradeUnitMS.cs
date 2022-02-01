@@ -11,22 +11,24 @@
             var sender = InfoC.Sender(MGOTypes.Master);
             var idx_0 = Es.MasterEs.UpgradeUnit<IdxC>().Idx;
 
-            var unit_0 = UnitEs.Main(idx_0).UnitTC;
+            var unit_0 = UnitEs(idx_0).MainE.UnitTC;
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            if (UnitEs.StatEs.Hp(idx_0).HaveMax)
+            var ability = Es.MasterEs.AbilityC.Ability;
+
+            if (UnitStatEs(idx_0).Hp.HaveMax)
             {
-                if (UnitEs.StatEs.Step(idx_0).HaveSteps)
+                if (UnitStatEs(idx_0).StepE.Have(ability))
                 {
                     if (Es.InventorResourcesEs.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     {
                         Es.InventorResourcesEs.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
-                        UnitEs.Main(idx_0).Upgrade();
-                        UnitEs.StatEs.Step(idx_0).Steps.Amount--;
+                        UnitEs(idx_0).MainE.Upgrade();
+                        UnitStatEs(idx_0).StepE.Take(ability);
 
-                        UnitEs.StatEs.Hp(idx_0).Health.Amount = CellUnitHpValues.MAX_HP;
+                        UnitStatEs(idx_0).Hp.SetMax();
 
                         Es.Rpc.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                     }

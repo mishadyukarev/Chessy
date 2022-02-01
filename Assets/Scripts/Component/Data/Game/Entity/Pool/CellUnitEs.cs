@@ -6,22 +6,15 @@ namespace Game.Game
 {
     public readonly struct CellUnitEs
     {
-        readonly CellUnitStunEs[] _stuns;
-        readonly CellUnitDefendEffectE[] _defendEffect;
-        readonly CellUnitMainE[] _main;
-        readonly CellUnitTWE[] _toolWeapons;
-        readonly Dictionary<ButtonTypes, CellUnitAbilityButtonsE[]> _uniqueButtons;
-        readonly Dictionary<AbilityTypes, CellUnitCooldownAbilityE[]> _cooldownUniques;
-        readonly Dictionary<PlayerTypes, CellUnitVisibleE[]> _cellUnitVisibles;
+        public readonly CellUnitMainE MainE;
+        public readonly CellUnitTWE ToolWeaponE;
 
-
-        public CellUnitMainE Main(in byte idx) => _main[idx];
-        public CellUnitStunEs Stun(in byte idx) => _stuns[idx];
-        public CellUnitDefendEffectE DefendEffect(in byte idx) => _defendEffect[idx];
-        public CellUnitTWE ToolWeapon(in byte idx) => _toolWeapons[idx];
-        public CellUnitAbilityButtonsE AbilityButton(in ButtonTypes button, in byte idx) => _uniqueButtons[button][idx];
-        public CellUnitCooldownAbilityE CooldownAbility(in AbilityTypes ability, in byte idx) => _cooldownUniques[ability][idx];
-        public CellUnitVisibleE VisibleE(in PlayerTypes player, in byte idx) => _cellUnitVisibles[player][idx];
+        readonly Dictionary<ButtonTypes, CellUnitAbilityButtonsE> _uniqueButtons;
+        readonly Dictionary<AbilityTypes, CellUnitCooldownAbilityE> _cooldownUniques;
+        readonly Dictionary<PlayerTypes, CellUnitVisibleE> _cellUnitVisibles;
+        public CellUnitAbilityButtonsE AbilityButton(in ButtonTypes button) => _uniqueButtons[button];
+        public CellUnitCooldownAbilityE CooldownAbility(in AbilityTypes ability) => _cooldownUniques[ability];
+        public CellUnitVisibleE VisibleE(in PlayerTypes player) => _cellUnitVisibles[player];
 
         public HashSet<AbilityTypes> CooldownKeys
         {
@@ -34,51 +27,35 @@ namespace Game.Game
         }
 
         public readonly CellUnitStatEs StatEs;
+        public readonly CellUnitEffectEs EffectEs;
 
 
-        public CellUnitEs(in EcsWorld gameW)
+        public CellUnitEs(in byte idx, in EcsWorld gameW)
         {
-            _uniqueButtons = new Dictionary<ButtonTypes, CellUnitAbilityButtonsE[]>();
+            MainE = new CellUnitMainE(idx, gameW);
+            ToolWeaponE = new CellUnitTWE(gameW);
+
+            _uniqueButtons = new Dictionary<ButtonTypes, CellUnitAbilityButtonsE>();
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                _uniqueButtons.Add(buttonT, new CellUnitAbilityButtonsE[CellStartValues.ALL_CELLS_AMOUNT]);
+                _uniqueButtons.Add(buttonT, new CellUnitAbilityButtonsE(gameW));
             }
 
-
-            _cooldownUniques = new Dictionary<AbilityTypes, CellUnitCooldownAbilityE[]>();
+            _cooldownUniques = new Dictionary<AbilityTypes, CellUnitCooldownAbilityE>();
             for (var ability = AbilityTypes.None + 1; ability < AbilityTypes.End; ability++)
             {
-                _cooldownUniques.Add(ability, new CellUnitCooldownAbilityE[CellStartValues.ALL_CELLS_AMOUNT]);
+                _cooldownUniques.Add(ability, new CellUnitCooldownAbilityE(ability, gameW));
             }
 
-
-            _cellUnitVisibles = new Dictionary<PlayerTypes, CellUnitVisibleE[]>();
+            _cellUnitVisibles = new Dictionary<PlayerTypes, CellUnitVisibleE>();
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _cellUnitVisibles[player] = new CellUnitVisibleE[CellStartValues.ALL_CELLS_AMOUNT];
+                _cellUnitVisibles[player] = new CellUnitVisibleE(gameW);
             }
 
 
-            _stuns = new CellUnitStunEs[CellStartValues.ALL_CELLS_AMOUNT];
-            _defendEffect = new CellUnitDefendEffectE[CellStartValues.ALL_CELLS_AMOUNT];
-            _main = new CellUnitMainE[CellStartValues.ALL_CELLS_AMOUNT];
-            _toolWeapons = new CellUnitTWE[CellStartValues.ALL_CELLS_AMOUNT];
-
-
-            for (byte idx = 0; idx < _stuns.Length; idx++)
-            {
-                _stuns[idx] = new CellUnitStunEs(idx, gameW);
-                _defendEffect[idx] = new CellUnitDefendEffectE(gameW);
-                _main[idx] = new CellUnitMainE(idx, gameW);
-                _toolWeapons[idx] = new CellUnitTWE(gameW);
-
-                foreach (var item in _uniqueButtons) _uniqueButtons[item.Key][idx] = new CellUnitAbilityButtonsE(gameW);
-                foreach (var item in _cooldownUniques) _cooldownUniques[item.Key][idx] = new CellUnitCooldownAbilityE(item.Key, gameW);
-                foreach (var item in _cellUnitVisibles) _cellUnitVisibles[item.Key][idx] = new CellUnitVisibleE(gameW);
-            }
-
-
-            StatEs = new CellUnitStatEs(gameW);
+            StatEs = new CellUnitStatEs(idx, gameW);
+            EffectEs = new CellUnitEffectEs(idx, gameW);
         }
     }
 }

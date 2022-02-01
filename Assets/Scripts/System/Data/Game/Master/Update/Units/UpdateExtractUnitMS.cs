@@ -8,30 +8,30 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < CellEs.Count; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (UnitEs.Main(idx_0).CanExtractPawnAdultForest(UnitEs.StatEs, EnvironmentEs))
+                if (UnitEs(idx_0).MainE.CanExtractPawnAdultForest(UnitEs(idx_0).StatEs, EnvironmentEs(idx_0)))
                 {
-                    EnvironmentEs.AdultForest(idx_0).ExtractPawn(UnitEs, Es.InventorResourcesEs);
+                    EnvironmentEs(idx_0).AdultForest.ExtractPawn(UnitEs(idx_0), Es.InventorResourcesEs);
 
-                    if (EnvironmentEs.AdultForest(idx_0).HaveEnvironment)
+                    if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        if (BuildEs.BuildingE(idx_0).BuildTC.Is(BuildingTypes.Camp) || !BuildEs.BuildingE(idx_0).BuildTC.Have)
+                        if (BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.Camp) || !BuildEs(idx_0).BuildingE.BuildTC.Have)
                         {
-                            BuildEs.BuildingE(idx_0).SetNew(BuildingTypes.Woodcutter, UnitEs.Main(idx_0).OwnerC.Player, BuildEs, Es.WhereBuildingEs);
+                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Woodcutter, UnitEs(idx_0).MainE.OwnerC.Player, BuildEs(idx_0), Es.WhereBuildingEs);
                         }
 
-                        else if (!BuildEs.BuildingE(idx_0).BuildTC.Is(BuildingTypes.Woodcutter))
+                        else if (!BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.Woodcutter))
                         {
-                            UnitEs.Main(idx_0).SetCondition(ConditionUnitTypes.Protected);
+                            UnitEs(idx_0).MainE.SetCondition(ConditionUnitTypes.Protected);
                         }
                     }
                     else
                     {
-                        BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
-                        EnvironmentEs.AdultForest(idx_0).Destroy(TrailEs.Trails(idx_0), Es.WhereEnviromentEs);
+                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
+                        EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails, Es.WhereEnviromentEs);
 
-                        EnvironmentEs.YoungForest(idx_0).SetNew(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
                     }
                 }
                 //else if (!Unit<UnitCellEC>(idx_0).CanResume(out resume, out env))

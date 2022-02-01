@@ -9,26 +9,26 @@
         public void Run()
         {
             var idx_0 = Es.MasterEs.GrowAdultForest<IdxC>().Idx;
-            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
+            var uniq_cur = Es.MasterEs.AbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
+            var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
 
 
-            if (!UnitEs.CooldownAbility(uniq_cur, idx_0).HaveCooldown)
+            if (!UnitEs(idx_0).CooldownAbility(uniq_cur).HaveCooldown)
             {
-                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                if (UnitStatEs(idx_0).StepE.Have(uniq_cur))
                 {
-                    if (CellEs.EnvironmentEs.YoungForest( idx_0).HaveEnvironment)
+                    if (EnvironmentEs(idx_0).YoungForest.HaveEnvironment)
                     {
-                        CellEs.EnvironmentEs.YoungForest( idx_0).Destroy(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).YoungForest.Destroy(Es.WhereEnviromentEs);
 
-                        CellEs.EnvironmentEs.AdultForest( idx_0).SetNew(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).AdultForest.SetNew(Es.WhereEnviromentEs);
 
-                        UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq_cur);
+                        UnitStatEs(idx_0).StepE.Take(uniq_cur);
 
-                        UnitEs.CooldownAbility(uniq_cur, idx_0).SetAfterAbility();
+                        UnitEs(idx_0).CooldownAbility(uniq_cur).SetAfterAbility();
 
                         Es.Rpc.SoundToGeneral(sender, uniq_cur);
 
@@ -36,14 +36,14 @@
                         //{
                         //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have = true;
                         //}
-                        var around = CellEs.GetXyAround(CellEs.CellE(idx_0).XyC.Xy);
+                        var around = CellEsWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy);
                         foreach (var xy_1 in around)
                         {
-                            var idx_1 = CellEs.GetIdxCell(xy_1);
+                            var idx_1 = CellEsWorker.GetIdxCell(xy_1);
 
-                            var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
+                            var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 
-                            if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                            if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                             {
                                 if (ownUnit_1.Is(ownUnit_0.Player))
                                 {

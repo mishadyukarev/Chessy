@@ -4,15 +4,19 @@
     {
         protected readonly Entities Es;
 
-        protected CellEs CellEs => Es.CellEs;
+        protected CellEsWorker CellEsWorker => Es.CellEsWorker;
 
-        protected CellUnitEs UnitEs => CellEs.UnitEs;
-        protected CellUnitStatEs UnitStatEs => UnitEs.StatEs;
+        protected CellEs CellEs(in byte idx) => Es.CellEs(idx);
 
-        protected CellBuildEs BuildEs => CellEs.BuildEs;
-        protected CellEnvironmentEs EnvironmentEs => CellEs.EnvironmentEs;
-        protected CellRiverEs RiverEs => CellEs.RiverEs;
-        protected CellTrailEs TrailEs => CellEs.TrailEs;
+        protected CellUnitEs UnitEs(in byte idx) => Es.UnitEs(idx);
+        protected CellUnitStatEs UnitStatEs(in byte idx) => Es.UnitStatEs(idx);
+        protected CellUnitEffectEs UnitEffectEs(in byte idx) => Es.UnitEffectEs(idx);
+
+        protected CellBuildEs BuildEs(in byte idx) => Es.BuildEs(idx);
+        protected CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
+        protected CellRiverEs RiverEs(in byte idx) => CellEs(idx).RiverEs;
+        protected CellTrailEs TrailEs(in byte idx) => CellEs(idx).TrailEs;
+        protected CellEffectEs EffectEs(in byte idx) => CellEs(idx).EffectEs;
 
         protected SystemAbstract(in Entities ents)
         {

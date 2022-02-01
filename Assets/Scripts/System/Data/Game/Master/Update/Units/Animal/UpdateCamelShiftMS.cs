@@ -16,13 +16,13 @@ namespace Game.Game
 
                 var randDir = Random.Range((int)DirectTypes.None + 1, (int)DirectTypes.End);
 
-                var idx_1 = CellEs.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
+                var idx_1 = CellEsWorker.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
 
-                if (CellEs.ParentE(idx_1).IsActiveSelf.IsActive
-                    && !EnvironmentEs.Mountain( idx_1).HaveEnvironment
-                    && !UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive
+                    && !EnvironmentEs(idx_1).Mountain.HaveEnvironment
+                    && !UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                 {
-                    UnitEs.Main(idx_0).Shift(idx_1, Es);
+                    UnitEs(idx_0).MainE.Shift(idx_1, Es);
                 }
             }
         }

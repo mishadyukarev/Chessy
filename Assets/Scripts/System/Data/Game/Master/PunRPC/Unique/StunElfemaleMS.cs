@@ -11,45 +11,45 @@ namespace Game.Game
         public void Run()
         {
             Es.MasterEs.StunElfemale<IdxFromToC>().Get(out var idx_from, out var idx_to);
-            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
+            var uniq_cur = Es.MasterEs.AbilityC.Ability;
 
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = Es.WhoseMove.WhoseMove.Player;
 
-            var ownUnit_from = UnitEs.Main(idx_from).OwnerC;
+            var ownUnit_from = UnitEs(idx_from).MainE.OwnerC;
 
-            var ownUnit_to = UnitEs.Main(idx_to).OwnerC;
+            var ownUnit_to = UnitEs(idx_to).MainE.OwnerC;
 
 
-            if (!UnitEs.CooldownAbility(uniq_cur, idx_from).HaveCooldown)
+            if (!UnitEs(idx_from).CooldownAbility(uniq_cur).HaveCooldown)
             {
-                if (UnitEs.VisibleE(playerSend, idx_to).IsVisibleC.IsVisible)
+                if (UnitEs(idx_to).VisibleE(playerSend).IsVisibleC.IsVisible)
                 {
-                    if (UnitEs.Main(idx_to).HaveUnit(UnitStatEs))
+                    if (UnitEs(idx_to).MainE.HaveUnit(UnitStatEs(idx_to)))
                     {
-                        if (CellEs.EnvironmentEs.AdultForest( idx_to).HaveEnvironment)
+                        if (EnvironmentEs(idx_to).AdultForest.HaveEnvironment)
                         {
-                            if (UnitEs.StatEs.Hp(idx_from).HaveMax)
+                            if (UnitStatEs(idx_from).Hp.HaveMax)
                             {
-                                if (UnitEs.StatEs.Step(idx_from).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                                if (UnitStatEs(idx_from).StepE.Have(uniq_cur))
                                 {
                                     if (!ownUnit_from.Is(ownUnit_to.Player))
                                     {
-                                        UnitEs.Stun(idx_to).Set(uniq_cur);
-                                        UnitEs.CooldownAbility(uniq_cur, idx_from).SetAfterAbility();
+                                        UnitEffectEs(idx_to).StunE.Set(uniq_cur);
+                                        UnitEs(idx_from).CooldownAbility(uniq_cur).SetAfterAbility();
 
-                                        UnitEs.StatEs.Step(idx_from).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq_cur);
+                                        UnitStatEs(idx_from).StepE.Take(uniq_cur);
 
                                         Es.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
 
 
-                                        foreach (var idx_1 in CellEs.GetIdxsAround(idx_to))
+                                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_to))
                                         {
-                                            if (CellEs.EnvironmentEs.AdultForest( idx_1).HaveEnvironment)
+                                            if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                             {
-                                                if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs) && UnitEs.Main(idx_1).OwnerC.Is(UnitEs.Main(idx_to).OwnerC.Player))
+                                                if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)) && UnitEs(idx_1).MainE.OwnerC.Is(UnitEs(idx_to).MainE.OwnerC.Player))
                                                 {
-                                                    UnitEs.Stun(idx_1).Set(uniq_cur);
+                                                    UnitEffectEs(idx_1).StunE.Set(uniq_cur);
                                                 }
                                             }
                                         }

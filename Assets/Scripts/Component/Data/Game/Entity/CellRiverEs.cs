@@ -6,12 +6,11 @@ namespace Game.Game
 {
     public readonly struct CellRiverEs
     {
-        readonly CellRiverE[] _rivers;
-        readonly Dictionary<DirectTypes, CellRiverDirectE[]> _directs;
+        readonly Dictionary<DirectTypes, CellRiverDirectE> _directs;
+        public CellRiverDirectE HaveRive(in DirectTypes dir) => _directs[dir];
 
-        public CellRiverE River(in byte idx) => _rivers[idx];
-        public CellRiverDirectE HaveRive(in DirectTypes dir, in byte idx) => _directs[dir][idx];
-
+        public readonly CellRiverE River;
+        
         public HashSet<DirectTypes> Keys
         {
             get
@@ -24,30 +23,21 @@ namespace Game.Game
 
         public CellRiverEs(in EcsWorld gameW)
         {
-            _directs = new Dictionary<DirectTypes, CellRiverDirectE[]>();
+            River = new CellRiverE(gameW);
 
+            _directs = new Dictionary<DirectTypes, CellRiverDirectE>();
             for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
-                _directs.Add(dir, new CellRiverDirectE[CellStartValues.ALL_CELLS_AMOUNT]);
-                for (byte idx = 0; idx < _directs[dir].Length; idx++)
-                {
-                    _directs[dir][idx] = new CellRiverDirectE(gameW);
-                }
-            }
-
-            _rivers = new CellRiverE[CellStartValues.ALL_CELLS_AMOUNT];
-            for (byte idx = 0; idx < _rivers.Length; idx++)
-            {
-                _rivers[idx] = new CellRiverE(gameW);
+                _directs[dir] = new CellRiverDirectE(gameW);
             }
         }
 
-        public void SetStart(in byte idx, params DirectTypes[] dirs)
+        public void SetStart(params DirectTypes[] dirs)
         {
             if (dirs == default) throw new Exception();
 
-            River(idx).RiverTC.River = RiverTypes.Start;
-            foreach (var item in dirs) HaveRive(item, idx).HaveRiver.Have = true;
+            River.RiverTC.River = RiverTypes.Start;
+            foreach (var item in dirs) HaveRive(item).HaveRiver.Have = true;
         }
     }
 }

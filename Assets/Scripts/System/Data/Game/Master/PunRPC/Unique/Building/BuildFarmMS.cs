@@ -10,53 +10,45 @@
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var build = Es.MasterEs.Build<BuildingTC>().Build;
-            var idx_0 = Es.MasterEs.Build<IdxC>().Idx;
+            var idx_0 = Es.MasterEs.BuildingFarmME.IdxC.Idx;
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
+            var ability = Es.MasterEs.AbilityC.Ability;
 
+            var buildC = BuildEs(idx_0).BuildingE.BuildTC;
 
-            if (build == BuildingTypes.Farm)
+            if (UnitStatEs(idx_0).StepE.Have(ability))
             {
-                var buildC = BuildEs.BuildingE(idx_0).BuildTC;
-
-                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
+                if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
                 {
-                    if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
+                    if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        if (!CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                        if (Es.InventorResourcesEs.CanCreateBuild(BuildingTypes.Farm, whoseMove, out var needRes))
                         {
-                            if (Es.InventorResourcesEs.CanCreateBuild(build, whoseMove, out var needRes))
+                            Es.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+
+                            EnvironmentEs(idx_0).YoungForest.Destroy(Es.WhereEnviromentEs);
+
+                            if (EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
                             {
-                                Es.Rpc.SoundToGeneral(sender, ClipTypes.Building);
-
-                                CellEs.EnvironmentEs.YoungForest( idx_0).Destroy(Es.WhereEnviromentEs);
-
-                                if (CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
-                                {
-                                    CellEs.EnvironmentEs.Fertilizer( idx_0).SetMax();
-                                }
-                                else
-                                {
-                                    CellEs.EnvironmentEs.Fertilizer( idx_0).SetNew();
-                                }
-
-                                Es.InventorResourcesEs.BuyBuild(whoseMove, build);
-
-                                BuildEs.BuildingE(idx_0).SetNew(build, whoseMove, BuildEs, Es.WhereBuildingEs);
-                                Es.WhereBuildingEs.HaveBuild(build, whoseMove, idx_0).HaveBuilding.Have = true;
-
-                                UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(build);
+                                EnvironmentEs(idx_0).Fertilizer.SetMax();
                             }
                             else
                             {
-                                Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                EnvironmentEs(idx_0).Fertilizer.SetNew();
                             }
+
+                            Es.InventorResourcesEs.BuyBuild(whoseMove, BuildingTypes.Farm);
+
+                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Farm, whoseMove, BuildEs(idx_0), Es.WhereBuildingEs);
+                            Es.WhereBuildingEs.HaveBuild(BuildingTypes.Farm, whoseMove, idx_0).HaveBuilding.Have = true;
+
+                            UnitStatEs(idx_0).StepE.Take(ability);
                         }
                         else
                         {
-                            Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                         }
                     }
                     else
@@ -64,11 +56,15 @@
                         Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
                 }
-
                 else
                 {
-                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
+            }
+
+            else
+            {
+                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

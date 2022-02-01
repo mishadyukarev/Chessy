@@ -7,8 +7,11 @@ namespace Game.Game
 {
     public readonly struct EntitiesView
     {
-        public static UIEs UIEs { get; private set; }
+        readonly CellVEs[] _cellVEs;
+        public CellVEs CellVEs(in byte idx) => _cellVEs[idx];
+        
 
+        public readonly UIEs UIEs;
 
 
         public EntitiesView(in EcsWorld gameW, out List<object> forData)
@@ -59,10 +62,13 @@ namespace Game.Game
                 }
 
 
-            new CellVEs(gameW, cells);
-            new UnitCellVEs(gameW, cells);
-            new CellFireVEs(gameW, cells);
-            new CellEnvVEs(gameW, cells);
+
+            _cellVEs = new CellVEs[cells.Length];
+            for (byte idx_0 = 0; idx_0 < _cellVEs.Length; idx_0++)
+            {
+                _cellVEs[idx_0] = new CellVEs(idx_0, cells[idx_0], gameW);
+            }
+
             new CellTrailVEs(gameW, cells);
             new CellCloudVEs(gameW, cells);
             new CellBuildingVEs(gameW, cells);
@@ -81,8 +87,8 @@ namespace Game.Game
 
             for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
-                isActiveParenCells[idx] = CellVEs.CellParent<GameObjectVC>(idx).IsActiveSelf;
-                idCells[idx] = CellVEs.Cell<GameObjectVC>(idx).InstanceID;
+                isActiveParenCells[idx] = CellVEs(idx).CellParent.IsActiveSelf;
+                idCells[idx] = CellVEs(idx).CellGO.InstanceID;
             }
 
             forData = new List<object>();

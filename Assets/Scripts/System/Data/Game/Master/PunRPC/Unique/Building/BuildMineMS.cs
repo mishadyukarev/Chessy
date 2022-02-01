@@ -10,49 +10,47 @@
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var build = Es.MasterEs.Build<BuildingTC>().Build;
-            var idx_0 = Es.MasterEs.Build<IdxC>().Idx;
+            var idx_0 = Es.MasterEs.BuildingMineME.WhereBuildMine.Idx;
 
 
-            var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
-            var ownBuild_0 = BuildEs.BuildingE(idx_0).Owner;
+            var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
+
+            var ability = Es.MasterEs.AbilityC.Ability;
 
 
             var whoseMove = Es.WhoseMove.WhoseMove.Player;
 
-            if (build == BuildingTypes.Mine)
+
+            if (UnitStatEs(idx_0).StepE.Have(ability))
             {
-                if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(build))
+                if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
                 {
-                    if (!build_0.Have || build_0.Is(BuildingTypes.Camp))
+                    if (EnvironmentEs(idx_0).Hill.HaveEnvironment
+                        && EnvironmentEs(idx_0).Hill.HaveEnvironment)
                     {
-                        if (CellEs.EnvironmentEs.Hill( idx_0).HaveEnvironment
-                            && CellEs.EnvironmentEs.Hill( idx_0).HaveEnvironment)
+                        if (Es.InventorResourcesEs.CanCreateBuild(BuildingTypes.Mine, whoseMove, out var needRes))
                         {
-                            if (Es.InventorResourcesEs.CanCreateBuild(build, whoseMove, out var needRes))
-                            {
-                                Es.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                            Es.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
-                                Es.InventorResourcesEs.BuyBuild(whoseMove, build);
+                            Es.InventorResourcesEs.BuyBuild(whoseMove, BuildingTypes.Mine);
 
 
-                                BuildEs.BuildingE(idx_0).SetNew(build, whoseMove, BuildEs, Es.WhereBuildingEs);
-                                Es.WhereBuildingEs.HaveBuild(build, whoseMove, idx_0).HaveBuilding.Have = true;
+                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Mine, whoseMove, BuildEs(idx_0), Es.WhereBuildingEs);
+                            Es.WhereBuildingEs.HaveBuild(BuildingTypes.Mine, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                                UnitEs.StatEs.Step(idx_0).Steps.Amount--;
-                            }
-
-                            else Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                            UnitStatEs(idx_0).StepE.Take(ability);
                         }
 
-                        else Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        else Es.Rpc.MistakeEconomyToGeneral(sender, needRes);
                     }
+
                     else Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
-                else
-                {
-                    Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                }
+                else Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+            }
+            else
+            {
+                Es.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

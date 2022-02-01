@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class AttackMS : SystemAbstract, IEcsRunSystem
     {
-        public AttackMS(in Entities ents) : base(ents)
+        internal AttackMS(in Entities ents) : base(ents)
         {
         }
 
@@ -17,24 +17,24 @@ namespace Game.Game
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, whoseMove, out var attack))
             {
-                UnitEs.StatEs.Step(idx_from).Steps.Amount = 0;
-                UnitEs.Main(idx_from).ResetCondition();
+                UnitStatEs(idx_from).StepE.SetStepsAfterAttack();
+                UnitEs(idx_from).MainE.ResetCondition();
 
 
                 float powerDam_from = 0;
                 float powerDam_to = 0;
 
 
-                powerDam_from += UnitEs.Main(idx_from).DamageAttack(CellEs, Es.UnitStatUpgradesEs, attack);
+                powerDam_from += UnitEs(idx_from).MainE.DamageAttack(CellEs(idx_from), Es.UnitStatUpgradesEs, attack);
 
-                if (UnitEs.Main(idx_from).UnitTC.IsMelee)
+                if (UnitEs(idx_from).MainE.UnitTC.IsMelee)
                     Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 else Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
-                powerDam_to += UnitEs.Main(idx_to).DamageOnCell(CellEs, Es.UnitStatUpgradesEs);
+                powerDam_to += UnitEs(idx_to).MainE.DamageOnCell(CellEs(idx_to), Es.UnitStatUpgradesEs);
 
 
-                var dirAttack = CellEs.GetDirect(idx_from, idx_to);
+                var dirAttack = CellEsWorker.GetDirect(idx_from, idx_to);
 
 
                 if (Es.SunSidesE.SunSideTC.IsAcitveSun)
@@ -62,10 +62,10 @@ namespace Game.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = CellUnitHpValues.MAX_HP;
+                var maxDamage = CellUnitStatHpE.MAX_HP;
                 var minDamage = 0;
 
-                if (!UnitEs.Main(idx_to).UnitTC.IsMelee) powerDam_to /= 2;
+                if (!UnitEs(idx_to).MainE.UnitTC.IsMelee) powerDam_to /= 2;
 
                 if (powerDam_to > powerDam_from)
                 {
@@ -105,56 +105,60 @@ namespace Game.Game
                 }
 
 
-                if (UnitEs.Main(idx_from).UnitTC.IsMelee)
+                if (UnitEs(idx_from).MainE.UnitTC.IsMelee)
                 {
-                    if (UnitEs.ToolWeapon(idx_from).ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                    if (UnitEs(idx_from).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
                     {
-                        UnitEs.ToolWeapon(idx_from).BreakShield();
+                        UnitEs(idx_from).ToolWeaponE.BreakShield();
+                    }
+                    else if (UnitEffectEs(idx_from).ShieldE.HaveShieldEffect)
+                    {
+                        UnitEffectEs(idx_from).ShieldE.Take();
                     }
                     else if (minus_from > 0)
                     {
-                        UnitEs.StatEs.Hp(idx_from).Attack((int)minus_from);
+                        UnitStatEs(idx_from).Hp.Attack((int)minus_from);
                     }
                 }
 
 
-                if (UnitEs.ToolWeapon(idx_to).ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                if (UnitEs(idx_to).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
                 {
-                    UnitEs.ToolWeapon(idx_to).BreakShield();
+                    UnitEs(idx_to).ToolWeaponE.BreakShield();
                 }
                 else if (minus_to > 0)
                 {
-                    UnitEs.StatEs.Hp(idx_to).Attack((int)minus_to);
+                    UnitStatEs(idx_to).Hp.Attack((int)minus_to);
                 }
 
 
 
-                if (!UnitEs.StatEs.Hp(idx_to).IsAlive)
+                if (!UnitStatEs(idx_to).Hp.IsAlive)
                 {
-                    if (UnitEs.Main(idx_to).UnitTC.IsAnimal)
+                    if (UnitEs(idx_to).MainE.UnitTC.IsAnimal)
                     {
-                        Es.InventorResourcesEs.Resource(ResourceTypes.Food, UnitEs.Main(idx_from).OwnerC.Player).Resources.Amount += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                        Es.InventorResourcesEs.Resource(ResourceTypes.Food, UnitEs(idx_from).MainE.OwnerC.Player).Resources.Amount += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                     }
 
-                    UnitEs.Main(idx_to).Kill(Es);
+                    UnitEs(idx_to).MainE.Kill(Es);
 
 
-                    if (UnitEs.Main(idx_from).UnitTC.IsMelee)
+                    if (UnitEs(idx_from).MainE.UnitTC.IsMelee)
                     {
-                        if (!UnitEs.StatEs.Hp(idx_from).IsAlive)
+                        if (!UnitStatEs(idx_from).Hp.IsAlive)
                         {
-                            UnitEs.Main(idx_from).Kill(Es);
+                            UnitEs(idx_from).MainE.Kill(Es);
                         }
                         else
                         {
-                            UnitEs.Main(idx_from).Shift(idx_to, Es);
+                            UnitEs(idx_from).MainE.Shift(idx_to, Es);
                         }
                     }
                 }
 
-                else if (!UnitEs.StatEs.Hp(idx_from).IsAlive)
+                else if (!UnitStatEs(idx_from).Hp.IsAlive)
                 {
-                    UnitEs.Main(idx_from).Kill(Es);
+                    UnitEs(idx_from).MainE.Kill(Es);
                 }
 
                 //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();

@@ -4,10 +4,16 @@ namespace Game.Game
 {
     public sealed class CellTrailPlayerE : EntityAbstract
     {
-        public ref IsVisibleC IsVisibleC => ref Ent.Get<IsVisibleC>();
+        ref IsVisibleC IsVisibleCRef => ref Ent.Get<IsVisibleC>();
+        public IsVisibleC IsVisibleC => Ent.Get<IsVisibleC>();
 
-        public CellTrailPlayerE(in EcsWorld world) : base(world)
+        internal CellTrailPlayerE(in EcsWorld gameW) : base(gameW)
         {
+        }
+
+        public void SetVisible(in bool isVisibled)
+        {
+            IsVisibleCRef.IsVisible = isVisibled;
         }
     }
 }

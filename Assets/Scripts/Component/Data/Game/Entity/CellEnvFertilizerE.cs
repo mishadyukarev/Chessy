@@ -8,7 +8,7 @@ namespace Game.Game
         {
             var extract = 10;
 
-            if (buildUpgEs.HaveUpgrade(buildEs.BuildingE(Idx), UpgradeTypes.PickCenter).HaveUpgrade.Have)
+            if (buildUpgEs.HaveUpgrade(buildEs.BuildingE, UpgradeTypes.PickCenter).HaveUpgrade.Have)
             {
                 extract += (int)(extract * 0.5f);
             }
@@ -34,7 +34,7 @@ namespace Game.Game
         }
         public void ExtractFarm(in CellEs cellEs, in BuildingUpgradeEs buildUpgEs, in InventorResourcesEs invResEs)
         {
-            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE(Idx).Owner.Player).AddFarmExtractFertilize(this, buildUpgEs, cellEs.BuildEs);
+            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.Owner.Player).AddFarmExtractFertilize(this, buildUpgEs, cellEs.BuildEs);
 
             ResourcesRef.Amount -= AmountExtractFarm(buildUpgEs, cellEs.BuildEs);
         }

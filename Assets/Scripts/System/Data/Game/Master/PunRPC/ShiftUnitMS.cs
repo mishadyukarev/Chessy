@@ -13,9 +13,9 @@
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
             {
-                UnitEs.StatEs.Step(idx_from).Steps.Amount -= UnitEs.Main(idx_to).StepsForShiftOrAttack(CellEs.GetDirect(idx_from, idx_to), EnvironmentEs, CellEs.TrailEs);
+                UnitStatEs(idx_from).StepE.TakeForShift(idx_to, Es);
 
-                UnitEs.Main(idx_from).Shift(idx_to, Es);
+                UnitEs(idx_from).MainE.Shift(idx_to, Es);
 
                 Es.Rpc.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

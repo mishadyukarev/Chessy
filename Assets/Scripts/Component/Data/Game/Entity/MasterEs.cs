@@ -9,9 +9,9 @@ namespace Game.Game
         static Dictionary<RpcMasterTypes, Entity> _rpcEnts;
         static Dictionary<AbilityTypes, Entity> _uniqEnts;
 
-        public ref AbilityC UniqueAbilityC => ref _else.Get<AbilityC>();
+        public ref RpcMasterTC RpcMasterTC => ref _else.Get<RpcMasterTC>();
+        public ref AbilityC AbilityC => ref _else.Get<AbilityC>();
 
-        public ref C Build<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.Build].Get<C>();
         public ref C ConditionUnit<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.ConditionUnit].Get<C>();
         public ref C BuyResources<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.BuyRes].Get<C>();
         public ref C Shift<C>() where C : struct => ref _rpcEnts[RpcMasterTypes.Shift].Get<C>();
@@ -33,9 +33,13 @@ namespace Game.Game
         public ref C ChangeDirectionWind<C>() where C : struct => ref _uniqEnts[AbilityTypes.ChangeDirectionWind].Get<C>();
         public ref C StunElfemale<C>() where C : struct => ref _uniqEnts[AbilityTypes.StunElfemale].Get<C>();
 
-        public IceWallME IceWall { get; private set; }
-        public FreezeDirectEnemyME FreezeDirectEnemy { get; private set; }
-
+        public readonly FreezeDirectEnemyME FreezeDirectEnemy;
+        public readonly BuildingFarmME BuildingFarmME;
+        public readonly BuildingMineME BuildingMineME;
+        public readonly BuildingCityME BuildingCityME;
+        public readonly CenterUpgradeME CenterUpgradeME;
+        public readonly IceWallME IceWall;
+        //public readonly ActiveIceWallME ActiveIceWallME;
 
         public MasterEs(in EcsWorld gameW)
         {
@@ -45,11 +49,6 @@ namespace Game.Game
 
             _else = gameW.NewEntity()
                 .Add(new AbilityC());
-
-
-            _rpcEnts.Add(RpcMasterTypes.Build, gameW.NewEntity()
-                .Add(new BuildingTC())
-                .Add(new IdxC()));
 
             _rpcEnts.Add(RpcMasterTypes.ConditionUnit, gameW.NewEntity()
                 .Add(new ConditionUnitC())
@@ -121,6 +120,11 @@ namespace Game.Game
 
             IceWall = new IceWallME(gameW);
             FreezeDirectEnemy = new FreezeDirectEnemyME(gameW);
+            BuildingFarmME = new BuildingFarmME(gameW);
+            BuildingMineME = new BuildingMineME(gameW);
+            BuildingCityME = new BuildingCityME(gameW);
+            CenterUpgradeME = new CenterUpgradeME(gameW);
+            //ActiveIceWallME = new ActiveIceWallME(gameW);
         }
     }
 }

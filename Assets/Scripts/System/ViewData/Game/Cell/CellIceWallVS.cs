@@ -7,7 +7,7 @@
 //    {
 //        public void Run()
 //        {
-//            foreach (var idx_0 in CellEs.Idxs)
+//            foreach (var idx_0 in CellEsWorker.Idxs)
 //            {
 //                if (EntitiesPool.IceWalls[idx_0].Hp.Have)
 //                {

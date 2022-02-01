@@ -5,30 +5,35 @@ namespace Game.Game
 {
     public readonly struct CellVEs
     {
-        static Entity[] _cellParents;
-        static Entity[] _cells;
+        readonly Entity _cellParent;
+        readonly Entity _cell;
 
-        public static ref C CellParent<C>(in byte idx) where C : struct => ref _cellParents[idx].Get<C>();
-        public static ref C Cell<C>(in byte idx) where C : struct, ICellVE => ref _cells[idx].Get<C>();
+        public ref GameObjectVC CellParent => ref _cellParent.Get<GameObjectVC>();
+        public ref GameObjectVC CellGO => ref _cell.Get<GameObjectVC>();
+        public ref SpriteRendererVC CellSR => ref _cell.Get<SpriteRendererVC>();
 
-        public CellVEs(in EcsWorld curGameW, in GameObject[] cells)
+
+        public readonly CellFireVE FireVE;
+        public readonly CellEnvironmentVEs EnvironmentVEs;
+        public readonly CellUnitVEs UnitVEs;
+
+
+        public CellVEs(in byte idx, in GameObject cell, in EcsWorld gameW)
         {
-            _cellParents = new Entity[cells.Length];
-            _cells = new Entity[cells.Length];
+            _cellParent = gameW.NewEntity()
+                .Add(new GameObjectVC(cell));
 
-            for (byte idx = 0; idx < _cells.Length; idx++)
-            {
-                _cellParents[idx] = curGameW.NewEntity()
-                      .Add(new GameObjectVC(cells[idx]));
+            var cellUnder = cell.transform.Find("Cell");
+
+            _cell = gameW.NewEntity()
+                  .Add(new GameObjectVC(cellUnder.gameObject))
+                  .Add(new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>()));
 
 
-                var cellUnder = cells[idx].transform.Find("Cell");
+            FireVE = new CellFireVE(cell, gameW);
 
-                _cells[idx] = curGameW.NewEntity()
-                      .Add(new GameObjectVC(cellUnder.gameObject))
-                      .Add(new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>()));
-            }
+            UnitVEs = new CellUnitVEs(cell, gameW);
+            EnvironmentVEs = new CellEnvironmentVEs(cell, gameW);
         }
     }
-    public interface ICellVE { }
 }

@@ -189,11 +189,13 @@ namespace Game.Game
                         case AbilityTypes.GrowAdultForest: volume = 0.3f; break;
                         case AbilityTypes.StunElfemale: volume = 0.3f; break;
                         case AbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
-                        case AbilityTypes.IceWall: volume = 0.1f; break;
                         case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
                         case AbilityTypes.Farm: volume = 0.1f; break;
                         case AbilityTypes.Mine: volume = 0.1f; break;
                         case AbilityTypes.City: volume = 0.1f; break;
+
+                        case AbilityTypes.IceWall: volume = 0.1f; break;
+                        case AbilityTypes.ActiveIceWall: volume = 0.1f; break;
                         default: throw new Exception();
                     }
 

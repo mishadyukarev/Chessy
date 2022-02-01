@@ -9,7 +9,7 @@
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var build = Es.MasterEs.Build<BuildingTC>().Build;
+            var build = Es.MasterEs.CenterUpgradeME.BuildingForUpgrade.Build;
 
 
             var whoseMove = Es.WhoseMove.CurPlayerI;

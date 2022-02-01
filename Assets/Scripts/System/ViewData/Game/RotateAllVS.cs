@@ -14,10 +14,10 @@ namespace Game.Game
         {
             var curPlayer = Es.WhoseMove.CurPlayerI;
 
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
-                CellVEs.Cell<SpriteRendererVC>(idx_0).RotParent = curPlayer == PlayerTypes.First
+                CellVEs(idx_0).CellSR.RotParent = curPlayer == PlayerTypes.First
                     ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
                 switch (curPlayer)

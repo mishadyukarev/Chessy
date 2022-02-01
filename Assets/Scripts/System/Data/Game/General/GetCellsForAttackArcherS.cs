@@ -8,31 +8,31 @@
 
         public void Run()
         {
-            foreach (var idx_0 in CellEs.Idxs)
+            foreach (var idx_0 in CellEsWorker.Idxs)
             {
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
-                var corner_0 = UnitEs.Main(idx_0).IsCorned;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var corner_0 = UnitEs(idx_0).MainE.IsCorned;
 
-                if (!UnitEs.Stun(idx_0).IsStunned)
+                if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
-                    if (UnitEs.StatEs.Step(idx_0).HaveSteps)
+                    if (UnitStatEs(idx_0).StepE.HaveSteps)
                     {
                         if (unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale, UnitTypes.Snowy))
                         {
-                            var xy_from = CellEs.CellE(idx_0).XyC.Xy;
+                            var xy_from = CellEs(idx_0).CellE.XyC.Xy;
 
                             for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                             {
-                                var xy_1 = CellEs.GetXyCellByDirect(xy_from, dir_1);
-                                var idx_1 = CellEs.GetIdxCell(xy_1);
+                                var xy_1 = CellEsWorker.GetXyCellByDirect(xy_from, dir_1);
+                                var idx_1 = CellEsWorker.GetIdxCell(xy_1);
 
-                                var ownUnit_1 = UnitEs.Main(idx_1).OwnerC;
+                                var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 
 
-                                if (CellEs.ParentE(idx_1).IsActiveSelf.IsActive && !CellEs.EnvironmentEs.Mountain(idx_1).HaveEnvironment)
+                                if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive && !EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                                 {
-                                    if (UnitEs.Main(idx_1).HaveUnit(UnitStatEs))
+                                    if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Player))
                                         {
@@ -63,17 +63,17 @@
                                     }
 
 
-                                    var xy_2 = CellEs.GetXyCellByDirect(xy_1, dir_1);
-                                    var idx_2 = CellEs.GetIdxCell(xy_2);
+                                    var xy_2 = CellEsWorker.GetXyCellByDirect(xy_1, dir_1);
+                                    var idx_2 = CellEsWorker.GetIdxCell(xy_2);
 
 
-                                    var unit_2 = UnitEs.Main(idx_2).UnitTC;
-                                    var ownUnit_2 = UnitEs.Main(idx_2).OwnerC;
+                                    var unit_2 = UnitEs(idx_2).MainE.UnitTC;
+                                    var ownUnit_2 = UnitEs(idx_2).MainE.OwnerC;
 
 
 
-                                    if (UnitEs.Main(idx_2).HaveUnit(UnitStatEs) && !unit_2.IsAnimal
-                                        && UnitEs.VisibleE(ownUnit_0.Player, idx_2).IsVisibleC.IsVisible
+                                    if (UnitEs(idx_2).MainE.HaveUnit(UnitStatEs(idx_2)) && !unit_2.IsAnimal
+                                        && UnitEs(idx_2).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
                                         if (unit_0.Is(UnitTypes.Archer))

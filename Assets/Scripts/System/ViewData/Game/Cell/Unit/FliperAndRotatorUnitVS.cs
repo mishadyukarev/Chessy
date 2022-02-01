@@ -10,14 +10,14 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
-                var corner_0 = UnitEs.Main(idx_0).IsCorned;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var corner_0 = UnitEs(idx_0).MainE.IsCorned;
 
-                ref var main_0 = ref UnitCellVEs.UnitMain<SpriteRendererVC>(idx_0);
-                ref var extra_0 = ref UnitCellVEs.UnitExtra<SpriteRendererVC>(idx_0);
+                ref var main_0 = ref CellVEs(idx_0).UnitVEs.UnitMainSR;
+                ref var extra_0 = ref CellVEs(idx_0).UnitVEs.UnitExtraSR;
 
 
 
@@ -28,7 +28,7 @@ namespace Game.Game
 
                 if (Es.SelectedIdxE.IdxC.Is(idx_0))
                 {
-                    if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
+                    if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                     {
                         if (ownUnit_0.Is(Es.WhoseMove.CurPlayerI))
                         {

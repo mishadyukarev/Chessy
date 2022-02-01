@@ -15,9 +15,9 @@ namespace Game.Game
 
             var env = Es.MasterEs.Seed<EnvironmetTC>().Environment;
             var idx_0 = Es.MasterEs.Seed<IdxC>().Idx;
-            var uniq_cur = Es.MasterEs.UniqueAbilityC.Ability;
+            var uniq_cur = Es.MasterEs.AbilityC.Ability;
 
-            var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
+            var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
 
 
             switch (env)
@@ -29,7 +29,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (UnitEs.StatEs.Step(idx_0).Steps.Amount >= CellUnitStepValues.NeedSteps(uniq_cur))
+                    if (UnitStatEs(idx_0).StepE.Have(uniq_cur))
                     {
                         if (build_0.Have && !build_0.Is(BuildingTypes.Camp))
                         {
@@ -37,17 +37,17 @@ namespace Game.Game
                         }
                         else
                         {
-                            if (!CellEs.EnvironmentEs.Fertilizer( idx_0).HaveEnvironment)
+                            if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
                             {
-                                if (!CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                                if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
 
-                                    if (!CellEs.EnvironmentEs.YoungForest( idx_0).HaveEnvironment)
+                                    if (!EnvironmentEs(idx_0).YoungForest.HaveEnvironment)
                                     {
                                         Es.Rpc.SoundToGeneral(sender, uniq_cur);
 
-                                        CellEs.EnvironmentEs.YoungForest( idx_0).SetNew(Es.WhereEnviromentEs);
+                                        EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
 
-                                        UnitEs.StatEs.Step(idx_0).Steps.Amount -= CellUnitStepValues.NeedSteps(uniq_cur);
+                                        UnitStatEs(idx_0).StepE.Take(uniq_cur);
                                     }
                                     else
                                     {

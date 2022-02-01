@@ -8,9 +8,6 @@
 
         public void Run()
         {
-            var unitEs = UnitEs;
-
-
             var sender = InfoC.Sender(MGOTypes.Master);
 
             var idx_0 = Es.MasterEs.SetUnit<IdxC>().Idx;
@@ -33,7 +30,7 @@
                     Es.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).TakeUnit();
                     levUnit = LevelTypes.First;
                 }
-                unitEs.Main(idx_0).SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), Es);
+                UnitEs(idx_0).MainE.SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), Es);
 
 
                 //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);

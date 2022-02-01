@@ -8,16 +8,16 @@
 
         public void Run()
         {
-            foreach (var idx in CellEs.Idxs)
+            foreach (var idx in CellEsWorker.Idxs)
             {
-                if (CellEs.FireEs.Fire(idx).Fire.Have)
+                if (EffectEs(idx).FireE.HaveFireC.Have)
                 {
-                    CellFireVEs.FireCellVC<SpriteRendererVC>(idx).Enable();
+                    CellVEs(idx).FireVE.SR.Enable();
                 }
 
                 else
                 {
-                    CellFireVEs.FireCellVC<SpriteRendererVC>(idx).Disable();
+                    CellVEs(idx).FireVE.SR.Disable();
                 }
             }
         }

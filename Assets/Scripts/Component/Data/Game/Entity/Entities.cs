@@ -53,7 +53,34 @@ namespace Game.Game
         public readonly AvailableCenterUpgradeEs AvailableCenterUpgradeEs;
         public readonly MasterEs MasterEs;
         public readonly BuildingUpgradeEs BuildingUpgradeEs;
-        public readonly CellEs CellEs;
+
+
+        #region Cells
+
+        readonly CellEs[] _cellEs;
+        public CellEs[] Cells => (CellEs[])_cellEs.Clone();
+        //public CellEnvironmentEs[] CellEnvironmentEs => (CellEnvironmentEs[])_cellEs..Clone();
+        public byte LengthCells => (byte)_cellEs.Length;
+
+
+        public CellEs CellEs(in byte idx) => _cellEs[idx];
+
+        public CellUnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
+        public CellUnitStatEs UnitStatEs(in byte idx) => UnitEs(idx).StatEs;
+        public CellUnitEffectEs UnitEffectEs(in byte idx) => UnitEs(idx).EffectEs;
+
+        public CellBuildEs BuildEs(in byte idx) => CellEs(idx).BuildEs;
+        public CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
+        public CellRiverEs RiverEs(in byte idx) => CellEs(idx).RiverEs;
+        public CellTrailEs TrailEs(in byte idx) => CellEs(idx).TrailEs;
+        public CellEffectEs EffectEs(in byte idx) => CellEs(idx).EffectEs;
+
+
+
+
+        public readonly CellEsWorker CellEsWorker;
+
+        #endregion
 
         #endregion
 
@@ -116,10 +143,21 @@ namespace Game.Game
             InventorToolWeaponEs = new InventorToolWeaponEs(gameW);
 
             UnitStatUpgradesEs = new UnitStatUpgradesEs(gameW);
-            CellEs = new CellEs(gameW, isActiveParenCells, idCells);
+
             AvailableCenterUpgradeEs = new AvailableCenterUpgradeEs(gameW);
             BuildingUpgradeEs = new BuildingUpgradeEs(gameW);
             MasterEs = new MasterEs(gameW);
+
+
+            _cellEs = new CellEs[CellStartValues.ALL_CELLS_AMOUNT];
+            byte idx = 0;
+            for (byte x = 0; x < CellStartValues.X_AMOUNT; x++)
+                for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
+                {
+                    _cellEs[idx] = new CellEs(isActiveParenCells[idx], idCells[idx], new byte[] { x, y }, idx, gameW);
+                    ++idx;
+                }
+            CellEsWorker = new CellEsWorker(_cellEs);
 
 
             new CellsForSetUnitsEs(gameW);

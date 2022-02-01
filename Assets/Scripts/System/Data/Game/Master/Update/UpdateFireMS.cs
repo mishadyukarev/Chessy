@@ -2,75 +2,64 @@
 {
     sealed class UpdateFireMS : SystemCellAbstract, IEcsRunSystem
     {
-        public UpdateFireMS(in Entities ents) : base(ents)
+        internal UpdateFireMS(in Entities ents) : base(ents)
         {
         }
 
         public void Run()
         {
-            var unitEs = UnitEs;
-
-            CellEs.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var directs);
+            CellEsWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var directs);
 
             foreach (var item in directs)
             {
-                CellEs.FireEs.Fire(item.Value).Fire.Disable();
+                EffectEs(item.Value).FireE.Disable();
             }
 
 
-            foreach (byte idx_0 in CellEs.Idxs)
+            foreach (byte idx_0 in CellEsWorker.Idxs)
             {
-                var xy_0 = CellEs.CellE(idx_0).XyC.Xy;
+                var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
 
-                var unit_0 = UnitEs.Main(idx_0).UnitTC;
-                var ownUnit_0 = UnitEs.Main(idx_0).OwnerC;
+                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
 
-                var hpUnit_0 = UnitEs.StatEs.Hp(idx_0).Health;
+                var hpUnit_0 = UnitStatEs(idx_0).Hp.Health;
 
-                var buil_0 = BuildEs.BuildingE(idx_0).BuildTC;
-                var ownBuil_0 = BuildEs.BuildingE(idx_0).Owner;
+                var buil_0 = BuildEs(idx_0).BuildingE.BuildTC;
+                var ownBuil_0 = BuildEs(idx_0).BuildingE.Owner;
 
-                ref var fire_0 = ref CellEs.FireEs.Fire(idx_0).Fire;
-
-                if (fire_0.Have)
+                if (EffectEs(idx_0).FireE.HaveFireC.Have)
                 {
-                    CellEs.EnvironmentEs.AdultForest(idx_0).Fire();
+                    EnvironmentEs(idx_0).AdultForest.Fire();
 
-                    if (UnitEs.Main(idx_0).HaveUnit(UnitStatEs))
+                    if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
                     {
-                        UnitEs.StatEs.Hp(idx_0).Health.Amount -= UnitDamageValues.FIRE_DAMAGE;
-                        if (!UnitEs.StatEs.Hp(idx_0).IsAlive)
-                        {
-                            unitEs.Main(idx_0).Kill(Es);
-                        }
+                        UnitStatEs(idx_0).Hp.Fire(Es);
                     }
 
-
-
-                    if (!CellEs.EnvironmentEs.AdultForest( idx_0).HaveEnvironment)
+                    if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        Es.WhereBuildingEs.HaveBuild(BuildEs.BuildingE(idx_0), idx_0).HaveBuilding.Have = false;
-                        BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
+                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
 
-                        CellEs.EnvironmentEs.AdultForest(idx_0).Destroy(TrailEs.Trails(idx_0), Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails, Es.WhereEnviromentEs);
 
 
                         if (UnityEngine.Random.Range(0, 100) < 50)
                         {
-                            CellEs.EnvironmentEs.YoungForest(idx_0).SetNew(Es.WhereEnviromentEs);
+                            EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
                         }
 
 
-                        fire_0.Disable();
+                        EffectEs(idx_0).FireE.Disable();
 
 
-                        foreach (var idx_1 in CellEs.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
                         {
-                            if (CellEs.ParentE(idx_1).IsActiveSelf.IsActive)
+                            if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive)
                             {
-                                if (CellEs.EnvironmentEs.AdultForest(idx_1).HaveEnvironment)
+                                if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                 {
-                                    CellEs.FireEs.Fire(idx_1).Fire.Enable();
+                                    EffectEs(idx_1).FireE.Enable();
                                 }
                             }
                         }

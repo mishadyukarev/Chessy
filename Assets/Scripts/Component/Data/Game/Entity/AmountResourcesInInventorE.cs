@@ -25,5 +25,9 @@ namespace Game.Game
         {
             Resources.Amount += fertE.AmountExtractFarm(buildUpgEs, buildEs);
         }
+        public void AddFarmExtractHill(in CellEnvHillE hillE, in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
+        {
+            Resources.Amount += hillE.AmountExtractMine(buildUpgEs, buildEs);
+        }
     }
 }

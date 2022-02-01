@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     sealed class UpdExtractMineMS : SystemAbstract, IEcsRunSystem
     {
@@ -11,18 +8,18 @@ namespace Game.Game
 
         public void Run()
         {
-            //for (byte idx_0 = 0; idx_0 < CellEs.Count; idx_0++)
-            //{
-            //    if (BuildEs.BuildingE(idx_0).CanExtractFertilizer(EnvironmentEs))
-            //    {
-            //        EnvironmentEs.Fertilizer(idx_0).ExtractFarm(CellEs, Es.BuildingUpgradeEs, Es.InventorResourcesEs);
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            {
+                if (BuildEs(idx_0).BuildingE.CanExtractHill(EnvironmentEs(idx_0)))
+                {
+                    EnvironmentEs(idx_0).Hill.ExtractMine(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
 
-            //        if (!EnvironmentEs.Fertilizer(idx_0).HaveEnvironment)
-            //        {
-            //            BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
-            //        }
-            //    }
-            //}
+                    if (!EnvironmentEs(idx_0).Hill.HaveEnvironment)
+                    {
+                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
+                    }
+                }
+            }
         }
     }
 }

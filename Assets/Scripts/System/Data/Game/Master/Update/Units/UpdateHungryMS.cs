@@ -8,8 +8,6 @@
 
         public void Run()
         {
-            var unitEs = UnitEs;
-
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
                 var res = ResourceTypes.Food;
@@ -22,20 +20,20 @@
                     {
                         for (var levUnit = LevelTypes.Second; levUnit > LevelTypes.None; levUnit--)
                         {
-                            foreach (var idx_0 in CellEs.Idxs)
+                            foreach (var idx_0 in CellEsWorker.Idxs)
                             {
                                 if (Es.WhereUnitsEs.WhereUnit(unit, levUnit, player, idx_0).HaveUnit.Have)
                                 {
-                                    var build_0 = BuildEs.BuildingE(idx_0).BuildTC;
+                                    var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
 
 
                                     if (build_0.Is(BuildingTypes.Camp))
                                     {
-                                        Es.WhereBuildingEs.HaveBuild(BuildEs.BuildingE(idx_0), idx_0).HaveBuilding.Have = false;
-                                        BuildEs.BuildingE(idx_0).Destroy(BuildEs, Es.WhereBuildingEs);
+                                        Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
+                                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
                                     }
 
-                                    UnitEs.Main(idx_0).Kill(Es);
+                                    UnitEs(idx_0).MainE.Kill(Es);
 
                                     return;
 

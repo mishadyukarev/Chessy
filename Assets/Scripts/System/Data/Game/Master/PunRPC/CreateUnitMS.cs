@@ -15,7 +15,7 @@
             var playerSend = Es.WhoseMove.WhoseMove.Player;
 
 
-            if (Es.WhereBuildingEs.IsSetted(BuildingTypes.City, playerSend, out var idx_city))
+            if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.City, playerSend, out var idx_city))
             {
                 if (Es.InventorResourcesEs.CanCreateUnit(playerSend, unit, out var needRes))
                 {
