@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    public struct TransformVC
+    public readonly struct TransformVC
     {
-        Transform _t;
+        readonly Transform _t;
 
         public Vector3 EulerAngles
         {
@@ -15,6 +15,11 @@ namespace Game.Game
         {
             get => _t.localEulerAngles;
             set => _t.localEulerAngles = value;
+        }
+        public Vector3 LocalScale
+        {
+            get => _t.localScale;
+            set => _t.localScale = value;
         }
 
         public TransformVC(in Transform t) => _t = t;

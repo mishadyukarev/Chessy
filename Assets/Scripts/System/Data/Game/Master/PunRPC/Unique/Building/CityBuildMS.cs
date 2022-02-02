@@ -23,7 +23,7 @@
             {
                 bool haveNearBorder = false;
 
-                foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                 {
                     if (!CellEs(idx_1).ParentE.IsActiveSelf.IsActive)
                     {

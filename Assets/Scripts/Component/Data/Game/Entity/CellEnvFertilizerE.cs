@@ -26,17 +26,33 @@ namespace Game.Game
 
         public void SetNew()
         {
-            ResourcesRef.Amount = CellEnvironmentValues.RandomResources(EnvironmentTypes.Fertilizer);
+            ResourcesRef.Amount = CellEnvironmentValues.RandomResources(EnvT);
         }
         public void SetMax()
         {
-            ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvironmentTypes.Fertilizer);
+            ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
+        }
+        public void AddAfterBuildingFarm()
+        {
+            ResourcesRef.Amount += CellEnvironmentValues.MaxResources(EnvT) / 2;
+            if (ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT))
+            {
+                ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
+            }
         }
         public void ExtractFarm(in CellEs cellEs, in BuildingUpgradeEs buildUpgEs, in InventorResourcesEs invResEs)
         {
-            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.Owner.Player).AddFarmExtractFertilize(this, buildUpgEs, cellEs.BuildEs);
+            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.OwnerC.Player).AddFarmExtractFertilize(this, buildUpgEs, cellEs.BuildEs);
 
             ResourcesRef.Amount -= AmountExtractFarm(buildUpgEs, cellEs.BuildEs);
+        }
+        public void AddIceWall()
+        {
+            ResourcesRef.Amount += CellEnvironmentValues.MaxResources(EnvT) / 5;
+            if (ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT))
+            {
+                ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
         {
             ref var cellClick = ref Es.ClickerObject.CellClickC;
 
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var own_0 = UnitEs(idx_0).MainE.OwnerC;
@@ -110,7 +110,7 @@
                 {
                     if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
                     {
-                        CellEsWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
+                        CellWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
 
                         foreach (var item in dirs)
                         {

@@ -11,7 +11,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in CellEsWorker.Idxs)
+            foreach (var idx_0 in CellWorker.Idxs)
             {
                 if (Es.InfoEnvironment.IsActiveC.IsActive)
                 {

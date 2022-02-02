@@ -45,7 +45,7 @@ namespace Game.Game
                                     {
                                         Es.Rpc.SoundToGeneral(sender, uniq_cur);
 
-                                        EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
+                                        EnvironmentEs(idx_0).YoungForest.SetNewRandom(Es.WhereEnviromentEs);
 
                                         UnitStatEs(idx_0).StepE.Take(uniq_cur);
                                     }

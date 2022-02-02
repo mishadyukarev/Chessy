@@ -39,13 +39,16 @@ namespace Game.Game
             }
             return false;
         }
-        public byte IdxUnit(in UnitTypes unit, in LevelTypes lev, in PlayerTypes player)
+        public bool TryGetIdxUnit(in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, out byte idx)
         {
-            for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
+            for (idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
-                if (WhereUnit(unit, lev, player, idx).HaveUnit.Have) return idx;
+                if (WhereUnit(unit, lev, player, idx).HaveUnit.Have)
+                {
+                    return true;
+                }
             }
-            throw new System.Exception("There's not unit");
+            return false;
         }
 
         public WhereUnitsEs(in EcsWorld gameW)

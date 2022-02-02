@@ -65,5 +65,13 @@ namespace Game.Game
             invResEs.Resource(ResourceT, unitEs.MainE.OwnerC.Player).AddPawnExtractAdultForest(unitEs, this);
             ResourcesRef.Amount -= AmountExtractPawn(unitEs);
         }
+        public void AddIceWall()
+        {
+            ResourcesRef.Amount += CellEnvironmentValues.MaxResources(EnvT) / 5;
+            if (ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT))
+            {
+                ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ namespace Game.Game
                 var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
 
                 var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
-                var ownBuild_0 = BuildEs(idx_0).BuildingE.Owner;
+                var ownBuild_0 = BuildEs(idx_0).BuildingE.OwnerC;
 
 
                 if (ownUnit_0.Is(Es.WhoseMove.CurPlayerI))
@@ -93,15 +93,15 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Snowy:
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.IceWall;
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.ActiveIceWall;
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Third).AbilityC.Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.DirectWave;
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.ActiveAroundBonusSnowy;
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Third).AbilityC.Ability = AbilityTypes.IceWall;
                                 break;
 
                             case UnitTypes.Camel:
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Reset();
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Second).AbilityC.Reset();
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Third).AbilityC.Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Third).AbilityC.Reset();
                                 break;
 
                             default: throw new Exception();

@@ -14,6 +14,7 @@ namespace Game.Game
 
 
         public readonly CellFireVE FireVE;
+
         public readonly CellEnvironmentVEs EnvironmentVEs;
         public readonly CellUnitVEs UnitVEs;
 
@@ -32,8 +33,9 @@ namespace Game.Game
 
             FireVE = new CellFireVE(cell, gameW);
 
-            UnitVEs = new CellUnitVEs(cell, gameW);
+ 
             EnvironmentVEs = new CellEnvironmentVEs(cell, gameW);
+            UnitVEs = new CellUnitVEs(cell.transform, gameW);
         }
     }
 }

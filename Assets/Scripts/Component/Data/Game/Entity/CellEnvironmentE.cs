@@ -39,10 +39,19 @@ namespace Game.Game
             ResourceT = resT;
         }
 
-        public void SetNew(in WhereEnviromentEs whereEnviromentEs)
+        public void SetNewRandom(in WhereEnviromentEs whereEnviromentEs)
         {
             whereEnviromentEs.Info(EnvT, Idx).HaveEnv.Have = true;
             ResourcesRef.Amount = CellEnvironmentValues.RandomResources(EnvT);
+        }
+        public void SetNewMax(in WhereEnviromentEs whereEnviromentEs)
+        {
+            whereEnviromentEs.Info(EnvT, Idx).HaveEnv.Have = true;
+            ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
+        }
+        public void SetMaxResources()
+        {
+            ResourcesRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
         }
         public virtual void Destroy(in WhereEnviromentEs whereEnviromentEs)
         {

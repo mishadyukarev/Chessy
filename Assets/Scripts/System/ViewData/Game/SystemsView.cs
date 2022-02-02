@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class SystemsView
+    public readonly struct SystemsView
     {
         static Dictionary<ViewDataSystemTypes, Action> _actions;
 
@@ -27,16 +27,19 @@ namespace Game.Game
                 + new RiverCellVS(ents, entsView).Run
                 + new CellBarsEnvVS(ents, entsView).Run
                 + new CellTrailVS(ents, entsView).Run
-                + new CellStunVS(ents, entsView).Run
                 + new SyncSelUnitCellVS(ents, entsView).Run
                 + new SupportCellVS(ents, entsView).Run
                 + new FliperAndRotatorUnitVS(ents, entsView).Run
+                + new CellUnitEffectFrozenArrawVS(ents, entsView).Run
+
+                + new CellUnitEffectStunVS(ents, entsView).Run
+                + new CellUnitEffectShieldVS(ents, entsView).Run
 
                 + new RotateAllVS(ents, entsView).Run
                 + new SoundVS(ents, entsView).Run);
 
 
-            new SystemViewDataUIManager(ents, entsView);
+            new SystemViewUI(ents, entsView);
         }
 
         public static void Run(in ViewDataSystemTypes type)

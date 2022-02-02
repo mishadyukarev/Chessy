@@ -11,7 +11,7 @@ namespace Game.Game
 
         public AmountC Health => Ent.Get<AmountC>();
         public BuildingTC BuildTC => Ent.Get<BuildingTC>();
-        public PlayerTC Owner => Ent.Get<PlayerTC>();
+        public PlayerTC OwnerC => Ent.Get<PlayerTC>();
 
         public bool HaveBuilding => IsAlive && HaveBuildingT;
         public bool IsAlive => Health.Amount > 0;
@@ -53,7 +53,7 @@ namespace Game.Game
         }
         public void Destroy(in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
         {
-            if (HaveBuilding)
+            if (HaveBuildingT)
             {
                 whereBuildingEs.HaveBuild(buildEs.BuildingE, Idx).HaveBuilding.Have = false;
 

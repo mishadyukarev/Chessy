@@ -12,7 +12,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
                 var hpUnit_0 = UnitStatEs(idx_0).Hp.Health;
@@ -35,7 +35,7 @@ namespace Game.Game
                         float xCordinate = (float)hpUnit_0.Amount / CellUnitStatHpE.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(UnitStatEs(idx_0).Water.Water.Amount <= CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(UnitStatEs(idx_0).WaterE.Water.Amount <= CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
                         Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).MainE));
 
 

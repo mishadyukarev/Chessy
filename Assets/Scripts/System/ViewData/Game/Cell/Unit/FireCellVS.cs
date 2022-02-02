@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (var idx in CellEsWorker.Idxs)
+            foreach (var idx in CellWorker.Idxs)
             {
                 if (EffectEs(idx).FireE.HaveFireC.Have)
                 {

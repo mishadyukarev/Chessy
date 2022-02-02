@@ -43,7 +43,7 @@ namespace Game.Game
                                         Es.Rpc.SoundToGeneral(RpcTarget.All, uniq_cur);
 
 
-                                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_to))
+                                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_to))
                                         {
                                             if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                             {

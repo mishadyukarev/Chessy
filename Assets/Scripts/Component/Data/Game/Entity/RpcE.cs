@@ -83,11 +83,13 @@ namespace Game.Game
         public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.ChangeDirectionWind, fromIdx, toIdx });
 
         public void CircularAttackKingToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.CircularAttack, idxCell });
-        public void IceWallToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.IceWall, idx });
-        public void ActiveIceWallToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.ActiveIceWall, idx });
         public void BuildFarmToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.Farm, idx});
         public void BuildMineToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.Mine, idx });
         public void BuildCityToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.City, idx });
+
+        public void IceWallToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.IceWall, idx });
+        public void ActiveSnowyAroundToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.ActiveAroundBonusSnowy, idx });
+        public void DirectWaveToMaster(in byte idx_from, in byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UniqueAbility, AbilityTypes.DirectWave, idx_from, idx_to });
 
         #endregion
 

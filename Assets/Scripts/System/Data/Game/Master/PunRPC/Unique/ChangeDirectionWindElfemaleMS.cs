@@ -20,7 +20,7 @@ namespace Game.Game
             {
                 if (UnitStatEs(idx_from).StepE.Have(uniq_cur))
                 {
-                    var newDir = CellEsWorker.GetDirect(Es.WindE.CenterCloud.Idx, idx_to);
+                    CellWorker.TryGetDirect(Es.WindE.CenterCloud.Idx, idx_to, out var newDir);
 
                     if (newDir != DirectTypes.None)
                     {

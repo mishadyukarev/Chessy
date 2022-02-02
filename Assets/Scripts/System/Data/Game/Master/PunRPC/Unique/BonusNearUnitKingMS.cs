@@ -34,10 +34,10 @@
                     //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
                     //}
 
-                    var around = CellEsWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy);
+                    var around = CellWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy);
                     foreach (var xy in around)
                     {
-                        var idx_1 = CellEsWorker.GetIdxCell(xy);
+                        var idx_1 = CellWorker.GetIdxCell(xy);
 
                         var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 

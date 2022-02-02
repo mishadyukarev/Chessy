@@ -204,27 +204,37 @@ namespace Game.Game
 
                             case CellClickTypes.UniqueAbility:
                                 {
-                                    if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.FireArcher))
+                                    switch (Es.SelectedUniqueAbilityE.AbilityC.Ability)
                                     {
-                                        Es.Rpc.FireArcherToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
-                                    }
+                                        case AbilityTypes.FireArcher:
+                                            Es.Rpc.FireArcherToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            break;
+     
+                                        case AbilityTypes.StunElfemale:
+                                            Es.Rpc.StunElfemaleToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            break;
 
-                                    else if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
-                                    {
-                                        CellEsWorker.TryGetIdxAround(Es.CurrentIdxE.IdxC.Idx, out var directs);
-
-                                        foreach (var item in directs)
-                                        {
-                                            if (item.Value == Es.CurrentIdxE.IdxC.Idx)
+                                        case AbilityTypes.ChangeDirectionWind:
                                             {
-                                                Es.Rpc.PutOutFireElffToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
-                                            }
-                                        }
-                                    }
+                                                CellWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var directs);
 
-                                    else if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.StunElfemale))
-                                    {
-                                        Es.Rpc.StunElfemaleToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                                foreach (var item in directs)
+                                                {
+                                                    if (item.Value == Es.CurrentIdxE.IdxC.Idx)
+                                                    {
+                                                        Es.Rpc.PutOutFireElffToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                                    }
+                                                }
+                                            }
+                                            break;
+
+                                        case AbilityTypes.DirectWave:
+                                            {
+                                                Es.Rpc.DirectWaveToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            }
+                                            break;
+
+                                        default: throw new Exception();
                                     }
 
                                     cellClick.Click = CellClickTypes.SimpleClick;

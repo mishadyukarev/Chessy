@@ -2,13 +2,13 @@
 {
     sealed class CellTrailVS : SystemViewAbstract, IEcsRunSystem
     {
-        public CellTrailVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal CellTrailVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 foreach (var dir in TrailEs(idx_0).Keys)
                 {

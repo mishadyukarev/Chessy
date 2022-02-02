@@ -12,7 +12,7 @@ namespace Game.Game
         {
             if (!Es.WhereUnitsEs.HaveUnit(UnitTypes.Camel))
             {
-                byte idx_0 = (byte)Random.Range(0, CellEsWorker.Idxs.Count);
+                byte idx_0 = (byte)Random.Range(0, CellWorker.Idxs.Count);
 
                 if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
@@ -20,7 +20,7 @@ namespace Game.Game
                     {
                         bool haveNearUnit = false;
 
-                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
                             if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                             {

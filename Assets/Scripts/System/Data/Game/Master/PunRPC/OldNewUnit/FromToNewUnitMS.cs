@@ -30,7 +30,7 @@
                     {
                         if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
                         {
-                            foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_from))
+                            foreach (var idx_1 in CellWorker.GetIdxsAround(idx_from))
                             {
                                 if (idx_1 == idx_to)
                                 {

@@ -12,8 +12,7 @@ namespace Game
         [SerializeField] TestModes _testMode = default;
 
         EcsWorld _commonW;
-        EcsWorld _menuW;
-        EcsWorld _gameW;
+        EcsWorld _toggleW;
 
         Systems _systems;
 
@@ -44,7 +43,7 @@ namespace Game
                 case SceneTypes.Game:
                     _systems.Run(DataSTypes.RunUpdate);
                     SystemsView.Run(ViewDataSystemTypes.RunUpdate);
-                    SystemViewDataUIManager.Run(UITypes.RunUpdate);
+                    SystemViewUI.Run(UITypes.RunUpdate);
                     break;
 
                 default:
@@ -68,7 +67,7 @@ namespace Game
                 case SceneTypes.Game:
                     _systems.Run(DataSTypes.RunFixedUpdate);
                     SystemsView.Run(ViewDataSystemTypes.RunFixedUpdate);
-                    SystemViewDataUIManager.Run(UITypes.RunFixedUpdate);
+                    SystemViewUI.Run(UITypes.RunFixedUpdate);
                     break;
 
                 default:
@@ -88,22 +87,22 @@ namespace Game
 
                 case SceneTypes.Menu:
                     {
-                        if (_gameW != default) _gameW = default;
+                        if (_toggleW != default) _toggleW = default;
 
-                        _menuW = new EcsWorld();
-                        new EntitieManager(_menuW);
+                        _toggleW = new EcsWorld();
+                        new EntitieManager(_toggleW);
                         new SystemsManager(default);
                         break;
                     }
 
                 case SceneTypes.Game:
                     {
-                        if (_menuW != default) _menuW = default;
+                        if (_toggleW != default) _toggleW = default;
 
-                        _gameW = new EcsWorld();
+                        _toggleW = new EcsWorld();
 
-                        var entsView = new EntitiesView(_gameW, out var forData);
-                        var ents = new Entities(_gameW, forData, RpcS.NamesMethods);
+                        var entsView = new EntitiesView(_toggleW, out var forData);
+                        var ents = new Entities(_toggleW, forData, RpcS.NamesMethods);
 
                         new FillCellsS(ents);
 

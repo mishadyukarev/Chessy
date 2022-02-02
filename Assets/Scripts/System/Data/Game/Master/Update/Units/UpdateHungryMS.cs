@@ -20,7 +20,7 @@
                     {
                         for (var levUnit = LevelTypes.Second; levUnit > LevelTypes.None; levUnit--)
                         {
-                            foreach (var idx_0 in CellEsWorker.Idxs)
+                            foreach (var idx_0 in CellWorker.Idxs)
                             {
                                 if (Es.WhereUnitsEs.WhereUnit(unit, levUnit, player, idx_0).HaveUnit.Have)
                                 {

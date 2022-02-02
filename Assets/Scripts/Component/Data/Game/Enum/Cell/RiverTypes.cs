@@ -5,7 +5,9 @@
         None,
 
         Start,
-        End,
+        EndRiver,
         Corner,
+
+        End,
     }
 }

@@ -29,7 +29,8 @@
 
         //Snowy
         IceWall,
-        ActiveIceWall,
+        ActiveAroundBonusSnowy,
+        DirectWave,
         //DefendAround,
 
         End

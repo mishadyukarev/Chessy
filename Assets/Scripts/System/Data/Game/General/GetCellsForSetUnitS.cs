@@ -10,7 +10,7 @@
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                foreach (var idx_0 in CellEsWorker.Idxs)
+                foreach (var idx_0 in CellWorker.Idxs)
                 {
                     CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = false;
                 }
@@ -26,11 +26,11 @@
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = true;
                     }
 
-                    var list_2 = CellEsWorker.GetXyAround(CellEs(idx_1).CellE.XyC.Xy);
+                    var list_2 = CellWorker.GetXyAround(CellEs(idx_1).CellE.XyC.Xy);
 
                     foreach (var xy_2 in list_2)
                     {
-                        var idx_2 = CellEsWorker.GetIdxCell(xy_2);
+                        var idx_2 = CellWorker.GetIdxCell(xy_2);
 
                         var unit_2 = UnitEs(idx_2).MainE.UnitTC;
 
@@ -47,11 +47,11 @@
 
                 else
                 {
-                    foreach (var idx_0 in CellEsWorker.Idxs)
+                    foreach (var idx_0 in CellWorker.Idxs)
                     {
                         var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                         var buld_0 = BuildEs(idx_0).BuildingE.BuildTC;
-                        var ownBuld_0 = BuildEs(idx_0).BuildingE.Owner;
+                        var ownBuld_0 = BuildEs(idx_0).BuildingE.OwnerC;
 
 
                         if (buld_0.Is(BuildingTypes.Camp))

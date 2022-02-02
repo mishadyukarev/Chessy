@@ -12,10 +12,10 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
-                var ownBuild_0 = BuildEs(idx_0).BuildingE.Owner;
+                var ownBuild_0 = BuildEs(idx_0).BuildingE.OwnerC;
 
 
                 var buildT = build_0.Build;

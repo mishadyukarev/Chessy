@@ -24,7 +24,7 @@
                     {
                         EnvironmentEs(idx_0).YoungForest.Destroy(Es.WhereEnviromentEs);
 
-                        EnvironmentEs(idx_0).AdultForest.SetNew(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).AdultForest.SetNewMax(Es.WhereEnviromentEs);
 
                         UnitStatEs(idx_0).StepE.Take(uniq_cur);
 
@@ -36,10 +36,10 @@
                         //{
                         //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have = true;
                         //}
-                        var around = CellEsWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy);
+                        var around = CellWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy);
                         foreach (var xy_1 in around)
                         {
-                            var idx_1 = CellEsWorker.GetIdxCell(xy_1);
+                            var idx_1 = CellWorker.GetIdxCell(xy_1);
 
                             var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 

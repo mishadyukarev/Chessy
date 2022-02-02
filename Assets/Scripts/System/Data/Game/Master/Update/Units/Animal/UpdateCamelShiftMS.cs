@@ -12,11 +12,11 @@ namespace Game.Game
         {
             if (Es.WhereUnitsEs.HaveUnit(UnitTypes.Camel))
             {
-                var idx_0 = Es.WhereUnitsEs.IdxUnit(UnitTypes.Camel, LevelTypes.First, PlayerTypes.None);
+                Es.WhereUnitsEs.TryGetIdxUnit(UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, out var idx_0);
 
                 var randDir = Random.Range((int)DirectTypes.None + 1, (int)DirectTypes.End);
 
-                var idx_1 = CellEsWorker.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
+                var idx_1 = CellWorker.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
 
                 if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive
                     && !EnvironmentEs(idx_1).Mountain.HaveEnvironment

@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (var idx_0 in CellEsWorker.Idxs)
+            foreach (var idx_0 in CellWorker.Idxs)
             {
                 CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.First, idx_0).Clear();
                 CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.Second, idx_0).Clear();
@@ -17,11 +17,13 @@
                 {
                     if (!UnitEffectEs(idx_0).StunE.IsStunned && UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && !UnitEs(idx_0).MainE.UnitTC.IsAnimal)
                     {
-                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
                             if (!EnvironmentEs(idx_1).Mountain.HaveEnvironment && !UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                             {
-                                var one = UnitStatEs(idx_0).StepE.Steps.Amount >= UnitEs(idx_1).MainE.StepsForShiftOrAttack(CellEsWorker.GetDirect(idx_0, idx_1), EnvironmentEs(idx_1), TrailEs(idx_1));
+                                CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
+
+                                var one = UnitStatEs(idx_0).StepE.Steps.Amount >= UnitEs(idx_1).MainE.StepsForShiftOrAttack(dir, EnvironmentEs(idx_1), TrailEs(idx_1));
                                 var two = UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).MainE);
 
                                 if (one || two)

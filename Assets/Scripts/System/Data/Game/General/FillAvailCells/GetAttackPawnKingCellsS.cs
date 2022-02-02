@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.Second).Clear();
@@ -25,7 +25,7 @@
                     {
                         DirectTypes dir_cur = default;
 
-                        CellEsWorker.TryGetIdxAround(idx_0, out var dirs);
+                        CellWorker.TryGetIdxAround(idx_0, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
@@ -37,8 +37,10 @@
 
                             if (!EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                             {
+                                CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
+
                                 if (UnitStatEs(idx_0).StepE.Steps.Amount >=
-                                    UnitEs(idx_1).MainE.StepsForShiftOrAttack(CellEsWorker.GetDirect(idx_0, idx_1), CellEs(idx_1).EnvironmentEs, CellEs(idx_1).TrailEs)
+                                    UnitEs(idx_1).MainE.StepsForShiftOrAttack(dir, CellEs(idx_1).EnvironmentEs, CellEs(idx_1).TrailEs)
 
                                     || UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).MainE))
                                 {

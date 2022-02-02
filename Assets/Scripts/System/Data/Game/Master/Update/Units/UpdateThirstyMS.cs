@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
@@ -27,15 +27,15 @@ namespace Game.Game
 
                     if (canExecute)
                     {
-                        if (RiverEs(idx_0).River.RiverTC.HaveRiver)
+                        if (RiverEs(idx_0).River.HaveRiver)
                         {
-                            UnitStatEs(idx_0).Water.SetMax(UnitEs(idx_0).MainE, Es.UnitStatUpgradesEs);
+                            UnitStatEs(idx_0).WaterE.SetMax(UnitEs(idx_0).MainE, Es.UnitStatUpgradesEs);
                         }
                         else
                         {
-                            UnitStatEs(idx_0).Water.Thirsty();
+                            UnitStatEs(idx_0).WaterE.Thirsty(UnitEs(idx_0).MainE.UnitTC.Unit);
 
-                            if (!UnitStatEs(idx_0).Water.HaveWater)
+                            if (!UnitStatEs(idx_0).WaterE.HaveWater)
                             {
                                 UnitStatEs(idx_0).Hp.Thirsty(Es);
                             }

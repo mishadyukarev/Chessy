@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
@@ -26,7 +26,7 @@
                             isVisForFirst = false;
                             isVisForSecond = false;
 
-                            foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                            foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                             {
                                 if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
                                 {
@@ -47,7 +47,7 @@
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                            foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                             {
                                 var unit_1 = UnitEs(idx_1).MainE.UnitTC;
                                 var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
@@ -80,7 +80,7 @@
 
                 if (build_0.Have)
                 {
-                    var ownBuild_0 = BuildEs(idx_0).BuildingE.Owner;
+                    var ownBuild_0 = BuildEs(idx_0).BuildingE.OwnerC;
 
                     BuildEs(idx_0).BuildingVisE(ownBuild_0.Player).IsVisibleC.IsVisible = true;
 
@@ -88,7 +88,7 @@
                     {
                         var isVisibledNextPlayer = false;
 
-                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
                             var unit_1 = UnitEs(idx_1).MainE.UnitTC;
                             var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
@@ -120,7 +120,7 @@
                     //}
 
 
-                    foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                     {
                         var unit_1 = UnitEs(idx_1).MainE.UnitTC;
                         var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;

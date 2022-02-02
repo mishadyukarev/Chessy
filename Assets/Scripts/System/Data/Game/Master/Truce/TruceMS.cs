@@ -13,7 +13,7 @@ namespace Game.Game
         {
             int random;
 
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
@@ -72,7 +72,7 @@ namespace Game.Game
                     {
                         EnvironmentEs(idx_0).YoungForest.Destroy(Es.WhereEnviromentEs);
 
-                        EnvironmentEs(idx_0).AdultForest.SetNew(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).AdultForest.SetNewRandom(Es.WhereEnviromentEs);
                     }
 
                     if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment

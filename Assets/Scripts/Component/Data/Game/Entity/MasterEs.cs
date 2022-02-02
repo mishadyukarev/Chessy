@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct MasterEs
+    public readonly struct MasterEs
     {
         static Entity _else;
         static Dictionary<RpcMasterTypes, Entity> _rpcEnts;
@@ -38,8 +38,9 @@ namespace Game.Game
         public readonly BuildingMineME BuildingMineME;
         public readonly BuildingCityME BuildingCityME;
         public readonly CenterUpgradeME CenterUpgradeME;
-        public readonly IceWallME IceWall;
-        //public readonly ActiveIceWallME ActiveIceWallME;
+        public readonly IceWallSnowyME IceWallSnowyME;
+        public readonly DirectWaveSnowyME DirectWaveSnowyME;
+        public readonly ActiveSnowyAroundME ActiveSnowyAroundME;
 
         public MasterEs(in EcsWorld gameW)
         {
@@ -118,13 +119,14 @@ namespace Game.Game
                 .Add(new IdxFromToC()));
 
 
-            IceWall = new IceWallME(gameW);
+            IceWallSnowyME = new IceWallSnowyME(gameW);
             FreezeDirectEnemy = new FreezeDirectEnemyME(gameW);
             BuildingFarmME = new BuildingFarmME(gameW);
             BuildingMineME = new BuildingMineME(gameW);
             BuildingCityME = new BuildingCityME(gameW);
             CenterUpgradeME = new CenterUpgradeME(gameW);
-            //ActiveIceWallME = new ActiveIceWallME(gameW);
+            DirectWaveSnowyME = new DirectWaveSnowyME(gameW);
+            ActiveSnowyAroundME = new ActiveSnowyAroundME(gameW);
         }
     }
 }

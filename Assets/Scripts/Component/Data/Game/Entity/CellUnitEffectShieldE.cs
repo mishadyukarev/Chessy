@@ -21,15 +21,24 @@ namespace Game.Game
         {
             switch (ability)
             {
-                case AbilityTypes.ActiveIceWall:
-                    AmountCRef.Amount++;
+                case AbilityTypes.ActiveAroundBonusSnowy:
+                    AmountCRef.Amount = 1;
                     break;
+
+                case AbilityTypes.DirectWave:
+                    AmountCRef.Amount = 1;
+                    break;
+
                 default: throw new Exception();
             }
         }
         public void Take(in int taking = 1)
         {
             AmountCRef.Amount -= taking;
+        }
+        public void Reset()
+        {
+            AmountCRef.Amount = 0;
         }
     }
 }

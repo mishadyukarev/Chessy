@@ -13,7 +13,7 @@ namespace Game.Game
             {
                 int random;
 
-                foreach (byte idx_0 in CellEsWorker.Idxs)
+                foreach (byte idx_0 in CellWorker.Idxs)
                 {
                     var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];
@@ -26,7 +26,7 @@ namespace Game.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
                             {
-                                EnvironmentEs(idx_0).Mountain.SetNew(Es.WhereEnviromentEs);
+                                EnvironmentEs(idx_0).Mountain.SetNewRandom(Es.WhereEnviromentEs);
                                 Es.WhereEnviromentEs.Info(EnvironmentTypes.Mountain, idx_0).HaveEnv.Have = true;
                             }
 
@@ -35,14 +35,14 @@ namespace Game.Game
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                                 {
-                                    EnvironmentEs(idx_0).AdultForest.SetNew(Es.WhereEnviromentEs);
+                                    EnvironmentEs(idx_0).AdultForest.SetNewRandom(Es.WhereEnviromentEs);
                                     Es.WhereEnviromentEs.Info(EnvironmentTypes.AdultForest, idx_0).HaveEnv.Have = true;
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Hill))
                                 {
-                                    EnvironmentEs(idx_0).Hill.SetNew(Es.WhereEnviromentEs);
+                                    EnvironmentEs(idx_0).Hill.SetNewRandom(Es.WhereEnviromentEs);
                                 }
                             }
                         }
@@ -52,7 +52,7 @@ namespace Game.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                             {
-                                EnvironmentEs(idx_0).AdultForest.SetNew(Es.WhereEnviromentEs);
+                                EnvironmentEs(idx_0).AdultForest.SetNewRandom(Es.WhereEnviromentEs);
                                 Es.WhereEnviromentEs.Info(EnvironmentTypes.AdultForest, idx_0).HaveEnv.Have = true;
                             }
                             else
@@ -69,10 +69,10 @@ namespace Game.Game
                         {
                             Es.WindE.CenterCloud.Idx = idx_0;
 
-                            CellEsWorker.TryGetXyAround(xy_0, out var dirs);
+                            CellWorker.TryGetXyAround(xy_0, out var dirs);
                             foreach (var item in dirs)
                             {
-                                var idx_1 = CellEsWorker.GetIdxCell(item.Value);
+                                var idx_1 = CellWorker.GetIdxCell(item.Value);
                                 //WindC.Set(item.Key, idx_1);
                             }
                         }
@@ -103,17 +103,17 @@ namespace Game.Game
                         {
                             if (RiverEs(idx_0).HaveRive(dir).HaveRiver.Have)
                             {
-                                var xy_next = CellEsWorker.GetXyCellByDirect(CellEs(idx_0).CellE.XyC.Xy, dir);
-                                var idx_next = CellEsWorker.GetIdxCell(xy_next);
+                                var xy_next = CellWorker.GetXyCellByDirect(CellEs(idx_0).CellE.XyC.Xy, dir);
+                                var idx_next = CellWorker.GetIdxCell(xy_next);
 
-                                RiverEs(idx_next).River.RiverTC.River = RiverTypes.End;
+                                RiverEs(idx_next).River.RiverTC.River = RiverTypes.EndRiver;
                             }
                         }
 
                         foreach (var dir in corners)
                         {
-                            var xy_next = CellEsWorker.GetXyCellByDirect(CellEs(idx_0).CellE.XyC.Xy, dir);
-                            var idx_next = CellEsWorker.GetIdxCell(xy_next);
+                            var xy_next = CellWorker.GetXyCellByDirect(CellEs(idx_0).CellE.XyC.Xy, dir);
+                            var idx_next = CellWorker.GetIdxCell(xy_next);
 
                             RiverEs(idx_next).River.RiverTC.River = RiverTypes.Corner;
                         }
@@ -125,7 +125,7 @@ namespace Game.Game
             {
                 Es.InventorResourcesEs.Resource(ResourceTypes.Food, PlayerTypes.Second).Resources.Amount = 999999;
 
-                foreach (byte idx_0 in CellEsWorker.Idxs)
+                foreach (byte idx_0 in CellWorker.Idxs)
                 {
                     var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];

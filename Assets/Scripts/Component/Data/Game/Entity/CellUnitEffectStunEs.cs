@@ -30,12 +30,20 @@ namespace Game.Game
                     ForExitStunRef.Amount = 4;
                     break;
 
-                case AbilityTypes.ActiveIceWall:
+                case AbilityTypes.ActiveAroundBonusSnowy:
+                    ForExitStunRef.Amount = 2;
+                    break;
+
+                case AbilityTypes.DirectWave:
                     ForExitStunRef.Amount = 2;
                     break;
 
                 default: throw new System.Exception();
             }
+        }
+        public void SetAfterAttackFrozenArrow()
+        {
+            ForExitStunRef.Amount = 2;
         }
     }
 }

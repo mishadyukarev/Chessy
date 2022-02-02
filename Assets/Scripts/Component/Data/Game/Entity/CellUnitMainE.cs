@@ -181,8 +181,12 @@ namespace Game.Game
             Set(unit);
             ents.CellEs(Idx).UnitEs.StatEs.Hp.SetMax();
             ents.CellEs(Idx).UnitEs.StatEs.StepE.SetMax(this);
-            ents.CellEs(Idx).UnitEs.StatEs.Water.SetMax(this, ents.UnitStatUpgradesEs);
+            ents.CellEs(Idx).UnitEs.StatEs.WaterE.SetMax(this, ents.UnitStatUpgradesEs);
+
             ents.UnitEffectEs(Idx).StunE.Reset();
+            ents.UnitEffectEs(Idx).ShieldE.Reset();
+            ents.UnitEffectEs(Idx).FrozenArrowE.Disable();
+
             ents.CellEs(Idx).UnitEs.ToolWeaponE.SetNew(tw);
             foreach (var item in ents.CellEs(Idx).UnitEs.CooldownKeys) ents.CellEs(Idx).UnitEs.CooldownAbility(item).SetNew();
             ents.WhereUnitsEs.WhereUnit(unit.Item1, unit.Item2, unit.Item3, Idx).HaveUnit.Have = true;
@@ -195,10 +199,11 @@ namespace Game.Game
             {
                 ents.WinnerE.Winner.Player = OwnerC.Player;
             }
-            else if (UnitTC.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
+            else if (UnitTC.Is(UnitTypes.Scout, UnitTypes.Elfemale, UnitTypes.Snowy))
             {
-                ents.ScoutHeroCooldownE(this).Cooldown.Amount = 3;
+                ents.ScoutHeroCooldownE(this).SetCooldownAfterKill(UnitTC.Unit);
                 ents.InventorUnitsEs.Units(UnitTC.Unit, LevelTC.Level, OwnerC.Player).AddUnit();
+
             }
             //else if (UnitTC.IsAnimal)
             //{
@@ -223,29 +228,34 @@ namespace Game.Game
             whereUnitsEs.WhereUnit(this, Idx).HaveUnit.Have = false;
 
             ents.CellEs(idx_to).UnitEs.MainE.Shift(this);
+
             ents.CellEs(idx_to).UnitEs.StatEs.Hp.Shift(ents.CellEs(Idx).UnitEs.StatEs.Hp);
             ents.CellEs(idx_to).UnitEs.StatEs.StepE.Shift(ents.CellEs(Idx).UnitEs.StatEs.StepE);
-            ents.CellEs(idx_to).UnitEs.StatEs.Water.Shift(ents.CellEs(Idx).UnitEs.StatEs.Water);
+            ents.CellEs(idx_to).UnitEs.StatEs.WaterE.Shift(ents.CellEs(Idx).UnitEs.StatEs.WaterE);
+
             ents.UnitEffectEs(idx_to).StunE.Shift(ents.UnitEffectEs(Idx).StunE);
             ents.UnitEffectEs(idx_to).ShieldE.Shift(ents.UnitEffectEs(Idx).ShieldE);
+            ents.UnitEffectEs(idx_to).FrozenArrowE.Shift(ents.UnitEffectEs(Idx).FrozenArrowE);
 
             ents.CellEs(idx_to).UnitEs.ToolWeaponE.Set(ents.CellEs(Idx).UnitEs.ToolWeaponE);
 
             foreach (var abilityT in ents.CellEs(Idx).UnitEs.CooldownKeys)
                 ents.CellEs(idx_to).UnitEs.CooldownAbility(abilityT).Shift(ents.CellEs(Idx).UnitEs.CooldownAbility(abilityT));
 
+            if (!ents.CellWorker.TryGetDirect(Idx, idx_to, out var direct)) throw new Exception();
+
             if (ents.CellEs(Idx).EnvironmentEs.AdultForest.HaveEnvironment)
             {
-                ents.CellEs(Idx).TrailEs.Trail(ents.CellEsWorker.GetDirect(Idx, idx_to)).SetNew();
+                ents.CellEs(Idx).TrailEs.Trail(direct).SetNew();
             }
             if (ents.CellEs(idx_to).EnvironmentEs.AdultForest.HaveEnvironment)
             {
-                ents.CellEs(idx_to).TrailEs.Trail(ents.CellEsWorker.GetDirect(Idx, idx_to).Invert()).SetNew();
+                ents.CellEs(idx_to).TrailEs.Trail(direct.Invert()).SetNew();
             }
 
-            if (ents.CellEs(idx_to).RiverEs.River.RiverTC.HaveRiver)
+            if (ents.CellEs(idx_to).RiverEs.River.HaveRiver)
             {
-                ents.CellEs(idx_to).UnitEs.StatEs.Water.SetMax(ents.CellEs(idx_to).UnitEs.MainE, statEs);
+                ents.CellEs(idx_to).UnitEs.StatEs.WaterE.SetMax(ents.CellEs(idx_to).UnitEs.MainE, statEs);
             }
 
             whereUnitsEs.WhereUnit(ents.CellEs(idx_to).UnitEs.MainE, idx_to).HaveUnit.Have = true;

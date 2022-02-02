@@ -11,6 +11,8 @@ namespace Game.Game
         public const int MAX_WATER_WITHOUT_EFFECTS = CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS;
 
         public bool HaveWater => Water.Amount > 0;
+
+        public bool Have(in AbilityTypes ability) => Water.Amount >= CellUnitStatWaterValues.Need(ability);
         
 
         public int MaxWater(in CellUnitMainE unitElseE, in UnitStatUpgradesEs statUpgEs)
@@ -37,11 +39,15 @@ namespace Game.Game
             WaterRef = waterE_from.Water;
             waterE_from.WaterRef.Amount = 0;
         }
-        public void Thirsty()
+        public void Thirsty(in UnitTypes unitT)
         {
-            WaterRef.Amount -= (int)(CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.15f);
+            WaterRef.Amount -= CellUnitStatWaterValues.NeedWaterThirsty(unitT);
         }
 
         public void SetMax(in CellUnitMainE unitMainE, in UnitStatUpgradesEs statUpgEs) => WaterRef.Amount = MaxWater(unitMainE, statUpgEs);
+        public void Take(in AbilityTypes ability)
+        {
+            WaterRef.Amount -= CellUnitStatWaterValues.Need(ability);
+        }
     }
 }

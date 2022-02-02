@@ -20,7 +20,7 @@
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {
-                            EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
+                            EnvironmentEs(idx_0).YoungForest.SetNewRandom(Es.WhereEnviromentEs);
                         }
                     }
                 }

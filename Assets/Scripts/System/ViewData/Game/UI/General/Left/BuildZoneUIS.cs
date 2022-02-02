@@ -11,7 +11,7 @@ namespace Game.Game
         public void Run()
         {
             var unit_sel = BuildEs(Es.SelectedIdxE.IdxC.Idx).BuildingE.BuildTC;
-            var own_sel = BuildEs(Es.SelectedIdxE.IdxC.Idx).BuildingE.Owner;
+            var own_sel = BuildEs(Es.SelectedIdxE.IdxC.Idx).BuildingE.OwnerC;
 
 
             if (Es.SelectedIdxE.IsSelCell && unit_sel.Is(BuildingTypes.City))

@@ -32,7 +32,7 @@
 
                             if (EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
                             {
-                                EnvironmentEs(idx_0).Fertilizer.SetMax();
+                                EnvironmentEs(idx_0).Fertilizer.AddAfterBuildingFarm();
                             }
                             else
                             {
@@ -42,7 +42,6 @@
                             Es.InventorResourcesEs.BuyBuild(whoseMove, BuildingTypes.Farm);
 
                             BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Farm, whoseMove, BuildEs(idx_0), Es.WhereBuildingEs);
-                            Es.WhereBuildingEs.HaveBuild(BuildingTypes.Farm, whoseMove, idx_0).HaveBuilding.Have = true;
 
                             UnitStatEs(idx_0).StepE.Take(ability);
                         }

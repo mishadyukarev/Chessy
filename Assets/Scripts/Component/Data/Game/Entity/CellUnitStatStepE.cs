@@ -1,4 +1,5 @@
 ﻿using ECS;
+using System;
 
 namespace Game.Game
 {
@@ -44,7 +45,8 @@ namespace Game.Game
         }
         public void TakeForShift(in byte idx_to, in Entities es)
         {
-            StepsRef.Amount -= es.UnitEs(idx_to).MainE.StepsForShiftOrAttack(es.CellEsWorker.GetDirect(Idx, idx_to), es.EnvironmentEs(idx_to), es.TrailEs(idx_to));
+            if (!es.CellWorker.TryGetDirect(Idx, idx_to, out var dir)) throw new Exception();
+            StepsRef.Amount -= es.UnitEs(idx_to).MainE.StepsForShiftOrAttack(dir, es.EnvironmentEs(idx_to), es.TrailEs(idx_to));
         }
     }
 }

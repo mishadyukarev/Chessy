@@ -34,7 +34,7 @@ namespace Game.Game
                 powerDam_to += UnitEs(idx_to).MainE.DamageOnCell(CellEs(idx_to), Es.UnitStatUpgradesEs);
 
 
-                var dirAttack = CellEsWorker.GetDirect(idx_from, idx_to);
+                CellWorker.TryGetDirect(idx_from, idx_to, out var dirAttack);
 
 
                 if (Es.SunSidesE.SunSideTC.IsAcitveSun)
@@ -107,22 +107,34 @@ namespace Game.Game
 
                 if (UnitEs(idx_from).MainE.UnitTC.IsMelee)
                 {
-                    if (UnitEs(idx_from).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
-                    {
-                        UnitEs(idx_from).ToolWeaponE.BreakShield();
-                    }
-                    else if (UnitEffectEs(idx_from).ShieldE.HaveShieldEffect)
+                    if (UnitEffectEs(idx_from).ShieldE.HaveShieldEffect)
                     {
                         UnitEffectEs(idx_from).ShieldE.Take();
+                    }
+                    else if (UnitEs(idx_from).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                    {
+                        UnitEs(idx_from).ToolWeaponE.BreakShield();
                     }
                     else if (minus_from > 0)
                     {
                         UnitStatEs(idx_from).Hp.Attack((int)minus_from);
                     }
                 }
+                else
+                {
+                    if (UnitEffectEs(idx_from).FrozenArrowE.HaveEffect)
+                    {
+                        UnitEffectEs(idx_from).FrozenArrowE.Disable();
 
+                        UnitEffectEs(idx_to).StunE.SetAfterAttackFrozenArrow();
+                    }
+                }
 
-                if (UnitEs(idx_to).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                if (UnitEffectEs(idx_to).ShieldE.HaveShieldEffect)
+                {
+                    UnitEffectEs(idx_to).ShieldE.Take();
+                }
+                else if (UnitEs(idx_to).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
                 {
                     UnitEs(idx_to).ToolWeaponE.BreakShield();
                 }
@@ -130,7 +142,6 @@ namespace Game.Game
                 {
                     UnitStatEs(idx_to).Hp.Attack((int)minus_to);
                 }
-
 
 
                 if (!UnitStatEs(idx_to).Hp.IsAlive)

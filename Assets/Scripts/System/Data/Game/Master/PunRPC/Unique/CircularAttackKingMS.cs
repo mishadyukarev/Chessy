@@ -26,9 +26,9 @@ namespace Game.Game
 
                     UnitEs(idx_0).CooldownAbility(uniq_cur).SetAfterAbility();
 
-                    foreach (var xy1 in CellEsWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy))
+                    foreach (var xy1 in CellWorker.GetXyAround(CellEs(idx_0).CellE.XyC.Xy))
                     {
-                        var idx_1 = CellEsWorker.GetIdxCell(xy1);
+                        var idx_1 = CellWorker.GetIdxCell(xy1);
 
                         var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
                         var tw_1 = UnitEs(idx_1).ToolWeaponE.ToolWeaponTC;

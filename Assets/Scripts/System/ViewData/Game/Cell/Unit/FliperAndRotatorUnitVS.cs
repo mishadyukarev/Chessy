@@ -4,13 +4,13 @@ namespace Game.Game
 {
     sealed class FliperAndRotatorUnitVS : SystemViewAbstract, IEcsRunSystem
     {
-        public FliperAndRotatorUnitVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal FliperAndRotatorUnitVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
         public void Run()
         {
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;

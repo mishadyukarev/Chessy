@@ -31,7 +31,7 @@
                         BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
                         EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails, Es.WhereEnviromentEs);
 
-                        EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).YoungForest.SetNewRandom(Es.WhereEnviromentEs);
                     }
                 }
                 //else if (!Unit<UnitCellEC>(idx_0).CanResume(out resume, out env))

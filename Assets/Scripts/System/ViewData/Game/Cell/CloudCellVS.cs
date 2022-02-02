@@ -8,14 +8,14 @@
 
         public void Run()
         {
-            foreach (var idx_0 in CellEsWorker.Idxs)
+            foreach (var idx_0 in CellWorker.Idxs)
             {
                 CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx_0).SetActive(false);
             }
 
             var centerCloud = Es.WindE.CenterCloud.Idx;
 
-            foreach (var idx in CellEsWorker.GetIdxsAround(centerCloud))
+            foreach (var idx in CellWorker.GetIdxsAround(centerCloud))
             {
                 CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx).SetActive(true);
             }

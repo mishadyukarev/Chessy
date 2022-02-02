@@ -76,7 +76,6 @@ namespace Game.Game
             new SupportCellVEs(gameW, cells);
             new CellBlocksVEs(gameW, cells);
             new CellBarsVEs(gameW, cells);
-            new StunCellVEs(gameW, cells);
 
 
             UIEs = new UIEs(gameW);

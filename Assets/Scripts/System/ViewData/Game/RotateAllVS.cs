@@ -14,7 +14,7 @@ namespace Game.Game
         {
             var curPlayer = Es.WhoseMove.CurPlayerI;
 
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
                 CellVEs(idx_0).CellSR.RotParent = curPlayer == PlayerTypes.First

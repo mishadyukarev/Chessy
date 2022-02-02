@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public readonly struct SpriteRendererVC : ITrailCellV, ICloudCellV, ISupportVE, IBlockCellVE, IBarCellVE, IStunCellVE
+    public readonly struct SpriteRendererVC : ITrailCellV, ICloudCellV, ISupportVE, IBlockCellVE, IBarCellVE
     {
         readonly SpriteRenderer _sr;
 

@@ -78,7 +78,7 @@ namespace Game.Game
 
 
 
-        public readonly CellEsWorker CellEsWorker;
+        public readonly CellEsWorker CellWorker;
 
         #endregion
 
@@ -157,7 +157,7 @@ namespace Game.Game
                     _cellEs[idx] = new CellEs(isActiveParenCells[idx], idCells[idx], new byte[] { x, y }, idx, gameW);
                     ++idx;
                 }
-            CellEsWorker = new CellEsWorker(_cellEs);
+            CellWorker = new CellEsWorker(_cellEs);
 
 
             new CellsForSetUnitsEs(gameW);

@@ -11,7 +11,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in CellEsWorker.Idxs)
+            foreach (var idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var levelUnit_0 = UnitEs(idx_0).MainE.LevelTC.Level;

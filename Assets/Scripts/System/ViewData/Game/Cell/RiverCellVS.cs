@@ -11,7 +11,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in CellEsWorker.Idxs)
+            foreach (var idx_0 in CellWorker.Idxs)
             {
                 ref var river_0 = ref RiverEs(idx_0).River.RiverTC;
 

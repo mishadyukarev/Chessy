@@ -6,12 +6,12 @@ namespace Game.Game
 {
     public readonly struct InventorResourcesEs
     {
-        readonly Dictionary<string, AmountResourcesInInventorE> _resources;
+        readonly Dictionary<string, ResourcesInInventorE> _resources;
 
         string Key(in ResourceTypes res, in PlayerTypes player) => res.ToString() + player;
 
-        public AmountResourcesInInventorE Resource(in ResourceTypes res, in PlayerTypes player) => _resources[Key(res, player)];
-        public AmountResourcesInInventorE Resource(in string key) => _resources[key];
+        public ResourcesInInventorE Resource(in ResourceTypes res, in PlayerTypes player) => _resources[Key(res, player)];
+        public ResourcesInInventorE Resource(in string key) => _resources[key];
 
         public HashSet<string> Keys
         {
@@ -25,13 +25,13 @@ namespace Game.Game
 
         public InventorResourcesEs(in EcsWorld gameW)
         {
-            _resources = new Dictionary<string, AmountResourcesInInventorE>();
+            _resources = new Dictionary<string, ResourcesInInventorE>();
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
                 for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
                 {
-                    _resources.Add(Key(res, player), new AmountResourcesInInventorE(EconomyValues.AmountResources(res), gameW));
+                    _resources.Add(Key(res, player), new ResourcesInInventorE(EconomyValues.AmountResources(res), gameW));
                 }
             }
         }

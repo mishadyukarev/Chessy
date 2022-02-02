@@ -28,7 +28,7 @@ namespace Game.Game
         }
         public void ExtractMine(in CellEs cellEs, in BuildingUpgradeEs buildUpgEs, in InventorResourcesEs invResEs)
         {
-            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.Owner.Player).AddFarmExtractHill(this, buildUpgEs, cellEs.BuildEs);
+            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.OwnerC.Player).AddFarmExtractHill(this, buildUpgEs, cellEs.BuildEs);
 
 
             ResourcesRef.Amount -= AmountExtractMine(buildUpgEs, cellEs.BuildEs);

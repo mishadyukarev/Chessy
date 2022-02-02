@@ -1,4 +1,6 @@
-﻿namespace Game.Game
+﻿using System.Collections.Generic;
+
+namespace Game.Game
 {
     sealed class UpdateFireMS : SystemCellAbstract, IEcsRunSystem
     {
@@ -8,7 +10,7 @@
 
         public void Run()
         {
-            CellEsWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var directs);
+            CellWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var directs);
 
             foreach (var item in directs)
             {
@@ -16,7 +18,9 @@
             }
 
 
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            var needForFireNext = new List<byte>();
+
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
 
@@ -26,7 +30,7 @@
                 var hpUnit_0 = UnitStatEs(idx_0).Hp.Health;
 
                 var buil_0 = BuildEs(idx_0).BuildingE.BuildTC;
-                var ownBuil_0 = BuildEs(idx_0).BuildingE.Owner;
+                var ownBuil_0 = BuildEs(idx_0).BuildingE.OwnerC;
 
                 if (EffectEs(idx_0).FireE.HaveFireC.Have)
                 {
@@ -46,23 +50,27 @@
 
                         if (UnityEngine.Random.Range(0, 100) < 50)
                         {
-                            EnvironmentEs(idx_0).YoungForest.SetNew(Es.WhereEnviromentEs);
+                            EnvironmentEs(idx_0).YoungForest.SetNewRandom(Es.WhereEnviromentEs);
                         }
-
 
                         EffectEs(idx_0).FireE.Disable();
 
 
-                        foreach (var idx_1 in CellEsWorker.GetIdxsAround(idx_0))
+                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive)
-                            {
-                                if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
-                                {
-                                    EffectEs(idx_1).FireE.Enable();
-                                }
-                            }
+                            needForFireNext.Add(idx_1);
                         }
+                    }
+                }
+            }
+
+            foreach (var idx_0 in needForFireNext)
+            {
+                if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                {
+                    if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    {
+                        EffectEs(idx_0).FireE.Enable();
                     }
                 }
             }

@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (var idx_0 in CellEsWorker.Idxs)
+            foreach (var idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
@@ -24,8 +24,8 @@
 
                             for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                             {
-                                var xy_1 = CellEsWorker.GetXyCellByDirect(xy_from, dir_1);
-                                var idx_1 = CellEsWorker.GetIdxCell(xy_1);
+                                var xy_1 = CellWorker.GetXyCellByDirect(xy_from, dir_1);
+                                var idx_1 = CellWorker.GetIdxCell(xy_1);
 
                                 var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
 
@@ -63,8 +63,8 @@
                                     }
 
 
-                                    var xy_2 = CellEsWorker.GetXyCellByDirect(xy_1, dir_1);
-                                    var idx_2 = CellEsWorker.GetIdxCell(xy_2);
+                                    var xy_2 = CellWorker.GetXyCellByDirect(xy_1, dir_1);
+                                    var idx_2 = CellWorker.GetIdxCell(xy_2);
 
 
                                     var unit_2 = UnitEs(idx_2).MainE.UnitTC;

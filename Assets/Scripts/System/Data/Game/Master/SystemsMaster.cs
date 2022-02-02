@@ -23,6 +23,8 @@ namespace Game.Game
                 + new UpdExtractWoodcutterMS(ents).Run
                 + new UpdExtractFarmMS(ents).Run
                 + new UpdExtractMineMS(ents).Run
+                + new UpdIceWallGiveWaterMS(ents).Run
+                + new UpdIceWallFertilizeAroundMS(ents).Run
 
                 + new UpdateFireMS(ents).Run
                 + new CloudUpdMS(ents).Run
@@ -33,7 +35,6 @@ namespace Game.Game
                 + new UpdateHealingUnitMS(ents).Run
                 + new UpdateHungryMS(ents).Run
                 + new UpdateThirstyMS(ents).Run
-                + new UpdGiveWaterSnowyMS(ents).Run
 
                 + new UpdateCamelShiftMS(ents).Run
                 + new UpdateSpawnCamelMS(ents).Run;
@@ -79,8 +80,9 @@ namespace Game.Game
             _uniqAbil.Add(AbilityTypes.ChangeDirectionWind, new ChangeDirectionWindElfemaleMS(ents).Run);
             _uniqAbil.Add(AbilityTypes.ChangeCornerArcher, new ChangeCornerArcherMS(ents).Run);
 
-            _uniqAbil.Add(AbilityTypes.IceWall, new IceWallMS(ents).Run);
-            _uniqAbil.Add(AbilityTypes.ActiveIceWall, new ActiveIceWallMS(ents).Run);
+            _uniqAbil.Add(AbilityTypes.IceWall, new SetIceWallSnowyMS(ents).Run);
+            _uniqAbil.Add(AbilityTypes.ActiveAroundBonusSnowy, new ActiveSnowyAroundMS(ents).Run);
+            _uniqAbil.Add(AbilityTypes.DirectWave, new DirectWaveSnowyMS(ents).Run);
         }
 
         public void InvokeRun(SystemDataMasterTypes mastDataSys) => _systems[mastDataSys].Invoke();

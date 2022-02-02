@@ -135,15 +135,16 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.IceWall:
-                            {
                                 Es.Rpc.IceWallToMaster(idx_sel);
-                            }
                             break;
 
-                        case AbilityTypes.ActiveIceWall:
-                            {
-                                Es.Rpc.ActiveIceWallToMaster(idx_sel);
-                            }
+                        case AbilityTypes.ActiveAroundBonusSnowy:
+                            Es.Rpc.ActiveSnowyAroundToMaster(idx_sel);
+                            break;
+
+                        case AbilityTypes.DirectWave:
+                            Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
+                            Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.DirectWave;
                             break;
 
                         default: throw new Exception();

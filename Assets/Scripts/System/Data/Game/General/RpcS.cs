@@ -103,11 +103,15 @@ namespace Game.Game
                         break;
 
                     case AbilityTypes.IceWall:
-                        _ents.MasterEs.IceWall.IdxC.Idx = (byte)objects[_idx_cur++];
+                        _ents.MasterEs.IceWallSnowyME.IdxC.Idx = (byte)objects[_idx_cur++];
                         break;
 
-                    case AbilityTypes.ActiveIceWall:
-                        //_ents.MasterEs.ActiveIceWallME.WhereActiveIceWall.Idx = (byte)objects[_idx_cur++];
+                    case AbilityTypes.ActiveAroundBonusSnowy:
+                        _ents.MasterEs.ActiveSnowyAroundME.Where.Idx = (byte)objects[_idx_cur++];
+                        break;
+
+                    case AbilityTypes.DirectWave:
+                        _ents.MasterEs.DirectWaveSnowyME.ForDirectWave.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     default: throw new Exception();
@@ -280,7 +284,7 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (byte idx_0 in _ents.CellEsWorker.Idxs)
+            foreach (byte idx_0 in _ents.CellWorker.Idxs)
             {
                 objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.UnitTC.Unit);
                 objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
@@ -288,7 +292,7 @@ namespace Game.Game
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Hp.Health.Amount);
                 objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.StepE.Steps.Amount);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Water.Water.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.WaterE.Water.Amount);
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.ConditionTC.Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
@@ -309,7 +313,7 @@ namespace Game.Game
 
 
                 objs.Add(_ents.CellEs(idx_0).BuildEs.BuildingE.BuildTC.Build);
-                objs.Add(_ents.CellEs(idx_0).BuildEs.BuildingE.Owner.Player);
+                objs.Add(_ents.CellEs(idx_0).BuildEs.BuildingE.OwnerC.Player);
 
 
 
@@ -390,7 +394,7 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (byte idx_0 in _ents.CellEsWorker.Idxs)
+            foreach (byte idx_0 in _ents.CellWorker.Idxs)
             {
                 //_ents.CellEs(idx_0).UnitEs.Main.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
                 //_ents.CellEs(idx_0).UnitEs.Main.LevelC.Level = (LevelTypes)objects[_idx_cur++];
@@ -442,10 +446,10 @@ namespace Game.Game
             }
 
 
-            _ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).Cooldown.Amount = (int)objects[_idx_cur++];
-            _ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).Cooldown.Amount = (int)objects[_idx_cur++];
-            _ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).Cooldown.Amount = (int)objects[_idx_cur++];
-            _ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).Cooldown.Amount = (int)objects[_idx_cur++];
+            _ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).SyncRpc((int)objects[_idx_cur++]);
+            _ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).SyncRpc((int)objects[_idx_cur++]);
+            _ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).SyncRpc((int)objects[_idx_cur++]);
+            _ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).SyncRpc((int)objects[_idx_cur++]);
 
 
 

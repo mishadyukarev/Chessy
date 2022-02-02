@@ -16,13 +16,15 @@ namespace Game.Game
         {
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                Es.ScoutHeroCooldownE(UnitTypes.Scout, player).Cooldown.Amount -= 1;
-                Es.ScoutHeroCooldownE(UnitTypes.Elfemale, player).Cooldown.Amount -= 1;
+                for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
+                {
+                    Es.ScoutHeroCooldownE(unit, player).UpdateCooldown();
+                }
 
                 Es.InventorResourcesEs.Resource(ResourceTypes.Food, player).Resources.Amount += EconomyValues.ADDING_FOOD_AFTER_MOVE;
             }
 
-            foreach (byte idx_0 in CellEsWorker.Idxs)
+            foreach (byte idx_0 in CellWorker.Idxs)
             {
                 ref var cell_0 = ref CellEs(idx_0).CellE.InstanceIDC;
 
@@ -108,7 +110,7 @@ namespace Game.Game
             }
 
             var amountAdultForest = 0;
-            foreach (var idx in CellEsWorker.Idxs)
+            foreach (var idx in CellWorker.Idxs)
             {
                 if (Es.WhereEnviromentEs.Info(EnvironmentTypes.AdultForest, idx).HaveEnv.Have)
                     amountAdultForest += 1;
@@ -122,7 +124,7 @@ namespace Game.Game
 
             if (Es.Motion.AmountMotions.Amount % 3 == 0)
             {
-                foreach (byte idx_0 in CellEsWorker.Idxs)
+                foreach (byte idx_0 in CellWorker.Idxs)
                 {
                     var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
 
