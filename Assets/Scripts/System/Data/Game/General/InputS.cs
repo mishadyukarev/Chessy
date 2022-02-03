@@ -6,11 +6,17 @@ namespace Game.Game
 
     sealed class InputS : SystemCellAbstract, IEcsRunSystem
     {
-        public InputS(in Entities ents) : base(ents) { }
+        internal InputS(in Entities ents) : base(ents)
+        {
+
+        }
 
         public void Run()
         {
-            if (Input.GetMouseButtonDown(0)) Es.InputE.IsClickedC.IsClicked = true;
+            if (Input.GetMouseButtonDown(0))
+            { 
+                Es.InputE.IsClickedC.IsClicked = true;
+            }
             else Es.InputE.IsClickedC.IsClicked = false;
         }
     }

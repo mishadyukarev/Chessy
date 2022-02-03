@@ -29,7 +29,7 @@ namespace Game.Game
 
 
             _units = new Dictionary<UnitTypes, Entity>();
-            for (var unit = UnitTypes.Elfemale; unit <= UnitTypes.Snowy; unit++)
+            for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Camel; unit++)
             {
                 _units.Add(unit, gameW.NewEntity()
                     .Add(new ImageUIC(hero.Find(unit.ToString()).GetComponent<Image>())));

@@ -4,10 +4,15 @@
     {
         protected readonly EntitiesView VEs;
 
-        public CellVEs CellVEs(in byte idx) => VEs.CellVEs(idx);
+        protected CellVEs CellVEs(in byte idx) => VEs.CellVEs(idx);
 
-        public CellUnitVEs UnitVEs(in byte idx) => CellVEs(idx).UnitVEs;
-        public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitVEs(idx).EffectVEs;
+        protected CellUnitVEs UnitVEs(in byte idx) => CellVEs(idx).UnitVEs;
+        protected CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitVEs(idx).EffectVEs;
+
+
+        protected UIEs UIEs => VEs.UIEs;
+        protected CenterUIEs CenterUIEs => UIEs.CenterEs;
+        protected RightUIEs RightUIEs => UIEs.RightEs;
 
         public SystemViewAbstract(in Entities ents, in EntitiesView entsView) : base(ents)
         {

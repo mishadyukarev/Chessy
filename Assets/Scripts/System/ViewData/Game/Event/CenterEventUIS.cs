@@ -1,7 +1,6 @@
 ﻿using Game.Common;
 using Photon.Pun;
 using UnityEngine;
-using static Game.Game.CenterHerosUIE;
 using static Game.Game.CenterHintUIE;
 using static Game.Game.CenterUpgradeUIE;
 using static Game.Game.EconomyUpUIE;
@@ -34,9 +33,11 @@ namespace Game.Game
             Water.AddListener(UpgradeWater);
 
 
-            ButtonC(UnitTypes.Elfemale).AddListener(delegate { GetHero(UnitTypes.Elfemale); });
-            ButtonC(UnitTypes.Snowy).AddListener(delegate { GetHero(UnitTypes.Snowy); });
-            ButtonC(UnitTypes.None).AddListener(OpenShop);
+            CenterUIEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
+            CenterUIEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { GetHero(UnitTypes.Snowy); });
+            CenterUIEs.HeroE(UnitTypes.Undead).ButtonC.AddListener(delegate { GetHero(UnitTypes.Undead); });
+            CenterUIEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
+            //VEs.UIEs.CenterEs.CenterHeroUIE(UnitTypes.Elfemale).AddListener(OpenShop);
         }
 
         void Ready() => Es.Rpc.ReadyToMaster();
@@ -53,13 +54,10 @@ namespace Game.Game
             {
                 if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
                 {
-                    Es.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
-
-                    Es.SelectedUnitE.UnitTC.Unit = UnitTypes.King;
-                    Es.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+                    Es.SelectedUnitE.SetSelectedUnit(UnitTypes.King, LevelTypes.First, Es.ClickerObject);
                 }
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
         void Hint()
         {
@@ -82,9 +80,9 @@ namespace Game.Game
             {
                 Es.Rpc.PickUpgUnitToMas(unit);
 
-                Parent.SetActive(true);
+                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void UpgradeBuild(BuildingTypes build)
@@ -93,9 +91,9 @@ namespace Game.Game
             {
                 Es.Rpc.PickUpgBuildToMas(build);
 
-                Parent.SetActive(true);
+                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void UpgradeWater()
@@ -104,9 +102,9 @@ namespace Game.Game
             {
                 Es.Rpc.UpgWater();
 
-                Parent.SetActive(true);
+                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void GetHero(in UnitTypes unit)
@@ -115,7 +113,7 @@ namespace Game.Game
             {
                 Es.Rpc.GetHeroToMaster(unit);
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         private void OpenShop()

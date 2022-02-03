@@ -4,15 +4,17 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct RightUIEs
+    public readonly struct RightUIEs
     {
-        Dictionary<ButtonTypes, RightUniqueUIE> _uniques;
-        Dictionary<string, RightUniqueZoneUIE> _uniqueZones;
-
-        public RightZoneUIE Zone { get; private set; }
-
+        readonly Dictionary<ButtonTypes, RightUniqueUIE> _uniques;
+        readonly Dictionary<string, RightUniqueZoneUIE> _uniqueZones;
+        readonly Dictionary<byte, RightEffectUIE> _effects;
         public RightUniqueUIE Unique(in ButtonTypes but) => _uniques[but];
         public RightUniqueZoneUIE UniqueZone(in ButtonTypes but, in AbilityTypes ability) => _uniqueZones[but.ToString() + ability];
+        public RightEffectUIE Effect(in byte numberEffect) => _effects[numberEffect];
+
+
+        public readonly RightZoneUIE Zone;
 
 
         public RightUIEs(in EcsWorld gameW)
@@ -46,6 +48,16 @@ namespace Game.Game
                     var zone = button.Find("Zones");
                     _uniqueZones.Add(buttonT.ToString() + ability, new RightUniqueZoneUIE(gameW, zone.Find(ability.ToString())));
                 }
+            }
+
+
+            _effects = new Dictionary<byte, RightEffectUIE>();
+
+            var effectZone = rightZone.Find("Effects");
+
+            for (byte idx_effect = 0; idx_effect < 5; idx_effect++)
+            {
+                _effects.Add(idx_effect, new RightEffectUIE(effectZone, idx_effect, gameW));
             }
         }
     }

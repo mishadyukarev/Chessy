@@ -28,7 +28,7 @@ namespace Game.Game
 
         void ExecuteScout()
         {
-            Es.SelectedIdxE.IdxC.Reset();
+            Es.SelectedIdxE.Reset();
 
             TryOnHint(VideoClipTypes.CreatingScout);
 
@@ -38,33 +38,36 @@ namespace Game.Game
                 {
                     if (Es.WhoseMove.IsMyMove)
                     {
-                        Es.ClickerObject.CellClickC.Click = CellClickTypes.GiveScout;
+                        Es.SelectedUnitE.SetSelectedUnit(UnitTypes.Scout, LevelTypes.First, Es.ClickerObject);
                     }
                 }
                 else
                 {
-                    SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+                    SoundV(ClipTypes.Mistake).Play();
                 }
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
         void Hero()
         {
-            Es.SelectedIdxE.IdxC.Reset();
+            Es.SelectedIdxE.Reset();
             TryOnHint(VideoClipTypes.CreatingHero);
 
             if (Es.WhoseMove.IsMyMove)
             {
-                if (!Es.ScoutHeroCooldownE(UnitTypes.Elfemale, Es.WhoseMove.CurPlayerI).HaveCooldown)
+                if (Es.InventorUnitsEs.HaveHero(Es.WhoseMove.CurPlayerI, out var myHero))
                 {
-                    Es.ClickerObject.CellClickC.Click = CellClickTypes.GiveHero;
-                }
-                else
-                {
-                    SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+                    if (!Es.ScoutHeroCooldownE(myHero, Es.WhoseMove.CurPlayerI).HaveCooldown)
+                    {
+                        Es.SelectedUnitE.SetSelectedUnit(myHero, LevelTypes.First, Es.ClickerObject);
+                    }
+                    else
+                    {
+                        SoundV(ClipTypes.Mistake).Play();
+                    }
                 }
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
 
@@ -76,7 +79,7 @@ namespace Game.Game
             }
             else
             {
-                SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+                SoundV(ClipTypes.Mistake).Play();
             }
         }
 
@@ -88,7 +91,7 @@ namespace Game.Game
 
                 Es.Rpc.CreateUnitToMaster(unit);
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void GetUnit(UnitTypes unitT)
@@ -101,18 +104,12 @@ namespace Game.Game
             {
                 if (Es.InventorUnitsEs.Units(unitT, LevelTypes.Second, Es.WhoseMove.CurPlayerI).HaveUnits)
                 {
-                    Es.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
-
-                    Es.SelectedUnitE.UnitTC.Unit = unitT;
-                    Es.SelectedUnitE.LevelTC.Level = LevelTypes.Second;
+                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.Second, Es.ClickerObject);
                 }
 
                 else if (Es.InventorUnitsEs.Units(unitT, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
                 {
-                    Es.ClickerObject.CellClickC.Click = CellClickTypes.SetUnit;
-
-                    Es.SelectedUnitE.UnitTC.Unit = unitT;
-                    Es.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.First, Es.ClickerObject);
                 }
 
                 else
@@ -120,7 +117,7 @@ namespace Game.Game
                     GetterUnitsEs.GetterUnit<IsActiveC>(unitT).IsActive = true;
                 }
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void ToggleToolWeapon(in ToolWeaponTypes tw)
@@ -179,7 +176,7 @@ namespace Game.Game
                     else selLevelTWC.Level = LevelTypes.Second;
                 }
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void ToggleUpgradeUnit()
@@ -191,7 +188,7 @@ namespace Game.Game
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
                 Es.ClickerObject.CellClickC.Click = CellClickTypes.UpgradeUnit;
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
 

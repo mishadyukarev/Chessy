@@ -14,7 +14,12 @@ namespace Game
         EcsWorld _commonW;
         EcsWorld _toggleW;
 
+        #region Game
+
         Systems _systems;
+        SystemsView _systemsV;
+
+        #endregion
 
 
         void Start()
@@ -42,8 +47,8 @@ namespace Game
 
                 case SceneTypes.Game:
                     _systems.Run(DataSTypes.RunUpdate);
-                    SystemsView.Run(ViewDataSystemTypes.RunUpdate);
-                    SystemViewUI.Run(UITypes.RunUpdate);
+                    _systemsV.Run(SystemViewDataTypes.RunUpdate);
+                    _systemsV.SystemViewUI.Run(UITypes.RunUpdate);
                     break;
 
                 default:
@@ -66,8 +71,8 @@ namespace Game
 
                 case SceneTypes.Game:
                     _systems.Run(DataSTypes.RunFixedUpdate);
-                    SystemsView.Run(ViewDataSystemTypes.RunFixedUpdate);
-                    SystemViewUI.Run(UITypes.RunFixedUpdate);
+                    _systemsV.Run(SystemViewDataTypes.RunFixedUpdate);
+                    _systemsV.SystemViewUI.Run(UITypes.RunFixedUpdate);
                     break;
 
                 default:
@@ -107,8 +112,8 @@ namespace Game
                         new FillCellsS(ents);
 
                         new Events(ents, entsView);
-                        _systems = new Systems(ents);
-                        new SystemsView(ents, entsView);
+                        _systemsV = new SystemsView(ents, entsView);
+                        _systems = new Systems(ents, _systemsV);
 
                         EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>().GiveData(ents, _systems);
                         RpcS.SyncAllMaster();

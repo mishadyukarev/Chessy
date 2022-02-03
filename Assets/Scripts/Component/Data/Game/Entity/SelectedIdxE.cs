@@ -9,5 +9,7 @@ namespace Game.Game
         public bool IsSelCell => IdxC.Idx != 0;
 
         public SelectedIdxE(in EcsWorld gameW) : base(gameW) { }
+
+        public void Reset() => IdxC.Idx = 0;
     }
 }

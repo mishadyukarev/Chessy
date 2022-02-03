@@ -17,6 +17,8 @@ namespace Game.Game
                 case UnitTypes.Scout: steps = 5; break;
                 case UnitTypes.Elfemale: steps = 3; break;
                 case UnitTypes.Snowy: steps = 3; break;
+                case UnitTypes.Undead: steps = 2; break;
+                case UnitTypes.Hell: steps = 1; break;
                 case UnitTypes.Camel: steps = 3; break;
                 default: throw new Exception();
             }
@@ -115,6 +117,17 @@ namespace Game.Game
         internal static int NeedSteps(in BuildingTypes build)
         {
             return 1;
+        }
+        internal static int NeedStepsShiftAttackUnit(in EnvironmentTypes envT)
+        {
+            switch (envT)
+            {
+                case EnvironmentTypes.Fertilizer: return 0;
+                case EnvironmentTypes.YoungForest: return 0;
+                case EnvironmentTypes.AdultForest: return 1;
+                case EnvironmentTypes.Hill: return 1;
+                default: throw new Exception();
+            }
         }
     }
 }

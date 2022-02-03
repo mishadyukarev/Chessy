@@ -11,9 +11,9 @@ namespace Game.Game
 
         public void Run()
         {
-            if (SoundV<AudioSourceVC>(ClipTypes.Truce).IsPlaying
-                || SoundV<AudioSourceVC>(ClipTypes.AfterBuildTown).IsPlaying
-                || SoundV<AudioSourceVC>(ClipTypes.PickUpgrade).IsPlaying)
+            if (SoundV(ClipTypes.Truce).IsPlaying
+                || SoundV(ClipTypes.AfterBuildTown).IsPlaying
+                || SoundV(ClipTypes.PickUpgrade).IsPlaying)
             {
                 SoundC.Volume = 0;
             }

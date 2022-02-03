@@ -23,7 +23,7 @@
                             {
                                 CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
 
-                                var one = UnitStatEs(idx_0).StepE.Steps.Amount >= UnitEs(idx_1).MainE.StepsForShiftOrAttack(dir, EnvironmentEs(idx_1), TrailEs(idx_1));
+                                var one = UnitEs(idx_0).StatEs.StepE.CanShift(UnitEs(idx_0).MainE.UnitTC, dir, CellEs(idx_1));
                                 var two = UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).MainE);
 
                                 if (one || two)

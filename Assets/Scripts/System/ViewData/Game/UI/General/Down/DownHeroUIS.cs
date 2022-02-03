@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class DownHeroUIS : SystemViewAbstract, IEcsRunSystem
     {
-        public DownHeroUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal DownHeroUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Game.Game
 
                 var cooldown = Es.ScoutHeroCooldownE(hero, curPlayerI).Cooldown.Amount;
 
-                for (var unit = UnitTypes.Elfemale; unit <= UnitTypes.Snowy; unit++)
+                for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Camel; unit++)
                 {
                     Image(unit).SetActive(false);
                 }

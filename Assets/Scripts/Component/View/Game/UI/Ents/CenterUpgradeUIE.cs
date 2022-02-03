@@ -29,7 +29,7 @@ namespace Game.Game
             _ents = gameW.NewEntity()
                 .Add(new GameObjectVC(parent.gameObject));
 
-            for (var unit = UnitTypes.First; unit <= UnitTypes.Scout; unit++)
+            for (var unit = UnitTypes.None + 1; unit <= UnitTypes.Scout; unit++)
                 _units.Add(unit, gameW.NewEntity()
                     .Add(new ButtonUIC(parent.Find(unit + "_Button").GetComponent<Button>())));
 

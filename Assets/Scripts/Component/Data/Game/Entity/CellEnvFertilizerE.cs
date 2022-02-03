@@ -46,7 +46,7 @@ namespace Game.Game
 
             ResourcesRef.Amount -= AmountExtractFarm(buildUpgEs, cellEs.BuildEs);
         }
-        public void AddIceWall()
+        public void FertilizeFromIceWall()
         {
             ResourcesRef.Amount += CellEnvironmentValues.MaxResources(EnvT) / 5;
             if (ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT))

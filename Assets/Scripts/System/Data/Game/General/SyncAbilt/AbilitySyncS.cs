@@ -98,6 +98,18 @@ namespace Game.Game
                                 UnitEs(idx_0).AbilityButton(ButtonTypes.Third).AbilityC.Ability = AbilityTypes.IceWall;
                                 break;
 
+                            case UnitTypes.Undead:
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.First).Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Second).Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Third).Reset();
+                                break;
+
+                            case UnitTypes.Hell:
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.First).Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Second).Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.Third).Reset();
+                                break;
+
                             case UnitTypes.Camel:
                                 UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Reset();
                                 UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Reset();

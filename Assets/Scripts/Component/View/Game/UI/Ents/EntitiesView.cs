@@ -7,16 +7,16 @@ namespace Game.Game
 {
     public readonly struct EntitiesView
     {
+        public readonly ResourceSpriteVEs ResourceSpriteEs;
+        public readonly UIEs UIEs;
+
         readonly CellVEs[] _cellVEs;
         public CellVEs CellVEs(in byte idx) => _cellVEs[idx];
-        
-
-        public readonly UIEs UIEs;
 
 
         public EntitiesView(in EcsWorld gameW, out List<object> forData)
         {
-            new ResourceSpriteVEs(gameW);
+            ResourceSpriteEs = new ResourceSpriteVEs(gameW);
             new VideoClipsResC(true);
 
 
@@ -37,8 +37,8 @@ namespace Game.Game
                 for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
                     var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
-                        ? ResourceSpriteVEs.Sprite(true).SpriteC.Sprite
-                        : ResourceSpriteVEs.Sprite(false).SpriteC.Sprite;
+                        ? ResourceSpriteEs.Sprite(true).SpriteC.Sprite
+                        : ResourceSpriteEs.Sprite(false).SpriteC.Sprite;
 
 
                     var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);

@@ -10,7 +10,7 @@ namespace Game.Game
         public readonly SystemsMaster SystemsMaster;
         public readonly SystemsOther SystemsOther;
 
-        public Systems(in Entities ents)
+        public Systems(in Entities ents, in SystemsView systemsView)
         {
             _actions = new Dictionary<DataSTypes, Action>();
 
@@ -18,7 +18,7 @@ namespace Game.Game
                 (Action)
                 new InputS(ents).Run
                 + new RayS(ents).Run
-                + new SelectorS(ents).Run);
+                + new SelectorS(ents, systemsView).Run);
 
 
             _actions.Add(DataSTypes.RunFixedUpdate,
@@ -33,7 +33,7 @@ namespace Game.Game
                 + new GetCellsForShiftUnitS(ents).Run
                 + new GetCellsForArsonArcherS(ents).Run
 
-                + new GetAttackPawnKingCellsS(ents).Run
+                + new GetAttackMeleeCellsS(ents).Run
                 + new GetCellsForAttackArcherS(ents).Run);
 
 

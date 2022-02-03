@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public ref RiverTC RiverTC => ref Ent.Get<RiverTC>();
 
-        public bool HaveRiver => RiverTC.River != RiverTypes.None && RiverTC.River != RiverTypes.End;
+        public bool HaveRiverNear => RiverTC.River != RiverTypes.None && RiverTC.River != RiverTypes.End;
 
         public CellRiverE(in EcsWorld gameW) : base(gameW)
         {

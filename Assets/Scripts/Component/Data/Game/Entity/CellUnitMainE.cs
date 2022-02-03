@@ -21,19 +21,7 @@ namespace Game.Game
         public bool HaveUnitT => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
 
 
-        public int StepsForShiftOrAttack(in DirectTypes dirMove, in CellEnvironmentEs envEs, in CellTrailEs trailsEs)
-        {
-            var needSteps = 1;
 
-            if (envEs.Fertilizer.HaveEnvironment) needSteps += envEs.Fertilizer.NeedStepsShiftAttackUnit;
-            if (envEs.YoungForest.HaveEnvironment) needSteps += envEs.YoungForest.NeedStepsShiftAttackUnit;
-            if (envEs.AdultForest.HaveEnvironment) needSteps += envEs.AdultForest.NeedStepsShiftAttackUnit;
-            if (envEs.Hill.HaveEnvironment) needSteps += envEs.Fertilizer.NeedStepsShiftAttackUnit;
-
-            if (trailsEs.Trail(dirMove.Invert()).HaveTrail) needSteps--;
-
-            return needSteps;
-        }
         //public bool CanResume(in byte idx, out int resume, out EnvironmentTypes env)
         //{
         //    resume = 0;
@@ -84,7 +72,7 @@ namespace Game.Game
             //var haveEff = CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx).Have;
             var upgPerc = 0f;
 
-            var standDamage = UnitDamageValues.StandDamage(UnitTC.Unit, LevelTC.Level);
+            var standDamage = CellUnitMainDamageValues.StandDamage(UnitTC.Unit, LevelTC.Level);
 
 
             if (!UnitTC.IsAnimal)
@@ -97,8 +85,8 @@ namespace Game.Game
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * UnitDamageValues.PercentTW(cellEs.UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
-            if (attack == AttackTypes.Unique) powerDamege += standDamage * UnitDamageValues.UNIQUE_PERCENT_DAMAGE;
+            powerDamege += standDamage * CellUnitMainDamageValues.PercentTW(cellEs.UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
+            if (attack == AttackTypes.Unique) powerDamege += standDamage * CellUnitMainDamageValues.UNIQUE_PERCENT_DAMAGE;
 
             //if (haveEff) powerDamege += standDamage * 0.2f;
 
@@ -111,9 +99,9 @@ namespace Game.Game
         {
             float powerDamege = DamageAttack(cellEs, statUpgEs, AttackTypes.Simple);
 
-            var standDamage = UnitDamageValues.StandDamage(UnitTC.Unit, LevelTC.Level);
+            var standDamage = CellUnitMainDamageValues.StandDamage(UnitTC.Unit, LevelTC.Level);
 
-            powerDamege += standDamage * UnitDamageValues.ProtRelaxPercent(ConditionTC.Condition);
+            powerDamege += standDamage * CellUnitMainDamageValues.ProtRelaxPercent(ConditionTC.Condition);
             if (cellEs.BuildEs.BuildingE.HaveBuilding) powerDamege += standDamage * CellBuildingValues.ProtectionPercent(cellEs.BuildEs.BuildingE.BuildTC.Build);
 
             float protectionPercent = 0;
@@ -199,7 +187,7 @@ namespace Game.Game
             {
                 ents.WinnerE.Winner.Player = OwnerC.Player;
             }
-            else if (UnitTC.Is(UnitTypes.Scout, UnitTypes.Elfemale, UnitTypes.Snowy))
+            else if (UnitTC.Is(UnitTypes.Scout) || UnitTC.IsHero)
             {
                 ents.ScoutHeroCooldownE(this).SetCooldownAfterKill(UnitTC.Unit);
                 ents.InventorUnitsEs.Units(UnitTC.Unit, LevelTC.Level, OwnerC.Player).AddUnit();
@@ -244,19 +232,34 @@ namespace Game.Game
 
             if (!ents.CellWorker.TryGetDirect(Idx, idx_to, out var direct)) throw new Exception();
 
-            if (ents.CellEs(Idx).EnvironmentEs.AdultForest.HaveEnvironment)
+
+            if (!ents.UnitEs(idx_to).MainE.UnitTC.Is(UnitTypes.Undead))
             {
-                ents.CellEs(Idx).TrailEs.Trail(direct).SetNew();
-            }
-            if (ents.CellEs(idx_to).EnvironmentEs.AdultForest.HaveEnvironment)
-            {
-                ents.CellEs(idx_to).TrailEs.Trail(direct.Invert()).SetNew();
+                if (ents.EnvironmentEs(Idx).AdultForest.HaveEnvironment)
+                {
+                    ents.CellEs(Idx).TrailEs.Trail(direct).SetNew();
+                }
+                if (ents.EnvironmentEs(idx_to).AdultForest.HaveEnvironment)
+                {
+                    ents.CellEs(idx_to).TrailEs.Trail(direct.Invert()).SetNew();
+                }
+
+                if (ents.RiverEs(idx_to).River.HaveRiverNear)
+                {
+                    ents.CellEs(idx_to).UnitEs.StatEs.WaterE.SetMax(ents.CellEs(idx_to).UnitEs.MainE, statEs);
+                }
             }
 
-            if (ents.CellEs(idx_to).RiverEs.River.HaveRiver)
+            ents.EffectEs(idx_to).FireE.TryFireAfterShift(ents.Cells);
+            if (ents.BuildEs(idx_to).BuildingE.HaveBuilding && !ents.BuildEs(idx_to).BuildingE.BuildTC.Is(BuildingTypes.City))
             {
-                ents.CellEs(idx_to).UnitEs.StatEs.WaterE.SetMax(ents.CellEs(idx_to).UnitEs.MainE, statEs);
+                if (!ents.BuildEs(idx_to).BuildingE.OwnerC.Is(ents.UnitEs(idx_to).MainE.OwnerC.Player))
+                {
+                    ents.BuildEs(idx_to).BuildingE.Destroy(ents.BuildEs(idx_to), ents.WhereBuildingEs);
+                }
             }
+
+
 
             whereUnitsEs.WhereUnit(ents.CellEs(idx_to).UnitEs.MainE, idx_to).HaveUnit.Have = true;
         }

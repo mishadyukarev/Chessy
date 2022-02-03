@@ -25,8 +25,12 @@ namespace Game.Game
                     case UnitTypes.Pawn: return true;
                     case UnitTypes.Archer: return false;
                     case UnitTypes.Scout: return true;
+
                     case UnitTypes.Elfemale: return false;
                     case UnitTypes.Snowy: return false;
+                    case UnitTypes.Undead: return true;
+                    case UnitTypes.Hell: return true;
+
                     case UnitTypes.Camel: return false;
                     default: throw new Exception();
                 }
@@ -42,8 +46,12 @@ namespace Game.Game
                     case UnitTypes.Pawn: return false;
                     case UnitTypes.Archer: return false;
                     case UnitTypes.Scout: return false;
+
                     case UnitTypes.Elfemale: return true;
                     case UnitTypes.Snowy: return true;
+                    case UnitTypes.Undead: return true;
+                    case UnitTypes.Hell: return true;
+
                     case UnitTypes.Camel: return false;
                     default: throw new Exception();
                 }
@@ -60,7 +68,11 @@ namespace Game.Game
                     case UnitTypes.Archer: return false;
                     case UnitTypes.Scout: return false;
                     case UnitTypes.Elfemale: return false;
+
                     case UnitTypes.Snowy: return false;
+                    case UnitTypes.Undead: return false;
+                    case UnitTypes.Hell: return false;
+
                     case UnitTypes.Camel: return true;
                     default: throw new Exception();
                 }

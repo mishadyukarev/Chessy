@@ -4,12 +4,24 @@ namespace Game.Game
 {
     public sealed class SelectedUnitE : EntityAbstract
     {
-        public ref UnitTC UnitTC => ref Ent.Get<UnitTC>();
-        public ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
+        ref UnitTC UnitTCRef => ref Ent.Get<UnitTC>();
+        ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
 
-        public SelectedUnitE(in EcsWorld gameW) : base(gameW)
+        public UnitTC UnitTC => Ent.Get<UnitTC>();
+        public LevelTC LevelTC => Ent.Get<LevelTC>();
+
+        public bool IsSelectedUnit => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
+
+        internal SelectedUnitE(in EcsWorld gameW) : base(gameW)
         {
 
+        }
+
+        public void SetSelectedUnit(in UnitTypes unitT, in LevelTypes level, in ClickerObjectE clickerObjectE)
+        {
+            UnitTCRef.Unit = unitT;
+            LevelTCRef.Level = level;
+            clickerObjectE.CellClickC.Click = CellClickTypes.SetUnit;
         }
     }
 }

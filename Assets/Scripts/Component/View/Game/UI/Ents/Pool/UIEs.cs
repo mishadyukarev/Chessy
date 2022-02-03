@@ -3,29 +3,21 @@ using Game.Common;
 
 namespace Game.Game
 {
-    public struct UIEs
+    public readonly struct UIEs
     {
-        public RightUIEs RightEs { get; private set; }
+        public readonly RightUIEs RightEs;
+        public readonly CenterUIEs CenterEs;
 
-        public UIEs(in EcsWorld gameW)
+        internal UIEs(in EcsWorld gameW)
         {
             RightEs = new RightUIEs(gameW);
+            CenterEs = new CenterUIEs(gameW);
 
             ///Left
             var leftZone = CanvasC.FindUnderCurZone("LeftZone").transform;
             new EntityLeftCityUIPool(gameW, leftZone);
             new EntityLeftEnvUIPool(gameW, leftZone);
 
-            ///Center
-            var centerZone = CanvasC.FindUnderCurZone("CenterZone").transform;
-            new EntityCenterUIPool(gameW, centerZone);
-            new CenterHerosUIE(gameW, centerZone);
-            new CenterFriendUIE(gameW, centerZone);
-            new CenterUpgradeUIE(gameW, centerZone);
-            new CenterHintUIE(gameW, centerZone);
-            new CenterSelectorUIE(gameW, centerZone);
-            new CenterKingUIE(gameW, centerZone);
-            new MistakeUIE(gameW, centerZone);
 
             ///Up
             var upZone = CanvasC.FindUnderCurZone("UpZone").transform;

@@ -4,9 +4,11 @@ namespace Game.Game
 {
     sealed class SelectorS : SystemCellAbstract, IEcsRunSystem
     {
-        public SelectorS(in Entities ents) : base(ents)
-        {
+        readonly SystemsView _systemV;
 
+        public SelectorS(in Entities ents, in SystemsView systemV) : base(ents)
+        {
+            _systemV = systemV;
         }
 
         public void Run()

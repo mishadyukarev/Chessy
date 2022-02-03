@@ -5,23 +5,23 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public struct ResourceSpriteVEs
+    public readonly struct ResourceSpriteVEs
     {
-        static Dictionary<bool, ResourceSpriteVE> _cells;
-        static Dictionary<string, ResourceSpriteVE> _units;
-        static Dictionary<string, ResourceSpriteVE> _archers;
-        static Dictionary<string, ResourceSpriteVE> _toolWeapons;
-        static Dictionary<AbilityTypes, ResourceSpriteVE> _abilities;
-        static Dictionary<BuildingTypes, ResourceSpriteVE> _buildings;
-        static Dictionary<BuildingTypes, ResourceSpriteVE> _buildingsBack;
+        readonly Dictionary<bool, ResourceSpriteVE> _cells;
+        readonly Dictionary<string, ResourceSpriteVE> _units;
+        readonly Dictionary<string, ResourceSpriteVE> _archers;
+        readonly Dictionary<string, ResourceSpriteVE> _toolWeapons;
+        readonly Dictionary<AbilityTypes, ResourceSpriteVE> _abilities;
+        readonly Dictionary<BuildingTypes, ResourceSpriteVE> _buildings;
+        readonly Dictionary<BuildingTypes, ResourceSpriteVE> _buildingsBack;
 
-        public static ResourceSpriteVE Sprite(in bool isWhite) => _cells[isWhite];
-        public static ResourceSpriteVE Sprite(in UnitTypes unit, in LevelTypes level) => _units[unit.ToString() + level];
-        public static ResourceSpriteVE Sprite(in bool isRook, in LevelTypes level) => _archers[isRook.ToString() + level];
-        public static ResourceSpriteVE Sprite(in ToolWeaponTypes tw, in LevelTypes level) => _toolWeapons[tw.ToString() + level];
-        public static ResourceSpriteVE Sprite(in AbilityTypes ability) => _abilities[ability];
-        public static ResourceSpriteVE Sprite(in BuildingTypes build) => _buildings[build];
-        public static ResourceSpriteVE SpriteBack(in BuildingTypes build) => _buildingsBack[build];
+        public ResourceSpriteVE Sprite(in bool isWhite) => _cells[isWhite];
+        public ResourceSpriteVE Sprite(in UnitTypes unit, in LevelTypes level) => _units[unit.ToString() + level];
+        public ResourceSpriteVE Sprite(in bool isRook, in LevelTypes level) => _archers[isRook.ToString() + level];
+        public ResourceSpriteVE Sprite(in ToolWeaponTypes tw, in LevelTypes level) => _toolWeapons[tw.ToString() + level];
+        public ResourceSpriteVE Sprite(in AbilityTypes ability) => _abilities[ability];
+        public ResourceSpriteVE Sprite(in BuildingTypes build) => _buildings[build];
+        public ResourceSpriteVE SpriteBack(in BuildingTypes build) => _buildingsBack[build];
 
 
         public ResourceSpriteVEs(in EcsWorld gameW)

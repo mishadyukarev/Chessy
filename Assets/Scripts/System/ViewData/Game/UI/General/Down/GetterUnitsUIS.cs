@@ -12,7 +12,7 @@ namespace Game.Game
 
         public void Run()
         {
-            for (UnitTypes unitT_cur = UnitTypes.Start; unitT_cur < UnitTypes.End; unitT_cur++)
+            for (UnitTypes unitT_cur = UnitTypes.None; unitT_cur < UnitTypes.End; unitT_cur++)
             {
                 if (unitT_cur == UnitTypes.Pawn || unitT_cur == UnitTypes.Archer)
                 {

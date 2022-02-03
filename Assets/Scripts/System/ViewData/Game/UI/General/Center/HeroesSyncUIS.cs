@@ -1,6 +1,4 @@
-﻿using static Game.Game.CenterHerosUIE;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     sealed class HeroesSyncUIS : SystemViewAbstract, IEcsRunSystem
     {
@@ -16,11 +14,13 @@ namespace Game.Game
             if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
                 && Es.AvailableCenterHero(curPlayerI).HaveCenterHero.Have)
             {
-                Parent.SetActive(!Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero));
+                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
+                    .SetActive(!Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero));
             }
             else
             {
-                Parent.SetActive(false);
+                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
+                    .SetActive(false);
             }
         }
     }

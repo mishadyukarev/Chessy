@@ -11,7 +11,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
                 var levelUnit_0 = UnitEs(idx_0).MainE.LevelTC.Level;
@@ -34,44 +34,22 @@ namespace Game.Game
                     {
                         mainUnit_0.Enable();
 
-                        switch (unit_0.Unit)
+                        if (unit_0.Is(UnitTypes.Archer))
                         {
-                            case UnitTypes.None:
-                                throw new Exception();
+                            mainUnit_0.Sprite = VEs.ResourceSpriteEs.Sprite(corner_0.Is, levelUnit_0).SpriteC.Sprite;
+                        }
+                        else
+                        {
+                            mainUnit_0.Sprite = VEs.ResourceSpriteEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
 
-                            case UnitTypes.King:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
-                                break;
-
-                            case UnitTypes.Pawn:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
-
+                            if (unit_0.Is(UnitTypes.Pawn))
+                            {
                                 if (tw_0.HaveTW)
                                 {
                                     extraUnit_0.Enable();
-                                    extraUnit_0.Sprite = ResourceSpriteVEs.Sprite(tw_0.ToolWeapon, twLevel_0.Level).SpriteC.Sprite;
+                                    extraUnit_0.Sprite = VEs.ResourceSpriteEs.Sprite(tw_0.ToolWeapon, twLevel_0.Level).SpriteC.Sprite;
                                 }
-                                break;
-
-                            case UnitTypes.Archer:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(corner_0.Is, levelUnit_0).SpriteC.Sprite;
-                                break;
-
-                            case UnitTypes.Scout:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
-                                break;
-
-                            case UnitTypes.Elfemale:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
-                                break;
-
-                            case UnitTypes.Snowy:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite;
-                                break;
-
-                            case UnitTypes.Camel:
-                                mainUnit_0.Sprite = ResourceSpriteVEs.Sprite(unit_0.Unit, levelUnit_0).SpriteC.Sprite; break;
-                                throw new Exception();
+                            }
                         }
 
                         if (UnitEs(idx_0).VisibleE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI)).IsVisibleC.IsVisible)

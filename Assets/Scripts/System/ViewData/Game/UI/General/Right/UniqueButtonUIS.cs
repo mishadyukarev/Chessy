@@ -23,7 +23,7 @@
 
                     VEs.UIEs.RightEs.Unique(button).Paren.SetActive(true);
 
-                    VEs.UIEs.RightEs.Unique(button).ImageC.Sprite = ResourceSpriteVEs.Sprite(ability).SpriteC.Sprite;
+                    VEs.UIEs.RightEs.Unique(button).ImageC.Sprite = VEs.ResourceSpriteEs.Sprite(ability).SpriteC.Sprite;
 
 
 

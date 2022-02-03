@@ -15,21 +15,7 @@ namespace Game.Game
         public bool HaveEnvironment => ResourcesRef.Amount > 0;
         public bool HaveMaxResources => ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT);
         public int MaxResources => CellEnvironmentValues.MaxResources(EnvT);
-        public float ProtectionPercent => UnitDamageValues.ProtectionPercent(EnvT);
-        public int NeedStepsShiftAttackUnit
-        {
-            get
-            {
-                switch (EnvT)
-                {
-                    case EnvironmentTypes.Fertilizer: return 0;
-                    case EnvironmentTypes.YoungForest: return 0;
-                    case EnvironmentTypes.AdultForest: return 1;
-                    case EnvironmentTypes.Hill: return 1;
-                    default: throw new Exception();
-                }
-            }
-        }
+        public float ProtectionPercent => CellUnitMainDamageValues.ProtectionPercent(EnvT);
 
 
         protected CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld world) : base(world)

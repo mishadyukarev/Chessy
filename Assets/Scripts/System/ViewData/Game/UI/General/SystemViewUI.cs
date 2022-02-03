@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class SystemViewUI
+    public readonly struct SystemViewUI
     {
-        static Dictionary<UITypes, Action> _actions;
+        readonly Dictionary<UITypes, Action> _actions;
 
         public SystemViewUI(in Entities ents, in EntitiesView entsView)
         {
@@ -15,7 +15,7 @@ namespace Game.Game
             _actions.Add(UITypes.RunUpdate, default);
 
 
-            _actions.Add(UITypes.RunFixedUpdate,
+            _actions.Add(UITypes.RunFixedUpdate, 
                 (Action)
 
                 ///Right
@@ -26,9 +26,9 @@ namespace Game.Game
                 + new UniqueButtonUIS(ents, entsView).Run
                 + new FirstButtonBuildUIS(ents, entsView).Run
                 + new SecButtonBuildUISys(ents, entsView).Run
-                + new ThirdBuildButtonUIS().Run
                 + new ShieldUIS(ents, entsView).Run
-                + new EffectsUISys().Run
+                + new RightEffectsUIS(ents, entsView).Run
+
 
                 ///Down
                 + new DonerUIS(ents, entsView).Run
@@ -56,12 +56,9 @@ namespace Game.Game
 
                 + new BuildZoneUIS(ents, entsView).Run
                 + new EnvUIS(ents, entsView).Run);
-
-
-            _actions.Add(UITypes.RunAfterRPCSync, default);
         }
 
-        public static void Run(in UITypes type)
+        public void Run(in UITypes type)
         {
             if (!_actions.ContainsKey(type)) throw new Exception();
 
@@ -74,8 +71,6 @@ namespace Game.Game
 
         RunUpdate,
         RunFixedUpdate,
-
-        RunAfterRPCSync,
 
         End
     }

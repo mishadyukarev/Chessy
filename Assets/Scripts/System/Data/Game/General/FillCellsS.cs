@@ -13,7 +13,9 @@ namespace Game.Game
             {
                 int random;
 
-                foreach (byte idx_0 in CellWorker.Idxs)
+               
+
+                for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
                 {
                     var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];
@@ -65,35 +67,19 @@ namespace Game.Game
                             }
                         }
 
-                        if (xy_0[0] == 5 && xy_0[1] == 5)
-                        {
-                            Es.WindE.CenterCloud.Idx = idx_0;
-
-                            CellWorker.TryGetXyAround(xy_0, out var dirs);
-                            foreach (var item in dirs)
-                            {
-                                var idx_1 = CellWorker.GetIdxCell(item.Value);
-                                //WindC.Set(item.Key, idx_1);
-                            }
-                        }
-
-
-                        ref var river_0 = ref RiverEs(idx_0).River.RiverTC;
-
-
                         var corners = new List<DirectTypes>();
 
-                        if (x >= 3 && x <= 6 && y == 5)
+                        if (x >= 3 && x < 4 && y == 5)
                         {
                             RiverEs(idx_0).SetStart( DirectTypes.Up);
                         }
-                        else if (x == 7 && y == 5)
+                        else if (x == 4 && y == 5)
                         {
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
                             RiverEs(idx_0).SetStart( DirectTypes.Up, DirectTypes.Right);
                         }
-                        else if (x >= 8 && x <= 12 && y == 4)
+                        else if (x >= 5 && x < 7 && y == 4)
                         {
                             RiverEs(idx_0).SetStart( DirectTypes.Up);
                         }

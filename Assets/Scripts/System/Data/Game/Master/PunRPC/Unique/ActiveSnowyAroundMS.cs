@@ -12,9 +12,9 @@
             var ability = Es.MasterEs.AbilityC.Ability;
             var idx_0 = Es.MasterEs.ActiveSnowyAroundME.Where.Idx;
 
-            if (UnitStatEs(idx_0).WaterE.Have(ability) || RiverEs(idx_0).River.HaveRiver)
+            if (UnitStatEs(idx_0).WaterE.Have(ability) || RiverEs(idx_0).River.HaveRiverNear)
             {
-                if(!RiverEs(idx_0).River.HaveRiver) UnitStatEs(idx_0).WaterE.Take(ability);
+                if(!RiverEs(idx_0).River.HaveRiverNear) UnitStatEs(idx_0).WaterE.Take(ability);
 
                 if (UnitStatEs(idx_0).StepE.Have(ability))
                 {

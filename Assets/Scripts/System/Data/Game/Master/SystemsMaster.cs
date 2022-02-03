@@ -30,11 +30,20 @@ namespace Game.Game
                 + new CloudUpdMS(ents).Run
                 + new UpdateIceWallMS(ents).Run
 
+            #region Unit
+
                 + new UpdateExtractUnitMS(ents).Run
                 + new ResumeUnitUpdMS(ents).Run
                 + new UpdateHealingUnitMS(ents).Run
                 + new UpdateHungryMS(ents).Run
                 + new UpdateThirstyMS(ents).Run
+
+                + new UpdTryFireAroundHellMS(ents).Run
+                + new UpdAttackFromWaterHellMS(ents).Run
+
+                + new UpdGiveWaterCloudScowyMS(ents).Run
+
+            #endregion
 
                 + new UpdateCamelShiftMS(ents).Run
                 + new UpdateSpawnCamelMS(ents).Run;

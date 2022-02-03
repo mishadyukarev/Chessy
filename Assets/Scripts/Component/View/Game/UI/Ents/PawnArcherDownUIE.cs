@@ -19,7 +19,7 @@ namespace Game.Game
             _taker = new Dictionary<UnitTypes, Entity>();
             _create = new Dictionary<UnitTypes, Entity>();
 
-            for (var unit = UnitTypes.Start; unit <= UnitTypes.End; unit++)
+            for (var unit = UnitTypes.None; unit <= UnitTypes.End; unit++)
             {
                 _taker.Add(unit, default);
                 _create.Add(unit, default);

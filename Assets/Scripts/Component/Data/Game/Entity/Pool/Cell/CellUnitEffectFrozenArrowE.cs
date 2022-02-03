@@ -2,14 +2,14 @@
 
 namespace Game.Game
 {
-    public sealed class CellUnitEffectFrozenArrowE : EntityAbstract
+    public sealed class CellUnitEffectFrozenArrowE : CellUnitEffectE
     {
         ref IsC IsFrozenArrawRef => ref Ent.Get<IsC>();
         public IsC IsFrozenArraw => Ent.Get<IsC>();
 
         public bool HaveEffect => IsFrozenArraw.Is;
 
-        internal CellUnitEffectFrozenArrowE(in EcsWorld world) : base(world)
+        internal CellUnitEffectFrozenArrowE(in byte idx, in EcsWorld world) : base(EffectTypes.FrozenArraw, idx, world)
         {
         }
 

@@ -9,7 +9,8 @@ namespace Game.Game
 
         public WindE(in EcsWorld gameW) : base(gameW)
         {
-            Ent.Add(new DirectTC(DirectTypes.Right));
+            Ent.Add(new DirectTC(DirectTypes.Right))
+                .Add(new IdxC(60));
         }
     }
 }

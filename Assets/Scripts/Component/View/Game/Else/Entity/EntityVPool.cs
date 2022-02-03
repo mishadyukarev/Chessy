@@ -17,16 +17,8 @@ namespace Game.Game
         public static ref C GeneralZone<C>() where C : struct => ref _ents[nameof(IGeneralZoneE)].Get<C>();
         public static ref C Photon<C>() where C : struct, IPhotonE => ref _ents[nameof(IPhotonE)].Get<C>();
 
-        public static ref C SoundV<C>(in ClipTypes clip) where C : struct, ISoundE
-        {
-            if (!_sounds0.ContainsKey(clip)) throw new Exception();
-            return ref _sounds0[clip].Get<C>();
-        }
-        public static ref C SoundV<C>(in AbilityTypes clip) where C : struct, ISoundE
-        {
-            if (!_sounds1.ContainsKey(clip)) throw new Exception();
-            return ref _sounds1[clip].Get<C>();
-        }
+        public static ref AudioSourceVC SoundV(in ClipTypes clip) => ref _sounds0[clip].Get<AudioSourceVC>();
+        public static ref AudioSourceVC SoundV(in AbilityTypes clip) => ref _sounds1[clip].Get<AudioSourceVC>();
 
 
         public EntityVPool(in EcsWorld gameW, out List<object> actions, out Dictionary<ClipTypes, System.Action> action0, out Dictionary<AbilityTypes, System.Action> action1)

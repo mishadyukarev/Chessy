@@ -3,10 +3,8 @@
     public enum UnitTypes
     {
         None,
-        Start = None,
 
         King,
-        First = King,
         Pawn,
         Archer,
 
@@ -15,6 +13,8 @@
         //Heros
         Elfemale,
         Snowy,
+        Undead,
+        Hell,
 
         //Animals
         Camel,

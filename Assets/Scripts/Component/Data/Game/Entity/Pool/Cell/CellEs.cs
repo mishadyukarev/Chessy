@@ -24,7 +24,7 @@ namespace Game.Game
             TrailEs = new CellTrailEs(gameW);
             UnitEs = new CellUnitEs(idx, gameW);
             EnvironmentEs = new CellEnvironmentEs(idx, gameW);
-            EffectEs = new CellEffectEs(gameW);
+            EffectEs = new CellEffectEs(idx, gameW);
             RiverEs = new CellRiverEs(gameW);
         }
     }

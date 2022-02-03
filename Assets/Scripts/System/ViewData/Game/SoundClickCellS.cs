@@ -9,7 +9,7 @@
 
 //            //if (NeedSoundEffC.Clip != default)
 //            //{
-//            //    EntityVPool.SoundV<AudioSourceVC>(NeedSoundEffC.Clip).Play();
+//            //    EntityVPool.SoundV(NeedSoundEffC.Clip).Play();
 //            //}
 
 

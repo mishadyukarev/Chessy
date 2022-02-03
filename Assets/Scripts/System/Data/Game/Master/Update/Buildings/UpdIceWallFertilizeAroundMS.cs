@@ -18,11 +18,11 @@
                         {
                             if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                             {
-                                EnvironmentEs(idx_1).AdultForest.AddIceWall();
+                                EnvironmentEs(idx_1).AdultForest.FertilizeFromIceWall();
                             }
-                            else
+                            else if(!EnvironmentEs(idx_1).Hill.HaveEnvironment)
                             {
-                                EnvironmentEs(idx_1).Fertilizer.AddIceWall();
+                                EnvironmentEs(idx_1).Fertilizer.FertilizeFromIceWall();
                             }
                         }
 

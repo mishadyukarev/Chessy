@@ -4,11 +4,11 @@ namespace Game.Game
 {
     public readonly struct CellEffectEs
     {
-        public readonly CellFireE FireE;
+        public readonly CellEffectFireE FireE;
 
-        public CellEffectEs(in EcsWorld gameW)
+        public CellEffectEs(in byte idx, in EcsWorld gameW)
         {
-            FireE = new CellFireE(gameW);
+            FireE = new CellEffectFireE(idx, gameW);
         }
     }
 }

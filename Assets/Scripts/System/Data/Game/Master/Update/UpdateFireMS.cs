@@ -10,28 +10,16 @@ namespace Game.Game
 
         public void Run()
         {
-            CellWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var directs);
-
-            foreach (var item in directs)
+            foreach (var idx_1 in CellWorker.GetIdxsAround(Es.WindE.CenterCloud.Idx))
             {
-                EffectEs(item.Value).FireE.Disable();
+                EffectEs(idx_1).FireE.Disable();
             }
 
 
             var needForFireNext = new List<byte>();
 
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
-
-                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
-
-                var hpUnit_0 = UnitStatEs(idx_0).Hp.Health;
-
-                var buil_0 = BuildEs(idx_0).BuildingE.BuildTC;
-                var ownBuil_0 = BuildEs(idx_0).BuildingE.OwnerC;
-
                 if (EffectEs(idx_0).FireE.HaveFireC.Have)
                 {
                     EnvironmentEs(idx_0).AdultForest.Fire();
@@ -47,11 +35,7 @@ namespace Game.Game
 
                         EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails, Es.WhereEnviromentEs);
 
-
-                        if (UnityEngine.Random.Range(0, 100) < 50)
-                        {
-                            EnvironmentEs(idx_0).YoungForest.SetNewRandom(Es.WhereEnviromentEs);
-                        }
+                        EnvironmentEs(idx_0).YoungForest.TrySetAfterFireForest(Es.WhereEnviromentEs);
 
                         EffectEs(idx_0).FireE.Disable();
 

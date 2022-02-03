@@ -5,20 +5,21 @@ namespace Game.Game
 {
     public readonly struct SystemsView
     {
-        static Dictionary<ViewDataSystemTypes, Action> _actions;
+        readonly Dictionary<SystemViewDataTypes, Action> _actions;
 
+        public readonly SystemViewUI SystemViewUI;
 
         public SystemsView(in Entities ents, in EntitiesView entsView)
         {
-            _actions = new Dictionary<ViewDataSystemTypes, Action>();
+            _actions = new Dictionary<SystemViewDataTypes, Action>();
 
 
-            _actions.Add(ViewDataSystemTypes.RunUpdate, default);
+            _actions.Add(SystemViewDataTypes.RunUpdate, new SyncSelUnitCellVS(ents, entsView).Run);
 
-
-            _actions.Add(ViewDataSystemTypes.RunFixedUpdate,
+            _actions.Add(SystemViewDataTypes.RunFixedUpdate,
                 (Action)
                 new CellUnitVS(ents, entsView).Run
+
                 + new UnitStatCellSyncS(ents, entsView).Run
                 + new BuildCellVS(ents, entsView).Run
                 + new EnvCellVS(ents, entsView).Run
@@ -27,7 +28,6 @@ namespace Game.Game
                 + new RiverCellVS(ents, entsView).Run
                 + new CellBarsEnvVS(ents, entsView).Run
                 + new CellTrailVS(ents, entsView).Run
-                + new SyncSelUnitCellVS(ents, entsView).Run
                 + new SupportCellVS(ents, entsView).Run
                 + new FliperAndRotatorUnitVS(ents, entsView).Run
                 + new CellUnitEffectFrozenArrawVS(ents, entsView).Run
@@ -39,14 +39,27 @@ namespace Game.Game
                 + new SoundVS(ents, entsView).Run);
 
 
-            new SystemViewUI(ents, entsView);
+
+
+
+            SystemViewUI = new SystemViewUI(ents, entsView);
         }
 
-        public static void Run(in ViewDataSystemTypes type)
+        public void Run(in SystemViewDataTypes type)
         {
             if (!_actions.ContainsKey(type)) throw new Exception();
 
             _actions[type]?.Invoke();
         }
+    }
+
+    public enum SystemViewDataTypes
+    {
+        None,
+
+        RunUpdate,
+        RunFixedUpdate,
+
+        End,
     }
 }

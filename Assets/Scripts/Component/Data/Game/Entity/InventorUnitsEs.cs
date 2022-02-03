@@ -23,9 +23,9 @@ namespace Game.Game
         }
         public bool HaveHero(in PlayerTypes owner, out UnitTypes hero)
         {
-            for (var unit = UnitTypes.Elfemale; unit <= UnitTypes.Snowy; unit++)
+            for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Camel; unit++)
             {
-                for (var level = LevelTypes.First; level < LevelTypes.End; level++)
+                for (var level = LevelTypes.None + 1; level < LevelTypes.End; level++)
                 {
                     if (Units(Key(unit, level, owner)).HaveUnits)
                     {

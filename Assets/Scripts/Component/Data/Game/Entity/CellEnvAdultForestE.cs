@@ -51,7 +51,7 @@ namespace Game.Game
         }
         public void Fire()
         {
-            ResourcesRef.Amount -= CellEnvironmentValues.MaxResources(EnvT) / 2;
+            ResourcesRef.Amount -= CellEnvironmentValues.MaxResources(EnvT) / 4;
         }
         public void ExtractWoodcutter(in CellEs cellEs, in BuildingUpgradeEs buildUpgEs, in InventorResourcesEs invResEs)
         {
@@ -65,7 +65,7 @@ namespace Game.Game
             invResEs.Resource(ResourceT, unitEs.MainE.OwnerC.Player).AddPawnExtractAdultForest(unitEs, this);
             ResourcesRef.Amount -= AmountExtractPawn(unitEs);
         }
-        public void AddIceWall()
+        public void FertilizeFromIceWall()
         {
             ResourcesRef.Amount += CellEnvironmentValues.MaxResources(EnvT) / 5;
             if (ResourcesRef.Amount >= CellEnvironmentValues.MaxResources(EnvT))

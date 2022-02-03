@@ -11,8 +11,8 @@ namespace Game.Game
         public CellUnitEffectEs(in byte idx, in EcsWorld gameW)
         {
             StunE = new CellUnitEffectStunEs(idx, gameW);
-            ShieldE = new CellUnitEffectShieldE(gameW);
-            FrozenArrowE = new CellUnitEffectFrozenArrowE(gameW);
+            ShieldE = new CellUnitEffectShieldE(idx, gameW);
+            FrozenArrowE = new CellUnitEffectFrozenArrowE(idx, gameW);
         }
     }
 }

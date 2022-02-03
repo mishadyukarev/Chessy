@@ -26,8 +26,8 @@ namespace Game.Game
                 {
                     if (isVisForMe)
                     {
-                        BuildFront(idx_0).Sprite = ResourceSpriteVEs.Sprite(buildT).SpriteC.Sprite;
-                        BuildBack(idx_0).Sprite = ResourceSpriteVEs.SpriteBack(buildT).SpriteC.Sprite;
+                        BuildFront(idx_0).Sprite = VEs.ResourceSpriteEs.Sprite(buildT).SpriteC.Sprite;
+                        BuildBack(idx_0).Sprite = VEs.ResourceSpriteEs.SpriteBack(buildT).SpriteC.Sprite;
 
                         BuildFront(idx_0).Enable();
                         BuildBack(idx_0).Enable();

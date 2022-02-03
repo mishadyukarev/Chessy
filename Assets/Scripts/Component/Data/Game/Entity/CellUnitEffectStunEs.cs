@@ -2,14 +2,14 @@
 
 namespace Game.Game
 {
-    public sealed class CellUnitEffectStunEs : CellEntityAbstract
+    public sealed class CellUnitEffectStunEs : CellUnitEffectE
     {
         ref AmountC ForExitStunRef => ref Ent.Get<AmountC>();
         public AmountC ForExitStun => Ent.Get<AmountC>();
 
         public bool IsStunned => ForExitStun.Amount > 0;
 
-        internal CellUnitEffectStunEs(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
+        internal CellUnitEffectStunEs(in byte idx, in EcsWorld gameW) : base(EffectTypes.Stun, idx, gameW) { }
 
         internal void Shift(in CellUnitEffectStunEs stunE_from)
         {

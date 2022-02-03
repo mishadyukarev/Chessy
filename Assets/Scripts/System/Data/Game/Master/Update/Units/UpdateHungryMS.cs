@@ -2,7 +2,7 @@
 {
     sealed class UpdateHungryMS : SystemCellAbstract, IEcsRunSystem
     {
-        public UpdateHungryMS(in Entities ents) : base(ents)
+        internal UpdateHungryMS(in Entities ents) : base(ents)
         {
         }
 

@@ -12,7 +12,7 @@
             var ability = Es.MasterEs.AbilityC.Ability;
 
 
-            if (UnitStatEs(idx_0).WaterE.Have(ability) || RiverEs(idx_0).River.HaveRiver)
+            if (UnitStatEs(idx_0).WaterE.Have(ability) || RiverEs(idx_0).River.HaveRiverNear)
             {
                 if (!BuildEs(idx_0).BuildingE.HaveBuilding)
                 {

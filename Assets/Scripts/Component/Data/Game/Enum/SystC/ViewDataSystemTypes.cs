@@ -1,12 +1,4 @@
-﻿namespace Game.Game
-{
-    public enum ViewDataSystemTypes
-    {
-        None,
+﻿//namespace Game.Game
+//{
 
-        RunUpdate,
-        RunFixedUpdate,
-
-        End,
-    }
-}
+//}

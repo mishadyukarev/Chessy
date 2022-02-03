@@ -104,7 +104,7 @@ namespace Game.Game
                 _ready.Add(player, new ReadyE(gameW));
                 _availHero.Add(player, new AvailableCenterHeroE(true, gameW));
 
-                for (var unit = UnitTypes.Scout; unit <= UnitTypes.Snowy; unit++)
+                for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
                 {
                     _scoutHeroCooldownEs.Add(unit.ToString() + player, new ScoutHeroCooldownE(gameW));
                 }

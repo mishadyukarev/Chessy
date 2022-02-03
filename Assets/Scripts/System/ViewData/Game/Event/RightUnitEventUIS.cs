@@ -35,7 +35,7 @@ namespace Game.Game
                     Es.Rpc.ConditionUnitToMaster(condUnitType, Es.SelectedIdxE.IdxC.Idx);
                 }
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void Unique(ButtonTypes uniqueButton)
@@ -151,9 +151,9 @@ namespace Game.Game
                     }
                 }
 
-                else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+                else SoundV(ClipTypes.Mistake).Play();
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void ExecuteBuild_Button(ButtonTypes buildBut)
@@ -197,7 +197,7 @@ namespace Game.Game
                     default: throw new Exception();
                 }
             }
-            else SoundV<AudioSourceVC>(ClipTypes.Mistake).Play();
+            else SoundV(ClipTypes.Mistake).Play();
         }
 
         void TryOnHint(VideoClipTypes videoClip)

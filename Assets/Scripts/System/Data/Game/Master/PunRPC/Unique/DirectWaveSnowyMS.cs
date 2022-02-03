@@ -16,9 +16,9 @@
 
             if (CellWorker.TryGetDirect(idx_from, idx_to, out var direct_0))
             {
-                if (UnitStatEs(idx_from).WaterE.Have(ability) || RiverEs(idx_from).River.HaveRiver)
+                if (UnitStatEs(idx_from).WaterE.Have(ability) || RiverEs(idx_from).River.HaveRiverNear)
                 {
-                    if (!RiverEs(idx_from).River.HaveRiver) UnitStatEs(idx_from).WaterE.Take(ability);
+                    if (!RiverEs(idx_from).River.HaveRiverNear) UnitStatEs(idx_from).WaterE.Take(ability);
 
                     if (UnitStatEs(idx_from).StepE.Have(ability))
                     {

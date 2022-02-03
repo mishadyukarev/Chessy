@@ -11,12 +11,25 @@ namespace Game.Game
 
         public const int MAX_HP = CellUnitStatHpValues.MAX_HP;
 
-        public bool IsHpDeathAfterAttack => Health.Amount <= UnitDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
+        public bool IsHpDeathAfterAttack => Health.Amount <= CellUnitMainDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
         public bool HaveMax => Health.Amount >= MAX_HP;
         public bool IsAlive => Health.Amount > 0;
 
 
         internal CellUnitStatHpE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
+
+        void Add(in int adding = 1)
+        {
+            HealthRef.Amount += adding;
+            if (Health.Amount > MAX_HP) HealthRef.Amount = MAX_HP;
+        }
+        void Take(in Entities ents, in int taking = 1)
+        {
+            HealthRef.Amount -= taking;
+            if (IsHpDeathAfterAttack) HealthRef.Amount = 0;
+            if (!IsAlive) ents.UnitEs(Idx).MainE.Kill(ents);
+        }
+
 
         internal void Shift(in CellUnitStatHpE hpE_from)
         {
@@ -38,6 +51,18 @@ namespace Game.Game
             HealthRef.Amount -= damage;
             if (IsHpDeathAfterAttack) HealthRef.Amount = 0;
         }
+        public void TakeHpHellWithNearWater(in Entities ents)
+        {
+            Take(ents, 15);
+        }
+        public void TakeHpHellWithCloud(in Entities ents)
+        {
+            Take(ents, 15);
+        }
+        public void TakeHpHellWithIceWall(in Entities ents)
+        {
+            Take(ents, 15);
+        }
 
         public void Thirsty(in Entities es)
         {
@@ -58,8 +83,15 @@ namespace Game.Game
 
         public void Fire(in Entities es)
         {
-            HealthRef.Amount -= CellUnitStatHpValues.FIRE_DAMAGE;
-            if (!IsAlive) es.CellEs(Idx).UnitEs.MainE.Kill(es);
+            if (es.UnitEs(Idx).MainE.UnitTC.Is(UnitTypes.Hell))
+            {
+                SetMax();
+            }
+            else
+            {
+                HealthRef.Amount -= CellUnitStatHpValues.FIRE_DAMAGE;
+                if (!IsAlive) es.CellEs(Idx).UnitEs.MainE.Kill(es);
+            }
         }
 
         public void SetMax()

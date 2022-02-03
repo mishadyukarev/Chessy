@@ -3,14 +3,14 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class CellUnitEffectShieldE : EntityAbstract
+    public sealed class CellUnitEffectShieldE : CellUnitEffectE
     {
         ref AmountC AmountCRef => ref Ent.Get<AmountC>();
         public ref AmountC AmountC => ref Ent.Get<AmountC>();
 
         public bool HaveShieldEffect => AmountC.Amount > 0;
 
-        internal CellUnitEffectShieldE(in EcsWorld gameW) : base(gameW) { }
+        internal CellUnitEffectShieldE(in byte idx, in EcsWorld gameW) : base(EffectTypes.Shield, idx, gameW) { }
 
         internal void Shift(in CellUnitEffectShieldE shieldE_from)
         {
