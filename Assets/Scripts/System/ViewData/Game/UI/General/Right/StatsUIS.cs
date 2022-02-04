@@ -17,7 +17,7 @@ namespace Game.Game
             var waterUnit_sel = UnitEs(idx_sel).StatEs.WaterE.Water;
 
 
-            if (UnitEs(idx_sel).MainE.HaveUnit(UnitStatEs(idx_sel)))
+            if (UnitEs(idx_sel).MainE.HaveUnit)
             {
                 var damageOnCell = UnitEs(idx_sel).MainE.DamageOnCell(CellEs(idx_sel), Es.UnitStatUpgradesEs);
                 var damageAttack = UnitEs(idx_sel).MainE.DamageAttack(CellEs(idx_sel), Es.UnitStatUpgradesEs, AttackTypes.Simple);
@@ -44,7 +44,7 @@ namespace Game.Game
                 UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount = (float)(damageOnCell / (float)damageAttack);
 
                 Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)UnitStatEs(idx_sel).StepE.MaxAmountSteps(UnitEs(idx_sel).MainE);
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)UnitStatEs(idx_sel).WaterE.MaxWater(UnitEs(idx_sel).MainE, Es.UnitStatUpgradesEs);
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)UnitStatEs(idx_sel).WaterE.MaxWater(UnitEs(idx_sel), Es.UnitStatUpgradesEs);
             }
 
             else

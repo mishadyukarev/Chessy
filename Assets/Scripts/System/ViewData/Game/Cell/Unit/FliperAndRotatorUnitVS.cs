@@ -13,8 +13,8 @@ namespace Game.Game
             foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
-                var corner_0 = UnitEs(idx_0).MainE.IsCorned;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
+                var isCorned = UnitEs(idx_0).CornedE.IsCornered;
 
                 ref var main_0 = ref CellVEs(idx_0).UnitVEs.UnitMainSR;
                 ref var extra_0 = ref CellVEs(idx_0).UnitVEs.UnitExtraSR;
@@ -28,13 +28,13 @@ namespace Game.Game
 
                 if (Es.SelectedIdxE.IdxC.Is(idx_0))
                 {
-                    if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                    if (UnitEs(idx_0).MainE.HaveUnit)
                     {
                         if (ownUnit_0.Is(Es.WhoseMove.CurPlayerI))
                         {
                             if (unit_0.Is(UnitTypes.Archer))
                             {
-                                if (corner_0.Is)
+                                if (isCorned)
                                 {
                                     main_0.LocalEulerAngles = new Vector3(0, 0, -90);
                                     main_0.FlipX = false;

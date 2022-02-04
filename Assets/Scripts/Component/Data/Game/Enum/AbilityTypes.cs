@@ -4,34 +4,37 @@
     {
         None,
 
-        //King
+        ///King
         CircularAttack,
         BonusNear,
 
-        //Pawn
+        ///Pawn
         FirePawn,
         PutOutFirePawn,
         Seed,
-        ///Building
         Farm,
         Mine,
         City,
         DestroyBuilding,
 
-        //Archer
+        ///Archer
         FireArcher,
         ChangeCornerArcher,
 
-        //Elfemale
+        ///Elfemale
         GrowAdultForest,
         StunElfemale,
         ChangeDirectionWind,
 
-        //Snowy
+        ///Snowy
         IceWall,
         ActiveAroundBonusSnowy,
         DirectWave,
         //DefendAround,
+
+        ///Undead
+        Resurrect,
+
 
         End
     }

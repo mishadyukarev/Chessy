@@ -11,8 +11,7 @@ namespace Game.Game
 
         public HaveUnitOnCellE WhereUnit(in (UnitTypes, LevelTypes, PlayerTypes) unit, in byte idx) => _units[Key(unit, idx)];
         public HaveUnitOnCellE WhereUnit(in UnitTypes unit, in LevelTypes level, in PlayerTypes player, in byte idx) => _units[Key((unit, level, player), idx)];
-        public HaveUnitOnCellE WhereUnit(in CellUnitMainE unitMainE, in byte idx) => _units[Key((unitMainE.UnitTC.Unit, unitMainE.LevelTC.Level, unitMainE.OwnerC.Player), idx)];
-        public HaveUnitOnCellE WhereUnit(in CellUnitEs unitEs) => _units[Key((unitEs.MainE.UnitTC.Unit, unitEs.MainE.LevelTC.Level, unitEs.MainE.OwnerC.Player), unitEs.MainE.Idx)];
+        public HaveUnitOnCellE WhereUnit(in CellUnitEs unitEs) => _units[Key((unitEs.MainE.UnitTC.Unit, unitEs.LevelE.LevelTC.Level, unitEs.OwnerE.OwnerC.Player), unitEs.MainE.Idx)];
         public HaveUnitOnCellE WhereUnit(in string key) => _units[key];
 
         public HashSet<string> Keys

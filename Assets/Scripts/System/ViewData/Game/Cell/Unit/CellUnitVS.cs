@@ -14,9 +14,9 @@ namespace Game.Game
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var levelUnit_0 = UnitEs(idx_0).MainE.LevelTC.Level;
+                var levelUnit_0 = UnitEs(idx_0).LevelE.LevelTC.Level;
 
-                var corner_0 = UnitEs(idx_0).MainE.IsCorned;
+                var isCorned = UnitEs(idx_0).CornedE.IsCornered;
 
                 var tw_0 = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
                 var twLevel_0 = UnitEs(idx_0).ToolWeaponE.LevelTC;
@@ -28,7 +28,7 @@ namespace Game.Game
                 mainUnit_0.Disable();
                 extraUnit_0.Disable();
 
-                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                if (UnitEs(idx_0).MainE.HaveUnit)
                 {
                     if (UnitEs(idx_0).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                     {
@@ -36,7 +36,7 @@ namespace Game.Game
 
                         if (unit_0.Is(UnitTypes.Archer))
                         {
-                            mainUnit_0.Sprite = VEs.ResourceSpriteEs.Sprite(corner_0.Is, levelUnit_0).SpriteC.Sprite;
+                            mainUnit_0.Sprite = VEs.ResourceSpriteEs.Sprite(isCorned, levelUnit_0).SpriteC.Sprite;
                         }
                         else
                         {

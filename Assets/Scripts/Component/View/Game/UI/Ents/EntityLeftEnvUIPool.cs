@@ -21,7 +21,7 @@ namespace Game.Game
             _envs = new Dictionary<ResourceTypes, Entity>();
 
             for (var ent = LeftEnvEntType.Start; ent <= LeftEnvEntType.End; ent++) _ents.Add(ent, default);
-            for (var res = ResourceTypes.Start; res <= ResourceTypes.End; res++) _envs.Add(res, default);
+            for (var res = ResourceTypes.None; res <= ResourceTypes.End; res++) _envs.Add(res, default);
 
 
             var envZone = leftZone.Find("EnvironmentZone");

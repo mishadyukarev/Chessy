@@ -19,7 +19,7 @@ namespace Game.Game
             _ents = new Dictionary<LeftCityEntType, Entity>();
             _buyEnts = new Dictionary<ResourceTypes, Entity>();
 
-            for (var res = ResourceTypes.Start; res <= ResourceTypes.End; res++) _buyEnts.Add(res, default);
+            for (var res = ResourceTypes.None; res <= ResourceTypes.End; res++) _buyEnts.Add(res, default);
 
 
             var buildZone = leftZone.transform.Find("BuildingZone");

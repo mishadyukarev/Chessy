@@ -26,13 +26,13 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (UnitEs(Es.SelectedIdxE.IdxC.Idx).MainE.ConditionTC.Is(condUnitType))
+                if (UnitEs(Es.SelectedIdxE.IdxC.Idx).ConditionE.ConditionTC.Is(condUnitType))
                 {
-                    Es.Rpc.ConditionUnitToMaster(ConditionUnitTypes.None, Es.SelectedIdxE.IdxC.Idx);
+                    Es.Rpc.ConditionUnitToMaster(Es.SelectedIdxE.IdxC.Idx, ConditionUnitTypes.None);
                 }
                 else
                 {
-                    Es.Rpc.ConditionUnitToMaster(condUnitType, Es.SelectedIdxE.IdxC.Idx);
+                    Es.Rpc.ConditionUnitToMaster(Es.SelectedIdxE.IdxC.Idx, condUnitType);
                 }
             }
             else SoundV(ClipTypes.Mistake).Play();
@@ -46,7 +46,7 @@ namespace Game.Game
 
                 var abil = UnitEs(idx_sel).AbilityButton(uniqueButton).AbilityC;
 
-                if (!UnitEs(idx_sel).CooldownAbility(abil.Ability).HaveCooldown)
+                if (!UnitEs(idx_sel).Ability(abil.Ability).HaveCooldown)
                 {
                     switch (abil.Ability)
                     {
@@ -66,8 +66,7 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.FireArcher:
-                            Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                            Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.FireArcher;
+                            Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.FireArcher, Es.ClickerObject);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
@@ -78,8 +77,7 @@ namespace Game.Game
 
                         case AbilityTypes.StunElfemale:
                             {
-                                Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.StunElfemale;
+                                Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.StunElfemale, Es.ClickerObject);
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
                             break;
@@ -103,8 +101,7 @@ namespace Game.Game
                         case AbilityTypes.ChangeDirectionWind:
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
-                                Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                                Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.ChangeDirectionWind;
+                                Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.ChangeDirectionWind, Es.ClickerObject);
                             }
                             break;
 
@@ -123,19 +120,16 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.City:
-                            {
-                                Es.Rpc.BuildCityToMaster(idx_sel);
-                            }
+                            Es.Rpc.BuildCityToMaster(idx_sel);
                             break;
 
                         case AbilityTypes.DestroyBuilding:
-                            {
-                                Es.Rpc.DestroyBuildingToMaster(idx_sel);
-                            }
+                            Es.Rpc.DestroyBuildingToMaster(idx_sel);
                             break;
 
+
                         case AbilityTypes.IceWall:
-                                Es.Rpc.IceWallToMaster(idx_sel);
+                            Es.Rpc.IceWallToMaster(idx_sel);
                             break;
 
                         case AbilityTypes.ActiveAroundBonusSnowy:
@@ -143,8 +137,12 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.DirectWave:
-                            Es.ClickerObject.CellClickC.Click = CellClickTypes.UniqueAbility;
-                            Es.SelectedUniqueAbilityE.AbilityC.Ability = AbilityTypes.DirectWave;
+                            Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.DirectWave, Es.ClickerObject);
+                            break;
+
+
+                        case AbilityTypes.Resurrect:
+                            Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.Resurrect, Es.ClickerObject);
                             break;
 
                         default: throw new Exception();

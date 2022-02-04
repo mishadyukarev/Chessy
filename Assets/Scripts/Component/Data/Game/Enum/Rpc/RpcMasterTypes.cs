@@ -6,7 +6,6 @@
 
         Ready,
         Done,
-        DestroyBuild,
         Shift,
         Attack,
         ConditionUnit,
@@ -17,9 +16,6 @@
         Sound,
         GetHero,
         UpgradeCellUnit,
-
-        ToNewUnit,
-        CreateHeroFromTo,
 
         GiveTakeToolWeapon,
         BuyRes,

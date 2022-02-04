@@ -15,20 +15,20 @@ namespace Game.Game
 
 
             var extracts = new Dictionary<ResourceTypes, int>();
-            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
+            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
                 extracts.Add(res, default);
             }
-            extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_MOVE;
+            extracts[ResourceTypes.Food] += ResourcesInInventorValues.ADDING_FOOD_AFTER_MOVE;
 
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && UnitEs(idx_0).MainE.OwnerC.Is(Es.WhoseMove.CurPlayerI))
+                if (UnitEs(idx_0).MainE.HaveUnit && UnitEs(idx_0).OwnerE.OwnerC.Is(Es.WhoseMove.CurPlayerI))
                 {
-                    extracts[ResourceTypes.Food] -= EconomyValues.CostFood(UnitEs(idx_0).MainE.UnitTC.Unit);
+                    extracts[ResourceTypes.Food] -= ResourcesInInventorValues.CostFood(UnitEs(idx_0).MainE.UnitTC.Unit);
 
-                    if (UnitEs(idx_0).MainE.CanExtractPawnAdultForest(UnitStatEs(idx_0), EnvironmentEs(idx_0)))
+                    if (Es.EnvAdultForestE(idx_0).CanExtractPawnAdultForest(UnitEs(idx_0)))
                     {
                         extracts[EnvironmentEs(idx_0).AdultForest.ResourceT] += EnvironmentEs(idx_0).AdultForest.AmountExtractPawn(UnitEs(idx_0));
                     }
@@ -51,7 +51,7 @@ namespace Game.Game
             EconomyExtract<TextUIC>(ResourceTypes.Ore).Text = "+ " + extracts[ResourceTypes.Ore];
 
 
-            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
+            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
                 Economy<TextUIC>(res).Text = Es.InventorResourcesEs.Resource(res, curPlayer).Resources.Amount.ToString();
             }

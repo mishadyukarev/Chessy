@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class RelaxUIS : SystemViewAbstract, IEcsRunSystem
     {
-        public RelaxUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal RelaxUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
@@ -13,18 +13,18 @@ namespace Game.Game
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
             var unit_sel = UnitEs(idx_sel).MainE.UnitTC;
-            var selOnUnitCom = UnitEs(idx_sel).MainE.OwnerC;
+            var selOnUnitCom = UnitEs(idx_sel).OwnerE.OwnerC;
 
 
             var activeButt = false;
 
-            if (UnitEs(idx_sel).MainE.HaveUnit(UnitStatEs(idx_sel)))
+            if (UnitEs(idx_sel).MainE.HaveUnit)
             {
                 if (selOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
                 {
                     activeButt = true;
 
-                    if (UnitEs(idx_sel).MainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                    if (UnitEs(idx_sel).ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                     {
                         RightRelaxUIE.Button<ImageUIC>().Color = Color.green;
                     }

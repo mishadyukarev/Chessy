@@ -21,7 +21,7 @@ namespace Game.Game
                     Es.ScoutHeroCooldownE(unit, player).UpdateCooldown();
                 }
 
-                Es.InventorResourcesEs.Resource(ResourceTypes.Food, player).Resources.Amount += EconomyValues.ADDING_FOOD_AFTER_MOVE;
+                Es.InventorResourcesEs.Resource(ResourceTypes.Food, player).Resources.Amount += ResourcesInInventorValues.ADDING_FOOD_AFTER_MOVE;
             }
 
             foreach (byte idx_0 in CellWorker.Idxs)
@@ -29,20 +29,20 @@ namespace Game.Game
                 ref var cell_0 = ref CellEs(idx_0).CellE.InstanceIDC;
 
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
                 var buil_0 = BuildEs(idx_0).BuildingE.BuildTC;
 
                 foreach (var item in CellEs(idx_0).TrailEs.Keys) TrailEs(idx_0).Trail(item).TakeEveryUpdate();
-                foreach (var item in UnitEs(idx_0).CooldownKeys) UnitEs(idx_0).CooldownAbility(item).TakeAfterUpdate();
+                foreach (var item in UnitEs(idx_0).CooldownKeys) UnitEs(idx_0).Ability(item).TakeAfterUpdate();
 
 
 
-                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && !unit_0.IsAnimal)
+                if (UnitEs(idx_0).MainE.HaveUnit && !unit_0.IsAnimal)
                 {
                     //CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
-                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownUnit_0.Player).Resources.Amount -= EconomyValues.CostFood(unit_0.Unit);
+                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownUnit_0.Player).Resources.Amount -= ResourcesInInventorValues.CostFood(unit_0.Unit);
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -55,12 +55,12 @@ namespace Game.Game
 
                     if (EffectEs(idx_0).FireE.HaveFireC.Have)
                     {
-                        UnitEs(idx_0).MainE.ResetCondition();
+                        UnitEs(idx_0).ConditionE.Reset();
                     }
 
                     else
                     {
-                        if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Protected))
+                        if (UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Protected))
                         {
                             if (UnitStatEs(idx_0).Hp.HaveMax)
                             {
@@ -97,11 +97,11 @@ namespace Game.Game
                             }
                         }
 
-                        else if (!UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                        else if (!UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                         {
                             if (UnitStatEs(idx_0).StepE.HaveSteps)
                             {
-                                UnitEs(idx_0).MainE.SetCondition(ConditionUnitTypes.Protected);
+                                UnitEs(idx_0).ConditionE.Set(ConditionUnitTypes.Protected);
                             }
                         }
                     }

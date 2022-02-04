@@ -62,7 +62,7 @@ namespace Game.Game
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Fertilizer))
                                 {
-                                    EnvironmentEs(idx_0).Fertilizer.SetNew();
+                                    EnvironmentEs(idx_0).Fertilizer.SetNewRandom(Es.WhereEnviromentEs);
                                 }
                             }
                         }

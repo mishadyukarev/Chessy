@@ -189,6 +189,8 @@ namespace Game.Game
                         case AbilityTypes.IceWall: volume = 0.1f; break;
                         case AbilityTypes.ActiveAroundBonusSnowy: volume = 0.1f; break;
                         case AbilityTypes.DirectWave: volume = 0.1f; break;
+
+                        case AbilityTypes.Resurrect: volume = 0.1f; break;
                         default: throw new Exception();
                     }
 

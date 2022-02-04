@@ -18,8 +18,8 @@
                 }
                 else
                 {
-                    VEs.UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs(Es.SelectedIdxE.IdxC.Idx).CooldownAbility(ability).HaveCooldown);
-                    VEs.UIEs.RightEs.Unique(button).Text.Text = UnitEs(Es.SelectedIdxE.IdxC.Idx).CooldownAbility(ability).Cooldown.Amount.ToString();
+                    VEs.UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).HaveCooldown);
+                    VEs.UIEs.RightEs.Unique(button).Text.Text = UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).Cooldown.Amount.ToString();
 
                     VEs.UIEs.RightEs.Unique(button).Paren.SetActive(true);
 

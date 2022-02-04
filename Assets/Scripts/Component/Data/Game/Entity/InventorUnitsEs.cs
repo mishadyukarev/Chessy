@@ -1,16 +1,17 @@
 ﻿using ECS;
+using Photon.Realtime;
 using System.Collections.Generic;
 
 namespace Game.Game
 {
     public readonly struct InventorUnitsEs
     {
-        readonly Dictionary<string, AmountUnitsInInventorE> _units;
+        readonly Dictionary<string, UnitsInInventorE> _units;
 
         string Key(UnitTypes unit, LevelTypes level, PlayerTypes player) => unit.ToString() + level + player;
 
-        public AmountUnitsInInventorE Units(in UnitTypes unit, in LevelTypes level, in PlayerTypes player) => _units[Key(unit, level, player)];
-        public AmountUnitsInInventorE Units(in string key) => _units[key];
+        public UnitsInInventorE Units(in UnitTypes unit, in LevelTypes level, in PlayerTypes player) => _units[Key(unit, level, player)];
+        public UnitsInInventorE Units(in string key) => _units[key];
 
         public HashSet<string> Keys
         {
@@ -41,7 +42,7 @@ namespace Game.Game
 
         public InventorUnitsEs(in EcsWorld gameW)
         {
-            _units = new Dictionary<string, AmountUnitsInInventorE>();
+            _units = new Dictionary<string, UnitsInInventorE>();
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.Camel; unit++)
             {
@@ -49,10 +50,19 @@ namespace Game.Game
                 {
                     for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
                     {
-                        _units.Add(Key(unit, level, player), new AmountUnitsInInventorE(EconomyValues.StartAmountUnits(unit, level), gameW));
+                        _units.Add(Key(unit, level, player), new UnitsInInventorE(unit, level, gameW));
                     }
                 }
             }
+        }
+
+
+        public void GetHero_Master(in UnitTypes unit, in Entities e)
+        {
+            var whoseMove = e.WhoseMove.WhoseMove.Player;
+
+            Units(unit, LevelTypes.First, whoseMove).AddUnit();
+            e.AvailableCenterHero(whoseMove).HaveCenterHero.Have = false;
         }
     }
 }

@@ -11,10 +11,10 @@
             foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
 
-                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                if (UnitEs(idx_0).MainE.HaveUnit)
                 {
                     if (unit_0.IsAnimal)
                     {
@@ -28,10 +28,10 @@
 
                             foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                             {
-                                if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                                if (UnitEs(idx_1).MainE.HaveUnit)
                                 {
-                                    if (UnitEs(idx_1).MainE.OwnerC.Is(PlayerTypes.First)) isVisForFirst = true;
-                                    if (UnitEs(idx_1).MainE.OwnerC.Is(PlayerTypes.Second)) isVisForSecond = true;
+                                    if (UnitEs(idx_1).OwnerE.OwnerC.Is(PlayerTypes.First)) isVisForFirst = true;
+                                    if (UnitEs(idx_1).OwnerE.OwnerC.Is(PlayerTypes.Second)) isVisForSecond = true;
                                 }
                             }
                         }
@@ -50,9 +50,9 @@
                             foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                             {
                                 var unit_1 = UnitEs(idx_1).MainE.UnitTC;
-                                var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
+                                var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
 
-                                if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                                if (UnitEs(idx_1).MainE.HaveUnit)
                                 {
                                     if (!ownUnit_1.Is(ownUnit_0.Player))
                                     {
@@ -91,9 +91,9 @@
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
                             var unit_1 = UnitEs(idx_1).MainE.UnitTC;
-                            var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
+                            var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
 
-                            if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                            if (UnitEs(idx_1).MainE.HaveUnit)
                             {
                                 if (!ownUnit_1.Is(ownBuild_0.Player))
                                 {
@@ -123,10 +123,10 @@
                     foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                     {
                         var unit_1 = UnitEs(idx_1).MainE.UnitTC;
-                        var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
+                        var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
 
 
-                        if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)) && !unit_1.IsAnimal)
+                        if (UnitEs(idx_1).MainE.HaveUnit && !unit_1.IsAnimal)
                         {
                             TrailEs(idx_0).IsVisible(ownUnit_1.Player).SetVisible(true);
                         }

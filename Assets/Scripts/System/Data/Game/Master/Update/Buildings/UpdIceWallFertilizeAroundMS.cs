@@ -18,18 +18,18 @@
                         {
                             if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                             {
-                                EnvironmentEs(idx_1).AdultForest.FertilizeFromIceWall();
+                                EnvironmentEs(idx_1).AdultForest.AddFromIceWall();
                             }
                             else if(!EnvironmentEs(idx_1).Hill.HaveEnvironment)
                             {
-                                EnvironmentEs(idx_1).Fertilizer.FertilizeFromIceWall();
+                                EnvironmentEs(idx_1).Fertilizer.AddFromIceWall();
                             }
                         }
 
 
-                        if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)) && UnitEs(idx_1).MainE.OwnerC.Is(BuildEs(idx_0).BuildingE.OwnerC.Player))
+                        if (UnitEs(idx_1).MainE.HaveUnit && UnitEs(idx_1).OwnerE.OwnerC.Is(BuildEs(idx_0).BuildingE.OwnerC.Player))
                         {
-                            UnitStatEs(idx_1).WaterE.SetMax(UnitEs(idx_1).MainE, Es.UnitStatUpgradesEs);
+                            UnitStatEs(idx_1).WaterE.SetMax(UnitEs(idx_1), Es.UnitStatUpgradesEs);
                         }
                     }
                 }

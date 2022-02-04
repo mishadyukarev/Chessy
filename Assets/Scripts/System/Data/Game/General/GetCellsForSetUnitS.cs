@@ -17,7 +17,7 @@
 
                 if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.City, player, out var idx_1))
                 {
-                    if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                    if (UnitEs(idx_1).MainE.HaveUnit)
                     {
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = false;
                     }
@@ -34,7 +34,7 @@
 
                         var unit_2 = UnitEs(idx_2).MainE.UnitTC;
 
-                        if (!EnvironmentEs(idx_2).Mountain.HaveEnvironment && !UnitEs(idx_2).MainE.HaveUnit(UnitStatEs(idx_2)))
+                        if (!EnvironmentEs(idx_2).Mountain.HaveEnvironment && !UnitEs(idx_2).MainE.HaveUnit)
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -56,7 +56,7 @@
 
                         if (buld_0.Is(BuildingTypes.Camp))
                         {
-                            if (!EnvironmentEs(idx_0).Mountain.HaveEnvironment && !UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                            if (!EnvironmentEs(idx_0).Mountain.HaveEnvironment && !UnitEs(idx_0).MainE.HaveUnit)
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }
@@ -69,7 +69,7 @@
 
                             var canSet = false;
 
-                            if (!UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                            if (!UnitEs(idx_0).MainE.HaveUnit)
                             {
                                 if (player == PlayerTypes.First)
                                 {

@@ -16,7 +16,7 @@ namespace Game.Game
             foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
                 var tw_0 = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
                 var twLevel_0 = UnitEs(idx_0).ToolWeaponE.LevelTC;
@@ -28,7 +28,7 @@ namespace Game.Game
 
                 TrailEs(idx_0).DestroyAll();
 
-                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                if (UnitEs(idx_0).MainE.HaveUnit)
                 {
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -40,7 +40,7 @@ namespace Game.Game
                                 UnitEs(idx_0).ToolWeaponE.Reset();
                             }
 
-                            UnitEs(idx_0).MainE.AddToInventorAndRemove(Es.InventorUnitsEs, Es.WhereUnitsEs);
+                            UnitEs(idx_0).MainE.AddToInventorAndRemove(Es);
                         }
                     }
                     else
@@ -52,7 +52,7 @@ namespace Game.Game
                             UnitEs(idx_0).ToolWeaponE.Reset();
                         }
 
-                        UnitEs(idx_0).MainE.AddToInventorAndRemove(Es.InventorUnitsEs, Es.WhereUnitsEs);
+                        UnitEs(idx_0).MainE.AddToInventorAndRemove(Es);
                     }
                 }
 
@@ -83,7 +83,7 @@ namespace Game.Game
 
                         if (random <= 3)
                         {
-                            EnvironmentEs(idx_0).Fertilizer.SetNew();
+                            EnvironmentEs(idx_0).Fertilizer.SetNewRandom(Es.WhereEnviromentEs);
                         }
                     }
                 }

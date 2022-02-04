@@ -45,7 +45,7 @@ namespace Game.Game
                     {
                         MistakeUIE.Zones<GameObjectVC>(MistakeE.Mistake<MistakeC>().Mistake).SetActive(true);
 
-                        for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
+                        for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                         {
                             if (MistakeE.Mistake(res).Amount > 0)
                             {

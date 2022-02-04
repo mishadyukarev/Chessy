@@ -27,7 +27,7 @@ namespace Game.Game
         {
             _envs = new Dictionary<string, HaveEnvironmentOnCellE>();
 
-            for (var env = EnvironmentTypes.First; env < EnvironmentTypes.End; env++)
+            for (var env = EnvironmentTypes.None + 1; env < EnvironmentTypes.End; env++)
             {
                 for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
                 {

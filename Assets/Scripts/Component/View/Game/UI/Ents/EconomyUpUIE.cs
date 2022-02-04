@@ -27,7 +27,7 @@ namespace Game.Game
             _economyExtract = new Dictionary<ResourceTypes, Entity>();
 
 
-            for (var res = ResourceTypes.First; res < ResourceTypes.End; res++)
+            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
                 var resZone = upZone.Find("ResourcesZone").Find(res.ToString());
 

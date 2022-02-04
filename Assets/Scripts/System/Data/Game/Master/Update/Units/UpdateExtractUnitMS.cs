@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (UnitEs(idx_0).MainE.CanExtractPawnAdultForest(UnitEs(idx_0).StatEs, EnvironmentEs(idx_0)))
+                if (EnvironmentEs(idx_0).AdultForest.CanExtractPawnAdultForest(UnitEs(idx_0)))
                 {
                     EnvironmentEs(idx_0).AdultForest.ExtractPawn(UnitEs(idx_0), Es.InventorResourcesEs);
 
@@ -18,12 +18,12 @@
                     {
                         if (BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.Camp) || !BuildEs(idx_0).BuildingE.BuildTC.Have)
                         {
-                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Woodcutter, UnitEs(idx_0).MainE.OwnerC.Player, BuildEs(idx_0), Es.WhereBuildingEs);
+                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Woodcutter, UnitEs(idx_0).OwnerE.OwnerC.Player, BuildEs(idx_0), Es.WhereBuildingEs);
                         }
 
                         else if (!BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.Woodcutter))
                         {
-                            UnitEs(idx_0).MainE.SetCondition(ConditionUnitTypes.Protected);
+                            UnitEs(idx_0).ConditionE.Set(ConditionUnitTypes.Protected);
                         }
                     }
                     else

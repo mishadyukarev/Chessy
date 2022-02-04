@@ -13,7 +13,7 @@
             foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var own_0 = UnitEs(idx_0).MainE.OwnerC;
+                var own_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
@@ -31,7 +31,7 @@
                 {
                     if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
-                        if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
+                        if (Es.SelectedUniqueAbilityE.AbilityTC.Is(AbilityTypes.ChangeDirectionWind))
                         {
                             support_0.Enable();
                             support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -39,7 +39,7 @@
                     }
                 }
 
-                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                if (UnitEs(idx_0).MainE.HaveUnit)
                 {
                     if (own_0.Is(Es.WhoseMove.CurPlayerI))
                     {
@@ -56,7 +56,7 @@
                         {
                             if (unit_0.Is(UnitTypes.Pawn, UnitTypes.Archer))
                             {
-                                if (UnitEs(idx_0).MainE.LevelTC.Is(LevelTypes.First))
+                                if (UnitEs(idx_0).LevelE.LevelTC.Is(LevelTypes.First))
                                 {
                                     support_0.Enable();
                                     support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -82,7 +82,7 @@
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
-                                    if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.StunElfemale))
+                                    if (Es.SelectedUniqueAbilityE.AbilityTC.Is(AbilityTypes.StunElfemale))
                                     {
                                         support_0.Enable();
                                         support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -108,7 +108,7 @@
             {
                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                 {
-                    if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.ChangeDirectionWind))
+                    if (Es.SelectedUniqueAbilityE.AbilityTC.Is(AbilityTypes.ChangeDirectionWind))
                     {
                         CellWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
 
@@ -120,7 +120,7 @@
                     }
                 }
 
-                else if (Es.SelectedUniqueAbilityE.AbilityC.Is(AbilityTypes.FireArcher))
+                else if (Es.SelectedUniqueAbilityE.AbilityTC.Is(AbilityTypes.FireArcher))
                 {
                     foreach (var idx in CellsForArsonArcherEs.Idxs<IdxsC>(Es.SelectedIdxE.IdxC.Idx).Idxs)
                     {

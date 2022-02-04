@@ -14,7 +14,7 @@ namespace Game.Game
         {
             foreach (byte idx_0 in CellWorker.Idxs)
             {
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
                 var hpUnit_0 = UnitStatEs(idx_0).Hp.Health;
 
                 Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
@@ -27,7 +27,7 @@ namespace Game.Game
 
                 if (UnitEs(idx_0).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
                 {
-                    if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                    if (UnitEs(idx_0).MainE.HaveUnit)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
@@ -40,13 +40,13 @@ namespace Game.Game
 
 
 
-                        if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Protected))
+                        if (UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Protected))
                         {
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.yellow;
                         }
 
-                        else if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                        else if (UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                         {
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.green;

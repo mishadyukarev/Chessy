@@ -3,11 +3,8 @@
     public enum ResourceTypes
     {
         None,
-        Start = None,
 
         Food,
-        First = Food,
-
         Wood,
         Ore,
         Iron,

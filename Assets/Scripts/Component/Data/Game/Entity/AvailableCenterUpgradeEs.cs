@@ -1,4 +1,5 @@
 ﻿using ECS;
+using Photon.Realtime;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -49,5 +50,29 @@ namespace Game.Game
                 }
             }
         }
+
+
+        public void UpgradeCenterUnit_Master(in UnitTypes unit, in Player sender, in Entities es)
+        {
+            var whoseMove = es.WhoseMove.WhoseMove.Player;
+
+
+            if (unit == UnitTypes.Scout)
+            {
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+            }
+            else
+            {
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+            }
+
+            es.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
+            es.AvailableCenterUpgradeEs.HaveUnitUpgrade(unit, whoseMove).HaveUpgrade.Have = false;
+
+            es.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+        }
+
     }
 }

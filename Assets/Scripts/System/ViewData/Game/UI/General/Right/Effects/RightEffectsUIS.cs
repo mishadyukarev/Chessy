@@ -21,7 +21,7 @@ namespace Game.Game
             {
                 var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-                if (UnitEs(Es.SelectedIdxE.IdxC.Idx).MainE.HaveUnit(UnitStatEs(idx_sel)))
+                if (UnitEs(Es.SelectedIdxE.IdxC.Idx).MainE.HaveUnit)
                 {
                     for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++)
                     {

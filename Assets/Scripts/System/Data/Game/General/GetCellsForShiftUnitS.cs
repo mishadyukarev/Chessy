@@ -15,11 +15,11 @@
 
                 if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
-                    if (!UnitEffectEs(idx_0).StunE.IsStunned && UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && !UnitEs(idx_0).MainE.UnitTC.IsAnimal)
+                    if (!UnitEffectEs(idx_0).StunE.IsStunned && UnitEs(idx_0).MainE.HaveUnit && !UnitEs(idx_0).MainE.UnitTC.IsAnimal)
                     {
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (!EnvironmentEs(idx_1).Mountain.HaveEnvironment && !UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                            if (!EnvironmentEs(idx_1).Mountain.HaveEnvironment && !UnitEs(idx_1).MainE.HaveUnit)
                             {
                                 CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
 
@@ -28,7 +28,7 @@
 
                                 if (one || two)
                                 {
-                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(UnitEs(idx_0).MainE.OwnerC.Player, idx_0).Add(idx_1);
+                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(UnitEs(idx_0).OwnerE.OwnerC.Player, idx_0).Add(idx_1);
                                 }
                             }
                         }

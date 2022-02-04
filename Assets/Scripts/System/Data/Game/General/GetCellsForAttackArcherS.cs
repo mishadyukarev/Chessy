@@ -11,8 +11,8 @@
             foreach (var idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
-                var corner_0 = UnitEs(idx_0).MainE.IsCorned;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
+                var isCornered_0 = UnitEs(idx_0).CornedE.IsCornered;
 
                 if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
@@ -27,18 +27,18 @@
                                 var xy_1 = CellWorker.GetXyCellByDirect(xy_from, dir_1);
                                 var idx_1 = CellWorker.GetIdxCell(xy_1);
 
-                                var ownUnit_1 = UnitEs(idx_1).MainE.OwnerC;
+                                var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
 
 
                                 if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive && !EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                                 {
-                                    if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                                    if (UnitEs(idx_1).MainE.HaveUnit)
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Player))
                                         {
                                             if (unit_0.Is(UnitTypes.Archer))
                                             {
-                                                if (corner_0.Is)
+                                                if (isCornered_0)
                                                 {
                                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                     {
@@ -68,17 +68,17 @@
 
 
                                     var unit_2 = UnitEs(idx_2).MainE.UnitTC;
-                                    var ownUnit_2 = UnitEs(idx_2).MainE.OwnerC;
+                                    var ownUnit_2 = UnitEs(idx_2).OwnerE.OwnerC;
 
 
 
-                                    if (UnitEs(idx_2).MainE.HaveUnit(UnitStatEs(idx_2)) && !unit_2.IsAnimal
+                                    if (UnitEs(idx_2).MainE.HaveUnit && !unit_2.IsAnimal
                                         && UnitEs(idx_2).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
                                         if (unit_0.Is(UnitTypes.Archer))
                                         {
-                                            if (corner_0.Is)
+                                            if (isCornered_0)
                                             {
                                                 if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                 {

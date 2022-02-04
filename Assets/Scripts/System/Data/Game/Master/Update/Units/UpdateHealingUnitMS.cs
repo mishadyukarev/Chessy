@@ -10,7 +10,7 @@
         {
             foreach (var idx_0 in CellWorker.Idxs)
             {
-                if (UnitEs(idx_0).MainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                if (UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                 {
                     UnitStatEs(idx_0).Hp.SetMax();
                 }

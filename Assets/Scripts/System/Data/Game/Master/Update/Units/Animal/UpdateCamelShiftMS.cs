@@ -20,7 +20,7 @@ namespace Game.Game
 
                 if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive
                     && !EnvironmentEs(idx_1).Mountain.HaveEnvironment
-                    && !UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                    && !UnitEs(idx_1).MainE.HaveUnit)
                 {
                     UnitEs(idx_0).MainE.Shift(idx_1, Es);
                 }

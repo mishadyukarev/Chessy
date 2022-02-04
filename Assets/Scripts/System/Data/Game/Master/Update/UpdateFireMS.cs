@@ -24,7 +24,7 @@ namespace Game.Game
                 {
                     EnvironmentEs(idx_0).AdultForest.Fire();
 
-                    if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)))
+                    if (UnitEs(idx_0).MainE.HaveUnit)
                     {
                         UnitStatEs(idx_0).Hp.Fire(Es);
                     }

@@ -5,25 +5,31 @@ namespace Game.Game
 {
     public readonly struct CellUnitEs
     {
-        public readonly CellUnitMainE MainE;
-        public readonly CellUnitTWE ToolWeaponE;
-
         readonly Dictionary<ButtonTypes, CellUnitAbilityButtonsE> _uniqueButtons;
-        readonly Dictionary<AbilityTypes, CellUnitAbilityCooldownE> _cooldownUniques;
+        readonly Dictionary<AbilityTypes, CellUnitAbilityE> _abilities;
         readonly Dictionary<PlayerTypes, CellUnitVisibleE> _cellUnitVisibles;
         public CellUnitAbilityButtonsE AbilityButton(in ButtonTypes button) => _uniqueButtons[button];
-        public CellUnitAbilityCooldownE CooldownAbility(in AbilityTypes ability) => _cooldownUniques[ability];
+        public CellUnitAbilityE Ability(in AbilityTypes ability) => _abilities[ability];
         public CellUnitVisibleE VisibleE(in PlayerTypes player) => _cellUnitVisibles[player];
-
         public HashSet<AbilityTypes> CooldownKeys
         {
             get
             {
                 var keys = new HashSet<AbilityTypes>();
-                foreach (var item in _cooldownUniques) keys.Add(item.Key);
+                foreach (var item in _abilities) keys.Add(item.Key);
                 return keys;
             }
         }
+
+
+        public readonly CellUnitMainE MainE;
+        public readonly CellUnitLevelE LevelE;
+        public readonly CellUnitOwnerE OwnerE;
+        public readonly CellUnitConditonE ConditionE;
+        public readonly CellUnitCornedE CornedE;
+        public readonly CellUnitToolWeaponE ToolWeaponE;
+        public readonly CellUnitWhoLastDiedHereE WhoLastDiedHereE;
+
 
         public readonly CellUnitStatEs StatEs;
         public readonly CellUnitEffectEs EffectEs;
@@ -31,19 +37,16 @@ namespace Game.Game
 
         public CellUnitEs(in byte idx, in EcsWorld gameW)
         {
-            MainE = new CellUnitMainE(idx, gameW);
-            ToolWeaponE = new CellUnitTWE(gameW);
-
             _uniqueButtons = new Dictionary<ButtonTypes, CellUnitAbilityButtonsE>();
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
                 _uniqueButtons.Add(buttonT, new CellUnitAbilityButtonsE(gameW));
             }
 
-            _cooldownUniques = new Dictionary<AbilityTypes, CellUnitAbilityCooldownE>();
+            _abilities = new Dictionary<AbilityTypes, CellUnitAbilityE>();
             for (var ability = AbilityTypes.None + 1; ability < AbilityTypes.End; ability++)
             {
-                _cooldownUniques.Add(ability, new CellUnitAbilityCooldownE(ability, gameW));
+                _abilities.Add(ability, new CellUnitAbilityE(ability, idx, gameW));
             }
 
             _cellUnitVisibles = new Dictionary<PlayerTypes, CellUnitVisibleE>();
@@ -52,6 +55,14 @@ namespace Game.Game
                 _cellUnitVisibles[player] = new CellUnitVisibleE(gameW);
             }
 
+
+            MainE = new CellUnitMainE(idx, gameW);
+            OwnerE = new CellUnitOwnerE(idx, gameW);
+            ConditionE = new CellUnitConditonE(idx, gameW);
+            LevelE = new CellUnitLevelE(idx, gameW);
+            ToolWeaponE = new CellUnitToolWeaponE(idx, gameW);
+            CornedE = new CellUnitCornedE(idx, gameW);
+            WhoLastDiedHereE = new CellUnitWhoLastDiedHereE(idx, gameW);
 
             StatEs = new CellUnitStatEs(idx, gameW);
             EffectEs = new CellUnitEffectEs(idx, gameW);

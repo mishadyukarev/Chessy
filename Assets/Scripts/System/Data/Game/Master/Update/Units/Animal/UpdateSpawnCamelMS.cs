@@ -16,13 +16,13 @@ namespace Game.Game
 
                 if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
-                    if (!UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && !EnvironmentEs(idx_0).Mountain.HaveEnvironment)
+                    if (!UnitEs(idx_0).MainE.HaveUnit && !EnvironmentEs(idx_0).Mountain.HaveEnvironment)
                     {
                         bool haveNearUnit = false;
 
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (UnitEs(idx_1).MainE.HaveUnit(UnitStatEs(idx_1)))
+                            if (UnitEs(idx_1).MainE.HaveUnit)
                             {
                                 haveNearUnit = true;
                                 break;

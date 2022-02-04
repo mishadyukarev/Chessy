@@ -1,4 +1,5 @@
 ﻿using ECS;
+using Photon.Realtime;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -24,6 +25,17 @@ namespace Game.Game
                     }
                 }
             }
+        }
+         
+        public void UpgradeCenter_Master(in BuildingTypes build, in Player sender, in Entities e)
+        {
+            var whoseMove = e.WhoseMove.CurPlayerI;
+
+            e.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
+            e.BuildingUpgradeEs.HaveUpgrade(build, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+            e.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, whoseMove).HaveUpgrade.Have = false;
+
+            e.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

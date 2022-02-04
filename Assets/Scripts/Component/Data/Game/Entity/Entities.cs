@@ -13,7 +13,7 @@ namespace Game.Game
         readonly Dictionary<PlayerTypes, AvailableCenterHeroE> _availHero;
 
         public ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
-        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitMainE unitMainE) => _scoutHeroCooldownEs[unitMainE.UnitTC.Unit.ToString() + unitMainE.OwnerC.Player];
+        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitEs unitEs) => _scoutHeroCooldownEs[unitEs.MainE.UnitTC.Unit.ToString() + unitEs.OwnerE.OwnerC.Player];
         public ReadyE Ready(in PlayerTypes player) => _ready[player];
         public SoundE Sound(in ClipTypes clip) => _sounds0[clip];
         public SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
@@ -27,14 +27,14 @@ namespace Game.Game
         public readonly InputE InputE;
         public readonly PreviousVisionIdxE PreviousVisionIdxE;
         public readonly WinnerE WinnerE;
-        public readonly WindE WindE;
+        public readonly WindCloudE WindE;
         public readonly FriendZoneE FriendZoneE;
         public readonly GameInfoE GameInfo;
         public readonly InfoEnvironmentE InfoEnvironment;
         public readonly SelectedUnitE SelectedUnitE;
         public readonly ClickerObjectE ClickerObject;
         public readonly WhoseMoveE WhoseMove;
-        public readonly SelectedUniqueAbilityE SelectedUniqueAbilityE;
+        public readonly SelectedAbilityE SelectedUniqueAbilityE;
         public readonly RpcE Rpc;
         public readonly SelectedToolWeaponE SelectedToolWeaponE;
 
@@ -67,10 +67,14 @@ namespace Game.Game
 
         public CellUnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
         public CellUnitStatEs UnitStatEs(in byte idx) => UnitEs(idx).StatEs;
+        public CellUnitStatHpE UnitStatHpE(in byte idx) => UnitStatEs(idx).Hp;
+        public CellUnitStatStepE UnitStatStepEs(in byte idx) => UnitStatEs(idx).StepE;
+        public CellUnitStatWaterE UnitStatWaterEs(in byte idx) => UnitStatEs(idx).WaterE;
         public CellUnitEffectEs UnitEffectEs(in byte idx) => UnitEs(idx).EffectEs;
 
         public CellBuildEs BuildEs(in byte idx) => CellEs(idx).BuildEs;
         public CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
+        public CellEnvAdultForestE EnvAdultForestE(in byte idx) => EnvironmentEs(idx).AdultForest;
         public CellRiverEs RiverEs(in byte idx) => CellEs(idx).RiverEs;
         public CellTrailEs TrailEs(in byte idx) => CellEs(idx).TrailEs;
         public CellEffectEs EffectEs(in byte idx) => CellEs(idx).EffectEs;
@@ -119,7 +123,7 @@ namespace Game.Game
             CurrentIdxE = new CurrentIdxE(gameW);
             PreviousVisionIdxE = new PreviousVisionIdxE(gameW);
 
-            WindE = new WindE(gameW);
+            WindE = new WindCloudE(gameW);
             WinnerE = new WinnerE(gameW);
             WhoseMove = new WhoseMoveE(PlayerTypes.First, gameW);
             InputE = new InputE(gameW);
@@ -131,7 +135,7 @@ namespace Game.Game
             ClickerObject = new ClickerObjectE(CellClickTypes.SimpleClick, gameW);
             SunSidesE = new SunSidesE(SunSideTypes.Dawn, gameW);
             SelectedUnitE = new SelectedUnitE(gameW);
-            SelectedUniqueAbilityE = new SelectedUniqueAbilityE(gameW);
+            SelectedUniqueAbilityE = new SelectedAbilityE(gameW);
             SelectedToolWeaponE = new SelectedToolWeaponE(gameW);
 
             WhereBuildingEs = new WhereBuildingEs(gameW);

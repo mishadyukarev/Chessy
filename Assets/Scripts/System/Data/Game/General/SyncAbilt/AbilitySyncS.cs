@@ -13,7 +13,7 @@ namespace Game.Game
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
                 var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
                 var ownBuild_0 = BuildEs(idx_0).BuildingE.OwnerC;
@@ -21,7 +21,7 @@ namespace Game.Game
 
                 if (ownUnit_0.Is(Es.WhoseMove.CurPlayerI))
                 {
-                    if (UnitEs(idx_0).MainE.HaveUnit(UnitEs(idx_0).StatEs))
+                    if (UnitEs(idx_0).MainE.HaveUnit)
                     {
                         switch (unit_0.Unit)
                         {
@@ -99,7 +99,7 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Undead:
-                                UnitEs(idx_0).AbilityButton(ButtonTypes.First).Reset();
+                                UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.Resurrect;
                                 UnitEs(idx_0).AbilityButton(ButtonTypes.Second).Reset();
                                 UnitEs(idx_0).AbilityButton(ButtonTypes.Third).Reset();
                                 break;

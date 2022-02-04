@@ -36,179 +36,167 @@ namespace Game.Game
         {
             _idx_cur = 0;
 
-            var rpcT = (RpcMasterTypes)objects[_idx_cur++];
+            var sender = infoFrom.Sender;
 
-            InfoC.AddInfo(MGOTypes.Master, infoFrom);
+            var obj = objects[_idx_cur++];
 
-            if (rpcT == RpcMasterTypes.UniqueAbility)
+            if (obj is AbilityTypes ability)
             {
-                var uniqAbil = (AbilityTypes)objects[_idx_cur++];
-
-                switch (uniqAbil)
+                switch (ability)
                 {
                     case AbilityTypes.None: throw new Exception();
 
                     case AbilityTypes.CircularAttack:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).CircularAttack_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.BonusNear:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BonusNear_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.FirePawn:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).FirePawn_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.PutOutFirePawn:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).PutOut_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.Seed:
-                        _ents.MasterEs.Seed<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        _ents.MasterEs.Seed<EnvironmetTC>().Environment = (EnvironmentTypes)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).Seed_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.Farm:
-                        _ents.MasterEs.BuildingFarmME.IdxC.Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildFarm_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.Mine:
-                        _ents.MasterEs.BuildingMineME.WhereBuildMine.Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildMine_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.City:
-                        _ents.MasterEs.BuildingCityME.WhereBuildCity.Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildCity_Master(sender, _ents);
+                        break;
+
+                    case AbilityTypes.DestroyBuilding:
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).Destroy_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.FireArcher:
-                        _ents.MasterEs.FireArcher<IdxFromToC>().From = (byte)objects[_idx_cur++];
-                        _ents.MasterEs.FireArcher<IdxFromToC>().To = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).FireArcher_Master((byte)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case AbilityTypes.GrowAdultForest:
-                        _ents.MasterEs.GrowAdultForest<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).GrowElfemale_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.StunElfemale:
-                        _ents.MasterEs.StunElfemale<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).StunElfemale_Master((byte)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case AbilityTypes.ChangeDirectionWind:
-                        _ents.MasterEs.ChangeDirectionWind<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ChangeDirectionWind_Master((byte)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case AbilityTypes.ChangeCornerArcher:
-                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ChangeCornerArcher_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.IceWall:
-                        _ents.MasterEs.IceWallSnowyME.IdxC.Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).SetIceWallSnowy_Master(_ents);
                         break;
 
                     case AbilityTypes.ActiveAroundBonusSnowy:
-                        _ents.MasterEs.ActiveSnowyAroundME.Where.Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ActiveSnowyAround_Master(sender, _ents);
                         break;
 
                     case AbilityTypes.DirectWave:
-                        _ents.MasterEs.DirectWaveSnowyME.ForDirectWave.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).DirectWaveSnowy_Master((byte)objects[_idx_cur++], sender, _ents);
+                        break;
+
+                    case AbilityTypes.Resurrect:
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ResurrectUnit_Master(sender, (byte)objects[_idx_cur++], _ents);
                         break;
 
                     default: throw new Exception();
                 }
-
-                _ents.MasterEs.AbilityC.Ability = uniqAbil;
-                _systems.SystemsMaster.InvokeRun(uniqAbil);
             }
 
             else
             {
+                var rpcT = (RpcMasterTypes)obj;
+
                 switch (rpcT)
                 {
                     case RpcMasterTypes.None:
                         throw new Exception();
 
                     case RpcMasterTypes.Ready:
+                        _ents.Ready(sender.GetPlayer()).Ready_Master(sender, _ents);
                         break;
 
                     case RpcMasterTypes.Done:
-                        break;
-
-                    case RpcMasterTypes.DestroyBuild:
-                        _ents.MasterEs.DestroyIdxC.Idx = (byte)objects[_idx_cur++];
+                        if(_ents.WhoseMove.Done_Master(sender, _ents))
+                        {
+                            _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                        }
                         break;
 
                     case RpcMasterTypes.Shift:
-                        _ents.MasterEs.Shift<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.Shift_Master((byte)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _ents.MasterEs.Attack.From = (byte)objects[_idx_cur++];
-                        _ents.MasterEs.Attack.To = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.Attack_Master((byte)objects[_idx_cur++], _ents);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        _ents.MasterEs.ConditionUnit<ConditionUnitC>().Condition = (ConditionUnitTypes)objects[_idx_cur++];
-                        _ents.MasterEs.ConditionUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).ConditionE.Condition_Master((ConditionUnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.CreateUnit:
-                        _ents.MasterEs.CreateUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        _ents.InventorResourcesEs.CreateUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.MeltOre:
+                        _ents.InventorResourcesEs.TryMeltOre_Master(sender, _ents);
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        _ents.MasterEs.SetUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        _ents.MasterEs.SetUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.BuyRes:
-                        _ents.MasterEs.BuyResources<ResourceTC>().Resource = (ResourceTypes)objects[_idx_cur++];
-                        break;
-
-                    case RpcMasterTypes.ToNewUnit:
-                        _ents.MasterEs.ScoutOldNew<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
-                        _ents.MasterEs.ScoutOldNew<IdxC>().Idx = (byte)objects[_idx_cur++];
-                        break;
-
-                    case RpcMasterTypes.CreateHeroFromTo:
-                        _ents.MasterEs.CreateHeroFromTo<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
-                        _ents.MasterEs.CreateHeroFromTo<IdxFromToC>().Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        _ents.InventorResourcesEs.BuyResources_Master((ResourceTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.UpgradeCellUnit:
-                        _ents.MasterEs.UpgradeUnit<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.UpgradeUnit_Master(sender, _ents);
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        _ents.MasterEs.GiveTakeToolWeapon<ToolWeaponTC>().ToolWeapon = (ToolWeaponTypes)objects[_idx_cur++];
-                        _ents.MasterEs.GiveTakeToolWeapon<LevelTC>().Level = (LevelTypes)objects[_idx_cur++];
-                        _ents.MasterEs.GiveTakeToolWeapon<IdxC>().Idx = (byte)objects[_idx_cur++];
+                        _ents.UnitEs((byte)objects[_idx_cur++]).ToolWeaponE.GiveTakeTW_Master((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        _ents.MasterEs.ForGetHero.Unit = (UnitTypes)objects[_idx_cur++];
+                        _ents.InventorUnitsEs.GetHero_Master((UnitTypes)objects[_idx_cur++], _ents);
                         break;
 
                     case RpcMasterTypes.UpgCenterUnits:
-                        _ents.MasterEs.UpgradeCenterUnit<UnitTC>().Unit = (UnitTypes)objects[_idx_cur++];
+                        _ents.AvailableCenterUpgradeEs.UpgradeCenterUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.UpgCenterBuild:
-                        _ents.MasterEs.CenterUpgradeME.BuildingForUpgrade.Build = (BuildingTypes)objects[_idx_cur++];
+                        _ents.BuildingUpgradeEs.UpgradeCenter_Master((BuildingTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.UpgWater:
+                        _ents.UnitStatUpgradesEs.UpgradeCenterWater_Master(sender, _ents);
                         break;
 
                     default:
                         throw new Exception();
                 }
-
-                _ents.MasterEs.RpcMasterTC.RpcMasterT = rpcT;
-                _systems.SystemsMaster.InvokeRun(rpcT);
             }
 
             SyncAllMaster();
@@ -219,8 +207,6 @@ namespace Game.Game
         {
             _idx_cur = 0;
             var rpcT = (RpcGeneralTypes)objects[_idx_cur++];
-
-            InfoC.AddInfo(MGOTypes.General, infoFrom);
 
             switch (rpcT)
             {
@@ -287,14 +273,14 @@ namespace Game.Game
             foreach (byte idx_0 in _ents.CellWorker.Idxs)
             {
                 objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.UnitTC.Unit);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.OwnerC.Player);
+                //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.OwnerE.OwnerC.Player);
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Hp.Health.Amount);
                 objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.StepE.Steps.Amount);
                 objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.WaterE.Water.Amount);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.ConditionTC.Condition);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ConditionE.ConditionTC.Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
@@ -304,9 +290,9 @@ namespace Game.Game
 
                 objs.Add(_ents.UnitEffectEs(idx_0).StunE.ForExitStun.Amount);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.IsCorned.Is);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.CornedE.IsCornered);
 
-                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.CooldownAbility(item).Cooldown.Amount);
+                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown.Amount);
 
 
 
@@ -419,7 +405,7 @@ namespace Game.Game
 
                 
 
-                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) _ents.CellEs(idx_0).UnitEs.CooldownAbility(item).SyncRpc((int)objects[_idx_cur++]);
+                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) _ents.CellEs(idx_0).UnitEs.Ability(item).SyncRpc((int)objects[_idx_cur++]);
 
 
 

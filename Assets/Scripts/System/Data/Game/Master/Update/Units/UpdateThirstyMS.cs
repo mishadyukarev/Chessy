@@ -13,9 +13,9 @@ namespace Game.Game
             foreach (byte idx_0 in CellWorker.Idxs)
             {
                 var unit_0 = UnitEs(idx_0).MainE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).MainE.OwnerC;
+                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
-                if (UnitEs(idx_0).MainE.HaveUnit(UnitStatEs(idx_0)) && !unit_0.IsAnimal)
+                if (UnitEs(idx_0).MainE.HaveUnit && !unit_0.IsAnimal)
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
@@ -29,7 +29,7 @@ namespace Game.Game
                     {
                         if (RiverEs(idx_0).River.HaveRiverNear)
                         {
-                            UnitStatEs(idx_0).WaterE.SetMax(UnitEs(idx_0).MainE, Es.UnitStatUpgradesEs);
+                            UnitStatEs(idx_0).WaterE.SetMax(UnitEs(idx_0), Es.UnitStatUpgradesEs);
                         }
                         else
                         {
