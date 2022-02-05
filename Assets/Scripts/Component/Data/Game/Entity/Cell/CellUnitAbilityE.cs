@@ -308,19 +308,16 @@ namespace Game.Game
                 {
                     if (!e.EnvAdultForestE(idx_0).HaveEnvironment)
                     {
-                        if (e.EnvFertilizeE(idx_0).HaveEnvironment)
+                        if (e.InventorResourcesEs.TryBuyBuilding_Master(BuildingTypes.Farm, whoseMove, sender, e))
                         {
-                            if (e.InventorResourcesEs.TryBuyBuilding_Master(BuildingTypes.Farm, whoseMove, sender, e))
-                            {
-                                e.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                            e.Rpc.SoundToGeneral(sender, ClipTypes.Building);
 
-                                e.EnvYoungForestE(idx_0).Destroy();
+                            e.EnvYoungForestE(idx_0).Destroy();
 
-                                e.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Farm, whoseMove);
+                            e.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Farm, whoseMove);
 
-                                e.UnitStatEs(idx_0).StepE.Take(_ability);
-                            }
-                        }   
+                            e.UnitStatEs(idx_0).StepE.Take(_ability);
+                        }
                     }
                     else
                     {

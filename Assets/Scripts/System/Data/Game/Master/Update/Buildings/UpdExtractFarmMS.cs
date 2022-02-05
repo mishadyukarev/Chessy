@@ -1,8 +1,8 @@
 ﻿namespace Game.Game
 {
-    public sealed class UpdExtractFarmMS : SystemAbstract, IEcsRunSystem
+    sealed class UpdExtractFarmMS : SystemAbstract, IEcsRunSystem
     {
-        public UpdExtractFarmMS(in Entities ents) : base(ents)
+        internal UpdExtractFarmMS(in Entities ents) : base(ents)
         {
         }
 
@@ -10,14 +10,14 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (BuildEs(idx_0).BuildingE.CanExtractFertilizer(EnvironmentEs(idx_0)))
+                if (Es.BuildE(idx_0).CanExtractFertilizer(EnvironmentEs(idx_0)))
                 {
-                    EnvironmentEs(idx_0).Fertilizer.ExtractFarm(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
+                    Es.EnvFertilizeE(idx_0).ExtractFarm(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
 
-                    if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
-                    {
-                        BuildEs(idx_0).BuildingE.Destroy();
-                    }
+                    //if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
+                    //{
+                    //    BuildEs(idx_0).BuildingE.Destroy();
+                    //}
                 }
             }
         }
