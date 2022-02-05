@@ -70,9 +70,9 @@ namespace Game.Game
                         _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildFarm_Master(sender, _ents);
                         break;
 
-                    case AbilityTypes.Mine:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildMine_Master(sender, _ents);
-                        break;
+                    //case AbilityTypes.Mine:
+                    //    _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildMine_Master(sender, _ents);
+                    //    break;
 
                     case AbilityTypes.City:
                         _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildCity_Master(sender, _ents);
@@ -311,7 +311,7 @@ namespace Game.Game
 
 
 
-                objs.Add(_ents.CellEs(idx_0).RiverEs.River.RiverTC.River);
+                objs.Add(_ents.CellEs(idx_0).RiverEs.RiverE.RiverTC.River);
                 foreach (var item_0 in _ents.CellEs(idx_0).RiverEs.Keys)
                     objs.Add(_ents.CellEs(idx_0).RiverEs.HaveRive(item_0).HaveRiver.Have);
 
@@ -338,9 +338,9 @@ namespace Game.Game
             foreach (var key in _ents.InventorToolWeaponEs.Keys) objs.Add(_ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons.Amount);
 
 
-            foreach (var key in _ents.WhereUnitsEs.Keys) objs.Add(_ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have);
-            foreach (var key in _ents.WhereBuildingEs.Keys) objs.Add(_ents.WhereBuildingEs.HaveBuild(key).HaveBuilding.Have);
-            foreach (var key in _ents.WhereEnviromentEs.Keys) objs.Add(_ents.WhereEnviromentEs.Info(key).HaveEnv.Have);
+            //foreach (var key in _ents.WhereUnitsEs.Keys) objs.Add(_ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have);
+            //foreach (var key in _ents.WhereBuildingEs.Keys) objs.Add(_ents.WhereBuildingEs.HaveBuild(key).HaveBuilding.Have);
+            //foreach (var key in _ents.WhereEnviromentEs.Keys) objs.Add(_ents.WhereEnviromentEs.Info(key).HaveEnv.Have);
 
 
             //foreach (var item in PickUpgC.HaveUpgrades) objs.Add(item.Value);
@@ -356,9 +356,9 @@ namespace Game.Game
             objs.Add(_ents.GameInfo.IsStartedGameC.IsStartedGame);
             objs.Add(_ents.Ready(PlayerTypes.Second).IsReadyC.IsReady);
 
-            objs.Add(_ents.Motion.AmountMotions.Amount);
+            objs.Add(_ents.Motion.AmountMotionsC.Amount);
 
-            objs.Add(_ents.WindE.CenterCloud.Idx);
+            objs.Add(_ents.WindCloudE.CenterCloud.Idx);
             //foreach (var item in WindC.Directs) objs.Add(item.Value);
             //objs.Add(WindC.CurDirWind);
 
@@ -417,7 +417,7 @@ namespace Game.Game
                 //    _ents.EnvironmentEs.Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
                 //}
 
-                _ents.CellEs(idx_0).RiverEs.River.RiverTC.River = (RiverTypes)objects[_idx_cur++];
+                _ents.CellEs(idx_0).RiverEs.RiverE.RiverTC.River = (RiverTypes)objects[_idx_cur++];
                 foreach (var dir in _ents.CellEs(idx_0).RiverEs.Keys)
                     _ents.CellEs(idx_0).RiverEs.HaveRive(dir).HaveRiver.Have = (bool)objects[_idx_cur++];
 
@@ -448,9 +448,9 @@ namespace Game.Game
             foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons.Amount = (int)objects[_idx_cur++];
 
 
-            foreach (var key in _ents.WhereUnitsEs.Keys) _ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have = (bool)objects[_idx_cur++];
-            foreach (var key in _ents.WhereBuildingEs.Keys) _ents.WhereBuildingEs.HaveBuild(key).HaveBuilding.Have = (bool)objects[_idx_cur++];
-            foreach (var key in _ents.WhereEnviromentEs.Keys) _ents.WhereEnviromentEs.Info(key).HaveEnv.Have = (bool)objects[_idx_cur++];
+            //foreach (var key in _ents.WhereUnitsEs.Keys) _ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have = (bool)objects[_idx_cur++];
+            //foreach (var key in _ents.WhereBuildingEs.Keys) _ents.WhereBuildingEs.HaveBuild(key).HaveBuilding.Have = (bool)objects[_idx_cur++];
+            //foreach (var key in _ents.WhereEnviromentEs.Keys) _ents.WhereEnviromentEs.Info(key).HaveEnv.Have = (bool)objects[_idx_cur++];
 
 
             //foreach (var item in PickUpgC.HaveUpgrades) PickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
@@ -467,9 +467,9 @@ namespace Game.Game
             _ents.Ready(_ents.WhoseMove.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
 
 
-            _ents.Motion.AmountMotions.Amount = (int)objects[_idx_cur++];
+            //_ents.Motion.AmountMotionsC.Amount = (int)objects[_idx_cur++];
 
-            _ents.WindE.CenterCloud.Idx = (byte)objects[_idx_cur++];
+            _ents.WindCloudE.CenterCloud.Idx = (byte)objects[_idx_cur++];
             //foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
             //WindC.Sync((DirectTypes)objects[_idx_cur++]);
 

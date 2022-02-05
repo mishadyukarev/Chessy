@@ -4,7 +4,7 @@
     {
         protected readonly Entities Es;
 
-        protected CellEsWorker CellWorker => Es.CellWorker;
+        protected CellEsSpaceWorker CellWorker => Es.CellWorker;
 
         protected CellEs CellEs(in byte idx) => Es.CellEs(idx);
 

@@ -5,11 +5,8 @@ namespace Game.Game
 {
     sealed class UpdatorMS : SystemCellAbstract, IEcsRunSystem
     {
-        readonly SystemsMaster _systemsMaster;
-
-        internal UpdatorMS(in SystemsMaster systemsMaster, in Entities ents) : base(ents)
+        internal UpdatorMS(in Entities ents) : base(ents)
         {
-            _systemsMaster = systemsMaster;
         }
 
         public void Run()
@@ -74,23 +71,21 @@ namespace Game.Game
                                             {
                                                 if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
                                                 {
-                                                    BuildEs(idx_camp).BuildingE.Destroy(BuildEs(idx_camp), Es.WhereBuildingEs);
+                                                    BuildEs(idx_camp).BuildingE.Destroy();
                                                 }
 
 
-                                                BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player, BuildEs(idx_0), Es.WhereBuildingEs);
-                                                Es.WhereBuildingEs.HaveBuild(BuildingTypes.Camp, ownUnit_0.Player, idx_0).HaveBuilding.Have = true;
+                                                BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
                                             }
                                         }
                                         else
                                         {
                                             if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
                                             {
-                                                BuildEs(idx_camp).BuildingE.Destroy(BuildEs(idx_camp), Es.WhereBuildingEs);
+                                                Es.BuildE(idx_camp).Destroy();
                                             }
 
-                                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player, BuildEs(idx_0), Es.WhereBuildingEs);
-                                            Es.WhereBuildingEs.HaveBuild(BuildingTypes.Camp, ownUnit_0.Player, idx_0).HaveBuilding.Have = true;
+                                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
                                         }
                                     }
                                 }
@@ -109,43 +104,8 @@ namespace Game.Game
                 }
             }
 
-            var amountAdultForest = 0;
-            foreach (var idx in CellWorker.Idxs)
-            {
-                if (Es.WhereEnviromentEs.Info(EnvironmentTypes.AdultForest, idx).HaveEnv.Have)
-                    amountAdultForest += 1;
-            }
-
-            if (amountAdultForest <= 8)
-            {
-                Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
-                _systemsMaster.InvokeRun(SystemDataMasterTypes.Truce);
-            }
-
-            if (Es.Motion.AmountMotions.Amount % 3 == 0)
-            {
-                foreach (byte idx_0 in CellWorker.Idxs)
-                {
-                    var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
-
-                    if (EnvironmentEs(idx_0).Hill.HaveEnvironment)
-                    {
-                        if (!build_0.Is(BuildingTypes.Mine))
-                        {
-                            if (!EnvironmentEs(idx_0).Hill.HaveMaxResources)
-                            {
-                                EnvironmentEs(idx_0).Hill.AddEveryMove();
-                            }
-                        }
-                    }
-                }
-            }
-
-            Es.Motion.AmountMotions.Amount += 1;
-
-
-
-            Es.SunSidesE.SunSideTC.ToggleNext();
+            Es.Motion.AddEveryUpdateMove();
+            Es.SunSidesE.ToggleNext();
         }
     }
 }

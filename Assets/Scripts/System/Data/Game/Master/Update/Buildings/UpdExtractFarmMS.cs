@@ -16,7 +16,7 @@
 
                     if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
                     {
-                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
+                        BuildEs(idx_0).BuildingE.Destroy();
                     }
                 }
             }

@@ -27,7 +27,7 @@ namespace Game.Game
 
                     if (canExecute)
                     {
-                        if (RiverEs(idx_0).River.HaveRiverNear)
+                        if (RiverEs(idx_0).RiverE.HaveRiverNear)
                         {
                             UnitStatEs(idx_0).WaterE.SetMax(UnitEs(idx_0), Es.UnitStatUpgradesEs);
                         }

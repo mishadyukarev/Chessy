@@ -13,7 +13,7 @@ namespace Game.Game
                 case BuildingTypes.Woodcutter: return 1;
                 case BuildingTypes.Mine: return 1;
                 case BuildingTypes.Camp: return 1;
-                case BuildingTypes.IceWall: return 4;
+                case BuildingTypes.IceWall: return 10;
                 default: throw new Exception();
             }
         }

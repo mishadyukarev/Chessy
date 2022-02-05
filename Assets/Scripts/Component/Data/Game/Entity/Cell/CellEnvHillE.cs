@@ -4,20 +4,13 @@ namespace Game.Game
 {
     public sealed class CellEnvHillE : CellEnvironmentE
     {
-        public int AmountExtractMine(in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
+        public bool CanExtractMine(in CellBuildEs buildEs)
         {
-            var extract = 10;
-
-            if (buildUpgEs.HaveUpgrade(buildEs.BuildingE, UpgradeTypes.PickCenter).HaveUpgrade.Have)
-            {
-                extract += (int)(extract * 0.5f);
-            }
-
-            if (extract > ResourcesC.Amount)
-                extract = ResourcesC.Amount;
-
-            return extract;
+            if (buildEs.BuildingE.HaveBuilding && buildEs.BuildingE.BuildTC.Is(BuildingTypes.Mine)
+                && ResourcesC.Amount > 1) return true;
+            else return false;
         }
+
 
         internal CellEnvHillE(in byte idx, in EcsWorld world) : base(EnvironmentTypes.Hill, ResourceTypes.Ore, idx, world)
         {
@@ -27,7 +20,8 @@ namespace Game.Game
         {
             invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.OwnerC.Player).AddFarmExtractHill(this, buildUpgEs, cellEs.BuildEs);
 
-            Take(AmountExtractMine(buildUpgEs, cellEs.BuildEs));;
+            Take(AmountExtractBuilding(buildUpgEs, cellEs.BuildEs));;
         }
+        public void ExtractPawn() => Take(10);
     }
 }

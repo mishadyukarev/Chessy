@@ -9,6 +9,8 @@ namespace Game.Game
         ref PlayerTC OwnerCRef => ref Ent.Get<PlayerTC>();
         public PlayerTC OwnerC => Ent.Get<PlayerTC>();
 
+        public bool Is(params PlayerTypes[] owners) => OwnerC.Is(owners);
+
         internal CellUnitOwnerE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
         }

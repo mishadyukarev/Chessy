@@ -16,7 +16,7 @@ namespace Game.Game
 
                 case AbilityTypes.DirectWave: return 5;
                 case AbilityTypes.ActiveAroundBonusSnowy: return 5;
-                case AbilityTypes.IceWall: return 5;
+                case AbilityTypes.IceWall: return 10;
 
                 case AbilityTypes.Resurrect: return 3;
 

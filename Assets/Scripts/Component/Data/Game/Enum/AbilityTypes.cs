@@ -13,7 +13,7 @@
         PutOutFirePawn,
         Seed,
         Farm,
-        Mine,
+        //Mine,
         City,
         DestroyBuilding,
 

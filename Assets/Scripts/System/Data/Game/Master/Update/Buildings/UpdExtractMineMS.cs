@@ -10,13 +10,20 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (BuildEs(idx_0).BuildingE.CanExtractHill(EnvironmentEs(idx_0)))
+                if (BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.Mine))
                 {
-                    EnvironmentEs(idx_0).Hill.ExtractMine(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
-
-                    if (!EnvironmentEs(idx_0).Hill.HaveEnvironment)
+                    if (EnvironmentEs(idx_0).Hill.CanExtractMine(BuildEs(idx_0)))
                     {
-                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
+                        EnvironmentEs(idx_0).Hill.ExtractMine(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
+
+                        if (!EnvironmentEs(idx_0).Hill.HaveEnvironment)
+                        {
+                            BuildEs(idx_0).BuildingE.Destroy();
+                        }
+                    }
+                    else
+                    {
+                        BuildEs(idx_0).BuildingE.Destroy();
                     }
                 }
             }

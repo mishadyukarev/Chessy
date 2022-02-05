@@ -47,9 +47,6 @@ TagManager:
   - name: Cell
     uniqueID: 3112104483
     locked: 0
-  - name: Water
-    uniqueID: 3922430727
-    locked: 0
   - name: Environment
     uniqueID: 156443979
     locked: 0
@@ -76,6 +73,9 @@ TagManager:
     locked: 0
   - name: ShieldEffect
     uniqueID: 1898758555
+    locked: 0
+  - name: Water
+    uniqueID: 3922430727
     locked: 0
   - name: Unit
     uniqueID: 1121464767

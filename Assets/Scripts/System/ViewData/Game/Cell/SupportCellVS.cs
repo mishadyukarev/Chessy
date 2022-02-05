@@ -110,7 +110,7 @@
                 {
                     if (Es.SelectedUniqueAbilityE.AbilityTC.Is(AbilityTypes.ChangeDirectionWind))
                     {
-                        CellWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var dirs);
+                        CellWorker.TryGetIdxAround(Es.WindCloudE.CenterCloud.Idx, out var dirs);
 
                         foreach (var item in dirs)
                         {

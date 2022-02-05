@@ -61,8 +61,8 @@ namespace Game.Game
                 {
                     if (build_0.Is(BuildingTypes.Camp))
                     {
-                        Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
+                        //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
+                        BuildEs(idx_0).BuildingE.Destroy();
                     }
                 }
 
@@ -70,9 +70,9 @@ namespace Game.Game
                 {
                     if (EnvironmentEs(idx_0).YoungForest.HaveEnvironment)
                     {
-                        EnvironmentEs(idx_0).YoungForest.Destroy(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).YoungForest.Destroy();
 
-                        EnvironmentEs(idx_0).AdultForest.SetNewRandom(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).AdultForest.SetRandomResources();
                     }
 
                     if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment
@@ -83,7 +83,7 @@ namespace Game.Game
 
                         if (random <= 3)
                         {
-                            EnvironmentEs(idx_0).Fertilizer.SetNewRandom(Es.WhereEnviromentEs);
+                            EnvironmentEs(idx_0).Fertilizer.SetRandomResources();
                         }
                     }
                 }

@@ -45,7 +45,7 @@ namespace Game.Game
                                 }
 
                                 CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.Farm;
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Third).AbilityC.Ability = AbilityTypes.Mine;
+                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Third).AbilityC.Reset();
 
                                 if (build_0.Have)
                                 {

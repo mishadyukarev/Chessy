@@ -112,12 +112,12 @@ namespace Game.Game
                             }
                             break;
 
-                        case AbilityTypes.Mine:
-                            {
-                                Es.Rpc.BuildMineToMaster(idx_sel);
-                                TryOnHint(VideoClipTypes.BuildMine);
-                            }
-                            break;
+                        //case AbilityTypes.Mine:
+                        //    {
+                        //        Es.Rpc.BuildMineToMaster(idx_sel);
+                        //        TryOnHint(VideoClipTypes.BuildMine);
+                        //    }
+                        //    break;
 
                         case AbilityTypes.City:
                             Es.Rpc.BuildCityToMaster(idx_sel);

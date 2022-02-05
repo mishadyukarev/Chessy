@@ -13,7 +13,7 @@ namespace Game.Game
         {
             foreach (var idx_0 in CellWorker.Idxs)
             {
-                ref var river_0 = ref RiverEs(idx_0).River.RiverTC;
+                ref var river_0 = ref RiverEs(idx_0).RiverE.RiverTC;
 
                 switch (Es.WhoseMove.CurPlayerI)
                 {

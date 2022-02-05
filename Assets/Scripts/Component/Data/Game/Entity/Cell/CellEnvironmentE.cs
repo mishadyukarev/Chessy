@@ -9,17 +9,34 @@ namespace Game.Game
         public readonly EnvironmentTypes EnvT;
         public readonly ResourceTypes ResourceT;
 
-        //protected ref HaveC HaveEnvCRef => ref Ent.Get<HaveC>();
         protected ref AmountC ResourcesCRef => ref Ent.Get<AmountC>();
         public AmountC ResourcesC => Ent.Get<AmountC>();
 
         public virtual bool HaveEnvironment => ResourcesC.Amount > 0;
         public bool HaveMaxResources => ResourcesCRef.Amount >= CellEnvironmentValues.MaxResources(EnvT);
+        public bool HaveMinResources => ResourcesCRef.Amount >= CellEnvironmentValues.MinResources(EnvT);
         public int MaxResources => CellEnvironmentValues.MaxResources(EnvT);
+        public int MinResources => CellEnvironmentValues.MinResources(EnvT);
         public float ProtectionPercent => CellUnitMainDamageValues.ProtectionPercent(EnvT);
+        protected int StandartExtract(in BuildingTypes build) => CellEnvironmentValues.StandartExtract(build, EnvT);
+
+        public int AmountExtractBuilding(in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
+        {
+            var extract = StandartExtract(buildEs.BuildingE.BuildTC.Build);
+
+            if (buildUpgEs.HaveUpgrade(buildEs.BuildingE, UpgradeTypes.PickCenter).HaveUpgrade.Have)
+            {
+                extract += (int)(extract * CellEnvironmentValues.Upgrade(buildEs.BuildingE.BuildTC.Build, UpgradeTypes.PickCenter));
+            }
+
+            if (extract > ResourcesC.Amount)
+                extract = ResourcesC.Amount;
+
+            return extract;
+        }
 
 
-        protected CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld world) : base(world)
+        protected CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld gameW) : base(gameW)
         {
             Idx = idx;
             EnvT = envT;
@@ -37,23 +54,18 @@ namespace Game.Game
                 ResourcesCRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
         }
 
-        public void SetNewRandom(in WhereEnviromentEs whereEnviromentEs)
+        public void SetRandomResources() => ResourcesCRef.Amount = UnityEngine.Random.Range(MinResources, MaxResources + 1);
+        public void SetRandomFromCenterResources() => ResourcesCRef.Amount = UnityEngine.Random.Range(MaxResources / 2, MaxResources + 1);
+        public void SetNewMax()
         {
-            whereEnviromentEs.Info(EnvT, Idx).HaveEnv.Have = true;
-            ResourcesCRef.Amount = CellEnvironmentValues.RandomResources(EnvT);
-        }
-        public void SetNewMax(in WhereEnviromentEs whereEnviromentEs)
-        {
-            whereEnviromentEs.Info(EnvT, Idx).HaveEnv.Have = true;
             ResourcesCRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
         }
         public void SetMaxResources()
         {
             ResourcesCRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
         }
-        public void Destroy(in WhereEnviromentEs whereEnviromentEs)
+        public void Destroy()
         {
-            whereEnviromentEs.Info(EnvT, Idx).HaveEnv.Have = false;
             ResourcesCRef.Amount = 0;
         }
     }

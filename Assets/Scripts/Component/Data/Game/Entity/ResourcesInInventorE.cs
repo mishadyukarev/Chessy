@@ -40,15 +40,15 @@ namespace Game.Game
         }
         public void AddWoodcutterExtractAdultForest(in CellEnvAdultForestE adultForestE, in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
         {
-            Resources.Amount += adultForestE.AmountExtractWoodcutter(buildUpgEs, buildEs);
+            Resources.Amount += adultForestE.AmountExtractBuilding(buildUpgEs, buildEs);
         }
         public void AddFarmExtractFertilize(in CellEnvFertilizerE fertE, in BuildingUpgradeEs buildUpgEs,in CellBuildEs buildEs)
         {
-            Resources.Amount += fertE.AmountExtractFarm(buildUpgEs, buildEs);
+            Resources.Amount += fertE.AmountExtractBuilding(buildUpgEs, buildEs);
         }
         public void AddFarmExtractHill(in CellEnvHillE hillE, in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
         {
-            Resources.Amount += hillE.AmountExtractMine(buildUpgEs, buildEs);
+            Resources.Amount += hillE.AmountExtractBuilding(buildUpgEs, buildEs);
         }
     }
 }

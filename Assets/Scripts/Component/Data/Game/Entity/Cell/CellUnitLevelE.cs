@@ -10,6 +10,8 @@ namespace Game.Game
         ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
         public LevelTC LevelTC => Ent.Get<LevelTC>();
 
+        public bool Is(params LevelTypes[] level) => LevelTC.Is(level);
+
         internal CellUnitLevelE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
         }

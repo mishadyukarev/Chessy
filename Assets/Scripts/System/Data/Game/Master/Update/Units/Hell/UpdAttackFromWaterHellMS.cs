@@ -12,12 +12,12 @@
             {
                 if (UnitEs(idx_0).MainE.UnitTC.Is(UnitTypes.Hell))
                 {
-                    if (RiverEs(idx_0).River.HaveRiverNear)
+                    if (RiverEs(idx_0).RiverE.HaveRiverNear)
                     {
                         UnitStatEs(idx_0).Hp.TakeHpHellWithNearWater(Es);
                     }
 
-                    if (CellWorker.GetIdxsAround(Es.WindE.CenterCloud.Idx).Contains(idx_0))
+                    if (CellWorker.GetIdxsAround(Es.WindCloudE.CenterCloud.Idx).Contains(idx_0))
                     {
                         UnitStatEs(idx_0).Hp.TakeHpHellWithCloud(Es);
                         break;

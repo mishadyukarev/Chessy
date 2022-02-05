@@ -27,7 +27,7 @@ namespace Game.Game
         public readonly InputE InputE;
         public readonly PreviousVisionIdxE PreviousVisionIdxE;
         public readonly WinnerE WinnerE;
-        public readonly WindCloudE WindE;
+        public readonly WindCloudE WindCloudE;
         public readonly FriendZoneE FriendZoneE;
         public readonly GameInfoE GameInfo;
         public readonly InfoEnvironmentE InfoEnvironment;
@@ -41,9 +41,7 @@ namespace Game.Game
 
         #region Pools
 
-        public readonly WhereBuildingEs WhereBuildingEs;
-        public readonly WhereEnviromentEs WhereEnviromentEs;
-        public readonly WhereUnitsEs WhereUnitsEs;
+        public readonly WhereBuildingsWorker WhereBuildingEs;
 
         public readonly InventorUnitsEs InventorUnitsEs;
         public readonly InventorResourcesEs InventorResourcesEs;
@@ -59,22 +57,32 @@ namespace Game.Game
 
         readonly CellEs[] _cellEs;
         public CellEs[] Cells => (CellEs[])_cellEs.Clone();
-        //public CellEnvironmentEs[] CellEnvironmentEs => (CellEnvironmentEs[])_cellEs..Clone();
         public byte LengthCells => (byte)_cellEs.Length;
 
 
         public CellEs CellEs(in byte idx) => _cellEs[idx];
 
         public CellUnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
+        public CellUnitMainE UnitMainE(in byte idx) => UnitEs(idx).MainE;
+        public CellUnitLevelE UnitLevelE(in byte idx) => UnitEs(idx).LevelE;
+        public CellUnitOwnerE UnitOwnerE(in byte idx) => UnitEs(idx).OwnerE;
+        public CellUnitConditonE UnitConditionE(in byte idx) => UnitEs(idx).ConditionE;
+        public CellUnitToolWeaponE UnitTWE(in byte idx) => UnitEs(idx).ToolWeaponE;
         public CellUnitStatEs UnitStatEs(in byte idx) => UnitEs(idx).StatEs;
         public CellUnitStatHpE UnitStatHpE(in byte idx) => UnitStatEs(idx).Hp;
-        public CellUnitStatStepE UnitStatStepEs(in byte idx) => UnitStatEs(idx).StepE;
-        public CellUnitStatWaterE UnitStatWaterEs(in byte idx) => UnitStatEs(idx).WaterE;
+        public CellUnitStatStepE UnitStatStepE(in byte idx) => UnitStatEs(idx).StepE;
+        public CellUnitStatWaterE UnitStatWaterE(in byte idx) => UnitStatEs(idx).WaterE;
         public CellUnitEffectEs UnitEffectEs(in byte idx) => UnitEs(idx).EffectEs;
 
         public CellBuildEs BuildEs(in byte idx) => CellEs(idx).BuildEs;
+        public CellBuildingE BuildE(in byte idx) => CellEs(idx).BuildEs.BuildingE;
         public CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
+        public CellEnvFertilizerE EnvFertilizerE(in byte idx) => EnvironmentEs(idx).Fertilizer;
+        public CellEnvYoungForestE EnvYoungForestE(in byte idx) => EnvironmentEs(idx).YoungForest;
         public CellEnvAdultForestE EnvAdultForestE(in byte idx) => EnvironmentEs(idx).AdultForest;
+        public CellEnvMountainE EnvMountainE(in byte idx) => EnvironmentEs(idx).Mountain;
+        public CellEnvHillE EnvHillE(in byte idx) => EnvironmentEs(idx).Hill;
+        public CellEnvFertilizerE EnvFertilizeE(in byte idx) => EnvironmentEs(idx).Fertilizer;
         public CellRiverEs RiverEs(in byte idx) => CellEs(idx).RiverEs;
         public CellTrailEs TrailEs(in byte idx) => CellEs(idx).TrailEs;
         public CellEffectEs EffectEs(in byte idx) => CellEs(idx).EffectEs;
@@ -82,7 +90,7 @@ namespace Game.Game
 
 
 
-        public readonly CellEsWorker CellWorker;
+        public readonly CellEsSpaceWorker CellWorker;
 
         #endregion
 
@@ -123,7 +131,7 @@ namespace Game.Game
             CurrentIdxE = new CurrentIdxE(gameW);
             PreviousVisionIdxE = new PreviousVisionIdxE(gameW);
 
-            WindE = new WindCloudE(gameW);
+            WindCloudE = new WindCloudE(gameW);
             WinnerE = new WinnerE(gameW);
             WhoseMove = new WhoseMoveE(PlayerTypes.First, gameW);
             InputE = new InputE(gameW);
@@ -137,10 +145,6 @@ namespace Game.Game
             SelectedUnitE = new SelectedUnitE(gameW);
             SelectedUniqueAbilityE = new SelectedAbilityE(gameW);
             SelectedToolWeaponE = new SelectedToolWeaponE(gameW);
-
-            WhereBuildingEs = new WhereBuildingEs(gameW);
-            WhereEnviromentEs = new WhereEnviromentEs(gameW);
-            WhereUnitsEs = new WhereUnitsEs(gameW);
 
             InventorUnitsEs = new InventorUnitsEs(gameW);
             InventorResourcesEs = new InventorResourcesEs(gameW);
@@ -161,7 +165,8 @@ namespace Game.Game
                     _cellEs[idx] = new CellEs(isActiveParenCells[idx], idCells[idx], new byte[] { x, y }, idx, gameW);
                     ++idx;
                 }
-            CellWorker = new CellEsWorker(_cellEs);
+            CellWorker = new CellEsSpaceWorker(_cellEs);
+            WhereBuildingEs = new WhereBuildingsWorker(_cellEs);
 
 
             new CellsForSetUnitsEs(gameW);

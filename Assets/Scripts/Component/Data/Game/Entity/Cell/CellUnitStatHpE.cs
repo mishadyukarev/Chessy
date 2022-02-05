@@ -74,7 +74,7 @@ namespace Game.Game
             {
                 if (es.CellEs(Idx).BuildEs.BuildingE.BuildTC.Is(BuildingTypes.Camp))
                 {
-                    es.CellEs(Idx).BuildEs.BuildingE.Destroy(es.CellEs(Idx).BuildEs, es.WhereBuildingEs);
+                    es.CellEs(Idx).BuildEs.BuildingE.Destroy();
                 }
 
                 es.CellEs(Idx).UnitEs.MainE.Kill(es);

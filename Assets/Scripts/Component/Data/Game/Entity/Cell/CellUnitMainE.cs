@@ -11,7 +11,7 @@ namespace Game.Game
         public UnitTC UnitTC => Ent.Get<UnitTC>();
 
         public bool HaveUnit => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
-
+        public bool Is(params UnitTypes[] unit) => UnitTC.Is(unit);
 
 
         //public bool CanResume(in byte idx, out int resume, out EnvironmentTypes env)
@@ -113,6 +113,7 @@ namespace Game.Game
         }
 
 
+
         internal CellUnitMainE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
 
@@ -131,7 +132,7 @@ namespace Game.Game
 
             ents.CellEs(idx_0).UnitEs.StatEs.Hp.SetMax();
             ents.CellEs(idx_0).UnitEs.StatEs.StepE.SetMax(this);
-            ents.UnitStatWaterEs(idx_0).SetMax(ents.UnitEs(idx_0), ents.UnitStatUpgradesEs);
+            ents.UnitStatWaterE(idx_0).SetMax(ents.UnitEs(idx_0), ents.UnitStatUpgradesEs);
 
             ents.UnitEffectEs(idx_0).StunE.Reset();
             ents.UnitEffectEs(idx_0).ShieldE.Reset();
@@ -139,7 +140,7 @@ namespace Game.Game
 
             ents.CellEs(idx_0).UnitEs.ToolWeaponE.SetNew(tw);
             foreach (var item in ents.CellEs(idx_0).UnitEs.CooldownKeys) ents.CellEs(idx_0).UnitEs.Ability(item).SetNew();
-            ents.WhereUnitsEs.WhereUnit(unit.Item1, unit.Item2, unit.Item3, Idx).HaveUnit.Have = true;
+            //ents.WhereUnitsEs.WhereUnit(unit.Item1, unit.Item2, unit.Item3, Idx).HaveUnit.Have = true;
         }
         public void Kill(in Entities ents)
         {
@@ -159,13 +160,13 @@ namespace Game.Game
 
             ents.UnitEs(idx_0).WhoLastDiedHereE.SetLastDied(ents.UnitEs(idx_0));
 
-            ents.WhereUnitsEs.WhereUnit(ents.UnitEs(idx_0)).HaveUnit.Have = false;
+            //ents.WhereUnitsEs.WhereUnit(ents.UnitEs(idx_0)).HaveUnit.Have = false;
 
             UnitTCRef.Unit = UnitTypes.None;
         }
         public void Clear(in Entities e)
         {
-            e.WhereUnitsEs.WhereUnit(e.UnitEs(Idx)).HaveUnit.Have = false;
+            //e.WhereUnitsEs.WhereUnit(e.UnitEs(Idx)).HaveUnit.Have = false;
 
             UnitTCRef.Unit = UnitTypes.None;
         }
@@ -173,7 +174,7 @@ namespace Game.Game
         {
             var idx_from = Idx;
 
-            ents.WhereUnitsEs.WhereUnit(ents.UnitEs(idx_from)).HaveUnit.Have = false;
+            //ents.WhereUnitsEs.WhereUnit(ents.UnitEs(idx_from)).HaveUnit.Have = false;
 
 
             ents.UnitEs(idx_to).MainE.UnitTCRef = UnitTC;
@@ -189,8 +190,8 @@ namespace Game.Game
 
 
             ents.UnitStatHpE(idx_to).Shift(ents.UnitStatHpE(idx_from));
-            ents.UnitStatStepEs(idx_to).Shift(ents.CellEs(Idx).UnitEs.StatEs.StepE);
-            ents.UnitStatWaterEs(idx_to).Shift(ents.CellEs(Idx).UnitEs.StatEs.WaterE);
+            ents.UnitStatStepE(idx_to).Shift(ents.CellEs(Idx).UnitEs.StatEs.StepE);
+            ents.UnitStatWaterE(idx_to).Shift(ents.CellEs(Idx).UnitEs.StatEs.WaterE);
 
             ents.UnitEffectEs(idx_to).StunE.Shift(ents.UnitEffectEs(Idx).StunE);
             ents.UnitEffectEs(idx_to).ShieldE.Shift(ents.UnitEffectEs(Idx).ShieldE);
@@ -215,7 +216,7 @@ namespace Game.Game
                     ents.CellEs(idx_to).TrailEs.Trail(direct.Invert()).SetNew();
                 }
 
-                if (ents.RiverEs(idx_to).River.HaveRiverNear)
+                if (ents.RiverEs(idx_to).RiverE.HaveRiverNear)
                 {
                     ents.CellEs(idx_to).UnitEs.StatEs.WaterE.SetMax(ents.UnitEs(idx_to), ents.UnitStatUpgradesEs);
                 }
@@ -226,11 +227,11 @@ namespace Game.Game
             {
                 if (!ents.BuildEs(idx_to).BuildingE.OwnerC.Is(ents.UnitEs(idx_to).OwnerE.OwnerC.Player))
                 {
-                    ents.BuildEs(idx_to).BuildingE.Destroy(ents.BuildEs(idx_to), ents.WhereBuildingEs);
+                    ents.BuildEs(idx_to).BuildingE.Destroy();
                 }
             }
 
-            ents.WhereUnitsEs.WhereUnit(ents.UnitEs(idx_to)).HaveUnit.Have = true;
+            //ents.WhereUnitsEs.WhereUnit(ents.UnitEs(idx_to)).HaveUnit.Have = true;
         }
         public void AddToInventorAndRemove(in Entities e)
         {
@@ -240,7 +241,6 @@ namespace Game.Game
             var owner = e.UnitEs(idx_0).OwnerE.OwnerC.Player;
 
             e.InventorUnitsEs.Units(UnitTC.Unit, level, owner).AddUnit();
-            e.WhereUnitsEs.WhereUnit(UnitTC.Unit, level, owner, Idx).HaveUnit.Have = false;
 
 
             UnitTCRef.Unit = UnitTypes.None;
@@ -296,11 +296,11 @@ namespace Game.Game
                 e.CellWorker.TryGetDirect(idx_from, idx_to, out var dirAttack);
 
 
-                if (e.SunSidesE.SunSideTC.IsAcitveSun)
+                if (e.SunSidesE.IsAcitveSun)
                 {
                     var isSunnedUnit = true;
 
-                    foreach (var dir in e.SunSidesE.SunSideTC.RaysSun)
+                    foreach (var dir in e.SunSidesE.RaysSun)
                     {
                         if (dirAttack == dir) isSunnedUnit = false;
                     }

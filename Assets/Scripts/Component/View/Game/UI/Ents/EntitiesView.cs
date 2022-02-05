@@ -33,17 +33,27 @@ namespace Game.Game
 
             var cells = new GameObject[CellStartValues.ALL_CELLS_AMOUNT];
 
+
             for (byte x = 0; x < CellStartValues.X_AMOUNT; x++)
                 for (byte y = 0; y < CellStartValues.Y_AMOUNT; y++)
                 {
-                    var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
-                        ? ResourceSpriteEs.Sprite(true).SpriteC.Sprite
-                        : ResourceSpriteEs.Sprite(false).SpriteC.Sprite;
+
+                    //    if(y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0)
+                    //{
+                    //    cells[idx_cur].transform.Find("Black").gameObject.SetActive(false);
+                    //}
+                    //else
+                    //{
+                    //    cells[idx_cur].transform.Find("White").gameObject.SetActive(false);
+                    //}
+
+                        //? 
+                        //: ResourceSpriteEs.Sprite(false).SpriteC.Sprite;
 
 
                     var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
                     cell.name = "CellMain";
-                    cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
+                    //cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
 
                     if (y == 0 || y == 10 && x >= 0 && x < 15 ||
                             y >= 1 && y < 10 && x >= 0 && x <= 2 || x >= 13 && x < 15 ||

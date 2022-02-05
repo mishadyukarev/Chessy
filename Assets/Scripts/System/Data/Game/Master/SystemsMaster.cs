@@ -16,17 +16,21 @@ namespace Game.Game
 
 
             var action =
-                (Action)new UpdatorMS(this, ents).Run
+                (Action)new UpdatorMS(ents).Run
 
                 + new UpdExtractWoodcutterMS(ents).Run
                 + new UpdExtractFarmMS(ents).Run
                 + new UpdExtractMineMS(ents).Run
-                + new UpdIceWallGiveWaterMS(ents).Run
-                + new UpdIceWallFertilizeAroundMS(ents).Run
+                + new IceWallGiveWaterUnitsUpdMS(ents).Run
+                + new IceWallFertilizeAroundUpdMS(ents).Run
 
                 + new UpdateFireMS(ents).Run
                 + new CloudUpdMS(ents).Run
                 + new UpdateIceWallMS(ents).Run
+                + new UpdFertilizeAroundRiverMS(ents).Run
+                + new UpdSetWoodcuttersAroundCityMS(ents).Run
+                + new CloudFertilizeUpdMS(ents).Run
+                + new UpdDryFertilizerMS(ents).Run
 
             #region Unit
 
@@ -35,16 +39,21 @@ namespace Game.Game
                 + new UpdateHealingUnitMS(ents).Run
                 + new UpdateHungryMS(ents).Run
                 + new UpdateThirstyMS(ents).Run
+                + new PawnExtractOreUpdMS(ents).Run
 
                 + new UpdTryFireAroundHellMS(ents).Run
                 + new UpdAttackFromWaterHellMS(ents).Run
 
                 + new UpdGiveWaterCloudScowyMS(ents).Run
 
+                + new UpdateCamelShiftMS(ents).Run
+                + new UpdateSpawnCamelMS(ents).Run
+
             #endregion
 
-                + new UpdateCamelShiftMS(ents).Run
-                + new UpdateSpawnCamelMS(ents).Run;
+                + new UpdTryInvokeTruceMS(this, ents).Run;
+
+
             _systems.Add(SystemDataMasterTypes.UpdateMove, action);
 
             action = new TruceMS(ents).Run;

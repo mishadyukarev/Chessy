@@ -10,15 +10,15 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (EnvironmentEs(idx_0).AdultForest.CanExtractPawnAdultForest(UnitEs(idx_0)))
+                if (Es.EnvAdultForestE(idx_0).CanExtractPawn(UnitEs(idx_0)))
                 {
-                    EnvironmentEs(idx_0).AdultForest.ExtractPawn(UnitEs(idx_0), Es.InventorResourcesEs);
+                    Es.EnvAdultForestE(idx_0).ExtractPawn(UnitEs(idx_0), Es.InventorResourcesEs);
 
-                    if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (Es.EnvAdultForestE(idx_0).HaveEnvironment)
                     {
                         if (BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.Camp) || !BuildEs(idx_0).BuildingE.BuildTC.Have)
                         {
-                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Woodcutter, UnitEs(idx_0).OwnerE.OwnerC.Player, BuildEs(idx_0), Es.WhereBuildingEs);
+                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Woodcutter, UnitEs(idx_0).OwnerE.OwnerC.Player);
                         }
 
                         else if (!BuildEs(idx_0).BuildingE.BuildTC.Is(BuildingTypes.Woodcutter))
@@ -28,10 +28,10 @@
                     }
                     else
                     {
-                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
-                        EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails, Es.WhereEnviromentEs);
+                        BuildEs(idx_0).BuildingE.Destroy();
+                        Es.EnvAdultForestE(idx_0).Destroy(TrailEs(idx_0).Trails);
 
-                        EnvironmentEs(idx_0).YoungForest.SetNewRandom(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).YoungForest.SetRandomResources();
                     }
                 }
                 //else if (!Unit<UnitCellEC>(idx_0).CanResume(out resume, out env))

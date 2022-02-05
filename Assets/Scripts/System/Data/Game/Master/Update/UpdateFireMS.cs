@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_1 in CellWorker.GetIdxsAround(Es.WindE.CenterCloud.Idx))
+            foreach (var idx_1 in CellWorker.GetIdxsAround(Es.WindCloudE.CenterCloud.Idx))
             {
                 EffectEs(idx_1).FireE.Disable();
             }
@@ -31,11 +31,11 @@ namespace Game.Game
 
                     if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        BuildEs(idx_0).BuildingE.Destroy(BuildEs(idx_0), Es.WhereBuildingEs);
+                        BuildEs(idx_0).BuildingE.Destroy();
 
-                        EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails, Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
 
-                        EnvironmentEs(idx_0).YoungForest.TrySetAfterFireForest(Es.WhereEnviromentEs);
+                        EnvironmentEs(idx_0).YoungForest.TrySetAfterFireForest();
 
                         EffectEs(idx_0).FireE.Disable();
 

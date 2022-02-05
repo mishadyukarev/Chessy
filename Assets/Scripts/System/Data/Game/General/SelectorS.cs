@@ -155,7 +155,7 @@ namespace Game.Game
 
                                         case AbilityTypes.ChangeDirectionWind:
                                             {
-                                                CellWorker.TryGetIdxAround(Es.WindE.CenterCloud.Idx, out var directs);
+                                                CellWorker.TryGetIdxAround(Es.WindCloudE.CenterCloud.Idx, out var directs);
 
                                                 foreach (var item in directs)
                                                 {

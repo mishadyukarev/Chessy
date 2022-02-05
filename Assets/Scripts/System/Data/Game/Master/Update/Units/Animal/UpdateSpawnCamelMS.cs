@@ -10,7 +10,18 @@ namespace Game.Game
 
         public void Run()
         {
-            if (!Es.WhereUnitsEs.HaveUnit(UnitTypes.Camel))
+            var haveCamel = false;
+
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            {
+                if (Es.UnitMainE(idx_0).Is(UnitTypes.Camel))
+                {
+                    haveCamel = true;
+                    break;
+                }
+            }
+
+            if (!haveCamel)
             {
                 byte idx_0 = (byte)Random.Range(0, CellWorker.Idxs.Count);
 

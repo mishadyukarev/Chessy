@@ -17,7 +17,7 @@ namespace Game.Game
                 case UnitTypes.Scout: steps = 5; break;
                 case UnitTypes.Elfemale: steps = 3; break;
                 case UnitTypes.Snowy: steps = 3; break;
-                case UnitTypes.Undead: steps = 2; break;
+                case UnitTypes.Undead: steps = 3; break;
                 case UnitTypes.Hell: steps = 1; break;
                 case UnitTypes.Camel: steps = 3; break;
                 default: throw new Exception();
@@ -39,7 +39,6 @@ namespace Game.Game
                 case AbilityTypes.FirePawn: return 1;
                 case AbilityTypes.PutOutFirePawn: return 1;
                 case AbilityTypes.Farm: return 1;
-                case AbilityTypes.Mine: return 1;
                 case AbilityTypes.City: return 1;
                 case AbilityTypes.DestroyBuilding: return 1;
 

@@ -15,27 +15,16 @@ namespace Game.Game
         public BuildingTC BuildTC => Ent.Get<BuildingTC>();
         public PlayerTC OwnerC => Ent.Get<PlayerTC>();
 
-        public bool HaveBuilding => IsAlive && HaveBuildingT;
+        public bool Is(params BuildingTypes[] builds) => BuildTC.Is(builds);
+        public bool Is(params PlayerTypes[] owners) => OwnerC.Is(owners);
+        public bool HaveBuilding => !BuildTC.Is(BuildingTypes.None, BuildingTypes.End);
         public bool IsAlive => Health.Amount > 0;
-        public bool HaveBuildingT => BuildTC.Have;
 
-        public bool CanExtractAdultForest(in CellBuildEs buildEs, in CellEnvironmentEs envEs)
-        {
-            if (buildEs.BuildingE.HaveBuilding
-                && buildEs.BuildingE.BuildTC.Is(BuildingTypes.Woodcutter)
-                && envEs.AdultForest.HaveEnvironment) return true;
-            else return false;
-        }
+
         public bool CanExtractFertilizer(in CellEnvironmentEs envEs)
         {
             if (HaveBuilding && BuildTC.Is(BuildingTypes.Farm)
                 && envEs.Fertilizer.HaveEnvironment) return true;
-            else return false;
-        }
-        public bool CanExtractHill(in CellEnvironmentEs envEs)
-        {
-            if (HaveBuilding && BuildTC.Is(BuildingTypes.Mine)
-                && envEs.Hill.HaveEnvironment) return true;
             else return false;
         }
 
@@ -43,35 +32,28 @@ namespace Game.Game
         {
         }
 
-        public void SetNew(in BuildingTypes build, in PlayerTypes owner, in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
+        public void SetNew(in BuildingTypes build, in PlayerTypes owner)
         {
-            if (buildEs.BuildingE.HaveBuilding) throw new Exception("There's got building on cell");
+            if (HaveBuilding) throw new Exception("There's got building on cell");
 
             BuildTCRef.Build = build;
             PlayerTCRef.Player = owner;
             HealthRef.Amount = CellBuildingValues.MaxAmountHealth(build);
-
-            whereBuildingEs.HaveBuild(build, owner, Idx).HaveBuilding.Have = true;
         }
-        public void Destroy(in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
+        public void Destroy()
         {
-            if (HaveBuildingT)
-            {
-                whereBuildingEs.HaveBuild(buildEs.BuildingE, Idx).HaveBuilding.Have = false;
-
-                BuildTCRef.Build = BuildingTypes.None;
-                PlayerTCRef.Player = PlayerTypes.None;
-                HealthRef.Amount = 0;
-            }
+            BuildTCRef.Build = BuildingTypes.None;
+            PlayerTCRef.Player = PlayerTypes.None;
+            HealthRef.Amount = 0;
         }
 
-        public void Defrost(in CellBuildEs buildEs, in WhereBuildingEs whereBuildingEs)
+        public void Defrost()
         {
-            if (!buildEs.BuildingE.HaveBuilding) throw new Exception("There's not got building on cell");
-            if (!buildEs.BuildingE.BuildTC.Is(BuildingTypes.IceWall)) throw new Exception("Need Ice Wall on cell");
+            if (!HaveBuilding) throw new Exception("There's not got building on cell");
+            if (!Is(BuildingTypes.IceWall)) throw new Exception("Need Ice Wall on cell");
 
             HealthRef.Amount--;
-            if (!buildEs.BuildingE.IsAlive) Destroy(buildEs, whereBuildingEs);
+            if (!IsAlive) Destroy();
         }
 
         public void Sync(in int health, in BuildingTypes build, in PlayerTypes player)

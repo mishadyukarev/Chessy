@@ -9,7 +9,7 @@ namespace Game.Game
         readonly Dictionary<DirectTypes, CellRiverDirectE> _directs;
         public CellRiverDirectE HaveRive(in DirectTypes dir) => _directs[dir];
 
-        public readonly CellRiverE River;
+        public readonly CellRiverE RiverE;
         
         public HashSet<DirectTypes> Keys
         {
@@ -23,7 +23,7 @@ namespace Game.Game
 
         public CellRiverEs(in EcsWorld gameW)
         {
-            River = new CellRiverE(gameW);
+            RiverE = new CellRiverE(gameW);
 
             _directs = new Dictionary<DirectTypes, CellRiverDirectE>();
             for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
@@ -36,7 +36,7 @@ namespace Game.Game
         {
             if (dirs == default) throw new Exception();
 
-            River.RiverTC.River = RiverTypes.Start;
+            RiverE.RiverTC.River = RiverTypes.Start;
             foreach (var item in dirs) HaveRive(item).HaveRiver.Have = true;
         }
     }

@@ -3,7 +3,6 @@
     public enum ConditionUnitTypes
     {
         None,
-        Start = None,
 
         Protected,
         Relaxed,

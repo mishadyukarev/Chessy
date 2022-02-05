@@ -33,12 +33,9 @@ namespace Game.Game
         {
             switch (unit)
             {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: throw new Exception();
                 case UnitTypes.Pawn:
                     switch (res)
                     {
-                        case ResourceTypes.None: throw new Exception();
                         case ResourceTypes.Food: return 50;
                         case ResourceTypes.Wood: return 0;
                         case ResourceTypes.Ore: return 0;
@@ -49,7 +46,6 @@ namespace Game.Game
                 case UnitTypes.Archer:
                     switch (res)
                     {
-                        case ResourceTypes.None: throw new Exception();
                         case ResourceTypes.Food: return 50;
                         case ResourceTypes.Wood: return 50;
                         case ResourceTypes.Ore: return 0;
@@ -64,7 +60,6 @@ namespace Game.Game
         {
             switch (res)
             {
-                case ResourceTypes.None: throw new Exception();
                 case ResourceTypes.Food: return 0;
                 case ResourceTypes.Wood: return 0;
                 case ResourceTypes.Ore: return 0;
@@ -77,7 +72,6 @@ namespace Game.Game
         {
             switch (res)
             {
-                case ResourceTypes.None: throw new Exception();
                 case ResourceTypes.Food: return 0;
                 case ResourceTypes.Wood: return 50;
                 case ResourceTypes.Ore: return 50;
@@ -90,7 +84,6 @@ namespace Game.Game
         {
             switch (res)
             {
-                case ResourceTypes.None: throw new Exception();
                 case ResourceTypes.Food: return 0;
                 case ResourceTypes.Wood: return 0;
                 case ResourceTypes.Ore: return 0;
@@ -103,55 +96,38 @@ namespace Game.Game
         {
             switch (resourceType)
             {
-                case ResourceTypes.None: throw new Exception();
-
                 case ResourceTypes.Food:
                     switch (build)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Wood:
                     switch (build)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
                         case BuildingTypes.Farm: return 50;
-                        case BuildingTypes.Woodcutter: throw new Exception();
                         case BuildingTypes.Mine: return 50;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Ore:
                     switch (build)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Iron:
                     switch (build)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Gold:
                     switch (build)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
@@ -164,12 +140,9 @@ namespace Game.Game
         {
             switch (unitType)
             {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: throw new Exception();
                 case UnitTypes.Pawn:
                     switch (resourceType)
                     {
-                        case ResourceTypes.None: throw new Exception();
                         case ResourceTypes.Food: return 0;
                         case ResourceTypes.Wood: return 0;
                         case ResourceTypes.Ore: return 0;
@@ -180,7 +153,6 @@ namespace Game.Game
                 case UnitTypes.Archer:
                     switch (resourceType)
                     {
-                        case ResourceTypes.None: throw new Exception();
                         case ResourceTypes.Food: return 0;
                         case ResourceTypes.Wood: return 0;
                         case ResourceTypes.Ore: return 0;
@@ -195,17 +167,12 @@ namespace Game.Game
         {
             switch (level)
             {
-                case LevelTypes.None: throw new Exception();
                 case LevelTypes.First:
                     switch (tW)
                     {
-                        case ToolWeaponTypes.None: throw new Exception();
-                        case ToolWeaponTypes.Pick: throw new Exception();
-                        case ToolWeaponTypes.Sword: throw new Exception();
                         case ToolWeaponTypes.Shield:
                             switch (res)
                             {
-                                case ResourceTypes.None: throw new Exception();
                                 case ResourceTypes.Food: return 0;
                                 case ResourceTypes.Wood: return 50;
                                 case ResourceTypes.Ore: return 0;
@@ -218,22 +185,19 @@ namespace Game.Game
                 case LevelTypes.Second:
                     switch (tW)
                     {
-                        case ToolWeaponTypes.None: throw new Exception();
                         case ToolWeaponTypes.Pick:
                             switch (res)
                             {
-                                case ResourceTypes.None: throw new Exception();
                                 case ResourceTypes.Food: return 0;
-                                case ResourceTypes.Wood: return 0;
+                                case ResourceTypes.Wood: return 50;
                                 case ResourceTypes.Ore: return 0;
-                                case ResourceTypes.Iron: return 1;
+                                case ResourceTypes.Iron: return 0;
                                 case ResourceTypes.Gold: return 0;
                                 default: throw new Exception();
                             }
                         case ToolWeaponTypes.Sword:
                             switch (res)
                             {
-                                case ResourceTypes.None: throw new Exception();
                                 case ResourceTypes.Food: return 0;
                                 case ResourceTypes.Wood: return 0;
                                 case ResourceTypes.Ore: return 0;
@@ -244,7 +208,6 @@ namespace Game.Game
                         case ToolWeaponTypes.Shield:
                             switch (res)
                             {
-                                case ResourceTypes.None: throw new Exception();
                                 case ResourceTypes.Food: return 0;
                                 case ResourceTypes.Wood: return 0;
                                 case ResourceTypes.Ore: return 0;

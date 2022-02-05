@@ -10,11 +10,11 @@ namespace Game.Game
 
         }
 
-        public void TrySetAfterFireForest(in WhereEnviromentEs whereEnviromentEs)
+        public void TrySetAfterFireForest()
         {
             if (UnityEngine.Random.Range(0f, 1f) < CellEnvironmentValues.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
             {
-                SetNewRandom(whereEnviromentEs);
+                SetRandomResources();
             }
         }
     }
