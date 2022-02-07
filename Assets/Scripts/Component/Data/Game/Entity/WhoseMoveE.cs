@@ -47,7 +47,7 @@ namespace Game.Game
 
         public bool Done_Master(in Player sender, in Entities e)
         {
-            e.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+            e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
             var needUpdateMove = false;
 
             if (PhotonNetwork.OfflineMode)
@@ -60,7 +60,7 @@ namespace Game.Game
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
                     needUpdateMove = true;
-                    e.Rpc.ActiveMotionZoneToGen(sender);
+                    e.RpcE.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
@@ -71,19 +71,19 @@ namespace Game.Game
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 
-                    var curPlayer = e.WhoseMove.CurPlayerI;
-                    var nextPlayer = e.WhoseMove.NextPlayerFrom(curPlayer);
+                    var curPlayer = e.WhoseMoveE.CurPlayerI;
+                    var nextPlayer = e.WhoseMoveE.NextPlayerFrom(curPlayer);
 
                     if (nextPlayer == PlayerTypes.First)
                     {
                         needUpdateMove = true;
-                        e.Rpc.ActiveMotionZoneToGen(sender);
+                        e.RpcE.ActiveMotionZoneToGen(sender);
                     }
 
-                    e.WhoseMove.WhoseMove.Player = nextPlayer;
+                    e.WhoseMoveE.WhoseMove.Player = nextPlayer;
 
 
-                    curPlayer = e.WhoseMove.CurPlayerI;
+                    curPlayer = e.WhoseMoveE.CurPlayerI;
 
                     //ViewDataSC.RotateAll.Invoke();
 

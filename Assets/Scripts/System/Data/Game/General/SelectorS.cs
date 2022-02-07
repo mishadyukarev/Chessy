@@ -16,19 +16,19 @@ namespace Game.Game
             var idx_cur = Es.CurrentIdxE.IdxC.Idx;
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var unit_cur = UnitEs(idx_cur).MainE.UnitTC;
+            var unit_cur = UnitEs(idx_cur).TypeE.UnitTC;
             var ownUnit_cur = UnitEs(idx_cur).OwnerE.OwnerC;
 
-            var unit_sel = UnitEs(idx_cur).MainE.UnitTC;
+            var unit_sel = UnitEs(idx_cur).TypeE.UnitTC;
 
-            ref var raycastTC = ref Es.ClickerObject.RayCastTC;
-            ref var cellClick = ref Es.ClickerObject.CellClickC;
+            ref var raycastTC = ref Es.ClickerObjectE.RayCastTC;
+            ref var cellClick = ref Es.ClickerObjectE.CellClickC;
 
             if (Es.InputE.IsClickedC.IsClicked)
             {
                 if (raycastTC.Is(RaycastTypes.Cell))
                 {
-                    if (!Es.WhoseMove.IsMyMove)
+                    if (!Es.WhoseMoveE.IsMyMove)
                     {
                         Es.SelectedIdxE.IdxC.Idx = Es.CurrentIdxE.IdxC.Idx;
                     }
@@ -43,21 +43,21 @@ namespace Game.Game
                                 {
                                     if (Es.SelectedIdxE.IsSelCell)
                                     {
-                                        if (CellsForAttackUnitsEs.CanAttack(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx, Es.WhoseMove.CurPlayerI, out var attack))
+                                        if (CellsForAttackUnitsEs.CanAttack(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx, Es.WhoseMoveE.CurPlayerI, out var attack))
                                         {
-                                            Es.Rpc.AttackUnitToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            Es.RpcE.AttackUnitToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
                                         }
 
-                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.WhoseMove.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).Contains(Es.CurrentIdxE.IdxC.Idx))
+                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.WhoseMoveE.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).Contains(Es.CurrentIdxE.IdxC.Idx))
                                         {
-                                            Es.Rpc.ShiftUnitToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            Es.RpcE.ShiftUnitToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
                                         }
 
                                         else
                                         {
-                                            if (UnitEs(idx_cur).MainE.HaveUnit)
+                                            if (UnitEs(idx_cur).TypeE.HaveUnit)
                                             {
-                                                if (ownUnit_cur.Is(Es.WhoseMove.CurPlayerI))
+                                                if (ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
                                                 {
                                                     if (unit_cur.Is(UnitTypes.Scout))
                                                     {
@@ -80,9 +80,9 @@ namespace Game.Game
 
                                     else
                                     {
-                                        if (UnitEs(idx_cur).MainE.HaveUnit)
+                                        if (UnitEs(idx_cur).TypeE.HaveUnit)
                                         {
-                                            if (ownUnit_cur.Is(Es.WhoseMove.CurPlayerI))
+                                            if (ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
                                             {
                                                 if (unit_cur.Is(UnitTypes.Scout))
                                                 {
@@ -106,16 +106,16 @@ namespace Game.Game
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    Es.Rpc.SetUniToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedUnitE.UnitTC.Unit);
+                                    Es.RpcE.SetUniToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedUnitE.UnitTC.Unit);
                                     cellClick.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(Es.WhoseMove.CurPlayerI))
+                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
                                     {
-                                        Es.Rpc.GiveTakeToolWeaponToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedToolWeaponE.ToolWeaponTC.ToolWeapon, Es.SelectedToolWeaponE.LevelTC.Level);
+                                        Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedToolWeaponE.ToolWeaponTC.ToolWeapon, Es.SelectedToolWeaponE.LevelTC.Level);
                                     }
                                     else
                                     {
@@ -128,10 +128,10 @@ namespace Game.Game
                             case CellClickTypes.UpgradeUnit:
                                 {
                                     if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
-                                        && ownUnit_cur.Is(Es.WhoseMove.CurPlayerI)
+                                        && ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI)
                                         && !UnitEs(idx_cur).LevelE.LevelTC.Is(LevelTypes.Second))
                                     {
-                                        Es.Rpc.UpgradeUnitToMaster(Es.CurrentIdxE.IdxC.Idx);
+                                        Es.RpcE.UpgradeUnitToMaster(Es.CurrentIdxE.IdxC.Idx);
                                     }
                                     else
                                     {
@@ -146,11 +146,11 @@ namespace Game.Game
                                     switch (Es.SelectedUniqueAbilityE.AbilityTC.Ability)
                                     {
                                         case AbilityTypes.FireArcher:
-                                            Es.Rpc.FireArcherToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            Es.RpcE.FireArcherToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
                                             break;
 
                                         case AbilityTypes.StunElfemale:
-                                            Es.Rpc.StunElfemaleToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            Es.RpcE.StunElfemaleToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
                                             break;
 
                                         case AbilityTypes.ChangeDirectionWind:
@@ -161,18 +161,18 @@ namespace Game.Game
                                                 {
                                                     if (item.Value == Es.CurrentIdxE.IdxC.Idx)
                                                     {
-                                                        Es.Rpc.PutOutFireElffToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                                        Es.RpcE.PutOutFireElffToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
                                                     }
                                                 }
                                             }
                                             break;
 
                                         case AbilityTypes.DirectWave:
-                                            Es.Rpc.DirectWaveToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            Es.RpcE.DirectWaveToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
                                             break;
 
                                         case AbilityTypes.Resurrect:
-                                            Es.Rpc.ResurrectToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
+                                            Es.RpcE.ResurrectToMaster(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
                                             break;
 
                                         default: throw new Exception();
@@ -205,7 +205,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!UnitEs(idx_cur).MainE.HaveUnit || !UnitEs(idx_cur).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
+                        if (!UnitEs(idx_cur).TypeE.HaveUnit || !UnitEs(idx_cur).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                         {
                             if (Es.CurrentIdxE.IsStartDirectToCell)
                             {

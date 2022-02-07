@@ -14,7 +14,7 @@
 
                 if (Es.InventorResourcesEs.Resource(res, player).IsMinus)
                 {
-                    Es.InventorResourcesEs.Resource(res, player).Resources.Amount = 0;
+                    Es.InventorResourcesEs.Resource(res, player).Reset();
 
                     for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
                     {
@@ -22,17 +22,15 @@
                         {
                             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
                             {
-                                if(Es.UnitMainE(idx_0).HaveUnit && Es.UnitLevelE(idx_0).Is(levUnit) && Es.UnitOwnerE(idx_0).OwnerC.Is(player))
+                                if(Es.UnitTypeE(idx_0).HaveUnit && Es.UnitLevelE(idx_0).Is(levUnit) && Es.UnitOwnerE(idx_0).OwnerC.Is(player))
                                 {
-                                    var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
-
-                                    if (build_0.Is(BuildingTypes.Camp))
+                                    if (Es.BuildE(idx_0).Is(BuildingTypes.Camp))
                                     {
                                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                                        BuildEs(idx_0).BuildingE.Destroy();
+                                        Es.BuildE(idx_0).Destroy(Es);
                                     }
 
-                                    UnitEs(idx_0).MainE.Kill(Es);
+                                    Es.UnitTypeE(idx_0).Kill(Es);
 
                                     return;
                                 }

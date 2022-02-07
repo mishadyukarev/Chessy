@@ -31,6 +31,8 @@ namespace Game.Game
                     case UnitTypes.Undead: return true;
                     case UnitTypes.Hell: return true;
 
+                    case UnitTypes.Skeleton: return true;
+
                     case UnitTypes.Camel: return false;
                     default: throw new Exception();
                 }
@@ -52,6 +54,8 @@ namespace Game.Game
                     case UnitTypes.Undead: return true;
                     case UnitTypes.Hell: return true;
 
+                    case UnitTypes.Skeleton: return false;
+
                     case UnitTypes.Camel: return false;
                     default: throw new Exception();
                 }
@@ -64,6 +68,7 @@ namespace Game.Game
                 switch (Unit)
                 {
                     case UnitTypes.King: return false;
+
                     case UnitTypes.Pawn: return false;
                     case UnitTypes.Archer: return false;
                     case UnitTypes.Scout: return false;
@@ -72,6 +77,8 @@ namespace Game.Game
                     case UnitTypes.Snowy: return false;
                     case UnitTypes.Undead: return false;
                     case UnitTypes.Hell: return false;
+
+                    case UnitTypes.Skeleton: return false;
 
                     case UnitTypes.Camel: return true;
                     default: throw new Exception();

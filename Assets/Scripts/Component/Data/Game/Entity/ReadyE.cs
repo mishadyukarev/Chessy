@@ -21,12 +21,12 @@ namespace Game.Game
             if (e.Ready(PlayerTypes.First).IsReadyC.IsReady
                 && e.Ready(PlayerTypes.Second).IsReadyC.IsReady)
             {
-                e.GameInfo.IsStartedGameC.IsStartedGame = true;
+                e.GameInfoE.IsStartedGameC.IsStartedGame = true;
             }
 
             else
             {
-                e.GameInfo.IsStartedGameC.IsStartedGame = false;
+                e.GameInfoE.IsStartedGameC.IsStartedGame = false;
             }
         }
     }

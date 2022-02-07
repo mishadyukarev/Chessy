@@ -8,7 +8,7 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.ClickerObject.CellClickC.Is(CellClickTypes.SetUnit))
+            if (Es.ClickerObjectE.CellClickC.Is(CellClickTypes.SetUnit))
             {
                 var idx_cur = Es.CurrentIdxE.IdxC.Idx;
 
@@ -16,9 +16,9 @@ namespace Game.Game
                 ref var mainUnit_pre = ref CellVEs(Es.PreviousVisionIdxE.IdxC.Idx).UnitVEs.UnitMainSR;
 
 
-                if (UnitEs(idx_cur).MainE.HaveUnit)
+                if (UnitEs(idx_cur).TypeE.HaveUnit)
                 {
-                    if (UnitEs(idx_cur).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
+                    if (UnitEs(idx_cur).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                     {
                         mainUnit_pre.Enable();
                     }

@@ -40,21 +40,21 @@ namespace Game.Game
             //VEs.UIEs.CenterEs.CenterHeroUIE(UnitTypes.Elfemale).AddListener(OpenShop);
         }
 
-        void Ready() => Es.Rpc.ReadyToMaster();
+        void Ready() => Es.RpcE.ReadyToMaster();
         void FriendReady()
         {
             Es.FriendZoneE.IsActiveC.IsActive = false;
         }
         void GetKing()
         {
-            Es.SelectedIdxE.IdxC.Reset();
+            Es.SelectedIdxE.Reset();
 
 
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
+                if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).HaveUnits)
                 {
-                    Es.SelectedUnitE.SetSelectedUnit(UnitTypes.King, LevelTypes.First, Es.ClickerObject);
+                    Es.SelectedUnitE.SetSelectedUnit(UnitTypes.King, LevelTypes.First, Es.ClickerObjectE);
                 }
             }
             else SoundV(ClipTypes.Mistake).Play();
@@ -76,9 +76,9 @@ namespace Game.Game
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                Es.Rpc.PickUpgUnitToMas(unit);
+                Es.RpcE.PickUpgUnitToMas(unit);
 
                 VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
@@ -87,9 +87,9 @@ namespace Game.Game
 
         void UpgradeBuild(BuildingTypes build)
         {
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                Es.Rpc.PickUpgBuildToMas(build);
+                Es.RpcE.PickUpgBuildToMas(build);
 
                 VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
@@ -98,9 +98,9 @@ namespace Game.Game
 
         void UpgradeWater()
         {
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                Es.Rpc.UpgWater();
+                Es.RpcE.UpgWater();
 
                 VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
@@ -109,9 +109,9 @@ namespace Game.Game
 
         void GetHero(in UnitTypes unit)
         {
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                Es.Rpc.GetHeroToMaster(unit);
+                Es.RpcE.GetHeroToMaster(unit);
             }
             else SoundV(ClipTypes.Mistake).Play();
         }

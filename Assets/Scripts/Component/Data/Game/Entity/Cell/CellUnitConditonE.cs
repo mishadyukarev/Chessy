@@ -9,6 +9,8 @@ namespace Game.Game
         ref ConditionUnitTC ConditionTCRef => ref Ent.Get<ConditionUnitTC>();
         public ConditionUnitTC ConditionTC => Ent.Get<ConditionUnitTC>();
 
+        public bool Is(in ConditionUnitTypes cond) => ConditionTC.Is(cond);
+
         internal CellUnitConditonE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
 
@@ -30,20 +32,20 @@ namespace Game.Game
                 case ConditionUnitTypes.Protected:
                     if (e.UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Protected))
                     {
-                        e.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         e.UnitEs(idx_0).ConditionE.Reset();
                     }
 
                     else if (e.UnitStatEs(idx_0).StepE.HaveSteps)
                     {
-                        e.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         e.UnitStatEs(idx_0).StepE.Take(cond);
                         e.UnitEs(idx_0).ConditionE.Set(cond);
                     }
 
                     else
                     {
-                        e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 
@@ -51,20 +53,20 @@ namespace Game.Game
                 case ConditionUnitTypes.Relaxed:
                     if (e.UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                     {
-                        e.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         e.UnitEs(idx_0).ConditionE.Reset();
                     }
 
                     else if (e.UnitStatEs(idx_0).StepE.HaveSteps)
                     {
-                        e.Rpc.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                        e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         e.UnitEs(idx_0).ConditionE.Set(cond);
                         e.UnitStatEs(idx_0).StepE.Take(cond);
                     }
 
                     else
                     {
-                        e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

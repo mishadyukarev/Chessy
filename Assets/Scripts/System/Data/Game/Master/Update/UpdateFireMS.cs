@@ -24,14 +24,14 @@ namespace Game.Game
                 {
                     EnvironmentEs(idx_0).AdultForest.Fire();
 
-                    if (UnitEs(idx_0).MainE.HaveUnit)
+                    if (UnitEs(idx_0).TypeE.HaveUnit)
                     {
                         UnitStatEs(idx_0).Hp.Fire(Es);
                     }
 
                     if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        BuildEs(idx_0).BuildingE.Destroy();
+                        BuildEs(idx_0).BuildingE.Destroy(Es);
 
                         EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
 

@@ -1,5 +1,4 @@
 ﻿using ECS;
-using System;
 
 namespace Game.Game
 {
@@ -17,7 +16,7 @@ namespace Game.Game
         public bool CanExtractPawn(in CellUnitEs unitEs)
         {
             if (HaveEnvironment
-                && unitEs.MainE.UnitTC.Is(UnitTypes.Pawn)
+                && unitEs.TypeE.UnitTC.Is(UnitTypes.Pawn)
                 && unitEs.ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed)
                 && unitEs.StatEs.Hp.HaveMax)
             {

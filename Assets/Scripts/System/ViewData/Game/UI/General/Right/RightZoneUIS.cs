@@ -15,9 +15,9 @@
 
             if (Es.SelectedIdxE.IsSelCell)
             {
-                if (UnitEs(idx_sel).MainE.HaveUnit)
+                if (UnitEs(idx_sel).TypeE.HaveUnit)
                 {
-                    if (UnitEs(idx_sel).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
+                    if (UnitEs(idx_sel).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                     {
                         activeParent = true;
                     }

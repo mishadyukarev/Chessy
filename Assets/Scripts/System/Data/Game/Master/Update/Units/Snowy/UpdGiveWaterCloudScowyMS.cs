@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (UnitEs(idx_0).MainE.UnitTC.Is(UnitTypes.Snowy))
+                if (UnitEs(idx_0).TypeE.UnitTC.Is(UnitTypes.Snowy))
                 {
                     if (CellWorker.GetIdxsAround(Es.WindCloudE.CenterCloud.Idx).Contains(idx_0))
                     {

@@ -6,15 +6,19 @@ namespace Game.Game
     public sealed class CellUnitEffectShieldE : CellUnitEffectE
     {
         ref AmountC AmountCRef => ref Ent.Get<AmountC>();
-        public ref AmountC AmountC => ref Ent.Get<AmountC>();
 
-        public bool HaveShieldEffect => AmountC.Amount > 0;
+        public int Shield
+        {
+            get => AmountCRef.Amount;
+            internal set => AmountCRef.Amount = value;
+        }
+        public bool HaveShieldEffect => Shield > 0;
 
         internal CellUnitEffectShieldE(in byte idx, in EcsWorld gameW) : base(EffectTypes.Shield, idx, gameW) { }
 
         internal void Shift(in CellUnitEffectShieldE shieldE_from)
         {
-            AmountCRef.Amount = shieldE_from.AmountC.Amount;
+            AmountCRef.Amount = shieldE_from.Shield;
             shieldE_from.AmountCRef.Amount = 0;
         }
         public void Set(in AbilityTypes ability)

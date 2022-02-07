@@ -1,5 +1,4 @@
 ﻿using ECS;
-using System;
 
 namespace Game.Game
 {
@@ -12,7 +11,7 @@ namespace Game.Game
         protected ref AmountC ResourcesCRef => ref Ent.Get<AmountC>();
         public AmountC ResourcesC => Ent.Get<AmountC>();
 
-        public virtual bool HaveEnvironment => ResourcesC.Amount > 0;
+        public bool HaveEnvironment => ResourcesC.Amount > 0;
         public bool HaveMaxResources => ResourcesCRef.Amount >= CellEnvironmentValues.MaxResources(EnvT);
         public bool HaveMinResources => ResourcesCRef.Amount >= CellEnvironmentValues.MinResources(EnvT);
         public int MaxResources => CellEnvironmentValues.MaxResources(EnvT);

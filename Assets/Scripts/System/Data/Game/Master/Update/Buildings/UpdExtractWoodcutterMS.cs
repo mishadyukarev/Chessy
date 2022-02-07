@@ -16,7 +16,7 @@
 
                     if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        BuildEs(idx_0).BuildingE.Destroy();
+                        BuildEs(idx_0).BuildingE.Destroy(Es);
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {

@@ -18,9 +18,9 @@ namespace Game.Game
             {
                 UnitEffectVEs(idx_0).FrozenArrawVE.SR.Disable();
 
-                if (UnitEs(idx_0).MainE.HaveUnit)
+                if (UnitEs(idx_0).TypeE.HaveUnit)
                 {
-                    if (UnitEffectEs(idx_0).FrozenArrowE.IsFrozenArraw.Is)
+                    if (UnitEffectEs(idx_0).FrozenArrowE.IsFrozenArraw)
                     {
                         UnitEffectVEs(idx_0).FrozenArrawVE.SR.Enable();
 

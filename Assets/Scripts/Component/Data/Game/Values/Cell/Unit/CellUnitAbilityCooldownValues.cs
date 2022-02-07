@@ -19,6 +19,7 @@ namespace Game.Game
                 case AbilityTypes.IceWall: return 10;
 
                 case AbilityTypes.Resurrect: return 3;
+                case AbilityTypes.SetTeleport: return 10;
 
                 default: throw new Exception();
             }

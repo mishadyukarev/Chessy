@@ -12,15 +12,15 @@ namespace Game.Game
         {
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var hpUnit_sel = UnitEs(idx_sel).StatEs.Hp.Health;
-            var stepUnit_sel = UnitEs(idx_sel).StatEs.StepE.Steps;
-            var waterUnit_sel = UnitEs(idx_sel).StatEs.WaterE.Water;
+            var hpUnit_sel = UnitEs(idx_sel).StatEs.Hp.HealthC;
+            var stepUnit_sel = UnitEs(idx_sel).StatEs.StepE.StepsC;
+            var waterUnit_sel = UnitEs(idx_sel).StatEs.WaterE.WaterC;
 
 
-            if (UnitEs(idx_sel).MainE.HaveUnit)
+            if (UnitEs(idx_sel).TypeE.HaveUnit)
             {
-                var damageOnCell = UnitEs(idx_sel).MainE.DamageOnCell(CellEs(idx_sel), Es.UnitStatUpgradesEs);
-                var damageAttack = UnitEs(idx_sel).MainE.DamageAttack(CellEs(idx_sel), Es.UnitStatUpgradesEs, AttackTypes.Simple);
+                var damageOnCell = UnitEs(idx_sel).DamageOnCell(CellEs(idx_sel), Es.UnitStatUpgradesEs);
+                var damageAttack = UnitEs(idx_sel).DamageAttack(CellEs(idx_sel), Es.UnitStatUpgradesEs, AttackTypes.Simple);
 
 
                 Stat<ImageUIC>(UnitStatTypes.Hp).SetActiveParent(true);
@@ -43,7 +43,7 @@ namespace Game.Game
 
                 UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)UnitStatEs(idx_sel).StepE.MaxAmountSteps(UnitEs(idx_sel).MainE);
+                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)stepUnit_sel.Amount / (float)UnitStatEs(idx_sel).StepE.MaxAmountSteps(UnitEs(idx_sel).TypeE);
                 UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = (float)waterUnit_sel.Amount / (float)UnitStatEs(idx_sel).WaterE.MaxWater(UnitEs(idx_sel), Es.UnitStatUpgradesEs);
             }
 

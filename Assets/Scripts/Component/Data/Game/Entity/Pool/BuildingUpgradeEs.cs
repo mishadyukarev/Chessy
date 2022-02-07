@@ -26,16 +26,16 @@ namespace Game.Game
                 }
             }
         }
-         
+
         public void UpgradeCenter_Master(in BuildingTypes build, in Player sender, in Entities e)
         {
-            var whoseMove = e.WhoseMove.CurPlayerI;
+            var whoseMove = e.WhoseMoveE.CurPlayerI;
 
             e.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
             e.BuildingUpgradeEs.HaveUpgrade(build, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
             e.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, whoseMove).HaveUpgrade.Have = false;
 
-            e.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            e.RpcE.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

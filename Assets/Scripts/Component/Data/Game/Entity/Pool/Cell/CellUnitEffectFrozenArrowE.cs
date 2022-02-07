@@ -5,9 +5,12 @@ namespace Game.Game
     public sealed class CellUnitEffectFrozenArrowE : CellUnitEffectE
     {
         ref IsC IsFrozenArrawRef => ref Ent.Get<IsC>();
-        public IsC IsFrozenArraw => Ent.Get<IsC>();
 
-        public bool HaveEffect => IsFrozenArraw.Is;
+        public bool IsFrozenArraw
+        {
+            get => IsFrozenArrawRef.Is;
+            set => IsFrozenArrawRef.Is = value;
+        }
 
         internal CellUnitEffectFrozenArrowE(in byte idx, in EcsWorld world) : base(EffectTypes.FrozenArraw, idx, world)
         {

@@ -8,11 +8,11 @@
 
         public void Run()
         {
-            ref var cellClick = ref Es.ClickerObject.CellClickC;
+            ref var cellClick = ref Es.ClickerObjectE.CellClickC;
 
             foreach (byte idx_0 in CellWorker.Idxs)
             {
-                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var own_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
@@ -39,9 +39,9 @@
                     }
                 }
 
-                if (UnitEs(idx_0).MainE.HaveUnit)
+                if (UnitEs(idx_0).TypeE.HaveUnit)
                 {
-                    if (own_0.Is(Es.WhoseMove.CurPlayerI))
+                    if (own_0.Is(Es.WhoseMoveE.CurPlayerI))
                     {
                         if (cellClick.Is(CellClickTypes.GiveTakeTW, CellClickTypes.GiveScout))
                         {
@@ -76,7 +76,7 @@
 
                     else
                     {
-                        if (UnitEs(idx_0).VisibleE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
+                        if (UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                         {
                             if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                             {
@@ -96,7 +96,7 @@
 
                 if (cellClick.Is(CellClickTypes.SetUnit))
                 {
-                    if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(Es.WhoseMove.CurPlayerI, idx_0).Can)
+                    if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(Es.WhoseMoveE.CurPlayerI, idx_0).Can)
                     {
                         SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                         SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
@@ -133,7 +133,7 @@
 
             else
             {
-                var idxs = CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.WhoseMove.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).Idxs;
+                var idxs = CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.WhoseMoveE.CurPlayerI, Es.SelectedIdxE.IdxC.Idx).Idxs;
 
                 foreach (var idx_0 in idxs)
                 {
@@ -141,13 +141,13 @@
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                 }
 
-                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Es.SelectedIdxE.IdxC.Idx, AttackTypes.Simple, Es.WhoseMove.CurPlayerI).Idxs)
+                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Es.SelectedIdxE.IdxC.Idx, AttackTypes.Simple, Es.WhoseMoveE.CurPlayerI).Idxs)
                 {
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
                 }
 
-                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Es.SelectedIdxE.IdxC.Idx, AttackTypes.Unique, Es.WhoseMove.CurPlayerI).Idxs)
+                foreach (var idx_0 in CellsForAttackUnitsEs.CanAttack<IdxsC>(Es.SelectedIdxE.IdxC.Idx, AttackTypes.Unique, Es.WhoseMoveE.CurPlayerI).Idxs)
                 {
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);

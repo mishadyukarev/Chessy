@@ -16,6 +16,9 @@
         Undead,
         Hell,
 
+        //FromHeroes
+        Skeleton,
+
         //Animals
         Camel,
 

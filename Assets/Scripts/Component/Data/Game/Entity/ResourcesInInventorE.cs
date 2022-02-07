@@ -7,7 +7,8 @@ namespace Game.Game
         readonly ResourceTypes _resT;
         readonly PlayerTypes _playerT;
 
-        public ref AmountC Resources => ref Ent.Get<AmountC>();
+        ref AmountC ResourcesRef => ref Ent.Get<AmountC>();
+        public AmountC Resources => Ent.Get<AmountC>();
 
         public bool IsMinus => Resources.Amount < 0;
 
@@ -27,28 +28,45 @@ namespace Game.Game
             Ent.Add(new AmountC(ResourcesInInventorValues.AmountResources(res)));
         }
 
-        public void Buy(in BuildingTypes build) => Resources.Amount -= ResourcesInInventorValues.ForBuild(build, _resT);
-        public void Buy(in UnitTypes unit) => Resources.Amount -= ResourcesInInventorValues.ForBuy(unit, _resT);
+        public void Buy(in BuildingTypes build) => ResourcesRef.Amount -= ResourcesInInventorValues.ForBuild(build, _resT);
+        public void Buy(in UnitTypes unit) => ResourcesRef.Amount -= ResourcesInInventorValues.ForBuy(unit, _resT);
         public void BuyMelting()
         {
-            Resources.Amount -= NeedForMelting();
-            Resources.Amount += ResourcesInInventorValues.AfterMelting(_resT);
+            ResourcesRef.Amount -= NeedForMelting();
+            ResourcesRef.Amount += ResourcesInInventorValues.AfterMelting(_resT);
+        }
+
+        public void Add(in int adding = 1)
+        {
+            ResourcesRef.Amount += adding;
+        }
+        public void Take(in int taking = 1)
+        {
+            ResourcesRef.Amount -= taking;
+        }
+        public void Set(in int amount)
+        {
+            ResourcesRef.Amount = amount;
+        }
+        public void Reset()
+        {
+            ResourcesRef.Amount = 0;
         }
         public void AddPawnExtractAdultForest(in CellUnitEs unitEs, in CellEnvAdultForestE adultForestE)
         {
-            Resources.Amount += adultForestE.AmountExtractPawn(unitEs);
+            ResourcesRef.Amount += adultForestE.AmountExtractPawn(unitEs);
         }
         public void AddWoodcutterExtractAdultForest(in CellEnvAdultForestE adultForestE, in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
         {
-            Resources.Amount += adultForestE.AmountExtractBuilding(buildUpgEs, buildEs);
+            ResourcesRef.Amount += adultForestE.AmountExtractBuilding(buildUpgEs, buildEs);
         }
-        public void AddFarmExtractFertilize(in CellEnvFertilizerE fertE, in BuildingUpgradeEs buildUpgEs,in CellBuildEs buildEs)
+        public void AddFarmExtractFertilize(in CellEnvFertilizerE fertE, in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
         {
-            Resources.Amount += fertE.AmountExtractBuilding(buildUpgEs, buildEs);
+            ResourcesRef.Amount += fertE.AmountExtractBuilding(buildUpgEs, buildEs);
         }
         public void AddFarmExtractHill(in CellEnvHillE hillE, in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
         {
-            Resources.Amount += hillE.AmountExtractBuilding(buildUpgEs, buildEs);
+            ResourcesRef.Amount += hillE.AmountExtractBuilding(buildUpgEs, buildEs);
         }
     }
 }

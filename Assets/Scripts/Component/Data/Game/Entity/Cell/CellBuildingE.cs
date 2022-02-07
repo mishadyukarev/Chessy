@@ -1,6 +1,4 @@
 ﻿using ECS;
-using Photon.Pun;
-using Photon.Realtime;
 using System;
 
 namespace Game.Game
@@ -40,20 +38,26 @@ namespace Game.Game
             PlayerTCRef.Player = owner;
             HealthRef.Amount = CellBuildingValues.MaxAmountHealth(build);
         }
-        public void Destroy()
+        public void Destroy(in Entities ents)
         {
+            if (BuildTCRef.Is(BuildingTypes.Teleport))
+            {
+                if (ents.StartTeleportE.Where == Idx) ents.StartTeleportE.Reset();
+                else ents.EndTeleportE.Reset();
+            }
+
             BuildTCRef.Build = BuildingTypes.None;
             PlayerTCRef.Player = PlayerTypes.None;
             HealthRef.Amount = 0;
         }
 
-        public void Defrost()
+        public void Defrost(in Entities ents)
         {
             if (!HaveBuilding) throw new Exception("There's not got building on cell");
             if (!Is(BuildingTypes.IceWall)) throw new Exception("Need Ice Wall on cell");
 
             HealthRef.Amount--;
-            if (!IsAlive) Destroy();
+            if (!IsAlive) Destroy(ents);
         }
 
         public void Sync(in int health, in BuildingTypes build, in PlayerTypes player)

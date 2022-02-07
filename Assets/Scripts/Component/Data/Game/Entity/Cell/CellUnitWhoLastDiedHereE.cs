@@ -20,7 +20,7 @@ namespace Game.Game
 
         internal void SetLastDied(in CellUnitEs unitEs)
         {
-            UnitTCRef.Unit = unitEs.MainE.UnitTC.Unit;
+            UnitTCRef.Unit = unitEs.TypeE.UnitTC.Unit;
             LevelTCRef.Level = unitEs.LevelE.LevelTC.Level;
             OwnerCRef.Player = unitEs.OwnerE.OwnerC.Player;
         }

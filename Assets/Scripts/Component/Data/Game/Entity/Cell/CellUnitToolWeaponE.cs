@@ -12,9 +12,29 @@ namespace Game.Game
 
         public ToolWeaponTC ToolWeaponTC => Ent.Get<ToolWeaponTC>();
         public LevelTC LevelTC => Ent.Get<LevelTC>();
-        public AmountC Protection => Ent.Get<AmountC>();
+        public AmountC ProtectionC => Ent.Get<AmountC>();
 
-        public bool HaveProtection => Protection.Amount > 0;
+
+        public ToolWeaponTypes ToolWeaponT
+        {
+            get => ToolWeaponTC.ToolWeapon;
+            internal set => ToolWeaponTCRef.ToolWeapon = value;
+        }
+        public LevelTypes Level
+        {
+            get => LevelTCRef.Level;
+            internal set => LevelTCRef.Level = value;
+        }
+        public int Protection
+        {
+            get => ProtectionRef.Amount;
+            internal set => ProtectionRef.Amount = value;
+        }
+
+
+        public bool HaveProtection => ProtectionC.Amount > 0;
+
+        public bool Is(params ToolWeaponTypes[] tws) => ToolWeaponTC.Is(tws);
 
         internal CellUnitToolWeaponE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
 
@@ -22,7 +42,7 @@ namespace Game.Game
         {
             ToolWeaponTCRef = twE.ToolWeaponTC;
             LevelTCRef = twE.LevelTC;
-            ProtectionRef = twE.Protection;
+            ProtectionRef = twE.ProtectionC;
         }
         public void SetNew(in ToolWeaponTypes tw, in LevelTypes level)
         {
@@ -72,7 +92,7 @@ namespace Game.Game
 
             if (idx_0 != default)
             {
-                var unit_0 = e.UnitEs(idx_0).MainE.UnitTC;
+                var unit_0 = e.UnitEs(idx_0).TypeE.UnitTC;
 
                 var ownUnit_0 = e.UnitEs(idx_0).OwnerE.OwnerC;
 
@@ -92,7 +112,7 @@ namespace Game.Game
 
                             e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
-                            e.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
 
@@ -104,7 +124,7 @@ namespace Game.Game
 
                             e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
-                            e.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
                         else if (tWForGive == ToolWeaponTypes.Pick)
@@ -117,11 +137,11 @@ namespace Game.Game
 
                                 e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
-                                e.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                e.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -135,11 +155,11 @@ namespace Game.Game
 
                                 e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
-                                e.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                e.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
 
@@ -153,15 +173,15 @@ namespace Game.Game
 
                                 e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
-                                e.Rpc.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
-                                e.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
                             }
                         }
                     }
-                    else e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    else e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

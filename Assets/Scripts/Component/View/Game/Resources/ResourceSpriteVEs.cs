@@ -7,7 +7,6 @@ namespace Game.Game
 {
     public readonly struct ResourceSpriteVEs
     {
-        readonly Dictionary<bool, ResourceSpriteVE> _cells;
         readonly Dictionary<string, ResourceSpriteVE> _units;
         readonly Dictionary<string, ResourceSpriteVE> _archers;
         readonly Dictionary<string, ResourceSpriteVE> _toolWeapons;
@@ -15,7 +14,6 @@ namespace Game.Game
         readonly Dictionary<BuildingTypes, ResourceSpriteVE> _buildings;
         readonly Dictionary<BuildingTypes, ResourceSpriteVE> _buildingsBack;
 
-        public ResourceSpriteVE Sprite(in bool isWhite) => _cells[isWhite];
         public ResourceSpriteVE Sprite(in UnitTypes unit, in LevelTypes level) => _units[unit.ToString() + level];
         public ResourceSpriteVE Sprite(in bool isRook, in LevelTypes level) => _archers[isRook.ToString() + level];
         public ResourceSpriteVE Sprite(in ToolWeaponTypes tw, in LevelTypes level) => _toolWeapons[tw.ToString() + level];
@@ -26,11 +24,6 @@ namespace Game.Game
 
         public ResourceSpriteVEs(in EcsWorld gameW)
         {
-            _cells = new Dictionary<bool, ResourceSpriteVE>();
-            _cells.Add(false, new ResourceSpriteVE(gameW, "Black_Sprite"));
-            _cells.Add(true, new ResourceSpriteVE(gameW, "White_Sprite"));
-
-
             var spriteName = "_Sprite";
 
             var folder = "Unit/";

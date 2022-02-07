@@ -66,7 +66,7 @@ namespace Game.Game
                         _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).Seed_Master(sender, _ents);
                         break;
 
-                    case AbilityTypes.Farm:
+                    case AbilityTypes.SetFarm:
                         _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildFarm_Master(sender, _ents);
                         break;
 
@@ -74,7 +74,7 @@ namespace Game.Game
                     //    _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildMine_Master(sender, _ents);
                     //    break;
 
-                    case AbilityTypes.City:
+                    case AbilityTypes.SetCity:
                         _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildCity_Master(sender, _ents);
                         break;
 
@@ -118,6 +118,18 @@ namespace Game.Game
                         _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ResurrectUnit_Master(sender, (byte)objects[_idx_cur++], _ents);
                         break;
 
+                    case AbilityTypes.SetTeleport:
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).SetTeleport_Master(_ents);
+                        break;
+
+                    case AbilityTypes.Teleport:
+                        _ents.UnitEs((byte)objects[_idx_cur++]).Teleport_Master(ability, sender, _ents);
+                        break;
+
+                    case AbilityTypes.InvokeSkeletons:
+                        _ents.UnitEs((byte)objects[_idx_cur++]).InvokeSkeletons_Master(ability, sender, _ents);
+                        break;
+
                     default: throw new Exception();
                 }
             }
@@ -136,18 +148,18 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Done:
-                        if(_ents.WhoseMove.Done_Master(sender, _ents))
+                        if(_ents.WhoseMoveE.Done_Master(sender, _ents))
                         {
                             _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
                         }
                         break;
 
                     case RpcMasterTypes.Shift:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.Shift_Master((byte)objects[_idx_cur++], sender, _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.Shift_Master((byte)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.Attack_Master((byte)objects[_idx_cur++], _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.Attack_Master((byte)objects[_idx_cur++], _ents);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
@@ -163,7 +175,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.BuyRes:
@@ -171,7 +183,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.UpgradeCellUnit:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).MainE.UpgradeUnit_Master(sender, _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.UpgradeUnit_Master(sender, _ents);
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
@@ -260,7 +272,7 @@ namespace Game.Game
         }
 
         [PunRPC]
-        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => _ents.Rpc.OtherRpc(objects, infoFrom);
+        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => _ents.RpcE.OtherRpc(objects, infoFrom);
 
 
         #region SyncData
@@ -272,13 +284,13 @@ namespace Game.Game
 
             foreach (byte idx_0 in _ents.CellWorker.Idxs)
             {
-                objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.UnitTC.Unit);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.TypeE.UnitTC.Unit);
                 //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
                 objs.Add(_ents.CellEs(idx_0).UnitEs.OwnerE.OwnerC.Player);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Hp.Health.Amount);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.StepE.Steps.Amount);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.WaterE.Water.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Hp.HealthC.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.StepE.StepsC.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.WaterE.WaterC.Amount);
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.ConditionE.ConditionTC.Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
@@ -286,9 +298,9 @@ namespace Game.Game
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
                 objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.LevelTC.Level);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.Protection.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.ProtectionC.Amount);
 
-                objs.Add(_ents.UnitEffectEs(idx_0).StunE.ForExitStun.Amount);
+                objs.Add(_ents.UnitEffectEs(idx_0).StunE.Stun);
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.CornedE.IsCornered);
 
@@ -351,9 +363,9 @@ namespace Game.Game
 
             #region Other
 
-            objs.Add(_ents.WhoseMove.WhoseMove.Player);
+            objs.Add(_ents.WhoseMoveE.WhoseMove.Player);
             objs.Add(_ents.WinnerE.Winner.Player);
-            objs.Add(_ents.GameInfo.IsStartedGameC.IsStartedGame);
+            objs.Add(_ents.GameInfoE.IsStartedGameC.IsStartedGame);
             objs.Add(_ents.Ready(PlayerTypes.Second).IsReadyC.IsReady);
 
             objs.Add(_ents.Motion.AmountMotionsC.Amount);
@@ -369,9 +381,9 @@ namespace Game.Game
             for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
 
-            _ents.Rpc.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            _ents.RpcE.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
 
-            _ents.Rpc.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
+            _ents.RpcE.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
         }
 
         [PunRPC]
@@ -443,7 +455,7 @@ namespace Game.Game
             //foreach (var key in BuildingUpgradesEnt.Keys) BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
 
 
-            foreach (var key in _ents.InventorResourcesEs.Keys) _ents.InventorResourcesEs.Resource(key).Resources.Amount = (int)objects[_idx_cur++];
+            foreach (var key in _ents.InventorResourcesEs.Keys) _ents.InventorResourcesEs.Resource(key).Set((int)objects[_idx_cur++]);
             foreach (var key in _ents.InventorUnitsEs.Keys) _ents.InventorUnitsEs.Units(key).Sync((int)objects[_idx_cur++]);
             foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons.Amount = (int)objects[_idx_cur++];
 
@@ -461,10 +473,10 @@ namespace Game.Game
 
             #region Other
 
-            _ents.WhoseMove.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
+            _ents.WhoseMoveE.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
             _ents.WinnerE.Winner.Player = (PlayerTypes)objects[_idx_cur++];
-            _ents.GameInfo.IsStartedGameC.IsStartedGame = (bool)objects[_idx_cur++];
-            _ents.Ready(_ents.WhoseMove.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
+            _ents.GameInfoE.IsStartedGameC.IsStartedGame = (bool)objects[_idx_cur++];
+            _ents.Ready(_ents.WhoseMoveE.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
 
 
             //_ents.Motion.AmountMotionsC.Amount = (int)objects[_idx_cur++];

@@ -2,19 +2,19 @@
 {
     sealed class EnvCellVS : SystemViewAbstract, IEcsRunSystem
     {
-        public EnvCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal EnvCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
         public void Run()
         {
-            foreach (var idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                CellVEs(idx_0).EnvironmentVEs.SR(EnvironmentTypes.Fertilizer).SetActive(EnvironmentEs(idx_0).Fertilizer.HaveEnvironment);
-                CellVEs(idx_0).EnvironmentVEs.SR(EnvironmentTypes.YoungForest).SetActive(EnvironmentEs(idx_0).YoungForest.HaveEnvironment);
-                CellVEs(idx_0).EnvironmentVEs.SR(EnvironmentTypes.AdultForest).SetActive(EnvironmentEs(idx_0).AdultForest.HaveEnvironment);
-                CellVEs(idx_0).EnvironmentVEs.SR(EnvironmentTypes.Hill).SetActive(EnvironmentEs(idx_0).Hill.HaveEnvironment);
-                CellVEs(idx_0).EnvironmentVEs.SR(EnvironmentTypes.Mountain).SetActive(EnvironmentEs(idx_0).Mountain.HaveEnvironment);
+                VEs.EnvironmentVE(idx_0, EnvironmentTypes.Fertilizer).SR.SetActive(Es.EnvironmentEs(idx_0).Fertilizer.HaveEnvironment);
+                VEs.EnvironmentVE(idx_0, EnvironmentTypes.YoungForest).SR.SetActive(Es.EnvironmentEs(idx_0).YoungForest.HaveEnvironment);
+                VEs.EnvironmentVE(idx_0, EnvironmentTypes.AdultForest).SR.SetActive(Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment);
+                VEs.EnvironmentVE(idx_0, EnvironmentTypes.Hill).SR.SetActive(Es.EnvironmentEs(idx_0).Hill.HaveEnvironment);
+                VEs.EnvironmentVE(idx_0, EnvironmentTypes.Mountain).SR.SetActive(Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment);
             }
         }
     }

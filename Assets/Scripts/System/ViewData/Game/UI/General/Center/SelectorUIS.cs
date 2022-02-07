@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var click_cur = Es.ClickerObject.CellClickC.Click;
+            var click_cur = Es.ClickerObjectE.CellClickC.Click;
             var uniq = Es.SelectedUniqueAbilityE.AbilityTC.Ability;
 
 

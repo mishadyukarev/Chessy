@@ -18,14 +18,14 @@ namespace Game.Game
                     Es.ScoutHeroCooldownE(unit, player).UpdateCooldown();
                 }
 
-                Es.InventorResourcesEs.Resource(ResourceTypes.Food, player).Resources.Amount += ResourcesInInventorValues.ADDING_FOOD_AFTER_MOVE;
+                Es.InventorResourcesEs.Resource(ResourceTypes.Food, player).Add(ResourcesInInventorValues.ADDING_FOOD_AFTER_MOVE);
             }
 
             foreach (byte idx_0 in CellWorker.Idxs)
             {
                 ref var cell_0 = ref CellEs(idx_0).CellE.InstanceIDC;
 
-                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
                 var buil_0 = BuildEs(idx_0).BuildingE.BuildTC;
@@ -35,11 +35,11 @@ namespace Game.Game
 
 
 
-                if (UnitEs(idx_0).MainE.HaveUnit && !unit_0.IsAnimal)
+                if (UnitEs(idx_0).TypeE.HaveUnit && !unit_0.IsAnimal)
                 {
                     //CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
-                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownUnit_0.Player).Resources.Amount -= ResourcesInInventorValues.CostFood(unit_0.Unit);
+                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownUnit_0.Player).Take(ResourcesInInventorValues.CostFood(unit_0.Unit));
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -71,7 +71,7 @@ namespace Game.Game
                                             {
                                                 if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
                                                 {
-                                                    BuildEs(idx_camp).BuildingE.Destroy();
+                                                    BuildEs(idx_camp).BuildingE.Destroy(Es);
                                                 }
 
 
@@ -82,7 +82,7 @@ namespace Game.Game
                                         {
                                             if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
                                             {
-                                                Es.BuildE(idx_camp).Destroy();
+                                                Es.BuildE(idx_camp).Destroy(Es);
                                             }
 
                                             BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
@@ -100,7 +100,7 @@ namespace Game.Game
                             }
                         }
                     }
-                    UnitStatEs(idx_0).StepE.SetMax(UnitEs(idx_0).MainE);
+                    UnitStatEs(idx_0).StepE.SetMax(UnitEs(idx_0).TypeE);
                 }
             }
 

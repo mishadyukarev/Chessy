@@ -13,7 +13,7 @@ namespace Game.Game
         readonly Dictionary<PlayerTypes, AvailableCenterHeroE> _availHero;
 
         public ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
-        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitEs unitEs) => _scoutHeroCooldownEs[unitEs.MainE.UnitTC.Unit.ToString() + unitEs.OwnerE.OwnerC.Player];
+        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitEs unitEs) => _scoutHeroCooldownEs[unitEs.TypeE.UnitTC.Unit.ToString() + unitEs.OwnerE.OwnerC.Player];
         public ReadyE Ready(in PlayerTypes player) => _ready[player];
         public SoundE Sound(in ClipTypes clip) => _sounds0[clip];
         public SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
@@ -29,14 +29,16 @@ namespace Game.Game
         public readonly WinnerE WinnerE;
         public readonly WindCloudE WindCloudE;
         public readonly FriendZoneE FriendZoneE;
-        public readonly GameInfoE GameInfo;
-        public readonly InfoEnvironmentE InfoEnvironment;
+        public readonly GameInfoE GameInfoE;
+        public readonly InfoEnvironmentE InfoEnvironmentE;
         public readonly SelectedUnitE SelectedUnitE;
-        public readonly ClickerObjectE ClickerObject;
-        public readonly WhoseMoveE WhoseMove;
+        public readonly ClickerObjectE ClickerObjectE;
+        public readonly WhoseMoveE WhoseMoveE;
         public readonly SelectedAbilityE SelectedUniqueAbilityE;
-        public readonly RpcE Rpc;
+        public readonly RpcE RpcE;
         public readonly SelectedToolWeaponE SelectedToolWeaponE;
+        public readonly StartTeleportE StartTeleportE;
+        public readonly EndTeleportE EndTeleportE;
 
 
         #region Pools
@@ -49,7 +51,6 @@ namespace Game.Game
 
         public readonly UnitStatUpgradesEs UnitStatUpgradesEs;
         public readonly AvailableCenterUpgradeEs AvailableCenterUpgradeEs;
-        public readonly MasterEs MasterEs;
         public readonly BuildingUpgradeEs BuildingUpgradeEs;
 
 
@@ -63,7 +64,7 @@ namespace Game.Game
         public CellEs CellEs(in byte idx) => _cellEs[idx];
 
         public CellUnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
-        public CellUnitMainE UnitMainE(in byte idx) => UnitEs(idx).MainE;
+        public CellUnitTypeE UnitTypeE(in byte idx) => UnitEs(idx).TypeE;
         public CellUnitLevelE UnitLevelE(in byte idx) => UnitEs(idx).LevelE;
         public CellUnitOwnerE UnitOwnerE(in byte idx) => UnitEs(idx).OwnerE;
         public CellUnitConditonE UnitConditionE(in byte idx) => UnitEs(idx).ConditionE;
@@ -75,7 +76,7 @@ namespace Game.Game
         public CellUnitEffectEs UnitEffectEs(in byte idx) => UnitEs(idx).EffectEs;
 
         public CellBuildEs BuildEs(in byte idx) => CellEs(idx).BuildEs;
-        public CellBuildingE BuildE(in byte idx) => CellEs(idx).BuildEs.BuildingE;
+        public CellBuildingE BuildE(in byte idx) => BuildEs(idx).BuildingE;
         public CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
         public CellEnvFertilizerE EnvFertilizerE(in byte idx) => EnvironmentEs(idx).Fertilizer;
         public CellEnvYoungForestE EnvYoungForestE(in byte idx) => EnvironmentEs(idx).YoungForest;
@@ -133,18 +134,20 @@ namespace Game.Game
 
             WindCloudE = new WindCloudE(gameW);
             WinnerE = new WinnerE(gameW);
-            WhoseMove = new WhoseMoveE(PlayerTypes.First, gameW);
+            WhoseMoveE = new WhoseMoveE(PlayerTypes.First, gameW);
             InputE = new InputE(gameW);
             FriendZoneE = new FriendZoneE(GameModeC.IsGameMode(GameModes.WithFriendOff), gameW);
-            Rpc = new RpcE(actions, namesMethods);
+            RpcE = new RpcE(actions, namesMethods);
             Motion = new MotionE(gameW);
-            GameInfo = new GameInfoE(gameW);
-            InfoEnvironment = new InfoEnvironmentE(gameW);
-            ClickerObject = new ClickerObjectE(CellClickTypes.SimpleClick, gameW);
+            GameInfoE = new GameInfoE(gameW);
+            InfoEnvironmentE = new InfoEnvironmentE(gameW);
+            ClickerObjectE = new ClickerObjectE(CellClickTypes.SimpleClick, gameW);
             SunSidesE = new SunSidesE(SunSideTypes.Dawn, gameW);
             SelectedUnitE = new SelectedUnitE(gameW);
             SelectedUniqueAbilityE = new SelectedAbilityE(gameW);
             SelectedToolWeaponE = new SelectedToolWeaponE(gameW);
+            StartTeleportE = new StartTeleportE(gameW);
+            EndTeleportE = new EndTeleportE(gameW);
 
             InventorUnitsEs = new InventorUnitsEs(gameW);
             InventorResourcesEs = new InventorResourcesEs(gameW);
@@ -154,7 +157,6 @@ namespace Game.Game
 
             AvailableCenterUpgradeEs = new AvailableCenterUpgradeEs(gameW);
             BuildingUpgradeEs = new BuildingUpgradeEs(gameW);
-            MasterEs = new MasterEs(gameW);
 
 
             _cellEs = new CellEs[CellStartValues.ALL_CELLS_AMOUNT];
@@ -175,7 +177,7 @@ namespace Game.Game
             new CellsForArsonArcherEs(gameW);
 
             new MistakeE(gameW);
-            new EntHint(gameW); 
+            new EntHint(gameW);
             new GetterUnitsEs(gameW);
         }
     }

@@ -15,7 +15,7 @@ namespace Game.Game
 
             foreach (byte idx_0 in CellWorker.Idxs)
             {
-                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
                 var tw_0 = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
@@ -28,7 +28,7 @@ namespace Game.Game
 
                 TrailEs(idx_0).DestroyAll();
 
-                if (UnitEs(idx_0).MainE.HaveUnit)
+                if (UnitEs(idx_0).TypeE.HaveUnit)
                 {
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -40,7 +40,7 @@ namespace Game.Game
                                 UnitEs(idx_0).ToolWeaponE.Reset();
                             }
 
-                            UnitEs(idx_0).MainE.AddToInventorAndRemove(Es);
+                            UnitEs(idx_0).TypeE.AddToInventorAndRemove(Es);
                         }
                     }
                     else
@@ -52,7 +52,7 @@ namespace Game.Game
                             UnitEs(idx_0).ToolWeaponE.Reset();
                         }
 
-                        UnitEs(idx_0).MainE.AddToInventorAndRemove(Es);
+                        UnitEs(idx_0).TypeE.AddToInventorAndRemove(Es);
                     }
                 }
 
@@ -62,7 +62,7 @@ namespace Game.Game
                     if (build_0.Is(BuildingTypes.Camp))
                     {
                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                        BuildEs(idx_0).BuildingE.Destroy();
+                        BuildEs(idx_0).BuildingE.Destroy(Es);
                     }
                 }
 

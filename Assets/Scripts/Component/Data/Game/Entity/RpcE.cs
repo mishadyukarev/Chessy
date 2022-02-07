@@ -83,14 +83,17 @@ namespace Game.Game
         public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.ChangeDirectionWind, fromIdx, toIdx });
 
         public void CircularAttackKingToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.CircularAttack, idxCell });
-        public void BuildFarmToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.Farm, idx});
-        public void BuildCityToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.City, idx });
+        public void BuildFarmToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.SetFarm, idx });
+        public void BuildCityToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.SetCity, idx });
 
         public void IceWallToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.IceWall, idx });
         public void ActiveSnowyAroundToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.ActiveAroundBonusSnowy, idx });
         public void DirectWaveToMaster(in byte idx_from, in byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.DirectWave, idx_from, idx_to });
 
         public void ResurrectToMaster(in byte idx_from, in byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.Resurrect, idx_from, idx_to });
+        public void SetTeleportToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.SetTeleport, idx });
+        public void TeleportToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.Teleport, idx });
+        public void InvokeSkeletonsToMaster(in byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.InvokeSkeletons, idx });
 
         #endregion
 
@@ -115,10 +118,10 @@ namespace Game.Game
         public void ShiftUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
         public void AttackUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
 
-        public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, idx, cond});
+        public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, idx, cond });
 
         public void UpgradeUnitToMaster(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgradeCellUnit, idxCell });
-        public void GiveTakeToolWeaponToMaster(byte idx, ToolWeaponTypes tw, LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, idx, tw, level});
+        public void GiveTakeToolWeaponToMaster(byte idx, ToolWeaponTypes tw, LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, idx, tw, level });
 
         public void CreateUnitToMaster(UnitTypes unitType) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.CreateUnit, unitType });
 

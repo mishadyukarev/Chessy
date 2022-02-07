@@ -18,23 +18,36 @@ namespace Game.Game
             var action =
                 (Action)new UpdatorMS(ents).Run
 
-                + new UpdExtractWoodcutterMS(ents).Run
-                + new UpdExtractFarmMS(ents).Run
-                + new UpdExtractMineMS(ents).Run
-                + new IceWallGiveWaterUnitsUpdMS(ents).Run
-                + new IceWallFertilizeAroundUpdMS(ents).Run
-
                 + new UpdateFireMS(ents).Run
                 + new CloudUpdMS(ents).Run
                 + new UpdateIceWallMS(ents).Run
                 + new UpdFertilizeAroundRiverMS(ents).Run
-                + new UpdSetWoodcuttersAroundCityMS(ents).Run
                 + new CloudFertilizeUpdMS(ents).Run
                 + new UpdDryFertilizerMS(ents).Run
 
+            #region Building
+
+                + new UpdExtractWoodcutterMS(ents).Run
+                + new UpdExtractFarmMS(ents).Run
+                + new MineExtractUpdateMS(ents).Run
+                + new IceWallGiveWaterUnitsUpdMS(ents).Run
+                + new IceWallFertilizeAroundUpdMS(ents).Run
+                + new UpdSetWoodcuttersAroundCityMS(ents).Run
+                + new CityExtractHillMS(ents).Run
+
+            #endregion
+
+
+            #region Environment
+
+                + new MountainThrowHillsUpdMS(ents).Run
+
+            #endregion
+
+
             #region Unit
 
-                + new UpdateExtractUnitMS(ents).Run
+                + new PawnExtractAdultForestMS(ents).Run
                 + new ResumeUnitUpdMS(ents).Run
                 + new UpdateHealingUnitMS(ents).Run
                 + new UpdateHungryMS(ents).Run

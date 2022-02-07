@@ -1,5 +1,4 @@
 ﻿using ECS;
-using Photon.Realtime;
 
 namespace Game.Game
 {

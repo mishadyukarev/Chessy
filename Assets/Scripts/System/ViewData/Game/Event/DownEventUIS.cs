@@ -32,13 +32,13 @@ namespace Game.Game
 
             TryOnHint(VideoClipTypes.CreatingScout);
 
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                if (!Es.ScoutHeroCooldownE(UnitTypes.Scout, Es.WhoseMove.CurPlayerI).HaveCooldown)
+                if (!Es.ScoutHeroCooldownE(UnitTypes.Scout, Es.WhoseMoveE.CurPlayerI).HaveCooldown)
                 {
-                    if (Es.WhoseMove.IsMyMove)
+                    if (Es.WhoseMoveE.IsMyMove)
                     {
-                        Es.SelectedUnitE.SetSelectedUnit(UnitTypes.Scout, LevelTypes.First, Es.ClickerObject);
+                        Es.SelectedUnitE.SetSelectedUnit(UnitTypes.Scout, LevelTypes.First, Es.ClickerObjectE);
                     }
                 }
                 else
@@ -53,13 +53,13 @@ namespace Game.Game
             Es.SelectedIdxE.Reset();
             TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                if (Es.InventorUnitsEs.HaveHero(Es.WhoseMove.CurPlayerI, out var myHero))
+                if (Es.InventorUnitsEs.HaveHero(Es.WhoseMoveE.CurPlayerI, out var myHero))
                 {
-                    if (!Es.ScoutHeroCooldownE(myHero, Es.WhoseMove.CurPlayerI).HaveCooldown)
+                    if (!Es.ScoutHeroCooldownE(myHero, Es.WhoseMoveE.CurPlayerI).HaveCooldown)
                     {
-                        Es.SelectedUnitE.SetSelectedUnit(myHero, LevelTypes.First, Es.ClickerObject);
+                        Es.SelectedUnitE.SetSelectedUnit(myHero, LevelTypes.First, Es.ClickerObjectE);
                     }
                     else
                     {
@@ -73,9 +73,9 @@ namespace Game.Game
 
         void Done()
         {
-            if (!Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
+            if (!Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).HaveUnits)
             {
-                Es.Rpc.DoneToMaster();
+                Es.RpcE.DoneToMaster();
             }
             else
             {
@@ -85,31 +85,31 @@ namespace Game.Game
 
         void BuyUnit(in UnitTypes unit)
         {
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
                 GetterUnitsEs.GetterUnit<TimerC>(unit).Reset();
 
-                Es.Rpc.CreateUnitToMaster(unit);
+                Es.RpcE.CreateUnitToMaster(unit);
             }
             else SoundV(ClipTypes.Mistake).Play();
         }
 
         void GetUnit(UnitTypes unitT)
         {
-            Es.SelectedIdxE.IdxC.Reset();
+            Es.SelectedIdxE.Reset();
 
             GetterUnitsEs.GetterUnit<TimerC>(unitT).Reset();
 
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
-                if (Es.InventorUnitsEs.Units(unitT, LevelTypes.Second, Es.WhoseMove.CurPlayerI).HaveUnits)
+                if (Es.InventorUnitsEs.Units(unitT, LevelTypes.Second, Es.WhoseMoveE.CurPlayerI).HaveUnits)
                 {
-                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.Second, Es.ClickerObject);
+                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.Second, Es.ClickerObjectE);
                 }
 
-                else if (Es.InventorUnitsEs.Units(unitT, LevelTypes.First, Es.WhoseMove.CurPlayerI).HaveUnits)
+                else if (Es.InventorUnitsEs.Units(unitT, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).HaveUnits)
                 {
-                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.First, Es.ClickerObject);
+                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.First, Es.ClickerObjectE);
                 }
 
                 else
@@ -122,12 +122,12 @@ namespace Game.Game
 
         void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
-            Es.SelectedIdxE.IdxC.Reset();
+            Es.SelectedIdxE.Reset();
 
             ref var selToolWeaponC = ref Es.SelectedToolWeaponE.ToolWeaponTC;
             ref var selLevelTWC = ref Es.SelectedToolWeaponE.LevelTC;
 
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
                 if (tw == ToolWeaponTypes.Pick)
                 {
@@ -139,7 +139,7 @@ namespace Game.Game
                 }
 
 
-                if (Es.ClickerObject.CellClickC.Is(CellClickTypes.GiveTakeTW))
+                if (Es.ClickerObjectE.CellClickC.Is(CellClickTypes.GiveTakeTW))
                 {
                     if (tw == ToolWeaponTypes.Shield)
                     {
@@ -162,7 +162,7 @@ namespace Game.Game
                 }
                 else
                 {
-                    Es.ClickerObject.CellClickC.Click = CellClickTypes.GiveTakeTW;
+                    Es.ClickerObjectE.CellClickC.Click = CellClickTypes.GiveTakeTW;
 
                     selToolWeaponC.ToolWeapon = tw;
 
@@ -181,12 +181,12 @@ namespace Game.Game
 
         void ToggleUpgradeUnit()
         {
-            Es.SelectedIdxE.IdxC.Reset();
+            Es.SelectedIdxE.Reset();
 
-            if (Es.WhoseMove.IsMyMove)
+            if (Es.WhoseMoveE.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
-                Es.ClickerObject.CellClickC.Click = CellClickTypes.UpgradeUnit;
+                Es.ClickerObjectE.CellClickC.Click = CellClickTypes.UpgradeUnit;
             }
             else SoundV(ClipTypes.Mistake).Play();
         }

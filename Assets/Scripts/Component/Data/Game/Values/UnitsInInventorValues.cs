@@ -38,6 +38,7 @@ namespace Game.Game
                 case UnitTypes.Snowy: return 0;
                 case UnitTypes.Undead: return 0;
                 case UnitTypes.Hell: return 0;
+                case UnitTypes.Skeleton: return 0;
                 default: throw new Exception();
             }
         }

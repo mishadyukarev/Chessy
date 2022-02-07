@@ -26,8 +26,9 @@ namespace Game.Game
                 case UnitTypes.Scout: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
                 case UnitTypes.Elfemale: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
                 case UnitTypes.Snowy: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1f);
-                case UnitTypes.Undead: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0);
-                case UnitTypes.Hell: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0);
+                case UnitTypes.Undead: return 0;
+                case UnitTypes.Hell: return 0;
+                case UnitTypes.Skeleton: return 0;
                 case UnitTypes.Camel: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
                 default: throw new Exception();
             }

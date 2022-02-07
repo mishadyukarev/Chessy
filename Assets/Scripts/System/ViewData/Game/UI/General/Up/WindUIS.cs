@@ -26,7 +26,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            if (Es.WhoseMove.CurPlayerI == PlayerTypes.Second)
+            if (Es.WhoseMoveE.CurPlayerI == PlayerTypes.Second)
                 DirectWind<TransformVC>().EulerAngles += new Vector3(0, 0, 180);
         }
     }

@@ -173,23 +173,29 @@ namespace Game.Game
                     {
                         case AbilityTypes.CircularAttack: throw new Exception();
                         case AbilityTypes.BonusNear: volume = 0.3f; break;
+
+                        case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
+                        case AbilityTypes.SetFarm: volume = 0.1f; break;
+                        case AbilityTypes.SetCity: volume = 0.1f; break;
+                        case AbilityTypes.Seed: volume = 0.2f; break;
                         case AbilityTypes.FirePawn: volume = 0.2f; break;
                         case AbilityTypes.PutOutFirePawn: throw new Exception();
-                        case AbilityTypes.Seed: volume = 0.2f; break;
+
                         case AbilityTypes.FireArcher: volume = 0.2f; break;
                         case AbilityTypes.ChangeCornerArcher: throw new Exception();
+
                         case AbilityTypes.GrowAdultForest: volume = 0.3f; break;
                         case AbilityTypes.StunElfemale: volume = 0.3f; break;
                         case AbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
-                        case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
-                        case AbilityTypes.Farm: volume = 0.1f; break;
-                        case AbilityTypes.City: volume = 0.1f; break;
 
                         case AbilityTypes.IceWall: volume = 0.1f; break;
                         case AbilityTypes.ActiveAroundBonusSnowy: volume = 0.1f; break;
                         case AbilityTypes.DirectWave: volume = 0.1f; break;
 
                         case AbilityTypes.Resurrect: volume = 0.1f; break;
+                        case AbilityTypes.SetTeleport: volume = 0.1f; break;
+                        case AbilityTypes.Teleport: volume = 0.1f; break;
+                        case AbilityTypes.InvokeSkeletons: volume = 0.1f; break;
                         default: throw new Exception();
                     }
 

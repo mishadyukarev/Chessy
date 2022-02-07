@@ -1,5 +1,4 @@
 ﻿using ECS;
-using Photon.Realtime;
 using System.Collections.Generic;
 
 namespace Game.Game
@@ -59,7 +58,7 @@ namespace Game.Game
 
         public void GetHero_Master(in UnitTypes unit, in Entities e)
         {
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
 
             Units(unit, LevelTypes.First, whoseMove).AddUnit();
             e.AvailableCenterHero(whoseMove).HaveCenterHero.Have = false;

@@ -15,7 +15,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.WhoseMove.CurPlayerI;
+            var curPlayer = Es.WhoseMoveE.CurPlayerI;
 
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
@@ -25,9 +25,9 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitMainE(idx_0).HaveUnit && UnitEs(idx_0).OwnerE.OwnerC.Is(Es.WhoseMove.CurPlayerI))
+                if (Es.UnitTypeE(idx_0).HaveUnit && UnitEs(idx_0).OwnerE.OwnerC.Is(Es.WhoseMoveE.CurPlayerI))
                 {
-                    _extracts[ResourceTypes.Food] -= ResourcesInInventorValues.CostFood(UnitEs(idx_0).MainE.UnitTC.Unit);
+                    _extracts[ResourceTypes.Food] -= ResourcesInInventorValues.CostFood(UnitEs(idx_0).TypeE.UnitTC.Unit);
 
                     if (Es.EnvAdultForestE(idx_0).CanExtractPawn(UnitEs(idx_0)))
                     {
@@ -41,6 +41,11 @@ namespace Game.Game
                 if (BuildEs(idx_0).BuildingE.CanExtractFertilizer(EnvironmentEs(idx_0)))
                 {
                     _extracts[EnvironmentEs(idx_0).Fertilizer.ResourceT] += EnvironmentEs(idx_0).Fertilizer.AmountExtractBuilding(Es.BuildingUpgradeEs, BuildEs(idx_0));
+                }
+
+                if (Es.EnvHillE(idx_0).CanExtractPawn(Es.UnitEs(idx_0), Es.EnvironmentEs(idx_0)))
+                {
+                    _extracts[Es.EnvHillE(idx_0).ResourceT] += Es.EnvHillE(idx_0).AmountExtractPawnPick();
                 }
             }
 

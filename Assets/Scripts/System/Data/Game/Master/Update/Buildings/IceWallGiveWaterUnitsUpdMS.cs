@@ -17,7 +17,7 @@
 
                     foreach (var idx_01 in idxs_01)
                     {
-                        if (UnitEs(idx_01).MainE.HaveUnit && UnitEs(idx_01).OwnerE.OwnerC.Is(BuildEs(idx_0).BuildingE.OwnerC.Player))
+                        if (UnitEs(idx_01).TypeE.HaveUnit && UnitEs(idx_01).OwnerE.OwnerC.Is(BuildEs(idx_0).BuildingE.OwnerC.Player))
                         {
                             Es.UnitStatWaterE(idx_01).SetMax(UnitEs(idx_01), Es.UnitStatUpgradesEs);
                         }

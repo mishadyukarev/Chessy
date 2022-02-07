@@ -10,7 +10,7 @@ namespace Game.Game
 
         string Key(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, in UpgradeTypes upg) => stat.ToString() + unit + lev + player + upg;
         public HaveUpgradeE Upgrade(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, in UpgradeTypes upg) => _ents[Key(stat, unit, lev, player, upg)];
-        public HaveUpgradeE Upgrade(in UnitStatTypes stat, in CellUnitEs unitEs, in UpgradeTypes upg) => _ents[Key(stat, unitEs.MainE.UnitTC.Unit, unitEs.LevelE.LevelTC.Level, unitEs.OwnerE.OwnerC.Player, upg)];
+        public HaveUpgradeE Upgrade(in UnitStatTypes stat, in CellUnitEs unitEs, in UpgradeTypes upg) => _ents[Key(stat, unitEs.TypeE.UnitTC.Unit, unitEs.LevelE.LevelTC.Level, unitEs.OwnerE.OwnerC.Player, upg)];
         public HaveUpgradeE Upgrade(in string key) => _ents[key];
 
         public HashSet<string> Keys
@@ -47,7 +47,7 @@ namespace Game.Game
 
         public void UpgradeCenterWater_Master(in Player sender, in Entities e)
         {
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
             {
@@ -59,7 +59,7 @@ namespace Game.Game
             e.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
             e.AvailableCenterUpgradeEs.HaveWaterUpgrade(whoseMove).HaveUpgrade.Have = false;
 
-            e.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            e.RpcE.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
     }
 }

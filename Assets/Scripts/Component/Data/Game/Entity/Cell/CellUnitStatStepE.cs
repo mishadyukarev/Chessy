@@ -5,15 +5,22 @@ namespace Game.Game
 {
     public sealed class CellUnitStatStepE : CellEntityAbstract
     {
-        ref AmountC StepsRef => ref Ent.Get<AmountC>();
-        public AmountC Steps => Ent.Get<AmountC>();
+        ref AmountC StepsCRef => ref Ent.Get<AmountC>();
+        public AmountC StepsC => Ent.Get<AmountC>();
 
-        public bool HaveSteps => Steps.Amount > 0;
-        public bool Have(in AbilityTypes ability) => StepsRef.Amount >= CellUnitStatStepValues.NeedSteps(ability);
-        public bool Have(in ConditionUnitTypes cond) => StepsRef.Amount >= CellUnitStatStepValues.NeedSteps(cond);
-        public bool Have(in ToolWeaponTypes tw) => StepsRef.Amount >= CellUnitStatStepValues.NeedSteps(tw);
-        public bool HaveMax(in CellUnitMainE unitElseE) => Steps.Amount >= MaxAmountSteps(unitElseE);
-        public int MaxAmountSteps(in CellUnitMainE cellUnitElse) => CellUnitStatStepValues.MaxAmountSteps(cellUnitElse.UnitTC.Unit, false);
+
+        public int Steps
+        {
+            get => StepsCRef.Amount;
+            set => StepsCRef.Amount = value;
+        }
+
+        public bool HaveSteps => StepsC.Amount > 0;
+        public bool Have(in AbilityTypes ability) => StepsCRef.Amount >= CellUnitStatStepValues.NeedSteps(ability);
+        public bool Have(in ConditionUnitTypes cond) => StepsCRef.Amount >= CellUnitStatStepValues.NeedSteps(cond);
+        public bool Have(in ToolWeaponTypes tw) => StepsCRef.Amount >= CellUnitStatStepValues.NeedSteps(tw);
+        public bool HaveMax(in CellUnitTypeE unitElseE) => StepsC.Amount >= MaxAmountSteps(unitElseE);
+        public int MaxAmountSteps(in CellUnitTypeE cellUnitElse) => CellUnitStatStepValues.MaxAmountSteps(cellUnitElse.UnitTC.Unit, false);
         int StepsForShiftOrAttack(in UnitTC unitTC_from, in DirectTypes dirMove_to, in CellEs cellEs_to)
         {
             var needSteps = 1;
@@ -32,41 +39,41 @@ namespace Game.Game
         }
         public bool CanShift(in UnitTC unitTC_from, in DirectTypes dirMove_to, in CellEs cellEs_to)
         {
-            return StepsForShiftOrAttack(unitTC_from, dirMove_to, cellEs_to) <= Steps.Amount;
+            return StepsForShiftOrAttack(unitTC_from, dirMove_to, cellEs_to) <= StepsC.Amount;
         }
 
         internal CellUnitStatStepE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
 
-        public void SetMax(in CellUnitMainE unitElseE_from) => StepsRef.Amount = MaxAmountSteps(unitElseE_from);
+        public void SetMax(in CellUnitTypeE unitElseE_from) => StepsCRef.Amount = MaxAmountSteps(unitElseE_from);
         public void Shift(in CellUnitStatStepE stepE_from)
         {
-            StepsRef = stepE_from.Steps;
-            stepE_from.StepsRef.Amount = 0;
+            StepsCRef = stepE_from.StepsC;
+            stepE_from.StepsCRef.Amount = 0;
         }
         public void SetStepsAfterAttack()
         {
-            StepsRef.Amount = 0;
+            StepsCRef.Amount = 0;
         }
         public void Take(in AbilityTypes ability)
         {
-            StepsRef.Amount -= CellUnitStatStepValues.NeedSteps(ability);
+            StepsCRef.Amount -= CellUnitStatStepValues.NeedSteps(ability);
         }
         public void Take(in RpcMasterTypes rpc)
         {
-            StepsRef.Amount -= CellUnitStatStepValues.NeedSteps(rpc);
+            StepsCRef.Amount -= CellUnitStatStepValues.NeedSteps(rpc);
         }
         public void Take(in ConditionUnitTypes cond)
         {
-            StepsRef.Amount -= CellUnitStatStepValues.NeedSteps(cond);
+            StepsCRef.Amount -= CellUnitStatStepValues.NeedSteps(cond);
         }
         public void Take(in ToolWeaponTypes tw)
         {
-            StepsRef.Amount -= CellUnitStatStepValues.NeedSteps(tw);
+            StepsCRef.Amount -= CellUnitStatStepValues.NeedSteps(tw);
         }
         public void TakeForShift(in byte idx_to, in Entities es)
         {
             if (!es.CellWorker.TryGetDirect(Idx, idx_to, out var dir)) throw new Exception();
-            StepsRef.Amount -= es.UnitStatEs(Idx).StepE.StepsForShiftOrAttack(es.UnitEs(Idx).MainE.UnitTC, dir, es.CellEs(idx_to));
+            StepsCRef.Amount -= es.UnitStatEs(Idx).StepE.StepsForShiftOrAttack(es.UnitEs(Idx).TypeE.UnitTC, dir, es.CellEs(idx_to));
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Game.Game
         {
             var idx_from = Idx;
 
-            if (!e.UnitEs(idx_to).MainE.HaveUnit)
+            if (!e.UnitEs(idx_to).TypeE.HaveUnit)
             {
                 if (!e.UnitEs(idx_from).Ability(_ability).HaveCooldown)
                 {
@@ -60,13 +60,13 @@ namespace Game.Game
                         {
                             var whoLast_to = e.UnitEs(idx_to).WhoLastDiedHereE;
 
-                            e.UnitEs(idx_to).MainE.SetNew((whoLast_to.UnitTC.Unit, whoLast_to.LevelTC.Level, whoLast_to.OwnerC.Player, ConditionUnitTypes.None, false), e);
+                            e.UnitEs(idx_to).SetNew((whoLast_to.UnitTC.Unit, whoLast_to.LevelTC.Level, whoLast_to.OwnerC.Player, ConditionUnitTypes.None, false), e);
                             e.UnitEs(idx_to).WhoLastDiedHereE.Clear();
                         }
                     }
                     else
                     {
-                        e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                 }
             }
@@ -84,7 +84,7 @@ namespace Game.Game
                     e.UnitStatEs(idx_0).StepE.Take(_ability);
                     e.UnitEs(idx_0).ConditionE.Reset();
 
-                    e.Rpc.SoundToGeneral(sender, _ability);
+                    e.RpcE.SoundToGeneral(sender, _ability);
 
                     //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have)
                     //{
@@ -98,7 +98,7 @@ namespace Game.Game
 
                         var ownUnit_1 = e.UnitEs(idx_1).OwnerE.OwnerC;
 
-                        if (e.UnitEs(idx_1).MainE.HaveUnit)
+                        if (e.UnitEs(idx_1).TypeE.HaveUnit)
                         {
                             if (ownUnit_1.Is(e.UnitEs(idx_0).OwnerE.OwnerC.Player))
                             {
@@ -112,11 +112,11 @@ namespace Game.Game
                 }
                 else
                 {
-                    e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else e.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
         }
         public void CircularAttack_Master(in Player sender, in Entities e)
         {
@@ -129,7 +129,7 @@ namespace Game.Game
             {
                 if (e.UnitStatEs(idx_0).StepE.Have(_ability))
                 {
-                    e.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    e.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
@@ -141,7 +141,7 @@ namespace Game.Game
                         var tw_1 = e.UnitEs(idx_1).ToolWeaponE.ToolWeaponTC;
 
 
-                        if (e.UnitEs(idx_1).MainE.HaveUnit)
+                        if (e.UnitEs(idx_1).TypeE.HaveUnit)
                         {
                             if (!ownUnit_1.Is(ownUnit_0.Player))
                             {
@@ -164,17 +164,17 @@ namespace Game.Game
                     //foreach (var item in CellUnitEffectsEs.Keys) 
                     //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 
-                    e.Rpc.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    e.RpcE.SoundToGeneral(sender, ClipTypes.AttackMelee);
 
 
                     e.UnitEs(idx_0).ConditionE.Reset();
                 }
                 else
                 {
-                    e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
-            else e.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
         }
         public void ChangeDirectionWind_Master(in byte idx_to, in Player sender, in Entities e)
         {
@@ -194,18 +194,18 @@ namespace Game.Game
 
                         e.UnitEs(idx_from).Ability(_ability).SetAfterAbility();
 
-                        e.Rpc.SoundToGeneral(RpcTarget.All, _ability);
+                        e.RpcE.SoundToGeneral(RpcTarget.All, _ability);
                     }
                 }
 
-                else e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+            else e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
 
         }
         public void ActiveSnowyAround_Master(in Player sender, in Entities e)
         {
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
             var idx_0 = Idx;
 
             if (e.UnitStatEs(idx_0).WaterE.Have(_ability) || e.RiverEs(idx_0).RiverE.HaveRiverNear)
@@ -219,17 +219,17 @@ namespace Game.Game
 
                     foreach (var idx_1 in e.CellWorker.GetIdxsAround(idx_0))
                     {
-                        if (e.UnitEs(idx_1).MainE.HaveUnit)
+                        if (e.UnitEs(idx_1).TypeE.HaveUnit)
                         {
                             if (e.UnitEs(idx_1).OwnerE.OwnerC.Is(whoseMove))
                             {
-                                if (e.UnitEs(idx_1).MainE.UnitTC.IsMelee && !e.UnitEs(idx_1).MainE.UnitTC.Is(UnitTypes.Camel, UnitTypes.Scout))
+                                if (e.UnitEs(idx_1).TypeE.UnitTC.IsMelee && !e.UnitEs(idx_1).TypeE.UnitTC.Is(UnitTypes.Camel, UnitTypes.Scout))
                                 {
                                     e.UnitStatEs(idx_1).WaterE.SetMax(e.UnitEs(idx_1), e.UnitStatUpgradesEs);
                                     e.UnitStatEs(idx_1).Hp.SetMax();
                                     e.UnitEffectEs(idx_1).ShieldE.Set(_ability);
                                 }
-                                if (e.UnitEs(idx_1).MainE.UnitTC.Is(UnitTypes.Archer))
+                                if (e.UnitEs(idx_1).TypeE.UnitTC.Is(UnitTypes.Archer))
                                 {
                                     e.UnitEffectEs(idx_1).FrozenArrowE.Enable();
                                 }
@@ -247,7 +247,7 @@ namespace Game.Game
         }
         public void DirectWaveSnowy_Master(in byte idx_to, in Player sender, in Entities e)
         {
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
             var ability = AbilityTypes.DirectWave;
 
             var idx_from = Idx;
@@ -269,7 +269,7 @@ namespace Game.Game
                         {
                             if (!e.CellEs(idx_0).ParentE.IsActiveSelf.IsActive) break;
 
-                            if (e.UnitEs(idx_0).MainE.HaveUnit)
+                            if (e.UnitEs(idx_0).TypeE.HaveUnit)
                             {
                                 if (e.UnitEs(idx_0).OwnerE.OwnerC.Is(whoseMove))
                                 {
@@ -290,7 +290,7 @@ namespace Game.Game
                     }
                     else
                     {
-                        e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                 }
             }
@@ -299,7 +299,7 @@ namespace Game.Game
         {
             var idx_0 = Idx;
 
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
             var buildC = e.BuildEs(idx_0).BuildingE.BuildTC;
 
             if (e.UnitStatEs(idx_0).StepE.Have(_ability))
@@ -310,7 +310,7 @@ namespace Game.Game
                     {
                         if (e.InventorResourcesEs.TryBuyBuilding_Master(BuildingTypes.Farm, whoseMove, sender, e))
                         {
-                            e.Rpc.SoundToGeneral(sender, ClipTypes.Building);
+                            e.RpcE.SoundToGeneral(sender, ClipTypes.Building);
 
                             e.EnvYoungForestE(idx_0).Destroy();
 
@@ -321,18 +321,18 @@ namespace Game.Game
                     }
                     else
                     {
-                        e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
                 }
                 else
                 {
-                    e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
             }
 
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
         //public void BuildMine_Master(in Player sender, in Entities e)
@@ -376,7 +376,7 @@ namespace Game.Game
         public void BuildCity_Master(in Player sender, in Entities e)
         {
             var idx_0 = Idx;
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
 
 
             if (e.UnitStatEs(idx_0).StepE.Have(_ability))
@@ -396,8 +396,8 @@ namespace Game.Game
 
                     if (!haveNearBorder)
                     {
-                        e.Rpc.SoundToGeneral(sender, ClipTypes.Building);
-                        e.Rpc.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
+                        e.RpcE.SoundToGeneral(sender, ClipTypes.Building);
+                        e.RpcE.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
                         e.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.City, whoseMove);
@@ -416,17 +416,17 @@ namespace Game.Game
 
                     else
                     {
-                        e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
+                        e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                     }
                 }
                 else
                 {
-                    e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
             }
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
         public void SetIceWallSnowy_Master(in Entities e)
@@ -455,6 +455,46 @@ namespace Game.Game
                 }
             }
         }
+        public void SetTeleport_Master(in Entities e)
+        {
+            var idx_0 = Idx;
+
+            if (!e.BuildE(idx_0).HaveBuilding)
+            {
+                if (!e.EnvAdultForestE(idx_0).HaveEnvironment)
+                {
+                    e.EnvYoungForestE(idx_0).Destroy();
+                    e.EnvFertilizeE(idx_0).Destroy();
+
+                    if (e.UnitStatStepE(idx_0).Have(_ability))
+                    {
+                        e.UnitStatStepE(idx_0).Take(_ability);
+
+                        if (e.StartTeleportE.HaveStart)
+                        {
+                            if (e.EndTeleportE.HaveEnd)
+                            {
+                                e.BuildE(e.StartTeleportE.WhereC.Idx).Destroy(e);
+                                e.StartTeleportE.Set(e.EndTeleportE);
+                                e.EndTeleportE.Set(idx_0, e.UnitOwnerE(idx_0).OwnerC.Player);
+                                SetAfterAbility();
+                            }
+                            else
+                            {
+                                e.EndTeleportE.Set(idx_0, e.UnitOwnerE(idx_0).OwnerC.Player);
+                                SetAfterAbility();
+                            }
+                        }
+                        else
+                        {
+                            e.StartTeleportE.Set(idx_0, e.UnitOwnerE(idx_0).OwnerC.Player);
+                        }
+
+                        e.BuildE(idx_0).SetNew(BuildingTypes.Teleport, e.UnitOwnerE(idx_0).OwnerC.Player);
+                    }
+                }
+            }
+        }
         public void Destroy_Master(in Player sender, in Entities e)
         {
             var idx_0 = Idx;
@@ -464,7 +504,7 @@ namespace Game.Game
 
             if (e.UnitStatEs(idx_0).StepE.HaveSteps)
             {
-                e.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                e.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 if (buildC_0.Is(BuildingTypes.City))
                 {
@@ -478,11 +518,11 @@ namespace Game.Game
                 }
 
                 //e.WhereBuildingEs.HaveBuild(e.BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                e.BuildEs(idx_0).BuildingE.Destroy();
+                e.BuildEs(idx_0).BuildingE.Destroy(e);
             }
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
         public void ChangeCornerArcher_Master(in Player sender, in Entities e)
@@ -497,29 +537,29 @@ namespace Game.Game
 
                     e.UnitStatEs(idx_0).StepE.Take(_ability);
 
-                    e.Rpc.SoundToGeneral(sender, ClipTypes.PickArcher);
+                    e.RpcE.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
                 else
                 {
-                    e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
         public void StunElfemale_Master(in byte idx_to, in Player sender, in Entities e)
         {
             var idx_from = Idx;
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
 
 
             if (!e.UnitEs(idx_from).Ability(_ability).HaveCooldown)
             {
                 if (e.UnitEs(idx_to).VisibleE(whoseMove).IsVisibleC.IsVisible)
                 {
-                    if (e.UnitEs(idx_to).MainE.HaveUnit)
+                    if (e.UnitEs(idx_to).TypeE.HaveUnit)
                     {
                         if (e.EnvironmentEs(idx_to).AdultForest.HaveEnvironment)
                         {
@@ -534,14 +574,14 @@ namespace Game.Game
 
                                         e.UnitStatEs(idx_from).StepE.Take(_ability);
 
-                                        e.Rpc.SoundToGeneral(RpcTarget.All, _ability);
+                                        e.RpcE.SoundToGeneral(RpcTarget.All, _ability);
 
 
                                         foreach (var idx_1 in e.CellWorker.GetIdxsAround(idx_to))
                                         {
                                             if (e.EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                             {
-                                                if (e.UnitEs(idx_1).MainE.HaveUnit && e.UnitEs(idx_1).OwnerE.OwnerC.Is(e.UnitEs(idx_to).OwnerE.OwnerC.Player))
+                                                if (e.UnitEs(idx_1).TypeE.HaveUnit && e.UnitEs(idx_1).OwnerE.OwnerC.Is(e.UnitEs(idx_to).OwnerE.OwnerC.Player))
                                                 {
                                                     e.UnitEffectEs(idx_1).StunE.Set(_ability);
                                                 }
@@ -550,15 +590,15 @@ namespace Game.Game
                                     }
                                 }
 
-                                else e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
-                            else e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
+                            else e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                         }
                     }
                 }
             }
 
-            else e.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+            else e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
         }
         public void FireArcher_Master(byte idx_to, in Player sender, in Entities e)
         {
@@ -568,7 +608,7 @@ namespace Game.Game
             {
                 if (CellsForArsonArcherEs.Idxs<IdxsC>(idx_from).Contains(idx_to))
                 {
-                    e.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
+                    e.RpcE.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
                     e.UnitStatEs(idx_from).StepE.Take(_ability);
                     e.EffectEs(idx_to).FireE.Enable();
@@ -577,7 +617,7 @@ namespace Game.Game
 
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
         public void PutOut_Master(in Player sender, in Entities e)
@@ -593,7 +633,7 @@ namespace Game.Game
 
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
         public void FirePawn_Master(in Player sender, in Entities e)
@@ -604,7 +644,7 @@ namespace Game.Game
             {
                 if (e.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                 {
-                    e.Rpc.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
+                    e.RpcE.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                     e.EffectEs(idx_0).FireE.Enable();
                     e.UnitStatEs(idx_0).StepE.Take(_ability);
@@ -617,7 +657,7 @@ namespace Game.Game
 
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
         public void Seed_Master(in Player sender, in Entities e)
@@ -628,7 +668,7 @@ namespace Game.Game
             {
                 if (e.BuildE(idx_0).HaveBuilding && !e.BuildE(idx_0).Is(BuildingTypes.Camp))
                 {
-                    e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
                 else
                 {
@@ -636,7 +676,7 @@ namespace Game.Game
                     {
                         if (!e.EnvYoungForestE(idx_0).HaveEnvironment)
                         {
-                            e.Rpc.SoundToGeneral(sender, _ability);
+                            e.RpcE.SoundToGeneral(sender, _ability);
 
                             e.EnvYoungForestE(idx_0).SetRandomResources();
 
@@ -644,19 +684,19 @@ namespace Game.Game
                         }
                         else
                         {
-                            e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                     }
                     else
                     {
-                        e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
                 }
             }
 
             else
             {
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
         public void GrowElfemale_Master(in Player sender, in Entities e)
@@ -680,7 +720,7 @@ namespace Game.Game
 
                         e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
-                        e.Rpc.SoundToGeneral(sender, _ability);
+                        e.RpcE.SoundToGeneral(sender, _ability);
 
                         //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have)
                         //{
@@ -693,7 +733,7 @@ namespace Game.Game
 
                             var ownUnit_1 = e.UnitEs(idx_1).OwnerE.OwnerC;
 
-                            if (e.UnitEs(idx_1).MainE.HaveUnit)
+                            if (e.UnitEs(idx_1).TypeE.HaveUnit)
                             {
                                 if (ownUnit_1.Is(ownUnit_0.Player))
                                 {
@@ -707,13 +747,13 @@ namespace Game.Game
 
                     }
 
-                    else e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                    else e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
-                else e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
             else
             {
-                e.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
+                e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

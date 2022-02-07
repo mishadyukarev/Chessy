@@ -11,8 +11,13 @@ namespace Game.Game
         public readonly UIEs UIEs;
 
         readonly CellVEs[] _cellVEs;
-        public CellVEs CellVEs(in byte idx) => _cellVEs[idx];
-
+        public CellVEs CellEs(in byte idx) => _cellVEs[idx];
+        public CellBuildingVEs BuildingVEs(in byte idx) => CellEs(idx).BuildingEs;
+        public CellBuildingVE BuildingE(in byte idx, in BuildingTypes buildT) => BuildingVEs(idx).Main(buildT);
+        public CellUnitVEs UnitVEs(in byte idx) => CellEs(idx).UnitVEs;
+        public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitVEs(idx).EffectVEs;
+        public CellEnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
+        public CellEnvironmentVE EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
 
         public EntitiesView(in EcsWorld gameW, out List<object> forData)
         {
@@ -76,12 +81,11 @@ namespace Game.Game
             _cellVEs = new CellVEs[cells.Length];
             for (byte idx_0 = 0; idx_0 < _cellVEs.Length; idx_0++)
             {
-                _cellVEs[idx_0] = new CellVEs(idx_0, cells[idx_0], gameW);
+                _cellVEs[idx_0] = new CellVEs(cells[idx_0], idx_0, gameW);
             }
 
             new CellTrailVEs(gameW, cells);
             new CellCloudVEs(gameW, cells);
-            new CellBuildingVEs(gameW, cells);
             new CellRiverVEs(gameW, cells);
             new SupportCellVEs(gameW, cells);
             new CellBlocksVEs(gameW, cells);
@@ -96,8 +100,8 @@ namespace Game.Game
 
             for (byte idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
-                isActiveParenCells[idx] = CellVEs(idx).CellParent.IsActiveSelf;
-                idCells[idx] = CellVEs(idx).CellGO.InstanceID;
+                isActiveParenCells[idx] = CellEs(idx).CellParent.IsActiveSelf;
+                idCells[idx] = CellEs(idx).CellGO.InstanceID;
             }
 
             forData = new List<object>();

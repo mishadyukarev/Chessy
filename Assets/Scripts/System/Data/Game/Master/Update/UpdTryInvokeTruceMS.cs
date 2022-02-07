@@ -23,7 +23,7 @@ namespace Game.Game
 
             if (amountAdultForest <= CellEnvironmentValues.ADULT_FORESTS_FOR_TRUCE)
             {
-                Es.Rpc.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                Es.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 _systemsMaster.InvokeRun(SystemDataMasterTypes.Truce);
             }
         }

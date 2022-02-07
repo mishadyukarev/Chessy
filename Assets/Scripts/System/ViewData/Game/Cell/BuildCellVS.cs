@@ -6,55 +6,35 @@ namespace Game.Game
 {
     sealed class BuildCellVS : SystemViewAbstract, IEcsRunSystem
     {
-        public BuildCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal BuildCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
         public void Run()
         {
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
+                var curPlayerI = Es.WhoseMoveE.CurPlayerI;
+
                 var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
                 var ownBuild_0 = BuildEs(idx_0).BuildingE.OwnerC;
 
 
                 var buildT = build_0.Build;
-                var isVisForMe = BuildEs(idx_0).BuildingVisE(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible;
-                var isVisForNext = BuildEs(idx_0).BuildingVisE(Es.WhoseMove.NextPlayerFrom(Es.WhoseMove.CurPlayerI)).IsVisibleC.IsVisible;
+                var isVisForMe = BuildEs(idx_0).BuildingVisE(curPlayerI).IsVisibleC.IsVisible;
+                var isVisForNext = BuildEs(idx_0).BuildingVisE(Es.WhoseMoveE.NextPlayerFrom(curPlayerI)).IsVisibleC.IsVisible;
 
-                if (BuildEs(idx_0).BuildingE.HaveBuilding)
+                for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
+                {
+                    VEs.BuildingE(idx_0, build).SR.Disable();
+                }
+
+                if (Es.BuildE(idx_0).HaveBuilding)
                 {
                     if (isVisForMe)
                     {
-                        BuildFront(idx_0).Sprite = VEs.ResourceSpriteEs.Sprite(buildT).SpriteC.Sprite;
-                        BuildBack(idx_0).Sprite = VEs.ResourceSpriteEs.SpriteBack(buildT).SpriteC.Sprite;
-
-                        BuildFront(idx_0).Enable();
-                        BuildBack(idx_0).Enable();
-
-                        var color = BuildFront(idx_0).Color;
-                        color.a = isVisForNext ? 1 : 0.7f;
-                        BuildFront(idx_0).Color = color;
-                        BuildBack(idx_0).Color = color;
-
-                        switch (ownBuild_0.Player)
-                        {
-                            case PlayerTypes.None: throw new Exception();
-                            case PlayerTypes.First: BuildBack(idx_0).Color = Color.blue; break;
-                            case PlayerTypes.Second: BuildBack(idx_0).Color = Color.red; break;
-                            default: throw new Exception();
-                        }
+                        VEs.BuildingE(idx_0, buildT).SR.Enable();
                     }
-                    else
-                    {
-                        BuildFront(idx_0).Disable();
-                        BuildBack(idx_0).Disable();
-                    }
-                }
-                else
-                {
-                    BuildFront(idx_0).Disable();
-                    BuildBack(idx_0).Disable();
                 }
             }
         }

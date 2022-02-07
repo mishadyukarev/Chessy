@@ -30,7 +30,7 @@ namespace Game.Game
                 .Add(new MistakeC())
                 .Add(new TimerC());
 
-            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) 
+            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                 _needRes.Add(res, gameW.NewEntity()
                     .Add(new AmountC()));
         }

@@ -10,6 +10,7 @@
         Mine,
         Camp,
         IceWall,
+        Teleport,
 
         End,
     }

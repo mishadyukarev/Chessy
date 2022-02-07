@@ -16,7 +16,7 @@ namespace Game.Game
 
             if (Es.SelectedIdxE.IsSelCell && unit_sel.Is(BuildingTypes.City))
             {
-                if (own_sel.Is(Es.WhoseMove.CurPlayerI))
+                if (own_sel.Is(Es.WhoseMoveE.CurPlayerI))
                 {
                     Melt<ButtonUIC>().SetActiveParent(true);
                 }

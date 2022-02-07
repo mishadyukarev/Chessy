@@ -4,22 +4,26 @@ namespace Game.Game
 {
     public sealed class CellUnitStatWaterE : EntityAbstract
     {
-        ref AmountC WaterRef => ref Ent.Get<AmountC>();
-        public AmountC Water => Ent.Get<AmountC>();
+        ref AmountC WaterCRef => ref Ent.Get<AmountC>();
+        public AmountC WaterC => Ent.Get<AmountC>();
 
 
+        public int Water
+        {
+            get => WaterCRef.Amount;
+            set => WaterCRef.Amount = value;
+        }
         public const int MAX_WATER_WITHOUT_EFFECTS = CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS;
+        public bool HaveWater => WaterC.Amount > 0;
 
-        public bool HaveWater => Water.Amount > 0;
+        public bool Have(in AbilityTypes ability) => WaterC.Amount >= CellUnitStatWaterValues.Need(ability);
 
-        public bool Have(in AbilityTypes ability) => Water.Amount >= CellUnitStatWaterValues.Need(ability);
-        
 
         public int MaxWater(in CellUnitEs unitEs, in UnitStatUpgradesEs statUpgEs)
         {
             var maxWater = CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS;
 
-            if (!unitEs.MainE.UnitTC.IsAnimal)
+            if (!unitEs.TypeE.UnitTC.IsAnimal)
             {
                 if (statUpgEs.Upgrade(UnitStatTypes.Water, unitEs, UpgradeTypes.PickCenter).HaveUpgrade.Have)
                 {
@@ -36,18 +40,18 @@ namespace Game.Game
 
         public void Shift(in CellUnitStatWaterE waterE_from)
         {
-            WaterRef = waterE_from.Water;
-            waterE_from.WaterRef.Amount = 0;
+            WaterCRef = waterE_from.WaterC;
+            waterE_from.WaterCRef.Amount = 0;
         }
         public void Thirsty(in UnitTypes unitT)
         {
-            WaterRef.Amount -= CellUnitStatWaterValues.NeedWaterThirsty(unitT);
+            WaterCRef.Amount -= CellUnitStatWaterValues.NeedWaterThirsty(unitT);
         }
 
-        public void SetMax(in CellUnitEs unitEs, in UnitStatUpgradesEs statUpgEs) => WaterRef.Amount = MaxWater(unitEs, statUpgEs);
+        public void SetMax(in CellUnitEs unitEs, in UnitStatUpgradesEs statUpgEs) => WaterCRef.Amount = MaxWater(unitEs, statUpgEs);
         public void Take(in AbilityTypes ability)
         {
-            WaterRef.Amount -= CellUnitStatWaterValues.Need(ability);
+            WaterCRef.Amount -= CellUnitStatWaterValues.Need(ability);
         }
     }
 }

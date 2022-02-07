@@ -10,11 +10,11 @@
         {
             foreach (byte idx_0 in CellWorker.Idxs)
             {
-                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
 
-                if (UnitEs(idx_0).MainE.HaveUnit)
+                if (UnitEs(idx_0).TypeE.HaveUnit)
                 {
                     if (unit_0.IsAnimal)
                     {
@@ -28,7 +28,7 @@
 
                             foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                             {
-                                if (UnitEs(idx_1).MainE.HaveUnit)
+                                if (UnitEs(idx_1).TypeE.HaveUnit)
                                 {
                                     if (UnitEs(idx_1).OwnerE.OwnerC.Is(PlayerTypes.First)) isVisForFirst = true;
                                     if (UnitEs(idx_1).OwnerE.OwnerC.Is(PlayerTypes.Second)) isVisForSecond = true;
@@ -49,10 +49,10 @@
 
                             foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                             {
-                                var unit_1 = UnitEs(idx_1).MainE.UnitTC;
+                                var unit_1 = UnitEs(idx_1).TypeE.UnitTC;
                                 var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
 
-                                if (UnitEs(idx_1).MainE.HaveUnit)
+                                if (UnitEs(idx_1).TypeE.HaveUnit)
                                 {
                                     if (!ownUnit_1.Is(ownUnit_0.Player))
                                     {
@@ -62,11 +62,11 @@
                                 }
                             }
 
-                            UnitEs(idx_0).VisibleE(Es.WhoseMove.NextPlayerFrom(ownUnit_0.Player)).IsVisibleC.IsVisible = isVisibledNextPlayer;
+                            UnitEs(idx_0).VisibleE(Es.WhoseMoveE.NextPlayerFrom(ownUnit_0.Player)).IsVisibleC.IsVisible = isVisibledNextPlayer;
                         }
                         else
                         {
-                            UnitEs(idx_0).VisibleE(Es.WhoseMove.NextPlayerFrom(ownUnit_0.Player)).IsVisibleC.IsVisible = true;
+                            UnitEs(idx_0).VisibleE(Es.WhoseMoveE.NextPlayerFrom(ownUnit_0.Player)).IsVisibleC.IsVisible = true;
                         }
                     }
                 }
@@ -90,10 +90,10 @@
 
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            var unit_1 = UnitEs(idx_1).MainE.UnitTC;
+                            var unit_1 = UnitEs(idx_1).TypeE.UnitTC;
                             var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
 
-                            if (UnitEs(idx_1).MainE.HaveUnit)
+                            if (UnitEs(idx_1).TypeE.HaveUnit)
                             {
                                 if (!ownUnit_1.Is(ownBuild_0.Player))
                                 {
@@ -102,9 +102,9 @@
                                 }
                             }
                         }
-                        BuildEs(idx_0).BuildingVisE(Es.WhoseMove.NextPlayerFrom(ownBuild_0.Player)).IsVisibleC.IsVisible = isVisibledNextPlayer;
+                        BuildEs(idx_0).BuildingVisE(Es.WhoseMoveE.NextPlayerFrom(ownBuild_0.Player)).IsVisibleC.IsVisible = isVisibledNextPlayer;
                     }
-                    else BuildEs(idx_0).BuildingVisE(Es.WhoseMove.NextPlayerFrom(ownBuild_0.Player)).IsVisibleC.IsVisible = true;
+                    else BuildEs(idx_0).BuildingVisE(Es.WhoseMoveE.NextPlayerFrom(ownBuild_0.Player)).IsVisibleC.IsVisible = true;
                 }
 
                 if (TrailEs(idx_0).HaveAnyTrail)
@@ -122,11 +122,11 @@
 
                     foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                     {
-                        var unit_1 = UnitEs(idx_1).MainE.UnitTC;
+                        var unit_1 = UnitEs(idx_1).TypeE.UnitTC;
                         var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
 
 
-                        if (UnitEs(idx_1).MainE.HaveUnit && !unit_1.IsAnimal)
+                        if (UnitEs(idx_1).TypeE.HaveUnit && !unit_1.IsAnimal)
                         {
                             TrailEs(idx_0).IsVisible(ownUnit_1.Player).SetVisible(true);
                         }

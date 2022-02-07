@@ -54,7 +54,7 @@ namespace Game.Game
 
         public void UpgradeCenterUnit_Master(in UnitTypes unit, in Player sender, in Entities es)
         {
-            var whoseMove = es.WhoseMove.WhoseMove.Player;
+            var whoseMove = es.WhoseMoveE.WhoseMove.Player;
 
 
             if (unit == UnitTypes.Scout)
@@ -71,7 +71,7 @@ namespace Game.Game
             es.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
             es.AvailableCenterUpgradeEs.HaveUnitUpgrade(unit, whoseMove).HaveUpgrade.Have = false;
 
-            es.Rpc.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+            es.RpcE.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }
 
     }

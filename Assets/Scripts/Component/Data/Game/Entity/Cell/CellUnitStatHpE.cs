@@ -1,19 +1,23 @@
 ﻿using ECS;
-using System;
 
 namespace Game.Game
 {
     public sealed class CellUnitStatHpE : CellEntityAbstract
     {
         ref AmountC HealthRef => ref Ent.Get<AmountC>();
-        public AmountC Health => Ent.Get<AmountC>();
+        public AmountC HealthC => Ent.Get<AmountC>();
 
+        public int Health
+        {
+            get => HealthRef.Amount;
+            internal set => HealthRef.Amount = value;
+        }
 
         public const int MAX_HP = CellUnitStatHpValues.MAX_HP;
 
-        public bool IsHpDeathAfterAttack => Health.Amount <= CellUnitMainDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
-        public bool HaveMax => Health.Amount >= MAX_HP;
-        public bool IsAlive => Health.Amount > 0;
+        public bool IsHpDeathAfterAttack => HealthC.Amount <= CellUnitMainDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
+        public bool HaveMax => HealthC.Amount >= MAX_HP;
+        public bool IsAlive => HealthC.Amount > 0;
 
 
         internal CellUnitStatHpE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
@@ -21,19 +25,19 @@ namespace Game.Game
         void Add(in int adding = 1)
         {
             HealthRef.Amount += adding;
-            if (Health.Amount > MAX_HP) HealthRef.Amount = MAX_HP;
+            if (HealthC.Amount > MAX_HP) HealthRef.Amount = MAX_HP;
         }
         void Take(in Entities ents, in int taking = 1)
         {
             HealthRef.Amount -= taking;
             if (IsHpDeathAfterAttack) HealthRef.Amount = 0;
-            if (!IsAlive) ents.UnitEs(Idx).MainE.Kill(ents);
+            if (!IsAlive) ents.UnitEs(Idx).TypeE.Kill(ents);
         }
-
+        internal void Set(in int amountHelth) => HealthRef.Amount = amountHelth;
 
         internal void Shift(in CellUnitStatHpE hpE_from)
         {
-            HealthRef = hpE_from.Health;
+            HealthRef = hpE_from.HealthC;
             hpE_from.HealthRef.Amount = 0;
         }
 
@@ -43,7 +47,7 @@ namespace Game.Game
 
             if (IsHpDeathAfterAttack || !IsAlive)
             {
-                Es.CellEs(Idx).UnitEs.MainE.Kill(Es);
+                Es.CellEs(Idx).UnitEs.TypeE.Kill(Es);
             }
         }
         public void Attack(in int damage)
@@ -66,7 +70,7 @@ namespace Game.Game
 
         public void Thirsty(in Entities es)
         {
-            float percent = CellUnitStatHpValues.ThirstyPercent(es.CellEs(Idx).UnitEs.MainE.UnitTC.Unit);
+            float percent = CellUnitStatHpValues.ThirstyPercent(es.CellEs(Idx).UnitEs.TypeE.UnitTC.Unit);
 
             HealthRef.Amount -= (int)(CellUnitStatWaterE.MAX_WATER_WITHOUT_EFFECTS * percent);
 
@@ -74,23 +78,23 @@ namespace Game.Game
             {
                 if (es.CellEs(Idx).BuildEs.BuildingE.BuildTC.Is(BuildingTypes.Camp))
                 {
-                    es.CellEs(Idx).BuildEs.BuildingE.Destroy();
+                    es.CellEs(Idx).BuildEs.BuildingE.Destroy(es);
                 }
 
-                es.CellEs(Idx).UnitEs.MainE.Kill(es);
+                es.CellEs(Idx).UnitEs.TypeE.Kill(es);
             }
         }
 
         public void Fire(in Entities es)
         {
-            if (es.UnitEs(Idx).MainE.UnitTC.Is(UnitTypes.Hell))
+            if (es.UnitEs(Idx).TypeE.UnitTC.Is(UnitTypes.Hell))
             {
                 SetMax();
             }
             else
             {
                 HealthRef.Amount -= CellUnitStatHpValues.FIRE_DAMAGE;
-                if (!IsAlive) es.CellEs(Idx).UnitEs.MainE.Kill(es);
+                if (!IsAlive) es.CellEs(Idx).UnitEs.TypeE.Kill(es);
             }
         }
 

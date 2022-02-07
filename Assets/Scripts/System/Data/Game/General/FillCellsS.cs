@@ -11,9 +11,7 @@ namespace Game.Game
 
             if (PhotonNetwork.IsMasterClient)
             {
-                int random;
-
-               
+                var amountMountains = 0;
 
                 for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
                 {
@@ -21,47 +19,30 @@ namespace Game.Game
                     var x = xy_0[0];
                     var y = xy_0[1];
 
-                    if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                    if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
-                            if (UnityEngine.Random.Range(1, 100) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
+                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
                             {
                                 Es.EnvMountainE(idx_0).SetRandomResources();
-
-                                foreach (var idx_1 in Es.CellWorker.GetIdxsAround(idx_0))
-                                {
-                                    if (Es.CellEs(idx_1).ParentE.IsActiveSelf.IsActive && !Es.EnvMountainE(idx_1).HaveEnvironment)
-                                    {
-                                        if (UnityEngine.Random.Range(0, 1f) <= 0.5f)
-                                        {
-                                            Es.EnvHillE(idx_1).SetRandomResources();
-                                        }
-                                    }
-                                }
+                                amountMountains++;
                             }
 
-                            //else
-                            //{
-                            //    if (UnityEngine.Random.Range(1, 100) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
-                            //    {
-                            //        EnvironmentEs(idx_0).AdultForest.SetRandomResources();
-                            //    }
-
-                            //    random = UnityEngine.Random.Range(1, 100);
-                            //    if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Hill))
-                            //    {
-                            //        EnvironmentEs(idx_0).Hill.SetRandomResources();
-                            //    }
-                            //}
+                            else
+                            {
+                                if (UnityEngine.Random.Range(0f, 1f) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                                {
+                                    Es.EnvAdultForestE(idx_0).SetRandomResources();
+                                }
+                            }
                         }
 
                         else
                         {
-                            random = UnityEngine.Random.Range(1, 100);
-                            if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                            if (UnityEngine.Random.Range(0f, 1f) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
                             {
-                                EnvironmentEs(idx_0).AdultForest.SetRandomResources();
+                                Es.EnvAdultForestE(idx_0).SetRandomResources();
                             }
                             //else
                             //{
@@ -115,7 +96,7 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                Es.InventorResourcesEs.Resource(ResourceTypes.Food, PlayerTypes.Second).Resources.Amount = 999999;
+                Es.InventorResourcesEs.Resource(ResourceTypes.Food, PlayerTypes.Second).Set(999999);
 
                 foreach (byte idx_0 in CellWorker.Idxs)
                 {
@@ -128,7 +109,7 @@ namespace Game.Game
                         EnvironmentEs(idx_0).Mountain.Destroy();
                         EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
 
-                        UnitEs(idx_0).MainE.SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected, false), Es);
+                        UnitEs(idx_0).SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected, false), Es);
                     }
 
                     else if (x == 8 && y == 8)
@@ -144,7 +125,7 @@ namespace Game.Game
                     {
                         EnvironmentEs(idx_0).Mountain.Destroy();
 
-                        UnitEs(idx_0).MainE.SetNew((UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected, false), Es);
+                        UnitEs(idx_0).SetNew((UnitTypes.Pawn, LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected, false), Es);
 
                         int rand = UnityEngine.Random.Range(0, 100);
 

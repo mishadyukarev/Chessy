@@ -15,7 +15,7 @@ namespace Game.Game
         public readonly CellEffectEs EffectEs;
         public readonly CellRiverEs RiverEs;
 
-        public CellEs(in bool isActiveParentCell, in int idCell, byte[] xy, in byte idx, in EcsWorld gameW)
+        internal CellEs(in bool isActiveParentCell, in int idCell, byte[] xy, in byte idx, in EcsWorld gameW)
         {
             ParentE = new CellParenE(isActiveParentCell, idx, gameW);
             CellE = new CellE(gameW, xy, idCell);

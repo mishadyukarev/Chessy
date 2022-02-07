@@ -12,7 +12,7 @@
             {
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
-                var unit_from = UnitEs(idx_0).MainE.UnitTC;
+                var unit_from = UnitEs(idx_0).TypeE.UnitTC;
 
                 if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {

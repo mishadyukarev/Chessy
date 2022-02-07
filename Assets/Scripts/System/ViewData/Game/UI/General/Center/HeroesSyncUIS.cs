@@ -9,7 +9,7 @@
         public void Run()
         {
             var isActiveKingZone = CenterKingUIE.Paren.IsActiveSelf;
-            var curPlayerI = Es.WhoseMove.CurPlayerI;
+            var curPlayerI = Es.WhoseMoveE.CurPlayerI;
 
             if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
                 && Es.AvailableCenterHero(curPlayerI).HaveCenterHero.Have)

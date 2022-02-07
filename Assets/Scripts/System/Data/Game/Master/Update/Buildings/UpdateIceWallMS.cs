@@ -12,7 +12,7 @@
             {
                 if (Es.BuildE(idx_0).HaveBuilding && Es.BuildE(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    Es.BuildE(idx_0).Defrost();
+                    Es.BuildE(idx_0).Defrost(Es);
                 }
             }
         }

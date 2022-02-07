@@ -4,7 +4,7 @@
     {
         protected readonly EntitiesView VEs;
 
-        protected CellVEs CellVEs(in byte idx) => VEs.CellVEs(idx);
+        protected CellVEs CellVEs(in byte idx) => VEs.CellEs(idx);
 
         protected CellUnitVEs UnitVEs(in byte idx) => CellVEs(idx).UnitVEs;
         protected CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitVEs(idx).EffectVEs;

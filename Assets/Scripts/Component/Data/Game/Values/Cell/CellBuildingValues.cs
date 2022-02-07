@@ -14,6 +14,7 @@ namespace Game.Game
                 case BuildingTypes.Mine: return 1;
                 case BuildingTypes.Camp: return 1;
                 case BuildingTypes.IceWall: return 10;
+                case BuildingTypes.Teleport: return 1;
                 default: throw new Exception();
             }
         }
@@ -29,6 +30,7 @@ namespace Game.Game
                 case BuildingTypes.Mine: return -0.1f;
                 case BuildingTypes.Camp: return 0;
                 case BuildingTypes.IceWall: return 0;
+                case BuildingTypes.Teleport: return 0;
                 default: throw new Exception();
             }
         }

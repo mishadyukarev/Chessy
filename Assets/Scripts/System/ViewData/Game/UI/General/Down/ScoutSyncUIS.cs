@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.WhoseMove.CurPlayerI;
+            var curPlayer = Es.WhoseMoveE.CurPlayerI;
 
             var isActive = Es.InventorUnitsEs.Units(UnitTypes.Scout, LevelTypes.First, curPlayer).HaveUnits;
             var cooldown = Es.ScoutHeroCooldownE(UnitTypes.Scout, curPlayer).Cooldown.Amount;

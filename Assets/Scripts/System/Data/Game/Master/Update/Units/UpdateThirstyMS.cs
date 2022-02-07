@@ -12,10 +12,10 @@ namespace Game.Game
         {
             foreach (byte idx_0 in CellWorker.Idxs)
             {
-                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
-                if (UnitEs(idx_0).MainE.HaveUnit && !unit_0.IsAnimal)
+                if (UnitEs(idx_0).TypeE.HaveUnit && !unit_0.IsAnimal)
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
@@ -33,7 +33,7 @@ namespace Game.Game
                         }
                         else
                         {
-                            UnitStatEs(idx_0).WaterE.Thirsty(UnitEs(idx_0).MainE.UnitTC.Unit);
+                            UnitStatEs(idx_0).WaterE.Thirsty(UnitEs(idx_0).TypeE.UnitTC.Unit);
 
                             if (!UnitStatEs(idx_0).WaterE.HaveWater)
                             {

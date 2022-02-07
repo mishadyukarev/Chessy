@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayerI = Es.WhoseMove.CurPlayerI;
+            var curPlayerI = Es.WhoseMoveE.CurPlayerI;
 
             if (Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero))
             {
@@ -18,7 +18,7 @@ namespace Game.Game
 
                 var cooldown = Es.ScoutHeroCooldownE(hero, curPlayerI).Cooldown.Amount;
 
-                for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Camel; unit++)
+                for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {
                     Image(unit).SetActive(false);
                 }

@@ -23,7 +23,7 @@
                         }
 
 
-                        if (UnitEs(idx_1).MainE.HaveUnit && Es.UnitOwnerE(idx_1).Is(Es.BuildE(idx_0).OwnerC.Player))
+                        if (UnitEs(idx_1).TypeE.HaveUnit && Es.UnitOwnerE(idx_1).Is(Es.BuildE(idx_0).OwnerC.Player))
                         {
                             Es.UnitStatWaterE(idx_1).SetMax(UnitEs(idx_1), Es.UnitStatUpgradesEs);
                         }

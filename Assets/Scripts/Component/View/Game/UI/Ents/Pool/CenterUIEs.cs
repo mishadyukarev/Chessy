@@ -20,7 +20,7 @@ namespace Game.Game
             var parent = centerZone.transform.Find("Heroes");
 
             _ents = new Dictionary<UnitTypes, CenterHeroUIE>();
-            for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Camel; unit++)
+            for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
             {
                 _ents.Add(unit, new CenterHeroUIE(parent,unit, gameW));
             }

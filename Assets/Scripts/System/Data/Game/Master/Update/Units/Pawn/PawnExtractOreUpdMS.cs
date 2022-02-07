@@ -13,15 +13,9 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitMainE(idx_0).Is(UnitTypes.Pawn) && Es.UnitConditionE(idx_0).ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                if (Es.EnvHillE(idx_0).CanExtractPawn(Es.UnitEs(idx_0), Es.EnvironmentEs(idx_0)))
                 {
-                    if (Es.UnitTWE(idx_0).ToolWeaponTC.Is(ToolWeaponTypes.Pick))
-                    {
-                        if (Es.EnvHillE(idx_0).HaveEnvironment && !Es.EnvAdultForestE(idx_0).HaveEnvironment)
-                        {
-                            Es.EnvHillE(idx_0).ExtractPawn();
-                        }
-                    }
+                    Es.EnvHillE(idx_0).ExtractPawnPick(Es.UnitEs(idx_0), Es.InventorResourcesEs);
                 }
             }
         }

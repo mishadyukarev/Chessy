@@ -6,15 +6,15 @@ namespace Game.Game
     {
         #region Common
 
-        public static byte StartPercentForSpawn(in EnvironmentTypes env)
+        public static float StartPercentForSpawn(in EnvironmentTypes env)
         {
             switch (env)
             {
-                case EnvironmentTypes.Fertilizer: return 30;
+                case EnvironmentTypes.Fertilizer: return 0.3f;
                 case EnvironmentTypes.YoungForest: return 0;
-                case EnvironmentTypes.AdultForest: return 50;
-                case EnvironmentTypes.Hill: return 25;
-                case EnvironmentTypes.Mountain: return 15;
+                case EnvironmentTypes.AdultForest: return 0.5f;
+                case EnvironmentTypes.Hill: return 0.25f;
+                case EnvironmentTypes.Mountain: return 0.30f;
                 default: throw new Exception();
             }
         }

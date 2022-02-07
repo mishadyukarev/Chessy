@@ -10,7 +10,6 @@
 
         protected CellUnitEs UnitEs(in byte idx) => Es.UnitEs(idx);
         protected CellUnitStatEs UnitStatEs(in byte idx) => Es.UnitStatEs(idx);
-        protected CellUnitStatHpE UnitStatHpE(in byte idx) => Es.UnitStatHpE(idx);
         protected CellUnitEffectEs UnitEffectEs(in byte idx) => Es.UnitEffectEs(idx);
 
         protected CellBuildEs BuildEs(in byte idx) => Es.BuildEs(idx);

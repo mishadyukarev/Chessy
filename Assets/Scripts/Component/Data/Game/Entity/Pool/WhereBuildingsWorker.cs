@@ -1,7 +1,4 @@
-﻿using ECS;
-using System.Collections.Generic;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public readonly struct WhereBuildingsWorker
     {

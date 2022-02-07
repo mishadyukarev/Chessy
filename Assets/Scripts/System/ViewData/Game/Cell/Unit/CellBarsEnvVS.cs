@@ -13,7 +13,7 @@ namespace Game.Game
         {
             foreach (var idx_0 in CellWorker.Idxs)
             {
-                if (Es.InfoEnvironment.IsActiveC.IsActive)
+                if (Es.InfoEnvironmentE.IsActiveC.IsActive)
                 {
                     if (EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
                     {

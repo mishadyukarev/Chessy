@@ -55,7 +55,7 @@ namespace Game.Game
             }
             else
             {
-                e.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
             }
 
             return canCreatBuild;
@@ -82,7 +82,7 @@ namespace Game.Game
 
         public void TryMeltOre_Master(in Player sender, in Entities e)
         {
-            var whoseMove = e.WhoseMove.WhoseMove.Player;
+            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
 
 
             var needRes = new Dictionary<ResourceTypes, int>();
@@ -100,11 +100,11 @@ namespace Game.Game
                 for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                     Resource(res, whoseMove).BuyMelting();
 
-                e.Rpc.SoundToGeneral(sender, ClipTypes.Melting);
+                e.RpcE.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                e.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
             }
         }
 
@@ -129,7 +129,7 @@ namespace Game.Game
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
             {
-                Resource(resType, player).Resources.Amount -= ResourcesInInventorValues.AmountResForBuyRes(resType);
+                Resource(resType, player).Take(ResourcesInInventorValues.AmountResForBuyRes(resType));
             }
 
             var amount = 0;
@@ -145,7 +145,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            Resource(res, player).Resources.Amount += amount;
+            Resource(res, player).Add(amount);
         }
 
 
@@ -168,7 +168,7 @@ namespace Game.Game
         public void BuyUpgradeUnit(PlayerTypes playerType, UnitTypes unitType)
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-                Resource(resType, playerType).Resources.Amount -= ResourcesInInventorValues.AmountResForUpgradeUnit(unitType, resType);
+                Resource(resType, playerType).Take(ResourcesInInventorValues.AmountResForUpgradeUnit(unitType, resType));
         }
 
 
@@ -191,7 +191,7 @@ namespace Game.Game
         public void BuyTW(PlayerTypes player, ToolWeaponTypes tw, LevelTypes level)
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-                Resource(resType, player).Resources.Amount -= ResourcesInInventorValues.AmountResForBuyTW(tw, level, resType);
+                Resource(resType, player).Take(ResourcesInInventorValues.AmountResForBuyTW(tw, level, resType));
         }
 
 
@@ -199,7 +199,7 @@ namespace Game.Game
 
         public void CreateUnit_Master(in UnitTypes unit, in Player sender, in Entities e)
         {
-            var playerSend = e.WhoseMove.WhoseMove.Player;
+            var playerSend = e.WhoseMoveE.WhoseMove.Player;
 
 
             if (e.WhereBuildingEs.TryGetBuilding(BuildingTypes.City, playerSend, out var idx_city))
@@ -209,33 +209,33 @@ namespace Game.Game
                     BuyUnit(playerSend, unit);
                     e.InventorUnitsEs.Units(unit, LevelTypes.First, playerSend).AddUnit();
 
-                    e.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                    e.RpcE.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }
                 else
                 {
-                    e.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
-                    e.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                    e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
+                    e.RpcE.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                e.Rpc.SoundToGeneral(sender, ClipTypes.Mistake);
-                e.Rpc.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
+                e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
+                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }
         public void BuyResources_Master(in ResourceTypes res, in Player sender, in Entities es)
         {
-            var whoseMove = es.WhoseMove.WhoseMove.Player;
+            var whoseMove = es.WhoseMoveE.WhoseMove.Player;
 
             if (es.InventorResourcesEs.CanBuy(whoseMove, res, out var needRes))
             {
                 es.InventorResourcesEs.BuyRes(whoseMove, res);
 
-                es.Rpc.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                es.RpcE.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                es.Rpc.MistakeEconomyToGeneral(sender, needRes);
+                es.RpcE.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

@@ -1,8 +1,4 @@
 ﻿using ECS;
-using Photon.Pun;
-using Photon.Realtime;
-using System;
-using UnityEngine;
 
 namespace Game.Game
 {
@@ -29,7 +25,7 @@ namespace Game.Game
         }
         public void TryFireAfterShift(in CellEs[] cellEs)
         {
-            if (cellEs[Idx].UnitEs.MainE.UnitTC.Is(UnitTypes.Hell))
+            if (cellEs[Idx].UnitEs.TypeE.UnitTC.Is(UnitTypes.Hell))
             {
                 if (cellEs[Idx].EnvironmentEs.AdultForest.HaveEnvironment)
                 {

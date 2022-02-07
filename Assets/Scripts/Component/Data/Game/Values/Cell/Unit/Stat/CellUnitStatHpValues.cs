@@ -27,8 +27,9 @@ namespace Game.Game
                 case UnitTypes.Scout: return 0.5f;
                 case UnitTypes.Elfemale: return 0.5f;
                 case UnitTypes.Snowy: return 0.5f;
+                case UnitTypes.Skeleton: return 0.5f;
                 default: throw new Exception();
             }
         }
-}
+    }
 }

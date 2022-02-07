@@ -1,6 +1,4 @@
 ﻿using ECS;
-using UnityEditor;
-using UnityEngine;
 
 namespace Game.Game
 {
@@ -9,12 +7,15 @@ namespace Game.Game
         ref PlayerTC OwnerCRef => ref Ent.Get<PlayerTC>();
         public PlayerTC OwnerC => Ent.Get<PlayerTC>();
 
+        public PlayerTypes PlayerT
+        {
+            get => OwnerC.Player;
+            set => OwnerCRef.Player = value;
+        }
         public bool Is(params PlayerTypes[] owners) => OwnerC.Is(owners);
 
         internal CellUnitOwnerE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
         }
-
-        public void Set(in PlayerTypes player) => OwnerCRef.Player = player;
     }
 }

@@ -12,15 +12,15 @@ namespace Game.Game
         {
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var unit_sel = UnitEs(idx_sel).MainE.UnitTC;
+            var unit_sel = UnitEs(idx_sel).TypeE.UnitTC;
             var ownUnit_sel = UnitEs(idx_sel).OwnerE.OwnerC;
 
 
             var isEnableButt = false;
 
-            if (UnitEs(idx_sel).MainE.HaveUnit)
+            if (UnitEs(idx_sel).TypeE.HaveUnit)
             {
-                if (ownUnit_sel.Is(Es.WhoseMove.CurPlayerI))
+                if (ownUnit_sel.Is(Es.WhoseMoveE.CurPlayerI))
                 {
                     isEnableButt = true;
 

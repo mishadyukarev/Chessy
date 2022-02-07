@@ -10,7 +10,7 @@
         {
             foreach (var idx_0 in CellWorker.Idxs)
             {
-                var unit_0 = UnitEs(idx_0).MainE.UnitTC;
+                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
                 var isCornered_0 = UnitEs(idx_0).CornedE.IsCornered;
 
@@ -32,7 +32,7 @@
 
                                 if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive && !EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                                 {
-                                    if (UnitEs(idx_1).MainE.HaveUnit)
+                                    if (UnitEs(idx_1).TypeE.HaveUnit)
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Player))
                                         {
@@ -67,12 +67,12 @@
                                     var idx_2 = CellWorker.GetIdxCell(xy_2);
 
 
-                                    var unit_2 = UnitEs(idx_2).MainE.UnitTC;
+                                    var unit_2 = UnitEs(idx_2).TypeE.UnitTC;
                                     var ownUnit_2 = UnitEs(idx_2).OwnerE.OwnerC;
 
 
 
-                                    if (UnitEs(idx_2).MainE.HaveUnit && !unit_2.IsAnimal
+                                    if (UnitEs(idx_2).TypeE.HaveUnit && !unit_2.IsAnimal
                                         && UnitEs(idx_2).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {

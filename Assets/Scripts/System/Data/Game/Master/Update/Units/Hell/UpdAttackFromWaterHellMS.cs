@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (UnitEs(idx_0).MainE.UnitTC.Is(UnitTypes.Hell))
+                if (UnitEs(idx_0).TypeE.UnitTC.Is(UnitTypes.Hell))
                 {
                     if (RiverEs(idx_0).RiverE.HaveRiverNear)
                     {

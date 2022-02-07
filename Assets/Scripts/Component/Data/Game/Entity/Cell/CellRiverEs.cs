@@ -10,7 +10,7 @@ namespace Game.Game
         public CellRiverDirectE HaveRive(in DirectTypes dir) => _directs[dir];
 
         public readonly CellRiverE RiverE;
-        
+
         public HashSet<DirectTypes> Keys
         {
             get

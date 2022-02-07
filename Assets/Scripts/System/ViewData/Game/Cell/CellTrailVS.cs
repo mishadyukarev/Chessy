@@ -12,7 +12,7 @@
             {
                 foreach (var dir in TrailEs(idx_0).Keys)
                 {
-                    if (TrailEs(idx_0).IsVisible(Es.WhoseMove.CurPlayerI).IsVisibleC.IsVisible)
+                    if (TrailEs(idx_0).IsVisible(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                     {
                         CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(CellEs(idx_0).TrailEs.Trail(dir).HaveTrail);
                     }

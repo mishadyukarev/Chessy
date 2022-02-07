@@ -18,7 +18,7 @@ namespace Game.Game
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 
-            ref var raycastC = ref Es.ClickerObject.RayCastTC;
+            ref var raycastC = ref Es.ClickerObjectE.RayCastTC;
 
 
             if (EventSystem.current.IsPointerOverGameObject())

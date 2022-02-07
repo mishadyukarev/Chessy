@@ -12,9 +12,9 @@
         FirePawn,
         PutOutFirePawn,
         Seed,
-        Farm,
+        SetFarm,
         //Mine,
-        City,
+        SetCity,
         DestroyBuilding,
 
         ///Archer
@@ -34,7 +34,9 @@
 
         ///Undead
         Resurrect,
-
+        SetTeleport,
+        Teleport,
+        InvokeSkeletons,
 
         End
     }

@@ -76,6 +76,9 @@ namespace Game.Game
                         case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
+
+                case UnitTypes.Skeleton: return 100;
+
                 case UnitTypes.Camel: return 0;
                 default: throw new Exception();
             }
