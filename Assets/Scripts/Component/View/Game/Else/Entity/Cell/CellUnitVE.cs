@@ -5,11 +5,20 @@ namespace Game.Game
 {
     public sealed class CellUnitVE : EntityAbstract
     {
-        public ref SpriteRendererVC SR => ref Ent.Get<SpriteRendererVC>();
+        ref SpriteRendererVC SRCRef => ref Ent.Get<SpriteRendererVC>();
 
         internal CellUnitVE(in SpriteRenderer sr, in EcsWorld gameW) : base(gameW)
         {
             Ent.Add(new SpriteRendererVC(sr));
+        }
+
+        public void Enable()
+        {
+            SRCRef.Enable();
+        }
+        public void Disable()
+        {
+            SRCRef.Disable();
         }
     }
 }

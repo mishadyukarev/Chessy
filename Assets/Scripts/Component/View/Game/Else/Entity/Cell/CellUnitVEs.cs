@@ -15,13 +15,13 @@ namespace Game.Game
 
         public CellUnitVEs(in Transform cellT, in EcsWorld gameW)
         {
-            var cellUnit = cellT.Find("Unit");
+            var cellUnit = cellT.Find("Unit+");
 
             _ents = new Dictionary<UnitTypes, CellUnitVE>();
 
             for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
             {
-                _ents.Add(unitT, new CellUnitVE(cellUnit.Find(unitT.ToString()).GetComponent<SpriteRenderer>(), gameW));
+                _ents.Add(unitT, new CellUnitVE(cellUnit.Find(unitT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
             }
 
             EffectVEs = new CellUnitEffectVEs(cellUnit, gameW);

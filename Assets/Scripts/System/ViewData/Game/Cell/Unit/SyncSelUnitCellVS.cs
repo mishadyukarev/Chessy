@@ -12,28 +12,24 @@ namespace Game.Game
             {
                 var idx_cur = Es.CurrentIdxE.IdxC.Idx;
 
-                ref var mainUnit_cur = ref CellVEs(idx_cur).UnitVEs.UnitMainSR;
-                ref var mainUnit_pre = ref CellVEs(Es.PreviousVisionIdxE.IdxC.Idx).UnitVEs.UnitMainSR;
+                //if (UnitEs(idx_cur).TypeE.HaveUnit)
+                //{
+                //    if (UnitEs(idx_cur).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
+                //    {
+                //        mainUnit_pre.Enable();
+                //    }
 
+                //    else
+                //    {
+                //        mainUnit_cur.Enable();
+                //    }
+                //}
 
-                if (UnitEs(idx_cur).TypeE.HaveUnit)
-                {
-                    if (UnitEs(idx_cur).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
-                    {
-                        mainUnit_pre.Enable();
-                    }
+                //else
+                //{
+                //    mainUnit_cur.Enable();
 
-                    else
-                    {
-                        mainUnit_cur.Enable();
-                    }
-                }
-
-                else
-                {
-                    mainUnit_cur.Enable();
-
-                }
+                //}
 
 
                 var selUnitT = Es.SelectedUnitE.UnitTC.Unit;
@@ -41,11 +37,11 @@ namespace Game.Game
 
                 if(selUnitT == UnitTypes.Archer)
                 {
-                    mainUnit_cur.Sprite = VEs.ResourceSpriteEs.Sprite(false, selLevelUnitT).SpriteC.Sprite;
+                    VEs.UnitE(idx_cur, selUnitT).Enable();
                 }
                 else
                 {
-                    mainUnit_cur.Sprite = VEs.ResourceSpriteEs.Sprite(selUnitT, selLevelUnitT).SpriteC.Sprite;
+                    VEs.UnitE(idx_cur, selUnitT).Enable();
                 }
             }
         }

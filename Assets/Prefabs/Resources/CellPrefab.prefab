@@ -207,7 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6556088804315702792}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Unit+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,7 +556,7 @@ GameObject:
   - component: {fileID: 2011606225676225780}
   - component: {fileID: 8674070509982696775}
   m_Layer: 0
-  m_Name: Pawn_SR
+  m_Name: Pawn_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -978,7 +978,7 @@ GameObject:
   - component: {fileID: 4781312851532486712}
   - component: {fileID: 2737775505163681891}
   m_Layer: 0
-  m_Name: Snowy_SR
+  m_Name: Snowy_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1470,7 +1470,7 @@ GameObject:
   - component: {fileID: 7656953093292727097}
   - component: {fileID: 3684909349972111698}
   m_Layer: 0
-  m_Name: Elfemale_SR
+  m_Name: Elfemale_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1962,7 +1962,7 @@ GameObject:
   - component: {fileID: 7589834663773524177}
   - component: {fileID: 5255525209750309274}
   m_Layer: 0
-  m_Name: Undead_SR
+  m_Name: Undead_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2239,7 +2239,7 @@ GameObject:
   - component: {fileID: 1812190546476031901}
   - component: {fileID: 8432211584770828666}
   m_Layer: 0
-  m_Name: King_SR
+  m_Name: King_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2731,7 +2731,7 @@ GameObject:
   - component: {fileID: 6421267922870317937}
   - component: {fileID: 1674798660822084845}
   m_Layer: 0
-  m_Name: Hell_SR
+  m_Name: Hell_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3049,7 +3049,7 @@ GameObject:
   - component: {fileID: 7241214571381927442}
   - component: {fileID: 3760936481267472059}
   m_Layer: 0
-  m_Name: Archer_SR
+  m_Name: Archer_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3377,7 +3377,7 @@ GameObject:
   - component: {fileID: 1490709110690907826}
   - component: {fileID: 7912972368822768562}
   m_Layer: 0
-  m_Name: Skeleton_SR
+  m_Name: Skeleton_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3705,7 +3705,7 @@ GameObject:
   - component: {fileID: 2795906527598767961}
   - component: {fileID: 9223177919717765928}
   m_Layer: 0
-  m_Name: Scout_SR
+  m_Name: Scout_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4395,7 +4395,7 @@ GameObject:
   - component: {fileID: 8052483186254902341}
   - component: {fileID: 3787744361262111741}
   m_Layer: 0
-  m_Name: Camel_SR
+  m_Name: Camel_SR+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,14 +7,12 @@ namespace Game.Game
 {
     public readonly struct ResourceSpriteVEs
     {
-        readonly Dictionary<string, ResourceSpriteVE> _units;
         readonly Dictionary<string, ResourceSpriteVE> _archers;
         readonly Dictionary<string, ResourceSpriteVE> _toolWeapons;
         readonly Dictionary<AbilityTypes, ResourceSpriteVE> _abilities;
         readonly Dictionary<BuildingTypes, ResourceSpriteVE> _buildings;
         readonly Dictionary<BuildingTypes, ResourceSpriteVE> _buildingsBack;
 
-        public ResourceSpriteVE Sprite(in UnitTypes unit, in LevelTypes level) => _units[unit.ToString() + level];
         public ResourceSpriteVE Sprite(in bool isRook, in LevelTypes level) => _archers[isRook.ToString() + level];
         public ResourceSpriteVE Sprite(in ToolWeaponTypes tw, in LevelTypes level) => _toolWeapons[tw.ToString() + level];
         public ResourceSpriteVE Sprite(in AbilityTypes ability) => _abilities[ability];
@@ -27,7 +25,6 @@ namespace Game.Game
             var spriteName = "_Sprite";
 
             var folder = "Unit/";
-            _units = new Dictionary<string, ResourceSpriteVE>();
             _archers = new Dictionary<string, ResourceSpriteVE>();
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
@@ -42,7 +39,7 @@ namespace Game.Game
                     }
                     else
                     {
-                        _units.Add(unit.ToString() + level, new ResourceSpriteVE(gameW, folder + unit + "_" + (int)level + spriteName));
+                        //_units.Add(unit.ToString() + level, new ResourceSpriteVE(gameW, folder + unit + "_" + (int)level + spriteName));
                     }
                 }
             }

@@ -4,49 +4,49 @@ namespace Game.Game
 {
     public readonly struct SpriteRendererVC : ITrailCellV, ICloudCellV, ISupportVE, IBlockCellVE, IBarCellVE
     {
-        readonly SpriteRenderer _sr;
+        public readonly SpriteRenderer SR;
 
         public Quaternion RotParent
         {
-            get => _sr.transform.parent.rotation;
-            set => _sr.transform.parent.rotation = value;
+            get => SR.transform.parent.rotation;
+            set => SR.transform.parent.rotation = value;
         }
         public Vector3 LocalEulerAngles
         {
-            get => _sr.transform.localEulerAngles;
-            set => _sr.transform.localEulerAngles = value;
+            get => SR.transform.localEulerAngles;
+            set => SR.transform.localEulerAngles = value;
         }
         public Vector3 LocalScale
         {
-            get => _sr.transform.localScale;
-            set => _sr.transform.localScale = value;
+            get => SR.transform.localScale;
+            set => SR.transform.localScale = value;
         }
 
         public Sprite Sprite
         {
-            get => _sr.sprite;
-            set => _sr.sprite = value;
+            get => SR.sprite;
+            set => SR.sprite = value;
         }
         public bool FlipX
         {
-            get => _sr.flipX;
-            set => _sr.flipX = value;
+            get => SR.flipX;
+            set => SR.flipX = value;
         }
         public Color Color
         {
-            get => _sr.color;
-            set => _sr.color = value;
+            get => SR.color;
+            set => SR.color = value;
         }
         public bool Enabled
         {
-            get => _sr.enabled;
-            set => _sr.enabled = value;
+            get => SR.enabled;
+            set => SR.enabled = value;
         }
 
-        public SpriteRendererVC(in SpriteRenderer sr) => _sr = sr;
+        public SpriteRendererVC(in SpriteRenderer sr) => SR = sr;
 
-        public void SetActive(in bool needActive) => _sr.enabled = needActive;
-        public void Enable() => _sr.enabled = true;
-        public void Disable() => _sr.enabled = false;
+        public void SetActive(in bool needActive) => SR.enabled = needActive;
+        public void Enable() => SR.enabled = true;
+        public void Disable() => SR.enabled = false;
     }
 }
