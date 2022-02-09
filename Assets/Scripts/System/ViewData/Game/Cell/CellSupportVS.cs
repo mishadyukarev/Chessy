@@ -38,33 +38,15 @@
                 {
                     if (own_0.Is(Es.WhoseMoveE.CurPlayerI))
                     {
-                        if (cellClick.Is(CellClickTypes.GiveTakeTW, CellClickTypes.GiveScout))
+                        if (cellClick.Is(CellClickTypes.UpgradeUnit))
                         {
                             if (unit_0.Is(UnitTypes.Pawn))
-                            {
-                                support_0.Enable();
-                                support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
-                            }
-                        }
-
-                        else if (cellClick.Is(CellClickTypes.UpgradeUnit))
-                        {
-                            if (unit_0.Is(UnitTypes.Pawn, UnitTypes.Archer))
                             {
                                 if (UnitEs(idx_0).LevelE.LevelTC.Is(LevelTypes.First))
                                 {
                                     support_0.Enable();
                                     support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
                                 }
-                            }
-                        }
-
-                        else if (cellClick.Is(CellClickTypes.GiveHero))
-                        {
-                            if (unit_0.Is(UnitTypes.Archer))
-                            {
-                                support_0.Enable();
-                                support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
                             }
                         }
                     }

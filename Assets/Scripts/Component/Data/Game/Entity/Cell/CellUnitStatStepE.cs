@@ -72,7 +72,7 @@ namespace Game.Game
         }
         public void TakeForShift(in byte idx_to, in Entities es)
         {
-            if (!es.CellWorker.TryGetDirect(Idx, idx_to, out var dir)) throw new Exception();
+            if (!es.CellSpaceWorker.TryGetDirect(Idx, idx_to, out var dir)) throw new Exception();
             StepsCRef.Amount -= es.UnitStatEs(Idx).StepE.StepsForShiftOrAttack(es.UnitEs(Idx).TypeE.UnitTC, dir, es.CellEs(idx_to));
         }
     }

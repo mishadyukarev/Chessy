@@ -23,7 +23,6 @@ namespace Game.Game
 
             Units(UnitTypes.King).AddListener(delegate { UpgradeUnit(UnitTypes.King); });
             Units(UnitTypes.Pawn).AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
-            Units(UnitTypes.Archer).AddListener(delegate { UpgradeUnit(UnitTypes.Archer); });
             Units(UnitTypes.Scout).AddListener(delegate { UpgradeUnit(UnitTypes.Scout); });
 
             Builds(BuildingTypes.Farm).AddListener(delegate { UpgradeBuild(BuildingTypes.Farm); });

@@ -12,7 +12,7 @@ namespace Game.Game
         static Dictionary<string, Entity> _toolWeapon;
 
         public static ref C Button<C>(in ToolWeaponTypes tw) where C : struct => ref _ents[tw].Get<C>();
-        public static ref C Image<C>(in ToolWeaponTypes tw, in LevelTypes level) where C : struct => ref _toolWeapon[tw.ToString() + level].Get<C>();
+        public static ref ImageUIC Image(in ToolWeaponTypes tw, in LevelTypes level) => ref _toolWeapon[tw.ToString() + level].Get<ImageUIC>();
 
         public DownToolWeaponUIEs(in EcsWorld gameW, in Transform downZone)
         {
@@ -21,21 +21,19 @@ namespace Game.Game
 
             var gTZone = downZone.Find("GiveTake");
 
-            for (var tw = ToolWeaponTypes.Pick; tw < ToolWeaponTypes.End; tw++)
+            for (var tw = ToolWeaponTypes.None + 1; tw < ToolWeaponTypes.End; tw++)
             {
                 var zone = gTZone.Find(tw.ToString());
 
-                var button = zone.Find(tw + "_Button").GetComponent<Button>();
-
                 _ents.Add(tw, gameW.NewEntity()
-                    .Add(new ButtonUIC(button))
-                    .Add(new ImageUIC(button.GetComponent<Image>()))
+                    .Add(new ButtonUIC(zone.Find("Button").GetComponent<Button>()))
+                    .Add(new ImageUIC(zone.Find("Back_Image").GetComponent<Image>()))
                     .Add(new TextUIC(zone.Find("Amount_TextMP").GetComponent<TextMeshProUGUI>())));
 
-                for (var level = LevelTypes.First; level < LevelTypes.End; level++)
+                for (var level = LevelTypes.None + 1; level < LevelTypes.End; level++)
                 {
                     _toolWeapon.Add(tw.ToString() + level, gameW.NewEntity()
-                        .Add(new ImageUIC(zone.Find(tw.ToString() + level + "_Image").GetComponent<Image>())));
+                        .Add(new ImageUIC(zone.Find(tw.ToString()).Find(level + "_Image").GetComponent<Image>())));
                 }
             }
         }

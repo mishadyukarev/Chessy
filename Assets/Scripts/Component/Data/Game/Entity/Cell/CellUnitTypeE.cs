@@ -146,7 +146,7 @@ namespace Game.Game
                 powerDam_to += e.UnitEs(idx_to).DamageOnCell(e.CellEs(idx_to), e.UnitStatUpgradesEs);
 
 
-                e.CellWorker.TryGetDirect(idx_from, idx_to, out var dirAttack);
+                e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var dirAttack);
 
 
                 if (e.SunSidesE.IsAcitveSun)

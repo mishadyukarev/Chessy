@@ -54,7 +54,7 @@ namespace Game.Game
             {
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
-                    foreach (byte idx_0 in e.CellWorker.Idxs)
+                    foreach (byte idx_0 in e.CellSpaceWorker.Idxs)
                     {
                         e.UnitEffectEs(idx_0).StunE.ExecuteAfterTrainingDoner();
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
@@ -65,7 +65,7 @@ namespace Game.Game
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
-                    foreach (byte idx_0 in e.CellWorker.Idxs)
+                    foreach (byte idx_0 in e.CellSpaceWorker.Idxs)
                     {
                         e.UnitEffectEs(idx_0).StunE.ExecuteAfterWithFriendDoner();
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();

@@ -6,7 +6,6 @@
 
         King,
         Pawn,
-        Archer,
 
         Scout,
 

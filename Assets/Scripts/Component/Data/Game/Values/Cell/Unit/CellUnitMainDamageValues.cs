@@ -28,14 +28,6 @@ namespace Game.Game
                         case LevelTypes.Second: return 150;
                         default: throw new Exception();
                     }
-                case UnitTypes.Archer:
-                    switch (lev)
-                    {
-                        case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: return 100;
-                        case LevelTypes.Second: return 150;
-                        default: throw new Exception();
-                    }
                 case UnitTypes.Scout:
                     switch (lev)
                     {
@@ -83,7 +75,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static float PercentTW(in ToolWeaponTypes tw)
+        internal static float PercentExtraDamageTW(in ToolWeaponTypes tw)
         {
             switch (tw)
             {
@@ -91,6 +83,7 @@ namespace Game.Game
                 case ToolWeaponTypes.Pick: return 0;
                 case ToolWeaponTypes.Sword: return 0.5f;
                 case ToolWeaponTypes.Shield: return 0;
+                case ToolWeaponTypes.BowCrossbow: return 0;
                 default: throw new Exception();
             }
         }

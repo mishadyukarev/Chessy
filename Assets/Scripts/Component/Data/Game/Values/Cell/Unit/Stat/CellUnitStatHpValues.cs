@@ -23,7 +23,6 @@ namespace Game.Game
                 case UnitTypes.None: throw new Exception();
                 case UnitTypes.King: return 0.4f;
                 case UnitTypes.Pawn: return 0.5f;
-                case UnitTypes.Archer: return 0.5f;
                 case UnitTypes.Scout: return 0.5f;
                 case UnitTypes.Elfemale: return 0.5f;
                 case UnitTypes.Snowy: return 0.5f;

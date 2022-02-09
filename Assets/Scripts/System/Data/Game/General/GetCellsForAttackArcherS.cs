@@ -10,15 +10,14 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
-                var isCornered_0 = UnitEs(idx_0).CornedE.IsCornered;
+                var isCornered_0 = UnitEs(idx_0).CornedE.IsRight;
 
                 if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
                     if (UnitStatEs(idx_0).StepE.HaveSteps)
                     {
-                        if (unit_0.Is(UnitTypes.Archer, UnitTypes.Elfemale, UnitTypes.Snowy))
+                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Elfemale, UnitTypes.Snowy) || Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
                             var xy_from = CellEs(idx_0).CellE.XyC.Xy;
 
@@ -36,7 +35,7 @@
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Player))
                                         {
-                                            if (unit_0.Is(UnitTypes.Archer))
+                                            if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                             {
                                                 if (isCornered_0)
                                                 {
@@ -72,11 +71,11 @@
 
 
 
-                                    if (UnitEs(idx_2).TypeE.HaveUnit && !unit_2.IsAnimal
-                                        && UnitEs(idx_2).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible
+                                    if (Es.UnitEs(idx_2).TypeE.HaveUnit && !unit_2.IsAnimal
+                                        && Es.UnitEs(idx_2).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
-                                        if (unit_0.Is(UnitTypes.Archer))
+                                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                         {
                                             if (isCornered_0)
                                             {

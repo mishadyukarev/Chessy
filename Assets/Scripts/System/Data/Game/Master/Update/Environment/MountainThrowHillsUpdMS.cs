@@ -15,7 +15,7 @@ namespace Game.Game
             {
                 if (Es.EnvMountainE(idx_0).HaveEnvironment)
                 {
-                    foreach (var idx_1 in Es.CellWorker.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in Es.CellSpaceWorker.GetIdxsAround(idx_0))
                     {
                         if (Random.Range(0f, 1f) <= 0.05f)
                         {

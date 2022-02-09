@@ -25,7 +25,6 @@ namespace Game.Game
                         case LevelTypes.Second: return 0;
                         default: throw new Exception();
                     }
-                case UnitTypes.Archer: return 0;
                 case UnitTypes.Scout:
                     switch (level)
                     {

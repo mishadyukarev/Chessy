@@ -43,16 +43,6 @@ namespace Game.Game
                         case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
-                case UnitTypes.Archer:
-                    switch (res)
-                    {
-                        case ResourceTypes.Food: return 50;
-                        case ResourceTypes.Wood: return 50;
-                        case ResourceTypes.Ore: return 0;
-                        case ResourceTypes.Iron: return 0;
-                        case ResourceTypes.Gold: return 0;
-                        default: throw new Exception();
-                    }
                 default: throw new Exception();
             }
         }
@@ -150,16 +140,6 @@ namespace Game.Game
                         case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
-                case UnitTypes.Archer:
-                    switch (resourceType)
-                    {
-                        case ResourceTypes.Food: return 0;
-                        case ResourceTypes.Wood: return 0;
-                        case ResourceTypes.Ore: return 0;
-                        case ResourceTypes.Iron: return 1;
-                        case ResourceTypes.Gold: return 0;
-                        default: throw new Exception();
-                    }
                 default: throw new Exception();
             }
         }
@@ -175,6 +155,16 @@ namespace Game.Game
                             {
                                 case ResourceTypes.Food: return 0;
                                 case ResourceTypes.Wood: return 10;
+                                case ResourceTypes.Ore: return 0;
+                                case ResourceTypes.Iron: return 0;
+                                case ResourceTypes.Gold: return 0;
+                                default: throw new Exception();
+                            }
+                        case ToolWeaponTypes.BowCrossbow:
+                            switch (res)
+                            {
+                                case ResourceTypes.Food: return 0;
+                                case ResourceTypes.Wood: return 50;
                                 case ResourceTypes.Ore: return 0;
                                 case ResourceTypes.Iron: return 0;
                                 case ResourceTypes.Gold: return 0;
@@ -206,6 +196,16 @@ namespace Game.Game
                                 default: throw new Exception();
                             }
                         case ToolWeaponTypes.Shield:
+                            switch (res)
+                            {
+                                case ResourceTypes.Food: return 0;
+                                case ResourceTypes.Wood: return 0;
+                                case ResourceTypes.Ore: return 0;
+                                case ResourceTypes.Iron: return 1;
+                                case ResourceTypes.Gold: return 0;
+                                default: throw new Exception();
+                            }
+                        case ToolWeaponTypes.BowCrossbow:
                             switch (res)
                             {
                                 case ResourceTypes.Food: return 0;

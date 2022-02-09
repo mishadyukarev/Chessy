@@ -18,10 +18,10 @@ namespace Game.Game
                 {
                     VEs.UnitEs(idx_cur).PawnE(true, Es.SelectedUnitE.LevelT).Enable(true);
                 }
-                else if (selUnitT == UnitTypes.Archer)
-                {
-                    VEs.UnitEs(idx_cur).ArcherE(false, true, levT).Enable(true);
-                }
+                //else if (selUnitT == UnitTypes.Archer)
+                //{
+                //    VEs.UnitEs(idx_cur).ArcherE(false, true, levT).Enable(true);
+                //}
                 else
                 {
                     VEs.UnitE(idx_cur, selUnitT, true).Enable(true);

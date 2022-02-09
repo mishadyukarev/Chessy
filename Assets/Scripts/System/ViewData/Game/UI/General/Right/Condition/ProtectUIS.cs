@@ -26,7 +26,6 @@ namespace Game.Game
 
                     RightProtectUIE.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
                     RightProtectUIE.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
-                    RightProtectUIE.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
                     RightProtectUIE.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
                     RightProtectUIE.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
 

@@ -1,37 +1,20 @@
-﻿using ECS;
-using System.Collections.Generic;
+﻿//using ECS;
+//using System.Collections.Generic;
 
-namespace Game.Game
-{
-    public struct GetterUnitsEs
-    {
-        static Dictionary<UnitTypes, Entity> _getter;
+//namespace Game.Game
+//{
+//    public struct GetterUnitsEs
+//    {
+//        static Entity _getter;
 
+//        public static ref IsActiveC IsActiveC => ref _getter.Get<IsActiveC>();
+//        public static ref TimerC TimerC => ref _getter.Get<TimerC>();
 
-        public static ref C GetterUnit<C>(in UnitTypes unit) where C : struct => ref _getter[unit].Get<C>();
-
-
-        public HashSet<UnitTypes> Keys
-        {
-            get
-            {
-                var keys = new HashSet<UnitTypes>();
-                foreach (var item in _getter) keys.Add(item.Key);
-                return keys;
-            }
-        }
-
-        public GetterUnitsEs(in EcsWorld gameW)
-        {
-            _getter = new Dictionary<UnitTypes, Entity>();
-
-            _getter.Add(UnitTypes.Pawn, gameW.NewEntity()
-                    .Add(new IsActiveC())
-                    .Add(new TimerC()));
-
-            _getter.Add(UnitTypes.Archer, gameW.NewEntity()
-                    .Add(new IsActiveC())
-                    .Add(new TimerC()));
-        }
-    }
-}
+//        public GetterUnitsEs(in EcsWorld gameW)
+//        {
+//            _getter = gameW.NewEntity()
+//                    .Add(new IsActiveC())
+//                    .Add(new TimerC());
+//        }
+//    }
+//}

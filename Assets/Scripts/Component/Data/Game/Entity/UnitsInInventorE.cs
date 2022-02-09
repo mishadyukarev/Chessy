@@ -10,6 +10,7 @@ namespace Game.Game
         ref AmountC UnitsRef => ref Ent.Get<AmountC>();
         public AmountC Units => Ent.Get<AmountC>();
 
+        public int AmountUnits => UnitsRef.Amount;
         public bool HaveUnits => Units.Amount > 0;
 
         internal UnitsInInventorE(in UnitTypes unit, in LevelTypes level, in EcsWorld gameW) : base(gameW)

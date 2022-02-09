@@ -55,7 +55,7 @@ namespace Game.Game
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * CellUnitMainDamageValues.PercentTW(cellEs.UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
+            powerDamege += standDamage * CellUnitMainDamageValues.PercentExtraDamageTW(cellEs.UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
             if (attack == AttackTypes.Unique) powerDamege += standDamage * CellUnitMainDamageValues.UNIQUE_PERCENT_DAMAGE;
 
             //if (haveEff) powerDamege += standDamage * 0.2f;
@@ -128,14 +128,14 @@ namespace Game.Game
         void Reset()
         {
             TypeE.UnitT = UnitTypes.None;
-            CornedE.IsCornered = false;
+            CornedE.IsRight = false;
             OwnerE.PlayerT = PlayerTypes.None;
             LevelE.LevelT = LevelTypes.None;
         }
         void Set(in byte idx_to, in Entities ents)
         {
             ents.UnitTypeE(idx_to).UnitT = TypeE.UnitT;
-            ents.UnitEs(idx_to).CornedE.IsCornered = CornedE.IsCornered;
+            ents.UnitEs(idx_to).CornedE.IsRight = CornedE.IsRight;
             ents.UnitOwnerE(idx_to).PlayerT = OwnerE.OwnerC.Player;
             ents.UnitEs(idx_to).ConditionE.Reset();
             ents.UnitEs(idx_to).LevelE.Set(LevelE.LevelTC.Level);
@@ -164,7 +164,7 @@ namespace Game.Game
             Set(idx_to, ents);
             Reset();
 
-            if (!ents.CellWorker.TryGetDirect(Idx, idx_to, out var direct)) throw new Exception();
+            if (!ents.CellSpaceWorker.TryGetDirect(Idx, idx_to, out var direct)) throw new Exception();
 
             if (!ents.UnitTypeE(idx_to).Is(UnitTypes.Undead))
             {
@@ -198,7 +198,7 @@ namespace Game.Game
             LevelE.Set(unit.Item2);
             OwnerE.PlayerT = unit.Item3;
             ConditionE.Set(unit.Item4);
-            CornedE.IsCornered = unit.Item5;
+            CornedE.IsRight = unit.Item5;
 
             StatEs.Hp.SetMax();
             StatEs.StepE.SetMax(TypeE);
@@ -257,7 +257,7 @@ namespace Game.Game
             {
                 StatEs.StepE.Take(ability);
 
-                foreach (var idx_1 in ents.CellWorker.GetIdxsAround(idx_0))
+                foreach (var idx_1 in ents.CellSpaceWorker.GetIdxsAround(idx_0))
                 {
                     if (!ents.UnitTypeE(idx_1).HaveUnit && !ents.EnvMountainE(idx_1).HaveEnvironment)
                     {

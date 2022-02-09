@@ -91,10 +91,10 @@ namespace Game.Game
                     //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_0).Have = true;
                     //}
 
-                    var around = e.CellWorker.GetXyAround(e.CellEs(idx_0).CellE.XyC.Xy);
+                    var around = e.CellSpaceWorker.GetXyAround(e.CellEs(idx_0).CellE.XyC.Xy);
                     foreach (var xy in around)
                     {
-                        var idx_1 = e.CellWorker.GetIdxCell(xy);
+                        var idx_1 = e.CellSpaceWorker.GetIdxCell(xy);
 
                         var ownUnit_1 = e.UnitEs(idx_1).OwnerE.OwnerC;
 
@@ -133,9 +133,9 @@ namespace Game.Game
 
                     e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
-                    foreach (var xy1 in e.CellWorker.GetXyAround(e.CellEs(idx_0).CellE.XyC.Xy))
+                    foreach (var xy1 in e.CellSpaceWorker.GetXyAround(e.CellEs(idx_0).CellE.XyC.Xy))
                     {
-                        var idx_1 = e.CellWorker.GetIdxCell(xy1);
+                        var idx_1 = e.CellSpaceWorker.GetIdxCell(xy1);
 
                         var ownUnit_1 = e.UnitEs(idx_1).OwnerE.OwnerC;
                         var tw_1 = e.UnitEs(idx_1).ToolWeaponE.ToolWeaponTC;
@@ -184,7 +184,7 @@ namespace Game.Game
             {
                 if (e.UnitStatEs(idx_from).StepE.Have(_ability))
                 {
-                    e.CellWorker.TryGetDirect(e.WindCloudE.CenterCloud.Idx, idx_to, out var newDir);
+                    e.CellSpaceWorker.TryGetDirect(e.WindCloudE.CenterCloud.Idx, idx_to, out var newDir);
 
                     if (newDir != DirectTypes.None)
                     {
@@ -217,7 +217,7 @@ namespace Game.Game
                     e.UnitStatEs(idx_0).StepE.Take(_ability);
                     e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
-                    foreach (var idx_1 in e.CellWorker.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in e.CellSpaceWorker.GetIdxsAround(idx_0))
                     {
                         if (e.UnitEs(idx_1).TypeE.HaveUnit)
                         {
@@ -229,7 +229,7 @@ namespace Game.Game
                                     e.UnitStatEs(idx_1).Hp.SetMax();
                                     e.UnitEffectEs(idx_1).ShieldE.Set(_ability);
                                 }
-                                if (e.UnitEs(idx_1).TypeE.UnitTC.Is(UnitTypes.Archer))
+                                if (e.UnitTWE(idx_1).Is(ToolWeaponTypes.BowCrossbow))
                                 {
                                     e.UnitEffectEs(idx_1).FrozenArrowE.Enable();
                                 }
@@ -252,7 +252,7 @@ namespace Game.Game
 
             var idx_from = Idx;
 
-            if (e.CellWorker.TryGetDirect(idx_from, idx_to, out var direct_0))
+            if (e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var direct_0))
             {
                 if (e.UnitStatEs(idx_from).WaterE.Have(ability) || e.RiverEs(idx_from).RiverE.HaveRiverNear)
                 {
@@ -285,7 +285,7 @@ namespace Game.Game
 
                             e.EffectEs(idx_0).FireE.Disable();
 
-                            idx_0 = e.CellWorker.GetIdxCellByDirect(idx_0, direct_0);
+                            idx_0 = e.CellSpaceWorker.GetIdxCellByDirect(idx_0, direct_0);
                         }
                     }
                     else
@@ -391,7 +391,7 @@ namespace Game.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var idx_1 in e.CellWorker.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in e.CellSpaceWorker.GetIdxsAround(idx_0))
                     {
                         if (!e.CellEs(idx_1).ParentE.IsActiveSelf.IsActive)
                         {
@@ -539,7 +539,7 @@ namespace Game.Game
             {
                 if (e.UnitStatEs(idx_0).StepE.Have(_ability))
                 {
-                    e.UnitEs(idx_0).CornedE.IsCornered = !e.UnitEs(idx_0).CornedE.IsCornered;
+                    e.UnitEs(idx_0).CornedE.IsRight = !e.UnitEs(idx_0).CornedE.IsRight;
 
                     e.UnitStatEs(idx_0).StepE.Take(_ability);
 
@@ -583,7 +583,7 @@ namespace Game.Game
                                         e.RpcE.SoundToGeneral(RpcTarget.All, _ability);
 
 
-                                        foreach (var idx_1 in e.CellWorker.GetIdxsAround(idx_to))
+                                        foreach (var idx_1 in e.CellSpaceWorker.GetIdxsAround(idx_to))
                                         {
                                             if (e.EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                             {
@@ -732,10 +732,10 @@ namespace Game.Game
                         //{
                         //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_0).Have = true;
                         //}
-                        var around = e.CellWorker.GetXyAround(e.CellEs(idx_0).CellE.XyC.Xy);
+                        var around = e.CellSpaceWorker.GetXyAround(e.CellEs(idx_0).CellE.XyC.Xy);
                         foreach (var xy_1 in around)
                         {
-                            var idx_1 = e.CellWorker.GetIdxCell(xy_1);
+                            var idx_1 = e.CellSpaceWorker.GetIdxCell(xy_1);
 
                             var ownUnit_1 = e.UnitEs(idx_1).OwnerE.OwnerC;
 

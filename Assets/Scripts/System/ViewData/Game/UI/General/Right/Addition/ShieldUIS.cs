@@ -17,7 +17,7 @@ namespace Game.Game
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Shield, LevelTypes.First).SetActive(false);
             UIEntExtraTW.Image<ImageUIC>(ToolWeaponTypes.Shield, LevelTypes.Second).SetActive(false);
 
-            if (tw_sel.HaveTW)
+            if (tw_sel.HaveTW && !tw_sel.Is(ToolWeaponTypes.BowCrossbow))
             {
                 UIEntExtraTW.Image<ImageUIC>(tw_sel.ToolWeapon, twLevel_sel.Level).SetActive(true);
             }

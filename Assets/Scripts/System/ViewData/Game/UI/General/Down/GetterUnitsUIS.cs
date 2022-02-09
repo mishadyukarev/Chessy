@@ -12,39 +12,31 @@ namespace Game.Game
 
         public void Run()
         {
-            for (UnitTypes unitT_cur = UnitTypes.None; unitT_cur < UnitTypes.End; unitT_cur++)
-            {
-                if (unitT_cur == UnitTypes.Pawn || unitT_cur == UnitTypes.Archer)
-                {
-                    if (GetterUnitsEs.GetterUnit<IsActiveC>(unitT_cur).IsActive)
-                    {
-                        PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(true);
 
-                        GetterUnitsEs.GetterUnit<TimerC>(unitT_cur).Timer += Time.deltaTime;
+            //if (GetterUnitsEs.IsActiveC.IsActive)
+            //{
+            //    PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(true);
 
-                        if (GetterUnitsEs.GetterUnit<TimerC>(unitT_cur).Timer >= NEEDED_TIME)
-                        {
-                            PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(false);
-                            GetterUnitsEs.GetterUnit<IsActiveC>(unitT_cur).IsActive = false;
-                            GetterUnitsEs.GetterUnit<TimerC>(unitT_cur).Reset();
-                        }
-                    }
+            //    GetterUnitsEs.TimerC>(unitT_cur).Timer += Time.deltaTime;
 
-                    else
-                    {
-                        PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(false);
-                    }
-                }
-            }
+            //    if (GetterUnitsEs.TimerC.Timer >= NEEDED_TIME)
+            //    {
+            //        PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(false);
+            //        GetterUnitsEs.IsActiveC.IsActive = false;
+            //        GetterUnitsEs.TimerC.Reset();
+            //    }
+            //}
 
-            var amountPawns = Es.InventorUnitsEs.Units(UnitTypes.Pawn, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).Units.Amount
-                + Es.InventorUnitsEs.Units(UnitTypes.Pawn, LevelTypes.Second, Es.WhoseMoveE.CurPlayerI).Units.Amount;
+            //else
+            //{
+            //    PawnArcherDownUIE.BuyUnit<ButtonUIC>(unitT_cur).SetActive(false);
+            //}
 
-            var amountArchers = Es.InventorUnitsEs.Units(UnitTypes.Archer, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).Units.Amount
-                + Es.InventorUnitsEs.Units(UnitTypes.Archer, LevelTypes.Second, Es.WhoseMoveE.CurPlayerI).Units.Amount;
+            var curPlayerI = Es.WhoseMoveE.CurPlayerI;
 
-            PawnArcherDownUIE.Taker<TextUIC>(UnitTypes.Pawn).Text = amountPawns.ToString();
-            PawnArcherDownUIE.Taker<TextUIC>(UnitTypes.Archer).Text = amountArchers.ToString();
+            var amountPawns = Es.WhereWorker.AmountPaws(curPlayerI);
+
+            DownPawnUIE.Taker<TextUIC>(UnitTypes.Pawn).Text = amountPawns.ToString() + "/" + Es.MaxPawnsE(curPlayerI).MaxPawns;
         }
     }
 }

@@ -35,7 +35,6 @@ namespace Game.Game
 
                     RightRelaxUIE.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
                     RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
-                    RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Archer).SetActive(false);
                     RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
                     RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
 

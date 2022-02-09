@@ -189,7 +189,7 @@ namespace Game.Game
             var playerSend = e.WhoseMoveE.WhoseMove.Player;
 
 
-            if (e.WhereBuildingEs.TryGetBuilding(BuildingTypes.City, playerSend, out var idx_city))
+            if (e.WhereWorker.TryGetBuilding(BuildingTypes.City, playerSend, out var idx_city))
             {
                 if (CanBuyUnit_Master(unit, playerSend, out var needRes))
                 {

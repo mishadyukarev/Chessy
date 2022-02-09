@@ -22,7 +22,6 @@ namespace Game.Game
             {
                 case UnitTypes.King: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
                 case UnitTypes.Pawn: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
-                case UnitTypes.Archer: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
                 case UnitTypes.Scout: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
                 case UnitTypes.Elfemale: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1);
                 case UnitTypes.Snowy: return (int)(MAX_WATER_WITHOUT_EFFECTS * 0.1f);

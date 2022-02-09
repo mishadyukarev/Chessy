@@ -12,18 +12,15 @@ namespace Game.Game
 
             UIEntDownDoner.Doner<ButtonUIC>().AddListener(Done);
 
-            PawnArcherDownUIE.BuyUnit<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
-            PawnArcherDownUIE.BuyUnit<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { BuyUnit(UnitTypes.Archer); });
 
-
-            PawnArcherDownUIE.Taker<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { GetUnit(UnitTypes.Pawn); });
-            PawnArcherDownUIE.Taker<ButtonUIC>(UnitTypes.Archer).AddListener(delegate { GetUnit(UnitTypes.Archer); });
+            DownPawnUIE.Taker<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { GetPawn(); });
 
             UIEntDownUpgrade.Upgrade<ButtonUIC>().AddListener(ToggleUpgradeUnit);
 
             Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
             Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
             Button<ButtonUIC>(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
+            Button<ButtonUIC>(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
         }
 
         void ExecuteScout()
@@ -83,38 +80,17 @@ namespace Game.Game
             }
         }
 
-        void BuyUnit(in UnitTypes unit)
-        {
-            if (Es.WhoseMoveE.IsMyMove)
-            {
-                GetterUnitsEs.GetterUnit<TimerC>(unit).Reset();
-
-                Es.RpcE.CreateUnitToMaster(unit);
-            }
-            else SoundV(ClipTypes.Mistake).Play();
-        }
-
-        void GetUnit(UnitTypes unitT)
+        void GetPawn()
         {
             Es.SelectedIdxE.Reset();
 
-            GetterUnitsEs.GetterUnit<TimerC>(unitT).Reset();
-
             if (Es.WhoseMoveE.IsMyMove)
             {
-                if (Es.InventorUnitsEs.Units(unitT, LevelTypes.Second, Es.WhoseMoveE.CurPlayerI).HaveUnits)
-                {
-                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.Second, Es.ClickerObjectE);
-                }
+                var whoseMove = Es.WhoseMoveE.CurPlayerI;
 
-                else if (Es.InventorUnitsEs.Units(unitT, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).HaveUnits)
+                if (Es.MaxPawnsE(whoseMove).CanGetPawn(Es.WhereWorker))
                 {
-                    Es.SelectedUnitE.SetSelectedUnit(unitT, LevelTypes.First, Es.ClickerObjectE);
-                }
-
-                else
-                {
-                    GetterUnitsEs.GetterUnit<IsActiveC>(unitT).IsActive = true;
+                    Es.SelectedUnitE.SetSelectedUnit(UnitTypes.Pawn, LevelTypes.First, Es.ClickerObjectE);
                 }
             }
             else SoundV(ClipTypes.Mistake).Play();
@@ -173,6 +149,7 @@ namespace Game.Game
 
                         else selLevelTWC.Level = LevelTypes.First;
                     }
+                    else if(tw == ToolWeaponTypes.BowCrossbow) selLevelTWC.Level = LevelTypes.First;
                     else selLevelTWC.Level = LevelTypes.Second;
                 }
             }

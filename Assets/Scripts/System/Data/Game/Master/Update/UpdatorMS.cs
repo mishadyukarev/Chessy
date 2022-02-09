@@ -69,7 +69,7 @@ namespace Game.Game
                                         {
                                             if (ownUnit_0.Is(PlayerTypes.First))
                                             {
-                                                if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
+                                                if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
                                                 {
                                                     BuildEs(idx_camp).BuildingE.Destroy(Es);
                                                 }
@@ -80,7 +80,7 @@ namespace Game.Game
                                         }
                                         else
                                         {
-                                            if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
+                                            if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
                                             {
                                                 Es.BuildE(idx_camp).Destroy(Es);
                                             }

@@ -12,7 +12,7 @@
             {
                 if (Es.BuildE(idx_0).Is(BuildingTypes.City))
                 {
-                    foreach (var idx_1 in Es.CellWorker.GetIdxsAround(idx_0))
+                    foreach (var idx_1 in Es.CellSpaceWorker.GetIdxsAround(idx_0))
                     {
                         if (Es.EnvAdultForestE(idx_1).HaveEnvironment)
                         {

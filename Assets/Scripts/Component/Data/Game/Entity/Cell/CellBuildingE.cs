@@ -75,11 +75,11 @@ namespace Game.Game
             var whoseMove = ents.WhoseMoveE.WhoseMove.Player;
 
 
-            foreach (var idx_to_1 in ents.CellWorker.GetIdxsAround(idx_to_0))
+            foreach (var idx_to_1 in ents.CellSpaceWorker.GetIdxsAround(idx_to_0))
             {
                 if (ents.BuildE(idx_to_1).Is(BuildingTypes.City, BuildingTypes.House))
                 {
-                    ents.CellWorker.TryGetDirect(idx_to_0, idx_to_1, out var dir);
+                    ents.CellSpaceWorker.TryGetDirect(idx_to_0, idx_to_1, out var dir);
 
                     if (dir == DirectTypes.Left || dir == DirectTypes.Right || dir == DirectTypes.Up || dir == DirectTypes.Down)
                     {

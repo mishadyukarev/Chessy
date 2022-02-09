@@ -13,7 +13,6 @@ namespace Game.Game
                 case UnitTypes.None: steps = 0; break;
                 case UnitTypes.King: steps = 2; break;
                 case UnitTypes.Pawn: steps = 2; break;
-                case UnitTypes.Archer: steps = 3; break;
                 case UnitTypes.Scout: steps = 5; break;
                 case UnitTypes.Elfemale: steps = 3; break;
                 case UnitTypes.Snowy: steps = 3; break;

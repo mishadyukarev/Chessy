@@ -6,7 +6,7 @@ namespace Game.Game
     {
         ref IsC IsCornedRef => ref Ent.Get<IsC>();
 
-        public bool IsCornered
+        public bool IsRight
         {
             get => IsCornedRef.Is;
             set => IsCornedRef.Is = value;

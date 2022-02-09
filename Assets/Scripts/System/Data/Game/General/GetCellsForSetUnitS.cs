@@ -15,7 +15,7 @@
                     CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = false;
                 }
 
-                if (Es.WhereBuildingEs.TryGetBuilding(BuildingTypes.City, player, out var idx_1))
+                if (Es.WhereWorker.TryGetBuilding(BuildingTypes.City, player, out var idx_1))
                 {
                     if (UnitEs(idx_1).TypeE.HaveUnit)
                     {

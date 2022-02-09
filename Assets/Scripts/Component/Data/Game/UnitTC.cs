@@ -23,7 +23,6 @@ namespace Game.Game
                     case UnitTypes.None: throw new Exception();
                     case UnitTypes.King: return true;
                     case UnitTypes.Pawn: return true;
-                    case UnitTypes.Archer: return false;
                     case UnitTypes.Scout: return true;
 
                     case UnitTypes.Elfemale: return false;
@@ -46,7 +45,7 @@ namespace Game.Game
                 {
                     case UnitTypes.King: return false;
                     case UnitTypes.Pawn: return false;
-                    case UnitTypes.Archer: return false;
+
                     case UnitTypes.Scout: return false;
 
                     case UnitTypes.Elfemale: return true;
@@ -68,12 +67,11 @@ namespace Game.Game
                 switch (Unit)
                 {
                     case UnitTypes.King: return false;
-
                     case UnitTypes.Pawn: return false;
-                    case UnitTypes.Archer: return false;
-                    case UnitTypes.Scout: return false;
-                    case UnitTypes.Elfemale: return false;
 
+                    case UnitTypes.Scout: return false;
+
+                    case UnitTypes.Elfemale: return false;
                     case UnitTypes.Snowy: return false;
                     case UnitTypes.Undead: return false;
                     case UnitTypes.Hell: return false;

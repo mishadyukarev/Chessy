@@ -11,6 +11,7 @@ namespace Game.Game
         readonly Dictionary<ClipTypes, SoundE> _sounds0;
         readonly Dictionary<AbilityTypes, SoundE> _sounds1;
         readonly Dictionary<PlayerTypes, AvailableCenterHeroE> _availHero;
+        readonly Dictionary<PlayerTypes, MaxPawnsE> _maxPawnsEs;
 
         public ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
         public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitEs unitEs) => _scoutHeroCooldownEs[unitEs.TypeE.UnitTC.Unit.ToString() + unitEs.OwnerE.OwnerC.Player];
@@ -18,6 +19,7 @@ namespace Game.Game
         public SoundE Sound(in ClipTypes clip) => _sounds0[clip];
         public SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
         public AvailableCenterHeroE AvailableCenterHero(in PlayerTypes player) => _availHero[player];
+        public MaxPawnsE MaxPawnsE(in PlayerTypes player) => _maxPawnsEs[player];
 
 
         public readonly CurrentIdxE CurrentIdxE;
@@ -43,8 +45,6 @@ namespace Game.Game
 
 
         #region Pools
-
-        public readonly WhereBuildingsWorker WhereBuildingEs;
 
         public readonly InventorUnitsEs InventorUnitsEs;
         public readonly InventorResourcesEs InventorResourcesEs;
@@ -92,7 +92,8 @@ namespace Game.Game
 
 
 
-        public readonly CellEsSpaceWorker CellWorker;
+        public readonly CellSpaceWorker CellSpaceWorker;
+        public readonly WhereWorker WhereWorker;
 
         #endregion
 
@@ -113,10 +114,12 @@ namespace Game.Game
             _scoutHeroCooldownEs = new Dictionary<string, ScoutHeroCooldownE>();
             _ready = new Dictionary<PlayerTypes, ReadyE>();
             _availHero = new Dictionary<PlayerTypes, AvailableCenterHeroE>();
+            _maxPawnsEs = new Dictionary<PlayerTypes, MaxPawnsE>();
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
                 _ready.Add(player, new ReadyE(gameW));
                 _availHero.Add(player, new AvailableCenterHeroE(true, gameW));
+                _maxPawnsEs.Add(player, new MaxPawnsE(player, gameW));
 
                 for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
                 {
@@ -169,8 +172,8 @@ namespace Game.Game
                     _cellEs[idx] = new CellEs(isActiveParenCells[idx], idCells[idx], new byte[] { x, y }, idx, gameW);
                     ++idx;
                 }
-            CellWorker = new CellEsSpaceWorker(_cellEs);
-            WhereBuildingEs = new WhereBuildingsWorker(_cellEs);
+            CellSpaceWorker = new CellSpaceWorker(_cellEs);
+            WhereWorker = new WhereWorker(_cellEs);
 
 
             new CellsForSetUnitsEs(gameW);
@@ -180,7 +183,6 @@ namespace Game.Game
 
             new MistakeE(gameW);
             new EntHint(gameW);
-            new GetterUnitsEs(gameW);
         }
     }
 }

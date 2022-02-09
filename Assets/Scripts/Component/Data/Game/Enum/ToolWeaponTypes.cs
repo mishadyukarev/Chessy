@@ -7,6 +7,7 @@
         Pick,
         Sword,
         Shield,
+        BowCrossbow,
 
         End,
     }

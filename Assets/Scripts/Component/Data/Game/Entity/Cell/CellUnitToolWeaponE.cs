@@ -30,10 +30,7 @@ namespace Game.Game
             get => ProtectionRef.Amount;
             internal set => ProtectionRef.Amount = value;
         }
-
-
         public bool HaveProtection => ProtectionC.Amount > 0;
-
         public bool Is(params ToolWeaponTypes[] tws) => ToolWeaponTC.Is(tws);
 
         internal CellUnitToolWeaponE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
@@ -146,6 +143,24 @@ namespace Game.Game
                         }
 
                         else if (tWForGive == ToolWeaponTypes.Sword)
+                        {
+                            if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
+                            {
+                                e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
+
+                                e.UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
+
+                                e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+
+                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            }
+                            else
+                            {
+                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
+                            }
+                        }
+
+                        else if (tWForGive == ToolWeaponTypes.BowCrossbow)
                         {
                             if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
                             {

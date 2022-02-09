@@ -27,7 +27,7 @@ namespace Game.Game
             new UIEntDownDoner(gameW, downZone);
             new UIEntDownUpgrade(gameW, downZone);
             var takeUnitZone = downZone.Find("TakeUnitZone");
-            new PawnArcherDownUIE(gameW, takeUnitZone);
+            new DownPawnUIE(gameW, takeUnitZone);
             new UIEntDownScout(gameW, takeUnitZone);
             new DownHeroUIE(gameW, takeUnitZone);
         }

@@ -22,18 +22,6 @@ namespace Game.Game
                             VEs.UnitEs(idx_0).PawnE(true, levT).Disable();
                             VEs.UnitEs(idx_0).PawnE(false, levT).Disable();
                         }
-
-                       
-                    }
-                    else if (unitT == UnitTypes.Archer)
-                    {
-                        for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
-                        {
-                            VEs.UnitEs(idx_0).ArcherE(true, true, levT).Disable();
-                            VEs.UnitEs(idx_0).ArcherE(true, false, levT).Disable();
-                            VEs.UnitEs(idx_0).ArcherE(false, true, levT).Disable();
-                            VEs.UnitEs(idx_0).ArcherE(false, false, levT).Disable();
-                        }
                     }
                     else
                     {
@@ -44,12 +32,23 @@ namespace Game.Game
 
                 for (var tw = ToolWeaponTypes.None + 1; tw < ToolWeaponTypes.End; tw++)
                 {
-                    if(tw == ToolWeaponTypes.Shield)
+                    if (tw == ToolWeaponTypes.Shield)
                     {
                         for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
                         {
                             VEs.UnitEs(idx_0).ShieldE(levT, true).Disable();
                             VEs.UnitEs(idx_0).ShieldE(levT, false).Disable();
+                        }
+                    }
+                    else if (tw == ToolWeaponTypes.BowCrossbow)
+                    {
+                        for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
+                        {
+                            VEs.UnitEs(idx_0).BowCrossbowE(true, true, levT).Disable();
+                            VEs.UnitEs(idx_0).BowCrossbowE(true, false, levT).Disable();
+                            VEs.UnitEs(idx_0).BowCrossbowE(false, true, levT).Disable();
+                            VEs.UnitEs(idx_0).BowCrossbowE(false, false, levT).Disable();
+
                         }
                     }
                     else
@@ -84,16 +83,20 @@ namespace Game.Game
                                 {
                                     VEs.UnitEs(idx_0).ShieldE(Es.UnitEs(idx_0).ToolWeaponE.LevelT, isSelected).Enable(isVisForNext);
                                 }
+                                else if (twT == ToolWeaponTypes.BowCrossbow)
+                                {
+                                    VEs.UnitEs(idx_0).BowCrossbowE(Es.UnitEs(idx_0).CornedE.IsRight, isSelected, Es.UnitTWE(idx_0).LevelT).Enable(isVisForNext);
+                                }
                                 else
                                 {
                                     VEs.UnitEs(idx_0).ToolWeaponE(twT, isSelected).Enable(isVisForNext);
                                 }
-                            }
-                        }
 
-                        else if (unitT == UnitTypes.Archer)
-                        {
-                            VEs.UnitEs(idx_0).ArcherE(Es.UnitEs(idx_0).CornedE.IsCornered, isSelected, levT).Enable(isVisForNext);
+                                if (twT == ToolWeaponTypes.BowCrossbow)
+                                {
+                                    VEs.UnitEs(idx_0).PawnE(isSelected, Es.UnitLevelE(idx_0).LevelT).Disable();
+                                }
+                            }
                         }
                         else
                         {

@@ -127,7 +127,7 @@ namespace Game.Game
 
                             case CellClickTypes.UpgradeUnit:
                                 {
-                                    if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
+                                    if (unit_cur.Is(UnitTypes.Pawn)
                                         && ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI)
                                         && !UnitEs(idx_cur).LevelE.LevelTC.Is(LevelTypes.Second))
                                     {
@@ -203,6 +203,7 @@ namespace Game.Game
                 else if (raycastTC.Is(RaycastTypes.Background))
                 {
                     cellClick.Click = CellClickTypes.SimpleClick;
+                    Es.SelectedIdxE.Reset();
                 }
             }
 

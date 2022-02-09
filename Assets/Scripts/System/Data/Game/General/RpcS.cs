@@ -304,7 +304,7 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (byte idx_0 in _ents.CellWorker.Idxs)
+            foreach (byte idx_0 in _ents.CellSpaceWorker.Idxs)
             {
                 objs.Add(_ents.CellEs(idx_0).UnitEs.TypeE.UnitTC.Unit);
                 //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
@@ -324,7 +324,7 @@ namespace Game.Game
 
                 objs.Add(_ents.UnitEffectEs(idx_0).StunE.Stun);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.CornedE.IsCornered);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.CornedE.IsRight);
 
                 foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown.Amount);
 
@@ -414,7 +414,7 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (byte idx_0 in _ents.CellWorker.Idxs)
+            foreach (byte idx_0 in _ents.CellSpaceWorker.Idxs)
             {
                 //_ents.CellEs(idx_0).UnitEs.Main.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
                 //_ents.CellEs(idx_0).UnitEs.Main.LevelC.Level = (LevelTypes)objects[_idx_cur++];

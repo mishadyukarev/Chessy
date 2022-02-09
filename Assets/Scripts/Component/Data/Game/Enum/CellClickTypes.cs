@@ -9,8 +9,6 @@
         SetUnit,
         GiveTakeTW,
         UpgradeUnit,
-        GiveScout,
-        GiveHero,
         UniqueAbility,
         CityBuildBuilding,
 

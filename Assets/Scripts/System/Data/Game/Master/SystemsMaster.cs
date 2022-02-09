@@ -24,6 +24,7 @@ namespace Game.Game
                 + new UpdFertilizeAroundRiverMS(ents).Run
                 + new CloudFertilizeUpdMS(ents).Run
                 + new UpdDryFertilizerMS(ents).Run
+                + new GetPawnUnitUpdMS(ents).Run
 
             #region Building
 
