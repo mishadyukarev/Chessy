@@ -139,7 +139,7 @@ namespace Game.Game
                 }
 
 
-                if (Es.ClickerObjectE.CellClickC.Is(CellClickTypes.GiveTakeTW))
+                if (Es.ClickerObjectE.CellClickCRef.Is(CellClickTypes.GiveTakeTW))
                 {
                     if (tw == ToolWeaponTypes.Shield)
                     {
@@ -162,7 +162,7 @@ namespace Game.Game
                 }
                 else
                 {
-                    Es.ClickerObjectE.CellClickC.Click = CellClickTypes.GiveTakeTW;
+                    Es.ClickerObjectE.CellClickCRef.Click = CellClickTypes.GiveTakeTW;
 
                     selToolWeaponC.ToolWeapon = tw;
 
@@ -186,7 +186,7 @@ namespace Game.Game
             if (Es.WhoseMoveE.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
-                Es.ClickerObjectE.CellClickC.Click = CellClickTypes.UpgradeUnit;
+                Es.ClickerObjectE.CellClickCRef.Click = CellClickTypes.UpgradeUnit;
             }
             else SoundV(ClipTypes.Mistake).Play();
         }

@@ -17,6 +17,7 @@ namespace Game.Game
         }
         public bool HaveUnit => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
         public bool Is(params UnitTypes[] unit) => UnitTC.Is(unit);
+        public bool IsMelee => UnitTC.IsMelee;
 
 
         //public bool CanResume(in byte idx, out int resume, out EnvironmentTypes env)

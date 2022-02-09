@@ -8,7 +8,7 @@ namespace Game.Game
         ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
         public LevelTC LevelTC => Ent.Get<LevelTC>();
 
-        public LevelTypes Level
+        public LevelTypes LevelT
         {
             get => LevelTCRef.Level;
             internal set => LevelTCRef.Level = value;

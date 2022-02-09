@@ -22,7 +22,7 @@ namespace Game.Game
             var unit_sel = UnitEs(idx_cur).TypeE.UnitTC;
 
             ref var raycastTC = ref Es.ClickerObjectE.RayCastTC;
-            ref var cellClick = ref Es.ClickerObjectE.CellClickC;
+            ref var cellClick = ref Es.ClickerObjectE.CellClickCRef;
 
             if (Es.InputE.IsClickedC.IsClicked)
             {
@@ -136,14 +136,14 @@ namespace Game.Game
                                     else
                                     {
                                         cellClick.Click = CellClickTypes.SimpleClick;
-                                        Es.SelectedIdxE.IdxC.Idx = Es.CurrentIdxE.IdxC.Idx;
+                                        Es.SelectedIdxE.IdxC.Idx = Es.CurrentIdxE.Idx;
                                     }
                                 }
                                 break;
 
                             case CellClickTypes.UniqueAbility:
                                 {
-                                    switch (Es.SelectedUniqueAbilityE.AbilityTC.Ability)
+                                    switch (Es.SelectedAbilityE.AbilityTC.Ability)
                                     {
                                         case AbilityTypes.FireArcher:
                                             Es.RpcE.FireArcherToMas(Es.SelectedIdxE.IdxC.Idx, Es.CurrentIdxE.IdxC.Idx);
@@ -180,6 +180,13 @@ namespace Game.Game
 
                                     cellClick.Click = CellClickTypes.SimpleClick;
                                     Es.SelectedIdxE.IdxC.Idx = Es.CurrentIdxE.IdxC.Idx;
+                                }
+                                break;
+
+                            case CellClickTypes.CityBuildBuilding:
+                                {
+                                    Es.RpcE.CityBuildToMaster(Es.SelectedBuildingE.BuildT, Es.SelectedIdxE.Idx, Es.CurrentIdxE.Idx);
+                                    cellClick.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 

@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;

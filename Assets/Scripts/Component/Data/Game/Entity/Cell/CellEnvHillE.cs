@@ -4,11 +4,6 @@ namespace Game.Game
 {
     public sealed class CellEnvHillE : CellEnvironmentE
     {
-        public bool CanExtractMine(in CellBuildEs buildEs)
-        {
-            return buildEs.BuildingE.HaveBuilding && buildEs.BuildingE.BuildTC.Is(BuildingTypes.Mine)
-                && HaveEnvironment;
-        }
         public bool CanExtractPawn(in CellUnitEs unitEs, in CellEnvironmentEs envEs)
         {
             return unitEs.TypeE.Is(UnitTypes.Pawn) && unitEs.ConditionE.Is(ConditionUnitTypes.Relaxed)

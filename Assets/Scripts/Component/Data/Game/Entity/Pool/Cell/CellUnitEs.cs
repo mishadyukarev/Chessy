@@ -90,7 +90,7 @@ namespace Game.Game
         
 
 
-        public CellUnitEs(in byte idx, in EcsWorld gameW)
+        internal CellUnitEs(in byte idx, in EcsWorld gameW)
         {
             Idx = idx;
 
@@ -130,7 +130,7 @@ namespace Game.Game
             TypeE.UnitT = UnitTypes.None;
             CornedE.IsCornered = false;
             OwnerE.PlayerT = PlayerTypes.None;
-            LevelE.Level = LevelTypes.None;
+            LevelE.LevelT = LevelTypes.None;
         }
         void Set(in byte idx_to, in Entities ents)
         {
@@ -149,7 +149,7 @@ namespace Game.Game
             ents.UnitEffectEs(idx_to).FrozenArrowE.IsFrozenArraw = EffectEs.FrozenArrowE.IsFrozenArraw;
 
             ents.UnitTWE(idx_to).ToolWeaponT = ToolWeaponE.ToolWeaponT;
-            ents.UnitTWE(idx_to).Level = ToolWeaponE.Level;
+            ents.UnitTWE(idx_to).LevelT = ToolWeaponE.LevelT;
             ents.UnitTWE(idx_to).Protection = ToolWeaponE.Protection;
 
             foreach (var abilityT in CooldownKeys) ents.UnitEs(idx_to).Ability(abilityT).Shift(Ability(abilityT));
@@ -219,8 +219,6 @@ namespace Game.Game
 
             if (StatEs.StepE.Have(ability))
             {
-
-
                 if (ents.BuildE(idx_0).Is(BuildingTypes.Teleport))
                 {
                     var idx_start = ents.StartTeleportE.WhereC.Idx;
@@ -255,9 +253,22 @@ namespace Game.Game
         {
             var idx_0 = Idx;
 
-            foreach (var idx_1 in ents.CellWorker.GetIdxsAround(idx_0))
+            if (StatEs.StepE.Have(ability))
             {
-                ents.UnitEs(idx_1).SetNew((UnitTypes.Skeleton, LevelTypes.First, OwnerE.PlayerT, ConditionUnitTypes.None, false), ents);
+                StatEs.StepE.Take(ability);
+
+                foreach (var idx_1 in ents.CellWorker.GetIdxsAround(idx_0))
+                {
+                    if (!ents.UnitTypeE(idx_1).HaveUnit && !ents.EnvMountainE(idx_1).HaveEnvironment)
+                    {
+                        ents.UnitEs(idx_1).SetNew((UnitTypes.Skeleton, LevelTypes.First, OwnerE.PlayerT, ConditionUnitTypes.None, false), ents);
+                    }
+                   
+                }
+            }
+            else
+            {
+                ents.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

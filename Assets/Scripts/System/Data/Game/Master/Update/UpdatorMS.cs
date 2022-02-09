@@ -39,7 +39,7 @@ namespace Game.Game
                 {
                     //CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
-                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownUnit_0.Player).Take(ResourcesInInventorValues.CostFood(unit_0.Unit));
+                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownUnit_0.Player).Take(ResourcesInInventorValues.CostFoodForFeedingThem(unit_0.Unit));
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {

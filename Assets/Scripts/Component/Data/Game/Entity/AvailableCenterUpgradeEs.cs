@@ -39,7 +39,7 @@ namespace Game.Game
 
                 _water.Add(player, new HaveUpgradeE(true, gameW));
 
-                for (var build = BuildingTypes.Farm; build <= BuildingTypes.Mine; build++)
+                for (var build = BuildingTypes.Farm; build <= BuildingTypes.Woodcutter; build++)
                 {
                     _build.Add(build.ToString() + player, new HaveUpgradeE(true, gameW));
                 }

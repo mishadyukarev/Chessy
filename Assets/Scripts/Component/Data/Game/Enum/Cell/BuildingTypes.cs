@@ -5,9 +5,14 @@
         None,
 
         City,
+
+        House,
+        //HuntingHut,
+        Market,
+        Smelter,
+
         Farm,
         Woodcutter,
-        Mine,
         Camp,
         IceWall,
         Teleport,

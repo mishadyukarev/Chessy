@@ -5,18 +5,15 @@ namespace Game.Game
 {
     public readonly struct UIEs
     {
+        public readonly LeftUIEs LeftUIEs;
         public readonly RightUIEs RightEs;
         public readonly CenterUIEs CenterEs;
 
         internal UIEs(in EcsWorld gameW)
         {
+            LeftUIEs = new LeftUIEs(gameW);
             RightEs = new RightUIEs(gameW);
             CenterEs = new CenterUIEs(gameW);
-
-            ///Left
-            var leftZone = CanvasC.FindUnderCurZone("LeftZone").transform;
-            new EntityLeftCityUIPool(gameW, leftZone);
-            new EntityLeftEnvUIPool(gameW, leftZone);
 
 
             ///Up

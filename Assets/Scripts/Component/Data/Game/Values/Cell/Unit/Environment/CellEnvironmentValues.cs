@@ -70,12 +70,6 @@ namespace Game.Game
                         case UpgradeTypes.PickCenter: return 0.5f;
                         default: throw new Exception();
                     }
-                case BuildingTypes.Mine:
-                    switch (upgT)
-                    {
-                        case UpgradeTypes.PickCenter: return 0.5f;
-                        default: throw new Exception();
-                    }
                 default: throw new Exception();
             }
         }

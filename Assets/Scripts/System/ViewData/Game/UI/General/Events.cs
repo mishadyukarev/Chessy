@@ -9,7 +9,7 @@
             new RightUnitEventUIS(ents, entsView);
             new UpEventUIS();
 
-            new LeftCityEventUISys(ents, entsView);
+            new LeftCityEventUIS(ents, entsView);
             new LeftEnvEventUISys(ents, entsView);
         }
     }

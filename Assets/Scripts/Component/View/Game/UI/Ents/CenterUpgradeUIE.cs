@@ -33,7 +33,7 @@ namespace Game.Game
                 _units.Add(unit, gameW.NewEntity()
                     .Add(new ButtonUIC(parent.Find(unit + "_Button").GetComponent<Button>())));
 
-            for (var build = BuildingTypes.Farm; build <= BuildingTypes.Mine; build++)
+            for (var build = BuildingTypes.Farm; build <= BuildingTypes.Woodcutter; build++)
                 _builds.Add(build, gameW.NewEntity()
                     .Add(new ButtonUIC(parent.Find(build + "_Button").GetComponent<Button>())));
 

@@ -5,7 +5,7 @@ namespace Game.Game
 {
     sealed class SoundVS : SystemViewAbstract, IEcsRunSystem
     {
-        public SoundVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal SoundVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 

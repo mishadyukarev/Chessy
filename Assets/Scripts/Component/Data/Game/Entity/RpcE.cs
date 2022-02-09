@@ -107,6 +107,12 @@ namespace Game.Game
         #endregion
 
 
+        #region CityBuild
+
+        public void CityBuildToMaster(in BuildingTypes buildT, in byte idx_from, in byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { buildT, idx_from, idx_to });
+
+        #endregion
+
         public void ReadyToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Ready });
 
         public void DoneToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Done, });

@@ -15,7 +15,7 @@ namespace Game.Game
         public void SetAbility(in AbilityTypes ability, in ClickerObjectE clickerObjectE)
         {
             AbilityTCRef.Ability = ability;
-            clickerObjectE.CellClickC.Click = CellClickTypes.UniqueAbility;
+            clickerObjectE.CellClickCRef.Click = CellClickTypes.UniqueAbility;
         }
     }
 }

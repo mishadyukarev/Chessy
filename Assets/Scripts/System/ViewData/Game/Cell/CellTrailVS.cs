@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 foreach (var dir in TrailEs(idx_0).Keys)
                 {

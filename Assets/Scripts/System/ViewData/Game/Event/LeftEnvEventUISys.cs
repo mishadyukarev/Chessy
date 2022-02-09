@@ -1,4 +1,4 @@
-﻿using static Game.Game.EntityLeftEnvUIPool;
+﻿using static Game.Game.LeftEnvironmentUIEs;
 
 namespace Game.Game
 {

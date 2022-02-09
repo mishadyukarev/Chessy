@@ -7,7 +7,7 @@ namespace Game.Game
         public const int ADDING_FOOD_AFTER_MOVE = 30;
         public const int AMOUNT_FOOD_AFTER_KILL_CAMEL = 50;
 
-        internal static int AmountResources(ResourceTypes res)
+        internal static int AmountResourcesOnStartGame(in ResourceTypes res)
         {
             switch (res)
             {
@@ -20,7 +20,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        public static int CostFood(in UnitTypes unit)
+        public static int CostFoodForFeedingThem(in UnitTypes unit)
         {
             if (unit != UnitTypes.King) return 10;
             else return 0;
@@ -29,7 +29,7 @@ namespace Game.Game
 
         #region Costs
 
-        internal static int ForBuy(UnitTypes unit, ResourceTypes res)
+        internal static int ForBuy(in UnitTypes unit, in ResourceTypes res)
         {
             switch (unit)
             {
@@ -56,7 +56,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static int AmountResForBuyRes(ResourceTypes res)
+        internal static int AmountResForBuyRes(in ResourceTypes res)
         {
             switch (res)
             {
@@ -92,7 +92,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static int ForBuild(BuildingTypes build, ResourceTypes resourceType)
+        internal static int ForBuild(in BuildingTypes build, in ResourceTypes resourceType)
         {
             switch (resourceType)
             {
@@ -100,35 +100,35 @@ namespace Game.Game
                     switch (build)
                     {
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Mine: return 0;
+                        case BuildingTypes.House: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Wood:
                     switch (build)
                     {
                         case BuildingTypes.Farm: return 50;
-                        case BuildingTypes.Mine: return 50;
+                        case BuildingTypes.House: return 50;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Ore:
                     switch (build)
                     {
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Mine: return 0;
+                        case BuildingTypes.House: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Iron:
                     switch (build)
                     {
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Mine: return 0;
+                        case BuildingTypes.House: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Gold:
                     switch (build)
                     {
                         case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Mine: return 0;
+                            case BuildingTypes.House: return 0;
                         default: throw new Exception();
                     }
                 default: throw new Exception();
@@ -136,7 +136,7 @@ namespace Game.Game
 
 
         }
-        internal static int AmountResForUpgradeUnit(UnitTypes unitType, ResourceTypes resourceType)
+        internal static int AmountResForUpgradeUnit(in UnitTypes unitType, in ResourceTypes resourceType)
         {
             switch (unitType)
             {
@@ -163,7 +163,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static int AmountResForBuyTW(ToolWeaponTypes tW, LevelTypes level, ResourceTypes res)
+        internal static int AmountResForBuyTW(in ToolWeaponTypes tW, in LevelTypes level, in ResourceTypes res)
         {
             switch (level)
             {
@@ -174,7 +174,7 @@ namespace Game.Game
                             switch (res)
                             {
                                 case ResourceTypes.Food: return 0;
-                                case ResourceTypes.Wood: return 50;
+                                case ResourceTypes.Wood: return 10;
                                 case ResourceTypes.Ore: return 0;
                                 case ResourceTypes.Iron: return 0;
                                 case ResourceTypes.Gold: return 0;
@@ -189,7 +189,7 @@ namespace Game.Game
                             switch (res)
                             {
                                 case ResourceTypes.Food: return 0;
-                                case ResourceTypes.Wood: return 50;
+                                case ResourceTypes.Wood: return 30;
                                 case ResourceTypes.Ore: return 0;
                                 case ResourceTypes.Iron: return 0;
                                 case ResourceTypes.Gold: return 0;

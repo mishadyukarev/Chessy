@@ -19,7 +19,7 @@ namespace Game.Game
 
             if (isActivatedZone)
             {
-                for (var build = BuildingTypes.Farm; build <= BuildingTypes.Mine; build++)
+                for (var build = BuildingTypes.Farm; build <= BuildingTypes.Woodcutter; build++)
                 {
                     if (Es.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Es.WhoseMoveE.CurPlayerI).HaveUpgrade.Have)
                     {

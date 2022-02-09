@@ -134,6 +134,28 @@ namespace Game.Game
                 }
             }
 
+            else if (obj is BuildingTypes buildT)
+            {
+                _ents.BuildE((byte)objects[_idx_cur++]).Build_Master((byte)objects[_idx_cur++], buildT, sender, _ents);
+
+                //switch (buildT)
+                //{
+                //    case BuildingTypes.House:
+                //        _ents.BuildE((byte)objects[_idx_cur++]).Build(buildT, sender, _ents);
+                //        break;
+
+                //    case BuildingTypes.Market:
+                //        _ents.BuildE((byte)objects[_idx_cur++]).Build(buildT, sender, _ents);
+                //        break;
+
+                //    case BuildingTypes.Smelter:
+                //        _ents.BuildE((byte)objects[_idx_cur++]).Build(buildT, sender, _ents);
+                //        break;
+
+                //    default: throw new Exception();
+                //}
+            }
+
             else
             {
                 var rpcT = (RpcMasterTypes)obj;

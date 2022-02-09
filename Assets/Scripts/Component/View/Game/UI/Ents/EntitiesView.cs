@@ -15,7 +15,7 @@ namespace Game.Game
         public CellBuildingVEs BuildingVEs(in byte idx) => CellEs(idx).BuildingEs;
         public CellBuildingVE BuildingE(in byte idx, in BuildingTypes buildT) => BuildingVEs(idx).Main(buildT);
         public CellUnitVEs UnitEs(in byte idx) => CellEs(idx).UnitVEs;
-        public CellUnitVE UnitE(in byte idx, in UnitTypes unitT) => UnitEs(idx).UnitE(unitT);
+        public CellUnitVE UnitE(in byte idx, in UnitTypes unitT, in bool isSelected) => UnitEs(idx).UnitE(unitT, isSelected);
         public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
         public CellEnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
         public CellEnvironmentVE EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);

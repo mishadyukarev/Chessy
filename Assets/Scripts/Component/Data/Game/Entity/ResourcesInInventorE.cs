@@ -25,7 +25,7 @@ namespace Game.Game
             _resT = res;
             _playerT = player;
 
-            Ent.Add(new AmountC(ResourcesInInventorValues.AmountResources(res)));
+            Ent.Add(new AmountC(ResourcesInInventorValues.AmountResourcesOnStartGame(res)));
         }
 
         public void Buy(in BuildingTypes build) => ResourcesRef.Amount -= ResourcesInInventorValues.ForBuild(build, _resT);

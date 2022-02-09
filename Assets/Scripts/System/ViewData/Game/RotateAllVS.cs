@@ -6,7 +6,7 @@ namespace Game.Game
 {
     sealed class RotateAllVS : SystemViewAbstract, IEcsRunSystem
     {
-        public RotateAllVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal RotateAllVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
@@ -14,7 +14,7 @@ namespace Game.Game
         {
             var curPlayer = Es.WhoseMoveE.CurPlayerI;
 
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
                 CellVEs(idx_0).CellSR.RotParent = curPlayer == PlayerTypes.First
@@ -37,11 +37,6 @@ namespace Game.Game
             }
 
             CameraVC.SetPosRotClient(curPlayer, MainGoVC.Pos);
-        }
-
-        public void SetRotForClient(PlayerTypes player)
-        {
-
         }
     }
 }

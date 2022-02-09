@@ -14,23 +14,24 @@ namespace Game.Game
             _actions = new Dictionary<SystemViewDataTypes, Action>();
 
 
-            _actions.Add(SystemViewDataTypes.RunUpdate, new SyncSelUnitCellVS(ents, entsView).Run);
+            _actions.Add(SystemViewDataTypes.RunUpdate,
+                (Action)
+                new CellUnitVS(ents, entsView).Run
+                + new CellUnitSelectedVS(ents, entsView).Run
+                + new CellSupportVS(ents, entsView).Run);
 
             _actions.Add(SystemViewDataTypes.RunFixedUpdate,
                 (Action)
-                new CellUnitVS(ents, entsView).Run
-
-                + new UnitStatCellSyncS(ents, entsView).Run
+                new UnitStatCellSyncS(ents, entsView).Run
                 + new BuildCellVS(ents, entsView).Run
                 + new EnvCellVS(ents, entsView).Run
-                + new FireCellVS(ents, entsView).Run
-                + new CloudCellVS(ents, entsView).Run
+                + new CellFireVS(ents, entsView).Run
+                + new CellCloudVS(ents, entsView).Run
                 + new RiverCellVS(ents, entsView).Run
                 + new CellBarsEnvVS(ents, entsView).Run
                 + new CellTrailVS(ents, entsView).Run
-                + new SupportCellVS(ents, entsView).Run
-                + new FliperAndRotatorUnitVS(ents, entsView).Run
                 + new CellUnitEffectFrozenArrawVS(ents, entsView).Run
+                
 
                 + new CellUnitEffectStunVS(ents, entsView).Run
                 + new CellUnitEffectShieldVS(ents, entsView).Run

@@ -20,7 +20,7 @@ namespace Game.Game
             get => ToolWeaponTC.ToolWeapon;
             internal set => ToolWeaponTCRef.ToolWeapon = value;
         }
-        public LevelTypes Level
+        public LevelTypes LevelT
         {
             get => LevelTCRef.Level;
             internal set => LevelTCRef.Level = value;

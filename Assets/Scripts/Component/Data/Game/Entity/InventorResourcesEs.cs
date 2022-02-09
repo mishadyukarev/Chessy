@@ -37,9 +37,10 @@ namespace Game.Game
             }
         }
 
-        public bool TryBuyBuilding_Master(in BuildingTypes build, in PlayerTypes player, in Player sender, in Entities e)
+
+        public bool CanBuyBuilding_Master(in BuildingTypes build, in PlayerTypes player, out Dictionary<ResourceTypes, int> needRes)
         {
-            var needRes = new Dictionary<ResourceTypes, int>();
+            needRes = new Dictionary<ResourceTypes, int>();
             var canCreatBuild = true;
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
@@ -47,21 +48,16 @@ namespace Game.Game
                 needRes.Add(res, Resource(res, player).Need(build));
                 if (canCreatBuild) canCreatBuild = Resource(res, player).CanBuy(build);
             }
-
-            if (canCreatBuild)
-            {
-                for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-                    Resource(resType, player).Buy(build);
-            }
-            else
-            {
-                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-            }
-
             return canCreatBuild;
         }
 
-        public bool CanBuyUnit(in UnitTypes unit, in PlayerTypes player, out Dictionary<ResourceTypes, int> needRes)
+        public void BuyBuilding_Master(in BuildingTypes build, in PlayerTypes player)
+        {
+            for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
+                Resource(resType, player).Buy(build);
+        }
+
+        public bool CanBuyUnit_Master(in UnitTypes unit, in PlayerTypes player, out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
             var canCreatBuild = true;
@@ -74,7 +70,7 @@ namespace Game.Game
 
             return canCreatBuild;
         }
-        public void BuyUnit(in PlayerTypes player, in UnitTypes unit)
+        public void BuyUnit_Master(in PlayerTypes player, in UnitTypes unit)
         {
             for (ResourceTypes resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
                 Resource(resType, player).Buy(unit);
@@ -108,9 +104,7 @@ namespace Game.Game
             }
         }
 
-
-
-        public bool CanBuy(PlayerTypes player, ResourceTypes res, out Dictionary<ResourceTypes, int> needRes)
+        public bool CanBuy_Master(PlayerTypes player, ResourceTypes res, out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
             var canCreatBuild = true;
@@ -125,7 +119,7 @@ namespace Game.Game
 
             return canCreatBuild;
         }
-        public void BuyRes(PlayerTypes player, ResourceTypes res)
+        public void BuyRes_Master(PlayerTypes player, ResourceTypes res)
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
             {
@@ -148,8 +142,6 @@ namespace Game.Game
             Resource(res, player).Add(amount);
         }
 
-
-
         public bool CanUpgradeUnit(PlayerTypes playerType, UnitTypes unitType, out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
@@ -170,8 +162,6 @@ namespace Game.Game
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
                 Resource(resType, playerType).Take(ResourcesInInventorValues.AmountResForUpgradeUnit(unitType, resType));
         }
-
-
 
         public bool CanBuyTW(PlayerTypes player, ToolWeaponTypes tw, LevelTypes lev, out Dictionary<ResourceTypes, int> needRes)
         {
@@ -194,9 +184,6 @@ namespace Game.Game
                 Resource(resType, player).Take(ResourcesInInventorValues.AmountResForBuyTW(tw, level, resType));
         }
 
-
-
-
         public void CreateUnit_Master(in UnitTypes unit, in Player sender, in Entities e)
         {
             var playerSend = e.WhoseMoveE.WhoseMove.Player;
@@ -204,9 +191,9 @@ namespace Game.Game
 
             if (e.WhereBuildingEs.TryGetBuilding(BuildingTypes.City, playerSend, out var idx_city))
             {
-                if (CanBuyUnit(unit, playerSend, out var needRes))
+                if (CanBuyUnit_Master(unit, playerSend, out var needRes))
                 {
-                    BuyUnit(playerSend, unit);
+                    BuyUnit_Master(playerSend, unit);
                     e.InventorUnitsEs.Units(unit, LevelTypes.First, playerSend).AddUnit();
 
                     e.RpcE.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
@@ -227,9 +214,9 @@ namespace Game.Game
         {
             var whoseMove = es.WhoseMoveE.WhoseMove.Player;
 
-            if (es.InventorResourcesEs.CanBuy(whoseMove, res, out var needRes))
+            if (es.InventorResourcesEs.CanBuy_Master(whoseMove, res, out var needRes))
             {
-                es.InventorResourcesEs.BuyRes(whoseMove, res);
+                es.InventorResourcesEs.BuyRes_Master(whoseMove, res);
 
                 es.RpcE.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }

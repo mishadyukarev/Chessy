@@ -12,9 +12,11 @@ namespace Game.Game
             Ent.Add(new SpriteRendererVC(sr));
         }
 
-        public void Enable()
+        public void Enable(in bool isVisForNext)
         {
             SRCRef.Enable();
+            if (isVisForNext) SRCRef.Color = new Color(SRCRef.Color.r, SRCRef.Color.g, SRCRef.Color.b, 1);
+            else SRCRef.Color = new Color(SRCRef.Color.r, SRCRef.Color.g, SRCRef.Color.b, 0.6f);
         }
         public void Disable()
         {

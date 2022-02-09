@@ -8,20 +8,18 @@
 
         public void Run()
         {
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, PlayerTypes.Second).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
-                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
-                var step_0 = UnitStatEs(idx_0).StepE.StepsC;
+                var ownUnit_0 = Es.UnitOwnerE(idx_0).OwnerC;
 
-                if (!UnitEffectEs(idx_0).StunE.IsStunned)
+                if (!Es.UnitEffectEs(idx_0).StunE.IsStunned)
                 {
-                    if (unit_0.Is(UnitTypes.Pawn, UnitTypes.King, UnitTypes.Undead, UnitTypes.Hell))
+                    if (Es.UnitTypeE(idx_0).HaveUnit && Es.UnitTypeE(idx_0).IsMelee && !Es.UnitTypeE(idx_0).Is(UnitTypes.Scout))
                     {
                         DirectTypes dir_cur = default;
 
@@ -45,7 +43,7 @@
                                     {
                                         if (!own_1.Is(ownUnit_0.Player))
                                         {
-                                            if (unit_0.Is(UnitTypes.Pawn))
+                                            if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn))
                                             {
                                                 if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)

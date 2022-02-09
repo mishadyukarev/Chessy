@@ -77,6 +77,9 @@ TagManager:
   - name: Water
     uniqueID: 3922430727
     locked: 0
+  - name: ToolWeapon
+    uniqueID: 2026191041
+    locked: 0
   - name: Unit
     uniqueID: 1121464767
     locked: 0

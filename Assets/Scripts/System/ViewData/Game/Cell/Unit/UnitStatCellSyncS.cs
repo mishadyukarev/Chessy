@@ -12,7 +12,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
                 var hpUnit_0 = UnitStatEs(idx_0).Hp.HealthC;

@@ -41,7 +41,7 @@ namespace Game.Game
 
             var selZone = centerZone.transform.Find("SelectorType");
 
-            for (var click = CellClickTypes.SimpleClick; click <= CellClickTypes.UniqueAbility; click++)
+            for (var click = CellClickTypes.SimpleClick; click < CellClickTypes.End; click++)
             {
                 click = (CellClickTypes)((int)click);
                 var str = click.ToString();

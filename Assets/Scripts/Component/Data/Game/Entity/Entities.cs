@@ -34,7 +34,8 @@ namespace Game.Game
         public readonly SelectedUnitE SelectedUnitE;
         public readonly ClickerObjectE ClickerObjectE;
         public readonly WhoseMoveE WhoseMoveE;
-        public readonly SelectedAbilityE SelectedUniqueAbilityE;
+        public readonly SelectedAbilityE SelectedAbilityE;
+        public readonly SelectedBuildingE SelectedBuildingE;
         public readonly RpcE RpcE;
         public readonly SelectedToolWeaponE SelectedToolWeaponE;
         public readonly StartTeleportE StartTeleportE;
@@ -144,7 +145,8 @@ namespace Game.Game
             ClickerObjectE = new ClickerObjectE(CellClickTypes.SimpleClick, gameW);
             SunSidesE = new SunSidesE(SunSideTypes.Dawn, gameW);
             SelectedUnitE = new SelectedUnitE(gameW);
-            SelectedUniqueAbilityE = new SelectedAbilityE(gameW);
+            SelectedAbilityE = new SelectedAbilityE(gameW);
+            SelectedBuildingE = new SelectedBuildingE(gameW);
             SelectedToolWeaponE = new SelectedToolWeaponE(gameW);
             StartTeleportE = new StartTeleportE(gameW);
             EndTeleportE = new EndTeleportE(gameW);

@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using static Game.Game.EntityLeftCityUIPool;
-using static Game.Game.EntityLeftEnvUIPool;
+using static Game.Game.LeftEnvironmentUIEs;
 
 namespace Game.Game
 {
-    public readonly struct ButtonUIC : ILeftCityMeltButtonUIE, ILeftCityBuyButtonsUIE, ILeftEnvInfoButtonUIE
+    public readonly struct ButtonUIC : ILeftEnvInfoButtonUIE
     {
         readonly Button _button;
 
@@ -15,7 +14,6 @@ namespace Game.Game
             get => _button.image.color;
             set => _button.image.color = value;
         }
-        public bool IsActiveParent => _button.transform.parent.gameObject.activeSelf;
         public bool IsEnabled
         {
             get => _button.enabled;

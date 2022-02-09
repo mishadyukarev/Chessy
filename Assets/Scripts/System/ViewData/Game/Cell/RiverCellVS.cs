@@ -5,13 +5,13 @@ namespace Game.Game
 {
     sealed class RiverCellVS : SystemViewAbstract, IEcsRunSystem
     {
-        public RiverCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal RiverCellVS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
         }
 
         public void Run()
         {
-            foreach (var idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 ref var river_0 = ref RiverEs(idx_0).RiverE.RiverTC;
 

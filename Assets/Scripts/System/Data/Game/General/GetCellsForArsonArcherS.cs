@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            foreach (var idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 

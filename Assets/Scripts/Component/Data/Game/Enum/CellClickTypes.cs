@@ -3,7 +3,6 @@
     public enum CellClickTypes
     {
         None,
-        Start = None,
 
         SimpleClick,
 
@@ -13,9 +12,7 @@
         GiveScout,
         GiveHero,
         UniqueAbility,
-
-        //FirstClick,
-        //AllOtherClicks,
+        CityBuildBuilding,
 
         End,
     }

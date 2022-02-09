@@ -63,7 +63,7 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.FireArcher:
-                            Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.FireArcher, Es.ClickerObjectE);
+                            Es.SelectedAbilityE.SetAbility(AbilityTypes.FireArcher, Es.ClickerObjectE);
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
@@ -74,7 +74,7 @@ namespace Game.Game
 
                         case AbilityTypes.StunElfemale:
                             {
-                                Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.StunElfemale, Es.ClickerObjectE);
+                                Es.SelectedAbilityE.SetAbility(AbilityTypes.StunElfemale, Es.ClickerObjectE);
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
                             break;
@@ -98,7 +98,7 @@ namespace Game.Game
                         case AbilityTypes.ChangeDirectionWind:
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
-                                Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.ChangeDirectionWind, Es.ClickerObjectE);
+                                Es.SelectedAbilityE.SetAbility(AbilityTypes.ChangeDirectionWind, Es.ClickerObjectE);
                             }
                             break;
 
@@ -127,12 +127,12 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.DirectWave:
-                            Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.DirectWave, Es.ClickerObjectE);
+                            Es.SelectedAbilityE.SetAbility(AbilityTypes.DirectWave, Es.ClickerObjectE);
                             break;
 
 
                         case AbilityTypes.Resurrect:
-                            Es.SelectedUniqueAbilityE.SetAbility(AbilityTypes.Resurrect, Es.ClickerObjectE);
+                            Es.SelectedAbilityE.SetAbility(AbilityTypes.Resurrect, Es.ClickerObjectE);
                             break;
 
                         case AbilityTypes.SetTeleport:

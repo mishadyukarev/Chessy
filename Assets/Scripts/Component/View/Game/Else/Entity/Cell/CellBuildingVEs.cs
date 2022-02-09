@@ -14,11 +14,11 @@ namespace Game.Game
         {
             _ents = new Dictionary<BuildingTypes, CellBuildingVE>();
 
-            var build = cell.transform.Find("Building");
+            var build = cell.transform.Find("Building+");
 
             for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)
             {
-                _ents.Add(buildT, new CellBuildingVE(build.transform.Find(buildT.ToString()).GetComponent<SpriteRenderer>(), gameW));
+                _ents.Add(buildT, new CellBuildingVE(build.transform.Find(buildT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
             }
         }
     }

@@ -13,66 +13,91 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
-                var levelUnit_0 = UnitEs(idx_0).LevelE.LevelTC.Level;
-
-                var isCorned = UnitEs(idx_0).CornedE.IsCornered;
-
-                var tw_0 = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
-                var twLevel_0 = UnitEs(idx_0).ToolWeaponE.LevelTC;
-
-
                 for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
                 {
-                    VEs.UnitE(idx_0, unitT).Disable();
+                    if (unitT == UnitTypes.Pawn)
+                    {
+                        for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
+                        {
+                            VEs.UnitEs(idx_0).PawnE(true, levT).Disable();
+                            VEs.UnitEs(idx_0).PawnE(false, levT).Disable();
+                        }
+
+                       
+                    }
+                    else if (unitT == UnitTypes.Archer)
+                    {
+                        for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
+                        {
+                            VEs.UnitEs(idx_0).ArcherE(true, true, levT).Disable();
+                            VEs.UnitEs(idx_0).ArcherE(true, false, levT).Disable();
+                            VEs.UnitEs(idx_0).ArcherE(false, true, levT).Disable();
+                            VEs.UnitEs(idx_0).ArcherE(false, false, levT).Disable();
+                        }
+                    }
+                    else
+                    {
+                        VEs.UnitE(idx_0, unitT, true).Disable();
+                        VEs.UnitE(idx_0, unitT, false).Disable();
+                    } 
                 }
 
-                //ref var mainUnit_0 = ref CellVEs(idx_0).UnitVEs.UnitMainSR;
-                //ref var extraUnit_0 = ref CellVEs(idx_0).UnitVEs.UnitExtraSR;
+                for (var tw = ToolWeaponTypes.None + 1; tw < ToolWeaponTypes.End; tw++)
+                {
+                    if(tw == ToolWeaponTypes.Shield)
+                    {
+                        for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
+                        {
+                            VEs.UnitEs(idx_0).ShieldE(levT, true).Disable();
+                            VEs.UnitEs(idx_0).ShieldE(levT, false).Disable();
+                        }
+                    }
+                    else
+                    {
+                        VEs.UnitEs(idx_0).ToolWeaponE(tw, true).Disable();
+                        VEs.UnitEs(idx_0).ToolWeaponE(tw, false).Disable();
+                    }
+                }
 
 
-                //mainUnit_0.Disable();
-                //extraUnit_0.Disable();
+
 
                 if (Es.UnitTypeE(idx_0).HaveUnit)
                 {
                     if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                     {
+                        var isSelected = idx_0 == Es.SelectedIdxE.IdxC.Idx;
+                        var isVisForNext = Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.NextPlayerFrom(Es.WhoseMoveE.CurPlayerI)).IsVisibleC.IsVisible;
+
                         var unitT = Es.UnitTypeE(idx_0).UnitT;
+                        var levT = Es.UnitLevelE(idx_0).LevelT;
 
-                        VEs.UnitE(idx_0, unitT).Enable();
+                        if (unitT == UnitTypes.Pawn)
+                        {
+                            VEs.UnitEs(idx_0).PawnE(isSelected, Es.UnitLevelE(idx_0).LevelT).Enable(isVisForNext);
 
-                        if (unit_0.Is(UnitTypes.Archer))
-                        {
-                           
-                        }
-                        else
-                        {
-                            if (unit_0.Is(UnitTypes.Pawn))
+                            if (Es.UnitEs(idx_0).ToolWeaponE.ToolWeaponTC.HaveTW)
                             {
-                                if (tw_0.HaveTW)
+                                var twT = Es.UnitEs(idx_0).ToolWeaponE.ToolWeaponT;
+
+                                if (twT == ToolWeaponTypes.Shield)
                                 {
-                                    //extraUnit_0.Sprite = VEs.ResourceSpriteEs.Sprite(tw_0.ToolWeapon, twLevel_0.Level).SpriteC.Sprite;
+                                    VEs.UnitEs(idx_0).ShieldE(Es.UnitEs(idx_0).ToolWeaponE.LevelT, isSelected).Enable(isVisForNext);
+                                }
+                                else
+                                {
+                                    VEs.UnitEs(idx_0).ToolWeaponE(twT, isSelected).Enable(isVisForNext);
                                 }
                             }
                         }
 
-                        if (UnitEs(idx_0).VisibleE(Es.WhoseMoveE.NextPlayerFrom(Es.WhoseMoveE.CurPlayerI)).IsVisibleC.IsVisible)
+                        else if (unitT == UnitTypes.Archer)
                         {
-                            //mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 1);
+                            VEs.UnitEs(idx_0).ArcherE(Es.UnitEs(idx_0).CornedE.IsCornered, isSelected, levT).Enable(isVisForNext);
                         }
                         else
                         {
-                            //mainUnit_0.Color = new Color(mainUnit_0.Color.r, mainUnit_0.Color.g, mainUnit_0.Color.b, 0.6f);
-                        }
-
-                        if (UnitEs(idx_0).VisibleE(Es.WhoseMoveE.NextPlayerFrom(Es.WhoseMoveE.CurPlayerI)).IsVisibleC.IsVisible)
-                        {
-                            //extraUnit_0.Color = new Color(extraUnit_0.Color.r, extraUnit_0.Color.g, extraUnit_0.Color.b, 1);
-                        }
-                        else
-                        {
-                            //extraUnit_0.Color = new Color(extraUnit_0.Color.r, extraUnit_0.Color.g, extraUnit_0.Color.b, 0.6f);
+                            VEs.UnitE(idx_0, unitT, isSelected).Enable(isVisForNext);
                         }
                     }
                 }

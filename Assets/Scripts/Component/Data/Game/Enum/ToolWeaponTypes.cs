@@ -3,7 +3,6 @@
     public enum ToolWeaponTypes
     {
         None,
-        Start = None,
 
         Pick,
         Sword,

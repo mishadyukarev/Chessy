@@ -10,6 +10,11 @@ namespace Game.Game
         public UnitTC UnitTC => Ent.Get<UnitTC>();
         public LevelTC LevelTC => Ent.Get<LevelTC>();
 
+        public LevelTypes LevelT
+        {
+            get => LevelTCRef.Level;
+            internal set => LevelTCRef.Level = value;
+        }
         public bool IsSelectedUnit => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
 
         internal SelectedUnitE(in EcsWorld gameW) : base(gameW)
@@ -21,7 +26,7 @@ namespace Game.Game
         {
             UnitTCRef.Unit = unitT;
             LevelTCRef.Level = level;
-            clickerObjectE.CellClickC.Click = CellClickTypes.SetUnit;
+            clickerObjectE.CellClickCRef.Click = CellClickTypes.SetUnit;
         }
     }
 }

@@ -28,7 +28,6 @@ namespace Game.Game
 
             Builds(BuildingTypes.Farm).AddListener(delegate { UpgradeBuild(BuildingTypes.Farm); });
             Builds(BuildingTypes.Woodcutter).AddListener(delegate { UpgradeBuild(BuildingTypes.Woodcutter); });
-            Builds(BuildingTypes.Mine).AddListener(delegate { UpgradeBuild(BuildingTypes.Mine); });
 
             Water.AddListener(UpgradeWater);
 
