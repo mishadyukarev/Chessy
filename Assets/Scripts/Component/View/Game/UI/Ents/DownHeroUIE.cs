@@ -17,9 +17,9 @@ namespace Game.Game
         public static ref ImageUIC Image(in UnitTypes unit) => ref _units[unit].Get<ImageUIC>();
         public static ref TextUIC Cooldown => ref _ent.Get<TextUIC>();
 
-        public DownHeroUIE(in EcsWorld gameW, in Transform gtZone)
+        public DownHeroUIE(in EcsWorld gameW, in Transform down)
         {
-            var hero = gtZone.Find("Hero");
+            var hero = down.Find("Hero");
 
             _ent = gameW.NewEntity()
                 .Add(new GameObjectVC(hero.gameObject))

@@ -8,7 +8,7 @@ namespace Game.Game
     public readonly struct EntitiesView
     {
         public readonly ResourceSpriteVEs ResourceSpriteEs;
-        public readonly UIEs UIEs;
+        public readonly EntitiesUI UIEs;
 
         readonly CellVEs[] _cellVEs;
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
@@ -93,7 +93,7 @@ namespace Game.Game
             new CellBarsVEs(gameW, cells);
 
 
-            UIEs = new UIEs(gameW);
+            UIEs = new EntitiesUI(gameW);
 
 
             var isActiveParenCells = new bool[CellStartValues.ALL_CELLS_AMOUNT];

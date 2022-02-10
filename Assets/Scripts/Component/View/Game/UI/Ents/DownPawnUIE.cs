@@ -8,33 +8,20 @@ namespace Game.Game
 {
     public readonly struct DownPawnUIE
     {
-        static readonly Dictionary<UnitTypes, Entity> _taker;
-        static readonly Dictionary<UnitTypes, Entity> _create;
+        static Entity _taker;
 
-        public static ref C Taker<C>(in UnitTypes unit) where C : struct => ref _taker[unit].Get<C>();
-        public static ref C BuyUnit<C>(in UnitTypes unit) where C : struct => ref _create[unit].Get<C>();
+        public static ref ButtonUIC ButtonUIC => ref _taker.Get<ButtonUIC>();
+        public static ref TextUIC TextUIC => ref _taker.Get<TextUIC>();
 
-        static DownPawnUIE()
+        public DownPawnUIE(in EcsWorld gameW, in Transform down)
         {
-            _taker = new Dictionary<UnitTypes, Entity>();
-            _create = new Dictionary<UnitTypes, Entity>();
+            var pawnT = down.Find(UnitTypes.Pawn.ToString());
 
-            for (var unit = UnitTypes.None; unit <= UnitTypes.End; unit++)
-            {
-                _taker.Add(unit, default);
-                _create.Add(unit, default);
-            }
-        }
-        public DownPawnUIE(in EcsWorld gameW, in Transform takeUnit)
-        {
-            _create[UnitTypes.Pawn] = gameW.NewEntity()
-                .Add(new ButtonUIC(takeUnit.Find("CreatePawn_Button").GetComponent<Button>()));
+            var button = pawnT.Find("Button").GetComponent<Button>();
 
-
-            var button = takeUnit.Find(UnitTypes.Pawn.ToString()).GetComponent<Button>();
-            _taker[UnitTypes.Pawn] =  gameW.NewEntity()
+            _taker =  gameW.NewEntity()
                 .Add(new ButtonUIC(button))
-                .Add(new TextUIC(button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
+                .Add(new TextUIC(pawnT.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
         }
     }
 }

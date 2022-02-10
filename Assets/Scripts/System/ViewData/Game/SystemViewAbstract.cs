@@ -10,7 +10,7 @@
         protected CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitVEs(idx).EffectVEs;
 
 
-        protected UIEs UIEs => VEs.UIEs;
+        protected EntitiesUI UIEs => VEs.UIEs;
         protected CenterUIEs CenterUIEs => UIEs.CenterEs;
         protected RightUIEs RightUIEs => UIEs.RightEs;
 

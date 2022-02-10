@@ -7,13 +7,17 @@ namespace Game.Game
     {
         public readonly LeftCityUIEs CityEs;
         public readonly LeftEnvironmentUIEs EnvironmentEs;
+        public readonly LeftMarketUIEs MarketEs;
+        public readonly LeftSmelterUIEs SmelterEs;
 
         internal LeftUIEs(in EcsWorld gameW)
         {
-            ///Left
             var leftZone = CanvasC.FindUnderCurZone("Left+").transform;
-            CityEs = new LeftCityUIEs(gameW, leftZone);
-            EnvironmentEs = new LeftEnvironmentUIEs(gameW, leftZone);
+
+            CityEs = new LeftCityUIEs(leftZone, gameW);
+            EnvironmentEs = new LeftEnvironmentUIEs(leftZone, gameW);
+            MarketEs = new LeftMarketUIEs(leftZone, gameW);
+            SmelterEs = new LeftSmelterUIEs(leftZone, gameW);
         }
     }
 }

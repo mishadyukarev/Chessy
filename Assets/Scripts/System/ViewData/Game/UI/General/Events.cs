@@ -10,7 +10,9 @@
             new UpEventUIS();
 
             new LeftCityEventUIS(ents, entsView);
-            new LeftEnvEventUISys(ents, entsView);
+            new LeftEnvEventUISys(ents, entsView.UIEs);
+            new LeftMarketEventUIS(ents, entsView);
+            new LeftSmelterEventUIS(ents, entsView.UIEs);
         }
     }
 }

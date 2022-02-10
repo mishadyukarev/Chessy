@@ -53,9 +53,9 @@ namespace Game.Game
                 + new PickUpgUIS(ents, entsView).Run
                 + new HeroesSyncUIS(ents, entsView).Run
 
-
-                + new BuildZoneUIS(ents, entsView).Run
-                + new EnvUIS(ents, entsView).Run);
+                ///Left
+                + new LeftZonesUIS(ents, entsView.UIEs).Run
+                + new EnvUIS(ents, entsView.UIEs).Run);
         }
 
         public void Run(in UITypes type)

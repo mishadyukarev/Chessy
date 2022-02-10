@@ -9,10 +9,12 @@ namespace Game.Game
         ref AmountC HealthRef => ref Ent.Get<AmountC>();
         ref BuildingTC BuildTCRef => ref Ent.Get<BuildingTC>();
         ref PlayerTC PlayerTCRef => ref Ent.Get<PlayerTC>();
+        ref IsActiveSmelterC IsActiveSmelterCRef => ref Ent.Get<IsActiveSmelterC>();
 
         public AmountC Health => Ent.Get<AmountC>();
         public BuildingTC BuildTC => Ent.Get<BuildingTC>();
         public PlayerTC OwnerC => Ent.Get<PlayerTC>();
+        public IsActiveSmelterC IsActiveSmelterC => Ent.Get<IsActiveSmelterC>();
 
         public bool Is(params BuildingTypes[] builds) => BuildTC.Is(builds);
         public bool Is(params PlayerTypes[] owners) => OwnerC.Is(owners);
@@ -31,13 +33,23 @@ namespace Game.Game
         {
         }
 
-        public void SetNew(in BuildingTypes build, in PlayerTypes owner)
+        public void SetNew(in BuildingTypes buildT, in PlayerTypes ownerT)
         {
             if (HaveBuilding) throw new Exception("There's got building on cell");
 
-            BuildTCRef.Build = build;
-            PlayerTCRef.Player = owner;
-            HealthRef.Amount = CellBuildingValues.MaxAmountHealth(build);
+            BuildTCRef.Build = buildT;
+            PlayerTCRef.Player = ownerT;
+            HealthRef.Amount = CellBuildingValues.MaxAmountHealth(buildT);
+        }
+        public void SetNewHouse(in PlayerTypes owner, in MaxAvailablePawnsE maxPawnsE)
+        {
+            SetNew(BuildingTypes.House, owner);
+            maxPawnsE.Add();
+        }
+        public void SetNewSmelter(in PlayerTypes owner)
+        {
+            SetNew(BuildingTypes.Smelter, owner);
+            IsActiveSmelterCRef.IsActive = false;
         }
         public void Destroy(in Entities ents)
         {
@@ -51,7 +63,6 @@ namespace Game.Game
             PlayerTCRef.Player = PlayerTypes.None;
             HealthRef.Amount = 0;
         }
-
         public void Defrost(in Entities ents)
         {
             if (!HaveBuilding) throw new Exception("There's not got building on cell");
@@ -60,12 +71,15 @@ namespace Game.Game
             HealthRef.Amount--;
             if (!IsAlive) Destroy(ents);
         }
-
         public void Sync(in int health, in BuildingTypes build, in PlayerTypes player)
         {
             HealthRef.Amount = health;
             BuildTCRef.Build = build;
             PlayerTCRef.Player = player;
+        }
+        public void ToggleSmelter()
+        {
+            IsActiveSmelterCRef.IsActive = !IsActiveSmelterCRef.IsActive;
         }
 
         public void Build_Master(in byte idx_to_0, in BuildingTypes buildT, in Player sender, in Entities ents)
@@ -77,7 +91,7 @@ namespace Game.Game
 
             foreach (var idx_to_1 in ents.CellSpaceWorker.GetIdxsAround(idx_to_0))
             {
-                if (ents.BuildE(idx_to_1).Is(BuildingTypes.City, BuildingTypes.House))
+                if (ents.BuildE(idx_to_1).Is(BuildingTypes.City, BuildingTypes.House, BuildingTypes.Market, BuildingTypes.Smelter))
                 {
                     ents.CellSpaceWorker.TryGetDirect(idx_to_0, idx_to_1, out var dir);
 
@@ -86,7 +100,22 @@ namespace Game.Game
                         if (ents.InventorResourcesEs.CanBuyBuilding_Master(buildT, whoseMove, out var needRes))
                         {
                             ents.InventorResourcesEs.BuyBuilding_Master(buildT, whoseMove);
-                            ents.BuildE(idx_to_0).SetNew(buildT, whoseMove);
+
+                            if (buildT == BuildingTypes.House)
+                            {
+                                ents.BuildE(idx_to_0).SetNewHouse(whoseMove, ents.MaxAvailablePawnsE(whoseMove));
+                            }
+                            else if (buildT == BuildingTypes.Smelter)
+                            {
+                                ents.BuildE(idx_to_0).SetNewSmelter(whoseMove);
+                            }
+                            else
+                            {
+                                ents.BuildE(idx_to_0).SetNew(buildT, whoseMove);
+                            }
+
+
+                            
                             break;
                         }
                         else

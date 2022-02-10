@@ -12,8 +12,8 @@ namespace Game.Game
             switch (res)
             {
                 case ResourceTypes.None: throw new Exception();
-                case ResourceTypes.Food: return 250;
-                case ResourceTypes.Wood: return 250;
+                case ResourceTypes.Food: return 0;
+                case ResourceTypes.Wood: return 0;
                 case ResourceTypes.Ore: return 0;
                 case ResourceTypes.Iron: return 5;
                 case ResourceTypes.Gold: return 5;
@@ -29,44 +29,25 @@ namespace Game.Game
 
         #region Costs
 
-        internal static int ForBuy(in UnitTypes unit, in ResourceTypes res)
+        public static int ResourcesForBuyFromMarket(in MarketBuyTypes marketT)
         {
-            switch (unit)
+            switch (marketT)
             {
-                case UnitTypes.Pawn:
-                    switch (res)
-                    {
-                        case ResourceTypes.Food: return 50;
-                        case ResourceTypes.Wood: return 0;
-                        case ResourceTypes.Ore: return 0;
-                        case ResourceTypes.Iron: return 0;
-                        case ResourceTypes.Gold: return 0;
-                        default: throw new Exception();
-                    }
+                case MarketBuyTypes.FoodToWood: return 100;
+                case MarketBuyTypes.WoodToFood: return 50;
+                case MarketBuyTypes.GoldToFood: return 1;
+                case MarketBuyTypes.GoldToWood: return 1;
                 default: throw new Exception();
             }
         }
-        internal static int AmountResForBuyRes(in ResourceTypes res)
+        public static int ResourcesAfterBuyInMarket(in MarketBuyTypes marketT)
         {
-            switch (res)
+            switch (marketT)
             {
-                case ResourceTypes.Food: return 0;
-                case ResourceTypes.Wood: return 0;
-                case ResourceTypes.Ore: return 0;
-                case ResourceTypes.Iron: return 0;
-                case ResourceTypes.Gold: return 1;
-                default: throw new Exception();
-            }
-        }
-        internal static int ForMelting(in ResourceTypes res)
-        {
-            switch (res)
-            {
-                case ResourceTypes.Food: return 0;
-                case ResourceTypes.Wood: return 50;
-                case ResourceTypes.Ore: return 50;
-                case ResourceTypes.Iron: return 0;
-                case ResourceTypes.Gold: return 0;
+                case MarketBuyTypes.FoodToWood: return 10;
+                case MarketBuyTypes.WoodToFood: return 10;
+                case MarketBuyTypes.GoldToFood: return 100;
+                case MarketBuyTypes.GoldToWood: return 50;
                 default: throw new Exception();
             }
         }
@@ -91,6 +72,8 @@ namespace Game.Game
                     {
                         case BuildingTypes.Farm: return 0;
                         case BuildingTypes.House: return 0;
+                        case BuildingTypes.Market: return 0;
+                        case BuildingTypes.Smelter: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Wood:
@@ -98,6 +81,8 @@ namespace Game.Game
                     {
                         case BuildingTypes.Farm: return 50;
                         case BuildingTypes.House: return 50;
+                        case BuildingTypes.Market: return 100;
+                        case BuildingTypes.Smelter: return 100;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Ore:
@@ -105,6 +90,8 @@ namespace Game.Game
                     {
                         case BuildingTypes.Farm: return 0;
                         case BuildingTypes.House: return 0;
+                        case BuildingTypes.Market: return 0;
+                        case BuildingTypes.Smelter: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Iron:
@@ -112,6 +99,8 @@ namespace Game.Game
                     {
                         case BuildingTypes.Farm: return 0;
                         case BuildingTypes.House: return 0;
+                        case BuildingTypes.Market: return 0;
+                        case BuildingTypes.Smelter: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Gold:
@@ -119,6 +108,8 @@ namespace Game.Game
                     {
                         case BuildingTypes.Farm: return 0;
                             case BuildingTypes.House: return 0;
+                        case BuildingTypes.Market: return 0;
+                        case BuildingTypes.Smelter: return 0;
                         default: throw new Exception();
                     }
                 default: throw new Exception();

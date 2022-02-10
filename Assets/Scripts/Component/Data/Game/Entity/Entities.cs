@@ -11,7 +11,7 @@ namespace Game.Game
         readonly Dictionary<ClipTypes, SoundE> _sounds0;
         readonly Dictionary<AbilityTypes, SoundE> _sounds1;
         readonly Dictionary<PlayerTypes, AvailableCenterHeroE> _availHero;
-        readonly Dictionary<PlayerTypes, MaxPawnsE> _maxPawnsEs;
+        readonly Dictionary<PlayerTypes, MaxAvailablePawnsE> _maxPawnsEs;
 
         public ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
         public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitEs unitEs) => _scoutHeroCooldownEs[unitEs.TypeE.UnitTC.Unit.ToString() + unitEs.OwnerE.OwnerC.Player];
@@ -19,7 +19,7 @@ namespace Game.Game
         public SoundE Sound(in ClipTypes clip) => _sounds0[clip];
         public SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
         public AvailableCenterHeroE AvailableCenterHero(in PlayerTypes player) => _availHero[player];
-        public MaxPawnsE MaxPawnsE(in PlayerTypes player) => _maxPawnsEs[player];
+        public MaxAvailablePawnsE MaxAvailablePawnsE(in PlayerTypes player) => _maxPawnsEs[player];
 
 
         public readonly CurrentIdxE CurrentIdxE;
@@ -78,6 +78,7 @@ namespace Game.Game
 
         public CellBuildEs BuildEs(in byte idx) => CellEs(idx).BuildEs;
         public CellBuildingE BuildE(in byte idx) => BuildEs(idx).BuildingE;
+
         public CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
         public CellEnvFertilizerE EnvFertilizerE(in byte idx) => EnvironmentEs(idx).Fertilizer;
         public CellEnvYoungForestE EnvYoungForestE(in byte idx) => EnvironmentEs(idx).YoungForest;
@@ -85,6 +86,7 @@ namespace Game.Game
         public CellEnvMountainE EnvMountainE(in byte idx) => EnvironmentEs(idx).Mountain;
         public CellEnvHillE EnvHillE(in byte idx) => EnvironmentEs(idx).Hill;
         public CellEnvFertilizerE EnvFertilizeE(in byte idx) => EnvironmentEs(idx).Fertilizer;
+
         public CellRiverEs RiverEs(in byte idx) => CellEs(idx).RiverEs;
         public CellTrailEs TrailEs(in byte idx) => CellEs(idx).TrailEs;
         public CellEffectEs EffectEs(in byte idx) => CellEs(idx).EffectEs;
@@ -114,12 +116,12 @@ namespace Game.Game
             _scoutHeroCooldownEs = new Dictionary<string, ScoutHeroCooldownE>();
             _ready = new Dictionary<PlayerTypes, ReadyE>();
             _availHero = new Dictionary<PlayerTypes, AvailableCenterHeroE>();
-            _maxPawnsEs = new Dictionary<PlayerTypes, MaxPawnsE>();
+            _maxPawnsEs = new Dictionary<PlayerTypes, MaxAvailablePawnsE>();
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
                 _ready.Add(player, new ReadyE(gameW));
                 _availHero.Add(player, new AvailableCenterHeroE(true, gameW));
-                _maxPawnsEs.Add(player, new MaxPawnsE(player, gameW));
+                _maxPawnsEs.Add(player, new MaxAvailablePawnsE(player, gameW));
 
                 for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
                 {

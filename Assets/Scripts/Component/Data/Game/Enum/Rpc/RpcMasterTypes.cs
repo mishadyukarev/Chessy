@@ -10,15 +10,12 @@
         Attack,
         ConditionUnit,
         Mistake,
-        CreateUnit,
-        MeltOre,
         SetUnit,
         Sound,
         GetHero,
         UpgradeCellUnit,
 
         GiveTakeToolWeapon,
-        BuyRes,
 
         UpgCenterUnits,
         UpgCenterBuild,

@@ -3,15 +3,20 @@ using Game.Common;
 
 namespace Game.Game
 {
-    public readonly struct UIEs
+    public readonly struct EntitiesUI
     {
-        public readonly LeftUIEs LeftUIEs;
+        public readonly LeftUIEs LeftEs;
         public readonly RightUIEs RightEs;
         public readonly CenterUIEs CenterEs;
 
-        internal UIEs(in EcsWorld gameW)
+        public LeftCityUIEs LeftCityEs => LeftEs.CityEs;
+        public LeftEnvironmentUIEs LeftEnvEs => LeftEs.EnvironmentEs;
+        public LeftMarketUIEs LeftMarketEs => LeftEs.MarketEs;
+        public LeftSmelterUIEs LeftSmelterEs => LeftEs.SmelterEs;
+
+        internal EntitiesUI(in EcsWorld gameW)
         {
-            LeftUIEs = new LeftUIEs(gameW);
+            LeftEs = new LeftUIEs(gameW);
             RightEs = new RightUIEs(gameW);
             CenterEs = new CenterUIEs(gameW);
 
@@ -25,11 +30,10 @@ namespace Game.Game
             var downZone = CanvasC.FindUnderCurZone("DownZone").transform;
             new DownToolWeaponUIEs(gameW, downZone);
             new UIEntDownDoner(gameW, downZone);
-            new UIEntDownUpgrade(gameW, downZone);
-            var takeUnitZone = downZone.Find("TakeUnitZone");
-            new DownPawnUIE(gameW, takeUnitZone);
-            new UIEntDownScout(gameW, takeUnitZone);
-            new DownHeroUIE(gameW, takeUnitZone);
+            new DownUpgradeUIE(gameW, downZone);
+            new DownPawnUIE(gameW, downZone);
+            new DownScoutUIEs(gameW, downZone);
+            new DownHeroUIE(gameW, downZone);
         }
     }
 }

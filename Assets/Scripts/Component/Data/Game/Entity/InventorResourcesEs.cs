@@ -24,7 +24,7 @@ namespace Game.Game
             }
         }
 
-        public InventorResourcesEs(in EcsWorld gameW)
+        internal InventorResourcesEs(in EcsWorld gameW)
         {
             _resources = new Dictionary<string, ResourcesInInventorE>();
 
@@ -37,6 +37,29 @@ namespace Game.Game
             }
         }
 
+        public void Melt_Master(in PlayerTypes player)
+        {
+            if (Resource(ResourceTypes.Wood, player).AmountResource >= 10 
+                && Resource(ResourceTypes.Ore, player).AmountResource >= 10)
+            {
+                Resource(ResourceTypes.Wood, player).Take(10);
+                Resource(ResourceTypes.Ore, player).Take(10);
+
+                if (UnityEngine.Random.Range(0f, 1f) <= 0.7f)
+                {
+                    if (UnityEngine.Random.Range(0f, 1f) <= 0.2f)
+                    {
+                        Resource(ResourceTypes.Gold, player).Add();
+                    }
+                    else
+                    {
+                        Resource(ResourceTypes.Iron, player).Add();
+                    }
+                }
+            }
+
+
+        }
 
         public bool CanBuyBuilding_Master(in BuildingTypes build, in PlayerTypes player, out Dictionary<ResourceTypes, int> needRes)
         {
@@ -50,96 +73,81 @@ namespace Game.Game
             }
             return canCreatBuild;
         }
-
         public void BuyBuilding_Master(in BuildingTypes build, in PlayerTypes player)
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
                 Resource(resType, player).Buy(build);
         }
 
-        public bool CanBuyUnit_Master(in UnitTypes unit, in PlayerTypes player, out Dictionary<ResourceTypes, int> needRes)
+        public bool CanBuyResourceFromMarket_Master(in MarketBuyTypes marketBuyT, in PlayerTypes player, out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
-            var canCreatBuild = true;
 
-            for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
+            needRes.Add(ResourceTypes.Food, 0);
+            needRes.Add(ResourceTypes.Wood, 0);
+            needRes.Add(ResourceTypes.Ore, 0);
+            needRes.Add(ResourceTypes.Iron, 0);
+            needRes.Add(ResourceTypes.Gold, 0);
+
+            switch (marketBuyT)
             {
-                needRes.Add(resType, Resource(resType, player).Need(unit));
-                if (canCreatBuild) canCreatBuild = Resource(resType, player).CanBuy(unit);
-            }
+                case MarketBuyTypes.FoodToWood:
+                    needRes[ResourceTypes.Food] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                    break;
 
-            return canCreatBuild;
-        }
-        public void BuyUnit_Master(in PlayerTypes player, in UnitTypes unit)
-        {
-            for (ResourceTypes resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-                Resource(resType, player).Buy(unit);
-        }
+                case MarketBuyTypes.WoodToFood:
+                    needRes[ResourceTypes.Wood] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                    break;
 
-        public void TryMeltOre_Master(in Player sender, in Entities e)
-        {
-            var whoseMove = e.WhoseMoveE.WhoseMove.Player;
+                case MarketBuyTypes.GoldToFood:
+                    needRes[ResourceTypes.Gold] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                    break;
 
+                case MarketBuyTypes.GoldToWood:
+                    needRes[ResourceTypes.Gold] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                    break;
 
-            var needRes = new Dictionary<ResourceTypes, int>();
-            var canMelt = true;
-
-            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-            {
-                needRes.Add(res, Resource(res, whoseMove).NeedForMelting());
-
-                if (canMelt) canMelt = Resource(res, whoseMove).CanBuyMelting();
-            }
-
-            if (canMelt)
-            {
-                for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-                    Resource(res, whoseMove).BuyMelting();
-
-                e.RpcE.SoundToGeneral(sender, ClipTypes.Melting);
-            }
-            else
-            {
-                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-            }
-        }
-
-        public bool CanBuy_Master(PlayerTypes player, ResourceTypes res, out Dictionary<ResourceTypes, int> needRes)
-        {
-            needRes = new Dictionary<ResourceTypes, int>();
-            var canCreatBuild = true;
-
-            for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-            {
-                var difAmountRes = Resource(resType, player).Resources.Amount - ResourcesInInventorValues.AmountResForBuyRes(resType);
-                needRes.Add(resType, ResourcesInInventorValues.AmountResForBuyRes(resType));
-
-                if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
-            }
-
-            return canCreatBuild;
-        }
-        public void BuyRes_Master(PlayerTypes player, ResourceTypes res)
-        {
-            for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-            {
-                Resource(resType, player).Take(ResourcesInInventorValues.AmountResForBuyRes(resType));
-            }
-
-            var amount = 0;
-
-            switch (res)
-            {
-                case ResourceTypes.None: throw new Exception();
-                case ResourceTypes.Food: amount = 100; break;
-                case ResourceTypes.Wood: amount = 100; break;
-                case ResourceTypes.Ore: throw new Exception();
-                case ResourceTypes.Iron: throw new Exception();
-                case ResourceTypes.Gold: throw new Exception();
                 default: throw new Exception();
             }
 
-            Resource(res, player).Add(amount);
+            foreach (var item in needRes) if (item.Value > Resource(item.Key, player).AmountResource) return false;
+            return true;
+        }
+        public void TryBuyResourcesFromMarket_Master(in MarketBuyTypes marketBuyT, in Player sender, in Entities ents)
+        {
+            var whoseMove = ents.WhoseMoveE.WhoseMove.Player;
+
+            if (CanBuyResourceFromMarket_Master(marketBuyT, whoseMove, out var needRes))
+            {
+                switch (marketBuyT)
+                {
+                    case MarketBuyTypes.FoodToWood:
+                        Resource(ResourceTypes.Food, whoseMove).Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
+                        Resource(ResourceTypes.Wood, whoseMove).Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        break;
+
+                    case MarketBuyTypes.WoodToFood:
+                        Resource(ResourceTypes.Wood, whoseMove).Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
+                        Resource(ResourceTypes.Food, whoseMove).Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        break;
+
+                    case MarketBuyTypes.GoldToFood:
+                        Resource(ResourceTypes.Gold, whoseMove).Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
+                        Resource(ResourceTypes.Food, whoseMove).Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        break;
+
+                    case MarketBuyTypes.GoldToWood:
+                        Resource(ResourceTypes.Gold, whoseMove).Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
+                        Resource(ResourceTypes.Wood, whoseMove).Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        break;
+
+                    default: throw new Exception();
+                }
+            }
+            else
+            {
+                ents.RpcE.MistakeEconomyToGeneral(sender, needRes);
+            }
         }
 
         public bool CanUpgradeUnit(PlayerTypes playerType, UnitTypes unitType, out Dictionary<ResourceTypes, int> needRes)
@@ -182,48 +190,6 @@ namespace Game.Game
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
                 Resource(resType, player).Take(ResourcesInInventorValues.AmountResForBuyTW(tw, level, resType));
-        }
-
-        public void CreateUnit_Master(in UnitTypes unit, in Player sender, in Entities e)
-        {
-            var playerSend = e.WhoseMoveE.WhoseMove.Player;
-
-
-            if (e.WhereWorker.TryGetBuilding(BuildingTypes.City, playerSend, out var idx_city))
-            {
-                if (CanBuyUnit_Master(unit, playerSend, out var needRes))
-                {
-                    BuyUnit_Master(playerSend, unit);
-                    e.InventorUnitsEs.Units(unit, LevelTypes.First, playerSend).AddUnit();
-
-                    e.RpcE.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
-                }
-                else
-                {
-                    e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
-                    e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-                }
-            }
-            else
-            {
-                e.RpcE.SoundToGeneral(sender, ClipTypes.Mistake);
-                e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
-            }
-        }
-        public void BuyResources_Master(in ResourceTypes res, in Player sender, in Entities es)
-        {
-            var whoseMove = es.WhoseMoveE.WhoseMove.Player;
-
-            if (es.InventorResourcesEs.CanBuy_Master(whoseMove, res, out var needRes))
-            {
-                es.InventorResourcesEs.BuyRes_Master(whoseMove, res);
-
-                es.RpcE.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
-            }
-            else
-            {
-                es.RpcE.MistakeEconomyToGeneral(sender, needRes);
-            }
         }
     }
 }

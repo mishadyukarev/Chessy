@@ -73,10 +73,6 @@ namespace Game.Game
                 case RpcMasterTypes.ConditionUnit: return 1;
                 case RpcMasterTypes.Mistake:
                     break;
-                case RpcMasterTypes.CreateUnit:
-                    break;
-                case RpcMasterTypes.MeltOre:
-                    break;
                 case RpcMasterTypes.SetUnit:
                     break;
                 case RpcMasterTypes.Sound:
@@ -86,8 +82,6 @@ namespace Game.Game
                 case RpcMasterTypes.UpgradeCellUnit:
                     break;
                 case RpcMasterTypes.GiveTakeToolWeapon:
-                    break;
-                case RpcMasterTypes.BuyRes:
                     break;
                 case RpcMasterTypes.UpgCenterUnits:
                     break;

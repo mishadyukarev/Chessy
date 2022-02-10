@@ -1,4 +1,4 @@
-﻿using static Game.Game.UIEntDownScout;
+﻿using static Game.Game.DownScoutUIEs;
 
 namespace Game.Game
 {

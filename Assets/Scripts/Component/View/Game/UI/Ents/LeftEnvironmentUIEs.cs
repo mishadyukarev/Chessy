@@ -8,14 +8,16 @@ namespace Game.Game
 {
     public readonly struct LeftEnvironmentUIEs
     {
-        static Dictionary<LeftEnvEntType, Entity> _ents;
-        static Dictionary<ResourceTypes, Entity> _envs;
+        readonly Dictionary<LeftEnvEntType, Entity> _ents;
+        readonly Dictionary<ResourceTypes, Entity> _envs;
 
-        public static ref C Info<C>() where C : struct, ILeftEnvInfoButtonUIE => ref _ents[LeftEnvEntType.Info].Get<C>();
-        public static ref C Resources<C>(in ResourceTypes res) where C : struct, ILeftEnvResTextUIE => ref _envs[res].Get<C>();
+        public ref C Info<C>() where C : struct, ILeftEnvInfoButtonUIE => ref _ents[LeftEnvEntType.Info].Get<C>();
+        public ref C Resources<C>(in ResourceTypes res) where C : struct, ILeftEnvResTextUIE => ref _envs[res].Get<C>();
 
 
-        public LeftEnvironmentUIEs(in EcsWorld gameW, in Transform leftZone)
+        public readonly LeftRightZoneUIE Zone;
+
+        public LeftEnvironmentUIEs(in Transform leftZone, in EcsWorld gameW)
         {
             _ents = new Dictionary<LeftEnvEntType, Entity>();
             _envs = new Dictionary<ResourceTypes, Entity>();
@@ -25,6 +27,8 @@ namespace Game.Game
 
 
             var envZone = leftZone.Find("Environment+");
+
+            Zone = new LeftRightZoneUIE(envZone.gameObject, gameW);
 
             _ents[LeftEnvEntType.Info] = gameW.NewEntity().Add(new ButtonUIC(envZone.Find("EnvironmentInfoButton").GetComponent<Button>()));
 

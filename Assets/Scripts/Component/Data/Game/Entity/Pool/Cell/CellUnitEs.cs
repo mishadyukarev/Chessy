@@ -159,7 +159,7 @@ namespace Game.Game
             Set(idx_to, ents);
             Reset();
         }
-        public void Shift(in byte idx_to, in Entities ents)
+        public void ShiftUnit(in byte idx_to, in bool withDestoyBuilding, in Entities ents)
         {
             Set(idx_to, ents);
             Reset();
@@ -184,11 +184,15 @@ namespace Game.Game
             }
 
             ents.EffectEs(idx_to).FireE.TryFireAfterShift(ents.Cells);
-            if (ents.BuildE(idx_to).HaveBuilding && !ents.BuildE(idx_to).Is(BuildingTypes.City))
+
+            if (withDestoyBuilding)
             {
-                if (!ents.BuildE(idx_to).Is(ents.UnitEs(idx_to).OwnerE.OwnerC.Player))
+                if (ents.BuildE(idx_to).HaveBuilding && !ents.BuildE(idx_to).Is(BuildingTypes.City))
                 {
-                    ents.BuildE(idx_to).Destroy(ents);
+                    if (!ents.BuildE(idx_to).Is(ents.UnitEs(idx_to).OwnerE.OwnerC.Player))
+                    {
+                        ents.BuildE(idx_to).Destroy(ents);
+                    }
                 }
             }
         }

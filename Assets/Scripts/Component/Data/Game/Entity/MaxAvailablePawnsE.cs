@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class MaxPawnsE : EntityAbstract
+    public sealed class MaxAvailablePawnsE : EntityAbstract
     {
         readonly PlayerTypes _playerT;
 
@@ -15,10 +15,15 @@ namespace Game.Game
             return MaxPawns - whereW.AmountPaws(_playerT) > 0;
         }
 
-        internal MaxPawnsE(in PlayerTypes player, in EcsWorld gameW) : base(gameW)
+        internal MaxAvailablePawnsE(in PlayerTypes player, in EcsWorld gameW) : base(gameW)
         {
             _playerT = player;
             MaxPawnsCRef.Amount = 3;
+        }
+
+        internal void Add()
+        {
+            MaxPawnsCRef.Amount++;
         }
     }
 }

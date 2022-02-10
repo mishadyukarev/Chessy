@@ -36,7 +36,7 @@ namespace Game.Game
 
             var amountPawns = Es.WhereWorker.AmountPaws(curPlayerI);
 
-            DownPawnUIE.Taker<TextUIC>(UnitTypes.Pawn).Text = amountPawns.ToString() + "/" + Es.MaxPawnsE(curPlayerI).MaxPawns;
+            DownPawnUIE.TextUIC.Text = amountPawns.ToString() + "/" + Es.MaxAvailablePawnsE(curPlayerI).MaxPawns;
         }
     }
 }

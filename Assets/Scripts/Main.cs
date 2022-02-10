@@ -115,6 +115,7 @@ namespace Game
                         _systemsV = new SystemsView(ents, entsView);
                         _systems = new Systems(ents, _systemsV);
 
+
                         EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>().GiveData(ents, _systems);
                         RpcS.SyncAllMaster();
 

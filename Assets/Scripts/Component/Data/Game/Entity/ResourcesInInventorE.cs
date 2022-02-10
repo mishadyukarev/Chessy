@@ -4,37 +4,30 @@ namespace Game.Game
 {
     public sealed class ResourcesInInventorE : EntityAbstract
     {
-        readonly ResourceTypes _resT;
-        readonly PlayerTypes _playerT;
+        public readonly ResourceTypes ResT;
+        public readonly PlayerTypes PlayerT;
 
         ref AmountC ResourcesRef => ref Ent.Get<AmountC>();
         public AmountC Resources => Ent.Get<AmountC>();
 
+        public int AmountResource => Resources.Amount;
         public bool IsMinus => Resources.Amount < 0;
 
-        public int Need(in BuildingTypes build) => ResourcesInInventorValues.ForBuild(build, _resT);
-        public int Need(in UnitTypes unit) => ResourcesInInventorValues.ForBuy(unit, _resT);
-        public int NeedForMelting() => ResourcesInInventorValues.ForMelting(_resT);
+        public int Need(in BuildingTypes build) => ResourcesInInventorValues.ForBuild(build, ResT);
+        public int NeedForBuy(in MarketBuyTypes marketBuyT) => ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
 
-        public bool CanBuy(in BuildingTypes build) => Resources.Amount >= ResourcesInInventorValues.ForBuild(build, _resT);
-        public bool CanBuy(in UnitTypes unit) => Resources.Amount >= ResourcesInInventorValues.ForBuy(unit, _resT);
-        public bool CanBuyMelting() => Resources.Amount >= ResourcesInInventorValues.ForMelting(_resT);
+        public bool CanBuy(in BuildingTypes build) => Resources.Amount >= ResourcesInInventorValues.ForBuild(build, ResT);
+        public bool CanBuyResourcesFromMarket(in BuildingTypes build) => Resources.Amount >= ResourcesInInventorValues.ForBuild(build, ResT);
 
         internal ResourcesInInventorE(in ResourceTypes res, in PlayerTypes player, in EcsWorld gameW) : base(gameW)
         {
-            _resT = res;
-            _playerT = player;
+            ResT = res;
+            PlayerT = player;
 
             Ent.Add(new AmountC(ResourcesInInventorValues.AmountResourcesOnStartGame(res)));
         }
 
-        public void Buy(in BuildingTypes build) => ResourcesRef.Amount -= ResourcesInInventorValues.ForBuild(build, _resT);
-        public void Buy(in UnitTypes unit) => ResourcesRef.Amount -= ResourcesInInventorValues.ForBuy(unit, _resT);
-        public void BuyMelting()
-        {
-            ResourcesRef.Amount -= NeedForMelting();
-            ResourcesRef.Amount += ResourcesInInventorValues.AfterMelting(_resT);
-        }
+        public void Buy(in BuildingTypes build) => ResourcesRef.Amount -= ResourcesInInventorValues.ForBuild(build, ResT);
 
         public void Add(in int adding = 1)
         {

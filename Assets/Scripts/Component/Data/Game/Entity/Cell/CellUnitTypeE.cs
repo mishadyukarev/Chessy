@@ -115,7 +115,7 @@ namespace Game.Game
             {
                 e.UnitStatStepE(idx_from).TakeForShift(idx_to, e);
 
-                e.UnitEs(idx_from).Shift(idx_to, e);
+                e.UnitEs(idx_from).ShiftUnit(idx_to, true, e);
 
                 e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
@@ -274,7 +274,7 @@ namespace Game.Game
                         }
                         else
                         {
-                            e.UnitEs(idx_from).Shift(idx_to, e);
+                            e.UnitEs(idx_from).ShiftUnit(idx_to, true, e);
                         }
                     }
                 }

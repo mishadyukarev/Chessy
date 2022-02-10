@@ -1,15 +1,13 @@
-﻿using static Game.Game.LeftEnvironmentUIEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    sealed class LeftEnvEventUISys : SystemViewAbstract
+    sealed class LeftEnvEventUISys : SystemUIAbstract
     {
-        public LeftEnvEventUISys(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal LeftEnvEventUISys(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
-            Info<ButtonUIC>().AddListener(EnvironmentInfo);
+            UIEs.LeftEs.EnvironmentEs.Info<ButtonUIC>().AddListener(EnvironmentInfo);
         }
 
-        private void EnvironmentInfo()
+        void EnvironmentInfo()
         {
             Es.InfoEnvironmentE.IsActiveC.Toggle();
         }

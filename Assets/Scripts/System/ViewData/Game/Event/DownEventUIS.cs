@@ -7,15 +7,15 @@ namespace Game.Game
     {
         internal DownEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
         {
-            UIEntDownScout.Scout<ButtonUIC>().AddListener(ExecuteScout);
+            DownScoutUIEs.Scout<ButtonUIC>().AddListener(ExecuteScout);
             DownHeroUIE.ButtonC.AddListener(Hero);
 
             UIEntDownDoner.Doner<ButtonUIC>().AddListener(Done);
 
 
-            DownPawnUIE.Taker<ButtonUIC>(UnitTypes.Pawn).AddListener(delegate { GetPawn(); });
+            DownPawnUIE.ButtonUIC.AddListener(delegate { GetPawn(); });
 
-            UIEntDownUpgrade.Upgrade<ButtonUIC>().AddListener(ToggleUpgradeUnit);
+            DownUpgradeUIE.ButtonUIC.AddListener(ToggleUpgradeUnit);
 
             Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
             Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
@@ -88,7 +88,7 @@ namespace Game.Game
             {
                 var whoseMove = Es.WhoseMoveE.CurPlayerI;
 
-                if (Es.MaxPawnsE(whoseMove).CanGetPawn(Es.WhereWorker))
+                if (Es.MaxAvailablePawnsE(whoseMove).CanGetPawn(Es.WhereWorker))
                 {
                     Es.SelectedUnitE.SetSelectedUnit(UnitTypes.Pawn, LevelTypes.First, Es.ClickerObjectE);
                 }

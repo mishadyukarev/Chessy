@@ -137,29 +137,15 @@ namespace Game.Game
             else if (obj is BuildingTypes buildT)
             {
                 _ents.BuildE((byte)objects[_idx_cur++]).Build_Master((byte)objects[_idx_cur++], buildT, sender, _ents);
-
-                //switch (buildT)
-                //{
-                //    case BuildingTypes.House:
-                //        _ents.BuildE((byte)objects[_idx_cur++]).Build(buildT, sender, _ents);
-                //        break;
-
-                //    case BuildingTypes.Market:
-                //        _ents.BuildE((byte)objects[_idx_cur++]).Build(buildT, sender, _ents);
-                //        break;
-
-                //    case BuildingTypes.Smelter:
-                //        _ents.BuildE((byte)objects[_idx_cur++]).Build(buildT, sender, _ents);
-                //        break;
-
-                //    default: throw new Exception();
-                //}
             }
 
-            else
+            else if (obj is MarketBuyTypes marketBuy)
             {
-                var rpcT = (RpcMasterTypes)obj;
+                _ents.InventorResourcesEs.TryBuyResourcesFromMarket_Master(marketBuy, sender, _ents);
+            }
 
+            else if (obj is RpcMasterTypes rpcT)
+            {
                 switch (rpcT)
                 {
                     case RpcMasterTypes.None:
@@ -170,7 +156,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Done:
-                        if(_ents.WhoseMoveE.Done_Master(sender, _ents))
+                        if (_ents.WhoseMoveE.Done_Master(sender, _ents))
                         {
                             _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
                         }
@@ -188,20 +174,8 @@ namespace Game.Game
                         _ents.UnitEs((byte)objects[_idx_cur++]).ConditionE.Condition_Master((ConditionUnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
-                    case RpcMasterTypes.CreateUnit:
-                        _ents.InventorResourcesEs.CreateUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
-                        break;
-
-                    case RpcMasterTypes.MeltOre:
-                        _ents.InventorResourcesEs.TryMeltOre_Master(sender, _ents);
-                        break;
-
                     case RpcMasterTypes.SetUnit:
                         _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
-                        break;
-
-                    case RpcMasterTypes.BuyRes:
-                        _ents.InventorResourcesEs.BuyResources_Master((ResourceTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.UpgradeCellUnit:
@@ -232,6 +206,8 @@ namespace Game.Game
                         throw new Exception();
                 }
             }
+
+            else throw new Exception();
 
             SyncAllMaster();
         }

@@ -35,6 +35,7 @@ namespace Game.Game
                 + new IceWallFertilizeAroundUpdMS(ents).Run
                 + new UpdSetWoodcuttersAroundCityMS(ents).Run
                 + new CityExtractHillMS(ents).Run
+                + new SmelterSmeltUpdateMS(ents).Run
 
             #endregion
 
