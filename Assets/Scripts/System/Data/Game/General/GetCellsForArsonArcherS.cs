@@ -12,11 +12,11 @@
             {
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
-                var unit_from = Es.UnitEs(idx_0).TypeE.UnitTC;
+                var unit_from = Es.UnitEs(idx_0).UnitE.UnitTC;
 
                 if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
-                    if (Es.UnitTypeE(idx_0).HaveUnit && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                    if (Es.UnitE(idx_0).HaveUnit && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                     {
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {

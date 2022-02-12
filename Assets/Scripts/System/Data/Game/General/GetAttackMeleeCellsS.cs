@@ -15,11 +15,11 @@
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
-                var ownUnit_0 = Es.UnitOwnerE(idx_0).OwnerC;
+                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
 
                 if (!Es.UnitEffectEs(idx_0).StunE.IsStunned)
                 {
-                    if (Es.UnitTypeE(idx_0).HaveUnit && Es.UnitTypeE(idx_0).IsMelee && !Es.UnitTypeE(idx_0).Is(UnitTypes.Scout))
+                    if (Es.UnitE(idx_0).HaveUnit && Es.UnitE(idx_0).IsMelee && !Es.UnitE(idx_0).Is(UnitTypes.Scout))
                     {
                         DirectTypes dir_cur = default;
 
@@ -30,20 +30,20 @@
                             dir_cur += 1;
                             var idx_1 = item_1.Value;
 
-                            var unit_1 = UnitEs(idx_1).TypeE.UnitTC;
-                            var own_1 = UnitEs(idx_1).OwnerE.OwnerC;
+                            var unit_1 = UnitEs(idx_1).UnitE.UnitTC;
+                            var own_1 = Es.UnitE(idx_1).OwnerC;
 
                             if (!EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                             {
                                 CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
 
-                                if (UnitEs(idx_0).StatEs.StepE.CanShift(UnitEs(idx_0).TypeE.UnitTC, dir, CellEs(idx_1))|| UnitStatEs(idx_0).StepE.HaveMax(UnitEs(idx_0).TypeE))
+                                if (Es.UnitE(idx_0).CanShift(UnitEs(idx_0).UnitE.UnitTC, dir, CellEs(idx_1))|| Es.UnitE(idx_0).HaveMaxSteps)
                                 {
-                                    if (UnitEs(idx_1).TypeE.HaveUnit)
+                                    if (UnitEs(idx_1).UnitE.HaveUnit)
                                     {
                                         if (!own_1.Is(ownUnit_0.Player))
                                         {
-                                            if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn))
+                                            if (Es.UnitE(idx_0).Is(UnitTypes.Pawn))
                                             {
                                                 if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)

@@ -14,12 +14,9 @@ namespace Game.Game
         public void Run()
         {
             var idx_cur = Es.CurrentIdxE.IdxC.Idx;
-            var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var unit_cur = UnitEs(idx_cur).TypeE.UnitTC;
-            var ownUnit_cur = UnitEs(idx_cur).OwnerE.OwnerC;
-
-            var unit_sel = UnitEs(idx_cur).TypeE.UnitTC;
+            var unit_cur = Es.UnitEs(idx_cur).UnitE.UnitTC;
+            var ownUnit_cur = Es.UnitE(idx_cur).OwnerC;
 
             ref var raycastTC = ref Es.ClickerObjectE.RayCastTC;
             ref var cellClick = ref Es.ClickerObjectE.CellClickCRef;
@@ -55,7 +52,7 @@ namespace Game.Game
 
                                         else
                                         {
-                                            if (UnitEs(idx_cur).TypeE.HaveUnit)
+                                            if (UnitEs(idx_cur).UnitE.HaveUnit)
                                             {
                                                 if (ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
                                                 {
@@ -80,7 +77,7 @@ namespace Game.Game
 
                                     else
                                     {
-                                        if (UnitEs(idx_cur).TypeE.HaveUnit)
+                                        if (UnitEs(idx_cur).UnitE.HaveUnit)
                                         {
                                             if (ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
                                             {
@@ -129,7 +126,7 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn)
                                         && ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI)
-                                        && !UnitEs(idx_cur).LevelE.LevelTC.Is(LevelTypes.Second))
+                                        && !Es.UnitE(idx_cur).Is(LevelTypes.Second))
                                     {
                                         Es.RpcE.UpgradeUnitToMaster(Es.CurrentIdxE.IdxC.Idx);
                                     }
@@ -214,7 +211,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!UnitEs(idx_cur).TypeE.HaveUnit || !UnitEs(idx_cur).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
+                        if (!UnitEs(idx_cur).UnitE.HaveUnit || !UnitEs(idx_cur).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                         {
                             if (Es.CurrentIdxE.IsStartDirectToCell)
                             {

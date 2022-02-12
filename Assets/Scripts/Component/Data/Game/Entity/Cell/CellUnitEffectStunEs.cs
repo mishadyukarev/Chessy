@@ -9,7 +9,7 @@ namespace Game.Game
         public int Stun
         {
             get => StunCRef.Amount;
-            internal set => StunCRef.Amount = value;
+            set => StunCRef.Amount = value;
         }
         public bool IsStunned => Stun > 0;
 

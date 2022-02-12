@@ -17,7 +17,7 @@
 
                 if (Es.WhereWorker.TryGetBuilding(BuildingTypes.City, player, out var idx_1))
                 {
-                    if (UnitEs(idx_1).TypeE.HaveUnit)
+                    if (UnitEs(idx_1).UnitE.HaveUnit)
                     {
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = false;
                     }
@@ -32,9 +32,9 @@
                     {
                         var idx_2 = CellWorker.GetIdxCell(xy_2);
 
-                        var unit_2 = UnitEs(idx_2).TypeE.UnitTC;
+                        var unit_2 = UnitEs(idx_2).UnitE.UnitTC;
 
-                        if (!EnvironmentEs(idx_2).Mountain.HaveEnvironment && !UnitEs(idx_2).TypeE.HaveUnit)
+                        if (!EnvironmentEs(idx_2).Mountain.HaveEnvironment && !UnitEs(idx_2).UnitE.HaveUnit)
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -49,14 +49,14 @@
                 {
                     foreach (var idx_0 in CellWorker.Idxs)
                     {
-                        var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
+                        var unit_0 = UnitEs(idx_0).UnitE.UnitTC;
                         var buld_0 = BuildEs(idx_0).BuildingE.BuildTC;
                         var ownBuld_0 = BuildEs(idx_0).BuildingE.OwnerC;
 
 
                         if (buld_0.Is(BuildingTypes.Camp))
                         {
-                            if (!EnvironmentEs(idx_0).Mountain.HaveEnvironment && !UnitEs(idx_0).TypeE.HaveUnit)
+                            if (!EnvironmentEs(idx_0).Mountain.HaveEnvironment && !UnitEs(idx_0).UnitE.HaveUnit)
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }
@@ -69,7 +69,7 @@
 
                             var canSet = false;
 
-                            if (!UnitEs(idx_0).TypeE.HaveUnit)
+                            if (!UnitEs(idx_0).UnitE.HaveUnit)
                             {
                                 if (player == PlayerTypes.First)
                                 {

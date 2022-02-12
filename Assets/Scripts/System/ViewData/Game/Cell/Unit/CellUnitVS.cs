@@ -43,14 +43,14 @@
                     }
                 }
 
-                if (Es.UnitTypeE(idx_0).HaveUnit)
+                if (Es.UnitE(idx_0).HaveUnit)
                 {
                     if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                     {
                         var isSelected = idx_0 == Es.SelectedIdxE.IdxC.Idx;
                         var isVisForNext = Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.NextPlayerFrom(Es.WhoseMoveE.CurPlayerI)).IsVisibleC.IsVisible;
 
-                        var unitT = Es.UnitTypeE(idx_0).UnitT;
+                        var unitT = Es.UnitE(idx_0).Unit;
 
                         if (unitT == UnitTypes.Pawn)
                         {
@@ -78,7 +78,7 @@
                         }
                         else
                         {
-                            VEs.UnitE(idx_0, isSelected, Es.UnitLevelE(idx_0).LevelT, unitT).Enable(isVisForNext);
+                            VEs.UnitE(idx_0, isSelected, Es.UnitE(idx_0).Level, unitT).Enable(isVisForNext);
                         }
                     }
                 }

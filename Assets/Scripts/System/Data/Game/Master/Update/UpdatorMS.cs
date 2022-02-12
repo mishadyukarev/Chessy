@@ -23,19 +23,19 @@ namespace Game.Game
 
             foreach (byte idx_0 in CellWorker.Idxs)
             {
-                ref var cell_0 = ref CellEs(idx_0).CellE.InstanceIDC;
+                ref var cell_0 = ref Es.CellEs(idx_0).CellE.InstanceIDC;
 
-                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
+                var unit_0 = Es.UnitEs(idx_0).UnitE.UnitTC;
+                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
 
-                var buil_0 = BuildEs(idx_0).BuildingE.BuildTC;
+                var buil_0 = Es.BuildEs(idx_0).BuildingE.BuildTC;
 
-                foreach (var item in CellEs(idx_0).TrailEs.Keys) TrailEs(idx_0).Trail(item).TakeEveryUpdate();
-                foreach (var item in UnitEs(idx_0).CooldownKeys) UnitEs(idx_0).Ability(item).TakeAfterUpdate();
+                foreach (var item in Es.CellEs(idx_0).TrailEs.Keys) Es.TrailEs(idx_0).Trail(item).TakeEveryUpdate();
+                foreach (var item in Es.UnitEs(idx_0).CooldownKeys) Es.UnitEs(idx_0).Ability(item).TakeAfterUpdate();
 
 
 
-                if (UnitEs(idx_0).TypeE.HaveUnit && !unit_0.IsAnimal)
+                if (Es.UnitEs(idx_0).UnitE.HaveUnit && !unit_0.IsAnimal)
                 {
                     //CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
@@ -45,21 +45,21 @@ namespace Game.Game
                     {
                         if (ownUnit_0.Is(PlayerTypes.Second))
                         {
-                            UnitStatEs(idx_0).Hp.SetMax();
+                            Es.UnitE(idx_0).SetMaxHp();
                         }
                     }
 
 
-                    if (EffectEs(idx_0).FireE.HaveFireC.Have)
+                    if (Es.EffectEs(idx_0).FireE.HaveFireC.Have)
                     {
-                        UnitEs(idx_0).ConditionE.Reset();
+                        Es.UnitE(idx_0).Condition = ConditionUnitTypes.None;
                     }
 
                     else
                     {
-                        if (UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Protected))
+                        if (Es.UnitE(idx_0).Is(ConditionUnitTypes.Protected))
                         {
-                            if (UnitStatEs(idx_0).Hp.HaveMax)
+                            if (Es.UnitE(idx_0).HaveMaxHp)
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
@@ -71,11 +71,11 @@ namespace Game.Game
                                             {
                                                 if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
                                                 {
-                                                    BuildEs(idx_camp).BuildingE.Destroy(Es);
+                                                    Es.BuildEs(idx_camp).BuildingE.Destroy(Es);
                                                 }
 
 
-                                                BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
+                                                Es.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
                                             }
                                         }
                                         else
@@ -85,22 +85,22 @@ namespace Game.Game
                                                 Es.BuildE(idx_camp).Destroy(Es);
                                             }
 
-                                            BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
+                                            Es.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
                                         }
                                     }
                                 }
                             }
                         }
 
-                        else if (!UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                        else if (!Es.UnitE(idx_0).Is(ConditionUnitTypes.Relaxed))
                         {
-                            if (UnitStatEs(idx_0).StepE.HaveSteps)
+                            if (Es.UnitE(idx_0).HaveSteps)
                             {
-                                UnitEs(idx_0).ConditionE.Set(ConditionUnitTypes.Protected);
+                                Es.UnitE(idx_0).Condition = ConditionUnitTypes.Protected;
                             }
                         }
                     }
-                    UnitStatEs(idx_0).StepE.SetMax(UnitEs(idx_0).TypeE);
+                    Es.UnitE(idx_0).SetMaxSteps();
                 }
             }
 

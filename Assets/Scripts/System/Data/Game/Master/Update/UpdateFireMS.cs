@@ -12,7 +12,7 @@ namespace Game.Game
         {
             foreach (var idx_1 in CellWorker.GetIdxsAround(Es.WindCloudE.CenterCloud.Idx))
             {
-                EffectEs(idx_1).FireE.Disable();
+                Es.EffectEs(idx_1).FireE.Disable();
             }
 
 
@@ -20,24 +20,24 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (EffectEs(idx_0).FireE.HaveFireC.Have)
+                if (Es.EffectEs(idx_0).FireE.HaveFireC.Have)
                 {
-                    EnvironmentEs(idx_0).AdultForest.Fire();
+                    Es.EnvironmentEs(idx_0).AdultForest.Fire();
 
-                    if (UnitEs(idx_0).TypeE.HaveUnit)
+                    if (Es.UnitEs(idx_0).UnitE.HaveUnit)
                     {
-                        UnitStatEs(idx_0).Hp.Fire(Es);
+                        Es.UnitE(idx_0).Fire(Es);
                     }
 
-                    if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (!Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        BuildEs(idx_0).BuildingE.Destroy(Es);
+                        Es.BuildEs(idx_0).BuildingE.Destroy(Es);
 
-                        EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
+                        Es.EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
 
-                        EnvironmentEs(idx_0).YoungForest.TrySetAfterFireForest();
+                        Es.EnvironmentEs(idx_0).YoungForest.TrySetAfterFireForest();
 
-                        EffectEs(idx_0).FireE.Disable();
+                        Es.EffectEs(idx_0).FireE.Disable();
 
 
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
@@ -50,11 +50,11 @@ namespace Game.Game
 
             foreach (var idx_0 in needForFireNext)
             {
-                if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
-                    if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        EffectEs(idx_0).FireE.Enable();
+                        Es.EffectEs(idx_0).FireE.Enable();
                     }
                 }
             }

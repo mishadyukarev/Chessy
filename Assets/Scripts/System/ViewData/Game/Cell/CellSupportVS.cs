@@ -12,8 +12,8 @@
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
-                var own_0 = UnitEs(idx_0).OwnerE.OwnerC;
+                var unit_0 = UnitEs(idx_0).UnitE.UnitTC;
+                var own_0 = Es.UnitE(idx_0).OwnerC;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
@@ -22,7 +22,7 @@
 
 
 
-                if (EffectEs(idx_0).FireE.HaveFireC.Have)
+                if (Es.EffectEs(idx_0).FireE.HaveFireC.Have)
                 {
                     if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
@@ -34,7 +34,7 @@
                     }
                 }
 
-                if (UnitEs(idx_0).TypeE.HaveUnit)
+                if (Es.UnitEs(idx_0).UnitE.HaveUnit)
                 {
                     if (own_0.Is(Es.WhoseMoveE.CurPlayerI))
                     {
@@ -42,7 +42,7 @@
                         {
                             if (unit_0.Is(UnitTypes.Pawn))
                             {
-                                if (UnitEs(idx_0).LevelE.LevelTC.Is(LevelTypes.First))
+                                if (Es.UnitE(idx_0).Is(LevelTypes.First))
                                 {
                                     support_0.Enable();
                                     support_0.Color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -53,9 +53,9 @@
 
                     else
                     {
-                        if (UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
+                        if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                         {
-                            if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                            if (Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {

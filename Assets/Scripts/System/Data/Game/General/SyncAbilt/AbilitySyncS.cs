@@ -12,7 +12,7 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
+                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
 
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Reset();
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Reset();
@@ -20,11 +20,11 @@ namespace Game.Game
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Reset();
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fifth).AbilityC.Reset();
 
-                if (Es.UnitOwnerE(idx_0).Is(Es.WhoseMoveE.CurPlayerI))
+                if (Es.UnitE(idx_0).Is(Es.WhoseMoveE.CurPlayerI))
                 {
-                    if (Es.UnitTypeE(idx_0).HaveUnit)
+                    if (Es.UnitE(idx_0).HaveUnit)
                     {
-                        switch (Es.UnitTypeE(idx_0).UnitT)
+                        switch (Es.UnitE(idx_0).Unit)
                         {
                             case UnitTypes.None: throw new Exception();
 

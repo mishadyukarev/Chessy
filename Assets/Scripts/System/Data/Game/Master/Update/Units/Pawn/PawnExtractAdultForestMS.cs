@@ -18,12 +18,12 @@
                     {
                         if (Es.BuildE(idx_0).Is(BuildingTypes.Camp) || !Es.BuildE(idx_0).BuildTC.Have)
                         {
-                            Es.BuildE(idx_0).SetNew(BuildingTypes.Woodcutter, Es.UnitOwnerE(idx_0).OwnerC.Player);
+                            Es.BuildE(idx_0).SetNew(BuildingTypes.Woodcutter, Es.UnitE(idx_0).Owner);
                         }
 
                         else if (!Es.BuildE(idx_0).Is(BuildingTypes.Woodcutter))
                         {
-                            Es.UnitConditionE(idx_0).Set(ConditionUnitTypes.Protected);
+                            Es.UnitE(idx_0).Condition = ConditionUnitTypes.Protected;
                         }
                     }
                     else

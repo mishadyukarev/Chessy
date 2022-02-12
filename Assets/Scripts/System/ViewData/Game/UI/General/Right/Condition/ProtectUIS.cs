@@ -12,15 +12,11 @@ namespace Game.Game
         {
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
-            var unit_sel = UnitEs(idx_sel).TypeE.UnitTC;
-            var ownUnit_sel = UnitEs(idx_sel).OwnerE.OwnerC;
-
-
             var isEnableButt = false;
 
-            if (UnitEs(idx_sel).TypeE.HaveUnit)
+            if (Es.UnitEs(idx_sel).UnitE.HaveUnit)
             {
-                if (ownUnit_sel.Is(Es.WhoseMoveE.CurPlayerI))
+                if (Es.UnitE(idx_sel).Is(Es.WhoseMoveE.CurPlayerI))
                 {
                     isEnableButt = true;
 
@@ -29,9 +25,9 @@ namespace Game.Game
                     RightProtectUIE.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
                     RightProtectUIE.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
 
-                    RightProtectUIE.Button<GameObjectVC>(unit_sel.Unit).SetActive(true);
+                    RightProtectUIE.Button<GameObjectVC>(Es.UnitE(idx_sel).Unit).SetActive(true);
 
-                    if (UnitEs(idx_sel).ConditionE.ConditionTC.Is(ConditionUnitTypes.Protected))
+                    if (Es.UnitE(idx_sel).Is(ConditionUnitTypes.Protected))
                     {
                         RightProtectUIE.Button<ImageUIC>().Color = Color.yellow;
                     }

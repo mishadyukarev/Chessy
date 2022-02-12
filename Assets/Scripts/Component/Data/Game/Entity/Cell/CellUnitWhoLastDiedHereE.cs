@@ -18,11 +18,11 @@ namespace Game.Game
         {
         }
 
-        internal void SetLastDied(in CellUnitEs unitEs)
+        internal void SetLastDied(in CellUnitE unitE)
         {
-            UnitTCRef.Unit = unitEs.TypeE.UnitTC.Unit;
-            LevelTCRef.Level = unitEs.LevelE.LevelTC.Level;
-            OwnerCRef.Player = unitEs.OwnerE.OwnerC.Player;
+            UnitTCRef.Unit = unitE.UnitTC.Unit;
+            LevelTCRef.Level = unitE.Level;
+            OwnerCRef.Player = unitE.Owner;
         }
         internal void Clear()
         {

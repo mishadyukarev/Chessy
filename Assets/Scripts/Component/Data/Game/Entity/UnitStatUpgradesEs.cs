@@ -10,7 +10,7 @@ namespace Game.Game
 
         string Key(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, in UpgradeTypes upg) => stat.ToString() + unit + lev + player + upg;
         public HaveUpgradeE Upgrade(in UnitStatTypes stat, in UnitTypes unit, in LevelTypes lev, in PlayerTypes player, in UpgradeTypes upg) => _ents[Key(stat, unit, lev, player, upg)];
-        public HaveUpgradeE Upgrade(in UnitStatTypes stat, in CellUnitEs unitEs, in UpgradeTypes upg) => _ents[Key(stat, unitEs.TypeE.UnitTC.Unit, unitEs.LevelE.LevelTC.Level, unitEs.OwnerE.OwnerC.Player, upg)];
+        public HaveUpgradeE Upgrade(in UnitStatTypes stat, in CellUnitE unitE, in UpgradeTypes upg) => _ents[Key(stat, unitE.Unit, unitE.Level, unitE.Owner, upg)];
         public HaveUpgradeE Upgrade(in string key) => _ents[key];
 
         public HashSet<string> Keys

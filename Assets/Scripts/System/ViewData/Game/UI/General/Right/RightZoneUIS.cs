@@ -15,7 +15,7 @@
 
             if (Es.SelectedIdxE.IsSelCell)
             {
-                if (UnitEs(idx_sel).TypeE.HaveUnit)
+                if (UnitEs(idx_sel).UnitE.HaveUnit)
                 {
                     if (UnitEs(idx_sel).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                     {

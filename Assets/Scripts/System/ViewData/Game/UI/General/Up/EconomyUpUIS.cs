@@ -25,9 +25,9 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitTypeE(idx_0).HaveUnit && UnitEs(idx_0).OwnerE.OwnerC.Is(Es.WhoseMoveE.CurPlayerI))
+                if (Es.UnitE(idx_0).HaveUnit && Es.UnitE(idx_0).OwnerC.Is(Es.WhoseMoveE.CurPlayerI))
                 {
-                    _extracts[ResourceTypes.Food] -= ResourcesInInventorValues.CostFoodForFeedingThem(UnitEs(idx_0).TypeE.UnitTC.Unit);
+                    _extracts[ResourceTypes.Food] -= ResourcesInInventorValues.CostFoodForFeedingThem(UnitEs(idx_0).UnitE.UnitTC.Unit);
 
                     if (Es.EnvAdultForestE(idx_0).CanExtractPawn(UnitEs(idx_0)))
                     {

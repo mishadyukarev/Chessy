@@ -10,14 +10,14 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
-                var isCornered_0 = UnitEs(idx_0).CornedE.IsRight;
+                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
+                var isRight_0 = Es.UnitE(idx_0).IsRightArcher;
 
                 if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
-                    if (UnitStatEs(idx_0).StepE.HaveSteps)
+                    if (Es.UnitE(idx_0).HaveSteps)
                     {
-                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Elfemale, UnitTypes.Snowy) || Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                        if (Es.UnitE(idx_0).Is(UnitTypes.Elfemale, UnitTypes.Snowy) || Es.UnitE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
                             var xy_from = CellEs(idx_0).CellE.XyC.Xy;
 
@@ -26,18 +26,18 @@
                                 var xy_1 = CellWorker.GetXyCellByDirect(xy_from, dir_1);
                                 var idx_1 = CellWorker.GetIdxCell(xy_1);
 
-                                var ownUnit_1 = UnitEs(idx_1).OwnerE.OwnerC;
+                                var ownUnit_1 = Es.UnitE(idx_1).OwnerC;
 
 
                                 if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive && !EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                                 {
-                                    if (UnitEs(idx_1).TypeE.HaveUnit)
+                                    if (UnitEs(idx_1).UnitE.HaveUnit)
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Player))
                                         {
-                                            if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                            if (Es.UnitE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                             {
-                                                if (isCornered_0)
+                                                if (isRight_0)
                                                 {
                                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                     {
@@ -66,18 +66,17 @@
                                     var idx_2 = CellWorker.GetIdxCell(xy_2);
 
 
-                                    var unit_2 = UnitEs(idx_2).TypeE.UnitTC;
-                                    var ownUnit_2 = UnitEs(idx_2).OwnerE.OwnerC;
+                                    var unit_2 = Es.UnitEs(idx_2).UnitE.UnitTC;
 
 
 
-                                    if (Es.UnitEs(idx_2).TypeE.HaveUnit && !unit_2.IsAnimal
+                                    if (Es.UnitEs(idx_2).UnitE.HaveUnit && !unit_2.IsAnimal
                                         && Es.UnitEs(idx_2).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible
-                                        && !ownUnit_2.Is(ownUnit_0.Player))
+                                        && !Es.UnitE(idx_2).Is(ownUnit_0.Player))
                                     {
-                                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                        if (Es.UnitE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                         {
-                                            if (isCornered_0)
+                                            if (isRight_0)
                                             {
                                                 if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                 {

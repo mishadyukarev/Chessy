@@ -10,12 +10,12 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
-                var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
+                var unit_0 = UnitEs(idx_0).UnitE.UnitTC;
+                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
 
-                if (UnitEs(idx_0).TypeE.HaveUnit && !unit_0.IsAnimal)
+                if (Es.UnitE(idx_0).HaveUnit && !unit_0.IsAnimal)
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
@@ -27,17 +27,18 @@ namespace Game.Game
 
                     if (canExecute)
                     {
-                        if (RiverEs(idx_0).RiverE.HaveRiverNear)
+                        if (Es.RiverEs(idx_0).RiverE.HaveRiverNear)
                         {
-                            UnitStatEs(idx_0).WaterE.SetMax(UnitEs(idx_0), Es.UnitStatUpgradesEs);
+                            Es.UnitE(idx_0).SetMaxWater(Es.UnitStatUpgradesEs);
                         }
                         else
                         {
-                            UnitStatEs(idx_0).WaterE.Thirsty(UnitEs(idx_0).TypeE.UnitTC.Unit);
+                            
+                            Es.UnitE(idx_0).Water -= CellUnitStatWaterValues.NeedWaterThirsty(Es.UnitE(idx_0).Unit);
 
-                            if (!UnitStatEs(idx_0).WaterE.HaveWater)
+                            if (!Es.UnitE(idx_0).HaveWater)
                             {
-                                UnitStatEs(idx_0).Hp.Thirsty(Es);
+                                Es.UnitE(idx_0).Thirsty(Es);
                             }
                         }
                     }

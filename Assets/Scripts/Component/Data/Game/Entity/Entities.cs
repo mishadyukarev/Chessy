@@ -15,7 +15,7 @@ namespace Game.Game
         readonly Dictionary<PlayerTypes, PeopleInCityE> _peopleEs;
 
         public ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
-        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitEs unitEs) => _scoutHeroCooldownEs[unitEs.TypeE.UnitTC.Unit.ToString() + unitEs.OwnerE.OwnerC.Player];
+        public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitE unitE) => _scoutHeroCooldownEs[unitE.Unit.ToString() + unitE.Owner];
         public ReadyE Ready(in PlayerTypes player) => _ready[player];
         public SoundE Sound(in ClipTypes clip) => _sounds0[clip];
         public SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
@@ -67,14 +67,8 @@ namespace Game.Game
         public CellEs CellEs(in byte idx) => _cellEs[idx];
 
         public CellUnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
-        public CellUnitE UnitTypeE(in byte idx) => UnitEs(idx).TypeE;
-        public CellUnitLevelE UnitLevelE(in byte idx) => UnitEs(idx).LevelE;
-        public CellUnitConditonE UnitConditionE(in byte idx) => UnitEs(idx).ConditionE;
+        public CellUnitE UnitE(in byte idx) => UnitEs(idx).UnitE;
         public CellUnitExtraToolWeaponE UnitExtraTWE(in byte idx) => UnitEs(idx).ExtraToolWeaponE;
-        public CellUnitStatEs UnitStatEs(in byte idx) => UnitEs(idx).StatEs;
-        public CellUnitStatHpE UnitStatHpE(in byte idx) => UnitStatEs(idx).Hp;
-        public CellUnitStatStepE UnitStatStepE(in byte idx) => UnitStatEs(idx).StepE;
-        public CellUnitStatWaterE UnitStatWaterE(in byte idx) => UnitStatEs(idx).WaterE;
         public CellUnitEffectEs UnitEffectEs(in byte idx) => UnitEs(idx).EffectEs;
 
         public CellBuildEs BuildEs(in byte idx) => CellEs(idx).BuildEs;

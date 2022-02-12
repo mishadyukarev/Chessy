@@ -2,13 +2,13 @@
 
 namespace Game.Game
 {
-    internal static class CellUnitStatHpValues
+    public static class CellUnitStatHpValues
     {
-        internal const int MAX_HP = 100;
+        public const int MAX_HP = 100;
 
-        internal static int FIRE_DAMAGE = 40;
+        public static int FIRE_DAMAGE = 40;
 
-        internal static int Damage(in AbilityTypes uniq)
+        public static int Damage(in AbilityTypes uniq)
         {
             switch (uniq)
             {
@@ -16,7 +16,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static float ThirstyPercent(in UnitTypes unit)
+        public static float ThirstyPercent(in UnitTypes unit)
         {
             switch (unit)
             {

@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public const int MAX_WATER_WITHOUT_EFFECTS = 100;
 
-        internal static int Need(in AbilityTypes ability)
+        public static int Need(in AbilityTypes ability)
         {
             switch (ability)
             {
@@ -16,7 +16,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static int NeedWaterThirsty(in UnitTypes unit)
+        public static int NeedWaterThirsty(in UnitTypes unit)
         {
             switch (unit)
             {

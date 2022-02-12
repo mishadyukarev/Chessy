@@ -163,23 +163,23 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Shift:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.Shift_Master((byte)objects[_idx_cur++], sender, _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.Shift_Master((byte)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.Attack_Master((byte)objects[_idx_cur++], _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.Attack_Master((byte)objects[_idx_cur++], _ents);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).ConditionE.Condition_Master((ConditionUnitTypes)objects[_idx_cur++], sender, _ents);
+                        _ents.UnitE((byte)objects[_idx_cur++]).Condition_Master((ConditionUnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.UpgradeCellUnit:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).TypeE.UpgradeUnit_Master(sender, _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.UpgradeUnit_Master(sender, _ents);
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
@@ -282,15 +282,15 @@ namespace Game.Game
 
             foreach (byte idx_0 in _ents.CellSpaceWorker.Idxs)
             {
-                objs.Add(_ents.CellEs(idx_0).UnitEs.TypeE.UnitTC.Unit);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.UnitTC.Unit);
                 //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.OwnerE.OwnerC.Player);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.OwnerC.Player);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.Hp.HealthC.Amount);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.StepE.StepsC.Amount);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.StatEs.WaterE.WaterC.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Health);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Steps);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Water);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ConditionE.ConditionTC.Condition);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
@@ -300,7 +300,7 @@ namespace Game.Game
 
                 objs.Add(_ents.UnitEffectEs(idx_0).StunE.Stun);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.CornedE.IsRight);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.IsRightArcher);
 
                 foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown.Amount);
 

@@ -2,17 +2,17 @@
 {
     sealed class UpdateHealingUnitMS : SystemAbstract, IEcsRunSystem
     {
-        public UpdateHealingUnitMS(in Entities ents) : base(ents)
+        internal UpdateHealingUnitMS(in Entities ents) : base(ents)
         {
         }
 
         public void Run()
         {
-            foreach (var idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (UnitEs(idx_0).ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                if (Es.UnitE(idx_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    UnitStatEs(idx_0).Hp.SetMax();
+                    Es.UnitE(idx_0).SetMaxHp();
                 }
             }
         }

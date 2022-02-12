@@ -23,7 +23,7 @@ namespace Game.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (UnitEs(Es.SelectedIdxE.IdxC.Idx).ConditionE.ConditionTC.Is(condUnitType))
+                if (Es.UnitE(Es.SelectedIdxE.IdxC.Idx).Is(condUnitType))
                 {
                     Es.RpcE.ConditionUnitToMaster(Es.SelectedIdxE.IdxC.Idx, ConditionUnitTypes.None);
                 }

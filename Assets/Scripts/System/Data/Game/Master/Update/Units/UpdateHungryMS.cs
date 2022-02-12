@@ -22,7 +22,7 @@
                         {
                             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
                             {
-                                if(Es.UnitTypeE(idx_0).HaveUnit && Es.UnitLevelE(idx_0).Is(levUnit) && Es.UnitOwnerE(idx_0).OwnerC.Is(player))
+                                if(Es.UnitE(idx_0).HaveUnit && Es.UnitE(idx_0).Is(levUnit) && Es.UnitE(idx_0).OwnerC.Is(player))
                                 {
                                     if (Es.BuildE(idx_0).Is(BuildingTypes.Camp))
                                     {
@@ -30,7 +30,7 @@
                                         Es.BuildE(idx_0).Destroy(Es);
                                     }
 
-                                    Es.UnitTypeE(idx_0).Kill(Es);
+                                    Es.UnitE(idx_0).Kill(Es);
 
                                     return;
                                 }

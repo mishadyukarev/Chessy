@@ -89,9 +89,9 @@ namespace Game.Game
 
             if (idx_0 != default)
             {
-                var unit_0 = e.UnitEs(idx_0).TypeE.UnitTC;
+                var unit_0 = e.UnitEs(idx_0).UnitE.UnitTC;
 
-                var ownUnit_0 = e.UnitEs(idx_0).OwnerE.OwnerC;
+                var ownUnit_0 = e.UnitE(idx_0).OwnerC;
 
                 var tw_0 = e.UnitEs(idx_0).ExtraToolWeaponE.ToolWeaponTC;
                 var twLevel_0 = e.UnitEs(idx_0).ExtraToolWeaponE.LevelTC;
@@ -99,7 +99,7 @@ namespace Game.Game
 
                 if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (e.UnitStatEs(idx_0).StepE.HaveSteps)
+                    if (e.UnitE(idx_0).HaveSteps)
                     {
 
                         if (tw_0.HaveTW)
@@ -107,7 +107,7 @@ namespace Game.Game
                             e.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
                             e.UnitEs(idx_0).ExtraToolWeaponE.Reset();
 
-                            e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+                            e.UnitE(idx_0).Take(tWForGive);
 
                             e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -119,7 +119,7 @@ namespace Game.Game
 
                             e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                            e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+                            e.UnitE(idx_0).Take(tWForGive);
 
                             e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -132,7 +132,7 @@ namespace Game.Game
 
                                 e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+                                e.UnitE(idx_0).Take(tWForGive);
 
                                 e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -150,7 +150,7 @@ namespace Game.Game
 
                                 e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+                                e.UnitE(idx_0).Take(tWForGive);
 
                                 e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -168,7 +168,7 @@ namespace Game.Game
 
                                 e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+                                e.UnitE(idx_0).Take(tWForGive);
 
                                 e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -186,7 +186,7 @@ namespace Game.Game
 
                                 e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+                                e.UnitE(idx_0).Take(tWForGive);
 
                                 e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
@@ -204,7 +204,7 @@ namespace Game.Game
 
                                 e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+                                e.UnitE(idx_0).Take(tWForGive);
 
                                 e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }

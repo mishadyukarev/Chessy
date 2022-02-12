@@ -21,7 +21,7 @@
             var amount = 0;
             for (var idx = 0; idx < CellStartValues.ALL_CELLS_AMOUNT; idx++)
             {
-                if (_cellEs[idx].UnitEs.TypeE.Is(UnitTypes.Pawn) && _cellEs[idx].UnitEs.OwnerE.Is(owner))
+                if (_cellEs[idx].UnitEs.UnitE.Is(UnitTypes.Pawn) && _cellEs[idx].UnitEs.UnitE.Is(owner))
                 {
                     amount++;
                 }

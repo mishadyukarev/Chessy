@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     sealed class PawnExtractOreUpdMS : SystemAbstract, IEcsRunSystem
     {
@@ -15,7 +12,7 @@ namespace Game.Game
             {
                 if (Es.EnvHillE(idx_0).CanExtractPawn(Es.UnitEs(idx_0), Es.EnvironmentEs(idx_0)))
                 {
-                    Es.EnvHillE(idx_0).ExtractPawnPick(Es.UnitEs(idx_0), Es.InventorResourcesEs);
+                    Es.EnvHillE(idx_0).ExtractPawnPick(Es.UnitE(idx_0), Es.InventorResourcesEs);
                 }
             }
         }

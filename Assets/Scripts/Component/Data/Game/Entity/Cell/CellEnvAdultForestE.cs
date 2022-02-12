@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public int AmountExtractPawn(in CellUnitEs unitEs)
         {
-            var extract = (int)(MaxResources * CellEnvironmentValues.RatioExtractPawnFromMaxResource(unitEs.LevelE.LevelTC.Level, EnvT));
+            var extract = (int)(MaxResources * CellEnvironmentValues.RatioExtractPawnFromMaxResource(unitEs.UnitE.Level, EnvT));
 
             if (extract > ResourcesC.Amount) extract = ResourcesC.Amount;
 
@@ -16,9 +16,9 @@ namespace Game.Game
         public bool CanExtractPawn(in CellUnitEs unitEs)
         {
             if (HaveEnvironment
-                && unitEs.TypeE.UnitTC.Is(UnitTypes.Pawn)
-                && unitEs.ConditionE.ConditionTC.Is(ConditionUnitTypes.Relaxed)
-                && unitEs.StatEs.Hp.HaveMax)
+                && unitEs.UnitE.Is(UnitTypes.Pawn)
+                && unitEs.UnitE.Is(ConditionUnitTypes.Relaxed)
+                && unitEs.UnitE.HaveMaxHp)
             {
                 return true;
             }
@@ -53,7 +53,7 @@ namespace Game.Game
         }
         public void ExtractPawn(in CellUnitEs unitEs, in InventorResourcesEs invResEs)
         {
-            invResEs.Resource(ResourceT, unitEs.OwnerE.OwnerC.Player).AddPawnExtractAdultForest(unitEs, this);
+            invResEs.Resource(ResourceT, unitEs.UnitE.OwnerC.Player).AddPawnExtractAdultForest(unitEs, this);
             Take(AmountExtractPawn(unitEs));
         }
     }

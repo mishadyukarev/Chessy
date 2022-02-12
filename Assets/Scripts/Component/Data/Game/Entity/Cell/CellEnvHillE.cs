@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public bool CanExtractPawn(in CellUnitEs unitEs, in CellEnvironmentEs envEs)
         {
-            return unitEs.TypeE.Is(UnitTypes.Pawn) && unitEs.ConditionE.Is(ConditionUnitTypes.Relaxed)
+            return unitEs.UnitE.Is(UnitTypes.Pawn) && unitEs.UnitE.Is(ConditionUnitTypes.Relaxed)
                 && unitEs.ExtraToolWeaponE.Is(ToolWeaponTypes.Pick)
                 && HaveEnvironment && !envEs.AdultForest.HaveEnvironment;
         }
@@ -30,11 +30,11 @@ namespace Game.Game
 
             Take(AmountExtractBuilding(buildUpgEs, cellEs.BuildEs)); ;
         }
-        public void ExtractPawnPick(in CellUnitEs unitEs, in InventorResourcesEs invResEs)
+        public void ExtractPawnPick(in CellUnitE unitE, in InventorResourcesEs invResEs)
         {
             var extract = AmountExtractPawnPick();
 
-            invResEs.Resource(ResourceT, unitEs.OwnerE.OwnerC.Player).Add(extract);
+            invResEs.Resource(ResourceT, unitE.Owner).Add(extract);
             Take(extract);
         }
         public void ExtractCity(in CellEs cellEs_from, in InventorResourcesEs invResEs)
