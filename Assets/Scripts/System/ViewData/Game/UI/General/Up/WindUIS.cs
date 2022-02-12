@@ -4,9 +4,9 @@ using static Game.Game.EconomyUpUIE;
 
 namespace Game.Game
 {
-    sealed class WindUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class WindUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public WindUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        public WindUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

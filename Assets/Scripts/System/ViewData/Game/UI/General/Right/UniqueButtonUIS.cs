@@ -1,9 +1,12 @@
 ﻿namespace Game.Game
 {
-    sealed class UniqueButtonUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class UniqueButtonUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal UniqueButtonUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        readonly Resources _resources;
+
+        internal UniqueButtonUIS(in Resources res, in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
+            _resources = res;
         }
 
         public void Run()
@@ -14,24 +17,24 @@
 
                 if (ability == default)
                 {
-                    VEs.UIEs.RightEs.Unique(button).Paren.SetActive(false);
+                    UIEs.RightEs.Unique(button).Paren.SetActive(false);
                 }
                 else
                 {
-                    VEs.UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).HaveCooldown);
-                    VEs.UIEs.RightEs.Unique(button).Text.Text = UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).Cooldown.Amount.ToString();
+                    UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).HaveCooldown);
+                    UIEs.RightEs.Unique(button).Text.Text = UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).Cooldown.Amount.ToString();
 
-                    VEs.UIEs.RightEs.Unique(button).Paren.SetActive(true);
+                    UIEs.RightEs.Unique(button).Paren.SetActive(true);
 
-                    VEs.UIEs.RightEs.Unique(button).ImageC.Sprite = VEs.ResourceSpriteEs.Sprite(ability).SpriteC.Sprite;
+                    UIEs.RightEs.Unique(button).ImageC.Sprite = _resources.Sprite(ability);
 
 
 
                     for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
                     {
-                        VEs.UIEs.RightEs.UniqueZone(button, unique).Zone.SetActive(false);
+                        UIEs.RightEs.UniqueZone(button, unique).Zone.SetActive(false);
                     }
-                    VEs.UIEs.RightEs.UniqueZone(button, ability).Zone.SetActive(true);
+                    UIEs.RightEs.UniqueZone(button, ability).Zone.SetActive(true);
 
 
 

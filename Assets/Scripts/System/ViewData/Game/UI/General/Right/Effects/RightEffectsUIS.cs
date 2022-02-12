@@ -2,12 +2,15 @@
 
 namespace Game.Game
 {
-    sealed class RightEffectsUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class RightEffectsUIS : SystemUIAbstract, IEcsRunSystem
     {
+        readonly Resources _resources;
         readonly Dictionary<EffectTypes, bool> _isFilled;
 
-        internal RightEffectsUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal RightEffectsUIS(in Resources resources, in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
+            _resources = resources;
+
             _isFilled = new Dictionary<EffectTypes, bool>();
             for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++)
             {
@@ -30,14 +33,14 @@ namespace Game.Game
 
                     for (byte idx_eff = 0; idx_eff < 5; idx_eff++)
                     {
-                        RightUIEs.Effect(idx_eff).GO.SetActive(false);
+                        UIEs.RightEs.Effect(idx_eff).GO.SetActive(false);
 
                         if(!_isFilled[EffectTypes.Shield])
                         {
                             if (UnitEffectEs(idx_sel).ShieldE.HaveShieldEffect)
                             {
-                                RightUIEs.Effect(idx_eff).GO.SetActive(true);
-                                RightUIEs.Effect(idx_eff).ImageUIC.Sprite = VEs.ResourceSpriteEs.Sprite(AbilityTypes.BonusNear).SpriteC.Sprite;
+                                UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
+                                UIEs.RightEs.Effect(idx_eff).ImageUIC.Sprite = _resources.Sprite(AbilityTypes.BonusNear);
                                 _isFilled[EffectTypes.Shield] = true;
                             }
                         }

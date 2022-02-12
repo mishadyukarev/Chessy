@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class ProtectUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class ProtectUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public ProtectUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal ProtectUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

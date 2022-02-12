@@ -3,9 +3,9 @@ using static Game.Game.CenterFriendUIE;
 
 namespace Game.Game
 {
-    sealed class FriendZoneUISys : SystemViewAbstract, IEcsRunSystem
+    sealed class FriendZoneUISys : SystemUIAbstract, IEcsRunSystem
     {
-        public FriendZoneUISys(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal FriendZoneUISys(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

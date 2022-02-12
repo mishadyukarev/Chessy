@@ -3,15 +3,15 @@ using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
-    sealed class RightUnitEventUIS : SystemViewAbstract
+    sealed class RightUnitEventUIS : SystemUIAbstract
     {
-        public RightUnitEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal RightUnitEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
-            VEs.UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
-            VEs.UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
-            VEs.UIEs.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
-            VEs.UIEs.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
-            VEs.UIEs.RightEs.Unique(ButtonTypes.Fifth).Button.AddListener(delegate { Unique(ButtonTypes.Fifth); });
+            UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
+            UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
+            UIEs.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
+            UIEs.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
+            UIEs.RightEs.Unique(ButtonTypes.Fifth).Button.AddListener(delegate { Unique(ButtonTypes.Fifth); });
 
             RightProtectUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
             RightRelaxUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });

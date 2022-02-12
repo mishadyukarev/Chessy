@@ -12,6 +12,7 @@ namespace Game.Game
         readonly Dictionary<AbilityTypes, SoundE> _sounds1;
         readonly Dictionary<PlayerTypes, AvailableCenterHeroE> _availHero;
         readonly Dictionary<PlayerTypes, MaxAvailablePawnsE> _maxPawnsEs;
+        readonly Dictionary<PlayerTypes, PeopleInCityE> _peopleEs;
 
         public ScoutHeroCooldownE ScoutHeroCooldownE(in UnitTypes unit, in PlayerTypes player) => _scoutHeroCooldownEs[unit.ToString() + player];
         public ScoutHeroCooldownE ScoutHeroCooldownE(in CellUnitEs unitEs) => _scoutHeroCooldownEs[unitEs.TypeE.UnitTC.Unit.ToString() + unitEs.OwnerE.OwnerC.Player];
@@ -20,6 +21,7 @@ namespace Game.Game
         public SoundE Sound(in AbilityTypes unique) => _sounds1[unique];
         public AvailableCenterHeroE AvailableCenterHero(in PlayerTypes player) => _availHero[player];
         public MaxAvailablePawnsE MaxAvailablePawnsE(in PlayerTypes player) => _maxPawnsEs[player];
+        public PeopleInCityE PeopleInCityE(in PlayerTypes player) => _peopleEs[player];
 
 
         public readonly CurrentIdxE CurrentIdxE;
@@ -65,11 +67,10 @@ namespace Game.Game
         public CellEs CellEs(in byte idx) => _cellEs[idx];
 
         public CellUnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
-        public CellUnitTypeE UnitTypeE(in byte idx) => UnitEs(idx).TypeE;
+        public CellUnitE UnitTypeE(in byte idx) => UnitEs(idx).TypeE;
         public CellUnitLevelE UnitLevelE(in byte idx) => UnitEs(idx).LevelE;
-        public CellUnitOwnerE UnitOwnerE(in byte idx) => UnitEs(idx).OwnerE;
         public CellUnitConditonE UnitConditionE(in byte idx) => UnitEs(idx).ConditionE;
-        public CellUnitToolWeaponE UnitTWE(in byte idx) => UnitEs(idx).ToolWeaponE;
+        public CellUnitExtraToolWeaponE UnitExtraTWE(in byte idx) => UnitEs(idx).ExtraToolWeaponE;
         public CellUnitStatEs UnitStatEs(in byte idx) => UnitEs(idx).StatEs;
         public CellUnitStatHpE UnitStatHpE(in byte idx) => UnitStatEs(idx).Hp;
         public CellUnitStatStepE UnitStatStepE(in byte idx) => UnitStatEs(idx).StepE;
@@ -117,11 +118,13 @@ namespace Game.Game
             _ready = new Dictionary<PlayerTypes, ReadyE>();
             _availHero = new Dictionary<PlayerTypes, AvailableCenterHeroE>();
             _maxPawnsEs = new Dictionary<PlayerTypes, MaxAvailablePawnsE>();
+            _peopleEs = new Dictionary<PlayerTypes, PeopleInCityE>();
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
                 _ready.Add(player, new ReadyE(gameW));
                 _availHero.Add(player, new AvailableCenterHeroE(true, gameW));
                 _maxPawnsEs.Add(player, new MaxAvailablePawnsE(player, gameW));
+                _peopleEs.Add(player, new PeopleInCityE(player, gameW));
 
                 for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
                 {
@@ -133,6 +136,7 @@ namespace Game.Game
             _sounds1 = new Dictionary<AbilityTypes, SoundE>();
             foreach (var item in sounds0) _sounds0.Add(item.Key, new SoundE(item.Value, gameW));
             foreach (var item in sounds1) _sounds1.Add(item.Key, new SoundE(item.Value, gameW));
+
 
             SelectedIdxE = new SelectedIdxE(gameW);
             CurrentIdxE = new CurrentIdxE(gameW);

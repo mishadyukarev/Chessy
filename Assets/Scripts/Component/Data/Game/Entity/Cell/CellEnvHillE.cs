@@ -7,7 +7,7 @@ namespace Game.Game
         public bool CanExtractPawn(in CellUnitEs unitEs, in CellEnvironmentEs envEs)
         {
             return unitEs.TypeE.Is(UnitTypes.Pawn) && unitEs.ConditionE.Is(ConditionUnitTypes.Relaxed)
-                && unitEs.ToolWeaponE.Is(ToolWeaponTypes.Pick)
+                && unitEs.ExtraToolWeaponE.Is(ToolWeaponTypes.Pick)
                 && HaveEnvironment && !envEs.AdultForest.HaveEnvironment;
         }
         public int AmountExtractPawnPick()

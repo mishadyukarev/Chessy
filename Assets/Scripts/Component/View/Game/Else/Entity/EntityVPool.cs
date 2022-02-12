@@ -151,7 +151,7 @@ namespace Game.Game
 
 
             cur_AS = aSParent.AddComponent<AudioSource>();
-            cur_AS.clip = Resources.Load<AudioClip>("GetHero_Clip");
+            cur_AS.clip = UnityEngine.Resources.Load<AudioClip>("GetHero_Clip");
             cur_AS.volume = 0.25f;
             _sounds0.Add(ClipTypes.GetHero, gameW.NewEntity().Add(new AudioSourceVC(cur_AS)));
 

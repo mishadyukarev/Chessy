@@ -4,9 +4,9 @@ using static Game.Game.EntityCenterUIPool;
 
 namespace Game.Game
 {
-    sealed class ReadyZoneUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class ReadyZoneUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public ReadyZoneUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal ReadyZoneUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class DownHeroUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class DownHeroUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal DownHeroUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal DownHeroUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

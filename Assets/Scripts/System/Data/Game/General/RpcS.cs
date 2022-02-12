@@ -183,7 +183,7 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).ToolWeaponE.GiveTakeTW_Master((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], sender, _ents);
+                        _ents.UnitEs((byte)objects[_idx_cur++]).ExtraToolWeaponE.GiveTakeTW_Master((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
                     case RpcMasterTypes.GetHero:
@@ -294,9 +294,9 @@ namespace Game.Game
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.LevelTC.Level);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ToolWeaponE.ProtectionC.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ToolWeaponTC.ToolWeapon);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.LevelTC.Level);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ProtectionC.Amount);
 
                 objs.Add(_ents.UnitEffectEs(idx_0).StunE.Stun);
 

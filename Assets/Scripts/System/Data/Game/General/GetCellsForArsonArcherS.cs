@@ -16,7 +16,7 @@
 
                 if (!UnitEffectEs(idx_0).StunE.IsStunned)
                 {
-                    if (Es.UnitTypeE(idx_0).HaveUnit && Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                    if (Es.UnitTypeE(idx_0).HaveUnit && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                     {
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {

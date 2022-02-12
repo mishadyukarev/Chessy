@@ -3,11 +3,11 @@ using static Game.Game.EntityCenterUIPool;
 
 namespace Game.Game
 {
-    sealed class MotionCenterUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class MotionCenterUIS : SystemUIAbstract, IEcsRunSystem
     {
         float _timer;
 
-        public MotionCenterUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal MotionCenterUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

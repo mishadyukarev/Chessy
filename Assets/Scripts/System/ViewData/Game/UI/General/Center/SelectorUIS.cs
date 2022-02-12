@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class SelectorUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class SelectorUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public SelectorUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal SelectorUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

@@ -1,8 +1,8 @@
 ﻿namespace Game.Game
 {
-    sealed class HeroesSyncUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class HeroesSyncUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public HeroesSyncUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal HeroesSyncUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 
@@ -14,12 +14,12 @@
             if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
                 && Es.AvailableCenterHero(curPlayerI).HaveCenterHero.Have)
             {
-                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
+                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
                     .SetActive(!Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero));
             }
             else
             {
-                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
+                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
                     .SetActive(false);
             }
         }

@@ -131,11 +131,11 @@ namespace Game.Game
 
                         if (rand >= 50)
                         {
-                            UnitEs(idx_0).ToolWeaponE.SetNew(ToolWeaponTypes.Sword, LevelTypes.Second);
+                            UnitEs(idx_0).ExtraToolWeaponE.SetNew(ToolWeaponTypes.Sword, LevelTypes.Second);
                         }
                         else
                         {
-                            UnitEs(idx_0).ToolWeaponE.SetNew(ToolWeaponTypes.Shield, LevelTypes.First);
+                            UnitEs(idx_0).ExtraToolWeaponE.SetNew(ToolWeaponTypes.Shield, LevelTypes.First);
                         }
                     }
                 }

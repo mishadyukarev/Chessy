@@ -115,7 +115,7 @@ namespace Game.Game
                                 {
                                     if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
                                     {
-                                        Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedToolWeaponE.ToolWeaponTC.ToolWeapon, Es.SelectedToolWeaponE.LevelTC.Level);
+                                        Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedToolWeaponE.ToolWeaponT, Es.SelectedToolWeaponE.LevelT);
                                     }
                                     else
                                     {
@@ -197,7 +197,8 @@ namespace Game.Game
 
                 else if (raycastTC.Is(RaycastTypes.UI))
                 {
-                    cellClick.Click = CellClickTypes.SimpleClick;
+                    //cellClick.Click = CellClickTypes.SimpleClick;
+                    //Es.SelectedIdxE.Reset();
                 }
 
                 else if (raycastTC.Is(RaycastTypes.Background))

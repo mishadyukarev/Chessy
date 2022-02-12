@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class StatsUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class StatsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal StatsUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal StatsUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

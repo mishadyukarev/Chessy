@@ -1,14 +1,12 @@
-﻿using static Game.Game.LeftCityUIEs;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    sealed class LeftCityEventUIS : SystemViewAbstract
+    sealed class LeftCityEventUIS : SystemUIAbstract
     {
-        internal LeftCityEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal LeftCityEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
-            VEs.UIEs.LeftEs.CityEs.BuildE(BuildingTypes.House).ButtonCRef.AddListener(delegate { Build(BuildingTypes.House); });
-            VEs.UIEs.LeftEs.CityEs.BuildE(BuildingTypes.Market).ButtonCRef.AddListener(delegate { Build(BuildingTypes.Market); });
-            VEs.UIEs.LeftEs.CityEs.BuildE(BuildingTypes.Smelter).ButtonCRef.AddListener(delegate { Build(BuildingTypes.Smelter); });
+            UIEs.LeftCityEs.BuildE(BuildingTypes.House).ButtonCRef.AddListener(delegate { Build(BuildingTypes.House); });
+            UIEs.LeftCityEs.BuildE(BuildingTypes.Market).ButtonCRef.AddListener(delegate { Build(BuildingTypes.Market); });
+            UIEs.LeftCityEs.BuildE(BuildingTypes.Smelter).ButtonCRef.AddListener(delegate { Build(BuildingTypes.Smelter); });
         }
 
         void Build(in BuildingTypes build)

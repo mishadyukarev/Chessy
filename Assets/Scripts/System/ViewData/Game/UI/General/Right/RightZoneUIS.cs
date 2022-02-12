@@ -1,8 +1,8 @@
 ﻿namespace Game.Game
 {
-    sealed class RightZoneUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class RightZoneUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public RightZoneUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal RightZoneUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 
@@ -24,7 +24,7 @@
                 }
             }
 
-            VEs.UIEs.RightEs.Zone.Zone.SetActive(activeParent);
+            UIEs.RightEs.Zone.Zone.SetActive(activeParent);
         }
     }
 }

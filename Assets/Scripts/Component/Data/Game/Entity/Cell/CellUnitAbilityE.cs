@@ -138,7 +138,7 @@ namespace Game.Game
                         var idx_1 = e.CellSpaceWorker.GetIdxCell(xy1);
 
                         var ownUnit_1 = e.UnitEs(idx_1).OwnerE.OwnerC;
-                        var tw_1 = e.UnitEs(idx_1).ToolWeaponE.ToolWeaponTC;
+                        var tw_1 = e.UnitEs(idx_1).ExtraToolWeaponE.ToolWeaponTC;
 
 
                         if (e.UnitEs(idx_1).TypeE.HaveUnit)
@@ -150,7 +150,7 @@ namespace Game.Game
 
                                 if (tw_1.Is(ToolWeaponTypes.Shield))
                                 {
-                                    e.UnitEs(idx_1).ToolWeaponE.BreakShield();
+                                    e.UnitEs(idx_1).ExtraToolWeaponE.BreakShield();
                                 }
                                 else
                                 {
@@ -229,7 +229,7 @@ namespace Game.Game
                                     e.UnitStatEs(idx_1).Hp.SetMax();
                                     e.UnitEffectEs(idx_1).ShieldE.Set(_ability);
                                 }
-                                if (e.UnitTWE(idx_1).Is(ToolWeaponTypes.BowCrossbow))
+                                if (e.UnitExtraTWE(idx_1).Is(ToolWeaponTypes.BowCrossbow))
                                 {
                                     e.UnitEffectEs(idx_1).FrozenArrowE.Enable();
                                 }

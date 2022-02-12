@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class KingZoneUISys : SystemViewAbstract, IEcsRunSystem
+    sealed class KingZoneUISys : SystemUIAbstract, IEcsRunSystem
     {
-        public KingZoneUISys(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal KingZoneUISys(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

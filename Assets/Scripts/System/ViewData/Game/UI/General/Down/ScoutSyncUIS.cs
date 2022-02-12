@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class ScoutSyncUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class ScoutSyncUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public ScoutSyncUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal ScoutSyncUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

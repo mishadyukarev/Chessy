@@ -3,11 +3,11 @@ using static Game.Game.EconomyUpUIE;
 
 namespace Game.Game
 {
-    sealed class EconomyUpUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class EconomyUpUIS : SystemUIAbstract, IEcsRunSystem
     {
         readonly Dictionary<ResourceTypes, int> _extracts;
 
-        internal EconomyUpUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal EconomyUpUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
             _extracts = new Dictionary<ResourceTypes, int>();
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts.Add(res, default);

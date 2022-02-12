@@ -4,8 +4,13 @@ namespace Game.Game
 {
     public sealed class SelectedToolWeaponE : EntityAbstract
     {
-        public ref ToolWeaponTC ToolWeaponTC => ref Ent.Get<ToolWeaponTC>();
-        public ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
+        ref ToolWeaponTC ToolWeaponTC => ref Ent.Get<ToolWeaponTC>();
+        ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
+
+        public ToolWeaponTypes ToolWeaponT => ToolWeaponTC.ToolWeapon;
+        public LevelTypes LevelT => LevelTC.Level;
+
+        public bool Is(params LevelTypes[] levTs) => LevelTC.Is(levTs);
 
         public SelectedToolWeaponE(in EcsWorld gameW) : base(gameW)
         {
@@ -14,5 +19,10 @@ namespace Game.Game
                 .Add(new LevelTC(LevelTypes.Second));
         }
 
+        public void Set(in ToolWeaponTypes twT, in LevelTypes levT)
+        {
+            ToolWeaponTC.ToolWeapon = twT;
+            LevelTC.Level = levT;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Game.Game
                         && !EnvironmentEs(idx_1).Mountain.HaveEnvironment
                         && !UnitEs(idx_1).TypeE.HaveUnit)
                     {
-                        UnitEs(idx_0).ShiftUnit(idx_1, false, Es);
+                        UnitEs(idx_0).Shift(idx_1, false, Es);
                     }
                 }
             }

@@ -84,6 +84,7 @@ namespace Game.Game
                 case ToolWeaponTypes.Sword: return 0.5f;
                 case ToolWeaponTypes.Shield: return 0;
                 case ToolWeaponTypes.BowCrossbow: return 0;
+                case ToolWeaponTypes.Axe: return 0;
                 default: throw new Exception();
             }
         }

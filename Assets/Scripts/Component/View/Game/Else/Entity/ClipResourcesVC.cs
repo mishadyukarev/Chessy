@@ -15,7 +15,7 @@ namespace Game.Game
 
             for (var clip = ClipTypes.First; clip < ClipTypes.End; clip++)
             {
-                _clips.Add(clip, Resources.Load<AudioClip>(clip + "_Clip"));
+                _clips.Add(clip, UnityEngine.Resources.Load<AudioClip>(clip + "_Clip"));
             }
 
 
@@ -28,7 +28,7 @@ namespace Game.Game
                 if (uniq == AbilityTypes.FireArcher || uniq == AbilityTypes.FirePawn) name += "Fire";
                 else name += uniq;
 
-                _uniq.Add(uniq, Resources.Load<AudioClip>(name + "_Clip"));
+                _uniq.Add(uniq, UnityEngine.Resources.Load<AudioClip>(name + "_Clip"));
             }
         }
 

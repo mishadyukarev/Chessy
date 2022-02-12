@@ -16,7 +16,7 @@ namespace Game.Game
 
                 if (selUnitT == UnitTypes.Pawn)
                 {
-                    VEs.UnitEs(idx_cur).PawnE(true, Es.SelectedUnitE.LevelT).Enable(true);
+                    //VEs.UnitEs(idx_cur).ToolWeaponE(ToolWeaponTypes.Axe, LevelTypes.First, true).Enable(true);
                 }
                 //else if (selUnitT == UnitTypes.Archer)
                 //{
@@ -24,7 +24,7 @@ namespace Game.Game
                 //}
                 else
                 {
-                    VEs.UnitE(idx_cur, selUnitT, true).Enable(true);
+                    VEs.UnitE(idx_cur, true, levT,  selUnitT).Enable(true);
                 }
             }
         }

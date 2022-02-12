@@ -7,7 +7,7 @@ namespace Game.Game
     {
         readonly Dictionary<SystemViewDataTypes, Action> _actions;
 
-        public readonly SystemViewUI SystemViewUI;
+
 
         public SystemsView(in Entities ents, in EntitiesView entsView)
         {
@@ -38,12 +38,6 @@ namespace Game.Game
 
                 + new RotateAllVS(ents, entsView).Run
                 + new SoundVS(ents, entsView).Run);
-
-
-
-
-
-            SystemViewUI = new SystemViewUI(ents, entsView);
         }
 
         public void Run(in SystemViewDataTypes type)

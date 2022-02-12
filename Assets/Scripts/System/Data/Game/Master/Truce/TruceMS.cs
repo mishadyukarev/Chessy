@@ -18,8 +18,8 @@ namespace Game.Game
                 var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
                 var ownUnit_0 = UnitEs(idx_0).OwnerE.OwnerC;
 
-                var tw_0 = UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
-                var twLevel_0 = UnitEs(idx_0).ToolWeaponE.LevelTC;
+                var tw_0 = UnitEs(idx_0).ExtraToolWeaponE.ToolWeaponTC;
+                var twLevel_0 = UnitEs(idx_0).ExtraToolWeaponE.LevelTC;
 
                 var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
 
@@ -37,7 +37,7 @@ namespace Game.Game
                             if (tw_0.HaveTW)
                             {
                                 Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
-                                UnitEs(idx_0).ToolWeaponE.Reset();
+                                UnitEs(idx_0).ExtraToolWeaponE.Reset();
                             }
 
                             UnitEs(idx_0).TypeE.AddToInventorAndRemove(Es);
@@ -49,7 +49,7 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
-                            UnitEs(idx_0).ToolWeaponE.Reset();
+                            UnitEs(idx_0).ExtraToolWeaponE.Reset();
                         }
 
                         UnitEs(idx_0).TypeE.AddToInventorAndRemove(Es);

@@ -18,6 +18,7 @@ namespace Game
 
         Systems _systems;
         SystemsView _systemsV;
+        SystemViewUI _systemViewUI;
 
         #endregion
 
@@ -48,7 +49,7 @@ namespace Game
                 case SceneTypes.Game:
                     _systems.Run(DataSTypes.RunUpdate);
                     _systemsV.Run(SystemViewDataTypes.RunUpdate);
-                    _systemsV.SystemViewUI.Run(UITypes.RunUpdate);
+                    _systemViewUI.Run(UITypes.RunUpdate);
                     break;
 
                 default:
@@ -72,7 +73,7 @@ namespace Game
                 case SceneTypes.Game:
                     _systems.Run(DataSTypes.RunFixedUpdate);
                     _systemsV.Run(SystemViewDataTypes.RunFixedUpdate);
-                    _systemsV.SystemViewUI.Run(UITypes.RunFixedUpdate);
+                    _systemViewUI.Run(UITypes.RunFixedUpdate);
                     break;
 
                 default:
@@ -102,19 +103,25 @@ namespace Game
 
                 case SceneTypes.Game:
                     {
-                        if (_toggleW != default) _toggleW = default;
+                        ref var gameW = ref _toggleW;
 
-                        _toggleW = new EcsWorld();
+                        if (gameW != default) gameW = default;
 
-                        var entsView = new EntitiesView(_toggleW, out var forData);
-                        var ents = new Entities(_toggleW, forData, RpcS.NamesMethods);
+                        gameW = new EcsWorld();
+
+                        var resources = new Game.Resources(gameW);
+
+                        var viewEs = new EntitiesView(gameW, out var forData);
+                        var uIEs = new EntitiesUI(gameW);
+                        var ents = new Entities(gameW, forData, RpcS.NamesMethods);
 
                         new FillCellsS(ents);
 
-                        new Events(ents, entsView);
-                        _systemsV = new SystemsView(ents, entsView);
-                        _systems = new Systems(ents, _systemsV);
+                        new Events(ents, uIEs);
 
+                        _systemViewUI = new SystemViewUI(resources, ents, uIEs);
+                        _systemsV = new SystemsView(ents, viewEs);
+                        _systems = new Systems(ents, _systemsV);
 
                         EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>().GiveData(ents, _systems);
                         RpcS.SyncAllMaster();

@@ -7,7 +7,7 @@ namespace Game.Game
     {
         readonly Dictionary<UITypes, Action> _actions;
 
-        public SystemViewUI(in Entities ents, in EntitiesView entsView)
+        public SystemViewUI(in Resources res, in Entities ents, in EntitiesUI entsUI)
         {
             _actions = new Dictionary<UITypes, Action>();
 
@@ -19,43 +19,41 @@ namespace Game.Game
                 (Action)
 
                 ///Right
-                new RightZoneUIS(ents, entsView).Run
-                + new StatsUIS(ents, entsView).Run
-                + new ProtectUIS(ents, entsView).Run
-                + new RelaxUIS(ents, entsView).Run
-                + new UniqueButtonUIS(ents, entsView).Run
-                + new FirstButtonBuildUIS(ents, entsView).Run
-                + new SecButtonBuildUISys(ents, entsView).Run
-                + new ShieldUIS(ents, entsView).Run
-                + new RightEffectsUIS(ents, entsView).Run
+                new RightZoneUIS(ents, entsUI).Run
+                + new StatsUIS(ents, entsUI).Run
+                + new ProtectUIS(ents, entsUI).Run
+                + new RelaxUIS(ents, entsUI).Run
+                + new UniqueButtonUIS(res, ents, entsUI).Run
+                + new ShieldUIS(ents, entsUI).Run
+                + new RightEffectsUIS(res, ents, entsUI).Run
 
 
                 ///Down
-                + new DonerUIS(ents, entsView).Run
-                + new GetterUnitsUIS(ents, entsView).Run
-                + new DownToolWeaponUIS(ents, entsView).Run
-                + new ScoutSyncUIS(ents, entsView).Run
-                + new DownHeroUIS(ents, entsView).Run
+                + new DonerUIS(ents, entsUI).Run
+                + new DownPawnUIS(ents, entsUI).Run
+                + new DownToolWeaponUIS(ents, entsUI).Run
+                + new ScoutSyncUIS(ents, entsUI).Run
+                + new DownHeroUIS(ents, entsUI).Run
 
                 ///Up
-                + new EconomyUpUIS(ents, entsView).Run
-                + new WindUIS(ents, entsView).Run
-                + new UpSunsUIS(ents, entsView).Run
+                + new EconomyUpUIS(ents, entsUI).Run
+                + new WindUIS(ents, entsUI).Run
+                + new UpSunsUIS(ents, entsUI).Run
 
                 ///Center
-                + new SelectorUIS(ents, entsView).Run
-                + new TheEndGameUIS(ents, entsView).Run
-                + new MotionCenterUIS(ents, entsView).Run
-                + new ReadyZoneUIS(ents, entsView).Run
+                + new SelectorUIS(ents, entsUI).Run
+                + new TheEndGameUIS(ents, entsUI).Run
+                + new MotionCenterUIS(ents, entsUI).Run
+                + new ReadyZoneUIS(ents, entsUI).Run
                 + new MistakeUIS().Run
-                + new KingZoneUISys(ents, entsView).Run
-                + new FriendZoneUISys(ents, entsView).Run
-                + new PickUpgUIS(ents, entsView).Run
-                + new HeroesSyncUIS(ents, entsView).Run
+                + new KingZoneUISys(ents, entsUI).Run
+                + new FriendZoneUISys(ents, entsUI).Run
+                + new PickUpgUIS(ents, entsUI).Run
+                + new HeroesSyncUIS(ents, entsUI).Run
 
                 ///Left
-                + new LeftZonesUIS(ents, entsView.UIEs).Run
-                + new EnvUIS(ents, entsView.UIEs).Run);
+                + new LeftZonesUIS(ents, entsUI).Run
+                + new EnvUIS(ents, entsUI).Run);
         }
 
         public void Run(in UITypes type)

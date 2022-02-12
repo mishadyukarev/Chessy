@@ -7,22 +7,18 @@ namespace Game.Game
 {
     public readonly struct EntitiesView
     {
-        public readonly ResourceSpriteVEs ResourceSpriteEs;
-        public readonly EntitiesUI UIEs;
-
         readonly CellVEs[] _cellVEs;
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
         public CellBuildingVEs BuildingVEs(in byte idx) => CellEs(idx).BuildingEs;
         public CellBuildingVE BuildingE(in byte idx, in BuildingTypes buildT) => BuildingVEs(idx).Main(buildT);
         public CellUnitVEs UnitEs(in byte idx) => CellEs(idx).UnitVEs;
-        public CellUnitVE UnitE(in byte idx, in UnitTypes unitT, in bool isSelected) => UnitEs(idx).UnitE(unitT, isSelected);
+        public CellUnitVE UnitE(in byte idx, in bool isSelected, in LevelTypes levT, in UnitTypes unitT) => UnitEs(idx).UnitE(isSelected, levT, unitT);
         public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
         public CellEnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
         public CellEnvironmentVE EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
 
         public EntitiesView(in EcsWorld gameW, out List<object> forData)
         {
-            ResourceSpriteEs = new ResourceSpriteVEs(gameW);
             new VideoClipsResC(true);
 
 
@@ -91,9 +87,6 @@ namespace Game.Game
             new SupportCellVEs(gameW, cells);
             new CellBlocksVEs(gameW, cells);
             new CellBarsVEs(gameW, cells);
-
-
-            UIEs = new EntitiesUI(gameW);
 
 
             var isActiveParenCells = new bool[CellStartValues.ALL_CELLS_AMOUNT];

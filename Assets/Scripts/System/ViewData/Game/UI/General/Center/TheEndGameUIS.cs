@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class TheEndGameUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class TheEndGameUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public TheEndGameUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal TheEndGameUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

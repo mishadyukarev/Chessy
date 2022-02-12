@@ -5,9 +5,12 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class CellUnitTypeE : CellEntityAbstract
+    public sealed class CellUnitE : CellEntityAbstract
     {
+        ref PlayerTC OwnerCRef => ref Ent.Get<PlayerTC>();
         ref UnitTC UnitTCRef => ref Ent.Get<UnitTC>();
+
+        public PlayerTC OwnerC => Ent.Get<PlayerTC>();
         public UnitTC UnitTC => Ent.Get<UnitTC>();
 
         public UnitTypes UnitT
@@ -15,8 +18,14 @@ namespace Game.Game
             get => UnitTCRef.Unit;
             internal set => UnitTCRef.Unit = value;
         }
+        public PlayerTypes PlayerT
+        {
+            get => OwnerC.Player;
+            set => OwnerCRef.Player = value;
+        }
         public bool HaveUnit => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
         public bool Is(params UnitTypes[] unit) => UnitTC.Is(unit);
+        public bool Is(params PlayerTypes[] owners) => OwnerC.Is(owners);
         public bool IsMelee => UnitTC.IsMelee;
 
 
@@ -67,8 +76,7 @@ namespace Game.Game
         //}
 
 
-
-        internal CellUnitTypeE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
+        internal CellUnitE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
 
         }
@@ -115,7 +123,7 @@ namespace Game.Game
             {
                 e.UnitStatStepE(idx_from).TakeForShift(idx_to, e);
 
-                e.UnitEs(idx_from).ShiftUnit(idx_to, true, e);
+                e.UnitEs(idx_from).Shift(idx_to, true, e);
 
                 e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
@@ -223,9 +231,9 @@ namespace Game.Game
                     {
                         e.UnitEffectEs(idx_from).ShieldE.Take();
                     }
-                    else if (e.UnitEs(idx_from).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                    else if (e.UnitEs(idx_from).ExtraToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
                     {
-                        e.UnitEs(idx_from).ToolWeaponE.BreakShield();
+                        e.UnitEs(idx_from).ExtraToolWeaponE.BreakShield();
                     }
                     else if (minus_from > 0)
                     {
@@ -246,9 +254,9 @@ namespace Game.Game
                 {
                     e.UnitEffectEs(idx_to).ShieldE.Take();
                 }
-                else if (e.UnitEs(idx_to).ToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                else if (e.UnitEs(idx_to).ExtraToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
                 {
-                    e.UnitEs(idx_to).ToolWeaponE.BreakShield();
+                    e.UnitEs(idx_to).ExtraToolWeaponE.BreakShield();
                 }
                 else if (minus_to > 0)
                 {
@@ -274,7 +282,7 @@ namespace Game.Game
                         }
                         else
                         {
-                            e.UnitEs(idx_from).ShiftUnit(idx_to, true, e);
+                            e.UnitEs(idx_from).Shift(idx_to, true, e);
                         }
                     }
                 }
@@ -297,22 +305,27 @@ namespace Game.Game
 
             if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(whoseMove, idx_0).Can)
             {
-                var levUnit = LevelTypes.None;
-
-                if (e.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).HaveUnits)
+                if (unit == UnitTypes.Pawn)
                 {
-                    e.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).TakeUnit();
-                    levUnit = LevelTypes.Second;
+                    e.PeopleInCityE(whoseMove).People--;
+                    e.UnitEs(idx_0).SetNew((unit, LevelTypes.First, whoseMove, ConditionUnitTypes.None, false), e);
                 }
                 else
                 {
-                    e.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).TakeUnit();
-                    levUnit = LevelTypes.First;
+                    var levUnit = LevelTypes.None;
+
+                    if (e.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).HaveUnits)
+                    {
+                        e.InventorUnitsEs.Units(unit, LevelTypes.Second, whoseMove).TakeUnit();
+                        levUnit = LevelTypes.Second;
+                    }
+                    else
+                    {
+                        e.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).TakeUnit();
+                        levUnit = LevelTypes.First;
+                    }
+                    e.UnitEs(idx_0).SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), e);
                 }
-                e.UnitEs(idx_0).SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), e);
-
-
-                //if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
                 e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }

@@ -2,17 +2,17 @@
 {
     public sealed class Events
     {
-        public Events(in Entities ents, in EntitiesView entsView)
+        public Events(in Entities ents, in EntitiesUI entsUI)
         {
-            new CenterEventUIS(ents, entsView);
-            new DownEventUIS(ents, entsView);
-            new RightUnitEventUIS(ents, entsView);
+            new CenterEventUIS(ents, entsUI);
+            new DownEventUIS(ents, entsUI);
+            new RightUnitEventUIS(ents, entsUI);
             new UpEventUIS();
 
-            new LeftCityEventUIS(ents, entsView);
-            new LeftEnvEventUISys(ents, entsView.UIEs);
-            new LeftMarketEventUIS(ents, entsView);
-            new LeftSmelterEventUIS(ents, entsView.UIEs);
+            new LeftCityEventUIS(ents, entsUI);
+            new LeftEnvEventUISys(ents, entsUI);
+            new LeftMarketEventUIS(ents, entsUI);
+            new LeftSmelterEventUIS(ents, entsUI);
         }
     }
 }

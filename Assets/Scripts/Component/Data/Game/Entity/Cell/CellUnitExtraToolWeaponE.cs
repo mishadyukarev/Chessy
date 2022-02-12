@@ -4,7 +4,7 @@ using System;
 
 namespace Game.Game
 {
-    public sealed class CellUnitToolWeaponE : CellEntityAbstract
+    public sealed class CellUnitExtraToolWeaponE : CellEntityAbstract
     {
         ref ToolWeaponTC ToolWeaponTCRef => ref Ent.Get<ToolWeaponTC>();
         ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
@@ -33,9 +33,9 @@ namespace Game.Game
         public bool HaveProtection => ProtectionC.Amount > 0;
         public bool Is(params ToolWeaponTypes[] tws) => ToolWeaponTC.Is(tws);
 
-        internal CellUnitToolWeaponE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
+        internal CellUnitExtraToolWeaponE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
 
-        internal void Set(in CellUnitToolWeaponE twE)
+        internal void Set(in CellUnitExtraToolWeaponE twE)
         {
             ToolWeaponTCRef = twE.ToolWeaponTC;
             LevelTCRef = twE.LevelTC;
@@ -93,8 +93,8 @@ namespace Game.Game
 
                 var ownUnit_0 = e.UnitEs(idx_0).OwnerE.OwnerC;
 
-                var tw_0 = e.UnitEs(idx_0).ToolWeaponE.ToolWeaponTC;
-                var twLevel_0 = e.UnitEs(idx_0).ToolWeaponE.LevelTC;
+                var tw_0 = e.UnitEs(idx_0).ExtraToolWeaponE.ToolWeaponTC;
+                var twLevel_0 = e.UnitEs(idx_0).ExtraToolWeaponE.LevelTC;
 
 
                 if (unit_0.Is(UnitTypes.Pawn))
@@ -105,7 +105,7 @@ namespace Game.Game
                         if (tw_0.HaveTW)
                         {
                             e.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
-                            e.UnitEs(idx_0).ToolWeaponE.Reset();
+                            e.UnitEs(idx_0).ExtraToolWeaponE.Reset();
 
                             e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
@@ -117,7 +117,7 @@ namespace Game.Game
                         {
                             e.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Amount--;
 
-                            e.UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
+                            e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
                             e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
@@ -130,7 +130,7 @@ namespace Game.Game
                             {
                                 e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                e.UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
+                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
                                 e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
@@ -148,7 +148,7 @@ namespace Game.Game
                             {
                                 e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                e.UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
+                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
                                 e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
@@ -166,7 +166,25 @@ namespace Game.Game
                             {
                                 e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                e.UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
+                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
+
+                                e.UnitStatEs(idx_0).StepE.Take(tWForGive);
+
+                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            }
+                            else
+                            {
+                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
+                            }
+                        }
+
+                        else if (tWForGive == ToolWeaponTypes.Axe)
+                        {
+                            if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
+                            {
+                                e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
+
+                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
                                 e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 
@@ -184,7 +202,7 @@ namespace Game.Game
                             {
                                 e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
 
-                                e.UnitEs(idx_0).ToolWeaponE.SetNew(tWForGive, levelTW);
+                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
                                 e.UnitStatEs(idx_0).StepE.Take(tWForGive);
 

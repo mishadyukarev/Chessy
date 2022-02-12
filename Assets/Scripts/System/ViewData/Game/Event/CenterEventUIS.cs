@@ -9,9 +9,9 @@ using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
-    sealed class CenterEventUIS : SystemViewAbstract
+    sealed class CenterEventUIS : SystemUIAbstract
     {
-        internal CenterEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal CenterEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
             Ready<ButtonUIC>().AddListener(Ready);
             JoinDiscord<ButtonUIC>().AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
@@ -31,11 +31,11 @@ namespace Game.Game
             Water.AddListener(UpgradeWater);
 
 
-            CenterUIEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
-            CenterUIEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { GetHero(UnitTypes.Snowy); });
-            CenterUIEs.HeroE(UnitTypes.Undead).ButtonC.AddListener(delegate { GetHero(UnitTypes.Undead); });
-            CenterUIEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
-            //VEs.UIEs.CenterEs.CenterHeroUIE(UnitTypes.Elfemale).AddListener(OpenShop);
+            UIEs.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
+            UIEs.CenterEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { GetHero(UnitTypes.Snowy); });
+            UIEs.CenterEs.HeroE(UnitTypes.Undead).ButtonC.AddListener(delegate { GetHero(UnitTypes.Undead); });
+            UIEs.CenterEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
+            //UIEs.CenterEs.CenterHeroUIE(UnitTypes.Elfemale).AddListener(OpenShop);
         }
 
         void Ready() => Es.RpcE.ReadyToMaster();
@@ -78,7 +78,7 @@ namespace Game.Game
             {
                 Es.RpcE.PickUpgUnitToMas(unit);
 
-                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
             else SoundV(ClipTypes.Mistake).Play();
         }
@@ -89,7 +89,7 @@ namespace Game.Game
             {
                 Es.RpcE.PickUpgBuildToMas(build);
 
-                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
             else SoundV(ClipTypes.Mistake).Play();
         }
@@ -100,7 +100,7 @@ namespace Game.Game
             {
                 Es.RpcE.UpgWater();
 
-                VEs.UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
             else SoundV(ClipTypes.Mistake).Play();
         }

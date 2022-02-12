@@ -25,13 +25,15 @@ namespace Game.Game
 
         public readonly byte Idx;
 
-        public readonly CellUnitTypeE TypeE;
+        public readonly CellUnitE TypeE;
         public readonly CellUnitLevelE LevelE;
         public readonly CellUnitOwnerE OwnerE;
         public readonly CellUnitConditonE ConditionE;
         public readonly CellUnitCornedE CornedE;
-        public readonly CellUnitToolWeaponE ToolWeaponE;
         public readonly CellUnitWhoLastDiedHereE WhoLastDiedHereE;
+
+        public readonly CellUnitExtraToolWeaponE ExtraToolWeaponE;
+        public readonly CellUnitMainToolWeaponE MainToolWeaponE;
 
         public readonly CellUnitStatEs StatEs;
         public readonly CellUnitEffectEs EffectEs;
@@ -55,7 +57,7 @@ namespace Game.Game
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * CellUnitMainDamageValues.PercentExtraDamageTW(cellEs.UnitEs.ToolWeaponE.ToolWeaponTC.ToolWeapon);
+            powerDamege += standDamage * CellUnitMainDamageValues.PercentExtraDamageTW(cellEs.UnitEs.ExtraToolWeaponE.ToolWeaponTC.ToolWeapon);
             if (attack == AttackTypes.Unique) powerDamege += standDamage * CellUnitMainDamageValues.UNIQUE_PERCENT_DAMAGE;
 
             //if (haveEff) powerDamege += standDamage * 0.2f;
@@ -89,7 +91,6 @@ namespace Game.Game
         }
         
 
-
         internal CellUnitEs(in byte idx, in EcsWorld gameW)
         {
             Idx = idx;
@@ -112,18 +113,17 @@ namespace Game.Game
                 _cellUnitVisibles[player] = new CellUnitVisibleE(gameW);
             }
 
-            TypeE = new CellUnitTypeE(idx, gameW);
-            OwnerE = new CellUnitOwnerE(idx, gameW);
+            TypeE = new CellUnitE(idx, gameW);
             ConditionE = new CellUnitConditonE(idx, gameW);
             LevelE = new CellUnitLevelE(idx, gameW);
-            ToolWeaponE = new CellUnitToolWeaponE(idx, gameW);
+            ExtraToolWeaponE = new CellUnitExtraToolWeaponE(idx, gameW);
+            MainToolWeaponE = new CellUnitMainToolWeaponE(idx, gameW);
             CornedE = new CellUnitCornedE(idx, gameW);
             WhoLastDiedHereE = new CellUnitWhoLastDiedHereE(idx, gameW);
 
             StatEs = new CellUnitStatEs(idx, gameW);
             EffectEs = new CellUnitEffectEs(idx, gameW);
         }
-
 
         void Reset()
         {
@@ -148,9 +148,12 @@ namespace Game.Game
             ents.UnitEffectEs(idx_to).ShieldE.Shield = EffectEs.ShieldE.Shield;
             ents.UnitEffectEs(idx_to).FrozenArrowE.IsFrozenArraw = EffectEs.FrozenArrowE.IsFrozenArraw;
 
-            ents.UnitTWE(idx_to).ToolWeaponT = ToolWeaponE.ToolWeaponT;
-            ents.UnitTWE(idx_to).LevelT = ToolWeaponE.LevelT;
-            ents.UnitTWE(idx_to).Protection = ToolWeaponE.Protection;
+            ents.UnitExtraTWE(idx_to).ToolWeaponT = ExtraToolWeaponE.ToolWeaponT;
+            ents.UnitExtraTWE(idx_to).LevelT = ExtraToolWeaponE.LevelT;
+            ents.UnitExtraTWE(idx_to).Protection = ExtraToolWeaponE.Protection;
+
+            ents.UnitEs(idx_to).MainToolWeaponE.ToolWeapon = MainToolWeaponE.ToolWeapon;
+            ents.UnitEs(idx_to).MainToolWeaponE.Level = MainToolWeaponE.Level;
 
             foreach (var abilityT in CooldownKeys) ents.UnitEs(idx_to).Ability(abilityT).Shift(Ability(abilityT));
         }
@@ -159,7 +162,7 @@ namespace Game.Game
             Set(idx_to, ents);
             Reset();
         }
-        public void ShiftUnit(in byte idx_to, in bool withDestoyBuilding, in Entities ents)
+        public void Shift(in byte idx_to, in bool withDestoyBuilding, in Entities ents)
         {
             Set(idx_to, ents);
             Reset();
@@ -196,7 +199,7 @@ namespace Game.Game
                 }
             }
         }
-        public void SetNew(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unit, in Entities ents, in (ToolWeaponTypes, LevelTypes) tw = default)
+        public void SetNew(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unit, in Entities ents, in (ToolWeaponTypes, LevelTypes, ToolWeaponTypes, LevelTypes) tw = default)
         {
             TypeE.UnitT = unit.Item1;
             LevelE.Set(unit.Item2);
@@ -212,8 +215,15 @@ namespace Game.Game
             EffectEs.ShieldE.Reset();
             EffectEs.FrozenArrowE.Disable();
 
-            ToolWeaponE.SetNew(tw);
+            MainToolWeaponE.SetNew(tw.Item1, tw.Item2);
+            ExtraToolWeaponE.SetNew(tw.Item3, tw.Item4);
             foreach (var item in CooldownKeys) Ability(item).SetNew();
+
+            if (TypeE.Is(UnitTypes.Pawn))
+            {
+                MainToolWeaponE.ToolWeapon = ToolWeaponTypes.Axe;
+                MainToolWeaponE.Level = LevelTypes.First;
+            }
         }
 
 

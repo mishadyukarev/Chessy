@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class DonerUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class DonerUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public DonerUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal DonerUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

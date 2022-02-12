@@ -35,7 +35,7 @@ namespace Game.Game
 
                             case UnitTypes.Pawn:
 
-                                if (Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                if (Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                 {
                                     Es.UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.FireArcher;
                                     Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.ChangeCornerArcher;

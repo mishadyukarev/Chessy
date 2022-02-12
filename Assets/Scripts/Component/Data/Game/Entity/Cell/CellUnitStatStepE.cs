@@ -19,8 +19,8 @@ namespace Game.Game
         public bool Have(in AbilityTypes ability) => StepsCRef.Amount >= CellUnitStatStepValues.NeedSteps(ability);
         public bool Have(in ConditionUnitTypes cond) => StepsCRef.Amount >= CellUnitStatStepValues.NeedSteps(cond);
         public bool Have(in ToolWeaponTypes tw) => StepsCRef.Amount >= CellUnitStatStepValues.NeedSteps(tw);
-        public bool HaveMax(in CellUnitTypeE unitElseE) => StepsC.Amount >= MaxAmountSteps(unitElseE);
-        public int MaxAmountSteps(in CellUnitTypeE cellUnitElse) => CellUnitStatStepValues.MaxAmountSteps(cellUnitElse.UnitTC.Unit, false);
+        public bool HaveMax(in CellUnitE unitElseE) => StepsC.Amount >= MaxAmountSteps(unitElseE);
+        public int MaxAmountSteps(in CellUnitE cellUnitElse) => CellUnitStatStepValues.MaxAmountSteps(cellUnitElse.UnitTC.Unit, false);
         int StepsForShiftOrAttack(in UnitTC unitTC_from, in DirectTypes dirMove_to, in CellEs cellEs_to)
         {
             var needSteps = 1;
@@ -44,7 +44,7 @@ namespace Game.Game
 
         internal CellUnitStatStepE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
 
-        public void SetMax(in CellUnitTypeE unitElseE_from) => StepsCRef.Amount = MaxAmountSteps(unitElseE_from);
+        public void SetMax(in CellUnitE unitElseE_from) => StepsCRef.Amount = MaxAmountSteps(unitElseE_from);
         public void Shift(in CellUnitStatStepE stepE_from)
         {
             StepsCRef = stepE_from.StepsC;

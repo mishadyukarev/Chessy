@@ -13,15 +13,20 @@ namespace Game.Game
         public static ref ButtonUIC ButtonUIC => ref _taker.Get<ButtonUIC>();
         public static ref TextUIC TextUIC => ref _taker.Get<TextUIC>();
 
-        public DownPawnUIE(in EcsWorld gameW, in Transform down)
+
+        public readonly DownPawnMaxPeopleE MaxPeopleE;
+
+        public DownPawnUIE(in Transform downZone, in EcsWorld gameW)
         {
-            var pawnT = down.Find(UnitTypes.Pawn.ToString());
+            var pawnT = downZone.Find(UnitTypes.Pawn.ToString());
 
             var button = pawnT.Find("Button").GetComponent<Button>();
 
             _taker =  gameW.NewEntity()
                 .Add(new ButtonUIC(button))
                 .Add(new TextUIC(pawnT.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
+
+            MaxPeopleE = new DownPawnMaxPeopleE(pawnT.Find("MaxPeople_TextMP+").GetComponent<TextMeshProUGUI>(), gameW);
         }
     }
 }

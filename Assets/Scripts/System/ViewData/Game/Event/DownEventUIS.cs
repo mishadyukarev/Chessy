@@ -3,9 +3,9 @@ using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
-    sealed class DownEventUIS : SystemViewAbstract
+    sealed class DownEventUIS : SystemUIAbstract
     {
-        internal DownEventUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal DownEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
             DownScoutUIEs.Scout<ButtonUIC>().AddListener(ExecuteScout);
             DownHeroUIE.ButtonC.AddListener(Hero);
@@ -21,6 +21,7 @@ namespace Game.Game
             Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
             Button<ButtonUIC>(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
             Button<ButtonUIC>(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
+            Button<ButtonUIC>(ToolWeaponTypes.Axe).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
         }
 
         void ExecuteScout()
@@ -86,9 +87,9 @@ namespace Game.Game
 
             if (Es.WhoseMoveE.IsMyMove)
             {
-                var whoseMove = Es.WhoseMoveE.CurPlayerI;
+                var curPlayerI = Es.WhoseMoveE.CurPlayerI;
 
-                if (Es.MaxAvailablePawnsE(whoseMove).CanGetPawn(Es.WhereWorker))
+                if (Es.PeopleInCityE(curPlayerI).CanGetPeople && Es.MaxAvailablePawnsE(curPlayerI).CanGetPawn(Es.WhereWorker))
                 {
                     Es.SelectedUnitE.SetSelectedUnit(UnitTypes.Pawn, LevelTypes.First, Es.ClickerObjectE);
                 }
@@ -99,9 +100,6 @@ namespace Game.Game
         void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
             Es.SelectedIdxE.Reset();
-
-            ref var selToolWeaponC = ref Es.SelectedToolWeaponE.ToolWeaponTC;
-            ref var selLevelTWC = ref Es.SelectedToolWeaponE.LevelTC;
 
             if (Es.WhoseMoveE.IsMyMove)
             {
@@ -115,43 +113,56 @@ namespace Game.Game
                 }
 
 
+                
+
+
+                var levT = LevelTypes.First;
+
                 if (Es.ClickerObjectE.CellClickCRef.Is(CellClickTypes.GiveTakeTW))
                 {
-                    if (tw == ToolWeaponTypes.Shield)
+                    if (tw == ToolWeaponTypes.Shield || tw == ToolWeaponTypes.BowCrossbow)
                     {
-                        if (selToolWeaponC.ToolWeapon == tw)
-                        {
-                            if (selLevelTWC.Is(LevelTypes.First)) selLevelTWC.Level = LevelTypes.Second;
-                            else selLevelTWC.Level = LevelTypes.First;
-                        }
-                        else
-                        {
-                            selToolWeaponC.ToolWeapon = tw;
-                            selLevelTWC.Level = LevelTypes.First;
-                        }
+                        if (Es.SelectedToolWeaponE.Is(LevelTypes.First)) levT = LevelTypes.Second;
                     }
-                    else
-                    {
-                        selToolWeaponC.ToolWeapon = tw;
-                        selLevelTWC.Level = LevelTypes.Second;
-                    }
+                    else if (tw != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
+
+                    Es.SelectedToolWeaponE.Set(tw, levT);
                 }
                 else
                 {
-                    Es.ClickerObjectE.CellClickCRef.Click = CellClickTypes.GiveTakeTW;
-
-                    selToolWeaponC.ToolWeapon = tw;
-
-                    if (tw == ToolWeaponTypes.Shield)
-                    {
-                        if (selLevelTWC.Is(LevelTypes.First))
-                            selLevelTWC.Level = LevelTypes.Second;
-
-                        else selLevelTWC.Level = LevelTypes.First;
-                    }
-                    else if(tw == ToolWeaponTypes.BowCrossbow) selLevelTWC.Level = LevelTypes.First;
-                    else selLevelTWC.Level = LevelTypes.Second;
+                    Es.SelectedToolWeaponE.Set(tw, Es.SelectedToolWeaponE.LevelT);
                 }
+
+                Es.ClickerObjectE.CellClickCRef.Click = CellClickTypes.GiveTakeTW;
+
+                //if (Es.ClickerObjectE.CellClickCRef.Is(CellClickTypes.GiveTakeTW))
+                //{
+                //    if (tw == ToolWeaponTypes.Shield || tw == ToolWeaponTypes.BowCrossbow)
+                //    {
+                //        if (selToolWeaponC.ToolWeapon == tw)
+                //        {
+                //            if (selLevelTWC.Is(LevelTypes.First))
+                //            {
+                //                selLevelTWC.Level = LevelTypes.Second;
+                //            }
+                //            else selLevelTWC.Level = LevelTypes.First;
+                //        }
+                //        else
+                //        {
+                //            selToolWeaponC.ToolWeapon = tw;
+                //            selLevelTWC.Level = LevelTypes.First;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        selToolWeaponC.ToolWeapon = tw;
+                //        selLevelTWC.Level = LevelTypes.Second;
+                //    }
+                //}
+                //else
+                //{
+
+                //}
             }
             else SoundV(ClipTypes.Mistake).Play();
         }

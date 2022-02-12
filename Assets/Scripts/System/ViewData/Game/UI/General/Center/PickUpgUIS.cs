@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class PickUpgUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class PickUpgUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public PickUpgUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal PickUpgUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

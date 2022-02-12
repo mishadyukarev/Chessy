@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class UpSunsUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class UpSunsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal UpSunsUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal UpSunsUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

@@ -7,102 +7,81 @@ namespace Game.Game
     public readonly struct CellUnitVEs
     {
         readonly Dictionary<string, CellUnitVE> _ents;
-        readonly Dictionary<string, CellUnitVE> _pawn;
-        readonly Dictionary<string, CellUnitToolWeaponVE> _tws;
-        readonly Dictionary<string, CellUnitToolWeaponVE> _shields;
+        readonly Dictionary<string, CellUnitToolWeaponVE> _extraTws;
+        readonly Dictionary<string, CellUnitToolWeaponVE> _mainTws;
         readonly Dictionary<string, CellUnitToolWeaponVE> _bowCrossbows;
 
-        public CellUnitVE UnitE(in UnitTypes unit, in bool isSelected) => _ents[unit.ToString() + isSelected];
-        public CellUnitVE PawnE(in bool isSelected, in LevelTypes levelT) => _pawn[isSelected.ToString() + levelT];
-        public CellUnitToolWeaponVE ToolWeaponE(in ToolWeaponTypes tw, in bool isSelected) => _tws[tw.ToString() + isSelected];
-        public CellUnitToolWeaponVE ShieldE(in LevelTypes level, in bool isSelected) => _shields[level.ToString() + isSelected];
-        public CellUnitToolWeaponVE BowCrossbowE(in bool isRight, in bool isSelected, in LevelTypes levelT) => _bowCrossbows[isRight.ToString() + isSelected + levelT];
+        public CellUnitVE UnitE(in bool isSelected, in LevelTypes levT, in UnitTypes unit) => _ents[isSelected.ToString() + levT + unit];
+        public CellUnitToolWeaponVE ExtraToolWeaponE(in bool isSelected, in LevelTypes level, in ToolWeaponTypes tw) => _extraTws[isSelected.ToString() + level + tw];
+        public CellUnitToolWeaponVE MainToolWeaponE(in bool isSelected, in LevelTypes level, in ToolWeaponTypes tw) => _mainTws[isSelected.ToString() + level + tw];
+        public CellUnitToolWeaponVE BowCrossbowE(in bool isSelected, in LevelTypes levelT, in bool isRight) => _bowCrossbows[isSelected.ToString() + levelT + isRight];
 
         public readonly CellUnitEffectVEs EffectVEs;
 
 
         public CellUnitVEs(in Transform cellT, in EcsWorld gameW)
         {
-            var cellUnit = cellT.Find("Unit+");
+            var cellUnitZone = cellT.Find("Unit+");
 
             _ents = new Dictionary<string, CellUnitVE>();
-            _pawn = new Dictionary<string, CellUnitVE>();
-
-
-
-
-            for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
-            {
-                var unitZone = cellUnit.Find(unitT.ToString() + "+");
-
-                if (unitT == UnitTypes.Pawn)
-                {
-                    var selZone = unitZone.Find("Selected+");
-                    var notSelZone = unitZone.Find("NotSelected+");
-
-                    for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
-                    {
-                        _pawn.Add(true.ToString() + levT, new CellUnitVE(selZone.Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
-                        _pawn.Add(false.ToString() + levT, new CellUnitVE(notSelZone.Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
-                    }
-                }
-                else
-                {
-                    _ents.Add(unitT.ToString() + true, new CellUnitVE(unitZone.Find("Selected_SR+").GetComponent<SpriteRenderer>(), gameW));
-                    _ents.Add(unitT.ToString() + false, new CellUnitVE(unitZone.Find("NotSelected_SR+").GetComponent<SpriteRenderer>(), gameW));
-                }
-            }
-
-
-            var twZone = cellUnit.Find("ToolWeapon+");
-            var shieldZone = twZone.Find("Shield+");
-
-            _tws = new Dictionary<string, CellUnitToolWeaponVE>();
-            _shields = new Dictionary<string, CellUnitToolWeaponVE>();
+            _extraTws = new Dictionary<string, CellUnitToolWeaponVE>();
+            _mainTws = new Dictionary<string, CellUnitToolWeaponVE>();
             _bowCrossbows = new Dictionary<string, CellUnitToolWeaponVE>();
 
-            for (var tw = ToolWeaponTypes.None + 1; tw < ToolWeaponTypes.End; tw++)
+            
+
+
+            for (int i = 0; i <= 1; i++)
             {
-                var twZ = twZone.Find(tw.ToString() + "+");
+                var isSelected = i == 0;
 
-                if (tw == ToolWeaponTypes.Shield)
+                var selZone = isSelected ? cellUnitZone.Find("Selected+") : cellUnitZone.Find("NotSelected+");
+
+                for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
                 {
-                    for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
+                    var zonee = selZone.Find(levT.ToString() + "+");
+
+                    for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
                     {
-                        var levTrans = twZ.Find(levT.ToString() + "+");
-
-                        _shields.Add(levT.ToString() + true, new CellUnitToolWeaponVE(levTrans.Find("Selected_SR+").GetComponent<SpriteRenderer>(), gameW));
-                        _shields.Add(levT.ToString() + false, new CellUnitToolWeaponVE(levTrans.Find("NotSelected_SR+").GetComponent<SpriteRenderer>(), gameW));
-                    }   
-                }
-                else if (tw == ToolWeaponTypes.BowCrossbow)
-                {
-                    var right = twZ.Find("Right+");
-                    var cornered = twZ.Find("Cornered+");
-
-                    for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
-                    {
-                        _bowCrossbows.Add(true.ToString() + true + levT, new CellUnitToolWeaponVE(right.Find("Selected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
-                        _bowCrossbows.Add(true.ToString() + false + levT, new CellUnitToolWeaponVE(right.Find("NotSelected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
-
-                        var v = cornered.Find("Selected+");
-                        var vv = v.Find(levT.ToString() + "_SR+");
-
-                        _bowCrossbows.Add(false.ToString() + true + levT, new CellUnitToolWeaponVE(cornered.Find("Selected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
-                        _bowCrossbows.Add(false.ToString() + false + levT, new CellUnitToolWeaponVE(cornered.Find("NotSelected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                        if (unitT != UnitTypes.Pawn)
+                        {
+                            _ents.Add(isSelected.ToString() + levT + unitT, new CellUnitVE(zonee.Find(unitT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                        }
                     }
-                }
-                else
-                {
-                    
 
-                    _tws.Add(tw.ToString() + true, new CellUnitToolWeaponVE(twZ.Find("Selected_SR+").GetComponent<SpriteRenderer>(), gameW));
-                    _tws.Add(tw.ToString() + false, new CellUnitToolWeaponVE(twZ.Find("NotSelected_SR+").GetComponent<SpriteRenderer>(), gameW));
-                }
-                
+                    var extraTwZone = zonee.Find("ExtraToolWeapon+");
+
+                    for (var twT = ToolWeaponTypes.Pick; twT <= ToolWeaponTypes.Shield; twT++)
+                    {
+                        _extraTws.Add(isSelected.ToString() + levT + twT, new CellUnitToolWeaponVE(extraTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                    }
+
+
+                    var mainTwZone = zonee.Find("MainToolWeapon+");
+
+                    for (var twT = ToolWeaponTypes.BowCrossbow; twT <= ToolWeaponTypes.Axe; twT++)
+                    {
+                        if(twT == ToolWeaponTypes.BowCrossbow)
+                        {
+
+                        }
+                        else
+                        {
+                            _mainTws.Add(isSelected.ToString() + levT + twT, new CellUnitToolWeaponVE(mainTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                        }
+                    }
+                        //var right = twZ.Find("Right+");
+                        //var cornered = twZ.Find("Cornered+");
+
+                        //_bowCrossbows.Add(true.ToString() + true + levT, new CellUnitToolWeaponVE(right.Find("Selected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                        //_bowCrossbows.Add(true.ToString() + false + levT, new CellUnitToolWeaponVE(right.Find("NotSelected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+
+                        //_bowCrossbows.Add(false.ToString() + true + levT, new CellUnitToolWeaponVE(cornered.Find("Selected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                        //_bowCrossbows.Add(false.ToString() + false + levT, new CellUnitToolWeaponVE(cornered.Find("NotSelected+").Find(levT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                    }
             }
 
-            EffectVEs = new CellUnitEffectVEs(cellUnit, gameW);
+            EffectVEs = new CellUnitEffectVEs(cellUnitZone, gameW);
         }
     }
 }

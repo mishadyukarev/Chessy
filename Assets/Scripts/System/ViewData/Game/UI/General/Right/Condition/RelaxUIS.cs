@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class RelaxUIS : SystemViewAbstract, IEcsRunSystem
+    sealed class RelaxUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal RelaxUIS(in Entities ents, in EntitiesView entsView) : base(ents, entsView)
+        internal RelaxUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
         {
         }
 

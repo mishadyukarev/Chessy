@@ -17,7 +17,7 @@
                 {
                     if (UnitStatEs(idx_0).StepE.HaveSteps)
                     {
-                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Elfemale, UnitTypes.Snowy) || Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Elfemale, UnitTypes.Snowy) || Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
                             var xy_from = CellEs(idx_0).CellE.XyC.Xy;
 
@@ -35,7 +35,7 @@
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Player))
                                         {
-                                            if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                            if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                             {
                                                 if (isCornered_0)
                                                 {
@@ -75,7 +75,7 @@
                                         && Es.UnitEs(idx_2).VisibleE(ownUnit_0.Player).IsVisibleC.IsVisible
                                         && !ownUnit_2.Is(ownUnit_0.Player))
                                     {
-                                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                        if (Es.UnitTypeE(idx_0).Is(UnitTypes.Pawn) && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                         {
                                             if (isCornered_0)
                                             {
