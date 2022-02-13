@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    sealed class GetCellsForArsonArcherS : SystemCellAbstract, IEcsRunSystem
+    sealed class GetCellsForArsonArcherS : SystemAbstract, IEcsRunSystem
     {
         public GetCellsForArsonArcherS(in Entities ents) : base(ents)
         {
@@ -12,17 +12,15 @@
             {
                 CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
 
-                var unit_from = Es.UnitEs(idx_0).UnitE.UnitTC;
-
-                if (!UnitEffectEs(idx_0).StunE.IsStunned)
+                if (!Es.UnitE(idx_0).IsStunned)
                 {
-                    if (Es.UnitE(idx_0).HaveUnit && Es.UnitExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                    if (Es.UnitE(idx_0).HaveUnit && Es.ExtraTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                     {
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (!EffectEs(idx_1).FireE.HaveFireC.Have)
+                            if (!Es.EffectEs(idx_1).FireE.HaveFireC.Have)
                             {
-                                if (EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
+                                if (Es.EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                 {
                                     CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Add(idx_1);
                                 }

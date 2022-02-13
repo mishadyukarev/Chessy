@@ -7,8 +7,16 @@ namespace Game.Game
         ref ToolWeaponTC ToolWeaponTC => ref Ent.Get<ToolWeaponTC>();
         ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
 
-        public ToolWeaponTypes ToolWeaponT => ToolWeaponTC.ToolWeapon;
-        public LevelTypes LevelT => LevelTC.Level;
+        public ToolWeaponTypes ToolWeapon
+        {
+            get => ToolWeaponTC.ToolWeapon;
+            set => ToolWeaponTC.ToolWeapon = value;
+        }
+        public LevelTypes Level
+        {
+            get => LevelTC.Level;
+            set => LevelTC.Level = value;
+        }
 
         public bool Is(params LevelTypes[] levTs) => LevelTC.Is(levTs);
 

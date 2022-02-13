@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    sealed class TruceMS : SystemCellAbstract, IEcsRunSystem
+    sealed class TruceMS : SystemAbstract, IEcsRunSystem
     {
-        public TruceMS(in Entities ents) : base(ents)
+        internal TruceMS(in Entities ents) : base(ents)
         {
         }
 
@@ -15,51 +15,44 @@ namespace Game.Game
 
             foreach (byte idx_0 in CellWorker.Idxs)
             {
-                var unit_0 = UnitEs(idx_0).UnitE.UnitTC;
-                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
 
-                var tw_0 = UnitEs(idx_0).ExtraToolWeaponE.ToolWeaponTC;
-                var twLevel_0 = UnitEs(idx_0).ExtraToolWeaponE.LevelTC;
-
-                var build_0 = BuildEs(idx_0).BuildingE.BuildTC;
-
-                EffectEs(idx_0).FireE.Disable();
+                Es.EffectEs(idx_0).FireE.Disable();
 
 
-                TrailEs(idx_0).DestroyAll();
+                Es.TrailEs(idx_0).DestroyAll();
 
-                if (UnitEs(idx_0).UnitE.HaveUnit)
+                if (Es.UnitEs(idx_0).UnitE.HaveUnit)
                 {
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (ownUnit_0.Is(PlayerTypes.First))
+                        if (Es.UnitE(idx_0).Is(PlayerTypes.First))
                         {
-                            if (tw_0.HaveTW)
+                            if (Es.ExtraTWE(idx_0).HaveToolWeapon)
                             {
-                                Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
-                                UnitEs(idx_0).ExtraToolWeaponE.Reset();
+                                Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeapon, Es.ExtraTWE(idx_0).LevelT, Es.UnitE(idx_0).Owner).Add();
+                                Es.UnitEs(idx_0).ExtraToolWeaponE.Reset();
                             }
 
-                            UnitEs(idx_0).UnitE.AddToInventorAndRemove(Es);
+                            Es.UnitE(idx_0).AddToInventorAndRemove(Es.InventorUnitsEs);
                         }
                     }
                     else
                     {
 
-                        if (tw_0.HaveTW)
+                        if (Es.ExtraTWE(idx_0).HaveToolWeapon)
                         {
-                            Es.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
-                            UnitEs(idx_0).ExtraToolWeaponE.Reset();
+                            Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeapon, Es.ExtraTWE(idx_0).LevelT, Es.UnitE(idx_0).Owner).Add();
+                            Es.UnitEs(idx_0).ExtraToolWeaponE.Reset();
                         }
 
-                        UnitEs(idx_0).UnitE.AddToInventorAndRemove(Es);
+                        Es.UnitE(idx_0).AddToInventorAndRemove(Es.InventorUnitsEs);
                     }
                 }
 
 
-                if (build_0.Have)
+                if (Es.BuildingE(idx_0).HaveBuilding)
                 {
-                    if (build_0.Is(BuildingTypes.Camp))
+                    if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
                     {
                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
                         BuildEs(idx_0).BuildingE.Destroy(Es);
@@ -68,22 +61,22 @@ namespace Game.Game
 
                 else
                 {
-                    if (EnvironmentEs(idx_0).YoungForest.HaveEnvironment)
+                    if (Es.EnvironmentEs(idx_0).YoungForest.HaveEnvironment)
                     {
-                        EnvironmentEs(idx_0).YoungForest.Destroy();
+                        Es.EnvironmentEs(idx_0).YoungForest.Destroy();
 
-                        EnvironmentEs(idx_0).AdultForest.SetRandomResources();
+                        Es.EnvironmentEs(idx_0).AdultForest.SetRandomResources();
                     }
 
-                    if (!EnvironmentEs(idx_0).Fertilizer.HaveEnvironment
-                        && !EnvironmentEs(idx_0).Mountain.HaveEnvironment
-                        && !EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (!Es.EnvironmentEs(idx_0).Fertilizer.HaveEnvironment
+                        && !Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment
+                        && !Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
                         random = Random.Range(0, 100);
 
                         if (random <= 3)
                         {
-                            EnvironmentEs(idx_0).Fertilizer.SetRandomResources();
+                            Es.EnvironmentEs(idx_0).Fertilizer.SetRandomResources();
                         }
                     }
                 }

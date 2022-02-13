@@ -9,36 +9,23 @@ namespace Game.Game
     {
         readonly AbilityTypes _ability;
         ref AmountC CooldownRef => ref Ent.Get<AmountC>();
-        public AmountC Cooldown => Ent.Get<AmountC>();
 
-        public bool HaveCooldown => Cooldown.Amount > 0;
+        public int Cooldown
+        {
+            get => CooldownRef.Amount;
+            set => CooldownRef.Amount = value;
+        }
+
+        public bool HaveCooldown => Cooldown > 0;
 
         internal CellUnitAbilityE(in AbilityTypes ability, in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
             _ability = ability;
         }
 
-        internal void SetNew()
-        {
-            CooldownRef.Amount = 0;
-        }
-        internal void Shift(in CellUnitAbilityE cooldownE_from)
-        {
-            CooldownRef = cooldownE_from.Cooldown;
-            cooldownE_from.CooldownRef.Amount = 0;
-        }
-
         public void SetAfterAbility()
         {
-            CooldownRef.Amount = CellUnitAbilityCooldownValues.NeedAfterAbility(_ability);
-        }
-        public void TakeAfterUpdate()
-        {
-            CooldownRef.Amount--;
-        }
-        public void SyncRpc(in int cooldown)
-        {
-            CooldownRef.Amount = cooldown;
+            Cooldown = CellUnitAbilityCooldownValues.NeedAfterAbility(_ability);
         }
 
 
@@ -54,13 +41,13 @@ namespace Game.Game
                     if (e.UnitE(idx_from).HaveStepsForAbility(_ability))
                     {
                         e.UnitEs(idx_from).Ability(_ability).SetAfterAbility();
-                        e.UnitE(idx_from).Take(_ability);
+                        e.UnitE(idx_from).TakeSteps(_ability);
 
                         if (e.UnitEs(idx_to).WhoLastDiedHereE.HaveDeadUnit)
                         {
                             var whoLast_to = e.UnitEs(idx_to).WhoLastDiedHereE;
 
-                            e.UnitEs(idx_to).SetNew((whoLast_to.UnitTC.Unit, whoLast_to.LevelTC.Level, whoLast_to.OwnerC.Player, ConditionUnitTypes.None, false), e);
+                            e.UnitE(idx_to).SetNew((whoLast_to.Unit, whoLast_to.Level, whoLast_to.Owner, ConditionUnitTypes.None, false), e.UnitStatUpgradesEs, e.UnitEs(idx_to));
                             e.UnitEs(idx_to).WhoLastDiedHereE.Clear();
                         }
                     }
@@ -81,7 +68,7 @@ namespace Game.Game
                 {
                     e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
-                    e.UnitE(idx_0).Take(_ability);
+                    e.UnitE(idx_0).TakeSteps(_ability);
                     e.UnitE(idx_0).Condition = ConditionUnitTypes.None;
 
                     e.RpcE.SoundToGeneral(sender, _ability);
@@ -96,11 +83,9 @@ namespace Game.Game
                     {
                         var idx_1 = e.CellSpaceWorker.GetIdxCell(xy);
 
-                        var ownUnit_1 = e.UnitE(idx_1).OwnerC;
-
                         if (e.UnitEs(idx_1).UnitE.HaveUnit)
                         {
-                            if (ownUnit_1.Is(e.UnitE(idx_0).OwnerC.Player))
+                            if (e.UnitE(idx_1).Is(e.UnitE(idx_0).Owner))
                             {
                                 //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
                                 //{
@@ -122,8 +107,6 @@ namespace Game.Game
         {
             var idx_0 = Idx;
 
-            var ownUnit_0 = e.UnitE(idx_0).OwnerC;
-
 
             if (!e.UnitEs(idx_0).Ability(_ability).HaveCooldown)
             {
@@ -137,30 +120,27 @@ namespace Game.Game
                     {
                         var idx_1 = e.CellSpaceWorker.GetIdxCell(xy1);
 
-                        var ownUnit_1 = e.UnitE(idx_1).OwnerC;
-                        var tw_1 = e.UnitEs(idx_1).ExtraToolWeaponE.ToolWeaponTC;
 
-
-                        if (e.UnitEs(idx_1).UnitE.HaveUnit)
+                        if (e.UnitE(idx_1).HaveUnit)
                         {
-                            if (!ownUnit_1.Is(ownUnit_0.Player))
+                            if (!e.UnitE(idx_1).Is(e.UnitE(idx_0).Owner))
                             {
                                 //foreach (var item in CellUnitEffectsEs.Keys) 
                                 //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_1).Disable();
 
-                                if (tw_1.Is(ToolWeaponTypes.Shield))
+                                if (e.ExtraTWE(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
                                     e.UnitEs(idx_1).ExtraToolWeaponE.BreakShield();
                                 }
                                 else
                                 {
-                                    e.UnitE(idx_1).Attack(_ability, e);
+                                    e.UnitE(idx_1).TakeHp(_ability, e);
                                 }
                             }
                         }
                     }
 
-                    e.UnitE(idx_0).Take(_ability);
+                    e.UnitE(idx_0).TakeSteps(_ability);
                     //foreach (var item in CellUnitEffectsEs.Keys) 
                     //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Disable();
 
@@ -190,7 +170,7 @@ namespace Game.Game
                     {
                         e.WindCloudE.DirectWind.Direct = newDir;
 
-                        e.UnitE(idx_from).Take(_ability);
+                        e.UnitE(idx_from).TakeSteps(_ability);
 
                         e.UnitEs(idx_from).Ability(_ability).SetAfterAbility();
 
@@ -210,33 +190,33 @@ namespace Game.Game
 
             if (e.UnitE(idx_0).HaveStepsForAbility(_ability) || e.RiverEs(idx_0).RiverE.HaveRiverNear)
             {
-                if (!e.RiverEs(idx_0).RiverE.HaveRiverNear) e.UnitE(idx_0).Take(_ability);
+                if (!e.RiverEs(idx_0).RiverE.HaveRiverNear) e.UnitE(idx_0).TakeSteps(_ability);
 
                 if (e.UnitE(idx_0).HaveStepsForAbility(_ability))
                 {
-                    e.UnitE(idx_0).Take(_ability);
+                    e.UnitE(idx_0).TakeSteps(_ability);
                     e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
                     foreach (var idx_1 in e.CellSpaceWorker.GetIdxsAround(idx_0))
                     {
-                        if (e.UnitEs(idx_1).UnitE.HaveUnit)
+                        if (e.UnitE(idx_1).HaveUnit)
                         {
-                            if (e.UnitE(idx_1).OwnerC.Is(whoseMove))
+                            if (e.UnitE(idx_1).Is(whoseMove))
                             {
-                                if (e.UnitEs(idx_1).UnitE.UnitTC.IsMelee && !e.UnitEs(idx_1).UnitE.UnitTC.Is(UnitTypes.Camel, UnitTypes.Scout))
+                                if (e.UnitE(idx_1).IsMelee(e.MainTWE(idx_1)) && !e.UnitE(idx_1).Is(UnitTypes.Camel, UnitTypes.Scout))
                                 {
                                     e.UnitE(idx_1).SetMaxWater(e.UnitStatUpgradesEs);
                                     e.UnitE(idx_1).SetMaxHp();
-                                    e.UnitEffectEs(idx_1).ShieldE.Set(_ability);
+                                    e.UnitE(idx_1).SetShield(_ability);
                                 }
-                                if (e.UnitExtraTWE(idx_1).Is(ToolWeaponTypes.BowCrossbow))
+                                if (e.ExtraTWE(idx_1).Is(ToolWeaponTypes.BowCrossbow))
                                 {
-                                    e.UnitEffectEs(idx_1).FrozenArrowE.Enable();
+                                    e.UnitE(idx_1).ShootsFrozenArraw = 0;
                                 }
                             }
                             else
                             {
-                                e.UnitEffectEs(idx_1).StunE.Set(_ability);
+                                e.UnitE(idx_1).SetStunAfterAbility(_ability);
                             }
                         }
 
@@ -256,11 +236,11 @@ namespace Game.Game
             {
                 if (e.UnitE(idx_from).HaveStepsForAbility(ability) || e.RiverEs(idx_from).RiverE.HaveRiverNear)
                 {
-                    if (!e.RiverEs(idx_from).RiverE.HaveRiverNear) e.UnitE(idx_from).Take(ability);
+                    if (!e.RiverEs(idx_from).RiverE.HaveRiverNear) e.UnitE(idx_from).TakeSteps(ability);
 
                     if (e.UnitE(idx_from).HaveStepsForAbility(ability))
                     {
-                        e.UnitE(idx_from).Take(ability);
+                        e.UnitE(idx_from).TakeSteps(ability);
                         e.UnitEs(idx_from).Ability(ability).SetAfterAbility();
 
                         var idx_0 = idx_to;
@@ -271,7 +251,7 @@ namespace Game.Game
 
                             if (e.UnitEs(idx_0).UnitE.HaveUnit)
                             {
-                                if (e.UnitE(idx_0).OwnerC.Is(whoseMove))
+                                if (e.UnitE(idx_0).Is(whoseMove))
                                 {
                                     //UnitEffectEs(idx_0).ShieldE.Set(ability);
                                     //UnitE(idx_0).SetMax();
@@ -279,7 +259,7 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    e.UnitEffectEs(idx_0).StunE.Set(ability);
+                                    e.UnitE(idx_0).SetStunAfterAbility(ability);
                                 }
                             }
 
@@ -300,13 +280,12 @@ namespace Game.Game
             var idx_0 = Idx;
 
             var whoseMove = e.WhoseMoveE.WhoseMove.Player;
-            var buildC = e.BuildEs(idx_0).BuildingE.BuildTC;
 
             if (e.UnitE(idx_0).HaveStepsForAbility(_ability))
             {
-                if (!buildC.Have || buildC.Is(BuildingTypes.Camp))
+                if (!e.BuildingE(idx_0).HaveBuilding || e.BuildingE(idx_0).Is(BuildingTypes.Camp))
                 {
-                    if (!e.EnvAdultForestE(idx_0).HaveEnvironment)
+                    if (!e.AdultForestE(idx_0).HaveEnvironment)
                     {
                         if (e.InventorResourcesEs.CanBuyBuilding_Master(BuildingTypes.Farm, whoseMove, out var needRes))
                         {
@@ -314,11 +293,11 @@ namespace Game.Game
 
                             e.RpcE.SoundToGeneral(sender, ClipTypes.Building);
 
-                            e.EnvYoungForestE(idx_0).Destroy();
+                            e.YoungForestE(idx_0).Destroy();
 
-                            e.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Farm, whoseMove);
+                            e.BuildingEs(idx_0).BuildingE.SetNew(BuildingTypes.Farm, whoseMove);
 
-                            e.UnitE(idx_0).Take(_ability);
+                            e.UnitE(idx_0).TakeSteps(_ability);
                         }
                         else
                         {
@@ -387,7 +366,7 @@ namespace Game.Game
 
             if (e.UnitE(idx_0).HaveStepsForAbility(_ability))
             {
-                if (!e.EnvAdultForestE(idx_0).HaveEnvironment)
+                if (!e.AdultForestE(idx_0).HaveEnvironment)
                 {
                     bool haveNearBorder = false;
 
@@ -406,10 +385,10 @@ namespace Game.Game
                         e.RpcE.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
 
-                        e.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.City, whoseMove);
+                        e.BuildingEs(idx_0).BuildingE.SetNew(BuildingTypes.City, whoseMove);
                         //e.WhereBuildingEs.HaveBuild(BuildingTypes.City, whoseMove, idx_0).HaveBuilding.Have = true;
 
-                        e.UnitE(idx_0).Take(_ability);
+                        e.UnitE(idx_0).TakeSteps(_ability);
 
 
                         e.EffectEs(idx_0).FireE.Disable();
@@ -441,20 +420,20 @@ namespace Game.Game
 
             if (e.UnitE(idx_0).HaveStepsForAbility(_ability) || e.RiverEs(idx_0).RiverE.HaveRiverNear)
             {
-                if (!e.BuildE(idx_0).HaveBuilding)
+                if (!e.BuildingE(idx_0).HaveBuilding)
                 {
-                    if (!e.EnvAdultForestE(idx_0).HaveEnvironment)
+                    if (!e.AdultForestE(idx_0).HaveEnvironment)
                     {
-                        e.EnvAdultForestE(idx_0).Destroy(e.TrailEs(idx_0).Trails);
-                        e.EnvFertilizeE(idx_0).Destroy();
+                        e.AdultForestE(idx_0).Destroy(e.TrailEs(idx_0).Trails);
+                        e.FertilizeE(idx_0).Destroy();
 
                         if (e.UnitE(idx_0).HaveStepsForAbility(_ability))
                         {
-                            e.UnitE(idx_0).Take(_ability);
+                            e.UnitE(idx_0).TakeSteps(_ability);
 
                             e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
-                            e.BuildE(idx_0).SetNew(BuildingTypes.IceWall, e.UnitE(idx_0).OwnerC.Player);
+                            e.BuildingE(idx_0).SetNew(BuildingTypes.IceWall, e.UnitE(idx_0).Owner);
                             //e.WhereBuildingEs.HaveBuild(BuildingTypes.IceWall, e.UnitE(idx_0).OwnerC.Player, idx_0).HaveBuilding.Have = true;
                         }
                     }
@@ -465,38 +444,38 @@ namespace Game.Game
         {
             var idx_0 = Idx;
 
-            if (!e.BuildE(idx_0).HaveBuilding)
+            if (!e.BuildingE(idx_0).HaveBuilding)
             {
-                if (!e.EnvAdultForestE(idx_0).HaveEnvironment)
+                if (!e.AdultForestE(idx_0).HaveEnvironment)
                 {
-                    e.EnvYoungForestE(idx_0).Destroy();
-                    e.EnvFertilizeE(idx_0).Destroy();
+                    e.YoungForestE(idx_0).Destroy();
+                    e.FertilizeE(idx_0).Destroy();
 
                     if (e.UnitE(idx_0).HaveStepsForAbility(_ability))
                     {
-                        e.UnitE(idx_0).Take(_ability);
+                        e.UnitE(idx_0).TakeSteps(_ability);
 
                         if (e.StartTeleportE.HaveStart)
                         {
                             if (e.EndTeleportE.HaveEnd)
                             {
-                                e.BuildE(e.StartTeleportE.WhereC.Idx).Destroy(e);
+                                e.BuildingE(e.StartTeleportE.WhereC.Idx).Destroy(e);
                                 e.StartTeleportE.Set(e.EndTeleportE);
-                                e.EndTeleportE.Set(idx_0, e.UnitE(idx_0).OwnerC.Player);
+                                e.EndTeleportE.Set(idx_0, e.UnitE(idx_0).Owner);
                                 SetAfterAbility();
                             }
                             else
                             {
-                                e.EndTeleportE.Set(idx_0, e.UnitE(idx_0).OwnerC.Player);
+                                e.EndTeleportE.Set(idx_0, e.UnitE(idx_0).Owner);
                                 SetAfterAbility();
                             }
                         }
                         else
                         {
-                            e.StartTeleportE.Set(idx_0, e.UnitE(idx_0).OwnerC.Player);
+                            e.StartTeleportE.Set(idx_0, e.UnitE(idx_0).Owner);
                         }
 
-                        e.BuildE(idx_0).SetNew(BuildingTypes.Teleport, e.UnitE(idx_0).OwnerC.Player);
+                        e.BuildingE(idx_0).SetNew(BuildingTypes.Teleport, e.UnitE(idx_0).Owner);
                     }
                 }
             }
@@ -504,27 +483,24 @@ namespace Game.Game
         public void Destroy_Master(in Player sender, in Entities e)
         {
             var idx_0 = Idx;
-            var ownUnit_0 = e.UnitE(idx_0).OwnerC;
-            var buildC_0 = e.BuildEs(idx_0).BuildingE.BuildTC;
-
 
             if (e.UnitE(idx_0).HaveSteps)
             {
                 e.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-                if (buildC_0.Is(BuildingTypes.City))
+                if (e.BuildingE(idx_0).Is(BuildingTypes.City))
                 {
-                    e.WinnerE.Winner.Player = ownUnit_0.Player;
+                    e.WinnerE.Winner.Player = e.UnitE(idx_0).Owner;
                 }
-                e.UnitE(idx_0).Take(AbilityTypes.DestroyBuilding);
+                e.UnitE(idx_0).TakeSteps(AbilityTypes.DestroyBuilding);
 
-                if (buildC_0.Is(BuildingTypes.Farm))
+                if (e.BuildingE(idx_0).Is(BuildingTypes.Farm))
                 {
                     e.EnvironmentEs(idx_0).Fertilizer.Destroy();
                 }
 
                 //e.WhereBuildingEs.HaveBuild(e.BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                e.BuildEs(idx_0).BuildingE.Destroy(e);
+                e.BuildingEs(idx_0).BuildingE.Destroy(e);
             }
             else
             {
@@ -539,9 +515,9 @@ namespace Game.Game
             {
                 if (e.UnitE(idx_0).HaveStepsForAbility(_ability))
                 {
-                    e.UnitE(idx_0).IsRightArcher = !e.UnitE(idx_0).IsRightArcher;
+                    e.UnitE(idx_0).ToggleArcherSide();
 
-                    e.UnitE(idx_0).Take(_ability);
+                    e.UnitE(idx_0).TakeSteps(_ability);
 
                     e.RpcE.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
@@ -573,12 +549,12 @@ namespace Game.Game
                             {
                                 if (e.UnitE(idx_from).HaveStepsForAbility(_ability))
                                 {
-                                    if (!e.UnitE(idx_from).OwnerC.Is(e.UnitE(idx_to).OwnerC.Player))
+                                    if (!e.UnitE(idx_from).Is(e.UnitE(idx_to).Owner))
                                     {
-                                        e.UnitEffectEs(idx_to).StunE.Set(_ability);
+                                        e.UnitE(idx_to).SetStunAfterAbility(_ability);
                                         e.UnitEs(idx_from).Ability(_ability).SetAfterAbility();
 
-                                        e.UnitE(idx_from).Take(_ability);
+                                        e.UnitE(idx_from).TakeSteps(_ability);
 
                                         e.RpcE.SoundToGeneral(RpcTarget.All, _ability);
 
@@ -587,9 +563,9 @@ namespace Game.Game
                                         {
                                             if (e.EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
                                             {
-                                                if (e.UnitEs(idx_1).UnitE.HaveUnit && e.UnitE(idx_1).OwnerC.Is(e.UnitE(idx_to).OwnerC.Player))
+                                                if (e.UnitEs(idx_1).UnitE.HaveUnit && e.UnitE(idx_1).Is(e.UnitE(idx_to).Owner))
                                                 {
-                                                    e.UnitEffectEs(idx_1).StunE.Set(_ability);
+                                                    e.UnitE(idx_1).SetStunAfterAbility(_ability);
                                                 }
                                             }
                                         }
@@ -616,7 +592,7 @@ namespace Game.Game
                 {
                     e.RpcE.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    e.UnitE(idx_from).Take(_ability);
+                    e.UnitE(idx_from).TakeSteps(_ability);
                     e.EffectEs(idx_to).FireE.Enable();
                 }
             }
@@ -634,7 +610,7 @@ namespace Game.Game
             {
                 e.EffectEs(idx_0).FireE.Disable();
 
-                e.UnitE(idx_0).Take(_ability);
+                e.UnitE(idx_0).TakeSteps(_ability);
             }
 
             else
@@ -653,7 +629,7 @@ namespace Game.Game
                     e.RpcE.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                     e.EffectEs(idx_0).FireE.Enable();
-                    e.UnitE(idx_0).Take(_ability);
+                    e.UnitE(idx_0).TakeSteps(_ability);
                 }
                 else
                 {
@@ -672,21 +648,21 @@ namespace Game.Game
 
             if (e.UnitE(idx_0).HaveStepsForAbility(_ability))
             {
-                if (e.BuildE(idx_0).HaveBuilding && !e.BuildE(idx_0).Is(BuildingTypes.Camp))
+                if (e.BuildingE(idx_0).HaveBuilding && !e.BuildingE(idx_0).Is(BuildingTypes.Camp))
                 {
                     e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
                 else
                 {
-                    if (!e.EnvAdultForestE(idx_0).HaveEnvironment)
+                    if (!e.AdultForestE(idx_0).HaveEnvironment)
                     {
-                        if (!e.EnvYoungForestE(idx_0).HaveEnvironment)
+                        if (!e.YoungForestE(idx_0).HaveEnvironment)
                         {
                             e.RpcE.SoundToGeneral(sender, _ability);
 
-                            e.EnvYoungForestE(idx_0).SetRandomResources();
+                            e.YoungForestE(idx_0).SetRandomResources();
 
-                            e.UnitE(idx_0).Take(_ability);
+                            e.UnitE(idx_0).TakeSteps(_ability);
                         }
                         else
                         {
@@ -709,7 +685,6 @@ namespace Game.Game
         {
             var idx_0 = Idx;
 
-            var ownUnit_0 = e.UnitE(idx_0).OwnerC;
 
 
             if (!e.UnitEs(idx_0).Ability(_ability).HaveCooldown)
@@ -720,9 +695,9 @@ namespace Game.Game
                     {
                         e.EnvironmentEs(idx_0).YoungForest.Destroy();
 
-                        e.EnvironmentEs(idx_0).AdultForest.SetNewMax();
+                        e.EnvironmentEs(idx_0).AdultForest.SetMaxResources();
 
-                        e.UnitE(idx_0).Take(_ability);
+                        e.UnitE(idx_0).TakeSteps(_ability);
 
                         e.UnitEs(idx_0).Ability(_ability).SetAfterAbility();
 
@@ -737,11 +712,9 @@ namespace Game.Game
                         {
                             var idx_1 = e.CellSpaceWorker.GetIdxCell(xy_1);
 
-                            var ownUnit_1 = e.UnitE(idx_1).OwnerC;
-
                             if (e.UnitEs(idx_1).UnitE.HaveUnit)
                             {
-                                if (ownUnit_1.Is(ownUnit_0.Player))
+                                if (e.UnitE(idx_1).Is(e.UnitE(idx_0).Owner))
                                 {
                                     //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have)
                                     //{

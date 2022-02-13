@@ -5,7 +5,7 @@ namespace Game.Game
 {
     sealed class RightUnitEventUIS : SystemUIAbstract
     {
-        internal RightUnitEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal RightUnitEventUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
             UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });

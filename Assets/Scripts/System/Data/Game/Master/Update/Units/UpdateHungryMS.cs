@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    sealed class UpdateHungryMS : SystemCellAbstract, IEcsRunSystem
+    sealed class UpdateHungryMS : SystemAbstract, IEcsRunSystem
     {
         internal UpdateHungryMS(in Entities ents) : base(ents)
         {
@@ -22,12 +22,12 @@
                         {
                             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
                             {
-                                if(Es.UnitE(idx_0).HaveUnit && Es.UnitE(idx_0).Is(levUnit) && Es.UnitE(idx_0).OwnerC.Is(player))
+                                if(Es.UnitE(idx_0).HaveUnit && Es.UnitE(idx_0).Is(levUnit) && Es.UnitE(idx_0).Is(player))
                                 {
-                                    if (Es.BuildE(idx_0).Is(BuildingTypes.Camp))
+                                    if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
                                     {
                                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                                        Es.BuildE(idx_0).Destroy(Es);
+                                        Es.BuildingE(idx_0).Destroy(Es);
                                     }
 
                                     Es.UnitE(idx_0).Kill(Es);

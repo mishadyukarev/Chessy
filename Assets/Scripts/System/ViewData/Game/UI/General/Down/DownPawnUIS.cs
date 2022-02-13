@@ -2,7 +2,7 @@
 {
     sealed class DownPawnUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal DownPawnUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal DownPawnUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

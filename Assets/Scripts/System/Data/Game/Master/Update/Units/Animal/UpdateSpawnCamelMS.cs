@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    sealed class UpdateSpawnCamelMS : SystemCellAbstract, IEcsRunSystem
+    sealed class UpdateSpawnCamelMS : SystemAbstract, IEcsRunSystem
     {
-        public UpdateSpawnCamelMS(in Entities ents) : base(ents)
+        internal UpdateSpawnCamelMS(in Entities ents) : base(ents)
         {
         }
 
@@ -25,9 +25,9 @@ namespace Game.Game
             {
                 byte idx_0 = (byte)Random.Range(0, CellWorker.Idxs.Count);
 
-                if (CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
-                    if (!UnitEs(idx_0).UnitE.HaveUnit && !EnvironmentEs(idx_0).Mountain.HaveEnvironment)
+                    if (!Es.UnitE(idx_0).HaveUnit && !Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment)
                     {
                         bool haveNearUnit = false;
 
@@ -42,7 +42,7 @@ namespace Game.Game
 
                         if (!haveNearUnit)
                         {
-                            Es.UnitEs(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
+                            Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es.UnitStatUpgradesEs, Es.UnitEs(idx_0));
                             return;
                         }
                     }

@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class RelaxUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal RelaxUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal RelaxUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

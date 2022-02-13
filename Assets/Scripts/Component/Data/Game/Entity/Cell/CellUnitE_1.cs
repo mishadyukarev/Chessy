@@ -7,95 +7,103 @@ namespace Game.Game
 {
     public sealed class CellUnitE : CellEntityAbstract
     {
-        ref PlayerTC OwnerCRef => ref Ent.Get<PlayerTC>();
-        ref UnitTC UnitTCRef => ref Ent.Get<UnitTC>();
-        ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
-        ref ConditionUnitTC ConditionTCRef => ref Ent.Get<ConditionUnitTC>();
-        ref IsRightArcherC IsCornedRef => ref Ent.Get<IsRightArcherC>();
-        ref AmountC HealthRef => ref Ent.Get<AmountC>();
-        ref StepC StepsCRef => ref Ent.Get<StepC>();
-        ref WaterC WaterCRef => ref Ent.Get<WaterC>();
-
-
-        public PlayerTC OwnerC => Ent.Get<PlayerTC>();
-        public UnitTC UnitTC => Ent.Get<UnitTC>();
+        ref UnitTC UnitTC => ref Ent.Get<UnitTC>();
+        ref PlayerTC PlayerTC => ref Ent.Get<PlayerTC>();
+        ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
+        ref ConditionUnitTC ConditionTC => ref Ent.Get<ConditionUnitTC>();
+        ref IsRightArcherC IsRightArcherC => ref Ent.Get<IsRightArcherC>();
+        ref HealthC HealthC => ref Ent.Get<HealthC>();
+        ref StepC StepC => ref Ent.Get<StepC>();
+        ref WaterC WaterC => ref Ent.Get<WaterC>();
+        ref StunC StunC => ref Ent.Get<StunC>();
+        ref ShieldEffectC ShieldEffectC => ref Ent.Get<ShieldEffectC>();
+        ref ShootsFrozenArrawC FrozenArrawC => ref Ent.Get<ShootsFrozenArrawC>();
 
 
         public UnitTypes Unit
         {
-            get => UnitTCRef.Unit;
-            set => UnitTCRef.Unit = value;
+            get => UnitTC.Unit;
+            private set => UnitTC.Unit = value;
         }
         public LevelTypes Level
         {
-            get => LevelTCRef.Level;
-            set => LevelTCRef.Level = value;
+            get => LevelTC.Level;
+            private set => LevelTC.Level = value;
         }
         public PlayerTypes Owner
         {
-            get => OwnerC.Player;
-            set => OwnerCRef.Player = value;
+            get => PlayerTC.Player;
+            private set => PlayerTC.Player = value;
         }
         public ConditionUnitTypes Condition
         {
-            get => ConditionTCRef.Condition;
-            set => ConditionTCRef.Condition = value;
+            get => ConditionTC.Condition;
+            set => ConditionTC.Condition = value;
         }
         public bool IsRightArcher
         {
-            get => IsCornedRef.IsRight;
-            set => IsCornedRef.IsRight = value;
-        }
-        public int Health
-        {
-            get => HealthRef.Amount;
-            set => HealthRef.Amount = value;
-        }
-        public int Steps
-        {
-            get => StepsCRef.Steps;
-            set => StepsCRef.Steps = value;
-        }
-        public int Water
-        {
-            get => WaterCRef.Water;
-            set => WaterCRef.Water = value;
+            get => IsRightArcherC.IsRight;
+            set => IsRightArcherC.IsRight = value;
         }
 
-        public bool Is(params UnitTypes[] unit) => UnitTCRef.Is(unit);
-        public bool Is(params LevelTypes[] level) => LevelTCRef.Is(level);
-        public bool Is(params PlayerTypes[] owners) => OwnerC.Is(owners);
-        public bool Is(params ConditionUnitTypes[] conds) => ConditionTCRef.Is(conds);
 
-        public bool HaveUnit => UnitTCRef.Unit != UnitTypes.None && UnitTCRef.Unit != UnitTypes.End;
-        public bool IsMelee => UnitTCRef.IsMelee;
-        public bool IsAnimal => UnitTCRef.IsAnimal;
+        public bool Is(params UnitTypes[] unit) => UnitTC.Is(unit);
+        public bool Is(params LevelTypes[] level) => LevelTC.Is(level);
+        public bool Is(params PlayerTypes[] owners) => PlayerTC.Is(owners);
+        public bool Is(params ConditionUnitTypes[] conds) => ConditionTC.Is(conds);
+
+        public bool HaveUnit => UnitTC.HaveUnit;
+        public bool IsMelee(in CellUnitMainToolWeaponE mainTWE)
+        {
+            if (Is(UnitTypes.Pawn))
+            {
+                if (mainTWE.Is(ToolWeaponTypes.BowCrossbow)) return false;
+                else return true;
+            }
+            else
+            {
+                return UnitTC.IsMelee;
+            }
+        }
+        public bool IsAnimal => UnitTC.IsAnimal;
 
 
         #region Stats
 
         #region Hp
 
+        public float Health
+        {
+            get => HealthC.Health;
+            private set => HealthC.Health = value;
+        }
+        public bool IsAlive => HealthC.IsAlive;
         public bool IsHpDeathAfterAttack => Health <= CellUnitMainDamageValues.HP_FOR_DEATH_AFTER_ATTACK;
         public bool HaveMaxHp => Health >= CellUnitStatHpValues.MAX_HP;
-        public bool IsAlive => Health > 0;
+        public bool MoreMaxHp => Health > CellUnitStatHpValues.MAX_HP;
 
         #endregion
 
 
         #region Steps
 
-        public bool HaveSteps => Steps > 0;
-        public bool HaveStepsForAbility(in AbilityTypes ability) => Steps >= CellUnitStatStepValues.NeedSteps(ability);
-        public bool Have(in ConditionUnitTypes cond) => Steps >= CellUnitStatStepValues.NeedSteps(cond);
-        public bool Have(in ToolWeaponTypes tw) => Steps >= CellUnitStatStepValues.NeedSteps(tw);
-        public bool HaveMaxSteps => Steps >= MaxAmountSteps;
-        public int MaxAmountSteps => CellUnitStatStepValues.MaxAmountSteps(Unit, false);
-        int StepsForShiftOrAttack(in UnitTC unitTC_from, in DirectTypes dirMove_to, in CellEs cellEs_to)
+        public float Steps
         {
-            var needSteps = 1;
+            get => StepC.Steps;
+            private set => StepC.Steps = value;
+        }
+        public bool HaveSteps => StepC.HaveSteps;
+        public bool HaveMaxSteps => Steps >= MaxAmountSteps;
+        public float MaxAmountSteps => CellUnitStatStepValues.MaxAmountSteps(Unit, false);
 
-            if (!unitTC_from.Is(UnitTypes.Undead))
+        public bool HaveStepsForAbility(in AbilityTypes ability) => Steps >= CellUnitStatStepValues.NeedSteps(ability);
+        public bool HaveStepsAfterCondition(in ConditionUnitTypes cond) => Steps >= CellUnitStatStepValues.NeedSteps(cond);
+        public bool HaveStepsAfterGiveTakeTW(in ToolWeaponTypes tw) => Steps >= CellUnitStatStepValues.NeedSteps(tw);
+        float StepsForShiftOrAttack(in UnitTypes unit, in DirectTypes dirMove_to, in CellEs cellEs_to)
+        {
+            var needSteps = 1f;
+
+            if (unit != UnitTypes.Undead)
             {
                 if (cellEs_to.EnvironmentEs.Fertilizer.HaveEnvironment) needSteps += CellUnitStatStepValues.NeedStepsShiftAttackUnit(cellEs_to.EnvironmentEs.Fertilizer.EnvT);
                 if (cellEs_to.EnvironmentEs.YoungForest.HaveEnvironment) needSteps += CellUnitStatStepValues.NeedStepsShiftAttackUnit(cellEs_to.EnvironmentEs.YoungForest.EnvT);
@@ -107,9 +115,9 @@ namespace Game.Game
 
             return needSteps;
         }
-        public bool CanShift(in UnitTC unitTC_from, in DirectTypes dirMove_to, in CellEs cellEs_to)
+        public bool CanShift(in UnitTypes unit, in DirectTypes dirMove_to, in CellEs cellEs_to)
         {
-            return StepsForShiftOrAttack(unitTC_from, dirMove_to, cellEs_to) <= Steps;
+            return StepsForShiftOrAttack(unit, dirMove_to, cellEs_to) <= Steps;
         }
 
         #endregion
@@ -117,18 +125,20 @@ namespace Game.Game
 
         #region Water
 
+        public float Water
+        {
+            get => WaterC.Water;
+            private set => WaterC.Water = value;
+        }
         public bool HaveWater => Water > 0;
         public bool Have(in AbilityTypes ability) => Water >= CellUnitStatWaterValues.Need(ability);
-        public int MaxWater(in UnitStatUpgradesEs statUpgEs)
+        public float MaxWater(in UnitStatUpgradesEs statUpgEs)
         {
             var maxWater = CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS;
 
-            if (!UnitTCRef.IsAnimal)
+            if (statUpgEs.Upgrade(UnitStatTypes.Water, this, UpgradeTypes.PickCenter).HaveUpgrade.Have)
             {
-                if (statUpgEs.Upgrade(UnitStatTypes.Water, this, UpgradeTypes.PickCenter).HaveUpgrade.Have)
-                {
-                    return maxWater += (int)(maxWater * 0.5f);
-                }
+                return maxWater += (int)(maxWater * 0.5f);
             }
 
             return maxWater;
@@ -139,43 +149,68 @@ namespace Game.Game
         #endregion
 
 
+        #region Effects
+
+        public int Stun
+        {
+            get => StunC.Stun;
+            set => StunC.Stun = value;
+        }
+        public bool IsStunned => Stun > 0;
+
+
+        public int Shield
+        {
+            get => ShieldEffectC.Protection;
+            set => ShieldEffectC.Protection = value;
+        }
+        public bool HaveShieldEffect => Shield > 0;
+
+
+        public int ShootsFrozenArraw
+        {
+            get => FrozenArrawC.Shoots;
+            set => FrozenArrawC.Shoots = value;
+        }
+        public bool HaveFrozenArrawEffect => ShootsFrozenArraw > 0;
+
+        #endregion
+
+
         #region Damage
 
-        public int DamageAttack(in CellUnitExtraToolWeaponE extraTWE, in UnitStatUpgradesEs statUpgEs, in AttackTypes attack)
+        public float DamageAttack(in CellUnitEs unitEs, in UnitStatUpgradesEs statUpgEs, in AttackTypes attack)
         {
             //var haveEff = CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx).Have;
             var upgPerc = 0f;
 
-            var standDamage = CellUnitMainDamageValues.StandDamage(Unit, Level);
-
-
-            if (!IsAnimal)
-                if (statUpgEs.Upgrade(UnitStatTypes.Damage, this, UpgradeTypes.PickCenter).HaveUpgrade.Have)
-                {
+            if (!IsAnimal) 
+                if (statUpgEs.Upgrade(UnitStatTypes.Damage, this, UpgradeTypes.PickCenter).HaveUpgrade.Have) 
                     upgPerc = 0.3f;
-                }
 
 
-
+            var standDamage = CellUnitMainDamageValues.StandDamage(Unit, Level);
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * CellUnitMainDamageValues.PercentExtraDamageTW(extraTWE.ToolWeaponTC.ToolWeapon);
+            if(unitEs.MainToolWeaponE.HaveToolWeapon) powerDamege += standDamage * CellUnitMainDamageValues.PercentDamageTW(unitEs.MainToolWeaponE);
+            if (unitEs.ExtraToolWeaponE.HaveToolWeapon) powerDamege += standDamage * CellUnitMainDamageValues.PercentExtraDamageTW(unitEs.ExtraToolWeaponE);
+
             if (attack == AttackTypes.Unique) powerDamege += standDamage * CellUnitMainDamageValues.UNIQUE_PERCENT_DAMAGE;
 
             //if (haveEff) powerDamege += standDamage * 0.2f;
 
             powerDamege += standDamage * upgPerc;
 
-            return (int)powerDamege;
+            return powerDamege;
         }
-        public int DamageOnCell(in CellEs cellEs, in UnitStatUpgradesEs statUpgEs)
+        public float DamageOnCell(in CellEs cellEs, in UnitStatUpgradesEs statUpgEs)
         {
-            float powerDamege = DamageAttack(cellEs.UnitEs.ExtraToolWeaponE, statUpgEs, AttackTypes.Simple);
+            float powerDamege = DamageAttack(cellEs.UnitEs, statUpgEs, AttackTypes.Simple);
 
             var standDamage = CellUnitMainDamageValues.StandDamage(Unit, Level);
 
             powerDamege += standDamage * CellUnitMainDamageValues.ProtRelaxPercent(Condition);
-            if (cellEs.BuildEs.BuildingE.HaveBuilding) powerDamege += standDamage * CellBuildingValues.ProtectionPercent(cellEs.BuildEs.BuildingE.BuildTC.Build);
+            if (cellEs.BuildEs.BuildingE.HaveBuilding) powerDamege += standDamage * CellBuildingValues.ProtectionPercent(cellEs.BuildEs.BuildingE.Building);
 
             float protectionPercent = 0;
 
@@ -189,7 +224,7 @@ namespace Game.Game
 
             powerDamege += standDamage * protectionPercent;
 
-            return (int)powerDamege;
+            return powerDamege;
         }
 
         #endregion
@@ -248,15 +283,10 @@ namespace Game.Game
 
         }
 
-        void Reset()
-        {
-            Unit = UnitTypes.None;
-            IsRightArcher = false;
-            Owner = PlayerTypes.None;
-            Level = LevelTypes.None;
-        }
         void Set(in byte idx_to, in Entities ents)
         {
+            var idx_0 = Idx;
+
             ents.UnitE(idx_to).Unit = Unit;
             ents.UnitE(idx_to).IsRightArcher = IsRightArcher;
             ents.UnitE(idx_to).Owner = Owner;
@@ -267,23 +297,21 @@ namespace Game.Game
             ents.UnitE(idx_to).Steps = Steps;
             ents.UnitE(idx_to).Water = Water;
 
-            ents.UnitEffectEs(idx_to).StunE.Stun = EffectEs.StunE.Stun;
-            ents.UnitEffectEs(idx_to).ShieldE.Shield = EffectEs.ShieldE.Shield;
-            ents.UnitEffectEs(idx_to).FrozenArrowE.IsFrozenArraw = EffectEs.FrozenArrowE.IsFrozenArraw;
+            ents.UnitE(idx_to).Stun = ents.UnitE(idx_0).Stun;
+            ents.UnitE(idx_to).Shield = ents.UnitE(idx_0).Shield;
+            ents.UnitE(idx_to).ShootsFrozenArraw = ents.UnitE(idx_0).ShootsFrozenArraw;
 
-            ents.UnitExtraTWE(idx_to).ToolWeaponT = ExtraToolWeaponE.ToolWeaponT;
-            ents.UnitExtraTWE(idx_to).LevelT = ExtraToolWeaponE.LevelT;
-            ents.UnitExtraTWE(idx_to).Protection = ExtraToolWeaponE.Protection;
+            ents.ExtraTWE(idx_to).ToolWeapon = ents.UnitEs(idx_0).ExtraToolWeaponE.ToolWeapon;
+            ents.ExtraTWE(idx_to).LevelT = ents.UnitEs(idx_0).ExtraToolWeaponE.LevelT;
+            ents.ExtraTWE(idx_to).Protection = ents.UnitEs(idx_0).ExtraToolWeaponE.Protection;
 
-            ents.UnitEs(idx_to).MainToolWeaponE.ToolWeapon = MainToolWeaponE.ToolWeapon;
-            ents.UnitEs(idx_to).MainToolWeaponE.Level = MainToolWeaponE.Level;
+            ents.UnitEs(idx_to).MainToolWeaponE.ToolWeapon = ents.UnitEs(idx_0).MainToolWeaponE.ToolWeapon;
+            ents.UnitEs(idx_to).MainToolWeaponE.Level = ents.UnitEs(idx_0).MainToolWeaponE.Level;
 
-            foreach (var abilityT in CooldownKeys) ents.UnitEs(idx_to).Ability(abilityT).Shift(Ability(abilityT));
+            foreach (var abilityT in ents.UnitEs(idx_0).CooldownKeys) ents.UnitEs(idx_to).Ability(abilityT).Cooldown =  ents.UnitEs(idx_0).Ability(abilityT).Cooldown;
         }
-        public void SetNew(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unit, in Entities ents, in (ToolWeaponTypes, LevelTypes, ToolWeaponTypes, LevelTypes) tw = default)
+        public void SetNew(in (UnitTypes, LevelTypes, PlayerTypes, ConditionUnitTypes, bool) unit, in UnitStatUpgradesEs statUpgEs, in CellUnitEs unitEs)
         {
-            var idx_0 = Idx;
-
             Unit = unit.Item1;
             Level = unit.Item2;
             Owner = unit.Item3;
@@ -292,36 +320,32 @@ namespace Game.Game
 
             SetMaxHp();
             SetMaxSteps();
-            SetMaxWater(ents.UnitStatUpgradesEs);
+            SetMaxWater(statUpgEs);
 
-            ents.UnitEffectEs(idx_0).StunE.Reset();
-            ents.UnitEffectEs(idx_0).ShieldE.Reset();
-            ents.UnitEffectEs(idx_0).FrozenArrowE.Disable();
+            Stun = 0;
+            Shield = 0;
+            ShootsFrozenArraw = 0;
 
-            ents.UnitEs(idx_0).MainToolWeaponE.SetNew(tw.Item1, tw.Item2);
-            ents.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tw.Item3, tw.Item4);
-            foreach (var item in ents.UnitEs(idx_0).CooldownKeys) ents.UnitEs(idx_0).Ability(item).SetNew();
-
-            //if (ents.UnitE(idx_0).Is(UnitTypes.Pawn))
-            //{
-            //    MainToolWeaponE.ToolWeapon = ToolWeaponTypes.Axe;
-            //    MainToolWeaponE.Level = LevelTypes.First;
-            //}
+            foreach (var item in unitEs.CooldownKeys) unitEs.Ability(item).Cooldown = 0;
         }
+        public void SetNewPawn(in (LevelTypes, PlayerTypes, ConditionUnitTypes) unit, in UnitStatUpgradesEs statUpgEs, in CellUnitEs unitEs)
+        {
+            SetNew((UnitTypes.Pawn, unit.Item1, unit.Item2, unit.Item3, false), statUpgEs, unitEs);
 
-
-
+            unitEs.MainToolWeaponE.ToolWeapon = ToolWeaponTypes.Axe;
+            unitEs.MainToolWeaponE.Level = LevelTypes.First;
+        }
         public void Kill(in Entities ents)
         {
             if (!HaveUnit) throw new Exception("There's not unit");
 
             var idx_0 = Idx;
 
-            if (UnitTC.Is(UnitTypes.King))
+            if (Is(UnitTypes.King))
             {
                 ents.WinnerE.Winner.Player = Owner;
             }
-            else if (UnitTC.Is(UnitTypes.Scout) || UnitTC.IsHero)
+            else if (Is(UnitTypes.Scout) || UnitTC.IsHero)
             {
                 ents.ScoutHeroCooldownE(this).SetCooldownAfterKill(UnitTC.Unit);
                 ents.InventorUnitsEs.Units(UnitTC.Unit, Level, Owner).AddUnit();
@@ -329,30 +353,24 @@ namespace Game.Game
 
             ents.UnitEs(idx_0).WhoLastDiedHereE.SetLastDied(this);
 
-            UnitTCRef.Unit = UnitTypes.None;
+            Unit = UnitTypes.None;
         }
-        public void AddToInventorAndRemove(in Entities e)
+        public void AddToInventorAndRemove(in InventorUnitsEs invUnitsEs)
         {
-            var idx_0 = Idx;
+            invUnitsEs.Units(Unit, Level, Owner).AddUnit();
 
-            var level = e.UnitE(idx_0).LevelTCRef.Level;
-            var owner = e.UnitE(idx_0).OwnerC.Player;
-
-            e.InventorUnitsEs.Units(UnitTC.Unit, level, owner).AddUnit();
-
-
-            UnitTCRef.Unit = UnitTypes.None;
+            Unit = UnitTypes.None;
         }
         public void Upgrade()
         {
-            if (LevelTCRef.Is(LevelTypes.Second, LevelTypes.End, LevelTypes.None)) throw new Exception();
+            if (LevelTC.Is(LevelTypes.Second, LevelTypes.End, LevelTypes.None)) throw new Exception();
 
-            LevelTCRef.Level = LevelTypes.Second;
+            LevelTC.Level = LevelTypes.Second;
         }
         public void Shift(in byte idx_to, in bool withDestoyBuilding, in Entities ents)
         {
             Set(idx_to, ents);
-            Reset();
+            Unit = UnitTypes.None;
 
             if (!ents.CellSpaceWorker.TryGetDirect(Idx, idx_to, out var direct)) throw new Exception();
 
@@ -377,11 +395,11 @@ namespace Game.Game
 
             if (withDestoyBuilding)
             {
-                if (ents.BuildE(idx_to).HaveBuilding && !ents.BuildE(idx_to).Is(BuildingTypes.City))
+                if (ents.BuildingE(idx_to).HaveBuilding && !ents.BuildingE(idx_to).Is(BuildingTypes.City))
                 {
-                    if (!ents.BuildE(idx_to).Is(ents.UnitE(idx_to).Owner))
+                    if (!ents.BuildingE(idx_to).Is(ents.UnitE(idx_to).Owner))
                     {
-                        ents.BuildE(idx_to).Destroy(ents);
+                        ents.BuildingE(idx_to).Destroy(ents);
                     }
                 }
             }
@@ -389,8 +407,9 @@ namespace Game.Game
         public void Teleport(in byte idx_to, in Entities ents)
         {
             Set(idx_to, ents);
-            Reset();
+            Unit = UnitTypes.None;
         }
+        public void ToggleArcherSide() => IsRightArcher = !IsRightArcher;
 
         public void Shift_Master(in byte idx_to, in Player sender, in Entities e)
         {
@@ -399,9 +418,10 @@ namespace Game.Game
 
             if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
             {
-                e.UnitE(idx_from).TakeForShift(idx_to, e);
+                if (!e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var dir)) throw new Exception();
+                TakeSteps(e.UnitE(idx_from).StepsForShiftOrAttack(e.UnitE(idx_from).Unit, dir, e.CellEs(idx_to)));
 
-                e.UnitEs(idx_from).Shift(idx_to, true, e);
+                e.UnitE(idx_from).Shift(idx_to, true, e);
 
                 e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
@@ -415,7 +435,7 @@ namespace Game.Game
 
             if (CellsForAttackUnitsEs.CanAttack(idx_from, idx_to, whoseMove, out var attack))
             {
-                e.UnitE(idx_from).SetStepsAfterAttack();
+                e.UnitE(idx_from).Steps = 0;
                 e.UnitE(idx_from).Condition = ConditionUnitTypes.None;
 
 
@@ -423,7 +443,7 @@ namespace Game.Game
                 float powerDam_to = 0;
 
 
-                powerDam_from += DamageAttack(e.UnitEs(idx_from).ExtraToolWeaponE, e.UnitStatUpgradesEs, attack);
+                powerDam_from += DamageAttack(e.UnitEs(idx_from), e.UnitStatUpgradesEs, attack);
 
                 if (e.UnitEs(idx_from).UnitE.UnitTC.IsMelee)
                     e.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
@@ -463,7 +483,7 @@ namespace Game.Game
                 var maxDamage = CellUnitStatHpValues.MAX_HP;
                 var minDamage = 0;
 
-                if (!e.UnitEs(idx_to).UnitE.UnitTC.IsMelee) powerDam_to /= 2;
+                //if (!e.UnitE(idx_to).IsMelee) powerDam_to /= 2;
 
                 if (powerDam_to > powerDam_from)
                 {
@@ -503,71 +523,60 @@ namespace Game.Game
                 }
 
 
-                if (e.UnitEs(idx_from).UnitE.UnitTC.IsMelee)
+                if (e.UnitE(idx_from).IsMelee(e.MainTWE(idx_from)))
                 {
-                    if (e.UnitEffectEs(idx_from).ShieldE.HaveShieldEffect)
+                    if (e.UnitE(idx_from).HaveShieldEffect)
                     {
-                        e.UnitEffectEs(idx_from).ShieldE.Take();
+                        e.UnitE(idx_from).TakeShield();
                     }
-                    else if (e.UnitEs(idx_from).ExtraToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                    else if (e.ExtraTWE(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        e.UnitEs(idx_from).ExtraToolWeaponE.BreakShield();
+                        e.ExtraTWE(idx_from).BreakShield();
                     }
                     else if (minus_from > 0)
                     {
-                        e.UnitE(idx_from).Attack((int)minus_from);
+                        e.UnitE(idx_from).TakeHp(e, minus_from);
                     }
                 }
                 else
                 {
-                    if (e.UnitEffectEs(idx_from).FrozenArrowE.IsFrozenArraw)
+                    if (e.UnitE(idx_from).HaveFrozenArrawEffect)
                     {
-                        e.UnitEffectEs(idx_from).FrozenArrowE.Disable();
+                        e.UnitE(idx_from).ShootsFrozenArraw = 0;
 
-                        e.UnitEffectEs(idx_to).StunE.SetAfterAttackFrozenArrow();
+                        e.UnitE(idx_to).Stun = 2;
                     }
                 }
 
-                if (e.UnitEffectEs(idx_to).ShieldE.HaveShieldEffect)
+                if (e.UnitE(idx_to).HaveShieldEffect)
                 {
-                    e.UnitEffectEs(idx_to).ShieldE.Take();
+                    e.UnitE(idx_to).TakeShield();
                 }
-                else if (e.UnitEs(idx_to).ExtraToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Shield))
+                else if (e.ExtraTWE(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    e.UnitEs(idx_to).ExtraToolWeaponE.BreakShield();
+                    e.ExtraTWE(idx_to).BreakShield();
                 }
                 else if (minus_to > 0)
                 {
-                    e.UnitE(idx_to).Attack((int)minus_to);
-                }
+                    var wasUnit = e.UnitE(idx_to).Unit;
+                    e.UnitE(idx_to).TakeHp(e, minus_to);
 
-
-                if (!e.UnitE(idx_to).IsAlive)
-                {
-                    if (e.UnitEs(idx_to).UnitE.UnitTC.IsAnimal)
+                    if (!e.UnitE(idx_to).HaveUnit)
                     {
-                        e.InventorResourcesEs.Resource(ResourceTypes.Food, e.UnitE(idx_from).OwnerC.Player).Add(ResourcesInInventorValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
-                    }
-
-                    e.UnitEs(idx_to).UnitE.Kill(e);
-
-
-                    if (e.UnitEs(idx_from).UnitE.UnitTC.IsMelee)
-                    {
-                        if (!e.UnitE(idx_from).IsAlive)
+                        if (wasUnit == UnitTypes.Camel)
                         {
-                            e.UnitEs(idx_from).UnitE.Kill(e);
+                            e.InventorResourcesEs.Resource(ResourceTypes.Food, e.UnitE(idx_from).Owner).Add(ResourcesInInventorValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
                         }
-                        else
-                        {
-                            e.UnitEs(idx_from).Shift(idx_to, true, e);
-                        }
-                    }
-                }
 
-                else if (!e.UnitE(idx_from).IsAlive)
-                {
-                    e.UnitEs(idx_from).UnitE.Kill(e);
+                        if (e.UnitE(idx_from).HaveUnit)
+                        {
+                            if (e.UnitE(idx_from).IsMelee(e.MainTWE(idx_from)))
+                            {
+                                e.UnitE(idx_from).Shift(idx_to, true, e);
+                            }
+                        }
+
+                    }
                 }
 
                 //foreach (var item in CellUnitEffectsEs.Keys) CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_from).Disable();
@@ -586,7 +595,7 @@ namespace Game.Game
                 if (unit == UnitTypes.Pawn)
                 {
                     e.PeopleInCityE(whoseMove).People--;
-                    e.UnitEs(idx_0).SetNew((unit, LevelTypes.First, whoseMove, ConditionUnitTypes.None, false), e);
+                    e.UnitE(idx_0).SetNewPawn((LevelTypes.First, whoseMove, ConditionUnitTypes.None), e.UnitStatUpgradesEs, e.UnitEs(idx_0));
                 }
                 else
                 {
@@ -602,7 +611,7 @@ namespace Game.Game
                         e.InventorUnitsEs.Units(unit, LevelTypes.First, whoseMove).TakeUnit();
                         levUnit = LevelTypes.First;
                     }
-                    e.UnitEs(idx_0).SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), e);
+                    e.UnitE(idx_0).SetNew((unit, levUnit, whoseMove, ConditionUnitTypes.None, false), e.UnitStatUpgradesEs, e.UnitEs(idx_0));
                 }
 
                 e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
@@ -612,22 +621,20 @@ namespace Game.Game
         {
             var idx_0 = Idx;
 
-            var unit_0 = UnitTC;
-
             var whoseMove = e.WhoseMoveE.WhoseMove.Player;
 
             if (e.UnitE(idx_0).HaveMaxHp)
             {
                 //if (UnitE(idx_0).Have(ability))
                 //{
-                if (e.InventorResourcesEs.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
+                if (e.InventorResourcesEs.CanUpgradeUnit(whoseMove, Unit, out var needRes))
                 {
-                    e.InventorResourcesEs.BuyUpgradeUnit(whoseMove, unit_0.Unit);
+                    e.InventorResourcesEs.BuyUpgradeUnit(whoseMove, Unit);
 
-                    e.UnitE(idx_0).Upgrade();
+                    Upgrade();
                     //UnitE(idx_0).Take(ability);
 
-                    e.UnitE(idx_0).SetMaxHp();
+                    SetMaxHp();
 
                     e.RpcE.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                 }
@@ -666,7 +673,7 @@ namespace Game.Game
                     else if (e.UnitE(idx_0).HaveSteps)
                     {
                         e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        e.UnitE(idx_0).Take(cond);
+                        e.UnitE(idx_0).TakeSteps(cond);
                         e.UnitE(idx_0).Condition = cond;
                     }
 
@@ -688,7 +695,7 @@ namespace Game.Game
                     {
                         e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         e.UnitE(idx_0).Condition = cond;
-                        e.UnitE(idx_0).Take(cond);
+                        e.UnitE(idx_0).TakeSteps(cond);
                     }
 
                     else
@@ -708,7 +715,7 @@ namespace Game.Game
 
             if (ents.UnitE(idx_0).HaveStepsForAbility(ability))
             {
-                if (ents.BuildE(idx_0).Is(BuildingTypes.Teleport))
+                if (ents.BuildingE(idx_0).Is(BuildingTypes.Teleport))
                 {
                     var idx_start = ents.StartTeleportE.WhereC.Idx;
                     var idx_end = ents.EndTeleportE.WhereC.Idx;
@@ -717,7 +724,7 @@ namespace Game.Game
                     {
                         if (!ents.UnitE(idx_end).HaveUnit)
                         {
-                            ents.UnitE(idx_0).Take(ability);
+                            ents.UnitE(idx_0).TakeSteps(ability);
 
                             Teleport(idx_end, ents);
                         }
@@ -726,7 +733,7 @@ namespace Game.Game
                     {
                         if (!ents.UnitE(idx_start).HaveUnit)
                         {
-                            ents.UnitE(idx_0).Take(ability);
+                            ents.UnitE(idx_0).TakeSteps(ability);
 
                             Teleport(idx_start, ents);
                         }
@@ -744,13 +751,13 @@ namespace Game.Game
 
             if (ents.UnitE(idx_0).HaveStepsForAbility(ability))
             {
-                ents.UnitE(idx_0).Take(ability);
+                ents.UnitE(idx_0).TakeSteps(ability);
 
                 foreach (var idx_1 in ents.CellSpaceWorker.GetIdxsAround(idx_0))
                 {
-                    if (!ents.UnitE(idx_1).HaveUnit && !ents.EnvMountainE(idx_1).HaveEnvironment)
+                    if (!ents.UnitE(idx_1).HaveUnit && !ents.MountainE(idx_1).HaveEnvironment)
                     {
-                        ents.UnitE(idx_1).SetNew((UnitTypes.Skeleton, LevelTypes.First, Owner, ConditionUnitTypes.None, false), ents);
+                        ents.UnitE(idx_1).SetNew((UnitTypes.Skeleton, LevelTypes.First, Owner, ConditionUnitTypes.None, false), ents.UnitStatUpgradesEs, ents.UnitEs(idx_1));
                     }
 
                 }
@@ -761,80 +768,33 @@ namespace Game.Game
             }
         }
 
+
         #region Stats
 
         #region Hp
 
-        void AddHp(in int adding = 1)
-        {
-            HealthRef.Amount += adding;
-            if (HaveMaxHp) SetMaxHp();
-        }
-        void TakeHp(in Entities ents, in int taking = 1)
-        {
-            HealthRef.Amount -= taking;
-            if (IsHpDeathAfterAttack) HealthRef.Amount = 0;
-            if (!IsAlive) ents.UnitEs(Idx).UnitE.Kill(ents);
-        }
+        public void SetMaxHp() => Health = CellUnitStatHpValues.MAX_HP;
+        public void SetMinHp() => Health = 0;
 
-        public void Attack(in AbilityTypes ability, in Entities Es)
+        public void AddHp(in float adding = 1)
         {
-            HealthRef.Amount -= CellUnitStatHpValues.Damage(ability);
-
-            if (IsHpDeathAfterAttack || !IsAlive)
+            if (!HaveMaxHp)
             {
-                Es.CellEs(Idx).UnitEs.UnitE.Kill(Es);
+                Health += adding;
+                if (MoreMaxHp) SetMaxHp();
             }
         }
-        public void Attack(in int damage)
-        {
-            HealthRef.Amount -= damage;
-            if (IsHpDeathAfterAttack) HealthRef.Amount = 0;
-        }
-        public void TakeHpHellWithNearWater(in Entities ents)
-        {
-            TakeHp(ents, 15);
-        }
-        public void TakeHpHellWithCloud(in Entities ents)
-        {
-            TakeHp(ents, 15);
-        }
-        public void TakeHpHellWithIceWall(in Entities ents)
-        {
-            TakeHp(ents, 15);
-        }
-        public void Thirsty(in Entities es)
-        {
-            float percent = CellUnitStatHpValues.ThirstyPercent(es.CellEs(Idx).UnitEs.UnitE.UnitTC.Unit);
 
-            HealthRef.Amount -= (int)(CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent);
-
-            if (!es.UnitE(Idx).IsAlive)
+        public void TakeHp(in Entities ents, in float taking = 1)
+        {
+            if (Health > 0)
             {
-                if (es.CellEs(Idx).BuildEs.BuildingE.BuildTC.Is(BuildingTypes.Camp))
-                {
-                    es.CellEs(Idx).BuildEs.BuildingE.Destroy(es);
-                }
-
-                es.CellEs(Idx).UnitEs.UnitE.Kill(es);
+                Health -= taking;
+                if (IsHpDeathAfterAttack) Health = 0;
+                if (!IsAlive) Kill(ents);
             }
         }
-        public void Fire(in Entities es)
-        {
-            if (es.UnitEs(Idx).UnitE.UnitTC.Is(UnitTypes.Hell))
-            {
-                SetMaxHp();
-            }
-            else
-            {
-                HealthRef.Amount -= CellUnitStatHpValues.FIRE_DAMAGE;
-                if (!IsAlive) es.CellEs(Idx).UnitEs.UnitE.Kill(es);
-            }
-        }
-        public void SetMaxHp()
-        {
-            HealthRef.Amount = CellUnitStatHpValues.MAX_HP;
-        }
+        public void TakeHp(in AbilityTypes ability, in Entities Es) => TakeHp(Es, CellUnitStatHpValues.Damage(ability));
 
         #endregion
 
@@ -842,30 +802,20 @@ namespace Game.Game
         #region Steps
 
         public void SetMaxSteps() => Steps = MaxAmountSteps;
-        public void SetStepsAfterAttack()
-        {
-            StepsCRef.Steps = 0;
-        }
-        public void Take(in AbilityTypes ability)
-        {
-            StepsCRef.Steps -= CellUnitStatStepValues.NeedSteps(ability);
-        }
-        public void Take(in RpcMasterTypes rpc)
-        {
-            Steps -= CellUnitStatStepValues.NeedSteps(rpc);
-        }
-        public void Take(in ConditionUnitTypes cond)
-        {
-            Steps -= CellUnitStatStepValues.NeedSteps(cond);
-        }
-        public void Take(in ToolWeaponTypes tw)
+        public void SetMinSteps() => Steps = 0;
+
+        public void TakeSteps(in float taking = 0.1f) => StepC.Take(taking);
+        public void TakeSteps(in AbilityTypes ability) => TakeSteps(CellUnitStatStepValues.NeedSteps(ability));
+        public void TakeSteps(in RpcMasterTypes rpc) => TakeSteps(CellUnitStatStepValues.NeedSteps(rpc));
+        public void TakeSteps(in ConditionUnitTypes cond) => TakeSteps(CellUnitStatStepValues.NeedSteps(cond));
+        public void TakeSteps(in ToolWeaponTypes tw)
         {
             Steps -= CellUnitStatStepValues.NeedSteps(tw);
         }
-        public void TakeForShift(in byte idx_to, in Entities es)
+
+        public void AddSteps(in float adding)
         {
-            if (!es.CellSpaceWorker.TryGetDirect(Idx, idx_to, out var dir)) throw new Exception();
-            Steps -= es.UnitE(Idx).StepsForShiftOrAttack(es.UnitEs(Idx).UnitE.UnitTC, dir, es.CellEs(idx_to));
+            Steps += adding;
         }
 
         #endregion
@@ -874,9 +824,73 @@ namespace Game.Game
         #region Water
 
         public void SetMaxWater(in UnitStatUpgradesEs statUpgEs) => Water = MaxWater(statUpgEs);
+        public void SetMinWater() => Water = 0;
+
+        public void AddWater(in float adding = 1)
+        {
+            Water += adding;
+        }
+
+        public void TakeWater(in float taking = 1)
+        {
+            Water -= taking;
+        }
         public void TakeWater(in AbilityTypes ability)
         {
             Water -= CellUnitStatWaterValues.Need(ability);
+        }
+
+        #endregion
+
+        #endregion
+
+
+        #region Effects
+
+        public void TakeStun(in int taking = 1)
+        {
+            Stun -= taking;
+        }
+        public void SetStunAfterAbility(in AbilityTypes abilityT)
+        {
+            switch (abilityT)
+            {
+                case AbilityTypes.StunElfemale:
+                    StunC.Stun = 4;
+                    break;
+
+                case AbilityTypes.ActiveAroundBonusSnowy:
+                    StunC.Stun = 2;
+                    break;
+
+                case AbilityTypes.DirectWave:
+                    StunC.Stun = 2;
+                    break;
+
+                default: throw new System.Exception();
+            }
+        }
+
+        #region Shield
+
+        public void SetShield(in AbilityTypes ability)
+        {
+            switch (ability)
+            {
+                case AbilityTypes.ActiveAroundBonusSnowy:
+                    Shield = 1;
+                    break;
+
+                case AbilityTypes.DirectWave:
+                    Shield = 1;
+                    break;
+
+                default: throw new Exception();
+            }
+        }
+        public void TakeShield(in int taking = 1)
+        {
+            Shield -= taking;
         }
 
         #endregion

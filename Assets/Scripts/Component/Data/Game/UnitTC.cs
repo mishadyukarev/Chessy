@@ -14,6 +14,7 @@ namespace Game.Game
             return false;
         }
 
+        public bool HaveUnit => !Is(UnitTypes.None, UnitTypes.End);
         public bool IsMelee
         {
             get
@@ -83,6 +84,7 @@ namespace Game.Game
                 }
             }
         }
+
 
         public UnitTC(in UnitTypes unit) => Unit = unit;
     }

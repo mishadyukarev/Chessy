@@ -2,6 +2,6 @@
 {
     public sealed class MaxPeopleInCityValues
     {
-        public const int MAX_PEOPLE_IN_CITY_START_GAME = 10;
+        public const int PEOPLE_IN_CITY_IN_START_GAME = 1;
     }
 }

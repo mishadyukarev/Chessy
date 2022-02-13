@@ -40,6 +40,20 @@
                         {
                             VEs.UnitEs(idx_0).ExtraToolWeaponE(isSelZone, levT, twT).Disable();
                         }
+
+                        for (var twT = ToolWeaponTypes.BowCrossbow; twT <= ToolWeaponTypes.Axe; twT++)
+                        {
+                            if (twT == ToolWeaponTypes.BowCrossbow)
+                            {
+                                VEs.UnitEs(idx_0).MainBowCrossbowE(isSelZone, levT, true).Disable();
+                                VEs.UnitEs(idx_0).MainBowCrossbowE(isSelZone, levT, false).Disable();
+                            }
+                            else
+                            {
+                                VEs.UnitEs(idx_0).MainToolWeaponE(isSelZone, levT, twT).Disable();
+                            }
+                            
+                        }
                     }
                 }
 
@@ -47,33 +61,29 @@
                 {
                     if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
                     {
-                        var isSelected = idx_0 == Es.SelectedIdxE.IdxC.Idx;
+                        var isSelected = idx_0 == Es.SelectedIdxE.Idx;
                         var isVisForNext = Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.NextPlayerFrom(Es.WhoseMoveE.CurPlayerI)).IsVisibleC.IsVisible;
 
                         var unitT = Es.UnitE(idx_0).Unit;
 
                         if (unitT == UnitTypes.Pawn)
                         {
-                            VEs.UnitEs(idx_0).MainToolWeaponE(isSelected, Es.UnitEs(idx_0).MainToolWeaponE.Level, Es.UnitEs(idx_0).MainToolWeaponE.ToolWeapon).Enable(isVisForNext);
-
-                            if (Es.UnitEs(idx_0).ExtraToolWeaponE.ToolWeaponTC.HaveTW)
+                            if (Es.MainTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                             {
-                                var twT = Es.UnitExtraTWE(idx_0).ToolWeaponT;
-                                var levT = Es.UnitExtraTWE(idx_0).LevelT;
+                                VEs.UnitEs(idx_0).MainBowCrossbowE(isSelected, Es.MainTWE(idx_0).Level, Es.UnitE(idx_0).IsRightArcher).Enable(isVisForNext);
+                            }
+                            else
+                            {
+                                VEs.UnitEs(idx_0).MainToolWeaponE(isSelected, Es.MainTWE(idx_0).Level, Es.MainTWE(idx_0).ToolWeapon).Enable(isVisForNext);
 
-                                if (twT == ToolWeaponTypes.BowCrossbow)
-                                {
-                                    //VEs.UnitEs(idx_0).BowCrossbowE(isSelected, levT, Es.UnitEs(idx_0).CornedE.IsRight).Enable(isVisForNext);
-                                }
-                                else
-                                {
-                                    VEs.UnitEs(idx_0).ExtraToolWeaponE(isSelected, levT, twT).Enable(isVisForNext);
-                                }
+                            }
 
-                                //if (twT == ToolWeaponTypes.BowCrossbow || twT == ToolWeaponTypes.Axe)
-                                //{
-                                //    VEs.UnitEs(idx_0).PawnE(isSelected, Es.UnitLevelE(idx_0).LevelT).Disable();
-                                //}
+                            if (Es.ExtraTWE(idx_0).HaveToolWeapon)
+                            {
+                                var twT = Es.ExtraTWE(idx_0).ToolWeapon;
+                                var levT = Es.ExtraTWE(idx_0).LevelT;
+
+                                VEs.UnitEs(idx_0).ExtraToolWeaponE(isSelected, levT, twT).Enable(isVisForNext);
                             }
                         }
                         else

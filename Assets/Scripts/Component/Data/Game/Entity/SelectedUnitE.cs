@@ -8,12 +8,11 @@ namespace Game.Game
         ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
 
         public UnitTC UnitTC => Ent.Get<UnitTC>();
-        public LevelTC LevelTC => Ent.Get<LevelTC>();
 
-        public LevelTypes LevelT
+        public LevelTypes Level
         {
             get => LevelTCRef.Level;
-            internal set => LevelTCRef.Level = value;
+            set => LevelTCRef.Level = value;
         }
         public bool IsSelectedUnit => UnitTC.Unit != UnitTypes.None && UnitTC.Unit != UnitTypes.End;
 

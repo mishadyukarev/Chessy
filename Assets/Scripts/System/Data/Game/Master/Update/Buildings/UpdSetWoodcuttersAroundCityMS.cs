@@ -10,15 +10,15 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.BuildE(idx_0).Is(BuildingTypes.City))
+                if (Es.BuildingE(idx_0).Is(BuildingTypes.City))
                 {
                     foreach (var idx_1 in Es.CellSpaceWorker.GetIdxsAround(idx_0))
                     {
-                        if (Es.EnvAdultForestE(idx_1).HaveEnvironment)
+                        if (Es.AdultForestE(idx_1).HaveEnvironment)
                         {
-                            if (!Es.BuildE(idx_1).HaveBuilding)
+                            if (!Es.BuildingE(idx_1).HaveBuilding)
                             {
-                                Es.BuildE(idx_1).SetNew(BuildingTypes.Woodcutter, Es.BuildE(idx_0).OwnerC.Player);
+                                Es.BuildingE(idx_1).SetNew(BuildingTypes.Woodcutter, Es.BuildingE(idx_0).Owner);
                             }
                         }
                     }

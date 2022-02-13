@@ -10,9 +10,15 @@ namespace Game.Game
         readonly Dictionary<ButtonTypes, CellUnitAbilityButtonsE> _uniqueButtons;
         readonly Dictionary<AbilityTypes, CellUnitAbilityE> _abilities;
         readonly Dictionary<PlayerTypes, CellUnitVisibleE> _cellUnitVisibles;
+
+        public readonly CellUnitE UnitE;
+        public readonly CellUnitMainToolWeaponE MainToolWeaponE;
+        public readonly CellUnitExtraToolWeaponE ExtraToolWeaponE;
+        public readonly CellUnitWhoLastDiedHereE WhoLastDiedHereE;
         public CellUnitAbilityButtonsE AbilityButton(in ButtonTypes button) => _uniqueButtons[button];
         public CellUnitAbilityE Ability(in AbilityTypes ability) => _abilities[ability];
         public CellUnitVisibleE VisibleE(in PlayerTypes player) => _cellUnitVisibles[player];
+
         public HashSet<AbilityTypes> CooldownKeys
         {
             get
@@ -23,21 +29,9 @@ namespace Game.Game
             }
         }
 
-        public readonly byte Idx;
-
-        public readonly CellUnitE UnitE;
-        public readonly CellUnitWhoLastDiedHereE WhoLastDiedHereE;
-
-        public readonly CellUnitExtraToolWeaponE ExtraToolWeaponE;
-        public readonly CellUnitMainToolWeaponE MainToolWeaponE;
-
-        public readonly CellUnitEffectEs EffectEs;
-
 
         internal CellUnitEs(in byte idx, in EcsWorld gameW)
         {
-            Idx = idx;
-
             _uniqueButtons = new Dictionary<ButtonTypes, CellUnitAbilityButtonsE>();
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
@@ -60,8 +54,6 @@ namespace Game.Game
             ExtraToolWeaponE = new CellUnitExtraToolWeaponE(idx, gameW);
             MainToolWeaponE = new CellUnitMainToolWeaponE(idx, gameW);
             WhoLastDiedHereE = new CellUnitWhoLastDiedHereE(idx, gameW);
-
-            EffectEs = new CellUnitEffectEs(idx, gameW);
         }
     }
 }

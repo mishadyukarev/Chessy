@@ -2,7 +2,7 @@
 {
     sealed class LeftCityEventUIS : SystemUIAbstract
     {
-        internal LeftCityEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal LeftCityEventUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             UIEs.LeftCityEs.BuildE(BuildingTypes.House).ButtonCRef.AddListener(delegate { Build(BuildingTypes.House); });
             UIEs.LeftCityEs.BuildE(BuildingTypes.Market).ButtonCRef.AddListener(delegate { Build(BuildingTypes.Market); });

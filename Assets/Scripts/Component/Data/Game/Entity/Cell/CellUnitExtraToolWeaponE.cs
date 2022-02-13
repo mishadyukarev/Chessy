@@ -6,56 +6,52 @@ namespace Game.Game
 {
     public sealed class CellUnitExtraToolWeaponE : CellEntityAbstract
     {
-        ref ToolWeaponTC ToolWeaponTCRef => ref Ent.Get<ToolWeaponTC>();
-        ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
-        ref AmountC ProtectionRef => ref Ent.Get<AmountC>();
-
-        public ToolWeaponTC ToolWeaponTC => Ent.Get<ToolWeaponTC>();
-        public LevelTC LevelTC => Ent.Get<LevelTC>();
-        public AmountC ProtectionC => Ent.Get<AmountC>();
+        ref ToolWeaponTC ToolWeaponTC => ref Ent.Get<ToolWeaponTC>();
+        ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
+        ref AmountC ProtectionC => ref Ent.Get<AmountC>();
 
 
-        public ToolWeaponTypes ToolWeaponT
+        public ToolWeaponTypes ToolWeapon
         {
             get => ToolWeaponTC.ToolWeapon;
-            internal set => ToolWeaponTCRef.ToolWeapon = value;
+            set => ToolWeaponTC.ToolWeapon = value;
         }
         public LevelTypes LevelT
         {
-            get => LevelTCRef.Level;
-            internal set => LevelTCRef.Level = value;
+            get => LevelTC.Level;
+            set => LevelTC.Level = value;
         }
         public int Protection
         {
-            get => ProtectionRef.Amount;
-            internal set => ProtectionRef.Amount = value;
+            get => ProtectionC.Amount;
+            set => ProtectionC.Amount = value;
         }
-        public bool HaveProtection => ProtectionC.Amount > 0;
+
+
         public bool Is(params ToolWeaponTypes[] tws) => ToolWeaponTC.Is(tws);
+
+
+        public bool HaveToolWeapon => ToolWeaponTC.HaveToolWeapon;
+        public bool HaveProtection => Protection > 0;
+
 
         internal CellUnitExtraToolWeaponE(in byte idx, in EcsWorld gameW) : base(idx, gameW) { }
 
-        internal void Set(in CellUnitExtraToolWeaponE twE)
-        {
-            ToolWeaponTCRef = twE.ToolWeaponTC;
-            LevelTCRef = twE.LevelTC;
-            ProtectionRef = twE.ProtectionC;
-        }
         public void SetNew(in ToolWeaponTypes tw, in LevelTypes level)
         {
-            ToolWeaponTCRef.ToolWeapon = tw;
-            LevelTCRef.Level = level;
+            ToolWeaponTC.ToolWeapon = tw;
+            LevelTC.Level = level;
 
             if (tw == ToolWeaponTypes.Shield)
             {
                 switch (level)
                 {
                     case LevelTypes.First:
-                        ProtectionRef.Amount = 1;
+                        ProtectionC.Amount = 1;
                         break;
 
                     case LevelTypes.Second:
-                        ProtectionRef.Amount = 3;
+                        ProtectionC.Amount = 3;
                         break;
 
                     default: throw new Exception();
@@ -63,22 +59,20 @@ namespace Game.Game
             }
         }
         public void SetNew(in (ToolWeaponTypes, LevelTypes) tw) => SetNew(tw.Item1, tw.Item2);
-
         public void BreakShield(in int taking = 1)
         {
-            if (!ToolWeaponTC.IsShield) throw new Exception();
+            if (!Is(ToolWeaponTypes.Shield)) throw new Exception();
             if (!HaveProtection) throw new Exception();
 
-            ProtectionRef.Amount -= taking;
+            ProtectionC.Amount -= taking;
 
-            if (!HaveProtection) ToolWeaponTCRef.ToolWeapon = ToolWeaponTypes.None;
+            if (!HaveProtection) ToolWeaponTC.ToolWeapon = ToolWeaponTypes.None;
         }
-
         public void Reset()
         {
-            ToolWeaponTCRef.ToolWeapon = ToolWeaponTypes.None;
-            LevelTCRef.Level = LevelTypes.None;
-            ProtectionRef.Amount = 0;
+            ToolWeaponTC.ToolWeapon = ToolWeaponTypes.None;
+            LevelTC.Level = LevelTypes.None;
+            ProtectionC.Amount = 0;
         }
 
 
@@ -86,125 +80,45 @@ namespace Game.Game
         {
             var idx_0 = Idx;
 
+            var ownUnit_0 = e.UnitE(idx_0).Owner;
 
-            if (idx_0 != default)
+            if (e.UnitE(idx_0).Is(UnitTypes.Pawn))
             {
-                var unit_0 = e.UnitEs(idx_0).UnitE.UnitTC;
-
-                var ownUnit_0 = e.UnitE(idx_0).OwnerC;
-
-                var tw_0 = e.UnitEs(idx_0).ExtraToolWeaponE.ToolWeaponTC;
-                var twLevel_0 = e.UnitEs(idx_0).ExtraToolWeaponE.LevelTC;
-
-
-                if (unit_0.Is(UnitTypes.Pawn))
+                if (e.MainTWE(idx_0).Is(ToolWeaponTypes.Axe))
                 {
                     if (e.UnitE(idx_0).HaveSteps)
                     {
-
-                        if (tw_0.HaveTW)
+                        if (e.ExtraTWE(idx_0).HaveToolWeapon)
                         {
-                            e.InventorToolWeaponEs.ToolWeapons(tw_0.ToolWeapon, twLevel_0.Level, ownUnit_0.Player).ToolWeapons.Amount++;
+                            e.InventorToolWeaponEs.ToolWeapons(e.ExtraTWE(idx_0).ToolWeapon, e.ExtraTWE(idx_0).LevelT, ownUnit_0).Add();
                             e.UnitEs(idx_0).ExtraToolWeaponE.Reset();
 
-                            e.UnitE(idx_0).Take(tWForGive);
+                            e.UnitE(idx_0).TakeSteps(tWForGive);
 
                             e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
 
-                        else if (e.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).HaveTW)
+                        else if (e.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0).HaveToolWeapon)
                         {
-                            e.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0.Player).ToolWeapons.Amount--;
+                            e.InventorToolWeaponEs.ToolWeapons(tWForGive, levelTW, ownUnit_0).Take();
 
                             e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                            e.UnitE(idx_0).Take(tWForGive);
+                            e.UnitE(idx_0).TakeSteps(tWForGive);
 
                             e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
-                        else if (tWForGive == ToolWeaponTypes.Pick)
+                        else
                         {
-                            if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
+                            if (e.InventorResourcesEs.CanBuyTW(tWForGive, levelTW, ownUnit_0, out var needRes))
                             {
-                                e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
+                                e.InventorResourcesEs.BuyTW(tWForGive, levelTW, ownUnit_0);
 
                                 e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
 
-                                e.UnitE(idx_0).Take(tWForGive);
-
-                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                            }
-                            else
-                            {
-                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-                            }
-                        }
-
-                        else if (tWForGive == ToolWeaponTypes.Sword)
-                        {
-                            if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
-                            {
-                                e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
-
-                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
-
-                                e.UnitE(idx_0).Take(tWForGive);
-
-                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                            }
-                            else
-                            {
-                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-                            }
-                        }
-
-                        else if (tWForGive == ToolWeaponTypes.BowCrossbow)
-                        {
-                            if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
-                            {
-                                e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
-
-                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
-
-                                e.UnitE(idx_0).Take(tWForGive);
-
-                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                            }
-                            else
-                            {
-                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-                            }
-                        }
-
-                        else if (tWForGive == ToolWeaponTypes.Axe)
-                        {
-                            if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
-                            {
-                                e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
-
-                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
-
-                                e.UnitE(idx_0).Take(tWForGive);
-
-                                e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                            }
-                            else
-                            {
-                                e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-                            }
-                        }
-
-                        else if (tWForGive == ToolWeaponTypes.Shield)
-                        {
-                            if (e.InventorResourcesEs.CanBuyTW(ownUnit_0.Player, tWForGive, levelTW, out var needRes))
-                            {
-                                e.InventorResourcesEs.BuyTW(ownUnit_0.Player, tWForGive, levelTW);
-
-                                e.UnitEs(idx_0).ExtraToolWeaponE.SetNew(tWForGive, levelTW);
-
-                                e.UnitE(idx_0).Take(tWForGive);
+                                e.UnitE(idx_0).TakeSteps(tWForGive);
 
                                 e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }

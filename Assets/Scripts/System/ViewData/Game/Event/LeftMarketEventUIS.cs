@@ -2,7 +2,7 @@
 {
     public sealed class LeftMarketEventUIS : SystemUIAbstract
     {
-        internal LeftMarketEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal LeftMarketEventUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             UIEs.LeftEs.MarketEs.FoodToWood.ButtonUIC.AddListener(delegate { BuyResource(MarketBuyTypes.FoodToWood); });
             UIEs.LeftEs.MarketEs.WoodToFood.ButtonUIC.AddListener(delegate { BuyResource(MarketBuyTypes.WoodToFood); });

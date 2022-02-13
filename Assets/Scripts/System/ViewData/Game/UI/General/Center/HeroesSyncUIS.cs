@@ -2,7 +2,7 @@
 {
     sealed class HeroesSyncUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal HeroesSyncUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal HeroesSyncUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

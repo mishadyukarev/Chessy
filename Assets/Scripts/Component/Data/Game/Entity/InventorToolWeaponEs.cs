@@ -10,6 +10,7 @@ namespace Game.Game
         string Key(in ToolWeaponTypes tw, in LevelTypes level, in PlayerTypes player) => tw.ToString() + level + player;
 
         public ToolWeaponInInventor ToolWeapons(in ToolWeaponTypes tw, in LevelTypes level, in PlayerTypes player) => _tWs[Key(tw, level, player)];
+        public ToolWeaponInInventor ToolWeapons(in CellUnitMainToolWeaponE mainTWE, in PlayerTypes player) => _tWs[Key(mainTWE.ToolWeapon, mainTWE.Level, player)];
         public ToolWeaponInInventor ToolWeapons(in string key) => _tWs[key];
 
         public HashSet<string> Keys

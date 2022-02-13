@@ -2,7 +2,7 @@
 {
     sealed class LeftEnvEventUISys : SystemUIAbstract
     {
-        internal LeftEnvEventUISys(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal LeftEnvEventUISys(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             UIEs.LeftEs.EnvironmentEs.Info<ButtonUIC>().AddListener(EnvironmentInfo);
         }

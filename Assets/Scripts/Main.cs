@@ -112,7 +112,7 @@ namespace Game
                         var resources = new Game.Resources(gameW);
 
                         var viewEs = new EntitiesView(gameW, out var forData);
-                        var uIEs = new EntitiesUI(gameW);
+                        var uIEs = new EntitiesViewUI(gameW);
                         var ents = new Entities(gameW, forData, RpcS.NamesMethods);
 
                         new FillCellsS(ents);

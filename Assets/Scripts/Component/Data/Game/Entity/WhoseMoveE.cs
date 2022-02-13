@@ -56,7 +56,7 @@ namespace Game.Game
                 {
                     foreach (byte idx_0 in e.CellSpaceWorker.Idxs)
                     {
-                        e.UnitEffectEs(idx_0).StunE.ExecuteAfterTrainingDoner();
+                        e.UnitE(idx_0).TakeStun(2);
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
                     needUpdateMove = true;
@@ -67,7 +67,7 @@ namespace Game.Game
                 {
                     foreach (byte idx_0 in e.CellSpaceWorker.Idxs)
                     {
-                        e.UnitEffectEs(idx_0).StunE.ExecuteAfterWithFriendDoner();
+                        e.UnitE(idx_0).TakeStun(2);
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 

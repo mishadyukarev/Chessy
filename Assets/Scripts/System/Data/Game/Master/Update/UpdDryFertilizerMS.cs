@@ -13,9 +13,9 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.EnvFertilizeE(idx_0).HaveEnvironment)
+                if (Es.FertilizeE(idx_0).HaveEnvironment)
                 {
-                    Es.EnvFertilizeE(idx_0).TakeDry();
+                    Es.FertilizeE(idx_0).TakeDry();
                 }
             }
         }

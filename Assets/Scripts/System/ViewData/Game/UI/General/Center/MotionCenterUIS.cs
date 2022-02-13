@@ -7,7 +7,7 @@ namespace Game.Game
     {
         float _timer;
 
-        internal MotionCenterUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal MotionCenterUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

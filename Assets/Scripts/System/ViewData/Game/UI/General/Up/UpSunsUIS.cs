@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class UpSunsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal UpSunsUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal UpSunsUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

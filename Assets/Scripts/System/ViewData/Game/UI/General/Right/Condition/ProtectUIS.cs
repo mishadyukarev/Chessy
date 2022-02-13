@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class ProtectUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal ProtectUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal ProtectUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

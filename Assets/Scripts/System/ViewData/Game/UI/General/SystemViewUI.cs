@@ -7,7 +7,7 @@ namespace Game.Game
     {
         readonly Dictionary<UITypes, Action> _actions;
 
-        public SystemViewUI(in Resources res, in Entities ents, in EntitiesUI entsUI)
+        public SystemViewUI(in Resources res, in Entities ents, in EntitiesViewUI entsUI)
         {
             _actions = new Dictionary<UITypes, Action>();
 

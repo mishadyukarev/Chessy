@@ -9,7 +9,7 @@ namespace Game.Game
         readonly Dictionary<string, HaveUpgradeE> _haveUpgrades;
 
         public HaveUpgradeE HaveUpgrade(in BuildingTypes build, in PlayerTypes player, in UpgradeTypes upg) => _haveUpgrades[build.ToString() + player + upg];
-        public HaveUpgradeE HaveUpgrade(in CellBuildingE buildE, in UpgradeTypes upg) => _haveUpgrades[buildE.BuildTC.Build.ToString() + buildE.OwnerC.Player + upg];
+        public HaveUpgradeE HaveUpgrade(in CellBuildingE buildE, in UpgradeTypes upg) => _haveUpgrades[buildE.Building.ToString() + buildE.Owner + upg];
 
         public BuildingUpgradeEs(in EcsWorld gameW)
         {

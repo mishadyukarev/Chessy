@@ -4,7 +4,7 @@
     {
         readonly Resources _resources;
 
-        internal UniqueButtonUIS(in Resources res, in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal UniqueButtonUIS(in Resources res, in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             _resources = res;
         }
@@ -22,7 +22,7 @@
                 else
                 {
                     UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).HaveCooldown);
-                    UIEs.RightEs.Unique(button).Text.Text = UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).Cooldown.Amount.ToString();
+                    UIEs.RightEs.Unique(button).Text.Text = UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).Cooldown.ToString();
 
                     UIEs.RightEs.Unique(button).Paren.SetActive(true);
 

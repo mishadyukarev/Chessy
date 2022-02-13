@@ -12,15 +12,12 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var unit_0 = UnitEs(idx_0).UnitE.UnitTC;
-                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
-
-                if (Es.UnitE(idx_0).HaveUnit && !unit_0.IsAnimal)
+                if (Es.UnitE(idx_0).HaveUnit && !Es.UnitE(idx_0).IsAnimal)
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (ownUnit_0.Is(PlayerTypes.First)) canExecute = true;
+                        if (Es.UnitE(idx_0).Is(PlayerTypes.First)) canExecute = true;
                     }
                     else canExecute = true;
 
@@ -34,11 +31,21 @@ namespace Game.Game
                         else
                         {
                             
-                            Es.UnitE(idx_0).Water -= CellUnitStatWaterValues.NeedWaterThirsty(Es.UnitE(idx_0).Unit);
+                            Es.UnitE(idx_0).TakeWater(CellUnitStatWaterValues.NeedWaterThirsty(Es.UnitE(idx_0).Unit));
 
                             if (!Es.UnitE(idx_0).HaveWater)
                             {
-                                Es.UnitE(idx_0).Thirsty(Es);
+                                float percent = CellUnitStatHpValues.ThirstyPercent(Es.UnitE(idx_0).Unit);
+
+                                Es.UnitE(idx_0).TakeHp(Es, CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS * percent);
+
+                                if (!Es.UnitE(idx_0).HaveUnit)
+                                {
+                                    if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
+                                    {
+                                        Es.BuildingE(idx_0).Destroy(Es);
+                                    }
+                                }
                             }
                         }
                     }

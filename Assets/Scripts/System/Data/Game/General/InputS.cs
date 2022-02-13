@@ -4,7 +4,7 @@
 namespace Game.Game
 {
 
-    sealed class InputS : SystemCellAbstract, IEcsRunSystem
+    sealed class InputS : SystemAbstract, IEcsRunSystem
     {
         internal InputS(in Entities ents) : base(ents)
         {

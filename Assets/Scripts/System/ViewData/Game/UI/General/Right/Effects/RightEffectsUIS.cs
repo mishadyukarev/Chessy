@@ -7,7 +7,7 @@ namespace Game.Game
         readonly Resources _resources;
         readonly Dictionary<EffectTypes, bool> _isFilled;
 
-        internal RightEffectsUIS(in Resources resources, in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal RightEffectsUIS(in Resources resources, in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             _resources = resources;
 
@@ -37,7 +37,7 @@ namespace Game.Game
 
                         if(!_isFilled[EffectTypes.Shield])
                         {
-                            if (UnitEffectEs(idx_sel).ShieldE.HaveShieldEffect)
+                            if (Es.UnitE(idx_sel).HaveShieldEffect)
                             {
                                 UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 UIEs.RightEs.Effect(idx_eff).ImageUIC.Sprite = _resources.Sprite(AbilityTypes.BonusNear);

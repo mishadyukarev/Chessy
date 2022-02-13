@@ -2,7 +2,7 @@
 {
     public sealed class Events
     {
-        public Events(in Entities ents, in EntitiesUI entsUI)
+        public Events(in Entities ents, in EntitiesViewUI entsUI)
         {
             new CenterEventUIS(ents, entsUI);
             new DownEventUIS(ents, entsUI);

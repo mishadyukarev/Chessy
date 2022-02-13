@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class KingZoneUISys : SystemUIAbstract, IEcsRunSystem
     {
-        internal KingZoneUISys(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal KingZoneUISys(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

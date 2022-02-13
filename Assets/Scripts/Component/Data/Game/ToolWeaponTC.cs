@@ -12,8 +12,7 @@ namespace Game.Game
             foreach (var tw in tWs) if (tw == ToolWeapon) return true;
             return false;
         }
-        public bool IsShield => Is(ToolWeaponTypes.Shield);
-        public bool HaveTW => ToolWeapon != default;
+        public bool HaveToolWeapon => !Is(ToolWeaponTypes.None, ToolWeaponTypes.End);
 
         public ToolWeaponTC(in ToolWeaponTypes tw) => ToolWeapon = tw;
     }

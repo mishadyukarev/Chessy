@@ -4,7 +4,7 @@ namespace Game.Game
 {
     public static class CellUnitStatStepValues
     {
-        public static int MaxAmountSteps(in UnitTypes unit, in bool haveEffect/*, in int upgradeSteps*/)
+        public static float MaxAmountSteps(in UnitTypes unit, in bool haveEffect/*, in int upgradeSteps*/)
         {
             var steps = 0;
 
@@ -31,7 +31,7 @@ namespace Game.Game
 
             return steps;
         }
-        internal static int NeedSteps(in AbilityTypes uniq)
+        internal static float NeedSteps(in AbilityTypes uniq)
         {
             switch (uniq)
             {
@@ -62,7 +62,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static int NeedSteps(in RpcMasterTypes rpc)
+        internal static float NeedSteps(in RpcMasterTypes rpc)
         {
             switch (rpc)
             {
@@ -99,20 +99,20 @@ namespace Game.Game
 
             return 1;
         }
-        internal static int NeedSteps(in ConditionUnitTypes cond)
+        internal static float NeedSteps(in ConditionUnitTypes cond)
         {
             return 1;
         }
-        internal static int NeedSteps(in ToolWeaponTypes tw)
+        internal static float NeedSteps(in ToolWeaponTypes tw)
         {
             return 1;
         }
 
-        internal static int NeedSteps(in BuildingTypes build)
+        internal static float NeedSteps(in BuildingTypes build)
         {
             return 1;
         }
-        internal static int NeedStepsShiftAttackUnit(in EnvironmentTypes envT)
+        internal static float NeedStepsShiftAttackUnit(in EnvironmentTypes envT)
         {
             switch (envT)
             {

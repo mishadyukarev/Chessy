@@ -33,7 +33,7 @@ namespace Game.Game
                 {
                     for (var lev = LevelTypes.None + 1; lev < LevelTypes.End; lev++)
                     {
-                        for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
+                        for (var player = PlayerTypes.None; player < PlayerTypes.End; player++)
                         {
                             for (var upg = UpgradeTypes.None + 1; upg < UpgradeTypes.End; upg++)
                             {

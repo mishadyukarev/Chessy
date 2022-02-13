@@ -4,15 +4,31 @@ namespace Game.Game
 {
     public sealed class CellUnitWhoLastDiedHereE : CellEntityAbstract
     {
-        ref UnitTC UnitTCRef => ref Ent.Get<UnitTC>();
-        ref LevelTC LevelTCRef => ref Ent.Get<LevelTC>();
-        ref PlayerTC OwnerCRef => ref Ent.Get<PlayerTC>();
+        ref UnitTC UnitTC => ref Ent.Get<UnitTC>();
+        ref LevelTC LevelTC => ref Ent.Get<LevelTC>();
+        ref PlayerTC PlayerTC => ref Ent.Get<PlayerTC>();
 
-        public UnitTC UnitTC => Ent.Get<UnitTC>();
-        public LevelTC LevelTC => Ent.Get<LevelTC>();
-        public PlayerTC OwnerC => Ent.Get<PlayerTC>();
+        public UnitTypes Unit
+        {
+            get => UnitTC.Unit;
+            set => UnitTC.Unit = value;
+        }
+        public LevelTypes Level
+        {
+            get => LevelTC.Level;
+            set => LevelTC.Level = value;
+        }
+        public PlayerTypes Owner
+        {
+            get => PlayerTC.Player;
+            set => PlayerTC.Player = value;
+        }
 
-        public bool HaveDeadUnit => UnitTC.Unit != UnitTypes.None;
+        public bool Is(params UnitTypes[] units) => UnitTC.Is(units);
+        public bool Is(params LevelTypes[] levels) => LevelTC.Is(levels);
+        public bool Is(params PlayerTypes[] players) => PlayerTC.Is(players);
+
+        public bool HaveDeadUnit => !Is(UnitTypes.None, UnitTypes.End);
 
         internal CellUnitWhoLastDiedHereE(in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
@@ -20,15 +36,15 @@ namespace Game.Game
 
         internal void SetLastDied(in CellUnitE unitE)
         {
-            UnitTCRef.Unit = unitE.UnitTC.Unit;
-            LevelTCRef.Level = unitE.Level;
-            OwnerCRef.Player = unitE.Owner;
+            UnitTC.Unit = unitE.Unit;
+            LevelTC.Level = unitE.Level;
+            PlayerTC.Player = unitE.Owner;
         }
         internal void Clear()
         {
-            UnitTCRef.Unit = UnitTypes.None;
-            LevelTCRef.Level = LevelTypes.None;
-            OwnerCRef.Player = PlayerTypes.None;
+            UnitTC.Unit = UnitTypes.None;
+            LevelTC.Level = LevelTypes.None;
+            PlayerTC.Player = PlayerTypes.None;
         }
     }
 }

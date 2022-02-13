@@ -12,8 +12,6 @@
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var unit_0 = UnitEs(idx_0).UnitE.UnitTC;
-                var own_0 = Es.UnitE(idx_0).OwnerC;
 
                 ref var support_0 = ref SupportCellVEs.Support<SpriteRendererVC>(idx_0);
 
@@ -36,11 +34,11 @@
 
                 if (Es.UnitEs(idx_0).UnitE.HaveUnit)
                 {
-                    if (own_0.Is(Es.WhoseMoveE.CurPlayerI))
+                    if (Es.UnitE(idx_0).Is(Es.WhoseMoveE.CurPlayerI))
                     {
                         if (cellClick.Is(CellClickTypes.UpgradeUnit))
                         {
-                            if (unit_0.Is(UnitTypes.Pawn))
+                            if (Es.UnitE(idx_0).Is(UnitTypes.Pawn))
                             {
                                 if (Es.UnitE(idx_0).Is(LevelTypes.First))
                                 {

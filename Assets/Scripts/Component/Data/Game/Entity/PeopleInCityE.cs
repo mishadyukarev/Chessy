@@ -6,20 +6,19 @@ namespace Game.Game
     {
         readonly PlayerTypes _player;
         ref AmountC AmountCRef => ref Ent.Get<AmountC>();
-        AmountC AmountC => Ent.Get<AmountC>();
 
         public int People
         {
-            get => AmountC.Amount;
+            get => AmountCRef.Amount;
             set => AmountCRef.Amount = value;
         }
 
-        public bool CanGetPeople => AmountC.HaveAny;
+        public bool CanGetPeople => AmountCRef.HaveAny;
 
         internal PeopleInCityE(in PlayerTypes player, in EcsWorld gameW) : base(gameW)
         {
             _player = player;
-            People = MaxPeopleInCityValues.MAX_PEOPLE_IN_CITY_START_GAME;
+            People = MaxPeopleInCityValues.PEOPLE_IN_CITY_IN_START_GAME;
         }
     }
 }

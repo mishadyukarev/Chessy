@@ -68,19 +68,18 @@ namespace Game.Game
 
         public CellUnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
         public CellUnitE UnitE(in byte idx) => UnitEs(idx).UnitE;
-        public CellUnitExtraToolWeaponE UnitExtraTWE(in byte idx) => UnitEs(idx).ExtraToolWeaponE;
-        public CellUnitEffectEs UnitEffectEs(in byte idx) => UnitEs(idx).EffectEs;
+        public CellUnitMainToolWeaponE MainTWE(in byte idx) => UnitEs(idx).MainToolWeaponE;
+        public CellUnitExtraToolWeaponE ExtraTWE(in byte idx) => UnitEs(idx).ExtraToolWeaponE;
 
-        public CellBuildEs BuildEs(in byte idx) => CellEs(idx).BuildEs;
-        public CellBuildingE BuildE(in byte idx) => BuildEs(idx).BuildingE;
+        public CellBuildingEs BuildingEs(in byte idx) => CellEs(idx).BuildEs;
+        public CellBuildingE BuildingE(in byte idx) => BuildingEs(idx).BuildingE;
 
         public CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
-        public CellEnvFertilizerE EnvFertilizerE(in byte idx) => EnvironmentEs(idx).Fertilizer;
-        public CellEnvYoungForestE EnvYoungForestE(in byte idx) => EnvironmentEs(idx).YoungForest;
-        public CellEnvAdultForestE EnvAdultForestE(in byte idx) => EnvironmentEs(idx).AdultForest;
-        public CellEnvMountainE EnvMountainE(in byte idx) => EnvironmentEs(idx).Mountain;
-        public CellEnvHillE EnvHillE(in byte idx) => EnvironmentEs(idx).Hill;
-        public CellEnvFertilizerE EnvFertilizeE(in byte idx) => EnvironmentEs(idx).Fertilizer;
+        public CellEnvYoungForestE YoungForestE(in byte idx) => EnvironmentEs(idx).YoungForest;
+        public CellEnvAdultForestE AdultForestE(in byte idx) => EnvironmentEs(idx).AdultForest;
+        public CellEnvMountainE MountainE(in byte idx) => EnvironmentEs(idx).Mountain;
+        public CellEnvHillE HillE(in byte idx) => EnvironmentEs(idx).Hill;
+        public CellEnvFertilizerE FertilizeE(in byte idx) => EnvironmentEs(idx).Fertilizer;
 
         public CellRiverEs RiverEs(in byte idx) => CellEs(idx).RiverEs;
         public CellTrailEs TrailEs(in byte idx) => CellEs(idx).TrailEs;

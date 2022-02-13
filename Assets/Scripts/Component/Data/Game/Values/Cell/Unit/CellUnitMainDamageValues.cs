@@ -5,7 +5,7 @@ namespace Game.Game
     public static class CellUnitMainDamageValues
     {
         public const float UNIQUE_PERCENT_DAMAGE = 0.5f;
-        public const int HP_FOR_DEATH_AFTER_ATTACK = 15;
+        public const float HP_FOR_DEATH_AFTER_ATTACK = 0.15f;
 
         internal static int StandDamage(in UnitTypes unit, in LevelTypes lev)
         {
@@ -75,16 +75,36 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-        internal static float PercentExtraDamageTW(in ToolWeaponTypes tw)
+        internal static float PercentExtraDamageTW(in CellUnitExtraToolWeaponE extraTWE)
         {
-            switch (tw)
+            switch (extraTWE.ToolWeapon)
             {
-                case ToolWeaponTypes.None: return 0;
                 case ToolWeaponTypes.Pick: return 0;
                 case ToolWeaponTypes.Sword: return 0.5f;
                 case ToolWeaponTypes.Shield: return 0;
-                case ToolWeaponTypes.BowCrossbow: return 0;
-                case ToolWeaponTypes.Axe: return 0;
+                default: throw new Exception();
+            }
+        }
+        internal static float PercentDamageTW(in CellUnitMainToolWeaponE mainTWE)
+        {
+            switch (mainTWE.Level)
+            {
+                case LevelTypes.First:
+                    switch (mainTWE.ToolWeapon)
+                    {
+                        case ToolWeaponTypes.BowCrossbow: return 0;
+                        case ToolWeaponTypes.Axe: return 0;
+                        default: throw new Exception();
+                    }
+
+                case LevelTypes.Second:
+                    switch (mainTWE.ToolWeapon)
+                    {
+                        case ToolWeaponTypes.BowCrossbow: return 0.3f;
+                        case ToolWeaponTypes.Axe: return 0;
+                        default: throw new Exception();
+                    }
+
                 default: throw new Exception();
             }
         }

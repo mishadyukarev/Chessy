@@ -39,8 +39,8 @@ namespace Game.Game
 
         public void Melt_Master(in PlayerTypes player)
         {
-            if (Resource(ResourceTypes.Wood, player).AmountResource >= 10 
-                && Resource(ResourceTypes.Ore, player).AmountResource >= 10)
+            if (Resource(ResourceTypes.Wood, player).Resources >= 10 
+                && Resource(ResourceTypes.Ore, player).Resources >= 10)
             {
                 Resource(ResourceTypes.Wood, player).Take(10);
                 Resource(ResourceTypes.Ore, player).Take(10);
@@ -110,7 +110,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            foreach (var item in needRes) if (item.Value > Resource(item.Key, player).AmountResource) return false;
+            foreach (var item in needRes) if (item.Value > Resource(item.Key, player).Resources) return false;
             return true;
         }
         public void TryBuyResourcesFromMarket_Master(in MarketBuyTypes marketBuyT, in Player sender, in Entities ents)
@@ -157,7 +157,7 @@ namespace Game.Game
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
-                var difAmountRes = Resource(res, playerType).Resources.Amount - ResourcesInInventorValues.AmountResForUpgradeUnit(unitType, res);
+                var difAmountRes = Resource(res, playerType).Resources - ResourcesInInventorValues.AmountResForUpgradeUnit(unitType, res);
                 needRes.Add(res, ResourcesInInventorValues.AmountResForUpgradeUnit(unitType, res));
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -171,14 +171,14 @@ namespace Game.Game
                 Resource(resType, playerType).Take(ResourcesInInventorValues.AmountResForUpgradeUnit(unitType, resType));
         }
 
-        public bool CanBuyTW(PlayerTypes player, ToolWeaponTypes tw, LevelTypes lev, out Dictionary<ResourceTypes, int> needRes)
+        public bool CanBuyTW(ToolWeaponTypes tw, LevelTypes lev, PlayerTypes player,  out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
             var canCreatBuild = true;
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
-                var difAmountRes = Resource(res, player).Resources.Amount - ResourcesInInventorValues.AmountResForBuyTW(tw, lev, res);
+                var difAmountRes = Resource(res, player).Resources - ResourcesInInventorValues.AmountResForBuyTW(tw, lev, res);
                 needRes.Add(res, ResourcesInInventorValues.AmountResForBuyTW(tw, lev, res));
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -186,7 +186,7 @@ namespace Game.Game
 
             return canCreatBuild;
         }
-        public void BuyTW(PlayerTypes player, ToolWeaponTypes tw, LevelTypes level)
+        public void BuyTW(ToolWeaponTypes tw, LevelTypes level, PlayerTypes player)
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
                 Resource(resType, player).Take(ResourcesInInventorValues.AmountResForBuyTW(tw, level, resType));

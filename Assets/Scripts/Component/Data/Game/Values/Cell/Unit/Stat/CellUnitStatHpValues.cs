@@ -4,15 +4,15 @@ namespace Game.Game
 {
     public static class CellUnitStatHpValues
     {
-        public const int MAX_HP = 100;
+        public const float MAX_HP = 1;
 
-        public static int FIRE_DAMAGE = 40;
+        public static float FIRE_DAMAGE = 0.4f;
 
-        public static int Damage(in AbilityTypes uniq)
+        public static float Damage(in AbilityTypes uniq)
         {
             switch (uniq)
             {
-                case AbilityTypes.CircularAttack: return 25;
+                case AbilityTypes.CircularAttack: return 0.25f;
                 default: throw new Exception();
             }
         }

@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class DownHeroUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal DownHeroUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal DownHeroUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

@@ -6,7 +6,7 @@ namespace Game.Game
 {
     sealed class ReadyZoneUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal ReadyZoneUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal ReadyZoneUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

@@ -3,7 +3,7 @@ using Game.Common;
 
 namespace Game.Game
 {
-    public readonly struct EntitiesUI
+    public readonly struct EntitiesViewUI
     {
         public readonly LeftUIEs LeftEs;
         public readonly RightUIEs RightEs;
@@ -15,7 +15,7 @@ namespace Game.Game
         public LeftMarketUIEs LeftMarketEs => LeftEs.MarketEs;
         public LeftSmelterUIEs LeftSmelterEs => LeftEs.SmelterEs;
 
-        public EntitiesUI(in EcsWorld gameW)
+        public EntitiesViewUI(in EcsWorld gameW)
         {
             LeftEs = new LeftUIEs(gameW);
             RightEs = new RightUIEs(gameW);

@@ -1,4 +1,6 @@
-﻿namespace Game.Game
+﻿using System;
+
+namespace Game.Game
 {
     sealed class UpdateIceWallMS : SystemAbstract, IEcsRunSystem
     {
@@ -10,9 +12,10 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.BuildE(idx_0).HaveBuilding && Es.BuildE(idx_0).Is(BuildingTypes.IceWall))
+                if (Es.BuildingE(idx_0).HaveBuilding && Es.BuildingE(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    Es.BuildE(idx_0).Defrost(Es);
+                    Es.BuildingE(idx_0).Health--;
+                    if (!Es.BuildingE(idx_0).IsAlive) Es.BuildingE(idx_0).Destroy(Es);
                 }
             }
         }

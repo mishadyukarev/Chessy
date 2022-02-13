@@ -13,7 +13,7 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                ref var river_0 = ref RiverEs(idx_0).RiverE.RiverTC;
+                ref var river_0 = ref Es.RiverEs(idx_0).RiverE.RiverTC;
 
                 switch (Es.WhoseMoveE.CurPlayerI)
                 {

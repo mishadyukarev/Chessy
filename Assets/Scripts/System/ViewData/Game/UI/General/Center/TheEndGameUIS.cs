@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class TheEndGameUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal TheEndGameUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal TheEndGameUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

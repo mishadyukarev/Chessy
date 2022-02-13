@@ -11,7 +11,7 @@ namespace Game.Game
 {
     sealed class CenterEventUIS : SystemUIAbstract
     {
-        internal CenterEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal CenterEventUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             Ready<ButtonUIC>().AddListener(Ready);
             JoinDiscord<ButtonUIC>().AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });

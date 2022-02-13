@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    sealed class UpdateCamelShiftMS : SystemCellAbstract, IEcsRunSystem
+    sealed class UpdateCamelShiftMS : SystemAbstract, IEcsRunSystem
     {
         internal UpdateCamelShiftMS(in Entities ents) : base(ents)
         {
@@ -18,11 +18,11 @@ namespace Game.Game
 
                     var idx_1 = CellWorker.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
 
-                    if (CellEs(idx_1).ParentE.IsActiveSelf.IsActive
-                        && !EnvironmentEs(idx_1).Mountain.HaveEnvironment
-                        && !UnitEs(idx_1).UnitE.HaveUnit)
+                    if (Es.CellEs(idx_1).ParentE.IsActiveSelf.IsActive
+                        && !Es.EnvironmentEs(idx_1).Mountain.HaveEnvironment
+                        && !Es.UnitEs(idx_1).UnitE.HaveUnit)
                     {
-                        UnitEs(idx_0).Shift(idx_1, false, Es);
+                        Es.UnitE(idx_0).Shift(idx_1, false, Es);
                     }
                 }
             }

@@ -1,12 +1,12 @@
-﻿namespace Game.Game
-{
-    public abstract class SystemCellAbstract : SystemAbstract
-    {
+﻿//namespace Game.Game
+//{
+//    public abstract class SystemAbstract : SystemAbstract
+//    {
 
 
-        protected SystemCellAbstract(in Entities ents) : base(ents)
-        {
+//        protected SystemAbstract(in Entities ents) : base(ents)
+//        {
 
-        }
-    }
-}
+//        }
+//    }
+//}

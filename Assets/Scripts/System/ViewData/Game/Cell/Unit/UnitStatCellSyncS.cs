@@ -14,8 +14,6 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
-
                 Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Disable();
 
 
@@ -56,7 +54,7 @@ namespace Game.Game
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Disable();
                         }
 
-                        if (ownUnit_0.Is(PlayerTypes.First))
+                        if (Es.UnitE(idx_0).Is(PlayerTypes.First))
                         {
                             Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.blue;
                             Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).Color = Color.blue;

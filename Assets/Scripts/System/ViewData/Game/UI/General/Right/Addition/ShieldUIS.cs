@@ -3,7 +3,7 @@ namespace Game.Game
 {
     sealed class ShieldUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal ShieldUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal ShieldUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

@@ -2,6 +2,6 @@
 {
     public static class UpdateValues
     {
-        public const int UPDATES_FOR_GET_UNIT = 10;
+        public const int UPDATES_FOR_GET_UNIT = 1;
     }
 }

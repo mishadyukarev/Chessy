@@ -2,31 +2,35 @@
 
 namespace Game.Game
 {
-    public abstract class CellEnvironmentE : EntityAbstract
+    public abstract class CellEnvironmentE : CellEntityAbstract
     {
-        public readonly byte Idx;
         public readonly EnvironmentTypes EnvT;
-        public readonly ResourceTypes ResourceT;
+        public readonly ResourceTypes Resource;
 
-        protected ref AmountC ResourcesCRef => ref Ent.Get<AmountC>();
-        public AmountC ResourcesC => Ent.Get<AmountC>();
+        protected ref AmountC ResourcesC => ref Ent.Get<AmountC>();
 
-        public int Resources => ResourcesC.Amount;
-        public bool HaveEnvironment => ResourcesC.Amount > 0;
-        public bool HaveMaxResources => ResourcesCRef.Amount >= CellEnvironmentValues.MaxResources(EnvT);
-        public bool HaveMinResources => ResourcesCRef.Amount >= CellEnvironmentValues.MinResources(EnvT);
+        public int Resources
+        {
+            get => ResourcesC.Amount;
+            set => ResourcesC.Amount = value;
+        }
+
+        public bool HaveEnvironment => Resources > 0;
+        public bool HaveMaxResources => Resources >= CellEnvironmentValues.MaxResources(EnvT);
+        public bool HaveMinResources => Resources >= CellEnvironmentValues.MinResources(EnvT);
+        public bool HaveMoveMaxResources => Resources > CellEnvironmentValues.MaxResources(EnvT);
         public int MaxResources => CellEnvironmentValues.MaxResources(EnvT);
         public int MinResources => CellEnvironmentValues.MinResources(EnvT);
         public float ProtectionPercent => CellUnitMainDamageValues.ProtectionPercent(EnvT);
         protected int StandartExtract(in BuildingTypes build) => CellEnvironmentValues.StandartExtract(build, EnvT);
 
-        public int AmountExtractBuilding(in BuildingUpgradeEs buildUpgEs, in CellBuildEs buildEs)
+        public int AmountExtractBuilding(in BuildingUpgradeEs buildUpgEs, in CellBuildingE buildE)
         {
-            var extract = StandartExtract(buildEs.BuildingE.BuildTC.Build);
+            var extract = StandartExtract(buildE.Building);
 
-            if (buildUpgEs.HaveUpgrade(buildEs.BuildingE, UpgradeTypes.PickCenter).HaveUpgrade.Have)
+            if (buildUpgEs.HaveUpgrade(buildE, UpgradeTypes.PickCenter).HaveUpgrade.Have)
             {
-                extract += (int)(extract * CellEnvironmentValues.Upgrade(buildEs.BuildingE.BuildTC.Build, UpgradeTypes.PickCenter));
+                extract += (int)(extract * CellEnvironmentValues.Upgrade(buildE.Building, UpgradeTypes.PickCenter));
             }
 
             if (extract > ResourcesC.Amount)
@@ -36,37 +40,35 @@ namespace Game.Game
         }
 
 
-        protected CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld gameW) : base(gameW)
+        protected CellEnvironmentE(in EnvironmentTypes envT, in ResourceTypes resT, in byte idx, in EcsWorld gameW) : base(idx, gameW)
         {
-            Idx = idx;
             EnvT = envT;
-            ResourceT = resT;
+            Resource = resT;
         }
 
-        protected void Take(in int taking = 1)
+        public void Take(in int taking = 1)
         {
-            ResourcesCRef.Amount -= taking;
+            Resources -= taking;
         }
-        protected void Add(in int adding = 1)
+        public void Add(in int adding = 1)
         {
-            ResourcesCRef.Amount += adding;
-            if (ResourcesC.Amount > CellEnvironmentValues.MaxResources(EnvT))
-                ResourcesCRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
+            if (!HaveMaxResources)
+            {
+                ResourcesC.Amount += adding;
+                if (HaveMoveMaxResources) ResourcesC.Amount = CellEnvironmentValues.MaxResources(EnvT);
+            }
         }
 
-        public void SetRandomResources() => ResourcesCRef.Amount = UnityEngine.Random.Range(MinResources, MaxResources + 1);
-        public void SetRandomFromCenterResources() => ResourcesCRef.Amount = UnityEngine.Random.Range(MaxResources / 2, MaxResources + 1);
-        public void SetNewMax()
-        {
-            ResourcesCRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
-        }
-        public void SetMaxResources()
-        {
-            ResourcesCRef.Amount = CellEnvironmentValues.MaxResources(EnvT);
-        }
+        public void SetMaxResources() => Resources = CellEnvironmentValues.MaxResources(EnvT);
+
+
+
+        public void SetRandomResources() => Resources = UnityEngine.Random.Range(MinResources, MaxResources + 1);
+        public void SetRandomFromCenterResources() => Resources = UnityEngine.Random.Range(MaxResources / 2, MaxResources + 1);
+
         public void Destroy()
         {
-            ResourcesCRef.Amount = 0;
+            Resources = 0;
         }
     }
 }

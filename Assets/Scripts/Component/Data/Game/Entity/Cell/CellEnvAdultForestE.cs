@@ -4,9 +4,9 @@ namespace Game.Game
 {
     public sealed class CellEnvAdultForestE : CellEnvironmentE
     {
-        public int AmountExtractPawn(in CellUnitEs unitEs)
+        public int AmountExtractPawn(in CellUnitE unitE)
         {
-            var extract = (int)(MaxResources * CellEnvironmentValues.RatioExtractPawnFromMaxResource(unitEs.UnitE.Level, EnvT));
+            var extract = (int)(MaxResources * CellEnvironmentValues.RatioExtractPawnFromMaxResource(unitE.Level, EnvT));
 
             if (extract > ResourcesC.Amount) extract = ResourcesC.Amount;
 
@@ -25,10 +25,10 @@ namespace Game.Game
             else return false;
         }
 
-        public bool CanExtractWoodcutter(in CellBuildEs buildEs)
+        public bool CanExtractWoodcutter(in CellBuildingEs buildEs)
         {
             if (buildEs.BuildingE.HaveBuilding
-                && buildEs.BuildingE.BuildTC.Is(BuildingTypes.Woodcutter)
+                && buildEs.BuildingE.Is(BuildingTypes.Woodcutter)
                 && HaveEnvironment) return true;
             else return false;
         }
@@ -44,17 +44,12 @@ namespace Game.Game
             foreach (var trailE in trailEs) trailE.Destroy();
         }
         public void Fire() => Take(CellEnvironmentValues.FireAdultForest);
-        public void ExtractWoodcutter(in CellEs cellEs, in BuildingUpgradeEs buildUpgEs, in InventorResourcesEs invResEs)
+        public void ExtractPawn(in CellUnitE unitE, in InventorResourcesEs invResEs)
         {
-            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.OwnerC.Player).AddWoodcutterExtractAdultForest(this, buildUpgEs, cellEs.BuildEs);
+            var extract = AmountExtractPawn(unitE);
 
-            Take(AmountExtractBuilding(buildUpgEs, cellEs.BuildEs));
-            if (!HaveEnvironment) cellEs.TrailEs.DestroyAll();
-        }
-        public void ExtractPawn(in CellUnitEs unitEs, in InventorResourcesEs invResEs)
-        {
-            invResEs.Resource(ResourceT, unitEs.UnitE.OwnerC.Player).AddPawnExtractAdultForest(unitEs, this);
-            Take(AmountExtractPawn(unitEs));
+            invResEs.Resource(Resource, unitE.Owner).Add(extract);
+            Take(extract);
         }
     }
 }

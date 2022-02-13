@@ -6,7 +6,7 @@ namespace Game.Game
 {
     sealed class WindUIS : SystemUIAbstract, IEcsRunSystem
     {
-        public WindUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        public WindUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

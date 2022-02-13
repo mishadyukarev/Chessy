@@ -3,7 +3,7 @@ using Photon.Pun;
 
 namespace Game.Game
 {
-    sealed class UpdatorMS : SystemCellAbstract, IEcsRunSystem
+    sealed class UpdatorMS : SystemAbstract, IEcsRunSystem
     {
         internal UpdatorMS(in Entities ents) : base(ents)
         {
@@ -25,25 +25,20 @@ namespace Game.Game
             {
                 ref var cell_0 = ref Es.CellEs(idx_0).CellE.InstanceIDC;
 
-                var unit_0 = Es.UnitEs(idx_0).UnitE.UnitTC;
-                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
-
-                var buil_0 = Es.BuildEs(idx_0).BuildingE.BuildTC;
-
                 foreach (var item in Es.CellEs(idx_0).TrailEs.Keys) Es.TrailEs(idx_0).Trail(item).TakeEveryUpdate();
-                foreach (var item in Es.UnitEs(idx_0).CooldownKeys) Es.UnitEs(idx_0).Ability(item).TakeAfterUpdate();
+                foreach (var item in Es.UnitEs(idx_0).CooldownKeys) Es.UnitEs(idx_0).Ability(item).Cooldown--;
 
 
 
-                if (Es.UnitEs(idx_0).UnitE.HaveUnit && !unit_0.IsAnimal)
+                if (Es.UnitEs(idx_0).UnitE.HaveUnit && !Es.UnitE(idx_0).IsAnimal)
                 {
                     //CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
-                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, ownUnit_0.Player).Take(ResourcesInInventorValues.CostFoodForFeedingThem(unit_0.Unit));
+                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, Es.UnitE(idx_0).Owner).Take(ResourcesInInventorValues.CostFoodForFeedingThem(Es.UnitE(idx_0).Unit));
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (ownUnit_0.Is(PlayerTypes.Second))
+                        if (Es.UnitE(idx_0).Is(PlayerTypes.Second))
                         {
                             Es.UnitE(idx_0).SetMaxHp();
                         }
@@ -61,31 +56,31 @@ namespace Game.Game
                         {
                             if (Es.UnitE(idx_0).HaveMaxHp)
                             {
-                                if (unit_0.Is(UnitTypes.Scout))
+                                if (Es.UnitE(idx_0).Is(UnitTypes.Scout))
                                 {
-                                    if (buil_0.Is(BuildingTypes.Woodcutter) || !buil_0.Have)
+                                    if (Es.BuildingE(idx_0).Is(BuildingTypes.Woodcutter) || !Es.BuildingE(idx_0).HaveBuilding)
                                     {
                                         if (GameModeC.IsGameMode(GameModes.TrainingOff))
                                         {
-                                            if (ownUnit_0.Is(PlayerTypes.First))
+                                            if (Es.UnitE(idx_0).Is(PlayerTypes.First))
                                             {
-                                                if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
+                                                if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, Es.UnitE(idx_0).Owner, out var idx_camp))
                                                 {
-                                                    Es.BuildEs(idx_camp).BuildingE.Destroy(Es);
+                                                    Es.BuildingEs(idx_camp).BuildingE.Destroy(Es);
                                                 }
 
 
-                                                Es.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
+                                                Es.BuildingEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, Es.UnitE(idx_0).Owner);
                                             }
                                         }
                                         else
                                         {
-                                            if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, ownUnit_0.Player, out var idx_camp))
+                                            if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, Es.UnitE(idx_0).Owner, out var idx_camp))
                                             {
-                                                Es.BuildE(idx_camp).Destroy(Es);
+                                                Es.BuildingE(idx_camp).Destroy(Es);
                                             }
 
-                                            Es.BuildEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, ownUnit_0.Player);
+                                            Es.BuildingEs(idx_0).BuildingE.SetNew(BuildingTypes.Camp, Es.UnitE(idx_0).Owner);
                                         }
                                     }
                                 }

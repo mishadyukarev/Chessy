@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    sealed class UpdateFireMS : SystemCellAbstract, IEcsRunSystem
+    sealed class UpdateFireMS : SystemAbstract, IEcsRunSystem
     {
         internal UpdateFireMS(in Entities ents) : base(ents)
         {
@@ -24,14 +24,21 @@ namespace Game.Game
                 {
                     Es.EnvironmentEs(idx_0).AdultForest.Fire();
 
-                    if (Es.UnitEs(idx_0).UnitE.HaveUnit)
+                    if (Es.UnitE(idx_0).HaveUnit)
                     {
-                        Es.UnitE(idx_0).Fire(Es);
+                        if (Es.UnitE(idx_0).Is(UnitTypes.Hell))
+                        {
+                            Es.UnitE(idx_0).SetMaxHp();
+                        }
+                        else
+                        {
+                            Es.UnitE(idx_0).TakeHp(Es, CellUnitStatHpValues.FIRE_DAMAGE);
+                        }
                     }
 
                     if (!Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        Es.BuildEs(idx_0).BuildingE.Destroy(Es);
+                        Es.BuildingEs(idx_0).BuildingE.Destroy(Es);
 
                         Es.EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
 

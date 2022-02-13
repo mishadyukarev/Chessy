@@ -13,9 +13,9 @@
             {
                 if (Es.RiverEs(idx_0).RiverE.HaveRiverNear)
                 {
-                    if (!Es.EnvMountainE(idx_0).HaveEnvironment)
+                    if (!Es.MountainE(idx_0).HaveEnvironment)
                     {
-                        Es.EnvFertilizeE(idx_0).AddFromNearRiver();
+                        Es.FertilizeE(idx_0).AddFromNearRiver();
                     }
                 }
             }

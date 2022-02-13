@@ -123,11 +123,11 @@ namespace Game.Game
                         break;
 
                     case AbilityTypes.Teleport:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Teleport_Master(ability, sender, _ents);
+                        _ents.UnitE((byte)objects[_idx_cur++]).Teleport_Master(ability, sender, _ents);
                         break;
 
                     case AbilityTypes.InvokeSkeletons:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).InvokeSkeletons_Master(ability, sender, _ents);
+                        _ents.UnitE((byte)objects[_idx_cur++]).InvokeSkeletons_Master(ability, sender, _ents);
                         break;
 
                     default: throw new Exception();
@@ -136,7 +136,7 @@ namespace Game.Game
 
             else if (obj is BuildingTypes buildT)
             {
-                _ents.BuildE((byte)objects[_idx_cur++]).Build_Master((byte)objects[_idx_cur++], buildT, sender, _ents);
+                _ents.BuildingE((byte)objects[_idx_cur++]).Build_Master((byte)objects[_idx_cur++], buildT, sender, _ents);
             }
 
             else if (obj is MarketBuyTypes marketBuy)
@@ -183,7 +183,18 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).ExtraToolWeaponE.GiveTakeTW_Master((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], sender, _ents);
+                        var idx_0 = (byte)objects[_idx_cur++];
+                        var twT = (ToolWeaponTypes)objects[_idx_cur++];
+                        var levT = (LevelTypes)objects[_idx_cur++];
+                        if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.BowCrossbow)
+                        {
+                            _ents.MainTWE(idx_0).GiveTake_Master(twT, levT, sender, _ents);
+                        }
+                        else
+                        {
+                            _ents.ExtraTWE(idx_0).GiveTakeTW_Master(twT, levT, sender, _ents);
+                        }
+                            
                         break;
 
                     case RpcMasterTypes.GetHero:
@@ -282,9 +293,9 @@ namespace Game.Game
 
             foreach (byte idx_0 in _ents.CellSpaceWorker.Idxs)
             {
-                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.UnitTC.Unit);
+                objs.Add(_ents.UnitE(idx_0).Unit);
                 //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.OwnerC.Player);
+                objs.Add(_ents.UnitE(idx_0).Owner);
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Health);
                 objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Steps);
@@ -294,22 +305,22 @@ namespace Game.Game
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ToolWeaponTC.ToolWeapon);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.LevelTC.Level);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ProtectionC.Amount);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ToolWeapon);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.LevelT);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.Protection);
 
-                objs.Add(_ents.UnitEffectEs(idx_0).StunE.Stun);
+                objs.Add(_ents.UnitE(idx_0).Stun);
 
                 objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.IsRightArcher);
 
-                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown.Amount);
+                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown);
 
 
 
 
 
-                objs.Add(_ents.CellEs(idx_0).BuildEs.BuildingE.BuildTC.Build);
-                objs.Add(_ents.CellEs(idx_0).BuildEs.BuildingE.OwnerC.Player);
+                objs.Add(_ents.BuildingE(idx_0).Building);
+                objs.Add(_ents.BuildingE(idx_0).Owner);
 
 
 
@@ -343,9 +354,9 @@ namespace Game.Game
             //foreach (var key in BuildingUpgradesEnt.Keys) objs.Add(BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have);
 
 
-            foreach (var key in _ents.InventorResourcesEs.Keys) objs.Add(_ents.InventorResourcesEs.Resource(key).Resources.Amount);
+            foreach (var key in _ents.InventorResourcesEs.Keys) objs.Add(_ents.InventorResourcesEs.Resource(key).Resources);
             foreach (var key in _ents.InventorUnitsEs.Keys) objs.Add(_ents.InventorUnitsEs.Units(key).Units.Amount);
-            foreach (var key in _ents.InventorToolWeaponEs.Keys) objs.Add(_ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons.Amount);
+            foreach (var key in _ents.InventorToolWeaponEs.Keys) objs.Add(_ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons);
 
 
             //foreach (var key in _ents.WhereUnitsEs.Keys) objs.Add(_ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have);
@@ -411,16 +422,15 @@ namespace Game.Game
                 //_ents.CellEs(idx_0).UnitEs.ToolWeapon.Protection.Amount = (int)objects[_idx_cur++];
 
 
-                _ents.UnitEffectEs(idx_0).StunE.SyncRpc((int)objects[_idx_cur++]);
+                //_ents.UnitE(idx_0).SyncRpc((int)objects[_idx_cur++]);
 
                 
 
-                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) _ents.CellEs(idx_0).UnitEs.Ability(item).SyncRpc((int)objects[_idx_cur++]);
+                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) _ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown = (int)objects[_idx_cur++];
 
 
 
-                _ents.CellEs(idx_0).BuildEs.BuildingE
-                    .Sync((int)objects[_idx_cur++], (BuildingTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
+                _ents.BuildingE(idx_0).Sync((int)objects[_idx_cur++], (BuildingTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
 
                 //foreach (var item_0 in _ents.EnvironmentEs.Keys)
                 //{
@@ -455,7 +465,7 @@ namespace Game.Game
 
             foreach (var key in _ents.InventorResourcesEs.Keys) _ents.InventorResourcesEs.Resource(key).Set((int)objects[_idx_cur++]);
             foreach (var key in _ents.InventorUnitsEs.Keys) _ents.InventorUnitsEs.Units(key).Sync((int)objects[_idx_cur++]);
-            foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons.Amount = (int)objects[_idx_cur++];
+            foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons = (int)objects[_idx_cur++];
 
 
             //foreach (var key in _ents.WhereUnitsEs.Keys) _ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have = (bool)objects[_idx_cur++];

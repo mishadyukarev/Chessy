@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    sealed class SelectorS : SystemCellAbstract, IEcsRunSystem
+    sealed class SelectorS : SystemAbstract, IEcsRunSystem
     {
         readonly SystemsView _systemV;
 
@@ -14,9 +14,6 @@ namespace Game.Game
         public void Run()
         {
             var idx_cur = Es.CurrentIdxE.IdxC.Idx;
-
-            var unit_cur = Es.UnitEs(idx_cur).UnitE.UnitTC;
-            var ownUnit_cur = Es.UnitE(idx_cur).OwnerC;
 
             ref var raycastTC = ref Es.ClickerObjectE.RayCastTC;
             ref var cellClick = ref Es.ClickerObjectE.CellClickCRef;
@@ -54,13 +51,13 @@ namespace Game.Game
                                         {
                                             if (UnitEs(idx_cur).UnitE.HaveUnit)
                                             {
-                                                if (ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
+                                                if (Es.UnitE(idx_cur).Is(Es.WhoseMoveE.CurPlayerI))
                                                 {
-                                                    if (unit_cur.Is(UnitTypes.Scout))
+                                                    if (Es.UnitE(idx_cur).Is(UnitTypes.Scout))
                                                     {
 
                                                     }
-                                                    else if (unit_cur.IsMelee)
+                                                    else if (Es.UnitE(idx_cur).IsMelee(Es.MainTWE(idx_cur)))
                                                     {
                                                         Es.Sound(ClipTypes.PickMelee).Sound.Invoke();
                                                     }
@@ -79,13 +76,13 @@ namespace Game.Game
                                     {
                                         if (UnitEs(idx_cur).UnitE.HaveUnit)
                                         {
-                                            if (ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
+                                            if (Es.UnitE(idx_cur).Is(Es.WhoseMoveE.CurPlayerI))
                                             {
-                                                if (unit_cur.Is(UnitTypes.Scout))
+                                                if (Es.UnitE(idx_cur).Is(UnitTypes.Scout))
                                                 {
 
                                                 }
-                                                else if (unit_cur.IsMelee)
+                                                else if (Es.UnitE(idx_cur).IsMelee(Es.MainTWE(idx_cur)))
                                                 {
                                                     Es.Sound(ClipTypes.PickMelee).Sound.Invoke();
                                                 }
@@ -110,9 +107,9 @@ namespace Game.Game
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (unit_cur.Is(UnitTypes.Pawn) && ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI))
+                                    if (Es.UnitE(idx_cur).Is(UnitTypes.Pawn) && Es.UnitE(idx_cur).Is(Es.WhoseMoveE.CurPlayerI))
                                     {
-                                        Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedToolWeaponE.ToolWeaponT, Es.SelectedToolWeaponE.LevelT);
+                                        Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxE.IdxC.Idx, Es.SelectedToolWeaponE.ToolWeapon, Es.SelectedToolWeaponE.Level);
                                     }
                                     else
                                     {
@@ -124,8 +121,8 @@ namespace Game.Game
 
                             case CellClickTypes.UpgradeUnit:
                                 {
-                                    if (unit_cur.Is(UnitTypes.Pawn)
-                                        && ownUnit_cur.Is(Es.WhoseMoveE.CurPlayerI)
+                                    if (Es.UnitE(idx_cur).Is(UnitTypes.Pawn)
+                                        && Es.UnitE(idx_cur).Is(Es.WhoseMoveE.CurPlayerI)
                                         && !Es.UnitE(idx_cur).Is(LevelTypes.Second))
                                     {
                                         Es.RpcE.UpgradeUnitToMaster(Es.CurrentIdxE.IdxC.Idx);

@@ -2,7 +2,7 @@
 {
     sealed class LeftZonesUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal LeftZonesUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal LeftZonesUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 
@@ -17,25 +17,25 @@
 
             if (Es.SelectedIdxE.IsSelCell)
             {
-                if (Es.BuildE(idx_sel).HaveBuilding)
+                if (Es.BuildingE(idx_sel).HaveBuilding)
                 {
-                    if (Es.BuildE(idx_sel).Is(Es.WhoseMoveE.CurPlayerI))
+                    if (Es.BuildingE(idx_sel).Is(Es.WhoseMoveE.CurPlayerI))
                     {
-                        if (Es.BuildE(idx_sel).Is(BuildingTypes.City))
+                        if (Es.BuildingE(idx_sel).Is(BuildingTypes.City))
                         {
                             UIEs.LeftCityEs.Zone.SetActive(true);
                         }
-                        else if (Es.BuildE(idx_sel).Is(BuildingTypes.Market))
+                        else if (Es.BuildingE(idx_sel).Is(BuildingTypes.Market))
                         {
                             UIEs.LeftMarketEs.Zone.SetActive(true);
                         }
-                        else if (Es.BuildE(idx_sel).Is(BuildingTypes.Smelter))
+                        else if (Es.BuildingE(idx_sel).Is(BuildingTypes.Smelter))
                         {
                             UIEs.LeftSmelterEs.Zone.SetActive(true);
                         }
                     }
 
-                    if (Es.BuildE(idx_sel).Is(BuildingTypes.Farm) || Es.BuildE(idx_sel).Is(BuildingTypes.Woodcutter))
+                    if (Es.BuildingE(idx_sel).Is(BuildingTypes.Farm) || Es.BuildingE(idx_sel).Is(BuildingTypes.Woodcutter))
                     {
                         UIEs.LeftEnvEs.Zone.SetActive(true);
                     }

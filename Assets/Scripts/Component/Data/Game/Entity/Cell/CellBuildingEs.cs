@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public readonly struct CellBuildEs
+    public readonly struct CellBuildingEs
     {
         readonly Dictionary<PlayerTypes, CellBuildingVisibleE> _owners;
 
         public readonly CellBuildingE BuildingE;
         public CellBuildingVisibleE BuildingVisE(in PlayerTypes player) => _owners[player];
 
-        public CellBuildEs(in byte idx, in EcsWorld gameW)
+        public CellBuildingEs(in byte idx, in EcsWorld gameW)
         {
             BuildingE = new CellBuildingE(idx, gameW);
 

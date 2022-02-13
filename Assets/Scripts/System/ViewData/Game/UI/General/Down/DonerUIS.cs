@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class DonerUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal DonerUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal DonerUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

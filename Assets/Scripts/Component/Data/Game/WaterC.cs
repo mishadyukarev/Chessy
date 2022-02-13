@@ -2,6 +2,6 @@
 {
     public struct WaterC
     {
-        public int Water;
+        public float Water;
     }
 }

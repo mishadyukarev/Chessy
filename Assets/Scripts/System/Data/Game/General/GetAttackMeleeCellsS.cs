@@ -15,11 +15,12 @@
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.First).Clear();
                 CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, PlayerTypes.Second).Clear();
 
-                var ownUnit_0 = Es.UnitE(idx_0).OwnerC;
+                var ownUnit_0 = Es.UnitE(idx_0).Owner;
 
-                if (!Es.UnitEffectEs(idx_0).StunE.IsStunned)
+                if (!Es.UnitE(idx_0).IsStunned)
                 {
-                    if (Es.UnitE(idx_0).HaveUnit && Es.UnitE(idx_0).IsMelee && !Es.UnitE(idx_0).Is(UnitTypes.Scout))
+                    if (Es.UnitE(idx_0).HaveUnit && Es.UnitE(idx_0).IsMelee(Es.MainTWE(idx_0)) 
+                        && !Es.MainTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow) && !Es.UnitE(idx_0).Is(UnitTypes.Scout))
                     {
                         DirectTypes dir_cur = default;
 
@@ -30,31 +31,30 @@
                             dir_cur += 1;
                             var idx_1 = item_1.Value;
 
-                            var unit_1 = UnitEs(idx_1).UnitE.UnitTC;
-                            var own_1 = Es.UnitE(idx_1).OwnerC;
+                            var own_1 = Es.UnitE(idx_1).Owner;
 
                             if (!EnvironmentEs(idx_1).Mountain.HaveEnvironment)
                             {
                                 CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
 
-                                if (Es.UnitE(idx_0).CanShift(UnitEs(idx_0).UnitE.UnitTC, dir, CellEs(idx_1))|| Es.UnitE(idx_0).HaveMaxSteps)
+                                if (Es.UnitE(idx_0).CanShift(Es.UnitE(idx_0).Unit, dir, CellEs(idx_1))|| Es.UnitE(idx_0).HaveMaxSteps)
                                 {
                                     if (UnitEs(idx_1).UnitE.HaveUnit)
                                     {
-                                        if (!own_1.Is(ownUnit_0.Player))
+                                        if (!Es.UnitE(idx_1).Is(ownUnit_0))
                                         {
                                             if (Es.UnitE(idx_0).Is(UnitTypes.Pawn))
                                             {
                                                 if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                                 {
-                                                    CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, ownUnit_0.Player).Add(idx_1);
+                                                    CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, ownUnit_0).Add(idx_1);
                                                 }
-                                                else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, ownUnit_0.Player).Add(idx_1);
+                                                else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, ownUnit_0).Add(idx_1);
                                             }
                                             else
                                             {
-                                                CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, ownUnit_0.Player).Add(idx_1);
+                                                CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, ownUnit_0).Add(idx_1);
                                             }
                                         }
                                     }

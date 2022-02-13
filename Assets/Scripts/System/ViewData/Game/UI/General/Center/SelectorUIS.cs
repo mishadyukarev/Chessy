@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class SelectorUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal SelectorUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal SelectorUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

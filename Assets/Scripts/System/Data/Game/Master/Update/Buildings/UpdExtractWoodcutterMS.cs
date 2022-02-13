@@ -10,17 +10,22 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.EnvAdultForestE(idx_0).CanExtractWoodcutter(BuildEs(idx_0)))
+                if (Es.AdultForestE(idx_0).CanExtractWoodcutter(BuildEs(idx_0)))
                 {
-                    EnvironmentEs(idx_0).AdultForest.ExtractWoodcutter(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
+                    var extract = Es.AdultForestE(idx_0).AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
 
-                    if (!EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    Es.InventorResourcesEs.Resource(ResourceTypes.Wood, Es.BuildingE(idx_0).Owner).Add(extract);
+
+                    Es.AdultForestE(idx_0).Take(extract);
+                    if (!Es.AdultForestE(idx_0).HaveEnvironment) Es.TrailEs(idx_0).DestroyAll();
+
+                    if (!Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        BuildEs(idx_0).BuildingE.Destroy(Es);
+                        Es.BuildingE(idx_0).Destroy(Es);
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {
-                            EnvironmentEs(idx_0).YoungForest.SetRandomResources();
+                            Es.YoungForestE(idx_0).SetRandomResources();
                         }
                     }
                 }

@@ -9,7 +9,7 @@ namespace Game.Game
 
 
         public readonly CellUnitEs UnitEs;
-        public readonly CellBuildEs BuildEs;
+        public readonly CellBuildingEs BuildEs;
         public readonly CellEnvironmentEs EnvironmentEs;
         public readonly CellTrailEs TrailEs;
         public readonly CellEffectEs EffectEs;
@@ -20,7 +20,7 @@ namespace Game.Game
             ParentE = new CellParenE(isActiveParentCell, idx, gameW);
             CellE = new CellE(gameW, xy, idCell);
 
-            BuildEs = new CellBuildEs(idx, gameW);
+            BuildEs = new CellBuildingEs(idx, gameW);
             TrailEs = new CellTrailEs(gameW);
             UnitEs = new CellUnitEs(idx, gameW);
             EnvironmentEs = new CellEnvironmentEs(idx, gameW);

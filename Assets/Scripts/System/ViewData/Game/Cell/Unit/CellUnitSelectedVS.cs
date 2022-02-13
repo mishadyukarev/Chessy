@@ -12,16 +12,12 @@ namespace Game.Game
             {
                 var idx_cur = Es.CurrentIdxE.IdxC.Idx;
                 var selUnitT = Es.SelectedUnitE.UnitTC.Unit;
-                var levT = Es.SelectedUnitE.LevelT;
+                var levT = Es.SelectedUnitE.Level;
 
                 if (selUnitT == UnitTypes.Pawn)
                 {
-                    //VEs.UnitEs(idx_cur).ToolWeaponE(ToolWeaponTypes.Axe, LevelTypes.First, true).Enable(true);
+                    VEs.UnitEs(idx_cur).MainToolWeaponE(true, LevelTypes.First, ToolWeaponTypes.Axe).Enable(true);
                 }
-                //else if (selUnitT == UnitTypes.Archer)
-                //{
-                //    VEs.UnitEs(idx_cur).ArcherE(false, true, levT).Enable(true);
-                //}
                 else
                 {
                     VEs.UnitE(idx_cur, true, levT,  selUnitT).Enable(true);

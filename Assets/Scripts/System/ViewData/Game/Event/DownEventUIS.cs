@@ -5,7 +5,7 @@ namespace Game.Game
 {
     sealed class DownEventUIS : SystemUIAbstract
     {
-        internal DownEventUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal DownEventUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
             DownScoutUIEs.Scout<ButtonUIC>().AddListener(ExecuteScout);
             DownHeroUIE.ButtonC.AddListener(Hero);
@@ -130,7 +130,7 @@ namespace Game.Game
                 }
                 else
                 {
-                    Es.SelectedToolWeaponE.Set(tw, Es.SelectedToolWeaponE.LevelT);
+                    Es.SelectedToolWeaponE.Set(tw, Es.SelectedToolWeaponE.Level);
                 }
 
                 Es.ClickerObjectE.CellClickCRef.Click = CellClickTypes.GiveTakeTW;

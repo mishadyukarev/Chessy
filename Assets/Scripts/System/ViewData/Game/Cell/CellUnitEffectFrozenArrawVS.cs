@@ -16,21 +16,21 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                UnitEffectVEs(idx_0).FrozenArrawVE.SR.Disable();
+                VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Disable();
 
-                if (UnitEs(idx_0).UnitE.HaveUnit)
+                if (Es.UnitEs(idx_0).UnitE.HaveUnit)
                 {
-                    if (UnitEffectEs(idx_0).FrozenArrowE.IsFrozenArraw)
+                    if (Es.UnitE(idx_0).HaveFrozenArrawEffect)
                     {
-                        UnitEffectVEs(idx_0).FrozenArrawVE.SR.Enable();
+                        VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Enable();
 
                         if (Es.SelectedIdxE.IdxC.Idx == idx_0)
                         {
-                            UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _leftLocalScale;
+                            VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _leftLocalScale;
                         }
                         else
                         {
-                            UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _mainLocalScale;
+                            VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _mainLocalScale;
                         }
                     }
                 }

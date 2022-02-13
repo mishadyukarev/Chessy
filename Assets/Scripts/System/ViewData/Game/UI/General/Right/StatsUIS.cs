@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class StatsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal StatsUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal StatsUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 
@@ -13,10 +13,10 @@ namespace Game.Game
             var idx_sel = Es.SelectedIdxE.IdxC.Idx;
 
 
-            if (Es.UnitEs(idx_sel).UnitE.HaveUnit)
+            if (Es.UnitE(idx_sel).HaveUnit)
             {
                 var damageOnCell = Es.UnitE(idx_sel).DamageOnCell(Es.CellEs(idx_sel), Es.UnitStatUpgradesEs);
-                var damageAttack = Es.UnitE(idx_sel).DamageAttack(Es.UnitEs(idx_sel).ExtraToolWeaponE, Es.UnitStatUpgradesEs, AttackTypes.Simple);
+                var damageAttack = Es.UnitE(idx_sel).DamageAttack(Es.UnitEs(idx_sel), Es.UnitStatUpgradesEs, AttackTypes.Simple);
 
 
                 Stat<ImageUIC>(UnitStatTypes.Hp).SetActiveParent(true);
@@ -25,15 +25,15 @@ namespace Game.Game
                 Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(true);
 
 
-                Stat<TextUIC>(UnitStatTypes.Hp).Text = Es.UnitE(idx_sel).Health.ToString();
+                Stat<TextUIC>(UnitStatTypes.Hp).Text = ((int)(Es.UnitE(idx_sel).Health * 100)).ToString();
                 Stat<TextUIC>(UnitStatTypes.Damage).Text = damageOnCell.ToString();
                 Stat<TextUIC>(UnitStatTypes.Steps).Text = Es.UnitE(idx_sel).Steps.ToString();
                 Stat<TextUIC>(UnitStatTypes.Water).Text = Es.UnitE(idx_sel).Water.ToString();
 
 
+                var v = Es.UnitE(idx_sel).Health / CellUnitStatHpValues.MAX_HP;
 
-
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Hp).FillAmount = Es.UnitE(idx_sel).Health / 100f;
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Hp).FillAmount = Es.UnitE(idx_sel).Health / CellUnitStatHpValues.MAX_HP;
 
 
 

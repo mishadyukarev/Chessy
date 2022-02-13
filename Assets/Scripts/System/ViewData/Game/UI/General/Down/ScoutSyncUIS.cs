@@ -4,7 +4,7 @@ namespace Game.Game
 {
     sealed class ScoutSyncUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal ScoutSyncUIS(in Entities ents, in EntitiesUI entsUI) : base(ents, entsUI)
+        internal ScoutSyncUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
         }
 

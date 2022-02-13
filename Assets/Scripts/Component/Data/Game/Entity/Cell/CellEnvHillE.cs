@@ -24,24 +24,18 @@ namespace Game.Game
         }
 
         public void AddEveryMove() => Add();
-        public void ExtractMine(in CellEs cellEs, in BuildingUpgradeEs buildUpgEs, in InventorResourcesEs invResEs)
-        {
-            invResEs.Resource(ResourceT, cellEs.BuildEs.BuildingE.OwnerC.Player).AddFarmExtractHill(this, buildUpgEs, cellEs.BuildEs);
-
-            Take(AmountExtractBuilding(buildUpgEs, cellEs.BuildEs)); ;
-        }
         public void ExtractPawnPick(in CellUnitE unitE, in InventorResourcesEs invResEs)
         {
             var extract = AmountExtractPawnPick();
 
-            invResEs.Resource(ResourceT, unitE.Owner).Add(extract);
+            invResEs.Resource(Resource, unitE.Owner).Add(extract);
             Take(extract);
         }
         public void ExtractCity(in CellEs cellEs_from, in InventorResourcesEs invResEs)
         {
             var extract = AmountExtractCity();
 
-            invResEs.Resource(ResourceT, cellEs_from.BuildEs.BuildingE.OwnerC.Player).Add(extract);
+            invResEs.Resource(Resource, cellEs_from.BuildEs.BuildingE.Owner).Add(extract);
             Take(extract);
         }
         public void AddFromMountain() => Add(10);
