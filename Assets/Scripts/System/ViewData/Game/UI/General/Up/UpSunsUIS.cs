@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            switch (Es.SunSidesE.SunSideTC.SunSide)
+            switch (Es.SunSideTC.SunSide)
             {
                 case SunSideTypes.Dawn:
                     UpSunsUIEs.ImageC(true).SetActive(false);

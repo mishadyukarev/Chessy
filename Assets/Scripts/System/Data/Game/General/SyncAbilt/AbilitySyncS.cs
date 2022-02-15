@@ -18,22 +18,22 @@ namespace Game.Game
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Reset();
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fifth).AbilityC.Reset();
 
-                if (Es.UnitE(idx_0).Is(Es.WhoseMoveE.CurPlayerI))
+                if (Es.UnitPlayerTC(idx_0).Is(Es.WhoseMovePlayerTC.CurPlayerI))
                 {
-                    if (Es.UnitE(idx_0).HaveUnit)
+                    if (Es.UnitTC(idx_0).HaveUnit)
                     {
-                        switch (Es.UnitE(idx_0).Unit)
+                        switch (Es.UnitTC(idx_0).Unit)
                         {
                             case UnitTypes.None: throw new Exception();
 
                             case UnitTypes.King:
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.CircularAttack;
-                                CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.BonusNear;
+                                Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.CircularAttack;
+                                Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.BonusNear;
                                 break;
 
                             case UnitTypes.Pawn:
 
-                                if (Es.MainTWE(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                if (Es.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                 {
                                     Es.UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.FireArcher;
                                     Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.ChangeCornerArcher;
@@ -42,12 +42,12 @@ namespace Game.Game
                                 {
                                     if (Es.AdultForestE(idx_0).HaveEnvironment)
                                     {
-                                        if (Es.EffectEs(idx_0).FireE.HaveFireC.Have) CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.PutOutFirePawn;
-                                        else CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.FirePawn;
+                                        if (Es.EffectEs(idx_0).FireE.HaveFireC.Have) Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.PutOutFirePawn;
+                                        else Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.FirePawn;
                                     }
                                     else
                                     {
-                                        CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.Seed;
+                                        Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.Seed;
                                     }
 
                                     Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.SetFarm;
@@ -59,7 +59,7 @@ namespace Game.Game
 
                                     else
                                     {
-                                        if (Es.WhereWorker.TryGetBuilding(BuildingTypes.City, Es.UnitE(idx_0).Owner, out var idx_city))
+                                        if (Es.WhereWorker.TryGetBuilding(BuildingTypes.City, Es.UnitPlayerTC(idx_0).Player, out var idx_city))
                                         {
                                             Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Reset();
                                         }

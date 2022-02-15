@@ -8,12 +8,12 @@
 
         public void Run()
         {
-            var curPlayerI = Es.WhoseMoveE.CurPlayerI;
+            var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
 
             var amountPawns = Es.WhereWorker.AmountPaws(curPlayerI);
 
             DownPawnUIE.TextUIC.Text = amountPawns.ToString() + "/" + Es.MaxAvailablePawnsE(curPlayerI).MaxPawns;
-            UIEs.DownEs.PawnEs.MaxPeopleE.SetMaxPeople(Es.PeopleInCityE(curPlayerI).People);
+            UIEs.DownEs.PawnEs.MaxPeopleE.SetMaxPeople(Es.PeopleInCityE(curPlayerI).AmountC.Amount);
         }
     }
 }

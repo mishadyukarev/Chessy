@@ -8,17 +8,17 @@
 
         public void Run()
         {
-            var xy_0 = CellEs(Es.WindCloudE.CenterCloud.Idx).CellE.XyC.Xy;
-            var xy_next = CellWorker.GetXyCellByDirect(xy_0, Es.WindCloudE.DirectWind.Direct);
+            var xy_0 = Es.CellEs(Es.CenterCloudIdxC.Idx).CellE.XyC.Xy;
+            var xy_next = CellWorker.GetXyCellByDirect(xy_0, Es.DirectWind.Direct);
 
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                Es.WindCloudE.CenterCloud.Idx = CellWorker.GetIdxCell(xy_next);
+                Es.CenterCloudIdxC.Idx = CellWorker.GetIdxCell(xy_next);
             }
             else
             {
-                var newDir = Es.WindCloudE.DirectWind.Direct;
+                var newDir = Es.DirectWind.Direct;
 
                 newDir = newDir.Invert();
                 var newDirInt = (int)newDir;
@@ -26,7 +26,7 @@
 
                 if (newDirInt <= 0) newDirInt = 1;
                 else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                Es.WindCloudE.DirectWind.Direct = (DirectTypes)newDirInt;
+                Es.DirectWind.Direct = (DirectTypes)newDirInt;
             }
 
             CellWorker.TryGetXyAround(xy_next, out var dirs);
@@ -35,7 +35,7 @@
             {
                 var idx_1 = CellWorker.GetIdxCell(item.Value);
 
-                TrailEs(idx_1).DestroyAll();
+                Es.TrailEs(idx_1).DestroyAll();
             }
         }
     }

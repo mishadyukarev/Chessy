@@ -12,11 +12,11 @@
 
 //            //if (Es.SelectedIdxE.IsSelCell)
 //            //{
-//            //    ref var selUnitDatCom = UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).UnitC;
+//            //    ref var selUnitDatCom = UnitEs.Main(Es.SelectedIdxC.Idx).UnitC;
 
 //            //    if (selUnitDatCom.Is(UnitTypes.Pawn))
 //            //    {
-//            //        ref var sellOnUnitCom = UnitEs.Main(Es.SelectedIdxE.IdxC.Idx).OwnerC;
+//            //        ref var sellOnUnitCom = UnitEs.Main(Es.SelectedIdxC.Idx).OwnerC;
 
 //            //        if (sellOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
 //            //        {

@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_1 in CellWorker.GetIdxsAround(Es.WindCloudE.CenterCloud.Idx))
+            foreach (var idx_1 in CellWorker.GetIdxsAround(Es.CenterCloudIdxC.Idx))
             {
                 Es.EffectEs(idx_1).FireE.Disable();
             }
@@ -24,23 +24,23 @@ namespace Game.Game
                 {
                     Es.EnvironmentEs(idx_0).AdultForest.Fire();
 
-                    if (Es.UnitE(idx_0).HaveUnit)
+                    if (Es.UnitTC(idx_0).HaveUnit)
                     {
-                        if (Es.UnitE(idx_0).Is(UnitTypes.Hell))
+                        if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
                         {
-                            Es.UnitE(idx_0).SetMaxHp();
+                            Es.UnitHpC(idx_0).Health = CellUnitStatHpValues.MAX_HP;
                         }
                         else
                         {
-                            Es.UnitE(idx_0).TakeHp(Es, CellUnitStatHpValues.FIRE_DAMAGE);
+                            Es.UnitE(idx_0).Take(Es, CellUnitStatHpValues.FIRE_DAMAGE);
                         }
                     }
 
                     if (!Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     {
-                        Es.BuildingEs(idx_0).BuildingE.Destroy(Es);
+                        Es.BuildEs(idx_0).BuildingE.Destroy(Es);
 
-                        Es.EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
+                        Es.EnvironmentEs(idx_0).AdultForest.Destroy(Es.TrailEs(idx_0).Trails);
 
                         Es.EnvironmentEs(idx_0).YoungForest.TrySetAfterFireForest();
 

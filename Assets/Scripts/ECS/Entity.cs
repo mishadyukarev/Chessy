@@ -26,7 +26,7 @@ namespace ECS
             return _ents[idx];
         }
 
-        internal bool GetPool<C>(out ComponentPool<C> pool) where C : struct
+        internal bool GetPool<C>(out ComponentPool<C> pool) where C : new()
         {
             for (int i = 0; i < _poolsComponents.Count; i++)
             {
@@ -41,7 +41,7 @@ namespace ECS
             return false;
         }
 
-        internal ComponentPool<C> AddPool<C>() where C : struct
+        internal ComponentPool<C> AddPool<C>() where C : new()
         {
             var pool = new ComponentPool<C>(new Dictionary<int, int>());
             _poolsComponents.Add(pool);
@@ -50,7 +50,7 @@ namespace ECS
     }
 
 
-    class ComponentPool<C> where C : struct
+    class ComponentPool<C> where C : new()
     {
         Dictionary<int, int> _numbersEntity;
         C[] _components;
@@ -88,7 +88,7 @@ namespace ECS
             _numberEnt = numberEnt;
         }
 
-        public Entity Add<C>(in C component) where C : struct
+        public Entity Add<C>(in C component) where C : new()
         {
             if (_curWorld.GetPool<C>(out var pool))
             {
@@ -103,7 +103,7 @@ namespace ECS
             return this;
         }
 
-        public ref C Get<C>() where C : struct
+        public ref C Get<C>() where C : new()
         {
             if (_curWorld.GetPool<C>(out var pool))
             {
@@ -120,8 +120,7 @@ namespace ECS
             else
             {
                 pool = _curWorld.AddPool<C>();
-                C component = new C();
-                pool.AddComponent(_numberEnt, component);
+                pool.AddComponent(_numberEnt, new C());
 
                 return ref pool.Component(_numberEnt);
             }

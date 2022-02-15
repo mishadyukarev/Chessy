@@ -6,13 +6,13 @@
 //        {
 //            //if (Ents.SelectedIdxE.IsSelCell)
 //            //{
-//            //    var idx_sel = Ents.SelectedIdxE.IdxC.Idx;
+//            //    var idx_sel = Ents.SelectedIdxE.Idx;
 
-//            //    ref var unit_sel = ref Ents.CellEs.CellUnitEs.Else(Ents.SelectedIdxE.IdxC.Idx).UnitC;
-//            //    ref var ownUnit_sel = ref Ents.CellEs.CellUnitEs.Else(Ents.SelectedIdxE.IdxC.Idx).OwnerC;
+//            //    ref var unit_sel = ref Ents.CellEs.CellUnitEs.Else(Ents.SelectedIdxE.Idx).UnitC;
+//            //    ref var ownUnit_sel = ref Ents.CellEs.CellUnitEs.Else(Ents.SelectedIdxE.Idx).OwnerC;
 
-//            //    ref var build_sel = ref CellBuildEs.Build(Ents.SelectedIdxE.IdxC.Idx).BuildTC;
-//            //    ref var ownBuild_sel = ref CellBuildEs.Build(Ents.SelectedIdxE.IdxC.Idx).PlayerTC;
+//            //    ref var build_sel = ref CellBuildEs.Build(Ents.SelectedIdxE.Idx).BuildTC;
+//            //    ref var ownBuild_sel = ref CellBuildEs.Build(Ents.SelectedIdxE.Idx).PlayerTC;
 
 //            //    var needActiveThirdButt = false;
 

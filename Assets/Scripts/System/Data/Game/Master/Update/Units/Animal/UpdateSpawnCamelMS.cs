@@ -14,7 +14,7 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitE(idx_0).Is(UnitTypes.Camel))
+                if (Es.UnitTC(idx_0).Is(UnitTypes.Camel))
                 {
                     haveCamel = true;
                     break;
@@ -27,13 +27,13 @@ namespace Game.Game
 
                 if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
-                    if (!Es.UnitE(idx_0).HaveUnit && !Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment)
+                    if (!Es.UnitTC(idx_0).HaveUnit && !Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment)
                     {
                         bool haveNearUnit = false;
 
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (UnitEs(idx_1).UnitE.HaveUnit)
+                            if (Es.UnitTC(idx_1).HaveUnit)
                             {
                                 haveNearUnit = true;
                                 break;
@@ -42,7 +42,7 @@ namespace Game.Game
 
                         if (!haveNearUnit)
                         {
-                            Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es.UnitStatUpgradesEs, Es.UnitEs(idx_0));
+                            Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
                         }
                     }

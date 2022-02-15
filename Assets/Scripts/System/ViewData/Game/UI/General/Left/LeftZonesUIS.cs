@@ -8,18 +8,18 @@
 
         public void Run()
         {
-            var idx_sel = Es.SelectedIdxE.Idx;
+            var idx_sel = Es.SelectedIdxC.Idx;
 
             UIEs.LeftCityEs.Zone.SetActive(false);
             UIEs.LeftEnvEs.Zone.SetActive(false);
             UIEs.LeftMarketEs.Zone.SetActive(false);
             UIEs.LeftSmelterEs.Zone.SetActive(false);
 
-            if (Es.SelectedIdxE.IsSelCell)
+            if (Es.SelectedIdxC.IsSelectedCell)
             {
                 if (Es.BuildingE(idx_sel).HaveBuilding)
                 {
-                    if (Es.BuildingE(idx_sel).Is(Es.WhoseMoveE.CurPlayerI))
+                    if (Es.BuildingE(idx_sel).Is(Es.WhoseMovePlayerTC.CurPlayerI))
                     {
                         if (Es.BuildingE(idx_sel).Is(BuildingTypes.City))
                         {

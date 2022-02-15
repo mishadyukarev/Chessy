@@ -8,9 +8,11 @@
 
         public void Run()
         {
-            UIEs.LeftEs.EnvironmentEs.Resources<TextUIC>(ResourceTypes.Food).Text = Es.FertilizeE(Es.SelectedIdxE.Idx).Resources.ToString();
-            UIEs.LeftEs.EnvironmentEs.Resources<TextUIC>(ResourceTypes.Wood).Text = Es.AdultForestE(Es.SelectedIdxE.Idx).Resources.ToString();
-            UIEs.LeftEs.EnvironmentEs.Resources<TextUIC>(ResourceTypes.Ore).Text = Es.HillE(Es.SelectedIdxE.Idx).Resources.ToString();
+            var idx_sel = Es.SelectedIdxC.Idx;
+
+            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Food).Text = ((int)(Es.FertilizeE(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Wood).Text = ((int)(Es.AdultForestE(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Ore).Text = ((int)(Es.HillE(idx_sel).Resources * 100)).ToString();
         }
     }
 }

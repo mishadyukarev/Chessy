@@ -10,14 +10,14 @@
         {
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                //if (Es.MaxPawnsE(playerT).MaxPawns > Es.InventorUnitsEs.Units(UnitTypes.Pawn, LevelTypes.First, playerT).AmountUnits
+                //if (Es.MaxPawnsE(playerT).MaxPawns > Es.Units(UnitTypes.Pawn, LevelTypes.First, playerT).AmountUnits
                 //    + Es.WhereWorker.AmountPaws(playerT))
                 //{
 
                 //    Es.ForNextUnitE(playerT).Steps += 0.5f;
                 //    if (Es.ForNextUnitE(playerT).CanGetUnit)
                 //    {
-                //        Es.InventorUnitsEs.Units(UnitTypes.Pawn, LevelTypes.First, playerT).AddUnit();
+                //        Es.Units(UnitTypes.Pawn, LevelTypes.First, playerT).AddUnit();
                 //        Es.ForNextUnitE(playerT).Reset();
                 //    }
                 //}

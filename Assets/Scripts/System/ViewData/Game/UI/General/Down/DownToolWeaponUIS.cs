@@ -26,8 +26,8 @@ namespace Game.Game
             }
 
 
-            var tw_sel = Es.SelectedToolWeaponE.ToolWeapon;
-            var levTw_sel = Es.SelectedToolWeaponE.Level;
+            var tw_sel = Es.SelectedTWTC.ToolWeapon;
+            var levTw_sel = Es.SelectedTWLevelTC.Level;
 
             color = Button<ImageUIC>(tw_sel).Color;
             color.a = 1;
@@ -42,13 +42,13 @@ namespace Game.Game
                 Image(twT, levTw_sel).SetActive(true);
             }
 
-            var curPlayerI = Es.WhoseMoveE.CurPlayerI;
+            var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
 
-            Button<TextUIC>(ToolWeaponTypes.Pick).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Pick, LevelTypes.Second, curPlayerI).ToolWeapons.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Sword).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Sword, LevelTypes.Second, curPlayerI).ToolWeapons.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Axe).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Axe, LevelTypes.Second, curPlayerI).ToolWeapons.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Shield).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Shield, Es.SelectedToolWeaponE.Level, curPlayerI).ToolWeapons.ToString();
-            Button<TextUIC>(ToolWeaponTypes.BowCrossbow).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.BowCrossbow, Es.SelectedToolWeaponE.Level, curPlayerI).ToolWeapons.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Pick).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Pick, LevelTypes.Second, curPlayerI).ToolWeaponsC.Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Sword).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Sword, LevelTypes.Second, curPlayerI).ToolWeaponsC.Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Axe).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Axe, LevelTypes.Second, curPlayerI).ToolWeaponsC.Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Shield).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Shield, Es.SelectedTWLevelTC.Level, curPlayerI).ToolWeaponsC.Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.BowCrossbow).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.BowCrossbow, Es.SelectedTWLevelTC.Level, curPlayerI).ToolWeaponsC.Amount.ToString();
         }
     }
 }

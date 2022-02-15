@@ -20,11 +20,11 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.SelectedIdxE.IsSelCell)
+            if (Es.SelectedIdxC.IsSelectedCell)
             {
-                var idx_sel = Es.SelectedIdxE.IdxC.Idx;
+                var idx_sel = Es.SelectedIdxC.Idx;
 
-                if (UnitEs(Es.SelectedIdxE.IdxC.Idx).UnitE.HaveUnit)
+                if (Es.UnitTC(Es.SelectedIdxC.Idx).HaveUnit)
                 {
                     for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++)
                     {
@@ -37,7 +37,7 @@ namespace Game.Game
 
                         if(!_isFilled[EffectTypes.Shield])
                         {
-                            if (Es.UnitE(idx_sel).HaveShieldEffect)
+                            if (Es.UnitEffectShield(idx_sel).HaveEffect)
                             {
                                 UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 UIEs.RightEs.Effect(idx_eff).ImageUIC.Sprite = _resources.Sprite(AbilityTypes.BonusNear);

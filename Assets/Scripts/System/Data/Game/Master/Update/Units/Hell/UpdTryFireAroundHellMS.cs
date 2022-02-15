@@ -12,7 +12,7 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitE(idx_0).Is(UnitTypes.Hell))
+                if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
                 {
                     foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                     {

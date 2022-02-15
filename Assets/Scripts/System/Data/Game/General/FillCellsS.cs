@@ -15,7 +15,7 @@ namespace Game.Game
 
                 for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
                 {
-                    var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
+                    var xy_0 = Es.CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
@@ -23,7 +23,7 @@ namespace Game.Game
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
-                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Mountain))
+                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.Mountain))
                             {
                                 Es.MountainE(idx_0).SetRandomResources();
                                 amountMountains++;
@@ -31,7 +31,7 @@ namespace Game.Game
 
                             else
                             {
-                                if (UnityEngine.Random.Range(0f, 1f) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                                if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
                                     Es.AdultForestE(idx_0).SetRandomResources();
                                 }
@@ -40,7 +40,7 @@ namespace Game.Game
 
                         else
                         {
-                            if (UnityEngine.Random.Range(0f, 1f) <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.AdultForest))
+                            if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
                                 Es.AdultForestE(idx_0).SetRandomResources();
                             }
@@ -72,11 +72,11 @@ namespace Game.Game
                         }
 
 
-                        foreach (var dir in CellEs(idx_0).RiverEs.Keys)
+                        foreach (var dir in Es.CellEs(idx_0).RiverEs.Keys)
                         {
                             if (Es.RiverEs(idx_0).HaveRive(dir).HaveRiver.Have)
                             {
-                                var xy_next = CellWorker.GetXyCellByDirect(CellEs(idx_0).CellE.XyC.Xy, dir);
+                                var xy_next = CellWorker.GetXyCellByDirect(Es.CellEs(idx_0).CellE.XyC.Xy, dir);
                                 var idx_next = CellWorker.GetIdxCell(xy_next);
 
                                 Es.RiverEs(idx_next).RiverE.RiverTC.River = RiverTypes.EndRiver;
@@ -85,7 +85,7 @@ namespace Game.Game
 
                         foreach (var dir in corners)
                         {
-                            var xy_next = CellWorker.GetXyCellByDirect(CellEs(idx_0).CellE.XyC.Xy, dir);
+                            var xy_next = CellWorker.GetXyCellByDirect(Es.CellEs(idx_0).CellE.XyC.Xy, dir);
                             var idx_next = CellWorker.GetIdxCell(xy_next);
 
                             Es.RiverEs(idx_next).RiverE.RiverTC.River = RiverTypes.Corner;
@@ -96,26 +96,26 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                Es.InventorResourcesEs.Resource(ResourceTypes.Food, PlayerTypes.Second).Set(999999);
+                Es.InventorResourcesEs.Resource(ResourceTypes.Food, PlayerTypes.Second).ResourceC.Set(999999);
 
                 foreach (byte idx_0 in CellWorker.Idxs)
                 {
-                    var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
+                    var xy_0 = Es.CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
                     if (x == 7 && y == 8)
                     {
-                        Es.EnvironmentEs(idx_0).Mountain.Destroy();
-                        Es.EnvironmentEs(idx_0).AdultForest.Destroy(TrailEs(idx_0).Trails);
+                        Es.EnvironmentEs(idx_0).Mountain.SetZeroResources();
+                        Es.EnvironmentEs(idx_0).AdultForest.Destroy(Es.TrailEs(idx_0).Trails);
 
-                        Es.UnitE(idx_0).SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected, false), Es.UnitStatUpgradesEs, Es.UnitEs(idx_0));
+                        Es.UnitE(idx_0).SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected, false), Es);
                     }
 
                     else if (x == 8 && y == 8)
                     {
-                        Es.MountainE(idx_0).Destroy();
-                        Es.AdultForestE(idx_0).Destroy(TrailEs(idx_0).Trails);
+                        Es.MountainE(idx_0).SetZeroResources();
+                        Es.AdultForestE(idx_0).Destroy(Es.TrailEs(idx_0).Trails);
 
                         Es.BuildingE(idx_0).SetNew(BuildingTypes.City, PlayerTypes.Second);
                         //Es.WhereBuildingEs.HaveBuild(BuildingTypes.City, PlayerTypes.Second, idx_0).HaveBuilding.Have = true;
@@ -123,9 +123,9 @@ namespace Game.Game
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
                     {
-                        Es.EnvironmentEs(idx_0).Mountain.Destroy();
+                        Es.EnvironmentEs(idx_0).Mountain.SetZeroResources();
 
-                        Es.UnitE(idx_0).SetNewPawn((LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected), Es.UnitStatUpgradesEs, Es.UnitEs(idx_0));
+                        Es.UnitE(idx_0).SetNewPawn((LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected), Es);
 
                         int rand = UnityEngine.Random.Range(0, 100);
 

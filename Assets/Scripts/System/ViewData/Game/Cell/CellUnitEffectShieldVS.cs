@@ -10,9 +10,9 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
+                if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMovePlayerTC.CurPlayerI).IsVisible)
                 {
-                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.SetActive(Es.UnitE(idx_0).HaveShieldEffect);
+                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.SetActive(Es.UnitEffectShield(idx_0).HaveEffect);
                 }
                 else
                 {

@@ -10,13 +10,13 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayerI = Es.WhoseMoveE.CurPlayerI;
+            var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
 
-            if (Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero))
+            if (Es.HaveHeroInInventor(curPlayerI, out var hero))
             {
                 Parent.SetActive(true);
 
-                var cooldown = Es.ScoutHeroCooldownE(hero, curPlayerI).Cooldown.Amount;
+                var cooldown = Es.ScoutHeroCooldownE(hero, curPlayerI).CooldownC.Amount;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

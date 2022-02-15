@@ -15,20 +15,20 @@
 
                 if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
                 {
-                    if (!Es.UnitE(idx_0).IsStunned && Es.UnitEs(idx_0).UnitE.HaveUnit && !Es.UnitE(idx_0).IsAnimal)
+                    if (!Es.UnitStunC(idx_0).IsStunned && Es.UnitTC(idx_0).HaveUnit && !Es.UnitTC(idx_0).IsAnimal)
                     {
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (!Es.EnvironmentEs(idx_1).Mountain.HaveEnvironment && !UnitEs(idx_1).UnitE.HaveUnit)
+                            if (!Es.EnvironmentEs(idx_1).Mountain.HaveEnvironment && !Es.UnitTC(idx_1).HaveUnit)
                             {
                                 CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
 
-                                var one = Es.UnitE(idx_0).CanShift(Es.UnitE(idx_0).Unit, dir, CellEs(idx_1));
-                                var two = Es.UnitE(idx_0).HaveMaxSteps;
+                                var one = Es.UnitE(idx_0).CanShift(dir, Es.CellEs(idx_1));
+                                var two = Es.UnitStepC(idx_0).Have(CellUnitStatStepValues.StandartStepsUnit(Es.UnitTC(idx_0).Unit));
 
                                 if (one || two)
                                 {
-                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.UnitE(idx_0).Owner, idx_0).Add(idx_1);
+                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.UnitPlayerTC(idx_0).Player, idx_0).Add(idx_1);
                                 }
                             }
                         }

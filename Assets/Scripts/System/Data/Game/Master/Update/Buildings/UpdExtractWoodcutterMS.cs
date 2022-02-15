@@ -10,11 +10,11 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.AdultForestE(idx_0).CanExtractWoodcutter(BuildEs(idx_0)))
+                if (Es.AdultForestE(idx_0).CanExtractWoodcutter(Es.BuildEs(idx_0)))
                 {
                     var extract = Es.AdultForestE(idx_0).AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
 
-                    Es.InventorResourcesEs.Resource(ResourceTypes.Wood, Es.BuildingE(idx_0).Owner).Add(extract);
+                    Es.InventorResourcesEs.Resource(ResourceTypes.Wood, Es.BuildingE(idx_0).Owner).ResourceC.Add(extract);
 
                     Es.AdultForestE(idx_0).Take(extract);
                     if (!Es.AdultForestE(idx_0).HaveEnvironment) Es.TrailEs(idx_0).DestroyAll();

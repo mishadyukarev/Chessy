@@ -17,9 +17,9 @@
 
                     foreach (var idx_01 in idxs_01)
                     {
-                        if (Es.UnitEs(idx_01).UnitE.HaveUnit && Es.UnitE(idx_01).Is(Es.BuildingE(idx_0).Owner))
+                        if (Es.UnitTC(idx_01).HaveUnit && Es.UnitPlayerTC(idx_01).Is(Es.BuildingE(idx_0).Owner))
                         {
-                            Es.UnitE(idx_01).SetMaxWater(Es.UnitStatUpgradesEs);
+                            Es.UnitE(idx_01).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                         }
                     }
                 }

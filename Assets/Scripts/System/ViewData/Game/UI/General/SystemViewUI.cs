@@ -45,7 +45,7 @@ namespace Game.Game
                 + new TheEndGameUIS(ents, entsUI).Run
                 + new MotionCenterUIS(ents, entsUI).Run
                 + new ReadyZoneUIS(ents, entsUI).Run
-                + new MistakeUIS().Run
+                + new MistakeUIS(ents, entsUI).Run
                 + new KingZoneUISys(ents, entsUI).Run
                 + new FriendZoneUISys(ents, entsUI).Run
                 + new PickUpgUIS(ents, entsUI).Run

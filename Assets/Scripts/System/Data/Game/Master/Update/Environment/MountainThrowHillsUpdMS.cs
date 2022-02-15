@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Game
 {
@@ -21,7 +20,7 @@ namespace Game.Game
                         {
                             if (!Es.MountainE(idx_1).HaveEnvironment && !Es.BuildingE(idx_1).HaveBuilding)
                             {
-                                Es.HillE(idx_1).AddFromMountain();
+                                Es.HillE(idx_1).Add(CellEnvironmentValues.ADDING_FROM_MOUNTAIN);
                             }
                         }
                     }

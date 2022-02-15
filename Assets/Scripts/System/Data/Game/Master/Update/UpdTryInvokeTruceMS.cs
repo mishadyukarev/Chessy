@@ -17,11 +17,11 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                if (Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
                     amountAdultForest++;
             }
 
-            if (amountAdultForest <= CellEnvironmentValues.ADULT_FORESTS_FOR_TRUCE)
+            if (amountAdultForest <= UpdateValues.NEED_ADULT_FORESTS_FOR_TRUCE)
             {
                 Es.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 _systemsMaster.InvokeRun(SystemDataMasterTypes.Truce);

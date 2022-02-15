@@ -12,7 +12,7 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitE(idx_0).Is(UnitTypes.Camel) && Es.UnitE(idx_0).Is(LevelTypes.First) && Es.UnitE(idx_0).Is(PlayerTypes.None))
+                if (Es.UnitTC(idx_0).Is(UnitTypes.Camel) && Es.UnitLevelTC(idx_0).Is(LevelTypes.First) && Es.UnitPlayerTC(idx_0).Is(PlayerTypes.None))
                 {
                     var randDir = Random.Range((int)DirectTypes.None + 1, (int)DirectTypes.End);
 
@@ -20,7 +20,7 @@ namespace Game.Game
 
                     if (Es.CellEs(idx_1).ParentE.IsActiveSelf.IsActive
                         && !Es.EnvironmentEs(idx_1).Mountain.HaveEnvironment
-                        && !Es.UnitEs(idx_1).UnitE.HaveUnit)
+                        && !Es.UnitTC(idx_1).HaveUnit)
                     {
                         Es.UnitE(idx_0).Shift(idx_1, false, Es);
                     }

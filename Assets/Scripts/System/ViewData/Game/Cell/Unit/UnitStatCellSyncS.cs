@@ -22,28 +22,28 @@ namespace Game.Game
                 Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
-                if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
+                if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMovePlayerTC.CurPlayerI).IsVisible)
                 {
-                    if (Es.UnitEs(idx_0).UnitE.HaveUnit)
+                    if (Es.UnitTC(idx_0).HaveUnit)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
                         
-                        float xCordinate = (float)Es.UnitE(idx_0).Health / CellUnitStatHpValues.MAX_HP;
+                        float xCordinate = (float)Es.UnitHpC(idx_0).Health / CellUnitStatHpValues.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Es.UnitE(idx_0).Water <= CellUnitStatWaterValues.MAX_WATER_WITHOUT_EFFECTS * 0.4f);
-                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(Es.UnitE(idx_0).HaveMaxSteps);
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Es.UnitWaterC(idx_0).Water <= CellUnitStatWaterValues.WATER_MAX_STANDART * 0.4f);
+                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(Es.UnitStepC(idx_0).Have(CellUnitStatStepValues.StandartStepsUnit(Es.UnitTC(idx_0).Unit)));
 
 
 
-                        if (Es.UnitE(idx_0).Is(ConditionUnitTypes.Protected))
+                        if (Es.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Protected))
                         {
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.yellow;
                         }
 
-                        else if (Es.UnitE(idx_0).Is(ConditionUnitTypes.Relaxed))
+                        else if (Es.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
                         {
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Enable();
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Color = Color.green;
@@ -54,7 +54,7 @@ namespace Game.Game
                             Block<SpriteRendererVC>(CellBlockTypes.Condition, idx_0).Disable();
                         }
 
-                        if (Es.UnitE(idx_0).Is(PlayerTypes.First))
+                        if (Es.UnitPlayerTC(idx_0).Is(PlayerTypes.First))
                         {
                             Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.blue;
                             Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).Color = Color.blue;

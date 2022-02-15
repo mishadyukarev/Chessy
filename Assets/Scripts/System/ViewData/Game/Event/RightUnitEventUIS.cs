@@ -19,17 +19,17 @@ namespace Game.Game
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (Es.UnitE(Es.SelectedIdxE.IdxC.Idx).Is(condUnitType))
+                if (Es.UnitConditionTC(Es.SelectedIdxC.Idx).Is(condUnitType))
                 {
-                    Es.RpcE.ConditionUnitToMaster(Es.SelectedIdxE.IdxC.Idx, ConditionUnitTypes.None);
+                    Es.RpcE.ConditionUnitToMaster(Es.SelectedIdxC.Idx, ConditionUnitTypes.None);
                 }
                 else
                 {
-                    Es.RpcE.ConditionUnitToMaster(Es.SelectedIdxE.IdxC.Idx, condUnitType);
+                    Es.RpcE.ConditionUnitToMaster(Es.SelectedIdxC.Idx, condUnitType);
                 }
             }
             else SoundV(ClipTypes.Mistake).Play();
@@ -37,13 +37,13 @@ namespace Game.Game
 
         void Unique(in ButtonTypes uniqueButton)
         {
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
-                var idx_sel = Es.SelectedIdxE.IdxC.Idx;
+                var idx_sel = Es.SelectedIdxC.Idx;
 
-                var abil = UnitEs(idx_sel).AbilityButton(uniqueButton).AbilityC;
+                var abil = Es.UnitEs(idx_sel).AbilityButton(uniqueButton).AbilityC;
 
-                if (!UnitEs(idx_sel).Ability(abil.Ability).HaveCooldown)
+                if (!Es.UnitEs(idx_sel).Ability(abil.Ability).HaveCooldown)
                 {
                     switch (abil.Ability)
                     {
@@ -63,7 +63,8 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.FireArcher:
-                            Es.SelectedAbilityE.SetAbility(AbilityTypes.FireArcher, Es.ClickerObjectE);
+                            Es.SelAbilityTC.Set(AbilityTypes.FireArcher);
+                            Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
 
@@ -74,7 +75,8 @@ namespace Game.Game
 
                         case AbilityTypes.StunElfemale:
                             {
-                                Es.SelectedAbilityE.SetAbility(AbilityTypes.StunElfemale, Es.ClickerObjectE);
+                                Es.SelAbilityTC.Ability = AbilityTypes.StunElfemale;
+                                Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
                             break;
@@ -98,7 +100,8 @@ namespace Game.Game
                         case AbilityTypes.ChangeDirectionWind:
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
-                                Es.SelectedAbilityE.SetAbility(AbilityTypes.ChangeDirectionWind, Es.ClickerObjectE);
+                                Es.SelAbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
+                                Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             }
                             break;
 
@@ -127,12 +130,14 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.DirectWave:
-                            Es.SelectedAbilityE.SetAbility(AbilityTypes.DirectWave, Es.ClickerObjectE);
+                            Es.SelAbilityTC.Ability = AbilityTypes.DirectWave;
+                            Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             break;
 
 
                         case AbilityTypes.Resurrect:
-                            Es.SelectedAbilityE.SetAbility(AbilityTypes.Resurrect, Es.ClickerObjectE);
+                            Es.SelAbilityTC.Ability = AbilityTypes.Resurrect;
+                            Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             break;
 
                         case AbilityTypes.SetTeleport:

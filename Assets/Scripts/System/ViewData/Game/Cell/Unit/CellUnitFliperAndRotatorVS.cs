@@ -13,7 +13,7 @@
 //            //for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
 //            //{
 //            //    var unit_0 = UnitEs(idx_0).TypeE.UnitTC;
-//            //    var ownUnit_0 = UnitE(idx_0).OwnerC;
+//            //    var ownUnit_0 = UnitPlayerTC(idx_0).PlayerC;
 //            //    var isCorned = UnitEs(idx_0).CornedE.IsCornered;
 
 //            //    ref var main_0 = ref CellVEs(idx_0).UnitVEs.UnitMainSR;
@@ -26,11 +26,11 @@
 //            //    main_0.FlipX = false;
 //            //    extra_0.FlipX = false;
 
-//            //    if (Es.SelectedIdxE.IdxC.Is(idx_0))
+//            //    if (Es.SelectedIdxC.IdxC.Is(idx_0))
 //            //    {
 //            //        if (UnitEs(idx_0).TypeE.HaveUnit)
 //            //        {
-//            //            if (ownUnit_0.Is(Es.WhoseMoveE.CurPlayerI))
+//            //            if (ownUnit_0.Is(Es.WhoseMove.CurPlayerI))
 //            //            {
 //            //                if (unit_0.Is(UnitTypes.Archer))
 //            //                {

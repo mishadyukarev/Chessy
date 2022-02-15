@@ -10,10 +10,10 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                var curPlayerI = Es.WhoseMoveE.CurPlayerI;
+                var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
 
-                var isVisForMe = Es.BuildingEs(idx_0).BuildingVisE(curPlayerI).IsVisibleC.IsVisible;
-                var isVisForNext = Es.BuildingEs(idx_0).BuildingVisE(Es.WhoseMoveE.NextPlayerFrom(curPlayerI)).IsVisibleC.IsVisible;
+                var isVisForMe = Es.BuildEs(idx_0).BuildingVisE(curPlayerI).IsVisibleC.IsVisible;
+                var isVisForNext = Es.BuildEs(idx_0).BuildingVisE(Es.WhoseMovePlayerTC.NextPlayerFrom(curPlayerI)).IsVisibleC.IsVisible;
 
                 for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
                 {

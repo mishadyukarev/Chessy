@@ -23,9 +23,9 @@
                         }
 
 
-                        if (UnitEs(idx_1).UnitE.HaveUnit && Es.UnitE(idx_1).Is(Es.BuildingE(idx_0).Owner))
+                        if (Es.UnitTC(idx_1).HaveUnit && Es.UnitPlayerTC(idx_1).Is(Es.BuildingE(idx_0).Owner))
                         {
-                            Es.UnitE(idx_1).SetMaxWater(Es.UnitStatUpgradesEs);
+                            Es.UnitE(idx_1).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                         }
                     }
                 }

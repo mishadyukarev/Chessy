@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            var idx_0 = Es.WindCloudE.CenterCloud.Idx;
+            var idx_0 = Es.CenterCloudIdxC.Idx;
 
             foreach (var idx_1 in Es.CellSpaceWorker.GetIdxsAround(idx_0))
             {

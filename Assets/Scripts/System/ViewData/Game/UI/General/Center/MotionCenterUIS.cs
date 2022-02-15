@@ -13,9 +13,9 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.Motion.IsActiveC.IsActive)
+            if (Es.MotionIsActiveC.IsActive)
             {
-                Motion<MotionsUIEC>().Text = Es.Motion.AmountMotionsC.Amount.ToString();
+                Motion<MotionsUIEC>().Text = Es.MotionsC.Amount.ToString();
                 Motion<MotionsUIEC>().SetActiveParent(true);
 
                 _timer += Time.deltaTime;
@@ -23,7 +23,7 @@ namespace Game.Game
                 if (_timer >= 1)
                 {
                     Motion<MotionsUIEC>().SetActiveParent(false);
-                    Es.Motion.IsActiveC.IsActive = false;
+                    Es.MotionIsActiveC.IsActive = false;
                     _timer = 0;
                 }
             }

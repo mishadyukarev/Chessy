@@ -12,7 +12,7 @@
 
         void BuyResource(in MarketBuyTypes marketBuyT)
         {
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
                 Es.RpcE.BuyResource(marketBuyT);
             }

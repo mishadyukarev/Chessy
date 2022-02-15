@@ -10,11 +10,11 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                foreach (var dir in TrailEs(idx_0).Keys)
+                foreach (var dir in Es.TrailEs(idx_0).Keys)
                 {
-                    if (TrailEs(idx_0).IsVisible(Es.WhoseMoveE.CurPlayerI).IsVisibleC.IsVisible)
+                    if (Es.TrailEs(idx_0).IsVisible(Es.WhoseMovePlayerTC.CurPlayerI).IsVisibleC.IsVisible)
                     {
-                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(CellEs(idx_0).TrailEs.Trail(dir).HaveTrail);
+                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).SetActive(Es.CellEs(idx_0).TrailEs.Trail(dir).HealthC.IsAlive);
                     }
                     else CellTrailVEs.TrailCellVC<SpriteRendererVC>(dir, idx_0).Disable();
                 }

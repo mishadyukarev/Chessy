@@ -10,8 +10,8 @@ namespace Game.Game
 
         public void Run()
         {
-            var click_cur = Es.ClickerObjectE.CellClickCRef.Click;
-            var uniq = Es.SelectedAbilityE.AbilityTC.Ability;
+            var click_cur = Es.CellClickTC.Click;
+            var uniq = Es.SelAbilityTC.Ability;
 
 
             SelectorUI<GameObjectVC>(click_cur).SetActiveParent(false);

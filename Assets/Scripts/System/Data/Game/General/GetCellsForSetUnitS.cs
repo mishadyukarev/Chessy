@@ -17,7 +17,7 @@
 
                 if (Es.WhereWorker.TryGetBuilding(BuildingTypes.City, player, out var idx_1))
                 {
-                    if (UnitEs(idx_1).UnitE.HaveUnit)
+                    if (Es.UnitTC(idx_1).HaveUnit)
                     {
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = false;
                     }
@@ -26,13 +26,13 @@
                         CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = true;
                     }
 
-                    var list_2 = CellWorker.GetXyAround(CellEs(idx_1).CellE.XyC.Xy);
+                    var list_2 = CellWorker.GetXyAround(Es.CellEs(idx_1).CellE.XyC.Xy);
 
                     foreach (var xy_2 in list_2)
                     {
                         var idx_2 = CellWorker.GetIdxCell(xy_2);
 
-                        if (!EnvironmentEs(idx_2).Mountain.HaveEnvironment && !UnitEs(idx_2).UnitE.HaveUnit)
+                        if (!Es.EnvironmentEs(idx_2).Mountain.HaveEnvironment && !Es.UnitTC(idx_2).HaveUnit)
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -49,20 +49,20 @@
                     {
                         if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
                         {
-                            if (!EnvironmentEs(idx_0).Mountain.HaveEnvironment && !UnitEs(idx_0).UnitE.HaveUnit)
+                            if (!Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment && !Es.UnitTC(idx_0).HaveUnit)
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }
                         }
                         else
                         {
-                            var xy = CellEs(idx_0).CellE.XyC.Xy;
+                            var xy = Es.CellEs(idx_0).CellE.XyC.Xy;
                             var x = xy[0];
                             var y = xy[1];
 
                             var canSet = false;
 
-                            if (!UnitEs(idx_0).UnitE.HaveUnit)
+                            if (!Es.UnitTC(idx_0).HaveUnit)
                             {
                                 if (player == PlayerTypes.First)
                                 {

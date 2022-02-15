@@ -15,9 +15,9 @@ namespace Game.Game
         {
             if (Input.GetMouseButtonDown(0))
             { 
-                Es.InputE.IsClickedC.IsClicked = true;
+                Es.IsClickedC.IsClicked = true;
             }
-            else Es.InputE.IsClickedC.IsClicked = false;
+            else Es.IsClickedC.IsClicked = false;
         }
     }
 }

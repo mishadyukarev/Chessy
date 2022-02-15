@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).HaveUnits)
+            if (Es.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMovePlayerTC.CurPlayerI).HaveUnits)
             {
                 Paren.SetActive(true);
             }

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Game.Common;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +40,8 @@ namespace Game.Game
             var sender = infoFrom.Sender;
 
             var obj = objects[_idx_cur++];
+
+            var whoseMove = _ents.WhoseMovePlayerTC.Player;
 
             if (obj is AbilityTypes ability)
             {
@@ -146,19 +149,93 @@ namespace Game.Game
 
             else if (obj is RpcMasterTypes rpcT)
             {
+                byte idx_0;
+
                 switch (rpcT)
                 {
                     case RpcMasterTypes.None:
                         throw new Exception();
 
                     case RpcMasterTypes.Ready:
-                        _ents.Ready(sender.GetPlayer()).Ready_Master(sender, _ents);
+                        {
+                            var playerSend = sender.GetPlayer();
+
+                            _ents.ReadyE(playerSend).IsReadyC.IsReady = !_ents.ReadyE(playerSend).IsReadyC.IsReady;
+
+                            if (_ents.ReadyE(PlayerTypes.First).IsReadyC.IsReady
+                                && _ents.ReadyE(PlayerTypes.Second).IsReadyC.IsReady)
+                            {
+                                _ents.IsStartedGameC.Is = true;
+                            }
+
+                            else
+                            {
+                                _ents.IsStartedGameC.Is = false;
+                            }
+                        }       
                         break;
 
                     case RpcMasterTypes.Done:
-                        if (_ents.WhoseMoveE.Done_Master(sender, _ents))
+
+                        _ents.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
+
+                        if (PhotonNetwork.OfflineMode)
                         {
-                            _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                            if (GameModeC.IsGameMode(GameModes.TrainingOff))
+                            {
+                                foreach (var idx in _ents.CellSpaceWorker.Idxs)
+                                {
+                                    _ents.UnitStunC(idx).Stun -= 2;
+                                    //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
+                                }
+                                _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                                _ents.RpcE.ActiveMotionZoneToGen(sender);
+                            }
+
+                            else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
+                            {
+                                foreach (var idx in _ents.CellSpaceWorker.Idxs)
+                                {
+                                    _ents.UnitStunC(idx).Stun -= 2;
+                                    //EntitiesPool.IceWalls[idx_0].Hp.Take();
+                                }
+
+                                var curPlayer = _ents.WhoseMovePlayerTC.CurPlayerI;
+                                var nextPlayer = _ents.WhoseMovePlayerTC.NextPlayerFrom(curPlayer);
+
+                                if (nextPlayer == PlayerTypes.First)
+                                {
+                                    _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                                    _ents.RpcE.ActiveMotionZoneToGen(sender);
+                                }
+
+                                _ents.WhoseMovePlayerTC.Player = nextPlayer;
+
+
+                                curPlayer = _ents.WhoseMovePlayerTC.CurPlayerI;
+
+                                //ViewDataSC.RotateAll.Invoke();
+
+                                _ents.FriendIsActiveC.IsActive = true;
+                            }
+                        }
+                        else
+                        {
+                            //if (WhoseMoveC.WhoseMove == playerSend)
+                            //{
+                            //    //if (!EntInventorUnits.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))
+                            //    //{
+                            //    //    if (playerSend == PlayerTypes.Second)
+                            //    //    {
+                            //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
+
+                            //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                            //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                            //    //    }
+
+                            //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
+                            //    //}
+                            //}
                         }
                         break;
 
@@ -178,27 +255,121 @@ namespace Game.Game
                         _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
                         break;
 
-                    case RpcMasterTypes.UpgradeCellUnit:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.UpgradeUnit_Master(sender, _ents);
-                        break;
-
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        var idx_0 = (byte)objects[_idx_cur++];
+                        idx_0 = (byte)objects[_idx_cur++];
                         var twT = (ToolWeaponTypes)objects[_idx_cur++];
-                        var levT = (LevelTypes)objects[_idx_cur++];
+                        var levelTW = (LevelTypes)objects[_idx_cur++];
                         if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.BowCrossbow)
                         {
-                            _ents.MainTWE(idx_0).GiveTake_Master(twT, levT, sender, _ents);
+                            if (_ents.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                            {
+                                if (_ents.UnitStepC(idx_0).Steps >= CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON)
+                                {
+                                    if (_ents.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                                    {
+                                        if (_ents.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
+                                        {
+                                            if (_ents.InventorToolWeaponEs.ToolWeapons(twT, levelTW, whoseMove).ToolWeaponsC.HaveAny)
+                                            {
+                                                //_ents.SetFromInventor(twT, levT, whoseMove, _ents.InventorToolWeaponEs);
+                                                _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
+
+                                                _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                            }
+                                            else
+                                            {
+                                                if (_ents.InventorResourcesEs.CanBuyTW(twT, levelTW, whoseMove, out var needs))
+                                                {
+                                                    _ents.InventorResourcesEs.BuyTW(twT, levelTW, whoseMove);
+                                                    //_ents.Set(twT, levT);
+
+                                                    _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
+
+                                                    _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                                }
+                                                else
+                                                {
+                                                    _ents.RpcE.MistakeEconomyToGeneral(sender, needs);
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            //TakeToInventor(whoseMove, e.InventorToolWeaponEs);
+                                            _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //TakeToInventor(whoseMove, e.InventorToolWeaponEs);
+                                        _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
+
+                                        _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                    }
+                                }
+                                else _ents.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            }
                         }
                         else
                         {
-                            _ents.ExtraTWE(idx_0).GiveTakeTW_Master(twT, levT, sender, _ents);
+                            var ownUnit_0 = _ents.UnitPlayerTC(idx_0).Player;
+
+                            if (_ents.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                            {
+                                if (_ents.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                                {
+                                    if (_ents.UnitStepC(idx_0).HaveSteps)
+                                    {
+                                        if (_ents.ExtraTWE(idx_0).ToolWeaponTC.HaveToolWeapon)
+                                        {
+                                            _ents.InventorToolWeaponEs.ToolWeapons(_ents.ExtraTWE(idx_0).ToolWeaponTC.ToolWeapon, _ents.ExtraTWE(idx_0).LevelTC.Level, ownUnit_0).ToolWeaponsC.Add(1);
+                                            _ents.UnitEs(idx_0).ExtraToolWeaponE.Reset();
+
+                                            _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON);
+
+                                            _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                        }
+
+
+                                        else if (_ents.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.HaveAny)
+                                        {
+                                            _ents.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.Take(1);
+
+                                            _ents.UnitEs(idx_0).ExtraToolWeaponE.SetNew(twT, levelTW);
+
+                                            _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON);
+
+                                            _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                        }
+
+                                        else
+                                        {
+                                            if (_ents.InventorResourcesEs.CanBuyTW(twT, levelTW, ownUnit_0, out var needRes))
+                                            {
+                                                _ents.InventorResourcesEs.BuyTW(twT, levelTW, ownUnit_0);
+
+                                                _ents.UnitEs(idx_0).ExtraToolWeaponE.SetNew(twT, levelTW);
+
+                                                _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON);
+
+                                                _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                            }
+                                            else
+                                            {
+                                                _ents.RpcE.MistakeEconomyToGeneral(sender, needRes);
+                                            }
+                                        }
+                                    }
+                                    else _ents.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                }
+                            }
                         }
                             
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        _ents.InventorUnitsEs.GetHero_Master((UnitTypes)objects[_idx_cur++], _ents);
+                        _ents.Units((UnitTypes)objects[_idx_cur++], LevelTypes.First, whoseMove).AmountC.Add(1);
+                        _ents.AvailableCenterHero(whoseMove).HaveCenterHero.Have = false;
                         break;
 
                     case RpcMasterTypes.UpgCenterUnits:
@@ -227,56 +398,57 @@ namespace Game.Game
         void GeneralRpc(object[] objects, PhotonMessageInfo infoFrom)
         {
             _idx_cur = 0;
-            var rpcT = (RpcGeneralTypes)objects[_idx_cur++];
 
-            switch (rpcT)
+            var obj = objects[_idx_cur++];
+
+            if (obj is MistakeTypes mistakeT)
             {
-                case RpcGeneralTypes.None:
-                    throw new Exception();
+                _ents.MistakeC.Mistake = mistakeT;
+                _ents.Sound(ClipTypes.Mistake).ActionC.Action.Invoke();
 
-                case RpcGeneralTypes.Mistake:
-                    var mistakeT = (MistakeTypes)objects[_idx_cur++];
-                    MistakeE.Mistake<MistakeC>().Mistake = mistakeT;
-                    MistakeE.Mistake<TimerC>().Reset();
+                if (mistakeT == MistakeTypes.Economy)
+                {
+                    _ents.MistakeEconomyE(ResourceTypes.Food).SetZero();
+                    _ents.MistakeEconomyE(ResourceTypes.Wood).SetZero();
+                    _ents.MistakeEconomyE(ResourceTypes.Ore).SetZero();
+                    _ents.MistakeEconomyE(ResourceTypes.Iron).SetZero();
+                    _ents.MistakeEconomyE(ResourceTypes.Gold).SetZero();
 
-                    if (mistakeT == MistakeTypes.Economy)
-                    {
-                        MistakeE.Mistake(ResourceTypes.Food).Amount = default;
-                        MistakeE.Mistake(ResourceTypes.Wood).Amount = default;
-                        MistakeE.Mistake(ResourceTypes.Ore).Amount = default;
-                        MistakeE.Mistake(ResourceTypes.Iron).Amount = default;
-                        MistakeE.Mistake(ResourceTypes.Gold).Amount = default;
+                    var needRes = (float[])objects[_idx_cur++];
 
-                        var needRes = (int[])objects[_idx_cur++];
+                    _ents.MistakeEconomyE(ResourceTypes.Food).Set(needRes[0]);
+                    _ents.MistakeEconomyE(ResourceTypes.Wood).Set(needRes[1]);
+                    _ents.MistakeEconomyE(ResourceTypes.Ore).Set(needRes[2]);
+                    _ents.MistakeEconomyE(ResourceTypes.Iron).Set(needRes[3]);
+                    _ents.MistakeEconomyE(ResourceTypes.Gold).Set(needRes[4]);
+                }
+            }
+            else if (obj is RpcGeneralTypes rpcT)
+            {
+                switch (rpcT)
+                {
+                    case RpcGeneralTypes.None:
+                        throw new Exception();
 
-                        MistakeE.Mistake(ResourceTypes.Food).Amount = needRes[0];
-                        MistakeE.Mistake(ResourceTypes.Wood).Amount = needRes[1];
-                        MistakeE.Mistake(ResourceTypes.Ore).Amount = needRes[2];
-                        MistakeE.Mistake(ResourceTypes.Iron).Amount = needRes[3];
-                        MistakeE.Mistake(ResourceTypes.Gold).Amount = needRes[4];
-                    }
+                    case RpcGeneralTypes.SoundEff:
+                        _ents.Sound((ClipTypes)objects[_idx_cur++]).ActionC.Invoke();
+                        break;
 
-                    _ents.Sound(ClipTypes.Mistake).Sound.Invoke();
-                    break;
+                    case RpcGeneralTypes.SoundUniqueAbility:
+                        _ents.Sound((AbilityTypes)objects[_idx_cur++]).ActionC.Invoke();
+                        break;
 
-                case RpcGeneralTypes.SoundEff:
-                    _ents.Sound((ClipTypes)objects[_idx_cur++]).Sound.Invoke();
-                    break;
+                    case RpcGeneralTypes.SoundRpcMaster:
+                        //Sound((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
+                        break;
 
-                case RpcGeneralTypes.SoundUniqueAbility:
-                    _ents.Sound((AbilityTypes)objects[_idx_cur++]).Sound.Invoke();
-                    break;
+                    case RpcGeneralTypes.ActiveMotion:
+                        _ents.MotionIsActiveC.IsActive = true;
+                        break;
 
-                case RpcGeneralTypes.SoundRpcMaster:
-                    //Sound((UniqueAbilityTypes)objects[_idx_cur++]).Invoke();
-                    break;
-
-                case RpcGeneralTypes.ActiveMotion:
-                    _ents.Motion.IsActiveC.IsActive = true;
-                    break;
-
-                default:
-                    throw new Exception();
+                    default:
+                        throw new Exception();
+                }
             }
         }
 
@@ -293,25 +465,25 @@ namespace Game.Game
 
             foreach (byte idx_0 in _ents.CellSpaceWorker.Idxs)
             {
-                objs.Add(_ents.UnitE(idx_0).Unit);
+                objs.Add(_ents.UnitTC(idx_0).Unit);
                 //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
-                objs.Add(_ents.UnitE(idx_0).Owner);
+                objs.Add(_ents.UnitPlayerTC(idx_0).Player);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Health);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Steps);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Water);
+                objs.Add(_ents.UnitHpC(idx_0).Health);
+                objs.Add(_ents.UnitStepC(idx_0).Steps);
+                objs.Add(_ents.UnitWaterC(idx_0).Water);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.Condition);
+                objs.Add(_ents.UnitConditionTC(idx_0).Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ToolWeapon);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.LevelT);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.Protection);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ToolWeaponTC.ToolWeapon);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.LevelTC.Level);
+                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ProtectionShieldC.Protection);
 
-                objs.Add(_ents.UnitE(idx_0).Stun);
+                objs.Add(_ents.UnitStunC(idx_0).Stun);
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.UnitE.IsRightArcher);
+                objs.Add(_ents.UnitIsRightArcherC(idx_0).IsRight);
 
                 foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown);
 
@@ -343,20 +515,20 @@ namespace Game.Game
                 objs.Add(_ents.CellEs(idx_0).EffectEs.FireE.HaveFireC.Have);
             }
 
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).Cooldown.Amount);
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).Cooldown.Amount);
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).Cooldown.Amount);
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).Cooldown.Amount);
+            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).CooldownC.Amount);
+            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).CooldownC.Amount);
+            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).CooldownC.Amount);
+            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).CooldownC.Amount);
 
 
 
-            foreach (var key in _ents.UnitStatUpgradesEs.Keys) objs.Add(_ents.UnitStatUpgradesEs.Upgrade(key).HaveUpgrade.Have);
+            //foreach (var key in _ents.UnitStatUpgradesEs.Keys) objs.Add(_ents.UnitStatUpgradesEs.Upgrade(key).HaveUpgrade.Have);
             //foreach (var key in BuildingUpgradesEnt.Keys) objs.Add(BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have);
 
 
-            foreach (var key in _ents.InventorResourcesEs.Keys) objs.Add(_ents.InventorResourcesEs.Resource(key).Resources);
-            foreach (var key in _ents.InventorUnitsEs.Keys) objs.Add(_ents.InventorUnitsEs.Units(key).Units.Amount);
-            foreach (var key in _ents.InventorToolWeaponEs.Keys) objs.Add(_ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons);
+            //foreach (var key in _ents.InventorResourcesEs.Keys) objs.Add(_ents.InventorResourcesEs.Resource(key).Resources);
+            //foreach (var key in _ents.InventorUnitsEs.Keys) objs.Add(_ents.Units(key).Units.Amount);
+            foreach (var key in _ents.InventorToolWeaponEs.Keys) objs.Add(_ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeaponsC.Amount);
 
 
             //foreach (var key in _ents.WhereUnitsEs.Keys) objs.Add(_ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have);
@@ -372,14 +544,14 @@ namespace Game.Game
 
             #region Other
 
-            objs.Add(_ents.WhoseMoveE.WhoseMove.Player);
-            objs.Add(_ents.WinnerE.Winner.Player);
-            objs.Add(_ents.GameInfoE.IsStartedGameC.IsStartedGame);
-            objs.Add(_ents.Ready(PlayerTypes.Second).IsReadyC.IsReady);
+            objs.Add(_ents.WhoseMovePlayerTC.Player);
+            objs.Add(_ents.WinnerC.Player);
+            objs.Add(_ents.IsStartedGameC.Is);
+            objs.Add(_ents.ReadyE(PlayerTypes.Second).IsReadyC.IsReady);
 
-            objs.Add(_ents.Motion.AmountMotionsC.Amount);
+            objs.Add(_ents.MotionsC.Amount);
 
-            objs.Add(_ents.WindCloudE.CenterCloud.Idx);
+            objs.Add(_ents.CenterCloudIdxC.Idx);
             //foreach (var item in WindC.Directs) objs.Add(item.Value);
             //objs.Add(WindC.CurDirWind);
 
@@ -443,8 +615,8 @@ namespace Game.Game
 
 
 
-                foreach (var item_0 in _ents.CellEs(idx_0).TrailEs.Keys)
-                    _ents.TrailEs(idx_0).Trail(item_0).Sync((int)objects[_idx_cur++]);
+                //foreach (var item_0 in _ents.CellEs(idx_0).TrailEs.Keys)
+                //    _ents.TrailEs(idx_0).Trail(item_0).Sync((int)objects[_idx_cur++]);
 
 
 
@@ -452,20 +624,20 @@ namespace Game.Game
             }
 
 
-            _ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).SyncRpc((int)objects[_idx_cur++]);
-            _ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).SyncRpc((int)objects[_idx_cur++]);
-            _ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).SyncRpc((int)objects[_idx_cur++]);
-            _ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).SyncRpc((int)objects[_idx_cur++]);
+            //_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).SyncRpc((int)objects[_idx_cur++]);
+            //_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).SyncRpc((int)objects[_idx_cur++]);
+            //_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).SyncRpc((int)objects[_idx_cur++]);
+            //_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).SyncRpc((int)objects[_idx_cur++]);
 
 
 
-            foreach (var key in _ents.UnitStatUpgradesEs.Keys) _ents.UnitStatUpgradesEs.Upgrade(key).HaveUpgrade.Have = (bool)objects[_idx_cur++];
+            //foreach (var key in _ents.UnitStatUpgradesEs.Keys) _ents.UnitStatUpgradesEs.Upgrade(key).HaveUpgrade.Have = (bool)objects[_idx_cur++];
             //foreach (var key in BuildingUpgradesEnt.Keys) BuildingUpgradesEnt.Upgrade<HaveUpgradeC>(key).Have = (bool)objects[_idx_cur++];
 
 
-            foreach (var key in _ents.InventorResourcesEs.Keys) _ents.InventorResourcesEs.Resource(key).Set((int)objects[_idx_cur++]);
-            foreach (var key in _ents.InventorUnitsEs.Keys) _ents.InventorUnitsEs.Units(key).Sync((int)objects[_idx_cur++]);
-            foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeapons = (int)objects[_idx_cur++];
+            //foreach (var key in _ents.InventorResourcesEs.Keys) _ents.InventorResourcesEs.Resource(key).Set((int)objects[_idx_cur++]);
+            //foreach (var key in _ents.InventorUnitsEs.Keys) _ents.Units(key).Sync((int)objects[_idx_cur++]);
+            foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeaponsC.Amount = (int)objects[_idx_cur++];
 
 
             //foreach (var key in _ents.WhereUnitsEs.Keys) _ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have = (bool)objects[_idx_cur++];
@@ -481,15 +653,15 @@ namespace Game.Game
 
             #region Other
 
-            _ents.WhoseMoveE.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
-            _ents.WinnerE.Winner.Player = (PlayerTypes)objects[_idx_cur++];
-            _ents.GameInfoE.IsStartedGameC.IsStartedGame = (bool)objects[_idx_cur++];
-            _ents.Ready(_ents.WhoseMoveE.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
+            _ents.WhoseMovePlayerTC.Player = (PlayerTypes)objects[_idx_cur++];
+            _ents.WinnerC.Player = (PlayerTypes)objects[_idx_cur++];
+            _ents.IsStartedGameC.Is = (bool)objects[_idx_cur++];
+            _ents.ReadyE(_ents.WhoseMovePlayerTC.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
 
 
             //_ents.Motion.AmountMotionsC.Amount = (int)objects[_idx_cur++];
 
-            _ents.WindCloudE.CenterCloud.Idx = (byte)objects[_idx_cur++];
+            _ents.CenterCloudIdxC.Set((byte)objects[_idx_cur++]);
             //foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
             //WindC.Sync((DirectTypes)objects[_idx_cur++]);
 

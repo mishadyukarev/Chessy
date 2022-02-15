@@ -18,13 +18,13 @@ namespace Game.Game
             {
                 VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Disable();
 
-                if (Es.UnitEs(idx_0).UnitE.HaveUnit)
+                if (Es.UnitTC(idx_0).HaveUnit)
                 {
-                    if (Es.UnitE(idx_0).HaveFrozenArrawEffect)
+                    if (Es.UnitFrozenArrawC(idx_0).HaveEffect)
                     {
                         VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Enable();
 
-                        if (Es.SelectedIdxE.IdxC.Idx == idx_0)
+                        if (Es.SelectedIdxC.Idx == idx_0)
                         {
                             VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _leftLocalScale;
                         }

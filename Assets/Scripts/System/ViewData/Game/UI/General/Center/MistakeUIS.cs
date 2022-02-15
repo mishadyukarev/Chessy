@@ -2,9 +2,13 @@
 
 namespace Game.Game
 {
-    class MistakeUIS : IEcsRunSystem
+    sealed class MistakeUIS : SystemUIAbstract, IEcsRunSystem
     {
         float _neededTimeForFading = 1.3f;
+
+        internal MistakeUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        {
+        }
 
         public void Run()
         {
@@ -24,44 +28,29 @@ namespace Game.Game
 
 
 
-            if (MistakeE.Mistake<MistakeC>().Mistake != MistakeTypes.None)
+            if (Es.MistakeC.HaveMistake)
             {
-                MistakeE.Mistake<TimerC>().Timer += Time.deltaTime;
+                Es.TimerC.Add(Time.deltaTime);
 
-                if (MistakeE.Mistake<MistakeC>().Mistake == MistakeTypes.Economy)
+                if (Es.MistakeC.Is(MistakeTypes.Economy))
                 {
-                    if (MistakeE.Mistake<TimerC>().Timer >= _neededTimeForFading)
+                    if (Es.TimerC.Timer >= _neededTimeForFading)
                     {
-                        MistakeE.Mistake<TimerC>().Timer = 0;
-                        MistakeE.Mistake<MistakeC>().Reset();
-
-                        //for (var res = ResTypes.First; res < ResTypes.End; res++)
-                        //{
-                        //    Economy<TextMPUGUIC>(res).Color = Color.white;
-                        //}
+                        Es.MistakeC.Set(MistakeTypes.None);
                     }
 
                     else
                     {
-                        MistakeUIE.Zones<GameObjectVC>(MistakeE.Mistake<MistakeC>().Mistake).SetActive(true);
+                        MistakeUIE.Zones<GameObjectVC>(Es.MistakeC.Mistake).SetActive(true);
 
                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                         {
-                            if (MistakeE.Mistake(res).Amount > 0)
+                            if (Es.MistakeEconomyE(res).NeedResources > 0)
                             {
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).SetActive(true);
 
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).Text
-                                    = ">= " + MistakeE.Mistake(res).Amount;
-
-                                //Economy<EconomyUpUIC>(res).Color = Color.red;
-                                //MistakeUIC.SetActiveRes(res, true);
-                                //MistakeUIC.SetText(res, ">= " + (-EntMistakeC.NeedResAmount(res)).ToString());
-                            }
-                            else
-                            {
-                                //Economy<EconomyUpUIC>(res).Color = Color.white;
-                                //MistakeUIC.SetActiveRes(res, false);
+                                    = ">= " + (int)(Es.MistakeEconomyE(res).NeedResources * 100);
                             }
                         }
                     }
@@ -70,12 +59,11 @@ namespace Game.Game
                 else
                 {
                     MistakeUIE.Background<GameObjectVC>().SetActive(true);
-                    MistakeUIE.Zones<GameObjectVC>(MistakeE.Mistake<MistakeC>().Mistake).SetActive(true);
+                    MistakeUIE.Zones<GameObjectVC>(Es.MistakeC.Mistake).SetActive(true);
 
-                    if (MistakeE.Mistake<TimerC>().Timer >= _neededTimeForFading)
+                    if (Es.TimerC.Timer >= _neededTimeForFading)
                     {
-                        MistakeE.Mistake<TimerC>().Timer = 0;
-                        MistakeE.Mistake<MistakeC>().Reset();
+                        Es.MistakeC.Set(MistakeTypes.None);
                     }
                 }
             }

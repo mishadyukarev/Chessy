@@ -9,13 +9,13 @@
         public void Run()
         {
             var isActiveKingZone = CenterKingUIE.Paren.IsActiveSelf;
-            var curPlayerI = Es.WhoseMoveE.CurPlayerI;
+            var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
 
             if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
                 && Es.AvailableCenterHero(curPlayerI).HaveCenterHero.Have)
             {
                 UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
-                    .SetActive(!Es.InventorUnitsEs.HaveHero(curPlayerI, out var hero));
+                    .SetActive(!Es.HaveHeroInInventor(curPlayerI, out var hero));
             }
             else
             {

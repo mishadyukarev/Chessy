@@ -17,7 +17,6 @@ namespace Game.Game
 
             new DownToolWeaponUIEs(gameW, downZone);
             new UIEntDownDoner(gameW, downZone);
-            new DownUpgradeUIE(gameW, downZone);
             
             new DownScoutUIEs(gameW, downZone);
             new DownHeroUIE(gameW, downZone);

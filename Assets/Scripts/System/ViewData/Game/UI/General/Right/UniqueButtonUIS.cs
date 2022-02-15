@@ -13,7 +13,7 @@
         {
             for (var button = ButtonTypes.First; button < ButtonTypes.End; button++)
             {
-                var ability = UnitEs(Es.SelectedIdxE.IdxC.Idx).AbilityButton(button).AbilityC.Ability;
+                var ability = Es.UnitEs(Es.SelectedIdxC.Idx).AbilityButton(button).AbilityC.Ability;
 
                 if (ability == default)
                 {
@@ -21,8 +21,8 @@
                 }
                 else
                 {
-                    UIEs.RightEs.Unique(button).Text.SetActiveParent(UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).HaveCooldown);
-                    UIEs.RightEs.Unique(button).Text.Text = UnitEs(Es.SelectedIdxE.IdxC.Idx).Ability(ability).Cooldown.ToString();
+                    UIEs.RightEs.Unique(button).Text.SetActiveParent(Es.UnitEs(Es.SelectedIdxC.Idx).Ability(ability).HaveCooldown);
+                    UIEs.RightEs.Unique(button).Text.Text = Es.UnitEs(Es.SelectedIdxC.Idx).Ability(ability).Cooldown.ToString();
 
                     UIEs.RightEs.Unique(button).Paren.SetActive(true);
 

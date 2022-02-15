@@ -41,18 +41,20 @@ namespace Game.Game
         void Ready() => Es.RpcE.ReadyToMaster();
         void FriendReady()
         {
-            Es.FriendZoneE.IsActiveC.IsActive = false;
+            Es.FriendIsActiveC.IsActive = false;
         }
         void GetKing()
         {
-            Es.SelectedIdxE.Reset();
+            Es.SelectedIdxC.Reset();
 
 
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
-                if (Es.InventorUnitsEs.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMoveE.CurPlayerI).HaveUnits)
+                if (Es.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMovePlayerTC.CurPlayerI).HaveUnits)
                 {
-                    Es.SelectedUnitE.SetSelectedUnit(UnitTypes.King, LevelTypes.First, Es.ClickerObjectE);
+                    Es.SelUnitTC.Unit = UnitTypes.King;
+                    Es.SelUnitLevelTC.Level = LevelTypes.First;
+                    Es.CellClickTC.Click = CellClickTypes.SetUnit;
                 }
             }
             else SoundV(ClipTypes.Mistake).Play();
@@ -74,7 +76,7 @@ namespace Game.Game
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
                 Es.RpcE.PickUpgUnitToMas(unit);
 
@@ -85,7 +87,7 @@ namespace Game.Game
 
         void UpgradeBuild(BuildingTypes build)
         {
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
                 Es.RpcE.PickUpgBuildToMas(build);
 
@@ -96,7 +98,7 @@ namespace Game.Game
 
         void UpgradeWater()
         {
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
                 Es.RpcE.UpgWater();
 
@@ -107,7 +109,7 @@ namespace Game.Game
 
         void GetHero(in UnitTypes unit)
         {
-            if (Es.WhoseMoveE.IsMyMove)
+            if (Es.WhoseMovePlayerTC.IsMyMove)
             {
                 Es.RpcE.GetHeroToMaster(unit);
             }

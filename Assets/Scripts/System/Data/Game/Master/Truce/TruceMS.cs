@@ -21,31 +21,33 @@ namespace Game.Game
 
                 Es.TrailEs(idx_0).DestroyAll();
 
-                if (Es.UnitEs(idx_0).UnitE.HaveUnit)
+                if (Es.UnitTC(idx_0).HaveUnit)
                 {
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (Es.UnitE(idx_0).Is(PlayerTypes.First))
+                        if (Es.UnitPlayerTC(idx_0).Is(PlayerTypes.First))
                         {
-                            if (Es.ExtraTWE(idx_0).HaveToolWeapon)
+                            if (Es.ExtraTWE(idx_0).ToolWeaponTC.HaveToolWeapon)
                             {
-                                Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeapon, Es.ExtraTWE(idx_0).LevelT, Es.UnitE(idx_0).Owner).Add();
+                                Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeaponTC.ToolWeapon, Es.ExtraTWE(idx_0).LevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
                                 Es.UnitEs(idx_0).ExtraToolWeaponE.Reset();
                             }
 
-                            Es.UnitE(idx_0).AddToInventorAndRemove(Es.InventorUnitsEs);
+                            Es.Units(Es.UnitTC(idx_0).Unit, Es.UnitLevelTC(idx_0).Level, Es.UnitPlayerTC(idx_0).Player).AmountC.Add(1);
+                            Es.UnitTC(idx_0).Unit = UnitTypes.None;
                         }
                     }
                     else
                     {
 
-                        if (Es.ExtraTWE(idx_0).HaveToolWeapon)
+                        if (Es.ExtraTWE(idx_0).ToolWeaponTC.HaveToolWeapon)
                         {
-                            Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeapon, Es.ExtraTWE(idx_0).LevelT, Es.UnitE(idx_0).Owner).Add();
+                            Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeaponTC.ToolWeapon, Es.ExtraTWE(idx_0).LevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
                             Es.UnitEs(idx_0).ExtraToolWeaponE.Reset();
                         }
 
-                        Es.UnitE(idx_0).AddToInventorAndRemove(Es.InventorUnitsEs);
+                        Es.Units(Es.UnitTC(idx_0).Unit, Es.UnitLevelTC(idx_0).Level, Es.UnitPlayerTC(idx_0).Player).AmountC.Add(1);
+                        Es.UnitTC(idx_0).Unit = UnitTypes.None;
                     }
                 }
 
@@ -55,7 +57,7 @@ namespace Game.Game
                     if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
                     {
                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                        BuildEs(idx_0).BuildingE.Destroy(Es);
+                        Es.BuildEs(idx_0).BuildingE.Destroy(Es);
                     }
                 }
 
@@ -63,7 +65,7 @@ namespace Game.Game
                 {
                     if (Es.EnvironmentEs(idx_0).YoungForest.HaveEnvironment)
                     {
-                        Es.EnvironmentEs(idx_0).YoungForest.Destroy();
+                        Es.EnvironmentEs(idx_0).YoungForest.SetZeroResources();
 
                         Es.EnvironmentEs(idx_0).AdultForest.SetRandomResources();
                     }

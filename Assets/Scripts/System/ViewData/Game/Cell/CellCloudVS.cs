@@ -13,7 +13,7 @@
                 CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx_0).SetActive(false);
             }
 
-            var centerCloud = Es.WindCloudE.CenterCloud.Idx;
+            var centerCloud = Es.CenterCloudIdxC.Idx;
 
             foreach (var idx in CellWorker.GetIdxsAround(centerCloud))
             {

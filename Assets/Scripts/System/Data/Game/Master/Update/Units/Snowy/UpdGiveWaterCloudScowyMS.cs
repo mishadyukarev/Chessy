@@ -10,11 +10,11 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitE(idx_0).Is(UnitTypes.Snowy))
+                if (Es.UnitTC(idx_0).Is(UnitTypes.Snowy))
                 {
-                    if (CellWorker.GetIdxsAround(Es.WindCloudE.CenterCloud.Idx).Contains(idx_0))
+                    if (CellWorker.GetIdxsAround(Es.CenterCloudIdxC.Idx).Contains(idx_0))
                     {
-                        Es.UnitE(idx_0).SetMaxWater(Es.UnitStatUpgradesEs);
+                        Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                     }
                     
                 }
