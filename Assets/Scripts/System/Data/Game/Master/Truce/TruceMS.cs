@@ -16,7 +16,7 @@ namespace Game.Game
             foreach (byte idx_0 in CellWorker.Idxs)
             {
 
-                Es.EffectEs(idx_0).FireE.Disable();
+                Es.HaveFire(idx_0) = false;
 
 
                 Es.TrailEs(idx_0).DestroyAll();
@@ -27,58 +27,58 @@ namespace Game.Game
                     {
                         if (Es.UnitPlayerTC(idx_0).Is(PlayerTypes.First))
                         {
-                            if (Es.ExtraTWE(idx_0).ToolWeaponTC.HaveToolWeapon)
+                            if (Es.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
                             {
-                                Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeaponTC.ToolWeapon, Es.ExtraTWE(idx_0).LevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
-                                Es.UnitEs(idx_0).ExtraToolWeaponE.Reset();
+                                Es.InventorToolWeaponEs.ToolWeapons(Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon, Es.UnitEs(idx_0).ExtraTWLevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
+                                Es.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                             }
 
-                            Es.Units(Es.UnitTC(idx_0).Unit, Es.UnitLevelTC(idx_0).Level, Es.UnitPlayerTC(idx_0).Player).AmountC.Add(1);
+                            Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
                             Es.UnitTC(idx_0).Unit = UnitTypes.None;
                         }
                     }
                     else
                     {
 
-                        if (Es.ExtraTWE(idx_0).ToolWeaponTC.HaveToolWeapon)
+                        if (Es.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
                         {
-                            Es.InventorToolWeaponEs.ToolWeapons(Es.ExtraTWE(idx_0).ToolWeaponTC.ToolWeapon, Es.ExtraTWE(idx_0).LevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
-                            Es.UnitEs(idx_0).ExtraToolWeaponE.Reset();
+                            Es.InventorToolWeaponEs.ToolWeapons(Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon, Es.UnitEs(idx_0).ExtraTWLevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
+                            Es.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         }
 
-                        Es.Units(Es.UnitTC(idx_0).Unit, Es.UnitLevelTC(idx_0).Level, Es.UnitPlayerTC(idx_0).Player).AmountC.Add(1);
+                        Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
                         Es.UnitTC(idx_0).Unit = UnitTypes.None;
                     }
                 }
 
 
-                if (Es.BuildingE(idx_0).HaveBuilding)
+                if (Es.BuildTC(idx_0).HaveBuilding)
                 {
-                    if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
+                    if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp))
                     {
                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                        Es.BuildEs(idx_0).BuildingE.Destroy(Es);
+                        //Es.BuildE(idx_0).BuildingE.Destroy(Es);
                     }
                 }
 
                 else
                 {
-                    if (Es.EnvironmentEs(idx_0).YoungForest.HaveEnvironment)
+                    if (Es.YoungForestC(idx_0).HaveAny)
                     {
-                        Es.EnvironmentEs(idx_0).YoungForest.SetZeroResources();
+                        Es.YoungForestC(idx_0).Resources = 0;
 
-                        Es.EnvironmentEs(idx_0).AdultForest.SetRandomResources();
+                       // Es.AdultForestC(idx_0).SetRandomResources();
                     }
 
-                    if (!Es.EnvironmentEs(idx_0).Fertilizer.HaveEnvironment
-                        && !Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment
-                        && !Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (!Es.EnvironmentEs(idx_0).FertilizeC.HaveAny
+                        && !Es.EnvironmentEs(idx_0).MountainC.HaveAny
+                        && !Es.AdultForestC(idx_0).HaveAny)
                     {
                         random = Random.Range(0, 100);
 
                         if (random <= 3)
                         {
-                            Es.EnvironmentEs(idx_0).Fertilizer.SetRandomResources();
+                            //Es.EnvironmentEs(idx_0).FertilizeC.Resources = CellEnvironmentValues.
                         }
                     }
                 }

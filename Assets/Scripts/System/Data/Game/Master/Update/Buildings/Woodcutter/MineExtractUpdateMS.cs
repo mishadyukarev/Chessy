@@ -16,7 +16,7 @@
             //        {
             //            Es.EnvHillE(idx_0).ExtractMine(CellEs(idx_0), Es.BuildingUpgradeEs, Es.InventorResourcesEs);
 
-            //            if (!Es.EnvHillE(idx_0).HaveEnvironment)
+            //            if (!Es.EnvHillE(idx_0).HaveAny)
             //            {
             //                Es.BuildE(idx_0).Destroy(Es);
             //            }

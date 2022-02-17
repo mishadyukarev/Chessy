@@ -10,9 +10,9 @@
         {
             var idx_sel = Es.SelectedIdxC.Idx;
 
-            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Food).Text = ((int)(Es.FertilizeE(idx_sel).Resources * 100)).ToString();
-            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Wood).Text = ((int)(Es.AdultForestE(idx_sel).Resources * 100)).ToString();
-            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Ore).Text = ((int)(Es.HillE(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Food).Text = ((int)(Es.FertilizeC(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Wood).Text = ((int)(Es.AdultForestC(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Ore).Text = ((int)(Es.HillC(idx_sel).Resources * 100)).ToString();
         }
     }
 }

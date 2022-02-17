@@ -1,9 +1,10 @@
 ﻿namespace Game.Game
 {
-    public struct HaveC
+    public class HaveC
     {
         public bool Have;
 
+        public HaveC() { }
         public HaveC(in bool have) => Have = have;
     }
 }

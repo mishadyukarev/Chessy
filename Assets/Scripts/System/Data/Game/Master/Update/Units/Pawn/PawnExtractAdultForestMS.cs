@@ -10,30 +10,36 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.AdultForestE(idx_0).CanExtractPawn)
-                {
-                    Es.AdultForestE(idx_0).ExtractPawn(Es.UnitE(idx_0), Es.InventorResourcesEs);
+                //if (Es.AdultForestC(idx_0).CanExtractPawn)
+                //{
+                //    //Es.AdultForestE(idx_0).ExtractPawn(Es.UnitE(idx_0), Es.InventorResourcesEs);
 
-                    if (Es.AdultForestE(idx_0).HaveEnvironment)
-                    {
-                        if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp) || !Es.BuildingE(idx_0).HaveBuilding)
-                        {
-                            Es.BuildingE(idx_0).SetNew(BuildingTypes.Woodcutter, Es.UnitPlayerTC(idx_0).Player);
-                        }
+                //    //var extract = AmountExtractPawn(unitE);
 
-                        else if (!Es.BuildingE(idx_0).Is(BuildingTypes.Woodcutter))
-                        {
-                            Es.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
-                        }
-                    }
-                    else
-                    {
-                        Es.BuildingE(idx_0).Destroy(Es);
-                        Es.AdultForestE(idx_0).Destroy(Es.TrailEs(idx_0).Trails);
+                //    //invResEs.Resource(Resource, unitE.PlayerTC.Player).ResourceC.Add(extract);
+                //    //Take(extract);
 
-                        Es.YoungForestE(idx_0).SetRandomResources();
-                    }
-                }
+
+                //    if (Es.AdultForestC(idx_0).HaveAny)
+                //    {
+                //        if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp) || !Es.BuildTC(idx_0).HaveBuilding)
+                //        {
+                //            Es.BuildingE(idx_0).SetNew(BuildingTypes.Woodcutter, Es.UnitPlayerTC(idx_0).Player);
+                //        }
+
+                //        else if (!Es.BuildTC(idx_0).Is(BuildingTypes.Woodcutter))
+                //        {
+                //            Es.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
+                //        }
+                //    }
+                //    else
+                //    {
+                //        Es.BuildingE(idx_0).Destroy(Es);
+                //        //Es.AdultForestC(idx_0).Destroy(Es.TrailEs(idx_0).Trails);
+
+                //        //Es.YoungForestC(idx_0).SetRandomResources();
+                //    }
+                //}
             }
         }
     }

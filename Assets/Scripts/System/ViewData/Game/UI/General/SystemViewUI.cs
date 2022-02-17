@@ -32,7 +32,7 @@ namespace Game.Game
                 + new DonerUIS(ents, entsUI).Run
                 + new DownPawnUIS(ents, entsUI).Run
                 + new DownToolWeaponUIS(ents, entsUI).Run
-                + new ScoutSyncUIS(ents, entsUI).Run
+                + new DownScoutUIS(ents, entsUI).Run
                 + new DownHeroUIS(ents, entsUI).Run
 
                 ///Up

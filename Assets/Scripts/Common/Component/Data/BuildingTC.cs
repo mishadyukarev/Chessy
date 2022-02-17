@@ -4,7 +4,7 @@
     {
         public BuildingTypes Build;
 
-        public bool Have => Build != default;
+        public bool HaveBuilding => !Is(BuildingTypes.None, BuildingTypes.End);
         public bool Is(params BuildingTypes[] builds)
         {
             foreach (var build in builds) if (build == Build) return true;

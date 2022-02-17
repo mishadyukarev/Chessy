@@ -1,7 +1,7 @@
-﻿namespace Game.Game
-{
-    public interface IIsMeleeCellUnit
-    {
-        bool IsMelee { get; }
-    }
-}
+﻿//namespace Game.Game
+//{
+//    public interface IIsMeleeCellUnit
+//    {
+//        bool IsMelee { get; }
+//    }
+//}

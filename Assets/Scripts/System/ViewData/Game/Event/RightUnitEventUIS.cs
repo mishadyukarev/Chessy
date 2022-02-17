@@ -19,7 +19,7 @@ namespace Game.Game
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
@@ -37,13 +37,13 @@ namespace Game.Game
 
         void Unique(in ButtonTypes uniqueButton)
         {
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
                 var idx_sel = Es.SelectedIdxC.Idx;
 
                 var abil = Es.UnitEs(idx_sel).AbilityButton(uniqueButton).AbilityC;
 
-                if (!Es.UnitEs(idx_sel).Ability(abil.Ability).HaveCooldown)
+                if (!Es.UnitEs(idx_sel).Ability(abil.Ability).CooldownC.HaveCooldown)
                 {
                     switch (abil.Ability)
                     {

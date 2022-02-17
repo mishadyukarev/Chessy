@@ -32,7 +32,7 @@
                     {
                         var idx_2 = CellWorker.GetIdxCell(xy_2);
 
-                        if (!Es.EnvironmentEs(idx_2).Mountain.HaveEnvironment && !Es.UnitTC(idx_2).HaveUnit)
+                        if (!Es.EnvironmentEs(idx_2).MountainC.HaveAny && !Es.UnitTC(idx_2).HaveUnit)
                         {
                             CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
                         }
@@ -47,9 +47,9 @@
                 {
                     foreach (var idx_0 in CellWorker.Idxs)
                     {
-                        if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
+                        if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp))
                         {
-                            if (!Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment && !Es.UnitTC(idx_0).HaveUnit)
+                            if (!Es.EnvironmentEs(idx_0).MountainC.HaveAny && !Es.UnitTC(idx_0).HaveUnit)
                             {
                                 CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
                             }

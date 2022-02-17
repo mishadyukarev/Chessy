@@ -2,15 +2,15 @@
 
 namespace Game.Game
 {
-    public sealed class CellE : EntityAbstract
+    public struct CellE
     {
-        public ref XyC XyC => ref Ent.Get<XyC>();
-        public ref InstanceIDC InstanceIDC => ref Ent.Get<InstanceIDC>();
+        public XyC XyC;
+        public int InstanceIDC;
 
-        public CellE(in EcsWorld gameW, in byte[] xy, in int instanceID) : base(gameW)
+        public CellE(in byte[] xy, in int instanceID)
         {
-            Ent.Add(new XyC(xy))
-               .Add(new InstanceIDC(instanceID));
+            XyC = new XyC(xy);
+            InstanceIDC = instanceID;
         }
     }
 }

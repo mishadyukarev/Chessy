@@ -1,6 +1,6 @@
-﻿namespace Game.Game
-{
-    public sealed class WinnerPlayerTC : PlayerTC
-    {
-    }
-}
+﻿//namespace Game.Game
+//{
+//    public sealed class WinnerPlayerTC : PlayerTC
+//    {
+//    }
+//}

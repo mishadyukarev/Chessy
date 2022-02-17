@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public class ToolWeaponTC
+    public struct ToolWeaponTC
     {
         public ToolWeaponTypes ToolWeapon;
         public bool Is(params ToolWeaponTypes[] tWs)
@@ -14,7 +14,6 @@ namespace Game.Game
         }
         public bool HaveToolWeapon => !Is(ToolWeaponTypes.None, ToolWeaponTypes.End);
 
-        public ToolWeaponTC() { }
         public ToolWeaponTC(in ToolWeaponTypes tw) => ToolWeapon = tw;
     }
 }

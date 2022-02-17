@@ -6,15 +6,15 @@ namespace Game.Game
 {
     public struct AvailableCenterUpgradeEs
     {
-        Dictionary<PlayerTypes, HaveUpgradeE> _haveUpgrades;
-        Dictionary<string, HaveUpgradeE> _build;
-        Dictionary<string, HaveUpgradeE> _unit;
-        Dictionary<PlayerTypes, HaveUpgradeE> _water;
+        Dictionary<PlayerTypes, HaveUpgradeC> _haveUpgrades;
+        Dictionary<string, HaveUpgradeC> _build;
+        Dictionary<string, HaveUpgradeC> _unit;
+        Dictionary<PlayerTypes, HaveUpgradeC> _water;
 
-        public HaveUpgradeE HaveUpgrade(in PlayerTypes player) => _haveUpgrades[player];
-        public HaveUpgradeE HaveBuildUpgrade(in BuildingTypes build, in PlayerTypes player) => _build[build.ToString() + player];
-        public HaveUpgradeE HaveUnitUpgrade(in UnitTypes unit, in PlayerTypes player) => _unit[unit.ToString() + player];
-        public HaveUpgradeE HaveWaterUpgrade(in PlayerTypes player) => _water[player];
+        public HaveUpgradeC HaveUpgrade(in PlayerTypes player) => _haveUpgrades[player];
+        public HaveUpgradeC HaveBuildUpgrade(in BuildingTypes build, in PlayerTypes player) => _build[build.ToString() + player];
+        public HaveUpgradeC HaveUnitUpgrade(in UnitTypes unit, in PlayerTypes player) => _unit[unit.ToString() + player];
+        public HaveUpgradeC HaveWaterUpgrade(in PlayerTypes player) => _water[player];
 
         public HashSet<PlayerTypes> Keys
         {
@@ -28,25 +28,25 @@ namespace Game.Game
 
         public AvailableCenterUpgradeEs(in EcsWorld gameW)
         {
-            _haveUpgrades = new Dictionary<PlayerTypes, HaveUpgradeE>();
-            _build = new Dictionary<string, HaveUpgradeE>();
-            _unit = new Dictionary<string, HaveUpgradeE>();
-            _water = new Dictionary<PlayerTypes, HaveUpgradeE>();
+            _haveUpgrades = new Dictionary<PlayerTypes, HaveUpgradeC>();
+            _build = new Dictionary<string, HaveUpgradeC>();
+            _unit = new Dictionary<string, HaveUpgradeC>();
+            _water = new Dictionary<PlayerTypes, HaveUpgradeC>();
 
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _haveUpgrades.Add(player, new HaveUpgradeE(true, gameW));
+                _haveUpgrades.Add(player, new HaveUpgradeC(true));
 
-                _water.Add(player, new HaveUpgradeE(true, gameW));
+                _water.Add(player, new HaveUpgradeC(true));
 
                 for (var build = BuildingTypes.Farm; build <= BuildingTypes.Woodcutter; build++)
                 {
-                    _build.Add(build.ToString() + player, new HaveUpgradeE(true, gameW));
+                    _build.Add(build.ToString() + player, new HaveUpgradeC(true));
                 }
 
                 for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
                 {
-                    _unit.Add(unit.ToString() + player, new HaveUpgradeE(true, gameW));
+                    _unit.Add(unit.ToString() + player, new HaveUpgradeC(true));
                 }
             }
         }
@@ -54,22 +54,22 @@ namespace Game.Game
 
         public void UpgradeCenterUnit_Master(in UnitTypes unit, in Player sender, in Entities es)
         {
-            var whoseMove = es.WhoseMovePlayerTC.Player;
+            var whoseMove = es.WhoseMove.Player;
 
 
             if (unit == UnitTypes.Scout)
             {
-                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
-                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).Have = true;
             }
             else
             {
-                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
-                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).HaveUpgrade.Have = true;
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).Have = true;
             }
 
-            es.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).HaveUpgrade.Have = false;
-            es.AvailableCenterUpgradeEs.HaveUnitUpgrade(unit, whoseMove).HaveUpgrade.Have = false;
+            es.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).Have = false;
+            es.AvailableCenterUpgradeEs.HaveUnitUpgrade(unit, whoseMove).Have = false;
 
             es.RpcE.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }

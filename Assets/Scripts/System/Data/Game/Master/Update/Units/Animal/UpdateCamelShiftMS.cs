@@ -18,11 +18,11 @@ namespace Game.Game
 
                     var idx_1 = CellWorker.GetIdxCellByDirect(idx_0, (DirectTypes)randDir);
 
-                    if (Es.CellEs(idx_1).ParentE.IsActiveSelf.IsActive
-                        && !Es.EnvironmentEs(idx_1).Mountain.HaveEnvironment
+                    if (Es.CellEs(idx_1).IsActiveParentSelf
+                        && !Es.EnvironmentEs(idx_1).MountainC.HaveAny
                         && !Es.UnitTC(idx_1).HaveUnit)
                     {
-                        Es.UnitE(idx_0).Shift(idx_1, false, Es);
+                        //Es.UnitE(idx_0).Shift(idx_1, false, Es);
                     }
                 }
             }

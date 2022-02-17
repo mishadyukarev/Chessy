@@ -42,18 +42,18 @@ namespace Game.Game
             if (Resource(ResourceTypes.Wood, player).ResourceC.Resources >= 10 
                 && Resource(ResourceTypes.Ore, player).ResourceC.Resources >= 10)
             {
-                Resource(ResourceTypes.Wood, player).ResourceC.Take(10);
-                Resource(ResourceTypes.Ore, player).ResourceC.Take(10);
+                Resource(ResourceTypes.Wood, player).ResourceC.Resources -= 10;
+                Resource(ResourceTypes.Ore, player).ResourceC.Resources -= 10;
 
                 if (UnityEngine.Random.Range(0f, 1f) <= 0.7f)
                 {
                     if (UnityEngine.Random.Range(0f, 1f) <= 0.2f)
                     {
-                        Resource(ResourceTypes.Gold, player).ResourceC.Add(1);
+                        Resource(ResourceTypes.Gold, player).ResourceC.Resources += 1;
                     }
                     else
                     {
-                        Resource(ResourceTypes.Iron, player).ResourceC.Add(1);
+                        Resource(ResourceTypes.Iron, player).ResourceC.Resources += 1;
                     }
                 }
             }
@@ -115,30 +115,30 @@ namespace Game.Game
         }
         public void TryBuyResourcesFromMarket_Master(in MarketBuyTypes marketBuyT, in Player sender, in Entities ents)
         {
-            var whoseMove = ents.WhoseMovePlayerTC.Player;
+            var whoseMove = ents.WhoseMove.Player;
 
             if (CanBuyResourceFromMarket_Master(marketBuyT, whoseMove, out var needRes))
             {
                 switch (marketBuyT)
                 {
                     case MarketBuyTypes.FoodToWood:
-                        Resource(ResourceTypes.Food, whoseMove).ResourceC.Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
-                        Resource(ResourceTypes.Wood, whoseMove).ResourceC.Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        Resource(ResourceTypes.Food, whoseMove).ResourceC.Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                        Resource(ResourceTypes.Wood, whoseMove).ResourceC.Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
                         break;
 
                     case MarketBuyTypes.WoodToFood:
-                        Resource(ResourceTypes.Wood, whoseMove).ResourceC.Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
-                        Resource(ResourceTypes.Food, whoseMove).ResourceC.Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        Resource(ResourceTypes.Wood, whoseMove).ResourceC.Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                        Resource(ResourceTypes.Food, whoseMove).ResourceC.Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
                         break;
 
                     case MarketBuyTypes.GoldToFood:
-                        Resource(ResourceTypes.Gold, whoseMove).ResourceC.Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
-                        Resource(ResourceTypes.Food, whoseMove).ResourceC.Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        Resource(ResourceTypes.Gold, whoseMove).ResourceC.Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                        Resource(ResourceTypes.Food, whoseMove).ResourceC.Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
                         break;
 
                     case MarketBuyTypes.GoldToWood:
-                        Resource(ResourceTypes.Gold, whoseMove).ResourceC.Take(ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT));
-                        Resource(ResourceTypes.Wood, whoseMove).ResourceC.Add(ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT));
+                        Resource(ResourceTypes.Gold, whoseMove).ResourceC.Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+                        Resource(ResourceTypes.Wood, whoseMove).ResourceC.Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
                         break;
 
                     default: throw new Exception();
@@ -168,7 +168,7 @@ namespace Game.Game
         public void BuyTW(ToolWeaponTypes tw, LevelTypes level, PlayerTypes player)
         {
             for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-                Resource(resType, player).ResourceC.Take(ResourcesInInventorValues.ForBuyToolWeapon(tw, level, resType));
+                Resource(resType, player).ResourceC.Resources -= ResourcesInInventorValues.ForBuyToolWeapon(tw, level, resType);
         }
     }
 }

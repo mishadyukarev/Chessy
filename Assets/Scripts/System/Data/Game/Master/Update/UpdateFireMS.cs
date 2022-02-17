@@ -12,7 +12,7 @@ namespace Game.Game
         {
             foreach (var idx_1 in CellWorker.GetIdxsAround(Es.CenterCloudIdxC.Idx))
             {
-                Es.EffectEs(idx_1).FireE.Disable();
+                Es.HaveFire(idx_1) = false;
             }
 
 
@@ -20,31 +20,35 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.EffectEs(idx_0).FireE.HaveFireC.Have)
+                if (Es.HaveFire(idx_0))
                 {
-                    Es.EnvironmentEs(idx_0).AdultForest.Fire();
+                    Es.AdultForestC(idx_0).Resources -= CellEnvironment_Values.FireAdultForest;
 
                     if (Es.UnitTC(idx_0).HaveUnit)
                     {
                         if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
                         {
-                            Es.UnitHpC(idx_0).Health = CellUnitStatHpValues.MAX_HP;
+                            Es.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
                         }
                         else
                         {
-                            Es.UnitE(idx_0).Take(Es, CellUnitStatHpValues.FIRE_DAMAGE);
+                            //Es.UnitE(idx_0).Take(Es, CellUnitStatHpValues.FIRE_DAMAGE);
                         }
                     }
 
-                    if (!Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (!Es.AdultForestC(idx_0).HaveAny)
                     {
-                        Es.BuildEs(idx_0).BuildingE.Destroy(Es);
+                        //Es.BuildE(idx_0).BuildingE.Destroy(Es);
 
-                        Es.EnvironmentEs(idx_0).AdultForest.Destroy(Es.TrailEs(idx_0).Trails);
+                        //Es.AdultForestC(idx_0).Destroy(Es.TrailEs(idx_0).Trails);
 
-                        Es.EnvironmentEs(idx_0).YoungForest.TrySetAfterFireForest();
+                        if (UnityEngine.Random.Range(0f, 1f) < CellEnvironment_Values.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
+                        {
+                            Es.YoungForestC(idx_0).Resources -= CellEnvironment_Values.FireAdultForest;
+                        }
 
-                        Es.EffectEs(idx_0).FireE.Disable();
+
+                        Es.HaveFire(idx_0) = false;
 
 
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
@@ -57,11 +61,11 @@ namespace Game.Game
 
             foreach (var idx_0 in needForFireNext)
             {
-                if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                if (Es.CellEs(idx_0).IsActiveParentSelf)
                 {
-                    if (Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (Es.AdultForestC(idx_0).HaveAny)
                     {
-                        Es.EffectEs(idx_0).FireE.Enable();
+                        Es.HaveFire(idx_0) = true;
                     }
                 }
             }

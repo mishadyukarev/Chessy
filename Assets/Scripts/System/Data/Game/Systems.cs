@@ -27,11 +27,16 @@ namespace Game.Game
 
             _actions.Add(DataSTypes.RunAfterSyncRPC,
                 (Action)
-                new VisibElseS(ents).Run
+                new GetCurentPlayerS(ents).Run
+
+                + new VisibElseS(ents).Run
                 + new AbilitySyncS(ents).Run
+                + new GetDamageUnitsS(ents).Run
                 + new GetCellsForSetUnitS(ents).Run
                 + new GetCellsForShiftUnitS(ents).Run
                 + new GetCellsForArsonArcherS(ents).Run
+
+                + new GetUnitTypeS(ents).Run
 
                 + new GetAttackMeleeCellsS(ents).Run
                 + new GetCellsForAttackArcherS(ents).Run);

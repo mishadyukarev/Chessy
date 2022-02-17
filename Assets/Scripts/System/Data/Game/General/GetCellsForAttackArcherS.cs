@@ -14,7 +14,7 @@
 
                 if (!Es.UnitStunC(idx_0).IsStunned)
                 {
-                    if (Es.UnitStepC(idx_0).HaveSteps)
+                    if (Es.UnitStepC(idx_0).HaveAnySteps)
                     {
                         if (Es.UnitTC(idx_0).Is(UnitTypes.Elfemale, UnitTypes.Snowy) || Es.UnitTC(idx_0).Is(UnitTypes.Pawn) && Es.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
@@ -26,7 +26,7 @@
                                 var idx_1 = CellWorker.GetIdxCell(xy_1);
 
 
-                                if (Es.CellEs(idx_1).ParentE.IsActiveSelf.IsActive && !Es.MountainE(idx_1).HaveEnvironment)
+                                if (Es.CellEs(idx_1).IsActiveParentSelf && !Es.MountainC(idx_1).HaveAny)
                                 {
                                     if (Es.UnitTC(idx_0).HaveUnit)
                                     {
@@ -38,22 +38,22 @@
                                                 {
                                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                     {
-                                                        CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, Es.UnitPlayerTC(idx_0).Player).Add(idx_1);
+                                                        Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_1);
                                                     }
-                                                    else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, Es.UnitPlayerTC(idx_0).Player).Add(idx_1);
+                                                    else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_1);
                                                 }
                                                 else
                                                 {
                                                     if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                     {
-                                                        CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, Es.UnitPlayerTC(idx_0).Player).Add(idx_1);
+                                                        Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_1);
                                                     }
-                                                    else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, Es.UnitPlayerTC(idx_0).Player).Add(idx_1);
+                                                    else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_1);
                                                 }
                                             }
                                             else
                                             {
-                                                CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, Es.UnitPlayerTC(idx_0).Player).Add(idx_1);
+                                                Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_1);
                                             }
                                         }
                                     }
@@ -63,8 +63,8 @@
                                     var idx_2 = CellWorker.GetIdxCell(xy_2);
 
 
-                                    if (Es.UnitTC(idx_2).HaveUnit && !Es.UnitTC(idx_2).IsAnimal
-                                        && Es.UnitEs(idx_2).VisibleE(Es.UnitPlayerTC(idx_0).Player).IsVisible
+                                    if (Es.UnitTC(idx_2).HaveUnit && !Es.UnitEs(idx_2).IsAnimal
+                                        && Es.UnitEs(idx_2).ForPlayer(Es.UnitPlayerTC(idx_0).Player).IsVisibleC
                                         && !Es.UnitPlayerTC(idx_2).Is(Es.UnitPlayerTC(idx_0).Player))
                                     {
                                         if (Es.UnitTC(idx_0).Is(UnitTypes.Pawn) && Es.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
@@ -73,24 +73,24 @@
                                             {
                                                 if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                 {
-                                                    CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, Es.UnitPlayerTC(idx_0).Player).Add(idx_2);
+                                                    Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_2);
                                                 }
 
-                                                else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, Es.UnitPlayerTC(idx_0).Player).Add(idx_2);
+                                                else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_2);
                                             }
                                             else
                                             {
                                                 if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
                                                 {
-                                                    CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, Es.UnitPlayerTC(idx_0).Player).Add(idx_2);
+                                                    Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_2);
                                                 }
 
-                                                else CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Unique, Es.UnitPlayerTC(idx_0).Player).Add(idx_2);
+                                                else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_2);
                                             }
                                         }
                                         else
                                         {
-                                            CellsForAttackUnitsEs.CanAttack<IdxsC>(idx_0, AttackTypes.Simple, Es.UnitPlayerTC(idx_0).Player).Add(idx_2);
+                                            Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_2);
                                         }
                                     }
                                 }

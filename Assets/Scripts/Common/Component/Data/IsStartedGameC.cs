@@ -1,7 +1,7 @@
-﻿namespace Game.Game
-{
-    public class IsStartedGameC : IsC
-    {
+﻿//namespace Game.Game
+//{
+//    public class IsStartedGameC : IsC
+//    {
 
-    }
-}
+//    }
+//}

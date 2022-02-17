@@ -2,18 +2,13 @@
 
 namespace Game.Game
 {
-    public class HealthC : AmountFloatC
+    public struct HealthC
     {
-        public float Health
-        {
-            get => Amount;
-            set => Amount = value;
-        }
+        public float Health;
 
         public bool IsAlive => Health > 0;
 
-        public HealthC() { }
-        public HealthC(in int health) : base(health) { }
+        public HealthC(in int health) { Health = health; }
 
         public void Destroy() => Health = 0;
     }

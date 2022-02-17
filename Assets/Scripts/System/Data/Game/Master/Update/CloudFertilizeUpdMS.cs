@@ -12,9 +12,9 @@
 
             foreach (var idx_1 in Es.CellSpaceWorker.GetIdxsAround(idx_0))
             {
-                if (!Es.MountainE(idx_1).HaveEnvironment)
+                if (!Es.MountainC(idx_1).HaveAny)
                 {
-                    Es.FertilizeE(idx_1).SetMaxResources();
+                    Es.FertilizeC(idx_1).Resources = CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES;
                 }
             }
         }

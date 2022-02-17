@@ -9,7 +9,7 @@
 
         void Toggle()
         {
-            Es.BuildingE(Es.SelectedIdxC.Idx).ToggleSmelter();
+            Es.BuildSmelterTC(Es.SelectedIdxC.Idx) = !Es.BuildSmelterTC(Es.SelectedIdxC.Idx);
         }
     }
 }

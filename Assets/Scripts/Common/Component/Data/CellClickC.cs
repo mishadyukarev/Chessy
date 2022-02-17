@@ -10,9 +10,6 @@
             return false;
         }
 
-        public CellClickC(CellClickTypes click)
-        {
-            Click = click;
-        }
+        public CellClickC(CellClickTypes click) => Click = click;
     }
 }

@@ -14,7 +14,7 @@
                 {
                     if (CellWorker.GetIdxsAround(Es.CenterCloudIdxC.Idx).Contains(idx_0))
                     {
-                        Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
+                        //Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                     }
                     
                 }

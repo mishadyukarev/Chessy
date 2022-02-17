@@ -10,20 +10,22 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
+            var curPlayerI = Es.CurPlayerI.Player;
 
-            if (Es.HaveHeroInInventor(curPlayerI, out var hero))
+            var myHeroT = Es.ForPlayerE(curPlayerI).AvailableHeroTC.Unit;
+
+            if (Es.ForPlayerE(curPlayerI).UnitsInfoE(myHeroT).HaveInInventor && myHeroT != UnitTypes.None)
             {
                 Parent.SetActive(true);
 
-                var cooldown = Es.ScoutHeroCooldownE(hero, curPlayerI).CooldownC.Amount;
+                var cooldown = Es.ForPlayerE(curPlayerI).UnitsInfoE(myHeroT).ScoutHeroCooldownC.Cooldown;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {
                     Image(unit).SetActive(false);
                 }
 
-                Image(hero).SetActive(true);
+                Image(myHeroT).SetActive(true);
 
                 if (cooldown > 0)
                 {

@@ -10,13 +10,16 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.BuildingE(idx_0).Is(BuildingTypes.City))
+                if (Es.BuildTC(idx_0).Is(BuildingTypes.City))
                 {
                     foreach (var idx_1 in Es.CellSpaceWorker.GetIdxsAround(idx_0))
                     {
-                        if (Es.HillE(idx_1).HaveEnvironment)
+                        if (Es.HillC(idx_1).HaveAny)
                         {
-                            Es.HillE(idx_1).ExtractCity(Es.CellEs(idx_0), Es.InventorResourcesEs);
+                            //var extract = AmountExtractCity();
+
+                            //invResEs.Resource(Resource, cellEs_from.BuildEs.BuildingE.Owner).ResourceC.Add(extract);
+                            //Take(extract);
                         }
                     }
                 }

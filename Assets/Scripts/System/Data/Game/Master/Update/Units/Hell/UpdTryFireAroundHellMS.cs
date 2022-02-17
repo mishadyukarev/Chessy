@@ -16,9 +16,12 @@ namespace Game.Game
                 {
                     foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                     {
-                        if (Es.EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
+                        if (Es.AdultForestC(idx_1).HaveAny)
                         {
-                            Es.EffectEs(idx_1).FireE.TryFireHell();
+                            if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
+                            {
+                                Es.HaveFire(idx_1) = true;
+                            }
                         }
                     }
                 }

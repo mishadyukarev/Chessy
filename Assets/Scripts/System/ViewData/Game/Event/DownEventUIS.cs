@@ -24,20 +24,19 @@ namespace Game.Game
 
         void ExecuteScout()
         {
-            Es.SelectedIdxC.Reset();
+            Es.SelectedIdxC.Idx = 0;
 
             TryOnHint(VideoClipTypes.CreatingScout);
 
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
-                if (Es.ScoutHeroCooldownE(UnitTypes.Scout, Es.WhoseMovePlayerTC.CurPlayerI).CooldownC.Amount !> 0)
+                if (Es.ForPlayerE(Es.CurPlayerI.Player).UnitsInfoE(UnitTypes.Scout).ScoutHeroCooldownC.Cooldown !> 0)
                 {
-                    if (Es.WhoseMovePlayerTC.IsMyMove)
-                    {
-                        Es.SelUnitTC.Unit = UnitTypes.Scout;
-                        Es.SelUnitLevelTC.Level = LevelTypes.First;
-                        Es.CellClickTC.Click = CellClickTypes.SetUnit;
-                    }
+                    //Es.SelUnitTC.SetSelectedUnit((UnitTypes.Scout, LevelTypes.First), Es.SelUnitLevelTC, ref Es.CellClickTC);
+
+                    //Unit = unit.Item1;
+                    //levTC.Level = unit.Item2;
+                    //clickC.Click = CellClickTypes.SetUnit;
                 }
                 else
                 {
@@ -48,16 +47,20 @@ namespace Game.Game
         }
         void Hero()
         {
-            Es.SelectedIdxC.Reset();
+            Es.SelectedIdxC.Idx = 0;
             TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
-                if (Es.HaveHeroInInventor(Es.WhoseMovePlayerTC.CurPlayerI, out var myHero))
+                var curPlayer = Es.CurPlayerI.Player;
+
+                var myHeroT = Es.ForPlayerE(curPlayer).AvailableHeroTC.Unit;
+
+                if (Es.ForPlayerE(curPlayer).UnitsInfoE(myHeroT).HaveInInventor)
                 {
-                    if (Es.ScoutHeroCooldownE(myHero, Es.WhoseMovePlayerTC.CurPlayerI).CooldownC.Amount !> 0)
+                    if (Es.ForPlayerE(Es.CurPlayerI.Player).UnitsInfoE(UnitTypes.Scout).ScoutHeroCooldownC.Cooldown !> 0)
                     {
-                        Es.SelUnitTC.Unit = myHero;
+                        Es.SelUnitTC.Unit = myHeroT;
                         Es.SelUnitLevelTC.Level = LevelTypes.First;
                         Es.CellClickTC.Click = CellClickTypes.SetUnit;
                     }
@@ -71,7 +74,7 @@ namespace Game.Game
         }
         void Done()
         {
-            if (!Es.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMovePlayerTC.CurPlayerI).HaveUnits)
+            if (!Es.ForPlayerE(Es.CurPlayerI.Player).UnitsInfoE(UnitTypes.King).HaveInInventor)
             {
                 Es.RpcE.DoneToMaster();
             }
@@ -82,15 +85,15 @@ namespace Game.Game
         }
         void GetPawn()
         {
-            Es.SelectedIdxC.Reset();
+            Es.SelectedIdxC.Idx = 0;
 
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
-                var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
+                var curPlayerI = Es.CurPlayerI.Player;
 
-                if (Es.PeopleInCityE(curPlayerI).AmountC.HaveAny)
+                if (Es.ForPlayerE(curPlayerI).PeopleInCityC > 0)
                 {
-                    if (Es.MaxAvailablePawnsE(curPlayerI).CanGetPawn(Es.WhereWorker))
+                    if (Es.ForPlayerE(curPlayerI).UnitsInfoE(UnitTypes.Pawn).UnitsInGameC < Es.ForPlayerE(curPlayerI).MaxAvailablePawnsC)
                     {
                         Es.SelUnitTC.Unit = UnitTypes.Pawn;
                         Es.SelUnitLevelTC.Level = LevelTypes.First;
@@ -100,7 +103,7 @@ namespace Game.Game
                 else
                 {
                     Es.MistakeC.Mistake = MistakeTypes.NeedMorePeopleInCity;
-                    Es.Sound(ClipTypes.Mistake).ActionC.Action.Invoke();
+                    Es.Sound(ClipTypes.Mistake).Action.Invoke();
                 }
 
 
@@ -109,9 +112,9 @@ namespace Game.Game
         }
         void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
-            Es.SelectedIdxC.Reset();
+            Es.SelectedIdxC.Idx = 0;
 
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
                 if (tw == ToolWeaponTypes.Pick)
                 {

@@ -10,19 +10,19 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Clear();
+                Es.UnitEs(idx_0).ForArson.Clear();
 
                 if (!Es.UnitStunC(idx_0).IsStunned)
                 {
-                    if (Es.UnitTC(idx_0).HaveUnit && Es.ExtraTWE(idx_0).ToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
+                    if (Es.UnitTC(idx_0).HaveUnit && Es.UnitEs(idx_0).ExtraToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
                     {
                         foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (!Es.EffectEs(idx_1).FireE.HaveFireC.Have)
+                            if (!Es.EffectEs(idx_1).HaveFire)
                             {
-                                if (Es.EnvironmentEs(idx_1).AdultForest.HaveEnvironment)
+                                if (Es.AdultForestC(idx_1).HaveAny)
                                 {
-                                    CellsForArsonArcherEs.Idxs<IdxsC>(idx_0).Add(idx_1);
+                                    Es.UnitEs(idx_0).ForArson.Add(idx_1);
                                 }
                             }
                         }

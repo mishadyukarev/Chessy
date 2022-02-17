@@ -11,18 +11,6 @@ namespace Game.Game
         public CellTrailE Trail(in DirectTypes dir) => _trails[dir];
         public CellTrailPlayerE IsVisible(in PlayerTypes player) => _players[player];
 
-        public CellTrailE[] Trails
-        {
-            get
-            {
-                var trails = new CellTrailE[_trails.Keys.Count];
-                var i = 0;
-                foreach (var trailT in _trails.Keys) trails[i++] = _trails[trailT];
-                return trails;
-
-            }
-        }
-
         public HashSet<DirectTypes> Keys
         {
             get
@@ -30,14 +18,6 @@ namespace Game.Game
                 var keys = new HashSet<DirectTypes>();
                 foreach (var item in _trails) keys.Add(item.Key);
                 return keys;
-            }
-        }
-        public bool HaveAnyTrail
-        {
-            get
-            {
-                foreach (var item in Keys) if (Trail(item).HealthC.IsAlive) return true;
-                return false;
             }
         }
 
@@ -49,11 +29,11 @@ namespace Game.Game
 
             for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
-                _trails.Add(dir, new CellTrailE(dir, gameW));
+                _trails.Add(dir, new CellTrailE());
             }
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _players.Add(player, new CellTrailPlayerE(gameW));
+                _players.Add(player, new CellTrailPlayerE());
             }
         }
 

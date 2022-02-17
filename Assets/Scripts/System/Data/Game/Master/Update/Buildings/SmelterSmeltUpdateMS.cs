@@ -10,11 +10,11 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.BuildingE(idx_0).HaveBuilding)
+                if (Es.BuildTC(idx_0).HaveBuilding)
                 {
-                    if (Es.BuildingE(idx_0).IsActiveSmelter)
+                    if (Es.BuildSmelterTC(idx_0))
                     {
-                        Es.InventorResourcesEs.Melt_Master(Es.BuildingE(idx_0).Owner);
+                        Es.InventorResourcesEs.Melt_Master(Es.BuildPlayerTC(idx_0).Player);
                     }
                 }
             }

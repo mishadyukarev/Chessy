@@ -2,13 +2,9 @@
 
 namespace Game.Game
 {
-    public class ProtectionC : AmountFloatC
+    public struct ProtectionC
     {
-        public float Protection
-        {
-            get => Amount;
-            set => Amount = value;
-        }
+        public float Protection;
 
         public bool HaveProtection => Protection > 0;
     }

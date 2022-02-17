@@ -10,25 +10,33 @@
         {         
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.First, idx_0).Clear();
-                CellsForShiftUnitsEs.CellsForShift<IdxsC>(PlayerTypes.Second, idx_0).Clear();
+                Es.UnitEs(idx_0).ForPlayer(PlayerTypes.First).ForShift.Clear();
+                Es.UnitEs(idx_0).ForPlayer(PlayerTypes.Second).ForShift.Clear();
 
-                if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                if (Es.CellEs(idx_0).IsActiveParentSelf)
                 {
-                    if (!Es.UnitStunC(idx_0).IsStunned && Es.UnitTC(idx_0).HaveUnit && !Es.UnitTC(idx_0).IsAnimal)
+                    if (!Es.UnitStunC(idx_0).IsStunned && Es.UnitTC(idx_0).HaveUnit && !Es.UnitEs(idx_0).IsAnimal)
                     {
-                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                        foreach (var idx_to in CellWorker.GetIdxsAround(idx_0))
                         {
-                            if (!Es.EnvironmentEs(idx_1).Mountain.HaveEnvironment && !Es.UnitTC(idx_1).HaveUnit)
+                            if (!Es.MountainC(idx_to).HaveAny && !Es.UnitTC(idx_to).HaveUnit)
                             {
-                                CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
+                                CellWorker.TryGetDirect(idx_0, idx_to, out var dir);
 
-                                var one = Es.UnitE(idx_0).CanShift(dir, Es.CellEs(idx_1));
-                                var two = Es.UnitStepC(idx_0).Have(CellUnitStatStepValues.StandartStepsUnit(Es.UnitTC(idx_0).Unit));
 
-                                if (one || two)
+                                float needSteps = CellUnitStatStep_Values.FOR_SHIFT_ATTACK_EMPTY_CELL;
+
+                                if (!Es.UnitTC(idx_0).Is(UnitTypes.Undead))
                                 {
-                                    CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.UnitPlayerTC(idx_0).Player, idx_0).Add(idx_1);
+                                    needSteps += CellUnitStatStep_Values.NeedStepsShiftAttackUnit(Es.FertilizeC(idx_to).HaveAny, Es.YoungForestC(idx_to).HaveAny, Es.AdultForestC(idx_to).HaveAny, Es.HillC(idx_to).HaveAny);
+
+                                    if (Es.TrailEs(idx_to).Trail(dir.Invert()).HealthC.IsAlive) needSteps -= CellUnitStatStep_Values.BONUS_TRAIL;
+                                }
+
+                                if (needSteps <= Es.UnitStepC(idx_0).Steps || Es.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.StandartForUnit(Es.UnitTC(idx_0).Unit))
+                                {
+                                    Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForShift.Add(idx_to);
+                                    Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).NeedStepsForShift[idx_to] = needSteps;
                                 }
                             }
                         }

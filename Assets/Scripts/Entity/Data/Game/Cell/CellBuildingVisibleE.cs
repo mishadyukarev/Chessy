@@ -2,10 +2,8 @@
 
 namespace Game.Game
 {
-    public sealed class CellBuildingVisibleE : EntityAbstract
+    public sealed class CellBuildingVisibleE
     {
-        public ref IsVisibleC IsVisibleC => ref Ent.Get<IsVisibleC>();
-
-        public CellBuildingVisibleE(in EcsWorld world) : base(world) { }
+        public bool IsVisibleC;
     }
 }

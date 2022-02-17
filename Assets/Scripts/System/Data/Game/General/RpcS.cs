@@ -8,7 +8,7 @@ namespace Game.Game
 {
     public sealed class RpcS : MonoBehaviour
     {
-        static Entities _ents;
+        static Entities _e;
         static Systems _systems;
         int _idx_cur;
 
@@ -26,7 +26,7 @@ namespace Game.Game
 
         public RpcS GiveData(in Entities ents, in Systems systems)
         {
-            _ents = ents;
+            _e = ents;
             _systems = systems;
             return this;
         }
@@ -41,96 +41,179 @@ namespace Game.Game
 
             var obj = objects[_idx_cur++];
 
-            var whoseMove = _ents.WhoseMovePlayerTC.Player;
+            var whoseMove = _e.WhoseMove.Player;
 
             if (obj is AbilityTypes ability)
             {
                 switch (ability)
                 {
-                    case AbilityTypes.None: throw new Exception();
-
                     case AbilityTypes.CircularAttack:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).CircularAttack_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).CircularAttack_Master(sender, _e);
                         break;
 
                     case AbilityTypes.BonusNear:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BonusNear_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BonusNear_Master(sender, _e);
                         break;
 
                     case AbilityTypes.FirePawn:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).FirePawn_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).FirePawn_Master(sender, _e);
                         break;
 
                     case AbilityTypes.PutOutFirePawn:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).PutOut_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).PutOut_Master(sender, _e);
                         break;
 
                     case AbilityTypes.Seed:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).Seed_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).Seed_Master(sender, _e);
                         break;
 
                     case AbilityTypes.SetFarm:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildFarm_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildFarm_Master(sender, _e);
                         break;
 
-                    //case AbilityTypes.Mine:
-                    //    _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildMine_Master(sender, _ents);
-                    //    break;
-
                     case AbilityTypes.SetCity:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).BuildCity_Master(sender, _ents);
+                        {
+                            var idx_0 = (byte)objects[_idx_cur++];
+
+                            if (_e.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.NeedForAbility(ability))
+                            {
+                                if (!_e.AdultForestC(idx_0).HaveAny)
+                                {
+                                    bool haveNearBorder = false;
+
+                                    foreach (var idx_1 in _e.CellSpaceWorker.GetIdxsAround(idx_0))
+                                    {
+                                        if (!_e.CellEs(idx_1).IsActiveParentSelf)
+                                        {
+                                            haveNearBorder = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!haveNearBorder)
+                                    {
+                                        _e.RpcE.SoundToGeneral(sender, ClipTypes.Building);
+                                        _e.RpcE.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
+
+
+                                        _e.BuildTC(idx_0).Build = BuildingTypes.City;
+                                        _e.BuildPlayerTC(idx_0).Player = whoseMove;
+                                        _e.BuildHpC(idx_0).Health = CellBuildingValues.MaxAmountHealth(BuildingTypes.City);
+
+                                        _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.NeedForAbility(ability);
+
+                                        _e.HaveFire(idx_0) = false;
+
+                                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                                        {
+                                            _e.TrailEs(idx_0).Trail(dirT).HealthC.Health = 0;
+                                        }
+
+                                        _e.AdultForestC(idx_0).Resources = 0;
+                                        _e.FertilizeC(idx_0).Resources = 0;
+                                        _e.YoungForestC(idx_0).Resources = 0;
+                                    }
+
+                                    else
+                                    {
+                                        _e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
+                                    }
+                                }
+                                else
+                                {
+                                    _e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                }
+                            }
+                            else
+                            {
+                                _e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            }
+                        }
+                        
                         break;
 
                     case AbilityTypes.DestroyBuilding:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).Destroy_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).Destroy_Master(sender, ref _e);
                         break;
 
                     case AbilityTypes.FireArcher:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).FireArcher_Master((byte)objects[_idx_cur++], sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).FireArcher_Master((byte)objects[_idx_cur++], sender, _e);
                         break;
 
                     case AbilityTypes.GrowAdultForest:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).GrowElfemale_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).GrowElfemale_Master(sender, _e);
                         break;
 
                     case AbilityTypes.StunElfemale:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).StunElfemale_Master((byte)objects[_idx_cur++], sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).StunElfemale_Master((byte)objects[_idx_cur++], sender, _e);
                         break;
 
                     case AbilityTypes.ChangeDirectionWind:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ChangeDirectionWind_Master((byte)objects[_idx_cur++], sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ChangeDirectionWind_Master((byte)objects[_idx_cur++], sender, ref _e);
                         break;
 
                     case AbilityTypes.ChangeCornerArcher:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ChangeCornerArcher_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ChangeCornerArcher_Master(sender, _e);
                         break;
 
                     case AbilityTypes.IceWall:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).SetIceWallSnowy_Master(_ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).SetIceWallSnowy_Master(_e);
                         break;
 
                     case AbilityTypes.ActiveAroundBonusSnowy:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ActiveSnowyAround_Master(sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ActiveSnowyAround_Master(sender, _e);
                         break;
 
                     case AbilityTypes.DirectWave:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).DirectWaveSnowy_Master((byte)objects[_idx_cur++], sender, _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).DirectWaveSnowy_Master((byte)objects[_idx_cur++], sender, _e);
                         break;
 
                     case AbilityTypes.Resurrect:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ResurrectUnit_Master(sender, (byte)objects[_idx_cur++], _ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).ResurrectUnit_Master(sender, (byte)objects[_idx_cur++], _e);
                         break;
 
                     case AbilityTypes.SetTeleport:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).Ability(ability).SetTeleport_Master(_ents);
+                        _e.UnitEs((byte)objects[_idx_cur++]).Ability(ability).SetTeleport_Master(ref _e);
                         break;
 
                     case AbilityTypes.Teleport:
-                        _ents.UnitE((byte)objects[_idx_cur++]).Teleport_Master(ability, sender, _ents);
+                        //var idx_0 = (byte)objects[_idx_cur++];
+
+                        //if (_ents.UnitStepC(idx_0).Have(CellUnitStatStepValues.NeedForAbility(ability)))
+                        //{
+                        //    if (_ents.BuildTC(idx_0).Is(BuildingTypes.Teleport))
+                        //    {
+                        //        var idx_start = _ents.StartTeleportIdxC;
+                        //        var idx_end = _ents.EndTeleportIdxC.Idx;
+
+                        //        if (_ents.EndTeleportIdxC.Idx.HaveEnd && idx_start == idx_0)
+                        //        {
+                        //            if (!_ents.UnitTC(idx_end).HaveUnit)
+                        //            {
+                        //                _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.NeedForAbility(ability));
+
+                        //                Teleport(idx_end, ents);
+                        //            }
+                        //        }
+                        //        else if (_ents.StartTeleportIdxC.HaveStart && idx_end == idx_0)
+                        //        {
+                        //            if (!_ents.UnitTC(idx_start).HaveUnit)
+                        //            {
+                        //                _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.NeedForAbility(ability));
+
+                        //                Teleport(idx_start, _ents);
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    _ents.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        //}
                         break;
 
                     case AbilityTypes.InvokeSkeletons:
-                        _ents.UnitE((byte)objects[_idx_cur++]).InvokeSkeletons_Master(ability, sender, _ents);
+                        //_ents.UnitE((byte)objects[_idx_cur++]).InvokeSkeletons_Master(ability, sender, _ents);
                         break;
 
                     default: throw new Exception();
@@ -139,12 +222,12 @@ namespace Game.Game
 
             else if (obj is BuildingTypes buildT)
             {
-                _ents.BuildingE((byte)objects[_idx_cur++]).Build_Master((byte)objects[_idx_cur++], buildT, sender, _ents);
+                //_ents.BuildingE((byte)objects[_idx_cur++]).Build_Master((byte)objects[_idx_cur++], buildT, sender, _ents);
             }
 
             else if (obj is MarketBuyTypes marketBuy)
             {
-                _ents.InventorResourcesEs.TryBuyResourcesFromMarket_Master(marketBuy, sender, _ents);
+                _e.InventorResourcesEs.TryBuyResourcesFromMarket_Master(marketBuy, sender, _e);
             }
 
             else if (obj is RpcMasterTypes rpcT)
@@ -160,228 +243,504 @@ namespace Game.Game
                         {
                             var playerSend = sender.GetPlayer();
 
-                            _ents.ReadyE(playerSend).IsReadyC.IsReady = !_ents.ReadyE(playerSend).IsReadyC.IsReady;
+                            _e.ForPlayerE(playerSend).IsReadyC = !_e.ForPlayerE(playerSend).IsReadyC;
 
-                            if (_ents.ReadyE(PlayerTypes.First).IsReadyC.IsReady
-                                && _ents.ReadyE(PlayerTypes.Second).IsReadyC.IsReady)
+                            if (_e.ForPlayerE(PlayerTypes.First).IsReadyC
+                                && _e.ForPlayerE(PlayerTypes.Second).IsReadyC)
                             {
-                                _ents.IsStartedGameC.Is = true;
+                                _e.IsStartedGame = true;
                             }
 
                             else
                             {
-                                _ents.IsStartedGameC.Is = false;
+                                _e.IsStartedGame = false;
                             }
                         }       
                         break;
 
                     case RpcMasterTypes.Done:
-
-                        _ents.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
-
-                        if (PhotonNetwork.OfflineMode)
                         {
-                            if (GameModeC.IsGameMode(GameModes.TrainingOff))
+                            _e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
+
+                            if (PhotonNetwork.OfflineMode)
                             {
-                                foreach (var idx in _ents.CellSpaceWorker.Idxs)
+                                if (GameModeC.IsGameMode(GameModes.TrainingOff))
                                 {
-                                    _ents.UnitStunC(idx).Stun -= 2;
-                                    //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
-                                }
-                                _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                                _ents.RpcE.ActiveMotionZoneToGen(sender);
-                            }
-
-                            else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
-                            {
-                                foreach (var idx in _ents.CellSpaceWorker.Idxs)
-                                {
-                                    _ents.UnitStunC(idx).Stun -= 2;
-                                    //EntitiesPool.IceWalls[idx_0].Hp.Take();
-                                }
-
-                                var curPlayer = _ents.WhoseMovePlayerTC.CurPlayerI;
-                                var nextPlayer = _ents.WhoseMovePlayerTC.NextPlayerFrom(curPlayer);
-
-                                if (nextPlayer == PlayerTypes.First)
-                                {
+                                    foreach (var idx in _e.CellSpaceWorker.Idxs)
+                                    {
+                                        _e.UnitStunC(idx).Stun -= 2;
+                                        //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
+                                    }
                                     _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
-                                    _ents.RpcE.ActiveMotionZoneToGen(sender);
+                                    _e.RpcE.ActiveMotionZoneToGen(sender);
                                 }
 
-                                _ents.WhoseMovePlayerTC.Player = nextPlayer;
+                                else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
+                                {
+                                    foreach (var idx in _e.CellSpaceWorker.Idxs)
+                                    {
+                                        _e.UnitStunC(idx).Stun -= 2;
+                                        //EntitiesPool.IceWalls[idx_0].Hp.Take();
+                                    }
+
+                                    var curPlayer = _e.CurPlayerI.Player;
+                                    var nextPlayer = _e.WhoseMove.NextPlayerFrom(curPlayer);
+
+                                    if (nextPlayer == PlayerTypes.First)
+                                    {
+                                        _systems.SystemsMaster.InvokeRun(SystemDataMasterTypes.UpdateMove);
+                                        _e.RpcE.ActiveMotionZoneToGen(sender);
+                                    }
+
+                                    _e.WhoseMove.Player = nextPlayer;
 
 
-                                curPlayer = _ents.WhoseMovePlayerTC.CurPlayerI;
+                                    curPlayer = _e.CurPlayerI.Player;
 
-                                //ViewDataSC.RotateAll.Invoke();
+                                    //ViewDataSC.RotateAll.Invoke();
 
-                                _ents.FriendIsActiveC.IsActive = true;
+                                    _e.FriendIsActiveC = true;
+                                }
                             }
-                        }
-                        else
-                        {
-                            //if (WhoseMoveC.WhoseMove == playerSend)
-                            //{
-                            //    //if (!EntInventorUnits.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))
-                            //    //{
-                            //    //    if (playerSend == PlayerTypes.Second)
-                            //    //    {
-                            //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
+                            else
+                            {
+                                //if (WhoseMoveC.WhoseMove == playerSend)
+                                //{
+                                //    //if (!EntInventorUnits.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))
+                                //    //{
+                                //    //    if (playerSend == PlayerTypes.Second)
+                                //    //    {
+                                //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
 
-                            //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                            //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
-                            //    //    }
+                                //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
+                                //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
+                                //    //    }
 
-                            //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
-                            //    //}
-                            //}
+                                //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
+                                //    //}
+                                //}
+                            }
                         }
                         break;
 
                     case RpcMasterTypes.Shift:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.Shift_Master((byte)objects[_idx_cur++], sender, _ents);
+                        {
+                            var idx_from = (byte)objects[_idx_cur++];
+                            var idx_to = (byte)objects[_idx_cur++];
+
+                            if (_e.UnitEs(idx_from).ForPlayer(whoseMove).ForShift.Contains(idx_to))
+                            {
+                                _e.UnitStepC(idx_from).Steps -= _e.UnitEs(idx_from).ForPlayer(whoseMove).NeedStepsForShift[idx_to];
+
+                                _e.UnitEs(idx_to).Set(_e.UnitEs(idx_from));
+                                _e.UnitConditionTC(idx_to).Condition = ConditionUnitTypes.None;
+
+                                _e.UnitTC(idx_from).Unit = UnitTypes.None;
+                                
+
+                                if (!_e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var direct)) throw new Exception();
+
+                                if (!_e.UnitTC(idx_to).Is(UnitTypes.Undead))
+                                {
+                                    if (_e.AdultForestC(idx_from).HaveAny)
+                                    {
+                                        _e.TrailEs(idx_from).Trail(direct).HealthC.Health = CellTrail_Values.HEALTH_TRAIL;
+                                    }
+                                    if (_e.AdultForestC(idx_to).HaveAny)
+                                    {
+                                        _e.TrailEs(idx_to).Trail(direct.Invert()).HealthC.Health = CellTrail_Values.HEALTH_TRAIL;
+                                    }
+
+                                    if (_e.RiverEs(idx_to).RiverE.HaveRiverNear)
+                                    {
+                                        _e.UnitWaterC(idx_to).Water = CellUnitStatWater_Values.MAX_WATER;
+                                    }
+                                }
+
+                                if (_e.UnitTC(idx_to).Is(UnitTypes.Hell))
+                                {
+                                    if (_e.AdultForestC(idx_to).HaveAny)
+                                    {
+                                        _e.EffectEs(idx_to).HaveFire = true;
+                                    }
+                                }
+
+                                if (_e.BuildTC(idx_to).HaveBuilding && !_e.BuildTC(idx_to).Is(BuildingTypes.City))
+                                {
+                                    if (!_e.BuildPlayerTC(idx_to).Is(_e.UnitPlayerTC(idx_to).Player))
+                                    {
+                                        _e.BuildTC(idx_to).Build = BuildingTypes.None;
+                                    }
+                                }
+
+                                _e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                            }
+                        }
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.Attack_Master((byte)objects[_idx_cur++], _ents);
-                        break;
-
-                    case RpcMasterTypes.ConditionUnit:
-                        _ents.UnitE((byte)objects[_idx_cur++]).Condition_Master((ConditionUnitTypes)objects[_idx_cur++], sender, _ents);
-                        break;
-
-                    case RpcMasterTypes.SetUnit:
-                        _ents.UnitEs((byte)objects[_idx_cur++]).UnitE.SetUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
-                        break;
-
-                    case RpcMasterTypes.GiveTakeToolWeapon:
-                        idx_0 = (byte)objects[_idx_cur++];
-                        var twT = (ToolWeaponTypes)objects[_idx_cur++];
-                        var levelTW = (LevelTypes)objects[_idx_cur++];
-                        if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.BowCrossbow)
                         {
-                            if (_ents.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                            var idx_from = (byte)objects[_idx_cur++];
+                            var idx_to = (byte)objects[_idx_cur++];
+
+                            var canAttack = _e.UnitEs(idx_from).ForPlayer(whoseMove).ForAttack(AttackTypes.Unique).Contains(idx_to)
+                                || _e.UnitEs(idx_from).ForPlayer(whoseMove).ForAttack(AttackTypes.Simple).Contains(idx_to);
+
+                            if (canAttack)
                             {
-                                if (_ents.UnitStepC(idx_0).Steps >= CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON)
+                                _e.UnitStepC(idx_from).Steps = 0;
+                                _e.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
+
+                                if (_e.UnitEs(idx_from).IsMelee)
+                                    _e.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                                else _e.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+
+
+                                float powerDam_from = _e.UnitEs(idx_to).DamageAttackC.Damage;
+                                float powerDam_to = _e.UnitEs(idx_to).DamageAttackC.Damage;
+
+
+                                if (_e.UnitEs(idx_from).ForPlayer(whoseMove).ForAttack(AttackTypes.Unique).Contains(idx_to))
                                 {
-                                    if (_ents.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                                    powerDam_from *= CellUnitDamage_Values.UNIQUE_PERCENT_DAMAGE;
+                                }
+
+
+                                _e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var dirAttack);
+
+
+                                if (_e.SunSideTC.IsAcitveSun)
+                                {
+                                    var isSunnedUnit = true;
+
+                                    foreach (var dir in _e.SunSideTC.RaysSun)
                                     {
-                                        if (_ents.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
-                                        {
-                                            if (_ents.InventorToolWeaponEs.ToolWeapons(twT, levelTW, whoseMove).ToolWeaponsC.HaveAny)
-                                            {
-                                                //_ents.SetFromInventor(twT, levT, whoseMove, _ents.InventorToolWeaponEs);
-                                                _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
+                                        if (dirAttack == dir) isSunnedUnit = false;
+                                    }
 
-                                                _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                            }
-                                            else
-                                            {
-                                                if (_ents.InventorResourcesEs.CanBuyTW(twT, levelTW, whoseMove, out var needs))
-                                                {
-                                                    _ents.InventorResourcesEs.BuyTW(twT, levelTW, whoseMove);
-                                                    //_ents.Set(twT, levT);
+                                    if (isSunnedUnit)
+                                    {
+                                        powerDam_from *= 0.9f;
+                                    }
+                                }
 
-                                                    _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
 
-                                                    _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                }
-                                                else
-                                                {
-                                                    _ents.RpcE.MistakeEconomyToGeneral(sender, needs);
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            //TakeToInventor(whoseMove, e.InventorToolWeaponEs);
-                                            _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
-                                        }
+
+
+
+
+                                float min_limit = 0;
+                                float max_limit = 0;
+                                float minus_to = 0;
+                                float minus_from = 0;
+
+                                var maxDamage = CellUnitStatHp_Values.MAX_HP;
+                                var minDamage = 0;
+
+                                //if (!e.UnitE(idx_to).IsMelee) powerDam_to /= 2;
+
+                                if (powerDam_to > powerDam_from)
+                                {
+                                    max_limit = powerDam_to * 2;
+                                    min_limit = powerDam_to / 3;
+
+                                    if (min_limit >= powerDam_from)
+                                    {
+                                        minus_from = maxDamage;
+                                        powerDam_to = minDamage;
                                     }
                                     else
                                     {
-                                        //TakeToInventor(whoseMove, e.InventorToolWeaponEs);
-                                        _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_MAIN_TOOLWEAPON);
+                                        minus_to = maxDamage * powerDam_from / max_limit;
 
-                                        _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                        max_limit = powerDam_from * 2;
+                                        minus_from = maxDamage * powerDam_to / max_limit;
                                     }
                                 }
-                                else _ents.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else
+                                {
+                                    max_limit = powerDam_from * 2;
+                                    min_limit = powerDam_from / 3;
+
+                                    if (min_limit >= powerDam_to)
+                                    {
+                                        minus_to = maxDamage;
+                                        minus_from = minDamage;
+                                    }
+                                    else
+                                    {
+                                        minus_from = maxDamage * powerDam_to / max_limit;
+
+                                        max_limit = powerDam_to * 2f;
+                                        minus_to = maxDamage * powerDam_from / max_limit;
+                                    }
+                                }
+
+
+                                if (_e.UnitEs(idx_from).IsMelee)
+                                {
+                                    if (_e.UnitEffectShield(idx_from).HaveProtection)
+                                    {
+                                        _e.UnitEffectShield(idx_from).Protection--;
+                                    }
+                                    else if (_e.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
+                                    {
+                                        //_e.UnitExtraProtectionShieldTC(idx_from).BreakShield(1, _e.UnitExtraTWTC(idx_to));
+                                    }
+                                    else if (minus_from > 0)
+                                    {
+                                        //_e.UnitHpC(idx_from).AttackCellUnit(minus_from, CellUnitDamage_Values.HP_FOR_DEATH_AFTER_ATTACK);
+
+                                        if (!_e.UnitHpC(idx_from).IsAlive)
+                                        {
+                                            //_e.UnitTC(idx_from).TrySetCooldownBeforeKilling(_e.ScoutHeroCooldownE(_e.UnitE(idx_from)).CooldownC, _e.Units(e.UnitE(idx_from)).AmountC, ScoutHeroCooldownValues.AfterKill(e.UnitTC(idx_from).Unit));
+                                            //_e.UnitTC(idx_from).KillUnit(_e.UnitPlayerTC(idx_from), _e.WinnerC);
+
+
+                                            _e.LastDiedUnitTC(idx_from).Unit = _e.UnitTC(idx_from).Unit;
+                                            _e.LastDiedLevelTC(idx_from).Level = _e.UnitLevelTC(idx_from).Level;
+                                            _e.LastDiedPlayerTC(idx_from).Player = _e.UnitPlayerTC(idx_from).Player;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (_e.UnitFrozenArrawC(idx_from).HaveEffect)
+                                    {
+                                        _e.UnitFrozenArrawC(idx_from).Shoots = 0;
+
+                                        _e.UnitStunC(idx_to).Stun = 2;
+                                    }
+                                }
+
+                                if (_e.UnitEffectShield(idx_to).HaveProtection)
+                                {
+                                    _e.UnitEffectShield(idx_to).Protection--;
+                                }
+                                else if (_e.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
+                                {
+                                    //_e.UnitExtraProtectionShieldTC(idx_to).BreakShield(1, _e.UnitExtraTWTC(idx_to));
+                                }
+                                else if (minus_to > 0)
+                                {
+                                    var wasUnit = _e.UnitTC(idx_to).Unit;
+
+                                    //_e.UnitHpC(idx_to).AttackCellUnit(minus_to, CellUnitDamage_Values.HP_FOR_DEATH_AFTER_ATTACK);
+
+                                    if (!_e.UnitHpC(idx_to).IsAlive)
+                                    {
+                                        //_e.UnitTC(idx_to).TrySetCooldownBeforeKilling(_e.ScoutHeroCooldownE(_e.UnitE(idx_to)).CooldownC, _e.Units(e.UnitE(idx_to)).AmountC, ScoutHeroCooldownValues.AfterKill(e.UnitTC(idx_to).Unit));
+                                        //_e.UnitTC(idx_to).KillUnit(_e.UnitPlayerTC(idx_to), _e.WinnerC);
+
+                                        _e.LastDiedUnitTC(idx_to).Unit = _e.UnitTC(idx_to).Unit;
+                                        _e.LastDiedLevelTC(idx_to).Level = _e.UnitLevelTC(idx_to).Level;
+                                        _e.LastDiedPlayerTC(idx_to).Player = _e.UnitPlayerTC(idx_to).Player;
+                                    }
+
+                                    if (!_e.UnitTC(idx_to).HaveUnit)
+                                    {
+                                        if (wasUnit == UnitTypes.Camel)
+                                        {
+                                            _e.InventorResourcesEs.Resource(ResourceTypes.Food, _e.UnitPlayerTC(idx_from).Player).ResourceC.Resources += ResourcesInInventorValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                                        }
+
+                                        if (_e.UnitTC(idx_from).HaveUnit)
+                                        {
+                                            if (_e.UnitEs(idx_from).IsMelee)
+                                            {
+                                                //_e.UnitEs(idx_from).Shift(idx_to, true, _e);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                        break;
+
+                    case RpcMasterTypes.ConditionUnit:
+                        //_ents.UnitE((byte)objects[_idx_cur++]).Condition_Master((ConditionUnitTypes)objects[_idx_cur++], sender, _ents);
+                        break;
+
+                    case RpcMasterTypes.SetUnit:
+                        {
+                            idx_0 = (byte)objects[_idx_cur++];
+                            var unitT = (UnitTypes)objects[_idx_cur++];
+
+                            if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(whoseMove, idx_0).Can)
+                            {
+                                _e.UnitTC(idx_0).Unit = unitT;
+                                _e.UnitPlayerTC(idx_0).Player = whoseMove;
+                                _e.UnitLevelTC(idx_0).Level = LevelTypes.First;
+                                _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
+                                _e.UnitIsRightArcherC(idx_0).IsRight = false;
+                                _e.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
+                                _e.UnitStepC(idx_0).Steps = CellUnitStatStep_Values.StandartForUnit(unitT);
+                                _e.UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX_WATER;
+                                _e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
+                                _e.UnitExtraLevelTC(idx_0).Level = LevelTypes.None;
+                                _e.UnitExtraProtectionShieldTC(idx_0).Protection = 0;
+                                _e.UnitStunC(idx_0).Stun = 0;
+                                _e.UnitEffectShield(idx_0).Protection = 0;
+                                _e.UnitFrozenArrawC(idx_0).Shoots = 0;
+
+
+                                if (unitT == UnitTypes.Pawn)
+                                {
+                                    _e.ForPlayerE(whoseMove).PeopleInCityC -= 1;
+
+                                    _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
+                                    _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
+                                }
+                                else
+                                {
+                                    _e.ForPlayerE(whoseMove).UnitsInfoE(unitT).HaveInInventor = false;
+
+                                    _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
+                                    _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.None;
+                                }
+
+                                _e.ForPlayerE(whoseMove).UnitsInfoE(unitT).UnitsInGameC++;
+
+                                _e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
                             }
                         }
-                        else
+                        break;
+
+                    case RpcMasterTypes.GiveTakeToolWeapon:
                         {
-                            var ownUnit_0 = _ents.UnitPlayerTC(idx_0).Player;
-
-                            if (_ents.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                            idx_0 = (byte)objects[_idx_cur++];
+                            var twT = (ToolWeaponTypes)objects[_idx_cur++];
+                            var levelTW = (LevelTypes)objects[_idx_cur++];
+                            if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.BowCrossbow)
                             {
-                                if (_ents.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                                if (_e.UnitTC(idx_0).Is(UnitTypes.Pawn))
                                 {
-                                    if (_ents.UnitStepC(idx_0).HaveSteps)
+                                    if (_e.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON)
                                     {
-                                        if (_ents.ExtraTWE(idx_0).ToolWeaponTC.HaveToolWeapon)
+                                        if (_e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
                                         {
-                                            _ents.InventorToolWeaponEs.ToolWeapons(_ents.ExtraTWE(idx_0).ToolWeaponTC.ToolWeapon, _ents.ExtraTWE(idx_0).LevelTC.Level, ownUnit_0).ToolWeaponsC.Add(1);
-                                            _ents.UnitEs(idx_0).ExtraToolWeaponE.Reset();
-
-                                            _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON);
-
-                                            _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                        }
-
-
-                                        else if (_ents.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.HaveAny)
-                                        {
-                                            _ents.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.Take(1);
-
-                                            _ents.UnitEs(idx_0).ExtraToolWeaponE.SetNew(twT, levelTW);
-
-                                            _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON);
-
-                                            _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                        }
-
-                                        else
-                                        {
-                                            if (_ents.InventorResourcesEs.CanBuyTW(twT, levelTW, ownUnit_0, out var needRes))
+                                            if (_e.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
                                             {
-                                                _ents.InventorResourcesEs.BuyTW(twT, levelTW, ownUnit_0);
+                                                if (_e.InventorToolWeaponEs.ToolWeapons(twT, levelTW, whoseMove).ToolWeaponsC.HaveAny)
+                                                {
+                                                    //_ents.SetFromInventor(twT, levT, whoseMove, _ents.InventorToolWeaponEs);
+                                                    _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON;
 
-                                                _ents.UnitEs(idx_0).ExtraToolWeaponE.SetNew(twT, levelTW);
+                                                    _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                                }
+                                                else
+                                                {
+                                                    if (_e.InventorResourcesEs.CanBuyTW(twT, levelTW, whoseMove, out var needs))
+                                                    {
+                                                        _e.InventorResourcesEs.BuyTW(twT, levelTW, whoseMove);
+                                                        //_ents.Set(twT, levT);
 
-                                                _ents.UnitStepC(idx_0).Take(CellUnitStatStepValues.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON);
+                                                        _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON;
 
-                                                _ents.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                                        _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                                    }
+                                                    else
+                                                    {
+                                                        _e.RpcE.MistakeEconomyToGeneral(sender, needs);
+                                                    }
+                                                }
                                             }
                                             else
                                             {
-                                                _ents.RpcE.MistakeEconomyToGeneral(sender, needRes);
+                                                //TakeToInventor(whoseMove, _e.InventorToolWeaponEs);
+                                                _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON;
                                             }
                                         }
+                                        else
+                                        {
+                                            //TakeToInventor(whoseMove, _e.InventorToolWeaponEs);
+                                            _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON;
+
+                                            _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                        }
                                     }
-                                    else _ents.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                    else _e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                }
+                            }
+                            else
+                            {
+                                var ownUnit_0 = _e.UnitPlayerTC(idx_0).Player;
+
+                                if (_e.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                                {
+                                    if (_e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                                    {
+                                        if (_e.UnitStepC(idx_0).HaveAnySteps)
+                                        {
+                                            if (_e.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
+                                            {
+                                                _e.InventorToolWeaponEs.ToolWeapons(_e.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon, _e.UnitEs(idx_0).ExtraTWLevelTC.Level, ownUnit_0).ToolWeaponsC.Add(1);
+                                                _e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
+
+                                                _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON;
+
+                                                _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                            }
+
+
+                                            else if (_e.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.HaveAny)
+                                            {
+                                                _e.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.Take(1);
+
+                                                //_e.UnitExtraTWTC(idx_0).SetNew(twT, levelTW, _e.UnitEs(idx_0).ExtraTWLevelTC, _e.UnitEs(idx_0).ExtraTWShieldC);
+
+                                                _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON;
+
+                                                _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                            }
+
+                                            else
+                                            {
+                                                if (_e.InventorResourcesEs.CanBuyTW(twT, levelTW, ownUnit_0, out var needRes))
+                                                {
+                                                    _e.InventorResourcesEs.BuyTW(twT, levelTW, ownUnit_0);
+
+                                                    //_e.UnitExtraTWTC(idx_0).SetNew(twT, levelTW, _e.UnitEs(idx_0).ExtraTWLevelTC, _e.UnitEs(idx_0).ExtraTWShieldC);
+
+                                                    _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON;
+
+                                                    _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                                }
+                                                else
+                                                {
+                                                    _e.RpcE.MistakeEconomyToGeneral(sender, needRes);
+                                                }
+                                            }
+                                        }
+                                        else _e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                    }
                                 }
                             }
                         }
-                            
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        _ents.Units((UnitTypes)objects[_idx_cur++], LevelTypes.First, whoseMove).AmountC.Add(1);
-                        _ents.AvailableCenterHero(whoseMove).HaveCenterHero.Have = false;
+                        //_e.Units((UnitTypes)objects[_idx_cur++], LevelTypes.First, whoseMove).AmountC.Add(1);
+                        _e.ForPlayerE(whoseMove).HaveCenterHeroC = false;
                         break;
 
                     case RpcMasterTypes.UpgCenterUnits:
-                        _ents.AvailableCenterUpgradeEs.UpgradeCenterUnit_Master((UnitTypes)objects[_idx_cur++], sender, _ents);
+                        _e.AvailableCenterUpgradeEs.UpgradeCenterUnit_Master((UnitTypes)objects[_idx_cur++], sender, _e);
                         break;
 
                     case RpcMasterTypes.UpgCenterBuild:
-                        _ents.BuildingUpgradeEs.UpgradeCenter_Master((BuildingTypes)objects[_idx_cur++], sender, _ents);
+                        //buildT = (BuildingTypes)objects[_idx_cur++];
+
+                        //_e.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).Have = false;
+                        //_e.HaveBuildingUpgrade(buildT, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                        //_e.AvailableCenterUpgradeEs.HaveBuildUpgrade(buildT, whoseMove).Have = false;
+
+                        //_e.RpcE.SoundToGeneral(sender, ClipTypes.PickUpgrade);
                         break;
 
                     case RpcMasterTypes.UpgWater:
-                        _ents.UnitStatUpgradesEs.UpgradeCenterWater_Master(sender, _ents);
+                        _e.UnitStatUpgradesEs.UpgradeCenterWater_Master(sender, _e);
                         break;
 
                     default:
@@ -403,24 +762,24 @@ namespace Game.Game
 
             if (obj is MistakeTypes mistakeT)
             {
-                _ents.MistakeC.Mistake = mistakeT;
-                _ents.Sound(ClipTypes.Mistake).ActionC.Action.Invoke();
+                _e.MistakeC.Mistake = mistakeT;
+                _e.Sound(ClipTypes.Mistake).Action.Invoke();
 
                 if (mistakeT == MistakeTypes.Economy)
                 {
-                    _ents.MistakeEconomyE(ResourceTypes.Food).SetZero();
-                    _ents.MistakeEconomyE(ResourceTypes.Wood).SetZero();
-                    _ents.MistakeEconomyE(ResourceTypes.Ore).SetZero();
-                    _ents.MistakeEconomyE(ResourceTypes.Iron).SetZero();
-                    _ents.MistakeEconomyE(ResourceTypes.Gold).SetZero();
+                    _e.MistakeEconomy(ResourceTypes.Food).Resources = 0;
+                    _e.MistakeEconomy(ResourceTypes.Wood).Resources = 0;
+                    _e.MistakeEconomy(ResourceTypes.Ore).Resources = 0;
+                    _e.MistakeEconomy(ResourceTypes.Iron).Resources = 0;
+                    _e.MistakeEconomy(ResourceTypes.Gold).Resources = 0;
 
                     var needRes = (float[])objects[_idx_cur++];
 
-                    _ents.MistakeEconomyE(ResourceTypes.Food).Set(needRes[0]);
-                    _ents.MistakeEconomyE(ResourceTypes.Wood).Set(needRes[1]);
-                    _ents.MistakeEconomyE(ResourceTypes.Ore).Set(needRes[2]);
-                    _ents.MistakeEconomyE(ResourceTypes.Iron).Set(needRes[3]);
-                    _ents.MistakeEconomyE(ResourceTypes.Gold).Set(needRes[4]);
+                    _e.MistakeEconomy(ResourceTypes.Food).Resources = needRes[0];
+                    _e.MistakeEconomy(ResourceTypes.Wood).Resources = needRes[1];
+                    _e.MistakeEconomy(ResourceTypes.Ore).Resources = needRes[2];
+                    _e.MistakeEconomy(ResourceTypes.Iron).Resources = needRes[3];
+                    _e.MistakeEconomy(ResourceTypes.Gold).Resources = needRes[4];
                 }
             }
             else if (obj is RpcGeneralTypes rpcT)
@@ -431,11 +790,11 @@ namespace Game.Game
                         throw new Exception();
 
                     case RpcGeneralTypes.SoundEff:
-                        _ents.Sound((ClipTypes)objects[_idx_cur++]).ActionC.Invoke();
+                        _e.Sound((ClipTypes)objects[_idx_cur++]).Invoke();
                         break;
 
                     case RpcGeneralTypes.SoundUniqueAbility:
-                        _ents.Sound((AbilityTypes)objects[_idx_cur++]).ActionC.Invoke();
+                        _e.Sound((AbilityTypes)objects[_idx_cur++]).Invoke();
                         break;
 
                     case RpcGeneralTypes.SoundRpcMaster:
@@ -443,7 +802,7 @@ namespace Game.Game
                         break;
 
                     case RpcGeneralTypes.ActiveMotion:
-                        _ents.MotionIsActiveC.IsActive = true;
+                        _e.MotionIsActiveC = true;
                         break;
 
                     default:
@@ -453,7 +812,7 @@ namespace Game.Game
         }
 
         [PunRPC]
-        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => _ents.RpcE.OtherRpc(objects, infoFrom);
+        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => _e.RpcE.OtherRpc(objects, infoFrom);
 
 
         #region SyncData
@@ -463,36 +822,36 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (byte idx_0 in _ents.CellSpaceWorker.Idxs)
+            foreach (byte idx_0 in _e.CellSpaceWorker.Idxs)
             {
-                objs.Add(_ents.UnitTC(idx_0).Unit);
+                objs.Add(_e.UnitTC(idx_0).Unit);
                 //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
-                objs.Add(_ents.UnitPlayerTC(idx_0).Player);
+                objs.Add(_e.UnitPlayerTC(idx_0).Player);
 
-                objs.Add(_ents.UnitHpC(idx_0).Health);
-                objs.Add(_ents.UnitStepC(idx_0).Steps);
-                objs.Add(_ents.UnitWaterC(idx_0).Water);
+                objs.Add(_e.UnitHpC(idx_0).Health);
+                objs.Add(_e.UnitStepC(idx_0).Steps);
+                objs.Add(_e.UnitWaterC(idx_0).Water);
 
-                objs.Add(_ents.UnitConditionTC(idx_0).Condition);
+                objs.Add(_e.UnitConditionTC(idx_0).Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ToolWeaponTC.ToolWeapon);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.LevelTC.Level);
-                objs.Add(_ents.CellEs(idx_0).UnitEs.ExtraToolWeaponE.ProtectionShieldC.Protection);
+                objs.Add(_e.CellEs(idx_0).UnitEs.ExtraToolWeaponTC.ToolWeapon);
+                objs.Add(_e.CellEs(idx_0).UnitEs.ExtraTWLevelTC.Level);
+                objs.Add(_e.CellEs(idx_0).UnitEs.ExtraTWShieldC.Protection);
 
-                objs.Add(_ents.UnitStunC(idx_0).Stun);
+                objs.Add(_e.UnitStunC(idx_0).Stun);
 
-                objs.Add(_ents.UnitIsRightArcherC(idx_0).IsRight);
+                objs.Add(_e.UnitIsRightArcherC(idx_0).IsRight);
 
-                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown);
-
-
+                //foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_ents.CellEs(idx_0).UnitEs.Ability(item).CooldownC);
 
 
 
-                objs.Add(_ents.BuildingE(idx_0).Building);
-                objs.Add(_ents.BuildingE(idx_0).Owner);
+
+
+                //objs.Add(_ents.BuildingE(idx_0).Building);
+                //objs.Add(_ents.BuildingE(idx_0).Owner);
 
 
 
@@ -504,21 +863,21 @@ namespace Game.Game
 
 
 
-                objs.Add(_ents.CellEs(idx_0).RiverEs.RiverE.RiverTC.River);
-                foreach (var item_0 in _ents.CellEs(idx_0).RiverEs.Keys)
-                    objs.Add(_ents.CellEs(idx_0).RiverEs.HaveRive(item_0).HaveRiver.Have);
+                objs.Add(_e.CellEs(idx_0).RiverEs.RiverE.RiverTC.River);
+                foreach (var item_0 in _e.CellEs(idx_0).RiverEs.Keys)
+                    objs.Add(_e.CellEs(idx_0).RiverEs.HaveRive(item_0).HaveRiver.Have);
 
 
-                foreach (var item_0 in _ents.CellEs(idx_0).TrailEs.Keys)
-                    objs.Add(_ents.CellEs(idx_0).TrailEs.Trail(item_0));
+                foreach (var item_0 in _e.CellEs(idx_0).TrailEs.Keys)
+                    objs.Add(_e.CellEs(idx_0).TrailEs.Trail(item_0));
 
-                objs.Add(_ents.CellEs(idx_0).EffectEs.FireE.HaveFireC.Have);
+                //objs.Add(_ents.CellEs(idx_0).EffectEs.FireE.HaveFireC);
             }
 
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).CooldownC.Amount);
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).CooldownC.Amount);
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).CooldownC.Amount);
-            objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).CooldownC.Amount);
+            //objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.First).CooldownC.Amount);
+            //objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Scout, PlayerTypes.Second).CooldownC.Amount);
+            //objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.First).CooldownC.Amount);
+            //objs.Add(_ents.ScoutHeroCooldownE(UnitTypes.Elfemale, PlayerTypes.Second).CooldownC.Amount);
 
 
 
@@ -528,7 +887,7 @@ namespace Game.Game
 
             //foreach (var key in _ents.InventorResourcesEs.Keys) objs.Add(_ents.InventorResourcesEs.Resource(key).Resources);
             //foreach (var key in _ents.InventorUnitsEs.Keys) objs.Add(_ents.Units(key).Units.Amount);
-            foreach (var key in _ents.InventorToolWeaponEs.Keys) objs.Add(_ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeaponsC.Amount);
+            //foreach (var key in _ents.InventorToolWeaponEs.Keys) objs.Add(_ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeaponsC.Amount);
 
 
             //foreach (var key in _ents.WhereUnitsEs.Keys) objs.Add(_ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have);
@@ -544,14 +903,14 @@ namespace Game.Game
 
             #region Other
 
-            objs.Add(_ents.WhoseMovePlayerTC.Player);
-            objs.Add(_ents.WinnerC.Player);
-            objs.Add(_ents.IsStartedGameC.Is);
-            objs.Add(_ents.ReadyE(PlayerTypes.Second).IsReadyC.IsReady);
+            //objs.Add(_e.WhoseMove.Player);
+            //objs.Add(_e.WinnerC.Player);
+            //objs.Add(_e.IsStartedGameC.Is);
+            //objs.Add(_ents.PeopleInCityE(PlayerTypes.Second).IsReadyC.IsReady);
 
-            objs.Add(_ents.MotionsC.Amount);
+            //objs.Add(_ents.MotionsC.Amount);
 
-            objs.Add(_ents.CenterCloudIdxC.Idx);
+            //objs.Add(_e.CenterCloudIdxC);
             //foreach (var item in WindC.Directs) objs.Add(item.Value);
             //objs.Add(WindC.CurDirWind);
 
@@ -562,9 +921,9 @@ namespace Game.Game
             for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
 
-            _ents.RpcE.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            _e.RpcE.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
 
-            _ents.RpcE.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
+            _e.RpcE.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
         }
 
         [PunRPC]
@@ -573,7 +932,7 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (byte idx_0 in _ents.CellSpaceWorker.Idxs)
+            foreach (byte idx_0 in _e.CellSpaceWorker.Idxs)
             {
                 //_ents.CellEs(idx_0).UnitEs.Main.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
                 //_ents.CellEs(idx_0).UnitEs.Main.LevelC.Level = (LevelTypes)objects[_idx_cur++];
@@ -598,20 +957,20 @@ namespace Game.Game
 
                 
 
-                foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) _ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown = (int)objects[_idx_cur++];
+                //foreach (var item in _ents.CellEs(idx_0).UnitEs.CooldownKeys) _ents.CellEs(idx_0).UnitEs.Ability(item).Cooldown = (int)objects[_idx_cur++];
 
 
 
-                _ents.BuildingE(idx_0).Sync((int)objects[_idx_cur++], (BuildingTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
+                //_ents.BuildingE(idx_0).Sync((int)objects[_idx_cur++], (BuildingTypes)objects[_idx_cur++], (PlayerTypes)objects[_idx_cur++]);
 
                 //foreach (var item_0 in _ents.EnvironmentEs.Keys)
                 //{
                 //    _ents.EnvironmentEs.Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
                 //}
 
-                _ents.CellEs(idx_0).RiverEs.RiverE.RiverTC.River = (RiverTypes)objects[_idx_cur++];
-                foreach (var dir in _ents.CellEs(idx_0).RiverEs.Keys)
-                    _ents.CellEs(idx_0).RiverEs.HaveRive(dir).HaveRiver.Have = (bool)objects[_idx_cur++];
+                _e.CellEs(idx_0).RiverEs.RiverE.RiverTC.River = (RiverTypes)objects[_idx_cur++];
+                foreach (var dir in _e.CellEs(idx_0).RiverEs.Keys)
+                    _e.CellEs(idx_0).RiverEs.HaveRive(dir).HaveRiver.Have = (bool)objects[_idx_cur++];
 
 
 
@@ -620,7 +979,7 @@ namespace Game.Game
 
 
 
-                _ents.CellEs(idx_0).EffectEs.FireE.SyncRpc((bool)objects[_idx_cur++]);
+                //_ents.CellEs(idx_0).EffectEs.FireE.SyncRpc((bool)objects[_idx_cur++]);
             }
 
 
@@ -637,7 +996,7 @@ namespace Game.Game
 
             //foreach (var key in _ents.InventorResourcesEs.Keys) _ents.InventorResourcesEs.Resource(key).Set((int)objects[_idx_cur++]);
             //foreach (var key in _ents.InventorUnitsEs.Keys) _ents.Units(key).Sync((int)objects[_idx_cur++]);
-            foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeaponsC.Amount = (int)objects[_idx_cur++];
+            //foreach (var key in _ents.InventorToolWeaponEs.Keys) _ents.InventorToolWeaponEs.ToolWeapons(key).ToolWeaponsC.Amount = (int)objects[_idx_cur++];
 
 
             //foreach (var key in _ents.WhereUnitsEs.Keys) _ents.WhereUnitsEs.WhereUnit(key).HaveUnit.Have = (bool)objects[_idx_cur++];
@@ -653,15 +1012,15 @@ namespace Game.Game
 
             #region Other
 
-            _ents.WhoseMovePlayerTC.Player = (PlayerTypes)objects[_idx_cur++];
-            _ents.WinnerC.Player = (PlayerTypes)objects[_idx_cur++];
-            _ents.IsStartedGameC.Is = (bool)objects[_idx_cur++];
-            _ents.ReadyE(_ents.WhoseMovePlayerTC.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
+            //_e.WhoseMove.Player = (PlayerTypes)objects[_idx_cur++];
+            //_e.WinnerC.Player = (PlayerTypes)objects[_idx_cur++];
+            //_e.IsStartedGameC = (bool)objects[_idx_cur++];
+            //_ents.ReadyE(_ents.WhoseMovePlayerTC.CurPlayerI).IsReadyC.IsReady = (bool)objects[_idx_cur++];
 
 
             //_ents.Motion.AmountMotionsC.Amount = (int)objects[_idx_cur++];
 
-            _ents.CenterCloudIdxC.Set((byte)objects[_idx_cur++]);
+            //_e.CenterCloudIdxC.Set((byte)objects[_idx_cur++]);
             //foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
             //WindC.Sync((DirectTypes)objects[_idx_cur++]);
 

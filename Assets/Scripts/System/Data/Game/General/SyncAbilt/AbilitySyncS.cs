@@ -18,7 +18,7 @@ namespace Game.Game
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Reset();
                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fifth).AbilityC.Reset();
 
-                if (Es.UnitPlayerTC(idx_0).Is(Es.WhoseMovePlayerTC.CurPlayerI))
+                if (Es.UnitPlayerTC(idx_0).Is(Es.CurPlayerI.Player))
                 {
                     if (Es.UnitTC(idx_0).HaveUnit)
                     {
@@ -40,9 +40,9 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    if (Es.AdultForestE(idx_0).HaveEnvironment)
+                                    if (Es.AdultForestC(idx_0).HaveAny)
                                     {
-                                        if (Es.EffectEs(idx_0).FireE.HaveFireC.Have) Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.PutOutFirePawn;
+                                        if (Es.HaveFire(idx_0)) Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.PutOutFirePawn;
                                         else Es.CellEs(idx_0).UnitEs.AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.FirePawn;
                                     }
                                     else
@@ -52,7 +52,7 @@ namespace Game.Game
 
                                     Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.SetFarm;
 
-                                    if (Es.BuildingE(idx_0).HaveBuilding)
+                                    if (Es.BuildTC(idx_0).HaveBuilding)
                                     {
                                         Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Ability = AbilityTypes.DestroyBuilding;
                                     }
@@ -91,7 +91,7 @@ namespace Game.Game
                                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.First).AbilityC.Ability = AbilityTypes.Resurrect;
                                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Second).AbilityC.Ability = AbilityTypes.SetTeleport;
                                 Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Third).AbilityC.Ability = AbilityTypes.InvokeSkeletons;
-                                if (Es.BuildingE(idx_0).HaveBuilding) Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Ability = AbilityTypes.DestroyBuilding;
+                                if (Es.BuildTC(idx_0).HaveBuilding) Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Ability = AbilityTypes.DestroyBuilding;
                                 break;
 
                             case UnitTypes.Hell:
@@ -106,7 +106,7 @@ namespace Game.Game
                             default: throw new Exception();
                         }
 
-                        if (Es.BuildingE(idx_0).Is(BuildingTypes.Teleport))
+                        if (Es.BuildTC(idx_0).Is(BuildingTypes.Teleport))
                         {
                             Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fifth).AbilityC.Ability = AbilityTypes.Teleport;
                         }

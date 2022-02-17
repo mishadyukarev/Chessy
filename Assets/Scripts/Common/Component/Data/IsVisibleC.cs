@@ -1,7 +1,7 @@
 ﻿namespace Game.Game
 {
-    public struct IsVisibleC
+    public class IsVisibleC : IsC
     {
-        public bool IsVisible;
+
     }
 }

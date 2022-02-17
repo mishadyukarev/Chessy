@@ -16,7 +16,7 @@
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {
-                    Es.PeopleInCityE(playerT).AmountC.Add(1);
+                    Es.ForPlayerE(playerT).PeopleInCityC += 1;
                 }
 
                 _curStep = 0;

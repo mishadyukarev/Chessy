@@ -13,38 +13,38 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.EnvIsActiveC.IsActive)
+                if (Es.EnvIsActiveC)
                 {
-                    if (Es.EnvironmentEs(idx_0).Fertilizer.HaveEnvironment)
+                    if (Es.EnvironmentEs(idx_0).FertilizeC.HaveAny)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Enable();
 
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).LocalScale
-                            = new Vector3(Es.EnvironmentEs(idx_0).Fertilizer.Resources / (float)CellEnvironmentValues.STANDART_MAX_AMOUNT_RESOURCES, 0.15f, 1);
+                            = new Vector3(Es.EnvironmentEs(idx_0).FertilizeC.Resources / (float)CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES, 0.15f, 1);
                     }
                     else
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Disable();
                     }
 
-                    if (Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                    if (Es.AdultForestC(idx_0).HaveAny)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).LocalScale =
-                            new Vector3(Es.EnvironmentEs(idx_0).AdultForest.Resources
-                            / (float)CellEnvironmentValues.STANDART_MAX_AMOUNT_RESOURCES, 0.15f, 1);
+                            new Vector3(Es.AdultForestC(idx_0).Resources
+                            / (float)CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES, 0.15f, 1);
                     }
                     else
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Disable();
                     }
 
-                    if (Es.EnvironmentEs(idx_0).Hill.HaveEnvironment)
+                    if (Es.EnvironmentEs(idx_0).HillC.HaveAny)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).LocalScale
-                            = new Vector3(Es.EnvironmentEs(idx_0).Hill.Resources
-                            / (float)CellEnvironmentValues.STANDART_MAX_AMOUNT_RESOURCES, 0.15f, 1);
+                            = new Vector3(Es.EnvironmentEs(idx_0).HillC.Resources
+                            / (float)CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES, 0.15f, 1);
                     }
                     else
                     {

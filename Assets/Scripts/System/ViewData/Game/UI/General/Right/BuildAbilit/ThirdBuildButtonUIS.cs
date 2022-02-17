@@ -19,13 +19,13 @@
 
 //            //    if (unit_sel.Is(UnitTypes.Pawn))
 //            //    {
-//            //        if (ownUnit_sel.Is(Ents.WhoseMove.CurPlayerI))
+//            //        if (ownUnit_sel.Is(Ents.CurPlayerI.Player))
 //            //        {
 //            //            if (build_sel.Have)
 //            //            {
-//            //                if (ownBuild_sel.Is(Ents.WhoseMove.CurPlayerI))
+//            //                if (ownBuild_sel.Is(Ents.CurPlayerI.Player))
 //            //                {
-//            //                    if (!WhereBuildsE.IsSetted(BuildingTypes.City, Ents.WhoseMove.CurPlayerI, out var idx_city))
+//            //                    if (!WhereBuildsE.IsSetted(BuildingTypes.City, Ents.CurPlayerI.Player, out var idx_city))
 //            //                    {
 //            //                        needActiveThirdButt = true;
 //            //                        //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;
@@ -42,7 +42,7 @@
 
 //            //            else
 //            //            {
-//            //                if (!WhereBuildsE.IsSetted(BuildingTypes.City, Ents.WhoseMove.CurPlayerI, out var idx_city))
+//            //                if (!WhereBuildsE.IsSetted(BuildingTypes.City, Ents.CurPlayerI.Player, out var idx_city))
 //            //                {
 //            //                    needActiveThirdButt = true;
 //            //                    //RightBuildUIE.Button<ImageUIC>(ButtonTypes.Third).Sprite = ResourcesSpriteVEs.Sprite(SpriteTypes.City).Sprite;

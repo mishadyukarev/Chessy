@@ -14,20 +14,20 @@
                 {
                     if (Es.RiverEs(idx_0).RiverE.HaveRiverNear)
                     {
-                        Es.UnitE(idx_0).Take(Es, 0.15f);
+                        //Es.UnitE(idx_0).Take(Es, 0.15f);
                     }
 
                     if (CellWorker.GetIdxsAround(Es.CenterCloudIdxC.Idx).Contains(idx_0))
                     {
-                        Es.UnitE(idx_0).Take(Es, 0.15f);
+                        //Es.UnitE(idx_0).Take(Es, 0.15f);
                         break;
                     }
 
                     foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
                     {
-                        if (Es.BuildingE(idx_1).Is(BuildingTypes.IceWall))
+                        if (Es.BuildTC(idx_1).Is(BuildingTypes.IceWall))
                         {
-                            Es.UnitE(idx_0).Take(Es, 0.15f);
+                            //Es.UnitE(idx_0).Take(Es, 0.15f);
                             break;
                         }
                     }

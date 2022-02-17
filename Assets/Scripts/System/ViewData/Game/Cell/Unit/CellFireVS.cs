@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.EffectEs(idx_0).FireE.HaveFireC.Have)
+                if (Es.EffectEs(idx_0).HaveFire)
                 {
                     CellVEs(idx_0).FireVE.SR.Enable();
                 }

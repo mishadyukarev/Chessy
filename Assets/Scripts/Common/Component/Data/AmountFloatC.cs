@@ -1,8 +1,8 @@
 ﻿namespace Game.Common
 {
-    public abstract class AmountFloatC
+    public class AmountFloatC
     {
-        protected float Amount;
+        public float Amount { get; set; }
 
         public bool HaveAny => Amount > 0;
         public bool IsMinus => Amount < 0;

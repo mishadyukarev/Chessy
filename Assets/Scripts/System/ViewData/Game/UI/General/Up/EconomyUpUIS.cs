@@ -15,7 +15,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.WhoseMovePlayerTC.CurPlayerI;
+            var curPlayer = Es.CurPlayerI.Player;
 
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
@@ -25,28 +25,28 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitTC(idx_0).HaveUnit && Es.UnitPlayerTC(idx_0).Is(Es.WhoseMovePlayerTC.CurPlayerI))
+                if (Es.UnitTC(idx_0).HaveUnit && Es.UnitPlayerTC(idx_0).Is(Es.CurPlayerI.Player))
                 {
                     _extracts[ResourceTypes.Food] -= ResourcesInInventorValues.CostFoodForFeedingThem(Es.UnitTC(idx_0).Unit);
 
-                    if (Es.AdultForestE(idx_0).CanExtractPawn)
-                    {
-                        _extracts[Es.EnvironmentEs(idx_0).AdultForest.Resource] += Es.EnvironmentEs(idx_0).AdultForest.AmountExtractPawn(Es.UnitE(idx_0));
-                    }
+                    //if (Es.AdultForestC(idx_0).CanExtractPawn)
+                    //{
+                    //    _extracts[Es.EnvironmentEs(idx_0).AdultForest.Resource] += Es.EnvironmentEs(idx_0).AdultForest.AmountExtractPawn(Es.UnitE(idx_0));
+                    //}
                 }
-                if (Es.AdultForestE(idx_0).CanExtractWoodcutter(Es.BuildEs(idx_0)))
-                {
-                    _extracts[Es.AdultForestE(idx_0).Resource] += Es.EnvironmentEs(idx_0).AdultForest.AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
-                }
-                if (Es.BuildingE(idx_0).CanExtractFertilizer(Es.EnvironmentEs(idx_0)))
-                {
-                    _extracts[Es.EnvironmentEs(idx_0).Fertilizer.Resource] += Es.EnvironmentEs(idx_0).Fertilizer.AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
-                }
+                //if (Es.AdultForestC(idx_0).CanExtractWoodcutter(Es.BuildEs(idx_0)))
+                //{
+                //    _extracts[Es.AdultForestC(idx_0).Resource] += Es.EnvironmentEs(idx_0).AdultForest.AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
+                //}
+                //if (Es.BuildingE(idx_0).CanExtractFertilizer(Es.EnvironmentEs(idx_0)))
+                //{
+                //    //_extracts[ResourceTypes.Food] += Es.EnvironmentEs(idx_0).FertilizeC.AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
+                //}
 
-                if (Es.HillE(idx_0).CanExtractPawn(Es.UnitEs(idx_0), Es.EnvironmentEs(idx_0)))
-                {
-                    _extracts[Es.HillE(idx_0).Resource] += Es.HillE(idx_0).AmountExtractPawnPick();
-                }
+                //if (Es.HillC(idx_0).CanExtractPawn(Es.UnitEs(idx_0), Es.EnvironmentEs(idx_0)))
+                //{
+                //    _extracts[Es.HillC(idx_0).Resource] += Es.HillC(idx_0).AmountExtractPawnPick();
+                //}
             }
 
 

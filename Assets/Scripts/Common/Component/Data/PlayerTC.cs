@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public class PlayerTC
+    public struct PlayerTC
     {
         public PlayerTypes Player;
 
@@ -12,7 +12,12 @@
             return false;
         }
 
-        public PlayerTC() { }
+        public PlayerTypes NextPlayerFrom(PlayerTypes player)
+        {
+            if (player == PlayerTypes.First) return PlayerTypes.Second;
+            else return PlayerTypes.First;
+        }
+
         public PlayerTC(in PlayerTypes player) => Player = player;
     }
 }

@@ -41,16 +41,16 @@ namespace Game.Game
         void Ready() => Es.RpcE.ReadyToMaster();
         void FriendReady()
         {
-            Es.FriendIsActiveC.IsActive = false;
+            Es.FriendIsActiveC = false;
         }
         void GetKing()
         {
-            Es.SelectedIdxC.Reset();
+            Es.SelectedIdxC.Idx = 0;
 
 
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
-                if (Es.Units(UnitTypes.King, LevelTypes.First, Es.WhoseMovePlayerTC.CurPlayerI).HaveUnits)
+                if (Es.ForPlayerE(Es.CurPlayerI.Player).UnitsInfoE(UnitTypes.King).HaveInInventor)
                 {
                     Es.SelUnitTC.Unit = UnitTypes.King;
                     Es.SelUnitLevelTC.Level = LevelTypes.First;
@@ -76,7 +76,7 @@ namespace Game.Game
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
                 Es.RpcE.PickUpgUnitToMas(unit);
 
@@ -87,7 +87,7 @@ namespace Game.Game
 
         void UpgradeBuild(BuildingTypes build)
         {
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
                 Es.RpcE.PickUpgBuildToMas(build);
 
@@ -98,7 +98,7 @@ namespace Game.Game
 
         void UpgradeWater()
         {
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
                 Es.RpcE.UpgWater();
 
@@ -109,7 +109,7 @@ namespace Game.Game
 
         void GetHero(in UnitTypes unit)
         {
-            if (Es.WhoseMovePlayerTC.IsMyMove)
+            if (Es.IsMyMove)
             {
                 Es.RpcE.GetHeroToMaster(unit);
             }

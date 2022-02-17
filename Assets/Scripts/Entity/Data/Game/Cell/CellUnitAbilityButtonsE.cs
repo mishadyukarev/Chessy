@@ -7,7 +7,5 @@ namespace Game.Game
         public ref AbilityTC AbilityC => ref Ent.Get<AbilityTC>();
 
         public CellUnitAbilityButtonsE(in EcsWorld gameW) : base(gameW) { }
-
-        public void Reset() => AbilityC.Ability = AbilityTypes.None;
     }
 }

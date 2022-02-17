@@ -1,7 +1,7 @@
-﻿namespace Game.Game
-{
-    public class IsClickedC
-    {
-        public bool IsClicked;
-    }
-}
+﻿//namespace Game.Game
+//{
+//    public class IsClickedC
+//    {
+//        public bool IsClicked;
+//    }
+//}

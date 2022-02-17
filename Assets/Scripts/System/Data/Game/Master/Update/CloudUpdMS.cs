@@ -9,7 +9,7 @@
         public void Run()
         {
             var xy_0 = Es.CellEs(Es.CenterCloudIdxC.Idx).CellE.XyC.Xy;
-            var xy_next = CellWorker.GetXyCellByDirect(xy_0, Es.DirectWind.Direct);
+            var xy_next = CellWorker.GetXyCellByDirect(xy_0, Es.DirectWindTC.Direct);
 
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
@@ -18,7 +18,7 @@
             }
             else
             {
-                var newDir = Es.DirectWind.Direct;
+                var newDir = Es.DirectWindTC.Direct;
 
                 newDir = newDir.Invert();
                 var newDirInt = (int)newDir;
@@ -26,7 +26,7 @@
 
                 if (newDirInt <= 0) newDirInt = 1;
                 else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                Es.DirectWind.Direct = (DirectTypes)newDirInt;
+                Es.DirectWindTC.Direct = (DirectTypes)newDirInt;
             }
 
             CellWorker.TryGetXyAround(xy_next, out var dirs);

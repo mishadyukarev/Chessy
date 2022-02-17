@@ -1,14 +1,14 @@
-﻿using ECS;
+﻿//using ECS;
 
-namespace Game.Game
-{
-    public sealed class CellParenE : EntityAbstract
-    {
-        public ref IsActiveC IsActiveSelf => ref Ent.Get<IsActiveC>();
+//namespace Game.Game
+//{
+//    public sealed class CellParenE : EntityAbstract
+//    {
 
-        public CellParenE(in bool isActive, in EcsWorld gameW) : base(gameW)
-        {
-            Ent.Add(new IsActiveC(isActive));
-        }
-    }
-}
+
+//        public CellParenE(in bool isActive, in EcsWorld gameW) : base(gameW)
+//        {
+//            IsActiveSelf = isActive;
+//        }
+//    }
+//}

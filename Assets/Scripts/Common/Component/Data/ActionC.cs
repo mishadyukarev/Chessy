@@ -5,10 +5,7 @@ namespace Game.Game
     {
         public readonly System.Action Action;
 
-        public ActionC(in System.Action action)
-        {
-            Action = action;
-        }
+        public ActionC(in System.Action action) => Action = action;
 
         public void Invoke() => Action.Invoke();
     }

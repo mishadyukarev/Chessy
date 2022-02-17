@@ -2,15 +2,14 @@
 
 namespace Game.Game
 {
-    public class ResourcesC : AmountFloatC
+    public struct ResourcesC
     {
-        public float Resources
-        {
-            get => Amount;
-            set => Amount = value;
-        }
+        public float Resources;
 
-        public ResourcesC() { }
-        public ResourcesC(in float resources): base(resources) { }
+        public bool HaveAny => Resources > 0;
+
+        public ResourcesC(in float resources) => Resources = resources;
+
+        public void SetRandom(in float low, in float max) => Resources = UnityEngine.Random.Range(low, max);
     }
 }

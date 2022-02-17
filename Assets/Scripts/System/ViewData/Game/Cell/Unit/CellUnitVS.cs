@@ -59,10 +59,10 @@
 
                 if (Es.UnitTC(idx_0).HaveUnit)
                 {
-                    if (Es.UnitEs(idx_0).VisibleE(Es.WhoseMovePlayerTC.CurPlayerI).IsVisible)
+                    if (Es.UnitEs(idx_0).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
                     {
                         var isSelected = idx_0 == Es.SelectedIdxC.Idx;
-                        var isVisForNext = Es.UnitEs(idx_0).VisibleE(Es.WhoseMovePlayerTC.NextPlayerFrom(Es.WhoseMovePlayerTC.CurPlayerI)).IsVisible;
+                        var isVisForNext = Es.UnitEs(idx_0).ForPlayer(Es.WhoseMove.NextPlayerFrom(Es.CurPlayerI.Player)).IsVisibleC;
 
                         var unitT = Es.UnitTC(idx_0).Unit;
 
@@ -78,10 +78,10 @@
 
                             }
 
-                            if (Es.ExtraTWE(idx_0).ToolWeaponTC.HaveToolWeapon)
+                            if (Es.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
                             {
-                                var twT = Es.ExtraTWE(idx_0).ToolWeaponTC.ToolWeapon;
-                                var levT = Es.ExtraTWE(idx_0).LevelTC.Level;
+                                var twT = Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon;
+                                var levT = Es.UnitEs(idx_0).ExtraTWLevelTC.Level;
 
                                 VEs.UnitEs(idx_0).ExtraToolWeaponE(isSelected, levT, twT).Enable(isVisForNext);
                             }

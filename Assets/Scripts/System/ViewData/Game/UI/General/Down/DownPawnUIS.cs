@@ -8,12 +8,12 @@
 
         public void Run()
         {
-            var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
+            var curPlayerI = Es.CurPlayerI.Player;
 
-            var amountPawns = Es.WhereWorker.AmountPaws(curPlayerI);
+            var amountPawnsInGame = Es.ForPlayerE(curPlayerI).UnitsInfoE(UnitTypes.Pawn).UnitsInGameC;
 
-            DownPawnUIE.TextUIC.Text = amountPawns.ToString() + "/" + Es.MaxAvailablePawnsE(curPlayerI).MaxPawns;
-            UIEs.DownEs.PawnEs.MaxPeopleE.SetMaxPeople(Es.PeopleInCityE(curPlayerI).AmountC.Amount);
+            DownPawnUIE.TextUIC.Text = amountPawnsInGame.ToString() + "/" + Es.ForPlayerE(curPlayerI).MaxAvailablePawnsC;
+            UIEs.DownEs.PawnEs.MaxPeopleE.SetMaxPeople(Es.ForPlayerE(curPlayerI).PeopleInCityC);
         }
     }
 }

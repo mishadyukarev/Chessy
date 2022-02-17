@@ -12,7 +12,7 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.UnitTC(idx_0).HaveUnit && !Es.UnitTC(idx_0).IsAnimal)
+                if (Es.UnitTC(idx_0).HaveUnit && !Es.UnitEs(idx_0).IsAnimal)
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
@@ -26,24 +26,24 @@ namespace Game.Game
                     {
                         if (Es.RiverEs(idx_0).RiverE.HaveRiverNear)
                         {
-                            Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
+                            //Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                         }
                         else
                         {
                             
-                            Es.UnitWaterC(idx_0).Take(CellUnitStatWaterValues.NeedWaterForThirsty(Es.UnitTC(idx_0).Unit));
+                            Es.UnitWaterC(idx_0).Water -= CellUnitStatWater_Values.NeedWaterForThirsty(Es.UnitTC(idx_0).Unit);
 
-                            if (!Es.UnitWaterC(idx_0).HaveAny)
+                            if (Es.UnitWaterC(idx_0).Water <= 0)
                             {
-                                float percent = CellUnitStatHpValues.ThirstyPercent(Es.UnitTC(idx_0).Unit);
+                                float percent = CellUnitStatHp_Values.ThirstyPercent(Es.UnitTC(idx_0).Unit);
 
-                                Es.UnitE(idx_0).Take(Es, CellUnitStatWaterValues.WATER_MAX_STANDART * percent);
+                                //Es.UnitE(idx_0).Take(Es, CellUnitStatWaterValues.WATER_MAX_STANDART * percent);
 
                                 if (!Es.UnitTC(idx_0).HaveUnit)
                                 {
-                                    if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
+                                    if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp))
                                     {
-                                        Es.BuildingE(idx_0).Destroy(Es);
+                                        //Es.BuildTC(idx_0).Destroy(Es);
                                     }
                                 }
                             }

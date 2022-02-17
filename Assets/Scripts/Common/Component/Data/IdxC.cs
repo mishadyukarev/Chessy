@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public class IdxC
+    public struct IdxC
     {
         public byte Idx;
 
@@ -16,10 +16,6 @@ namespace Game.Game
         }
 
 
-        public IdxC() { }
         public IdxC(in byte idx) => Idx = idx;
-
-
-        public void Set(in byte idx) => Idx = idx;
     }
 }

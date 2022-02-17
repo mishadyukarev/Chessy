@@ -12,7 +12,7 @@
             {
                 if (Es.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    Es.UnitHpC(idx_0).Health = CellUnitStatHpValues.MAX_HP;
+                    Es.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
                 }
             }
         }

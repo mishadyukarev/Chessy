@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public class SunSideTC
+    public struct SunSideTC
     {
         public SunSideTypes SunSide;
 
@@ -48,7 +48,6 @@ namespace Game.Game
             }
         }
 
-        public SunSideTC() { }
         public SunSideTC(in SunSideTypes sunSide) => SunSide = sunSide;
 
         public void ToggleNext() => SunSide = SunSide == SunSideTypes.Night ? SunSideTypes.Dawn : SunSide++;

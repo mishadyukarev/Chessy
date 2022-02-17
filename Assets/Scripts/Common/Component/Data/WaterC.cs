@@ -2,12 +2,8 @@
 
 namespace Game.Game
 {
-    public class WaterC : AmountFloatC
+    public struct WaterC
     {
-        public float Water
-        {
-            get => Amount;
-            set => Amount = value;
-        }
+        public float Water;
     }
 }

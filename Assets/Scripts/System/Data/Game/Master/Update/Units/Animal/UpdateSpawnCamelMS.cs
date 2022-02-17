@@ -25,9 +25,9 @@ namespace Game.Game
             {
                 byte idx_0 = (byte)Random.Range(0, CellWorker.Idxs.Count);
 
-                if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                if (Es.CellEs(idx_0).IsActiveParentSelf)
                 {
-                    if (!Es.UnitTC(idx_0).HaveUnit && !Es.EnvironmentEs(idx_0).Mountain.HaveEnvironment)
+                    if (!Es.UnitTC(idx_0).HaveUnit && !Es.EnvironmentEs(idx_0).MountainC.HaveAny)
                     {
                         bool haveNearUnit = false;
 
@@ -42,7 +42,7 @@ namespace Game.Game
 
                         if (!haveNearUnit)
                         {
-                            Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
+                            //Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
                         }
                     }

@@ -12,7 +12,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.WhoseMovePlayerTC.CurPlayerI;
+            var curPlayer = Es.CurPlayerI.Player;
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {

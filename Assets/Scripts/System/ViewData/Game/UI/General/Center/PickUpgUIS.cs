@@ -10,10 +10,10 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.WhoseMovePlayerTC.CurPlayerI;
+            var curPlayer = Es.CurPlayerI.Player;
 
-            var isActivatedZone = Es.AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).HaveUpgrade.Have
-                && !Es.Units(UnitTypes.King, LevelTypes.First, curPlayer).HaveUnits;
+            var isActivatedZone = Es.AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).Have
+                && !Es.ForPlayerE(curPlayer).UnitsInfoE(UnitTypes.King).HaveInInventor;
 
             Paren.SetActive(isActivatedZone);
 
@@ -21,7 +21,7 @@ namespace Game.Game
             {
                 for (var build = BuildingTypes.Farm; build <= BuildingTypes.Woodcutter; build++)
                 {
-                    if (Es.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Es.WhoseMovePlayerTC.CurPlayerI).HaveUpgrade.Have)
+                    if (Es.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Es.CurPlayerI.Player).Have)
                     {
                         Builds(build).SetActive(true);
                     }

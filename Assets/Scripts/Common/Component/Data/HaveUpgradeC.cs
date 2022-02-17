@@ -1,9 +1,9 @@
 ﻿namespace Game.Game
 {
-    public struct HaveUpgradeC
+    public class HaveUpgradeC : HaveC
     {
-        public bool Have;
 
-        public HaveUpgradeC(in bool haveUpgrade) => Have = haveUpgrade;
+        public HaveUpgradeC() { }
+        public HaveUpgradeC(in bool have) : base(have) { }
     }
 }

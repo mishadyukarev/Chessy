@@ -13,11 +13,11 @@
             var activeParent = false;
 
 
-            if (Es.SelectedIdxC.IsSelectedCell)
+            if (Es.SelectedIdxC.Idx > 0)
             {
                 if (Es.UnitTC(idx_sel).HaveUnit)
                 {
-                    if (Es.UnitEs(idx_sel).VisibleE(Es.WhoseMovePlayerTC.CurPlayerI).IsVisible)
+                    if (Es.UnitEs(idx_sel).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
                     {
                         activeParent = true;
                     }

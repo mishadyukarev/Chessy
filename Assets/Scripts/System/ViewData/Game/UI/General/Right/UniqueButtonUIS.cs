@@ -21,8 +21,8 @@
                 }
                 else
                 {
-                    UIEs.RightEs.Unique(button).Text.SetActiveParent(Es.UnitEs(Es.SelectedIdxC.Idx).Ability(ability).HaveCooldown);
-                    UIEs.RightEs.Unique(button).Text.Text = Es.UnitEs(Es.SelectedIdxC.Idx).Ability(ability).Cooldown.ToString();
+                    UIEs.RightEs.Unique(button).Text.SetActiveParent(Es.UnitEs(Es.SelectedIdxC.Idx).Ability(ability).CooldownC.HaveCooldown);
+                    UIEs.RightEs.Unique(button).Text.Text = Es.UnitEs(Es.SelectedIdxC.Idx).Ability(ability).CooldownC.Cooldown.ToString();
 
                     UIEs.RightEs.Unique(button).Paren.SetActive(true);
 

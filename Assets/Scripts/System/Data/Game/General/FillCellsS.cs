@@ -19,21 +19,23 @@ namespace Game.Game
                     var x = xy_0[0];
                     var y = xy_0[1];
 
-                    if (Es.CellEs(idx_0).ParentE.IsActiveSelf.IsActive)
+                    if (Es.CellEs(idx_0).IsActiveParentSelf)
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
                             if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.Mountain))
                             {
-                                Es.MountainE(idx_0).SetRandomResources();
+                                Es.MountainC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES);
                                 amountMountains++;
                             }
+
+                            
 
                             else
                             {
                                 if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
-                                    Es.AdultForestE(idx_0).SetRandomResources();
+                                    Es.AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES);
                                 }
                             }
                         }
@@ -42,33 +44,25 @@ namespace Game.Game
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
-                                Es.AdultForestE(idx_0).SetRandomResources();
+                                Es.AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES);
                             }
-                            //else
-                            //{
-                            //    random = UnityEngine.Random.Range(1, 100);
-                            //    if (random <= CellEnvironmentValues.StartPercentForSpawn(EnvironmentTypes.Fertilizer))
-                            //    {
-                            //        EnvironmentEs(idx_0).Fertilizer.SetNewRandom();
-                            //    }
-                            //}
                         }
 
                         var corners = new List<DirectTypes>();
 
                         if (x >= 3 && x < 4 && y == 5)
                         {
-                            Es.RiverEs(idx_0).SetStart( DirectTypes.Up);
+                            Es.RiverEs(idx_0).SetStart(DirectTypes.Up);
                         }
                         else if (x == 4 && y == 5)
                         {
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
-                            Es.RiverEs(idx_0).SetStart( DirectTypes.Up, DirectTypes.Right);
+                            Es.RiverEs(idx_0).SetStart(DirectTypes.Up, DirectTypes.Right);
                         }
                         else if (x >= 5 && x < 7 && y == 4)
                         {
-                            Es.RiverEs(idx_0).SetStart( DirectTypes.Up);
+                            Es.RiverEs(idx_0).SetStart(DirectTypes.Up);
                         }
 
 
@@ -96,7 +90,7 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                Es.InventorResourcesEs.Resource(ResourceTypes.Food, PlayerTypes.Second).ResourceC.Set(999999);
+                Es.InventorResourcesEs.Resource(ResourceTypes.Food, PlayerTypes.Second).ResourceC.Resources = 999999;
 
                 foreach (byte idx_0 in CellWorker.Idxs)
                 {
@@ -106,36 +100,74 @@ namespace Game.Game
 
                     if (x == 7 && y == 8)
                     {
-                        Es.EnvironmentEs(idx_0).Mountain.SetZeroResources();
-                        Es.EnvironmentEs(idx_0).AdultForest.Destroy(Es.TrailEs(idx_0).Trails);
+                        Es.MountainC(idx_0).Resources = 0;
 
-                        Es.UnitE(idx_0).SetNew((UnitTypes.King, LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected, false), Es);
+                        if (Es.AdultForestC(idx_0).HaveAny)
+                        {
+                            Es.AdultForestC(idx_0).Resources = 0;
+                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                            {
+                                Es.TrailEs(idx_0).Trail(dirT).HealthC.Health = 0;
+                            }
+                        }
+
+                        Es.UnitTC(idx_0).Unit = UnitTypes.King;
+                        Es.UnitLevelTC(idx_0).Level = LevelTypes.First;
+                        Es.UnitPlayerTC(idx_0).Player = PlayerTypes.Second;
+                        Es.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
+
+                        Es.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
+                        Es.UnitStepC(idx_0).Steps = CellUnitStatStep_Values.StandartForUnit(UnitTypes.King);
+                        Es.UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX_WATER;
                     }
 
                     else if (x == 8 && y == 8)
                     {
-                        Es.MountainE(idx_0).SetZeroResources();
-                        Es.AdultForestE(idx_0).Destroy(Es.TrailEs(idx_0).Trails);
+                        Es.MountainC(idx_0).Resources = 0;
 
-                        Es.BuildingE(idx_0).SetNew(BuildingTypes.City, PlayerTypes.Second);
-                        //Es.WhereBuildingEs.HaveBuild(BuildingTypes.City, PlayerTypes.Second, idx_0).HaveBuilding.Have = true;
+                        if (Es.AdultForestC(idx_0).HaveAny)
+                        {
+                            Es.AdultForestC(idx_0).Resources = 0;
+                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                            {
+                                Es.TrailEs(idx_0).Trail(dirT).HealthC.Health = 0;
+                            }
+                        }
+
+                        Es.BuildTC(idx_0).Build = BuildingTypes.City;
+                        Es.BuildPlayerTC(idx_0).Player = PlayerTypes.Second;
+                        Es.BuildHpC(idx_0).Health = CellBuildingValues.MaxAmountHealth(BuildingTypes.City);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
                     {
-                        Es.EnvironmentEs(idx_0).Mountain.SetZeroResources();
+                        Es.MountainC(idx_0).Resources = 0;
 
-                        Es.UnitE(idx_0).SetNewPawn((LevelTypes.First, PlayerTypes.Second, ConditionUnitTypes.Protected), Es);
+                        Es.UnitTC(idx_0).Unit = UnitTypes.Pawn;
+                        Es.UnitLevelTC(idx_0).Level = LevelTypes.First;
+                        Es.UnitPlayerTC(idx_0).Player = PlayerTypes.Second;
+                        Es.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
-                        int rand = UnityEngine.Random.Range(0, 100);
+                        Es.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
+                        Es.UnitStepC(idx_0).Steps = CellUnitStatStep_Values.StandartForUnit(UnitTypes.Pawn);
+                        Es.UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX_WATER;
 
-                        if (rand >= 50)
+                        Es.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
+                        Es.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
+
+
+                        var rand = UnityEngine.Random.Range(0f, 1f);
+
+                        if (rand >= 0.5f)
                         {
-                            Es.UnitEs(idx_0).ExtraToolWeaponE.SetNew(ToolWeaponTypes.Sword, LevelTypes.Second);
+                            Es.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Sword;
+                            Es.UnitExtraLevelTC(idx_0).Level = LevelTypes.Second;
                         }
                         else
                         {
-                            Es.UnitEs(idx_0).ExtraToolWeaponE.SetNew(ToolWeaponTypes.Shield, LevelTypes.First);
+                            Es.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Shield;
+                            Es.UnitExtraLevelTC(idx_0).Level = LevelTypes.First;
+                            Es.UnitExtraProtectionShieldTC(idx_0).Protection = CellUnitToolWeapon_Values.ProtectionShield(LevelTypes.First);
                         }
                     }
                 }

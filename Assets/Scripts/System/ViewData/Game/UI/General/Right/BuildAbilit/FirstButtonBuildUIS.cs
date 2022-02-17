@@ -18,7 +18,7 @@
 //            //    {
 //            //        var selOnUnitCom = UnitEs.Main(Es.SelectedIdxC.Idx).OwnerC;
 
-//            //        if (selOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
+//            //        if (selOnUnitCom.Is(Es.CurPlayerI.Player))
 //            //        {
 //            //            buildT = BuildingTypes.Farm;
 //            //        }

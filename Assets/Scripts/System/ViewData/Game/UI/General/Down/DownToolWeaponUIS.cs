@@ -42,13 +42,13 @@ namespace Game.Game
                 Image(twT, levTw_sel).SetActive(true);
             }
 
-            var curPlayerI = Es.WhoseMovePlayerTC.CurPlayerI;
+            var curPlayerI = Es.CurPlayerI.Player;
 
-            Button<TextUIC>(ToolWeaponTypes.Pick).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Pick, LevelTypes.Second, curPlayerI).ToolWeaponsC.Amount.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Sword).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Sword, LevelTypes.Second, curPlayerI).ToolWeaponsC.Amount.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Axe).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Axe, LevelTypes.Second, curPlayerI).ToolWeaponsC.Amount.ToString();
-            Button<TextUIC>(ToolWeaponTypes.Shield).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Shield, Es.SelectedTWLevelTC.Level, curPlayerI).ToolWeaponsC.Amount.ToString();
-            Button<TextUIC>(ToolWeaponTypes.BowCrossbow).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.BowCrossbow, Es.SelectedTWLevelTC.Level, curPlayerI).ToolWeaponsC.Amount.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Pick).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Pick, LevelTypes.Second, curPlayerI).ToolWeaponsC.ToolWeapons.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Sword).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Sword, LevelTypes.Second, curPlayerI).ToolWeaponsC.ToolWeapons.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Axe).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Axe, LevelTypes.Second, curPlayerI).ToolWeaponsC.ToolWeapons.ToString();
+            Button<TextUIC>(ToolWeaponTypes.Shield).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.Shield, Es.SelectedTWLevelTC.Level, curPlayerI).ToolWeaponsC.ToolWeapons.ToString();
+            Button<TextUIC>(ToolWeaponTypes.BowCrossbow).Text = Es.InventorToolWeaponEs.ToolWeapons(ToolWeaponTypes.BowCrossbow, Es.SelectedTWLevelTC.Level, curPlayerI).ToolWeaponsC.ToolWeapons.ToString();
         }
     }
 }

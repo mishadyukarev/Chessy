@@ -30,7 +30,7 @@ namespace Game.Game
 
             if (Es.MistakeC.HaveMistake)
             {
-                Es.TimerC.Add(Time.deltaTime);
+                Es.TimerC.Timer += Time.deltaTime;
 
                 if (Es.MistakeC.Is(MistakeTypes.Economy))
                 {
@@ -45,12 +45,12 @@ namespace Game.Game
 
                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                         {
-                            if (Es.MistakeEconomyE(res).NeedResources > 0)
+                            if (Es.MistakeEconomy(res).Resources > 0)
                             {
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).SetActive(true);
 
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).Text
-                                    = ">= " + (int)(Es.MistakeEconomyE(res).NeedResources * 100);
+                                    = ">= " + (int)(Es.MistakeEconomy(res).Resources * 100);
                             }
                         }
                     }

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public class LevelTC
+    public struct LevelTC
     {
         public LevelTypes Level;
         public bool Is(params LevelTypes[] levels)
@@ -13,7 +13,6 @@ namespace Game.Game
             return false;
         }
 
-        public LevelTC() { }
         public LevelTC(in LevelTypes level) => Level = level;
 
         public bool TryUpgrade()

@@ -12,9 +12,9 @@
             {
                 var res = ResourceTypes.Food;
 
-                if (Es.InventorResourcesEs.Resource(res, player).ResourceC.IsMinus)
+                if (Es.InventorResourcesEs.Resource(res, player).ResourceC.Resources < 0)
                 {
-                    Es.InventorResourcesEs.Resource(res, player).ResourceC.Reset();
+                    Es.InventorResourcesEs.Resource(res, player).ResourceC.Resources = 0;
 
                     for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
                     {
@@ -24,23 +24,23 @@
                             {
                                 if(Es.UnitTC(idx_0).HaveUnit && Es.UnitLevelTC(idx_0).Is(levUnit) && Es.UnitPlayerTC(idx_0).Is(player))
                                 {
-                                    if (Es.BuildingE(idx_0).Is(BuildingTypes.Camp))
+                                    if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp))
                                     {
                                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                                        Es.BuildingE(idx_0).Destroy(Es);
+                                        //Es.BuildTC(idx_0).Destroy(Es);
                                     }
 
                                     if (Es.UnitTC(idx_0).Is(UnitTypes.King))
                                     {
                                         Es.WinnerC.Player = Es.UnitPlayerTC(idx_0).Player;
                                     }
-                                    else if (Es.UnitTC(idx_0).Is(UnitTypes.Scout) || Es.UnitTC(idx_0).IsHero)
+                                    else if (Es.UnitTC(idx_0).Is(UnitTypes.Scout) || Es.UnitEs(idx_0).IsHero)
                                     {
-                                        Es.ScoutHeroCooldownE(Es.UnitTC(idx_0).Unit, Es.UnitPlayerTC(idx_0).Player).CooldownC.Amount = ScoutHeroCooldownValues.AfterKill(Es.UnitTC(idx_0).Unit);
-                                        Es.Units(Es.UnitTC(idx_0).Unit, Es.UnitLevelTC(idx_0).Level, Es.UnitPlayerTC(idx_0).Player).AmountC.Add(1);
+                                        Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).ScoutHeroCooldownC.Cooldown = ScoutHeroCooldownValues.AfterKill(Es.UnitTC(idx_0).Unit);
+                                        Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
                                     }
 
-                                    Es.UnitEs(idx_0).WhoLastDiedHereE.SetLastDied(Es.UnitE(idx_0));
+                                    //Es.LastDiedUnitTC(idx_0).SetLastDied((Es.UnitTC(idx_0), Es.UnitLevelTC(idx_0), Es.UnitPlayerTC(idx_0)), Es.LastDiedLevelTC(idx_0), Es.LastDiedPlayerTC(idx_0));
                                     Es.UnitTC(idx_0).Unit = UnitTypes.None;
                                 }
                             }

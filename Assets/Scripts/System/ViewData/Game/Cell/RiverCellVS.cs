@@ -15,7 +15,7 @@ namespace Game.Game
             {
                 ref var river_0 = ref Es.RiverEs(idx_0).RiverE.RiverTC;
 
-                switch (Es.WhoseMovePlayerTC.CurPlayerI)
+                switch (Es.CurPlayerI.Player)
                 {
                     case PlayerTypes.None: throw new Exception();
                     case PlayerTypes.First:

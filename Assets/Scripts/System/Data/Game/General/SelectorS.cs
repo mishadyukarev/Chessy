@@ -18,13 +18,13 @@ namespace Game.Game
             ref var raycastTC = ref Es.RayCastTC;
             ref var cellClick = ref Es.CellClickTC;
 
-            if (Es.IsClickedC.IsClicked)
+            if (Es.IsClickedC)
             {
                 if (raycastTC.Is(RaycastTypes.Cell))
                 {
-                    if (!Es.WhoseMovePlayerTC.IsMyMove)
+                    if (!Es.IsMyMove)
                     {
-                        Es.SelectedIdxC.Set(Es.CurrentIdxC.Idx);
+                        Es.SelectedIdxC.Idx = Es.CurrentIdxC.Idx;
                     }
 
                     else
@@ -35,14 +35,17 @@ namespace Game.Game
 
                             case CellClickTypes.SimpleClick:
                                 {
-                                    if (Es.SelectedIdxC.IsSelectedCell)
+                                    if (Es.SelectedIdxC.Idx > 0)
                                     {
-                                        if (CellsForAttackUnitsEs.CanAttack(Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx, Es.WhoseMovePlayerTC.CurPlayerI, out var attack))
+                                        var curPlayerI = Es.CurPlayerI.Player;
+
+                                        if (Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(curPlayerI).ForAttack(AttackTypes.Simple).Contains(Es.CurrentIdxC.Idx)
+                                            || Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(curPlayerI).ForAttack(AttackTypes.Unique).Contains(Es.CurrentIdxC.Idx))
                                         {
                                             Es.RpcE.AttackUnitToMaster(Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx);
                                         }
 
-                                        else if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(Es.WhoseMovePlayerTC.CurPlayerI, Es.SelectedIdxC.Idx).Contains(Es.CurrentIdxC.Idx))
+                                        else if (Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(Es.CurPlayerI.Player).ForShift.Contains(Es.CurrentIdxC.Idx))
                                         {
                                             Es.RpcE.ShiftUnitToMaster(Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx);
                                         }
@@ -51,49 +54,49 @@ namespace Game.Game
                                         {
                                             if (Es.UnitTC(idx_cur).HaveUnit)
                                             {
-                                                if (Es.UnitPlayerTC(idx_cur).Is(Es.WhoseMovePlayerTC.CurPlayerI))
+                                                if (Es.UnitPlayerTC(idx_cur).Is(Es.CurPlayerI.Player))
                                                 {
                                                     if (Es.UnitTC(idx_cur).Is(UnitTypes.Scout))
                                                     {
 
                                                     }
-                                                    else if (Es.UnitTC(idx_cur).IsMelee && Es.MainTWE(idx_cur).ToolWeaponTC.IsMelee)
+                                                    else if (Es.UnitEs(idx_cur).IsMelee)
                                                     {
-                                                        Es.Sound(ClipTypes.PickMelee).ActionC.Invoke();
+                                                        Es.Sound(ClipTypes.PickMelee).Invoke();
                                                     }
                                                     else
                                                     {
-                                                        Es.Sound(ClipTypes.PickArcher).ActionC.Invoke();
+                                                        Es.Sound(ClipTypes.PickArcher).Invoke();
                                                     }
                                                 }
                                             }
                                         }
 
-                                        Es.SelectedIdxC.Set(Es.CurrentIdxC.Idx);
+                                        Es.SelectedIdxC.Idx = Es.CurrentIdxC.Idx;
                                     }
 
                                     else
                                     {
                                         if (Es.UnitTC(idx_cur).HaveUnit)
                                         {
-                                            if (Es.UnitPlayerTC(idx_cur).Is(Es.WhoseMovePlayerTC.CurPlayerI))
+                                            if (Es.UnitPlayerTC(idx_cur).Is(Es.CurPlayerI.Player))
                                             {
                                                 if (Es.UnitTC(idx_cur).Is(UnitTypes.Scout))
                                                 {
 
                                                 }
-                                                else if (Es.UnitTC(idx_cur).IsMelee && Es.MainTWE(idx_cur).ToolWeaponTC.IsMelee)
+                                                else if (Es.UnitEs(idx_cur).IsMelee)
                                                 {
-                                                    Es.Sound(ClipTypes.PickMelee).ActionC.Invoke();
+                                                    Es.Sound(ClipTypes.PickMelee).Invoke();
                                                 }
                                                 else
                                                 {
-                                                    Es.Sound(ClipTypes.PickArcher).ActionC.Invoke();
+                                                    Es.Sound(ClipTypes.PickArcher).Invoke();
                                                 }
                                             }
                                         }
 
-                                        Es.SelectedIdxC.Set(Es.CurrentIdxC.Idx);
+                                        Es.SelectedIdxC.Idx = Es.CurrentIdxC.Idx;
                                     }
                                 }
                                 break;
@@ -107,14 +110,14 @@ namespace Game.Game
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (Es.UnitTC(idx_cur).Is(UnitTypes.Pawn) && Es.UnitPlayerTC(idx_cur).Is(Es.WhoseMovePlayerTC.CurPlayerI))
+                                    if (Es.UnitTC(idx_cur).Is(UnitTypes.Pawn) && Es.UnitPlayerTC(idx_cur).Is(Es.CurPlayerI.Player))
                                     {
                                         Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxC.Idx, Es.SelectedTWTC.ToolWeapon, Es.SelectedTWLevelTC.Level);
                                     }
                                     else
                                     {
                                         cellClick.Click = CellClickTypes.SimpleClick;
-                                        Es.SelectedIdxC.Set(Es.CurrentIdxC.Idx);
+                                        Es.SelectedIdxC.Idx= Es.CurrentIdxC.Idx;
                                     }
                                 }
                                 break;
@@ -157,7 +160,7 @@ namespace Game.Game
                                     }
 
                                     cellClick.Click = CellClickTypes.SimpleClick;
-                                    Es.SelectedIdxC.Set(Es.CurrentIdxC.Idx);
+                                    Es.SelectedIdxC.Idx = Es.CurrentIdxC.Idx;
                                 }
                                 break;
 
@@ -182,7 +185,7 @@ namespace Game.Game
                 else if (raycastTC.Is(RaycastTypes.Background))
                 {
                     cellClick.Click = CellClickTypes.SimpleClick;
-                    Es.SelectedIdxC.Reset();
+                    Es.SelectedIdxC.Idx = 0;
                 }
             }
 
@@ -192,15 +195,15 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.SetUnit))
                     {
-                        if (!Es.UnitTC(idx_cur).HaveUnit || !Es.UnitEs(idx_cur).VisibleE(Es.WhoseMovePlayerTC.CurPlayerI).IsVisible)
+                        if (!Es.UnitTC(idx_cur).HaveUnit || !Es.UnitEs(idx_cur).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
                         {
-                            if (Es.CurrentIdxC.IsStartDirectToCell)
+                            if (Es.CurrentIdxC.Idx == 0)
                             {
-                                Es.PreviousVisionIdxC.Set(Es.CurrentIdxC.Idx);
+                                Es.PreviousVisionIdxC = Es.CurrentIdxC;
                             }
                             else
                             {
-                                Es.PreviousVisionIdxC.Set(Es.CurrentIdxC.Idx);
+                                Es.PreviousVisionIdxC = Es.CurrentIdxC;
                             }
                         }
                     }

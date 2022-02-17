@@ -9,7 +9,7 @@
 
         void EnvironmentInfo()
         {
-            Es.EnvIsActiveC.Toggle();
+            Es.EnvIsActiveC = !Es.EnvIsActiveC;
         }
     }
 }

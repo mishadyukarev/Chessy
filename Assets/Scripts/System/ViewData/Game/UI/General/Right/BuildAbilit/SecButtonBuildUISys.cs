@@ -18,7 +18,7 @@
 //            //    {
 //            //        ref var sellOnUnitCom = UnitEs.Main(Es.SelectedIdxC.Idx).OwnerC;
 
-//            //        if (sellOnUnitCom.Is(Es.WhoseMove.CurPlayerI))
+//            //        if (sellOnUnitCom.Is(Es.CurPlayerI.Player))
 //            //        {
 //            //            buildT = BuildingTypes.Mine;
 //            //        }

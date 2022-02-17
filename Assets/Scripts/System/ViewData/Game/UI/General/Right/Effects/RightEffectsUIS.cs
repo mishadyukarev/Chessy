@@ -20,7 +20,7 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.SelectedIdxC.IsSelectedCell)
+            if (Es.SelectedIdxC.Idx > 0)
             {
                 var idx_sel = Es.SelectedIdxC.Idx;
 
@@ -37,7 +37,7 @@ namespace Game.Game
 
                         if(!_isFilled[EffectTypes.Shield])
                         {
-                            if (Es.UnitEffectShield(idx_sel).HaveEffect)
+                            if (Es.UnitEffectShield(idx_sel).HaveProtection)
                             {
                                 UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 UIEs.RightEs.Effect(idx_eff).ImageUIC.Sprite = _resources.Sprite(AbilityTypes.BonusNear);

@@ -1,14 +1,14 @@
-﻿using ECS;
+﻿//using ECS;
 
-namespace Game.Game
-{
-    public sealed class AvailableCenterHeroE : EntityAbstract
-    {
-        public ref HaveC HaveCenterHero => ref Ent.Get<HaveC>();
+//namespace Game.Game
+//{
+//    public sealed class AvailableCenterHeroE : EntityAbstract
+//    {
 
-        public AvailableCenterHeroE(in bool haveCenterHero, in EcsWorld world) : base(world)
-        {
-            Ent.Add(new HaveC(haveCenterHero));
-        }
-    }
-}
+
+//        public AvailableCenterHeroE(in bool haveCenterHero, in EcsWorld world) : base(world)
+//        {
+//            Ent.Add(new HaveC(haveCenterHero));
+//        }
+//    }
+//}

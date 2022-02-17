@@ -16,7 +16,7 @@ namespace Game.Game
 
             if (Es.UnitTC(idx_sel).HaveUnit)
             {
-                if (Es.UnitPlayerTC(idx_sel).Is(Es.WhoseMovePlayerTC.CurPlayerI))
+                if (Es.UnitPlayerTC(idx_sel).Is(Es.CurPlayerI.Player))
                 {
                     activeButt = true;
 

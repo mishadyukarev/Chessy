@@ -2,13 +2,8 @@
 
 namespace Game.Game
 {
-    public class TimerC : AmountFloatC
+    public struct TimerC
     {
-        public float Timer
-        {
-            get => Amount;
-            set => Amount = value;
-        }
-
+        public float Timer;
     }
 }

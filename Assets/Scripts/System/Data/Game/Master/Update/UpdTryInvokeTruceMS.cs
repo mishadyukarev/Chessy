@@ -17,7 +17,7 @@ namespace Game.Game
 
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.EnvironmentEs(idx_0).AdultForest.HaveEnvironment)
+                if (Es.AdultForestC(idx_0).HaveAny)
                     amountAdultForest++;
             }
 
