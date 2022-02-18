@@ -11,8 +11,8 @@ namespace Game.Game
             if (Es.CellClickTC.Is(CellClickTypes.SetUnit))
             {
                 var idx_cur = Es.CurrentIdxC.Idx;
-                var selUnitT = Es.SelUnitTC.Unit;
-                var levT = Es.SelUnitLevelTC.Level;
+                var selUnitT = Es.SelectedUnitE.UnitTC.Unit;
+                var levT = Es.SelectedUnitE.LevelTC.Level;
 
                 if (selUnitT == UnitTypes.Pawn)
                 {

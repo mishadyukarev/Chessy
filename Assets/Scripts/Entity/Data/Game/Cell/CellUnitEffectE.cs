@@ -6,7 +6,7 @@ namespace Game.Game
     {
         readonly EffectTypes EffectT;
 
-        protected CellUnitEffectE(in EffectTypes effectT, in CellEs cellEs, in EcsWorld gameW) : base(cellEs, gameW)
+        protected CellUnitEffectE(in EffectTypes effectT, in CellPoolEs cellEs, in EcsWorld gameW) : base(cellEs, gameW)
         {
             EffectT = effectT;
         }

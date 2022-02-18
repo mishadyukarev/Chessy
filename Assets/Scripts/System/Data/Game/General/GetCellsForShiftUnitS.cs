@@ -17,11 +17,13 @@
                 {
                     if (!Es.UnitStunC(idx_0).IsStunned && Es.UnitTC(idx_0).HaveUnit && !Es.UnitEs(idx_0).IsAnimal)
                     {
-                        foreach (var idx_to in CellWorker.GetIdxsAround(idx_0))
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
+                            var idx_to = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                             if (!Es.MountainC(idx_to).HaveAny && !Es.UnitTC(idx_to).HaveUnit)
                             {
-                                CellWorker.TryGetDirect(idx_0, idx_to, out var dir);
+                                var dir = Es.CellEs(idx_0).Direct(idx_to);
 
 
                                 float needSteps = CellUnitStatStep_Values.FOR_SHIFT_ATTACK_EMPTY_CELL;
@@ -30,7 +32,7 @@
                                 {
                                     needSteps += CellUnitStatStep_Values.NeedStepsShiftAttackUnit(Es.FertilizeC(idx_to).HaveAny, Es.YoungForestC(idx_to).HaveAny, Es.AdultForestC(idx_to).HaveAny, Es.HillC(idx_to).HaveAny);
 
-                                    if (Es.TrailEs(idx_to).Trail(dir.Invert()).HealthC.IsAlive) needSteps -= CellUnitStatStep_Values.BONUS_TRAIL;
+                                    if (Es.CellEs(idx_to).TrailHealthC(dir.Invert()).IsAlive) needSteps -= CellUnitStatStep_Values.BONUS_TRAIL;
                                 }
 
                                 if (needSteps <= Es.UnitStepC(idx_0).Steps || Es.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.StandartForUnit(Es.UnitTC(idx_0).Unit))

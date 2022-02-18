@@ -15,7 +15,7 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
-                if (Es.FriendIsActiveC)
+                if (Es.FriendIsActive)
                 {
                     TextC.SetActiveParent(true);
 

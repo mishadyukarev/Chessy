@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public enum DataSTypes
+    public enum SystemDataTypes
     {
         None,
 

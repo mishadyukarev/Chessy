@@ -12,16 +12,16 @@
             {
                 if (Es.BuildTC(idx_0).HaveBuilding && Es.BuildTC(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    var idxs_01 = CellWorker.GetIdxsAround(idx_0);
-                    idxs_01.Add(idx_0);
+                    //var idxs_01 = Es.CellEs(idx_0).Idxs;
+                    //idxs_01.Add(idx_0);
 
-                    foreach (var idx_01 in idxs_01)
-                    {
-                        if (Es.UnitTC(idx_01).HaveUnit && Es.UnitPlayerTC(idx_01).Is(Es.BuildPlayerTC(idx_0).Player))
-                        {
-                            //Es.UnitE(idx_01).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
-                        }
-                    }
+                    //foreach (var idx_01 in Es.CellEs(idx_0).Idxs)
+                    //{
+                    //    if (Es.UnitTC(idx_01).HaveUnit && Es.UnitPlayerTC(idx_01).Is(Es.BuildPlayerTC(idx_0).Player))
+                    //    {
+                    //        //Es.UnitE(idx_01).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
+                    //    }
+                    //}
                 }
             }
         }

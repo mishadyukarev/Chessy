@@ -1,4 +1,6 @@
-﻿namespace Game.Game
+﻿using System.Linq;
+
+namespace Game.Game
 {
     sealed class UpdAttackFromWaterHellMS : SystemAbstract, IEcsRunSystem
     {
@@ -12,20 +14,20 @@
             {
                 if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
                 {
-                    if (Es.RiverEs(idx_0).RiverE.HaveRiverNear)
+                    if (Es.RiverEs(idx_0).RiverE.RiverTC.HaveRiverNear)
                     {
                         //Es.UnitE(idx_0).Take(Es, 0.15f);
                     }
 
-                    if (CellWorker.GetIdxsAround(Es.CenterCloudIdxC.Idx).Contains(idx_0))
+                    if (Es.CellEs(Es.CenterCloudIdxC.Idx).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
                     {
                         //Es.UnitE(idx_0).Take(Es, 0.15f);
                         break;
                     }
 
-                    foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                    foreach (var cellE in Es.CellEs(idx_0).AroundCellEs)
                     {
-                        if (Es.BuildTC(idx_1).Is(BuildingTypes.IceWall))
+                        if (Es.BuildTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
                         {
                             //Es.UnitE(idx_0).Take(Es, 0.15f);
                             break;

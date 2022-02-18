@@ -41,7 +41,7 @@ namespace Game.Game
         void Ready() => Es.RpcE.ReadyToMaster();
         void FriendReady()
         {
-            Es.FriendIsActiveC = false;
+            Es.FriendIsActive = false;
         }
         void GetKing()
         {
@@ -50,10 +50,10 @@ namespace Game.Game
 
             if (Es.IsMyMove)
             {
-                if (Es.ForPlayerE(Es.CurPlayerI.Player).UnitsInfoE(UnitTypes.King).HaveInInventor)
+                if (Es.PlayerE(Es.CurPlayerI.Player).UnitsInfoE(UnitTypes.King).HaveInInventor)
                 {
-                    Es.SelUnitTC.Unit = UnitTypes.King;
-                    Es.SelUnitLevelTC.Level = LevelTypes.First;
+                    Es.SelectedUnitE.UnitTC.Unit = UnitTypes.King;
+                    Es.SelectedUnitE.LevelTC.Level = LevelTypes.First;
                     Es.CellClickTC.Click = CellClickTypes.SetUnit;
                 }
             }

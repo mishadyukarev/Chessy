@@ -10,9 +10,9 @@ namespace Game.Game
 
         public void Run()
         {
-            foreach (var idx_1 in CellWorker.GetIdxsAround(Es.CenterCloudIdxC.Idx))
+            foreach (var cellE in Es.CellEs(Es.CenterCloudIdxC.Idx).AroundCellEs)
             {
-                Es.HaveFire(idx_1) = false;
+                Es.HaveFire(cellE.IdxC.Idx) = false;
             }
 
 
@@ -51,9 +51,9 @@ namespace Game.Game
                         Es.HaveFire(idx_0) = false;
 
 
-                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                        foreach (var cellE in Es.CellEs(idx_0).AroundCellEs)
                         {
-                            needForFireNext.Add(idx_1);
+                            needForFireNext.Add(cellE.IdxC.Idx);
                         }
                     }
                 }

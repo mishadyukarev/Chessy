@@ -1,8 +1,6 @@
-﻿using ECS;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
-    public struct CellWhoLastDiedHereE
+    public struct WhoLastDiedHereE
     {
         public UnitTC UnitTC;
         public LevelTC LevelTC;

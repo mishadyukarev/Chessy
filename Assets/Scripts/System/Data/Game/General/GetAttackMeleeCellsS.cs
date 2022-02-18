@@ -23,18 +23,15 @@
                     {
                         DirectTypes dir_cur = default;
 
-                        CellWorker.TryGetIdxAround(idx_0, out var dirs);
-
-                        foreach (var item_1 in dirs)
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            dir_cur += 1;
-                            var idx_1 = item_1.Value;
+                            var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                            var own_1 = Es.UnitPlayerTC(idx_1).Player;
+                            dir_cur += 1;
 
                             if (!Es.EnvironmentEs(idx_1).MountainC.HaveAny)
                             {
-                                CellWorker.TryGetDirect(idx_0, idx_1, out var dir);
+                                var dir = Es.CellEs(idx_0).Direct(idx_1);
 
                                 var haveMaxSteps = Es.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.StandartForUnit(Es.UnitTC(idx_0).Unit);
 

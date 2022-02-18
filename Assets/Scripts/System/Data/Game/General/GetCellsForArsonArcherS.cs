@@ -16,8 +16,10 @@
                 {
                     if (Es.UnitTC(idx_0).HaveUnit && Es.UnitEs(idx_0).ExtraToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
                     {
-                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
+                            var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                             if (!Es.EffectEs(idx_1).HaveFire)
                             {
                                 if (Es.AdultForestC(idx_1).HaveAny)

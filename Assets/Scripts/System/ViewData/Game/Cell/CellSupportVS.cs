@@ -25,7 +25,7 @@ namespace Game.Game
                 {
                     if (cellClick.Is(CellClickTypes.UniqueAbility))
                     {
-                        if (Es.SelAbilityTC.Is(AbilityTypes.ChangeDirectionWind))
+                        if (Es.SelectedAbilityTC.Is(AbilityTypes.ChangeDirectionWind))
                         {
                             _isActive = true;
                             _color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -55,7 +55,7 @@ namespace Game.Game
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {
-                                    if (Es.SelAbilityTC.Is(AbilityTypes.StunElfemale))
+                                    if (Es.SelectedAbilityTC.Is(AbilityTypes.StunElfemale))
                                     {
                                         _isActive = true;
                                         _color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -69,7 +69,7 @@ namespace Game.Game
 
                 if (cellClick.Is(CellClickTypes.SetUnit))
                 {
-                    if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(Es.CurPlayerI.Player, idx_0).Can)
+                    if (Es.UnitEs(idx_0).ForPlayer(Es.CurPlayerI.Player).CanSetUnitHere)
                     {
                         _isActive = true;
                         _color = ColorsValues.Color(SupportCellVisionTypes.Shift);
@@ -89,19 +89,19 @@ namespace Game.Game
             {
                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                 {
-                    if (Es.SelAbilityTC.Is(AbilityTypes.ChangeDirectionWind))
+                    if (Es.SelectedAbilityTC.Is(AbilityTypes.ChangeDirectionWind))
                     {
-                        CellWorker.TryGetIdxAround(Es.CenterCloudIdxC.Idx, out var dirs);
-
-                        foreach (var item in dirs)
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            SupportCellVEs.Support<SpriteRendererVC>(item.Value).Enable();
-                            SupportCellVEs.Support<SpriteRendererVC>(item.Value).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                            var idx_1 = Es.CellEs(Es.CenterCloudIdxC.Idx).AroundCellE(dirT).IdxC.Idx;
+
+                            SupportCellVEs.Support<SpriteRendererVC>(idx_1).Enable();
+                            SupportCellVEs.Support<SpriteRendererVC>(idx_1).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                         }
                     }
                 }
 
-                else if (Es.SelAbilityTC.Is(AbilityTypes.FireArcher))
+                else if (Es.SelectedAbilityTC.Is(AbilityTypes.FireArcher))
                 {
                     foreach (var idx in Es.UnitEs(Es.SelectedIdxC.Idx).ForArson.Idxs)
                     {

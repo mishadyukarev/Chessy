@@ -32,18 +32,15 @@ namespace Game.Game
 
                 if (river_0.River == RiverTypes.Start)
                 {
-                    foreach (var dir_1 in Es.CellEs(idx_0).RiverEs.Keys)
+                    for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                     {
                         if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                         {
-                            CellRiverVEs.River(dir_1, idx_0).SetActive(Es.CellEs(idx_0).RiverEs.HaveRive(dir_1).HaveRiver.Have);
+                            CellRiverVEs.River(dir_1, idx_0).SetActive(Es.CellEs(idx_0).RiverEs.HaveRive(dir_1));
                         }
                     }
                 }
             }
-
-
-
         }
     }
 }

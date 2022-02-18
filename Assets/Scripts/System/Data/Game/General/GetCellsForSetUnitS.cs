@@ -8,80 +8,79 @@
 
         public void Run()
         {
-            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
-                foreach (var idx_0 in CellWorker.Idxs)
+                for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
                 {
-                    CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = false;
+                    Es.UnitEs(idx_0).ForPlayer(player).CanSetUnitHere = false;
                 }
+            }
 
-                if (Es.WhereWorker.TryGetBuilding(BuildingTypes.City, player, out var idx_1))
+            //if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp))
+            //{
+            //    if (!Es.MountainC(idx_0).HaveAny && !Es.UnitTC(idx_0).HaveUnit)
+            //    {
+            //        Es.UnitEs(idx_0).ForPlayer(player).CanSetUnitHere = true;
+            //    }
+            //}
+
+            for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
+            {
+                if (Es.PlayerE(player).LevelE(LevelTypes.First).BuildsInGame(BuildingTypes.City).HaveAny)
                 {
-                    if (Es.UnitTC(idx_1).HaveUnit)
+                    for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
                     {
-                        CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = false;
-                    }
-                    else
-                    {
-                        CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_1).Can = true;
-                    }
-
-                    var list_2 = CellWorker.GetXyAround(Es.CellEs(idx_1).CellE.XyC.Xy);
-
-                    foreach (var xy_2 in list_2)
-                    {
-                        var idx_2 = CellWorker.GetIdxCell(xy_2);
-
-                        if (!Es.EnvironmentEs(idx_2).MountainC.HaveAny && !Es.UnitTC(idx_2).HaveUnit)
+                        if (Es.UnitTC(idx_0).HaveUnit)
                         {
-                            CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = true;
+                            Es.UnitEs(idx_0).ForPlayer(player).CanSetUnitHere = false;
                         }
                         else
                         {
-                            CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_2).Can = false;
+                            Es.UnitEs(idx_0).ForPlayer(player).CanSetUnitHere = true;
                         }
+
+                        //foreach (var idx_2 in Es.CellEs(idx_0).Idxs)
+                        //{
+                        //    if (!Es.MountainC(idx_2).HaveAny && !Es.UnitTC(idx_2).HaveUnit)
+                        //    {
+                        //        Es.UnitEs(idx_2).ForPlayer(player).CanSetUnitHere = true;
+                        //    }
+                        //    else
+                        //    {
+                        //        Es.UnitEs(idx_2).ForPlayer(player).CanSetUnitHere = false;
+                        //    }
+                        //}
                     }
                 }
-
                 else
                 {
-                    foreach (var idx_0 in CellWorker.Idxs)
+                    for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
                     {
-                        if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp))
-                        {
-                            if (!Es.EnvironmentEs(idx_0).MountainC.HaveAny && !Es.UnitTC(idx_0).HaveUnit)
-                            {
-                                CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = true;
-                            }
-                        }
-                        else
-                        {
-                            var xy = Es.CellEs(idx_0).CellE.XyC.Xy;
-                            var x = xy[0];
-                            var y = xy[1];
+                        var xy = Es.CellEs(idx_0).CellE.XyC.Xy;
+                        var x = xy[0];
+                        var y = xy[1];
 
-                            var canSet = false;
+                        var canSet = false;
 
-                            if (!Es.UnitTC(idx_0).HaveUnit)
+                        if (!Es.UnitTC(idx_0).HaveUnit)
+                        {
+                            if (player == PlayerTypes.First)
                             {
-                                if (player == PlayerTypes.First)
+                                if (y < 3 && x > 3 && x < 12)
                                 {
-                                    if (y < 3 && x > 3 && x < 12)
-                                    {
-                                        canSet = true;
-                                    }
-                                }
-                                else
-                                {
-                                    if (y > 7 && x > 3 && x < 12)
-                                    {
-                                        canSet = true;
-                                    }
+                                    canSet = true;
                                 }
                             }
-
-                            CellsForSetUnitsEs.CanSet<CanSetUnitC>(player, idx_0).Can = canSet;
+                            else
+                            {
+                                if (y > 7 && x > 3 && x < 12)
+                                {
+                                    canSet = true;
+                                }
+                            }
                         }
+
+                        Es.UnitEs(idx_0).ForPlayer(player).CanSetUnitHere = canSet;
                     }
                 }
             }

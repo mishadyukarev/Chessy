@@ -59,7 +59,7 @@ namespace Game.Game
 
                                     else
                                     {
-                                        if (Es.WhereWorker.TryGetBuilding(BuildingTypes.City, Es.UnitPlayerTC(idx_0).Player, out var idx_city))
+                                        if (Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).LevelE(LevelTypes.First).BuildsInGame(BuildingTypes.City).HaveAny)
                                         {
                                             Es.UnitEs(idx_0).AbilityButton(ButtonTypes.Fourth).AbilityC.Reset();
                                         }

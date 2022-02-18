@@ -14,13 +14,13 @@ namespace Game.Game
             {
                 if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
                 {
-                    foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                    foreach (var cellE in Es.CellEs(idx_0).AroundCellEs)
                     {
-                        if (Es.AdultForestC(idx_1).HaveAny)
+                        if (Es.AdultForestC(cellE.IdxC.Idx).HaveAny)
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
                             {
-                                Es.HaveFire(idx_1) = true;
+                                Es.HaveFire(cellE.IdxC.Idx) = true;
                             }
                         }
                     }

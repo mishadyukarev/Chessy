@@ -14,7 +14,7 @@
                 {
                     if (Es.BuildSmelterTC(idx_0))
                     {
-                        Es.InventorResourcesEs.Melt_Master(Es.BuildPlayerTC(idx_0).Player);
+                        //Es.InventorResourcesEs.Melt_Master(Es.BuildPlayerTC(idx_0).Player);
                     }
                 }
             }

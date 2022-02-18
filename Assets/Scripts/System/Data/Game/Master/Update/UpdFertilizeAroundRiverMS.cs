@@ -11,7 +11,7 @@
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.RiverEs(idx_0).RiverE.HaveRiverNear)
+                if (Es.RiverEs(idx_0).RiverE.RiverTC.HaveRiverNear)
                 {
                     if (!Es.MountainC(idx_0).HaveAny)
                     {

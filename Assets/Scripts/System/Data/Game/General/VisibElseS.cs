@@ -22,8 +22,10 @@
                             isVisForFirst = false;
                             isVisForSecond = false;
 
-                            foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
+                                var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                                 if (Es.UnitTC(idx_1).HaveUnit)
                                 {
                                     if (Es.UnitPlayerTC(idx_1).Is(PlayerTypes.First)) isVisForFirst = true;
@@ -43,8 +45,10 @@
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
+                                var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                                 if (Es.UnitTC(idx_1).HaveUnit)
                                 {
                                     if (!Es.UnitPlayerTC(idx_1).Is(Es.UnitPlayerTC(idx_0).Player))
@@ -75,8 +79,10 @@
                     {
                         var isVisibledNextPlayer = false;
 
-                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
+                            var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                             if (Es.UnitTC(idx_1).HaveUnit)
                             {
                                 if (!Es.UnitPlayerTC(idx_1).Is(Es.BuildPlayerTC(idx_0).Player))
@@ -93,10 +99,10 @@
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    if (Es.TrailEs(idx_0).Trail(dirT).HealthC.Health > 0)
+                    if (Es.CellEs(idx_0).TrailHealthC(dirT).Health > 0)
                     {
-                        Es.TrailEs(idx_0).IsVisible(PlayerTypes.First).IsVisibleC = false;
-                        Es.TrailEs(idx_0).IsVisible(PlayerTypes.Second).IsVisibleC = false;
+                        Es.CellEs(idx_0).IsVisible(PlayerTypes.First) = false;
+                        Es.CellEs(idx_0).IsVisible(PlayerTypes.Second) = false;
 
                         //if (unit_0.Have)
                         //{
@@ -106,11 +112,13 @@
                         //}
 
 
-                        foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                        for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
                         {
+                            var idx_1 = Es.CellEs(idx_0).AroundCellE(dir).IdxC.Idx;
+
                             if (Es.UnitTC(idx_1).HaveUnit && !Es.UnitEs(idx_1).IsAnimal)
                             {
-                                Es.TrailEs(idx_0).IsVisible(Es.UnitPlayerTC(idx_1).Player).IsVisibleC = true;
+                                Es.CellEs(idx_0).IsVisible(Es.UnitPlayerTC(idx_1).Player) = true;
                             }
                         }
                         //}

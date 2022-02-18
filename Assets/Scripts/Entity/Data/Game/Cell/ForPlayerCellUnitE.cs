@@ -6,6 +6,7 @@ namespace Game.Game
     {
         public readonly float[] NeedStepsForShift;
         public bool IsVisibleC;
+        public bool CanSetUnitHere;
 
         public IdxsC ForShift;
         readonly IdxsC[] _forAttack;

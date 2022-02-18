@@ -2,13 +2,15 @@
 
 namespace Game.Game
 {
-    public struct CellE
+    public readonly struct CellE
     {
-        public XyC XyC;
-        public int InstanceIDC;
+        public readonly IdxC IdxC;
+        public readonly XyC XyC;
+        public readonly int InstanceIDC;
 
-        public CellE(in byte[] xy, in int instanceID)
+        public CellE(in byte idx, in byte[] xy, in int instanceID)
         {
+            IdxC = new IdxC(idx);
             XyC = new XyC(xy);
             InstanceIDC = instanceID;
         }

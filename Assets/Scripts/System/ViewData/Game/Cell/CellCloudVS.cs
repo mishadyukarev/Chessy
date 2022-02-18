@@ -15,9 +15,9 @@
 
             var centerCloud = Es.CenterCloudIdxC.Idx;
 
-            foreach (var idx in CellWorker.GetIdxsAround(centerCloud))
+            foreach (var cellE in Es.CellEs(centerCloud).AroundCellEs)
             {
-                CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx).SetActive(true);
+                CellCloudVEs.CloudCellVC<SpriteRendererVC>(cellE.IdxC.Idx).SetActive(true);
             }
 
             CellCloudVEs.CloudCellVC<SpriteRendererVC>(centerCloud).SetActive(true);

@@ -18,7 +18,7 @@ namespace Game.Game
             ref var raycastTC = ref Es.RayCastTC;
             ref var cellClick = ref Es.CellClickTC;
 
-            if (Es.IsClickedC)
+            if (Es.IsClicked)
             {
                 if (raycastTC.Is(RaycastTypes.Cell))
                 {
@@ -103,7 +103,7 @@ namespace Game.Game
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    Es.RpcE.SetUniToMaster(Es.CurrentIdxC.Idx, Es.SelUnitTC.Unit);
+                                    Es.RpcE.SetUniToMaster(Es.CurrentIdxC.Idx, Es.SelectedUnitE.UnitTC.Unit);
                                     cellClick.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
@@ -112,7 +112,7 @@ namespace Game.Game
                                 {
                                     if (Es.UnitTC(idx_cur).Is(UnitTypes.Pawn) && Es.UnitPlayerTC(idx_cur).Is(Es.CurPlayerI.Player))
                                     {
-                                        Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxC.Idx, Es.SelectedTWTC.ToolWeapon, Es.SelectedTWLevelTC.Level);
+                                        Es.RpcE.GiveTakeToolWeaponToMaster(Es.CurrentIdxC.Idx, Es.SelectedTWE.ToolWeaponTC.ToolWeapon, Es.SelectedTWE.LevelTC.Level);
                                     }
                                     else
                                     {
@@ -124,7 +124,7 @@ namespace Game.Game
 
                             case CellClickTypes.UniqueAbility:
                                 {
-                                    switch (Es.SelAbilityTC.Ability)
+                                    switch (Es.SelectedAbilityTC.Ability)
                                     {
                                         case AbilityTypes.FireArcher:
                                             Es.RpcE.FireArcherToMas(Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx);
@@ -136,11 +136,9 @@ namespace Game.Game
 
                                         case AbilityTypes.ChangeDirectionWind:
                                             {
-                                                CellWorker.TryGetIdxAround(Es.CenterCloudIdxC.Idx, out var directs);
-
-                                                foreach (var item in directs)
+                                                foreach (var cellE in Es.CellEs(Es.CenterCloudIdxC.Idx).AroundCellEs)
                                                 {
-                                                    if (item.Value == Es.CurrentIdxC.Idx)
+                                                    if (cellE.IdxC.Idx == Es.CurrentIdxC.Idx)
                                                     {
                                                         Es.RpcE.PutOutFireElffToMas(Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx);
                                                     }

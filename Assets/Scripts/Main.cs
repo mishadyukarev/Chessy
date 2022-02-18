@@ -47,7 +47,7 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    _systems.Run(DataSTypes.RunUpdate);
+                    _systems.Run(SystemDataTypes.RunUpdate);
                     _systemsV.Run(SystemViewDataTypes.RunUpdate);
                     _systemViewUI.Run(UITypes.RunUpdate);
                     break;
@@ -71,7 +71,7 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    _systems.Run(DataSTypes.RunFixedUpdate);
+                    _systems.Run(SystemDataTypes.RunFixedUpdate);
                     _systemsV.Run(SystemViewDataTypes.RunFixedUpdate);
                     _systemViewUI.Run(UITypes.RunFixedUpdate);
                     break;
@@ -114,8 +114,6 @@ namespace Game
                         var viewEs = new EntitiesView(gameW, out var forData);
                         var uIEs = new EntitiesViewUI(gameW);
                         var ents = new Entities(gameW, forData, RpcS.NamesMethods);
-
-                        new FillCellsS(ents);
 
                         new Events(ents, uIEs);
 

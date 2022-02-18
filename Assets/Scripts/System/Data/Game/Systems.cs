@@ -5,30 +5,31 @@ namespace Game.Game
 {
     public readonly struct Systems
     {
-        readonly Dictionary<DataSTypes, Action> _actions;
+        readonly Dictionary<SystemDataTypes, Action> _actions;
 
         public readonly SystemsMaster SystemsMaster;
         public readonly SystemsOther SystemsOther;
 
         public Systems(in Entities ents, in SystemsView systemsView)
         {
-            _actions = new Dictionary<DataSTypes, Action>();
+            _actions = new Dictionary<SystemDataTypes, Action>();
 
-            _actions.Add(DataSTypes.RunUpdate,
+            _actions.Add(SystemDataTypes.RunUpdate,
                 (Action)
                 new InputS(ents).Run
                 + new RayS(ents).Run
                 + new SelectorS(ents, systemsView).Run);
 
 
-            _actions.Add(DataSTypes.RunFixedUpdate,
+            _actions.Add(SystemDataTypes.RunFixedUpdate,
                 (Action)default);
 
 
-            _actions.Add(DataSTypes.RunAfterSyncRPC,
+            _actions.Add(SystemDataTypes.RunAfterSyncRPC,
                 (Action)
                 new GetCurentPlayerS(ents).Run
 
+                + new SetIdxsBuildingsS(ents).Run
                 + new VisibElseS(ents).Run
                 + new AbilitySyncS(ents).Run
                 + new GetDamageUnitsS(ents).Run
@@ -46,7 +47,7 @@ namespace Game.Game
             SystemsMaster = new SystemsMaster(ents);
             SystemsOther = new SystemsOther(ents);
         }
-        public void Run(in DataSTypes type)
+        public void Run(in SystemDataTypes type)
         {
             if (!_actions.ContainsKey(type)) throw new Exception();
 

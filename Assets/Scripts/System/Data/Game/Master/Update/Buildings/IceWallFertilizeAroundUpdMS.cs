@@ -12,8 +12,10 @@
             {
                 if (Es.BuildTC(idx_0).HaveBuilding && Es.BuildTC(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    foreach (var idx_1 in CellWorker.GetIdxsAround(idx_0))
+                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
+                        var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                         if (!Es.BuildTC(idx_1).Is(BuildingTypes.City) && !Es.MountainC(idx_1).HaveAny)
                         {
                             if(!Es.HillC(idx_1).HaveAny)

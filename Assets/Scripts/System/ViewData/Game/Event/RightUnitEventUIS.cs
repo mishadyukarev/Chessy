@@ -63,7 +63,7 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.FireArcher:
-                            Es.SelAbilityTC.Set(AbilityTypes.FireArcher);
+                            Es.SelectedAbilityTC.Set(AbilityTypes.FireArcher);
                             Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
@@ -75,7 +75,7 @@ namespace Game.Game
 
                         case AbilityTypes.StunElfemale:
                             {
-                                Es.SelAbilityTC.Ability = AbilityTypes.StunElfemale;
+                                Es.SelectedAbilityTC.Ability = AbilityTypes.StunElfemale;
                                 Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
@@ -100,7 +100,7 @@ namespace Game.Game
                         case AbilityTypes.ChangeDirectionWind:
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
-                                Es.SelAbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
+                                Es.SelectedAbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
                                 Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             }
                             break;
@@ -130,13 +130,13 @@ namespace Game.Game
                             break;
 
                         case AbilityTypes.DirectWave:
-                            Es.SelAbilityTC.Ability = AbilityTypes.DirectWave;
+                            Es.SelectedAbilityTC.Ability = AbilityTypes.DirectWave;
                             Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             break;
 
 
                         case AbilityTypes.Resurrect:
-                            Es.SelAbilityTC.Ability = AbilityTypes.Resurrect;
+                            Es.SelectedAbilityTC.Ability = AbilityTypes.Resurrect;
                             Es.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             break;
 

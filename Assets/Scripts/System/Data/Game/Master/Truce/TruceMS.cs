@@ -13,13 +13,15 @@ namespace Game.Game
         {
             int random;
 
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
-
                 Es.HaveFire(idx_0) = false;
 
-
-                Es.TrailEs(idx_0).DestroyAll();
+                for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                {
+                    Es.CellEs(idx_0).TrailHealthC(dirT).Health = 0;
+                }
+                
 
                 if (Es.UnitTC(idx_0).HaveUnit)
                 {
@@ -29,11 +31,11 @@ namespace Game.Game
                         {
                             if (Es.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
                             {
-                                Es.InventorToolWeaponEs.ToolWeapons(Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon, Es.UnitEs(idx_0).ExtraTWLevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
+                                Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).LevelE(Es.UnitEs(idx_0).ExtraTWLevelTC.Level).ToolWeapons(Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon).Amount++;
                                 Es.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                             }
 
-                            Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
+                            Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
                             Es.UnitTC(idx_0).Unit = UnitTypes.None;
                         }
                     }
@@ -42,11 +44,12 @@ namespace Game.Game
 
                         if (Es.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
                         {
-                            Es.InventorToolWeaponEs.ToolWeapons(Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon, Es.UnitEs(idx_0).ExtraTWLevelTC.Level, Es.UnitPlayerTC(idx_0).Player).ToolWeaponsC.Add(1);
+                            Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).LevelE(Es.UnitEs(idx_0).ExtraTWLevelTC.Level).ToolWeapons(Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon).Amount++;
+
                             Es.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         }
 
-                        Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
+                        Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
                         Es.UnitTC(idx_0).Unit = UnitTypes.None;
                     }
                 }

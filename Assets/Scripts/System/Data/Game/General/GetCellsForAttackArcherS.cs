@@ -18,12 +18,9 @@
                     {
                         if (Es.UnitTC(idx_0).Is(UnitTypes.Elfemale, UnitTypes.Snowy) || Es.UnitTC(idx_0).Is(UnitTypes.Pawn) && Es.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            var xy_from = Es.CellEs(idx_0).CellE.XyC.Xy;
-
                             for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                             {
-                                var xy_1 = CellWorker.GetXyCellByDirect(xy_from, dir_1);
-                                var idx_1 = CellWorker.GetIdxCell(xy_1);
+                                var idx_1 = Es.CellEs(idx_0).AroundCellE(dir_1).IdxC.Idx;
 
 
                                 if (Es.CellEs(idx_1).IsActiveParentSelf && !Es.MountainC(idx_1).HaveAny)
@@ -58,9 +55,7 @@
                                         }
                                     }
 
-
-                                    var xy_2 = CellWorker.GetXyCellByDirect(xy_1, dir_1);
-                                    var idx_2 = CellWorker.GetIdxCell(xy_2);
+                                    var idx_2 = Es.CellEs(idx_1).AroundCellE(dir_1).IdxC.Idx;
 
 
                                     if (Es.UnitTC(idx_2).HaveUnit && !Es.UnitEs(idx_2).IsAnimal

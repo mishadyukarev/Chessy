@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct CellUnitEs
+    public struct CellUnitPoolEs
     {
         public UnitTC UnitTC;
         public PlayerTC PlayerTC;
@@ -11,6 +11,7 @@ namespace Game.Game
 
         public ConditionUnitTC ConditionTC;
         public IsRightArcherC IsRightArcherC;
+
         public StunC StunC;
         public ProtectionC ShieldEffectC;
         public FrozenArrawC FrozenArrawC;
@@ -45,7 +46,7 @@ namespace Game.Game
         public ref ForPlayerCellUnitE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player - 1];
 
 
-        internal CellUnitEs(in CellEs cellEs, in EcsWorld gameW) : this()
+        internal CellUnitPoolEs(in CellPoolEs cellEs, in EcsWorld gameW) : this()
         {
             _uniqueButtons = new Dictionary<ButtonTypes, CellUnitAbilityButtonsE>();
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
@@ -68,7 +69,7 @@ namespace Game.Game
             ForArson = new IdxsC(new HashSet<byte>());
         }
 
-        public void Set(in CellUnitEs unitE)
+        public void Set(in CellUnitPoolEs unitE)
         {
             UnitTC.Unit = unitE.UnitTC.Unit;
             LevelTC.Level = unitE.LevelTC.Level;

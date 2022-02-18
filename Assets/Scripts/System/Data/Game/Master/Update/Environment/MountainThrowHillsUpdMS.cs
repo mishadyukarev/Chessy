@@ -14,15 +14,22 @@ namespace Game.Game
             {
                 if (Es.MountainC(idx_0).HaveAny)
                 {
-                    foreach (var idx_1 in Es.CellSpaceWorker.GetIdxsAround(idx_0))
+                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
+                        var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                         if (Random.Range(0f, 1f) <= 0.05f)
                         {
-                            if (!Es.MountainC(idx_1).HaveAny && !Es.BuildTC(idx_1).HaveBuilding)
+                            if (!Es.MountainC(Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx).HaveAny && !Es.BuildTC(idx_1).HaveBuilding)
                             {
                                 Es.HillC(idx_1).Resources += CellEnvironment_Values.ADDING_FROM_MOUNTAIN;
                             }
                         }
+                    }
+
+                    foreach (var cellE in Es.CellEs(idx_0).AroundCellEs)
+                    {
+                       
                     }
                 }
             }

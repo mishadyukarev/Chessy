@@ -54,7 +54,7 @@ namespace Game.Game
         //}
 
 
-        internal CellUnitE(in CellEs cellEs, in EcsWorld gameW) : base(cellEs, gameW)
+        internal CellUnitE(in CellPoolEs cellEs, in EcsWorld gameW) : base(cellEs, gameW)
         {
 
         }
@@ -127,7 +127,7 @@ namespace Game.Game
 
         //    if (CellsForShiftUnitsEs.CellsForShift<IdxsC>(whoseMove, idx_from).Contains(idx_to))
         //    {
-        //        if (!e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var dir)) throw new Exception();
+        //        if (!e.TryGetDirect(idx_from, idx_to, out var dir)) throw new Exception();
         //        e.UnitStepC(idx_from).Take(e.UnitE(idx_from).ForShiftOrAttack(dir, e.CellEs(idx_to)));
 
         //        e.UnitE(idx_from).Shift(idx_to, true, e);

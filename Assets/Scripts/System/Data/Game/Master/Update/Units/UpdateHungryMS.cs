@@ -12,9 +12,9 @@
             {
                 var res = ResourceTypes.Food;
 
-                if (Es.InventorResourcesEs.Resource(res, player).ResourceC.Resources < 0)
+                if (Es.PlayerE(player).ResourcesC(res).Resources < 0)
                 {
-                    Es.InventorResourcesEs.Resource(res, player).ResourceC.Resources = 0;
+                    Es.PlayerE(player).ResourcesC(res).Resources = 0;
 
                     for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
                     {
@@ -36,8 +36,8 @@
                                     }
                                     else if (Es.UnitTC(idx_0).Is(UnitTypes.Scout) || Es.UnitEs(idx_0).IsHero)
                                     {
-                                        Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).ScoutHeroCooldownC.Cooldown = ScoutHeroCooldownValues.AfterKill(Es.UnitTC(idx_0).Unit);
-                                        Es.ForPlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
+                                        Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).ScoutHeroCooldownC.Cooldown = ScoutHeroCooldownValues.AfterKill(Es.UnitTC(idx_0).Unit);
+                                        Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).UnitsInfoE(Es.UnitTC(idx_0).Unit).HaveInInventor = true;
                                     }
 
                                     //Es.LastDiedUnitTC(idx_0).SetLastDied((Es.UnitTC(idx_0), Es.UnitLevelTC(idx_0), Es.UnitPlayerTC(idx_0)), Es.LastDiedLevelTC(idx_0), Es.LastDiedPlayerTC(idx_0));

@@ -28,20 +28,20 @@ namespace Game.Game
 
 
 
-            if (Es.MistakeC.HaveMistake)
+            if (Es.MistakeTC.HaveMistake)
             {
-                Es.TimerC.Timer += Time.deltaTime;
+                Es.MistakeTimerC.Timer += Time.deltaTime;
 
-                if (Es.MistakeC.Is(MistakeTypes.Economy))
+                if (Es.MistakeTC.Is(MistakeTypes.Economy))
                 {
-                    if (Es.TimerC.Timer >= _neededTimeForFading)
+                    if (Es.MistakeTimerC.Timer >= _neededTimeForFading)
                     {
-                        Es.MistakeC.Set(MistakeTypes.None);
+                        Es.MistakeTC.Set(MistakeTypes.None);
                     }
 
                     else
                     {
-                        MistakeUIE.Zones<GameObjectVC>(Es.MistakeC.Mistake).SetActive(true);
+                        MistakeUIE.Zones<GameObjectVC>(Es.MistakeTC.Mistake).SetActive(true);
 
                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                         {
@@ -59,11 +59,11 @@ namespace Game.Game
                 else
                 {
                     MistakeUIE.Background<GameObjectVC>().SetActive(true);
-                    MistakeUIE.Zones<GameObjectVC>(Es.MistakeC.Mistake).SetActive(true);
+                    MistakeUIE.Zones<GameObjectVC>(Es.MistakeTC.Mistake).SetActive(true);
 
-                    if (Es.TimerC.Timer >= _neededTimeForFading)
+                    if (Es.MistakeTimerC.Timer >= _neededTimeForFading)
                     {
-                        Es.MistakeC.Set(MistakeTypes.None);
+                        Es.MistakeTC.Set(MistakeTypes.None);
                     }
                 }
             }

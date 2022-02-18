@@ -8,13 +8,14 @@
 
         public void Run()
         {
-            var xy_0 = Es.CellEs(Es.CenterCloudIdxC.Idx).CellE.XyC.Xy;
-            var xy_next = CellWorker.GetXyCellByDirect(xy_0, Es.DirectWindTC.Direct);
+            var idx_0 = Es.CenterCloudIdxC.Idx;
+            var xy_next = Es.CellEs(idx_0).AroundCellE(Es.DirectWindTC.Direct).XyC.Xy;
+            var idx_next = Es.CellEs(idx_0).AroundCellE(Es.DirectWindTC.Direct).IdxC.Idx;
 
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                Es.CenterCloudIdxC.Idx = CellWorker.GetIdxCell(xy_next);
+                Es.CenterCloudIdxC.Idx = Es.GetIdxCell(xy_next);
             }
             else
             {
@@ -29,13 +30,9 @@
                 Es.DirectWindTC.Direct = (DirectTypes)newDirInt;
             }
 
-            CellWorker.TryGetXyAround(xy_next, out var dirs);
-
-            foreach (var item in dirs)
+            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {
-                var idx_1 = CellWorker.GetIdxCell(item.Value);
-
-                Es.TrailEs(idx_1).DestroyAll();
+                Es.CellEs(idx_next).TrailHealthC(dirT).Health = 0;
             }
         }
     }

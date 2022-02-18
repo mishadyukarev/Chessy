@@ -6,6 +6,8 @@ namespace Game.Game
     {
         readonly HashSet<byte> _idxs;
 
+        public bool HaveAny => _idxs.Count > 0;
+
         public HashSet<byte> Idxs
         {
             get
@@ -21,5 +23,6 @@ namespace Game.Game
 
         public void Add(in byte idx) => _idxs.Add(idx);
         public void Clear() => _idxs.Clear();
+
     }
 }

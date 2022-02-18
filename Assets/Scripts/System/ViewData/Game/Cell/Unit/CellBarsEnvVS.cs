@@ -13,7 +13,7 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
             {
-                if (Es.EnvIsActiveC)
+                if (Es.EnvIsActive)
                 {
                     if (Es.EnvironmentEs(idx_0).FertilizeC.HaveAny)
                     {

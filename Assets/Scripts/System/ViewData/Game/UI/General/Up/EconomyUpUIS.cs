@@ -64,7 +64,7 @@ namespace Game.Game
                 if (res == ResourceTypes.Iron || res == ResourceTypes.Gold) multiple = 1;
                 else multiple = 100;
 
-                Economy<TextUIC>(res).Text = ((int)(Es.InventorResourcesEs.Resource(res, curPlayer).ResourceC.Resources * multiple)).ToString();
+                Economy<TextUIC>(res).Text = ((int)(Es.PlayerE(curPlayer).ResourcesC(res).Resources * multiple)).ToString();
             }
         }
     }

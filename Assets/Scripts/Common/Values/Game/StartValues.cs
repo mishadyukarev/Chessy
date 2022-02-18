@@ -13,6 +13,14 @@ namespace Game.Game
 
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;
 
+        public const byte START_WIND = 60;
+        public const DirectTypes DIRECT_WIND = DirectTypes.Right;
+        public const SunSideTypes SUN_SIDE = SunSideTypes.Dawn;
+        public const PlayerTypes WHOSE_MOVE = PlayerTypes.First;
+        public const CellClickTypes CELL_CLICK = CellClickTypes.SimpleClick;
+        public const ToolWeaponTypes SELECTED_TOOL_WEAPON = ToolWeaponTypes.Axe;
+        public const LevelTypes SELECTED_LEVEL_TOOL_WEAPON = LevelTypes.First;
+
         public static float SpawnPercent(in EnvironmentTypes env)
         {
             switch (env)

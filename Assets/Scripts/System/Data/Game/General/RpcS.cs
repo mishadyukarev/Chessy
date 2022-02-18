@@ -81,8 +81,10 @@ namespace Game.Game
                                 {
                                     bool haveNearBorder = false;
 
-                                    foreach (var idx_1 in _e.CellSpaceWorker.GetIdxsAround(idx_0))
+                                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                                     {
+                                        var idx_1 = _e.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
                                         if (!_e.CellEs(idx_1).IsActiveParentSelf)
                                         {
                                             haveNearBorder = true;
@@ -99,6 +101,7 @@ namespace Game.Game
                                         _e.BuildTC(idx_0).Build = BuildingTypes.City;
                                         _e.BuildPlayerTC(idx_0).Player = whoseMove;
                                         _e.BuildHpC(idx_0).Health = CellBuildingValues.MaxAmountHealth(BuildingTypes.City);
+                                        _e.BuildLevelTC(idx_0).Level = LevelTypes.First;
 
                                         _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.NeedForAbility(ability);
 
@@ -106,7 +109,7 @@ namespace Game.Game
 
                                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                                         {
-                                            _e.TrailEs(idx_0).Trail(dirT).HealthC.Health = 0;
+                                            _e.CellEs(idx_0).TrailHealthC(dirT).Health = 0;
                                         }
 
                                         _e.AdultForestC(idx_0).Resources = 0;
@@ -227,7 +230,7 @@ namespace Game.Game
 
             else if (obj is MarketBuyTypes marketBuy)
             {
-                _e.InventorResourcesEs.TryBuyResourcesFromMarket_Master(marketBuy, sender, _e);
+                //_e.InventorResourcesEs.TryBuyResourcesFromMarket_Master(marketBuy, sender, _e);
             }
 
             else if (obj is RpcMasterTypes rpcT)
@@ -243,10 +246,10 @@ namespace Game.Game
                         {
                             var playerSend = sender.GetPlayer();
 
-                            _e.ForPlayerE(playerSend).IsReadyC = !_e.ForPlayerE(playerSend).IsReadyC;
+                            _e.PlayerE(playerSend).IsReadyC = !_e.PlayerE(playerSend).IsReadyC;
 
-                            if (_e.ForPlayerE(PlayerTypes.First).IsReadyC
-                                && _e.ForPlayerE(PlayerTypes.Second).IsReadyC)
+                            if (_e.PlayerE(PlayerTypes.First).IsReadyC
+                                && _e.PlayerE(PlayerTypes.Second).IsReadyC)
                             {
                                 _e.IsStartedGame = true;
                             }
@@ -266,7 +269,7 @@ namespace Game.Game
                             {
                                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                                 {
-                                    foreach (var idx in _e.CellSpaceWorker.Idxs)
+                                    for (byte idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
                                     {
                                         _e.UnitStunC(idx).Stun -= 2;
                                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
@@ -277,7 +280,7 @@ namespace Game.Game
 
                                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                                 {
-                                    foreach (var idx in _e.CellSpaceWorker.Idxs)
+                                    for (byte idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
                                     {
                                         _e.UnitStunC(idx).Stun -= 2;
                                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
@@ -299,7 +302,7 @@ namespace Game.Game
 
                                     //ViewDataSC.RotateAll.Invoke();
 
-                                    _e.FriendIsActiveC = true;
+                                    _e.FriendIsActive = true;
                                 }
                             }
                             else
@@ -336,22 +339,22 @@ namespace Game.Game
                                 _e.UnitConditionTC(idx_to).Condition = ConditionUnitTypes.None;
 
                                 _e.UnitTC(idx_from).Unit = UnitTypes.None;
-                                
 
-                                if (!_e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var direct)) throw new Exception();
+
+                                var direct = _e.CellEs(idx_from).Direct(idx_to);
 
                                 if (!_e.UnitTC(idx_to).Is(UnitTypes.Undead))
                                 {
                                     if (_e.AdultForestC(idx_from).HaveAny)
                                     {
-                                        _e.TrailEs(idx_from).Trail(direct).HealthC.Health = CellTrail_Values.HEALTH_TRAIL;
+                                        _e.CellEs(idx_from).TrailHealthC(direct).Health = CellTrail_Values.HEALTH_TRAIL;
                                     }
                                     if (_e.AdultForestC(idx_to).HaveAny)
                                     {
-                                        _e.TrailEs(idx_to).Trail(direct.Invert()).HealthC.Health = CellTrail_Values.HEALTH_TRAIL;
+                                        _e.CellEs(idx_to).TrailHealthC(direct.Invert()).Health = CellTrail_Values.HEALTH_TRAIL;
                                     }
 
-                                    if (_e.RiverEs(idx_to).RiverE.HaveRiverNear)
+                                    if (_e.RiverEs(idx_to).RiverE.RiverTC.HaveRiverNear)
                                     {
                                         _e.UnitWaterC(idx_to).Water = CellUnitStatWater_Values.MAX_WATER;
                                     }
@@ -405,9 +408,7 @@ namespace Game.Game
                                     powerDam_from *= CellUnitDamage_Values.UNIQUE_PERCENT_DAMAGE;
                                 }
 
-
-                                _e.CellSpaceWorker.TryGetDirect(idx_from, idx_to, out var dirAttack);
-
+                                var dirAttack = _e.CellEs(idx_from).Direct(idx_to);
 
                                 if (_e.SunSideTC.IsAcitveSun)
                                 {
@@ -541,7 +542,7 @@ namespace Game.Game
                                     {
                                         if (wasUnit == UnitTypes.Camel)
                                         {
-                                            _e.InventorResourcesEs.Resource(ResourceTypes.Food, _e.UnitPlayerTC(idx_from).Player).ResourceC.Resources += ResourcesInInventorValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                                            //_e.InventorResourcesEs.Resource(ResourceTypes.Food, _e.UnitPlayerTC(idx_from).Player).ResourceC.Resources += ResourcesInInventorValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                                         }
 
                                         if (_e.UnitTC(idx_from).HaveUnit)
@@ -567,7 +568,7 @@ namespace Game.Game
                             idx_0 = (byte)objects[_idx_cur++];
                             var unitT = (UnitTypes)objects[_idx_cur++];
 
-                            if (CellsForSetUnitsEs.CanSet<CanSetUnitC>(whoseMove, idx_0).Can)
+                            if (_e.UnitEs(idx_0).ForPlayer(whoseMove).CanSetUnitHere)
                             {
                                 _e.UnitTC(idx_0).Unit = unitT;
                                 _e.UnitPlayerTC(idx_0).Player = whoseMove;
@@ -587,20 +588,20 @@ namespace Game.Game
 
                                 if (unitT == UnitTypes.Pawn)
                                 {
-                                    _e.ForPlayerE(whoseMove).PeopleInCityC -= 1;
+                                    _e.PlayerE(whoseMove).PeopleInCity -= 1;
 
                                     _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                                     _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
                                 }
                                 else
                                 {
-                                    _e.ForPlayerE(whoseMove).UnitsInfoE(unitT).HaveInInventor = false;
+                                    _e.PlayerE(whoseMove).UnitsInfoE(unitT).HaveInInventor = false;
 
                                     _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                                     _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.None;
                                 }
 
-                                _e.ForPlayerE(whoseMove).UnitsInfoE(unitT).UnitsInGameC++;
+                                _e.PlayerE(whoseMove).UnitsInfoE(unitT).UnitsInGame++;
 
                                 _e.RpcE.SoundToGeneral(sender, ClipTypes.ClickToTable);
                             }
@@ -622,7 +623,7 @@ namespace Game.Game
                                         {
                                             if (_e.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
                                             {
-                                                if (_e.InventorToolWeaponEs.ToolWeapons(twT, levelTW, whoseMove).ToolWeaponsC.HaveAny)
+                                                if (_e.PlayerE(whoseMove).LevelE(levelTW).ToolWeapons(twT).HaveAny)
                                                 {
                                                     //_ents.SetFromInventor(twT, levT, whoseMove, _ents.InventorToolWeaponEs);
                                                     _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON;
@@ -631,19 +632,19 @@ namespace Game.Game
                                                 }
                                                 else
                                                 {
-                                                    if (_e.InventorResourcesEs.CanBuyTW(twT, levelTW, whoseMove, out var needs))
-                                                    {
-                                                        _e.InventorResourcesEs.BuyTW(twT, levelTW, whoseMove);
-                                                        //_ents.Set(twT, levT);
+                                                    //if (_e.InventorResourcesEs.CanBuyTW(twT, levelTW, whoseMove, out var needs))
+                                                    //{
+                                                    //    _e.InventorResourcesEs.BuyTW(twT, levelTW, whoseMove);
+                                                    //    //_ents.Set(twT, levT);
 
-                                                        _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON;
+                                                    //    _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_MAIN_TOOLWEAPON;
 
-                                                        _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                    }
-                                                    else
-                                                    {
-                                                        _e.RpcE.MistakeEconomyToGeneral(sender, needs);
-                                                    }
+                                                    //    _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                                    //}
+                                                    //else
+                                                    //{
+                                                    //    _e.RpcE.MistakeEconomyToGeneral(sender, needs);
+                                                    //}
                                                 }
                                             }
                                             else
@@ -675,7 +676,7 @@ namespace Game.Game
                                         {
                                             if (_e.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
                                             {
-                                                _e.InventorToolWeaponEs.ToolWeapons(_e.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon, _e.UnitEs(idx_0).ExtraTWLevelTC.Level, ownUnit_0).ToolWeaponsC.Add(1);
+                                                _e.PlayerE(ownUnit_0).LevelE(_e.UnitExtraLevelTC(idx_0).Level).ToolWeapons(_e.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
                                                 _e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
 
                                                 _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON;
@@ -684,9 +685,9 @@ namespace Game.Game
                                             }
 
 
-                                            else if (_e.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.HaveAny)
+                                            else if (_e.PlayerE(ownUnit_0).LevelE(levelTW).ToolWeapons(twT).HaveAny)
                                             {
-                                                _e.InventorToolWeaponEs.ToolWeapons(twT, levelTW, ownUnit_0).ToolWeaponsC.Take(1);
+                                                _e.PlayerE(ownUnit_0).LevelE(levelTW).ToolWeapons(twT).Amount --;
 
                                                 //_e.UnitExtraTWTC(idx_0).SetNew(twT, levelTW, _e.UnitEs(idx_0).ExtraTWLevelTC, _e.UnitEs(idx_0).ExtraTWShieldC);
 
@@ -697,20 +698,20 @@ namespace Game.Game
 
                                             else
                                             {
-                                                if (_e.InventorResourcesEs.CanBuyTW(twT, levelTW, ownUnit_0, out var needRes))
-                                                {
-                                                    _e.InventorResourcesEs.BuyTW(twT, levelTW, ownUnit_0);
+                                                //if (_e.InventorResourcesEs.CanBuyTW(twT, levelTW, ownUnit_0, out var needRes))
+                                                //{
+                                                //    _e.InventorResourcesEs.BuyTW(twT, levelTW, ownUnit_0);
 
-                                                    //_e.UnitExtraTWTC(idx_0).SetNew(twT, levelTW, _e.UnitEs(idx_0).ExtraTWLevelTC, _e.UnitEs(idx_0).ExtraTWShieldC);
+                                                //    //_e.UnitExtraTWTC(idx_0).SetNew(twT, levelTW, _e.UnitEs(idx_0).ExtraTWLevelTC, _e.UnitEs(idx_0).ExtraTWShieldC);
 
-                                                    _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON;
+                                                //    _e.UnitStepC(idx_0).Steps -= CellUnitStatStep_Values.FOR_GIVE_TAKE_EXTRA_TOOLWEAPON;
 
-                                                    _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                }
-                                                else
-                                                {
-                                                    _e.RpcE.MistakeEconomyToGeneral(sender, needRes);
-                                                }
+                                                //    _e.RpcE.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                                //}
+                                                //else
+                                                //{
+                                                //    _e.RpcE.MistakeEconomyToGeneral(sender, needRes);
+                                                //}
                                             }
                                         }
                                         else _e.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
@@ -722,11 +723,28 @@ namespace Game.Game
 
                     case RpcMasterTypes.GetHero:
                         //_e.Units((UnitTypes)objects[_idx_cur++], LevelTypes.First, whoseMove).AmountC.Add(1);
-                        _e.ForPlayerE(whoseMove).HaveCenterHeroC = false;
+                        _e.PlayerE(whoseMove).HaveCenterHeroC = false;
                         break;
 
                     case RpcMasterTypes.UpgCenterUnits:
-                        _e.AvailableCenterUpgradeEs.UpgradeCenterUnit_Master((UnitTypes)objects[_idx_cur++], sender, _e);
+                        //var whoseMove = es.WhoseMove.Player;
+
+
+                        //if (unit == UnitTypes.Scout)
+                        //{
+                        //    es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                        //    es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Steps, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                        //}
+                        //else
+                        //{
+                        //    es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.First, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                        //    es.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Damage, unit, LevelTypes.Second, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                        //}
+
+                        //es.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).Have = false;
+                        //es.AvailableCenterUpgradeEs.HaveUnitUpgrade(unit, whoseMove).Have = false;
+
+                        //es.RpcE.SoundToGeneral(sender, ClipTypes.PickUpgrade);
                         break;
 
                     case RpcMasterTypes.UpgCenterBuild:
@@ -740,7 +758,19 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.UpgWater:
-                        _e.UnitStatUpgradesEs.UpgradeCenterWater_Master(sender, _e);
+                        //var whoseMove = e.WhoseMove.Player;
+
+                        //for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
+                        //{
+                        //    for (var level = LevelTypes.None + 1; level < LevelTypes.End; level++)
+                        //    {
+                        //        e.UnitStatUpgradesEs.Upgrade(UnitStatTypes.Water, unit, level, whoseMove, UpgradeTypes.PickCenter).Have = true;
+                        //    }
+                        //}
+                        //e.AvailableCenterUpgradeEs.HaveUpgrade(whoseMove).Have = false;
+                        //e.AvailableCenterUpgradeEs.HaveWaterUpgrade(whoseMove).Have = false;
+
+                        //e.RpcE.SoundToGeneral(sender, ClipTypes.PickUpgrade);
                         break;
 
                     default:
@@ -762,7 +792,7 @@ namespace Game.Game
 
             if (obj is MistakeTypes mistakeT)
             {
-                _e.MistakeC.Mistake = mistakeT;
+                _e.MistakeE.MistakeTC.Mistake = mistakeT;
                 _e.Sound(ClipTypes.Mistake).Action.Invoke();
 
                 if (mistakeT == MistakeTypes.Economy)
@@ -802,7 +832,7 @@ namespace Game.Game
                         break;
 
                     case RpcGeneralTypes.ActiveMotion:
-                        _e.MotionIsActiveC = true;
+                        _e.MotionIsActive = true;
                         break;
 
                     default:
@@ -822,7 +852,7 @@ namespace Game.Game
             var objs = new List<object>();
 
 
-            foreach (byte idx_0 in _e.CellSpaceWorker.Idxs)
+             for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 objs.Add(_e.UnitTC(idx_0).Unit);
                 //objs.Add(_ents.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
@@ -864,12 +894,12 @@ namespace Game.Game
 
 
                 objs.Add(_e.CellEs(idx_0).RiverEs.RiverE.RiverTC.River);
-                foreach (var item_0 in _e.CellEs(idx_0).RiverEs.Keys)
-                    objs.Add(_e.CellEs(idx_0).RiverEs.HaveRive(item_0).HaveRiver.Have);
+                //foreach (var item_0 in _e.CellEs(idx_0).RiverEs.Keys)
+                //    objs.Add(_e.CellEs(idx_0).RiverEs.HaveRive(item_0).HaveRiver.Have);
 
 
-                foreach (var item_0 in _e.CellEs(idx_0).TrailEs.Keys)
-                    objs.Add(_e.CellEs(idx_0).TrailEs.Trail(item_0));
+                //foreach (var item_0 in _e.CellEs(idx_0).TrailEs.Keys)
+                //    objs.Add(_e.CellEs(idx_0).TrailEs.Trail(item_0));
 
                 //objs.Add(_ents.CellEs(idx_0).EffectEs.FireE.HaveFireC);
             }
@@ -932,7 +962,7 @@ namespace Game.Game
             _idx_cur = 0;
 
 
-            foreach (byte idx_0 in _e.CellSpaceWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 //_ents.CellEs(idx_0).UnitEs.Main.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
                 //_ents.CellEs(idx_0).UnitEs.Main.LevelC.Level = (LevelTypes)objects[_idx_cur++];
@@ -968,9 +998,9 @@ namespace Game.Game
                 //    _ents.EnvironmentEs.Environment(item_0, idx_0).Resources.Amount = (int)objects[_idx_cur++];
                 //}
 
-                _e.CellEs(idx_0).RiverEs.RiverE.RiverTC.River = (RiverTypes)objects[_idx_cur++];
-                foreach (var dir in _e.CellEs(idx_0).RiverEs.Keys)
-                    _e.CellEs(idx_0).RiverEs.HaveRive(dir).HaveRiver.Have = (bool)objects[_idx_cur++];
+                //_e.CellEs(idx_0).RiverEs.RiverE.RiverTC.River = (RiverTypes)objects[_idx_cur++];
+                //foreach (var dir in _e.CellEs(idx_0).RiverEs.Keys)
+                //    _e.CellEs(idx_0).RiverEs.HaveRive(dir).HaveRiver.Have = (bool)objects[_idx_cur++];
 
 
 
@@ -1031,7 +1061,7 @@ namespace Game.Game
         [PunRPC]
         void UpdateDataAndView(object[] objects)
         {
-            _systems.Run(DataSTypes.RunAfterSyncRPC);
+            _systems.Run(SystemDataTypes.RunAfterSyncRPC);
         }
 
         #endregion

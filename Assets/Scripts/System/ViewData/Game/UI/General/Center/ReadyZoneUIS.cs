@@ -14,7 +14,7 @@ namespace Game.Game
         {
             ref var readyBut = ref Ready<ButtonUIC>();
 
-            readyBut.Color = Es.ForPlayerE(Es.CurPlayerI.Player).IsReadyC ? Color.red : Color.white;
+            readyBut.Color = Es.PlayerE(Es.CurPlayerI.Player).IsReadyC ? Color.red : Color.white;
 
             if (Es.IsStartedGame || PhotonNetwork.OfflineMode)
             {

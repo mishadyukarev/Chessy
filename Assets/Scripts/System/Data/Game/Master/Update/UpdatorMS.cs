@@ -15,13 +15,13 @@ namespace Game.Game
             {
                 for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
                 {
-                    Es.ForPlayerE(player).UnitsInfoE(unit).ScoutHeroCooldownC.Cooldown--;
+                    Es.PlayerE(player).UnitsInfoE(unit).ScoutHeroCooldownC.Cooldown--;
                 }
 
-                Es.InventorResourcesEs.Resource(ResourceTypes.Food, player).ResourceC.Resources += ResourcesInInventorValues.ADDING_FOOD_AFTER_MOVE;
+                Es.PlayerE(player).ResourcesC(ResourceTypes.Food).Resources += ResourcesInInventorValues.ADDING_FOOD_AFTER_MOVE;
             }
 
-            foreach (byte idx_0 in CellWorker.Idxs)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 //foreach (var item in Es.CellEs(idx_0).TrailEs.Keys) Es.TrailEs(idx_0).Trail(item).HealthC.Take(0.1f);
                 //foreach (var item in Es.UnitE(idx_0).CooldownKeys) Es.UnitE(idx_0).Ability(item).CooldownC.Cooldown--;
@@ -32,7 +32,7 @@ namespace Game.Game
                 {
                     //CellUnitStepsInConditionEs.Steps(condUnit_0.Condition, idx_0)++;
 
-                    Es.InventorResourcesEs.Resource(ResourceTypes.Food, Es.UnitPlayerTC(idx_0).Player).ResourceC.Resources -= ResourcesInInventorValues.CostFoodForFeedingThem(Es.UnitTC(idx_0).Unit);
+                    //Es.InventorResourcesEs.Resource(ResourceTypes.Food, Es.UnitPlayerTC(idx_0).Player).ResourceC.Resources -= ResourcesInInventorValues.CostFoodForFeedingThem(Es.UnitTC(idx_0).Unit);
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
@@ -62,7 +62,7 @@ namespace Game.Game
                                         {
                                             if (Es.UnitPlayerTC(idx_0).Is(PlayerTypes.First))
                                             {
-                                                if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, Es.UnitPlayerTC(idx_0).Player, out var idx_camp))
+                                                if (Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).LevelE(Es.BuildLevelTC(idx_0).Level).BuildsInGame(BuildingTypes.City).HaveAny)
                                                 {
                                                     //Es.BuildE(idx_camp).BuildingE.Destroy(Es);
                                                 }
@@ -73,7 +73,7 @@ namespace Game.Game
                                         }
                                         else
                                         {
-                                            if (Es.WhereWorker.TryGetBuilding(BuildingTypes.Camp, Es.UnitPlayerTC(idx_0).Player, out var idx_camp))
+                                            if (Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).LevelE(Es.BuildLevelTC(idx_0).Level).BuildsInGame(BuildingTypes.Camp).HaveAny)
                                             {
                                                 //Es.BuildingE(idx_camp).Destroy(Es);
                                             }
