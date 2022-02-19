@@ -5,14 +5,14 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public delegate void Action<in T1, in T2, in T3>(T1 arg1, T2 arg2, params T3[] arg3);
+    public delegate void ActionMy<in T1, in T2, in T3>(T1 arg1, T2 arg2, params T3[] arg3);
 
     public sealed class RpcE
     {
         int _idx_cur;
 
-        readonly Action<string, RpcTarget, object[]> _action0;
-        readonly Action<string, Player, object[]> _action1;
+        readonly ActionMy<string, RpcTarget, object[]> _action0;
+        readonly ActionMy<string, Player, object[]> _action1;
 
         readonly string _masterRPCName;
         readonly string _generalRPCName;
@@ -22,8 +22,8 @@ namespace Game.Game
         {
             _idx_cur = 0;
 
-            _action0 = (Action<string, RpcTarget, object[]>)actions[_idx_cur++];
-            _action1 = (Action<string, Player, object[]>)actions[_idx_cur++];
+            _action0 = (ActionMy<string, RpcTarget, object[]>)actions[_idx_cur++];
+            _action1 = (ActionMy<string, Player, object[]>)actions[_idx_cur++];
 
             _idx_cur = 0;
             _masterRPCName = names[_idx_cur++];

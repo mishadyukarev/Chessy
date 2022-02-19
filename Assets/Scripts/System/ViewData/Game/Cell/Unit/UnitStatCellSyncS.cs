@@ -32,7 +32,7 @@ namespace Game.Game
                         float xCordinate = (float)Es.UnitHpC(idx_0).Health / CellUnitStatHp_Values.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Es.UnitWaterC(idx_0).Water <= CellUnitStatWater_Values.MAX_WATER * 0.4f);
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(Es.UnitWaterC(idx_0).Water <= CellUnitStatWater_Values.MAX * 0.4f);
                         Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(Es.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.StandartForUnit(Es.UnitTC(idx_0).Unit));
 
 

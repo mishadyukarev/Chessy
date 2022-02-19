@@ -6,6 +6,6 @@ namespace Game.Game
     {
         public float Protection;
 
-        public bool HaveProtection => Protection > 0;
+        public bool HaveAnyProtection => Protection > 0;
     }
 }

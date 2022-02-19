@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct PowerDamageC
+    public struct DamageC
     {
         public float Damage;
     }

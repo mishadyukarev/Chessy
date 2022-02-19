@@ -26,7 +26,7 @@ namespace Game.Game
 
 
                     powerDamage += standDamage * CellUnitDamage_Values.ProtRelaxPercent(Es.UnitConditionTC(idx_0).Condition);
-                    if (Es.BuildTC(idx_0).HaveBuilding) powerDamage += standDamage * CellBuildingValues.ProtectionPercent(Es.BuildTC(idx_0).Build);
+                    if (Es.BuildTC(idx_0).HaveBuilding) powerDamage += standDamage * CellBuilding_Values.ProtectionPercent(Es.BuildTC(idx_0).Build);
 
                     float protectionPercent = 0;
 

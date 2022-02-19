@@ -1,10 +1,16 @@
-﻿using ECS;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Game.Game
 {
     public struct CellUnitPoolEs
     {
+        readonly AbilityTC[] _uniqueButtons;
+        readonly CooldownC[] _abilities;
+        readonly CellUnitForPlayerE[] _visibles;
+        readonly StepsC[] _needStepsForShift;
+        readonly IdxsC[] _forAttack;
+
+
         public UnitTC UnitTC;
         public PlayerTC PlayerTC;
         public LevelTC LevelTC;
@@ -31,42 +37,44 @@ namespace Game.Game
         public LevelTC ExtraTWLevelTC;
         public ProtectionC ExtraTWShieldC;
 
-        public PowerDamageC DamageAttackC;
-        public PowerDamageC DamageOnCell;
+        public DamageC DamageAttackC;
+        public DamageC DamageOnCell;
 
         public IdxsC ForArson;
+        public IdxsC ForShift;
+
+        public CellUnitExtractPawnE ExtractPawnE;
+        public CellUnitNeedKillE NeelKillE;
 
 
-        readonly Dictionary<ButtonTypes, CellUnitAbilityButtonsE> _uniqueButtons;
-        readonly Dictionary<AbilityTypes, CellUnitAbilityE> _abilities;
-        readonly ForPlayerCellUnitE[] _visibles;
+        public IdxsC ForAttack(in AttackTypes attack) => _forAttack[(byte)attack - 1];
+        public ref StepsC NeedSteps(in byte idx_cell) => ref _needStepsForShift[idx_cell];
 
-        public CellUnitAbilityButtonsE AbilityButton(in ButtonTypes button) => _uniqueButtons[button];
-        public CellUnitAbilityE Ability(in AbilityTypes ability) => _abilities[ability];
-        public ref ForPlayerCellUnitE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player - 1];
+        public ref AbilityTC Ability(in ButtonTypes button) => ref _uniqueButtons[(byte)button - 1];
+        public ref CooldownC CoolDownC(in AbilityTypes ability) => ref _abilities[(byte)ability - 1];
+        public ref CellUnitForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player - 1];
 
 
-        internal CellUnitPoolEs(in CellPoolEs cellEs, in EcsWorld gameW) : this()
+        internal CellUnitPoolEs(in bool def) : this()
         {
-            _uniqueButtons = new Dictionary<ButtonTypes, CellUnitAbilityButtonsE>();
-            for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
-            {
-                _uniqueButtons.Add(buttonT, new CellUnitAbilityButtonsE(gameW));
-            }
+            _uniqueButtons = new AbilityTC[(byte)ButtonTypes.End - 1];
 
-            _abilities = new Dictionary<AbilityTypes, CellUnitAbilityE>();
-            for (var ability = AbilityTypes.None + 1; ability < AbilityTypes.End; ability++)
-            {
-                _abilities.Add(ability, new CellUnitAbilityE(ability, cellEs, gameW));
-            }
+            _abilities = new CooldownC[(byte)AbilityTypes.End - 1];
 
-            _visibles = new ForPlayerCellUnitE[(byte)PlayerTypes.End - 1];
+            _visibles = new CellUnitForPlayerE[(byte)PlayerTypes.End - 1];
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _visibles[(byte)player - 1] = new ForPlayerCellUnitE(default);
+                _visibles[(byte)player - 1] = new CellUnitForPlayerE();
             }
 
             ForArson = new IdxsC(new HashSet<byte>());
+            ForShift = new IdxsC(new HashSet<byte>());
+
+            _needStepsForShift = new StepsC[StartValues.ALL_CELLS_AMOUNT];
+            _forAttack = new IdxsC[(byte)AttackTypes.End - 1];
+
+            _forAttack[(byte)AttackTypes.Simple - 1] = new IdxsC(new HashSet<byte>());
+            _forAttack[(byte)AttackTypes.Unique - 1] = new IdxsC(new HashSet<byte>());
         }
 
         public void Set(in CellUnitPoolEs unitE)
@@ -94,11 +102,11 @@ namespace Game.Game
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                AbilityButton(buttonT).AbilityC.Ability = unitE.AbilityButton(buttonT).AbilityC.Ability;
+                Ability(buttonT).Ability = unitE.Ability(buttonT).Ability;
             }
             for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
             {
-                Ability(abilityT).CooldownC.Cooldown = unitE.Ability(abilityT).CooldownC.Cooldown;
+                CoolDownC(abilityT).Cooldown = unitE.CoolDownC(abilityT).Cooldown;
             }
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {

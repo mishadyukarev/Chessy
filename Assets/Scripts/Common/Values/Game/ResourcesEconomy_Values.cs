@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public static class ResourcesInInventorValues
+    public static class ResourcesEconomy_Values
     {
         public const float ADDING_FOOD_AFTER_MOVE = 0.3f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;
@@ -22,8 +22,8 @@ namespace Game.Game
             {
                 case MarketBuyTypes.FoodToWood: return 1;
                 case MarketBuyTypes.WoodToFood: return 0.5f;
-                case MarketBuyTypes.GoldToFood: return 0.01f;
-                case MarketBuyTypes.GoldToWood: return 0.01f;
+                case MarketBuyTypes.GoldToFood: return 1;
+                case MarketBuyTypes.GoldToWood: return 1;
                 default: throw new Exception();
             }
         }

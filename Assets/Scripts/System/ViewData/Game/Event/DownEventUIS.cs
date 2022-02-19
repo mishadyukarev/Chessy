@@ -1,12 +1,17 @@
-﻿using static Game.Game.DownToolWeaponUIEs;
+﻿using System;
+using static Game.Game.DownToolWeaponUIEs;
 using static Game.Game.EntityVPool;
 
 namespace Game.Game
 {
     sealed class DownEventUIS : SystemUIAbstract
     {
-        internal DownEventUIS(in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        readonly Action _updateUI;
+
+        internal DownEventUIS(in Action updateUI, in Entities ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
+            _updateUI = updateUI;
+
             DownScoutUIEs.Scout<ButtonUIC>().AddListener(ExecuteScout);
             DownHeroUIE.ButtonC.AddListener(Hero);
 
@@ -158,6 +163,8 @@ namespace Game.Game
                 Es.CellClickTC.Click = CellClickTypes.GiveTakeTW;
             }
             else SoundV(ClipTypes.Mistake).Play();
+
+            _updateUI.Invoke();
         }
         void TryOnHint(VideoClipTypes videoClip)
         {

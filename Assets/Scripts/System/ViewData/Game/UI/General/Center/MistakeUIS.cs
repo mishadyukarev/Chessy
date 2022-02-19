@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game.Game
 {
@@ -36,7 +37,7 @@ namespace Game.Game
                 {
                     if (Es.MistakeTimerC.Timer >= _neededTimeForFading)
                     {
-                        Es.MistakeTC.Set(MistakeTypes.None);
+                        Es.MistakeTC.Mistake = MistakeTypes.None;
                     }
 
                     else
@@ -50,7 +51,7 @@ namespace Game.Game
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).SetActive(true);
 
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).Text
-                                    = ">= " + (int)(Es.MistakeEconomy(res).Resources * 100);
+                                    = ">= " + Math.Round(Es.MistakeEconomy(res).Resources, 2);
                             }
                         }
                     }
@@ -63,7 +64,7 @@ namespace Game.Game
 
                     if (Es.MistakeTimerC.Timer >= _neededTimeForFading)
                     {
-                        Es.MistakeTC.Set(MistakeTypes.None);
+                        Es.MistakeTC.Mistake = MistakeTypes.None;
                     }
                 }
             }

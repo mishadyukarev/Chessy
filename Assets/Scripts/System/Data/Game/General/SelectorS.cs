@@ -1,26 +1,36 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.Game
 {
     sealed class SelectorS : SystemAbstract, IEcsRunSystem
     {
-        readonly SystemsView _systemV;
+        readonly Action _updateView;
+        readonly Action _updateUI;
 
-        public SelectorS(in Entities ents, in SystemsView systemV) : base(ents)
+        public SelectorS(in Entities ents, in Action updateView, in Action updateUI) : base(ents)
         {
-            _systemV = systemV;
+            _updateView = updateView;
+            _updateUI = updateUI;
         }
 
         public void Run()
         {
             var idx_cur = Es.CurrentIdxC.Idx;
 
-            ref var raycastTC = ref Es.RayCastTC;
-            ref var cellClick = ref Es.CellClickTC;
+
+            if (Input.GetKey(KeyCode.Space))
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1)) Es.PlayerE(Es.CurPlayerI.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
+                if (Input.GetKeyDown(KeyCode.Alpha2)) Es.PlayerE(Es.CurPlayerI.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
+                if (Input.GetKeyDown(KeyCode.Alpha3)) Es.PlayerE(Es.CurPlayerI.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
+                if (Input.GetKeyDown(KeyCode.Alpha4)) Es.PlayerE(Es.CurPlayerI.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
+                if (Input.GetKeyDown(KeyCode.Alpha5)) Es.PlayerE(Es.CurPlayerI.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
+            }
 
             if (Es.IsClicked)
             {
-                if (raycastTC.Is(RaycastTypes.Cell))
+                if (Es.RayCastTC.Is(RaycastTypes.Cell))
                 {
                     if (!Es.IsMyMove)
                     {
@@ -29,7 +39,7 @@ namespace Game.Game
 
                     else
                     {
-                        switch (cellClick.Click)
+                        switch (Es.CellClickTC.Click)
                         {
                             case CellClickTypes.None: throw new Exception();
 
@@ -39,13 +49,13 @@ namespace Game.Game
                                     {
                                         var curPlayerI = Es.CurPlayerI.Player;
 
-                                        if (Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(curPlayerI).ForAttack(AttackTypes.Simple).Contains(Es.CurrentIdxC.Idx)
-                                            || Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(curPlayerI).ForAttack(AttackTypes.Unique).Contains(Es.CurrentIdxC.Idx))
+                                        if (Es.UnitEs(Es.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Contains(Es.CurrentIdxC.Idx)
+                                            || Es.UnitEs(Es.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Contains(Es.CurrentIdxC.Idx))
                                         {
                                             Es.RpcE.AttackUnitToMaster(Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx);
                                         }
 
-                                        else if (Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(Es.CurPlayerI.Player).ForShift.Contains(Es.CurrentIdxC.Idx))
+                                        else if (Es.UnitEs(Es.SelectedIdxC.Idx).ForShift.Contains(Es.CurrentIdxC.Idx))
                                         {
                                             Es.RpcE.ShiftUnitToMaster(Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx);
                                         }
@@ -104,7 +114,7 @@ namespace Game.Game
                             case CellClickTypes.SetUnit:
                                 {
                                     Es.RpcE.SetUniToMaster(Es.CurrentIdxC.Idx, Es.SelectedUnitE.UnitTC.Unit);
-                                    cellClick.Click = CellClickTypes.SimpleClick;
+                                    Es.CellClickTC.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 
@@ -116,7 +126,7 @@ namespace Game.Game
                                     }
                                     else
                                     {
-                                        cellClick.Click = CellClickTypes.SimpleClick;
+                                        Es.CellClickTC.Click = CellClickTypes.SimpleClick;
                                         Es.SelectedIdxC.Idx= Es.CurrentIdxC.Idx;
                                     }
                                 }
@@ -157,7 +167,7 @@ namespace Game.Game
                                         default: throw new Exception();
                                     }
 
-                                    cellClick.Click = CellClickTypes.SimpleClick;
+                                    Es.CellClickTC.Click = CellClickTypes.SimpleClick;
                                     Es.SelectedIdxC.Idx = Es.CurrentIdxC.Idx;
                                 }
                                 break;
@@ -165,7 +175,7 @@ namespace Game.Game
                             case CellClickTypes.CityBuildBuilding:
                                 {
                                     Es.RpcE.CityBuildToMaster(Es.SelectedBuildingTC.Build, Es.SelectedIdxC.Idx, Es.CurrentIdxC.Idx);
-                                    cellClick.Click = CellClickTypes.SimpleClick;
+                                    Es.CellClickTC.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 
@@ -174,24 +184,27 @@ namespace Game.Game
                     }
                 }
 
-                else if (raycastTC.Is(RaycastTypes.UI))
+                else if (Es.RayCastTC.Is(RaycastTypes.UI))
                 {
                     //cellClick.Click = CellClickTypes.SimpleClick;
                     //Es.SelectedIdxE.Reset();
                 }
 
-                else if (raycastTC.Is(RaycastTypes.Background))
+                else if (Es.RayCastTC.Is(RaycastTypes.Background))
                 {
-                    cellClick.Click = CellClickTypes.SimpleClick;
+                    Es.CellClickTC.Click = CellClickTypes.SimpleClick;
                     Es.SelectedIdxC.Idx = 0;
                 }
+
+                _updateView.Invoke();
+                _updateUI.Invoke();
             }
 
             else
             {
-                if (raycastTC.Is(RaycastTypes.Cell))
+                if (Es.RayCastTC.Is(RaycastTypes.Cell))
                 {
-                    if (cellClick.Is(CellClickTypes.SetUnit))
+                    if (Es.CellClickTC.Is(CellClickTypes.SetUnit))
                     {
                         if (!Es.UnitTC(idx_cur).HaveUnit || !Es.UnitEs(idx_cur).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
                         {

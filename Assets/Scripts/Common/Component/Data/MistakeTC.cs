@@ -13,9 +13,5 @@
 
 
         public MistakeTC(in MistakeTypes mistakeT) => Mistake = mistakeT;
-
-
-        public void Set(in MistakeTypes mistakeT) => Mistake = mistakeT;
-        public void Reset() => Set(MistakeTypes.None);
     }
 }

@@ -14,8 +14,8 @@ namespace Game.Game
             _photonView = photonView;
 
             actions = new List<object>();
-            actions.Add((Action<string, RpcTarget, object[]>)_photonView.RPC);
-            actions.Add((Action<string, Player, object[]>)_photonView.RPC);
+            actions.Add((ActionMy<string, RpcTarget, object[]>)_photonView.RPC);
+            actions.Add((ActionMy<string, Player, object[]>)_photonView.RPC);
         }
 
 

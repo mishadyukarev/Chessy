@@ -37,7 +37,7 @@ namespace Game.Game
 
                         if(!_isFilled[EffectTypes.Shield])
                         {
-                            if (Es.UnitEffectShield(idx_sel).HaveProtection)
+                            if (Es.UnitEffectShield(idx_sel).HaveAnyProtection)
                             {
                                 UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 UIEs.RightEs.Effect(idx_eff).ImageUIC.Sprite = _resources.Sprite(AbilityTypes.BonusNear);

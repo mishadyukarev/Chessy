@@ -12,7 +12,7 @@
             {
                 if (Es.UnitEs(idx_0).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
                 {
-                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.SetActive(Es.UnitEffectShield(idx_0).HaveProtection);
+                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.SetActive(Es.UnitEffectShield(idx_0).HaveAnyProtection);
                 }
                 else
                 {

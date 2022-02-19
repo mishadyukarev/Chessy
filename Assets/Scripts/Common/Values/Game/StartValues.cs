@@ -37,15 +37,15 @@ namespace Game.Game
             switch (res)
             {
                 case ResourceTypes.None: throw new Exception();
-                case ResourceTypes.Food: return 0;
-                case ResourceTypes.Wood: return 0;
+                case ResourceTypes.Food: return 1;
+                case ResourceTypes.Wood: return 1;
                 case ResourceTypes.Ore: return 0;
-                case ResourceTypes.Iron: return 3f;
-                case ResourceTypes.Gold: return 3f;
+                case ResourceTypes.Iron: return 3;
+                case ResourceTypes.Gold: return 3;
                 default: throw new Exception();
             }
         }
-        public static int Units(in UnitTypes unit, in LevelTypes level)
+        public static bool HaveUnit(in UnitTypes unit, in LevelTypes level)
         {
             switch (unit)
             {
@@ -54,31 +54,25 @@ namespace Game.Game
                     switch (level)
                     {
                         case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: return 1;
-                        case LevelTypes.Second: return 0;
+                        case LevelTypes.First: return true;
+                        case LevelTypes.Second: return false;
                         default: throw new Exception();
                     }
-                case UnitTypes.Pawn:
-                    switch (level)
-                    {
-                        case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: return 1;
-                        case LevelTypes.Second: return 0;
-                        default: throw new Exception();
-                    }
+                case UnitTypes.Pawn: return false;
                 case UnitTypes.Scout:
                     switch (level)
                     {
                         case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: return 1;
-                        case LevelTypes.Second: return 0;
+                        case LevelTypes.First: return true;
+                        case LevelTypes.Second: return false;
                         default: throw new Exception();
                     }
-                case UnitTypes.Elfemale: return 0;
-                case UnitTypes.Snowy: return 0;
-                case UnitTypes.Undead: return 0;
-                case UnitTypes.Hell: return 0;
-                case UnitTypes.Skeleton: return 0;
+                case UnitTypes.Elfemale: return false;
+                case UnitTypes.Snowy: return false;
+                case UnitTypes.Undead: return false;
+                case UnitTypes.Hell: return false;
+                case UnitTypes.Skeleton: return false;
+                case UnitTypes.Camel: return false;
                 default: throw new Exception();
             }
         }

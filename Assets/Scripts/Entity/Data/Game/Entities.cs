@@ -18,11 +18,12 @@ namespace Game.Game
         public SelectedToolWeaponE SelectedTWE;
 
         public SunSideTC SunSideTC;
-        public CellClickC CellClickTC;
         public DirectTC DirectWindTC;
-        public BuildingTC SelectedBuildingTC;
+
+        public CellClickC CellClickTC;
         public RayCastTC RayCastTC;
 
+        public BuildingTC SelectedBuildingTC;
         public AbilityTC SelectedAbilityTC;
 
         public IdxC StartTeleportIdxC;
@@ -39,14 +40,15 @@ namespace Game.Game
         public bool IsStartedGame;
         public bool IsClicked;
 
-        public int MotionsC;
+        public int Motions;
 
 
         readonly ActionC[] _sounds0;
         readonly ActionC[] _sounds1;
         readonly ResourcesC[] _mistakeEconomyEs;
-        readonly InfoForPlayerE[] _forPlayerEs;
-        public ref InfoForPlayerE PlayerE(in PlayerTypes player) => ref _forPlayerEs[(byte)player - 1];
+        readonly InfoPlayerPoolEs[] _forPlayerEs;
+        public ref InfoPlayerPoolEs PlayerE(in PlayerTypes player) => ref _forPlayerEs[(byte)player - 1];
+        public ref UnitInfoE UnitInfo(in PlayerTypes playerT, in UnitTypes unitT) => ref PlayerE(playerT).UnitsInfoE(unitT);
         public ref ActionC Sound(in ClipTypes clip) => ref _sounds0[(int)clip - 1];
         public ref ActionC Sound(in AbilityTypes unique) => ref _sounds1[(int)unique - 1];
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
@@ -81,7 +83,8 @@ namespace Game.Game
         public ref LevelTC UnitMainTWLevelTC(in byte idx) => ref UnitEs(idx).MainLevelTC;
         public ref ToolWeaponTC UnitExtraTWTC(in byte idx) => ref UnitEs(idx).ExtraToolWeaponTC;
         public ref LevelTC UnitExtraLevelTC(in byte idx) => ref UnitEs(idx).ExtraTWLevelTC;
-        public ref ProtectionC UnitExtraProtectionShieldTC(in byte idx) => ref UnitEs(idx).ExtraTWShieldC;
+        public ref ProtectionC UnitExtraProtectionTC(in byte idx) => ref UnitEs(idx).ExtraTWShieldC;
+        public ref CellUnitExtractPawnE UnitExtractPawnE(in byte idx) => ref UnitEs(idx).ExtractPawnE;
 
 
         #region Effects
@@ -101,9 +104,9 @@ namespace Game.Game
 
         public ref CellBuildingE BuildE(in byte idx) => ref CellEs(idx).BuildE;
         public ref BuildingTC BuildTC(in byte idx) => ref BuildE(idx).BuildingC;
-        public ref HealthC BuildHpC(in byte idx) => ref BuildE(idx).HealthC;
-        public ref PlayerTC BuildPlayerTC(in byte idx) => ref BuildE(idx).PlayerC;
         public ref LevelTC BuildLevelTC(in byte idx) => ref BuildE(idx).LevelTC;
+        public ref PlayerTC BuildPlayerTC(in byte idx) => ref BuildE(idx).PlayerC;
+        public ref HealthC BuildHpC(in byte idx) => ref BuildE(idx).HealthC;
         public ref bool BuildSmelterTC(in byte idx) => ref BuildE(idx).IsActiveSmelter;
 
         public ref CellEnvironmentEs EnvironmentEs(in byte idx) => ref CellEs(idx).EnvironmentEs;
@@ -113,7 +116,7 @@ namespace Game.Game
         public ref ResourcesC HillC(in byte idx) => ref EnvironmentEs(idx).HillC;
         public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentEs(idx).FertilizeC;
 
-        public ref CellRiverPoolEs RiverEs(in byte idx) => ref CellEs(idx).RiverEs;
+        public ref CellRiverE RiverEs(in byte idx) => ref CellEs(idx).RiverEs;
 
         public ref CellEffectE EffectEs(in byte idx) => ref CellEs(idx).EffectEs;
         public ref bool HaveFire(in byte idx) => ref EffectEs(idx).HaveFire;
@@ -127,7 +130,7 @@ namespace Game.Game
         public const byte X = 0;
         public const byte Y = 1;
 
-        public byte GetIdxCell(in byte[] xy) => _idxs[xy[X].ToString() + "_" + xy[Y]];
+        public byte GetIdxCellByXy(in byte[] xy) => _idxs[xy[X].ToString() + "_" + xy[Y]];
 
         #endregion
 
@@ -272,7 +275,7 @@ namespace Game.Game
 
 
 
-        public Entities(in EcsWorld gameW, in List<object> forData, in List<string> namesMethods)
+        public Entities(in List<object> forData, in List<string> namesMethods)
         {
             CenterCloudIdxC.Idx = StartValues.START_WIND;
             FriendIsActive = GameModeC.IsGameMode(GameModes.WithFriendOff);
@@ -291,11 +294,11 @@ namespace Game.Game
             var idCells = (int[])forData[i++];
 
 
-            _forPlayerEs = new InfoForPlayerE[(byte)PlayerTypes.End];
+            _forPlayerEs = new InfoPlayerPoolEs[(byte)PlayerTypes.End];
 
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _forPlayerEs[(byte)player - 1] = new InfoForPlayerE(true);
+                _forPlayerEs[(byte)player - 1] = new InfoPlayerPoolEs(true);
             }
             _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
 
@@ -323,7 +326,7 @@ namespace Game.Game
             for (byte x = 0; x < StartValues.X_AMOUNT; x++)
                 for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
                 {
-                    _cellEs[idx] = new CellPoolEs(isActiveParenCells[idx], idCells[idx], new byte[] { x, y }, idx++, gameW, this);
+                    _cellEs[idx] = new CellPoolEs(isActiveParenCells[idx], idCells[idx], new byte[] { x, y }, idx++, this);
                 }
 
 
@@ -390,7 +393,7 @@ namespace Game.Game
                             {
                                 var idx_next = CellEs(idx_0).AroundCellE(dir).IdxC.Idx;
 
-                                RiverEs(idx_next).RiverE.RiverTC.River = RiverTypes.EndRiver;
+                                RiverEs(idx_next).RiverTC.River = RiverTypes.EndRiver;
                             }
                         }
 
@@ -398,7 +401,7 @@ namespace Game.Game
                         {
                             var idx_next = CellEs(idx_0).AroundCellE(dir).IdxC.Idx;
 
-                            RiverEs(idx_next).RiverE.RiverTC.River = RiverTypes.Corner;
+                            RiverEs(idx_next).RiverTC.River = RiverTypes.Corner;
                         }
                     }
                 }
@@ -436,7 +439,7 @@ namespace Game.Game
 
                         UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
                         UnitStepC(idx_0).Steps = CellUnitStatStep_Values.StandartForUnit(UnitTypes.King);
-                        UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX_WATER;
+                        UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX;
                     }
 
                     else if (x == 8 && y == 8)
@@ -454,7 +457,7 @@ namespace Game.Game
 
                         BuildTC(idx_0).Build = BuildingTypes.City;
                         BuildPlayerTC(idx_0).Player = PlayerTypes.Second;
-                        BuildHpC(idx_0).Health = CellBuildingValues.MaxAmountHealth(BuildingTypes.City);
+                        BuildHpC(idx_0).Health = CellBuilding_Values.MaxHealth(BuildingTypes.City);
                         BuildLevelTC(idx_0).Level = LevelTypes.First;
                     }
 
@@ -469,7 +472,7 @@ namespace Game.Game
 
                         UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
                         UnitStepC(idx_0).Steps = CellUnitStatStep_Values.StandartForUnit(UnitTypes.Pawn);
-                        UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX_WATER;
+                        UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX;
 
                         UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                         UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
@@ -486,7 +489,7 @@ namespace Game.Game
                         {
                             UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Shield;
                             UnitExtraLevelTC(idx_0).Level = LevelTypes.First;
-                            UnitExtraProtectionShieldTC(idx_0).Protection = CellUnitToolWeapon_Values.ProtectionShield(LevelTypes.First);
+                            UnitExtraProtectionTC(idx_0).Protection = CellUnitToolWeapon_Values.ProtectionShield(LevelTypes.First);
                         }
                     }
                 }

@@ -14,7 +14,7 @@ namespace Game.Game
             {
                 if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
                 {
-                    if (Es.RiverEs(idx_0).RiverE.RiverTC.HaveRiverNear)
+                    if (Es.RiverEs(idx_0).RiverTC.HaveRiverNear)
                     {
                         //Es.UnitE(idx_0).Take(Es, 0.15f);
                     }

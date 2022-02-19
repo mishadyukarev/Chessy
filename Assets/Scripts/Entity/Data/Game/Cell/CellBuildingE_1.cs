@@ -20,6 +20,14 @@ namespace Game.Game
             _owners = new bool[types];
         }
 
+        public void Set(in BuildingTypes buildT, in LevelTypes levT, in float hp, PlayerTypes playerT)
+        {
+            BuildingC.Build = buildT;
+            HealthC.Health = hp;
+            PlayerC.Player = playerT;
+            LevelTC.Level = levT;
+        }
+
 
         //public bool CanExtractFertilizer(in CellEnvironmentEs envEs)
         //{
@@ -63,48 +71,5 @@ namespace Game.Game
         //    PlayerC.Player = PlayerTypes.None;
         //    HealthC.Health = 0;
         //}
-
-        public void Build_Master(in byte idx_to_0, in BuildingTypes buildT, in Player sender, in Entities ents)
-        {
-            var whoseMove = ents.WhoseMove.Player;
-
-
-            //foreach (var idx_to_1 in ents.CellSpaceWorker.GetIdxsAround(idx_to_0))
-            //{
-            //    if (ents.BuildTC(idx_to_1).Is(BuildingTypes.City, BuildingTypes.House, BuildingTypes.Market, BuildingTypes.Smelter))
-            //    {
-            //        ents.CellSpaceWorker.TryGetDirect(idx_to_0, idx_to_1, out var dir);
-
-            //        if (dir == DirectTypes.Left || dir == DirectTypes.Right || dir == DirectTypes.Up || dir == DirectTypes.Down)
-            //        {
-            //            if (ents.InventorResourcesEs.CanBuyBuilding_Master(buildT, whoseMove, out var needRes))
-            //            {
-            //                ents.InventorResourcesEs.BuyBuilding_Master(buildT, whoseMove);
-
-            //                if (buildT == BuildingTypes.House)
-            //                {
-            //                    //ents.BuildingE(idx_to_0).SetNewHouse(whoseMove, ents.MaxAvailablePawnsE(whoseMove));
-            //                }
-            //                else if (buildT == BuildingTypes.Smelter)
-            //                {
-            //                    //ents.BuildingE(idx_to_0).SetNewSmelter(whoseMove);
-            //                }
-            //                else
-            //                {
-            //                    //ents.BuildingE(idx_to_0).SetNew(buildT, whoseMove);
-            //                }
-
-
-
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                ents.RpcE.MistakeEconomyToGeneral(sender, needRes);
-            //            }
-            //        }
-            //    }
-            //}
-        }
     }
 }

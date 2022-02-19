@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Game
 {
@@ -17,6 +18,7 @@ namespace Game.Game
                 return idxs;
             }
         }
+        public byte IdxFirst => Idxs.First();
         public bool Contains(in byte idx) => _idxs.Contains(idx);
 
         public IdxsC(in HashSet<byte> idxs) => _idxs = idxs;

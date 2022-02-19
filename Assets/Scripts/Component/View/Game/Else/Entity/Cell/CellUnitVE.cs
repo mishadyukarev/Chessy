@@ -3,24 +3,20 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class CellUnitVE : EntityAbstract
+    public class CellUnitVE
     {
-        ref SpriteRendererVC SRCRef => ref Ent.Get<SpriteRendererVC>();
+        public SpriteRendererVC SpriteRenderC;
 
-        internal CellUnitVE(in SpriteRenderer sr, in EcsWorld gameW) : base(gameW)
+        internal CellUnitVE(in SpriteRenderer sr)
         {
-            Ent.Add(new SpriteRendererVC(sr));
+            SpriteRenderC = new SpriteRendererVC(sr);
         }
 
         public void Enable(in bool isVisForNext)
         {
-            SRCRef.Enable();
-            if (isVisForNext) SRCRef.Color = new Color(SRCRef.Color.r, SRCRef.Color.g, SRCRef.Color.b, 1);
-            else SRCRef.Color = new Color(SRCRef.Color.r, SRCRef.Color.g, SRCRef.Color.b, 0.6f);
-        }
-        public void Disable()
-        {
-            SRCRef.Disable();
+            SpriteRenderC.Enable();
+            if (isVisForNext) SpriteRenderC.Color = new Color(SpriteRenderC.Color.r, SpriteRenderC.Color.g, SpriteRenderC.Color.b, 1);
+            else SpriteRenderC.Color = new Color(SpriteRenderC.Color.r, SpriteRenderC.Color.g, SpriteRenderC.Color.b, 0.6f);
         }
     }
 }

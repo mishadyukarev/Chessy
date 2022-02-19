@@ -24,7 +24,7 @@ namespace Game.Game
 
                     if (canExecute)
                     {
-                        if (Es.RiverEs(idx_0).RiverE.RiverTC.HaveRiverNear)
+                        if (Es.RiverEs(idx_0).RiverTC.HaveRiverNear)
                         {
                             //Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                         }

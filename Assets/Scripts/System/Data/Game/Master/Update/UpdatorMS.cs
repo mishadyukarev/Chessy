@@ -18,7 +18,7 @@ namespace Game.Game
                     Es.PlayerE(player).UnitsInfoE(unit).ScoutHeroCooldownC.Cooldown--;
                 }
 
-                Es.PlayerE(player).ResourcesC(ResourceTypes.Food).Resources += ResourcesInInventorValues.ADDING_FOOD_AFTER_MOVE;
+                Es.PlayerE(player).ResourcesC(ResourceTypes.Food).Resources += ResourcesEconomy_Values.ADDING_FOOD_AFTER_MOVE;
             }
 
             for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
@@ -97,7 +97,7 @@ namespace Game.Game
                 }
             }
 
-            Es.MotionsC += 1;
+            Es.Motions += 1;
             Es.SunSideTC.ToggleNext();
         }
     }

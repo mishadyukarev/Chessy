@@ -101,8 +101,8 @@
                 {
                     if (Es.CellEs(idx_0).TrailHealthC(dirT).Health > 0)
                     {
-                        Es.CellEs(idx_0).IsVisible(PlayerTypes.First) = false;
-                        Es.CellEs(idx_0).IsVisible(PlayerTypes.Second) = false;
+                        Es.CellEs(idx_0).Player(PlayerTypes.First).IsVisibleTrail = false;
+                        Es.CellEs(idx_0).Player(PlayerTypes.Second).IsVisibleTrail = false;
 
                         //if (unit_0.Have)
                         //{
@@ -118,7 +118,7 @@
 
                             if (Es.UnitTC(idx_1).HaveUnit && !Es.UnitEs(idx_1).IsAnimal)
                             {
-                                Es.CellEs(idx_0).IsVisible(Es.UnitPlayerTC(idx_1).Player) = true;
+                                Es.CellEs(idx_0).Player(Es.UnitPlayerTC(idx_1).Player).IsVisibleTrail = true;
                             }
                         }
                         //}

@@ -1,16 +1,16 @@
-﻿using ECS;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Game.Game
 {
     public struct CellPoolEs
     {
+        readonly CellPlayerPoolEs[] _forPlayerEs;
+
         readonly CellE[] _aroundEs;
         readonly Dictionary<byte, DirectTypes> _aroundDirs;
 
         readonly HealthC[] _trailHealthCs;
-        readonly bool[] _trailsVisibled;
 
         public bool IsActiveParentSelf;
 
@@ -20,18 +20,39 @@ namespace Game.Game
         public CellBuildingE BuildE;
         public CellEnvironmentEs EnvironmentEs;
         public CellEffectE EffectEs;
-        public CellRiverPoolEs RiverEs;
+        public CellRiverE RiverEs;
 
 
         public CellE AroundCellE(in byte idx_array) => _aroundEs[idx_array];
         public CellE AroundCellE(in DirectTypes dirT) => _aroundEs[(byte)dirT - 1];
         public CellE[] AroundCellEs => (CellE[])_aroundEs.Clone();
         public DirectTypes Direct(in byte idx) => _aroundDirs[idx];
+        public IdxC[] AroundCellIdxsC
+        {
+            get
+            {
+                var idxsC = new IdxC[_aroundEs.Length];
+                var i = 0;
+                foreach (var item in _aroundEs) idxsC[i] = _aroundEs[i++].IdxC;
+                return idxsC;
+            }
+        }
+        public byte[] Idxs
+        {
+            get
+            {
+                var idxsC = new byte[_aroundEs.Length];
+                var i = 0;
+                foreach (var item in _aroundEs) idxsC[i] = _aroundEs[i++].IdxC.Idx;
+                return idxsC;
+            }
+        }
+
 
         public ref HealthC TrailHealthC(in DirectTypes dir) => ref _trailHealthCs[(byte)dir - 1];
-        public ref bool IsVisible(in PlayerTypes player) => ref _trailsVisibled[(byte)player - 1];
+        public ref CellPlayerPoolEs Player(in PlayerTypes player) => ref _forPlayerEs[(byte)player - 1];
 
-        internal CellPoolEs(in bool isActiveParent, in int idCell, byte[] xy, in byte idx, in EcsWorld gameW, in Entities e) : this()
+        internal CellPoolEs(in bool isActiveParent, in int idCell, byte[] xy, in byte idx, in Entities e) : this()
         {
             IsActiveParentSelf = isActiveParent;
 
@@ -100,7 +121,7 @@ namespace Game.Game
                     var x = (byte)(xy[Entities.X] + xyDirect[Entities.X]);
                     var y = (byte)(xy[Entities.Y] + xyDirect[Entities.Y]);
 
-                    idxsAround[i] = e.GetIdxCell(new[] { x, y });
+                    idxsAround[i] = e.GetIdxCellByXy(new[] { x, y });
 
                     _aroundDirs.Add(idxsAround[i], dir);
                     _aroundEs[(byte)dir - 1] = new CellE(idxsAround[i], new byte[] { x, y }, default);
@@ -109,13 +130,14 @@ namespace Game.Game
                 //IdxsAround = new IdxsArrayC(idxsAround);
             }
 
+            _forPlayerEs = new CellPlayerPoolEs[(byte)PlayerTypes.End - 1];
+
             _trailHealthCs = new HealthC[(byte)DirectTypes.End - 1];
-            _trailsVisibled = new bool[(byte)PlayerTypes.End - 1];
 
             CellE = new CellE(idx, xy, idCell);
             BuildE = new CellBuildingE((byte)PlayerTypes.End);
-            UnitEs = new CellUnitPoolEs(this, gameW);
-            RiverEs = new CellRiverPoolEs(default);
+            UnitEs = new CellUnitPoolEs(default);
+            RiverEs = new CellRiverE(default);
         }
     }
 }

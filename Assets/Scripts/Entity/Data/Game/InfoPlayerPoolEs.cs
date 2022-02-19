@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct InfoForPlayerE
+    public struct InfoPlayerPoolEs
     {
         public UnitTC AvailableHeroTC;
         public bool IsReadyC;
@@ -17,7 +17,7 @@
         public ref ResourcesC ResourcesC(in ResourceTypes resT) => ref _resourceCs[(byte)resT - 1];
 
 
-        internal InfoForPlayerE(in bool b) : this()
+        internal InfoPlayerPoolEs(in bool b) : this()
         {
             PeopleInCity = StartValues.PEOPLE_IN_CITY;
             MaxAvailablePawns = StartValues.MAX_AVAILABLE_PAWN;
@@ -25,6 +25,12 @@
             _unitsInfoEs = new UnitInfoE[(byte)UnitTypes.End - 1];
             _levelInfoEs = new LevelInfoE[(byte)LevelTypes.End - 1];
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];
+
+            for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
+            {
+                
+                _unitsInfoEs[(byte)unitT - 1] = new UnitInfoE(StartValues.HaveUnit(unitT, LevelTypes.First));
+            }
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {

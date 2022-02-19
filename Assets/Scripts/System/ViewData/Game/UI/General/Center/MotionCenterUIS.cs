@@ -15,7 +15,7 @@ namespace Game.Game
         {
             if (Es.MotionIsActive)
             {
-                Motion<MotionsUIEC>().Text = Es.MotionsC.ToString();
+                Motion<MotionsUIEC>().Text = Es.Motions.ToString();
                 Motion<MotionsUIEC>().SetActiveParent(true);
 
                 _timer += Time.deltaTime;

@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    public static class CellBuildingValues
+    public static class CellBuilding_Values
     {
-        public static int MaxAmountHealth(in BuildingTypes build)
+        public static int MaxHealth(in BuildingTypes build)
         {
             switch (build)
             {

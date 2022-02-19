@@ -45,7 +45,7 @@ namespace Game.Game
                     {
                         if (unitT != UnitTypes.Pawn)
                         {
-                            _ents.Add(isSelected.ToString() + levT + unitT, new CellUnitVE(zonee.Find(unitT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                            _ents.Add(isSelected.ToString() + levT + unitT, new CellUnitVE(zonee.Find(unitT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
                         }
                     }
 

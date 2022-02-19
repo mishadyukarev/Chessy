@@ -41,9 +41,9 @@ namespace Game.Game
             {
                 var idx_sel = Es.SelectedIdxC.Idx;
 
-                var abil = Es.UnitEs(idx_sel).AbilityButton(uniqueButton).AbilityC;
+                var abil = Es.UnitEs(idx_sel).Ability(uniqueButton);
 
-                if (!Es.UnitEs(idx_sel).Ability(abil.Ability).CooldownC.HaveCooldown)
+                if (!Es.UnitEs(idx_sel).CoolDownC(abil.Ability).HaveCooldown)
                 {
                     switch (abil.Ability)
                     {

@@ -15,7 +15,7 @@
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                Es.CenterCloudIdxC.Idx = Es.GetIdxCell(xy_next);
+                Es.CenterCloudIdxC.Idx = Es.GetIdxCellByXy(xy_next);
             }
             else
             {

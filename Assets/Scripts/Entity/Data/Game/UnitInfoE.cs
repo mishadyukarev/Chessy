@@ -1,6 +1,4 @@
-﻿using ECS;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public struct UnitInfoE
     {

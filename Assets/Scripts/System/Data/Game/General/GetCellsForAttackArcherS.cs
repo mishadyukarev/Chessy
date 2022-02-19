@@ -35,22 +35,22 @@
                                                 {
                                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                     {
-                                                        Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                                        Es.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
                                                     }
-                                                    else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                                    else Es.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
                                                 }
                                                 else
                                                 {
                                                     if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                     {
-                                                        Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                                        Es.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
                                                     }
-                                                    else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                                    else Es.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
                                                 }
                                             }
                                             else
                                             {
-                                                Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                                Es.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
                                             }
                                         }
                                     }
@@ -68,24 +68,24 @@
                                             {
                                                 if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                 {
-                                                    Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_2);
+                                                    Es.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_2);
                                                 }
 
-                                                else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                                else Es.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
                                             }
                                             else
                                             {
                                                 if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
                                                 {
-                                                    Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Unique).Add(idx_2);
+                                                    Es.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_2);
                                                 }
 
-                                                else Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                                else Es.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
                                             }
                                         }
                                         else
                                         {
-                                            Es.UnitEs(idx_0).ForPlayer(Es.UnitPlayerTC(idx_0).Player).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                            Es.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
                                         }
                                     }
                                 }

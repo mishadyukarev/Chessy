@@ -10,7 +10,7 @@ namespace Game.Game
         public readonly SystemsMaster SystemsMaster;
         public readonly SystemsOther SystemsOther;
 
-        public Systems(in Entities ents, in SystemsView systemsView)
+        public Systems(in Entities ents, in Action updateView, in Action updateUI)
         {
             _actions = new Dictionary<SystemDataTypes, Action>();
 
@@ -18,17 +18,19 @@ namespace Game.Game
                 (Action)
                 new InputS(ents).Run
                 + new RayS(ents).Run
-                + new SelectorS(ents, systemsView).Run);
+                + new SelectorS(ents, updateView, updateUI).Run
+                + new TesterS(ents).Run);
 
 
             _actions.Add(SystemDataTypes.RunFixedUpdate,
                 (Action)default);
 
 
-            _actions.Add(SystemDataTypes.RunAfterSyncRPC,
+            _actions.Add(SystemDataTypes.RunAfterDoing,
                 (Action)
                 new GetCurentPlayerS(ents).Run
-
+                + new CityBuildingGetCellsS(ents).Run
+                + new WhoNeedAttackS(ents).Run
                 + new SetIdxsBuildingsS(ents).Run
                 + new VisibElseS(ents).Run
                 + new AbilitySyncS(ents).Run
@@ -36,6 +38,7 @@ namespace Game.Game
                 + new GetCellsForSetUnitS(ents).Run
                 + new GetCellsForShiftUnitS(ents).Run
                 + new GetCellsForArsonArcherS(ents).Run
+                + new ExtractPawnS(ents).Run
 
                 + new GetUnitTypeS(ents).Run
 

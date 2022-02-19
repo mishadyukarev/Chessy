@@ -9,11 +9,11 @@ namespace Game.Game
 
         public ref ResourcesC ResourceC => ref Ent.Get<ResourcesC>();
 
-        public float Need(in BuildingTypes build) => ResourcesInInventorValues.ForBuild(build, ResT);
-        public float NeedForBuy(in MarketBuyTypes marketBuyT) => ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
+        public float Need(in BuildingTypes build) => ResourcesEconomy_Values.ForBuild(build, ResT);
+        public float NeedForBuy(in MarketBuyTypes marketBuyT) => ResourcesEconomy_Values.ResourcesForBuyFromMarket(marketBuyT);
 
-        public bool CanBuy(in BuildingTypes build) => ResourceC.Resources >= ResourcesInInventorValues.ForBuild(build, ResT);
-        public bool CanBuyResourcesFromMarket(in BuildingTypes build) => ResourceC.Resources >= ResourcesInInventorValues.ForBuild(build, ResT);
+        public bool CanBuy(in BuildingTypes build) => ResourceC.Resources >= ResourcesEconomy_Values.ForBuild(build, ResT);
+        public bool CanBuyResourcesFromMarket(in BuildingTypes build) => ResourceC.Resources >= ResourcesEconomy_Values.ForBuild(build, ResT);
 
         internal ResourcesInInventorE(in ResourceTypes res, in PlayerTypes player, in EcsWorld gameW) : base(gameW)
         {
@@ -23,6 +23,6 @@ namespace Game.Game
             Ent.Add(new ResourcesC(StartValues.Resources(res)));
         }
 
-        public void Buy(in BuildingTypes build) => ResourceC.Resources -= ResourcesInInventorValues.ForBuild(build, ResT);
+        public void Buy(in BuildingTypes build) => ResourceC.Resources -= ResourcesEconomy_Values.ForBuild(build, ResT);
     }
 }

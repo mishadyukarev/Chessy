@@ -20,7 +20,7 @@
                         {
                             if (unitT != UnitTypes.Pawn)
                             {
-                                VEs.UnitE(idx_0, isSelZone, levT, unitT).Disable();
+                                VEs.UnitE(idx_0, isSelZone, levT, unitT).SpriteRenderC.Disable();
                             }
                         }
 

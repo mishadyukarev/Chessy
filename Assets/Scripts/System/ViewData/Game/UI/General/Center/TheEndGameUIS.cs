@@ -17,12 +17,12 @@ namespace Game.Game
 
             else if (Es.WinnerC.Player != Es.CurPlayerI.Player)
             {
-                EndGame<EndGameUIEC>().SetText(true);
+                EndGame<EndGameUIEC>().SetText(false);
                 EndGame<EndGameUIEC>().SetActiveZone(true);
             }
             else
             {
-                EndGame<EndGameUIEC>().SetText(false);
+                EndGame<EndGameUIEC>().SetText(true);
                 EndGame<EndGameUIEC>().SetActiveZone(true);
             }
         }

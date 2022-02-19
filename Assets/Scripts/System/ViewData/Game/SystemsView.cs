@@ -7,21 +7,20 @@ namespace Game.Game
     {
         readonly Dictionary<SystemViewDataTypes, Action> _actions;
 
-
-
-        public SystemsView(in Entities ents, in EntitiesView entsView)
+        public SystemsView(in Entities ents, in EntitiesView entsView, out Action updateView)
         {
             _actions = new Dictionary<SystemViewDataTypes, Action>();
 
-
-            _actions.Add(SystemViewDataTypes.RunUpdate,
+            _actions.Add(SystemViewDataTypes.RunUpdate, 
                 (Action)
-                new CellUnitVS(ents, entsView).Run
-                + new CellUnitSelectedVS(ents, entsView).Run
-                + new CellSupportVS(ents, entsView).Run);
+            new CellUnitVS(ents, entsView).Run
+            + new CellUnitSelectedVS(ents, entsView).Run
+            + new CellSupportVS(ents, entsView).Run);
 
-            _actions.Add(SystemViewDataTypes.RunFixedUpdate,
-                (Action)
+            _actions.Add(SystemViewDataTypes.RunFixedUpdate, default);
+
+
+            updateView = (Action)
                 new UnitStatCellSyncS(ents, entsView).Run
                 + new BuildCellVS(ents, entsView).Run
                 + new EnvCellVS(ents, entsView).Run
@@ -31,13 +30,13 @@ namespace Game.Game
                 + new CellBarsEnvVS(ents, entsView).Run
                 + new CellTrailVS(ents, entsView).Run
                 + new CellUnitEffectFrozenArrawVS(ents, entsView).Run
-                
+
 
                 + new CellUnitEffectStunVS(ents, entsView).Run
                 + new CellUnitEffectShieldVS(ents, entsView).Run
 
                 + new RotateAllVS(ents, entsView).Run
-                + new SoundVS(ents, entsView).Run);
+                + new SoundVS(ents, entsView).Run;
         }
 
         public void Run(in SystemViewDataTypes type)

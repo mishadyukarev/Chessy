@@ -114,7 +114,7 @@ namespace Game.Game
 
             else
             {
-                var idxs = Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(Es.CurPlayerI.Player).ForShift.Idxs;
+                var idxs = Es.UnitEs(Es.SelectedIdxC.Idx).ForShift.Idxs;
 
                 foreach (var idx_0 in idxs)
                 {
@@ -122,13 +122,13 @@ namespace Game.Game
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                 }
 
-                foreach (var idx_0 in Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(Es.CurPlayerI.Player).ForAttack(AttackTypes.Simple).Idxs)
+                foreach (var idx_0 in Es.UnitEs(Es.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Idxs)
                 {
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
                 }
 
-                foreach (var idx_0 in Es.UnitEs(Es.SelectedIdxC.Idx).ForPlayer(Es.CurPlayerI.Player).ForAttack(AttackTypes.Unique).Idxs)
+                foreach (var idx_0 in Es.UnitEs(Es.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Idxs)
                 {
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
                     SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);

@@ -7,16 +7,17 @@ namespace Game.Game
     {
         readonly Dictionary<UITypes, Action> _actions;
 
-        public SystemViewUI(in Resources res, in Entities ents, in EntitiesViewUI entsUI)
+        public SystemViewUI(in Resources res, in Entities ents, in EntitiesViewUI entsUI, out Action updateUI)
         {
             _actions = new Dictionary<UITypes, Action>();
 
 
-            _actions.Add(UITypes.RunUpdate, default);
-
-
-            _actions.Add(UITypes.RunFixedUpdate, 
+            _actions.Add(UITypes.RunUpdate, 
                 (Action)
+                new MistakeUIS(ents, entsUI).Run
+                + new MotionCenterUIS(ents, entsUI).Run);
+
+            updateUI = (Action)
 
                 ///Right
                 new RightZoneUIS(ents, entsUI).Run
@@ -43,17 +44,18 @@ namespace Game.Game
                 ///Center
                 + new SelectorUIS(ents, entsUI).Run
                 + new TheEndGameUIS(ents, entsUI).Run
-                + new MotionCenterUIS(ents, entsUI).Run
                 + new ReadyZoneUIS(ents, entsUI).Run
-                + new MistakeUIS(ents, entsUI).Run
-                + new KingZoneUISys(ents, entsUI).Run
+                + new KingZoneUIS(ents, entsUI).Run
                 + new FriendZoneUISys(ents, entsUI).Run
                 + new PickUpgUIS(ents, entsUI).Run
                 + new HeroesSyncUIS(ents, entsUI).Run
 
                 ///Left
                 + new LeftZonesUIS(ents, entsUI).Run
-                + new EnvUIS(ents, entsUI).Run);
+                + new EnvUIS(ents, entsUI).Run;
+
+
+            _actions.Add(UITypes.RunFixedUpdate, default);
         }
 
         public void Run(in UITypes type)
