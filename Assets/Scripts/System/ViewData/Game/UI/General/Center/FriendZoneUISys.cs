@@ -15,11 +15,11 @@ namespace Game.Game
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
-                if (Es.FriendIsActive)
+                if (E.FriendIsActive)
                 {
                     TextC.SetActiveParent(true);
 
-                    if (Es.CurPlayerI.Player == PlayerTypes.First)
+                    if (E.CurPlayerI.Player == PlayerTypes.First)
                     {
                         TextC.Text = "1";
                     }

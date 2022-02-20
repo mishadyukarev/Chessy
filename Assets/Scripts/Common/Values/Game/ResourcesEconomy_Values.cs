@@ -152,7 +152,7 @@ namespace Game.Game
                                 case ResourceTypes.Food: return 0;
                                 case ResourceTypes.Wood: return 0;
                                 case ResourceTypes.Ore: return 0;
-                                case ResourceTypes.Iron: return 0.1f;
+                                case ResourceTypes.Iron: return 1;
                                 case ResourceTypes.Gold: return 0;
                                 default: throw new Exception();
                             }

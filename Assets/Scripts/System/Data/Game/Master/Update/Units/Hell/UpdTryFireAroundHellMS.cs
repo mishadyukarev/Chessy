@@ -10,17 +10,17 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
+                if (E.UnitTC(idx_0).Is(UnitTypes.Hell))
                 {
-                    foreach (var cellE in Es.CellEs(idx_0).AroundCellEs)
+                    foreach (var cellE in E.CellEs(idx_0).AroundCellEs)
                     {
-                        if (Es.AdultForestC(cellE.IdxC.Idx).HaveAny)
+                        if (E.AdultForestC(cellE.IdxC.Idx).HaveAny)
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
                             {
-                                Es.HaveFire(cellE.IdxC.Idx) = true;
+                                E.HaveFire(cellE.IdxC.Idx) = true;
                             }
                         }
                     }

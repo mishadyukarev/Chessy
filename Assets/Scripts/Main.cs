@@ -115,13 +115,13 @@ namespace Game
                         var uIEs = new EntitiesViewUI(gameW);
                         var ents = new Entities(forData, RpcS.NamesMethods);
 
-
                         _systemViewUI = new SystemViewUI(resources, ents, uIEs, out var updateUI);
                         _systemsV = new SystemsView(ents, viewEs, out var updateView);
+                        _systems = new Systems(ents, updateView, updateUI);
 
                         new Events(updateView, updateUI, ents, uIEs);
 
-                        _systems = new Systems(ents, updateView, updateUI);
+                        
 
                         EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>().GiveData(ents, _systems, updateView,  updateUI);
                         RpcS.SyncAllMaster();

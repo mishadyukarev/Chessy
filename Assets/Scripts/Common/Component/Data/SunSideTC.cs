@@ -50,6 +50,6 @@ namespace Game.Game
 
         public SunSideTC(in SunSideTypes sunSide) => SunSide = sunSide;
 
-        public void ToggleNext() => SunSide = SunSide == SunSideTypes.Night ? SunSideTypes.Dawn : SunSide++;
+        public void ToggleNext() => SunSide = SunSide == SunSideTypes.Night ? SunSideTypes.Dawn : ++SunSide;
     }
 }

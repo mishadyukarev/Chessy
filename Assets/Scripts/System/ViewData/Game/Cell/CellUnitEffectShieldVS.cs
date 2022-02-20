@@ -8,11 +8,11 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.UnitEs(idx_0).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
+                if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerI.Player).IsVisible)
                 {
-                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.SetActive(Es.UnitEffectShield(idx_0).HaveAnyProtection);
+                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.SetActive(E.UnitEffectShield(idx_0).HaveAnyProtection);
                 }
                 else
                 {

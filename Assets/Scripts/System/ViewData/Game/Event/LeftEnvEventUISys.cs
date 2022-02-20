@@ -14,7 +14,7 @@ namespace Game.Game
 
         void EnvironmentInfo()
         {
-            Es.EnvIsActive = !Es.EnvIsActive;
+            E.EnvIsActive = !E.EnvIsActive;
             _updateView.Invoke();
         }
     }

@@ -48,6 +48,8 @@ namespace Game.Game
         readonly ResourcesC[] _mistakeEconomyEs;
         readonly InfoPlayerPoolEs[] _forPlayerEs;
         public ref InfoPlayerPoolEs PlayerE(in PlayerTypes player) => ref _forPlayerEs[(byte)player - 1];
+        public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerE(playerT).ResourcesC(resT);
+        public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerE(playerT).LevelE(levT).ToolWeapons(twT);
         public ref UnitInfoE UnitInfo(in PlayerTypes playerT, in UnitTypes unitT) => ref PlayerE(playerT).UnitsInfoE(unitT);
         public ref ActionC Sound(in ClipTypes clip) => ref _sounds0[(int)clip - 1];
         public ref ActionC Sound(in AbilityTypes unique) => ref _sounds1[(int)unique - 1];
@@ -71,43 +73,63 @@ namespace Game.Game
 
         public ref CellUnitPoolEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
 
-        public ref UnitTC UnitTC(in byte idx) => ref UnitEs(idx).UnitTC;
-        public ref PlayerTC UnitPlayerTC(in byte idx) => ref UnitEs(idx).PlayerTC;
-        public ref LevelTC UnitLevelTC(in byte idx) => ref UnitEs(idx).LevelTC;
-        public ref ConditionUnitTC UnitConditionTC(in byte idx) => ref UnitEs(idx).ConditionTC;
-        public ref IsRightArcherC UnitIsRightArcherC(in byte idx) => ref UnitEs(idx).IsRightArcherC;
-        public ref HealthC UnitHpC(in byte idx) => ref UnitEs(idx).HealthC;
-        public ref StepsC UnitStepC(in byte idx) => ref UnitEs(idx).StepC;
-        public ref WaterC UnitWaterC(in byte idx) => ref UnitEs(idx).WaterC;
-        public ref ToolWeaponTC UnitMainTWTC(in byte idx) => ref UnitEs(idx).MainToolWeaponTC;
-        public ref LevelTC UnitMainTWLevelTC(in byte idx) => ref UnitEs(idx).MainLevelTC;
-        public ref ToolWeaponTC UnitExtraTWTC(in byte idx) => ref UnitEs(idx).ExtraToolWeaponTC;
-        public ref LevelTC UnitExtraLevelTC(in byte idx) => ref UnitEs(idx).ExtraTWLevelTC;
-        public ref ProtectionC UnitExtraProtectionTC(in byte idx) => ref UnitEs(idx).ExtraTWShieldC;
-        public ref CellUnitExtractPawnE UnitExtractPawnE(in byte idx) => ref UnitEs(idx).ExtractPawnE;
+        public ref CellUnitMainE UnitMainE(in byte idx_cell) => ref UnitEs(idx_cell).MainE;
+        public ref UnitTC UnitTC(in byte idx) => ref UnitMainE(idx).UnitTC;
+        public ref PlayerTC UnitPlayerTC(in byte idx) => ref UnitMainE(idx).PlayerTC;
+        public ref LevelTC UnitLevelTC(in byte idx) => ref UnitMainE(idx).LevelTC;
+        public ref ConditionUnitTC UnitConditionTC(in byte idx) => ref UnitMainE(idx).ConditionTC;
+        public ref IsRightArcherC UnitIsRightArcherC(in byte idx) => ref UnitMainE(idx).IsRightArcherC;
 
+        public ref CellUnitStatsE UnitStatsE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
+        public ref HealthC UnitHpC(in byte idx) => ref UnitStatsE(idx).HealthC;
+        public ref StepsC UnitStepC(in byte idx) => ref UnitStatsE(idx).StepC;
+        public ref WaterC UnitWaterC(in byte idx) => ref UnitStatsE(idx).WaterC;
 
-        #region Effects
+        public ref CellUnitMainToolWeaponE UnitMainTWE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
+        public ref ToolWeaponTC UnitMainTWTC(in byte idx) => ref UnitMainTWE(idx).ToolWeaponTC;
+        public ref LevelTC UnitMainTWLevelTC(in byte idx) => ref UnitMainTWE(idx).LevelTC;
 
-        public ref StunC UnitStunC(in byte idx) => ref UnitEs(idx).StunC;
-        public ref ProtectionC UnitEffectShield(in byte idx) => ref UnitEs(idx).ShieldEffectC;
-        public ref FrozenArrawC UnitFrozenArrawC(in byte idx) => ref UnitEs(idx).FrozenArrawC;
+        public ref CellUnitExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
+        public ref ToolWeaponTC UnitExtraTWTC(in byte idx) => ref UnitExtraTWE(idx).ToolWeaponTC;
+        public ref LevelTC UnitExtraLevelTC(in byte idx) => ref UnitExtraTWE(idx).LevelTC;
+        public ref ProtectionC UnitExtraProtectionTC(in byte idx) => ref UnitExtraTWE(idx).ProtectionC;
 
-        #endregion
+        public ref CellUnitExtractE UnitExtactE(in byte idx_cell) => ref UnitEs(idx_cell).ExtractE;
+        public ref ResourcesC PawnExtractAdultForestE(in byte idx) => ref UnitExtactE(idx).PawnExtractAdultForestE;
+        public ref ResourcesC PawnExtractHillE(in byte idx) => ref UnitExtactE(idx).PawnExtractHillE;
 
-        #endregion
-
-        public ref WhoLastDiedHereE LastDiedE(in byte idx) => ref CellEs(idx).WhoLastDiedHereE;
+        public ref CellUnitWhoLastDiedHereE LastDiedE(in byte idx) => ref UnitEs(idx).WhoLastDiedHereE;
         public ref UnitTC LastDiedUnitTC(in byte idx) => ref LastDiedE(idx).UnitTC;
         public ref LevelTC LastDiedLevelTC(in byte idx) => ref LastDiedE(idx).LevelTC;
         public ref PlayerTC LastDiedPlayerTC(in byte idx) => ref LastDiedE(idx).PlayerTC;
 
-        public ref CellBuildingE BuildE(in byte idx) => ref CellEs(idx).BuildE;
+        public ref CellUnitDamageE UnitDamageE(in byte idx_cell) => ref UnitEs(idx_cell).DamageE;
+        public ref DamageC UnitDamageAttackC(in byte idx_cell) => ref UnitDamageE(idx_cell).DamageAttackC;
+        public ref DamageC UnitDamageOnCellC(in byte idx_cell) => ref UnitDamageE(idx_cell).DamageOnCell;
+
+
+        #region Effects
+
+        public ref CellUnitEffectsE UnitEffectsE(in byte idx_cell) => ref UnitEs(idx_cell).EffectsE;
+        public ref StunC UnitEffectStunC(in byte idx) => ref UnitEffectsE(idx).StunC;
+        public ref ProtectionC UnitEffectShield(in byte idx) => ref UnitEffectsE(idx).ShieldEffectC;
+        public ref ShootsC UnitEffectFrozenArrawC(in byte idx) => ref UnitEffectsE(idx).FrozenArrawC;
+
+        #endregion
+
+        #endregion
+
+
+
+        public ref CellBuildingPoolEs BuildE(in byte idx) => ref CellEs(idx).BuildE;
         public ref BuildingTC BuildTC(in byte idx) => ref BuildE(idx).BuildingC;
         public ref LevelTC BuildLevelTC(in byte idx) => ref BuildE(idx).LevelTC;
         public ref PlayerTC BuildPlayerTC(in byte idx) => ref BuildE(idx).PlayerC;
         public ref HealthC BuildHpC(in byte idx) => ref BuildE(idx).HealthC;
         public ref bool BuildSmelterTC(in byte idx) => ref BuildE(idx).IsActiveSmelter;
+        public ref ExtractE WoodcutterExtractE(in byte idx) => ref BuildE(idx).WoodcutterExtractE;
+        public ref ExtractE FarmExtractFertilizeE(in byte idx) => ref BuildE(idx).FarmExtractE;
+
 
         public ref CellEnvironmentEs EnvironmentEs(in byte idx) => ref CellEs(idx).EnvironmentEs;
         public ref ResourcesC YoungForestC(in byte idx) => ref EnvironmentEs(idx).YoungForestC;
@@ -162,119 +184,6 @@ namespace Game.Game
         //    }
         //}
 
-        //public bool CanBuyBuilding_Master(in BuildingTypes build, in PlayerTypes player, out Dictionary<ResourceTypes, float> needRes)
-        //{
-        //    needRes = new Dictionary<ResourceTypes, float>();
-        //    var canCreatBuild = true;
-
-        //    for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-        //    {
-        //        needRes.Add(res, Resource(res, player).Need(build));
-        //        if (canCreatBuild) canCreatBuild = Resource(res, player).CanBuy(build);
-        //    }
-        //    return canCreatBuild;
-        //}
-        //public void BuyBuilding_Master(in BuildingTypes build, in PlayerTypes player)
-        //{
-        //    for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-        //        Resource(resType, player).Buy(build);
-        //}
-
-        //public bool CanBuyResourceFromMarket_Master(in MarketBuyTypes marketBuyT, in PlayerTypes player, out Dictionary<ResourceTypes, float> needRes)
-        //{
-        //    needRes = new Dictionary<ResourceTypes, float>();
-
-        //    needRes.Add(ResourceTypes.Food, 0);
-        //    needRes.Add(ResourceTypes.Wood, 0);
-        //    needRes.Add(ResourceTypes.Ore, 0);
-        //    needRes.Add(ResourceTypes.Iron, 0);
-        //    needRes.Add(ResourceTypes.Gold, 0);
-
-        //    switch (marketBuyT)
-        //    {
-        //        case MarketBuyTypes.FoodToWood:
-        //            needRes[ResourceTypes.Food] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //            break;
-
-        //        case MarketBuyTypes.WoodToFood:
-        //            needRes[ResourceTypes.Wood] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //            break;
-
-        //        case MarketBuyTypes.GoldToFood:
-        //            needRes[ResourceTypes.Gold] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //            break;
-
-        //        case MarketBuyTypes.GoldToWood:
-        //            needRes[ResourceTypes.Gold] = ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //            break;
-
-        //        default: throw new Exception();
-        //    }
-
-        //    foreach (var item in needRes) if (item.Value > Resource(item.Key, player).ResourceC.Resources) return false;
-        //    return true;
-        //}
-        //public void TryBuyResourcesFromMarket_Master(in MarketBuyTypes marketBuyT, in Player sender, in Entities ents)
-        //{
-        //    var whoseMove = ents.WhoseMove.Player;
-
-        //    if (CanBuyResourceFromMarket_Master(marketBuyT, whoseMove, out var needRes))
-        //    {
-        //        switch (marketBuyT)
-        //        {
-        //            case MarketBuyTypes.FoodToWood:
-        //                ForPlayerE(whoseMove).ResourcesC(ResourceTypes.Food).Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //                ForPlayerE(whoseMove).ResourcesC(ResourceTypes.Wood).Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
-        //                break;
-
-        //            case MarketBuyTypes.WoodToFood:
-        //                Resource(ResourceTypes.Wood, whoseMove).ResourceC.Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //                Resource(ResourceTypes.Food, whoseMove).ResourceC.Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
-        //                break;
-
-        //            case MarketBuyTypes.GoldToFood:
-        //                Resource(ResourceTypes.Gold, whoseMove).ResourceC.Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //                Resource(ResourceTypes.Food, whoseMove).ResourceC.Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
-        //                break;
-
-        //            case MarketBuyTypes.GoldToWood:
-        //                Resource(ResourceTypes.Gold, whoseMove).ResourceC.Resources -= ResourcesInInventorValues.ResourcesForBuyFromMarket(marketBuyT);
-        //                Resource(ResourceTypes.Wood, whoseMove).ResourceC.Resources += ResourcesInInventorValues.ResourcesAfterBuyInMarket(marketBuyT);
-        //                break;
-
-        //            default: throw new Exception();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        ents.RpcE.MistakeEconomyToGeneral(sender, needRes);
-        //    }
-        //}
-
-        //public bool CanBuyTW(ToolWeaponTypes tw, LevelTypes lev, PlayerTypes player, out Dictionary<ResourceTypes, float> needRes)
-        //{
-        //    needRes = new Dictionary<ResourceTypes, float>();
-        //    var canCreatBuild = true;
-
-        //    for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-        //    {
-        //        var difAmountRes = Resource(res, player).ResourceC.Resources - ResourcesInInventorValues.ForBuyToolWeapon(tw, lev, res);
-        //        needRes.Add(res, ResourcesInInventorValues.ForBuyToolWeapon(tw, lev, res));
-
-        //        if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
-        //    }
-
-        //    return canCreatBuild;
-        //}
-        //public void BuyTW(ToolWeaponTypes tw, LevelTypes level, PlayerTypes player)
-        //{
-        //    for (var resType = ResourceTypes.None + 1; resType < ResourceTypes.End; resType++)
-        //        Resource(resType, player).ResourceC.Resources -= ResourcesInInventorValues.ForBuyToolWeapon(tw, level, resType);
-        //}
-
-
-
-
         public Entities(in List<object> forData, in List<string> namesMethods)
         {
             CenterCloudIdxC.Idx = StartValues.START_WIND;
@@ -315,19 +224,21 @@ namespace Game.Game
 
             _idxs = new Dictionary<string, byte>();
 
+            var xys = new List<byte[]>();
+
             byte idx = 0;
             for (byte x = 0; x < StartValues.X_AMOUNT; x++)
                 for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
                 {
-                    _idxs.Add(x.ToString() + "_" + y, idx++);
+                    _idxs.Add(x.ToString() + "_" + y, idx);
+                    xys.Add(new byte[] { x, y });
+                    idx++;
                 }
 
-            idx = 0;
-            for (byte x = 0; x < StartValues.X_AMOUNT; x++)
-                for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
-                {
-                    _cellEs[idx] = new CellPoolEs(isActiveParenCells[idx], idCells[idx], new byte[] { x, y }, idx++, this);
-                }
+            for (idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
+            {
+                _cellEs[idx] = new CellPoolEs(isActiveParenCells, idCells[idx], xys[idx], idx, this);
+            }
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -346,7 +257,7 @@ namespace Game.Game
                         {
                             if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.Mountain))
                             {
-                                MountainC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES);
+                                MountainC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.ENVIRONMENT_MAX);
                                 amountMountains++;
                             }
 
@@ -356,7 +267,7 @@ namespace Game.Game
                             {
                                 if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
-                                    AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES);
+                                    AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.ENVIRONMENT_MAX);
                                 }
                             }
                         }
@@ -365,7 +276,7 @@ namespace Game.Game
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
-                                AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES);
+                                AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.ENVIRONMENT_MAX);
                             }
                         }
 
@@ -489,7 +400,7 @@ namespace Game.Game
                         {
                             UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Shield;
                             UnitExtraLevelTC(idx_0).Level = LevelTypes.First;
-                            UnitExtraProtectionTC(idx_0).Protection = CellUnitToolWeapon_Values.ProtectionShield(LevelTypes.First);
+                            UnitExtraProtectionTC(idx_0).Protection = CellUnitToolWeapon_Values.SHIELD_PROTECTION_LEVEL_FIRST;
                         }
                     }
                 }

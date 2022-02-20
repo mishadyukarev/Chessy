@@ -8,20 +8,22 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.BuildTC(idx_0).Is(BuildingTypes.City))
+                if (E.BuildTC(idx_0).Is(BuildingTypes.City))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+                        var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        if (Es.HillC(idx_1).HaveAny)
+                        if (E.HillC(idx_1).HaveAny)
                         {
-                            //var extract = AmountExtractCity();
+                            var extract = CellEnvironment_Values.CITY_EXTRACT_HILL;
 
-                            //invResEs.Resource(Resource, cellEs_from.BuildEs.BuildingE.Owner).ResourceC.Add(extract);
-                            //Take(extract);
+                            if (E.HillC(idx_1).Resources < extract) extract = E.HillC(idx_1).Resources;
+
+                            E.ResourcesC(E.BuildPlayerTC(idx_0).Player, ResourceTypes.Ore).Resources += extract;
+                            E.HillC(idx_1).Resources -= extract;
                         }
                     }
                 }

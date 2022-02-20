@@ -10,18 +10,18 @@
         {
             for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
-                if (Es.UnitEs(idx_0).NeelKillE.NeedKill)
+                if (E.UnitEs(idx_0).NeelKillE.DamageC.Damage > 0)
                 {
-                    if (Es.UnitTC(idx_0).Is(UnitTypes.Scout) || Es.UnitEs(idx_0).IsHero)
+                    if (E.UnitTC(idx_0).Is(UnitTypes.Scout) || E.UnitMainE(idx_0).IsHero)
                     {
-                        Es.UnitInfo(Es.UnitPlayerTC(idx_0).Player, Es.UnitTC(idx_0).Unit).ScoutHeroCooldownC.Cooldown = ScoutHeroCooldownValues.AfterKill(Es.UnitTC(idx_0).Unit);
-                        Es.UnitInfo(Es.UnitPlayerTC(idx_0).Player, Es.UnitTC(idx_0).Unit).HaveInInventor = true;
+                        E.UnitInfo(E.UnitPlayerTC(idx_0).Player, E.UnitTC(idx_0).Unit).ScoutHeroCooldownC.Cooldown = ScoutHeroCooldownValues.AfterKill(E.UnitTC(idx_0).Unit);
+                        E.UnitInfo(E.UnitPlayerTC(idx_0).Player, E.UnitTC(idx_0).Unit).HaveInInventor = true;
                     }
 
-                    if (Es.UnitTC(idx_0).Is(UnitTypes.King)) Es.WinnerC.Player = Es.UnitEs(idx_0).NeelKillE.WhoKiller.Player;
+                    if (E.UnitTC(idx_0).Is(UnitTypes.King)) E.WinnerC.Player = E.UnitEs(idx_0).NeelKillE.WhoKiller.Player;
 
-                    Es.UnitTC(idx_0).Unit = UnitTypes.None;
-                    Es.UnitEs(idx_0).NeelKillE.NeedKill = false;
+                    E.UnitTC(idx_0).Unit = UnitTypes.None;
+                    E.UnitEs(idx_0).NeelKillE.DamageC.Damage = 0;
                 }
             }
         }

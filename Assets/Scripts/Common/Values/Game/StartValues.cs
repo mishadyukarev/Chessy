@@ -8,7 +8,7 @@ namespace Game.Game
         public const byte Y_AMOUNT = 11;
         public const byte ALL_CELLS_AMOUNT = X_AMOUNT * Y_AMOUNT;
 
-        public const int PEOPLE_IN_CITY = 1;
+        public const int PEOPLE_IN_CITY = 3;
         public const int MAX_AVAILABLE_PAWN = 3;
 
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;

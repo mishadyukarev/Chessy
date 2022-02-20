@@ -10,10 +10,10 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.CurPlayerI.Player;
+            var curPlayer = E.CurPlayerI.Player;
 
-            var isActive = Es.PlayerE(curPlayer).UnitsInfoE(UnitTypes.Scout).HaveInInventor;
-            var cooldown = Es.PlayerE(curPlayer).UnitsInfoE(UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
+            var isActive = E.PlayerE(curPlayer).UnitsInfoE(UnitTypes.Scout).HaveInInventor;
+            var cooldown = E.PlayerE(curPlayer).UnitsInfoE(UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
 
 
             Scout<ButtonUIC>().SetActive(isActive);

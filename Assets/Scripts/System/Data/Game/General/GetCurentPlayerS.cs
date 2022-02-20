@@ -19,7 +19,7 @@ namespace Game.Game
                 case GameModes.TrainingOff: curPlayer = PlayerTypes.First; 
                     break;
 
-                case GameModes.WithFriendOff: curPlayer = Es.WhoseMove.Player;
+                case GameModes.WithFriendOff: curPlayer = E.WhoseMove.Player;
                     break;
 
                 case GameModes.PublicOn:
@@ -33,8 +33,8 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            Es.CurPlayerI.Player = curPlayer;
-            Es.IsMyMove = Es.CurPlayerI.Player == Es.WhoseMove.Player;
+            E.CurPlayerI.Player = curPlayer;
+            E.IsMyMove = E.CurPlayerI.Player == E.WhoseMove.Player;
         }
     }
 }

@@ -10,41 +10,20 @@ namespace Game.Game
         readonly StepsC[] _needStepsForShift;
         readonly IdxsC[] _forAttack;
 
-
-        public UnitTC UnitTC;
-        public PlayerTC PlayerTC;
-        public LevelTC LevelTC;
-
-        public ConditionUnitTC ConditionTC;
-        public IsRightArcherC IsRightArcherC;
-
-        public StunC StunC;
-        public ProtectionC ShieldEffectC;
-        public FrozenArrawC FrozenArrawC;
-
-        public HealthC HealthC;
-        public StepsC StepC;
-        public WaterC WaterC;
-
-        public bool IsAnimal;
-        public bool IsMelee;
-        public bool IsHero;
-
-        public ToolWeaponTC MainToolWeaponTC;
-        public LevelTC MainLevelTC;
-
-        public ToolWeaponTC ExtraToolWeaponTC;
-        public LevelTC ExtraTWLevelTC;
-        public ProtectionC ExtraTWShieldC;
-
-        public DamageC DamageAttackC;
-        public DamageC DamageOnCell;
-
         public IdxsC ForArson;
         public IdxsC ForShift;
 
-        public CellUnitExtractPawnE ExtractPawnE;
-        public CellUnitNeedKillE NeelKillE;
+        public CellUnitMainE MainE;
+        public CellUnitStatsE StatsE;
+        public CellUnitStatsMaxE StatsMaxE;
+        public CellUnitEffectsE EffectsE;
+        public CellUnitMainToolWeaponE MainToolWeaponE;
+        public CellUnitExtraToolWeaponE ExtraToolWeaponE;
+        public CellUnitWhoLastDiedHereE WhoLastDiedHereE;
+        public CellUnitDamageE DamageE;
+        public CellUnitExtractE ExtractE;
+        public CellUnitAttackUnitE NeelKillE;
+
 
 
         public IdxsC ForAttack(in AttackTypes attack) => _forAttack[(byte)attack - 1];
@@ -52,7 +31,7 @@ namespace Game.Game
 
         public ref AbilityTC Ability(in ButtonTypes button) => ref _uniqueButtons[(byte)button - 1];
         public ref CooldownC CoolDownC(in AbilityTypes ability) => ref _abilities[(byte)ability - 1];
-        public ref CellUnitForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player - 1];
+        public ref CellUnitForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player];
 
 
         internal CellUnitPoolEs(in bool def) : this()
@@ -61,10 +40,10 @@ namespace Game.Game
 
             _abilities = new CooldownC[(byte)AbilityTypes.End - 1];
 
-            _visibles = new CellUnitForPlayerE[(byte)PlayerTypes.End - 1];
+            _visibles = new CellUnitForPlayerE[(byte)PlayerTypes.End];
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _visibles[(byte)player - 1] = new CellUnitForPlayerE();
+                _visibles[(byte)player] = new CellUnitForPlayerE();
             }
 
             ForArson = new IdxsC(new HashSet<byte>());
@@ -79,38 +58,23 @@ namespace Game.Game
 
         public void Set(in CellUnitPoolEs unitE)
         {
-            UnitTC.Unit = unitE.UnitTC.Unit;
-            LevelTC.Level = unitE.LevelTC.Level;
-            PlayerTC.Player = unitE.PlayerTC.Player;
-            ConditionTC.Condition = unitE.ConditionTC.Condition;
-            IsRightArcherC.IsRight = unitE.IsRightArcherC.IsRight;
-
-            StunC.Stun = unitE.StunC.Stun;
-            ShieldEffectC.Protection = unitE.ShieldEffectC.Protection;
-            FrozenArrawC.Shoots = unitE.FrozenArrawC.Shoots;
-
-            HealthC.Health = unitE.HealthC.Health;
-            StepC.Steps = unitE.StepC.Steps;
-            WaterC.Water = unitE.WaterC.Water;
-
-            MainToolWeaponTC.ToolWeapon = unitE.MainToolWeaponTC.ToolWeapon;
-            MainLevelTC.Level = unitE.MainLevelTC.Level;
-
-            ExtraToolWeaponTC.ToolWeapon = unitE.ExtraToolWeaponTC.ToolWeapon;
-            ExtraTWLevelTC.Level = unitE.ExtraTWLevelTC.Level;
-            ExtraTWShieldC.Protection = unitE.ExtraTWShieldC.Protection;
+            MainE = unitE.MainE;
+            EffectsE = unitE.EffectsE;
+            StatsE = unitE.StatsE;
+            MainToolWeaponE = unitE.MainToolWeaponE;
+            ExtraToolWeaponE = unitE.ExtraToolWeaponE;
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                Ability(buttonT).Ability = unitE.Ability(buttonT).Ability;
+                Ability(buttonT) = unitE.Ability(buttonT);
             }
             for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
             {
-                CoolDownC(abilityT).Cooldown = unitE.CoolDownC(abilityT).Cooldown;
+                CoolDownC(abilityT) = unitE.CoolDownC(abilityT);
             }
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                ForPlayer(playerT).IsVisibleC = unitE.ForPlayer(playerT).IsVisibleC;
+                ForPlayer(playerT) = unitE.ForPlayer(playerT);
             }
         }
     }

@@ -11,11 +11,11 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                ref var river_0 = ref Es.RiverEs(idx_0).RiverTC;
+                ref var river_0 = ref E.RiverEs(idx_0).RiverTC;
 
-                switch (Es.CurPlayerI.Player)
+                switch (E.CurPlayerI.Player)
                 {
                     case PlayerTypes.None: throw new Exception();
                     case PlayerTypes.First:
@@ -36,7 +36,7 @@ namespace Game.Game
                     {
                         if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                         {
-                            CellRiverVEs.River(dir_1, idx_0).SetActive(Es.CellEs(idx_0).RiverEs.HaveRive(dir_1));
+                            CellRiverVEs.River(dir_1, idx_0).SetActive(E.CellEs(idx_0).RiverEs.HaveRive(dir_1));
                         }
                     }
                 }

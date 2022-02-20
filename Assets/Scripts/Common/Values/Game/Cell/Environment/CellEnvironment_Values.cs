@@ -7,7 +7,7 @@ namespace Game.Game
         #region Common
 
 
-        public const float STANDART_MAX_AMOUNT_RESOURCES = 1;
+        public const float ENVIRONMENT_MAX = 1;
 
         public static float StandartExtract(in BuildingTypes buildT, in EnvironmentTypes env)
         {
@@ -58,7 +58,7 @@ namespace Game.Game
         {
             switch (env)
             {
-                case EnvironmentTypes.Fertilizer: return STANDART_MAX_AMOUNT_RESOURCES;
+                case EnvironmentTypes.Fertilizer: return ENVIRONMENT_MAX;
                 default: throw new Exception();
             }
         }
@@ -66,10 +66,30 @@ namespace Game.Game
         #endregion
 
 
+        #region Fertilize
+
+        public const float FARM_EXTRACT = ENVIRONMENT_MAX * 0.1f;
+        public const float DRY_FERTILIZE = ENVIRONMENT_MAX * 0.1f;
+        public const float RIVER_FERTILIZE_AROUND = ENVIRONMENT_MAX * 0.1f;
+
+        #endregion
+
+
+        #region Hill
+
+        public const float PAWN_PICK_EXTRACT_HILL = ENVIRONMENT_MAX * 0.1f;
+        public const float CITY_EXTRACT_HILL = ENVIRONMENT_MAX * 0.1f;
+
+        #endregion
+
+
         #region AdultForest
 
-        public static float FireAdultForest => STANDART_MAX_AMOUNT_RESOURCES / 4;
-        public static float AddingAfterBuildingFarm => STANDART_MAX_AMOUNT_RESOURCES / 2;
+        public const float FireAdultForest = ENVIRONMENT_MAX / 4;
+        public const float AddingAfterBuildingFarm = ENVIRONMENT_MAX / 2;
+        public const float EXTRACT_PAWM_ADULT_FOREST = ENVIRONMENT_MAX / 10;
+        public const float PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT = 1.5f;
+        public const float WOODCUTTER_EXTRACT = ENVIRONMENT_MAX / 10;
 
         #endregion
 

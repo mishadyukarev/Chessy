@@ -8,13 +8,13 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    if (Es.CellEs(idx_0).Player(Es.CurPlayerI.Player).IsVisibleTrail)
+                    if (E.CellEs(idx_0).Player(E.CurPlayerI.Player).IsVisibleTrail)
                     {
-                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dirT, idx_0).SetActive(Es.CellEs(idx_0).TrailHealthC(dirT).IsAlive);
+                        CellTrailVEs.TrailCellVC<SpriteRendererVC>(dirT, idx_0).SetActive(E.CellEs(idx_0).TrailHealthC(dirT).IsAlive);
                     }
                     else CellTrailVEs.TrailCellVC<SpriteRendererVC>(dirT, idx_0).Disable();
                 }

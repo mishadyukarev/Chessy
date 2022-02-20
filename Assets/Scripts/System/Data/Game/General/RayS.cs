@@ -18,7 +18,7 @@ namespace Game.Game
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 
-            ref var raycastC = ref Es.RayCastTC;
+            ref var raycastC = ref E.RayCastTC;
 
 
             if (EventSystem.current.IsPointerOverGameObject())
@@ -41,12 +41,12 @@ namespace Game.Game
             {
                 for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
                 {
-                    int one = Es.CellEs(idx_0).CellE.InstanceIDC;
+                    int one = E.CellEs(idx_0).CellE.InstanceIDC;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        Es.CurrentIdxC.Idx = idx_0;
+                        E.CurrentIdxC.Idx = idx_0;
                         raycastC.Raycast = RaycastTypes.Cell;
                         return;
                     }

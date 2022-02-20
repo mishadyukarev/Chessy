@@ -10,5 +10,11 @@
             UnitTC.Unit = unitT;
             LevelTC.Level = levT;
         }
+
+        public void Set(in UnitTypes unitT, LevelTypes levT)
+        {
+            UnitTC.Unit = unitT;
+            LevelTC.Level = levT;
+        }
     }
 }

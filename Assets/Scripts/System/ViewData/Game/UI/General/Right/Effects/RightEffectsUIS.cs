@@ -20,11 +20,11 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.SelectedIdxC.Idx > 0)
+            if (E.SelectedIdxC.Idx > 0)
             {
-                var idx_sel = Es.SelectedIdxC.Idx;
+                var idx_sel = E.SelectedIdxC.Idx;
 
-                if (Es.UnitTC(Es.SelectedIdxC.Idx).HaveUnit)
+                if (E.UnitTC(E.SelectedIdxC.Idx).HaveUnit)
                 {
                     for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++)
                     {
@@ -37,7 +37,7 @@ namespace Game.Game
 
                         if(!_isFilled[EffectTypes.Shield])
                         {
-                            if (Es.UnitEffectShield(idx_sel).HaveAnyProtection)
+                            if (E.UnitEffectShield(idx_sel).HaveAnyProtection)
                             {
                                 UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 UIEs.RightEs.Effect(idx_eff).ImageUIC.Sprite = _resources.Sprite(AbilityTypes.BonusNear);

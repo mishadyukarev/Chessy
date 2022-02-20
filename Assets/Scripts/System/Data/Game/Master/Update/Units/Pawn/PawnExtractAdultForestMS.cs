@@ -8,41 +8,39 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.UnitEs(idx_0).ExtractPawnE.CanExtract)
+                if (E.PawnExtractAdultForestE(idx_0).HaveAny)
                 {
-                    Es.AdultForestC(idx_0).Resources -= Es.UnitEs(idx_0).ExtractPawnE.ResourcesC.Resources;
-                    Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Wood).Resources += Es.UnitExtractPawnE(idx_0).ResourcesC.Resources;
+                    var extract = E.PawnExtractAdultForestE(idx_0).Resources;
 
-                    //Es.AdultForestE(idx_0).ExtractPawn(Es.UnitE(idx_0), Es.InventorResourcesEs);
-
-                    //var extract = AmountExtractPawn(unitE);
-
-                    //invResEs.Resource(Resource, unitE.PlayerTC.Player).ResourceC.Add(extract);
-                    //Take(extract);
+                    E.AdultForestC(idx_0).Resources -= extract;
+                    E.PlayerE(E.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Wood).Resources += extract;
 
 
-                    if (Es.AdultForestC(idx_0).HaveAny)
+                    if (E.AdultForestC(idx_0).HaveAny)
                     {
-                        if (Es.BuildTC(idx_0).Is(BuildingTypes.Camp) || !Es.BuildTC(idx_0).HaveBuilding)
+                        if (E.BuildTC(idx_0).Is(BuildingTypes.Camp) || !E.BuildTC(idx_0).HaveBuilding)
                         {
-                            Es.BuildE(idx_0).Set(BuildingTypes.Woodcutter, LevelTypes.First, 1, Es.UnitPlayerTC(idx_0).Player);
+                            E.BuildE(idx_0).Set(BuildingTypes.Woodcutter, LevelTypes.First, 1, E.UnitPlayerTC(idx_0).Player);
                         }
 
-                        else if (!Es.BuildTC(idx_0).Is(BuildingTypes.Woodcutter))
+                        else if (!E.BuildTC(idx_0).Is(BuildingTypes.Woodcutter))
                         {
-                            Es.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
+                            E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
                         }
                     }
                     else
                     {
-                        Es.BuildTC(idx_0).Build = BuildingTypes.None;
+                        E.BuildTC(idx_0).Build = BuildingTypes.None;
 
-                        //Es.AdultForestC(idx_0).Destroy(Es.TrailEs(idx_0).Trails);
-
-                        //Es.YoungForestC(idx_0).SetRandomResources();
+                        E.YoungForestC(idx_0).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
                     }
+                }
+                else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed)
+                    && E.UnitHpC(idx_0).Health >= CellUnitStatHp_Values.MAX_HP)
+                {
+                    E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
                 }
             }
         }

@@ -10,17 +10,17 @@ namespace Game.Game
 
         public void Run()
         {
-            var idx_sel = Es.SelectedIdxC.Idx;
+            var idx_sel = E.SelectedIdxC.Idx;
 
             var activeButt = false;
 
-            if (Es.UnitTC(idx_sel).HaveUnit)
+            if (E.UnitTC(idx_sel).HaveUnit)
             {
-                if (Es.UnitPlayerTC(idx_sel).Is(Es.CurPlayerI.Player))
+                if (E.UnitPlayerTC(idx_sel).Is(E.CurPlayerI.Player))
                 {
                     activeButt = true;
 
-                    if (Es.UnitConditionTC(idx_sel).Is(ConditionUnitTypes.Relaxed))
+                    if (E.UnitConditionTC(idx_sel).Is(ConditionUnitTypes.Relaxed))
                     {
                         RightRelaxUIE.Button<ImageUIC>().Color = Color.green;
                     }
@@ -34,7 +34,7 @@ namespace Game.Game
                     RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
                     RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
 
-                    RightRelaxUIE.Button<GameObjectVC>(Es.UnitTC(idx_sel).Unit).SetActive(true);
+                    RightRelaxUIE.Button<GameObjectVC>(E.UnitTC(idx_sel).Unit).SetActive(true);
                 }
             }
 

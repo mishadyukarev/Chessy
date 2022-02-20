@@ -10,11 +10,11 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.UnitTC(idx_0).Is(UnitTypes.Snowy))
+                if (E.UnitTC(idx_0).Is(UnitTypes.Snowy))
                 {
-                    if (Es.CellEs(Es.CenterCloudIdxC.Idx).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
+                    if (E.CellEs(E.CenterCloudIdxC.Idx).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
                     {
                         //Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                     }

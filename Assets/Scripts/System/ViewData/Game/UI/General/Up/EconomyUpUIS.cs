@@ -16,7 +16,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.CurPlayerI.Player;
+            var curPlayer = E.CurPlayerI.Player;
 
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
@@ -24,37 +24,31 @@ namespace Game.Game
             _extracts[ResourceTypes.Food] += ResourcesEconomy_Values.ADDING_FOOD_AFTER_MOVE;
 
 
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.UnitTC(idx_0).HaveUnit && Es.UnitPlayerTC(idx_0).Is(Es.CurPlayerI.Player))
+
+
+                if (E.UnitPlayerTC(idx_0).Is(curPlayer))
                 {
-                    _extracts[ResourceTypes.Food] -= ResourcesEconomy_Values.CostFoodForFeedingThem(Es.UnitTC(idx_0).Unit);
+                    if (E.UnitTC(idx_0).HaveUnit)
+                    {
+                        _extracts[ResourceTypes.Food] -= ResourcesEconomy_Values.CostFoodForFeedingThem(E.UnitTC(idx_0).Unit);
+                    }
 
-                    //if (Es.AdultForestC(idx_0).CanExtractPawn)
-                    //{
-                    //    _extracts[Es.EnvironmentEs(idx_0).AdultForest.Resource] += Es.EnvironmentEs(idx_0).AdultForest.AmountExtractPawn(Es.UnitE(idx_0));
-                    //}
+
+                    _extracts[ResourceTypes.Ore] += E.PawnExtractHillE(idx_0).Resources;
+                    _extracts[ResourceTypes.Wood] += E.PawnExtractAdultForestE(idx_0).Resources;
                 }
-                //if (Es.AdultForestC(idx_0).CanExtractWoodcutter(Es.BuildEs(idx_0)))
-                //{
-                //    _extracts[Es.AdultForestC(idx_0).Resource] += Es.EnvironmentEs(idx_0).AdultForest.AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
-                //}
-                //if (Es.BuildingE(idx_0).CanExtractFertilizer(Es.EnvironmentEs(idx_0)))
-                //{
-                //    //_extracts[ResourceTypes.Food] += Es.EnvironmentEs(idx_0).FertilizeC.AmountExtractBuilding(Es.BuildingUpgradeEs, Es.BuildingE(idx_0));
-                //}
 
-                //if (Es.HillC(idx_0).CanExtractPawn(Es.UnitEs(idx_0), Es.EnvironmentEs(idx_0)))
-                //{
-                //    _extracts[Es.HillC(idx_0).Resource] += Es.HillC(idx_0).AmountExtractPawnPick();
-                //}
+                if (E.BuildPlayerTC(idx_0).Is(curPlayer))
+                {
+                    _extracts[ResourceTypes.Wood] += E.WoodcutterExtractE(idx_0).ResourcesC.Resources;
+                    _extracts[ResourceTypes.Food] += E.FarmExtractFertilizeE(idx_0).ResourcesC.Resources;
+                }
             }
 
-
-            var multiple = 100;
-
             if (_extracts[ResourceTypes.Food] < 0) EconomyExtract<TextUIC>(ResourceTypes.Food).Text = Math.Round(_extracts[ResourceTypes.Food], 2).ToString();
-            else EconomyExtract<TextUIC>(ResourceTypes.Food).Text = "+ " + Math.Round(_extracts[ResourceTypes.Food], 2).ToString();
+            else EconomyExtract<TextUIC>(ResourceTypes.Food).Text = "+ " + Math.Round(_extracts[ResourceTypes.Food], 2);
 
             EconomyExtract<TextUIC>(ResourceTypes.Wood).Text = "+ " + Math.Round(_extracts[ResourceTypes.Wood], 2);
             EconomyExtract<TextUIC>(ResourceTypes.Ore).Text = "+ " + Math.Round(_extracts[ResourceTypes.Ore], 2);
@@ -62,7 +56,7 @@ namespace Game.Game
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
-                Economy<TextUIC>(res).Text = Math.Round(Es.PlayerE(curPlayer).ResourcesC(res).Resources, 2).ToString();
+                Economy<TextUIC>(res).Text = Math.Round(E.PlayerE(curPlayer).ResourcesC(res).Resources, 1).ToString();
             }
         }
     }

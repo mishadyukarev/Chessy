@@ -35,12 +35,17 @@ namespace Game.Game
                 + new VisibElseS(ents).Run
                 + new AbilitySyncS(ents).Run
                 + new GetDamageUnitsS(ents).Run
+                + new GetUnitTypeS(ents).Run
+                + new DeleteTrailsS(ents).Run
+
+                + new PawnExtractAdultForestGetCellsS(ents).Run
+                + new PawnExtractHillS(ents).Run
+                + new WoodcutterExtractGetCellsS(ents).Run
+                + new FarmExtractGetCellsS(ents).Run
+
                 + new GetCellsForSetUnitS(ents).Run
                 + new GetCellsForShiftUnitS(ents).Run
                 + new GetCellsForArsonArcherS(ents).Run
-                + new ExtractPawnS(ents).Run
-
-                + new GetUnitTypeS(ents).Run
 
                 + new GetAttackMeleeCellsS(ents).Run
                 + new GetCellsForAttackArcherS(ents).Run);
@@ -50,11 +55,7 @@ namespace Game.Game
             SystemsMaster = new SystemsMaster(ents);
             SystemsOther = new SystemsOther(ents);
         }
-        public void Run(in SystemDataTypes type)
-        {
-            if (!_actions.ContainsKey(type)) throw new Exception();
 
-            _actions[type]?.Invoke();
-        }
+        public void Run(in SystemDataTypes type) => _actions[type]?.Invoke();
     }
 }

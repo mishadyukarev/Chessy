@@ -2,10 +2,10 @@
 {
     public abstract class SystemAbstract
     {
-        protected readonly Entities Es;
+        protected readonly Entities E;
         protected SystemAbstract(in Entities ents)
         {
-            Es = ents;
+            E = ents;
         }
     }
 }

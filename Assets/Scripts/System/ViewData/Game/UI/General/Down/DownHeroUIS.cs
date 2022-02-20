@@ -10,15 +10,15 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayerI = Es.CurPlayerI.Player;
+            var curPlayerI = E.CurPlayerI.Player;
 
-            var myHeroT = Es.PlayerE(curPlayerI).AvailableHeroTC.Unit;
+            var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 
-            if (myHeroT != UnitTypes.None && Es.PlayerE(curPlayerI).UnitsInfoE(myHeroT).HaveInInventor)
+            if (myHeroT != UnitTypes.None && E.PlayerE(curPlayerI).UnitsInfoE(myHeroT).HaveInInventor)
             {
                 Parent.SetActive(true);
 
-                var cooldown = Es.PlayerE(curPlayerI).UnitsInfoE(myHeroT).ScoutHeroCooldownC.Cooldown;
+                var cooldown = E.PlayerE(curPlayerI).UnitsInfoE(myHeroT).ScoutHeroCooldownC.Cooldown;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

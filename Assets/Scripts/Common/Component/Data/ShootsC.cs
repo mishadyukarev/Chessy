@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct FrozenArrawC
+    public struct ShootsC
     {
         public int Shoots;
         public bool HaveEffect => Shoots > 0;

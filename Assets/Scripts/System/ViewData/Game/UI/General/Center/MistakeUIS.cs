@@ -29,29 +29,29 @@ namespace Game.Game
 
 
 
-            if (Es.MistakeTC.HaveMistake)
+            if (E.MistakeTC.HaveMistake)
             {
-                Es.MistakeTimerC.Timer += Time.deltaTime;
+                E.MistakeTimerC.Timer += Time.deltaTime;
 
-                if (Es.MistakeTC.Is(MistakeTypes.Economy))
+                if (E.MistakeTC.Is(MistakeTypes.Economy))
                 {
-                    if (Es.MistakeTimerC.Timer >= _neededTimeForFading)
+                    if (E.MistakeTimerC.Timer >= _neededTimeForFading)
                     {
-                        Es.MistakeTC.Mistake = MistakeTypes.None;
+                        E.MistakeTC.Mistake = MistakeTypes.None;
                     }
 
                     else
                     {
-                        MistakeUIE.Zones<GameObjectVC>(Es.MistakeTC.Mistake).SetActive(true);
+                        MistakeUIE.Zones<GameObjectVC>(E.MistakeTC.Mistake).SetActive(true);
 
                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                         {
-                            if (Es.MistakeEconomy(res).Resources > 0)
+                            if (E.MistakeEconomy(res).Resources > 0)
                             {
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).SetActive(true);
 
                                 MistakeUIE.NeedAmountResources<TextUIC>(res).Text
-                                    = ">= " + Math.Round(Es.MistakeEconomy(res).Resources, 2);
+                                    = ">= " + Math.Round(E.MistakeEconomy(res).Resources, 2);
                             }
                         }
                     }
@@ -60,11 +60,11 @@ namespace Game.Game
                 else
                 {
                     MistakeUIE.Background<GameObjectVC>().SetActive(true);
-                    MistakeUIE.Zones<GameObjectVC>(Es.MistakeTC.Mistake).SetActive(true);
+                    MistakeUIE.Zones<GameObjectVC>(E.MistakeTC.Mistake).SetActive(true);
 
-                    if (Es.MistakeTimerC.Timer >= _neededTimeForFading)
+                    if (E.MistakeTimerC.Timer >= _neededTimeForFading)
                     {
-                        Es.MistakeTC.Mistake = MistakeTypes.None;
+                        E.MistakeTC.Mistake = MistakeTypes.None;
                     }
                 }
             }

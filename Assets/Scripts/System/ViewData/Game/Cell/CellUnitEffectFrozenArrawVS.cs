@@ -14,17 +14,17 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
                 VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Disable();
 
-                if (Es.UnitTC(idx_0).HaveUnit)
+                if (E.UnitTC(idx_0).HaveUnit)
                 {
-                    if (Es.UnitFrozenArrawC(idx_0).HaveEffect)
+                    if (E.UnitEffectFrozenArrawC(idx_0).HaveEffect)
                     {
                         VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Enable();
 
-                        if (Es.SelectedIdxC.Idx == idx_0)
+                        if (E.SelectedIdxC.Idx == idx_0)
                         {
                             VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _leftLocalScale;
                         }

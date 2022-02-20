@@ -8,16 +8,16 @@
 
         public void Run()
         {
-            var idx_sel = Es.SelectedIdxC.Idx;
+            var idx_sel = E.SelectedIdxC.Idx;
 
             var activeParent = false;
 
 
-            if (Es.SelectedIdxC.Idx > 0)
+            if (E.SelectedIdxC.Idx > 0)
             {
-                if (Es.UnitTC(idx_sel).HaveUnit)
+                if (E.UnitTC(idx_sel).HaveUnit)
                 {
-                    if (Es.UnitEs(idx_sel).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
+                    if (E.UnitEs(idx_sel).ForPlayer(E.CurPlayerI.Player).IsVisible)
                     {
                         activeParent = true;
                     }

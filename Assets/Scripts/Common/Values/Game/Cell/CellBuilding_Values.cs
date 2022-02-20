@@ -22,7 +22,6 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
-
         public static float ProtectionPercent(in BuildingTypes build)
         {
             switch (build)

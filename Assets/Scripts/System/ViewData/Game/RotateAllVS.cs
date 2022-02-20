@@ -12,9 +12,9 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.CurPlayerI.Player;
+            var curPlayer = E.CurPlayerI.Player;
 
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
                 CellVEs(idx_0).CellSR.RotParent = curPlayer == PlayerTypes.First

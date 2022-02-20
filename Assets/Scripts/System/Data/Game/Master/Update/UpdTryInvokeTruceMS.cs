@@ -15,15 +15,15 @@ namespace Game.Game
         {
             var amountAdultForest = 0;
 
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.AdultForestC(idx_0).HaveAny)
+                if (E.AdultForestC(idx_0).HaveAny)
                     amountAdultForest++;
             }
 
             if (amountAdultForest <= UpdateValues.NEED_ADULT_FORESTS_FOR_TRUCE)
             {
-                Es.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                E.RpcE.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 _systemsMaster.InvokeRun(SystemDataMasterTypes.Truce);
             }
         }

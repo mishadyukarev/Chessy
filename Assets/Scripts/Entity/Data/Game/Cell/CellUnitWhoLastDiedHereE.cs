@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public struct WhoLastDiedHereE
+    public struct CellUnitWhoLastDiedHereE
     {
         public UnitTC UnitTC;
         public LevelTC LevelTC;

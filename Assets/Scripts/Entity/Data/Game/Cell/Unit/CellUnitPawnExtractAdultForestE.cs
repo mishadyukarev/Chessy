@@ -1,8 +1,10 @@
 ﻿namespace Game.Game
 {
-    public struct CellUnitExtractPawnE
+    public struct CellUnitPawnExtractAdultForestE
     {
         public bool CanExtract;
+
+        public ResourceTC ResourceTC;
         public ResourcesC ResourcesC;
     }
 }

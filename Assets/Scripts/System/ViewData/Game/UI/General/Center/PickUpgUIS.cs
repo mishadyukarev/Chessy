@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = Es.CurPlayerI.Player;
+            var curPlayer = E.CurPlayerI.Player;
 
             var isActivatedZone = false;// Es.AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).Have
             //    && !Es.PlayerE(curPlayer).UnitsInfoE(UnitTypes.King).HaveInInventor;

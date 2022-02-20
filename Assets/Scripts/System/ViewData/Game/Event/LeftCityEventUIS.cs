@@ -11,8 +11,8 @@
 
         void Build(in BuildingTypes build)
         {
-            Es.SelectedBuildingTC.Build = build;
-            Es.CellClickTC.Click = CellClickTypes.CityBuildBuilding;
+            E.SelectedBuildingTC.Build = build;
+            E.CellClickTC.Click = CellClickTypes.CityBuildBuilding;
         }
     }
 }

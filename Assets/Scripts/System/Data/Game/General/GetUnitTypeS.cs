@@ -13,23 +13,23 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
-                if (Es.UnitTC(idx_0).HaveUnit)
+                if (E.UnitTC(idx_0).HaveUnit)
                 {
-                    Es.UnitEs(idx_0).IsAnimal = Es.UnitTC(idx_0).Is(UnitTypes.Camel);
+                    E.UnitMainE(idx_0).IsAnimal = E.UnitTC(idx_0).Is(UnitTypes.Camel);
 
                     var isMelee = true;
                     var ishero = false;
 
-                    if (Es.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                    if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
                     {
-                        if (Es.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                        if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            Es.UnitEs(idx_0).IsMelee = false;
+                            isMelee = false;
                         }
                     }
                     else
                     {
-                        switch (Es.UnitTC(idx_0).Unit)
+                        switch (E.UnitTC(idx_0).Unit)
                         {
                             case UnitTypes.Elfemale:
                                 isMelee = false;
@@ -54,8 +54,8 @@ namespace Game.Game
                         }
                     }
 
-                    Es.UnitEs(idx_0).IsMelee = isMelee;
-                    Es.UnitEs(idx_0).IsHero = ishero;
+                    E.UnitMainE(idx_0).IsMelee = isMelee;
+                    E.UnitMainE(idx_0).IsHero = ishero;
                 }
                 
             }

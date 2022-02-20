@@ -8,11 +8,11 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.CellClickTC.Is(CellClickTypes.SetUnit))
+            if (E.CellClickTC.Is(CellClickTypes.SetUnit))
             {
-                var idx_cur = Es.CurrentIdxC.Idx;
-                var selUnitT = Es.SelectedUnitE.UnitTC.Unit;
-                var levT = Es.SelectedUnitE.LevelTC.Level;
+                var idx_cur = E.CurrentIdxC.Idx;
+                var selUnitT = E.SelectedUnitE.UnitTC.Unit;
+                var levT = E.SelectedUnitE.LevelTC.Level;
 
                 if (selUnitT == UnitTypes.Pawn)
                 {

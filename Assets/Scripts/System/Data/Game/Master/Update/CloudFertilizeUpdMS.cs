@@ -8,15 +8,15 @@
 
         public void Run()
         {
-            var idx_0 = Es.CenterCloudIdxC.Idx;
+            var idx_0 = E.CenterCloudIdxC.Idx;
 
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {
-                var idx_1 = Es.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+                var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                if (!Es.MountainC(idx_1).HaveAny)
+                if (!E.MountainC(idx_1).HaveAny)
                 {
-                    Es.FertilizeC(idx_1).Resources = CellEnvironment_Values.STANDART_MAX_AMOUNT_RESOURCES;
+                    E.FertilizeC(idx_1).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
                 }
             }
         }

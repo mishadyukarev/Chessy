@@ -10,11 +10,11 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.BuildTC(idx_0).HaveBuilding && Es.BuildTC(idx_0).Is(BuildingTypes.IceWall))
+                if (E.BuildTC(idx_0).HaveBuilding && E.BuildTC(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    Es.BuildHpC(idx_0).Health--;
+                    E.BuildHpC(idx_0).Health--;
                     //if (!Es.BuildHpC(idx_0).IsAlive) //Es.BuildTC(idx_0).Destroy(Es);
                 }
             }

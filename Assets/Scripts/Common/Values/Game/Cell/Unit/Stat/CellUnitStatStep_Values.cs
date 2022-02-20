@@ -8,8 +8,7 @@ namespace Game.Game
 
         public const float BONUS_TRAIL = 0.5f;
 
-        public const float FOR_GIVE_TAKE_MAIN_TOOLWEAPON = 0.25f;
-        public const float FOR_GIVE_TAKE_EXTRA_TOOLWEAPON = 0.25f;
+        public const float FOR_GIVE_TAKE_TOOLWEAPON = 0.25f;
 
         public const float FOR_TOGGLE_CONDITION_UNIT = 0.5f;
 

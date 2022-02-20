@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
                 for (int i = 0; i <= 1; i++)
                 {
@@ -57,38 +57,38 @@
                     }
                 }
 
-                if (Es.UnitTC(idx_0).HaveUnit)
+                if (E.UnitTC(idx_0).HaveUnit)
                 {
-                    if (Es.UnitEs(idx_0).ForPlayer(Es.CurPlayerI.Player).IsVisibleC)
+                    if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerI.Player).IsVisible)
                     {
-                        var isSelected = idx_0 == Es.SelectedIdxC.Idx;
-                        var isVisForNext = Es.UnitEs(idx_0).ForPlayer(Es.WhoseMove.NextPlayerFrom(Es.CurPlayerI.Player)).IsVisibleC;
+                        var isSelected = idx_0 == E.SelectedIdxC.Idx;
+                        var isVisForNext = E.UnitEs(idx_0).ForPlayer(E.WhoseMove.NextPlayerFrom(E.CurPlayerI.Player)).IsVisible;
 
-                        var unitT = Es.UnitTC(idx_0).Unit;
+                        var unitT = E.UnitTC(idx_0).Unit;
 
                         if (unitT == UnitTypes.Pawn)
                         {
-                            if (Es.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                            if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                             {
-                                VEs.UnitEs(idx_0).MainBowCrossbowE(isSelected, Es.UnitMainTWLevelTC(idx_0).Level, Es.UnitIsRightArcherC(idx_0).IsRight).Enable(isVisForNext);
+                                VEs.UnitEs(idx_0).MainBowCrossbowE(isSelected, E.UnitMainTWLevelTC(idx_0).Level, E.UnitIsRightArcherC(idx_0).IsRight).Enable(isVisForNext);
                             }
                             else
                             {
-                                VEs.UnitEs(idx_0).MainToolWeaponE(isSelected, Es.UnitMainTWLevelTC(idx_0).Level, Es.UnitMainTWTC(idx_0).ToolWeapon).Enable(isVisForNext);
+                                VEs.UnitEs(idx_0).MainToolWeaponE(isSelected, E.UnitMainTWLevelTC(idx_0).Level, E.UnitMainTWTC(idx_0).ToolWeapon).Enable(isVisForNext);
 
                             }
 
-                            if (Es.UnitEs(idx_0).ExtraToolWeaponTC.HaveToolWeapon)
+                            if (E.UnitExtraTWTC(idx_0).HaveToolWeapon)
                             {
-                                var twT = Es.UnitEs(idx_0).ExtraToolWeaponTC.ToolWeapon;
-                                var levT = Es.UnitEs(idx_0).ExtraTWLevelTC.Level;
+                                var twT = E.UnitExtraTWTC(idx_0).ToolWeapon;
+                                var levT = E.UnitExtraLevelTC(idx_0).Level;
 
                                 VEs.UnitEs(idx_0).ExtraToolWeaponE(isSelected, levT, twT).Enable(isVisForNext);
                             }
                         }
                         else
                         {
-                            VEs.UnitE(idx_0, isSelected, Es.UnitLevelTC(idx_0).Level, unitT).Enable(isVisForNext);
+                            VEs.UnitE(idx_0, isSelected, E.UnitLevelTC(idx_0).Level, unitT).Enable(isVisForNext);
                         }
                     }
                 }

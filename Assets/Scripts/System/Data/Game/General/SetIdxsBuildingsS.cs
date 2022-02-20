@@ -12,16 +12,16 @@
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {
-                    Es.PlayerE(playerT).LevelE(LevelTypes.First).BuildsInGame(buildT).Clear();
+                    E.PlayerE(playerT).LevelE(LevelTypes.First).BuildsInGame(buildT).Clear();
                 }
             }
 
             for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
-                if (Es.BuildTC(idx_0).HaveBuilding)
+                if (E.BuildTC(idx_0).HaveBuilding)
                 {
-                    Es.PlayerE(Es.BuildPlayerTC(idx_0).Player).LevelE(Es.BuildLevelTC(idx_0).Level)
-                        .BuildsInGame(Es.BuildTC(idx_0).Build).Add(idx_0);
+                    E.PlayerE(E.BuildPlayerTC(idx_0).Player).LevelE(E.BuildLevelTC(idx_0).Level)
+                        .BuildsInGame(E.BuildTC(idx_0).Build).Add(idx_0);
                 }
             }
         }

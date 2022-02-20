@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public struct CellUnitForPlayerE
     {
-        public bool IsVisibleC;
+        public bool IsVisible;
         public bool CanSetUnitHere;
     }
 }

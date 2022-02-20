@@ -10,62 +10,62 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                Es.UnitEs(idx_0).Ability(ButtonTypes.First).Reset();
-                Es.UnitEs(idx_0).Ability(ButtonTypes.Second).Reset();
-                Es.UnitEs(idx_0).Ability(ButtonTypes.Third).Reset();
-                Es.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
-                Es.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Reset();
+                E.UnitEs(idx_0).Ability(ButtonTypes.First).Reset();
+                E.UnitEs(idx_0).Ability(ButtonTypes.Second).Reset();
+                E.UnitEs(idx_0).Ability(ButtonTypes.Third).Reset();
+                E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
+                E.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Reset();
 
-                if (Es.UnitPlayerTC(idx_0).Is(Es.CurPlayerI.Player))
+                if (E.UnitPlayerTC(idx_0).Is(E.CurPlayerI.Player))
                 {
-                    if (Es.UnitTC(idx_0).HaveUnit)
+                    if (E.UnitTC(idx_0).HaveUnit)
                     {
-                        switch (Es.UnitTC(idx_0).Unit)
+                        switch (E.UnitTC(idx_0).Unit)
                         {
                             case UnitTypes.None: throw new Exception();
 
                             case UnitTypes.King:
-                                Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.CircularAttack;
-                                Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.BonusNear;
+                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.CircularAttack;
+                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.BonusNear;
                                 break;
 
                             case UnitTypes.Pawn:
 
-                                if (Es.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                 {
-                                    Es.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.FireArcher;
-                                    Es.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ChangeCornerArcher;
+                                    E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.FireArcher;
+                                    E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ChangeCornerArcher;
                                 }
                                 else
                                 {
-                                    if (Es.AdultForestC(idx_0).HaveAny)
+                                    if (E.AdultForestC(idx_0).HaveAny)
                                     {
-                                        if (Es.HaveFire(idx_0)) Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.PutOutFirePawn;
-                                        else Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.FirePawn;
+                                        if (E.HaveFire(idx_0)) E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.PutOutFirePawn;
+                                        else E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.FirePawn;
                                     }
                                     else
                                     {
-                                        Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.Seed;
+                                        E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.Seed;
                                     }
 
-                                    Es.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetFarm;
+                                    E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetFarm;
 
-                                    if (Es.BuildTC(idx_0).HaveBuilding)
+                                    if (E.BuildTC(idx_0).HaveBuilding)
                                     {
-                                        Es.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
+                                        E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
                                     }
 
                                     else
                                     {
-                                        if (Es.PlayerE(Es.UnitPlayerTC(idx_0).Player).LevelE(LevelTypes.First).BuildsInGame(BuildingTypes.City).HaveAny)
+                                        if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).LevelE(LevelTypes.First).BuildsInGame(BuildingTypes.City).HaveAny)
                                         {
-                                            Es.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
+                                            E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
                                         }
                                         else
                                         {
-                                            Es.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.SetCity;
+                                            E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.SetCity;
                                         }
                                     }
                                 }
@@ -76,22 +76,22 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Elfemale:
-                                Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
-                                Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
-                                Es.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
+                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
+                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
+                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
                                 break;
 
                             case UnitTypes.Snowy:
-                                Es.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.DirectWave;
-                                Es.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ActiveAroundBonusSnowy;
-                                Es.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.IceWall;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.DirectWave;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ActiveAroundBonusSnowy;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.IceWall;
                                 break;
 
                             case UnitTypes.Undead:
-                                Es.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.Resurrect;
-                                Es.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetTeleport;
-                                Es.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.InvokeSkeletons;
-                                if (Es.BuildTC(idx_0).HaveBuilding) Es.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.Resurrect;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetTeleport;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.InvokeSkeletons;
+                                if (E.BuildTC(idx_0).HaveBuilding) E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
                                 break;
 
                             case UnitTypes.Hell:
@@ -106,9 +106,9 @@ namespace Game.Game
                             default: throw new Exception();
                         }
 
-                        if (Es.BuildTC(idx_0).Is(BuildingTypes.Teleport))
+                        if (E.BuildTC(idx_0).Is(BuildingTypes.Teleport))
                         {
-                            Es.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Ability = AbilityTypes.Teleport;
+                            E.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Ability = AbilityTypes.Teleport;
                         }
 
                     }

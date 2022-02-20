@@ -10,12 +10,12 @@ namespace Game.Game
 
         public void Run()
         {
-            if (Es.WinnerC.Player == default)
+            if (E.WinnerC.Player == default)
             {
                 EndGame<EndGameUIEC>().SetActiveZone(false);
             }
 
-            else if (Es.WinnerC.Player != Es.CurPlayerI.Player)
+            else if (E.WinnerC.Player != E.CurPlayerI.Player)
             {
                 EndGame<EndGameUIEC>().SetText(false);
                 EndGame<EndGameUIEC>().SetActiveZone(true);

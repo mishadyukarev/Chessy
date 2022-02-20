@@ -10,24 +10,24 @@ namespace Game.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Es.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (Es.UnitTC(idx_0).Is(UnitTypes.Hell))
+                if (E.UnitTC(idx_0).Is(UnitTypes.Hell))
                 {
-                    if (Es.RiverEs(idx_0).RiverTC.HaveRiverNear)
+                    if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
                     {
                         //Es.UnitE(idx_0).Take(Es, 0.15f);
                     }
 
-                    if (Es.CellEs(Es.CenterCloudIdxC.Idx).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
+                    if (E.CellEs(E.CenterCloudIdxC.Idx).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
                     {
                         //Es.UnitE(idx_0).Take(Es, 0.15f);
                         break;
                     }
 
-                    foreach (var cellE in Es.CellEs(idx_0).AroundCellEs)
+                    foreach (var cellE in E.CellEs(idx_0).AroundCellEs)
                     {
-                        if (Es.BuildTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
+                        if (E.BuildTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
                         {
                             //Es.UnitE(idx_0).Take(Es, 0.15f);
                             break;
