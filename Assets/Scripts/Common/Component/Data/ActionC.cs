@@ -1,12 +1,14 @@
 ﻿
+using System;
+
 namespace Game.Game
 {
     public struct ActionC
     {
-        public readonly System.Action Action;
+        public Action Action;
 
-        public ActionC(in System.Action action) => Action = action;
+        public ActionC(in Action action) => Action = action;
 
-        public void Invoke() => Action.Invoke();
+        public void Invoke() => Action?.Invoke();
     }
 }

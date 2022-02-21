@@ -14,13 +14,8 @@ namespace Game
         EcsWorld _commonW;
         EcsWorld _toggleW;
 
-        #region Game
-
-        Systems _systems;
-        SystemsView _systemsV;
-        SystemViewUI _systemViewUI;
-
-        #endregion
+        ActionC _runUpdate;
+        ActionC _runFixedUpdate;
 
 
         void Start()
@@ -47,9 +42,7 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    _systems.Run(SystemDataTypes.RunUpdate);
-                    _systemsV.Run(SystemViewDataTypes.RunUpdate);
-                    _systemViewUI.Run(UITypes.RunUpdate);
+                    _runUpdate.Invoke();
                     break;
 
                 default:
@@ -71,9 +64,7 @@ namespace Game
                     break;
 
                 case SceneTypes.Game:
-                    _systems.Run(SystemDataTypes.RunFixedUpdate);
-                    _systemsV.Run(SystemViewDataTypes.RunFixedUpdate);
-                    _systemViewUI.Run(UITypes.RunFixedUpdate);
+                    _runFixedUpdate.Invoke();
                     break;
 
                 default:
@@ -111,19 +102,18 @@ namespace Game
 
                         var resources = new Game.Resources(gameW);
 
-                        var viewEs = new EntitiesView(gameW, out var forData);
+                        var entViews = new EntitiesView(gameW, out var forData);
                         var uIEs = new EntitiesViewUI(gameW);
-                        var ents = new Entities(forData, RpcS.NamesMethods);
+                        var ents = new EntitiesModel(forData, RpcS.NamesMethods);
 
-                        _systemViewUI = new SystemViewUI(resources, ents, uIEs, out var updateUI);
-                        _systemsV = new SystemsView(ents, viewEs, out var updateView);
-                        _systems = new Systems(ents, updateView, updateUI);
+                        new SystemViewUI(ref _runUpdate, ref _runFixedUpdate, resources, ents, uIEs, out var updateUI);
+                        new SystemsView(ref _runUpdate, ref _runFixedUpdate, ents, entViews, out var updateView);
+                        new Systems(ref _runUpdate, ref _runFixedUpdate, ents, updateUI, updateView, out var runAfterDoing);
+
 
                         new Events(updateView, updateUI, ents, uIEs);
 
-                        
-
-                        EntityVPool.Photon<PhotonVC>().AddComponent<RpcS>().GiveData(ents, _systems, updateView,  updateUI);
+                        EntityVPool.Photon<PhotonE>().AddComponent<RpcS>().GiveData(ents, updateView,  updateUI, runAfterDoing);
                         RpcS.SyncAllMaster();
 
                         break;

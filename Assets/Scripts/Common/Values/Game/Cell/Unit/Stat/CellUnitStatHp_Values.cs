@@ -7,6 +7,7 @@ namespace Game.Game
         public const float MAX_HP = 1;
 
         public const float FIRE_DAMAGE = 0.4f;
+        public const float HP_FOR_DEATH_AFTER_ATTACK = 0.15f;
 
         public static float DamageAfterAbility(in AbilityTypes uniq)
         {

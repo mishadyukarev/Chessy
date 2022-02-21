@@ -1,14 +1,13 @@
-﻿namespace Game.Game
-{
-    public enum SystemDataTypes
-    {
-        None,
+﻿//namespace Game.Game
+//{
+//    public enum SystemDataTypes
+//    {
+//        None,
 
-        RunUpdate,
-        RunFixedUpdate,
+//        RunFixedUpdate,
 
-        RunAfterDoing,
+//        RunAfterDoing,
 
-        End
-    }
-}
+//        End
+//    }
+//}

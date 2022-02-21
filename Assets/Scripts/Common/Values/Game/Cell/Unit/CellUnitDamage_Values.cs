@@ -5,7 +5,6 @@ namespace Game.Game
     public static class CellUnitDamage_Values
     {
         public const float UNIQUE_PERCENT_DAMAGE = 0.5f;
-        public const float HP_FOR_DEATH_AFTER_ATTACK = 0.15f;
 
         public static float StandDamage(in UnitTypes unit, in LevelTypes lev)
         {
