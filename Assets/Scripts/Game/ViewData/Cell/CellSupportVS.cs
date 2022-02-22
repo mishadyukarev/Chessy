@@ -51,7 +51,7 @@ namespace Game.Game
 
                         else
                         {
-                            if (E.AdultForestC(idx_0).HaveAny)
+                            if (E.AdultForestC(idx_0).HaveAnyResources)
                             {
                                 if (cellClick.Is(CellClickTypes.UniqueAbility))
                                 {

@@ -24,7 +24,7 @@ namespace Game.Game
 
                 if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerI.Player).IsVisible)
                 {
-                    if (E.UnitTC(idx_0).HaveUnit)
+                    if (E.UnitTC(idx_0).HaveUnit && !E.UnitMainE(idx_0).IsAnimal)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).Color = Color.red;
@@ -32,8 +32,8 @@ namespace Game.Game
                         float xCordinate = (float)E.UnitHpC(idx_0).Health / CellUnitStatHp_Values.MAX_HP;
                         Bar<SpriteRendererVC>(CellBarTypes.Hp, idx_0).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(E.UnitWaterC(idx_0).Water <= CellUnitStatWater_Values.MAX * 0.4f);
-                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(E.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.StandartForUnit(E.UnitTC(idx_0).Unit));
+                        Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).SetActive(E.UnitWaterC(idx_0).Water <= UnitWater_Values.MAX * 0.4f);
+                        Block<SpriteRendererVC>(CellBlockTypes.MaxSteps, idx_0).SetActive(E.UnitStepC(idx_0).Steps >= E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxSteps);
 
 
 

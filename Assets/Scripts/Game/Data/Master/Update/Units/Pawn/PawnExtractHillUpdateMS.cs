@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (E.PawnExtractHillE(idx_0).HaveAny)
+                if (E.PawnExtractHillE(idx_0).HaveAnyResources)
                 {
                     var extract = E.PawnExtractHillE(idx_0).Resources;
 

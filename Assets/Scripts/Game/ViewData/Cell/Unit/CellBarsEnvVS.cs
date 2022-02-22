@@ -15,7 +15,7 @@ namespace Game.Game
             {
                 if (E.EnvIsActive)
                 {
-                    if (E.EnvironmentEs(idx_0).FertilizeC.HaveAny)
+                    if (E.EnvironmentEs(idx_0).FertilizeC.HaveAnyResources)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Enable();
 
@@ -27,7 +27,7 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Disable();
                     }
 
-                    if (E.AdultForestC(idx_0).HaveAny)
+                    if (E.AdultForestC(idx_0).HaveAnyResources)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).LocalScale =
@@ -39,7 +39,7 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Disable();
                     }
 
-                    if (E.EnvironmentEs(idx_0).HillC.HaveAny)
+                    if (E.EnvironmentEs(idx_0).HillC.HaveAnyResources)
                     {
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).LocalScale

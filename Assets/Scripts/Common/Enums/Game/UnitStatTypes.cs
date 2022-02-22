@@ -3,11 +3,8 @@
     public enum UnitStatTypes
     {
         None,
-        Start = None,
 
         Hp,
-        First = Hp,
-
         Damage,
         Steps,
         Water,

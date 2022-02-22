@@ -50,10 +50,9 @@ namespace Game.Game
 
             if (E.IsMyMove)
             {
-                if (E.PlayerE(E.CurPlayerI.Player).UnitsInfoE(UnitTypes.King).HaveInInventor)
+                if (E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
                 {
-                    E.SelectedUnitE.UnitTC.Unit = UnitTypes.King;
-                    E.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+                    E.SelectedUnitE.Set(UnitTypes.King, LevelTypes.First);
                     E.CellClickTC.Click = CellClickTypes.SetUnit;
                 }
             }

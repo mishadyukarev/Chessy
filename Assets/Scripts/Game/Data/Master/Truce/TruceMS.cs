@@ -13,7 +13,7 @@ namespace Game.Game
         {
             int random;
 
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.HaveFire(idx_0) = false;
 
@@ -35,7 +35,7 @@ namespace Game.Game
                                 E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                             }
 
-                            E.PlayerE(E.UnitPlayerTC(idx_0).Player).UnitsInfoE(E.UnitTC(idx_0).Unit).HaveInInventor = true;
+                            E.UnitInfo(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level, E.UnitTC(idx_0).Unit).HaveInInventor = true;
                             E.UnitTC(idx_0).Unit = UnitTypes.None;
                         }
                     }
@@ -49,7 +49,7 @@ namespace Game.Game
                             E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         }
 
-                        E.PlayerE(E.UnitPlayerTC(idx_0).Player).UnitsInfoE(E.UnitTC(idx_0).Unit).HaveInInventor = true;
+                        E.UnitInfo(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level, E.UnitTC(idx_0).Unit).HaveInInventor = true;
                         E.UnitTC(idx_0).Unit = UnitTypes.None;
                     }
                 }
@@ -66,16 +66,16 @@ namespace Game.Game
 
                 else
                 {
-                    if (E.YoungForestC(idx_0).HaveAny)
+                    if (E.YoungForestC(idx_0).HaveAnyResources)
                     {
                         E.YoungForestC(idx_0).Resources = 0;
 
                        // Es.AdultForestC(idx_0).SetRandomResources();
                     }
 
-                    if (!E.EnvironmentEs(idx_0).FertilizeC.HaveAny
-                        && !E.EnvironmentEs(idx_0).MountainC.HaveAny
-                        && !E.AdultForestC(idx_0).HaveAny)
+                    if (!E.EnvironmentEs(idx_0).FertilizeC.HaveAnyResources
+                        && !E.EnvironmentEs(idx_0).MountainC.HaveAnyResources
+                        && !E.AdultForestC(idx_0).HaveAnyResources)
                     {
                         random = Random.Range(0, 100);
 

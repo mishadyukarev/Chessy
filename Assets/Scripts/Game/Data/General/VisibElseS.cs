@@ -19,7 +19,7 @@
                             var isVisForFirst = true;
                             var isVisForSecond = true;
 
-                            if (E.AdultForestC(idx_0).HaveAny)
+                            if (E.AdultForestC(idx_0).HaveAnyResources)
                             {
                                 isVisForFirst = false;
                                 isVisForSecond = false;
@@ -44,7 +44,7 @@
                     {
                         E.UnitEs(idx_0).ForPlayer(E.UnitPlayerTC(idx_0).Player).IsVisible = true;
 
-                        if (E.AdultForestC(idx_0).HaveAny)
+                        if (E.AdultForestC(idx_0).HaveAnyResources)
                         {
                             var isVisibledNextPlayer = false;
 
@@ -78,7 +78,7 @@
                 {
                     E.BuildE(idx_0).IsVisible(E.BuildPlayerTC(idx_0).Player) = true;
 
-                    if (E.AdultForestC(idx_0).HaveAny)
+                    if (E.AdultForestC(idx_0).HaveAnyResources)
                     {
                         var isVisibledNextPlayer = false;
 

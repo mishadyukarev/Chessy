@@ -16,7 +16,7 @@ namespace Game.Game
         {
             _rivers = new Dictionary<DirectTypes, Entity[]>();
 
-            _parents = new Entity[StartValues.ALL_CELLS_AMOUNT];
+            _parents = new Entity[Start_Values.ALL_CELLS_AMOUNT];
             for (var idx = 0; idx < _parents.Length; idx++)
             {
                 _parents[idx] = gameW.NewEntity()
@@ -28,7 +28,7 @@ namespace Game.Game
             {
                 if (dir == DirectTypes.Up || dir == DirectTypes.Right || dir == DirectTypes.Down || dir == DirectTypes.Left)
                 {
-                    _rivers.Add(dir, new Entity[StartValues.ALL_CELLS_AMOUNT]);
+                    _rivers.Add(dir, new Entity[Start_Values.ALL_CELLS_AMOUNT]);
                     for (byte idx = 0; idx < _rivers[dir].Length; idx++)
                     {
                         var river = cells[idx].transform.Find("River");

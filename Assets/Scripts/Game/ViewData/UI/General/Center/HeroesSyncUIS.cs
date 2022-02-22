@@ -12,11 +12,11 @@
             var curPlayerI = E.CurPlayerI.Player;
 
             if (!isActiveKingZone && !CenterUpgradeUIE.Paren.IsActiveSelf
-                && E.PlayerE(curPlayerI).HaveCenterHeroC)
+                && E.PlayerE(curPlayerI).HaveCenterHero)
             {
                 var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 
-                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(!E.PlayerE(curPlayerI).UnitsInfoE(myHeroT).HaveInInventor);
+                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(!E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).HaveInInventor);
             }
             else
             {

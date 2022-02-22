@@ -13,7 +13,7 @@ namespace Game.Game
             var idx_sel = E.SelectedIdxC.Idx;
 
 
-            if (E.UnitTC(idx_sel).HaveUnit)
+            if (E.UnitTC(idx_sel).HaveUnit && !E.UnitMainE(idx_sel).IsAnimal)
             {
                 var damageOnCell = E.UnitDamageOnCellC(idx_sel).Damage;
                 var damageAttack = E.UnitDamageAttackC(idx_sel).Damage;
@@ -39,8 +39,8 @@ namespace Game.Game
 
                 UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)E.UnitStepC(idx_sel).Steps / CellUnitStatStep_Values.StandartForUnit(E.UnitTC(idx_sel).Unit);
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = E.UnitWaterC(idx_sel).Water / (float)CellUnitStatWater_Values.MAX;
+                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)E.UnitStepC(idx_sel).Steps / E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxSteps;
+                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = E.UnitWaterC(idx_sel).Water / (float)E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxWater;
             }
 
             else

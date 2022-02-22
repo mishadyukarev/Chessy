@@ -13,7 +13,7 @@
             {
                 if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
                 {
-                    if (!E.MountainC(idx_0).HaveAny)
+                    if (!E.MountainC(idx_0).HaveAnyResources)
                     {
                         E.FertilizeC(idx_0).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
                     }

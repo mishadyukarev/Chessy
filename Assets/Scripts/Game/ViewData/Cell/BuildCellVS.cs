@@ -24,7 +24,7 @@
                 {
                     if (isVisForMe)
                     {
-                        VEs.BuildingE(idx_0, E.BuildTC(idx_0).Build).SR.Enable();
+                        VEs.BuildingE(idx_0, E.BuildTC(idx_0).Building).SR.Enable();
                     }
                 }
             }

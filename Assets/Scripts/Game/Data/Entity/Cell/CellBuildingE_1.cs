@@ -25,7 +25,7 @@ namespace Game.Game
 
         public void Set(in BuildingTypes buildT, in LevelTypes levT, in float hp, PlayerTypes playerT)
         {
-            BuildingC.Build = buildT;
+            BuildingC.Building = buildT;
             HealthC.Health = hp;
             PlayerC.Player = playerT;
             LevelTC.Level = levT;

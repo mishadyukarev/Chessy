@@ -15,13 +15,13 @@ namespace Game.Game
             {
                 for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
                 {
-                    E.PlayerE(player).UnitsInfoE(unit).ScoutHeroCooldownC.Cooldown--;
+                    E.UnitInfo(player, LevelTypes.First, unit).ScoutHeroCooldownC.Cooldown--;
                 }
 
                 E.ResourcesC(player, ResourceTypes.Food).Resources += ResourcesEconomy_Values.ADDING_FOOD_AFTER_MOVE;
             }
 
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
@@ -60,7 +60,7 @@ namespace Game.Game
                                         {
                                             if (E.UnitPlayerTC(idx_0).Is(PlayerTypes.First))
                                             {
-                                                if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).LevelE(LevelTypes.First).BuildsInGame(BuildingTypes.City).HaveAny)
+                                                if (E.BuildingsInfo(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
                                                 {
                                                     //Es.BuildE(idx_camp).BuildingE.Destroy(Es);
                                                 }
@@ -71,7 +71,7 @@ namespace Game.Game
                                         }
                                         else
                                         {
-                                            if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).LevelE(E.BuildLevelTC(idx_0).Level).BuildsInGame(BuildingTypes.Camp).HaveAny)
+                                            if (E.BuildingsInfo(E.UnitPlayerTC(idx_0).Player, E.BuildLevelTC(idx_0).Level, BuildingTypes.Camp).IdxC.HaveAny)
                                             {
                                                 //Es.BuildingE(idx_camp).Destroy(Es);
                                             }
@@ -91,7 +91,7 @@ namespace Game.Game
                             }
                         }
                     }
-                    E.UnitStepC(idx_0).Steps = CellUnitStatStep_Values.StandartForUnit(E.UnitTC(idx_0).Unit);
+                    E.UnitStepC(idx_0).Steps = E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxSteps;
                 }
             }
 

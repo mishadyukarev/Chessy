@@ -11,7 +11,7 @@ namespace Game.Game
 
         public CellCloudVEs(in EcsWorld gameW, in GameObject[] cells)
         {
-            _cloud = new Entity[StartValues.ALL_CELLS_AMOUNT];
+            _cloud = new Entity[Start_Values.ALL_CELLS_AMOUNT];
 
             for (var idx = 0; idx < _cloud.Length; idx++)
             {

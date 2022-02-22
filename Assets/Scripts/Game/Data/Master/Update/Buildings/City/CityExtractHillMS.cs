@@ -16,7 +16,7 @@
                     {
                         var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        if (E.HillC(idx_1).HaveAny)
+                        if (E.HillC(idx_1).HaveAnyResources)
                         {
                             var extract = CellEnvironment_Values.CITY_EXTRACT_HILL;
 

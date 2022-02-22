@@ -23,7 +23,7 @@
                                 var idx_1 = E.CellEs(idx_0).AroundCellE(dir_1).IdxC.Idx;
 
 
-                                if (E.CellEs(idx_1).IsActiveParentSelf && !E.MountainC(idx_1).HaveAny)
+                                if (E.CellEs(idx_1).IsActiveParentSelf && !E.MountainC(idx_1).HaveAnyResources)
                                 {
                                     if (E.UnitTC(idx_1).HaveUnit)
                                     {

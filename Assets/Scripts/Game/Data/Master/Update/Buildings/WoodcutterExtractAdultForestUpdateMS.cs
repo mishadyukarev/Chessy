@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (E.WoodcutterExtractE(idx_0).ResourcesC.HaveAny)
+                if (E.WoodcutterExtractE(idx_0).ResourcesC.HaveAnyResources)
                 {
                     var extract = E.WoodcutterExtractE(idx_0).ResourcesC.Resources;
 
@@ -18,9 +18,9 @@
 
                     E.AdultForestC(idx_0).Resources -= extract;
 
-                    if (!E.AdultForestC(idx_0).HaveAny)
+                    if (!E.AdultForestC(idx_0).HaveAnyResources)
                     {
-                        E.BuildTC(idx_0).Build = BuildingTypes.None;
+                        E.BuildTC(idx_0).Building = BuildingTypes.None;
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {

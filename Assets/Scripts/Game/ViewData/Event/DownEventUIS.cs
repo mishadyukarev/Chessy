@@ -35,7 +35,7 @@ namespace Game.Game
 
             if (E.IsMyMove)
             {
-                if (!E.PlayerE(E.CurPlayerI.Player).UnitsInfoE(UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
+                if (!E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
                 {
                     E.SelectedUnitE.Set(UnitTypes.Scout, LevelTypes.First);
                     E.CellClickTC.Click = CellClickTypes.SetUnit;
@@ -58,9 +58,9 @@ namespace Game.Game
 
                 var myHeroT = E.PlayerE(curPlayer).AvailableHeroTC.Unit;
 
-                if (E.PlayerE(curPlayer).UnitsInfoE(myHeroT).HaveInInventor)
+                if (E.UnitInfo(curPlayer, LevelTypes.First, myHeroT).HaveInInventor)
                 {
-                    if (!E.PlayerE(E.CurPlayerI.Player).UnitsInfoE(UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
+                    if (!E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
                     {
                         E.SelectedUnitE.UnitTC.Unit = myHeroT;
                         E.SelectedUnitE.LevelTC.Level = LevelTypes.First;
@@ -76,7 +76,7 @@ namespace Game.Game
         }
         void Done()
         {
-            if (!E.PlayerE(E.CurPlayerI.Player).UnitsInfoE(UnitTypes.King).HaveInInventor)
+            if (!E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
             {
                 E.RpcPoolEs.DoneToMaster();
             }
@@ -95,10 +95,12 @@ namespace Game.Game
 
                 if (E.PlayerE(curPlayerI).PeopleInCity > 0)
                 {
-                    if (E.PlayerE(curPlayerI).UnitsInfoE(UnitTypes.Pawn).UnitsInGame < E.PlayerE(curPlayerI).MaxAvailablePawns)
+                    var pawnsInGame = E.UnitInfo(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
+                        + E.UnitInfo(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;
+
+                    if (pawnsInGame < E.PlayerE(curPlayerI).MaxAvailablePawns)
                     {
-                        E.SelectedUnitE.UnitTC.Unit = UnitTypes.Pawn;
-                        E.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+                        E.SelectedUnitE.Set(UnitTypes.Pawn, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;
                     }
                 }

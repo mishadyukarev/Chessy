@@ -8,13 +8,13 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.FarmExtractFertilizeE(idx_0).ResourcesC.Resources = 0;
 
                 if (E.BuildTC(idx_0).Is(BuildingTypes.Farm))
                 {
-                    if (E.FertilizeC(idx_0).HaveAny)
+                    if (E.FertilizeC(idx_0).HaveAnyResources)
                     {
                         var extract = CellEnvironment_Values.FARM_EXTRACT;
 

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public static class StartValues
+    public static class Start_Values
     {
         public const byte X_AMOUNT = 15;
         public const byte Y_AMOUNT = 11;
@@ -76,5 +76,43 @@ namespace Game.Game
                 default: throw new Exception();
             }
         }
+
+
+        #region Unit
+
+        #region Steps
+
+
+
+        public static float StandartForUnit(in UnitTypes unit)
+        {
+            var steps = 0f;
+
+            switch (unit)
+            {
+                case UnitTypes.None: steps = 0; break;
+                case UnitTypes.King: steps = 1; break;
+                case UnitTypes.Pawn: steps = 1; break;
+
+                case UnitTypes.Scout: steps = 2.5f; break;
+
+                case UnitTypes.Elfemale: steps = 2; break;
+                case UnitTypes.Snowy: steps = 3; break;
+                case UnitTypes.Undead: steps = 3; break;
+                case UnitTypes.Hell: steps = 1; break;
+
+                case UnitTypes.Skeleton: steps = 2; break;
+
+                case UnitTypes.Camel: steps = 2; break;
+                default: throw new Exception();
+            }
+
+            return steps;
+        }
+
+        #endregion
+
+        #endregion
+
     }
 }

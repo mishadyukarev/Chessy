@@ -8,8 +8,9 @@ namespace Game.Game
     public struct RpcPoolEs
     {
         public PlayerPhotonC SenderC;
-        public AttackME AttackME;
-        public ActionC DonerC;
+        public Action<byte, byte> AttackAction;
+        public Action Doner;
+        public Action<UnitTypes> UpgradeCenter;
 
 
         int _idx_cur;
@@ -101,10 +102,11 @@ namespace Game.Game
         #endregion
 
 
-        #region Upgrades
+        #region CenterUpgrades
 
-        public void PickUpgUnitToMas(UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterUnits, unit });
-        public void PickUpgBuildToMas(BuildingTypes build) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterBuild, build });
+        public void PickUpgUnitToMas(in UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterUnits, unit });
+        public void CenterUpgradeUnit(in UnitTypes unit) => UpgradeCenter(unit);
+        public void PickUpgBuildToMas(in BuildingTypes build) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterBuild, build });
         public void UpgWater() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgWater });
 
         #endregion
@@ -126,11 +128,13 @@ namespace Game.Game
         public void ReadyToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Ready });
 
         public void DoneToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Done, });
+        public void Done() => Doner.Invoke();
 
         public void GetHeroToMaster(UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GetHero, unit });
 
         public void ShiftUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
         public void AttackUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
+        public void Attack(in byte idx_from, in byte idx_to) => AttackAction(idx_from, idx_to);
         public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, idx, cond });
 
         public void GiveTakeToolWeaponToMaster(byte idx, ToolWeaponTypes tw, LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, idx, tw, level });

@@ -84,7 +84,12 @@ namespace Game
 
                 case SceneTypes.Menu:
                     {
-                        if (_toggleW != default) _toggleW = default;
+                        if (_toggleW != default)
+                        {
+                            _toggleW = default;
+                            _runUpdate.Action = default;
+                            _runFixedUpdate.Action = default;
+                        }
 
                         _toggleW = new EcsWorld();
                         new EntitieManager(_toggleW);
@@ -108,7 +113,7 @@ namespace Game
 
                         new SystemViewUI(ref _runUpdate, ref _runFixedUpdate, resources, ents, uIEs, out var updateUI);
                         new SystemsView(ref _runUpdate, ref _runFixedUpdate, ents, entViews, out var updateView);
-                        new Systems(ref _runUpdate, ref _runFixedUpdate, ents, updateUI, updateView, out var runAfterDoing);
+                        new SystemsModel(ref _runUpdate, ref _runFixedUpdate, ents, updateUI, updateView, out var runAfterDoing);
 
 
                         new Events(updateView, updateUI, ents, uIEs);

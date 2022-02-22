@@ -2,9 +2,13 @@
 
 namespace Game.Game
 {
-    public static class CellUnitStatWater_Values
+    public static class UnitWater_Values
     {
+        #region Start
+
         public const float MAX = 1;
+
+        #endregion
 
         public static float NeedAfterAbility(in AbilityTypes ability)
         {

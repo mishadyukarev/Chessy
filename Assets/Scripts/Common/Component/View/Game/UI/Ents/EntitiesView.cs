@@ -33,11 +33,11 @@ namespace Game.Game
 
             byte idx_cur = 0;
 
-            var cells = new GameObject[StartValues.ALL_CELLS_AMOUNT];
+            var cells = new GameObject[Start_Values.ALL_CELLS_AMOUNT];
 
 
-            for (byte x = 0; x < StartValues.X_AMOUNT; x++)
-                for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
+            for (byte x = 0; x < Start_Values.X_AMOUNT; x++)
+                for (byte y = 0; y < Start_Values.Y_AMOUNT; y++)
                 {
 
                     //    if(y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0)
@@ -89,10 +89,10 @@ namespace Game.Game
             new CellBarsVEs(gameW, cells);
 
 
-            var isActiveParenCells = new bool[StartValues.ALL_CELLS_AMOUNT];
-            var idCells = new int[StartValues.ALL_CELLS_AMOUNT];
+            var isActiveParenCells = new bool[Start_Values.ALL_CELLS_AMOUNT];
+            var idCells = new int[Start_Values.ALL_CELLS_AMOUNT];
 
-            for (byte idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
+            for (byte idx = 0; idx < Start_Values.ALL_CELLS_AMOUNT; idx++)
             {
                 isActiveParenCells[idx] = CellEs(idx).CellParent.IsActiveSelf;
                 idCells[idx] = CellEs(idx).CellGO.InstanceID;

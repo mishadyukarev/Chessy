@@ -12,24 +12,22 @@ namespace Game.Game
         {
             var curPlayer = E.CurPlayerI.Player;
 
-            var isActivatedZone = false;// Es.AvailableCenterUpgradeEs.HaveUpgrade(curPlayer).Have
-            //    && !Es.PlayerE(curPlayer).UnitsInfoE(UnitTypes.King).HaveInInventor;
+            var isActivatedZone = E.PlayerE(curPlayer).HaveCenterUpgrade && !E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.King).HaveInInventor;
 
             Paren.SetActive(isActivatedZone);
 
             if (isActivatedZone)
             {
-                //for (var build = BuildingTypes.Farm; build <= BuildingTypes.Woodcutter; build++)
+                //for (var buildT = BuildingTypes.Farm; buildT <= BuildingTypes.Woodcutter; buildT++)
                 //{
-                //    if (Es.AvailableCenterUpgradeEs.HaveBuildUpgrade(build, Es.CurPlayerI.Player).Have)
-                //    {
-                //        Builds(build).SetActive(true);
-                //    }
-                //    else
-                //    {
-                //        Builds(build).SetActive(false);
-                //    }
+                //    Builds(buildT).SetActive(E.BuildingsInfo(E.CurPlayerI.Player, LevelTypes.First, buildT).HaveCenterUpgrade);
                 //}
+
+                //for (var unitT = UnitTypes.King; unitT <= UnitTypes.Pawn; unitT++)
+                //{
+                //    Units(unitT).SetActive(E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, unitT).HaveCenterUpgrade);
+                //}
+
 
                 //foreach (var item_0 in AvailableUpgradeEs.Keys UnitAvailPickUpgC.Available_1)
                 //{

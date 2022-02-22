@@ -23,11 +23,11 @@ namespace Game.Game
 
             if (!haveCamel)
             {
-                byte idx_0 = (byte)Random.Range(0,  StartValues.ALL_CELLS_AMOUNT);
+                byte idx_0 = (byte)Random.Range(0,  Start_Values.ALL_CELLS_AMOUNT);
 
                 if (E.CellEs(idx_0).IsActiveParentSelf)
                 {
-                    if (!E.UnitTC(idx_0).HaveUnit && !E.EnvironmentEs(idx_0).MountainC.HaveAny)
+                    if (!E.UnitTC(idx_0).HaveUnit && !E.EnvironmentEs(idx_0).MountainC.HaveAnyResources)
                     {
                         bool haveNearUnit = false;
 

@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public float Resources;
 
-        public bool HaveAny => Resources > 0;
+        public bool HaveAnyResources => Resources > 0;
 
         public ResourcesC(in float resources) => Resources = resources;
 

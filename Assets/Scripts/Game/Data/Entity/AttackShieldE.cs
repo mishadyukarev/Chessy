@@ -4,20 +4,13 @@ namespace Game.Game
 {
     public struct AttackShieldE
     {
-        readonly ActionC _actionC;
-        public IdxC IdxC;
-        public DamageC DamageC;
+        readonly Action<float, byte> _attackShield;
 
-        public AttackShieldE(in Action action) : this()
+        public AttackShieldE(in Action<float, byte> action) : this()
         {
-            _actionC.Action = action;
+            _attackShield = action;
         }
 
-        public void AttackShield(in float damage, in byte idx_cell)
-        {
-            DamageC.Damage = damage;
-            IdxC.Idx = idx_cell;
-            _actionC.Invoke();
-        }
+        public void Attack(in float damage, in byte idx_cell) => _attackShield(damage, idx_cell);
     }
 }

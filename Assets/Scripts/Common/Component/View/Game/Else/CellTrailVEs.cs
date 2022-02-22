@@ -21,7 +21,7 @@ namespace Game.Game
 
             for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
             {
-                _trails.Add(dir, new Entity[StartValues.ALL_CELLS_AMOUNT]);
+                _trails.Add(dir, new Entity[Start_Values.ALL_CELLS_AMOUNT]);
 
                 for (byte idx = 0; idx < _trails[dir].Length; idx++)
                 {

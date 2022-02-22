@@ -40,7 +40,7 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    if (E.AdultForestC(idx_0).HaveAny)
+                                    if (E.AdultForestC(idx_0).HaveAnyResources)
                                     {
                                         if (E.HaveFire(idx_0)) E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.PutOutFirePawn;
                                         else E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.FirePawn;
@@ -59,7 +59,7 @@ namespace Game.Game
 
                                     else
                                     {
-                                        if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).LevelE(LevelTypes.First).BuildsInGame(BuildingTypes.City).HaveAny)
+                                        if (E.BuildingsInfo(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
                                         {
                                             E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
                                         }

@@ -2,17 +2,15 @@
 
 namespace Game.Game
 {
-    sealed class AttackMS : SystemAbstract, IEcsRunSystem
+    sealed class AttackMS : SystemAbstract
     {
         internal AttackMS(in EntitiesModel ents) : base(ents)
         {
         }
 
-        public void Run()
+        public void Attack(byte idx_from, byte idx_to)
         {
             var whoseMove = E.WhoseMove.Player;
-            var idx_from = E.RpcPoolEs.AttackME.FromIdxC.Idx;
-            var idx_to = E.RpcPoolEs.AttackME.ToIdxC.Idx;
 
             var canAttack = E.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to)
                 || E.UnitEs(idx_from).ForAttack(AttackTypes.Simple).Contains(idx_to);
@@ -33,7 +31,7 @@ namespace Game.Game
 
                 if (E.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to))
                 {
-                    powerDam_from += powerDam_from * CellUnitDamage_Values.UNIQUE_PERCENT_DAMAGE;
+                    powerDam_from += powerDam_from * UnitDamage_Values.UNIQUE_PERCENT_DAMAGE;
                 }
 
                 var dirAttack = E.CellEs(idx_from).Direct(idx_to);
@@ -105,9 +103,6 @@ namespace Game.Game
                     }
                 }
 
-
-                var player_from = E.UnitPlayerTC(idx_from).Player;
-
                 if (E.UnitMainE(idx_from).IsMelee)
                 {
                     if (E.UnitEffectShield(idx_from).HaveAnyProtection)
@@ -117,9 +112,7 @@ namespace Game.Game
 
                     else if (E.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        E.UnitEffectShield(idx_from).Protection--;
-                        if (!E.UnitEffectShield(idx_from).HaveAnyProtection)
-                            E.UnitExtraTWTC(idx_from).ToolWeapon = ToolWeaponTypes.None;
+                        E.AttackShieldE.Attack(1, idx_from);
                     }
 
                     else if (minus_from > 0)
@@ -144,9 +137,7 @@ namespace Game.Game
 
                 else if (E.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    E.UnitEffectShield(idx_to).Protection--;
-                    if (!E.UnitEffectShield(idx_to).HaveAnyProtection)
-                        E.UnitExtraTWTC(idx_to).ToolWeapon = ToolWeaponTypes.None;
+                    E.AttackShieldE.Attack(1, idx_to);
                 }
 
                 else if (minus_to > 0)
@@ -176,8 +167,7 @@ namespace Game.Game
                         {
                             if (E.UnitMainE(idx_from).IsMelee)
                             {
-                                E.UnitEs(idx_to).Set(E.UnitEs(idx_from));
-                                E.UnitTC(idx_from).Unit = UnitTypes.None;
+                                E.UnitShiftE.Shift(idx_from, idx_to);
                             }
                         }
                     }

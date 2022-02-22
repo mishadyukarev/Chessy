@@ -15,7 +15,7 @@ namespace Game.Game
         static UIEntRightStats()
         {
             _stats = new Dictionary<UnitStatTypes, Entity>();
-            for (var stat = UnitStatTypes.Start; stat < UnitStatTypes.End; stat++) _stats.Add(stat, default);
+            for (var stat = UnitStatTypes.None + 1; stat < UnitStatTypes.End; stat++) _stats.Add(stat, default);
         }
         public UIEntRightStats(in EcsWorld gameW, in GameObject rightZone)
         {

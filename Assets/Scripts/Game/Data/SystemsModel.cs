@@ -2,9 +2,9 @@
 
 namespace Game.Game
 {
-    public readonly struct Systems
+    public readonly struct SystemsModel
     {
-        public Systems(ref ActionC update, ref ActionC fixedUpdate, in EntitiesModel ents, in Action updateView, in Action updateUI, out Action runAfterDoing)
+        public SystemsModel(ref ActionC update, ref ActionC fixedUpdate, in EntitiesModel ents, in Action updateView, in Action updateUI, out Action runAfterDoing)
         {
             update.Action +=
                 (Action)
@@ -13,8 +13,10 @@ namespace Game.Game
                 + new SelectorS(ents, updateView, updateUI).Run;
 
 
-            ents.AttackShieldE = new AttackShieldE(new AttackShieldS(ents).Run);
-            ents.UnitAttackE = new UnitAttackUnitE(new UnitAttackUnitS(ents).Run);
+            new AttackShieldS(ents);
+            new UnitAttackUnitS(ents);
+            new CellUnitShiftS(ents);
+            new CenterUpgradeUnitS(ents);
 
 
             runAfterDoing =

@@ -22,7 +22,7 @@
 
                             if (!E.EffectEs(idx_1).HaveFire)
                             {
-                                if (E.AdultForestC(idx_1).HaveAny)
+                                if (E.AdultForestC(idx_1).HaveAnyResources)
                                 {
                                     E.UnitEs(idx_0).ForArson.Add(idx_1);
                                 }

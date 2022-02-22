@@ -47,6 +47,10 @@ namespace Game.Game
                 ///Left
                 + new LeftZonesUIS(ents, entsUI).Run
                 + new EnvUIS(ents, entsUI).Run;
+
+
+
+            fixedUpdate.Action += updateUI;
         }
     }
 }

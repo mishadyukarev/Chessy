@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (E.PawnExtractAdultForestE(idx_0).HaveAny)
+                if (E.PawnExtractAdultForestE(idx_0).HaveAnyResources)
                 {
                     var extract = E.PawnExtractAdultForestE(idx_0).Resources;
 
@@ -18,7 +18,7 @@
                     E.PlayerE(E.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Wood).Resources += extract;
 
 
-                    if (E.AdultForestC(idx_0).HaveAny)
+                    if (E.AdultForestC(idx_0).HaveAnyResources)
                     {
                         if (E.BuildTC(idx_0).Is(BuildingTypes.Camp) || !E.BuildTC(idx_0).HaveBuilding)
                         {
@@ -32,7 +32,7 @@
                     }
                     else
                     {
-                        E.BuildTC(idx_0).Build = BuildingTypes.None;
+                        E.BuildTC(idx_0).Building = BuildingTypes.None;
 
                         E.YoungForestC(idx_0).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
                     }

@@ -10,7 +10,7 @@
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (E.FertilizeC(idx_0).HaveAny)
+                if (E.FertilizeC(idx_0).HaveAnyResources)
                 {
                     E.FertilizeC(idx_0).Resources -= CellEnvironment_Values.DRY_FERTILIZE;
                 }

@@ -16,9 +16,9 @@
                     {
                         var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        if (!E.BuildTC(idx_1).Is(BuildingTypes.City) && !E.MountainC(idx_1).HaveAny)
+                        if (!E.BuildTC(idx_1).Is(BuildingTypes.City) && !E.MountainC(idx_1).HaveAnyResources)
                         {
-                            if(!E.HillC(idx_1).HaveAny)
+                            if(!E.HillC(idx_1).HaveAnyResources)
                             {
                                 E.FertilizeC(idx_1).Resources = CellEnvironment_Values.AddingFromIceWall(EnvironmentTypes.Fertilizer);
                             }

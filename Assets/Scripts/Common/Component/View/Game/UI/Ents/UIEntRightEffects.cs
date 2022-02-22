@@ -14,7 +14,7 @@ namespace Game.Game
         static UIEntRightEffects()
         {
             _effects_Images = new Dictionary<UnitStatTypes, Entity>();
-            for (var unitStat = UnitStatTypes.Start; unitStat <= UnitStatTypes.End; unitStat++)
+            for (var unitStat = UnitStatTypes.None + 1; unitStat <= UnitStatTypes.End; unitStat++)
                 _effects_Images.Add(unitStat, default);
         }
         public UIEntRightEffects(in EcsWorld gameW, in Transform rightZone)

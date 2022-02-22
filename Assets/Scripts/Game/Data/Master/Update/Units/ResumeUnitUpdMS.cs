@@ -8,7 +8,7 @@
 
         public void Run()
         {
-             for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+             for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 //var unit_0 = UnitEs(idx_0).Main.UnitC;
                 //ref var condUnit_0 = UnitEs(idx_0).Main.ConditionTC;

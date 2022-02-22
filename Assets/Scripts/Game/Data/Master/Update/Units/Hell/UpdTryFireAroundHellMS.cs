@@ -16,7 +16,7 @@ namespace Game.Game
                 {
                     foreach (var cellE in E.CellEs(idx_0).AroundCellEs)
                     {
-                        if (E.AdultForestC(cellE.IdxC.Idx).HaveAny)
+                        if (E.AdultForestC(cellE.IdxC.Idx).HaveAnyResources)
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
                             {

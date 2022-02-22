@@ -15,7 +15,7 @@
 
                 if (!E.UnitEffectStunC(idx_0).IsStunned)
                 {
-                    if (E.UnitTC(idx_0).HaveUnit && E.UnitMainE(idx_0).IsMelee
+                    if (E.UnitTC(idx_0).HaveUnit && E.UnitMainE(idx_0).IsMelee && !E.UnitMainE(idx_0).IsAnimal
                         && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow) && !E.UnitTC(idx_0).Is(UnitTypes.Scout))
                     {
                         DirectTypes dir_cur = default;
@@ -26,11 +26,11 @@
 
                             dir_cur += 1;
 
-                            if (!E.EnvironmentEs(idx_1).MountainC.HaveAny)
+                            if (!E.EnvironmentEs(idx_1).MountainC.HaveAnyResources)
                             {
                                 var dir = E.CellEs(idx_0).Direct(idx_1);
 
-                                var haveMaxSteps = E.UnitStepC(idx_0).Steps >= CellUnitStatStep_Values.StandartForUnit(E.UnitTC(idx_0).Unit);
+                                var haveMaxSteps = E.UnitStepC(idx_0).Steps >= E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxSteps;
 
                                 if (E.UnitTC(idx_0).Is(UnitTypes.King))
                                 {

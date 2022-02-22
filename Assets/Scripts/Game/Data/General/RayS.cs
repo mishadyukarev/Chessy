@@ -39,7 +39,7 @@ namespace Game.Game
 
             if (raycast)
             {
-                for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+                for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
                 {
                     int one = E.CellEs(idx_0).CellE.InstanceIDC;
                     int two = raycast.transform.gameObject.GetInstanceID();

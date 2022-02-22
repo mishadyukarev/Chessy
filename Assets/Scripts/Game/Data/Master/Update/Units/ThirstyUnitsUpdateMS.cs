@@ -26,18 +26,18 @@ namespace Game.Game
                     {
                         if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
                         {
-                            E.UnitWaterC(idx_0).Water = CellUnitStatWater_Values.MAX;
+                            E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxWater;
                         }
                         else
                         {
                             
-                            E.UnitWaterC(idx_0).Water -= CellUnitStatWater_Values.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
+                            E.UnitWaterC(idx_0).Water -= UnitWater_Values.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
 
                             if (E.UnitWaterC(idx_0).Water <= 0)
                             {
                                 float percent = CellUnitStatHp_Values.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                E.UnitAttackE.Attack(CellUnitStatWater_Values.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);
+                                E.UnitAttackE.Attack(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);
                             }
                         }
                     }

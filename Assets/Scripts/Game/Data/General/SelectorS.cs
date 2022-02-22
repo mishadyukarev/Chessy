@@ -174,7 +174,7 @@ namespace Game.Game
 
                             case CellClickTypes.CityBuildBuilding:
                                 {
-                                    E.RpcPoolEs.CityBuildToMaster(E.SelectedBuildingTC.Build, E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
+                                    E.RpcPoolEs.CityBuildToMaster(E.SelectedBuildingTC.Building, E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
                                     E.CellClickTC.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;

@@ -12,8 +12,8 @@ namespace Game.Game
         {
             var curPlayer = E.CurPlayerI.Player;
 
-            var isActive = E.PlayerE(curPlayer).UnitsInfoE(UnitTypes.Scout).HaveInInventor;
-            var cooldown = E.PlayerE(curPlayer).UnitsInfoE(UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
+            var isActive = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).HaveInInventor;
+            var cooldown = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
 
 
             Scout<ButtonUIC>().SetActive(isActive);

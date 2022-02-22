@@ -14,7 +14,7 @@
             {
                 var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                if (!E.MountainC(idx_1).HaveAny)
+                if (!E.MountainC(idx_1).HaveAnyResources)
                 {
                     E.FertilizeC(idx_1).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
                 }

@@ -1,16 +1,15 @@
 ﻿namespace Game.Game
 {
-    sealed class AttackShieldS : SystemAbstract, IEcsRunSystem
+    sealed class AttackShieldS : SystemAbstract
     {
         internal AttackShieldS(in EntitiesModel ents) : base(ents)
         {
+            E.AttackShieldE = new AttackShieldE(Attack);
         }
 
-        public void Run()
+        void Attack(float damage, byte idx_0)
         {
-            var idx_0 = E.AttackShieldE.IdxC.Idx;
-
-            E.UnitExtraProtectionTC(idx_0).Protection -= E.AttackShieldE.DamageC.Damage;
+            E.UnitExtraProtectionTC(idx_0).Protection -= damage;
             if (!E.UnitExtraProtectionTC(idx_0).HaveAnyProtection)
                 E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
         }

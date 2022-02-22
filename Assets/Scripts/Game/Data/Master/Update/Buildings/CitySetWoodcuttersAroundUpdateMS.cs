@@ -16,11 +16,11 @@
                     {
                         var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        if (E.AdultForestC(idx_1).HaveAny)
+                        if (E.AdultForestC(idx_1).HaveAnyResources)
                         {
                             if (!E.BuildTC(idx_1).HaveBuilding)
                             {
-                                E.BuildE(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, CellBuilding_Values.MaxHealth(BuildingTypes.Woodcutter), E.BuildPlayerTC(idx_0).Player);
+                                E.BuildE(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, Building_Values.MaxHealth(BuildingTypes.Woodcutter), E.BuildPlayerTC(idx_0).Player);
                             }
                         }
                     }

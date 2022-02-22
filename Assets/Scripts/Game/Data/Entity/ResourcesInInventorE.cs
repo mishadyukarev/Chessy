@@ -20,7 +20,7 @@ namespace Game.Game
             ResT = res;
             PlayerT = player;
 
-            Ent.Add(new ResourcesC(StartValues.Resources(res)));
+            Ent.Add(new ResourcesC(Start_Values.Resources(res)));
         }
 
         public void Buy(in BuildingTypes build) => ResourceC.Resources -= ResourcesEconomy_Values.ForBuild(build, ResT);

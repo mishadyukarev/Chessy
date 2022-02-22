@@ -15,12 +15,10 @@ namespace Game.Game
 
         public CellUnitMainE MainE;
         public CellUnitStatsE StatsE;
-        public CellUnitStatsMaxE StatsMaxE;
         public CellUnitEffectsE EffectsE;
         public CellUnitMainToolWeaponE MainToolWeaponE;
         public CellUnitExtraToolWeaponE ExtraToolWeaponE;
         public CellUnitWhoLastDiedHereE WhoLastDiedHereE;
-        public CellUnitDamageE DamageE;
         public CellUnitExtractE ExtractE;
 
 
@@ -48,7 +46,7 @@ namespace Game.Game
             ForArson = new IdxsC(new HashSet<byte>());
             ForShift = new IdxsC(new HashSet<byte>());
 
-            _needStepsForShift = new StepsC[StartValues.ALL_CELLS_AMOUNT];
+            _needStepsForShift = new StepsC[Start_Values.ALL_CELLS_AMOUNT];
             _forAttack = new IdxsC[(byte)AttackTypes.End - 1];
 
             _forAttack[(byte)AttackTypes.Simple - 1] = new IdxsC(new HashSet<byte>());

@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public SystemsMaster(in EntitiesModel ents)
         {
-            ents.RpcPoolEs.AttackME = new AttackME(new AttackMS(ents).Run);
+            ents.RpcPoolEs.AttackAction = new AttackMS(ents).Attack;
 
 
             var truce = (Action)new TruceMS(ents).Run;
@@ -65,7 +65,7 @@ namespace Game.Game
 
                 + new TryInvokeTruceUpdateMS(truce, ents).Run;
 
-            ents.RpcPoolEs.DonerC = new ActionC(new DonerMS(updateMove, ents).Run);
+            ents.RpcPoolEs.Doner = new DonerMS(updateMove, ents).Run;
         }
     }
 }

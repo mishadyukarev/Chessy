@@ -10,7 +10,8 @@
         {
             var curPlayerI = E.CurPlayerI.Player;
 
-            var amountPawnsInGame = E.PlayerE(curPlayerI).UnitsInfoE(UnitTypes.Pawn).UnitsInGame;
+            var amountPawnsInGame = E.UnitInfo(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
+                + E.UnitInfo(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;
 
             DownPawnUIE.TextUIC.Text = amountPawnsInGame.ToString() + "/" + E.PlayerE(curPlayerI).MaxAvailablePawns;
             UIEs.DownEs.PawnEs.MaxPeopleE.SetMaxPeople(E.PlayerE(curPlayerI).PeopleInCity);

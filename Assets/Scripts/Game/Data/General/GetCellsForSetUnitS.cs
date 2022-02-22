@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
                 {
@@ -26,15 +26,15 @@
 
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                var idxs = E.PlayerE(player).LevelE(LevelTypes.First).BuildsInGame(BuildingTypes.City);
+                var idxsC = E.BuildingsInfo(player, LevelTypes.First, BuildingTypes.City).IdxC;
 
-                if (idxs.HaveAny)
+                if (idxsC.HaveAny)
                 {
-                    foreach (var cellE in E.CellEs(idxs.IdxFirst).AroundCellIdxsC)
+                    foreach (var cellE in E.CellEs(idxsC.IdxFirst).AroundCellIdxsC)
                     {
                         var idx_1 = cellE.Idx;
 
-                        if (!E.MountainC(idx_1).HaveAny && !E.UnitTC(cellE.Idx).HaveUnit)
+                        if (!E.MountainC(idx_1).HaveAnyResources && !E.UnitTC(cellE.Idx).HaveUnit)
                         {
                             E.UnitEs(idx_1).ForPlayer(player).CanSetUnitHere = true;
                         }
@@ -42,7 +42,7 @@
                 }
                 else
                 {
-                    for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+                    for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
                     {
                         var xy = E.CellEs(idx_0).CellE.XyC.Xy;
                         var x = xy[0];
