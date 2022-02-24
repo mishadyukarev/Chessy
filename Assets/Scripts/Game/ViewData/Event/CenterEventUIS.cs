@@ -48,9 +48,9 @@ namespace Game.Game
             E.SelectedIdxC.Idx = 0;
 
 
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                if (E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
+                if (E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
                 {
                     E.SelectedUnitE.Set(UnitTypes.King, LevelTypes.First);
                     E.CellClickTC.Click = CellClickTypes.SetUnit;
@@ -75,7 +75,7 @@ namespace Game.Game
 
         void UpgradeUnit(UnitTypes unit)
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 E.RpcPoolEs.PickUpgUnitToMas(unit);
 
@@ -86,7 +86,7 @@ namespace Game.Game
 
         void UpgradeBuild(BuildingTypes build)
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 E.RpcPoolEs.PickUpgBuildToMas(build);
 
@@ -97,7 +97,7 @@ namespace Game.Game
 
         void UpgradeWater()
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 E.RpcPoolEs.UpgWater();
 
@@ -108,7 +108,7 @@ namespace Game.Game
 
         void GetHero(in UnitTypes unit)
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 E.RpcPoolEs.GetHeroToMaster(unit);
             }

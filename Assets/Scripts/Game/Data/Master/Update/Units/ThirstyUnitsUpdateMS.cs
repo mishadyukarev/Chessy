@@ -37,7 +37,7 @@ namespace Game.Game
                             {
                                 float percent = CellUnitStatHp_Values.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                E.UnitAttackE.Attack(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);
+                                //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);
                             }
                         }
                     }

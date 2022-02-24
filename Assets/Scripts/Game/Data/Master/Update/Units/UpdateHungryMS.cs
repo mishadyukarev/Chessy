@@ -24,7 +24,7 @@
                             {
                                 if(E.UnitTC(idx_0).HaveUnit && E.UnitLevelTC(idx_0).Is(levUnit) && E.UnitPlayerTC(idx_0).Is(player))
                                 {
-                                    if (E.BuildTC(idx_0).Is(BuildingTypes.Camp))
+                                    if (E.BuildingTC(idx_0).Is(BuildingTypes.Camp))
                                     {
                                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
                                         //Es.BuildTC(idx_0).Destroy(Es);

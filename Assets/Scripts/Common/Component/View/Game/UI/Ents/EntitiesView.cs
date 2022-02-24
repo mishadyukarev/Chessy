@@ -10,7 +10,7 @@ namespace Game.Game
         readonly CellVEs[] _cellVEs;
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
         public CellBuildingVEs BuildingVEs(in byte idx) => CellEs(idx).BuildingEs;
-        public CellBuildingVE BuildingE(in byte idx, in BuildingTypes buildT) => BuildingVEs(idx).Main(buildT);
+        public SpriteRendererVC BuildingE(in byte idx, in BuildingTypes buildT) => BuildingVEs(idx).Main(buildT);
         public CellUnitVEs UnitEs(in byte idx) => CellEs(idx).UnitVEs;
         public CellUnitVE UnitE(in byte idx, in bool isSelected, in LevelTypes levT, in UnitTypes unitT) => UnitEs(idx).UnitE(isSelected, levT, unitT);
         public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;

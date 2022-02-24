@@ -20,9 +20,9 @@ namespace Game.Game
 
                         if (Random.Range(0f, 1f) <= 0.05f)
                         {
-                            if (!E.MountainC(E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx).HaveAnyResources && !E.BuildTC(idx_1).HaveBuilding)
+                            if (!E.MountainC(E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx).HaveAnyResources && !E.BuildingTC(idx_1).HaveBuilding)
                             {
-                                E.HillC(idx_1).Resources += CellEnvironment_Values.ADDING_FROM_MOUNTAIN;
+                                E.HillC(idx_1).Resources += Environment_Values.ADDING_FROM_MOUNTAIN;
                             }
                         }
                     }

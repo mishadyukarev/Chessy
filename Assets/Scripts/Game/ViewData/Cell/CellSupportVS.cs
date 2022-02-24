@@ -14,7 +14,7 @@ namespace Game.Game
         public void Run()
         {
             ref var cellClick = ref E.CellClickTC;
-            var curPlayer = E.CurPlayerI.Player;
+            var curPlayer = E.CurPlayerITC.Player;
 
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
@@ -69,7 +69,7 @@ namespace Game.Game
 
                 if (cellClick.Is(CellClickTypes.SetUnit))
                 {
-                    if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerI.Player).CanSetUnitHere)
+                    if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).CanSetUnitHere)
                     {
                         _isActive = true;
                         _color = ColorsValues.Color(SupportCellVisionTypes.Shift);

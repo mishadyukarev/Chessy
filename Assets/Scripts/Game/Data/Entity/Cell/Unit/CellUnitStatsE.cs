@@ -2,9 +2,9 @@
 {
     public struct CellUnitStatsE
     {
-        public HealthC HealthC;
         public StepsC StepC;
         public WaterC WaterC;
+        public HealthC HealthC;
 
         public DamageC DamageAttackC;
         public DamageC DamageOnCell;

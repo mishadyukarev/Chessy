@@ -29,6 +29,7 @@ namespace Game.Game
             _unitEs = new Dictionary<UnitTypes, PlayerUnitInfoE>();
 
             HaveCenterUpgrade = true;
+            HaveCenterHero = true;
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {

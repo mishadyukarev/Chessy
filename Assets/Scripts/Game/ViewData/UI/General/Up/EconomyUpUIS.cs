@@ -16,7 +16,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = E.CurPlayerI.Player;
+            var curPlayer = E.CurPlayerITC.Player;
 
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
@@ -42,8 +42,8 @@ namespace Game.Game
 
                 if (E.BuildPlayerTC(idx_0).Is(curPlayer))
                 {
-                    _extracts[ResourceTypes.Wood] += E.WoodcutterExtractE(idx_0).ResourcesC.Resources;
-                    _extracts[ResourceTypes.Food] += E.FarmExtractFertilizeE(idx_0).ResourcesC.Resources;
+                    _extracts[ResourceTypes.Wood] += E.WoodcutterExtractE(idx_0).Resources;
+                    _extracts[ResourceTypes.Food] += E.FarmExtractFertilizeE(idx_0).Resources;
                 }
             }
 

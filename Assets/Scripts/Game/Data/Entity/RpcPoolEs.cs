@@ -8,9 +8,13 @@ namespace Game.Game
     public struct RpcPoolEs
     {
         public PlayerPhotonC SenderC;
-        public Action<byte, byte> AttackAction;
         public Action Doner;
         public Action<UnitTypes> UpgradeCenter;
+        public UpgradeCenterUnitE CenterUpgradeUnitE;
+        public UnitTC GetHeroTC;
+        public SetUnitME SetUnitME;
+        public AttackME AttackME;
+        public ShiftUnitE ShiftUnitME;
 
 
         int _idx_cur;
@@ -134,7 +138,6 @@ namespace Game.Game
 
         public void ShiftUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
         public void AttackUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
-        public void Attack(in byte idx_from, in byte idx_to) => AttackAction(idx_from, idx_to);
         public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, idx, cond });
 
         public void GiveTakeToolWeaponToMaster(byte idx, ToolWeaponTypes tw, LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, idx, tw, level });

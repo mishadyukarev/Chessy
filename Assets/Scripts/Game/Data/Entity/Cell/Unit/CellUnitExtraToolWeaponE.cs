@@ -6,6 +6,8 @@
         public LevelTC LevelTC;
         public ProtectionC ProtectionC;
 
+        public DamageC DamageBrokeShieldC;
+
         public void Set(in ToolWeaponTC twTC, in LevelTC levTC, in ProtectionC protectionC)
         {
             ToolWeaponTC = twTC;

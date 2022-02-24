@@ -27,7 +27,7 @@ namespace Game.Game
 
                     foreach (var cellE in E.CellEs(idx_0).AroundCellEs)
                     {
-                        if (E.BuildTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
+                        if (E.BuildingTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
                         {
                             //Es.UnitE(idx_0).Take(Es, 0.15f);
                             break;

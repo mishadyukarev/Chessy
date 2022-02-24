@@ -16,7 +16,7 @@
 
                 if (!E.MountainC(idx_1).HaveAnyResources)
                 {
-                    E.FertilizeC(idx_1).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
+                    E.FertilizeC(idx_1).Resources = Environment_Values.ENVIRONMENT_MAX;
                 }
             }
         }

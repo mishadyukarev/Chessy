@@ -20,7 +20,7 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).Enable();
 
                         Bar<SpriteRendererVC>(CellBarTypes.Food, idx_0).LocalScale
-                            = new Vector3(E.EnvironmentEs(idx_0).FertilizeC.Resources / (float)CellEnvironment_Values.ENVIRONMENT_MAX, 0.15f, 1);
+                            = new Vector3(E.EnvironmentEs(idx_0).FertilizeC.Resources / (float)Environment_Values.ENVIRONMENT_MAX, 0.15f, 1);
                     }
                     else
                     {
@@ -32,7 +32,7 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Wood, idx_0).LocalScale =
                             new Vector3(E.AdultForestC(idx_0).Resources
-                            / (float)CellEnvironment_Values.ENVIRONMENT_MAX, 0.15f, 1);
+                            / (float)Environment_Values.ENVIRONMENT_MAX, 0.15f, 1);
                     }
                     else
                     {
@@ -44,7 +44,7 @@ namespace Game.Game
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).Enable();
                         Bar<SpriteRendererVC>(CellBarTypes.Ore, idx_0).LocalScale
                             = new Vector3(E.EnvironmentEs(idx_0).HillC.Resources
-                            / (float)CellEnvironment_Values.ENVIRONMENT_MAX, 0.15f, 1);
+                            / (float)Environment_Values.ENVIRONMENT_MAX, 0.15f, 1);
                     }
                     else
                     {

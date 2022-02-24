@@ -55,9 +55,9 @@ namespace Game.Game
                 }
 
 
-                if (E.BuildTC(idx_0).HaveBuilding)
+                if (E.BuildingTC(idx_0).HaveBuilding)
                 {
-                    if (E.BuildTC(idx_0).Is(BuildingTypes.Camp))
+                    if (E.BuildingTC(idx_0).Is(BuildingTypes.Camp))
                     {
                         //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
                         //Es.BuildE(idx_0).BuildingE.Destroy(Es);

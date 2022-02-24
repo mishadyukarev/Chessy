@@ -4,12 +4,12 @@ namespace Game.Game
 {
     public static class Building_Values
     {
+        public const float HELTH_CITY = 1;
+
         public static int MaxHealth(in BuildingTypes build)
         {
             switch (build)
             {
-                case BuildingTypes.City: return 1;
-
                 case BuildingTypes.House: return 1;
                 case BuildingTypes.Market: return 1;
                 case BuildingTypes.Smelter: return 1;

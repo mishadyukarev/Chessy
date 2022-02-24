@@ -19,7 +19,7 @@ namespace Game.Game
                 {
                     TextC.SetActiveParent(true);
 
-                    if (E.CurPlayerI.Player == PlayerTypes.First)
+                    if (E.CurPlayerITC.Player == PlayerTypes.First)
                     {
                         TextC.Text = "1";
                     }

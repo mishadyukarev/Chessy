@@ -59,10 +59,10 @@
 
                 if (E.UnitTC(idx_0).HaveUnit)
                 {
-                    if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerI.Player).IsVisible)
+                    if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).IsVisible)
                     {
                         var isSelected = idx_0 == E.SelectedIdxC.Idx;
-                        var isVisForNext = E.UnitEs(idx_0).ForPlayer(E.NextPlayer(E.CurPlayerI.Player).Player).IsVisible;
+                        var isVisForNext = E.UnitEs(idx_0).ForPlayer(E.NextPlayer(E.CurPlayerITC.Player).Player).IsVisible;
 
                         var unitT = E.UnitTC(idx_0).Unit;
 

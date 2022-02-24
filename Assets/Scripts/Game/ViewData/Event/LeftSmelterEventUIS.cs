@@ -9,7 +9,7 @@
 
         void Toggle()
         {
-            E.BuildSmelterTC(E.SelectedIdxC.Idx) = !E.BuildSmelterTC(E.SelectedIdxC.Idx);
+            E.IsActiveSmelter(E.SelectedIdxC.Idx) = !E.IsActiveSmelter(E.SelectedIdxC.Idx);
         }
     }
 }

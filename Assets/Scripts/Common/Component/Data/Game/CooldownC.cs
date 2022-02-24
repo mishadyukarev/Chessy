@@ -2,7 +2,7 @@
 {
     public struct CooldownC
     {
-        public int Cooldown;
+        public float Cooldown;
 
         public bool HaveCooldown => Cooldown > 0;
     }

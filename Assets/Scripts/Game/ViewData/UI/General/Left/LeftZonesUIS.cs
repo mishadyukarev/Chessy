@@ -17,25 +17,25 @@
 
             if (E.SelectedIdxC.Idx > 0)
             {
-                if (E.BuildTC(idx_sel).HaveBuilding)
+                if (E.BuildingTC(idx_sel).HaveBuilding)
                 {
-                    if (E.BuildPlayerTC(idx_sel).Is(E.CurPlayerI.Player))
+                    if (E.BuildPlayerTC(idx_sel).Is(E.CurPlayerITC.Player))
                     {
-                        if (E.BuildTC(idx_sel).Is(BuildingTypes.City))
+                        if (E.BuildingTC(idx_sel).Is(BuildingTypes.City))
                         {
                             UIEs.LeftCityEs.Zone.SetActive(true);
                         }
-                        else if (E.BuildTC(idx_sel).Is(BuildingTypes.Market))
+                        else if (E.BuildingTC(idx_sel).Is(BuildingTypes.Market))
                         {
                             UIEs.LeftMarketEs.Zone.SetActive(true);
                         }
-                        else if (E.BuildTC(idx_sel).Is(BuildingTypes.Smelter))
+                        else if (E.BuildingTC(idx_sel).Is(BuildingTypes.Smelter))
                         {
                             UIEs.LeftSmelterEs.Zone.SetActive(true);
                         }
                     }
 
-                    if (E.BuildTC(idx_sel).Is(BuildingTypes.Farm) || E.BuildTC(idx_sel).Is(BuildingTypes.Woodcutter))
+                    if (E.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || E.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
                     {
                         UIEs.LeftEnvEs.Zone.SetActive(true);
                     }

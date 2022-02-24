@@ -22,7 +22,7 @@ namespace Game.Game
                 Block<SpriteRendererVC>(CellBlockTypes.NeedWater, idx_0).Disable();
 
 
-                if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerI.Player).IsVisible)
+                if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).IsVisible)
                 {
                     if (E.UnitTC(idx_0).HaveUnit && !E.UnitMainE(idx_0).IsAnimal)
                     {

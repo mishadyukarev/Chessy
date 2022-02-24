@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            var curPlayerI = E.CurPlayerI.Player;
+            var curPlayerI = E.CurPlayerITC.Player;
 
             var amountPawnsInGame = E.UnitInfo(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
                 + E.UnitInfo(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;

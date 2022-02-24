@@ -22,7 +22,7 @@ namespace Game.Game
             {
                 if (E.HaveFire(idx_0))
                 {
-                    E.AdultForestC(idx_0).Resources -= CellEnvironment_Values.FireAdultForest;
+                    E.AdultForestC(idx_0).Resources -= Environment_Values.FireAdultForest;
 
                     if (E.UnitTC(idx_0).HaveUnit)
                     {
@@ -32,17 +32,17 @@ namespace Game.Game
                         }
                         else
                         {
-                            E.UnitAttackE.Attack(CellUnitStatHp_Values.FIRE_DAMAGE, E.NextPlayer(E.UnitPlayerTC(idx_0).Player).Player, idx_0);
+                            //E.ActionEs.AttackUnit(CellUnitStatHp_Values.FIRE_DAMAGE, E.NextPlayer(E.UnitPlayerTC(idx_0).Player).Player, idx_0);
                         }
                     }
 
                     if (!E.AdultForestC(idx_0).HaveAnyResources)
                     {
-                        E.BuildTC(idx_0).Building = BuildingTypes.None;
+                        E.BuildingTC(idx_0).Building = BuildingTypes.None;
 
-                        if (UnityEngine.Random.Range(0f, 1f) < CellEnvironment_Values.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
+                        if (UnityEngine.Random.Range(0f, 1f) < Environment_Values.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
                         {
-                            E.YoungForestC(idx_0).Resources -= CellEnvironment_Values.FireAdultForest;
+                            E.YoungForestC(idx_0).Resources -= Environment_Values.FireAdultForest;
                         }
 
 

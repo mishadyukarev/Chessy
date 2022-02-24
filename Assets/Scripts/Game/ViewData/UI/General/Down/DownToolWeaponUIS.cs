@@ -42,7 +42,7 @@ namespace Game.Game
                 Image(twT, levTw_sel).SetActive(true);
             }
 
-            var curPlayerI = E.CurPlayerI.Player;
+            var curPlayerI = E.CurPlayerITC.Player;
 
             Button<TextUIC>(ToolWeaponTypes.Pick).Text = E.PlayerE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).Amount.ToString();
             Button<TextUIC>(ToolWeaponTypes.Sword).Text = E.PlayerE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).Amount.ToString();

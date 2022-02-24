@@ -54,7 +54,7 @@ namespace Game.Game
                             {
                                 if (E.UnitTC(idx_0).Is(UnitTypes.Scout))
                                 {
-                                    if (E.BuildTC(idx_0).Is(BuildingTypes.Woodcutter) || !E.BuildTC(idx_0).HaveBuilding)
+                                    if (E.BuildingTC(idx_0).Is(BuildingTypes.Woodcutter) || !E.BuildingTC(idx_0).HaveBuilding)
                                     {
                                         if (GameModeC.IsGameMode(GameModes.TrainingOff))
                                         {

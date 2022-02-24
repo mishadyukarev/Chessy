@@ -16,7 +16,7 @@
                 {
                     if (E.HillC(idx_0).HaveAnyResources)
                     {
-                        var extract = CellEnvironment_Values.PAWN_PICK_EXTRACT_HILL;
+                        var extract = Environment_Values.PAWN_PICK_EXTRACT_HILL;
 
 
                         if (E.HillC(idx_0).Resources < extract) extract = E.HillC(idx_0).Resources;

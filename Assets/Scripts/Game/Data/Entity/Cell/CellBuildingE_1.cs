@@ -1,34 +1,26 @@
-﻿using Photon.Realtime;
+﻿using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct CellBuildingPoolEs
+    public struct CellBuildingEs
     {
-        readonly bool[] _owners;
-        public bool IsActiveSmelter;
+        readonly Dictionary<PlayerTypes, bool> _isVisibled;
 
-        public BuildingTC BuildingC;
-        public HealthC HealthC;
-        public PlayerTC PlayerC;
-        public LevelTC LevelTC;
+        public CellBuildingMainE MainE;
+        public CellBuildingExtractE ExtractE;
 
-        public ExtractE WoodcutterExtractE;
-        public ExtractE FarmExtractE;
-
-        public ref bool IsVisible(in PlayerTypes player) => ref _owners[(byte)player - 1];
+        public bool IsVisible(in PlayerTypes player) => _isVisibled[player];
 
 
-        public CellBuildingPoolEs(in byte types) : this()
+        public CellBuildingEs(in byte types) : this()
         {
-            _owners = new bool[types];
+            _isVisibled = new Dictionary<PlayerTypes, bool>();
+            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+            {
+                _isVisibled.Add(playerT, default);
+            }
         }
 
-        public void Set(in BuildingTypes buildT, in LevelTypes levT, in float hp, PlayerTypes playerT)
-        {
-            BuildingC.Building = buildT;
-            HealthC.Health = hp;
-            PlayerC.Player = playerT;
-            LevelTC.Level = levT;
-        }
+        public void SetVisible(in PlayerTypes player, in bool isVisibled) => _isVisibled[player] = isVisibled;
     }
 }

@@ -10,17 +10,22 @@
         {
             for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
-                E.WoodcutterExtractE(idx_0).ResourcesC.Resources = 0;
+                E.WoodcutterExtractE(idx_0).Resources = 0;
 
-                if (E.BuildTC(idx_0).Is(BuildingTypes.Woodcutter))
+                if (E.BuildingTC(idx_0).Is(BuildingTypes.Woodcutter))
                 {
-                    var extract = CellEnvironment_Values.WOODCUTTER_EXTRACT;
+                    var extract = Environment_Values.WOODCUTTER_EXTRACT;
+
+                    if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
+                    {
+                        extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
+                    }
 
 
                     if (E.AdultForestC(idx_0).Resources < extract) extract = E.AdultForestC(idx_0).Resources;
 
 
-                    E.WoodcutterExtractE(idx_0).ResourcesC.Resources = extract;
+                    E.WoodcutterExtractE(idx_0).Resources = extract;
                 }
             }
         }

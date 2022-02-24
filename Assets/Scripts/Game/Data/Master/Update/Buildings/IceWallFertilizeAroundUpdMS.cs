@@ -10,17 +10,17 @@
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (E.BuildTC(idx_0).HaveBuilding && E.BuildTC(idx_0).Is(BuildingTypes.IceWall))
+                if (E.BuildingTC(idx_0).HaveBuilding && E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
                         var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        if (!E.BuildTC(idx_1).Is(BuildingTypes.City) && !E.MountainC(idx_1).HaveAnyResources)
+                        if (!E.BuildingTC(idx_1).Is(BuildingTypes.City) && !E.MountainC(idx_1).HaveAnyResources)
                         {
                             if(!E.HillC(idx_1).HaveAnyResources)
                             {
-                                E.FertilizeC(idx_1).Resources = CellEnvironment_Values.AddingFromIceWall(EnvironmentTypes.Fertilizer);
+                                E.FertilizeC(idx_1).Resources = Environment_Values.AddingFromIceWall(EnvironmentTypes.Fertilizer);
                             }
                         }
 

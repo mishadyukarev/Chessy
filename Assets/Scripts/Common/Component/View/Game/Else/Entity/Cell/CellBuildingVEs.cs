@@ -6,19 +6,19 @@ namespace Game.Game
 {
     public readonly struct CellBuildingVEs
     {
-        readonly Dictionary<BuildingTypes, CellBuildingVE> _ents;
+        readonly Dictionary<BuildingTypes, SpriteRendererVC> _ents;
 
-        public CellBuildingVE Main(in BuildingTypes buildT) => _ents[buildT];
+        public SpriteRendererVC Main(in BuildingTypes buildT) => _ents[buildT];
 
-        public CellBuildingVEs(in GameObject cell, in EcsWorld gameW)
+        public CellBuildingVEs(in GameObject cell)
         {
-            _ents = new Dictionary<BuildingTypes, CellBuildingVE>();
+            _ents = new Dictionary<BuildingTypes, SpriteRendererVC>();
 
             var build = cell.transform.Find("Building+");
 
             for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)
             {
-                _ents.Add(buildT, new CellBuildingVE(build.transform.Find(buildT.ToString() + "_SR+").GetComponent<SpriteRenderer>(), gameW));
+                _ents.Add(buildT, new SpriteRendererVC(build.transform.Find(buildT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
             }
         }
     }

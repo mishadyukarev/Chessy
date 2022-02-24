@@ -1,12 +1,10 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Game.Game
+﻿namespace Game.Game
 {
     public sealed class GetUnitTypeS : SystemAbstract, IEcsRunSystem
     {
         internal GetUnitTypeS(in EntitiesModel ents) : base(ents)
         {
+
         }
 
         public void Run()
@@ -57,7 +55,6 @@ namespace Game.Game
                     E.UnitMainE(idx_0).IsMelee = isMelee;
                     E.UnitMainE(idx_0).IsHero = ishero;
                 }
-                
             }
         }
     }

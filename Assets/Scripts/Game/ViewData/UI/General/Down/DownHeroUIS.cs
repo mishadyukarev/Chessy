@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayerI = E.CurPlayerI.Player;
+            var curPlayerI = E.CurPlayerITC.Player;
 
             var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 

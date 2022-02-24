@@ -4,11 +4,12 @@
     {
         internal GetCellsForAttackArcherS(in EntitiesModel ents) : base(ents)
         {
+
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 var isRight_0 = E.UnitIsRightArcherC(idx_0).IsRight;
 

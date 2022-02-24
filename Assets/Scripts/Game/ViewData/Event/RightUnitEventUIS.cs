@@ -19,7 +19,7 @@ namespace Game.Game
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
@@ -37,7 +37,7 @@ namespace Game.Game
 
         void Unique(in ButtonTypes uniqueButton)
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 var idx_sel = E.SelectedIdxC.Idx;
 

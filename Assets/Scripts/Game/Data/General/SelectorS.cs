@@ -21,18 +21,18 @@ namespace Game.Game
 
             if (Input.GetKey(KeyCode.Space))
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1)) E.PlayerE(E.CurPlayerI.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
-                if (Input.GetKeyDown(KeyCode.Alpha2)) E.PlayerE(E.CurPlayerI.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
-                if (Input.GetKeyDown(KeyCode.Alpha3)) E.PlayerE(E.CurPlayerI.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
-                if (Input.GetKeyDown(KeyCode.Alpha4)) E.PlayerE(E.CurPlayerI.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
-                if (Input.GetKeyDown(KeyCode.Alpha5)) E.PlayerE(E.CurPlayerI.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
+                if (Input.GetKeyDown(KeyCode.Alpha1)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
+                if (Input.GetKeyDown(KeyCode.Alpha2)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
+                if (Input.GetKeyDown(KeyCode.Alpha3)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
+                if (Input.GetKeyDown(KeyCode.Alpha4)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
+                if (Input.GetKeyDown(KeyCode.Alpha5)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
             }
 
             if (E.IsClicked)
             {
                 if (E.RayCastTC.Is(RaycastTypes.Cell))
                 {
-                    if (!E.IsMyMove)
+                    if (!E.CurPlayerITC.Is(E.WhoseMove.Player))
                     {
                         E.SelectedIdxC.Idx = E.CurrentIdxC.Idx;
                     }
@@ -47,7 +47,7 @@ namespace Game.Game
                                 {
                                     if (E.SelectedIdxC.Idx > 0)
                                     {
-                                        var curPlayerI = E.CurPlayerI.Player;
+                                        var curPlayerI = E.CurPlayerITC.Player;
 
                                         if (E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Contains(E.CurrentIdxC.Idx)
                                             || E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Contains(E.CurrentIdxC.Idx))
@@ -64,7 +64,7 @@ namespace Game.Game
                                         {
                                             if (E.UnitTC(idx_cur).HaveUnit)
                                             {
-                                                if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerI.Player))
+                                                if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
                                                 {
                                                     if (E.UnitTC(idx_cur).Is(UnitTypes.Scout))
                                                     {
@@ -89,7 +89,7 @@ namespace Game.Game
                                     {
                                         if (E.UnitTC(idx_cur).HaveUnit)
                                         {
-                                            if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerI.Player))
+                                            if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
                                             {
                                                 if (E.UnitTC(idx_cur).Is(UnitTypes.Scout))
                                                 {
@@ -120,7 +120,7 @@ namespace Game.Game
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (E.UnitTC(idx_cur).Is(UnitTypes.Pawn) && E.UnitPlayerTC(idx_cur).Is(E.CurPlayerI.Player))
+                                    if (E.UnitTC(idx_cur).Is(UnitTypes.Pawn) && E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
                                     {
                                         E.RpcPoolEs.GiveTakeToolWeaponToMaster(E.CurrentIdxC.Idx, E.SelectedTWE.ToolWeaponTC.ToolWeapon, E.SelectedTWE.LevelTC.Level);
                                     }
@@ -206,7 +206,7 @@ namespace Game.Game
                 {
                     if (E.CellClickTC.Is(CellClickTypes.SetUnit))
                     {
-                        if (!E.UnitTC(idx_cur).HaveUnit || !E.UnitEs(idx_cur).ForPlayer(E.CurPlayerI.Player).IsVisible)
+                        if (!E.UnitTC(idx_cur).HaveUnit || !E.UnitEs(idx_cur).ForPlayer(E.CurPlayerITC.Player).IsVisible)
                         {
                             if (E.CurrentIdxC.Idx == 0)
                             {

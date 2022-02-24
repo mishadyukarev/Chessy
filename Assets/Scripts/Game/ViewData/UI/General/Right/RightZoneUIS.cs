@@ -17,7 +17,7 @@
             {
                 if (E.UnitTC(idx_sel).HaveUnit)
                 {
-                    if (E.UnitEs(idx_sel).ForPlayer(E.CurPlayerI.Player).IsVisible)
+                    if (E.UnitEs(idx_sel).ForPlayer(E.CurPlayerITC.Player).IsVisible)
                     {
                         activeParent = true;
                     }

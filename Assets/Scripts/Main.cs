@@ -113,8 +113,7 @@ namespace Game
 
                         new SystemViewUI(ref _runUpdate, ref _runFixedUpdate, resources, ents, uIEs, out var updateUI);
                         new SystemsView(ref _runUpdate, ref _runFixedUpdate, ents, entViews, out var updateView);
-                        new SystemsModel(ref _runUpdate, ref _runFixedUpdate, ents, updateUI, updateView, out var runAfterDoing);
-
+                        new SystemsModel(ref _runUpdate, ents, updateUI, updateView, out var runAfterDoing);
 
                         new Events(updateView, updateUI, ents, uIEs);
 

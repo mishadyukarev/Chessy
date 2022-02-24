@@ -6,11 +6,12 @@ namespace Game.Game
     {
         internal AbilitySyncS(in EntitiesModel ents) : base(ents)
         {
+
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.UnitEs(idx_0).Ability(ButtonTypes.First).Reset();
                 E.UnitEs(idx_0).Ability(ButtonTypes.Second).Reset();
@@ -18,7 +19,7 @@ namespace Game.Game
                 E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
                 E.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Reset();
 
-                if (E.UnitPlayerTC(idx_0).Is(E.CurPlayerI.Player))
+                if (E.UnitPlayerTC(idx_0).Is(E.CurPlayerITC.Player))
                 {
                     if (E.UnitTC(idx_0).HaveUnit)
                     {
@@ -52,7 +53,7 @@ namespace Game.Game
 
                                     E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetFarm;
 
-                                    if (E.BuildTC(idx_0).HaveBuilding)
+                                    if (E.BuildingTC(idx_0).HaveBuilding)
                                     {
                                         E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
                                     }
@@ -76,9 +77,9 @@ namespace Game.Game
                                 break;
 
                             case UnitTypes.Elfemale:
-                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
-                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
-                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
                                 break;
 
                             case UnitTypes.Snowy:
@@ -91,7 +92,7 @@ namespace Game.Game
                                 E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.Resurrect;
                                 E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetTeleport;
                                 E.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.InvokeSkeletons;
-                                if (E.BuildTC(idx_0).HaveBuilding) E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
+                                if (E.BuildingTC(idx_0).HaveBuilding) E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
                                 break;
 
                             case UnitTypes.Hell:
@@ -106,7 +107,7 @@ namespace Game.Game
                             default: throw new Exception();
                         }
 
-                        if (E.BuildTC(idx_0).Is(BuildingTypes.Teleport))
+                        if (E.BuildingTC(idx_0).Is(BuildingTypes.Teleport))
                         {
                             E.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Ability = AbilityTypes.Teleport;
                         }

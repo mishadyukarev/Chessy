@@ -16,14 +16,13 @@
 
             for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
-                if (E.BuildTC(idx_0).Is(BuildingTypes.City))
+                if (E.BuildingTC(idx_0).Is(BuildingTypes.City))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT <= DirectTypes.Left; dirT++)
                     {
                         var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        if (!E.UnitTC(idx_1).HaveUnit 
-                            && !E.MountainC(idx_1).HaveAnyResources && !E.HillC(idx_1).HaveAnyResources && !E.AdultForestC(idx_1).HaveAnyResources)
+                        if (!E.MountainC(idx_1).HaveAnyResources && !E.HillC(idx_1).HaveAnyResources && !E.AdultForestC(idx_1).HaveAnyResources)
                         {
                             E.CellEs(idx_1).Player(E.BuildPlayerTC(idx_0).Player).CanCityBuildHere = true;
                         }

@@ -12,7 +12,7 @@
 
         void BuyResource(in MarketBuyTypes marketBuyT)
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 E.RpcPoolEs.BuyResource(marketBuyT);
             }

@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 UIEntDownDoner.Wait<GameObjectVC>().SetActive(false);
                 UIEntDownDoner.Doner<ButtonUIC>().Color = Color.white;

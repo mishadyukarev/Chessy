@@ -36,7 +36,7 @@ namespace Game.Game
 
 
 
-            BuildingEs = new CellBuildingVEs(cell, gameW);
+            BuildingEs = new CellBuildingVEs(cell);
             EnvironmentVEs = new CellEnvironmentVEs( cell, idx, gameW);
             UnitVEs = new CellUnitVEs(cell.transform, gameW);
         }

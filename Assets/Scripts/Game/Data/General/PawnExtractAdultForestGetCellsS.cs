@@ -16,13 +16,13 @@
                 {
                     if (E.UnitTC(idx_0).Is(UnitTypes.Pawn) && E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                     {
-                        var extract = CellEnvironment_Values.EXTRACT_PAWM_ADULT_FOREST;
+                        var extract = Environment_Values.EXTRACT_PAWM_ADULT_FOREST;
 
                         if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
                         {
                             if (E.UnitMainTWLevelTC(idx_0).Is(LevelTypes.Second))
                             {
-                                extract *= CellEnvironment_Values.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
+                                extract *= Environment_Values.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
                             }
                         }
 

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public static class CellEnvironment_Values
+    public static class Environment_Values
     {
         #region Common
 
@@ -68,9 +68,11 @@ namespace Game.Game
 
         #region Fertilize
 
-        public const float FARM_EXTRACT = ENVIRONMENT_MAX * 0.1f;
         public const float DRY_FERTILIZE = ENVIRONMENT_MAX * 0.1f;
         public const float RIVER_FERTILIZE_AROUND = ENVIRONMENT_MAX * 0.1f;
+
+        public const float FARM_EXTRACT = ENVIRONMENT_MAX * 0.1f;
+        public const float FARM_CENTER_UPGRADE = FARM_EXTRACT * 0.5f;
 
         #endregion
 
@@ -89,7 +91,9 @@ namespace Game.Game
         public const float AddingAfterBuildingFarm = ENVIRONMENT_MAX / 2;
         public const float EXTRACT_PAWM_ADULT_FOREST = ENVIRONMENT_MAX / 10;
         public const float PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT = 1.5f;
+
         public const float WOODCUTTER_EXTRACT = ENVIRONMENT_MAX / 10;
+        public const float WOODCUTTER_CENTER_UPGRADE = WOODCUTTER_EXTRACT * 0.5f;
 
         #endregion
 

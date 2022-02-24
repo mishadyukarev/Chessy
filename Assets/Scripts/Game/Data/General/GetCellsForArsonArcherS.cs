@@ -1,14 +1,15 @@
 ﻿namespace Game.Game
 {
-    sealed class GetCellsForArsonArcherS : SystemAbstract, IEcsRunSystem
+    sealed class GetCellsForArsonArcherS : SystemAbstract
     {
-        public GetCellsForArsonArcherS(in EntitiesModel ents) : base(ents)
+        internal GetCellsForArsonArcherS(in EntitiesModel ents) : base(ents)
         {
+
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.UnitEs(idx_0).ForArson.Clear();
 
@@ -31,6 +32,8 @@
                     }
                 }
             }
+
+
         }
     }
 }

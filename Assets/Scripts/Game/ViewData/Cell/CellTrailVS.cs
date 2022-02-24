@@ -12,7 +12,7 @@
             {
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    if (E.CellEs(idx_0).Player(E.CurPlayerI.Player).IsVisibleTrail)
+                    if (E.CellEs(idx_0).Player(E.CurPlayerITC.Player).IsVisibleTrail)
                     {
                         CellTrailVEs.TrailCellVC<SpriteRendererVC>(dirT, idx_0).SetActive(E.CellEs(idx_0).TrailHealthC(dirT).IsAlive);
                     }

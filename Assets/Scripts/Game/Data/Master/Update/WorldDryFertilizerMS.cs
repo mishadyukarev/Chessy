@@ -12,7 +12,7 @@
             {
                 if (E.FertilizeC(idx_0).HaveAnyResources)
                 {
-                    E.FertilizeC(idx_0).Resources -= CellEnvironment_Values.DRY_FERTILIZE;
+                    E.FertilizeC(idx_0).Resources -= Environment_Values.DRY_FERTILIZE;
                 }
             }
         }

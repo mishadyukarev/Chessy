@@ -2,14 +2,22 @@
 
 namespace Game.Game
 {
-    sealed class AttackMS : SystemAbstract
+    sealed class AttackMS : SystemAbstract, IEcsRunSystem
     {
         internal AttackMS(in EntitiesModel ents) : base(ents)
         {
+
         }
 
-        public void Attack(byte idx_from, byte idx_to)
+        public void Run()
         {
+            var idx_from = E.RpcPoolEs.AttackME.FromIdxC.Idx;
+
+            if (idx_from == 0) return;
+
+
+
+            var idx_to = E.RpcPoolEs.AttackME.ToIdxC.Idx;
             var whoseMove = E.WhoseMove.Player;
 
             var canAttack = E.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to)
@@ -112,12 +120,13 @@ namespace Game.Game
 
                     else if (E.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        E.AttackShieldE.Attack(1, idx_from);
+                        E.UnitExtraTWE(idx_from).DamageBrokeShieldC.Damage = 1f;
                     }
 
                     else if (minus_from > 0)
                     {
-                        E.UnitAttackE.Attack(minus_from, E.NextPlayer(E.UnitPlayerTC(idx_from).Player).Player, idx_from);
+                        E.UnitMainE(idx_from).AttackDamageC.Damage = minus_from;
+                        E.UnitMainE(idx_from).WhoKillerC.Player = E.NextPlayer(E.UnitPlayerTC(idx_from).Player).Player;
                     }
                 }
                 else
@@ -137,42 +146,31 @@ namespace Game.Game
 
                 else if (E.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    E.AttackShieldE.Attack(1, idx_to);
+                    E.UnitExtraTWE(idx_to).DamageBrokeShieldC.Damage = 1f;
                 }
 
                 else if (minus_to > 0)
                 {
                     var wasUnitT = E.UnitTC(idx_to).Unit;
 
+                    var killer = PlayerTypes.None;
+
                     if (E.UnitMainE(idx_to).IsAnimal)
                     {
-                        E.UnitAttackE.Attack(minus_to, E.UnitPlayerTC(idx_from).Player, idx_to);
+                        killer = E.UnitPlayerTC(idx_from).Player;
                     }
                     else
                     {
-                        E.UnitAttackE.Attack(minus_to, E.NextPlayer(E.UnitPlayerTC(idx_to)).Player, idx_to);
+                        killer = E.NextPlayer(E.UnitPlayerTC(idx_to)).Player;
                     }
 
-
-
-
-                    if (!E.UnitHpC(idx_to).IsAlive)
-                    {
-                        if (wasUnitT == UnitTypes.Camel)
-                        {
-                            E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += ResourcesEconomy_Values.AMOUNT_FOOD_AFTER_KILL_CAMEL;
-                        }
-
-                        if (E.UnitTC(idx_from).HaveUnit)
-                        {
-                            if (E.UnitMainE(idx_from).IsMelee)
-                            {
-                                E.UnitShiftE.Shift(idx_from, idx_to);
-                            }
-                        }
-                    }
+                    E.UnitMainE(idx_to).AttackDamageC.Damage = minus_to;
+                    E.UnitMainE(idx_to).WhoKillerC.Player = killer;
+                    E.UnitMainE(idx_to).FromIdx.Idx = idx_from;
                 }
             }
+
+            E.RpcPoolEs.AttackME.FromIdxC.Idx = 0;
         }
     }
 }

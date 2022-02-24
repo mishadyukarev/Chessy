@@ -33,9 +33,9 @@ namespace Game.Game
 
             TryOnHint(VideoClipTypes.CreatingScout);
 
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                if (!E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
+                if (!E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
                 {
                     E.SelectedUnitE.Set(UnitTypes.Scout, LevelTypes.First);
                     E.CellClickTC.Click = CellClickTypes.SetUnit;
@@ -52,18 +52,17 @@ namespace Game.Game
             E.SelectedIdxC.Idx = 0;
             TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                var curPlayer = E.CurPlayerI.Player;
+                var curPlayer = E.CurPlayerITC.Player;
 
                 var myHeroT = E.PlayerE(curPlayer).AvailableHeroTC.Unit;
 
                 if (E.UnitInfo(curPlayer, LevelTypes.First, myHeroT).HaveInInventor)
                 {
-                    if (!E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
+                    if (!E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
                     {
-                        E.SelectedUnitE.UnitTC.Unit = myHeroT;
-                        E.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+                        E.SelectedUnitE.Set(myHeroT, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;
                     }
                     else
@@ -76,7 +75,7 @@ namespace Game.Game
         }
         void Done()
         {
-            if (!E.UnitInfo(E.CurPlayerI.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
+            if (!E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
             {
                 E.RpcPoolEs.DoneToMaster();
             }
@@ -89,9 +88,9 @@ namespace Game.Game
         {
             E.SelectedIdxC.Idx = 0;
 
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                var curPlayerI = E.CurPlayerI.Player;
+                var curPlayerI = E.CurPlayerITC.Player;
 
                 if (E.PlayerE(curPlayerI).PeopleInCity > 0)
                 {
@@ -106,8 +105,7 @@ namespace Game.Game
                 }
                 else
                 {
-                    E.MistakeE.MistakeTC.Mistake = MistakeTypes.NeedMorePeopleInCity;
-                    E.MistakeE.TimerC.Timer = 0;
+                    E.MistakeE.Set(MistakeTypes.NeedMorePeopleInCity, 0);
                     E.Sound(ClipTypes.Mistake).Action.Invoke();
                 }
 
@@ -119,7 +117,7 @@ namespace Game.Game
         {
             E.SelectedIdxC.Idx = 0;
 
-            if (E.IsMyMove)
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
                 if (tw == ToolWeaponTypes.Pick)
                 {

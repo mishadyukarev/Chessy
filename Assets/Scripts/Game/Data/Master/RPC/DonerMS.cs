@@ -41,7 +41,7 @@ namespace Game.Game
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();
                     }
 
-                    var curPlayer = E.CurPlayerI.Player;
+                    var curPlayer = E.CurPlayerITC.Player;
                     var nextPlayer = E.NextPlayer(curPlayer).Player;
 
                     if (nextPlayer == PlayerTypes.First)
@@ -53,7 +53,7 @@ namespace Game.Game
                     E.WhoseMove.Player = nextPlayer;
 
 
-                    curPlayer = E.CurPlayerI.Player;
+                    curPlayer = E.CurPlayerITC.Player;
 
                     //ViewDataSC.RotateAll.Invoke();
 

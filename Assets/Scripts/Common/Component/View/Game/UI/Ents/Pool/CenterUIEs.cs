@@ -30,7 +30,7 @@ namespace Game.Game
 
             new EntityCenterUIPool(gameW, centerZone);
             new CenterFriendUIE(gameW, centerZone);
-            new CenterUpgradeUIE(gameW, centerZone);
+            new CenterUpgradeUIE(centerZone);
             new CenterHintUIE(gameW, centerZone);
             new CenterSelectorUIE(gameW, centerZone);
             new CenterKingUIE(gameW, centerZone);

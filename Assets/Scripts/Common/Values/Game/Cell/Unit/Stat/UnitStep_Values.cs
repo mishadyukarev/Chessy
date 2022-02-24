@@ -15,7 +15,7 @@ namespace Game.Game
 
         #region CenterUpgrade
 
-        public const float CENTER_BONUS_SCOUT = 1f;
+        public const float CENTER_BONUS_SCOUT = 3f;
         public const float CENTER_KING_BONUS = 1f;
         public const float CENTER_PAWN_BONUS = 0.5f;
 
@@ -26,6 +26,11 @@ namespace Game.Game
         public const float CHANGE_CORNER_ARCHER = 0.5f;
         public const float ARCHER_FIRE = 1;
 
+        public const float NEED_FOR_DESTROY_BUILDING = 0.5f;
+        public const float NEED_FOR_BUILDING_ICEWALL = 0.5f;
+        public const float NEED_FOR_BUILDING_CITY = 0.5f;
+        public const float NEED_FOR_PAWN_FIRE = 0.5f;
+        public const float NEED_FOR_PAWN_PUT_OUT_FIRE = 0.5f;
         public static float NeedForAbility(in AbilityTypes uniq)
         {
             switch (uniq)
@@ -33,18 +38,13 @@ namespace Game.Game
                 case AbilityTypes.CircularAttack: return 0.5f;
                 case AbilityTypes.BonusNear: return 0.5f;
 
-                case AbilityTypes.FirePawn: return 0.5f;
-                case AbilityTypes.PutOutFirePawn: return 0.5f;
                 case AbilityTypes.SetFarm: return 0.5f;
-                case AbilityTypes.SetCity: return 0.5f;
-                case AbilityTypes.DestroyBuilding: return 0.5f;
 
                 case AbilityTypes.Seed: return 0.5f;
                 case AbilityTypes.GrowAdultForest: return 0.5f;
                 case AbilityTypes.StunElfemale: return 0.5f;
                 case AbilityTypes.ChangeDirectionWind: return 1;
 
-                case AbilityTypes.IceWall: return 0.5f;
                 case AbilityTypes.ActiveAroundBonusSnowy: return 0.5f;
                 case AbilityTypes.DirectWave: return 0.5f;
 

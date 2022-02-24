@@ -6,11 +6,6 @@ namespace Game.Game
     {
         public SystemViewUI(ref ActionC update, ref ActionC fixedUpdate, in Resources res, in EntitiesModel ents, in EntitiesViewUI entsUI, out Action updateUI)
         {
-            update.Action +=
-                 (Action)
-                new MistakeUIS(ents, entsUI).Run
-                + new MotionCenterUIS(ents, entsUI).Run;
-
             updateUI = (Action)
 
                 ///Right
@@ -43,6 +38,8 @@ namespace Game.Game
                 + new FriendZoneUISys(ents, entsUI).Run
                 + new PickUpgUIS(ents, entsUI).Run
                 + new HeroesSyncUIS(ents, entsUI).Run
+                + new MistakeUIS(ents, entsUI).Run
+                + new MotionCenterUIS(ents, entsUI).Run
 
                 ///Left
                 + new LeftZonesUIS(ents, entsUI).Run

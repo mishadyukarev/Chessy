@@ -1,14 +1,15 @@
 ﻿namespace Game.Game
 {
-    sealed class VisibElseS : SystemAbstract, IEcsRunSystem
+    sealed class VisibleUnitAndBuildingS : SystemAbstract, IEcsRunSystem
     {
-        public VisibElseS(in EntitiesModel ents) : base(ents)
+        internal VisibleUnitAndBuildingS(in EntitiesModel ents) : base(ents)
         {
+
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 if (E.UnitTC(idx_0).HaveUnit)
                 {
@@ -71,12 +72,12 @@
                     }
                 }
 
-                E.BuildE(idx_0).IsVisible(PlayerTypes.First) = true;
-                E.BuildE(idx_0).IsVisible(PlayerTypes.Second) = true;
+                E.BuildEs(idx_0).SetVisible(PlayerTypes.First, true);
+                E.BuildEs(idx_0).SetVisible(PlayerTypes.Second, true);
 
-                if (E.BuildTC(idx_0).HaveBuilding)
+                if (E.BuildingTC(idx_0).HaveBuilding)
                 {
-                    E.BuildE(idx_0).IsVisible(E.BuildPlayerTC(idx_0).Player) = true;
+                    E.BuildEs(idx_0).SetVisible(E.BuildPlayerTC(idx_0).Player, true);
 
                     if (E.AdultForestC(idx_0).HaveAnyResources)
                     {
@@ -95,9 +96,9 @@
                                 }
                             }
                         }
-                        E.BuildE(idx_0).IsVisible(E.NextPlayer(E.BuildPlayerTC(idx_0).Player).Player) = isVisibledNextPlayer;
+                        E.BuildEs(idx_0).SetVisible(E.NextPlayer(E.BuildPlayerTC(idx_0).Player).Player, isVisibledNextPlayer);
                     }
-                    else E.BuildE(idx_0).IsVisible(E.NextPlayer(E.BuildPlayerTC(idx_0).Player).Player) = true;
+                    else E.BuildEs(idx_0).SetVisible(E.NextPlayer(E.BuildPlayerTC(idx_0).Player).Player, true);
                 }
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
@@ -131,7 +132,7 @@
                         break;
 
                     }
-                }  
+                }
             }
         }
     }

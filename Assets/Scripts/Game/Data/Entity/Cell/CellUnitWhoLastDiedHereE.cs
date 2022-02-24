@@ -18,5 +18,11 @@
             LevelTC = levTC;
             PlayerTC = playerTC;
         }
+        public void Set(in CellUnitMainE unitMainE)
+        {
+            UnitTC = unitMainE.UnitTC;
+            LevelTC = unitMainE.LevelTC;
+            PlayerTC = unitMainE.PlayerTC;
+        }
     }
 }

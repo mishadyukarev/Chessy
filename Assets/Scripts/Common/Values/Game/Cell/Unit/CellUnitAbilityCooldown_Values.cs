@@ -2,8 +2,11 @@
 
 namespace Game.Game
 {
-    public sealed class CellUnitAbilityCooldownValues
+    public struct CellUnitAbilityCooldown_Values
     {
+
+        public static float NEED_FOR_ICE_WALL;
+
         public static int NeedAfterAbility(in AbilityTypes ability)
         {
             switch (ability)

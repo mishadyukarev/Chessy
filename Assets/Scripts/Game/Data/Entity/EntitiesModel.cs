@@ -1,14 +1,22 @@
 ﻿using Game.Common;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 
 namespace Game.Game
 {
     public sealed class EntitiesModel
     {
+        readonly ActionC[] _sounds0;
+        readonly ActionC[] _sounds1;
+        readonly ResourcesC[] _mistakeEconomyEs;
+        readonly ForPlayerPoolEs[] _forPlayerEs;
+        readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
+
+
         public PlayerTC WhoseMove;
         public PlayerTC WinnerC;
-        public PlayerTC CurPlayerI;
+        public PlayerTC CurPlayerITC;
 
         public SunSideTC SunSideTC;
         public DirectTC DirectWindTC;
@@ -26,7 +34,6 @@ namespace Game.Game
         public IdxC PreviousVisionIdxC;
         public IdxC CenterCloudIdxC;
 
-        public bool IsMyMove;
         public bool MotionIsActive;
         public bool EnvIsActive;
         public bool FriendIsActive;
@@ -38,22 +45,18 @@ namespace Game.Game
         public RpcPoolEs RpcPoolEs;
         public SelectedUnitE SelectedUnitE;
         public SelectedToolWeaponE SelectedTWE;
-        public UnitAttackUnitE UnitAttackE;
-        public AttackShieldE AttackShieldE;
-        public CellUnitShiftE UnitShiftE;
 
-        readonly ActionC[] _sounds0;
-        readonly ActionC[] _sounds1;
-        readonly ResourcesC[] _mistakeEconomyEs;
-        readonly ForPlayerPoolEs[] _forPlayerEs;
-        readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
+
         public ref ForPlayerPoolEs PlayerE(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerE(playerT).ResourcesC(resT);
         public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerE(playerT).LevelE(levT).ToolWeapons(twT);
-        public ref UnitInfoE UnitInfo(in PlayerTypes playerT, in LevelTypes levT, in UnitTypes unitT) => ref PlayerE(playerT).LevelE(levT).UnitsInfoE(unitT);
-        public ref UnitInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC, in UnitTC unitTC) => ref PlayerE(playerTC.Player).LevelE(levTC.Level).UnitsInfoE(unitTC.Unit);
+        public ref PlayerLevelUnitInfoE UnitInfo(in PlayerTypes playerT, in LevelTypes levT, in UnitTypes unitT) => ref PlayerE(playerT).LevelE(levT).UnitsInfoE(unitT);
+        public ref PlayerLevelUnitInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC, in UnitTC unitTC) => ref PlayerE(playerTC.Player).LevelE(levTC.Level).UnitsInfoE(unitTC.Unit);
+        public ref PlayerLevelUnitInfoE UnitInfo(in CellUnitMainE unitMainE) => ref PlayerE(unitMainE.PlayerTC.Player).LevelE(unitMainE.LevelTC.Level).UnitsInfoE(unitMainE.UnitTC.Unit);
         public PlayerUnitInfoE UnitUnfo(in PlayerTypes playerT, in UnitTypes unitT) => PlayerE(playerT).UnitE(unitT);
-        public ref InfoPlayerLevelBuildingE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerE(playerT).LevelE(levT).BuildingInfoE(buildT);
+        public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerE(playerT).LevelE(levT).BuildingInfoE(buildT);
+        public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTC playerT, in LevelTC levT, in BuildingTC buildT) => ref PlayerE(playerT.Player).LevelE(levT.Level).BuildingInfoE(buildT.Building);
+        public ref PlayerLevelBuildingInfoE BuildingsInfo(in CellBuildingMainE buildMainE) => ref PlayerE(buildMainE.PlayerC.Player).LevelE(buildMainE.LevelTC.Level).BuildingInfoE(buildMainE.BuildingC.Building);
         public ref ActionC Sound(in ClipTypes clip) => ref _sounds0[(int)clip - 1];
         public ref ActionC Sound(in AbilityTypes unique) => ref _sounds1[(int)unique - 1];
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
@@ -67,16 +70,16 @@ namespace Game.Game
 
         #region Cells
 
-        readonly CellPoolEs[] _cellEs;
+        readonly CellEs[] _cellEs;
         public byte LengthCells => (byte)_cellEs.Length;
 
 
-        public ref CellPoolEs CellEs(in byte idx) => ref _cellEs[idx];
+        public ref CellEs CellEs(in byte idx) => ref _cellEs[idx];
 
 
         #region Unit
 
-        public ref CellUnitPoolEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
+        public ref CellUnitEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
 
         public ref CellUnitMainE UnitMainE(in byte idx_cell) => ref UnitEs(idx_cell).MainE;
         public ref UnitTC UnitTC(in byte idx) => ref UnitMainE(idx).UnitTC;
@@ -91,6 +94,7 @@ namespace Game.Game
         public ref WaterC UnitWaterC(in byte idx) => ref UnitStatsE(idx).WaterC;
         public ref DamageC UnitDamageAttackC(in byte idx_cell) => ref UnitStatsE(idx_cell).DamageAttackC;
         public ref DamageC UnitDamageOnCellC(in byte idx_cell) => ref UnitStatsE(idx_cell).DamageOnCell;
+        
 
         public ref CellUnitMainToolWeaponE UnitMainTWE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
         public ref ToolWeaponTC UnitMainTWTC(in byte idx) => ref UnitMainTWE(idx).ToolWeaponTC;
@@ -123,15 +127,21 @@ namespace Game.Game
         #endregion
 
 
+        #region Building
 
-        public ref CellBuildingPoolEs BuildE(in byte idx) => ref CellEs(idx).BuildE;
-        public ref BuildingTC BuildTC(in byte idx) => ref BuildE(idx).BuildingC;
-        public ref LevelTC BuildLevelTC(in byte idx) => ref BuildE(idx).LevelTC;
-        public ref PlayerTC BuildPlayerTC(in byte idx) => ref BuildE(idx).PlayerC;
-        public ref HealthC BuildHpC(in byte idx) => ref BuildE(idx).HealthC;
-        public ref bool BuildSmelterTC(in byte idx) => ref BuildE(idx).IsActiveSmelter;
-        public ref ExtractE WoodcutterExtractE(in byte idx) => ref BuildE(idx).WoodcutterExtractE;
-        public ref ExtractE FarmExtractFertilizeE(in byte idx) => ref BuildE(idx).FarmExtractE;
+        public ref CellBuildingEs BuildEs(in byte idx) => ref CellEs(idx).BuildEs;
+        public ref CellBuildingMainE BuildingMainE(in byte idx_cell) => ref BuildEs(idx_cell).MainE;
+        public ref BuildingTC BuildingTC(in byte idx) => ref BuildingMainE(idx).BuildingC;
+        public ref LevelTC BuildLevelTC(in byte idx) => ref BuildingMainE(idx).LevelTC;
+        public ref PlayerTC BuildPlayerTC(in byte idx) => ref BuildingMainE(idx).PlayerC;
+        public ref HealthC BuildHpC(in byte idx) => ref BuildingMainE(idx).HealthC;
+        public ref bool IsActiveSmelter(in byte idx) => ref BuildingMainE(idx).IsActiveSmelter;
+
+        public ref CellBuildingExtractE BuildingExtractE(in byte idx_cell) => ref BuildEs(idx_cell).ExtractE;
+        public ref ResourcesC WoodcutterExtractE(in byte idx) => ref BuildingExtractE(idx).WoodcutterExtractC;
+        public ref ResourcesC FarmExtractFertilizeE(in byte idx) => ref BuildingExtractE(idx).FarmExtractC;
+
+        #endregion
 
 
         public ref CellEnvironmentEs EnvironmentEs(in byte idx) => ref CellEs(idx).EnvironmentEs;
@@ -203,7 +213,7 @@ namespace Game.Game
             RpcPoolEs = new RpcPoolEs(actions, namesMethods);
 
 
-            _cellEs = new CellPoolEs[Start_Values.ALL_CELLS_AMOUNT];
+            _cellEs = new CellEs[Start_Values.ALL_CELLS_AMOUNT];
             _idxs = new Dictionary<string, byte>();
             var xys = new List<byte[]>();
 
@@ -218,8 +228,30 @@ namespace Game.Game
 
             for (idx = 0; idx < Start_Values.ALL_CELLS_AMOUNT; idx++)
             {
-                _cellEs[idx] = new CellPoolEs(isActiveParenCells, idCells[idx], xys[idx], idx, this);
+                _cellEs[idx] = new CellEs(isActiveParenCells, idCells[idx], xys[idx], idx, this);
             }
+
+            switch (GameModeC.CurGameMode)
+            {
+                case GameModes.TrainingOff:
+                    CurPlayerITC.Player = PlayerTypes.First;
+                    break;
+
+                case GameModes.WithFriendOff:
+                    CurPlayerITC.Player = WhoseMove.Player;
+                    break;
+
+                case GameModes.PublicOn:
+                    CurPlayerITC.Player = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                    break;
+
+                case GameModes.WithFriendOn:
+                    CurPlayerITC.Player = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                    break;
+
+                default: throw new Exception();
+            }
+
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -238,7 +270,7 @@ namespace Game.Game
                         {
                             if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= Start_Values.SpawnPercent(EnvironmentTypes.Mountain))
                             {
-                                MountainC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.ENVIRONMENT_MAX);
+                                MountainC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
                                 amountMountains++;
                             }
 
@@ -248,7 +280,7 @@ namespace Game.Game
                             {
                                 if (UnityEngine.Random.Range(0f, 1f) <= Start_Values.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
-                                    AdultForestC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.ENVIRONMENT_MAX);
+                                    AdultForestC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
                                 }
                             }
                         }
@@ -257,7 +289,7 @@ namespace Game.Game
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= Start_Values.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
-                                AdultForestC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, CellEnvironment_Values.ENVIRONMENT_MAX);
+                                AdultForestC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
                             }
                         }
 
@@ -323,11 +355,11 @@ namespace Game.Game
                                 CellEs(idx_0).TrailHealthC(dirT).Health = 0;
                             }
                         }
-
                         UnitTC(idx_0).Unit = UnitTypes.King;
                         UnitLevelTC(idx_0).Level = LevelTypes.First;
                         UnitPlayerTC(idx_0).Player = PlayerTypes.Second;
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
+
 
                         UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
                         UnitStepC(idx_0).Steps = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).MaxSteps;
@@ -347,10 +379,7 @@ namespace Game.Game
                             }
                         }
 
-                        BuildTC(idx_0).Building = BuildingTypes.City;
-                        BuildPlayerTC(idx_0).Player = PlayerTypes.Second;
-                        BuildHpC(idx_0).Health = Building_Values.MaxHealth(BuildingTypes.City);
-                        BuildLevelTC(idx_0).Level = LevelTypes.First;
+                        BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, Building_Values.HELTH_CITY, PlayerTypes.Second);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
@@ -368,7 +397,6 @@ namespace Game.Game
 
                         UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                         UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
-
 
                         var rand = UnityEngine.Random.Range(0f, 1f);
 

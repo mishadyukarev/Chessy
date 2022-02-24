@@ -16,7 +16,7 @@ namespace Game.Game
 
             if (E.UnitTC(idx_sel).HaveUnit)
             {
-                if (E.UnitPlayerTC(idx_sel).Is(E.CurPlayerI.Player))
+                if (E.UnitPlayerTC(idx_sel).Is(E.CurPlayerITC.Player))
                 {
                     isEnableButt = true;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public struct CellPoolEs
+    public struct CellEs
     {
         readonly CellPlayerPoolEs[] _forPlayerEs;
 
@@ -16,8 +16,8 @@ namespace Game.Game
         public bool IsActiveParentSelf;
 
         public readonly CellE CellE;
-        public CellUnitPoolEs UnitEs;
-        public CellBuildingPoolEs BuildE;
+        public CellUnitEs UnitEs;
+        public CellBuildingEs BuildEs;
         public CellEnvironmentEs EnvironmentEs;
         public CellEffectE EffectEs;
         public CellRiverE RiverEs;
@@ -40,7 +40,7 @@ namespace Game.Game
                 return idxsC;
             }
         }
-        public byte[] Idxs
+        public byte[] IdxsAround
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Game.Game
         public ref HealthC TrailHealthC(in DirectTypes dir) => ref _trailHealthCs[(byte)dir - 1];
         public ref CellPlayerPoolEs Player(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
 
-        internal CellPoolEs(in bool[] isActiveParents, in int idCell, byte[] xy, in byte idx, in EntitiesModel e) : this()
+        internal CellEs(in bool[] isActiveParents, in int idCell, byte[] xy, in byte idx, in EntitiesModel e) : this()
         {
             IsActiveParentSelf = isActiveParents[idx];
 
@@ -149,8 +149,8 @@ namespace Game.Game
             _trailHealthCs = new HealthC[(byte)DirectTypes.End - 1];
 
             CellE = new CellE(idx, xy, idCell);
-            BuildE = new CellBuildingPoolEs((byte)PlayerTypes.End);
-            UnitEs = new CellUnitPoolEs(default);
+            BuildEs = new CellBuildingEs((byte)PlayerTypes.End);
+            UnitEs = new CellUnitEs(default);
             RiverEs = new CellRiverE(default);
         }
     }

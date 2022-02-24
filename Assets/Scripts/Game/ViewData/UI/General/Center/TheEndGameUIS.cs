@@ -15,7 +15,7 @@ namespace Game.Game
                 EndGame<EndGameUIEC>().SetActiveZone(false);
             }
 
-            else if (E.WinnerC.Player != E.CurPlayerI.Player)
+            else if (E.WinnerC.Player != E.CurPlayerITC.Player)
             {
                 EndGame<EndGameUIEC>().SetText(false);
                 EndGame<EndGameUIEC>().SetActiveZone(true);

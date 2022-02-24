@@ -20,21 +20,21 @@
 
                     if (E.AdultForestC(idx_0).HaveAnyResources)
                     {
-                        if (E.BuildTC(idx_0).Is(BuildingTypes.Camp) || !E.BuildTC(idx_0).HaveBuilding)
+                        if (E.BuildingTC(idx_0).Is(BuildingTypes.Camp) || !E.BuildingTC(idx_0).HaveBuilding)
                         {
-                            E.BuildE(idx_0).Set(BuildingTypes.Woodcutter, LevelTypes.First, 1, E.UnitPlayerTC(idx_0).Player);
+                            E.BuildingMainE(idx_0).Set(BuildingTypes.Woodcutter, LevelTypes.First, 1, E.UnitPlayerTC(idx_0).Player);
                         }
 
-                        else if (!E.BuildTC(idx_0).Is(BuildingTypes.Woodcutter))
+                        else if (!E.BuildingTC(idx_0).Is(BuildingTypes.Woodcutter))
                         {
                             E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
                         }
                     }
                     else
                     {
-                        E.BuildTC(idx_0).Building = BuildingTypes.None;
+                        E.BuildingTC(idx_0).Building = BuildingTypes.None;
 
-                        E.YoungForestC(idx_0).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
+                        E.YoungForestC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
                     }
                 }
                 else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed)

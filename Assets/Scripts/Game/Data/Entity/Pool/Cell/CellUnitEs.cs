@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public struct CellUnitPoolEs
+    public struct CellUnitEs
     {
         readonly AbilityTC[] _uniqueButtons;
         readonly CooldownC[] _abilities;
@@ -22,7 +22,6 @@ namespace Game.Game
         public CellUnitExtractE ExtractE;
 
 
-
         public IdxsC ForAttack(in AttackTypes attack) => _forAttack[(byte)attack - 1];
         public ref StepsC NeedSteps(in byte idx_cell) => ref _needStepsForShift[idx_cell];
 
@@ -31,7 +30,7 @@ namespace Game.Game
         public ref CellUnitForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player];
 
 
-        internal CellUnitPoolEs(in bool def) : this()
+        internal CellUnitEs(in bool def) : this()
         {
             _uniqueButtons = new AbilityTC[(byte)ButtonTypes.End - 1];
 
@@ -53,7 +52,7 @@ namespace Game.Game
             _forAttack[(byte)AttackTypes.Unique - 1] = new IdxsC(new HashSet<byte>());
         }
 
-        public void Set(in CellUnitPoolEs unitE)
+        public void Set(in CellUnitEs unitE)
         {
             MainE = unitE.MainE;
             EffectsE = unitE.EffectsE;

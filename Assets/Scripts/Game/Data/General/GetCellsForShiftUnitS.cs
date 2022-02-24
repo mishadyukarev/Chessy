@@ -4,11 +4,12 @@
     {
         internal GetCellsForShiftUnitS(in EntitiesModel ents) : base(ents)
         {
+
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.UnitEs(idx_0).ForShift.Clear();
                 E.UnitEs(idx_0).ForShift.Clear();
@@ -18,7 +19,7 @@
                     E.UnitEs(idx_0).NeedSteps(idx).Steps = 0;
                     E.UnitEs(idx_0).NeedSteps(idx).Steps = 0;
                 }
-                    
+
                 if (E.CellEs(idx_0).IsActiveParentSelf)
                 {
                     if (!E.UnitEffectStunC(idx_0).IsStunned && E.UnitTC(idx_0).HaveUnit && !E.UnitMainE(idx_0).IsAnimal)
@@ -46,7 +47,7 @@
                                 if (needSteps <= E.UnitStepC(idx_0).Steps || E.UnitStepC(idx_0).Steps >= E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxSteps)
                                 {
                                     E.UnitEs(idx_0).ForShift.Add(idx_to);
-                                    
+
                                 }
                             }
                         }
