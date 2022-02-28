@@ -1,7 +1,6 @@
 ﻿using System;
-using static Game.Game.EntityVPool;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class RightUnitEventUIS : SystemUIAbstract
     {
@@ -13,8 +12,8 @@ namespace Game.Game
             UIEs.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
             UIEs.RightEs.Unique(ButtonTypes.Fifth).Button.AddListener(delegate { Unique(ButtonTypes.Fifth); });
 
-            RightProtectUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
-            RightRelaxUIE.Button<ButtonUIC>().AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
+            UIEs.RightEs.ProtectE.ButtonUIC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
+            UIEs.RightEs.ProtectE.ButtonUIC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
         }
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)
@@ -32,7 +31,7 @@ namespace Game.Game
                     E.RpcPoolEs.ConditionUnitToMaster(E.SelectedIdxC.Idx, condUnitType);
                 }
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
 
         void Unique(in ButtonTypes uniqueButton)
@@ -156,9 +155,9 @@ namespace Game.Game
                     }
                 }
 
-                else SoundV(ClipTypes.Mistake).Play();
+                else E.Sound(ClipTypes.Mistake).Action.Invoke();
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
 
         void TryOnHint(VideoClipTypes videoClip)

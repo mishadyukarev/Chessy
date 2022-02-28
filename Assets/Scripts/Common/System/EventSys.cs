@@ -1,4 +1,4 @@
-﻿namespace Game.Common
+﻿namespace Chessy.Common
 {
     public sealed class EventSys
     {

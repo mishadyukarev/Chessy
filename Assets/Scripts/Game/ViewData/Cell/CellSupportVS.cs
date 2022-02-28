@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class CellSupportVS : SystemViewAbstract, IEcsRunSystem
     {
@@ -77,12 +77,12 @@ namespace Game.Game
                 }
 
 
-                SupportCellVEs.Support<SpriteRendererVC>(idx_0).SetActive(_isActive);
-                SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = _color;
+                SupportCellVEs.Support(idx_0).SetActive(_isActive);
+                SupportCellVEs.Support(idx_0).Color = _color;
             }
 
-            SupportCellVEs.Support<SpriteRendererVC>(E.SelectedIdxC.Idx).Enable();
-            SupportCellVEs.Support<SpriteRendererVC>(E.SelectedIdxC.Idx).Color = ColorsValues.Color(SupportCellVisionTypes.Selector);
+            SupportCellVEs.Support(E.SelectedIdxC.Idx).Enable();
+            SupportCellVEs.Support(E.SelectedIdxC.Idx).Color = ColorsValues.Color(SupportCellVisionTypes.Selector);
 
 
             if (cellClick.Is(CellClickTypes.UniqueAbility))
@@ -95,8 +95,8 @@ namespace Game.Game
                         {
                             var idx_1 = E.CellEs(E.CenterCloudIdxC.Idx).AroundCellE(dirT).IdxC.Idx;
 
-                            SupportCellVEs.Support<SpriteRendererVC>(idx_1).Enable();
-                            SupportCellVEs.Support<SpriteRendererVC>(idx_1).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                            SupportCellVEs.Support(idx_1).Enable();
+                            SupportCellVEs.Support(idx_1).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                         }
                     }
                 }
@@ -105,8 +105,8 @@ namespace Game.Game
                 {
                     foreach (var idx in E.UnitEs(E.SelectedIdxC.Idx).ForArson.Idxs)
                     {
-                        SupportCellVEs.Support<SpriteRendererVC>(idx).Enable();
-                        SupportCellVEs.Support<SpriteRendererVC>(idx).Color = ColorsValues.Color(SupportCellVisionTypes.FireSelector);
+                        SupportCellVEs.Support(idx).Enable();
+                        SupportCellVEs.Support(idx).Color = ColorsValues.Color(SupportCellVisionTypes.FireSelector);
                     }
                 }
             }
@@ -118,20 +118,20 @@ namespace Game.Game
 
                 foreach (var idx_0 in idxs)
                 {
-                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
-                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                    SupportCellVEs.Support(idx_0).Enable();
+                    SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                 }
 
                 foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Idxs)
                 {
-                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
-                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
+                    SupportCellVEs.Support(idx_0).Enable();
+                    SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
                 }
 
                 foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Idxs)
                 {
-                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Enable();
-                    SupportCellVEs.Support<SpriteRendererVC>(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                    SupportCellVEs.Support(idx_0).Enable();
+                    SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
                 }
             }
         }

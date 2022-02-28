@@ -1,9 +1,9 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-namespace Game.Menu
+namespace Chessy.Menu
 {
     public sealed class EventSys
     {

@@ -1,7 +1,6 @@
-﻿using Game.Common;
-using static Game.Game.EntityVPool;
+﻿using Chessy.Common;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class SoundVS : SystemViewAbstract, IEcsRunSystem
     {
@@ -11,9 +10,9 @@ namespace Game.Game
 
         public void Run()
         {
-            if (SoundV(ClipTypes.Truce).IsPlaying
-                || SoundV(ClipTypes.AfterBuildTown).IsPlaying
-                || SoundV(ClipTypes.PickUpgrade).IsPlaying)
+            if (VEs.EntityVPool.SoundV(ClipTypes.Truce).IsPlaying
+                || VEs.EntityVPool.SoundV(ClipTypes.AfterBuildTown).IsPlaying
+                || VEs.EntityVPool.SoundV(ClipTypes.PickUpgrade).IsPlaying)
             {
                 SoundC.Volume = 0;
             }

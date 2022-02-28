@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public sealed class RpcS : MonoBehaviour
     {

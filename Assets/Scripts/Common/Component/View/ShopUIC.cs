@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Game.Common
+namespace Chessy.Common
 {
     public struct ShopUIC
     {

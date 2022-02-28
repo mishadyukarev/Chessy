@@ -1,13 +1,16 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using System;
 using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class RotateAllVS : SystemViewAbstract, IEcsRunSystem
     {
+        readonly Vector3 _gamePosCamera;
+
         internal RotateAllVS(in EntitiesModel ents, in EntitiesView entsView) : base(ents, entsView)
         {
+            _gamePosCamera = new Vector3(7.4f, 4.8f, -2);
         }
 
         public void Run()
@@ -25,18 +28,31 @@ namespace Game.Game
                     case PlayerTypes.None: throw new Exception();
 
                     case PlayerTypes.First:
-                        CellTrailVEs.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 0);
+                        //VEs.CellEs(idx_0).Tra CellTrailVEs.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 0);
                         break;
 
                     case PlayerTypes.Second:
-                        CellTrailVEs.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 180);
+                        //CellTrailVEs.TrailCellVC<ParentTransformVC>(DirectTypes.Up, idx_0).Transform.localEulerAngles = new Vector3(0, 0, 180);
                         break;
 
                     default: throw new Exception();
                 }
             }
 
-            CameraVC.SetPosRotClient(curPlayer, MainGoVC.Pos);
+
+            if (curPlayer == PlayerTypes.None) throw new System.Exception();
+
+            if (curPlayer == PlayerTypes.First)
+            {
+                VEs.CameraVC.Transform.position = MainGoVC.Pos + _gamePosCamera;
+                VEs.CameraVC.Transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                VEs.CameraVC.Transform.position = MainGoVC.Pos + _gamePosCamera + new Vector3(0, 0.5f, 0);
+                VEs.CameraVC.Transform.eulerAngles = new Vector3(0, 0, 180);
+            }
+
         }
     }
 }

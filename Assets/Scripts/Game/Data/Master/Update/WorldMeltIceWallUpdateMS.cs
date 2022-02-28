@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     internal class WorldMeltIceWallUpdateMS : SystemAbstract, IEcsRunSystem
     {

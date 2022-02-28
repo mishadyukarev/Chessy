@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 
-namespace Game.Menu
+namespace Chessy.Menu
 {
     public sealed class ConnectorMenuSys : IEcsRunSystem
     {

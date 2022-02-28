@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class RayS : SystemAbstract, IEcsRunSystem
     {

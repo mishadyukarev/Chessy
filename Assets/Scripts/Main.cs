@@ -1,11 +1,11 @@
 ﻿using ECS;
-using Game.Common;
-using Game.Game;
-using Game.Menu;
+using Chessy.Common;
+using Chessy.Game;
+using Chessy.Menu;
 using System;
 using UnityEngine;
 
-namespace Game
+namespace Chessy
 {
     sealed class Main : MonoBehaviour
     {
@@ -99,16 +99,10 @@ namespace Game
 
                 case SceneTypes.Game:
                     {
-                        ref var gameW = ref _toggleW;
+                        var resources = new Game.Resources(default);
 
-                        if (gameW != default) gameW = default;
-
-                        gameW = new EcsWorld();
-
-                        var resources = new Game.Resources(gameW);
-
-                        var entViews = new EntitiesView(gameW, out var forData);
-                        var uIEs = new EntitiesViewUI(gameW);
+                        var entViews = new EntitiesView(out var forData);
+                        var uIEs = new EntitiesViewUI();
                         var ents = new EntitiesModel(forData, RpcS.NamesMethods);
 
                         new SystemViewUI(ref _runUpdate, ref _runFixedUpdate, resources, ents, uIEs, out var updateUI);
@@ -117,7 +111,7 @@ namespace Game
 
                         new Events(updateView, updateUI, ents, uIEs);
 
-                        EntityVPool.Photon<PhotonE>().AddComponent<RpcS>().GiveData(ents, updateView,  updateUI, runAfterDoing);
+                        entViews.EntityVPool.Photon.AddComponent<RpcS>().GiveData(ents, updateView,  updateUI, runAfterDoing);
                         RpcS.SyncAllMaster();
 
                         break;

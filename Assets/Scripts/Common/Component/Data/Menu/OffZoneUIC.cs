@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Game.Menu
+namespace Chessy.Menu
 {
     public struct OffZoneUIC
     {

@@ -1,8 +1,8 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using Photon.Pun;
 using System;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class DonerMS : SystemAbstract, IEcsRunSystem
     {

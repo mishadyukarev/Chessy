@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class CellUnitEffectShieldVS : SystemViewAbstract, IEcsRunSystem
     {
@@ -12,11 +12,11 @@
             {
                 if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).IsVisible)
                 {
-                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.SetActive(E.UnitEffectShield(idx_0).HaveAnyProtection);
+                    VEs.UnitEffectVEs(idx_0).ShieldVE.SetActive(E.UnitEffectShield(idx_0).HaveAnyProtection);
                 }
                 else
                 {
-                    VEs.UnitEffectVEs(idx_0).ShieldVE.SR.Disable();
+                    VEs.UnitEffectVEs(idx_0).ShieldVE.Disable();
                 }
             }
         }

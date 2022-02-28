@@ -1,7 +1,7 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using Photon.Pun;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class UpdatorMS : SystemAbstract, IEcsRunSystem
     {

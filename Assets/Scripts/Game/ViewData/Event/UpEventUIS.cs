@@ -1,16 +1,17 @@
-﻿using Game.Common;
-using static Game.Game.EconomyUpUIE;
+﻿using Chessy.Common;
+using Photon.Pun;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class UpEventUIS
     {
-        internal UpEventUIS()
+        internal UpEventUIS(in EntitiesModel ents, in EntitiesViewUI entsUI)
         {
-            Alpha<ButtonUIC>().AddListener(OpenShop);
+            entsUI.UpEs.AlphaC.AddListener(OpenShop);
+            entsUI.UpEs.LeaveC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
         }
 
-        private void OpenShop()
+        void OpenShop()
         {
             ShopUIC.EnableZone();
         }

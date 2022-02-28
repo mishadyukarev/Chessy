@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Game.Game
+namespace Chessy.Game
 {
 
     sealed class InputS : SystemAbstract, IEcsRunSystem

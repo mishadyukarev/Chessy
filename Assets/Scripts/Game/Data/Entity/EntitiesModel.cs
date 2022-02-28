@@ -1,9 +1,9 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public sealed class EntitiesModel
     {

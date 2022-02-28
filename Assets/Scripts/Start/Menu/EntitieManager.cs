@@ -1,9 +1,9 @@
 ﻿using ECS;
-using Game.Common;
+using Chessy.Common;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Menu
+namespace Chessy.Menu
 {
     public sealed class EntitieManager
     {

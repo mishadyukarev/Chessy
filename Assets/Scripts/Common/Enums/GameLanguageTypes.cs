@@ -1,4 +1,4 @@
-﻿namespace Game.Common
+﻿namespace Chessy.Common
 {
     public enum GameLanguageTypes
     {

@@ -1,6 +1,6 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 
-namespace Game.Menu
+namespace Chessy.Menu
 {
     public sealed class SyncSys : IEcsRunSystem
     {

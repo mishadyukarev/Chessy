@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public struct IdxC
     {

@@ -1,6 +1,6 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public struct ResourcesC
     {

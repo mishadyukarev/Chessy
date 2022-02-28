@@ -1,34 +1,33 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using Photon.Pun;
 using UnityEngine;
-using static Game.Game.CenterHintUIE;
-using static Game.Game.CenterUpgradeUIE;
-using static Game.Game.EconomyUpUIE;
-using static Game.Game.EntityCenterUIPool;
-using static Game.Game.EntityVPool;
+using static Chessy.Game.CenterHintUIE;
+using static Chessy.Game.CenterUpgradeUIE;
+using static Chessy.Game.UpEconomyUIE;
+using static Chessy.Game.EntityVPool;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class CenterEventUIS : SystemUIAbstract
     {
         internal CenterEventUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
-            Ready<ButtonUIC>().AddListener(Ready);
-            JoinDiscord<ButtonUIC>().AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
+            UIEs.CenterEs.ReadyButtonC.AddListener(Ready);
+            UIEs.CenterEs.JoinDiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
 
-            CenterKingUIE.Button.AddListener(delegate { GetKing(); });
-            Leave<ButtonUIC>().AddListener(delegate { PhotonNetwork.LeaveRoom(); });
-            CenterFriendUIE.ButtonC.AddListener(FriendReady);
-            Hint<ButtonUIC>().AddListener(Hint);
+            UIEs.CenterEs.KingE.Button.AddListener(delegate { GetKing(); });
 
-            Units(UnitTypes.King).AddListener(delegate { UpgradeUnit(UnitTypes.King); });
-            Units(UnitTypes.Pawn).AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
-            Units(UnitTypes.Scout).AddListener(delegate { UpgradeUnit(UnitTypes.Scout); });
+            UIEs.CenterEs.FriendE.ButtonC.AddListener(FriendReady);
+            //UIEs.CenterEs.AddListener(Hint);
 
-            Builds(BuildingTypes.Farm).AddListener(delegate { UpgradeBuild(BuildingTypes.Farm); });
-            Builds(BuildingTypes.Woodcutter).AddListener(delegate { UpgradeBuild(BuildingTypes.Woodcutter); });
+            //UIEs.CenterEs.Units(UnitTypes.King).AddListener(delegate { UpgradeUnit(UnitTypes.King); });
+            //Units(UnitTypes.Pawn).AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
+            //Units(UnitTypes.Scout).AddListener(delegate { UpgradeUnit(UnitTypes.Scout); });
 
-            Water.AddListener(UpgradeWater);
+            //Builds(BuildingTypes.Farm).AddListener(delegate { UpgradeBuild(BuildingTypes.Farm); });
+            //Builds(BuildingTypes.Woodcutter).AddListener(delegate { UpgradeBuild(BuildingTypes.Woodcutter); });
+
+            //Water.AddListener(UpgradeWater);
 
 
             UIEs.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
@@ -56,7 +55,7 @@ namespace Game.Game
                     E.CellClickTC.Click = CellClickTypes.SetUnit;
                 }
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
         void Hint()
         {
@@ -81,7 +80,7 @@ namespace Game.Game
 
                 UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
 
         void UpgradeBuild(BuildingTypes build)
@@ -92,7 +91,7 @@ namespace Game.Game
 
                 UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
 
         void UpgradeWater()
@@ -103,7 +102,7 @@ namespace Game.Game
 
                 UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
 
         void GetHero(in UnitTypes unit)
@@ -112,7 +111,7 @@ namespace Game.Game
             {
                 E.RpcPoolEs.GetHeroToMaster(unit);
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
 
         private void OpenShop()

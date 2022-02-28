@@ -1,7 +1,7 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class TruceMS : SystemAbstract, IEcsRunSystem
     {

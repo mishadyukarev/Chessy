@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Purchasing; //библиотека с покупками, будет доступна когда активируем сервисы
 
-namespace Game.Common
+namespace Chessy.Common
 {
     public sealed class IAPCore : IStoreListener //для получения сообщений из Unity Purchasing
     {

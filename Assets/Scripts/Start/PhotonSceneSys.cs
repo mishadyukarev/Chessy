@@ -1,8 +1,8 @@
-﻿using Game.Game;
+﻿using Chessy.Game;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Game.Common
+namespace Chessy.Common
 {
     public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks
     {

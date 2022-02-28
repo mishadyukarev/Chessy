@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public readonly struct Resources
     {
@@ -12,7 +12,7 @@ namespace Game.Game
         public SpriteVC Sprite(in AbilityTypes ability) => _abilities[ability];
 
 
-        public Resources(in EcsWorld gameW)
+        public Resources(in bool def)
         {
             var spriteName = "_Sprite";
 

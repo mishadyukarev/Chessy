@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Common
+namespace Chessy.Common
 {
     public sealed class CreateVSs
     {

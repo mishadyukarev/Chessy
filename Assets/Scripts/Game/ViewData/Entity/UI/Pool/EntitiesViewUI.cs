@@ -1,0 +1,25 @@
+﻿namespace Chessy.Game
+{
+    public class EntitiesViewUI
+    {
+        public readonly LeftUIEs LeftEs;
+        public readonly RightUIEs RightEs;
+        public readonly CenterUIEs CenterEs;
+        public readonly DownUIEs DownEs;
+        public readonly UpUIEs UpEs;
+
+        public LeftCityUIEs LeftCityEs => LeftEs.CityEs;
+        public LeftEnvironmentUIEs LeftEnvEs => LeftEs.EnvironmentEs;
+        public LeftMarketUIEs LeftMarketEs => LeftEs.MarketEs;
+        public LeftSmelterUIEs LeftSmelterEs => LeftEs.SmelterEs;
+
+        public EntitiesViewUI()
+        {
+            LeftEs = new LeftUIEs(default);
+            RightEs = new RightUIEs(default);
+            CenterEs = new CenterUIEs(default);
+            DownEs = new DownUIEs(default);
+            UpEs = new UpUIEs(default);
+        }
+    }
+}

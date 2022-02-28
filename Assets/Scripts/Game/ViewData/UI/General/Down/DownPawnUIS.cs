@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class DownPawnUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -8,13 +8,13 @@
 
         public void Run()
         {
-            var curPlayerI = E.CurPlayerITC.Player;
+            //var curPlayerI = E.CurPlayerITC.Player;
 
-            var amountPawnsInGame = E.UnitInfo(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
-                + E.UnitInfo(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;
+            //var amountPawnsInGame = E.UnitInfo(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
+            //    + E.UnitInfo(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;
 
-            DownPawnUIE.TextUIC.Text = amountPawnsInGame.ToString() + "/" + E.PlayerE(curPlayerI).MaxAvailablePawns;
-            UIEs.DownEs.PawnEs.MaxPeopleE.SetMaxPeople(E.PlayerE(curPlayerI).PeopleInCity);
+            //DownPawnUIE.TextUIC.Text = amountPawnsInGame.ToString() + "/" + E.PlayerE(curPlayerI).MaxAvailablePawns;
+            //UIEs.DownEs.PawnEs.MaxPeopleE.SetMaxPeople(E.PlayerE(curPlayerI).PeopleInCity);
         }
     }
 }

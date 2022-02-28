@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class CellCloudVS : SystemViewAbstract, IEcsRunSystem
     {
@@ -10,17 +10,17 @@
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                CellCloudVEs.CloudCellVC<SpriteRendererVC>(idx_0).SetActive(false);
+                VEs.CellEs(idx_0).CloudCellVC.SetActive(false);
             }
 
             var centerCloud = E.CenterCloudIdxC.Idx;
 
             foreach (var cellE in E.CellEs(centerCloud).AroundCellEs)
             {
-                CellCloudVEs.CloudCellVC<SpriteRendererVC>(cellE.IdxC.Idx).SetActive(true);
+                VEs.CellEs(cellE.IdxC.Idx).CloudCellVC.SetActive(true);
             }
 
-            CellCloudVEs.CloudCellVC<SpriteRendererVC>(centerCloud).SetActive(true);
+            VEs.CellEs(centerCloud).CloudCellVC.SetActive(true);
         }
     }
 }

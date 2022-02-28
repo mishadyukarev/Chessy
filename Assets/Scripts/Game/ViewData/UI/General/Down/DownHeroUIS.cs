@@ -1,6 +1,6 @@
-﻿using static Game.Game.DownHeroUIE;
+﻿using static Chessy.Game.DownHeroUIE;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class DownHeroUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -10,37 +10,37 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayerI = E.CurPlayerITC.Player;
+            //var curPlayerI = E.CurPlayerITC.Player;
 
-            var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
+            //var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 
-            if (myHeroT != UnitTypes.None && E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).HaveInInventor)
-            {
-                Parent.SetActive(true);
+            //if (myHeroT != UnitTypes.None && E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).HaveInInventor)
+            //{
+            //    Parent.SetActive(true);
 
-                var cooldown = E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).ScoutHeroCooldownC.Cooldown;
+            //    var cooldown = E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).ScoutHeroCooldownC.Cooldown;
 
-                for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
-                {
-                    Image(unit).SetActive(false);
-                }
+            //    for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
+            //    {
+            //        Image(unit).SetActive(false);
+            //    }
 
-                Image(myHeroT).SetActive(true);
+            //    Image(myHeroT).SetActive(true);
 
-                if (cooldown > 0)
-                {
-                    Cooldown.SetActiveParent(true);
-                    Cooldown.Text = cooldown.ToString();
-                }
-                else
-                {
-                    Cooldown.SetActiveParent(false);
-                }
-            }
-            else
-            {
-                Parent.SetActive(false);
-            }
+            //    if (cooldown > 0)
+            //    {
+            //        Cooldown.SetActiveParent(true);
+            //        Cooldown.Text = cooldown.ToString();
+            //    }
+            //    else
+            //    {
+            //        Cooldown.SetActiveParent(false);
+            //    }
+            //}
+            //else
+            //{
+            //    Parent.SetActive(false);
+            //}
 
         }
     }

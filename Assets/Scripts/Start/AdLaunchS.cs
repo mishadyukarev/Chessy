@@ -2,7 +2,7 @@
 using System;
 using Yodo1.MAS;
 
-namespace Game.Common
+namespace Chessy.Common
 {
     public sealed class AdLaunchS : IEcsRunSystem
     {

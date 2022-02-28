@@ -1,6 +1,6 @@
 ﻿using ECS;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public struct CellEffectE
     {

@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class RightZoneUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -24,7 +24,7 @@
                 }
             }
 
-            UIEs.RightEs.Zone.Zone.SetActive(activeParent);
+            UIEs.RightEs.Zone.SetActive(activeParent);
         }
     }
 }

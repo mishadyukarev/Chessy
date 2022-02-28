@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class EnvUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -10,9 +10,9 @@
         {
             var idx_sel = E.SelectedIdxC.Idx;
 
-            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Food).Text = ((int)(E.FertilizeC(idx_sel).Resources * 100)).ToString();
-            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Wood).Text = ((int)(E.AdultForestC(idx_sel).Resources * 100)).ToString();
-            UIEs.LeftEnvEs.Resources<TextUIC>(ResourceTypes.Ore).Text = ((int)(E.HillC(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(E.FertilizeC(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(E.AdultForestC(idx_sel).Resources * 100)).ToString();
+            UIEs.LeftEnvEs.Envs[ResourceTypes.Ore].TextUI.text = ((int)(E.HillC(idx_sel).Resources * 100)).ToString();
         }
     }
 }

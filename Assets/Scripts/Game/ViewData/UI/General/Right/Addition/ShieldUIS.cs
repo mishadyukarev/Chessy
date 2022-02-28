@@ -1,5 +1,5 @@
 ﻿
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class ShieldUIS : SystemUIAbstract, IEcsRunSystem
     {

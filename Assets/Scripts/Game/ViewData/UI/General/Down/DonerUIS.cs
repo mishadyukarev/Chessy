@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class DonerUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -10,16 +10,16 @@ namespace Game.Game
 
         public void Run()
         {
-            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
-            {
-                UIEntDownDoner.Wait<GameObjectVC>().SetActive(false);
-                UIEntDownDoner.Doner<ButtonUIC>().Color = Color.white;
-            }
-            else
-            {
-                UIEntDownDoner.Wait<GameObjectVC>().SetActive(true);
-                UIEntDownDoner.Doner<ButtonUIC>().Color = Color.red;
-            }
+            //if (E.CurPlayerITC.Is(E.WhoseMove.Player))
+            //{
+            //    UIEntDownDoner.Wait<GameObjectVC>().SetActive(false);
+            //    UIEntDownDoner.Doner<ButtonUIC>().Color = Color.white;
+            //}
+            //else
+            //{
+            //    UIEntDownDoner.Wait<GameObjectVC>().SetActive(true);
+            //    UIEntDownDoner.Doner<ButtonUIC>().Color = Color.red;
+            //}
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class RiverCellVS : SystemViewAbstract, IEcsRunSystem
     {

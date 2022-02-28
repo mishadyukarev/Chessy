@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class UnitShiftS : SystemAbstract, IEcsRunSystem
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class CellUnitEffectFrozenArrawVS : SystemViewAbstract, IEcsRunSystem
     {
@@ -16,21 +16,21 @@ namespace Game.Game
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Disable();
+                VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Disable();
 
                 if (E.UnitTC(idx_0).HaveUnit)
                 {
                     if (E.UnitEffectFrozenArrawC(idx_0).HaveEffect)
                     {
-                        VEs.UnitEffectVEs(idx_0).FrozenArrawVE.SR.Enable();
+                        VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Enable();
 
                         if (E.SelectedIdxC.Idx == idx_0)
                         {
-                            VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _leftLocalScale;
+                            VEs.UnitEffectVEs(idx_0).Parent.LocalScale = _leftLocalScale;
                         }
                         else
                         {
-                            VEs.UnitEffectVEs(idx_0).FrozenArrawVE.Parent.LocalScale = _mainLocalScale;
+                            VEs.UnitEffectVEs(idx_0).Parent.LocalScale = _mainLocalScale;
                         }
                     }
                 }

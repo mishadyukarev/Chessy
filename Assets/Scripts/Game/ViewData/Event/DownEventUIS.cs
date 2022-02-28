@@ -1,8 +1,8 @@
 ﻿using System;
-using static Game.Game.DownToolWeaponUIEs;
-using static Game.Game.EntityVPool;
+using static Chessy.Game.DownToolWeaponUIEs;
+using static Chessy.Game.EntityVPool;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class DownEventUIS : SystemUIAbstract
     {
@@ -12,19 +12,19 @@ namespace Game.Game
         {
             _updateUI = updateUI;
 
-            DownScoutUIEs.Scout<ButtonUIC>().AddListener(ExecuteScout);
-            DownHeroUIE.ButtonC.AddListener(Hero);
+            UIEs.DownEs.DonerE.ButtonC.AddListener(Done);
 
-            UIEntDownDoner.Doner<ButtonUIC>().AddListener(Done);
+            UIEs.DownEs.ScoutE.ButtonC.AddListener(ExecuteScout);
+            UIEs.DownEs.HeroE.ButtonC.AddListener(Hero);
 
 
-            DownPawnUIE.ButtonUIC.AddListener(delegate { GetPawn(); });
+            UIEs.DownEs.PawnE.ButtonUIC.AddListener(delegate { GetPawn(); });
 
-            Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
-            Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            Button<ButtonUIC>(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
-            Button<ButtonUIC>(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
-            Button<ButtonUIC>(ToolWeaponTypes.Axe).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
+            //Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            //Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
+            //Button<ButtonUIC>(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
+            //Button<ButtonUIC>(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
+            //Button<ButtonUIC>(ToolWeaponTypes.Axe).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
         }
 
         void ExecuteScout()
@@ -42,10 +42,10 @@ namespace Game.Game
                 }
                 else
                 {
-                    SoundV(ClipTypes.Mistake).Play();
+                    E.Sound(ClipTypes.Mistake).Action.Invoke();
                 }
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
         void Hero()
         {
@@ -67,11 +67,11 @@ namespace Game.Game
                     }
                     else
                     {
-                        SoundV(ClipTypes.Mistake).Play();
+                        E.Sound(ClipTypes.Mistake).Action.Invoke();
                     }
                 }
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
         void Done()
         {
@@ -81,7 +81,7 @@ namespace Game.Game
             }
             else
             {
-                SoundV(ClipTypes.Mistake).Play();
+                E.Sound(ClipTypes.Mistake).Action.Invoke();
             }
         }
         void GetPawn()
@@ -111,7 +111,7 @@ namespace Game.Game
 
 
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
         void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
@@ -159,7 +159,7 @@ namespace Game.Game
 
                 E.CellClickTC.Click = CellClickTypes.GiveTakeTW;
             }
-            else SoundV(ClipTypes.Mistake).Play();
+            else E.Sound(ClipTypes.Mistake).Action.Invoke();
 
             _updateUI.Invoke();
         }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using static Game.Game.EconomyUpUIE;
+﻿using System.Collections.Generic;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class EconomyUpUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -47,17 +45,17 @@ namespace Game.Game
                 }
             }
 
-            if (_extracts[ResourceTypes.Food] < 0) EconomyExtract<TextUIC>(ResourceTypes.Food).Text = Math.Round(_extracts[ResourceTypes.Food], 2).ToString();
-            else EconomyExtract<TextUIC>(ResourceTypes.Food).Text = "+ " + Math.Round(_extracts[ResourceTypes.Food], 2);
+            //if (_extracts[ResourceTypes.Food] < 0) EconomyExtract<TextUIC>(ResourceTypes.Food).Text = Math.Round(_extracts[ResourceTypes.Food], 2).ToString();
+            //else EconomyExtract<TextUIC>(ResourceTypes.Food).Text = "+ " + Math.Round(_extracts[ResourceTypes.Food], 2);
 
-            EconomyExtract<TextUIC>(ResourceTypes.Wood).Text = "+ " + Math.Round(_extracts[ResourceTypes.Wood], 2);
-            EconomyExtract<TextUIC>(ResourceTypes.Ore).Text = "+ " + Math.Round(_extracts[ResourceTypes.Ore], 2);
+            //EconomyExtract<TextUIC>(ResourceTypes.Wood).Text = "+ " + Math.Round(_extracts[ResourceTypes.Wood], 2);
+            //EconomyExtract<TextUIC>(ResourceTypes.Ore).Text = "+ " + Math.Round(_extracts[ResourceTypes.Ore], 2);
 
 
-            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-            {
-                Economy<TextUIC>(res).Text = Math.Round(E.PlayerE(curPlayer).ResourcesC(res).Resources, 1).ToString();
-            }
+            //for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
+            //{
+            //    Economy<TextUIC>(res).Text = Math.Round(E.PlayerE(curPlayer).ResourcesC(res).Resources, 1).ToString();
+            //}
         }
     }
 }

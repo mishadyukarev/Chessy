@@ -1,10 +1,10 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     internal sealed class LeftSmelterEventUIS : SystemUIAbstract
     {
         internal LeftSmelterEventUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
         {
-            UIEs.LeftSmelterEs.TogglerE.ButtonUIC.AddListener(Toggle);
+            UIEs.LeftSmelterEs.ButtonUIC.AddListener(Toggle);
         }
 
         void Toggle()

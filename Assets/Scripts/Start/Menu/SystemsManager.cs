@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Menu
+namespace Chessy.Menu
 {
     public struct SystemsManager
     {

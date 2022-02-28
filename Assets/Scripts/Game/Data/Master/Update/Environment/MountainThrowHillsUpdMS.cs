@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class MountainThrowHillsUpdMS : SystemAbstract, IEcsRunSystem
     {

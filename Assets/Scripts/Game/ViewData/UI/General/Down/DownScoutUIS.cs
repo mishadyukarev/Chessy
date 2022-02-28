@@ -1,6 +1,6 @@
-﻿using static Game.Game.DownScoutUIEs;
+﻿using static Chessy.Game.DownScoutUIE;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class DownScoutUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -10,23 +10,23 @@ namespace Game.Game
 
         public void Run()
         {
-            var curPlayer = E.CurPlayerITC.Player;
+            //var curPlayer = E.CurPlayerITC.Player;
 
-            var isActive = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).HaveInInventor;
-            var cooldown = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
+            //var isActive = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).HaveInInventor;
+            //var cooldown = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
 
 
-            Scout<ButtonUIC>().SetActive(isActive);
+            //Scout<ButtonUIC>().SetActive(isActive);
 
-            if (isActive && cooldown > 0)
-            {
-                Cooldown<TextUIC>().SetActiveParent(true);
-                Cooldown<TextUIC>().Text = cooldown.ToString();
-            }
-            else
-            {
-                Cooldown<TextUIC>().SetActiveParent(false);
-            }
+            //if (isActive && cooldown > 0)
+            //{
+            //    Cooldown<TextUIC>().SetActiveParent(true);
+            //    Cooldown<TextUIC>().Text = cooldown.ToString();
+            //}
+            //else
+            //{
+            //    Cooldown<TextUIC>().SetActiveParent(false);
+            //}
         }
     }
 }

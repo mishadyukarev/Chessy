@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public struct Events
     {
@@ -9,10 +9,10 @@ namespace Game.Game
             new CenterEventUIS(ents, entsUI);
             new DownEventUIS(updateUI, ents, entsUI);
             new RightUnitEventUIS(ents, entsUI);
-            new UpEventUIS();
+            new UpEventUIS(ents, entsUI);
 
             new LeftCityEventUIS(ents, entsUI);
-            new LeftEnvEventUISys(updateView, ents, entsUI);
+            new LeftEnvironmentEventUIS(updateView, ents, entsUI);
             new LeftMarketEventUIS(ents, entsUI);
             new LeftSmelterEventUIS(ents, entsUI);
         }

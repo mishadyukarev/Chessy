@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class UpSunsUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -13,23 +13,23 @@ namespace Game.Game
             switch (E.SunSideTC.SunSide)
             {
                 case SunSideTypes.Dawn:
-                    UpSunsUIEs.ImageC(true).SetActive(false);
-                    UpSunsUIEs.ImageC(false).SetActive(true);
+                    UIEs.UpEs.SunsE.RightSun.SetActive(false);
+                    UIEs.UpEs.SunsE.LeftSun.SetActive(true);
                     break;
 
                 case SunSideTypes.Center:
-                    UpSunsUIEs.ImageC(true).SetActive(false);
-                    UpSunsUIEs.ImageC(false).SetActive(false);
+                    UIEs.UpEs.SunsE.RightSun.SetActive(false);
+                    UIEs.UpEs.SunsE.LeftSun.SetActive(false);
                     break;
 
                 case SunSideTypes.Sunset:
-                    UpSunsUIEs.ImageC(true).SetActive(true);
-                    UpSunsUIEs.ImageC(false).SetActive(false);
+                    UIEs.UpEs.SunsE.RightSun.SetActive(true);
+                    UIEs.UpEs.SunsE.LeftSun.SetActive(false);
                     break;
 
                 case SunSideTypes.Night:
-                    UpSunsUIEs.ImageC(true).SetActive(false);
-                    UpSunsUIEs.ImageC(false).SetActive(false);
+                    UIEs.UpEs.SunsE.RightSun.SetActive(false);
+                    UIEs.UpEs.SunsE.LeftSun.SetActive(false);
                     break;
 
                 default: throw new Exception();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class FireUpdateMS : SystemAbstract, IEcsRunSystem
     {

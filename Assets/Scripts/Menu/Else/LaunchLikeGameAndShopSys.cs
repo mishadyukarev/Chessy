@@ -1,7 +1,7 @@
-﻿using Game.Common;
+﻿using Chessy.Common;
 using System;
 
-namespace Game.Menu
+namespace Chessy.Menu
 {
     public class LaunchLikeGameAndShopSys : IEcsRunSystem
     {

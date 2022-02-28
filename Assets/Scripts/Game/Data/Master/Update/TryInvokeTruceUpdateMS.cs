@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using System;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public sealed class TryInvokeTruceUpdateMS : SystemAbstract, IEcsRunSystem
     {

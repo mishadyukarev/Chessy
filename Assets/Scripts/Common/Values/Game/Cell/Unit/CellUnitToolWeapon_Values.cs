@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public static class CellUnitToolWeapon_Values
     {

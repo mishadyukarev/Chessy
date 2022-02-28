@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class UpdAttackFromWaterHellMS : SystemAbstract, IEcsRunSystem
     {

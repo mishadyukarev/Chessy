@@ -1,7 +1,7 @@
 ﻿using ECS;
 using System.Collections.Generic;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public sealed class CellUnitForAttackE
     {

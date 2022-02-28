@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class RightEffectsUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -40,7 +40,7 @@ namespace Game.Game
                             if (E.UnitEffectShield(idx_sel).HaveAnyProtection)
                             {
                                 UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
-                                UIEs.RightEs.Effect(idx_eff).ImageUIC.Sprite = _resources.Sprite(AbilityTypes.BonusNear).Sprite;
+                                UIEs.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resources.Sprite(AbilityTypes.BonusNear).Sprite;
                                 _isFilled[EffectTypes.Shield] = true;
                             }
                         }

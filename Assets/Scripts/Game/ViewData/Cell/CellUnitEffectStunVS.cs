@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class CellUnitEffectStunVS : SystemViewAbstract, IEcsRunSystem
     {
@@ -12,11 +12,11 @@
             {
                 if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).IsVisible)
                 {
-                    VEs.UnitEffectVEs(idx_0).StunVE.Stun.SetActive(E.UnitEffectStunC(idx_0).IsStunned);
+                    VEs.UnitEffectVEs(idx_0).StunVE.SetActive(E.UnitEffectStunC(idx_0).IsStunned);
                 }
                 else
                 {
-                    VEs.UnitEffectVEs(idx_0).StunVE.Stun.Disable();
+                    VEs.UnitEffectVEs(idx_0).StunVE.Disable();
                 }
             }
         }

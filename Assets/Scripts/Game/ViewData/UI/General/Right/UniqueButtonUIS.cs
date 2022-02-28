@@ -1,4 +1,4 @@
-﻿namespace Game.Game
+﻿namespace Chessy.Game
 {
     sealed class UniqueButtonUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -21,20 +21,20 @@
                 }
                 else
                 {
-                    UIEs.RightEs.Unique(button).Text.SetActiveParent(E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).HaveCooldown);
-                    UIEs.RightEs.Unique(button).Text.Text = E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).Cooldown.ToString();
+                    UIEs.RightEs.Unique(button).TextUIC.SetActiveParent(E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).HaveCooldown);
+                    UIEs.RightEs.Unique(button).TextUIC.TextUI.text = E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).Cooldown.ToString();
 
                     UIEs.RightEs.Unique(button).Paren.SetActive(true);
 
-                    UIEs.RightEs.Unique(button).ImageC.Sprite = _resources.Sprite(ability).Sprite;
+                    UIEs.RightEs.Unique(button).ImageC.Image.sprite = _resources.Sprite(ability).Sprite;
 
 
 
                     for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
                     {
-                        UIEs.RightEs.UniqueZone(button, unique).Zone.SetActive(false);
+                        UIEs.RightEs.UniqueZone(button, unique).SetActive(false);
                     }
-                    UIEs.RightEs.UniqueZone(button, ability).Zone.SetActive(true);
+                    UIEs.RightEs.UniqueZone(button, ability).SetActive(true);
 
 
 

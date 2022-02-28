@@ -1,6 +1,6 @@
-﻿using static Game.Game.UIEntRightStats;
+﻿using static Chessy.Game.RightStatsUIEs;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class StatsUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -19,36 +19,36 @@ namespace Game.Game
                 var damageAttack = E.UnitDamageAttackC(idx_sel).Damage;
 
 
-                Stat<ImageUIC>(UnitStatTypes.Hp).SetActiveParent(true);
-                Stat<ImageUIC>(UnitStatTypes.Damage).SetActiveParent(true);
-                Stat<ImageUIC>(UnitStatTypes.Steps).SetActiveParent(true);
-                Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(true);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(true);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(true);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(true);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(true);
 
 
-                Stat<TextUIC>(UnitStatTypes.Hp).Text = ((int)(E.UnitHpC(idx_sel).Health * 100)).ToString();
-                Stat<TextUIC>(UnitStatTypes.Damage).Text = damageOnCell.ToString();
-                Stat<TextUIC>(UnitStatTypes.Steps).Text = E.UnitStepC(idx_sel).Steps.ToString();
-                Stat<TextUIC>(UnitStatTypes.Water).Text = E.UnitWaterC(idx_sel).Water.ToString();
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = ((int)(E.UnitHpC(idx_sel).Health * 100)).ToString();
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = damageOnCell.ToString();
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = E.UnitStepC(idx_sel).Steps.ToString();
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = E.UnitWaterC(idx_sel).Water.ToString();
 
 
                 var v = E.UnitHpC(idx_sel).Health / CellUnitStatHp_Values.MAX_HP;
 
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Hp).FillAmount = E.UnitHpC(idx_sel).Health / CellUnitStatHp_Values.MAX_HP;
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = E.UnitHpC(idx_sel).Health / CellUnitStatHp_Values.MAX_HP;
 
 
 
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Damage).FillAmount = (float)(damageOnCell / (float)damageAttack);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                Stat<ImageUIC>(UnitStatTypes.Steps).FillAmount = (float)E.UnitStepC(idx_sel).Steps / E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxSteps;
-                UIEntRightStats.Stat<ImageUIC>(UnitStatTypes.Water).FillAmount = E.UnitWaterC(idx_sel).Water / (float)E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxWater;
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)E.UnitStepC(idx_sel).Steps / E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxSteps;
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = E.UnitWaterC(idx_sel).Water / (float)E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxWater;
             }
 
             else
             {
-                Stat<ImageUIC>(UnitStatTypes.Hp).SetActiveParent(false);
-                Stat<ImageUIC>(UnitStatTypes.Damage).SetActiveParent(false);
-                Stat<ImageUIC>(UnitStatTypes.Steps).SetActiveParent(false);
-                Stat<ImageUIC>(UnitStatTypes.Water).SetActiveParent(false);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(false);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(false);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(false);
+                UIEs.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
             }
         }
     }

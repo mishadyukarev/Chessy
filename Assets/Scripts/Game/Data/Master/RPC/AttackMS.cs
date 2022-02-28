@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     sealed class AttackMS : SystemAbstract, IEcsRunSystem
     {

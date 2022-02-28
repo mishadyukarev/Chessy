@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Yodo1.MAS;
 
-namespace Game.Common
+namespace Chessy.Common
 {
     public sealed class MyYodo : IEcsRunSystem
     {

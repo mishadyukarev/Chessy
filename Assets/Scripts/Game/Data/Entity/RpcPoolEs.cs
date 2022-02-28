@@ -3,7 +3,7 @@ using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 
-namespace Game.Game
+namespace Chessy.Game
 {
     public struct RpcPoolEs
     {
