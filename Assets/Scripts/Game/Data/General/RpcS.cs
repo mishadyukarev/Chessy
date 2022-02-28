@@ -81,8 +81,7 @@ namespace Game.Game
 
                                                 else
                                                 {
-                                                    _e.UnitMainE(idx_1).AttackDamageC.Damage = CellUnitStatHp_Values.MAX_HP / 4;
-                                                    _e.UnitMainE(idx_1).WhoKillerC.Player = _e.UnitPlayerTC(idx_0).Player;
+                                                    _e.AttackUnitE(idx_1).Set(CellUnitStatHp_Values.MAX_HP / 4, _e.UnitPlayerTC(idx_0).Player);
                                                 }
                                             }
                                         }
@@ -258,11 +257,11 @@ namespace Game.Game
 
                                             _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
 
-                                            _e.YoungForestC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
+                                            _e.YoungForestC(idx_0).Resources = 0;
 
                                             _e.BuildingTC(idx_0).Building = BuildingTypes.Farm;
-                                            _e.BuildLevelTC(idx_0).Level = LevelTypes.First;
-                                            _e.BuildPlayerTC(idx_0).Player = whoseMove;
+                                            _e.BuildingLevelTC(idx_0).Level = LevelTypes.First;
+                                            _e.BuildingPlayerTC(idx_0).Player = whoseMove;
                                             _e.BuildHpC(idx_0).Health = Building_Values.MaxHealth(BuildingTypes.Farm);
 
                                             _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
@@ -395,7 +394,7 @@ namespace Game.Game
 
                             if (!_e.UnitEs(idx_0).CoolDownC(ability).HaveCooldown)
                             {
-                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
+                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NEED_FOR_GROW_ADULT_FOREST)
                                 {
                                     if (_e.YoungForestC(idx_0).HaveAnyResources)
                                     {
@@ -403,9 +402,20 @@ namespace Game.Game
 
                                         _e.AdultForestC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
 
-                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_GROW_ADULT_FOREST;
 
-                                        _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
+                                        _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.AFTER_GROW_ADULT_FOREST;
+
+
+                                        foreach (var idx_1 in _e.CellEs(idx_0).IdxsAround)
+                                        {
+                                            if (_e.YoungForestC(idx_1).HaveAnyResources)
+                                            {
+                                                _e.AdultForestC(idx_1).Resources = Environment_Values.ENVIRONMENT_MAX;
+                                            }
+                                        }
+
+
 
                                         _e.RpcPoolEs.SoundToGeneral(sender, ability);
 
@@ -430,8 +440,10 @@ namespace Game.Game
 
                                     else _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                 }
+
                                 else _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
+
                             else
                             {
                                 _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
@@ -559,7 +571,7 @@ namespace Game.Game
                                         {
                                             _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_BUILDING_ICEWALL;
 
-                                            _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NEED_FOR_ICE_WALL;
+                                            _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.AFTER_ICE_WALL;
 
                                             _e.BuildingMainE(idx_0).Set(BuildingTypes.IceWall, LevelTypes.First, CellUnitStatHp_Values.MAX_HP, _e.UnitPlayerTC(idx_0).Player);
                                         }
@@ -728,8 +740,8 @@ namespace Game.Game
                                         }
 
                                         _e.BuildingTC(idx_0).Building = BuildingTypes.Teleport;
-                                        _e.BuildLevelTC(idx_0).Level = LevelTypes.First;
-                                        _e.BuildPlayerTC(idx_0).Player = whoseMove;
+                                        _e.BuildingLevelTC(idx_0).Level = LevelTypes.First;
+                                        _e.BuildingPlayerTC(idx_0).Player = whoseMove;
                                         _e.BuildHpC(idx_0).Health = Building_Values.MaxHealth(BuildingTypes.Teleport);
                                     }
                                 }
@@ -830,8 +842,8 @@ namespace Game.Game
                         }
 
                         _e.BuildingTC(idx_1).Building = buildT;
-                        _e.BuildLevelTC(idx_1).Level = LevelTypes.First;
-                        _e.BuildPlayerTC(idx_1).Player = whoseMove;
+                        _e.BuildingLevelTC(idx_1).Level = LevelTypes.First;
+                        _e.BuildingPlayerTC(idx_1).Player = whoseMove;
                         _e.BuildHpC(idx_1).Health = Building_Values.MaxHealth(buildT);
 
 

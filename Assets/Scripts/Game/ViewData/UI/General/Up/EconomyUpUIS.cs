@@ -40,7 +40,7 @@ namespace Game.Game
                     _extracts[ResourceTypes.Wood] += E.PawnExtractAdultForestE(idx_0).Resources;
                 }
 
-                if (E.BuildPlayerTC(idx_0).Is(curPlayer))
+                if (E.BuildingPlayerTC(idx_0).Is(curPlayer))
                 {
                     _extracts[ResourceTypes.Wood] += E.WoodcutterExtractE(idx_0).Resources;
                     _extracts[ResourceTypes.Food] += E.FarmExtractFertilizeE(idx_0).Resources;

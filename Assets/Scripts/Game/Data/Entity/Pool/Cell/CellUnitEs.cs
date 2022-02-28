@@ -20,6 +20,7 @@ namespace Game.Game
         public CellUnitExtraToolWeaponE ExtraToolWeaponE;
         public CellUnitWhoLastDiedHereE WhoLastDiedHereE;
         public CellUnitExtractE ExtractE;
+        public AttackToUnitE AttackUnitE;
 
 
         public IdxsC ForAttack(in AttackTypes attack) => _forAttack[(byte)attack - 1];

@@ -77,7 +77,7 @@
 
                 if (E.BuildingTC(idx_0).HaveBuilding)
                 {
-                    E.BuildEs(idx_0).SetVisible(E.BuildPlayerTC(idx_0).Player, true);
+                    E.BuildEs(idx_0).SetVisible(E.BuildingPlayerTC(idx_0).Player, true);
 
                     if (E.AdultForestC(idx_0).HaveAnyResources)
                     {
@@ -89,16 +89,16 @@
 
                             if (E.UnitTC(idx_1).HaveUnit)
                             {
-                                if (!E.UnitPlayerTC(idx_1).Is(E.BuildPlayerTC(idx_0).Player))
+                                if (!E.UnitPlayerTC(idx_1).Is(E.BuildingPlayerTC(idx_0).Player))
                                 {
                                     isVisibledNextPlayer = true;
                                     break;
                                 }
                             }
                         }
-                        E.BuildEs(idx_0).SetVisible(E.NextPlayer(E.BuildPlayerTC(idx_0).Player).Player, isVisibledNextPlayer);
+                        E.BuildEs(idx_0).SetVisible(E.NextPlayer(E.BuildingPlayerTC(idx_0).Player).Player, isVisibledNextPlayer);
                     }
-                    else E.BuildEs(idx_0).SetVisible(E.NextPlayer(E.BuildPlayerTC(idx_0).Player).Player, true);
+                    else E.BuildEs(idx_0).SetVisible(E.NextPlayer(E.BuildingPlayerTC(idx_0).Player).Player, true);
                 }
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)

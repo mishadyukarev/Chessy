@@ -22,7 +22,7 @@
 
                             if (E.HillC(idx_1).Resources < extract) extract = E.HillC(idx_1).Resources;
 
-                            E.ResourcesC(E.BuildPlayerTC(idx_0).Player, ResourceTypes.Ore).Resources += extract;
+                            E.ResourcesC(E.BuildingPlayerTC(idx_0).Player, ResourceTypes.Ore).Resources += extract;
                             E.HillC(idx_1).Resources -= extract;
                         }
                     }

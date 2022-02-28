@@ -25,7 +25,7 @@
                         }
 
 
-                        if (E.UnitTC(idx_1).HaveUnit && E.UnitPlayerTC(idx_1).Is(E.BuildPlayerTC(idx_0).Player))
+                        if (E.UnitTC(idx_1).HaveUnit && E.UnitPlayerTC(idx_1).Is(E.BuildingPlayerTC(idx_0).Player))
                         {
                             //Es.UnitE(idx_1).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                         }

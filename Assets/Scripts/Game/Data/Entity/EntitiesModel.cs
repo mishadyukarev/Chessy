@@ -114,6 +114,11 @@ namespace Game.Game
         public ref LevelTC LastDiedLevelTC(in byte idx) => ref LastDiedE(idx).LevelTC;
         public ref PlayerTC LastDiedPlayerTC(in byte idx) => ref LastDiedE(idx).PlayerTC;
 
+        public ref AttackToUnitE AttackUnitE(in byte idx_cell) => ref UnitEs(idx_cell).AttackUnitE;
+        public ref DamageC DamageAttackUnitC(in byte idx_cell) => ref AttackUnitE(idx_cell).AttackDamageC;
+        public ref PlayerTC AttackUnitKillerTC(in byte idx_cell) => ref AttackUnitE(idx_cell).WhoKillerC;
+        public ref IdxC AttackUnitFromIdxC(in byte idx_cell) => ref AttackUnitE(idx_cell).FromIdx;
+
 
         #region Effects
 
@@ -132,8 +137,8 @@ namespace Game.Game
         public ref CellBuildingEs BuildEs(in byte idx) => ref CellEs(idx).BuildEs;
         public ref CellBuildingMainE BuildingMainE(in byte idx_cell) => ref BuildEs(idx_cell).MainE;
         public ref BuildingTC BuildingTC(in byte idx) => ref BuildingMainE(idx).BuildingC;
-        public ref LevelTC BuildLevelTC(in byte idx) => ref BuildingMainE(idx).LevelTC;
-        public ref PlayerTC BuildPlayerTC(in byte idx) => ref BuildingMainE(idx).PlayerC;
+        public ref LevelTC BuildingLevelTC(in byte idx) => ref BuildingMainE(idx).LevelTC;
+        public ref PlayerTC BuildingPlayerTC(in byte idx) => ref BuildingMainE(idx).PlayerC;
         public ref HealthC BuildHpC(in byte idx) => ref BuildingMainE(idx).HealthC;
         public ref bool IsActiveSmelter(in byte idx) => ref BuildingMainE(idx).IsActiveSmelter;
 

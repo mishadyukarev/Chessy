@@ -13,7 +13,7 @@ namespace Game.Game
         {
             for (byte idx_to = 0; idx_to < Start_Values.ALL_CELLS_AMOUNT; idx_to++)
             {
-                var damage = E.UnitMainE(idx_to).AttackDamageC.Damage;
+                var damage = E.DamageAttackUnitC(idx_to).Damage;
 
                 if(damage > 0)
                 {
@@ -32,13 +32,13 @@ namespace Game.Game
 
 
 
-                        if (E.UnitTC(idx_to).Is(UnitTypes.King)) E.WinnerC.Player = E.UnitMainE(idx_to).WhoKillerC.Player;
+                        if (E.UnitTC(idx_to).Is(UnitTypes.King)) E.WinnerC.Player = E.AttackUnitKillerTC(idx_to).Player;
                         E.LastDiedE(idx_to).Set(E.UnitMainE(idx_to));
                         E.UnitInfo(E.UnitMainE(idx_to)).UnitsInGame--;
 
 
 
-                        var idx_from = E.UnitMainE(idx_to).FromIdx.Idx;
+                        var idx_from = E.AttackUnitFromIdxC(idx_to).Idx;
 
                         if (idx_from != 0)
                         {
@@ -62,7 +62,7 @@ namespace Game.Game
                     }
 
 
-                    E.UnitMainE(idx_to).AttackDamageC.Damage = 0;
+                    E.DamageAttackUnitC(idx_to).Damage = 0;
                 }
             }
         }

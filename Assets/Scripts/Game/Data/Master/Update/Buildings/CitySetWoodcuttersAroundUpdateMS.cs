@@ -20,7 +20,7 @@
                         {
                             if (!E.BuildingTC(idx_1).HaveBuilding)
                             {
-                                E.BuildingMainE(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, Building_Values.MaxHealth(BuildingTypes.Woodcutter), E.BuildPlayerTC(idx_0).Player);
+                                E.BuildingMainE(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, Building_Values.MaxHealth(BuildingTypes.Woodcutter), E.BuildingPlayerTC(idx_0).Player);
                             }
                         }
                     }

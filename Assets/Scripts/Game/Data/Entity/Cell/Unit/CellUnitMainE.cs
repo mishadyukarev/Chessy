@@ -11,9 +11,7 @@
         public bool IsMelee;
         public bool IsHero;
 
-        public DamageC AttackDamageC;
-        public PlayerTC WhoKillerC;
-        public IdxC FromIdx;
+
 
         public IdxC ShiftTo;
     }

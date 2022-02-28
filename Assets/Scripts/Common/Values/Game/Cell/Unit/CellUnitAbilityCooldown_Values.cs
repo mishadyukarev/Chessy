@@ -4,8 +4,8 @@ namespace Game.Game
 {
     public struct CellUnitAbilityCooldown_Values
     {
-
-        public static float NEED_FOR_ICE_WALL;
+        public const float AFTER_ICE_WALL = 10;
+        public const float AFTER_GROW_ADULT_FOREST = 10;
 
         public static int NeedAfterAbility(in AbilityTypes ability)
         {
@@ -13,7 +13,6 @@ namespace Game.Game
             {
                 case AbilityTypes.CircularAttack: return 2;
                 case AbilityTypes.BonusNear: return 3;
-                case AbilityTypes.GrowAdultForest: return 5;
                 case AbilityTypes.StunElfemale: return 5;
                 case AbilityTypes.ChangeDirectionWind: return 6;
 

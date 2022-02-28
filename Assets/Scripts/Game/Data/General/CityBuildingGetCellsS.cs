@@ -24,7 +24,7 @@
 
                         if (!E.MountainC(idx_1).HaveAnyResources && !E.HillC(idx_1).HaveAnyResources && !E.AdultForestC(idx_1).HaveAnyResources)
                         {
-                            E.CellEs(idx_1).Player(E.BuildPlayerTC(idx_0).Player).CanCityBuildHere = true;
+                            E.CellEs(idx_1).Player(E.BuildingPlayerTC(idx_0).Player).CanCityBuildHere = true;
                         }
                     }
                 }

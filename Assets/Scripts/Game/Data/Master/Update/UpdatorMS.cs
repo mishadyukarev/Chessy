@@ -71,7 +71,7 @@ namespace Game.Game
                                         }
                                         else
                                         {
-                                            if (E.BuildingsInfo(E.UnitPlayerTC(idx_0).Player, E.BuildLevelTC(idx_0).Level, BuildingTypes.Camp).IdxC.HaveAny)
+                                            if (E.BuildingsInfo(E.UnitPlayerTC(idx_0).Player, E.BuildingLevelTC(idx_0).Level, BuildingTypes.Camp).IdxC.HaveAny)
                                             {
                                                 //Es.BuildingE(idx_camp).Destroy(Es);
                                             }

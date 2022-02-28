@@ -54,7 +54,7 @@
 
                 if (E.BuildingTC(idx_to).HaveBuilding && !E.BuildingTC(idx_to).Is(BuildingTypes.City))
                 {
-                    if (!E.BuildPlayerTC(idx_to).Is(E.UnitPlayerTC(idx_to).Player))
+                    if (!E.BuildingPlayerTC(idx_to).Is(E.UnitPlayerTC(idx_to).Player))
                     {
                         E.BuildingTC(idx_to).Building = BuildingTypes.None;
                     }

@@ -19,7 +19,7 @@
             {
                 if (E.BuildingTC(idx_sel).HaveBuilding)
                 {
-                    if (E.BuildPlayerTC(idx_sel).Is(E.CurPlayerITC.Player))
+                    if (E.BuildingPlayerTC(idx_sel).Is(E.CurPlayerITC.Player))
                     {
                         if (E.BuildingTC(idx_sel).Is(BuildingTypes.City))
                         {

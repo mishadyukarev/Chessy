@@ -22,6 +22,8 @@ namespace Game.Game
                 + new UnitShiftMS(ents).Run
 
                 + new WorldClearTrailsS(ents).Run
+                + new WorldCountsAmountBuildingInGameS(ents).Run
+
                 + new PawnExtractAdultForestGetCellsS(ents).Run
                 + new PawnExtractHillS(ents).Run
 

@@ -31,6 +31,7 @@ namespace Game.Game
         public const float NEED_FOR_BUILDING_CITY = 0.5f;
         public const float NEED_FOR_PAWN_FIRE = 0.5f;
         public const float NEED_FOR_PAWN_PUT_OUT_FIRE = 0.5f;
+        public const float NEED_FOR_GROW_ADULT_FOREST = 0.5f;
         public static float NeedForAbility(in AbilityTypes uniq)
         {
             switch (uniq)
@@ -41,7 +42,6 @@ namespace Game.Game
                 case AbilityTypes.SetFarm: return 0.5f;
 
                 case AbilityTypes.Seed: return 0.5f;
-                case AbilityTypes.GrowAdultForest: return 0.5f;
                 case AbilityTypes.StunElfemale: return 0.5f;
                 case AbilityTypes.ChangeDirectionWind: return 1;
 

@@ -125,8 +125,7 @@ namespace Game.Game
 
                     else if (minus_from > 0)
                     {
-                        E.UnitMainE(idx_from).AttackDamageC.Damage = minus_from;
-                        E.UnitMainE(idx_from).WhoKillerC.Player = E.NextPlayer(E.UnitPlayerTC(idx_from).Player).Player;
+                        E.AttackUnitE(idx_from).Set(minus_from, E.NextPlayer(E.UnitPlayerTC(idx_from).Player).Player);
                     }
                 }
                 else
@@ -164,9 +163,7 @@ namespace Game.Game
                         killer = E.NextPlayer(E.UnitPlayerTC(idx_to)).Player;
                     }
 
-                    E.UnitMainE(idx_to).AttackDamageC.Damage = minus_to;
-                    E.UnitMainE(idx_to).WhoKillerC.Player = killer;
-                    E.UnitMainE(idx_to).FromIdx.Idx = idx_from;
+                    E.AttackUnitE(idx_to).Set(minus_to, killer, idx_from);
                 }
             }
 

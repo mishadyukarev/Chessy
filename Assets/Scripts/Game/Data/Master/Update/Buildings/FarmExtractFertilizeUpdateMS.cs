@@ -14,7 +14,7 @@
                 {
                     var extract = E.FarmExtractFertilizeE(idx_0).Resources;
 
-                    E.ResourcesC(E.BuildPlayerTC(idx_0).Player, ResourceTypes.Food).Resources += extract;
+                    E.ResourcesC(E.BuildingPlayerTC(idx_0).Player, ResourceTypes.Food).Resources += extract;
                     E.FertilizeC(idx_0).Resources -= extract;
 
                     if (!E.FertilizeC(idx_0).HaveAnyResources)

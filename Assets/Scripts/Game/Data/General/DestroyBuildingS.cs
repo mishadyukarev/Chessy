@@ -32,7 +32,7 @@
 
                             else if (E.BuildingTC(idx_0).Is(BuildingTypes.House))
                             {
-                                E.PlayerE(E.BuildPlayerTC(idx_0).Player).MaxAvailablePawns--;
+                                E.PlayerE(E.BuildingPlayerTC(idx_0).Player).MaxAvailablePawns--;
                             }
 
 
