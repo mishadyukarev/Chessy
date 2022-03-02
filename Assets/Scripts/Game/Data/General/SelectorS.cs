@@ -172,13 +172,6 @@ namespace Chessy.Game
                                 }
                                 break;
 
-                            case CellClickTypes.CityBuildBuilding:
-                                {
-                                    E.RpcPoolEs.CityBuildToMaster(E.SelectedBuildingTC.Building, E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
-                                    E.CellClickTC.Click = CellClickTypes.SimpleClick;
-                                }
-                                break;
-
                             default: throw new Exception();
                         }
                     }

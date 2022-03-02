@@ -4,7 +4,7 @@
     {
         public DamageC AttackDamageC;
         public PlayerTC WhoKillerC;
-        public IdxC FromIdx;
+        public IdxCellC FromIdx;
 
         public void Set(in float damage, in PlayerTypes killer, in byte idx = 0)
         {

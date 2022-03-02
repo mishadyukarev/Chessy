@@ -6,14 +6,14 @@ namespace Chessy.Game
 {
     public readonly struct LeftCityUIEs
     {
-        readonly Dictionary<BuildingTypes, LeftCityBuildUIE> _ents;
-        public LeftCityBuildUIE BuildE(in BuildingTypes buildT) => _ents[buildT];
+        readonly Dictionary<BuildingTypes, ButtonUIC> _ents;
+        public ButtonUIC BuildE(in BuildingTypes buttonT) => _ents[buttonT];
 
         public readonly GameObjectVC Zone;
 
         internal LeftCityUIEs(in Transform leftZone)
         {
-            _ents = new Dictionary<BuildingTypes, LeftCityBuildUIE>();
+            _ents = new Dictionary<BuildingTypes, ButtonUIC>();
 
 
             var buildZone = leftZone.transform.Find("City+");
@@ -22,7 +22,7 @@ namespace Chessy.Game
 
             for (var buildT = BuildingTypes.House; buildT <= BuildingTypes.Smelter; buildT++)
             {
-                _ents.Add(buildT, new LeftCityBuildUIE(buildZone.Find("Build" + buildT + "+").Find("Button+").GetComponent<Button>()));
+                _ents.Add(buildT, new ButtonUIC(buildZone.Find(buildT + "+").Find("Button+").GetComponent<Button>()));
             }
         }
     }

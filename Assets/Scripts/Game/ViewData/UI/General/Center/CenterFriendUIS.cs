@@ -4,27 +4,27 @@ namespace Chessy.Game
 {
     sealed class CenterFriendUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterFriendUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterFriendUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
         public void Run()
         {
-            UIEs.CenterEs.FriendE.ButtonC.SetActiveParent(false);
+            UIE.CenterEs.FriendE.ButtonC.SetActiveParent(false);
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
                 if (E.FriendIsActive)
                 {
-                    UIEs.CenterEs.FriendE.TextC.SetActiveParent(true);
+                    UIE.CenterEs.FriendE.TextC.SetActiveParent(true);
 
                     if (E.CurPlayerITC.Player == PlayerTypes.First)
                     {
-                        UIEs.CenterEs.FriendE.TextC.TextUI.text = "1";
+                        UIE.CenterEs.FriendE.TextC.TextUI.text = "1";
                     }
                     else
                     {
-                        UIEs.CenterEs.FriendE.TextC.TextUI.text = "2";
+                        UIE.CenterEs.FriendE.TextC.TextUI.text = "2";
                     }
                 }
             }

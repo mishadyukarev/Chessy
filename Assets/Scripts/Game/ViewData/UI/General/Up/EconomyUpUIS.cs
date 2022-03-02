@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Chessy.Game
 {
@@ -6,7 +7,7 @@ namespace Chessy.Game
     {
         readonly Dictionary<ResourceTypes, float> _extracts;
 
-        internal EconomyUpUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal EconomyUpUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
             _extracts = new Dictionary<ResourceTypes, float>();
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts.Add(res, default);
@@ -45,17 +46,17 @@ namespace Chessy.Game
                 }
             }
 
-            //if (_extracts[ResourceTypes.Food] < 0) EconomyExtract<TextUIC>(ResourceTypes.Food).Text = Math.Round(_extracts[ResourceTypes.Food], 2).ToString();
-            //else EconomyExtract<TextUIC>(ResourceTypes.Food).Text = "+ " + Math.Round(_extracts[ResourceTypes.Food], 2);
+            if (_extracts[ResourceTypes.Food] < 0) UIE.UpEs.EconomyE.Economy(ResourceTypes.Food).TextUI.text = Math.Round(_extracts[ResourceTypes.Food], 2).ToString();
+            else UIE.UpEs.EconomyE.Economy(ResourceTypes.Food).TextUI.text = "+ " + Math.Round(_extracts[ResourceTypes.Food], 2);
 
-            //EconomyExtract<TextUIC>(ResourceTypes.Wood).Text = "+ " + Math.Round(_extracts[ResourceTypes.Wood], 2);
-            //EconomyExtract<TextUIC>(ResourceTypes.Ore).Text = "+ " + Math.Round(_extracts[ResourceTypes.Ore], 2);
+            UIE.UpEs.EconomyE.Economy(ResourceTypes.Wood).TextUI.text = "+ " + Math.Round(_extracts[ResourceTypes.Wood], 2);
+            UIE.UpEs.EconomyE.Economy(ResourceTypes.Ore).TextUI.text = "+ " + Math.Round(_extracts[ResourceTypes.Ore], 2);
 
 
-            //for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-            //{
-            //    Economy<TextUIC>(res).Text = Math.Round(E.PlayerE(curPlayer).ResourcesC(res).Resources, 1).ToString();
-            //}
+            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
+            {
+                UIE.UpEs.EconomyE.Economy(res).TextUI.text = Math.Round(E.PlayerE(curPlayer).ResourcesC(res).Resources, 1).ToString();
+            }
         }
     }
 }

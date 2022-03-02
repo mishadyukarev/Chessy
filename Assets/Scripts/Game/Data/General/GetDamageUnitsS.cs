@@ -114,18 +114,6 @@ namespace Chessy.Game
                                 p = UnitDamage_Values.CITY;
                                 break;
 
-                            case BuildingTypes.House:
-                                p = UnitDamage_Values.HOUSE;
-                                break;
-
-                            case BuildingTypes.Market:
-                                p = UnitDamage_Values.MARKET;
-                                break;
-
-                            case BuildingTypes.Smelter:
-                                p = UnitDamage_Values.SMELTER;
-                                break;
-
                             case BuildingTypes.Farm:
                                 p = UnitDamage_Values.FARM;
                                 break;

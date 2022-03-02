@@ -2,7 +2,7 @@
 {
     sealed class LeftZonesUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal LeftZonesUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal LeftZonesUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
@@ -10,10 +10,8 @@
         {
             var idx_sel = E.SelectedIdxC.Idx;
 
-            UIEs.LeftCityEs.Zone.SetActive(false);
-            UIEs.LeftEnvEs.Zone.SetActive(false);
-            UIEs.LeftMarketEs.Zone.SetActive(false);
-            UIEs.LeftSmelterEs.Zone.SetActive(false);
+            UIE.LeftCityEs.Zone.SetActive(false);
+            UIE.LeftEnvEs.Zone.SetActive(false);
 
             if (E.SelectedIdxC.Idx > 0)
             {
@@ -23,26 +21,18 @@
                     {
                         if (E.BuildingTC(idx_sel).Is(BuildingTypes.City))
                         {
-                            UIEs.LeftCityEs.Zone.SetActive(true);
-                        }
-                        else if (E.BuildingTC(idx_sel).Is(BuildingTypes.Market))
-                        {
-                            UIEs.LeftMarketEs.Zone.SetActive(true);
-                        }
-                        else if (E.BuildingTC(idx_sel).Is(BuildingTypes.Smelter))
-                        {
-                            UIEs.LeftSmelterEs.Zone.SetActive(true);
+                            UIE.LeftCityEs.Zone.SetActive(true);
                         }
                     }
 
                     if (E.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || E.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
                     {
-                        UIEs.LeftEnvEs.Zone.SetActive(true);
+                        UIE.LeftEnvEs.Zone.SetActive(true);
                     }
                 }
                 else
                 {
-                    UIEs.LeftEnvEs.Zone.SetActive(true);
+                    UIE.LeftEnvEs.Zone.SetActive(true);
                 }
             }
         }

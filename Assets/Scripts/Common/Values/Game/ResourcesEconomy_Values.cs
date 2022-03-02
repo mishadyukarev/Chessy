@@ -50,60 +50,26 @@ namespace Chessy.Game
                 default: throw new Exception();
             }
         }
-        public static float ForBuild(in BuildingTypes build, in ResourceTypes resourceType)
-        {
-            switch (resourceType)
-            {
-                case ResourceTypes.Food:
-                    switch (build)
-                    {
-                        case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.House: return 0;
-                        case BuildingTypes.Market: return 0;
-                        case BuildingTypes.Smelter: return 0;
-                        default: throw new Exception();
-                    }
-                case ResourceTypes.Wood:
-                    switch (build)
-                    {
-                        case BuildingTypes.Farm: return 0.5f;
-                        case BuildingTypes.House: return 1f;
-                        case BuildingTypes.Market: return 10;
-                        case BuildingTypes.Smelter: return 5;
-                        default: throw new Exception();
-                    }
-                case ResourceTypes.Ore:
-                    switch (build)
-                    {
-                        case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.House: return 0;
-                        case BuildingTypes.Market: return 0;
-                        case BuildingTypes.Smelter: return 0;
-                        default: throw new Exception();
-                    }
-                case ResourceTypes.Iron:
-                    switch (build)
-                    {
-                        case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.House: return 0;
-                        case BuildingTypes.Market: return 0;
-                        case BuildingTypes.Smelter: return 0;
-                        default: throw new Exception();
-                    }
-                case ResourceTypes.Gold:
-                    switch (build)
-                    {
-                        case BuildingTypes.Farm: return 0;
-                            case BuildingTypes.House: return 0;
-                        case BuildingTypes.Market: return 0;
-                        case BuildingTypes.Smelter: return 0;
-                        default: throw new Exception();
-                    }
-                default: throw new Exception();
-            }
 
 
-        }
+        public const float NEED_FOOD_FOR_BUILDING_HOUSE = 0;
+        public const float NEED_WOOD_FOR_BUILDING_HOUSE = 1f;
+        public const float NEED_ORE_FOR_BUILDING_HOUSE = 0;
+        public const float NEED_IRON_FOR_BUILDING_HOUSE = 0;
+        public const float NEED_GOLD_FOR_BUILDING_HOUSE = 0;
+
+        public const float NEED_FOOD_FOR_BUILDING_MARKET = 0;
+        public const float NEED_WOOD_FOR_BUILDING_MARKET = 10f;
+        public const float NEED_ORE_FOR_BUILDING_MARKET = 0;
+        public const float NEED_IRON_FOR_BUILDING_MARKET = 0;
+        public const float NEED_GOLD_FOR_BUILDING_MARKET = 0;
+
+        public const float NEED_FOOD_FOR_BUILDING_SMELTER = 0;
+        public const float NEED_WOOD_FOR_BUILDING_SMELTER = 5f;
+        public const float NEED_ORE_FOR_BUILDING_SMELTER = 0;
+        public const float NEED_IRON_FOR_BUILDING_SMELTER = 0;
+        public const float NEED_GOLD_FOR_BUILDING_SMELTER = 0;
+
         public static float ForBuyToolWeapon(in ToolWeaponTypes tW, in LevelTypes level, in ResourceTypes res)
         {
             switch (level)

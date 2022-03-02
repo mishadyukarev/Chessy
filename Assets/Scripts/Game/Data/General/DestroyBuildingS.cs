@@ -30,10 +30,10 @@
                                 E.FertilizeC(idx_0).Resources = 0;
                             }
 
-                            else if (E.BuildingTC(idx_0).Is(BuildingTypes.House))
-                            {
-                                E.PlayerE(E.BuildingPlayerTC(idx_0).Player).MaxAvailablePawns--;
-                            }
+                            //else if (E.BuildingTC(idx_0).Is(BuildingTypes.House))
+                            //{
+                            //    E.PlayerE(E.BuildingPlayerTC(idx_0).Player).MaxAvailablePawns--;
+                            //}
 
 
                             E.BuildingTC(idx_0).Building = BuildingTypes.None;

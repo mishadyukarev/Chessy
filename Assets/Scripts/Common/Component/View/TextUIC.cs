@@ -11,17 +11,6 @@ namespace Chessy.Game
         public Transform Parent_T => Transform.parent;
         public GameObject Parent_G => Parent_T.gameObject;
 
-        public string Text
-        {
-            get => TextUI.text;
-            set => TextUI.text = value;
-        }
-        public Color Color
-        {
-            get => TextUI.color;
-            set => TextUI.color = value;
-        }
-
         public TextUIC(in TextMeshProUGUI text) => TextUI = text;
 
         public void SetActiveParent(in bool isActive) => Parent_T.gameObject.SetActive(isActive);

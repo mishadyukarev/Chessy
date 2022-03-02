@@ -2,24 +2,27 @@
 
 namespace Chessy.Game
 {
-    sealed class DonerUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class DonerUIS : SystemAbstract, IEcsRunSystem
     {
-        internal DonerUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        readonly DownDonerUIE _donerE;
+
+        internal DonerUIS(in DownDonerUIE downDoner, in EntitiesModel ents) : base(ents)
         {
+            _donerE = downDoner;
         }
 
         public void Run()
         {
-            //if (E.CurPlayerITC.Is(E.WhoseMove.Player))
-            //{
-            //    UIEntDownDoner.Wait<GameObjectVC>().SetActive(false);
-            //    UIEntDownDoner.Doner<ButtonUIC>().Color = Color.white;
-            //}
-            //else
-            //{
-            //    UIEntDownDoner.Wait<GameObjectVC>().SetActive(true);
-            //    UIEntDownDoner.Doner<ButtonUIC>().Color = Color.red;
-            //}
+            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
+            {
+                _donerE.WaitGoC.SetActive(false);
+                _donerE.ButtonC.Image.color = Color.white;
+            }
+            else
+            {
+                _donerE.WaitGoC.SetActive(true);
+                _donerE.ButtonC.Image.color = Color.red;
+            }
         }
     }
 }

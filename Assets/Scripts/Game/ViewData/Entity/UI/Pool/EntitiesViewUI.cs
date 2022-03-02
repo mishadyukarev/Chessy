@@ -10,8 +10,6 @@
 
         public LeftCityUIEs LeftCityEs => LeftEs.CityEs;
         public LeftEnvironmentUIEs LeftEnvEs => LeftEs.EnvironmentEs;
-        public LeftMarketUIEs LeftMarketEs => LeftEs.MarketEs;
-        public LeftSmelterUIEs LeftSmelterEs => LeftEs.SmelterEs;
 
         public EntitiesViewUI()
         {

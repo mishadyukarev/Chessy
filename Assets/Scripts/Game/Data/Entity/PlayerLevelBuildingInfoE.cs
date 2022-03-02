@@ -5,7 +5,6 @@ namespace Chessy.Game
     public struct PlayerLevelBuildingInfoE
     {
         public readonly IdxsC IdxC;
-        public bool HaveCenterUpgrade;
 
         internal PlayerLevelBuildingInfoE(in bool def) : this()
         {

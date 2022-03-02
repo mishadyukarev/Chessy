@@ -2,7 +2,7 @@
 {
     public struct SetUnitME
     {
-        public IdxC IdxC;
+        public IdxCellC IdxC;
         public UnitTC UnitTC;
 
         public void Set(in byte idx, in UnitTypes unitT)

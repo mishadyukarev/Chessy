@@ -2,25 +2,25 @@
 {
     sealed class CenterHeroesUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterHeroesUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterHeroesUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
         public void Run()
         {
-            var isActiveKingZone = UIEs.CenterEs.KingE.Paren.IsActiveSelf;
+            var isActiveKingZone = UIE.CenterEs.KingE.Paren.IsActiveSelf;
             var curPlayerI = E.CurPlayerITC.Player;
 
-            if (!isActiveKingZone && !UIEs.CenterEs.UpgradeE.Parent.IsActiveSelf
+            if (!isActiveKingZone && !UIE.CenterEs.UpgradeE.Parent.IsActiveSelf
                 && E.PlayerE(curPlayerI).HaveCenterHero)
             {
                 //var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 
-                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+                UIE.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
             else
             {
-                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent
+                UIE.CenterEs.HeroE(UnitTypes.Elfemale).Parent
                     .SetActive(false);
             }
         }

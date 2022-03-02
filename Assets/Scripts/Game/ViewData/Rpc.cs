@@ -5,12 +5,14 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public sealed class RpcS : MonoBehaviour
+    public sealed class Rpc : MonoBehaviour
     {
         static EntitiesModel _e;
         static Action _updateView;
         static Action _updateUI;
         static Action _runAfterDoing;
+        static EventsUI _eventsUI;
+
         int _idx_cur;
 
 
@@ -26,13 +28,13 @@ namespace Chessy.Game
             }
         }
 
-        public RpcS GiveData(in EntitiesModel ents, in Action updateView, in Action updateUI, in Action runAfterDoing)
+        public Rpc GiveData(in EntitiesModel ents, in Action updateView, in Action updateUI, in Action runAfterDoing, in EventsUI eventsUI)
         {
             _e = ents;
             _updateUI = updateUI;
             _updateView = updateView;
             _runAfterDoing = runAfterDoing;
-
+            _eventsUI = eventsUI;
 
             return this;
         }
@@ -243,16 +245,16 @@ namespace Chessy.Game
 
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                         {
-                                            var need = ResourcesEconomy_Values.ForBuild(BuildingTypes.Farm, resT);
-                                            needRes.Add(resT, need);
-                                            if (need > _e.PlayerE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                                            //var need = ResourcesEconomy_Values.ForBuild(BuildingTypes.Farm, resT);
+                                            //needRes.Add(resT, need);
+                                            //if (need > _e.PlayerE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
                                         }
 
                                         if (canBuild)
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             {
-                                                _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ResourcesEconomy_Values.ForBuild(BuildingTypes.Farm, resT);
+                                                //_e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ResourcesEconomy_Values.ForBuild(BuildingTypes.Farm, resT);
                                             }
 
                                             _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
@@ -818,75 +820,7 @@ namespace Chessy.Game
 
             else if (obj is BuildingTypes buildT)
             {
-                var idx_0 = (byte)objects[_idx_cur++];
-                var idx_1 = (byte)objects[_idx_cur++];
-
-
-                if (_e.CellEs(idx_1).Player(whoseMove).CanCityBuildHere)
-                {
-                    var needRes = new Dictionary<ResourceTypes, float>();
-                    var canBuild = true;
-
-                    for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                    {
-                        var need = ResourcesEconomy_Values.ForBuild(buildT, resT);
-                        needRes.Add(resT, need);
-                        if (need > _e.PlayerE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
-                    }
-
-                    if (canBuild)
-                    {
-                        for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                        {
-                            _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ResourcesEconomy_Values.ForBuild(buildT, resT);
-                        }
-
-                        _e.BuildingTC(idx_1).Building = buildT;
-                        _e.BuildingLevelTC(idx_1).Level = LevelTypes.First;
-                        _e.BuildingPlayerTC(idx_1).Player = whoseMove;
-                        _e.BuildHpC(idx_1).Health = Building_Values.MaxHealth(buildT);
-
-
-                        if (buildT == BuildingTypes.House)
-                        {
-                            _e.PlayerE(whoseMove).MaxAvailablePawns++;
-                        }
-                    }
-
-                    else
-                    {
-                        _e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
-                    }
-
-
-
-
-                    //if (_e.InventorResourcesEs.CanBuyBuilding_Master(buildT, whoseMove, out var needRes))
-                    //{
-                    //_e.InventorResourcesEs.BuyBuilding_Master(buildT, whoseMove);
-
-                    //    if (buildT == BuildingTypes.House)
-                    //    {
-                    //        //ents.BuildingE(idx_to_0).SetNewHouse(whoseMove, ents.MaxAvailablePawnsE(whoseMove));
-                    //    }
-                    //    else if (buildT == BuildingTypes.Smelter)
-                    //    {
-                    //        //ents.BuildingE(idx_to_0).SetNewSmelter(whoseMove);
-                    //    }
-                    //    else
-                    //    {
-                    //        //ents.BuildingE(idx_to_0).SetNew(buildT, whoseMove);
-                    //    }
-
-
-
-                    //    break;
-                    //}
-                    //else
-                    //{
-                    //    ents.RpcE.MistakeEconomyToGeneral(sender, needRes);
-                    //}
-                }
+                _eventsUI.LeftCityEventUI.BuyBuilding_Master(buildT, sender);
             }
 
             else if (obj is MarketBuyTypes marketBuy)
@@ -1022,7 +956,7 @@ namespace Chessy.Game
                                         _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
                                     }
 
-                                    else if (_e.UnitStepC(idx_0).HaveAnySteps)
+                                    else if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.FOR_TOGGLE_CONDITION_UNIT)
                                     {
                                         _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
                                         _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_TOGGLE_CONDITION_UNIT;
@@ -1043,7 +977,7 @@ namespace Chessy.Game
                                         _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
                                     }
 
-                                    else if (_e.UnitStepC(idx_0).HaveAnySteps)
+                                    else if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.FOR_TOGGLE_CONDITION_UNIT)
                                     {
                                         _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
                                         _e.UnitConditionTC(idx_0).Condition = condT;
@@ -1314,43 +1248,17 @@ namespace Chessy.Game
                             }
                         }
                         break;
-                            
+
                     case RpcMasterTypes.GetHero:
                         _e.RpcPoolEs.GetHeroTC.Unit = (UnitTypes)objects[_idx_cur++];
 
                         break;
 
-                    case RpcMasterTypes.UpgCenterUnits:
-                        _e.RpcPoolEs.CenterUpgradeUnitE.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
-                        break;
+                    case RpcMasterTypes.PickFraction:
+                        //_e.RpcPoolEs.CenterUpgradeUnitE.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
 
-                    case RpcMasterTypes.UpgCenterBuild:
-                        {
-                            buildT = (BuildingTypes)objects[_idx_cur++];
-
-                            _e.BuildingsInfo(whoseMove, LevelTypes.First, buildT).HaveCenterUpgrade = true;
-
-                            _e.PlayerE(whoseMove).HaveCenterUpgrade = false;
-
-
-                            _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickUpgrade);
-                        }
-                        break;
-
-                    case RpcMasterTypes.UpgWater:
-                        {
-                            for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
-                            {
-                                for (var level = LevelTypes.None + 1; level < LevelTypes.End; level++)
-                                {
-                                    _e.UnitInfo(whoseMove, level, unit).MaxWater += 0.5f;
-                                }
-                            }
-                            _e.PlayerE(whoseMove).HaveCenterUpgrade = false;
-                            //_e.AvailableCenterUpgradeEs.HaveWaterUpgrade(whoseMove).Have = false;
-
-                            _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickUpgrade);
-                        }
+                        _e.PlayerE(whoseMove).HaveFraction = true;
+                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickUpgrade);
                         break;
 
                     default:

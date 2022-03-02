@@ -7,10 +7,12 @@ namespace Chessy.Game
         public UnitTC AvailableHeroTC;
         public bool IsReadyC;
         public bool HaveCenterHero;
-        public bool HaveCenterUpgrade;
+        public bool HaveFraction;
 
-        public int PeopleInCity;
-        public int MaxAvailablePawns;
+        public float PeopleInCity;
+        public float MaxAvailablePawns;
+        public bool HaveMarket;
+        public bool HaveSmelter;
 
         readonly LevelInfoE[] _levelInfoEs;
         readonly ResourcesC[] _resourceCs;
@@ -28,7 +30,6 @@ namespace Chessy.Game
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];
             _unitEs = new Dictionary<UnitTypes, PlayerUnitInfoE>();
 
-            HaveCenterUpgrade = true;
             HaveCenterHero = true;
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)

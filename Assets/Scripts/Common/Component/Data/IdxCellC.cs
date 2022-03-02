@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    public struct IdxC
+    public struct IdxCellC
     {
         public byte Idx;
 
@@ -16,6 +16,6 @@ namespace Chessy.Game
         }
 
 
-        public IdxC(in byte idx) => Idx = idx;
+        public IdxCellC(in byte idx) => Idx = idx;
     }
 }

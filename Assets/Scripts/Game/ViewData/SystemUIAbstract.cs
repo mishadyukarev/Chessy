@@ -2,11 +2,11 @@
 {
     public abstract class SystemUIAbstract : SystemAbstract
     {
-        protected readonly EntitiesViewUI UIEs;
+        protected readonly EntitiesViewUI UIE;
 
-        protected SystemUIAbstract(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents)
+        protected SystemUIAbstract( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(ents)
         {
-            UIEs = entsUI;
+            UIE = entsUI;
         }
     }
 }

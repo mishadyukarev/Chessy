@@ -108,17 +108,14 @@ namespace Chessy.Game
 
         #region CenterUpgrades
 
-        public void PickUpgUnitToMas(in UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterUnits, unit });
-        public void CenterUpgradeUnit(in UnitTypes unit) => UpgradeCenter(unit);
-        public void PickUpgBuildToMas(in BuildingTypes build) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgCenterBuild, build });
-        public void UpgWater() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.UpgWater });
+        public void PickFractionToMaster(in ButtonTypes buttonT) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.PickFraction, buttonT });
 
         #endregion
 
 
         #region CityBuild
 
-        public void CityBuildToMaster(in BuildingTypes buildT, in byte idx_from, in byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { buildT, idx_from, idx_to });
+        public void CityBuyBuildingToMaster(in BuildingTypes buildT) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { buildT });
 
         #endregion
 

@@ -1,32 +1,33 @@
-﻿using static Chessy.Game.DownScoutUIE;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game
 {
-    sealed class DownScoutUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class DownScoutUIS : SystemAbstract, IEcsRunSystem
     {
-        internal DownScoutUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        readonly DownScoutUIE _scoutE;
+
+        internal DownScoutUIS(in DownScoutUIE scoutUIE, in EntitiesModel ents) : base(ents)
         {
+            _scoutE = scoutUIE;
         }
 
         public void Run()
         {
-            //var curPlayer = E.CurPlayerITC.Player;
+            var curPlayer = E.CurPlayerITC.Player;
 
-            //var isActive = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).HaveInInventor;
-            //var cooldown = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
+            var isActive = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).HaveInInventor;
+            var cooldown = E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.Cooldown;
 
 
-            //Scout<ButtonUIC>().SetActive(isActive);
+            _scoutE.ButtonC.SetActive(isActive);
 
-            //if (isActive && cooldown > 0)
-            //{
-            //    Cooldown<TextUIC>().SetActiveParent(true);
-            //    Cooldown<TextUIC>().Text = cooldown.ToString();
-            //}
-            //else
-            //{
-            //    Cooldown<TextUIC>().SetActiveParent(false);
-            //}
+            if (isActive && cooldown > 0)
+            {
+                _scoutE.CooldownTextC.SetActiveParent(true);
+                _scoutE.CooldownTextC.TextUI.text = cooldown.ToString();
+            }
+            else
+            {
+                _scoutE.CooldownTextC.SetActiveParent(false);
+            }
         }
     }
 }

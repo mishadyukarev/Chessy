@@ -2,7 +2,7 @@
 {
     sealed class CenterSelectorUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterSelectorUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterSelectorUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
@@ -12,35 +12,35 @@
             var uniq = E.SelectedAbilityTC.Ability;
 
 
-            UIEs.CenterEs.SelectorE.SelectorUI(click_cur).SetActiveParent(false);
+            UIE.CenterEs.SelectorE.SelectorUI(click_cur).SetActiveParent(false);
 
-            foreach (var click in UIEs.CenterEs.SelectorE.KeysClick)
+            foreach (var click in UIE.CenterEs.SelectorE.KeysClick)
             {
-                UIEs.CenterEs.SelectorE.SelectorUI(click).SetActive(false);
+                UIE.CenterEs.SelectorE.SelectorUI(click).SetActive(false);
             }
 
-            foreach (var unique in UIEs.CenterEs.SelectorE.KeysUnique)
+            foreach (var unique in UIE.CenterEs.SelectorE.KeysUnique)
             {
-                UIEs.CenterEs.SelectorE.SelectorUI(unique).SetActive(false);
+                UIE.CenterEs.SelectorE.SelectorUI(unique).SetActive(false);
             }
 
             if (click_cur != CellClickTypes.None
                 && click_cur != CellClickTypes.SimpleClick
                 && click_cur != CellClickTypes.SetUnit)
             {
-                UIEs.CenterEs.SelectorE.SelectorUI(click_cur).SetActiveParent(true);
+                UIE.CenterEs.SelectorE.SelectorUI(click_cur).SetActiveParent(true);
 
                 if (click_cur == CellClickTypes.UniqueAbility)
                 {
-                    if (UIEs.CenterEs.SelectorE.KeysUnique.Contains(uniq))
+                    if (UIE.CenterEs.SelectorE.KeysUnique.Contains(uniq))
                     {
-                        UIEs.CenterEs.SelectorE.SelectorUI(click_cur).SetActive(true);
-                        UIEs.CenterEs.SelectorE.SelectorUI(uniq).SetActive(true);
+                        UIE.CenterEs.SelectorE.SelectorUI(click_cur).SetActive(true);
+                        UIE.CenterEs.SelectorE.SelectorUI(uniq).SetActive(true);
                     }
                 }
                 else
                 {
-                    UIEs.CenterEs.SelectorE.SelectorUI(click_cur).SetActive(true);
+                    UIE.CenterEs.SelectorE.SelectorUI(click_cur).SetActive(true);
                 }
             }
         }

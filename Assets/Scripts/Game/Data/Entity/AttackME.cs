@@ -2,8 +2,8 @@
 {
     public struct AttackME
     {
-        public IdxC FromIdxC;
-        public IdxC ToIdxC;
+        public IdxCellC FromIdxC;
+        public IdxCellC ToIdxC;
 
         public void Set(in byte idx_from, in byte idx_to)
         {

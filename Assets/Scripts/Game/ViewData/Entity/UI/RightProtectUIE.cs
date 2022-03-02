@@ -8,7 +8,7 @@ namespace Chessy.Game
     {
         readonly Dictionary<UnitTypes, GameObjectVC> _zones;
 
-        public ButtonUIC ButtonUIC;
+        public ButtonUIC ButtonC;
         public ImageUIC ImageUIC;
 
         public GameObjectVC Button(in UnitTypes unit) => _zones[unit];
@@ -19,7 +19,7 @@ namespace Chessy.Game
 
             var button = condZone.Find("StandartAbilityButton1").GetComponent<Button>();
 
-            ButtonUIC = new ButtonUIC(button);
+            ButtonC = new ButtonUIC(button);
             ImageUIC = new ImageUIC(button.transform.Find("Image").GetComponent<Image>());
 
 

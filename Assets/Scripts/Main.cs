@@ -103,16 +103,16 @@ namespace Chessy
 
                         var entViews = new EntitiesView(out var forData);
                         var uIEs = new EntitiesViewUI();
-                        var ents = new EntitiesModel(forData, RpcS.NamesMethods);
+                        var ents = new EntitiesModel(forData, Rpc.NamesMethods);
 
-                        new SystemViewUI(ref _runUpdate, ref _runFixedUpdate, resources, ents, uIEs, out var updateUI);
+                        new SystemViewUI(ref _runUpdate, ref _runFixedUpdate, resources, uIEs, ents,  out var updateUI);
                         new SystemsView(ref _runUpdate, ref _runFixedUpdate, ents, entViews, out var updateView);
                         new SystemsModel(ref _runUpdate, ents, updateUI, updateView, out var runAfterDoing);
 
-                        new Events(updateView, updateUI, ents, uIEs);
+                        var eventsUI = new EventsUI(updateView, updateUI, uIEs,  ents);
 
-                        entViews.EntityVPool.Photon.AddComponent<RpcS>().GiveData(ents, updateView,  updateUI, runAfterDoing);
-                        RpcS.SyncAllMaster();
+                        entViews.EntityVPool.Photon.AddComponent<Rpc>().GiveData(ents, updateView,  updateUI, runAfterDoing, eventsUI);
+                        Rpc.SyncAllMaster();
 
                         break;
                     }

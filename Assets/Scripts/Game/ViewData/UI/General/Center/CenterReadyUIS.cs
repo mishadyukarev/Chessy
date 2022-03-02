@@ -5,13 +5,13 @@ namespace Chessy.Game
 {
     sealed class CenterReadyUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterReadyUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterReadyUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
         public void Run()
         {
-            var readyBut = UIEs.CenterEs.ReadyButtonC;
+            var readyBut = UIE.CenterEs.ReadyButtonC;
 
             readyBut.Image.color = E.PlayerE(E.CurPlayerITC.Player).IsReadyC ? Color.red : Color.white;
 

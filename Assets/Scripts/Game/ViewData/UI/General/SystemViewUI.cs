@@ -4,46 +4,47 @@ namespace Chessy.Game
 {
     public readonly struct SystemViewUI
     {
-        public SystemViewUI(ref ActionC update, ref ActionC fixedUpdate, in Resources res, in EntitiesModel ents, in EntitiesViewUI entsUI, out Action updateUI)
+        public SystemViewUI(ref ActionC update, ref ActionC fixedUpdate, in Resources res,  in EntitiesViewUI entsUI, in EntitiesModel ents, out Action updateUI)
         {
             updateUI = (Action)
 
                 ///Right
-                new RightZoneUIS(ents, entsUI).Run
-                + new StatsUIS(ents, entsUI).Run
-                + new RightUnitProtectUIS(ents, entsUI).Run
-                + new RelaxUIS(ents, entsUI).Run
-                + new UniqueButtonUIS(res, ents, entsUI).Run
-                + new ShieldUIS(ents, entsUI).Run
-                + new RightEffectsUIS(res, ents, entsUI).Run
+                new RightZoneUIS(entsUI, ents).Run
+                + new StatsUIS(entsUI, ents).Run
+                + new RightUnitProtectUIS(entsUI, ents).Run
+                + new RelaxUIS(entsUI, ents).Run
+                + new UniqueButtonUIS(res, entsUI, ents).Run
+                + new ShieldUIS(entsUI, ents).Run
+                + new RightEffectsUIS(res, entsUI, ents).Run
 
 
                 ///Down
-                + new DonerUIS(ents, entsUI).Run
-                + new DownPawnUIS(ents, entsUI).Run
-                + new DownToolWeaponUIS(ents, entsUI).Run
-                + new DownScoutUIS(ents, entsUI).Run
-                + new DownHeroUIS(ents, entsUI).Run
+                + new DonerUIS(entsUI.DownEs.DonerE, ents).Run
+                + new DownPawnUIS(entsUI.DownEs.PawnE, ents).Run
+                + new DownToolWeaponUIS(entsUI.DownEs.ToolWeaponE, ents).Run
+                + new DownScoutUIS(entsUI.DownEs.ScoutE, ents).Run
+                + new DownHeroUIS(entsUI.DownEs.HeroE, ents).Run
 
                 ///Up
-                + new EconomyUpUIS(ents, entsUI).Run
-                + new UpWindUIS(ents, entsUI).Run
-                + new UpSunsUIS(ents, entsUI).Run
+                + new EconomyUpUIS(entsUI, ents).Run
+                + new UpWindUIS(entsUI, ents).Run
+                + new UpSunsUIS(entsUI, ents).Run
 
                 ///Center
-                + new CenterSelectorUIS(ents, entsUI).Run
-                + new CenterEndGameUIS(ents, entsUI).Run
-                + new CenterReadyUIS(ents, entsUI).Run
-                + new CenterKingUIS(ents, entsUI).Run
-                + new CenterFriendUIS(ents, entsUI).Run
-                + new CenterPickFractionUIS(ents, entsUI).Run
-                + new CenterHeroesUIS(ents, entsUI).Run
-                + new CenterMistakeUIS(ents, entsUI).Run
-                + new CenterMotionUIS(ents, entsUI).Run
+                + new CenterSelectorUIS(entsUI, ents).Run
+                + new CenterEndGameUIS(entsUI, ents).Run
+                + new CenterReadyUIS(entsUI, ents).Run
+                + new CenterKingUIS(entsUI, ents).Run
+                + new CenterFriendUIS(entsUI, ents).Run
+                + new CenterPickFractionUIS(entsUI, ents).Run
+                + new CenterHeroesUIS(entsUI, ents).Run
+                + new CenterMistakeUIS(entsUI, ents).Run
+                + new CenterMotionUIS(entsUI, ents).Run
+                + new CenterBuildingZonesUIS(entsUI, ents).Run
 
                 ///Left
-                + new LeftZonesUIS(ents, entsUI).Run
-                + new EnvUIS(ents, entsUI).Run;
+                + new LeftZonesUIS(entsUI, ents).Run
+                + new EnvUIS(entsUI, ents).Run;
 
 
 

@@ -18,10 +18,10 @@
                     {
                         var extract = Environment_Values.FARM_EXTRACT;
 
-                        if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
-                        {
-                            extract += Environment_Values.FARM_CENTER_UPGRADE;
-                        }
+                        //if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
+                        //{
+                        //    extract += Environment_Values.FARM_CENTER_UPGRADE;
+                        //}
 
                         if (E.FertilizeC(idx_0).Resources < extract) extract = E.FertilizeC(idx_0).Resources;
 

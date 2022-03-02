@@ -24,15 +24,16 @@ namespace Chessy.Game
         public CellClickC CellClickTC;
         public RayCastTC RayCastTC;
 
-        public BuildingTC SelectedBuildingTC;
         public AbilityTC SelectedAbilityTC;
 
-        public IdxC StartTeleportIdxC;
-        public IdxC EndTeleportIdxC;
-        public IdxC CurrentIdxC;
-        public IdxC SelectedIdxC;
-        public IdxC PreviousVisionIdxC;
-        public IdxC CenterCloudIdxC;
+        public BuildingTC SelectedBuildingTC;
+
+        public IdxCellC StartTeleportIdxC;
+        public IdxCellC EndTeleportIdxC;
+        public IdxCellC CurrentIdxC;
+        public IdxCellC SelectedIdxC;
+        public IdxCellC PreviousVisionIdxC;
+        public IdxCellC CenterCloudIdxC;
 
         public bool MotionIsActive;
         public bool EnvIsActive;
@@ -117,7 +118,7 @@ namespace Chessy.Game
         public ref AttackToUnitE AttackUnitE(in byte idx_cell) => ref UnitEs(idx_cell).AttackUnitE;
         public ref DamageC DamageAttackUnitC(in byte idx_cell) => ref AttackUnitE(idx_cell).AttackDamageC;
         public ref PlayerTC AttackUnitKillerTC(in byte idx_cell) => ref AttackUnitE(idx_cell).WhoKillerC;
-        public ref IdxC AttackUnitFromIdxC(in byte idx_cell) => ref AttackUnitE(idx_cell).FromIdx;
+        public ref IdxCellC AttackUnitFromIdxC(in byte idx_cell) => ref AttackUnitE(idx_cell).FromIdx;
 
 
         #region Effects

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public readonly struct LeftMarketUIEs
+    public readonly struct CenterMarketUIE
     {
         public readonly ButtonUIC FoodToWood;
         public readonly ButtonUIC WoodToFood;
@@ -12,7 +12,7 @@ namespace Chessy.Game
 
         public readonly GameObjectVC Zone;
 
-        internal LeftMarketUIEs(in Transform leftZone)
+        internal CenterMarketUIE(in Transform leftZone)
         {
             var marketZone = leftZone.Find("Market+");
 

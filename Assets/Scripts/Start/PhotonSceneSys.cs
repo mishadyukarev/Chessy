@@ -53,7 +53,7 @@ namespace Chessy.Common
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            RpcS.SyncAllMaster();
+            Rpc.SyncAllMaster();
         }
 
         //public override sealed void OnDisconnectedFromPhoton()

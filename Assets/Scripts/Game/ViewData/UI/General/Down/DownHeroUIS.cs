@@ -1,46 +1,47 @@
-﻿using static Chessy.Game.DownHeroUIE;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game
 {
-    sealed class DownHeroUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class DownHeroUIS : SystemAbstract, IEcsRunSystem
     {
-        internal DownHeroUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        readonly DownHeroUIE _downHeroUIE;
+
+        internal DownHeroUIS(in DownHeroUIE downHeroUIE, in EntitiesModel ents) : base(ents)
         {
+            _downHeroUIE = downHeroUIE;
         }
 
         public void Run()
         {
-            //var curPlayerI = E.CurPlayerITC.Player;
+            var curPlayerI = E.CurPlayerITC.Player;
 
-            //var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
+            var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 
-            //if (myHeroT != UnitTypes.None && E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).HaveInInventor)
-            //{
-            //    Parent.SetActive(true);
+            if (myHeroT != UnitTypes.None && E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).HaveInInventor)
+            {
+                _downHeroUIE.Parent.SetActive(true);
 
-            //    var cooldown = E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).ScoutHeroCooldownC.Cooldown;
+                var cooldown = E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).ScoutHeroCooldownC.Cooldown;
 
-            //    for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
-            //    {
-            //        Image(unit).SetActive(false);
-            //    }
+                for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
+                {
+                    _downHeroUIE.Image(unit).SetActive(false);
+                }
 
-            //    Image(myHeroT).SetActive(true);
+                _downHeroUIE.Image(myHeroT).SetActive(true);
 
-            //    if (cooldown > 0)
-            //    {
-            //        Cooldown.SetActiveParent(true);
-            //        Cooldown.Text = cooldown.ToString();
-            //    }
-            //    else
-            //    {
-            //        Cooldown.SetActiveParent(false);
-            //    }
-            //}
-            //else
-            //{
-            //    Parent.SetActive(false);
-            //}
+                if (cooldown > 0)
+                {
+                    _downHeroUIE.Cooldown.SetActiveParent(true);
+                    _downHeroUIE.Cooldown.TextUI.text = cooldown.ToString();
+                }
+                else
+                {
+                    _downHeroUIE.Cooldown.SetActiveParent(false);
+                }
+            }
+            else
+            {
+                _downHeroUIE.Parent.SetActive(false);
+            }
 
         }
     }

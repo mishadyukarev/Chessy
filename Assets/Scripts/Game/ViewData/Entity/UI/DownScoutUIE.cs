@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct DownScoutUIE
+    public sealed class DownScoutUIE
     {
-        public ButtonUIC ButtonC;
-        public TextUIC CooldownTextC;
+        public readonly ButtonUIC ButtonC;
+        public readonly TextUIC CooldownTextC;
 
         public DownScoutUIE(in Transform down)
         {

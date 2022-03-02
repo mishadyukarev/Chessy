@@ -7,7 +7,7 @@ namespace Chessy.Game
         readonly Resources _resources;
         readonly Dictionary<EffectTypes, bool> _isFilled;
 
-        internal RightEffectsUIS(in Resources resources, in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal RightEffectsUIS(in Resources resources,  in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
             _resources = resources;
 
@@ -33,14 +33,14 @@ namespace Chessy.Game
 
                     for (byte idx_eff = 0; idx_eff < 5; idx_eff++)
                     {
-                        UIEs.RightEs.Effect(idx_eff).GO.SetActive(false);
+                        UIE.RightEs.Effect(idx_eff).GO.SetActive(false);
 
                         if(!_isFilled[EffectTypes.Shield])
                         {
                             if (E.UnitEffectShield(idx_sel).HaveAnyProtection)
                             {
-                                UIEs.RightEs.Effect(idx_eff).GO.SetActive(true);
-                                UIEs.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resources.Sprite(AbilityTypes.BonusNear).Sprite;
+                                UIE.RightEs.Effect(idx_eff).GO.SetActive(true);
+                                UIE.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resources.Sprite(AbilityTypes.BonusNear).Sprite;
                                 _isFilled[EffectTypes.Shield] = true;
                             }
                         }

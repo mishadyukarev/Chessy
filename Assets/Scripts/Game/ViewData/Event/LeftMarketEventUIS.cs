@@ -2,12 +2,12 @@
 {
     public sealed class LeftMarketEventUIS : SystemUIAbstract
     {
-        internal LeftMarketEventUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal LeftMarketEventUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
-            UIEs.LeftEs.MarketEs.FoodToWood.AddListener(delegate { BuyResource(MarketBuyTypes.FoodToWood); });
-            UIEs.LeftEs.MarketEs.WoodToFood.AddListener(delegate { BuyResource(MarketBuyTypes.WoodToFood); });
-            UIEs.LeftEs.MarketEs.GoldToFood.AddListener(delegate { BuyResource(MarketBuyTypes.GoldToFood); });
-            UIEs.LeftEs.MarketEs.GoldToWood.AddListener(delegate { BuyResource(MarketBuyTypes.GoldToWood); });
+            //UIE.LeftEs.MarketEs.FoodToWood.AddListener(delegate { BuyResource(MarketBuyTypes.FoodToWood); });
+            //UIE.LeftEs.MarketEs.WoodToFood.AddListener(delegate { BuyResource(MarketBuyTypes.WoodToFood); });
+            //UIE.LeftEs.MarketEs.GoldToFood.AddListener(delegate { BuyResource(MarketBuyTypes.GoldToFood); });
+            //UIE.LeftEs.MarketEs.GoldToWood.AddListener(delegate { BuyResource(MarketBuyTypes.GoldToWood); });
         }
 
         void BuyResource(in MarketBuyTypes marketBuyT)

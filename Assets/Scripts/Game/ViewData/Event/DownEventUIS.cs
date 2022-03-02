@@ -1,5 +1,5 @@
 ﻿using System;
-using static Chessy.Game.DownToolWeaponUIEs;
+using static Chessy.Game.DownToolWeaponUIE;
 using static Chessy.Game.EntityVPool;
 
 namespace Chessy.Game
@@ -8,23 +8,23 @@ namespace Chessy.Game
     {
         readonly Action _updateUI;
 
-        internal DownEventUIS(in Action updateUI, in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal DownEventUIS(in Action updateUI,  in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
             _updateUI = updateUI;
 
-            UIEs.DownEs.DonerE.ButtonC.AddListener(Done);
+            UIE.DownEs.DonerE.ButtonC.AddListener(Done);
 
-            UIEs.DownEs.ScoutE.ButtonC.AddListener(ExecuteScout);
-            UIEs.DownEs.HeroE.ButtonC.AddListener(Hero);
+            UIE.DownEs.ScoutE.ButtonC.AddListener(ExecuteScout);
+            UIE.DownEs.HeroE.ButtonC.AddListener(Hero);
 
 
-            UIEs.DownEs.PawnE.ButtonUIC.AddListener(delegate { GetPawn(); });
+            UIE.DownEs.PawnE.ButtonUIC.AddListener(delegate { GetPawn(); });
 
-            //Button<ButtonUIC>(ToolWeaponTypes.Pick).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
-            //Button<ButtonUIC>(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            //Button<ButtonUIC>(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
-            //Button<ButtonUIC>(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
-            //Button<ButtonUIC>(ToolWeaponTypes.Axe).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
+            UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Pick).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Sword).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
+            UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
+            UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
+            UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
         }
 
         void ExecuteScout()

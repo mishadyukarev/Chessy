@@ -4,7 +4,7 @@
     {
         readonly Resources _resources;
 
-        internal UniqueButtonUIS(in Resources res, in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal UniqueButtonUIS(in Resources res,  in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
             _resources = res;
         }
@@ -17,24 +17,24 @@
 
                 if (ability == default)
                 {
-                    UIEs.RightEs.Unique(button).Paren.SetActive(false);
+                    UIE.RightEs.Unique(button).Paren.SetActive(false);
                 }
                 else
                 {
-                    UIEs.RightEs.Unique(button).TextUIC.SetActiveParent(E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).HaveCooldown);
-                    UIEs.RightEs.Unique(button).TextUIC.TextUI.text = E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).Cooldown.ToString();
+                    UIE.RightEs.Unique(button).TextUIC.SetActiveParent(E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).HaveCooldown);
+                    UIE.RightEs.Unique(button).TextUIC.TextUI.text = E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability).Cooldown.ToString();
 
-                    UIEs.RightEs.Unique(button).Paren.SetActive(true);
+                    UIE.RightEs.Unique(button).Paren.SetActive(true);
 
-                    UIEs.RightEs.Unique(button).ImageC.Image.sprite = _resources.Sprite(ability).Sprite;
+                    UIE.RightEs.Unique(button).ImageC.Image.sprite = _resources.Sprite(ability).Sprite;
 
 
 
                     for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
                     {
-                        UIEs.RightEs.UniqueZone(button, unique).SetActive(false);
+                        UIE.RightEs.UniqueZone(button, unique).SetActive(false);
                     }
-                    UIEs.RightEs.UniqueZone(button, ability).SetActive(true);
+                    UIE.RightEs.UniqueZone(button, ability).SetActive(true);
 
 
 

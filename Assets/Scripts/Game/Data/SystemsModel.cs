@@ -28,7 +28,6 @@ namespace Chessy.Game
                 + new PawnExtractHillS(ents).Run
 
                 + new DestroyBuildingS(ents).Run
-                + new CityBuildingGetCellsS(ents).Run
                 + new WoodcutterExtractGetCellsS(ents).Run
                 + new FarmExtractGetCellsS(ents).Run
 

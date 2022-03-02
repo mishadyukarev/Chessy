@@ -2,7 +2,7 @@
 {
     sealed class CenterKingUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterKingUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterKingUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
@@ -10,11 +10,11 @@
         {
             if (E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
             {
-                UIEs.CenterEs.KingE.Paren.SetActive(true);
+                UIE.CenterEs.KingE.Paren.SetActive(true);
             }
             else
             {
-                UIEs.CenterEs.KingE.Paren.SetActive(false);
+                UIE.CenterEs.KingE.Paren.SetActive(false);
             }
         }
     }

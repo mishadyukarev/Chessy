@@ -2,7 +2,7 @@
 {
     sealed class CenterPickFractionUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterPickFractionUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterPickFractionUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
@@ -10,9 +10,9 @@
         {
             var curPlayer = E.CurPlayerITC.Player;
 
-            var isActivatedZone = E.PlayerE(curPlayer).HaveCenterUpgrade && !E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.King).HaveInInventor;
+            var isActivatedZone = !E.PlayerE(curPlayer).HaveFraction && !E.UnitInfo(curPlayer, LevelTypes.First, UnitTypes.King).HaveInInventor;
 
-            UIEs.CenterEs.UpgradeE.Parent.SetActive(isActivatedZone);
+            UIE.CenterEs.UpgradeE.Parent.SetActive(isActivatedZone);
 
             if (isActivatedZone)
             {

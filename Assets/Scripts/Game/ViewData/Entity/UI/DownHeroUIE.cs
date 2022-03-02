@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct DownHeroUIE
+    public sealed class DownHeroUIE
     {
         readonly Dictionary<UnitTypes, ImageUIC> _units;
 

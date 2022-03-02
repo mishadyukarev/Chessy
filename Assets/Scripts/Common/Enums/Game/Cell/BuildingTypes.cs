@@ -6,16 +6,16 @@
 
         City,
 
-        House,
-        //HuntingHut,
-        Market,
-        Smelter,
-
         Farm,
         Woodcutter,
         Camp,
         IceWall,
         Teleport,
+
+        House,
+        //HuntingHut,
+        Market,
+        Smelter,
 
         End,
     }

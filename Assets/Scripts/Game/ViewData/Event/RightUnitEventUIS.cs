@@ -4,16 +4,16 @@ namespace Chessy.Game
 {
     sealed class RightUnitEventUIS : SystemUIAbstract
     {
-        internal RightUnitEventUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal RightUnitEventUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
-            UIEs.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
-            UIEs.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
-            UIEs.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
-            UIEs.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
-            UIEs.RightEs.Unique(ButtonTypes.Fifth).Button.AddListener(delegate { Unique(ButtonTypes.Fifth); });
+            UIE.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
+            UIE.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
+            UIE.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
+            UIE.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
+            UIE.RightEs.Unique(ButtonTypes.Fifth).Button.AddListener(delegate { Unique(ButtonTypes.Fifth); });
 
-            UIEs.RightEs.ProtectE.ButtonUIC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
-            UIEs.RightEs.ProtectE.ButtonUIC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
+            UIE.RightEs.ProtectE.ButtonC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
+            UIE.RightEs.RelaxE.ButtonC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
         }
 
         void ConditionAbilityButton(ConditionUnitTypes condUnitType)

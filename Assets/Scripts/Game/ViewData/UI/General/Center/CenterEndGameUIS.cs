@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class CenterEndGameUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterEndGameUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterEndGameUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
@@ -12,20 +12,20 @@ namespace Chessy.Game
         {
             if (E.WinnerC.Player == default)
             {
-                UIEs.CenterEs.EndGame.SetActiveParent(false);
+                UIE.CenterEs.EndGame.SetActiveParent(false);
             }
 
             else if (E.WinnerC.Player != E.CurPlayerITC.Player)
             {
-                UIEs.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
-                UIEs.CenterEs.EndGame.SetActiveParent(true);
+                UIE.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
+                UIE.CenterEs.EndGame.SetActiveParent(true);
             }
             else
             {
 
-                UIEs.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreWinner);
+                UIE.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreWinner);
 
-                UIEs.CenterEs.EndGame.SetActiveParent(true);
+                UIE.CenterEs.EndGame.SetActiveParent(true);
             }
         }
     }

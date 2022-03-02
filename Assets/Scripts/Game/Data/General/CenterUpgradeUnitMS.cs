@@ -44,7 +44,7 @@
 
                 }
 
-                E.PlayerE(whoseMove).HaveCenterUpgrade = false;
+                E.PlayerE(whoseMove).HaveFraction = false;
                 //E.UnitInfo(whoseMove, LevelTypes.First, unit).HaveCenterUpgrade = false;
 
                 E.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickUpgrade);

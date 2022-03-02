@@ -6,17 +6,11 @@ namespace Chessy.Game
 {
     public readonly struct CenterUpgradeUIE
     {
-        //readonly Dictionary<UnitTypes, ButtonUIC> _units;
-        //readonly Dictionary<BuildingTypes, ButtonUIC> _builds;
-
-        //public readonly GameObjectVC Paren;
-        //public readonly ButtonUIC Water;
-
-        //public ButtonUIC Units(in UnitTypes unit) => _units[unit];
-        //public ButtonUIC Builds(in BuildingTypes build) => _builds[build];
+        readonly Dictionary<ButtonTypes, ButtonUIC> _buttons;
 
         public readonly GameObjectVC Parent;
 
+        public ButtonUIC ButtonC(in ButtonTypes buttonT) => _buttons[buttonT];
 
         public CenterUpgradeUIE(in Transform centerZone)
         {
@@ -25,16 +19,13 @@ namespace Chessy.Game
             Parent = new GameObjectVC(parent.gameObject);
 
 
-            //_units = new Dictionary<UnitTypes, ButtonUIC>();
-            //_builds = new Dictionary<BuildingTypes, ButtonUIC>();
+            _buttons = new Dictionary<ButtonTypes, ButtonUIC>();
 
-            //for (var unit = UnitTypes.None + 1; unit <= UnitTypes.Scout; unit++)
-            //    _units.Add(unit, new ButtonUIC(parent.Find(unit + "_Button").GetComponent<Button>()));
 
-            //for (var build = BuildingTypes.Farm; build <= BuildingTypes.Woodcutter; build++)
-            //    _builds.Add(build, new ButtonUIC(parent.Find(build + "_Button").GetComponent<Button>()));
-
-            //Water = new ButtonUIC(parent.transform.Find(UnitStatTypes.Water.ToString() + "_Button").GetComponent<Button>());
+            for (var buttonT = ButtonTypes.None + 1; buttonT <= ButtonTypes.Third; buttonT++)
+            {
+                _buttons.Add(buttonT, new ButtonUIC(parent.Find(buttonT.ToString()).Find("Button").GetComponent<Button>()));
+            }
         }
     }
 }

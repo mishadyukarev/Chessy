@@ -9,7 +9,6 @@
         SetUnit,
         GiveTakeTW,
         UniqueAbility,
-        CityBuildBuilding,
 
         End,
     }

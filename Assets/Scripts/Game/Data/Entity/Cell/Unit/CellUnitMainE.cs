@@ -13,6 +13,6 @@
 
 
 
-        public IdxC ShiftTo;
+        public IdxCellC ShiftTo;
     }
 }

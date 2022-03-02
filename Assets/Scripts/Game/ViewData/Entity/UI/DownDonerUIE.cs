@@ -3,15 +3,15 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct DownDonerUIE
+    public sealed class DownDonerUIE
     {
         public ButtonUIC ButtonC;
-        public GameObjectVC Wait;
+        public GameObjectVC WaitGoC;
 
         public DownDonerUIE(in Transform downZone)
         {
             ButtonC = new ButtonUIC(downZone.Find("DonerButton").GetComponent<Button>());
-            Wait = new GameObjectVC(downZone.Find("WaitZone").gameObject);
+            WaitGoC = new GameObjectVC(downZone.Find("WaitZone").gameObject);
         }
     }
 }

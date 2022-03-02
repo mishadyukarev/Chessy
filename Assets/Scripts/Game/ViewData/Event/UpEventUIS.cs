@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class UpEventUIS
     {
-        internal UpEventUIS(in EntitiesModel ents, in EntitiesViewUI entsUI)
+        internal UpEventUIS( in EntitiesViewUI entsUI, in EntitiesModel ents)
         {
             entsUI.UpEs.AlphaC.AddListener(OpenShop);
             entsUI.UpEs.LeaveC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });

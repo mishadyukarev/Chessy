@@ -10,10 +10,6 @@ namespace Chessy.Game
         {
             switch (build)
             {
-                case BuildingTypes.House: return 1;
-                case BuildingTypes.Market: return 1;
-                case BuildingTypes.Smelter: return 1;
-
                 case BuildingTypes.Farm: return 1;
                 case BuildingTypes.Woodcutter: return 1;
                 case BuildingTypes.Camp: return 1;

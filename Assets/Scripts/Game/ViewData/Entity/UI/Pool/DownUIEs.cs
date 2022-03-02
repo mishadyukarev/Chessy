@@ -8,6 +8,7 @@ namespace Chessy.Game
         public readonly DownDonerUIE DonerE;
         public readonly DownScoutUIE ScoutE;
         public readonly DownHeroUIE HeroE;
+        public readonly DownToolWeaponUIE ToolWeaponE;
 
         public DownUIEs(in bool def)
         {
@@ -16,7 +17,7 @@ namespace Chessy.Game
 
             PawnE = new DownPawnUIE(downZone);
 
-            new DownToolWeaponUIEs(downZone);
+            ToolWeaponE = new DownToolWeaponUIE(downZone);
             DonerE = new DownDonerUIE(downZone);
 
             ScoutE = new DownScoutUIE(downZone);

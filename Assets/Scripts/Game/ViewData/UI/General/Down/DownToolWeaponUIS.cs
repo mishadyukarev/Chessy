@@ -1,54 +1,56 @@
 ﻿using UnityEngine;
-using static Chessy.Game.DownToolWeaponUIEs;
 
 namespace Chessy.Game
 {
-    sealed class DownToolWeaponUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class DownToolWeaponUIS : SystemAbstract, IEcsRunSystem
     {
-        internal DownToolWeaponUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        readonly DownToolWeaponUIE _twE;
+
+        internal DownToolWeaponUIS(in DownToolWeaponUIE twE, in EntitiesModel ents) : base(ents)
         {
+            _twE = twE;
         }
 
         public void Run()
         {
-            //Color color;
+            Color color;
 
-            //for (var twT = ToolWeaponTypes.None + 1; twT < ToolWeaponTypes.End; twT++)
-            //{
-            //    for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
-            //    {
-            //        Image(twT, levT).SetActive(false);
-            //    }
+            for (var twT = ToolWeaponTypes.None + 1; twT < ToolWeaponTypes.End; twT++)
+            {
+                for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
+                {
+                    _twE .LevelImageC(twT, levT).SetActive(false);
+                }
 
-            //    color = Button<ImageUIC>(twT).Color;
-            //    color.a = 0;
-            //    Button<ImageUIC>(twT).Color = color;
-            //}
-
-
-            //var tw_sel = E.SelectedTWE.ToolWeaponTC.ToolWeapon;
-            //var levTw_sel = E.SelectedTWE.LevelTC.Level;
-
-            //color = Button<ImageUIC>(tw_sel).Color;
-            //color.a = 1;
-            //Button<ImageUIC>(tw_sel).Color = color;
+                color = _twE.ImageC(twT).Image.color;
+                color.a = 0;
+                _twE.ImageC(twT).Image.color = color;
+            }
 
 
-            //Image(tw_sel, levTw_sel).SetActive(true);
+            var tw_sel = E.SelectedTWE.ToolWeaponTC.ToolWeapon;
+            var levTw_sel = E.SelectedTWE.LevelTC.Level;
+
+            color = _twE.ImageC(tw_sel).Image.color;
+            color.a = 1;
+            _twE.ImageC(tw_sel).Image.color = color;
 
 
-            //for (var twT = ToolWeaponTypes.None + 1; twT < ToolWeaponTypes.End; twT++)
-            //{
-            //    Image(twT, levTw_sel).SetActive(true);
-            //}
+            _twE.LevelImageC(tw_sel, levTw_sel).SetActive(true);
 
-            //var curPlayerI = E.CurPlayerITC.Player;
 
-            //Button<TextUIC>(ToolWeaponTypes.Pick).Text = E.PlayerE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).Amount.ToString();
-            //Button<TextUIC>(ToolWeaponTypes.Sword).Text = E.PlayerE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).Amount.ToString();
-            //Button<TextUIC>(ToolWeaponTypes.Axe).Text = E.PlayerE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).Amount.ToString();
-            //Button<TextUIC>(ToolWeaponTypes.Shield).Text = E.PlayerE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.Shield).Amount.ToString();
-            //Button<TextUIC>(ToolWeaponTypes.BowCrossbow).Text = E.PlayerE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.BowCrossbow).Amount.ToString();
+            for (var twT = ToolWeaponTypes.None + 1; twT < ToolWeaponTypes.End; twT++)
+            {
+                _twE.LevelImageC(twT, levTw_sel).SetActive(true);
+            }
+
+            var curPlayerI = E.CurPlayerITC.Player;
+
+            _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = E.PlayerE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = E.PlayerE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = E.PlayerE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = E.PlayerE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.Shield).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = E.PlayerE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.BowCrossbow).Amount.ToString();
         }
     }
 }

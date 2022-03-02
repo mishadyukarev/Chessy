@@ -30,11 +30,11 @@ namespace Chessy.Game
         {
             return _aroundDirs_0.ContainsKey(idx_cell) ? _aroundDirs_0[idx_cell] : _aroundDirs_1[idx_cell];
         }
-        public IdxC[] AroundCellIdxsC
+        public IdxCellC[] AroundCellIdxsC
         {
             get
             {
-                var idxsC = new IdxC[_aroundEs.Length];
+                var idxsC = new IdxCellC[_aroundEs.Length];
                 var i = 0;
                 foreach (var item in _aroundEs) idxsC[i] = _aroundEs[i++].IdxC;
                 return idxsC;

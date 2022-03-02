@@ -6,10 +6,10 @@ namespace Chessy.Game
     {
         readonly Action _updateView;
 
-        internal LeftEnvironmentEventUIS(in Action updateView, in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal LeftEnvironmentEventUIS(in Action updateView,  in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
             _updateView = updateView;
-            UIEs.LeftEs.EnvironmentEs.InfoButtonC.AddListener(EnvironmentInfo);
+            UIE.LeftEs.EnvironmentEs.InfoButtonC.AddListener(EnvironmentInfo);
         }
 
         void EnvironmentInfo()

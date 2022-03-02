@@ -12,21 +12,6 @@ namespace Chessy.Game
             get => Image.sprite;
             set => Image.sprite = value;
         }
-        public Color Color
-        {
-            get => Image.color;
-            set => Image.color = value;
-        }
-        public float FillAmount
-        {
-            get => Image.fillAmount;
-            set => Image.fillAmount = value;
-        }
-        public bool IsEnabled
-        {
-            get => Image.enabled;
-            set => Image.enabled = value;
-        }
 
         public ImageUIC(in Image image) => Image = image;
 

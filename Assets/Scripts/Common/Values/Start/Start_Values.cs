@@ -8,8 +8,8 @@ namespace Chessy.Game
         public const byte Y_AMOUNT = 11;
         public const byte ALL_CELLS_AMOUNT = X_AMOUNT * Y_AMOUNT;
 
-        public const int PEOPLE_IN_CITY = 3;
-        public const int MAX_AVAILABLE_PAWN = 3;
+        public const int PEOPLE_IN_CITY = 1;
+        public const int MAX_AVAILABLE_PAWN = 1;
 
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;
 
@@ -37,11 +37,11 @@ namespace Chessy.Game
             switch (res)
             {
                 case ResourceTypes.None: throw new Exception();
-                case ResourceTypes.Food: return 1;
-                case ResourceTypes.Wood: return 1;
+                case ResourceTypes.Food: return 0;
+                case ResourceTypes.Wood: return 0;
                 case ResourceTypes.Ore: return 0;
-                case ResourceTypes.Iron: return 3;
-                case ResourceTypes.Gold: return 3;
+                case ResourceTypes.Iron: return 0;
+                case ResourceTypes.Gold: return 0;
                 default: throw new Exception();
             }
         }

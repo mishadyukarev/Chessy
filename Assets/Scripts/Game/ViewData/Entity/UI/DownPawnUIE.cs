@@ -4,12 +4,11 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct DownPawnUIE
+    public sealed class DownPawnUIE
     {
         public ButtonUIC ButtonUIC;
-        public TextUIC TextUIC;
-
-        public TextUIC MaxPawns;
+        public TextUIC AmountTextC;
+        public TextUIC MaxPawnsTextC;
 
         public DownPawnUIE(in Transform downZone)
         {
@@ -18,9 +17,9 @@ namespace Chessy.Game
             var button = pawnT.Find("Button").GetComponent<Button>();
 
             ButtonUIC = new ButtonUIC(button);
-            TextUIC = new TextUIC(pawnT.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            AmountTextC = new TextUIC(pawnT.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
-            MaxPawns = new TextUIC(pawnT.Find("MaxPeople_TextMP+").GetComponent<TextMeshProUGUI>());
+            MaxPawnsTextC = new TextUIC(pawnT.Find("MaxPeople_TextMP+").GetComponent<TextMeshProUGUI>());
         }
     }
 }

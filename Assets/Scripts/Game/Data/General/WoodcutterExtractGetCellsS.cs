@@ -16,10 +16,10 @@
                 {
                     var extract = Environment_Values.WOODCUTTER_EXTRACT;
 
-                    if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
-                    {
-                        extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
-                    }
+                    //if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
+                    //{
+                    //    extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
+                    //}
 
 
                     if (E.AdultForestC(idx_0).Resources < extract) extract = E.AdultForestC(idx_0).Resources;

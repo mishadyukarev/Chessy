@@ -1,24 +1,24 @@
 ﻿using Chessy.Common;
-using Photon.Pun;
 using UnityEngine;
-using static Chessy.Game.CenterHintUIE;
-using static Chessy.Game.CenterUpgradeUIE;
-using static Chessy.Game.UpEconomyUIE;
-using static Chessy.Game.EntityVPool;
 
 namespace Chessy.Game
 {
     sealed class CenterEventUIS : SystemUIAbstract
     {
-        internal CenterEventUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal CenterEventUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
-            UIEs.CenterEs.ReadyButtonC.AddListener(Ready);
-            UIEs.CenterEs.JoinDiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
+            UIE.CenterEs.ReadyButtonC.AddListener(Ready);
+            UIE.CenterEs.JoinDiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
 
-            UIEs.CenterEs.KingE.Button.AddListener(delegate { GetKing(); });
+            UIE.CenterEs.KingE.Button.AddListener(delegate { GetKing(); });
 
-            UIEs.CenterEs.FriendE.ButtonC.AddListener(FriendReady);
+            UIE.CenterEs.FriendE.ButtonC.AddListener(FriendReady);
             //UIEs.CenterEs.AddListener(Hint);
+
+            UIE.CenterEs.UpgradeE.ButtonC(ButtonTypes.First).AddListener(delegate { PickFraction(ButtonTypes.First); });
+            UIE.CenterEs.UpgradeE.ButtonC(ButtonTypes.Second).AddListener(delegate { PickFraction(ButtonTypes.Second); });
+            UIE.CenterEs.UpgradeE.ButtonC(ButtonTypes.Third).AddListener(delegate { PickFraction(ButtonTypes.Third); });
+
 
             //UIEs.CenterEs.Units(UnitTypes.King).AddListener(delegate { UpgradeUnit(UnitTypes.King); });
             //Units(UnitTypes.Pawn).AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
@@ -30,10 +30,10 @@ namespace Chessy.Game
             //Water.AddListener(UpgradeWater);
 
 
-            UIEs.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
-            UIEs.CenterEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { GetHero(UnitTypes.Snowy); });
-            UIEs.CenterEs.HeroE(UnitTypes.Undead).ButtonC.AddListener(delegate { GetHero(UnitTypes.Undead); });
-            UIEs.CenterEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
+            UIE.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
+            UIE.CenterEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { GetHero(UnitTypes.Snowy); });
+            UIE.CenterEs.HeroE(UnitTypes.Undead).ButtonC.AddListener(delegate { GetHero(UnitTypes.Undead); });
+            UIE.CenterEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
             //UIEs.CenterEs.CenterHeroUIE(UnitTypes.Elfemale).AddListener(OpenShop);
         }
 
@@ -72,35 +72,13 @@ namespace Chessy.Game
             //}
         }
 
-        void UpgradeUnit(UnitTypes unit)
+        void PickFraction(in ButtonTypes buttonT)
         {
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                E.RpcPoolEs.PickUpgUnitToMas(unit);
+                E.RpcPoolEs.PickFractionToMaster(buttonT);
 
-                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
-            }
-            else E.Sound(ClipTypes.Mistake).Action.Invoke();
-        }
-
-        void UpgradeBuild(BuildingTypes build)
-        {
-            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
-            {
-                E.RpcPoolEs.PickUpgBuildToMas(build);
-
-                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
-            }
-            else E.Sound(ClipTypes.Mistake).Action.Invoke();
-        }
-
-        void UpgradeWater()
-        {
-            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
-            {
-                E.RpcPoolEs.UpgWater();
-
-                UIEs.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+                UIE.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }

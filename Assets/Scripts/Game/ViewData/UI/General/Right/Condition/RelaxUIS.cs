@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class RelaxUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal RelaxUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal RelaxUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

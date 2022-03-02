@@ -23,6 +23,8 @@ namespace Chessy.Game
         public readonly CenterUpgradeUIE UpgradeE;
         public readonly CenterSelectorUIE SelectorE;
         public readonly CenterMistakeUIE MistakeE;
+        public readonly CenterMarketUIE MarketE;
+        public readonly DownSmelterUIE SmelterEs;
 
         public CenterHeroUIE HeroE(in UnitTypes unit) => _ents[unit];
 
@@ -50,6 +52,10 @@ namespace Chessy.Game
             UpgradeE = new CenterUpgradeUIE(centerZone);
             SelectorE = new CenterSelectorUIE(centerZone);
             MistakeE = new CenterMistakeUIE(centerZone);
+
+            var buildingZone = centerZone.Find("Building+");
+            MarketE = new CenterMarketUIE(buildingZone);
+            SmelterEs = new DownSmelterUIE(buildingZone);
 
             new CenterHintUIE(centerZone);
             

@@ -16,9 +16,7 @@
 
         GiveTakeToolWeapon,
 
-        UpgCenterUnits,
-        UpgCenterBuild,
-        UpgWater,
+        PickFraction,
 
         UniqueAbility,
 

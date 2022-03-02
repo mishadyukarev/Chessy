@@ -2,7 +2,7 @@
 {
     sealed class RightZoneUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal RightZoneUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal RightZoneUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
@@ -24,7 +24,7 @@
                 }
             }
 
-            UIEs.RightEs.Zone.SetActive(activeParent);
+            UIE.RightEs.Zone.SetActive(activeParent);
         }
     }
 }

@@ -3,7 +3,7 @@ namespace Chessy.Game
 {
     sealed class ShieldUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal ShieldUIS(in EntitiesModel ents, in EntitiesViewUI entsUI) : base(ents, entsUI)
+        internal ShieldUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
         }
 
