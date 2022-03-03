@@ -11,7 +11,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_to = 0; idx_to < Start_Values.ALL_CELLS_AMOUNT; idx_to++)
+            for (byte idx_to = 0; idx_to < Start_VALUES.ALL_CELLS_AMOUNT; idx_to++)
             {
                 var damage = E.DamageAttackUnitC(idx_to).Damage;
 

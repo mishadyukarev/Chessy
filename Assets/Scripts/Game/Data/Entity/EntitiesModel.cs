@@ -7,7 +7,7 @@ namespace Chessy.Game
 {
     public sealed class EntitiesModel
     {
-        readonly ActionC[] _sounds0;
+        readonly Dictionary<ClipTypes, ActionC> _sounds0;
         readonly ActionC[] _sounds1;
         readonly ResourcesC[] _mistakeEconomyEs;
         readonly ForPlayerPoolEs[] _forPlayerEs;
@@ -25,8 +25,7 @@ namespace Chessy.Game
         public RayCastTC RayCastTC;
 
         public AbilityTC SelectedAbilityTC;
-
-        public BuildingTC SelectedBuildingTC;
+        public SelectedBuildingsC SelectedBuildingsC;
 
         public IdxCellC StartTeleportIdxC;
         public IdxCellC EndTeleportIdxC;
@@ -58,7 +57,7 @@ namespace Chessy.Game
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerE(playerT).LevelE(levT).BuildingInfoE(buildT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTC playerT, in LevelTC levT, in BuildingTC buildT) => ref PlayerE(playerT.Player).LevelE(levT.Level).BuildingInfoE(buildT.Building);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in CellBuildingMainE buildMainE) => ref PlayerE(buildMainE.PlayerC.Player).LevelE(buildMainE.LevelTC.Level).BuildingInfoE(buildMainE.BuildingC.Building);
-        public ref ActionC Sound(in ClipTypes clip) => ref _sounds0[(int)clip - 1];
+        public ActionC Sound(in ClipTypes clip) => _sounds0[clip];
         public ref ActionC Sound(in AbilityTypes unique) => ref _sounds1[(int)unique - 1];
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
         public PlayerTC NextPlayer(in PlayerTypes playerT) => _nextPlayer[playerT];
@@ -182,13 +181,13 @@ namespace Chessy.Game
 
         public EntitiesModel(in List<object> forData, in List<string> namesMethods)
         {
-            CenterCloudIdxC.Idx = Start_Values.START_WIND;
+            CenterCloudIdxC.Idx = Start_VALUES.START_WIND;
             FriendIsActive = GameModeC.IsGameMode(GameModes.WithFriendOff);
-            DirectWindTC = new DirectTC(Start_Values.DIRECT_WIND);
-            SunSideTC = new SunSideTC(Start_Values.SUN_SIDE);
-            WhoseMove = new PlayerTC(Start_Values.WHOSE_MOVE);
-            CellClickTC = new CellClickC(Start_Values.CELL_CLICK);
-            SelectedTWE = new SelectedToolWeaponE(Start_Values.SELECTED_TOOL_WEAPON, Start_Values.SELECTED_LEVEL_TOOL_WEAPON);
+            DirectWindTC = new DirectTC(Start_VALUES.DIRECT_WIND);
+            SunSideTC = new SunSideTC(Start_VALUES.SUN_SIDE);
+            WhoseMove = new PlayerTC(Start_VALUES.WHOSE_MOVE);
+            CellClickTC = new CellClickC(Start_VALUES.CELL_CLICK);
+            SelectedTWE = new SelectedToolWeaponE(Start_VALUES.SELECTED_TOOL_WEAPON, Start_VALUES.SELECTED_LEVEL_TOOL_WEAPON);
 
             var i = 0;
 
@@ -211,28 +210,35 @@ namespace Chessy.Game
             _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
 
 
-            _sounds0 = new ActionC[(int)ClipTypes.End - 1];
+
+            var selectedBuildings = new Dictionary<BuildingTypes, bool>();
+            for (var buildingT = BuildingTypes.None + 1; buildingT < BuildingTypes.End; buildingT++) selectedBuildings.Add(buildingT, false);
+            SelectedBuildingsC = new SelectedBuildingsC(selectedBuildings);
+
+
+
+            _sounds0 = new Dictionary<ClipTypes, ActionC>();
             _sounds1 = new ActionC[(int)AbilityTypes.End - 1];
-            foreach (var item in sounds0) _sounds0[(int)item.Key - 1] = new ActionC(item.Value);
+            foreach (var item in sounds0) _sounds0[item.Key] = new ActionC(item.Value);
             foreach (var item in sounds1) _sounds1[(int)item.Key - 1] = new ActionC(item.Value);
 
             RpcPoolEs = new RpcPoolEs(actions, namesMethods);
 
 
-            _cellEs = new CellEs[Start_Values.ALL_CELLS_AMOUNT];
+            _cellEs = new CellEs[Start_VALUES.ALL_CELLS_AMOUNT];
             _idxs = new Dictionary<string, byte>();
             var xys = new List<byte[]>();
 
             byte idx = 0;
-            for (byte x = 0; x < Start_Values.X_AMOUNT; x++)
-                for (byte y = 0; y < Start_Values.Y_AMOUNT; y++)
+            for (byte x = 0; x < Start_VALUES.X_AMOUNT; x++)
+                for (byte y = 0; y < Start_VALUES.Y_AMOUNT; y++)
                 {
                     _idxs.Add(x.ToString() + "_" + y, idx);
                     xys.Add(new byte[] { x, y });
                     idx++;
                 }
 
-            for (idx = 0; idx < Start_Values.ALL_CELLS_AMOUNT; idx++)
+            for (idx = 0; idx < Start_VALUES.ALL_CELLS_AMOUNT; idx++)
             {
                 _cellEs[idx] = new CellEs(isActiveParenCells, idCells[idx], xys[idx], idx, this);
             }
@@ -274,9 +280,9 @@ namespace Chessy.Game
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
-                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= Start_Values.SpawnPercent(EnvironmentTypes.Mountain))
+                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.Mountain))
                             {
-                                MountainC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
+                                MountainC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
                                 amountMountains++;
                             }
 
@@ -284,18 +290,18 @@ namespace Chessy.Game
 
                             else
                             {
-                                if (UnityEngine.Random.Range(0f, 1f) <= Start_Values.SpawnPercent(EnvironmentTypes.AdultForest))
+                                if (UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
-                                    AdultForestC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
+                                    AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
                                 }
                             }
                         }
 
                         else
                         {
-                            if (UnityEngine.Random.Range(0f, 1f) <= Start_Values.SpawnPercent(EnvironmentTypes.AdultForest))
+                            if (UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
-                                AdultForestC(idx_0).SetRandom(Start_Values.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
+                                AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
                             }
                         }
 
@@ -343,7 +349,7 @@ namespace Chessy.Game
                 PlayerE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
 
 
-                for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
+                for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
                 {
                     var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];

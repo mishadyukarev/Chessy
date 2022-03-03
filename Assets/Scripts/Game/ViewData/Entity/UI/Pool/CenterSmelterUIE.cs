@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public readonly struct DownSmelterUIE
+    public readonly struct CenterSmelterUIE
     {
         public readonly GameObjectVC Zone;
         public readonly ButtonUIC ButtonUIC;
 
-        internal DownSmelterUIE(in Transform leftZone)
+        internal CenterSmelterUIE(in Transform leftZone)
         {
             var zone = leftZone.Find("Smelter+");
 

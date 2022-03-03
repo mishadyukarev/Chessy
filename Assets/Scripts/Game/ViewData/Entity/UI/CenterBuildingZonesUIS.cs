@@ -10,7 +10,7 @@
         {
             UIE.CenterEs.MarketE.Zone.SetActive(false);
 
-            if (E.SelectedBuildingTC.Is(BuildingTypes.Market))
+            if (E.SelectedBuildingsC.Is(BuildingTypes.Market))
             {
                 UIE.CenterEs.MarketE.Zone.SetActive(true);
             }

@@ -10,7 +10,7 @@
         {
             var idx_sel = E.SelectedIdxC.Idx;
 
-            UIE.LeftCityEs.Zone.SetActive(false);
+            UIE.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
             UIE.LeftEnvEs.Zone.SetActive(false);
 
             if (E.SelectedIdxC.Idx > 0)
@@ -21,7 +21,7 @@
                     {
                         if (E.BuildingTC(idx_sel).Is(BuildingTypes.City))
                         {
-                            UIE.LeftCityEs.Zone.SetActive(true);
+                            UIE.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
                         }
                     }
 

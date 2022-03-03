@@ -5,12 +5,14 @@ namespace Chessy.Game
 {
     public readonly struct CenterMarketUIE
     {
+        public readonly GameObjectVC Zone;
+
         public readonly ButtonUIC FoodToWood;
         public readonly ButtonUIC WoodToFood;
         public readonly ButtonUIC GoldToFood;
         public readonly ButtonUIC GoldToWood;
 
-        public readonly GameObjectVC Zone;
+        public readonly ButtonUIC ExitButtonC;
 
         internal CenterMarketUIE(in Transform leftZone)
         {
@@ -23,6 +25,8 @@ namespace Chessy.Game
             WoodToFood = new ButtonUIC(marketZone.Find("WoodToFood+").Find("Button+").GetComponent<Button>());
             GoldToFood = new ButtonUIC(marketZone.Find("GoldToFood+").Find("Button+").GetComponent<Button>());
             GoldToWood = new ButtonUIC(marketZone.Find("GoldToWood+").Find("Button+").GetComponent<Button>());
+
+            ExitButtonC = new ButtonUIC(marketZone.Find("Exit_Button").GetComponent<Button>());
         }
     }
 }

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public sealed class LeftCityEventUI : SystemUIAbstract
+    public sealed class LeftCityEventUI : SystemAbstract
     {
-        internal LeftCityEventUI( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal LeftCityEventUI(in LeftUIEs leftEs, in EntitiesModel ents) : base(ents)
         {
-            UIE.LeftCityEs.BuildE(BuildingTypes.House).AddListener(delegate { Build(BuildingTypes.House); });
-            UIE.LeftCityEs.BuildE(BuildingTypes.Market).AddListener(delegate { Build(BuildingTypes.Market); });
-            UIE.LeftCityEs.BuildE(BuildingTypes.Smelter).AddListener(delegate { Build(BuildingTypes.Smelter); });
+            leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { Build(BuildingTypes.House); });
+            leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { Build(BuildingTypes.Market); });
+            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(delegate { Build(BuildingTypes.Smelter); });
         }
 
         void Build(in BuildingTypes buildT)
@@ -25,13 +25,13 @@ namespace Chessy.Game
 
                 case BuildingTypes.Market:
                     {
-                        if (E.SelectedBuildingTC.Is(BuildingTypes.Market))
+                        if (E.SelectedBuildingsC.Is(BuildingTypes.Market))
                         {
-                            E.SelectedBuildingTC.Building = BuildingTypes.None;
+                            E.SelectedBuildingsC.Set(BuildingTypes.Market, false);
                         }
                         else if (E.PlayerE(curPlayerI).HaveMarket)
                         {
-                            E.SelectedBuildingTC.Building = BuildingTypes.Market;
+                            E.SelectedBuildingsC.Set(BuildingTypes.Market, true);
                         }
                         else
                         {

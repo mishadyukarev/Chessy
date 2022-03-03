@@ -1340,7 +1340,7 @@ namespace Chessy.Game
             var objs = new List<object>();
 
 
-            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
             {
                 objs.Add(_e.UnitTC(idx_0).Unit);
                 //objs.Add(_e.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
@@ -1450,7 +1450,7 @@ namespace Chessy.Game
             _idx_cur = 0;
 
 
-            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
             {
                 //_e.CellEs(idx_0).UnitEs.Main.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
                 //_e.CellEs(idx_0).UnitEs.Main.LevelC.Level = (LevelTypes)objects[_idx_cur++];

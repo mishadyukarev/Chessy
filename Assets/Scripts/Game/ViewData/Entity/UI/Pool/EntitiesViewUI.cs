@@ -8,7 +8,6 @@
         public readonly DownUIEs DownEs;
         public readonly UpUIEs UpEs;
 
-        public LeftCityUIEs LeftCityEs => LeftEs.CityEs;
         public LeftEnvironmentUIEs LeftEnvEs => LeftEs.EnvironmentEs;
 
         public EntitiesViewUI()

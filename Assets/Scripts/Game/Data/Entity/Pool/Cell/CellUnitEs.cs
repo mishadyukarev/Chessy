@@ -46,7 +46,7 @@ namespace Chessy.Game
             ForArson = new IdxsC(new HashSet<byte>());
             ForShift = new IdxsC(new HashSet<byte>());
 
-            _needStepsForShift = new StepsC[Start_Values.ALL_CELLS_AMOUNT];
+            _needStepsForShift = new StepsC[Start_VALUES.ALL_CELLS_AMOUNT];
             _forAttack = new IdxsC[(byte)AttackTypes.End - 1];
 
             _forAttack[(byte)AttackTypes.Simple - 1] = new IdxsC(new HashSet<byte>());

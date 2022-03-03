@@ -44,7 +44,8 @@ namespace Chessy.Game
 
                 ///Left
                 + new LeftZonesUIS(entsUI, ents).Run
-                + new EnvUIS(entsUI, ents).Run;
+                + new EnvUIS(entsUI, ents).Run
+                + new LeftCityUIS(entsUI, ents).Run;
 
 
 

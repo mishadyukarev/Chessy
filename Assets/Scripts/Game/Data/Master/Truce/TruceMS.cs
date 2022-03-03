@@ -13,7 +13,7 @@ namespace Chessy.Game
         {
             int random;
 
-            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.HaveFire(idx_0) = false;
 

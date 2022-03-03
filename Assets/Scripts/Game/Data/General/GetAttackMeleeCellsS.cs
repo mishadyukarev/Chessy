@@ -11,7 +11,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Start_Values.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Clear();
                 E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Clear();

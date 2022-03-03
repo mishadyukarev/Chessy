@@ -6,8 +6,9 @@ namespace Chessy.Game
     {
         public GameObject GameObject;
 
-        public string Name => GameObject.name;
+
         public Transform Transform => GameObject.transform;
+
         public int InstanceID => GameObject.GetInstanceID();
         public bool IsActiveSelf => GameObject.activeSelf;
 

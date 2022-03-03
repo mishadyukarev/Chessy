@@ -3,38 +3,34 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class CenterEventUIS : SystemUIAbstract
+    sealed class CenterEventUIS : SystemAbstract
     {
-        internal CenterEventUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        readonly CenterUIEs _centerUIEs;
+
+        internal CenterEventUIS(in CenterUIEs centerUIEs, in EntitiesModel ents) : base(ents)
         {
-            UIE.CenterEs.ReadyButtonC.AddListener(Ready);
-            UIE.CenterEs.JoinDiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
+            _centerUIEs = centerUIEs;
 
-            UIE.CenterEs.KingE.Button.AddListener(delegate { GetKing(); });
+            centerUIEs.ReadyButtonC.AddListener(Ready);
+            centerUIEs.JoinDiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
 
-            UIE.CenterEs.FriendE.ButtonC.AddListener(FriendReady);
+            centerUIEs.KingE.Button.AddListener(delegate { GetKing(); });
+
+            centerUIEs.FriendE.ButtonC.AddListener(FriendReady);
             //UIEs.CenterEs.AddListener(Hint);
 
-            UIE.CenterEs.UpgradeE.ButtonC(ButtonTypes.First).AddListener(delegate { PickFraction(ButtonTypes.First); });
-            UIE.CenterEs.UpgradeE.ButtonC(ButtonTypes.Second).AddListener(delegate { PickFraction(ButtonTypes.Second); });
-            UIE.CenterEs.UpgradeE.ButtonC(ButtonTypes.Third).AddListener(delegate { PickFraction(ButtonTypes.Third); });
+            centerUIEs.UpgradeE.ButtonC(ButtonTypes.First).AddListener(delegate { PickFraction(ButtonTypes.First); });
+            centerUIEs.UpgradeE.ButtonC(ButtonTypes.Second).AddListener(delegate { PickFraction(ButtonTypes.Second); });
+            centerUIEs.UpgradeE.ButtonC(ButtonTypes.Third).AddListener(delegate { PickFraction(ButtonTypes.Third); });
 
 
-            //UIEs.CenterEs.Units(UnitTypes.King).AddListener(delegate { UpgradeUnit(UnitTypes.King); });
-            //Units(UnitTypes.Pawn).AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
-            //Units(UnitTypes.Scout).AddListener(delegate { UpgradeUnit(UnitTypes.Scout); });
-
-            //Builds(BuildingTypes.Farm).AddListener(delegate { UpgradeBuild(BuildingTypes.Farm); });
-            //Builds(BuildingTypes.Woodcutter).AddListener(delegate { UpgradeBuild(BuildingTypes.Woodcutter); });
-
-            //Water.AddListener(UpgradeWater);
-
-
-            UIE.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
-            UIE.CenterEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { GetHero(UnitTypes.Snowy); });
-            UIE.CenterEs.HeroE(UnitTypes.Undead).ButtonC.AddListener(delegate { GetHero(UnitTypes.Undead); });
-            UIE.CenterEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
+            centerUIEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
+            centerUIEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { GetHero(UnitTypes.Snowy); });
+            centerUIEs.HeroE(UnitTypes.Undead).ButtonC.AddListener(delegate { GetHero(UnitTypes.Undead); });
+            centerUIEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
             //UIEs.CenterEs.CenterHeroUIE(UnitTypes.Elfemale).AddListener(OpenShop);
+
+            centerUIEs.MarketE.ExitButtonC.AddListener(ExitMarket);
         }
 
         void Ready() => E.RpcPoolEs.ReadyToMaster();
@@ -78,7 +74,7 @@ namespace Chessy.Game
             {
                 E.RpcPoolEs.PickFractionToMaster(buttonT);
 
-                UIE.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+                _centerUIEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
@@ -92,9 +88,14 @@ namespace Chessy.Game
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
 
-        private void OpenShop()
+        void OpenShop()
         {
             ShopUIC.EnableZone();
+        }
+
+        void ExitMarket()
+        {
+            E.SelectedBuildingsC.Set(BuildingTypes.Market, false);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    public static class Start_Values
+    public static class Start_VALUES
     {
         public const byte X_AMOUNT = 15;
         public const byte Y_AMOUNT = 11;

@@ -9,7 +9,7 @@
 
         public void Run()
         {
-            for (byte idx_from = 0; idx_from < Start_Values.ALL_CELLS_AMOUNT; idx_from++)
+            for (byte idx_from = 0; idx_from < Start_VALUES.ALL_CELLS_AMOUNT; idx_from++)
             {
                 var idx_to = E.UnitMainE(idx_from).ShiftTo.Idx;
 

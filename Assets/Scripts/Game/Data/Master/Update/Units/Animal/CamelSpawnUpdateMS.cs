@@ -23,7 +23,7 @@ namespace Chessy.Game
 
             if (!haveCamel)
             {
-                byte idx_0 = (byte)Random.Range(0,  Start_Values.ALL_CELLS_AMOUNT);
+                byte idx_0 = (byte)Random.Range(0,  Start_VALUES.ALL_CELLS_AMOUNT);
 
                 if (E.CellEs(idx_0).IsActiveParentSelf)
                 {

@@ -25,7 +25,7 @@ namespace Chessy.Game
             _unitsInfoEs = new PlayerLevelUnitInfoE[(byte)UnitTypes.End - 1];
             for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
             {
-                _unitsInfoEs[(byte)unitT - 1] = new PlayerLevelUnitInfoE(levT, unitT, Start_Values.HaveUnit(unitT, LevelTypes.First));
+                _unitsInfoEs[(byte)unitT - 1] = new PlayerLevelUnitInfoE(levT, unitT, Start_VALUES.HaveUnit(unitT, LevelTypes.First));
             }
         }
     }

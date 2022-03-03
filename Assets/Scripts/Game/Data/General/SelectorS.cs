@@ -19,14 +19,17 @@ namespace Chessy.Game
             var idx_cur = E.CurrentIdxC.Idx;
 
 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
-                if (Input.GetKeyDown(KeyCode.Alpha2)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
-                if (Input.GetKeyDown(KeyCode.Alpha3)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
-                if (Input.GetKeyDown(KeyCode.Alpha4)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
-                if (Input.GetKeyDown(KeyCode.Alpha5)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
+                if (Input.GetKey(KeyCode.Alpha1)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha2)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha3)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha4)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
+                if (Input.GetKey(KeyCode.Alpha5)) E.PlayerE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
             }
+
+
+
 
             if (E.IsClicked)
             {

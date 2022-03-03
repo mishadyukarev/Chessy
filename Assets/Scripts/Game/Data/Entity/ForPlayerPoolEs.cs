@@ -23,8 +23,8 @@ namespace Chessy.Game
 
         internal ForPlayerPoolEs(in bool b) : this()
         {
-            PeopleInCity = Start_Values.PEOPLE_IN_CITY;
-            MaxAvailablePawns = Start_Values.MAX_AVAILABLE_PAWN;
+            PeopleInCity = Start_VALUES.PEOPLE_IN_CITY;
+            MaxAvailablePawns = Start_VALUES.MAX_AVAILABLE_PAWN;
 
             _levelInfoEs = new LevelInfoE[(byte)LevelTypes.End - 1];
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];
@@ -34,7 +34,7 @@ namespace Chessy.Game
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                _resourceCs[(byte)resT - 1] = new ResourcesC(Start_Values.Resources(resT));
+                _resourceCs[(byte)resT - 1] = new ResourcesC(Start_VALUES.Resources(resT));
             }
             for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
             {
