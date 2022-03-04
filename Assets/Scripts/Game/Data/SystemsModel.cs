@@ -53,14 +53,15 @@ namespace Chessy.Game
                 (Action)new UpdatorMS(ents).Run
 
                 + new FireUpdateMS(ents).Run
-                + new CloudUpdMS(ents).Run
                 + new UpdateIceWallMS(ents).Run
                 + new RiverFertilizeAroundUpdateMS(ents).Run
-                + new CloudFertilizeUpdMS(ents).Run
                 + new WorldDryFertilizerMS(ents).Run
-                + new GetPawnUnitUpdMS(ents).Run
                 + new TryGetPeopleUpdateMS(ents).Run
                 + new WorldMeltIceWallUpdateMS(ents).Run
+
+                + new CloudUpdMS(ents).Run
+                + new CloudFertilizeUpdMS(ents).Run
+
 
             #region Building
 

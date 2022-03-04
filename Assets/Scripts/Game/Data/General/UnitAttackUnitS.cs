@@ -52,7 +52,7 @@ namespace Chessy.Game
 
                             if (E.UnitTC(idx_to).Is(UnitTypes.Camel))
                             {
-                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += ResourcesEconomy_Values.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += Economy_VALUES.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                             }
                         }
 

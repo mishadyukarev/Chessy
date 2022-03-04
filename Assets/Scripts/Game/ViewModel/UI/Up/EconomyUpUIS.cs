@@ -20,7 +20,7 @@ namespace Chessy.Game
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
 
-            _extracts[ResourceTypes.Food] += ResourcesEconomy_Values.ADDING_FOOD_AFTER_MOVE;
+            _extracts[ResourceTypes.Food] += Economy_VALUES.ADDING_FOOD_AFTER_MOVE;
 
 
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
@@ -31,7 +31,7 @@ namespace Chessy.Game
                 {
                     if (E.UnitTC(idx_0).HaveUnit)
                     {
-                        _extracts[ResourceTypes.Food] -= ResourcesEconomy_Values.CostFoodForFeedingThem(E.UnitTC(idx_0).Unit);
+                        _extracts[ResourceTypes.Food] -= Economy_VALUES.CostFoodForFeedingThem;
                     }
 
 
@@ -46,16 +46,16 @@ namespace Chessy.Game
                 }
             }
 
-            if (_extracts[ResourceTypes.Food] < 0) UIE.UpEs.EconomyE.Economy(ResourceTypes.Food).TextUI.text = Math.Round(_extracts[ResourceTypes.Food], 2).ToString();
-            else UIE.UpEs.EconomyE.Economy(ResourceTypes.Food).TextUI.text = "+ " + Math.Round(_extracts[ResourceTypes.Food], 2);
+            if (_extracts[ResourceTypes.Food] < 0) UIE.UpEs.EconomyE.Economy(ResourceTypes.Food).TextUI.text = (Math.Truncate(10 * _extracts[ResourceTypes.Food]) / 10).ToString();
+            else UIE.UpEs.EconomyE.Economy(ResourceTypes.Food).TextUI.text = "+ " + Math.Truncate(100 * _extracts[ResourceTypes.Food]) / 10;
 
-            UIE.UpEs.EconomyE.Economy(ResourceTypes.Wood).TextUI.text = "+ " + Math.Round(_extracts[ResourceTypes.Wood], 2);
-            UIE.UpEs.EconomyE.Economy(ResourceTypes.Ore).TextUI.text = "+ " + Math.Round(_extracts[ResourceTypes.Ore], 2);
+            UIE.UpEs.EconomyE.Economy(ResourceTypes.Wood).TextUI.text = "+ " + Math.Truncate(10 * _extracts[ResourceTypes.Wood]) / 10;
+            UIE.UpEs.EconomyE.Economy(ResourceTypes.Ore).TextUI.text = "+ " + Math.Truncate(10 * _extracts[ResourceTypes.Ore]) / 10;
 
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
-                UIE.UpEs.EconomyE.Economy(res).TextUI.text = Math.Round(E.PlayerE(curPlayer).ResourcesC(res).Resources, 1).ToString();
+                UIE.UpEs.EconomyE.Economy(res).TextUI.text = (Math.Truncate(10 * E.PlayerE(curPlayer).ResourcesC(res).Resources) / 10).ToString();
             }
         }
     }

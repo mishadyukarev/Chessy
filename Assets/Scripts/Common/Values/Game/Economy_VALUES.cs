@@ -2,58 +2,39 @@
 
 namespace Chessy.Game
 {
-    public static class ResourcesEconomy_Values
+    public static class Economy_VALUES
     {
         public const float ADDING_FOOD_AFTER_MOVE = 0.3f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;
 
-        public static float CostFoodForFeedingThem(in UnitTypes unit)
-        {
-            if (unit != UnitTypes.King) return 0.1f;
-            else return 0;
-        }
+        public const float CostFoodForFeedingThem = 0.1f;
 
 
         #region Costs
 
-        public static float ResourcesForBuyFromMarket(in MarketBuyTypes marketT)
-        {
-            switch (marketT)
-            {
-                case MarketBuyTypes.FoodToWood: return 1;
-                case MarketBuyTypes.WoodToFood: return 0.5f;
-                case MarketBuyTypes.GoldToFood: return 1;
-                case MarketBuyTypes.GoldToWood: return 1;
-                default: throw new Exception();
-            }
-        }
-        public static float ResourcesAfterBuyInMarket(in MarketBuyTypes marketT)
-        {
-            switch (marketT)
-            {
-                case MarketBuyTypes.FoodToWood: return 0.1f;
-                case MarketBuyTypes.WoodToFood: return 0.1f;
-                case MarketBuyTypes.GoldToFood: return 1;
-                case MarketBuyTypes.GoldToWood: return 0.5f;
-                default: throw new Exception();
-            }
-        }
-        public static float AfterMelting(in ResourceTypes res)
-        {
-            switch (res)
-            {
-                case ResourceTypes.Food: return 0;
-                case ResourceTypes.Wood: return 0;
-                case ResourceTypes.Ore: return 0;
-                case ResourceTypes.Iron: return 0.05f;
-                case ResourceTypes.Gold: return 0.01f;
-                default: throw new Exception();
-            }
-        }
+
+        public const float WOOD_NEED_FOR_MELTING = 1f;
+        public const float ORE_NEED_FOR_MELTING = 0.5f;
+
+        public const float IRON_AFTER_MELTING = 4f;
+        public const float GOLD_AFTER_MELTING = 1f;
+
+
+        public const float FOR_BUY_FROM_MARKET_FOOD_TO_WOOD = 1f;
+        public const float FOR_BUY_FROM_MARKET_WOOD_TO_FOOD = 0.5f;
+        public const float FOR_BUY_FROM_MARKET_GOLD_TO_FOOD = 1f;
+        public const float FOR_BUY_FROM_MARKET_GOLD_TO_WOOD = 1f;
+
+        public const float AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD = 0.1f;
+        public const float AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD = 0.1f;
+        public const float AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD = 1;
+        public const float AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD = 0.5f;
+
+
+        public const float WOOD_FOR_BUILDING_FARM = 0.5f;
 
 
         public const float NEED_FOOD_FOR_BUILDING_HOUSE = 0;
-        public const float NEED_WOOD_FOR_BUILDING_HOUSE = 1f;
         public const float NEED_ORE_FOR_BUILDING_HOUSE = 0;
         public const float NEED_IRON_FOR_BUILDING_HOUSE = 0;
         public const float NEED_GOLD_FOR_BUILDING_HOUSE = 0;

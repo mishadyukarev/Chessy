@@ -92,7 +92,7 @@ namespace Chessy.Game
             {
                 var curPlayerI = E.CurPlayerITC.Player;
 
-                if (E.PlayerE(curPlayerI).PeopleInCity > 0)
+                if (E.PlayerE(curPlayerI).PeopleInCity >= 1)
                 {
                     var pawnsInGame = E.UnitInfo(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
                         + E.UnitInfo(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;

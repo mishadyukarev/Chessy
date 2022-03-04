@@ -68,7 +68,7 @@ namespace Chessy.Game
 
         #region Fertilize
 
-        public const float DRY_FERTILIZE = ENVIRONMENT_MAX * 0.1f;
+        public const float DRY_FERTILIZE = ENVIRONMENT_MAX * 0.05f;
         public const float RIVER_FERTILIZE_AROUND = ENVIRONMENT_MAX * 0.1f;
 
         public const float FARM_EXTRACT = ENVIRONMENT_MAX * 0.1f;

@@ -17,6 +17,7 @@ namespace Chessy.Game
         public ShiftUnitE ShiftUnitME;
 
 
+
         int _idx_cur;
 
         readonly ActionMy<string, RpcTarget, object[]> _action0;
@@ -120,11 +121,8 @@ namespace Chessy.Game
         #endregion
 
 
-        #region MarketBuy
-
-        public void BuyResource(in MarketBuyTypes marketBuy) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { marketBuy });
-
-        #endregion
+        public void Melt_ToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Melt });
+        public void BuyResource_ToMaster(in MarketBuyTypes marketBuy) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { marketBuy });
 
         public void ReadyToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Ready });
 

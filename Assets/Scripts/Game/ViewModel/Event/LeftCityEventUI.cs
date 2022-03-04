@@ -17,6 +17,24 @@ namespace Chessy.Game
         {
             var curPlayerI = E.CurPlayerITC.Player;
 
+            if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
+            {
+                if (E.SelectedBuildingsC.Is(buildT))
+                {
+                    E.SelectedBuildingsC.Set(buildT, false);
+                }
+                else if (E.PlayerE(curPlayerI).HaveBuilding(buildT))
+                {
+                    E.SelectedBuildingsC.Set(buildT, true);
+                }
+                else
+                {
+                    E.RpcPoolEs.CityBuyBuildingToMaster(buildT);
+                }
+            }
+
+
+
             switch (buildT)
             {
                 case BuildingTypes.House:
@@ -24,31 +42,9 @@ namespace Chessy.Game
                     break;
 
                 case BuildingTypes.Market:
-                    {
-                        if (E.SelectedBuildingsC.Is(BuildingTypes.Market))
-                        {
-                            E.SelectedBuildingsC.Set(BuildingTypes.Market, false);
-                        }
-                        else if (E.PlayerE(curPlayerI).HaveMarket)
-                        {
-                            E.SelectedBuildingsC.Set(BuildingTypes.Market, true);
-                        }
-                        else
-                        {
-                            E.RpcPoolEs.CityBuyBuildingToMaster(buildT);
-                        }
-                    }
                     break;
 
                 case BuildingTypes.Smelter:
-                    if (E.PlayerE(curPlayerI).HaveSmelter)
-                    {
-
-                    }
-                    else
-                    {
-                        E.RpcPoolEs.CityBuyBuildingToMaster(buildT);
-                    }
                     break;
 
                 default: throw new Exception();
@@ -72,15 +68,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ResourcesEconomy_Values.NEED_FOOD_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ResourcesEconomy_Values.NEED_FOOD_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ResourcesEconomy_Values.NEED_FOOD_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -93,15 +89,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ResourcesEconomy_Values.NEED_WOOD_FOR_BUILDING_HOUSE;
+                                need = E.PlayerE(whoseMove).WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ResourcesEconomy_Values.NEED_WOOD_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_WOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ResourcesEconomy_Values.NEED_WOOD_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_WOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -113,15 +109,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ResourcesEconomy_Values.NEED_ORE_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ResourcesEconomy_Values.NEED_ORE_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ResourcesEconomy_Values.NEED_ORE_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -133,15 +129,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ResourcesEconomy_Values.NEED_IRON_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ResourcesEconomy_Values.NEED_IRON_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ResourcesEconomy_Values.NEED_IRON_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -153,15 +149,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ResourcesEconomy_Values.NEED_GOLD_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ResourcesEconomy_Values.NEED_GOLD_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ResourcesEconomy_Values.NEED_GOLD_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -187,14 +183,16 @@ namespace Chessy.Game
                 {
                     case BuildingTypes.House:
                         E.PlayerE(whoseMove).MaxAvailablePawns++;
+                        E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).MaxAvailablePawns + E.PlayerE(whoseMove).MaxAvailablePawns);
+                        E.PlayerE(whoseMove).WoodForBuyHouse += E.PlayerE(whoseMove).WoodForBuyHouse;
                         break;
 
                     case BuildingTypes.Market:
-                        E.PlayerE(whoseMove).HaveMarket = true;
+                        E.PlayerE(whoseMove).SetHaveBuilding(BuildingTypes.Market, true);
                         break;
 
                     case BuildingTypes.Smelter:
-                        E.PlayerE(whoseMove).HaveSmelter = true;
+                        E.PlayerE(whoseMove).SetHaveBuilding(BuildingTypes.Smelter, true);
                         break;
 
                     default: throw new Exception();

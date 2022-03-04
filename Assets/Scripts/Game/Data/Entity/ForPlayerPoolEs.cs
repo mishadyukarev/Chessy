@@ -4,15 +4,18 @@ namespace Chessy.Game
 {
     public struct ForPlayerPoolEs
     {
+        readonly Dictionary<BuildingTypes, bool> _haveBuilding;
+
         public UnitTC AvailableHeroTC;
         public bool IsReadyC;
         public bool HaveCenterHero;
         public bool HaveFraction;
 
         public float PeopleInCity;
-        public float MaxAvailablePawns;
-        public bool HaveMarket;
-        public bool HaveSmelter;
+        public int MaxPeopleInCity;
+        public int MaxAvailablePawns;
+        public float WoodForBuyHouse;
+
 
         readonly LevelInfoE[] _levelInfoEs;
         readonly ResourcesC[] _resourceCs;
@@ -21,14 +24,29 @@ namespace Chessy.Game
         public ref ResourcesC ResourcesC(in ResourceTypes resT) => ref _resourceCs[(byte)resT - 1];
         public PlayerUnitInfoE UnitE(in UnitTypes unitT) => _unitEs[unitT];
 
+        public bool HaveBuilding(in BuildingTypes buildingT) => _haveBuilding[buildingT];
+
         internal ForPlayerPoolEs(in bool b) : this()
         {
             PeopleInCity = Start_VALUES.PEOPLE_IN_CITY;
+            MaxPeopleInCity = Start_VALUES.PEOPLE_IN_CITY + Start_VALUES.PEOPLE_IN_CITY;
             MaxAvailablePawns = Start_VALUES.MAX_AVAILABLE_PAWN;
 
             _levelInfoEs = new LevelInfoE[(byte)LevelTypes.End - 1];
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];
             _unitEs = new Dictionary<UnitTypes, PlayerUnitInfoE>();
+
+
+            _haveBuilding = new Dictionary<BuildingTypes, bool>();
+
+            _haveBuilding.Add(BuildingTypes.Market, false);
+            _haveBuilding.Add(BuildingTypes.Smelter, false);
+
+
+            WoodForBuyHouse = Start_VALUES.NEED_WOOD_FOR_BUILDING_HOUSE;
+
+
+
 
             HaveCenterHero = true;
 
@@ -45,5 +63,7 @@ namespace Chessy.Game
                 _unitEs.Add(unitT, new PlayerUnitInfoE(unitT));
             }
         }
+
+        public void SetHaveBuilding(in BuildingTypes buildingT, in bool have) => _haveBuilding[buildingT] = have;
     }
 }

@@ -20,6 +20,7 @@ namespace Chessy.Game
 
         public SunSideTC SunSideTC;
         public DirectTC DirectWindTC;
+        public StrengthC StrengthWind;
 
         public CellClickC CellClickTC;
         public RayCastTC RayCastTC;
@@ -188,6 +189,8 @@ namespace Chessy.Game
             WhoseMove = new PlayerTC(Start_VALUES.WHOSE_MOVE);
             CellClickTC = new CellClickC(Start_VALUES.CELL_CLICK);
             SelectedTWE = new SelectedToolWeaponE(Start_VALUES.SELECTED_TOOL_WEAPON, Start_VALUES.SELECTED_LEVEL_TOOL_WEAPON);
+            StrengthWind = new StrengthC(Start_VALUES.STRENGTH_WIND);
+
 
             var i = 0;
 

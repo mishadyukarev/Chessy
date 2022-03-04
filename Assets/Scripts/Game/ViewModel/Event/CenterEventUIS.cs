@@ -30,7 +30,7 @@ namespace Chessy.Game
             centerUIEs.HeroE(UnitTypes.Hell).ButtonC.AddListener(delegate { GetHero(UnitTypes.Hell); });
             //UIEs.CenterEs.CenterHeroUIE(UnitTypes.Elfemale).AddListener(OpenShop);
 
-            centerUIEs.MarketE.ExitButtonC.AddListener(ExitMarket);
+
         }
 
         void Ready() => E.RpcPoolEs.ReadyToMaster();
@@ -91,11 +91,6 @@ namespace Chessy.Game
         void OpenShop()
         {
             ShopUIC.EnableZone();
-        }
-
-        void ExitMarket()
-        {
-            E.SelectedBuildingsC.Set(BuildingTypes.Market, false);
         }
     }
 }

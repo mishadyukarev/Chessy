@@ -13,12 +13,14 @@ namespace Chessy.Game
         {
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
+                //E.ResourcesC(player, ResourceTypes.Food).Resources -= E.PlayerE(player).PeopleInCity * Economy_VALUES.CostFoodForFeedingThem / 2;
+
                 for (var unit = UnitTypes.Scout; unit < UnitTypes.Camel; unit++)
                 {
                     E.UnitInfo(player, LevelTypes.First, unit).ScoutHeroCooldownC.Cooldown--;
                 }
 
-                E.ResourcesC(player, ResourceTypes.Food).Resources += ResourcesEconomy_Values.ADDING_FOOD_AFTER_MOVE;
+                E.ResourcesC(player, ResourceTypes.Food).Resources += Economy_VALUES.ADDING_FOOD_AFTER_MOVE;
             }
 
             for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
@@ -30,7 +32,7 @@ namespace Chessy.Game
 
                 if (E.UnitTC(idx_0).HaveUnit && !E.UnitMainE(idx_0).IsAnimal)
                 {
-                    E.ResourcesC(E.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= ResourcesEconomy_Values.CostFoodForFeedingThem(E.UnitTC(idx_0).Unit);
+                    E.ResourcesC(E.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= Economy_VALUES.CostFoodForFeedingThem;
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {

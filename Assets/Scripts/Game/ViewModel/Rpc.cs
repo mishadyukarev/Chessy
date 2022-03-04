@@ -245,16 +245,23 @@ namespace Chessy.Game
 
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                         {
-                                            //var need = ResourcesEconomy_Values.ForBuild(BuildingTypes.Farm, resT);
-                                            //needRes.Add(resT, need);
-                                            //if (need > _e.PlayerE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                                            if (resT == ResourceTypes.Wood)
+                                            {
+                                                needRes.Add(resT, Economy_VALUES.WOOD_FOR_BUILDING_FARM);
+                                            }
+                                            else
+                                            {
+                                                needRes.Add(resT, 0);
+                                            }
+
+                                            if (needRes[resT] > _e.PlayerE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
                                         }
 
                                         if (canBuild)
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             {
-                                                //_e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ResourcesEconomy_Values.ForBuild(BuildingTypes.Farm, resT);
+                                                _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                                             }
 
                                             _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
@@ -268,16 +275,19 @@ namespace Chessy.Game
 
                                             _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
                                         }
+
                                         else
                                         {
                                             _e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
                                         }
                                     }
+
                                     else
                                     {
                                         _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                     }
                                 }
+
                                 else
                                 {
                                     _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
@@ -823,80 +833,7 @@ namespace Chessy.Game
                 _eventsUI.LeftCityEventUI.BuyBuilding_Master(buildT, sender);
             }
 
-            else if (obj is MarketBuyTypes marketBuy)
-            {
-                var needRes = new Dictionary<ResourceTypes, float>();
-
-                needRes.Add(ResourceTypes.Food, 0);
-                needRes.Add(ResourceTypes.Wood, 0);
-                needRes.Add(ResourceTypes.Ore, 0);
-                needRes.Add(ResourceTypes.Iron, 0);
-                needRes.Add(ResourceTypes.Gold, 0);
-
-                switch (marketBuy)
-                {
-                    case MarketBuyTypes.FoodToWood:
-                        needRes[ResourceTypes.Food] = ResourcesEconomy_Values.ResourcesForBuyFromMarket(marketBuy);
-                        break;
-
-                    case MarketBuyTypes.WoodToFood:
-                        needRes[ResourceTypes.Wood] = ResourcesEconomy_Values.ResourcesForBuyFromMarket(marketBuy);
-                        break;
-
-                    case MarketBuyTypes.GoldToFood:
-                        needRes[ResourceTypes.Gold] = ResourcesEconomy_Values.ResourcesForBuyFromMarket(marketBuy);
-                        break;
-
-                    case MarketBuyTypes.GoldToWood:
-                        needRes[ResourceTypes.Gold] = ResourcesEconomy_Values.ResourcesForBuyFromMarket(marketBuy);
-                        break;
-                }
-
-                var canBuy = true;
-
-                for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                {
-                    if (needRes[resT] > _e.PlayerE(_e.WhoseMove.Player).ResourcesC(resT).Resources)
-                    {
-                        canBuy = false;
-                        break;
-                    }
-                }
-
-                if (canBuy)
-                {
-                    for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                    {
-                        _e.PlayerE(_e.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
-                    }
-                    switch (marketBuy)
-                    {
-                        case MarketBuyTypes.FoodToWood:
-                            _e.PlayerE(_e.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
-                                += ResourcesEconomy_Values.ResourcesAfterBuyInMarket(marketBuy);
-                            break;
-
-                        case MarketBuyTypes.WoodToFood:
-                            _e.PlayerE(_e.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
-                                += ResourcesEconomy_Values.ResourcesAfterBuyInMarket(marketBuy);
-                            break;
-
-                        case MarketBuyTypes.GoldToFood:
-                            _e.PlayerE(_e.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
-                                += ResourcesEconomy_Values.ResourcesAfterBuyInMarket(marketBuy);
-                            break;
-
-                        case MarketBuyTypes.GoldToWood:
-                            _e.PlayerE(_e.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
-                                += ResourcesEconomy_Values.ResourcesAfterBuyInMarket(marketBuy);
-                            break;
-                    }
-                }
-                else
-                {
-                    _e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
-                }
-            }
+            else if (obj is MarketBuyTypes marketBuy) _eventsUI.CenterBuildingEnventsUI.Buy_Master(marketBuy, sender);
 
             else if (obj is RpcMasterTypes rpcT)
             {
@@ -1045,8 +982,8 @@ namespace Chessy.Game
 
                                                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                                         {
-                                                            var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, res);
-                                                            needRes.Add(res, ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, res));
+                                                            var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
+                                                            needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
 
                                                             if (canBuy) canBuy = difAmountRes >= 0;
                                                         }
@@ -1054,7 +991,7 @@ namespace Chessy.Game
                                                         if (canBuy)
                                                         {
                                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                                _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, resT);
+                                                                _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
 
                                                             _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -1114,8 +1051,8 @@ namespace Chessy.Game
 
                                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                                     {
-                                                        var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, res);
-                                                        needRes.Add(res, ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, res));
+                                                        var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
+                                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
 
                                                         if (canBuy) canBuy = difAmountRes >= 0;
                                                     }
@@ -1123,7 +1060,7 @@ namespace Chessy.Game
                                                     if (canBuy)
                                                     {
                                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                            _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, resT);
+                                                            _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
 
                                                         _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -1206,8 +1143,8 @@ namespace Chessy.Game
 
                                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                                     {
-                                                        var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, res);
-                                                        needRes.Add(res, ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, res));
+                                                        var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
+                                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
 
                                                         if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
                                                     }
@@ -1215,7 +1152,7 @@ namespace Chessy.Game
                                                     if (canCreatBuild)
                                                     {
                                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                            _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ResourcesEconomy_Values.ForBuyToolWeapon(twT, levTW, resT);
+                                                            _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
 
                                                         var protection = 0f;
 
@@ -1259,6 +1196,10 @@ namespace Chessy.Game
 
                         _e.PlayerE(whoseMove).HaveFraction = true;
                         _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickUpgrade);
+                        break;
+
+                    case RpcMasterTypes.Melt:
+                        _eventsUI.CenterBuildingEnventsUI.Melt_Master(sender);
                         break;
 
                     default:

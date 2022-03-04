@@ -49,6 +49,7 @@ MonoBehaviour:
   - UpdateDataAndView
   - GeneralRpc
   - OtherRpc
+  - Melt_Master
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
