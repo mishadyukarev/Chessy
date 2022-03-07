@@ -114,24 +114,26 @@ namespace Chessy.Game
 
             else
             {
-                var idxs = E.UnitEs(E.SelectedIdxC.Idx).ForShift.Idxs;
-
-                foreach (var idx_0 in idxs)
+                if (E.UnitPlayerTC(E.SelectedIdxC.Idx).Is(E.CurPlayerITC.Player))
                 {
-                    SupportCellVEs.Support(idx_0).Enable();
-                    SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
-                }
+                    var idxs = E.UnitEs(E.SelectedIdxC.Idx).ForShift.Idxs;
 
-                foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Idxs)
-                {
-                    SupportCellVEs.Support(idx_0).Enable();
-                    SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
-                }
+                    foreach (var idx_0 in idxs)
+                    {
+                        SupportCellVEs.Support(idx_0).Enable();
+                        SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                    }
 
-                foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Idxs)
-                {
-                    SupportCellVEs.Support(idx_0).Enable();
-                    SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                    foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Idxs)
+                    {
+                        SupportCellVEs.Support(idx_0).Enable();
+                        SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
+                    }
+                    foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Idxs)
+                    {
+                        SupportCellVEs.Support(idx_0).Enable();
+                        SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                    }
                 }
             }
         }

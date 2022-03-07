@@ -39,6 +39,10 @@ namespace Chessy.Game
                                     E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.FireArcher;
                                     E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ChangeCornerArcher;
                                 }
+                                else if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                                {
+
+                                }
                                 else
                                 {
                                     if (E.AdultForestC(idx_0).HaveAnyResources)
@@ -71,9 +75,6 @@ namespace Chessy.Game
                                     }
                                 }
 
-                                break;
-
-                            case UnitTypes.Scout:
                                 break;
 
                             case UnitTypes.Elfemale:

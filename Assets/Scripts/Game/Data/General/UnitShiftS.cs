@@ -40,7 +40,7 @@
 
                     if (E.RiverEs(idx_to).RiverTC.HaveRiverNear)
                     {
-                        E.UnitWaterC(idx_to).Water = E.UnitInfo(E.UnitPlayerTC(idx_to), E.UnitLevelTC(idx_to), E.UnitTC(idx_to)).MaxWater;
+                        E.UnitWaterC(idx_to).Water = E.UnitInfo(E.UnitPlayerTC(idx_to), E.UnitLevelTC(idx_to), E.UnitTC(idx_to)).WaterMax;
                     }
                 }
 

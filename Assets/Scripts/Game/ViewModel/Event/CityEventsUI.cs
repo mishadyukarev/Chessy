@@ -2,11 +2,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Chessy.Game.EventsUI.Left
 {
-    public sealed class LeftCityEventUI : SystemAbstract
+    public sealed class CityEventsUI : SystemAbstract
     {
-        internal LeftCityEventUI(in LeftUIEs leftEs, in EntitiesModel ents) : base(ents)
+        internal CityEventsUI(in LeftUIEs leftEs, in EntitiesModel ents) : base(ents)
         {
             leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { Build(BuildingTypes.House); });
             leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { Build(BuildingTypes.Market); });
@@ -68,15 +68,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_HOUSE;
+                                need = ECONOMY_VALUES.NEED_FOOD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_MARKET;
+                                need = ECONOMY_VALUES.NEED_FOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_SMELTER;
+                                need = ECONOMY_VALUES.NEED_FOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -93,11 +93,11 @@ namespace Chessy.Game
                                 break;
 
                             case BuildingTypes.Market:
-                                need = Economy_VALUES.NEED_WOOD_FOR_BUILDING_MARKET;
+                                need = ECONOMY_VALUES.NEED_WOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = Economy_VALUES.NEED_WOOD_FOR_BUILDING_SMELTER;
+                                need = ECONOMY_VALUES.NEED_WOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -109,15 +109,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_HOUSE;
+                                need = ECONOMY_VALUES.NEED_ORE_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_MARKET;
+                                need = ECONOMY_VALUES.NEED_ORE_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_SMELTER;
+                                need = ECONOMY_VALUES.NEED_ORE_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -129,15 +129,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_HOUSE;
+                                need = ECONOMY_VALUES.NEED_IRON_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_MARKET;
+                                need = ECONOMY_VALUES.NEED_IRON_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_SMELTER;
+                                need = ECONOMY_VALUES.NEED_IRON_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -149,15 +149,15 @@ namespace Chessy.Game
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_HOUSE;
+                                need = ECONOMY_VALUES.NEED_GOLD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_MARKET;
+                                need = ECONOMY_VALUES.NEED_GOLD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_SMELTER;
+                                need = ECONOMY_VALUES.NEED_GOLD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -183,7 +183,7 @@ namespace Chessy.Game
                 {
                     case BuildingTypes.House:
                         E.PlayerE(whoseMove).MaxAvailablePawns++;
-                        E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).MaxAvailablePawns + E.PlayerE(whoseMove).MaxAvailablePawns);
+                        //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).MaxAvailablePawns + E.PlayerE(whoseMove).MaxAvailablePawns);
                         E.PlayerE(whoseMove).WoodForBuyHouse += E.PlayerE(whoseMove).WoodForBuyHouse;
                         break;
 

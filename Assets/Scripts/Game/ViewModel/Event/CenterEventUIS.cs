@@ -19,9 +19,9 @@ namespace Chessy.Game
             centerUIEs.FriendE.ButtonC.AddListener(FriendReady);
             //UIEs.CenterEs.AddListener(Hint);
 
-            centerUIEs.UpgradeE.ButtonC(ButtonTypes.First).AddListener(delegate { PickFraction(ButtonTypes.First); });
-            centerUIEs.UpgradeE.ButtonC(ButtonTypes.Second).AddListener(delegate { PickFraction(ButtonTypes.Second); });
-            centerUIEs.UpgradeE.ButtonC(ButtonTypes.Third).AddListener(delegate { PickFraction(ButtonTypes.Third); });
+            //centerUIEs.UpgradeE.ButtonC(ButtonTypes.First).AddListener(delegate { PickFraction(FractionTypes.Economy); });
+            //centerUIEs.UpgradeE.ButtonC(ButtonTypes.Second).AddListener(delegate { PickFraction(FractionTypes.Attack); });
+            //centerUIEs.UpgradeE.ButtonC(ButtonTypes.Third).AddListener(delegate { PickFraction(FractionTypes.Heros); });
 
 
             centerUIEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { GetHero(UnitTypes.Elfemale); });
@@ -45,7 +45,7 @@ namespace Chessy.Game
 
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                if (E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
+                if (E.UnitInfoE(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
                 {
                     E.SelectedUnitE.Set(UnitTypes.King, LevelTypes.First);
                     E.CellClickTC.Click = CellClickTypes.SetUnit;
@@ -68,16 +68,16 @@ namespace Chessy.Game
             //}
         }
 
-        void PickFraction(in ButtonTypes buttonT)
-        {
-            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
-            {
-                E.RpcPoolEs.PickFractionToMaster(buttonT);
+        //void PickFraction(in FractionTypes fractionT)
+        //{
+        //    if (E.CurPlayerITC.Is(E.WhoseMove.Player))
+        //    {
+        //        E.RpcPoolEs.PickFractionToMaster(fractionT);
 
-                _centerUIEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
-            }
-            else E.Sound(ClipTypes.Mistake).Action.Invoke();
-        }
+        //        _centerUIEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+        //    }
+        //    else E.Sound(ClipTypes.Mistake).Action.Invoke();
+        //}
 
         void GetHero(in UnitTypes unit)
         {

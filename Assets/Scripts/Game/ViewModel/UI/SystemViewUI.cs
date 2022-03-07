@@ -22,7 +22,6 @@ namespace Chessy.Game
                 + new DonerUIS(entsUI.DownEs.DonerE, ents).Run
                 + new DownPawnUIS(entsUI.DownEs.PawnE, ents).Run
                 + new DownToolWeaponUIS(entsUI.DownEs.ToolWeaponE, ents).Run
-                + new DownScoutUIS(entsUI.DownEs.ScoutE, ents).Run
                 + new DownHeroUIS(entsUI.DownEs.HeroE, ents).Run
 
                 ///Up
@@ -36,7 +35,6 @@ namespace Chessy.Game
                 + new CenterReadyUIS(entsUI, ents).Run
                 + new CenterKingUIS(entsUI, ents).Run
                 + new CenterFriendUIS(entsUI, ents).Run
-                + new CenterPickFractionUIS(entsUI, ents).Run
                 + new CenterHeroesUIS(entsUI, ents).Run
                 + new CenterMistakeUIS(entsUI, ents).Run
                 + new CenterMotionUIS(entsUI, ents).Run

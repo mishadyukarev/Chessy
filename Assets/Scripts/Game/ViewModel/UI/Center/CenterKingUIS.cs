@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            if (E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
+            if (E.UnitInfoE(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
             {
                 UIE.CenterEs.KingE.Paren.SetActive(true);
             }

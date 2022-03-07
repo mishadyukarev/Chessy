@@ -22,7 +22,7 @@ namespace Chessy.Game
                     amountAdultForest++;
             }
 
-            if (amountAdultForest <= Update_VALUES.NEED_ADULT_FORESTS_FOR_TRUCE)
+            if (amountAdultForest <= UPDATE_VALUES.NEED_ADULT_FORESTS_FOR_TRUCE)
             {
                 E.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
                 _truce.Invoke();

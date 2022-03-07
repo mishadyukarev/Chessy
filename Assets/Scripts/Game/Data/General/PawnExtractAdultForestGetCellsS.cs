@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game
+﻿namespace Chessy.Game.Systems.Model
 {
     sealed class PawnExtractAdultForestGetCellsS : SystemAbstract, IEcsRunSystem
     {
@@ -14,9 +14,19 @@
 
                 if (E.AdultForestC(idx_0).HaveAnyResources)
                 {
-                    if (E.UnitTC(idx_0).Is(UnitTypes.Pawn) && E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                    if (E.UnitTC(idx_0).Is(UnitTypes.Pawn) && E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                     {
                         var extract = Environment_Values.EXTRACT_PAWM_ADULT_FOREST;
+
+                        if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
+                        {
+                            if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                            {
+                                extract *= 2;
+                            }
+                        }
+
+
 
                         if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
                         {

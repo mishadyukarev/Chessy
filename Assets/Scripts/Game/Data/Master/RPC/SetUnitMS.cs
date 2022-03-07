@@ -25,9 +25,9 @@
                     E.UnitLevelTC(idx_0).Level = LevelTypes.First;
                     E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
                     E.UnitIsRightArcherC(idx_0).IsRight = false;
-                    E.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
-                    E.UnitStepC(idx_0).Steps = E.UnitInfo(E.UnitMainE(idx_0)).MaxSteps;
-                    E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitMainE(idx_0)).MaxWater;
+                    E.UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                    E.UnitStepC(idx_0).Steps = 1/*E.UnitStatsE(idx_0).MaxStepsC.Steps*/;
+                    E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitMainE(idx_0)).WaterMax;
                     E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                     E.UnitExtraLevelTC(idx_0).Level = LevelTypes.None;
                     E.UnitExtraProtectionTC(idx_0).Protection = 0;
@@ -48,7 +48,7 @@
 
                     else
                     {
-                        E.UnitInfo(whoseMove, LevelTypes.First, unitT).HaveInInventor = false;
+                        E.UnitInfoE(whoseMove, LevelTypes.First, unitT).HaveInInventor = false;
 
                         E.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         E.UnitMainTWLevelTC(idx_0).Level = LevelTypes.None;

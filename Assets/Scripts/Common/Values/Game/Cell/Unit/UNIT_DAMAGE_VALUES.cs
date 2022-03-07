@@ -1,12 +1,11 @@
-﻿namespace Chessy.Game
+﻿namespace Chessy.Game.Values
 {
-    public readonly struct UnitDamage_Values
+    public readonly struct UNIT_DAMAGE_VALUES
     {
         #region Start
 
         public const float KING = 3;
         public const float PAWN = 1f;
-        public const float SCOUT = 0.5f;
         public const float ELFEMALE = 2;
         public const float SNOWY = 2;
         public const float UNDEAD = 2;

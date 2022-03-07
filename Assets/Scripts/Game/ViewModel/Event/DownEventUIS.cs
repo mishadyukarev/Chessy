@@ -1,6 +1,4 @@
 ﻿using System;
-using static Chessy.Game.DownToolWeaponUIE;
-using static Chessy.Game.EntityVPool;
 
 namespace Chessy.Game
 {
@@ -8,13 +6,13 @@ namespace Chessy.Game
     {
         readonly Action _updateUI;
 
-        internal DownEventUIS(in Action updateUI,  in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal DownEventUIS(in Action updateUI, in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
             _updateUI = updateUI;
 
             UIE.DownEs.DonerE.ButtonC.AddListener(Done);
 
-            UIE.DownEs.ScoutE.ButtonC.AddListener(ExecuteScout);
+            //UIE.DownEs.ScoutE.ButtonC.AddListener(ExecuteScout);
             UIE.DownEs.HeroE.ButtonC.AddListener(Hero);
 
 
@@ -25,28 +23,29 @@ namespace Chessy.Game
             UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Shield).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
             UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
             UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
+            UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Staff); });
         }
 
-        void ExecuteScout()
-        {
-            E.SelectedIdxC.Idx = 0;
+        //void ExecuteScout()
+        //{
+        //    E.SelectedIdxC.Idx = 0;
 
-            TryOnHint(VideoClipTypes.CreatingScout);
+        //    TryOnHint(VideoClipTypes.CreatingScout);
 
-            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
-            {
-                if (!E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
-                {
-                    E.SelectedUnitE.Set(UnitTypes.Scout, LevelTypes.First);
-                    E.CellClickTC.Click = CellClickTypes.SetUnit;
-                }
-                else
-                {
-                    E.Sound(ClipTypes.Mistake).Action.Invoke();
-                }
-            }
-            else E.Sound(ClipTypes.Mistake).Action.Invoke();
-        }
+        //    if (E.CurPlayerITC.Is(E.WhoseMove.Player))
+        //    {
+        //        if (!E.UnitInfoE(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.Scout).HeroCooldownC.HaveCooldown)
+        //        {
+        //            E.SelectedUnitE.Set(UnitTypes.Scout, LevelTypes.First);
+        //            E.CellClickTC.Click = CellClickTypes.SetUnit;
+        //        }
+        //        else
+        //        {
+        //            E.Sound(ClipTypes.Mistake).Action.Invoke();
+        //        }
+        //    }
+        //    else E.Sound(ClipTypes.Mistake).Action.Invoke();
+        //}
         void Hero()
         {
             E.SelectedIdxC.Idx = 0;
@@ -58,9 +57,9 @@ namespace Chessy.Game
 
                 var myHeroT = E.PlayerE(curPlayer).AvailableHeroTC.Unit;
 
-                if (E.UnitInfo(curPlayer, LevelTypes.First, myHeroT).HaveInInventor)
+                if (E.UnitInfoE(curPlayer, LevelTypes.First, myHeroT).HaveInInventor)
                 {
-                    if (!E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.Scout).ScoutHeroCooldownC.HaveCooldown)
+                    if (!E.UnitInfoE(E.CurPlayerITC.Player, LevelTypes.First, myHeroT).HeroCooldownC.HaveCooldown)
                     {
                         E.SelectedUnitE.Set(myHeroT, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;
@@ -75,7 +74,7 @@ namespace Chessy.Game
         }
         void Done()
         {
-            if (!E.UnitInfo(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
+            if (!E.UnitInfoE(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.King).HaveInInventor)
             {
                 E.RpcPoolEs.DoneToMaster();
             }
@@ -94,8 +93,8 @@ namespace Chessy.Game
 
                 if (E.PlayerE(curPlayerI).PeopleInCity >= 1)
                 {
-                    var pawnsInGame = E.UnitInfo(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
-                        + E.UnitInfo(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;
+                    var pawnsInGame = E.UnitInfoE(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
+                        + E.UnitInfoE(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;
 
                     if (pawnsInGame < E.PlayerE(curPlayerI).MaxAvailablePawns)
                     {
@@ -140,7 +139,7 @@ namespace Chessy.Game
                             if (E.SelectedTWE.LevelTC.Is(LevelTypes.First)) levT = LevelTypes.Second;
                         }
                         else if (tw != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
-                    }   
+                    }
                     else
                     {
                         levT = E.SelectedTWE.LevelTC.Level;

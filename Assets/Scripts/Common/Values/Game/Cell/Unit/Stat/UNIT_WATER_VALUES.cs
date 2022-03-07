@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Chessy.Game
+namespace Chessy.Game.Values
 {
-    public static class UnitWater_Values
+    public static class UNIT_WATER_VALUES
     {
         #region Start
 
@@ -26,7 +26,6 @@ namespace Chessy.Game
             {
                 case UnitTypes.King: return MAX * 0.1f;
                 case UnitTypes.Pawn: return MAX * 0.1f;
-                case UnitTypes.Scout: return MAX * 0.1f;
                 case UnitTypes.Elfemale: return MAX * 0.1f;
                 case UnitTypes.Snowy: return MAX * 0.1f;
                 case UnitTypes.Undead: return 0;

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Chessy.Game.EventsUI;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Chessy.Game
         static Action _updateView;
         static Action _updateUI;
         static Action _runAfterDoing;
-        static EventsUI _eventsUI;
+        static EventsUIManager _eventsUI;
 
         int _idx_cur;
 
@@ -28,7 +29,7 @@ namespace Chessy.Game
             }
         }
 
-        public Rpc GiveData(in EntitiesModel ents, in Action updateView, in Action updateUI, in Action runAfterDoing, in EventsUI eventsUI)
+        public Rpc GiveData(in EntitiesModel ents, in Action updateView, in Action updateUI, in Action runAfterDoing, in EventsUIManager eventsUI)
         {
             _e = ents;
             _updateUI = updateUI;
@@ -50,7 +51,17 @@ namespace Chessy.Game
             var obj = objects[_idx_cur++];
             var whoseMove = _e.WhoseMove.Player;
 
-            if (obj is AbilityTypes ability)
+            if (obj is byte idx)
+            {
+                var obj_1 = objects[_idx_cur++];
+
+                if (obj_1 is ToolWeaponTypes twT)
+                {
+                    new GiveTakeToolWeaponMS(twT, (LevelTypes)objects[_idx_cur++], idx, sender, _e);
+                }
+            }
+
+            else if (obj is AbilityTypes ability)
             {
                 switch (ability)
                 {
@@ -83,7 +94,7 @@ namespace Chessy.Game
 
                                                 else
                                                 {
-                                                    _e.AttackUnitE(idx_1).Set(CellUnitStatHp_Values.MAX_HP / 4, _e.UnitPlayerTC(idx_0).Player);
+                                                    _e.AttackUnitE(idx_1).Set(CellUnitStatHp_VALUES.HP / 4, _e.UnitPlayerTC(idx_0).Player);
                                                 }
                                             }
                                         }
@@ -247,7 +258,7 @@ namespace Chessy.Game
                                         {
                                             if (resT == ResourceTypes.Wood)
                                             {
-                                                needRes.Add(resT, Economy_VALUES.WOOD_FOR_BUILDING_FARM);
+                                                needRes.Add(resT, ECONOMY_VALUES.WOOD_FOR_BUILDING_FARM);
                                             }
                                             else
                                             {
@@ -476,7 +487,7 @@ namespace Chessy.Game
                                     {
                                         if (_e.AdultForestC(idx_to).HaveAnyResources)
                                         {
-                                            if (_e.UnitHpC(idx_from).Health >= CellUnitStatHp_Values.MAX_HP)
+                                            if (_e.UnitHpC(idx_from).Health >= CellUnitStatHp_VALUES.HP)
                                             {
                                                 if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.NeedForAbility(ability))
                                                 {
@@ -490,21 +501,22 @@ namespace Chessy.Game
                                                         _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ability);
 
 
-                                                        foreach (var idx_1 in _e.CellEs(idx_to).AroundCellIdxsC)
+                                                        foreach (var idx_1 in _e.CellEs(idx_to).IdxsAround)
                                                         {
-                                                            //if (e.AdultForestC(idx_1).AdultForest.HaveAny)
-                                                            //{
-                                                            //    if (e.UnitTC(idx_1).HaveUnit && e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(idx_to).Player))
-                                                            //    {
-                                                            //        e.UnitE(idx_1).StunC.Stun = CellUnitEffectStun_Values.ForStunAfterAbility(_ability);
-                                                            //    }
-                                                            //}
+                                                            if (_e.AdultForestC(idx_1).HaveAnyResources)
+                                                            {
+                                                                if (_e.UnitTC(idx_1).HaveUnit && _e.UnitPlayerTC(idx_1).Is(_e.UnitPlayerTC(idx_to).Player))
+                                                                {
+                                                                    _e.UnitEffectStunC(idx_1).Stun = CellUnitEffectStun_Values.ForStunAfterAbility(ability);
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
 
                                                 else _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                             }
+
                                             else _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                                         }
                                     }
@@ -520,7 +532,7 @@ namespace Chessy.Game
                             var idx_from = (byte)objects[_idx_cur++];
                             var idx_to = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitHpC(idx_from).Health >= CellUnitStatHp_Values.MAX_HP)
+                            if (_e.UnitHpC(idx_from).Health >= CellUnitStatHp_VALUES.HP)
                             {
                                 if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.NeedForAbility(ability))
                                 {
@@ -544,7 +556,7 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitHpC(idx_0).Health >= CellUnitStatHp_Values.MAX_HP)
+                            if (_e.UnitHpC(idx_0).Health >= CellUnitStatHp_VALUES.HP)
                             {
                                 if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.CHANGE_CORNER_ARCHER)
                                 {
@@ -585,7 +597,7 @@ namespace Chessy.Game
 
                                             _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.AFTER_ICE_WALL;
 
-                                            _e.BuildingMainE(idx_0).Set(BuildingTypes.IceWall, LevelTypes.First, CellUnitStatHp_Values.MAX_HP, _e.UnitPlayerTC(idx_0).Player);
+                                            _e.BuildingMainE(idx_0).Set(BuildingTypes.IceWall, LevelTypes.First, CellUnitStatHp_VALUES.HP, _e.UnitPlayerTC(idx_0).Player);
                                         }
                                     }
                                 }
@@ -612,12 +624,13 @@ namespace Chessy.Game
                                         {
                                             if (_e.UnitPlayerTC(idx_1).Is(whoseMove))
                                             {
-                                                if (_e.UnitMainE(idx_1).IsMelee && !_e.UnitTC(idx_1).Is(UnitTypes.Camel, UnitTypes.Scout))
+                                                if (_e.UnitMainE(idx_1).IsMelee && !_e.UnitTC(idx_1).Is(UnitTypes.Camel))
                                                 {
-                                                    _e.UnitWaterC(idx_1).Water = _e.UnitInfo(_e.UnitPlayerTC(idx_1), _e.UnitLevelTC(idx_1), _e.UnitTC(idx_1)).MaxWater;
-                                                    _e.UnitHpC(idx_1).Health = CellUnitStatHp_Values.MAX_HP;
+                                                    _e.UnitWaterC(idx_1).Water = _e.UnitInfo(_e.UnitPlayerTC(idx_1), _e.UnitLevelTC(idx_1), _e.UnitTC(idx_1)).WaterMax;
+                                                    _e.UnitHpC(idx_1).Health = CellUnitStatHp_VALUES.HP;
                                                     _e.UnitEffectShield(idx_1).Protection = CellUnitEffectShield_Values.AFTER_DIRECT_WAVE;
                                                 }
+
                                                 if (_e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.BowCrossbow))
                                                 {
                                                     _e.UnitEffectFrozenArrawC(idx_1).Shoots = 0;
@@ -940,262 +953,8 @@ namespace Chessy.Game
                         _e.RpcPoolEs.SetUnitME.Set((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++]);
                         break;
 
-                    case RpcMasterTypes.GiveTakeToolWeapon:
-                        {
-                            idx_0 = (byte)objects[_idx_cur++];
-                            var twT = (ToolWeaponTypes)objects[_idx_cur++];
-                            var levTW = (LevelTypes)objects[_idx_cur++];
-
-                            if (_e.UnitTC(idx_0).Is(UnitTypes.Pawn))
-                            {
-                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON)
-                                {
-                                    if (twT == ToolWeaponTypes.BowCrossbow)
-                                    {
-                                        if (_e.UnitExtraTWTC(idx_0).HaveToolWeapon)
-                                        {
-                                            _e.ToolWeaponsC(_e.UnitPlayerTC(idx_0).Player, _e.UnitExtraLevelTC(idx_0).Level, _e.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
-                                            _e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
-
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-                                        }
-                                        else
-                                        {
-                                            if (_e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
-                                            {
-                                                if (_e.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
-                                                {
-                                                    if (_e.PlayerE(whoseMove).LevelE(levTW).ToolWeapons(twT).HaveAny)
-                                                    {
-                                                        _e.ToolWeaponsC(whoseMove, levTW, twT).Amount--;
-                                                        _e.UnitMainTWTC(idx_0).ToolWeapon = twT;
-                                                        _e.UnitMainTWLevelTC(idx_0).Level = levTW;
-
-                                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                    }
-                                                    else
-                                                    {
-                                                        var needRes = new Dictionary<ResourceTypes, float>();
-                                                        var canBuy = true;
-
-                                                        for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-                                                        {
-                                                            var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                                            needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
-
-                                                            if (canBuy) canBuy = difAmountRes >= 0;
-                                                        }
-
-                                                        if (canBuy)
-                                                        {
-                                                            for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                                _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
-
-                                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                                            _e.UnitMainTWTC(idx_0).ToolWeapon = twT;
-                                                            _e.UnitMainTWLevelTC(idx_0).Level = levTW;
-
-                                                            _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                        }
-                                                        else
-                                                        {
-                                                            _e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
-                                                        }
-
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    _e.ToolWeaponsC(whoseMove, _e.UnitMainTWLevelTC(idx_0).Level, _e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
-                                                    _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
-                                                    _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
-
-                                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-                                                }
-                                            }
-
-                                            else
-                                            {
-                                                _e.ToolWeaponsC(whoseMove, _e.UnitMainTWLevelTC(idx_0).Level, _e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
-                                                _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
-                                                _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
-
-                                                _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-                                            }
-                                        }
-                                    }
-
-                                    else if (twT == ToolWeaponTypes.Axe)
-                                    {
-                                        if (_e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
-                                        {
-                                            if (_e.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
-                                            {
-                                                if (_e.PlayerE(whoseMove).LevelE(levTW).ToolWeapons(twT).HaveAny)
-                                                {
-                                                    _e.ToolWeaponsC(whoseMove, levTW, twT).Amount--;
-                                                    _e.UnitMainTWTC(idx_0).ToolWeapon = twT;
-                                                    _e.UnitMainTWLevelTC(idx_0).Level = levTW;
-
-                                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                                    _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                }
-                                                else
-                                                {
-                                                    var needRes = new Dictionary<ResourceTypes, float>();
-                                                    var canBuy = true;
-
-                                                    for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-                                                    {
-                                                        var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
-
-                                                        if (canBuy) canBuy = difAmountRes >= 0;
-                                                    }
-
-                                                    if (canBuy)
-                                                    {
-                                                        for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                            _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
-
-                                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                                        _e.UnitMainTWTC(idx_0).ToolWeapon = twT;
-                                                        _e.UnitMainTWLevelTC(idx_0).Level = levTW;
-
-                                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                    }
-                                                    else
-                                                    {
-                                                        _e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
-                                                    }
-
-                                                }
-                                            }
-                                            else
-                                            {
-                                                _e.ToolWeaponsC(whoseMove, _e.UnitMainTWLevelTC(idx_0).Level, _e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
-                                                _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
-                                                _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
-
-                                                _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-                                            }
-                                        }
-
-                                        else
-                                        {
-                                            _e.ToolWeaponsC(whoseMove, _e.UnitMainTWLevelTC(idx_0).Level, _e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
-                                            _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
-                                            _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
-
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                            _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                        }
-                                    }
-
-                                    else
-                                    {
-                                        var ownUnit_0 = _e.UnitPlayerTC(idx_0).Player;
-
-                                        if (_e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
-                                        {
-                                            _e.ToolWeaponsC(_e.UnitPlayerTC(idx_0).Player, _e.UnitMainTWLevelTC(idx_0).Level, _e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
-                                            _e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
-                                            _e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
-
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-                                        }
-
-                                        else
-                                        {
-                                            if (_e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
-                                            {
-                                                if (_e.UnitExtraTWTC(idx_0).HaveToolWeapon)
-                                                {
-                                                    _e.PlayerE(ownUnit_0).LevelE(_e.UnitExtraLevelTC(idx_0).Level).ToolWeapons(_e.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
-                                                    _e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
-
-                                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                                    _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                }
-
-                                                else if (_e.ToolWeaponsC(ownUnit_0, levTW, twT).HaveAny)
-                                                {
-                                                    _e.PlayerE(ownUnit_0).LevelE(levTW).ToolWeapons(twT).Amount--;
-
-                                                    _e.UnitExtraTWE(idx_0).Set(twT, levTW, _e.UnitExtraProtectionTC(idx_0).Protection);
-
-                                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                                    _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                }
-
-                                                else
-                                                {
-                                                    var needRes = new Dictionary<ResourceTypes, float>();
-                                                    var canCreatBuild = true;
-
-                                                    for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
-                                                    {
-                                                        var difAmountRes = _e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
-
-                                                        if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
-                                                    }
-
-                                                    if (canCreatBuild)
-                                                    {
-                                                        for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                            _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
-
-                                                        var protection = 0f;
-
-                                                        if (twT == ToolWeaponTypes.Shield)
-                                                        {
-                                                            protection = levTW == LevelTypes.First ? CellUnitToolWeapon_Values.SHIELD_PROTECTION_LEVEL_FIRST
-                                                                : CellUnitToolWeapon_Values.SHIELD_PROTECTION_LEVEL_SECOND;
-                                                        }
-
-                                                        _e.UnitExtraTWE(idx_0).Set(twT, levTW, protection);
-
-                                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
-
-                                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
-                                                    }
-                                                    else
-                                                    {
-                                                        _e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-
-                                else
-                                {
-                                    _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                }
-                            }
-                        }
-                        break;
-
                     case RpcMasterTypes.GetHero:
                         _e.RpcPoolEs.GetHeroTC.Unit = (UnitTypes)objects[_idx_cur++];
-
-                        break;
-
-                    case RpcMasterTypes.PickFraction:
-                        //_e.RpcPoolEs.CenterUpgradeUnitE.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
-
-                        _e.PlayerE(whoseMove).HaveFraction = true;
-                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickUpgrade);
                         break;
 
                     case RpcMasterTypes.Melt:

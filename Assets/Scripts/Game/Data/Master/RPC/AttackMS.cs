@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Chessy.Game.Values;
+using Photon.Pun;
 
 namespace Chessy.Game
 {
@@ -39,7 +40,7 @@ namespace Chessy.Game
 
                 if (E.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to))
                 {
-                    powerDam_from += powerDam_from * UnitDamage_Values.UNIQUE_PERCENT_DAMAGE;
+                    powerDam_from += powerDam_from * UNIT_DAMAGE_VALUES.UNIQUE_PERCENT_DAMAGE;
                 }
 
                 var dirAttack = E.CellEs(idx_from).Direct(idx_to);
@@ -69,7 +70,7 @@ namespace Chessy.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = CellUnitStatHp_Values.MAX_HP;
+                var maxDamage = CellUnitStatHp_VALUES.HP;
                 var minDamage = 0;
 
                 //if (!e.UnitE(idx_to).IsMelee) powerDam_to /= 2;

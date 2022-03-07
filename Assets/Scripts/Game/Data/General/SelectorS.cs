@@ -69,11 +69,7 @@ namespace Chessy.Game
                                             {
                                                 if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
                                                 {
-                                                    if (E.UnitTC(idx_cur).Is(UnitTypes.Scout))
-                                                    {
-
-                                                    }
-                                                    else if (E.UnitMainE(idx_cur).IsMelee)
+                                                    if (E.UnitMainE(idx_cur).IsMelee)
                                                     {
                                                         E.Sound(ClipTypes.PickMelee).Invoke();
                                                     }
@@ -94,11 +90,7 @@ namespace Chessy.Game
                                         {
                                             if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
                                             {
-                                                if (E.UnitTC(idx_cur).Is(UnitTypes.Scout))
-                                                {
-
-                                                }
-                                                else if (E.UnitMainE(idx_cur).IsMelee)
+                                                if (E.UnitMainE(idx_cur).IsMelee)
                                                 {
                                                     E.Sound(ClipTypes.PickMelee).Invoke();
                                                 }

@@ -1,13 +1,11 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 
-namespace Chessy.Game
+namespace Chessy.Game.EventsUI.Center
 {
-    public sealed class CenterBuildingEventsUI : SystemAbstract
+    public sealed class BuildingEventsUI : SystemAbstract
     {
-        public CenterBuildingEventsUI(in CenterUIEs centerUIEs, in EntitiesModel ents) : base(ents)
+        public BuildingEventsUI(in CenterUIEs centerUIEs, in EntitiesModel ents) : base(ents)
         {
             centerUIEs.MarketE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Market); });
             centerUIEs.SmelterE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Smelter); });
@@ -54,19 +52,19 @@ namespace Chessy.Game
             switch (marketBuyT)
             {
                 case MarketBuyTypes.FoodToWood:
-                    needRes[ResourceTypes.Food] = Economy_VALUES.FOR_BUY_FROM_MARKET_FOOD_TO_WOOD;
+                    needRes[ResourceTypes.Food] = ECONOMY_VALUES.FOR_BUY_FROM_MARKET_FOOD_TO_WOOD;
                     break;
 
                 case MarketBuyTypes.WoodToFood:
-                    needRes[ResourceTypes.Wood] = Economy_VALUES.FOR_BUY_FROM_MARKET_WOOD_TO_FOOD;
+                    needRes[ResourceTypes.Wood] = ECONOMY_VALUES.FOR_BUY_FROM_MARKET_WOOD_TO_FOOD;
                     break;
 
                 case MarketBuyTypes.GoldToFood:
-                    needRes[ResourceTypes.Gold] = Economy_VALUES.FOR_BUY_FROM_MARKET_GOLD_TO_FOOD;
+                    needRes[ResourceTypes.Gold] = ECONOMY_VALUES.FOR_BUY_FROM_MARKET_GOLD_TO_FOOD;
                     break;
 
                 case MarketBuyTypes.GoldToWood:
-                    needRes[ResourceTypes.Gold] = Economy_VALUES.FOR_BUY_FROM_MARKET_GOLD_TO_WOOD;
+                    needRes[ResourceTypes.Gold] = ECONOMY_VALUES.FOR_BUY_FROM_MARKET_GOLD_TO_WOOD;
                     break;
             }
 
@@ -91,22 +89,22 @@ namespace Chessy.Game
                 {
                     case MarketBuyTypes.FoodToWood:
                         E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
-                            += Economy_VALUES.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD;
+                            += ECONOMY_VALUES.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD;
                         break;
 
                     case MarketBuyTypes.WoodToFood:
                         E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
-                            += Economy_VALUES.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD;
+                            += ECONOMY_VALUES.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToFood:
                         E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
-                            += Economy_VALUES.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD;
+                            += ECONOMY_VALUES.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToWood:
                         E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
-                            += Economy_VALUES.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD;
+                            += ECONOMY_VALUES.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD;
                         break;
                 }
 
@@ -123,8 +121,8 @@ namespace Chessy.Game
             var needRes = new Dictionary<ResourceTypes, float>();
 
             needRes.Add(ResourceTypes.Food, 0);
-            needRes.Add(ResourceTypes.Wood, Economy_VALUES.WOOD_NEED_FOR_MELTING);
-            needRes.Add(ResourceTypes.Ore, Economy_VALUES.ORE_NEED_FOR_MELTING);
+            needRes.Add(ResourceTypes.Wood, ECONOMY_VALUES.WOOD_NEED_FOR_MELTING);
+            needRes.Add(ResourceTypes.Ore, ECONOMY_VALUES.ORE_NEED_FOR_MELTING);
             needRes.Add(ResourceTypes.Iron, 0);
             needRes.Add(ResourceTypes.Gold, 0);
 
@@ -146,8 +144,8 @@ namespace Chessy.Game
                     E.PlayerE(E.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
-                E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += Economy_VALUES.IRON_AFTER_MELTING;
-                E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += Economy_VALUES.GOLD_AFTER_MELTING;
+                E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += ECONOMY_VALUES.IRON_AFTER_MELTING;
+                E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += ECONOMY_VALUES.GOLD_AFTER_MELTING;
 
                 E.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
             }

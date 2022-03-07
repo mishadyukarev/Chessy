@@ -4,6 +4,7 @@ using Chessy.Game;
 using Chessy.Menu;
 using System;
 using UnityEngine;
+using Chessy.Game.EventsUI;
 
 namespace Chessy
 {
@@ -109,7 +110,7 @@ namespace Chessy
                         new SystemsView(ref _runUpdate, ref _runFixedUpdate, ents, entViews, out var updateView);
                         new SystemsModel(ref _runUpdate, ents, updateUI, updateView, out var runAfterDoing);
 
-                        var eventsUI = new EventsUI(updateView, updateUI, uIEs,  ents);
+                        var eventsUI = new EventsUIManager(updateView, updateUI, uIEs,  ents);
 
                         entViews.EntityVPool.Photon.AddComponent<Rpc>().GiveData(ents, updateView,  updateUI, runAfterDoing, eventsUI);
                         Rpc.SyncAllMaster();

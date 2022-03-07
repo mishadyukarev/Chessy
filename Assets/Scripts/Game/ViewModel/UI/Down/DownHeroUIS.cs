@@ -15,11 +15,11 @@
 
             var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 
-            if (myHeroT != UnitTypes.None && E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).HaveInInventor)
+            if (myHeroT != UnitTypes.None && E.UnitInfoE(curPlayerI, LevelTypes.First, myHeroT).HaveInInventor)
             {
                 _downHeroUIE.Parent.SetActive(true);
 
-                var cooldown = E.UnitInfo(curPlayerI, LevelTypes.First, myHeroT).ScoutHeroCooldownC.Cooldown;
+                var cooldown = E.UnitInfoE(curPlayerI, LevelTypes.First, myHeroT).HeroCooldownC.Cooldown;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

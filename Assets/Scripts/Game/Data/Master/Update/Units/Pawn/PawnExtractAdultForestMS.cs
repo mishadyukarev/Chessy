@@ -38,7 +38,7 @@
                     }
                 }
                 else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed)
-                    && E.UnitHpC(idx_0).Health >= CellUnitStatHp_Values.MAX_HP)
+                    && E.UnitHpC(idx_0).Health >= CellUnitStatHp_VALUES.HP)
                 {
                     E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
                 }

@@ -2,12 +2,12 @@
 
 namespace Chessy.Game
 {
-    public static class Economy_VALUES
+    public static class ECONOMY_VALUES
     {
-        public const float ADDING_FOOD_AFTER_MOVE = 0.3f;
+        public const float ADDING_FOOD_AFTER_UPDATE = 0.3f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;
 
-        public const float CostFoodForFeedingThem = 0.1f;
+        public const float FOOD_FOR_FEEDING_UNITS = 0.1f;
 
 
         #region Costs
@@ -79,6 +79,17 @@ namespace Chessy.Game
                                 default: throw new Exception();
                             }
                         case ToolWeaponTypes.BowCrossbow:
+                            switch (res)
+                            {
+                                case ResourceTypes.Food: return 0;
+                                case ResourceTypes.Wood: return 0.5f;
+                                case ResourceTypes.Ore: return 0;
+                                case ResourceTypes.Iron: return 0;
+                                case ResourceTypes.Gold: return 0;
+                                default: throw new Exception();
+                            }
+
+                        case ToolWeaponTypes.Staff:
                             switch (res)
                             {
                                 case ResourceTypes.Food: return 0;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chessy.Game.Systems.Model;
+using System;
 
 namespace Chessy.Game
 {
@@ -15,8 +16,7 @@ namespace Chessy.Game
 
             runAfterDoing =
                 (Action)
-                new CenterUpgradeUnitMS(ents).Run
-                + new GetHeroMS(ents).Run
+                new GetHeroMS(ents).Run
                 + new SetUnitMS(ents).Run
                 + new AttackMS(ents).Run
                 + new UnitShiftMS(ents).Run
@@ -33,7 +33,8 @@ namespace Chessy.Game
 
                 + new UnitAttackUnitS(ents).Run
                 + new UnitShiftS(ents).Run
-                + new AttackShieldS(ents).Run   
+                + new AttackShieldS(ents).Run
+                + new UnitGetMaxStepsAndWaterS(ents).Run
                 + new GetUnitTypeS(ents).Run
                 + new GetCellsForSetUnitS(ents).Run
                 + new AbilitySyncS(ents).Run
@@ -53,10 +54,9 @@ namespace Chessy.Game
                 (Action)new UpdatorMS(ents).Run
 
                 + new FireUpdateMS(ents).Run
-                + new UpdateIceWallMS(ents).Run
                 + new RiverFertilizeAroundUpdateMS(ents).Run
                 + new WorldDryFertilizerMS(ents).Run
-                + new TryGetPeopleUpdateMS(ents).Run
+                + new CitiesAddPeopleUpdateMS(ents).Run
                 + new WorldMeltIceWallUpdateMS(ents).Run
 
                 + new CloudUpdMS(ents).Run

@@ -28,7 +28,7 @@ namespace Chessy.Game
                     {
                         if (E.UnitTC(idx_0).Is(UnitTypes.Hell))
                         {
-                            E.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
+                            E.UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
                         }
                         else
                         {

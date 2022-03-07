@@ -47,7 +47,7 @@ namespace Chessy.Game
                             E.UnitPlayerTC(idx_0).Player = PlayerTypes.None;
                             E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
 
-                            E.UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
+                            E.UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
                             E.UnitStepC(idx_0).Steps = 1f;
                             E.UnitWaterC(idx_0).Water = 1f;
 

@@ -8,5 +8,7 @@
 
         public DamageC DamageAttackC;
         public DamageC DamageOnCell;
+
+        public StepsC MaxStepsC;
     }
 }

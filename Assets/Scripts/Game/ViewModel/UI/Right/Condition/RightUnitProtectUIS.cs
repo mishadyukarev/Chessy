@@ -23,7 +23,6 @@ namespace Chessy.Game
                     UIE.RightEs.ProtectE.Button(UnitTypes.King).SetActive(false);
                     UIE.RightEs.ProtectE.Button(UnitTypes.Pawn).SetActive(false);
                     UIE.RightEs.ProtectE.Button(UnitTypes.Elfemale).SetActive(false);
-                    UIE.RightEs.ProtectE.Button(UnitTypes.Scout).SetActive(false);
 
                     UIE.RightEs.ProtectE.Button(E.UnitTC(idx_sel).Unit).SetActive(true);
 

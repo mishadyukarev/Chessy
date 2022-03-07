@@ -35,7 +35,7 @@ namespace Chessy.Game
                                 E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                             }
 
-                            E.UnitInfo(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level, E.UnitTC(idx_0).Unit).HaveInInventor = true;
+                            E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level, E.UnitTC(idx_0).Unit).HaveInInventor = true;
                             E.UnitTC(idx_0).Unit = UnitTypes.None;
                         }
                     }
@@ -49,7 +49,7 @@ namespace Chessy.Game
                             E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         }
 
-                        E.UnitInfo(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level, E.UnitTC(idx_0).Unit).HaveInInventor = true;
+                        E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level, E.UnitTC(idx_0).Unit).HaveInInventor = true;
                         E.UnitTC(idx_0).Unit = UnitTypes.None;
                     }
                 }

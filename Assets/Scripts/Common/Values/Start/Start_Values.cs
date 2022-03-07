@@ -8,7 +8,7 @@ namespace Chessy.Game
         public const byte Y_AMOUNT = 11;
         public const byte ALL_CELLS_AMOUNT = X_AMOUNT * Y_AMOUNT;
 
-        public const int PEOPLE_IN_CITY = 1;
+        public const int PEOPLE_IN_CITY = 15;
         public const int MAX_AVAILABLE_PAWN = 1;
 
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;
@@ -22,7 +22,7 @@ namespace Chessy.Game
         public const ToolWeaponTypes SELECTED_TOOL_WEAPON = ToolWeaponTypes.Axe;
         public const LevelTypes SELECTED_LEVEL_TOOL_WEAPON = LevelTypes.First;
 
-        public const float NEED_WOOD_FOR_BUILDING_HOUSE = 0.25f;
+        public const float NEED_WOOD_FOR_BUILDING_HOUSE = 0.15f;
 
         public static float SpawnPercent(in EnvironmentTypes env)
         {
@@ -35,6 +35,7 @@ namespace Chessy.Game
                 default: throw new Exception();
             }
         }
+
         public static float Resources(in ResourceTypes res)
         {
             switch (res)
@@ -62,14 +63,6 @@ namespace Chessy.Game
                         default: throw new Exception();
                     }
                 case UnitTypes.Pawn: return false;
-                case UnitTypes.Scout:
-                    switch (level)
-                    {
-                        case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: return true;
-                        case LevelTypes.Second: return false;
-                        default: throw new Exception();
-                    }
                 case UnitTypes.Elfemale: return false;
                 case UnitTypes.Snowy: return false;
                 case UnitTypes.Undead: return false;
@@ -79,43 +72,5 @@ namespace Chessy.Game
                 default: throw new Exception();
             }
         }
-
-
-        #region Unit
-
-        #region Steps
-
-
-
-        public static float StandartForUnit(in UnitTypes unit)
-        {
-            var steps = 0f;
-
-            switch (unit)
-            {
-                case UnitTypes.None: steps = 0; break;
-                case UnitTypes.King: steps = 1; break;
-                case UnitTypes.Pawn: steps = 1; break;
-
-                case UnitTypes.Scout: steps = 2.5f; break;
-
-                case UnitTypes.Elfemale: steps = 2; break;
-                case UnitTypes.Snowy: steps = 3; break;
-                case UnitTypes.Undead: steps = 3; break;
-                case UnitTypes.Hell: steps = 1; break;
-
-                case UnitTypes.Skeleton: steps = 2; break;
-
-                case UnitTypes.Camel: steps = 2; break;
-                default: throw new Exception();
-            }
-
-            return steps;
-        }
-
-        #endregion
-
-        #endregion
-
     }
 }

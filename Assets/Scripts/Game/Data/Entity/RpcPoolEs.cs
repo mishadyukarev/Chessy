@@ -107,12 +107,6 @@ namespace Chessy.Game
         #endregion
 
 
-        #region CenterUpgrades
-
-        public void PickFractionToMaster(in ButtonTypes buttonT) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.PickFraction, buttonT });
-
-        #endregion
-
 
         #region CityBuild
 
@@ -135,7 +129,7 @@ namespace Chessy.Game
         public void AttackUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
         public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, idx, cond });
 
-        public void GiveTakeToolWeaponToMaster(byte idx, ToolWeaponTypes tw, LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, idx, tw, level });
+        public void GiveTakeToolWeaponToMaster(in byte idx, in ToolWeaponTypes tw, in LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { idx, tw, level});
 
         public void SetUniToMaster(byte idxCell, UnitTypes unitType) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.SetUnit, idxCell, unitType });
 

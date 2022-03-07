@@ -4,12 +4,13 @@
     {
         None,
 
+        Staff,
+        BowCrossbow,
+        Axe,
+
         Pick,
         Sword,
         Shield,
-
-        BowCrossbow,
-        Axe,
 
         End,
     }

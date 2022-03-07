@@ -40,7 +40,7 @@ namespace Chessy.Game
                 }
             }
 
-            if (Random.Range(0f, 1f) > 0.9f) E.StrengthWind.Strength = Random.Range(1, 4);
+            if (Random.Range(0f, 1f) > UPDATE_VALUES.PERCENT_FOR_CHANGING_WIND) E.StrengthWind.Strength = Random.Range(1, 4);
         }
     }
 }

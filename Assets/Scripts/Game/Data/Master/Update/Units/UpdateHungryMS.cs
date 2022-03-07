@@ -34,10 +34,10 @@
                                     {
                                         E.WinnerC.Player = E.UnitPlayerTC(idx_0).Player;
                                     }
-                                    else if (E.UnitTC(idx_0).Is(UnitTypes.Scout) || E.UnitMainE(idx_0).IsHero)
+                                    else if (E.UnitMainE(idx_0).IsHero)
                                     {
-                                        E.UnitInfo(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).ScoutHeroCooldownC.Cooldown = ScoutHeroCooldownValues.AfterKill(E.UnitTC(idx_0).Unit);
-                                        E.UnitInfo(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).HaveInInventor = true;
+                                        E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).HeroCooldownC.Cooldown = HeroCooldown_VALUES.AfterKill(E.UnitTC(idx_0).Unit);
+                                        E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).HaveInInventor = true;
                                     }
 
                                     //Es.LastDiedUnitTC(idx_0).SetLastDied((Es.UnitTC(idx_0), Es.UnitLevelTC(idx_0), Es.UnitPlayerTC(idx_0)), Es.LastDiedLevelTC(idx_0), Es.LastDiedPlayerTC(idx_0));

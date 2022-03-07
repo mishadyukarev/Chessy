@@ -2,17 +2,15 @@
 
 namespace Chessy.Game
 {
-    public struct ForPlayerPoolEs
+    public sealed class ForPlayerPoolEs
     {
         readonly Dictionary<BuildingTypes, bool> _haveBuilding;
 
         public UnitTC AvailableHeroTC;
         public bool IsReadyC;
         public bool HaveCenterHero;
-        public bool HaveFraction;
 
         public float PeopleInCity;
-        public int MaxPeopleInCity;
         public int MaxAvailablePawns;
         public float WoodForBuyHouse;
 
@@ -26,10 +24,9 @@ namespace Chessy.Game
 
         public bool HaveBuilding(in BuildingTypes buildingT) => _haveBuilding[buildingT];
 
-        internal ForPlayerPoolEs(in bool b) : this()
+        internal ForPlayerPoolEs(in bool b)
         {
             PeopleInCity = Start_VALUES.PEOPLE_IN_CITY;
-            MaxPeopleInCity = Start_VALUES.PEOPLE_IN_CITY + Start_VALUES.PEOPLE_IN_CITY;
             MaxAvailablePawns = Start_VALUES.MAX_AVAILABLE_PAWN;
 
             _levelInfoEs = new LevelInfoE[(byte)LevelTypes.End - 1];

@@ -12,15 +12,18 @@
             {
                 if (E.BuildingTC(idx_0).Is(BuildingTypes.City))
                 {
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                    if (E.PlayerE(E.BuildingPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
                     {
-                        var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
-
-                        if (E.AdultForestC(idx_1).HaveAnyResources)
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            if (!E.BuildingTC(idx_1).HaveBuilding)
+                            var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+
+                            if (E.AdultForestC(idx_1).HaveAnyResources)
                             {
-                                E.BuildingMainE(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, Building_Values.MaxHealth(BuildingTypes.Woodcutter), E.BuildingPlayerTC(idx_0).Player);
+                                if (!E.BuildingTC(idx_1).HaveBuilding)
+                                {
+                                    E.BuildingMainE(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, Building_Values.MaxHealth(BuildingTypes.Woodcutter), E.BuildingPlayerTC(idx_0).Player);
+                                }
                             }
                         }
                     }

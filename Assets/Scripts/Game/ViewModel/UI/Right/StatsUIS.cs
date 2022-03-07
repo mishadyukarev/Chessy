@@ -1,4 +1,5 @@
-﻿using static Chessy.Game.RightStatsUIEs;
+﻿using System;
+using static Chessy.Game.RightStatsUIEs;
 
 namespace Chessy.Game
 {
@@ -25,22 +26,21 @@ namespace Chessy.Game
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(true);
 
 
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = ((int)(E.UnitHpC(idx_sel).Health * 100)).ToString();
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = damageOnCell.ToString();
+                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * E.UnitHpC(idx_sel).Health).ToString();
+                UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = (Math.Truncate(10 * damageOnCell) / 10).ToString();
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = E.UnitStepC(idx_sel).Steps.ToString();
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = E.UnitWaterC(idx_sel).Water.ToString();
+                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = Math.Truncate(10 * E.UnitWaterC(idx_sel).Water).ToString();
 
+                var v = E.UnitHpC(idx_sel).Health / CellUnitStatHp_VALUES.HP;
 
-                var v = E.UnitHpC(idx_sel).Health / CellUnitStatHp_Values.MAX_HP;
-
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = E.UnitHpC(idx_sel).Health / CellUnitStatHp_Values.MAX_HP;
+                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = E.UnitHpC(idx_sel).Health / CellUnitStatHp_VALUES.HP;
 
 
 
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)E.UnitStepC(idx_sel).Steps / E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxSteps;
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = E.UnitWaterC(idx_sel).Water / (float)E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).MaxWater;
+                UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)E.UnitStepC(idx_sel).Steps / E.UnitStatsE(idx_sel).MaxStepsC.Steps;
+                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = E.UnitWaterC(idx_sel).Water / (float)E.UnitInfo(E.UnitPlayerTC(idx_sel), E.UnitLevelTC(idx_sel), E.UnitTC(idx_sel)).WaterMax;
             }
 
             else

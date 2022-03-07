@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chessy.Game.Values;
+using System;
 
 namespace Chessy.Game
 {
@@ -23,39 +24,35 @@ namespace Chessy.Game
                             switch (E.UnitTC(idx_0).Unit)
                             {
                                 case UnitTypes.King:
-                                    powerDamage = UnitDamage_Values.KING;
+                                    powerDamage = UNIT_DAMAGE_VALUES.KING;
                                     break;
 
                                 case UnitTypes.Pawn:
-                                    powerDamage = UnitDamage_Values.PAWN;
-                                    break;
-
-                                case UnitTypes.Scout:
-                                    powerDamage = UnitDamage_Values.SCOUT;
+                                    powerDamage = UNIT_DAMAGE_VALUES.PAWN;
                                     break;
 
                                 case UnitTypes.Elfemale:
-                                    powerDamage = UnitDamage_Values.ELFEMALE;
+                                    powerDamage = UNIT_DAMAGE_VALUES.ELFEMALE;
                                     break;
 
                                 case UnitTypes.Snowy:
-                                    powerDamage = UnitDamage_Values.SNOWY;
+                                    powerDamage = UNIT_DAMAGE_VALUES.SNOWY;
                                     break;
 
                                 case UnitTypes.Undead:
-                                    powerDamage = UnitDamage_Values.UNDEAD;
+                                    powerDamage = UNIT_DAMAGE_VALUES.UNDEAD;
                                     break;
 
                                 case UnitTypes.Hell:
-                                    powerDamage = UnitDamage_Values.HELL;
+                                    powerDamage = UNIT_DAMAGE_VALUES.HELL;
                                     break;
 
                                 case UnitTypes.Skeleton:
-                                    powerDamage = UnitDamage_Values.SKELETON;
+                                    powerDamage = UNIT_DAMAGE_VALUES.SKELETON;
                                     break;
 
                                 case UnitTypes.Camel:
-                                    powerDamage = UnitDamage_Values.CAMEL;
+                                    powerDamage = UNIT_DAMAGE_VALUES.CAMEL;
                                     break;
 
                                 default: throw new Exception();
@@ -63,17 +60,28 @@ namespace Chessy.Game
                             break;
                     }
 
-                    if (E.UnitInfo(E.UnitMainE(idx_0)).HaveCenterUpgrade)
+                    if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Hell))
                     {
-                        if (E.UnitTC(idx_0).Is(UnitTypes.King))
+                        if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
                         {
-                            powerDamage += UnitDamage_Values.CENTER_KING_BONUS;
-                        }
-                        else if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
-                        {
-                            powerDamage += UnitDamage_Values.CENTER_PAWN_BONUS;
+                            powerDamage *= 1.5f;
                         }
                     }
+
+
+
+
+                    //if (E.PlayerE(E.UnitMainE(idx_0).PlayerTC.Player).FractionTypes != FractionTypes.None)
+                    //{
+                    //    if (E.UnitTC(idx_0).Is(UnitTypes.King))
+                    //    {
+                    //        powerDamage += UNIT_DAMAGE_VALUES.CENTER_KING_BONUS;
+                    //    }
+                    //    else if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                    //    {
+                    //        powerDamage += UNIT_DAMAGE_VALUES.CENTER_PAWN_BONUS;
+                    //    }
+                    //}
 
 
                     if (E.UnitMainTWTC(idx_0).HaveToolWeapon)
@@ -82,26 +90,26 @@ namespace Chessy.Game
                         {
                             if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                             {
-                                powerDamage += powerDamage * UnitDamage_Values.BOW_CROSSBOW_SECOND;
+                                powerDamage += powerDamage * UNIT_DAMAGE_VALUES.BOW_CROSSBOW_SECOND;
                             }
                             else if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
                             {
-                                powerDamage += powerDamage * UnitDamage_Values.AXE_SECOND;
+                                powerDamage += powerDamage * UNIT_DAMAGE_VALUES.AXE_SECOND;
                             }
                         }
                     }
-                    if (E.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.Sword)) powerDamage += powerDamage * UnitDamage_Values.SWORD;
+                    if (E.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.Sword)) powerDamage += powerDamage * UNIT_DAMAGE_VALUES.SWORD;
 
                     E.UnitDamageAttackC(idx_0).Damage = powerDamage;
 
 
                     if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Protected))
                     {
-                        powerDamage += powerDamage * UnitDamage_Values.PROTECTED;
+                        powerDamage += powerDamage * UNIT_DAMAGE_VALUES.PROTECTED;
                     }
                     else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
                     {
-                        powerDamage += powerDamage * UnitDamage_Values.RELAXED;
+                        powerDamage += powerDamage * UNIT_DAMAGE_VALUES.RELAXED;
                     }
 
                     if (E.BuildingTC(idx_0).HaveBuilding)
@@ -111,15 +119,15 @@ namespace Chessy.Game
                         switch (E.BuildingTC(idx_0).Building)
                         {
                             case BuildingTypes.City:
-                                p = UnitDamage_Values.CITY;
+                                p = UNIT_DAMAGE_VALUES.CITY;
                                 break;
 
                             case BuildingTypes.Farm:
-                                p = UnitDamage_Values.FARM;
+                                p = UNIT_DAMAGE_VALUES.FARM;
                                 break;
 
                             case BuildingTypes.Woodcutter:
-                                p = UnitDamage_Values.WOODCUTTER;
+                                p = UNIT_DAMAGE_VALUES.WOODCUTTER;
                                 break;
 
                             default:
@@ -132,9 +140,9 @@ namespace Chessy.Game
 
                     float protectionPercent = 0;
 
-                    if (E.FertilizeC(idx_0).HaveAnyResources) protectionPercent += UnitDamage_Values.FERTILIZER;
-                    if (E.AdultForestC(idx_0).HaveAnyResources) protectionPercent += UnitDamage_Values.ADULT_FOREST;
-                    if (E.HillC(idx_0).HaveAnyResources) protectionPercent += UnitDamage_Values.HILL;
+                    if (E.FertilizeC(idx_0).HaveAnyResources) protectionPercent += UNIT_DAMAGE_VALUES.FERTILIZER;
+                    if (E.AdultForestC(idx_0).HaveAnyResources) protectionPercent += UNIT_DAMAGE_VALUES.ADULT_FOREST;
+                    if (E.HillC(idx_0).HaveAnyResources) protectionPercent += UNIT_DAMAGE_VALUES.HILL;
 
                     powerDamage += powerDamage * protectionPercent;
 

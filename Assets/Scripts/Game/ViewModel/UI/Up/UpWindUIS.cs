@@ -1,32 +1,40 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game
 {
     sealed class UpWindUIS : SystemUIAbstract, IEcsRunSystem
     {
+        readonly Dictionary<DirectTypes, Vector3> _directs;
+        readonly Vector3 _rotationForOtherPlayer = new Vector3(0, 0, 180);
+
         internal UpWindUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
+            _directs = new Dictionary<DirectTypes, Vector3>();
+            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+            {
+                switch (dirT)
+                {
+                    case DirectTypes.None: throw new Exception();
+                    case DirectTypes.Right: _directs.Add(dirT, new Vector3()); break;
+                    case DirectTypes.Left: _directs.Add(dirT, new Vector3(0, 0, 180)); break;
+                    case DirectTypes.Up: _directs.Add(dirT, new Vector3(0, 0, 90)); break;
+                    case DirectTypes.Down: _directs.Add(dirT, new Vector3(0, 0, 270)); break;
+                    case DirectTypes.UpRight: _directs.Add(dirT, new Vector3(0, 0, 45)); break;
+                    case DirectTypes.UpLeft: _directs.Add(dirT, new Vector3(0, 0, 135)); break;
+                    case DirectTypes.DownRight: _directs.Add(dirT, new Vector3(0, 0, 315)); break;
+                    case DirectTypes.DownLeft: _directs.Add(dirT, new Vector3(0, 0, 225)); break;
+                    default: throw new Exception();
+                }
+            }
         }
 
         public void Run()
         {
-            switch (E.DirectWindTC.Direct)
-            {
-                case DirectTypes.None: throw new Exception();
-                case DirectTypes.Right: UIE.UpEs.WindTrC.EulerAngles = new Vector3(); break;
-                case DirectTypes.Left: UIE.UpEs.WindTrC.EulerAngles = new Vector3(0, 0, 180); break;
-                case DirectTypes.Up: UIE.UpEs.WindTrC.EulerAngles = new Vector3(0, 0, 90); break;
-                case DirectTypes.Down: UIE.UpEs.WindTrC.EulerAngles = new Vector3(0, 0, 270); break;
-                case DirectTypes.UpRight: UIE.UpEs.WindTrC.EulerAngles = new Vector3(0, 0, 45); break;
-                case DirectTypes.UpLeft: UIE.UpEs.WindTrC.EulerAngles = new Vector3(0, 0, 135); break;
-                case DirectTypes.DownRight: UIE.UpEs.WindTrC.EulerAngles = new Vector3(0, 0, 315); break;
-                case DirectTypes.DownLeft: UIE.UpEs.WindTrC.EulerAngles = new Vector3(0, 0, 225); break;
-                default: throw new Exception();
-            }
-
-            if (E.CurPlayerITC.Player == PlayerTypes.Second)
-                UIE.UpEs.WindTrC.EulerAngles += new Vector3(0, 0, 180);
+            UIE.UpEs.WindTrC.EulerAngles = _directs[E.DirectWindTC.Direct];
+            if (E.CurPlayerITC.Player == PlayerTypes.Second) UIE.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
+            UIE.UpEs.WindTextC.TextUI.text = E.StrengthWind.Strength.ToString();
         }
     }
 }

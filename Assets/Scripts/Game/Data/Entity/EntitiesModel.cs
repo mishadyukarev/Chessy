@@ -10,7 +10,7 @@ namespace Chessy.Game
         readonly Dictionary<ClipTypes, ActionC> _sounds0;
         readonly ActionC[] _sounds1;
         readonly ResourcesC[] _mistakeEconomyEs;
-        readonly ForPlayerPoolEs[] _forPlayerEs;
+        readonly Dictionary<PlayerTypes, ForPlayerPoolEs> _forPlayerEs;
         readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
 
 
@@ -48,10 +48,10 @@ namespace Chessy.Game
         public SelectedToolWeaponE SelectedTWE;
 
 
-        public ref ForPlayerPoolEs PlayerE(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
+        public ForPlayerPoolEs PlayerE(in PlayerTypes player) => _forPlayerEs[player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerE(playerT).ResourcesC(resT);
         public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerE(playerT).LevelE(levT).ToolWeapons(twT);
-        public ref PlayerLevelUnitInfoE UnitInfo(in PlayerTypes playerT, in LevelTypes levT, in UnitTypes unitT) => ref PlayerE(playerT).LevelE(levT).UnitsInfoE(unitT);
+        public ref PlayerLevelUnitInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT, in UnitTypes unitT) => ref PlayerE(playerT).LevelE(levT).UnitsInfoE(unitT);
         public ref PlayerLevelUnitInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC, in UnitTC unitTC) => ref PlayerE(playerTC.Player).LevelE(levTC.Level).UnitsInfoE(unitTC.Unit);
         public ref PlayerLevelUnitInfoE UnitInfo(in CellUnitMainE unitMainE) => ref PlayerE(unitMainE.PlayerTC.Player).LevelE(unitMainE.LevelTC.Level).UnitsInfoE(unitMainE.UnitTC.Unit);
         public PlayerUnitInfoE UnitUnfo(in PlayerTypes playerT, in UnitTypes unitT) => PlayerE(playerT).UnitE(unitT);
@@ -205,10 +205,10 @@ namespace Chessy.Game
             _nextPlayer.Add(PlayerTypes.First, new PlayerTC(PlayerTypes.Second));
             _nextPlayer.Add(PlayerTypes.Second, new PlayerTC(PlayerTypes.First));
 
-            _forPlayerEs = new ForPlayerPoolEs[(byte)PlayerTypes.End];
-            for (var player = PlayerTypes.None; player < PlayerTypes.End; player++)
+            _forPlayerEs = new Dictionary<PlayerTypes, ForPlayerPoolEs>();
+            for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                _forPlayerEs[(byte)player] = new ForPlayerPoolEs(true);
+                _forPlayerEs.Add(playerT, new ForPlayerPoolEs(true));
             }
             _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
 
@@ -376,9 +376,9 @@ namespace Chessy.Game
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
 
-                        UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
-                        UnitStepC(idx_0).Steps = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).MaxSteps;
-                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).MaxWater;
+                        UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                        UnitStepC(idx_0).Steps = UnitStatsE(idx_0).MaxStepsC.Steps;
+                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).WaterMax;
                     }
 
                     else if (x == 8 && y == 8)
@@ -406,9 +406,9 @@ namespace Chessy.Game
                         UnitPlayerTC(idx_0).Player = PlayerTypes.Second;
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
-                        UnitHpC(idx_0).Health = CellUnitStatHp_Values.MAX_HP;
-                        UnitStepC(idx_0).Steps = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).MaxSteps;
-                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).MaxWater;
+                        UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                        UnitStepC(idx_0).Steps = UnitStatsE(idx_0).MaxStepsC.Steps;
+                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).WaterMax;
 
                         UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                         UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;

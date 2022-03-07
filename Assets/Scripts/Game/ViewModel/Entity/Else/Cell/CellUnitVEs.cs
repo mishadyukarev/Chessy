@@ -58,7 +58,7 @@ namespace Chessy.Game
 
                     var mainTwZone = zonee.Find("MainToolWeapon+");
 
-                    for (var twT = ToolWeaponTypes.BowCrossbow; twT <= ToolWeaponTypes.Axe; twT++)
+                    for (var twT = ToolWeaponTypes.Staff; twT <= ToolWeaponTypes.Axe; twT++)
                     {
                         if (twT == ToolWeaponTypes.BowCrossbow)
                         {

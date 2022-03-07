@@ -18,20 +18,11 @@ namespace Chessy.Game
                 if(damage > 0)
                 {
                     E.UnitHpC(idx_to).Health -= damage;
-                    if (E.UnitHpC(idx_to).Health <= CellUnitStatHp_Values.HP_FOR_DEATH_AFTER_ATTACK)
+                    if (E.UnitHpC(idx_to).Health <= CellUnitStatHp_VALUES.HP_FOR_DEATH_AFTER_ATTACK)
                         E.UnitHpC(idx_to).Health = 0;
 
                     if (!E.UnitHpC(idx_to).IsAlive)
                     {
-                        if (E.UnitTC(idx_to).Is(UnitTypes.Scout) || E.UnitMainE(idx_to).IsHero)
-                        {
-                            E.UnitInfo(E.UnitPlayerTC(idx_to), E.UnitLevelTC(idx_to), E.UnitTC(idx_to)).ScoutHeroCooldownC.Cooldown = ScoutHeroCooldownValues.AfterKill(E.UnitTC(idx_to).Unit);
-                            E.UnitInfo(E.UnitPlayerTC(idx_to), E.UnitLevelTC(idx_to), E.UnitTC(idx_to)).HaveInInventor = true;
-                        }
-
-
-
-
                         if (E.UnitTC(idx_to).Is(UnitTypes.King)) E.WinnerC.Player = E.AttackUnitKillerTC(idx_to).Player;
                         E.LastDiedE(idx_to).Set(E.UnitMainE(idx_to));
                         E.UnitInfo(E.UnitMainE(idx_to)).UnitsInGame--;
@@ -52,7 +43,7 @@ namespace Chessy.Game
 
                             if (E.UnitTC(idx_to).Is(UnitTypes.Camel))
                             {
-                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += Economy_VALUES.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += ECONOMY_VALUES.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                             }
                         }
 

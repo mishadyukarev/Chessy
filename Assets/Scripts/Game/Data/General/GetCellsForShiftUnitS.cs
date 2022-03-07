@@ -44,7 +44,7 @@
 
                             if (!E.MountainC(idx_to).HaveAnyResources && !E.UnitTC(idx_to).HaveUnit)
                             {
-                                if (needSteps <= E.UnitStepC(idx_0).Steps || E.UnitStepC(idx_0).Steps >= E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxSteps)
+                                if (needSteps <= E.UnitStepC(idx_0).Steps || E.UnitStepC(idx_0).Steps >= E.UnitStatsE(idx_0).MaxStepsC.Steps)
                                 {
                                     E.UnitEs(idx_0).ForShift.Add(idx_to);
 

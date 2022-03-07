@@ -15,11 +15,14 @@ namespace Chessy.Game
             {
                 E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Clear();
                 E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Clear();
+            }
 
+            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+            {
                 if (!E.UnitEffectStunC(idx_0).IsStunned)
                 {
                     if (E.UnitTC(idx_0).HaveUnit && E.UnitMainE(idx_0).IsMelee && !E.UnitMainE(idx_0).IsAnimal
-                        && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow) && !E.UnitTC(idx_0).Is(UnitTypes.Scout))
+                        && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                     {
                         DirectTypes dir_cur = default;
 
@@ -33,7 +36,7 @@ namespace Chessy.Game
                             {
                                 var dir = E.CellEs(idx_0).Direct(idx_1);
 
-                                var haveMaxSteps = E.UnitStepC(idx_0).Steps >= E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxSteps;
+                                var haveMaxSteps = E.UnitStepC(idx_0).Steps >= E.UnitStatsE(idx_0).MaxStepsC.Steps;
 
                                 if (E.UnitTC(idx_0).Is(UnitTypes.King))
                                 {

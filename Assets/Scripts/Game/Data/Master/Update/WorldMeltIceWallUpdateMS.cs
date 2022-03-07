@@ -12,7 +12,7 @@
             {
                 if (E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    E.BuildHpC(idx_0).Health -= 0.1f;
+                    E.BuildEs(idx_0).MainE.AttackBuildingC.Damage += 0.5f;
                 }
             }
         }

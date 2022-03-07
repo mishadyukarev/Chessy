@@ -16,7 +16,7 @@
                 var whoseMove = E.WhoseMove.Player;
 
                 E.PlayerE(whoseMove).AvailableHeroTC.Unit = unitT;
-                E.UnitInfo(whoseMove, LevelTypes.First, unitT).HaveInInventor = true;
+                E.UnitInfoE(whoseMove, LevelTypes.First, unitT).HaveInInventor = true;
                 E.PlayerE(whoseMove).HaveCenterHero = false;
 
 

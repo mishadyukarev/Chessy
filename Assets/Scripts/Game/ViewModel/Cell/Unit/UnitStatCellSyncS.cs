@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Values;
+using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -27,11 +28,11 @@ namespace Chessy.Game
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Enable();
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Color = Color.red;
 
-                        float xCordinate = (float)E.UnitHpC(idx_0).Health / CellUnitStatHp_Values.MAX_HP;
+                        float xCordinate = (float)E.UnitHpC(idx_0).Health / CellUnitStatHp_VALUES.HP;
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Hp).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        VEs.CellEs(idx_0).Block(CellBlockTypes.NeedWater).SetActive(E.UnitWaterC(idx_0).Water <= UnitWater_Values.MAX * 0.4f);
-                        VEs.CellEs(idx_0).Block(CellBlockTypes.MaxSteps).SetActive(E.UnitStepC(idx_0).Steps >= E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxSteps);
+                        VEs.CellEs(idx_0).Block(CellBlockTypes.NeedWater).SetActive(E.UnitWaterC(idx_0).Water <= UNIT_WATER_VALUES.MAX * 0.4f);
+                        VEs.CellEs(idx_0).Block(CellBlockTypes.MaxSteps).SetActive(E.UnitStepC(idx_0).Steps >= E.UnitStatsE(idx_0).MaxStepsC.Steps);
 
 
 

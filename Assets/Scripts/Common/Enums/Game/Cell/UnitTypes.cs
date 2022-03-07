@@ -7,8 +7,6 @@
         King,
         Pawn,
 
-        Scout,
-
         //Heros
         Elfemale,
         Snowy,

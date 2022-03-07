@@ -14,8 +14,6 @@
         Sound,
         GetHero,
         Melt,
-        GiveTakeToolWeapon,
-        PickFraction,
         UniqueAbility,
 
         End

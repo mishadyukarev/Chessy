@@ -24,7 +24,7 @@
                             }
                         }
 
-                        for (var twT = ToolWeaponTypes.BowCrossbow; twT <= ToolWeaponTypes.Axe; twT++)
+                        for (var twT = ToolWeaponTypes.Staff; twT <= ToolWeaponTypes.Axe; twT++)
                         {
                             if (twT == ToolWeaponTypes.BowCrossbow)
                             {
@@ -41,7 +41,7 @@
                             VEs.UnitEs(idx_0).ExtraToolWeaponE(isSelZone, levT, twT).Disable();
                         }
 
-                        for (var twT = ToolWeaponTypes.BowCrossbow; twT <= ToolWeaponTypes.Axe; twT++)
+                        for (var twT = ToolWeaponTypes.Staff; twT <= ToolWeaponTypes.Axe; twT++)
                         {
                             if (twT == ToolWeaponTypes.BowCrossbow)
                             {

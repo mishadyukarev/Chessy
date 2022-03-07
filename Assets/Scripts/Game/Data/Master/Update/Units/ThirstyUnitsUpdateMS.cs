@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
@@ -26,18 +27,18 @@ namespace Chessy.Game
                     {
                         if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
                         {
-                            E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).MaxWater;
+                            E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).WaterMax;
                         }
                         else
                         {
                             
-                            E.UnitWaterC(idx_0).Water -= UnitWater_Values.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
+                            E.UnitWaterC(idx_0).Water -= UNIT_WATER_VALUES.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
 
                             if (E.UnitWaterC(idx_0).Water <= 0)
                             {
-                                float percent = CellUnitStatHp_Values.ThirstyPercent(E.UnitTC(idx_0).Unit);
+                                float percent = CellUnitStatHp_VALUES.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                E.AttackUnitE(idx_0).Set(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player);
+                                E.AttackUnitE(idx_0).Set(CellUnitStatHp_VALUES.HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);
