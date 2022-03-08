@@ -1,4 +1,10 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Entity.Cell;
+using Chessy.Game.Entity.Cell.Unit;
+using Chessy.Game.Values;
+using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -12,6 +18,8 @@ namespace Chessy.Game
         readonly ResourcesC[] _mistakeEconomyEs;
         readonly Dictionary<PlayerTypes, ForPlayerPoolEs> _forPlayerEs;
         readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
+        readonly Dictionary<UnitTypes, bool> _isAnimal;
+        readonly Dictionary<UnitTypes, bool> _isHero;
 
 
         public PlayerTC WhoseMove;
@@ -51,9 +59,9 @@ namespace Chessy.Game
         public ForPlayerPoolEs PlayerE(in PlayerTypes player) => _forPlayerEs[player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerE(playerT).ResourcesC(resT);
         public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerE(playerT).LevelE(levT).ToolWeapons(twT);
-        public ref PlayerLevelUnitInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT, in UnitTypes unitT) => ref PlayerE(playerT).LevelE(levT).UnitsInfoE(unitT);
-        public ref PlayerLevelUnitInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC, in UnitTC unitTC) => ref PlayerE(playerTC.Player).LevelE(levTC.Level).UnitsInfoE(unitTC.Unit);
-        public ref PlayerLevelUnitInfoE UnitInfo(in CellUnitMainE unitMainE) => ref PlayerE(unitMainE.PlayerTC.Player).LevelE(unitMainE.LevelTC.Level).UnitsInfoE(unitMainE.UnitTC.Unit);
+        public ref PlayerLevelInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT) => ref PlayerE(playerT).LevelE(levT);
+        public ref PlayerLevelInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC) => ref PlayerE(playerTC.Player).LevelE(levTC.Level);
+        public ref PlayerLevelInfoE UnitInfo(in CellUnitMainE unitMainE) => ref PlayerE(unitMainE.PlayerTC.Player).LevelE(unitMainE.LevelTC.Level);
         public PlayerUnitInfoE UnitUnfo(in PlayerTypes playerT, in UnitTypes unitT) => PlayerE(playerT).UnitE(unitT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerE(playerT).LevelE(levT).BuildingInfoE(buildT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTC playerT, in LevelTC levT, in BuildingTC buildT) => ref PlayerE(playerT.Player).LevelE(levT.Level).BuildingInfoE(buildT.Building);
@@ -68,6 +76,9 @@ namespace Chessy.Game
         public ref MistakeTC MistakeTC => ref MistakeE.MistakeTC;
         public ref TimerC MistakeTimerC => ref MistakeE.TimerC;
 
+        public bool IsAnimal(in UnitTypes unitT) => _isAnimal[unitT];
+        public bool IsHero(in UnitTypes unitT) => _isHero[unitT];
+
 
         #region Cells
 
@@ -80,7 +91,7 @@ namespace Chessy.Game
 
         #region Unit
 
-        public ref CellUnitEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
+        public ref UnitEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
 
         public ref CellUnitMainE UnitMainE(in byte idx_cell) => ref UnitEs(idx_cell).MainE;
         public ref UnitTC UnitTC(in byte idx) => ref UnitMainE(idx).UnitTC;
@@ -213,6 +224,37 @@ namespace Chessy.Game
             _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
 
 
+            _isAnimal = new Dictionary<UnitTypes, bool>();
+            _isHero = new Dictionary<UnitTypes, bool>();
+
+            for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
+            {
+                if (unitT == UnitTypes.Camel) _isAnimal.Add(unitT, true);
+                else _isAnimal.Add(unitT, false);
+
+                var ishero = false;
+                switch (unitT)
+                {
+                    case UnitTypes.Elfemale:
+                        ishero = true;
+                        break;
+
+                    case UnitTypes.Snowy:
+                        ishero = true;
+                        break;
+
+                    case UnitTypes.Undead:
+                        ishero = true;
+                        break;
+
+                    case UnitTypes.Hell:
+                        ishero = true;
+                        break;
+                }
+
+                _isHero.Add(unitT, ishero);
+            }
+
 
             var selectedBuildings = new Dictionary<BuildingTypes, bool>();
             for (var buildingT = BuildingTypes.None + 1; buildingT < BuildingTypes.End; buildingT++) selectedBuildings.Add(buildingT, false);
@@ -285,7 +327,7 @@ namespace Chessy.Game
                         {
                             if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.Mountain))
                             {
-                                MountainC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
+                                MountainC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                                 amountMountains++;
                             }
 
@@ -295,7 +337,7 @@ namespace Chessy.Game
                             {
                                 if (UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
-                                    AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
+                                    AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                                 }
                             }
                         }
@@ -304,7 +346,7 @@ namespace Chessy.Game
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
-                                AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, Environment_Values.ENVIRONMENT_MAX);
+                                AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                             }
                         }
 
@@ -376,9 +418,9 @@ namespace Chessy.Game
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
 
-                        UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                        UnitHpC(idx_0).Health = Hp_VALUES.HP;
                         UnitStepC(idx_0).Steps = UnitStatsE(idx_0).MaxStepsC.Steps;
-                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).WaterMax;
+                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0)).WaterKingPawnMax;
                     }
 
                     else if (x == 8 && y == 8)
@@ -406,9 +448,9 @@ namespace Chessy.Game
                         UnitPlayerTC(idx_0).Player = PlayerTypes.Second;
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
-                        UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                        UnitHpC(idx_0).Health = Hp_VALUES.HP;
                         UnitStepC(idx_0).Steps = UnitStatsE(idx_0).MaxStepsC.Steps;
-                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0), UnitTC(idx_0)).WaterMax;
+                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0)).WaterKingPawnMax;
 
                         UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                         UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;

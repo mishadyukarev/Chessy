@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values;
+
+namespace Chessy.Game
 {
     sealed class LeftCityUIS : SystemUIAbstract, IEcsRunSystem
     {
@@ -20,8 +22,8 @@
             }
 
             UIE.LeftEs.CityE(BuildingTypes.House).CostTextC.TextUI.text = E.PlayerE(whoseMove).WoodForBuyHouse.ToString();
-            UIE.LeftEs.CityE(BuildingTypes.Market).CostTextC.TextUI.text = ECONOMY_VALUES.NEED_WOOD_FOR_BUILDING_MARKET.ToString();
-            UIE.LeftEs.CityE(BuildingTypes.Smelter).CostTextC.TextUI.text = ECONOMY_VALUES.NEED_WOOD_FOR_BUILDING_SMELTER.ToString();
+            UIE.LeftEs.CityE(BuildingTypes.Market).CostTextC.TextUI.text = Economy_VALUES.NEED_WOOD_FOR_BUILDING_MARKET.ToString();
+            UIE.LeftEs.CityE(BuildingTypes.Smelter).CostTextC.TextUI.text = Economy_VALUES.NEED_WOOD_FOR_BUILDING_SMELTER.ToString();
         }
     }
 }

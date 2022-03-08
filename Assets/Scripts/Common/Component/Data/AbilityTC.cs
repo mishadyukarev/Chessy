@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game;
+
+namespace Chessy.Common
 {
     public struct AbilityTC
     {

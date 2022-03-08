@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell.Unit.Stats;
+
+namespace Chessy.Game
 {
     sealed class IceWallGiveWaterUnitsUpdMS : SystemAbstract, IEcsRunSystem
     {
@@ -12,16 +14,16 @@
             {
                 if (E.BuildingTC(idx_0).HaveBuilding && E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    //var idxs_01 = Es.CellEs(idx_0).Idxs;
-                    //idxs_01.Add(idx_0);
+                    var idxs_01 = E.CellEs(idx_0).IdxsAroundHashSet;
+                    idxs_01.Add(idx_0);
 
-                    //foreach (var idx_01 in Es.CellEs(idx_0).Idxs)
-                    //{
-                    //    if (Es.UnitTC(idx_01).HaveUnit && Es.UnitPlayerTC(idx_01).Is(Es.BuildPlayerTC(idx_0).Player))
-                    //    {
-                    //        //Es.UnitE(idx_01).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
-                    //    }
-                    //}
+                    foreach (var idx_01 in E.CellEs(idx_0).IdxsAround)
+                    {
+                        if (E.UnitTC(idx_01).HaveUnit && E.UnitPlayerTC(idx_01).Is(E.BuildingPlayerTC(idx_0).Player))
+                        {
+                            E.UnitWaterC(idx_01).Water = WaterValues.MAX;
+                        }
+                    }
                 }
             }
         }

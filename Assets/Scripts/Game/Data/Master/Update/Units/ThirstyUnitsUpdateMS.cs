@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game
 {
@@ -13,7 +14,7 @@ namespace Chessy.Game
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
-                if (E.UnitTC(idx_0).HaveUnit && !E.UnitMainE(idx_0).IsAnimal)
+                if (E.UnitTC(idx_0).HaveUnit && !E.IsAnimal(E.UnitTC(idx_0).Unit))
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
@@ -27,18 +28,18 @@ namespace Chessy.Game
                     {
                         if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
                         {
-                            E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0), E.UnitTC(idx_0)).WaterMax;
+                            E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitPlayerTC(idx_0), E.UnitLevelTC(idx_0)).WaterKingPawnMax;
                         }
                         else
                         {
                             
-                            E.UnitWaterC(idx_0).Water -= UNIT_WATER_VALUES.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
+                            E.UnitWaterC(idx_0).Water -= WaterValues.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
 
                             if (E.UnitWaterC(idx_0).Water <= 0)
                             {
-                                float percent = CellUnitStatHp_VALUES.ThirstyPercent(E.UnitTC(idx_0).Unit);
+                                float percent = Hp_VALUES.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                E.AttackUnitE(idx_0).Set(CellUnitStatHp_VALUES.HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player);
+                                E.AttackUnitE(idx_0).Set(Hp_VALUES.HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);

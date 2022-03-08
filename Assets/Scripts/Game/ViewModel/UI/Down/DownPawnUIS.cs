@@ -15,8 +15,8 @@ namespace Chessy.Game
         {
             var curPlayerI = E.CurPlayerITC.Player;
 
-            var amountPawnsInGame = E.UnitInfoE(curPlayerI, LevelTypes.First, UnitTypes.Pawn).UnitsInGame
-                + E.UnitInfoE(curPlayerI, LevelTypes.Second, UnitTypes.Pawn).UnitsInGame;
+            var amountPawnsInGame = E.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
+                + E.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
 
             _pawnE.AmountTextC.TextUI.text = amountPawnsInGame.ToString() + "/" + E.PlayerE(curPlayerI).MaxAvailablePawns;
             _pawnE.MaxPawnsTextC.TextUI.text = Math.Truncate(E.PlayerE(curPlayerI).PeopleInCity).ToString();

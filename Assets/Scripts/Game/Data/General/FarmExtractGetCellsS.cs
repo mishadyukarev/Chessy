@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game
 {
     sealed class FarmExtractGetCellsS : SystemAbstract, IEcsRunSystem
     {
@@ -16,7 +19,7 @@
                 {
                     if (E.FertilizeC(idx_0).HaveAnyResources)
                     {
-                        var extract = Environment_Values.FARM_EXTRACT;
+                        var extract = EnvironmentValues.FARM_EXTRACT;
 
                         //if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
                         //{

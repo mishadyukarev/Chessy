@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game
+﻿namespace Chessy.Game.Entity
 {
     public readonly struct CellE
     {

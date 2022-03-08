@@ -1,6 +1,4 @@
-﻿using Chessy.Common;
-
-namespace Chessy.Game
+﻿namespace Chessy.Common
 {
     public struct WaterC
     {

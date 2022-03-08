@@ -2,16 +2,9 @@
 {
     public static class HeroCooldown_VALUES
     {
-        public static int AfterKill(in UnitTypes unitT)
-        {
-            switch (unitT)
-            {
-                case UnitTypes.Elfemale: return 5;
-                case UnitTypes.Snowy: return 5;
-                case UnitTypes.Undead: return 1;
-                case UnitTypes.Hell: return 10;
-                default: return 0;
-            }
-        }
+        public const float Elfemale = 5;
+        public const float Snowy = 5;
+        public const float Undead = 2;
+        public const float Hell = 10;
     }
 }

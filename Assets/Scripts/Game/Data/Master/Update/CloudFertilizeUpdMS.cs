@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game
 {
     sealed class CloudFertilizeUpdMS : SystemAbstract, IEcsRunSystem
     {
@@ -16,7 +19,7 @@
 
                 if (!E.MountainC(idx_1).HaveAnyResources)
                 {
-                    E.FertilizeC(idx_1).Resources = Environment_Values.ENVIRONMENT_MAX;
+                    E.FertilizeC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                 }
             }
         }

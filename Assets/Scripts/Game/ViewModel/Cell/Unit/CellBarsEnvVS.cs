@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -19,7 +21,7 @@ namespace Chessy.Game
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Food).Enable();
 
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Food).LocalScale
-                            = new Vector3(E.EnvironmentEs(idx_0).FertilizeC.Resources / (float)Environment_Values.ENVIRONMENT_MAX, 0.15f, 1);
+                            = new Vector3(E.EnvironmentEs(idx_0).FertilizeC.Resources / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
                     }
                     else
                     {
@@ -31,7 +33,7 @@ namespace Chessy.Game
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Wood).Enable();
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Wood).LocalScale =
                             new Vector3(E.AdultForestC(idx_0).Resources
-                            / (float)Environment_Values.ENVIRONMENT_MAX, 0.15f, 1);
+                            / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
                     }
                     else
                     {
@@ -43,7 +45,7 @@ namespace Chessy.Game
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Ore).Enable();
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Ore).LocalScale
                             = new Vector3(E.EnvironmentEs(idx_0).HillC.Resources
-                            / (float)Environment_Values.ENVIRONMENT_MAX, 0.15f, 1);
+                            / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
                     }
                     else
                     {

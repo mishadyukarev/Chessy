@@ -1,4 +1,11 @@
 ﻿using Chessy.Game.EventsUI;
+using Chessy.Game.Systems.Model.Master.Methods;
+using Chessy.Game.Values;
+using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+using Chessy.Game.Values.Cell.Unit;
+using Chessy.Game.Values.Cell.Unit.Effect;
+using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -71,12 +78,12 @@ namespace Chessy.Game
 
                             if (!_e.UnitEs(idx_0).CoolDownC(ability).HaveCooldown)
                             {
-                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
+                                if (_e.UnitStepC(idx_0).Steps >= StepValues.NeedForAbility(ability))
                                 {
                                     _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                                    _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
-                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                    _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
+                                    _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
 
 
                                     foreach (var idxC_0 in _e.CellEs(idx_0).AroundCellIdxsC)
@@ -94,13 +101,13 @@ namespace Chessy.Game
 
                                                 else
                                                 {
-                                                    _e.AttackUnitE(idx_1).Set(CellUnitStatHp_VALUES.HP / 4, _e.UnitPlayerTC(idx_0).Player);
+                                                    _e.AttackUnitE(idx_1).Set(Hp_VALUES.HP / 4, _e.UnitPlayerTC(idx_0).Player);
                                                 }
                                             }
                                         }
                                     }
 
-                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                    _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
                                     _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
 
                                     _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
@@ -122,11 +129,11 @@ namespace Chessy.Game
 
                             if (!_e.UnitEs(idx_0).CoolDownC(ability).HaveCooldown)
                             {
-                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
+                                if (_e.UnitStepC(idx_0).Steps >= StepValues.NeedForAbility(ability))
                                 {
-                                    _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
+                                    _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
 
-                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                    _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
                                     _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
 
                                     _e.RpcPoolEs.SoundToGeneral(sender, ability);
@@ -159,14 +166,14 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NEED_FOR_PAWN_FIRE)
+                            if (_e.UnitStepC(idx_0).Steps >= StepValues.NEED_FOR_PAWN_FIRE)
                             {
                                 if (_e.AdultForestC(idx_0).HaveAnyResources)
                                 {
                                     _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                                     _e.HaveFire(idx_0) = true;
-                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_PAWN_FIRE;
+                                    _e.UnitStepC(idx_0).Steps -= StepValues.NEED_FOR_PAWN_FIRE;
                                 }
 
                                 else
@@ -186,11 +193,11 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NEED_FOR_PAWN_PUT_OUT_FIRE)
+                            if (_e.UnitStepC(idx_0).Steps >= StepValues.NEED_FOR_PAWN_PUT_OUT_FIRE)
                             {
                                 _e.HaveFire(idx_0) = false;
 
-                                _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_PAWN_PUT_OUT_FIRE;
+                                _e.UnitStepC(idx_0).Steps -= StepValues.NEED_FOR_PAWN_PUT_OUT_FIRE;
                             }
 
                             else
@@ -204,7 +211,7 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
+                            if (_e.UnitStepC(idx_0).Steps >= StepValues.NeedForAbility(ability))
                             {
                                 if (_e.BuildingTC(idx_0).HaveBuilding && !_e.BuildingTC(idx_0).Is(BuildingTypes.Camp))
                                 {
@@ -218,9 +225,9 @@ namespace Chessy.Game
                                         {
                                             _e.RpcPoolEs.SoundToGeneral(sender, ability);
 
-                                            _e.YoungForestC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
+                                            _e.YoungForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                            _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
                                         }
                                         else
                                         {
@@ -245,7 +252,7 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
+                            if (_e.UnitStepC(idx_0).Steps >= StepValues.NeedForAbility(ability))
                             {
                                 if (!_e.BuildingTC(idx_0).HaveBuilding || _e.BuildingTC(idx_0).Is(BuildingTypes.Camp))
                                 {
@@ -258,7 +265,7 @@ namespace Chessy.Game
                                         {
                                             if (resT == ResourceTypes.Wood)
                                             {
-                                                needRes.Add(resT, ECONOMY_VALUES.WOOD_FOR_BUILDING_FARM);
+                                                needRes.Add(resT, Economy_VALUES.WOOD_FOR_BUILDING_FARM);
                                             }
                                             else
                                             {
@@ -284,7 +291,7 @@ namespace Chessy.Game
                                             _e.BuildingPlayerTC(idx_0).Player = whoseMove;
                                             _e.BuildHpC(idx_0).Health = Building_Values.MaxHealth(BuildingTypes.Farm);
 
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                            _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
                                         }
 
                                         else
@@ -316,7 +323,7 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NEED_FOR_BUILDING_CITY)
+                            if (_e.UnitStepC(idx_0).Steps >= StepValues.NEED_FOR_BUILDING_CITY)
                             {
                                 if (!_e.AdultForestC(idx_0).HaveAnyResources)
                                 {
@@ -340,12 +347,10 @@ namespace Chessy.Game
 
                                         _e.BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, Building_Values.HELTH_CITY, whoseMove);
 
-                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_BUILDING_CITY;
+                                        _e.UnitStepC(idx_0).Steps -= StepValues.NEED_FOR_BUILDING_CITY;
 
                                         _e.HaveFire(idx_0) = false;
 
-                                        _e.AdultForestC(idx_0).Resources = 0;
-                                        _e.FertilizeC(idx_0).Resources = 0;
                                         _e.YoungForestC(idx_0).Resources = 0;
                                     }
 
@@ -354,17 +359,18 @@ namespace Chessy.Game
                                         _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                                     }
                                 }
+
                                 else
                                 {
                                     _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                                 }
                             }
+
                             else
                             {
                                 _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
-
                         break;
 
                     case AbilityTypes.DestroyBuilding:
@@ -378,7 +384,7 @@ namespace Chessy.Game
                                 _e.BuildingMainE(idx_0).AttackBuildingC.Damage = 1;
                                 _e.BuildingMainE(idx_0).KillerC.Player = _e.UnitPlayerTC(idx_0).Player;
 
-                                _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_DESTROY_BUILDING;
+                                _e.UnitStepC(idx_0).Steps -= StepValues.NEED_FOR_DESTROY_BUILDING;
                             }
 
                             else
@@ -393,13 +399,13 @@ namespace Chessy.Game
                             var idx_from = (byte)objects[_idx_cur++];
                             var idx_to = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.ARCHER_FIRE)
+                            if (_e.UnitStepC(idx_from).Steps >= StepValues.ARCHER_FIRE)
                             {
                                 if (_e.UnitEs(idx_from).ForArson.Contains(idx_to))
                                 {
                                     _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                                    _e.UnitStepC(idx_from).Steps -= UnitStep_Values.ARCHER_FIRE;
+                                    _e.UnitStepC(idx_from).Steps -= StepValues.ARCHER_FIRE;
                                     _e.HaveFire(idx_to) = false;
                                 }
                             }
@@ -417,24 +423,24 @@ namespace Chessy.Game
 
                             if (!_e.UnitEs(idx_0).CoolDownC(ability).HaveCooldown)
                             {
-                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NEED_FOR_GROW_ADULT_FOREST)
+                                if (_e.UnitStepC(idx_0).Steps >= StepValues.NEED_FOR_GROW_ADULT_FOREST)
                                 {
                                     if (_e.YoungForestC(idx_0).HaveAnyResources)
                                     {
                                         _e.YoungForestC(idx_0).Resources = 0;
 
-                                        _e.AdultForestC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
+                                        _e.AdultForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_GROW_ADULT_FOREST;
+                                        _e.UnitStepC(idx_0).Steps -= StepValues.NEED_FOR_GROW_ADULT_FOREST;
 
-                                        _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.AFTER_GROW_ADULT_FOREST;
+                                        _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
 
 
                                         foreach (var idx_1 in _e.CellEs(idx_0).IdxsAround)
                                         {
                                             if (_e.YoungForestC(idx_1).HaveAnyResources)
                                             {
-                                                _e.AdultForestC(idx_1).Resources = Environment_Values.ENVIRONMENT_MAX;
+                                                _e.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                                             }
                                         }
 
@@ -487,16 +493,16 @@ namespace Chessy.Game
                                     {
                                         if (_e.AdultForestC(idx_to).HaveAnyResources)
                                         {
-                                            if (_e.UnitHpC(idx_from).Health >= CellUnitStatHp_VALUES.HP)
+                                            if (_e.UnitHpC(idx_from).Health >= Hp_VALUES.HP)
                                             {
-                                                if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.NeedForAbility(ability))
+                                                if (_e.UnitStepC(idx_from).Steps >= StepValues.NeedForAbility(ability))
                                                 {
                                                     if (!_e.UnitPlayerTC(idx_from).Is(_e.UnitPlayerTC(idx_to).Player))
                                                     {
-                                                        _e.UnitEffectStunC(idx_to).Stun = CellUnitEffectStun_Values.ForStunAfterAbility(ability);
-                                                        _e.UnitEs(idx_from).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
+                                                        _e.UnitEffectStunC(idx_to).Stun = StunValues.ELFEMALE;
+                                                        _e.UnitEs(idx_from).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
 
-                                                        _e.UnitStepC(idx_from).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                                        _e.UnitStepC(idx_from).Steps -= StepValues.NeedForAbility(ability);
 
                                                         _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ability);
 
@@ -507,7 +513,7 @@ namespace Chessy.Game
                                                             {
                                                                 if (_e.UnitTC(idx_1).HaveUnit && _e.UnitPlayerTC(idx_1).Is(_e.UnitPlayerTC(idx_to).Player))
                                                                 {
-                                                                    _e.UnitEffectStunC(idx_1).Stun = CellUnitEffectStun_Values.ForStunAfterAbility(ability);
+                                                                    _e.UnitEffectStunC(idx_1).Stun = StunValues.ELFEMALE;
                                                                 }
                                                             }
                                                         }
@@ -532,15 +538,15 @@ namespace Chessy.Game
                             var idx_from = (byte)objects[_idx_cur++];
                             var idx_to = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitHpC(idx_from).Health >= CellUnitStatHp_VALUES.HP)
+                            if (_e.UnitHpC(idx_from).Health >= Hp_VALUES.HP)
                             {
-                                if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.NeedForAbility(ability))
+                                if (_e.UnitStepC(idx_from).Steps >= StepValues.NeedForAbility(ability))
                                 {
                                     _e.DirectWindTC.Direct = _e.CellEs(_e.CenterCloudIdxC.Idx).Direct(idx_to);
 
-                                    _e.UnitStepC(idx_from).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                    _e.UnitStepC(idx_from).Steps -= StepValues.NeedForAbility(ability);
 
-                                    _e.UnitEs(idx_from).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
+                                    _e.UnitEs(idx_from).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
 
                                     _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ability);
 
@@ -556,21 +562,23 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitHpC(idx_0).Health >= CellUnitStatHp_VALUES.HP)
+                            if (_e.UnitHpC(idx_0).Health >= Hp_VALUES.HP)
                             {
-                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.CHANGE_CORNER_ARCHER)
+                                if (_e.UnitStepC(idx_0).Steps >= StepValues.CHANGE_CORNER_ARCHER)
                                 {
                                     _e.UnitIsRightArcherC(idx_0).ToggleSide();
 
-                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.CHANGE_CORNER_ARCHER;
+                                    _e.UnitStepC(idx_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
 
                                     _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
                                 }
+
                                 else
                                 {
                                     _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
+
                             else
                             {
                                 _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
@@ -579,123 +587,15 @@ namespace Chessy.Game
                         break;
 
                     case AbilityTypes.IceWall:
-                        {
-                            var idx_0 = (byte)objects[_idx_cur++];
-
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NEED_FOR_BUILDING_ICEWALL || _e.RiverEs(idx_0).RiverTC.HaveRiverNear)
-                            {
-                                if (!_e.BuildingTC(idx_0).HaveBuilding)
-                                {
-                                    if (!_e.AdultForestC(idx_0).HaveAnyResources)
-                                    {
-                                        _e.AdultForestC(idx_0).Resources = 0;
-                                        _e.FertilizeC(idx_0).Resources = 0;
-
-                                        if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NEED_FOR_BUILDING_ICEWALL)
-                                        {
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NEED_FOR_BUILDING_ICEWALL;
-
-                                            _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.AFTER_ICE_WALL;
-
-                                            _e.BuildingMainE(idx_0).Set(BuildingTypes.IceWall, LevelTypes.First, CellUnitStatHp_VALUES.HP, _e.UnitPlayerTC(idx_0).Player);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        new IceWallSnowyMS((byte)objects[_idx_cur++], _e);
                         break;
 
                     case AbilityTypes.ActiveAroundBonusSnowy:
-                        {
-                            var idx_0 = (byte)objects[_idx_cur++];
-
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability) || _e.RiverEs(idx_0).RiverTC.HaveRiverNear)
-                            {
-                                if (!_e.RiverEs(idx_0).RiverTC.HaveRiverNear) _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
-
-                                if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
-                                {
-                                    _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
-                                    _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
-
-                                    foreach (var idx_1 in _e.CellEs(idx_0).IdxsAround)
-                                    {
-                                        if (_e.UnitTC(idx_0).HaveUnit)
-                                        {
-                                            if (_e.UnitPlayerTC(idx_1).Is(whoseMove))
-                                            {
-                                                if (_e.UnitMainE(idx_1).IsMelee && !_e.UnitTC(idx_1).Is(UnitTypes.Camel))
-                                                {
-                                                    _e.UnitWaterC(idx_1).Water = _e.UnitInfo(_e.UnitPlayerTC(idx_1), _e.UnitLevelTC(idx_1), _e.UnitTC(idx_1)).WaterMax;
-                                                    _e.UnitHpC(idx_1).Health = CellUnitStatHp_VALUES.HP;
-                                                    _e.UnitEffectShield(idx_1).Protection = CellUnitEffectShield_Values.AFTER_DIRECT_WAVE;
-                                                }
-
-                                                if (_e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.BowCrossbow))
-                                                {
-                                                    _e.UnitEffectFrozenArrawC(idx_1).Shoots = 0;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                _e.UnitEffectStunC(idx_1).Stun = CellUnitEffectStun_Values.ForStunAfterAbility(ability);
-                                            }
-                                        }
-
-                                        _e.EffectEs(idx_1).HaveFire = false;
-                                    }
-                                }
-                            }
-                        }
+                        new ActiveAroundBonusSnowy((byte)objects[_idx_cur++], sender, _e);
                         break;
 
                     case AbilityTypes.DirectWave:
-                        {
-                            var idx_from = (byte)objects[_idx_cur++];
-                            var idx_to = (byte)objects[_idx_cur++];
-
-                            //var direct = e.CellEs(idx_from).Direct(idx_to).Direct;
-
-                            if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.NeedForAbility(ability) || _e.RiverEs(idx_from).RiverTC.HaveRiverNear)
-                            {
-                                if (!_e.RiverEs(idx_from).RiverTC.HaveRiverNear) _e.UnitStepC(idx_from).Steps -= UnitStep_Values.NeedForAbility(ability);
-
-                                if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.NeedForAbility(ability))
-                                {
-                                    _e.UnitStepC(idx_from).Steps -= UnitStep_Values.NeedForAbility(ability);
-                                    _e.UnitEs(idx_from).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
-
-                                    var idx_0 = idx_to;
-
-                                    for (var i = 0; i < 3; i++)
-                                    {
-                                        if (!_e.CellEs(idx_0).IsActiveParentSelf) break;
-
-                                        if (_e.UnitTC(idx_0).HaveUnit)
-                                        {
-                                            if (_e.UnitPlayerTC(idx_0).Is(whoseMove))
-                                            {
-                                                //UnitEffectEs(idx_0).ShieldE.Set(ability);
-                                                //UnitE(idx_0).SetMax();
-                                                //UnitStatEs(idx_0).Water.SetMax(UnitEs(idx_0).MainE, Es.UnitStatUpgradesEs);
-                                            }
-                                            else
-                                            {
-                                                _e.UnitEffectStunC(idx_0).Stun = CellUnitEffectStun_Values.ForStunAfterAbility(ability);
-                                            }
-                                        }
-
-                                        _e.HaveFire(idx_0) = false;
-
-                                        //idx_0 = e.CellEs().GetIdxCellByDirect(idx_0, direct_0);
-                                    }
-                                }
-                                else
-                                {
-                                    _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                }
-                            }
-                        }
+                        new DirectWaveSnowyMS((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender, _e);            
                         break;
 
                     case AbilityTypes.Resurrect:
@@ -707,10 +607,10 @@ namespace Chessy.Game
                             {
                                 if (!_e.UnitEs(idx_from).CoolDownC(ability).HaveCooldown)
                                 {
-                                    if (_e.UnitStepC(idx_from).Steps >= UnitStep_Values.NeedForAbility(ability))
+                                    if (_e.UnitStepC(idx_from).Steps >= StepValues.NeedForAbility(ability))
                                     {
-                                        _e.UnitEs(idx_from).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
-                                        _e.UnitStepC(idx_from).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                        _e.UnitEs(idx_from).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
+                                        _e.UnitStepC(idx_from).Steps -= StepValues.NeedForAbility(ability);
 
                                         if (_e.LastDiedE(idx_to).UnitTC.HaveUnit)
                                         {
@@ -738,9 +638,9 @@ namespace Chessy.Game
                                     _e.YoungForestC(idx_0).Resources = 0;
                                     _e.FertilizeC(idx_0).Resources = 0;
 
-                                    if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
+                                    if (_e.UnitStepC(idx_0).Steps >= StepValues.NeedForAbility(ability))
                                     {
-                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                        _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
 
                                         if (_e.StartTeleportIdxC.Idx > 0)
                                         {
@@ -751,12 +651,12 @@ namespace Chessy.Game
                                                 _e.StartTeleportIdxC = _e.EndTeleportIdxC;
 
                                                 _e.EndTeleportIdxC.Idx = idx_0;
-                                                _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
+                                                _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
                                             }
                                             else
                                             {
                                                 _e.EndTeleportIdxC.Idx = idx_0;
-                                                _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = CellUnitAbilityCooldown_Values.NeedAfterAbility(ability);
+                                                _e.UnitEs(idx_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
                                             }
                                         }
                                         else
@@ -778,7 +678,7 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.NeedForAbility(ability))
+                            if (_e.UnitStepC(idx_0).Steps >= StepValues.NeedForAbility(ability))
                             {
                                 if (_e.BuildingTC(idx_0).Is(BuildingTypes.Teleport))
                                 {
@@ -789,7 +689,7 @@ namespace Chessy.Game
                                     {
                                         if (!_e.UnitTC(idx_end).HaveUnit)
                                         {
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                            _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
 
                                             //Teleport(idx_end, ents);
                                         }
@@ -798,7 +698,7 @@ namespace Chessy.Game
                                     {
                                         if (!_e.UnitTC(idx_start).HaveUnit)
                                         {
-                                            _e.UnitStepC(idx_0).Steps -= UnitStep_Values.NeedForAbility(ability);
+                                            _e.UnitStepC(idx_0).Steps -= StepValues.NeedForAbility(ability);
 
                                             //Teleport(idx_start, _e);
                                         }
@@ -906,10 +806,10 @@ namespace Chessy.Game
                                         _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
                                     }
 
-                                    else if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.FOR_TOGGLE_CONDITION_UNIT)
+                                    else if (_e.UnitStepC(idx_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                                     {
                                         _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_TOGGLE_CONDITION_UNIT;
+                                        _e.UnitStepC(idx_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                                         _e.UnitConditionTC(idx_0).Condition = condT;
                                     }
 
@@ -927,11 +827,11 @@ namespace Chessy.Game
                                         _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
                                     }
 
-                                    else if (_e.UnitStepC(idx_0).Steps >= UnitStep_Values.FOR_TOGGLE_CONDITION_UNIT)
+                                    else if (_e.UnitStepC(idx_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                                     {
                                         _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
                                         _e.UnitConditionTC(idx_0).Condition = condT;
-                                        _e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_TOGGLE_CONDITION_UNIT;
+                                        _e.UnitStepC(idx_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                                     }
 
                                     else

@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Stats;
+
+namespace Chessy.Game
 {
     sealed class UpdateHealingUnitMS : SystemAbstract, IEcsRunSystem
     {
@@ -12,7 +15,7 @@
             {
                 if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    E.UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                    E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
                 }
             }
         }

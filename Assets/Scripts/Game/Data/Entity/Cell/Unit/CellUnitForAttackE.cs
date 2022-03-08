@@ -5,6 +5,6 @@ namespace Chessy.Game
 {
     public sealed class CellUnitForAttackE
     {
-        public IdxsC IdxsC = new IdxsC(new HashSet<byte>());
+        public IdxsCellsC IdxsC = new IdxsCellsC(new HashSet<byte>());
     }
 }

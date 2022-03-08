@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game
 {
     sealed class WoodcutterExtractAdultForestUpdateMS : SystemAbstract, IEcsRunSystem
     {
@@ -26,7 +29,7 @@
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {
-                            E.YoungForestC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
+                            E.YoungForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
                         }
                     }
                 }

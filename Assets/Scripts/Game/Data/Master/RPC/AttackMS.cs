@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 
 namespace Chessy.Game
@@ -70,7 +71,7 @@ namespace Chessy.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = CellUnitStatHp_VALUES.HP;
+                var maxDamage = Hp_VALUES.HP;
                 var minDamage = 0;
 
                 //if (!e.UnitE(idx_to).IsMelee) powerDam_to /= 2;
@@ -151,11 +152,9 @@ namespace Chessy.Game
 
                 else if (minus_to > 0)
                 {
-                    var wasUnitT = E.UnitTC(idx_to).Unit;
-
                     var killer = PlayerTypes.None;
 
-                    if (E.UnitMainE(idx_to).IsAnimal)
+                    if (E.IsAnimal(E.UnitTC(idx_to).Unit))
                     {
                         killer = E.UnitPlayerTC(idx_from).Player;
                     }

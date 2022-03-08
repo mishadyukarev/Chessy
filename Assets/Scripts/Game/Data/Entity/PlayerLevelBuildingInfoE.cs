@@ -4,11 +4,11 @@ namespace Chessy.Game
 {
     public struct PlayerLevelBuildingInfoE
     {
-        public readonly IdxsC IdxC;
+        public readonly IdxsCellsC IdxC;
 
         internal PlayerLevelBuildingInfoE(in bool def) : this()
         {
-            IdxC = new IdxsC(new HashSet<byte>());
+            IdxC = new IdxsCellsC(new HashSet<byte>());
         }
     }
 }

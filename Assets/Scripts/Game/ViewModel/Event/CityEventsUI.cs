@@ -1,4 +1,5 @@
-﻿using Photon.Realtime;
+﻿using Chessy.Game.Values;
+using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 
@@ -68,15 +69,15 @@ namespace Chessy.Game.EventsUI.Left
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ECONOMY_VALUES.NEED_FOOD_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ECONOMY_VALUES.NEED_FOOD_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ECONOMY_VALUES.NEED_FOOD_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_FOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -93,11 +94,11 @@ namespace Chessy.Game.EventsUI.Left
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ECONOMY_VALUES.NEED_WOOD_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_WOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ECONOMY_VALUES.NEED_WOOD_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_WOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -109,15 +110,15 @@ namespace Chessy.Game.EventsUI.Left
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ECONOMY_VALUES.NEED_ORE_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ECONOMY_VALUES.NEED_ORE_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ECONOMY_VALUES.NEED_ORE_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_ORE_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -129,15 +130,15 @@ namespace Chessy.Game.EventsUI.Left
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ECONOMY_VALUES.NEED_IRON_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ECONOMY_VALUES.NEED_IRON_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ECONOMY_VALUES.NEED_IRON_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_IRON_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -149,15 +150,15 @@ namespace Chessy.Game.EventsUI.Left
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = ECONOMY_VALUES.NEED_GOLD_FOR_BUILDING_HOUSE;
+                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = ECONOMY_VALUES.NEED_GOLD_FOR_BUILDING_MARKET;
+                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = ECONOMY_VALUES.NEED_GOLD_FOR_BUILDING_SMELTER;
+                                need = Economy_VALUES.NEED_GOLD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:

@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game
 {
     sealed class PawnExtractHillS : SystemAbstract, IEcsRunSystem
     {
@@ -16,7 +19,7 @@
                 {
                     if (E.HillC(idx_0).HaveAnyResources)
                     {
-                        var extract = Environment_Values.PAWN_PICK_EXTRACT_HILL;
+                        var extract = EnvironmentValues.PAWN_PICK_EXTRACT_HILL;
 
 
                         if (E.HillC(idx_0).Resources < extract) extract = E.HillC(idx_0).Resources;

@@ -23,7 +23,7 @@ namespace Chessy.Game.Systems.Model
                             waterMax *= 1.5f;
                         }
                         
-                        E.UnitInfoE(playerT, levelT, unitT).WaterMax = waterMax;
+                        E.UnitInfoE(playerT, levelT).WaterKingPawnMax = waterMax;
                     }
                 }
             }

@@ -6,19 +6,23 @@ namespace Chessy.Game
     {
         readonly Dictionary<BuildingTypes, bool> _haveBuilding;
 
-        public UnitTC AvailableHeroTC;
         public bool IsReadyC;
-        public bool HaveCenterHero;
 
         public float PeopleInCity;
         public int MaxAvailablePawns;
         public float WoodForBuyHouse;
 
+        public UnitTC AvailableHeroTC;
+        public CooldownC HeroCooldownC;
+        public bool HaveHeroInInventor;
 
-        readonly LevelInfoE[] _levelInfoEs;
+        public bool HaveKingInInventor;
+
+
+        readonly PlayerLevelInfoE[] _levelInfoEs;
         readonly ResourcesC[] _resourceCs;
         readonly Dictionary<UnitTypes, PlayerUnitInfoE> _unitEs;
-        public ref LevelInfoE LevelE(in LevelTypes levT) => ref _levelInfoEs[(byte)levT - 1];
+        public ref PlayerLevelInfoE LevelE(in LevelTypes levT) => ref _levelInfoEs[(byte)levT - 1];
         public ref ResourcesC ResourcesC(in ResourceTypes resT) => ref _resourceCs[(byte)resT - 1];
         public PlayerUnitInfoE UnitE(in UnitTypes unitT) => _unitEs[unitT];
 
@@ -29,10 +33,12 @@ namespace Chessy.Game
             PeopleInCity = Start_VALUES.PEOPLE_IN_CITY;
             MaxAvailablePawns = Start_VALUES.MAX_AVAILABLE_PAWN;
 
-            _levelInfoEs = new LevelInfoE[(byte)LevelTypes.End - 1];
+            _levelInfoEs = new PlayerLevelInfoE[(byte)LevelTypes.End - 1];
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];
             _unitEs = new Dictionary<UnitTypes, PlayerUnitInfoE>();
 
+
+            HaveKingInInventor = true;
 
             _haveBuilding = new Dictionary<BuildingTypes, bool>();
 
@@ -42,18 +48,13 @@ namespace Chessy.Game
 
             WoodForBuyHouse = Start_VALUES.NEED_WOOD_FOR_BUILDING_HOUSE;
 
-
-
-
-            HaveCenterHero = true;
-
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
                 _resourceCs[(byte)resT - 1] = new ResourcesC(Start_VALUES.Resources(resT));
             }
             for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
             {
-                _levelInfoEs[(byte)levT - 1] = new LevelInfoE(levT);
+                _levelInfoEs[(byte)levT - 1] = new PlayerLevelInfoE(levT);
             }
             for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
             {

@@ -13,10 +13,7 @@
             {
                 if (E.UnitTC(idx_0).HaveUnit)
                 {
-                    E.UnitMainE(idx_0).IsAnimal = E.UnitTC(idx_0).Is(UnitTypes.Camel);
-
                     var isMelee = true;
-                    var ishero = false;
 
                     if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
                     {
@@ -31,20 +28,16 @@
                         {
                             case UnitTypes.Elfemale:
                                 isMelee = false;
-                                ishero = true;
                                 break;
 
                             case UnitTypes.Snowy:
                                 isMelee = false;
-                                ishero = true;
                                 break;
 
                             case UnitTypes.Undead:
-                                ishero = true;
                                 break;
 
                             case UnitTypes.Hell:
-                                ishero = true;
                                 break;
 
                             default:
@@ -53,7 +46,6 @@
                     }
 
                     E.UnitMainE(idx_0).IsMelee = isMelee;
-                    E.UnitMainE(idx_0).IsHero = ishero;
                 }
             }
         }

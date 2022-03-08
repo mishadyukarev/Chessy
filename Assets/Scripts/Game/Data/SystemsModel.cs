@@ -41,8 +41,10 @@ namespace Chessy.Game
                 + new GetDamageUnitsS(ents).Run
                 + new VisibleUnitAndBuildingS(ents).Run
                 + new GetCellsForShiftUnitS(ents).Run
+
                 + new GetAttackMeleeCellsS(ents).Run
                 + new GetCellsForAttackArcherS(ents).Run
+
                 + new GetCellsForArsonArcherS(ents).Run;
 
 
@@ -69,7 +71,7 @@ namespace Chessy.Game
                 + new FarmExtractFertilizeUpdateMS(ents).Run
                 + new MineExtractUpdateMS(ents).Run
                 + new IceWallGiveWaterUnitsUpdMS(ents).Run
-                + new IceWallFertilizeAroundUpdMS(ents).Run
+                + new IceWallFertilizeAroundUpdateMS(ents).Run
                 + new CitySetWoodcuttersAroundUpdateMS(ents).Run
                 + new CityExtractHillMS(ents).Run
                 + new SmelterSmeltUpdateMS(ents).Run

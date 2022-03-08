@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game
 {
     sealed class RiverFertilizeAroundUpdateMS : SystemAbstract, IEcsRunSystem
     {
@@ -15,7 +18,7 @@
                 {
                     if (!E.MountainC(idx_0).HaveAnyResources)
                     {
-                        E.FertilizeC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
+                        E.FertilizeC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
             }

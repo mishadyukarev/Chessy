@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Chessy.Game
+namespace Chessy.Game.Values
 {
-    public static class ECONOMY_VALUES
+    public struct Economy_VALUES
     {
         public const float ADDING_FOOD_AFTER_UPDATE = 0.3f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;

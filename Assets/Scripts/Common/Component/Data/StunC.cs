@@ -2,7 +2,7 @@
 {
     public struct StunC
     {
-        public int Stun;
+        public float Stun;
         public bool IsStunned => Stun > 0;
     }
 }

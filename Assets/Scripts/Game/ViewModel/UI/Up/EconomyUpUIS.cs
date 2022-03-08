@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chessy.Game.Values;
+using System;
 using System.Collections.Generic;
 
 namespace Chessy.Game
@@ -20,7 +21,7 @@ namespace Chessy.Game
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
 
-            _extracts[ResourceTypes.Food] += ECONOMY_VALUES.ADDING_FOOD_AFTER_UPDATE;
+            _extracts[ResourceTypes.Food] += Economy_VALUES.ADDING_FOOD_AFTER_UPDATE;
 
 
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
@@ -31,7 +32,7 @@ namespace Chessy.Game
                 {
                     if (E.UnitTC(idx_0).HaveUnit)
                     {
-                        _extracts[ResourceTypes.Food] -= ECONOMY_VALUES.FOOD_FOR_FEEDING_UNITS;
+                        _extracts[ResourceTypes.Food] -= Economy_VALUES.FOOD_FOR_FEEDING_UNITS;
                     }
 
 

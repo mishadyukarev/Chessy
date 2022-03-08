@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game
 {
     sealed class WoodcutterExtractGetCellsS : SystemAbstract, IEcsRunSystem
     {
@@ -14,7 +17,7 @@
 
                 if (E.BuildingTC(idx_0).Is(BuildingTypes.Woodcutter))
                 {
-                    var extract = Environment_Values.WOODCUTTER_EXTRACT;
+                    var extract = EnvironmentValues.WOODCUTTER_EXTRACT;
 
                     //if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
                     //{

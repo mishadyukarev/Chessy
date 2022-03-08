@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Stats;
+
+namespace Chessy.Game
 {
     sealed class SetUnitMS : SystemAbstract, IEcsRunSystem
     {
@@ -25,9 +28,9 @@
                     E.UnitLevelTC(idx_0).Level = LevelTypes.First;
                     E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
                     E.UnitIsRightArcherC(idx_0).IsRight = false;
-                    E.UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                    E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
                     E.UnitStepC(idx_0).Steps = 1/*E.UnitStatsE(idx_0).MaxStepsC.Steps*/;
-                    E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitMainE(idx_0)).WaterMax;
+                    E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitMainE(idx_0)).WaterKingPawnMax;
                     E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                     E.UnitExtraLevelTC(idx_0).Level = LevelTypes.None;
                     E.UnitExtraProtectionTC(idx_0).Protection = 0;
@@ -35,7 +38,7 @@
                     E.UnitEffectShield(idx_0).Protection = 0;
                     E.UnitEffectFrozenArrawC(idx_0).Shoots = 0;
 
-                    E.UnitInfo(E.UnitMainE(idx_0)).UnitsInGame++;
+                    E.UnitInfo(E.UnitMainE(idx_0)).Add(E.UnitTC(idx_0).Unit, 1);
 
 
                     if (unitT == UnitTypes.Pawn)
@@ -48,7 +51,19 @@
 
                     else
                     {
-                        E.UnitInfoE(whoseMove, LevelTypes.First, unitT).HaveInInventor = false;
+                        if (E.IsHero(unitT))
+                        {
+                            E.PlayerE(whoseMove).HaveHeroInInventor = false;
+                        }
+                        else if (unitT == UnitTypes.King)
+                        {
+                            E.PlayerE(whoseMove).HaveKingInInventor = false;
+                        }
+                        //else
+                        //{
+                        //    E.UnitInfoE(whoseMove, LevelTypes.First).HaveInInventor = false;
+                        //}
+                        
 
                         E.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         E.UnitMainTWLevelTC(idx_0).Level = LevelTypes.None;

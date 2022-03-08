@@ -12,7 +12,7 @@
             var curPlayerI = E.CurPlayerITC.Player;
 
             if (!isActiveKingZone && !UIE.CenterEs.UpgradeE.Parent.IsActiveSelf
-                && E.PlayerE(curPlayerI).HaveCenterHero)
+                && E.PlayerE(curPlayerI).AvailableHeroTC.Is(UnitTypes.None))
             {
                 //var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 

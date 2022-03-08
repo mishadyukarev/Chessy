@@ -17,10 +17,10 @@
                     E.ResourcesC(E.BuildingPlayerTC(idx_0).Player, ResourceTypes.Food).Resources += extract;
                     E.FertilizeC(idx_0).Resources -= extract;
 
-                    if (!E.FertilizeC(idx_0).HaveAnyResources)
-                    {
-                        E.BuildingTC(idx_0).Building = BuildingTypes.None;
-                    }
+                    //if (!E.FertilizeC(idx_0).HaveAnyResources)
+                    //{
+                    //    E.BuildingTC(idx_0).Building = BuildingTypes.None;
+                    //}
                 }
             }
         }

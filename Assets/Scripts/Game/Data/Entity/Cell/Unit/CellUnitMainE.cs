@@ -7,11 +7,7 @@
         public LevelTC LevelTC;
         public ConditionUnitTC ConditionTC;
         public IsRightArcherC IsRightArcherC;
-        public bool IsAnimal;
         public bool IsMelee;
-        public bool IsHero;
-
-
 
         public IdxCellC ShiftTo;
     }

@@ -22,27 +22,27 @@
                         {
                             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
                             {
-                                if(E.UnitTC(idx_0).HaveUnit && E.UnitLevelTC(idx_0).Is(levUnit) && E.UnitPlayerTC(idx_0).Is(player))
-                                {
-                                    if (E.BuildingTC(idx_0).Is(BuildingTypes.Camp))
-                                    {
-                                        //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                                        //Es.BuildTC(idx_0).Destroy(Es);
-                                    }
+                                //if(E.UnitTC(idx_0).HaveUnit && E.UnitLevelTC(idx_0).Is(levUnit) && E.UnitPlayerTC(idx_0).Is(player))
+                                //{
+                                //    if (E.BuildingTC(idx_0).Is(BuildingTypes.Camp))
+                                //    {
+                                //        //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
+                                //        //Es.BuildTC(idx_0).Destroy(Es);
+                                //    }
 
-                                    if (E.UnitTC(idx_0).Is(UnitTypes.King))
-                                    {
-                                        E.WinnerC.Player = E.UnitPlayerTC(idx_0).Player;
-                                    }
-                                    else if (E.UnitMainE(idx_0).IsHero)
-                                    {
-                                        E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).HeroCooldownC.Cooldown = HeroCooldown_VALUES.AfterKill(E.UnitTC(idx_0).Unit);
-                                        E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).HaveInInventor = true;
-                                    }
+                                //    if (E.UnitTC(idx_0).Is(UnitTypes.King))
+                                //    {
+                                //        E.WinnerC.Player = E.UnitPlayerTC(idx_0).Player;
+                                //    }
+                                //    else if (E.UnitMainE(idx_0).IsHero)
+                                //    {
+                                //        E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).HeroCooldownC.Cooldown = HeroCooldown_VALUES.AfterKill(E.UnitTC(idx_0).Unit);
+                                //        E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, E.UnitTC(idx_0).Unit).HaveInInventor = true;
+                                //    }
 
-                                    //Es.LastDiedUnitTC(idx_0).SetLastDied((Es.UnitTC(idx_0), Es.UnitLevelTC(idx_0), Es.UnitPlayerTC(idx_0)), Es.LastDiedLevelTC(idx_0), Es.LastDiedPlayerTC(idx_0));
-                                    E.UnitTC(idx_0).Unit = UnitTypes.None;
-                                }
+                                //    //Es.LastDiedUnitTC(idx_0).SetLastDied((Es.UnitTC(idx_0), Es.UnitLevelTC(idx_0), Es.UnitPlayerTC(idx_0)), Es.LastDiedLevelTC(idx_0), Es.LastDiedPlayerTC(idx_0));
+                                //    E.UnitTC(idx_0).Unit = UnitTypes.None;
+                                //}
                             }
                         }
                     }

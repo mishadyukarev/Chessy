@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Stats;
+using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -47,7 +49,7 @@ namespace Chessy.Game
                             E.UnitPlayerTC(idx_0).Player = PlayerTypes.None;
                             E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
 
-                            E.UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                            E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
                             E.UnitStepC(idx_0).Steps = 1f;
                             E.UnitWaterC(idx_0).Water = 1f;
 

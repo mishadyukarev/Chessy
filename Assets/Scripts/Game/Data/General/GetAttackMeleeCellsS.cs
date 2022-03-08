@@ -21,7 +21,7 @@ namespace Chessy.Game
             {
                 if (!E.UnitEffectStunC(idx_0).IsStunned)
                 {
-                    if (E.UnitTC(idx_0).HaveUnit && E.UnitMainE(idx_0).IsMelee && !E.UnitMainE(idx_0).IsAnimal
+                    if (E.UnitTC(idx_0).HaveUnit && E.UnitMainE(idx_0).IsMelee && !E.IsAnimal(E.UnitTC(idx_0).Unit)
                         && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                     {
                         DirectTypes dir_cur = default;
@@ -34,14 +34,7 @@ namespace Chessy.Game
 
                             if (!E.EnvironmentEs(idx_1).MountainC.HaveAnyResources)
                             {
-                                var dir = E.CellEs(idx_0).Direct(idx_1);
-
                                 var haveMaxSteps = E.UnitStepC(idx_0).Steps >= E.UnitStatsE(idx_0).MaxStepsC.Steps;
-
-                                if (E.UnitTC(idx_0).Is(UnitTypes.King))
-                                {
-
-                                }
 
                                 if (E.UnitStepC(idx_0).Steps >= E.UnitEs(idx_0).NeedSteps(idx_1).Steps || haveMaxSteps)
                                 {

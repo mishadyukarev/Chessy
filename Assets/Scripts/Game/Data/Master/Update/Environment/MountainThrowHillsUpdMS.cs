@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -22,7 +24,7 @@ namespace Chessy.Game
                         {
                             if (!E.MountainC(E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx).HaveAnyResources && !E.BuildingTC(idx_1).HaveBuilding)
                             {
-                                E.HillC(idx_1).Resources += Environment_Values.ADDING_FROM_MOUNTAIN;
+                                E.HillC(idx_1).Resources += EnvironmentValues.ADDING_FROM_MOUNTAIN;
                             }
                         }
                     }

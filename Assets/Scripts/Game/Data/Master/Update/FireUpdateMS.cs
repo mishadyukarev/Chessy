@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+using Chessy.Game.Values.Cell.Unit.Stats;
+using System.Collections.Generic;
 
 namespace Chessy.Game
 {
@@ -22,13 +26,13 @@ namespace Chessy.Game
             {
                 if (E.HaveFire(idx_0))
                 {
-                    E.AdultForestC(idx_0).Resources -= Environment_Values.FireAdultForest;
+                    E.AdultForestC(idx_0).Resources -= EnvironmentValues.FireAdultForest;
 
                     if (E.UnitTC(idx_0).HaveUnit)
                     {
                         if (E.UnitTC(idx_0).Is(UnitTypes.Hell))
                         {
-                            E.UnitHpC(idx_0).Health = CellUnitStatHp_VALUES.HP;
+                            E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
                         }
                         else
                         {
@@ -40,9 +44,9 @@ namespace Chessy.Game
                     {
                         E.BuildingTC(idx_0).Building = BuildingTypes.None;
 
-                        if (UnityEngine.Random.Range(0f, 1f) < Environment_Values.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
+                        if (UnityEngine.Random.Range(0f, 1f) < EnvironmentValues.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
                         {
-                            E.YoungForestC(idx_0).Resources -= Environment_Values.FireAdultForest;
+                            E.YoungForestC(idx_0).Resources -= EnvironmentValues.FireAdultForest;
                         }
 
 

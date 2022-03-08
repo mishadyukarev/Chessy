@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Common;
+
+namespace Chessy.Game
 {
     public struct CellUnitStatsE
     {

@@ -15,7 +15,7 @@
                 {
                     if (E.UnitPlayerTC(idx_0).Is(PlayerTypes.None))
                     {
-                        if (E.UnitMainE(idx_0).IsAnimal)
+                        if (E.IsAnimal(E.UnitTC(idx_0).Unit))
                         {
                             var isVisForFirst = true;
                             var isVisForSecond = true;
@@ -122,7 +122,7 @@
                         {
                             var idx_1 = E.CellEs(idx_0).AroundCellE(dir).IdxC.Idx;
 
-                            if (E.UnitTC(idx_1).HaveUnit && !E.UnitMainE(idx_1).IsAnimal)
+                            if (E.UnitTC(idx_1).HaveUnit && !E.IsAnimal(E.UnitTC(idx_1).Unit))
                             {
                                 E.CellEs(idx_0).Player(E.UnitPlayerTC(idx_1).Player).IsVisibleTrail = true;
                             }

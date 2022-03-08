@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game
 {
     sealed class WorldDryFertilizerMS : SystemAbstract, IEcsRunSystem
     {
@@ -12,7 +15,7 @@
             {
                 if (E.FertilizeC(idx_0).HaveAnyResources)
                 {
-                    E.FertilizeC(idx_0).Resources -= Environment_Values.DRY_FERTILIZE;
+                    E.FertilizeC(idx_0).Resources -= EnvironmentValues.DRY_FERTILIZE;
                 }
             }
         }

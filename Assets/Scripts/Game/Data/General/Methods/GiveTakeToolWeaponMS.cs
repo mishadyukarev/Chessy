@@ -1,4 +1,6 @@
-﻿using Photon.Realtime;
+﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Stats;
+using Photon.Realtime;
 using System.Collections.Generic;
 
 namespace Chessy.Game
@@ -11,7 +13,7 @@ namespace Chessy.Game
 
             if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
             {
-                if (e.UnitStepC(idx_0).Steps >= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON)
+                if (e.UnitStepC(idx_0).Steps >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
                 {
                     if (twT == ToolWeaponTypes.BowCrossbow || twT == ToolWeaponTypes.Staff)
                     {
@@ -20,7 +22,7 @@ namespace Chessy.Game
                             e.ToolWeaponsC(e.UnitPlayerTC(idx_0).Player, e.UnitExtraLevelTC(idx_0).Level, e.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
                             e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
 
-                            e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                            e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
                         else
                         {
@@ -34,7 +36,7 @@ namespace Chessy.Game
                                         e.UnitMainTWTC(idx_0).ToolWeapon = twT;
                                         e.UnitMainTWLevelTC(idx_0).Level = levTW;
 
-                                        e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                     }
@@ -45,8 +47,8 @@ namespace Chessy.Game
 
                                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                         {
-                                            var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                            needRes.Add(res, ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, res));
+                                            var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
+                                            needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
 
                                             if (canBuy) canBuy = difAmountRes >= 0;
                                         }
@@ -54,9 +56,9 @@ namespace Chessy.Game
                                         if (canBuy)
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, resT);
+                                                e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
 
-                                            e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                            e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                             e.UnitMainTWTC(idx_0).ToolWeapon = twT;
                                             e.UnitMainTWLevelTC(idx_0).Level = levTW;
@@ -76,7 +78,7 @@ namespace Chessy.Game
                                     e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                                     e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
-                                    e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                                 }
                             }
 
@@ -86,7 +88,7 @@ namespace Chessy.Game
                                 e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                                 e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
-                                e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
                     }
@@ -103,7 +105,7 @@ namespace Chessy.Game
                                     e.UnitMainTWTC(idx_0).ToolWeapon = twT;
                                     e.UnitMainTWLevelTC(idx_0).Level = levTW;
 
-                                    e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -114,8 +116,8 @@ namespace Chessy.Game
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                        needRes.Add(res, ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, res));
+                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
+                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canBuy) canBuy = difAmountRes >= 0;
                                     }
@@ -123,9 +125,9 @@ namespace Chessy.Game
                                     if (canBuy)
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, resT);
+                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
 
-                                        e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         e.UnitMainTWTC(idx_0).ToolWeapon = twT;
                                         e.UnitMainTWLevelTC(idx_0).Level = levTW;
@@ -145,7 +147,7 @@ namespace Chessy.Game
                                 e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                                 e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
-                                e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
 
@@ -155,7 +157,7 @@ namespace Chessy.Game
                             e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                             e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
-                            e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                            e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                             e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -171,7 +173,7 @@ namespace Chessy.Game
                             e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                             e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
-                            e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                            e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
 
                         else
@@ -183,7 +185,7 @@ namespace Chessy.Game
                                     e.PlayerE(ownUnit_0).LevelE(e.UnitExtraLevelTC(idx_0).Level).ToolWeapons(e.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
                                     e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
 
-                                    e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -194,7 +196,7 @@ namespace Chessy.Game
 
                                     e.UnitExtraTWE(idx_0).Set(twT, levTW, e.UnitExtraProtectionTC(idx_0).Protection);
 
-                                    e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -206,8 +208,8 @@ namespace Chessy.Game
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                        needRes.Add(res, ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, res));
+                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
+                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
                                     }
@@ -215,7 +217,7 @@ namespace Chessy.Game
                                     if (canCreatBuild)
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= ECONOMY_VALUES.ForBuyToolWeapon(twT, levTW, resT);
+                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
 
                                         var protection = 0f;
 
@@ -227,7 +229,7 @@ namespace Chessy.Game
 
                                         e.UnitExtraTWE(idx_0).Set(twT, levTW, protection);
 
-                                        e.UnitStepC(idx_0).Steps -= UnitStep_Values.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                     }

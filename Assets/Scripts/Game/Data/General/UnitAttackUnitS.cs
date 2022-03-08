@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Stats;
+using System;
 
 namespace Chessy.Game
 {
@@ -15,17 +17,47 @@ namespace Chessy.Game
             {
                 var damage = E.DamageAttackUnitC(idx_to).Damage;
 
-                if(damage > 0)
+                if (damage > 0)
                 {
                     E.UnitHpC(idx_to).Health -= damage;
-                    if (E.UnitHpC(idx_to).Health <= CellUnitStatHp_VALUES.HP_FOR_DEATH_AFTER_ATTACK)
+                    if (E.UnitHpC(idx_to).Health <= Hp_VALUES.HP_FOR_DEATH_AFTER_ATTACK)
                         E.UnitHpC(idx_to).Health = 0;
 
                     if (!E.UnitHpC(idx_to).IsAlive)
                     {
                         if (E.UnitTC(idx_to).Is(UnitTypes.King)) E.WinnerC.Player = E.AttackUnitKillerTC(idx_to).Player;
+                        else if (E.IsHero(E.UnitTC(idx_to).Unit))
+                        {
+                            var cooldown = 0f;
+
+                            switch (E.UnitTC(idx_to).Unit)
+                            {
+                                case UnitTypes.Elfemale:
+                                    cooldown = HeroCooldown_VALUES.Elfemale;
+                                    break;
+
+                                case UnitTypes.Snowy:
+                                    cooldown = HeroCooldown_VALUES.Snowy;
+                                    break;
+
+                                case UnitTypes.Undead:
+                                    cooldown = HeroCooldown_VALUES.Undead;
+                                    break;
+
+                                case UnitTypes.Hell:
+                                    cooldown = HeroCooldown_VALUES.Hell;
+                                    break;
+
+                                default: throw new Exception();
+                            }
+
+                            E.PlayerE(E.UnitPlayerTC(idx_to).Player).HeroCooldownC.Cooldown = cooldown;
+                            E.PlayerE(E.UnitPlayerTC(idx_to).Player).HaveHeroInInventor = true;
+                        }
+
+
                         E.LastDiedE(idx_to).Set(E.UnitMainE(idx_to));
-                        E.UnitInfo(E.UnitMainE(idx_to)).UnitsInGame--;
+                        E.UnitInfo(E.UnitMainE(idx_to)).Take(E.UnitTC(idx_to).Unit, 1);
 
 
 
@@ -43,7 +75,7 @@ namespace Chessy.Game
 
                             if (E.UnitTC(idx_to).Is(UnitTypes.Camel))
                             {
-                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += ECONOMY_VALUES.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += Economy_VALUES.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                             }
                         }
 

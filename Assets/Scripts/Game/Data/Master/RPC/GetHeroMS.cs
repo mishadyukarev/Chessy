@@ -16,8 +16,7 @@
                 var whoseMove = E.WhoseMove.Player;
 
                 E.PlayerE(whoseMove).AvailableHeroTC.Unit = unitT;
-                E.UnitInfoE(whoseMove, LevelTypes.First, unitT).HaveInInventor = true;
-                E.PlayerE(whoseMove).HaveCenterHero = false;
+                E.PlayerE(whoseMove).HaveHeroInInventor = true;
 
 
                 E.RpcPoolEs.GetHeroTC.Unit = UnitTypes.None;

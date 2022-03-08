@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Chessy.Game.Entity;
+using Chessy.Game.Entity.Cell.Unit;
+using System;
 using System.Collections.Generic;
 
 namespace Chessy.Game
@@ -16,7 +18,7 @@ namespace Chessy.Game
         public bool IsActiveParentSelf;
 
         public readonly CellE CellE;
-        public CellUnitEs UnitEs;
+        public UnitEs UnitEs;
         public CellBuildingEs BuildEs;
         public CellEnvironmentEs EnvironmentEs;
         public CellEffectE EffectEs;
@@ -48,6 +50,15 @@ namespace Chessy.Game
                 var i = 0;
                 foreach (var item in _aroundEs) idxsC[i] = _aroundEs[i++].IdxC.Idx;
                 return idxsC;
+            }
+        }
+        public HashSet<byte> IdxsAroundHashSet
+        {
+            get
+            {
+                var hashSet = new HashSet<byte>();
+                foreach (var item in _aroundEs) hashSet.Add(item.IdxC.Idx);
+                return hashSet;
             }
         }
 
@@ -150,7 +161,7 @@ namespace Chessy.Game
 
             CellE = new CellE(idx, xy, idCell);
             BuildEs = new CellBuildingEs((byte)PlayerTypes.End);
-            UnitEs = new CellUnitEs(default);
+            UnitEs = new UnitEs(default);
             RiverEs = new CellRiverE(default);
         }
     }

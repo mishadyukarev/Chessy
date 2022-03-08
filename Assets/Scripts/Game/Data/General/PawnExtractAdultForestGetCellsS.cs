@@ -1,4 +1,7 @@
-﻿namespace Chessy.Game.Systems.Model
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+
+namespace Chessy.Game.Systems.Model
 {
     sealed class PawnExtractAdultForestGetCellsS : SystemAbstract, IEcsRunSystem
     {
@@ -16,7 +19,7 @@
                 {
                     if (E.UnitTC(idx_0).Is(UnitTypes.Pawn) && E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                     {
-                        var extract = Environment_Values.EXTRACT_PAWM_ADULT_FOREST;
+                        var extract = EnvironmentValues.EXTRACT_PAWM_ADULT_FOREST;
 
                         if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
                         {
@@ -32,7 +35,7 @@
                         {
                             if (E.UnitMainTWLevelTC(idx_0).Is(LevelTypes.Second))
                             {
-                                extract *= Environment_Values.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
+                                extract *= EnvironmentValues.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
                             }
                         }
 

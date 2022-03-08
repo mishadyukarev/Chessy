@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    public static class Start_VALUES
+    public struct Start_VALUES
     {
         public const byte X_AMOUNT = 15;
         public const byte Y_AMOUNT = 11;
@@ -46,29 +46,6 @@ namespace Chessy.Game
                 case ResourceTypes.Ore: return 0;
                 case ResourceTypes.Iron: return 0;
                 case ResourceTypes.Gold: return 0;
-                default: throw new Exception();
-            }
-        }
-        public static bool HaveUnit(in UnitTypes unit, in LevelTypes level)
-        {
-            switch (unit)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King:
-                    switch (level)
-                    {
-                        case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: return true;
-                        case LevelTypes.Second: return false;
-                        default: throw new Exception();
-                    }
-                case UnitTypes.Pawn: return false;
-                case UnitTypes.Elfemale: return false;
-                case UnitTypes.Snowy: return false;
-                case UnitTypes.Undead: return false;
-                case UnitTypes.Hell: return false;
-                case UnitTypes.Skeleton: return false;
-                case UnitTypes.Camel: return false;
                 default: throw new Exception();
             }
         }

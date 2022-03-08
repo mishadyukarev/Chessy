@@ -1,4 +1,8 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values.Cell;
+using Chessy.Game.Values.Cell.Environment;
+using Chessy.Game.Values.Cell.Unit.Stats;
+
+namespace Chessy.Game
 {
     sealed class PawnExtractAdultForestMS : SystemAbstract, IEcsRunSystem
     {
@@ -34,11 +38,11 @@
                     {
                         E.BuildingTC(idx_0).Building = BuildingTypes.None;
 
-                        E.YoungForestC(idx_0).Resources = Environment_Values.ENVIRONMENT_MAX;
+                        E.YoungForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
                 else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed)
-                    && E.UnitHpC(idx_0).Health >= CellUnitStatHp_VALUES.HP)
+                    && E.UnitHpC(idx_0).Health >= Hp_VALUES.HP)
                 {
                     E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
                 }
