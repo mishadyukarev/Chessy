@@ -40,7 +40,7 @@ namespace Chessy.Game
                             if (E.UnitEffectShield(idx_sel).HaveAnyProtection)
                             {
                                 UIE.RightEs.Effect(idx_eff).GO.SetActive(true);
-                                UIE.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resources.Sprite(AbilityTypes.BonusNear).Sprite;
+                                UIE.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resources.Sprite(AbilityTypes.KingPassiveNearBonus).Sprite;
                                 _isFilled[EffectTypes.Shield] = true;
                             }
                         }

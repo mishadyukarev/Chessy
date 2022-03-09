@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Common;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 

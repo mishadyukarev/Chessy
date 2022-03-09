@@ -25,7 +25,7 @@ namespace Chessy.Game
 
             if (!haveCamel)
             {
-                byte idx_0 = (byte)Random.Range(0,  Start_VALUES.ALL_CELLS_AMOUNT);
+                byte idx_0 = (byte)Random.Range(0,  StartValues.ALL_CELLS_AMOUNT);
 
                 if (E.CellEs(idx_0).IsActiveParentSelf)
                 {
@@ -49,9 +49,11 @@ namespace Chessy.Game
                             E.UnitPlayerTC(idx_0).Player = PlayerTypes.None;
                             E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
 
-                            E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
+                            E.UnitHpC(idx_0).Health = HpValues.MAX;
                             E.UnitStepC(idx_0).Steps = 1f;
                             E.UnitWaterC(idx_0).Water = 1f;
+
+                            E.UnitEffectShield(idx_0).Protection = 0;
 
 
                             //Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);

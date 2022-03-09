@@ -12,7 +12,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 if (E.UnitTC(idx_0).HaveUnit)
                 {
@@ -60,6 +60,13 @@ namespace Chessy.Game
                             break;
                     }
 
+
+                    if (E.UnitEffectsE(idx_0).HaveKingEffect)
+                    {
+                        powerDamage *= 1.25f;
+                    }
+
+
                     if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Hell))
                     {
                         if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
@@ -67,21 +74,6 @@ namespace Chessy.Game
                             powerDamage *= 1.5f;
                         }
                     }
-
-
-
-
-                    //if (E.PlayerE(E.UnitMainE(idx_0).PlayerTC.Player).FractionTypes != FractionTypes.None)
-                    //{
-                    //    if (E.UnitTC(idx_0).Is(UnitTypes.King))
-                    //    {
-                    //        powerDamage += UNIT_DAMAGE_VALUES.CENTER_KING_BONUS;
-                    //    }
-                    //    else if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
-                    //    {
-                    //        powerDamage += UNIT_DAMAGE_VALUES.CENTER_PAWN_BONUS;
-                    //    }
-                    //}
 
 
                     if (E.UnitMainTWTC(idx_0).HaveToolWeapon)
@@ -145,6 +137,12 @@ namespace Chessy.Game
                     if (E.HillC(idx_0).HaveAnyResources) protectionPercent += UNIT_DAMAGE_VALUES.HILL;
 
                     powerDamage += powerDamage * protectionPercent;
+
+
+                    if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                    {
+                        powerDamage /= 2;
+                    }
 
                     E.UnitDamageOnCellC(idx_0).Damage = powerDamage;
                 }

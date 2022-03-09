@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public sealed class DownPawnUIE
+    public readonly struct DownPawnUIE
     {
-        public ButtonUIC ButtonUIC;
-        public TextUIC AmountTextC;
-        public TextUIC MaxPawnsTextC;
+        public readonly ButtonUIC ButtonUIC;
+        public readonly TextUIC AmountTextC;
+        public readonly TextUIC MaxPawnsTextC;
 
         public DownPawnUIE(in Transform downZone)
         {

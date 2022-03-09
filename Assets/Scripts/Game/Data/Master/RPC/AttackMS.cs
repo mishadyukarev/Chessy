@@ -71,7 +71,7 @@ namespace Chessy.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = Hp_VALUES.HP;
+                var maxDamage = HpValues.MAX;
                 var minDamage = 0;
 
                 //if (!e.UnitE(idx_to).IsMelee) powerDam_to /= 2;

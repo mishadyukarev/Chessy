@@ -29,11 +29,11 @@ namespace Chessy.Game
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Enable();
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Color = Color.red;
 
-                        float xCordinate = (float)E.UnitHpC(idx_0).Health / Hp_VALUES.HP;
+                        float xCordinate = (float)E.UnitHpC(idx_0).Health / HpValues.MAX;
                         VEs.CellEs(idx_0).Bar(CellBarTypes.Hp).LocalScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
                         VEs.CellEs(idx_0).Block(CellBlockTypes.NeedWater).SetActive(E.UnitWaterC(idx_0).Water <= WaterValues.MAX * 0.4f);
-                        VEs.CellEs(idx_0).Block(CellBlockTypes.MaxSteps).SetActive(E.UnitStepC(idx_0).Steps >= E.UnitStatsE(idx_0).MaxStepsC.Steps);
+                        VEs.CellEs(idx_0).Block(CellBlockTypes.MaxSteps).SetActive(E.UnitStepC(idx_0).Steps >= StepValues.MAX);
 
 
 

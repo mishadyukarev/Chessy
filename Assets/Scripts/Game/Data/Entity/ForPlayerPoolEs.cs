@@ -30,8 +30,8 @@ namespace Chessy.Game
 
         internal ForPlayerPoolEs(in bool b)
         {
-            PeopleInCity = Start_VALUES.PEOPLE_IN_CITY;
-            MaxAvailablePawns = Start_VALUES.MAX_AVAILABLE_PAWN;
+            PeopleInCity = StartValues.PEOPLE_IN_CITY;
+            MaxAvailablePawns = StartValues.MAX_AVAILABLE_PAWN;
 
             _levelInfoEs = new PlayerLevelInfoE[(byte)LevelTypes.End - 1];
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];
@@ -46,11 +46,11 @@ namespace Chessy.Game
             _haveBuilding.Add(BuildingTypes.Smelter, false);
 
 
-            WoodForBuyHouse = Start_VALUES.NEED_WOOD_FOR_BUILDING_HOUSE;
+            WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                _resourceCs[(byte)resT - 1] = new ResourcesC(Start_VALUES.Resources(resT));
+                _resourceCs[(byte)resT - 1] = new ResourcesC(StartValues.Resources(resT));
             }
             for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
             {

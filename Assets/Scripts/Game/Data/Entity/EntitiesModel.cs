@@ -48,6 +48,7 @@ namespace Chessy.Game
         public bool FriendIsActive;
         public bool IsStartedGame;
         public bool IsClicked;
+        public bool IsSelectedCity;
 
         public int Motions;
 
@@ -193,14 +194,14 @@ namespace Chessy.Game
 
         public EntitiesModel(in List<object> forData, in List<string> namesMethods)
         {
-            CenterCloudIdxC.Idx = Start_VALUES.START_WIND;
+            CenterCloudIdxC.Idx = StartValues.START_WIND;
             FriendIsActive = GameModeC.IsGameMode(GameModes.WithFriendOff);
-            DirectWindTC = new DirectTC(Start_VALUES.DIRECT_WIND);
-            SunSideTC = new SunSideTC(Start_VALUES.SUN_SIDE);
-            WhoseMove = new PlayerTC(Start_VALUES.WHOSE_MOVE);
-            CellClickTC = new CellClickC(Start_VALUES.CELL_CLICK);
-            SelectedTWE = new SelectedToolWeaponE(Start_VALUES.SELECTED_TOOL_WEAPON, Start_VALUES.SELECTED_LEVEL_TOOL_WEAPON);
-            StrengthWind = new StrengthC(Start_VALUES.STRENGTH_WIND);
+            DirectWindTC = new DirectTC(StartValues.DIRECT_WIND);
+            SunSideTC = new SunSideTC(StartValues.SUN_SIDE);
+            WhoseMove = new PlayerTC(StartValues.WHOSE_MOVE);
+            CellClickTC = new CellClickC(StartValues.CELL_CLICK);
+            SelectedTWE = new SelectedToolWeaponE(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
+            StrengthWind = new StrengthC(StartValues.STRENGTH_WIND);
 
 
             var i = 0;
@@ -270,20 +271,20 @@ namespace Chessy.Game
             RpcPoolEs = new RpcPoolEs(actions, namesMethods);
 
 
-            _cellEs = new CellEs[Start_VALUES.ALL_CELLS_AMOUNT];
+            _cellEs = new CellEs[StartValues.ALL_CELLS_AMOUNT];
             _idxs = new Dictionary<string, byte>();
             var xys = new List<byte[]>();
 
             byte idx = 0;
-            for (byte x = 0; x < Start_VALUES.X_AMOUNT; x++)
-                for (byte y = 0; y < Start_VALUES.Y_AMOUNT; y++)
+            for (byte x = 0; x < StartValues.X_AMOUNT; x++)
+                for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
                 {
                     _idxs.Add(x.ToString() + "_" + y, idx);
                     xys.Add(new byte[] { x, y });
                     idx++;
                 }
 
-            for (idx = 0; idx < Start_VALUES.ALL_CELLS_AMOUNT; idx++)
+            for (idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
             {
                 _cellEs[idx] = new CellEs(isActiveParenCells, idCells[idx], xys[idx], idx, this);
             }
@@ -325,9 +326,9 @@ namespace Chessy.Game
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
-                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.Mountain))
+                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.Mountain))
                             {
-                                MountainC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                MountainC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                                 amountMountains++;
                             }
 
@@ -335,18 +336,18 @@ namespace Chessy.Game
 
                             else
                             {
-                                if (UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.AdultForest))
+                                if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
-                                    AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                    AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                                 }
                             }
                         }
 
                         else
                         {
-                            if (UnityEngine.Random.Range(0f, 1f) <= Start_VALUES.SpawnPercent(EnvironmentTypes.AdultForest))
+                            if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
-                                AdultForestC(idx_0).SetRandom(Start_VALUES.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                AdultForestC(idx_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                             }
                         }
 
@@ -394,7 +395,7 @@ namespace Chessy.Game
                 PlayerE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
 
 
-                for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+                for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
                 {
                     var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];
@@ -418,9 +419,9 @@ namespace Chessy.Game
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
 
-                        UnitHpC(idx_0).Health = Hp_VALUES.HP;
-                        UnitStepC(idx_0).Steps = UnitStatsE(idx_0).MaxStepsC.Steps;
-                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0)).WaterKingPawnMax;
+                        UnitHpC(idx_0).Health = HpValues.MAX;
+                        UnitStepC(idx_0).Steps = StepValues.MAX;
+                        UnitWaterC(idx_0).Water = WaterValues.MAX;
                     }
 
                     else if (x == 8 && y == 8)
@@ -436,7 +437,7 @@ namespace Chessy.Game
                             }
                         }
 
-                        BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, Building_Values.HELTH_CITY, PlayerTypes.Second);
+                        //BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, Building_Values.HELTH_CITY, PlayerTypes.Second);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
@@ -448,9 +449,9 @@ namespace Chessy.Game
                         UnitPlayerTC(idx_0).Player = PlayerTypes.Second;
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
-                        UnitHpC(idx_0).Health = Hp_VALUES.HP;
-                        UnitStepC(idx_0).Steps = UnitStatsE(idx_0).MaxStepsC.Steps;
-                        UnitWaterC(idx_0).Water = UnitInfo(UnitPlayerTC(idx_0), UnitLevelTC(idx_0)).WaterKingPawnMax;
+                        UnitHpC(idx_0).Health = HpValues.MAX;
+                        UnitStepC(idx_0).Steps = StepValues.MAX;
+                        UnitWaterC(idx_0).Water = WaterValues.MAX;
 
                         UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                         UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;

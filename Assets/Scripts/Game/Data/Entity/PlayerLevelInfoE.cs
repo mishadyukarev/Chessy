@@ -8,7 +8,7 @@ namespace Chessy.Game
         readonly PlayerLevelBuildingInfoE[] _buildingInfoEs;
         readonly Dictionary<UnitTypes, int> _unitsInGame;
 
-        public float WaterKingPawnMax;
+        //public float WaterUnitMax;
 
         public ref AmountC ToolWeapons(in ToolWeaponTypes tw) => ref _twTC[(byte)tw];
         public ref PlayerLevelBuildingInfoE BuildingInfoE(in BuildingTypes buildT) => ref _buildingInfoEs[(byte)buildT - 1];
@@ -31,8 +31,6 @@ namespace Chessy.Game
             {
                 _unitsInGame.Add(unitT, 0);
             }
-
-            WaterKingPawnMax = 1;
         }
 
         public void SetUnitsInGame(in UnitTypes unitT, in int units) => _unitsInGame[unitT] = units;

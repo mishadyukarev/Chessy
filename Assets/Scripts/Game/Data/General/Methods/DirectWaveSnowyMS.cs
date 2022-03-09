@@ -16,10 +16,9 @@ namespace Chessy.Game.Systems.Model.Master.Methods
 
             if (e.UnitWaterC(idx_from).Water >= WaterValues.DIRECT_WAVE || e.RiverEs(idx_from).RiverTC.HaveRiverNear)
             {
-                if (!e.RiverEs(idx_from).RiverTC.HaveRiverNear) e.UnitWaterC(idx_from).Water -= WaterValues.DIRECT_WAVE;
-
                 if (e.UnitStepC(idx_from).Steps >= StepValues.DIRECT_WAVE)
                 {
+                    if (!e.RiverEs(idx_from).RiverTC.HaveRiverNear) e.UnitWaterC(idx_from).Water -= WaterValues.DIRECT_WAVE;
                     e.UnitStepC(idx_from).Steps -= StepValues.DIRECT_WAVE;
                     e.UnitEs(idx_from).CoolDownC(AbilityTypes.DirectWave).Cooldown = AbilityCooldownValues.DIRECT_WAVE;
 
@@ -38,13 +37,7 @@ namespace Chessy.Game.Systems.Model.Master.Methods
                         {
                             if (e.UnitPlayerTC(idx_0).Is(whoseMove))
                             {
-                                e.UnitEffectShield(idx_0).Protection = ShieldValues.BONUS_AROUND;
-                                e.UnitWaterC(idx_0).Water = e.UnitInfo(e.UnitMainE(idx_0)).WaterKingPawnMax;
-                            }
-
-                            else
-                            {
-                                e.UnitEffectStunC(idx_0).Stun = StunValues.DIRECT_WAVE;
+                                e.UnitWaterC(idx_0).Water = WaterValues.MAX;
                             }
                         }
 

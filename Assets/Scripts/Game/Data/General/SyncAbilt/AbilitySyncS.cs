@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chessy.Common;
+using System;
 
 namespace Chessy.Game
 {
@@ -11,7 +12,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.UnitEs(idx_0).Ability(ButtonTypes.First).Reset();
                 E.UnitEs(idx_0).Ability(ButtonTypes.Second).Reset();
@@ -29,7 +30,7 @@ namespace Chessy.Game
 
                             case UnitTypes.King:
                                 E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.CircularAttack;
-                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.BonusNear;
+                                E.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.KingPassiveNearBonus;
                                 break;
 
                             case UnitTypes.Pawn:
@@ -62,17 +63,17 @@ namespace Chessy.Game
                                         E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
                                     }
 
-                                    else
-                                    {
-                                        if (E.BuildingsInfo(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
-                                        {
-                                            E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
-                                        }
-                                        else
-                                        {
-                                            E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.SetCity;
-                                        }
-                                    }
+                                    //else
+                                    //{
+                                    //    if (E.BuildingsInfo(E.UnitPlayerTC(idx_0).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
+                                    //    {
+                                    //        E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
+                                    //    }
+                                    //    else
+                                    //    {
+                                    //        E.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.SetCity;
+                                    //    }
+                                    //}
                                 }
 
                                 break;
@@ -80,12 +81,13 @@ namespace Chessy.Game
                             case UnitTypes.Elfemale:
                                 E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
                                 E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
-                                E.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
+                                
                                 break;
 
                             case UnitTypes.Snowy:
                                 E.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.DirectWave;
                                 E.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ActiveAroundBonusSnowy;
+                                E.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
                                 //E.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.IceWall;
                                 break;
 

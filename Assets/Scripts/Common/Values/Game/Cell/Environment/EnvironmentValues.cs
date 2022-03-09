@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game.Values.Cell.Environment
 {
-    public struct EnvironmentValues
+    public static class EnvironmentValues
     {
         #region Common
 

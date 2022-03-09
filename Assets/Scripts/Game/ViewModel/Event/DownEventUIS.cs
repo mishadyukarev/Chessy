@@ -24,28 +24,16 @@ namespace Chessy.Game
             UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
             UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
             UIE.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { ToggleToolWeapon(ToolWeaponTypes.Staff); });
+
+
+            UIE.DownEs.CityButtonUIE.ButtonC.AddListener(City);
+        }
+        
+        void City()
+        {
+            E.IsSelectedCity = !E.IsSelectedCity;
         }
 
-        //void ExecuteScout()
-        //{
-        //    E.SelectedIdxC.Idx = 0;
-
-        //    TryOnHint(VideoClipTypes.CreatingScout);
-
-        //    if (E.CurPlayerITC.Is(E.WhoseMove.Player))
-        //    {
-        //        if (!E.UnitInfoE(E.CurPlayerITC.Player, LevelTypes.First, UnitTypes.Scout).HeroCooldownC.HaveCooldown)
-        //        {
-        //            E.SelectedUnitE.Set(UnitTypes.Scout, LevelTypes.First);
-        //            E.CellClickTC.Click = CellClickTypes.SetUnit;
-        //        }
-        //        else
-        //        {
-        //            E.Sound(ClipTypes.Mistake).Action.Invoke();
-        //        }
-        //    }
-        //    else E.Sound(ClipTypes.Mistake).Action.Invoke();
-        //}
         void Hero()
         {
             E.SelectedIdxC.Idx = 0;

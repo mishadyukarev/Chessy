@@ -11,6 +11,6 @@ namespace Chessy.Game
         public DamageC DamageAttackC;
         public DamageC DamageOnCell;
 
-        public StepsC MaxStepsC;
+        //public StepsC MaxStepsC;
     }
 }

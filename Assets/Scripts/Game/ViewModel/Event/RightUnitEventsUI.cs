@@ -1,17 +1,17 @@
-﻿using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Common;
 using System;
 
 namespace Chessy.Game
 {
     public sealed class RightUnitEventsUI : SystemUIAbstract
     {
-        internal RightUnitEventsUI( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal RightUnitEventsUI(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
-            UIE.RightEs.Unique(ButtonTypes.First).Button.AddListener(delegate { Unique(ButtonTypes.First); });
-            UIE.RightEs.Unique(ButtonTypes.Second).Button.AddListener(delegate { Unique(ButtonTypes.Second); });
-            UIE.RightEs.Unique(ButtonTypes.Third).Button.AddListener(delegate { Unique(ButtonTypes.Third); });
-            UIE.RightEs.Unique(ButtonTypes.Fourth).Button.AddListener(delegate { Unique(ButtonTypes.Fourth); });
-            UIE.RightEs.Unique(ButtonTypes.Fifth).Button.AddListener(delegate { Unique(ButtonTypes.Fifth); });
+            UIE.RightEs.Unique(ButtonTypes.First).ButtonC.AddListener(delegate { Unique(ButtonTypes.First); });
+            UIE.RightEs.Unique(ButtonTypes.Second).ButtonC.AddListener(delegate { Unique(ButtonTypes.Second); });
+            UIE.RightEs.Unique(ButtonTypes.Third).ButtonC.AddListener(delegate { Unique(ButtonTypes.Third); });
+            UIE.RightEs.Unique(ButtonTypes.Fourth).ButtonC.AddListener(delegate { Unique(ButtonTypes.Fourth); });
+            UIE.RightEs.Unique(ButtonTypes.Fifth).ButtonC.AddListener(delegate { Unique(ButtonTypes.Fifth); });
 
             UIE.RightEs.ProtectE.ButtonC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
             UIE.RightEs.RelaxE.ButtonC.AddListener(delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
@@ -81,9 +81,9 @@ namespace Chessy.Game
                             }
                             break;
 
-                        case AbilityTypes.BonusNear:
-                            E.RpcPoolEs.BonusNearUnits(idx_sel);
-                            TryOnHint(VideoClipTypes.BonusKing);
+                        case AbilityTypes.KingPassiveNearBonus:
+                            //E.RpcPoolEs.BonusNearUnits(idx_sel);
+                            //TryOnHint(VideoClipTypes.BonusKing);
                             break;
 
                         case AbilityTypes.ChangeCornerArcher:

@@ -16,11 +16,10 @@ namespace Chessy.Game.Systems.Model.Master.Methods
 
             if (e.UnitWaterC(idx_0).Water >= WaterValues.BONUS_AROUND_SNOWY || e.RiverEs(idx_0).RiverTC.HaveRiverNear)
             {
-                if (!e.RiverEs(idx_0).RiverTC.HaveRiverNear) e.UnitWaterC(idx_0).Water -= WaterValues.BONUS_AROUND_SNOWY;
-
-                if (e.UnitStepC(idx_0).Steps >= StepValues.NEED_FOR_BONUS_AROUND_SNOWY)
+                if (e.UnitStepC(idx_0).Steps >= StepValues.BONUS_AROUND_SNOWY)
                 {
-                    e.UnitStepC(idx_0).Steps -= StepValues.NEED_FOR_BONUS_AROUND_SNOWY;
+                    if (!e.RiverEs(idx_0).RiverTC.HaveRiverNear) e.UnitWaterC(idx_0).Water -= WaterValues.BONUS_AROUND_SNOWY;
+                    e.UnitStepC(idx_0).Steps -= StepValues.BONUS_AROUND_SNOWY;
                     e.UnitEs(idx_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
 
                     e.FertilizeC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
@@ -35,19 +34,12 @@ namespace Chessy.Game.Systems.Model.Master.Methods
                             {
                                 if (e.UnitMainTWTC(idx_1).Is(ToolWeaponTypes.BowCrossbow))
                                 {
-                                    e.UnitEffectFrozenArrawC(idx_1).Shoots = 1;
+
                                 }
                                 else
                                 {
-                                    e.UnitWaterC(idx_1).Water = e.UnitInfo(e.UnitPlayerTC(idx_1), e.UnitLevelTC(idx_1)).WaterKingPawnMax;
-                                    e.UnitHpC(idx_1).Health = Hp_VALUES.HP;
-                                    e.UnitEffectShield(idx_1).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                    e.UnitWaterC(idx_1).Water = WaterValues.MAX;
                                 }
-                            }
-
-                            else
-                            {
-                                e.UnitEffectStunC(idx_1).Stun = StunValues.AROUND_BONUS_SNOWY;
                             }
                         }
 

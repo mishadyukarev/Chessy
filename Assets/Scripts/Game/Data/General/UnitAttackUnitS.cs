@@ -13,14 +13,14 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_to = 0; idx_to < Start_VALUES.ALL_CELLS_AMOUNT; idx_to++)
+            for (byte idx_to = 0; idx_to < StartValues.ALL_CELLS_AMOUNT; idx_to++)
             {
                 var damage = E.DamageAttackUnitC(idx_to).Damage;
 
                 if (damage > 0)
                 {
                     E.UnitHpC(idx_to).Health -= damage;
-                    if (E.UnitHpC(idx_to).Health <= Hp_VALUES.HP_FOR_DEATH_AFTER_ATTACK)
+                    if (E.UnitHpC(idx_to).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
                         E.UnitHpC(idx_to).Health = 0;
 
                     if (!E.UnitHpC(idx_to).IsAlive)
@@ -75,7 +75,7 @@ namespace Chessy.Game
 
                             if (E.UnitTC(idx_to).Is(UnitTypes.Camel))
                             {
-                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += Economy_VALUES.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                                E.ResourcesC(E.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                             }
                         }
 

@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Entity.View.UI.Down;
 
 namespace Chessy.Game
 {
@@ -8,6 +9,7 @@ namespace Chessy.Game
         public readonly DownDonerUIE DonerE;
         public readonly DownHeroUIE HeroE;
         public readonly DownToolWeaponUIE ToolWeaponE;
+        public readonly CityButtonUIE CityButtonUIE;
 
         public DownUIEs(in bool def)
         {
@@ -19,6 +21,7 @@ namespace Chessy.Game
             ToolWeaponE = new DownToolWeaponUIE(downZone);
             DonerE = new DownDonerUIE(downZone);
             HeroE = new DownHeroUIE(downZone);
+            CityButtonUIE = new CityButtonUIE(downZone);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Chessy.Game
         public UnitTC GetHeroTC;
         public SetUnitME SetUnitME;
         public AttackME AttackME;
-        public ShiftUnitE ShiftUnitME;
 
 
 
@@ -84,7 +83,7 @@ namespace Chessy.Game
         public void ChangeCornerArchToMas(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.ChangeCornerArcher, idxCell });
         public void DestroyBuildingToMaster(byte idx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.DestroyBuilding, idx });
 
-        public void BonusNearUnits(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.BonusNear, idxCell });
+        public void BonusNearUnits(byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.KingPassiveNearBonus, idxCell });
 
         public void StunElfemaleToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.StunElfemale, fromIdx, toIdx });
 

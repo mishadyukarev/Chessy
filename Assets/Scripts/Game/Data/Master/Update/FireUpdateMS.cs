@@ -22,7 +22,7 @@ namespace Chessy.Game
 
             var needForFireNext = new List<byte>();
 
-            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 if (E.HaveFire(idx_0))
                 {
@@ -32,7 +32,7 @@ namespace Chessy.Game
                     {
                         if (E.UnitTC(idx_0).Is(UnitTypes.Hell))
                         {
-                            E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
+                            E.UnitHpC(idx_0).Health = HpValues.MAX;
                         }
                         else
                         {

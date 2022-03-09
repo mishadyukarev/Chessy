@@ -19,10 +19,10 @@ namespace Chessy.Game
 
                 E.PlayerE(player).HeroCooldownC.Cooldown--;
 
-                E.ResourcesC(player, ResourceTypes.Food).Resources += Economy_VALUES.ADDING_FOOD_AFTER_UPDATE;
+                E.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
             }
 
-            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
@@ -31,13 +31,13 @@ namespace Chessy.Game
 
                 if (E.UnitTC(idx_0).HaveUnit && !E.IsAnimal(E.UnitTC(idx_0).Unit))
                 {
-                    E.ResourcesC(E.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= Economy_VALUES.FOOD_FOR_FEEDING_UNITS;
+                    E.ResourcesC(E.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
                         if (E.UnitPlayerTC(idx_0).Is(PlayerTypes.Second))
                         {
-                            E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
+                            E.UnitHpC(idx_0).Health = HpValues.MAX;
                         }
                     }
 
@@ -51,7 +51,7 @@ namespace Chessy.Game
                     {
                         if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Protected))
                         {
-                            if (E.UnitHpC(idx_0).Health >= Hp_VALUES.HP)
+                            if (E.UnitHpC(idx_0).Health >= HpValues.MAX)
                             {
                                 if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
                                 {
@@ -92,7 +92,7 @@ namespace Chessy.Game
                             }
                         }
                     }
-                    E.UnitStepC(idx_0).Steps = E.UnitStatsE(idx_0).MaxStepsC.Steps;
+                    E.UnitStepC(idx_0).Steps = StepValues.MAX;
                 }
             }
 

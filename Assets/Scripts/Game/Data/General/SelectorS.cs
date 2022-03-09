@@ -35,6 +35,8 @@ namespace Chessy.Game
             {
                 if (E.RayCastTC.Is(RaycastTypes.Cell))
                 {
+                    E.IsSelectedCity = false;
+
                     if (!E.CurPlayerITC.Is(E.WhoseMove.Player))
                     {
                         E.SelectedIdxC.Idx = E.CurrentIdxC.Idx;

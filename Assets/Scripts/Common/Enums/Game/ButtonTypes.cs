@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game
+﻿namespace Chessy.Common
 {
     public enum ButtonTypes
     {

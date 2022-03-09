@@ -28,9 +28,9 @@ namespace Chessy.Game
                     E.UnitLevelTC(idx_0).Level = LevelTypes.First;
                     E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
                     E.UnitIsRightArcherC(idx_0).IsRight = false;
-                    E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
-                    E.UnitStepC(idx_0).Steps = 1/*E.UnitStatsE(idx_0).MaxStepsC.Steps*/;
-                    E.UnitWaterC(idx_0).Water = E.UnitInfo(E.UnitMainE(idx_0)).WaterKingPawnMax;
+                    E.UnitHpC(idx_0).Health = HpValues.MAX;
+                    E.UnitStepC(idx_0).Steps = StepValues.MAX;
+                    E.UnitWaterC(idx_0).Water = WaterValues.MAX;
                     E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                     E.UnitExtraLevelTC(idx_0).Level = LevelTypes.None;
                     E.UnitExtraProtectionTC(idx_0).Protection = 0;

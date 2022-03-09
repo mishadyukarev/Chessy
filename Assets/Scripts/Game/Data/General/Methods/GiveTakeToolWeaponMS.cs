@@ -47,8 +47,8 @@ namespace Chessy.Game
 
                                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                         {
-                                            var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                            needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
+                                            var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
+                                            needRes.Add(res, EconomyValues.ForBuyToolWeapon(twT, levTW, res));
 
                                             if (canBuy) canBuy = difAmountRes >= 0;
                                         }
@@ -56,7 +56,7 @@ namespace Chessy.Game
                                         if (canBuy)
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
+                                                e.PlayerE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
                                             e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -116,8 +116,8 @@ namespace Chessy.Game
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
+                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
+                                        needRes.Add(res, EconomyValues.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canBuy) canBuy = difAmountRes >= 0;
                                     }
@@ -125,7 +125,7 @@ namespace Chessy.Game
                                     if (canBuy)
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
+                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
                                         e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -208,8 +208,8 @@ namespace Chessy.Game
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - Economy_VALUES.ForBuyToolWeapon(twT, levTW, res);
-                                        needRes.Add(res, Economy_VALUES.ForBuyToolWeapon(twT, levTW, res));
+                                        var difAmountRes = e.PlayerE(whoseMove).ResourcesC(res).Resources - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
+                                        needRes.Add(res, EconomyValues.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
                                     }
@@ -217,7 +217,7 @@ namespace Chessy.Game
                                     if (canCreatBuild)
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= Economy_VALUES.ForBuyToolWeapon(twT, levTW, resT);
+                                            e.PlayerE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
                                         var protection = 0f;
 

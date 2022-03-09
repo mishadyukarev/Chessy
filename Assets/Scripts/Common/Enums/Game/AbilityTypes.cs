@@ -6,7 +6,7 @@
 
         ///King
         CircularAttack,
-        BonusNear,
+        KingPassiveNearBonus,
 
         ///Pawn
         FirePawn,
@@ -24,12 +24,12 @@
         ///Elfemale
         GrowAdultForest,
         StunElfemale,
-        ChangeDirectionWind,
 
         ///Snowy
         IceWall,
         ActiveAroundBonusSnowy,
         DirectWave,
+        ChangeDirectionWind,
         //DefendAround,
 
         ///Undead

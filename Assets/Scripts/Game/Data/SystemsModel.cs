@@ -19,22 +19,21 @@ namespace Chessy.Game
                 new GetHeroMS(ents).Run
                 + new SetUnitMS(ents).Run
                 + new AttackMS(ents).Run
-                + new UnitShiftMS(ents).Run
 
                 + new WorldClearTrailsS(ents).Run
                 + new WorldCountsAmountBuildingInGameS(ents).Run
-
-                + new PawnExtractAdultForestGetCellsS(ents).Run
-                + new PawnExtractHillS(ents).Run
 
                 + new DestroyBuildingS(ents).Run
                 + new WoodcutterExtractGetCellsS(ents).Run
                 + new FarmExtractGetCellsS(ents).Run
 
+                ///Unit
+                + new PawnExtractAdultForestGetCellsS(ents).Run
+                + new PawnExtractHillS(ents).Run
                 + new UnitAttackUnitS(ents).Run
                 + new UnitShiftS(ents).Run
                 + new AttackShieldS(ents).Run
-                + new UnitGetMaxStepsAndWaterS(ents).Run
+                + new UnitGetEffectsS(ents).Run
                 + new GetUnitTypeS(ents).Run
                 + new GetCellsForSetUnitS(ents).Run
                 + new AbilitySyncS(ents).Run

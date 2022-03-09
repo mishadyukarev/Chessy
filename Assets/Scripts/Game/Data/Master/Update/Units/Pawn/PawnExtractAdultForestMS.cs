@@ -42,7 +42,7 @@ namespace Chessy.Game
                     }
                 }
                 else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed)
-                    && E.UnitHpC(idx_0).Health >= Hp_VALUES.HP)
+                    && E.UnitHpC(idx_0).Health >= HpValues.MAX)
                 {
                     E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
                 }

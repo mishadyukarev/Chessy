@@ -16,46 +16,37 @@ namespace Chessy.Game
             ref var cellClick = ref E.CellClickTC;
             var curPlayer = E.CurPlayerITC.Player;
 
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 _isActive = false;
                 _color = default;
 
-                if (E.HaveFire(idx_0))
-                {
-                    if (cellClick.Is(CellClickTypes.UniqueAbility))
-                    {
-                        if (E.SelectedAbilityTC.Is(AbilityTypes.ChangeDirectionWind))
-                        {
-                            _isActive = true;
-                            _color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
-                        }
-                    }
-                }
 
-                if (E.UnitTC(idx_0).HaveUnit)
+                switch (E.CellClickTC.Click)
                 {
-                    if (E.UnitEs(idx_0).ForPlayer(curPlayer).IsVisible)
-                    {
-                        if (E.UnitPlayerTC(idx_0).Is(curPlayer))
+                    case CellClickTypes.SimpleClick:
+                        {
+
+                        }
+                        break;
+
+                    case CellClickTypes.SetUnit:
+                        {
+                            if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).CanSetUnitHere)
+                            {
+                                _isActive = true;
+                                _color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                            }
+                        }
+                        break;
+
+                    case CellClickTypes.GiveTakeTW:
                         {
                             if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
                             {
-                                if (cellClick.Is(CellClickTypes.GiveTakeTW))
+                                if (E.UnitEs(idx_0).ForPlayer(curPlayer).IsVisible)
                                 {
-                                    _isActive = true;
-                                    _color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            if (E.AdultForestC(idx_0).HaveAnyResources)
-                            {
-                                if (cellClick.Is(CellClickTypes.UniqueAbility))
-                                {
-                                    if (E.SelectedAbilityTC.Is(AbilityTypes.StunElfemale))
+                                    if (E.UnitPlayerTC(idx_0).Is(curPlayer))
                                     {
                                         _isActive = true;
                                         _color = ColorsValues.Color(SupportCellVisionTypes.GivePawnTool);
@@ -63,17 +54,32 @@ namespace Chessy.Game
                                 }
                             }
                         }
-                    }
-                }
+                        break;
 
+                    case CellClickTypes.UniqueAbility:
 
-                if (cellClick.Is(CellClickTypes.SetUnit))
-                {
-                    if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).CanSetUnitHere)
-                    {
-                        _isActive = true;
-                        _color = ColorsValues.Color(SupportCellVisionTypes.Shift);
-                    }
+                        switch (E.SelectedAbilityTC.Ability)
+                        {
+                            case AbilityTypes.ChangeDirectionWind:
+                                if (E.HaveFire(idx_0))
+                                {
+                                    _isActive = true;
+                                    _color = ColorsValues.Color(E.SelectedAbilityTC.Ability);
+                                }
+                                break;
+
+                            case AbilityTypes.StunElfemale:
+                                if (E.AdultForestC(idx_0).HaveAnyResources)
+                                {
+                                    _isActive = true;
+                                    _color = ColorsValues.Color(E.SelectedAbilityTC.Ability);
+                                }
+                                break;
+                        }
+                        break;
+
+                    default:
+                        break;
                 }
 
 

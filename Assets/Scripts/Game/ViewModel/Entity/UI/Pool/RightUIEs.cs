@@ -1,15 +1,14 @@
 ﻿using Chessy.Common;
+using Chessy.Game.View.UI.Entity.Right;
 using System.Collections.Generic;
 
 namespace Chessy.Game
 {
     public struct RightUIEs
     {
-        readonly Dictionary<ButtonTypes, RightUniqueUIE> _uniques;
-        readonly Dictionary<string, GameObjectVC> _uniqueZones;
+        readonly Dictionary<ButtonTypes, UniqueButtonUIE> _uniques;
         readonly Dictionary<byte, RightEffectUIE> _effects;
-        public RightUniqueUIE Unique(in ButtonTypes but) => _uniques[but];
-        public GameObjectVC UniqueZone(in ButtonTypes but, in AbilityTypes ability) => _uniqueZones[but.ToString() + ability];
+        public UniqueButtonUIE Unique(in ButtonTypes but) => _uniques[but];
         public RightEffectUIE Effect(in byte numberEffect) => _effects[numberEffect];
 
 
@@ -33,23 +32,17 @@ namespace Chessy.Game
             RelaxE = new RightRelaxUIE(conditionZone);
 
 
-            _uniques = new Dictionary<ButtonTypes, RightUniqueUIE>();
-            _uniqueZones = new Dictionary<string, GameObjectVC>();
+            _uniques = new Dictionary<ButtonTypes, UniqueButtonUIE>();
 
-            var uniqueZone = rightZone.Find("Unique");
+            var uniqueZone = rightZone.Find("Unique+");
             var buildingZone = rightZone.Find("Building");
 
 
             for (var buttonT = ButtonTypes.First; buttonT < ButtonTypes.End; buttonT++)
             {
-                var button = uniqueZone.Find(buttonT.ToString());
+                var button = uniqueZone.Find(buttonT.ToString() + "+");
 
-                _uniques.Add(buttonT, new RightUniqueUIE(button));
-                for (var ability = AbilityTypes.None + 1; ability < AbilityTypes.End; ability++)
-                {
-                    var zone = button.Find("Zones");
-                    _uniqueZones.Add(buttonT.ToString() + ability, new GameObjectVC(zone.Find(ability.ToString()).gameObject));
-                }
+                _uniques.Add(buttonT, new UniqueButtonUIE(buttonT, button));
             }
 
 

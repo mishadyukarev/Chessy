@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    public readonly struct ColorsValues
+    public static class ColorsValues
     {
+        static readonly Dictionary<AbilityTypes, Color> _uniques;
+
         public static Color Color(SupportCellVisionTypes supVisType)
         {
             switch (supVisType)
@@ -21,6 +24,14 @@ namespace Chessy.Game
                 case SupportCellVisionTypes.GivePawnTool: return new Color(0, 1, 1, 0.65f);
                 default: throw new Exception();
             }
+        }
+        public static Color Color(in AbilityTypes abilityT) => _uniques[abilityT];
+
+        static ColorsValues()
+        {
+            _uniques = new Dictionary<AbilityTypes, Color>();
+            _uniques.Add(AbilityTypes.ChangeDirectionWind, new Color(0, 1, 1, 0.2f));
+            _uniques.Add(AbilityTypes.StunElfemale, new Color(0, 1, 1, 0.2f));
         }
     }
 }

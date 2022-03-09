@@ -8,31 +8,31 @@
 
         public void Run()
         {
-            var idx_sel = E.SelectedIdxC.Idx;
-
             UIE.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
             UIE.LeftEnvEs.Zone.SetActive(false);
 
-            if (E.SelectedIdxC.Idx > 0)
+            if (E.IsSelectedCity)
             {
-                if (E.BuildingTC(idx_sel).HaveBuilding)
+                UIE.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
+            }
+            else
+            {
+                var idx_sel = E.SelectedIdxC.Idx;
+
+                if (E.SelectedIdxC.Idx > 0)
                 {
-                    if (E.BuildingPlayerTC(idx_sel).Is(E.CurPlayerITC.Player))
+                    if (E.BuildingTC(idx_sel).HaveBuilding)
                     {
-                        if (E.BuildingTC(idx_sel).Is(BuildingTypes.City))
+
+                        if (E.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || E.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
                         {
-                            UIE.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
+                            UIE.LeftEnvEs.Zone.SetActive(true);
                         }
                     }
-
-                    if (E.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || E.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
+                    else
                     {
                         UIE.LeftEnvEs.Zone.SetActive(true);
                     }
-                }
-                else
-                {
-                    UIE.LeftEnvEs.Zone.SetActive(true);
                 }
             }
         }

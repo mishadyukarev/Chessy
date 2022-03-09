@@ -185,7 +185,7 @@ namespace Chessy.Game
                     switch (uniq)
                     {
                         case AbilityTypes.CircularAttack: throw new Exception();
-                        case AbilityTypes.BonusNear: volume = 0.3f; break;
+                        case AbilityTypes.KingPassiveNearBonus: volume = 0.3f; break;
 
                         case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
                         case AbilityTypes.SetFarm: volume = 0.1f; break;

@@ -15,7 +15,7 @@ namespace Chessy.Game
             {
                 if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    E.UnitHpC(idx_0).Health = Hp_VALUES.HP;
+                    E.UnitHpC(idx_0).Health = HpValues.MAX;
                 }
             }
         }

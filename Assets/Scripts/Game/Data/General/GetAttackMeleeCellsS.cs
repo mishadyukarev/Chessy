@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chessy.Game.Values.Cell.Unit.Stats;
+using System;
 
 namespace Chessy.Game
 {
@@ -11,13 +12,13 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Clear();
                 E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Clear();
             }
 
-            for (byte idx_0 = 0; idx_0 < Start_VALUES.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
             {
                 if (!E.UnitEffectStunC(idx_0).IsStunned)
                 {
@@ -34,7 +35,7 @@ namespace Chessy.Game
 
                             if (!E.EnvironmentEs(idx_1).MountainC.HaveAnyResources)
                             {
-                                var haveMaxSteps = E.UnitStepC(idx_0).Steps >= E.UnitStatsE(idx_0).MaxStepsC.Steps;
+                                var haveMaxSteps = E.UnitStepC(idx_0).Steps >= StepValues.MAX;
 
                                 if (E.UnitStepC(idx_0).Steps >= E.UnitEs(idx_0).NeedSteps(idx_1).Steps || haveMaxSteps)
                                 {

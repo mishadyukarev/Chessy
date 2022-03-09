@@ -24,7 +24,7 @@ namespace Chessy.Game
             {
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
-                    for (byte idx = 0; idx < Start_VALUES.ALL_CELLS_AMOUNT; idx++)
+                    for (byte idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
                     {
                         E.UnitEffectStunC(idx).Stun -= 2;
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
@@ -35,7 +35,7 @@ namespace Chessy.Game
 
                 else if (GameModeC.IsGameMode(GameModes.WithFriendOff))
                 {
-                    for (byte idx = 0; idx < Start_VALUES.ALL_CELLS_AMOUNT; idx++)
+                    for (byte idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
                     {
                         E.UnitEffectStunC(idx).Stun -= 2;
                         //EntitiesPool.IceWalls[idx_0].Hp.Take();

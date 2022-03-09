@@ -13,7 +13,7 @@ namespace Chessy.Game.Values.Cell.Unit
             switch (ability)
             {
                 case AbilityTypes.CircularAttack: return 2;
-                case AbilityTypes.BonusNear: return 3;
+                case AbilityTypes.KingPassiveNearBonus: return 3;
                 case AbilityTypes.StunElfemale: return 5;
                 case AbilityTypes.ChangeDirectionWind: return 6;
 
