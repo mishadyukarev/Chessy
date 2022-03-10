@@ -47,7 +47,7 @@ namespace Chessy.Game.Entity.Cell.Unit
             ForArson = new IdxsCellsC(new HashSet<byte>());
             ForShift = new IdxsCellsC(new HashSet<byte>());
 
-            _needStepsForShift = new StepsC[StartValues.ALL_CELLS_AMOUNT];
+            _needStepsForShift = new StepsC[StartValues.CELLS];
             _forAttack = new Dictionary<AttackTypes, IdxsCellsC>();
 
             _forAttack[AttackTypes.Simple] = new IdxsCellsC(new HashSet<byte>());

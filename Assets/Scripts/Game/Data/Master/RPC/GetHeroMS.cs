@@ -1,26 +1,15 @@
-﻿namespace Chessy.Game
-{
-    sealed class GetHeroMS : SystemAbstract, IEcsRunSystem
-    {
-        internal GetHeroMS(in EntitiesModel ents) : base(ents)
-        {
+﻿//namespace Chessy.Game
+//{
+//    sealed class GetHeroMS : SystemAbstract, IEcsRunSystem
+//    {
+//        internal GetHeroMS(in EntitiesModel ents) : base(ents)
+//        {
 
-        }
+//        }
 
-        public void Run()
-        {
-            var unitT = E.RpcPoolEs.GetHeroTC.Unit;
-
-            if (unitT != UnitTypes.None)
-            {
-                var whoseMove = E.WhoseMove.Player;
-
-                E.PlayerE(whoseMove).AvailableHeroTC.Unit = unitT;
-                E.PlayerE(whoseMove).HaveHeroInInventor = true;
-
-
-                E.RpcPoolEs.GetHeroTC.Unit = UnitTypes.None;
-            }
-        }
-    }
-}
+//        public void Run()
+//        {
+           
+//        }
+//    }
+//}

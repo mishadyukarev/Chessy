@@ -12,7 +12,7 @@
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {
-                    E.PlayerE(playerT).PeopleInCity += 1;
+                    E.PlayerInfoE(playerT).PeopleInCity += 1;
                 }
             }
 

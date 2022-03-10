@@ -19,7 +19,7 @@ namespace Chessy.Game
         public AudioSourceVC SoundV(in AbilityTypes clip) => _sounds1[clip];
 
 
-        public EntityVPool(out List<object> actions, out Dictionary<ClipTypes, System.Action> action0, out Dictionary<AbilityTypes, System.Action> action1)
+        public EntityVPool(out List<object> actions, out Dictionary<ClipTypes, global::System.Action> action0, out Dictionary<AbilityTypes, global::System.Action> action1)
         {
             _sounds0 = new Dictionary<ClipTypes, AudioSourceVC>();
             _sounds1 = new Dictionary<AbilityTypes, AudioSourceVC>();

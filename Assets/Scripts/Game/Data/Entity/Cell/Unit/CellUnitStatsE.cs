@@ -9,8 +9,6 @@ namespace Chessy.Game
         public HealthC HealthC;
 
         public DamageC DamageAttackC;
-        public DamageC DamageOnCell;
-
-        //public StepsC MaxStepsC;
+        public DamageC DamageOnCellC;
     }
 }

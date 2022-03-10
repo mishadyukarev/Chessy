@@ -73,7 +73,7 @@ namespace Chessy.Game.EventsUI.Center
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > E.PlayerE(E.WhoseMove.Player).ResourcesC(resT).Resources)
+                if (needRes[resT] > E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -84,27 +84,27 @@ namespace Chessy.Game.EventsUI.Center
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    E.PlayerE(E.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
+                    E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
                 }
                 switch (marketBuyT)
                 {
                     case MarketBuyTypes.FoodToWood:
-                        E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
+                        E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD;
                         break;
 
                     case MarketBuyTypes.WoodToFood:
-                        E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
+                        E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToFood:
-                        E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
+                        E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToWood:
-                        E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
+                        E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD;
                         break;
                 }
@@ -131,7 +131,7 @@ namespace Chessy.Game.EventsUI.Center
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > E.PlayerE(E.WhoseMove.Player).ResourcesC(resT).Resources)
+                if (needRes[resT] > E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -142,11 +142,11 @@ namespace Chessy.Game.EventsUI.Center
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    E.PlayerE(E.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
+                    E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
-                E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
-                E.PlayerE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
+                E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
+                E.PlayerInfoE(E.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
 
                 E.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
             }

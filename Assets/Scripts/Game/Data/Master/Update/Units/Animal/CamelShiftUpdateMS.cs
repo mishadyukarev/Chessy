@@ -10,7 +10,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 if (E.UnitTC(idx_0).Is(UnitTypes.Camel))
                 {

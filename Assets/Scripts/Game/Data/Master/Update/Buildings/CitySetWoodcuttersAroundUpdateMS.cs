@@ -12,7 +12,7 @@
             {
                 if (E.BuildingTC(idx_0).Is(BuildingTypes.City))
                 {
-                    if (E.PlayerE(E.BuildingPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
+                    if (E.PlayerInfoE(E.BuildingPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
                     {
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {

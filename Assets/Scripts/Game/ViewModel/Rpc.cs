@@ -1,6 +1,7 @@
 ﻿using Chessy.Game.EventsUI;
 using Chessy.Game.Model.System;
-using Chessy.Game.Systems.Model.Master.Methods;
+using Chessy.Game.System.Model.Master;
+using Chessy.Game.System.Model.Master.Methods;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
@@ -277,14 +278,14 @@ namespace Chessy.Game
                                                 needRes.Add(resT, 0);
                                             }
 
-                                            if (needRes[resT] > _e.PlayerE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                                            if (needRes[resT] > _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
                                         }
 
                                         if (canBuild)
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             {
-                                                _e.PlayerE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                                                _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                                             }
 
                                             _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
@@ -727,10 +728,10 @@ namespace Chessy.Game
                         {
                             var playerSend = sender.GetPlayer();
 
-                            _e.PlayerE(playerSend).IsReadyC = !_e.PlayerE(playerSend).IsReadyC;
+                            _e.PlayerInfoE(playerSend).IsReadyC = !_e.PlayerInfoE(playerSend).IsReadyC;
 
-                            if (_e.PlayerE(PlayerTypes.First).IsReadyC
-                                && _e.PlayerE(PlayerTypes.Second).IsReadyC)
+                            if (_e.PlayerInfoE(PlayerTypes.First).IsReadyC
+                                && _e.PlayerInfoE(PlayerTypes.Second).IsReadyC)
                             {
                                 _e.IsStartedGame = true;
                             }
@@ -751,7 +752,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _e.RpcPoolEs.AttackME.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        new AttackUnit_M((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _e);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
@@ -816,11 +817,11 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        _e.RpcPoolEs.SetUnitME.Set((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++]);
+                        new SetUnitS_M((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++], sender, _e);
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        _e.RpcPoolEs.GetHeroTC.Unit = (UnitTypes)objects[_idx_cur++];
+                        new GetHeroS_M((UnitTypes)objects[_idx_cur++], _e);
                         break;
 
                     case RpcMasterTypes.Melt:
@@ -906,7 +907,7 @@ namespace Chessy.Game
             var objs = new List<object>();
 
 
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 objs.Add(_e.UnitTC(idx_0).Unit);
                 //objs.Add(_e.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
@@ -1016,7 +1017,7 @@ namespace Chessy.Game
             _idx_cur = 0;
 
 
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 //_e.CellEs(idx_0).UnitEs.Main.UnitTC.Unit = (UnitTypes)objects[_idx_cur++];
                 //_e.CellEs(idx_0).UnitEs.Main.LevelC.Level = (LevelTypes)objects[_idx_cur++];

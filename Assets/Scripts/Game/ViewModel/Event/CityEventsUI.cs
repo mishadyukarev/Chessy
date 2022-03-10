@@ -24,7 +24,7 @@ namespace Chessy.Game.EventsUI.Left
                 {
                     E.SelectedBuildingsC.Set(buildT, false);
                 }
-                else if (E.PlayerE(curPlayerI).HaveBuilding(buildT))
+                else if (E.PlayerInfoE(curPlayerI).HaveBuilding(buildT))
                 {
                     E.SelectedBuildingsC.Set(buildT, true);
                 }
@@ -90,7 +90,7 @@ namespace Chessy.Game.EventsUI.Left
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = E.PlayerE(whoseMove).WoodForBuyHouse;
+                                need = E.PlayerInfoE(whoseMove).WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
@@ -170,30 +170,30 @@ namespace Chessy.Game.EventsUI.Left
                 }
 
                 needRes.Add(resT, need);
-                if (need > E.PlayerE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                if (need > E.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
             }
 
             if (canBuild)
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    E.PlayerE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                    E.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        E.PlayerE(whoseMove).MaxAvailablePawns++;
+                        E.PlayerInfoE(whoseMove).MaxAvailablePawns++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).MaxAvailablePawns + E.PlayerE(whoseMove).MaxAvailablePawns);
-                        E.PlayerE(whoseMove).WoodForBuyHouse += E.PlayerE(whoseMove).WoodForBuyHouse;
+                        E.PlayerInfoE(whoseMove).WoodForBuyHouse += E.PlayerInfoE(whoseMove).WoodForBuyHouse;
                         break;
 
                     case BuildingTypes.Market:
-                        E.PlayerE(whoseMove).SetHaveBuilding(BuildingTypes.Market, true);
+                        E.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Market, true);
                         break;
 
                     case BuildingTypes.Smelter:
-                        E.PlayerE(whoseMove).SetHaveBuilding(BuildingTypes.Smelter, true);
+                        E.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Smelter, true);
                         break;
 
                     default: throw new Exception();

@@ -33,7 +33,7 @@ namespace Chessy.Game
                         {
                             var needWater = WaterValues.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
 
-                            if (E.PlayerE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
+                            if (E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
                             {
                                 needWater *= 0.75f;
                             }

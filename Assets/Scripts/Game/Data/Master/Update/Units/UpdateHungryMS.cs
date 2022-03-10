@@ -12,9 +12,9 @@
             {
                 var res = ResourceTypes.Food;
 
-                if (E.PlayerE(player).ResourcesC(res).Resources < 0)
+                if (E.PlayerInfoE(player).ResourcesC(res).Resources < 0)
                 {
-                    E.PlayerE(player).ResourcesC(res).Resources = 0;
+                    E.PlayerInfoE(player).ResourcesC(res).Resources = 0;
 
                     for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
                     {

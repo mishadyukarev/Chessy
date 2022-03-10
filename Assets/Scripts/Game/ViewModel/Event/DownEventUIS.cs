@@ -43,11 +43,11 @@ namespace Chessy.Game
             {
                 var curPlayer = E.CurPlayerITC.Player;
 
-                var myHeroT = E.PlayerE(curPlayer).AvailableHeroTC.Unit;
+                var myHeroT = E.PlayerInfoE(curPlayer).AvailableHeroTC.Unit;
 
-                if (E.PlayerE(curPlayer).HaveHeroInInventor)
+                if (E.PlayerInfoE(curPlayer).HaveHeroInInventor)
                 {
-                    if (!E.PlayerE(E.CurPlayerITC.Player).HeroCooldownC.HaveCooldown)
+                    if (!E.PlayerInfoE(E.CurPlayerITC.Player).HeroCooldownC.HaveCooldown)
                     {
                         E.SelectedUnitE.Set(myHeroT, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;
@@ -62,7 +62,7 @@ namespace Chessy.Game
         }
         void Done()
         {
-            if (!E.PlayerE(E.CurPlayerITC.Player).HaveKingInInventor)
+            if (!E.PlayerInfoE(E.CurPlayerITC.Player).HaveKingInInventor)
             {
                 E.RpcPoolEs.DoneToMaster();
             }
@@ -79,12 +79,12 @@ namespace Chessy.Game
             {
                 var curPlayerI = E.CurPlayerITC.Player;
 
-                if (E.PlayerE(curPlayerI).PeopleInCity >= 1)
+                if (E.PlayerInfoE(curPlayerI).PeopleInCity >= 1)
                 {
                     var pawnsInGame = E.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
                         + E.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
 
-                    if (pawnsInGame < E.PlayerE(curPlayerI).MaxAvailablePawns)
+                    if (pawnsInGame < E.PlayerInfoE(curPlayerI).MaxAvailablePawns)
                     {
                         E.SelectedUnitE.Set(UnitTypes.Pawn, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;

@@ -4,6 +4,7 @@ using Chessy.Game.Entity.Cell.Unit;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
+using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using System;
@@ -57,16 +58,16 @@ namespace Chessy.Game
         public SelectedToolWeaponE SelectedTWE;
 
 
-        public ForPlayerPoolEs PlayerE(in PlayerTypes player) => _forPlayerEs[player];
-        public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerE(playerT).ResourcesC(resT);
-        public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerE(playerT).LevelE(levT).ToolWeapons(twT);
-        public ref PlayerLevelInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT) => ref PlayerE(playerT).LevelE(levT);
-        public ref PlayerLevelInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC) => ref PlayerE(playerTC.Player).LevelE(levTC.Level);
-        public ref PlayerLevelInfoE UnitInfo(in CellUnitMainE unitMainE) => ref PlayerE(unitMainE.PlayerTC.Player).LevelE(unitMainE.LevelTC.Level);
-        public PlayerUnitInfoE UnitUnfo(in PlayerTypes playerT, in UnitTypes unitT) => PlayerE(playerT).UnitE(unitT);
-        public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerE(playerT).LevelE(levT).BuildingInfoE(buildT);
-        public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTC playerT, in LevelTC levT, in BuildingTC buildT) => ref PlayerE(playerT.Player).LevelE(levT.Level).BuildingInfoE(buildT.Building);
-        public ref PlayerLevelBuildingInfoE BuildingsInfo(in CellBuildingMainE buildMainE) => ref PlayerE(buildMainE.PlayerC.Player).LevelE(buildMainE.LevelTC.Level).BuildingInfoE(buildMainE.BuildingC.Building);
+        public ForPlayerPoolEs PlayerInfoE(in PlayerTypes player) => _forPlayerEs[player];
+        public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);
+        public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT);
+        public ref PlayerLevelInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT) => ref PlayerInfoE(playerT).LevelE(levT);
+        public ref PlayerLevelInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC) => ref PlayerInfoE(playerTC.Player).LevelE(levTC.Level);
+        public ref PlayerLevelInfoE UnitInfo(in CellUnitMainE unitMainE) => ref PlayerInfoE(unitMainE.PlayerTC.Player).LevelE(unitMainE.LevelTC.Level);
+        public PlayerUnitInfoE UnitUnfo(in PlayerTypes playerT, in UnitTypes unitT) => PlayerInfoE(playerT).UnitE(unitT);
+        public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT);
+        public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTC playerT, in LevelTC levT, in BuildingTC buildT) => ref PlayerInfoE(playerT.Player).LevelE(levT.Level).BuildingInfoE(buildT.Building);
+        public ref PlayerLevelBuildingInfoE BuildingsInfo(in CellBuildingMainE buildMainE) => ref PlayerInfoE(buildMainE.PlayerC.Player).LevelE(buildMainE.LevelTC.Level).BuildingInfoE(buildMainE.BuildingC.Building);
         public ActionC Sound(in ClipTypes clip) => _sounds0[clip];
         public ref ActionC Sound(in AbilityTypes unique) => ref _sounds1[(int)unique - 1];
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
@@ -79,6 +80,8 @@ namespace Chessy.Game
 
         public bool IsAnimal(in UnitTypes unitT) => _isAnimal[unitT];
         public bool IsHero(in UnitTypes unitT) => _isHero[unitT];
+
+
 
 
         #region Cells
@@ -105,9 +108,8 @@ namespace Chessy.Game
         public ref HealthC UnitHpC(in byte idx) => ref UnitStatsE(idx).HealthC;
         public ref StepsC UnitStepC(in byte idx) => ref UnitStatsE(idx).StepC;
         public ref WaterC UnitWaterC(in byte idx) => ref UnitStatsE(idx).WaterC;
-        public ref DamageC UnitDamageAttackC(in byte idx_cell) => ref UnitStatsE(idx_cell).DamageAttackC;
-        public ref DamageC UnitDamageOnCellC(in byte idx_cell) => ref UnitStatsE(idx_cell).DamageOnCell;
-        
+        public ref DamageC DamageAttackC(in byte idx) => ref UnitStatsE(idx).DamageAttackC;
+        public ref DamageC DamageOnCellC(in byte idx) => ref UnitStatsE(idx).DamageOnCellC;
 
         public ref CellUnitMainToolWeaponE UnitMainTWE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
         public ref ToolWeaponTC UnitMainTWTC(in byte idx) => ref UnitMainTWE(idx).ToolWeaponTC;
@@ -203,12 +205,11 @@ namespace Chessy.Game
             SelectedTWE = new SelectedToolWeaponE(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
             StrengthWind = new StrengthC(StartValues.STRENGTH_WIND);
 
-
             var i = 0;
 
             var actions = (List<object>)forData[i++];
-            var sounds0 = (Dictionary<ClipTypes, System.Action>)forData[i++];
-            var sounds1 = (Dictionary<AbilityTypes, System.Action>)forData[i++];
+            var sounds0 = (Dictionary<ClipTypes, Action>)forData[i++];
+            var sounds1 = (Dictionary<AbilityTypes, Action>)forData[i++];
             var isActiveParenCells = (bool[])forData[i++];
             var idCells = (int[])forData[i++];
 
@@ -271,7 +272,7 @@ namespace Chessy.Game
             RpcPoolEs = new RpcPoolEs(actions, namesMethods);
 
 
-            _cellEs = new CellEs[StartValues.ALL_CELLS_AMOUNT];
+            _cellEs = new CellEs[StartValues.CELLS];
             _idxs = new Dictionary<string, byte>();
             var xys = new List<byte[]>();
 
@@ -284,7 +285,7 @@ namespace Chessy.Game
                     idx++;
                 }
 
-            for (idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
+            for (idx = 0; idx < StartValues.CELLS; idx++)
             {
                 _cellEs[idx] = new CellEs(isActiveParenCells, idCells[idx], xys[idx], idx, this);
             }
@@ -392,10 +393,10 @@ namespace Chessy.Game
 
             if (GameModeC.IsGameMode(GameModes.TrainingOff))
             {
-                PlayerE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
+                PlayerInfoE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
 
 
-                for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+                for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
                 {
                     var xy_0 = CellEs(idx_0).CellE.XyC.Xy;
                     var x = xy_0[0];

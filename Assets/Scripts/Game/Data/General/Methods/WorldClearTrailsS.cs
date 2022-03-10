@@ -1,24 +1,18 @@
-﻿using System;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game.System.Model
 {
-    sealed class WorldClearTrailsS : SystemAbstract, IEcsRunSystem
+    sealed class WorldClearTrailsS : CellSystem, IEcsRunSystem
     {
-        internal WorldClearTrailsS(in EntitiesModel ents) : base(ents)
+        internal WorldClearTrailsS(in byte idx, in EntitiesModel eM) : base(idx, eM)
         {
-
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            if (!E.AdultForestC(Idx).HaveAnyResources)
             {
-                if (!E.AdultForestC(idx_0).HaveAnyResources)
+                for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                    {
-                        E.CellEs(idx_0).TrailHealthC(dirT).Health = 0;
-                    }
+                    E.CellEs(Idx).TrailHealthC(dirT).Health = 0;
                 }
             }
         }

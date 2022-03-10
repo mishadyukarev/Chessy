@@ -56,7 +56,7 @@ namespace Chessy.Game
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
-                UIE.UpEs.EconomyE.Economy(res).TextUI.text = (Math.Truncate(10 * E.PlayerE(curPlayer).ResourcesC(res).Resources) / 10).ToString();
+                UIE.UpEs.EconomyE.Economy(res).TextUI.text = (Math.Truncate(10 * E.PlayerInfoE(curPlayer).ResourcesC(res).Resources) / 10).ToString();
             }
         }
     }

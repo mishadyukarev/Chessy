@@ -11,9 +11,6 @@ namespace Chessy.Game
         public Action Doner;
         public Action<UnitTypes> UpgradeCenter;
         public UpgradeCenterUnitE CenterUpgradeUnitE;
-        public UnitTC GetHeroTC;
-        public SetUnitME SetUnitME;
-        public AttackME AttackME;
 
 
 

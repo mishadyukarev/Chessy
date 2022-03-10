@@ -15,7 +15,7 @@ namespace Chessy.Game
         {
             _rivers = new Dictionary<DirectTypes, SpriteRendererVC[]>();
 
-            _parents = new TransformVC[StartValues.ALL_CELLS_AMOUNT];
+            _parents = new TransformVC[StartValues.CELLS];
             for (var idx = 0; idx < _parents.Length; idx++)
             {
                 _parents[idx] = new TransformVC(cells[idx].transform.Find("River"));
@@ -26,7 +26,7 @@ namespace Chessy.Game
             {
                 if (dir == DirectTypes.Up || dir == DirectTypes.Right || dir == DirectTypes.Down || dir == DirectTypes.Left)
                 {
-                    _rivers.Add(dir, new SpriteRendererVC[StartValues.ALL_CELLS_AMOUNT]);
+                    _rivers.Add(dir, new SpriteRendererVC[StartValues.CELLS]);
                     for (byte idx = 0; idx < _rivers[dir].Length; idx++)
                     {
                         var river = cells[idx].transform.Find("River");

@@ -1,9 +1,7 @@
-﻿namespace Chessy.Game.Values
+﻿namespace Chessy.Game.Values.Cell.Unit
 {
-    public readonly struct UNIT_DAMAGE_VALUES
+    public static class DamageValues
     {
-        #region Start
-
         public const float KING = 3;
         public const float PAWN = 1f;
         public const float ELFEMALE = 2;
@@ -13,15 +11,8 @@
         public const float SKELETON = 0.5f;
         public const float CAMEL = 0;
 
-        #endregion
 
-
-        public const float UNIQUE_PERCENT_DAMAGE = 0.5f;
-
-
-
-        public const float CENTER_KING_BONUS = 0.6f;
-        public const float CENTER_PAWN_BONUS = 0.2f;
+        public const float UNIQUE_PERCENT_DAMAGE = 1.5f;
 
 
         #region ToolWeapon
@@ -35,8 +26,8 @@
 
 
 
-        public const float PROTECTED = 0.2f;
-        public const float RELAXED = -0.2f;
+        public const float PROTECTED = 0.25f;
+        public const float RELAXED = -0.25f;
 
         public const float FERTILIZER = -0.1f;
         public const float ADULT_FOREST = 0.3f;

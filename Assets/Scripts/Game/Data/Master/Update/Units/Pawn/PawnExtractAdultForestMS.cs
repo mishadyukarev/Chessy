@@ -19,7 +19,7 @@ namespace Chessy.Game
                     var extract = E.PawnExtractAdultForestE(idx_0).Resources;
 
                     E.AdultForestC(idx_0).Resources -= extract;
-                    E.PlayerE(E.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Wood).Resources += extract;
+                    E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Wood).Resources += extract;
 
 
                     if (E.AdultForestC(idx_0).HaveAnyResources)

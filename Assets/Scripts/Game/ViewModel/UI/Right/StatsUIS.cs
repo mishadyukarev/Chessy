@@ -16,8 +16,8 @@ namespace Chessy.Game
 
             if (E.UnitTC(idx_sel).HaveUnit && !E.IsAnimal(E.UnitTC(idx_sel).Unit))
             {
-                var damageOnCell = E.UnitDamageOnCellC(idx_sel).Damage;
-                var damageAttack = E.UnitDamageAttackC(idx_sel).Damage;
+                var damageOnCell = E.DamageOnCellC(idx_sel).Damage;
+                var damageAttack = E.DamageAttackC(idx_sel).Damage;
 
 
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(true);

@@ -17,12 +17,12 @@ namespace Chessy.Game
             {
                 //E.ResourcesC(player, ResourceTypes.Food).Resources -= E.PlayerE(player).PeopleInCity * Economy_VALUES.CostFoodForFeedingThem / 2;
 
-                E.PlayerE(player).HeroCooldownC.Cooldown--;
+                E.PlayerInfoE(player).HeroCooldownC.Cooldown--;
 
                 E.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
             }
 
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {

@@ -15,7 +15,7 @@
                     var extract = E.PawnExtractHillE(idx_0).Resources;
 
                     E.HillC(idx_0).Resources -= extract;
-                    E.PlayerE(E.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Ore).Resources += extract;
+                    E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Ore).Resources += extract;
 
 
                     //if (E.AdultForestC(idx_0).HaveAny)

@@ -4,7 +4,7 @@ using Chessy.Game.Values.Cell.Unit.Effect;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 
-namespace Chessy.Game.Systems.Model.Master.Methods
+namespace Chessy.Game.System.Model.Master.Methods
 {
     public struct DirectWaveSnowyMS
     {

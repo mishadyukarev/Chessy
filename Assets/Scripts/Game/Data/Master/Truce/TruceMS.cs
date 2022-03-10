@@ -13,7 +13,7 @@ namespace Chessy.Game
         {
             int random;
 
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 E.HaveFire(idx_0) = false;
 
@@ -31,7 +31,7 @@ namespace Chessy.Game
                         {
                             if (E.UnitExtraTWTC(idx_0).HaveToolWeapon)
                             {
-                                E.PlayerE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
+                                E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
                                 E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                             }
 
@@ -44,7 +44,7 @@ namespace Chessy.Game
 
                         if (E.UnitExtraTWTC(idx_0).HaveToolWeapon)
                         {
-                            E.PlayerE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
+                            E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
 
                             E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         }

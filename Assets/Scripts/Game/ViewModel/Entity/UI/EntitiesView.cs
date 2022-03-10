@@ -39,7 +39,7 @@ namespace Chessy.Game
 
             byte idx_cur = 0;
 
-            var cells = new GameObject[StartValues.ALL_CELLS_AMOUNT];
+            var cells = new GameObject[StartValues.CELLS];
 
 
             for (byte x = 0; x < StartValues.X_AMOUNT; x++)
@@ -95,10 +95,10 @@ namespace Chessy.Game
             CameraVC.Camera = Camera.main;
 
 
-            var isActiveParenCells = new bool[StartValues.ALL_CELLS_AMOUNT];
-            var idCells = new int[StartValues.ALL_CELLS_AMOUNT];
+            var isActiveParenCells = new bool[StartValues.CELLS];
+            var idCells = new int[StartValues.CELLS];
 
-            for (byte idx = 0; idx < StartValues.ALL_CELLS_AMOUNT; idx++)
+            for (byte idx = 0; idx < StartValues.CELLS; idx++)
             {
                 isActiveParenCells[idx] = CellEs(idx).CellParent.IsActiveSelf;
                 idCells[idx] = CellEs(idx).CellGO.InstanceID;

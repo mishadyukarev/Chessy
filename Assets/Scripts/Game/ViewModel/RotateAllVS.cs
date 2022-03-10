@@ -40,7 +40,7 @@ namespace Chessy.Game
             }
 
 
-            if (curPlayer == PlayerTypes.None) throw new System.Exception();
+            if (curPlayer == PlayerTypes.None) throw new global::System.Exception();
 
             if (curPlayer == PlayerTypes.First)
             {

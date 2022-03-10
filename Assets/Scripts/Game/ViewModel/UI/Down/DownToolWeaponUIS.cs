@@ -46,12 +46,12 @@ namespace Chessy.Game
 
             var curPlayerI = E.CurPlayerITC.Player;
 
-            _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = E.PlayerE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).Amount.ToString();
-            _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = E.PlayerE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).Amount.ToString();
-            _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = E.PlayerE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).Amount.ToString();
-            _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = E.PlayerE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.Shield).Amount.ToString();
-            _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = E.PlayerE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.BowCrossbow).Amount.ToString();
-            _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = E.PlayerE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.Shield).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(E.SelectedTWE.LevelTC.Level).ToolWeapons(ToolWeaponTypes.BowCrossbow).Amount.ToString();
+            _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).Amount.ToString();
         }
     }
 }

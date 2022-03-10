@@ -16,7 +16,7 @@ namespace Chessy.Game
             ref var cellClick = ref E.CellClickTC;
             var curPlayer = E.CurPlayerITC.Player;
 
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 _isActive = false;
                 _color = default;
@@ -32,7 +32,7 @@ namespace Chessy.Game
 
                     case CellClickTypes.SetUnit:
                         {
-                            if (E.UnitEs(idx_0).ForPlayer(E.CurPlayerITC.Player).CanSetUnitHere)
+                            if (E.PlayerInfoE(E.CurPlayerITC.Player).ForSetUnitsC.Contains(idx_0))
                             {
                                 _isActive = true;
                                 _color = ColorsValues.Color(SupportCellVisionTypes.Shift);

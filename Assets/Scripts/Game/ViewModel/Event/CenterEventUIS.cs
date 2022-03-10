@@ -45,7 +45,7 @@ namespace Chessy.Game
 
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                if (E.PlayerE(E.CurPlayerITC.Player).HaveKingInInventor)
+                if (E.PlayerInfoE(E.CurPlayerITC.Player).HaveKingInInventor)
                 {
                     E.SelectedUnitE.Set(UnitTypes.King, LevelTypes.First);
                     E.CellClickTC.Click = CellClickTypes.SetUnit;

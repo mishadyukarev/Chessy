@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         public const byte X_AMOUNT = 15;
         public const byte Y_AMOUNT = 11;
-        public const byte ALL_CELLS_AMOUNT = X_AMOUNT * Y_AMOUNT;
+        public const byte CELLS = X_AMOUNT * Y_AMOUNT;
 
         public const int PEOPLE_IN_CITY = 15;
         public const int MAX_AVAILABLE_PAWN = 1;

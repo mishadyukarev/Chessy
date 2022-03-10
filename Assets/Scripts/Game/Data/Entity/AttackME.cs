@@ -1,14 +1,14 @@
-﻿namespace Chessy.Game
-{
-    public struct AttackME
-    {
-        public IdxCellC FromIdxC;
-        public IdxCellC ToIdxC;
+﻿//namespace Chessy.Game
+//{
+//    public struct AttackME
+//    {
+//        public IdxCellC FromIdxC;
+//        public IdxCellC ToIdxC;
 
-        public void Set(in byte idx_from, in byte idx_to)
-        {
-            FromIdxC.Idx = idx_from;
-            ToIdxC.Idx = idx_to;
-        }
-    }
-}
+//        public void Set(in byte idx_from, in byte idx_to)
+//        {
+//            FromIdxC.Idx = idx_from;
+//            ToIdxC.Idx = idx_to;
+//        }
+//    }
+//}

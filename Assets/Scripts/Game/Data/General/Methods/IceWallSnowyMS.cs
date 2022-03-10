@@ -1,7 +1,7 @@
 ﻿using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
-namespace Chessy.Game.Systems.Model.Master.Methods
+namespace Chessy.Game.System.Model.Master.Methods
 {
     public struct IceWallSnowyMS
     {

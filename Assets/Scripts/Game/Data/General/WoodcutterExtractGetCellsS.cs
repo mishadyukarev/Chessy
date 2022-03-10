@@ -1,35 +1,31 @@
-﻿using Chessy.Game.Values.Cell;
-using Chessy.Game.Values.Cell.Environment;
+﻿using Chessy.Game.Values.Cell.Environment;
 
-namespace Chessy.Game
+namespace Chessy.Game.System.Model
 {
-    sealed class WoodcutterExtractGetCellsS : SystemAbstract, IEcsRunSystem
+    sealed class WoodcutterExtractGetCellsS : CellSystem, IEcsRunSystem
     {
-        internal WoodcutterExtractGetCellsS(in EntitiesModel ents) : base(ents)
+        internal WoodcutterExtractGetCellsS(in byte idx, in EntitiesModel eM) : base(idx, eM)
         {
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            E.WoodcutterExtractE(Idx).Resources = 0;
+
+            if (E.BuildingTC(Idx).Is(BuildingTypes.Woodcutter))
             {
-                E.WoodcutterExtractE(idx_0).Resources = 0;
+                var extract = EnvironmentValues.WOODCUTTER_EXTRACT;
 
-                if (E.BuildingTC(idx_0).Is(BuildingTypes.Woodcutter))
-                {
-                    var extract = EnvironmentValues.WOODCUTTER_EXTRACT;
-
-                    //if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
-                    //{
-                    //    extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
-                    //}
+                //if (E.BuildingsInfo(E.BuildingMainE(Idx)).HaveCenterUpgrade)
+                //{
+                //    extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
+                //}
 
 
-                    if (E.AdultForestC(idx_0).Resources < extract) extract = E.AdultForestC(idx_0).Resources;
+                if (E.AdultForestC(Idx).Resources < extract) extract = E.AdultForestC(Idx).Resources;
 
 
-                    E.WoodcutterExtractE(idx_0).Resources = extract;
-                }
+                E.WoodcutterExtractE(Idx).Resources = extract;
             }
         }
     }

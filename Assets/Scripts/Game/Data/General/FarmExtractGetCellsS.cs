@@ -1,35 +1,31 @@
-﻿using Chessy.Game.Values.Cell;
-using Chessy.Game.Values.Cell.Environment;
+﻿using Chessy.Game.Values.Cell.Environment;
 
-namespace Chessy.Game
+namespace Chessy.Game.System.Model
 {
-    sealed class FarmExtractGetCellsS : SystemAbstract, IEcsRunSystem
+    sealed class FarmExtractGetCellsS : CellSystem, IEcsRunSystem
     {
-        internal FarmExtractGetCellsS(in EntitiesModel ents) : base(ents)
+        internal FarmExtractGetCellsS(in byte idx, in EntitiesModel eM) : base(idx, eM)
         {
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.ALL_CELLS_AMOUNT; idx_0++)
+            E.FarmExtractFertilizeE(Idx).Resources = 0;
+
+            if (E.BuildingTC(Idx).Is(BuildingTypes.Farm))
             {
-                E.FarmExtractFertilizeE(idx_0).Resources = 0;
-
-                if (E.BuildingTC(idx_0).Is(BuildingTypes.Farm))
+                if (E.FertilizeC(Idx).HaveAnyResources)
                 {
-                    if (E.FertilizeC(idx_0).HaveAnyResources)
-                    {
-                        var extract = EnvironmentValues.FARM_EXTRACT;
+                    var extract = EnvironmentValues.FARM_EXTRACT;
 
-                        //if (E.BuildingsInfo(E.BuildingMainE(idx_0)).HaveCenterUpgrade)
-                        //{
-                        //    extract += Environment_Values.FARM_CENTER_UPGRADE;
-                        //}
+                    //if (E.BuildingsInfo(E.BuildingMainE(Idx)).HaveCenterUpgrade)
+                    //{
+                    //    extract += Environment_Values.FARM_CENTER_UPGRADE;
+                    //}
 
-                        if (E.FertilizeC(idx_0).Resources < extract) extract = E.FertilizeC(idx_0).Resources;
+                    if (E.FertilizeC(Idx).Resources < extract) extract = E.FertilizeC(Idx).Resources;
 
-                        E.FarmExtractFertilizeE(idx_0).Resources = extract;
-                    }
+                    E.FarmExtractFertilizeE(Idx).Resources = extract;
                 }
             }
         }

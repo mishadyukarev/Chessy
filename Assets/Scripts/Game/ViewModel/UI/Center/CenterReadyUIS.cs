@@ -13,7 +13,7 @@ namespace Chessy.Game
         {
             var readyBut = UIE.CenterEs.ReadyButtonC;
 
-            readyBut.Image.color = E.PlayerE(E.CurPlayerITC.Player).IsReadyC ? Color.red : Color.white;
+            readyBut.Image.color = E.PlayerInfoE(E.CurPlayerITC.Player).IsReadyC ? Color.red : Color.white;
 
             if (E.IsStartedGame || PhotonNetwork.OfflineMode)
             {

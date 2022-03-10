@@ -1,0 +1,159 @@
+﻿using Chessy.Game.Values.Cell.Unit;
+using Chessy.Game.Values.Cell.Unit.Stats;
+using Photon.Pun;
+
+namespace Chessy.Game.System.Model.Master
+{
+    public struct AttackUnit_M
+    {
+        public AttackUnit_M(in byte idx_from, in byte idx_to, in EntitiesModel e)
+        {
+            var whoseMove = e.WhoseMove.Player;
+
+            var canAttack = e.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to)
+                || e.UnitEs(idx_from).ForAttack(AttackTypes.Simple).Contains(idx_to);
+
+            if (canAttack && e.UnitPlayerTC(idx_from).Is(whoseMove))
+            {
+                e.UnitStepC(idx_from).Steps = 0;
+                e.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
+
+                if (e.UnitMainE(idx_from).IsMelee)
+                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                else e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+
+
+                float powerDam_from = e.DamageAttackC(idx_from).Damage; 
+                if (e.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to))
+                {
+                    powerDam_from *= DamageValues.UNIQUE_PERCENT_DAMAGE;
+                }
+
+                float powerDam_to = e.DamageOnCellC(idx_to).Damage;
+
+
+                var dirAttack = e.CellEs(idx_from).Direct(idx_to);
+
+                if (e.SunSideTC.IsAcitveSun)
+                {
+                    var isSunnedUnit = true;
+
+                    foreach (var dir in e.SunSideTC.RaysSun)
+                    {
+                        if (dirAttack == dir) isSunnedUnit = false;
+                    }
+
+                    if (isSunnedUnit)
+                    {
+                        powerDam_from *= 0.9f;
+                    }
+                }
+
+
+
+
+
+
+                float min_limit = 0;
+                float max_limit = 0;
+                float minus_to = 0;
+                float minus_from = 0;
+
+                var maxDamage = HpValues.MAX;
+                var minDamage = 0;
+
+                //if (!e.UnitE(idx_to).IsMelee) powerDam_to /= 2;
+
+                if (powerDam_to > powerDam_from)
+                {
+                    max_limit = powerDam_to * 2;
+                    min_limit = powerDam_to / 3;
+
+                    if (min_limit >= powerDam_from)
+                    {
+                        minus_from = maxDamage;
+                        powerDam_to = minDamage;
+                    }
+                    else
+                    {
+                        minus_to = maxDamage * powerDam_from / max_limit;
+
+                        max_limit = powerDam_from * 2;
+                        minus_from = maxDamage * powerDam_to / max_limit;
+                    }
+                }
+                else
+                {
+                    max_limit = powerDam_from * 2;
+                    min_limit = powerDam_from / 3;
+
+                    if (min_limit >= powerDam_to)
+                    {
+                        minus_to = maxDamage;
+                        minus_from = minDamage;
+                    }
+                    else
+                    {
+                        minus_from = maxDamage * powerDam_to / max_limit;
+
+                        max_limit = powerDam_to * 2f;
+                        minus_to = maxDamage * powerDam_from / max_limit;
+                    }
+                }
+
+                if (e.UnitMainE(idx_from).IsMelee)
+                {
+                    if (e.UnitEffectShield(idx_from).HaveAnyProtection)
+                    {
+                        e.UnitEffectShield(idx_from).Protection--;
+                    }
+
+                    else if (e.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
+                    {
+                        e.UnitExtraTWE(idx_from).DamageBrokeShieldC.Damage = 1f;
+                    }
+
+                    else if (minus_from > 0)
+                    {
+                        e.AttackUnitE(idx_from).Set(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player);
+                    }
+                }
+                else
+                {
+                    if (e.UnitEffectFrozenArrawC(idx_from).HaveEffect)
+                    {
+                        e.UnitEffectFrozenArrawC(idx_from).Shoots = 0;
+
+                        e.UnitEffectStunC(idx_to).Stun = 2;
+                    }
+                }
+
+                if (e.UnitEffectShield(idx_to).HaveAnyProtection)
+                {
+                    e.UnitEffectShield(idx_to).Protection--;
+                }
+
+                else if (e.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
+                {
+                    e.UnitExtraTWE(idx_to).DamageBrokeShieldC.Damage = 1f;
+                }
+
+                else if (minus_to > 0)
+                {
+                    var killer = PlayerTypes.None;
+
+                    if (e.IsAnimal(e.UnitTC(idx_to).Unit))
+                    {
+                        killer = e.UnitPlayerTC(idx_from).Player;
+                    }
+                    else
+                    {
+                        killer = e.NextPlayer(e.UnitPlayerTC(idx_to)).Player;
+                    }
+
+                    e.AttackUnitE(idx_to).Set(minus_to, killer, idx_from);
+                }
+            }
+        }
+    }
+}
