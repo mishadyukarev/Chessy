@@ -1,13 +1,16 @@
 ﻿namespace Chessy.Game.System.Model
 {
-    sealed class ClearAttackCellsS : CellSystem, IEcsRunSystem
+    sealed class ClearAttackCellsS : SystemAbstract, IEcsRunSystem
     {
-        internal ClearAttackCellsS(in byte idx, in EntitiesModel eM) : base(idx, eM) { }
+        internal ClearAttackCellsS(in EntitiesModel eM) : base(eM) { }
 
         public void Run()
         {
-            E.UnitEs(Idx).ForAttack(AttackTypes.Simple).Clear();
-            E.UnitEs(Idx).ForAttack(AttackTypes.Unique).Clear();
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            {
+                E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Clear();
+                E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Clear();
+            }
         }
     }
 }

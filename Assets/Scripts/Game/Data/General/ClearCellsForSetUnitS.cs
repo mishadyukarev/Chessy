@@ -2,16 +2,14 @@
 {
     internal class ClearCellsForSetUnitS : SystemAbstract, IEcsRunSystem
     {
-        readonly PlayerTypes _playerT;
-
-        public ClearCellsForSetUnitS(in PlayerTypes playerT, in EntitiesModel eM) : base(eM)
-        {
-            _playerT = playerT;
-        }
+        internal ClearCellsForSetUnitS(in EntitiesModel eM) : base(eM) { }
 
         public void Run()
         {
-            E.PlayerInfoE(_playerT).ForSetUnitsC.Clear();
+            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+            {
+                //E.PlayerInfoE(playerT).ForSetUnitsC.Clear();
+            }
         }
     }
 }

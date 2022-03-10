@@ -18,7 +18,7 @@ namespace Chessy.Game.System.Model.Master
                 e.UnitStepC(idx_from).Steps = 0;
                 e.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
 
-                if (e.UnitMainE(idx_from).IsMelee)
+                if (e.IsMelee(idx_from))
                     e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 else e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
@@ -101,7 +101,7 @@ namespace Chessy.Game.System.Model.Master
                     }
                 }
 
-                if (e.UnitMainE(idx_from).IsMelee)
+                if (e.IsMelee(idx_from))
                 {
                     if (e.UnitEffectShield(idx_from).HaveAnyProtection)
                     {

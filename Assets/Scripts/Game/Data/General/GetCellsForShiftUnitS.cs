@@ -2,71 +2,73 @@
 
 namespace Chessy.Game.System.Model
 {
-    sealed class GetCellsForShiftUnitS : CellSystem, IEcsRunSystem
+    sealed class GetCellsForShiftUnitS : SystemAbstract, IEcsRunSystem
     {
-        internal GetCellsForShiftUnitS(in byte idx, in EntitiesModel eM) : base(idx, eM)
-        {
-        }
+        internal GetCellsForShiftUnitS(in EntitiesModel eM) : base(eM) { }
 
         public void Run()
         {
-            E.UnitEs(Idx).ForShift.Clear();
-            E.UnitEs(Idx).ForShift.Clear();
-
-            for (byte idx = 0; idx < E.LengthCells; idx++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                E.UnitEs(Idx).NeedSteps(idx).Steps = 0;
-                E.UnitEs(Idx).NeedSteps(idx).Steps = 0;
-            }
+                E.UnitEs(idx_0).ForShift.Clear();
+                E.UnitEs(idx_0).ForShift.Clear();
 
-            if (E.CellEs(Idx).IsActiveParentSelf)
-            {
-                if (!E.UnitEffectStunC(Idx).IsStunned && E.UnitTC(Idx).HaveUnit && !E.IsAnimal(E.UnitTC(Idx).Unit))
+
+                for (byte idx = 0; idx < E.LengthCells; idx++)
                 {
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                    E.UnitEs(idx_0).NeedSteps(idx).Steps = 0;
+                    E.UnitEs(idx_0).NeedSteps(idx).Steps = 0;
+                }
+
+                if (E.CellEs(idx_0).IsActiveParentSelf)
+                {
+                    if (!E.UnitEffectStunC(idx_0).IsStunned && E.UnitTC(idx_0).HaveUnit && !E.IsAnimal(E.UnitTC(idx_0).Unit))
                     {
-                        var idx_to = E.CellEs(Idx).AroundCellE(dirT).IdxC.Idx;
-
-                        float needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
-
-                        if (!E.UnitMainE(Idx).IsMelee || E.UnitMainTWTC(Idx).Is(ToolWeaponTypes.Staff))
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            needSteps /= 2;
-                        }
+                            var idx_to = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        if (!E.UnitTC(Idx).Is(UnitTypes.Undead))
-                        {
-                            if (E.FertilizeC(idx_to).HaveAnyResources) needSteps += StepValues.FERTILIZER;
-                            if (E.YoungForestC(idx_to).HaveAnyResources) needSteps += StepValues.YOUNG_FOREST;
-                            if (E.AdultForestC(idx_to).HaveAnyResources)
+                            float needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
+
+                            if (!E.IsMelee(idx_0) || E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
                             {
-                                if (!E.UnitMainTWTC(Idx).Is(ToolWeaponTypes.Staff))
-                                {
-                                    needSteps += StepValues.ADULT_FOREST;
-                                }
-                            }
-                            if (E.HillC(idx_to).HaveAnyResources)
-                            {
-                                if (!E.UnitMainTWTC(Idx).Is(ToolWeaponTypes.Staff))
-                                {
-                                    needSteps += StepValues.HILL;
-                                }
+                                needSteps /= 2;
                             }
 
-                            if (E.CellEs(idx_to).TrailHealthC(dirT.Invert()).IsAlive) needSteps -= StepValues.BONUS_TRAIL;
-
-                        }
-
-
-
-                        E.UnitEs(Idx).NeedSteps(idx_to).Steps = needSteps;
-
-                        if (!E.MountainC(idx_to).HaveAnyResources && !E.UnitTC(idx_to).HaveUnit)
-                        {
-                            if (needSteps <= E.UnitStepC(Idx).Steps || E.UnitStepC(Idx).Steps >= StepValues.MAX)
+                            if (!E.UnitTC(idx_0).Is(UnitTypes.Undead))
                             {
-                                E.UnitEs(Idx).ForShift.Add(idx_to);
+                                if (E.FertilizeC(idx_to).HaveAnyResources) needSteps += StepValues.FERTILIZER;
+                                if (E.YoungForestC(idx_to).HaveAnyResources) needSteps += StepValues.YOUNG_FOREST;
+                                if (E.AdultForestC(idx_to).HaveAnyResources)
+                                {
+                                    if (!E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                                    {
+                                        needSteps += StepValues.ADULT_FOREST;
+                                    }
+                                }
+                                if (E.HillC(idx_to).HaveAnyResources)
+                                {
+                                    if (!E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                                    {
+                                        needSteps += StepValues.HILL;
+                                    }
+                                }
 
+                                if (E.CellEs(idx_to).TrailHealthC(dirT.Invert()).IsAlive) needSteps -= StepValues.BONUS_TRAIL;
+
+                            }
+
+
+
+                            E.UnitEs(idx_0).NeedSteps(idx_to).Steps = needSteps;
+
+                            if (!E.MountainC(idx_to).HaveAnyResources && !E.UnitTC(idx_to).HaveUnit)
+                            {
+                                if (needSteps <= E.UnitStepC(idx_0).Steps || E.UnitStepC(idx_0).Steps >= StepValues.MAX)
+                                {
+                                    E.UnitEs(idx_0).ForShift.Add(idx_to);
+
+                                }
                             }
                         }
                     }

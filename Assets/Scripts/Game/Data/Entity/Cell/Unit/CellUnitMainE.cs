@@ -7,7 +7,6 @@
         public LevelTC LevelTC;
         public ConditionUnitTC ConditionTC;
         public IsRightArcherC IsRightArcherC;
-        public bool IsMelee;
 
         public IdxCellC ShiftTo;
     }

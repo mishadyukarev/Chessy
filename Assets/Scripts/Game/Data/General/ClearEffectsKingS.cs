@@ -2,16 +2,16 @@
 {
     sealed class ClearEffectsKingS : SystemAbstract, IEcsRunSystem
     {
-        readonly PlayerTypes _playerT;
-
-        internal ClearEffectsKingS(in PlayerTypes playerT, in EntitiesModel ents) : base(ents)
+        internal ClearEffectsKingS(in EntitiesModel ents) : base(ents)
         {
-            _playerT = playerT;
         }
 
         public void Run()
         {
-            E.PlayerInfoE(_playerT).WhereKingEffects.Clear();
+            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+            {
+                E.PlayerInfoE(playerT).WhereKingEffects.Clear();
+            }
         }
     }
 }

@@ -1,50 +1,51 @@
 ﻿namespace Chessy.Game.System.Model
 {
-    sealed class DestroyBuildingS : CellSystem, IEcsRunSystem
+    sealed class DestroyBuildingS : SystemAbstract, IEcsRunSystem
     {
-        internal DestroyBuildingS(in byte idx, in EntitiesModel eM) : base(idx, eM)
-        {
-        }
+        internal DestroyBuildingS(in EntitiesModel eM) : base(eM) { }
 
         public void Run()
         {
-            var damage = E.BuildingMainE(Idx).AttackBuildingC.Damage;
-
-            if (damage > 0)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                if (E.BuildingTC(Idx).HaveBuilding)
-                {
-                    E.BuildHpC(Idx).Health -= damage;
+                var damage = E.BuildingMainE(idx_0).AttackBuildingC.Damage;
 
-                    if (!E.BuildHpC(Idx).IsAlive)
+                if (damage > 0)
+                {
+                    if (E.BuildingTC(idx_0).HaveBuilding)
                     {
-                        if (E.BuildingTC(Idx).Is(BuildingTypes.City))
+                        E.BuildHpC(idx_0).Health -= damage;
+
+                        if (!E.BuildHpC(idx_0).IsAlive)
                         {
-                            E.WinnerC.Player = E.NextPlayer(E.BuildingMainE(Idx).KillerC.Player).Player;
+                            if (E.BuildingTC(idx_0).Is(BuildingTypes.City))
+                            {
+                                E.WinnerC.Player = E.NextPlayer(E.BuildingMainE(idx_0).KillerC.Player).Player;
+                            }
+
+                            else if (E.BuildingTC(idx_0).Is(BuildingTypes.Farm))
+                            {
+                                E.FertilizeC(idx_0).Resources = 0;
+                            }
+
+                            //else if (E.BuildingTC(Idx).Is(BuildingTypes.House))
+                            //{
+                            //    E.PlayerE(E.BuildingPlayerTC(Idx).Player).MaxAvailablePawns--;
+                            //}
+
+
+                            E.BuildingTC(idx_0).Building = BuildingTypes.None;
                         }
 
-                        else if (E.BuildingTC(Idx).Is(BuildingTypes.Farm))
-                        {
-                            E.FertilizeC(Idx).Resources = 0;
-                        }
-
-                        //else if (E.BuildingTC(Idx).Is(BuildingTypes.House))
-                        //{
-                        //    E.PlayerE(E.BuildingPlayerTC(Idx).Player).MaxAvailablePawns--;
-                        //}
 
 
-                        E.BuildingTC(Idx).Building = BuildingTypes.None;
+
+                        E.BuildingMainE(idx_0).AttackBuildingC.Damage = 0;
                     }
-
-
-
-
-                    E.BuildingMainE(Idx).AttackBuildingC.Damage = 0;
-                }
-                else
-                {
-                    throw new global::System.Exception();
+                    else
+                    {
+                        throw new global::System.Exception();
+                    }
                 }
             }
         }

@@ -9,7 +9,7 @@ namespace Chessy.Game.System.Model.Master
         {
             var whoseMove = E.WhoseMove.Player;
 
-            if (E.PlayerInfoE(whoseMove).ForSetUnitsC.Contains(idx_0))
+            if (E.CanSetUnit(idx_0, E.UnitTC(idx_0).HaveUnit, whoseMove))
             {
                 E.UnitTC(idx_0).Unit = unitT;
                 E.UnitPlayerTC(idx_0).Player = whoseMove;

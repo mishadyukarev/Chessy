@@ -21,6 +21,8 @@ namespace Chessy.Game
         readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
         readonly Dictionary<UnitTypes, bool> _isAnimal;
         readonly Dictionary<UnitTypes, bool> _isHero;
+        readonly Dictionary<string, bool> _isMelee;
+        readonly Dictionary<string, bool> _canSetUnit = new Dictionary<string, bool>();
 
 
         public PlayerTC WhoseMove;
@@ -80,8 +82,9 @@ namespace Chessy.Game
 
         public bool IsAnimal(in UnitTypes unitT) => _isAnimal[unitT];
         public bool IsHero(in UnitTypes unitT) => _isHero[unitT];
-
-
+        public bool IsMelee(in UnitTypes unitT, in bool haveBowCrossbow) => _isMelee[unitT.ToString() + haveBowCrossbow];
+        public bool IsMelee(in byte idx_cell) => _isMelee[UnitTC(idx_cell).Unit.ToString() + UnitMainTWTC(idx_cell).Is(ToolWeaponTypes.BowCrossbow)];
+        public bool CanSetUnit(in byte idx_cell, in bool haveUnit, in PlayerTypes playerT) => _canSetUnit[idx_cell.ToString() + haveUnit + playerT];
 
 
         #region Cells
@@ -228,11 +231,13 @@ namespace Chessy.Game
 
             _isAnimal = new Dictionary<UnitTypes, bool>();
             _isHero = new Dictionary<UnitTypes, bool>();
+            _isMelee = new Dictionary<string, bool>();
 
             for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
             {
                 if (unitT == UnitTypes.Camel) _isAnimal.Add(unitT, true);
                 else _isAnimal.Add(unitT, false);
+
 
                 var ishero = false;
                 switch (unitT)
@@ -253,8 +258,36 @@ namespace Chessy.Game
                         ishero = true;
                         break;
                 }
-
                 _isHero.Add(unitT, ishero);
+
+
+                foreach (var haveBowCrossbow in new[] { true, false })
+                {
+                    var isMelee = true;
+
+                    switch (unitT)
+                    {
+                        case UnitTypes.Pawn:
+                            if (haveBowCrossbow) isMelee = false;
+                            break;
+
+                        case UnitTypes.Elfemale:
+                            isMelee = false;
+                            break;
+
+                        case UnitTypes.Snowy:
+                            isMelee = false;
+                            break;
+
+                        case UnitTypes.Undead:
+                            break;
+
+                        case UnitTypes.Hell:
+                            break;
+                    }
+
+                    _isMelee.Add(unitT.ToString() + haveBowCrossbow, isMelee);
+                }
             }
 
 
@@ -289,6 +322,43 @@ namespace Chessy.Game
             {
                 _cellEs[idx] = new CellEs(isActiveParenCells, idCells[idx], xys[idx], idx, this);
             }
+
+
+
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            {
+                foreach (var haveUnit in new[] { true, false })
+                {
+                    for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+                    {
+                        var xy = CellEs(idx_0).CellE.XyC.Xy;
+                        var x = xy[0];
+                        var y = xy[1];
+
+                        var canSet = false;
+
+                        if (playerT == PlayerTypes.First)
+                        {
+                            if (y < 3 && x > 3 && x < 12)
+                            {
+                                canSet = true;
+                            }
+                        }
+                        else
+                        {
+                            if (y > 7 && x > 3 && x < 12)
+                            {
+                                canSet = true;
+                            }
+                        }
+
+
+                        _canSetUnit.Add(idx_0.ToString() + haveUnit + playerT, canSet);
+                    }
+                }
+            }
+
+
 
             switch (GameModeC.CurGameMode)
             {

@@ -1,49 +1,50 @@
-﻿namespace Chessy.Game.System.Model
-{
-    public sealed class GetUnitTypeS : CellSystem, IEcsRunSystem
-    {
-        internal GetUnitTypeS(in byte idx, in EntitiesModel eM) : base(idx, eM)
-        {
-        }
+﻿//namespace Chessy.Game.System.Model
+//{
+//    public sealed class GetUnitTypeS : SystemAbstract, IEcsRunSystem
+//    {
+//        internal GetUnitTypeS(in EntitiesModel eM) : base(eM) { }
 
-        public void Run()
-        {
-            if (E.UnitTC(Idx).HaveUnit)
-            {
-                var isMelee = true;
+//        public void Run()
+//        {
+//            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+//            {
+//                if (E.UnitTC(idx_0).HaveUnit)
+//                {
+//                    var isMelee = true;
 
-                if (E.UnitTC(Idx).Is(UnitTypes.Pawn))
-                {
-                    if (E.UnitMainTWTC(Idx).Is(ToolWeaponTypes.BowCrossbow))
-                    {
-                        isMelee = false;
-                    }
-                }
-                else
-                {
-                    switch (E.UnitTC(Idx).Unit)
-                    {
-                        case UnitTypes.Elfemale:
-                            isMelee = false;
-                            break;
+//                    if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
+//                    {
+//                        if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+//                        {
+//                            isMelee = false;
+//                        }
+//                    }
+//                    else
+//                    {
+//                        switch (E.UnitTC(idx_0).Unit)
+//                        {
+//                            case UnitTypes.Elfemale:
+//                                isMelee = false;
+//                                break;
 
-                        case UnitTypes.Snowy:
-                            isMelee = false;
-                            break;
+//                            case UnitTypes.Snowy:
+//                                isMelee = false;
+//                                break;
 
-                        case UnitTypes.Undead:
-                            break;
+//                            case UnitTypes.Undead:
+//                                break;
 
-                        case UnitTypes.Hell:
-                            break;
+//                            case UnitTypes.Hell:
+//                                break;
 
-                        default:
-                            break;
-                    }
-                }
+//                            default:
+//                                break;
+//                        }
+//                    }
 
-                E.UnitMainE(Idx).IsMelee = isMelee;
-            }
-        }
-    }
-}
+//                    E.UnitMainE(idx_0).IsMelee = isMelee;
+//                }
+//            }
+//        }
+//    }
+//}

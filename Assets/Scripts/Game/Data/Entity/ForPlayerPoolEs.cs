@@ -22,7 +22,7 @@ namespace Chessy.Game
 
         public bool HaveKingInInventor;
         public IdxsCellsC WhereKingEffects;
-        public IdxsCellsC ForSetUnitsC;
+        //public IdxsCellsC ForSetUnitsC;
 
 
         public ref PlayerLevelInfoE LevelE(in LevelTypes levT) => ref _levelInfoEs[(byte)levT - 1];
@@ -45,7 +45,7 @@ namespace Chessy.Game
             MaxAvailablePawns = StartValues.MAX_AVAILABLE_PAWN;
             HaveKingInInventor = true;
             WhereKingEffects = new IdxsCellsC(new HashSet<byte>());
-            ForSetUnitsC = new IdxsCellsC(new HashSet<byte>());
+            //ForSetUnitsC = new IdxsCellsC(new HashSet<byte>());
             WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)

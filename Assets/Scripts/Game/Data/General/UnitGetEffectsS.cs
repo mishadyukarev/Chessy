@@ -1,22 +1,23 @@
 ﻿namespace Chessy.Game.System.Model
 {
-    sealed class UnitGetEffectsS : CellSystem, IEcsRunSystem
+    sealed class UnitGetEffectsS : SystemAbstract, IEcsRunSystem
     {
-        internal UnitGetEffectsS(in byte idx, in EntitiesModel eM) : base(idx, eM)
-        {
-        }
+        internal UnitGetEffectsS(in EntitiesModel eM) : base(eM) { }
 
         public void Run()
         {
-            if (E.UnitTC(Idx).Is(UnitTypes.King))
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                foreach (var idx_1 in E.CellEs(Idx).IdxsAround)
+                if (E.UnitTC(idx_0).Is(UnitTypes.King))
                 {
-                    if (E.UnitTC(idx_1).HaveUnit)
+                    foreach (var idx_1 in E.CellEs(idx_0).IdxsAround)
                     {
-                        if (E.UnitPlayerTC(idx_1).Is(E.UnitPlayerTC(Idx).Player))
+                        if (E.UnitTC(idx_1).HaveUnit)
                         {
-                            E.PlayerInfoE(E.UnitPlayerTC(idx_1).Player).WhereKingEffects.Add(idx_1);
+                            if (E.UnitPlayerTC(idx_1).Is(E.UnitPlayerTC(idx_0).Player))
+                            {
+                                E.PlayerInfoE(E.UnitPlayerTC(idx_1).Player).WhereKingEffects.Add(idx_1);
+                            }
                         }
                     }
                 }

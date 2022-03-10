@@ -15,74 +15,52 @@ namespace Chessy.Game
 
 
 
-            runAfterDoing = default;
+            runAfterDoing = (Action)
+                //ClearingCells
+                new ClearCellsForSetUnitS(ents).Run
+                + new ClearEffectsKingS(ents).Run
+
+                + new DestroyBuildingS(ents).Run
+                + new AttackShieldS(ents).Run
+                + new UnitGetEffectsS(ents).Run
+                + new WorldClearTrailsS(ents).Run
+                + new WoodcutterExtractGetCellsS(ents).Run
+                + new FarmExtractGetCellsS(ents).Run
 
 
-            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-            {
-                runAfterDoing += (Action)
-                    new ClearCellsForSetUnitS(playerT, ents).Run
-                    + new ClearEffectsKingS(playerT, ents).Run;
-            }
+            #region World
 
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
-            {
-                runAfterDoing += (Action)
-                    new UnitAttackUnitS(idx_0, ents).Run;
-            }
+                 + new WorldCountsAmountBuildingInGameS(ents).Run
 
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
-            {
-                runAfterDoing += (Action)
-                    new DestroyBuildingS(idx_0, ents).Run
-                    + new UnitShiftS(idx_0, ents).Run
-                    + new AttackShieldS(idx_0, ents).Run;
-            }
+            #endregion
 
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
-            {
-                runAfterDoing += (Action)
-                    new UnitGetEffectsS(idx_0, ents).Run;
-            }
 
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
-            {
-                runAfterDoing += (Action) 
-                    new WorldClearTrailsS(idx_0, ents).Run
-                    + new WoodcutterExtractGetCellsS(idx_0, ents).Run
-                    + new FarmExtractGetCellsS(idx_0, ents).Run
+            #region Unit
 
-                    ///Unit
+                //Moving
+                + new UnitAttackUnitS(ents).Run
+                + new UnitShiftS(ents).Run
 
-                    ///Extract
-                    + new PawnGetExtractAdultForestS(idx_0, ents).Run
-                    + new PawnExtractHillS(idx_0, ents).Run
+                //Extract
+                + new PawnGetExtractAdultForestS(ents).Run
+                + new PawnExtractHillS(ents).Run
+                + new GetDamageUnitsS(ents).Run
+                + new UnitAbilityS(ents).Run
 
-                    + new GetUnitTypeS(idx_0, ents).Run
-                    + new GetDamageUnitsS(idx_0, ents).Run
-                    + new AbilitySyncS(idx_0, ents).Run
 
-                    + new VisibleUnitAndBuildingS(idx_0, ents).Run
-                    + new GetCellsForShiftUnitS(idx_0, ents).Run
 
-                    + new ClearAttackCellsS(idx_0, ents).Run
-                    + new GetAttackMeleeCellsS(idx_0, ents).Run
-                    + new GetCellsForAttackArcherS(idx_0, ents).Run
+                //Attack
+                + new ClearAttackCellsS(ents).Run
+                + new GetAttackMeleeCellsS(ents).Run
+                + new GetCellsForAttackArcherS(ents).Run
 
-                    + new GetCellForArsonArcherS(idx_0, ents).Run;
+                + new VisibleUnitAndBuildingS(ents).Run
+                + new GetCellsForShiftUnitS(ents).Run
+                + new GetCellForArsonArcherS(ents).Run;
 
-                for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-                {
-                    runAfterDoing += (Action)
-                        new GetCellsForSetUnitS(playerT, idx_0, ents).Run;
+            #endregion
 
-                    for (var buildingT = BuildingTypes.None + 1; buildingT < BuildingTypes.End; buildingT++)
-                    {
-                        runAfterDoing += (Action)
-                            new WorldCountsAmountBuildingInGameS(buildingT, playerT, idx_0, ents).Run;
-                    }
-                }
-            }
+               
 
 
             var truce = (Action)new TruceMS(ents).Run;

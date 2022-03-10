@@ -1,23 +1,24 @@
 ﻿namespace Chessy.Game.System.Model
 {
-    sealed class AttackShieldS : CellSystem, IEcsRunSystem
+    sealed class AttackShieldS : SystemAbstract, IEcsRunSystem
     {
-        internal AttackShieldS(in byte idx, in EntitiesModel eM) : base(idx, eM)
-        {
-        }
+        internal AttackShieldS(in EntitiesModel eM) : base(eM) { }
 
         public void Run()
         {
-            var damage = E.UnitExtraTWE(Idx).DamageBrokeShieldC.Damage;
-
-            if (damage > 0)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                E.UnitExtraProtectionTC(Idx).Protection -= damage;
-                if (!E.UnitExtraProtectionTC(Idx).HaveAnyProtection)
-                    E.UnitExtraTWTC(Idx).ToolWeapon = ToolWeaponTypes.None;
+                var damage = E.UnitExtraTWE(idx_0).DamageBrokeShieldC.Damage;
+
+                if (damage > 0)
+                {
+                    E.UnitExtraProtectionTC(idx_0).Protection -= damage;
+                    if (!E.UnitExtraProtectionTC(idx_0).HaveAnyProtection)
+                        E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
 
 
-                E.UnitExtraTWE(Idx).DamageBrokeShieldC.Damage = 0;
+                    E.UnitExtraTWE(idx_0).DamageBrokeShieldC.Damage = 0;
+                }
             }
         }
     }
