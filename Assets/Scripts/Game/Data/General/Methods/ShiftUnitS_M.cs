@@ -1,4 +1,5 @@
-﻿using Photon.Realtime;
+﻿using Chessy.Game.System.Model;
+using Photon.Realtime;
 
 namespace Chessy.Game
 {
@@ -10,7 +11,7 @@ namespace Chessy.Game
             {
                 e.UnitStepC(idx_from).Steps -= e.UnitEs(idx_from).NeedSteps(idx_to).Steps;
 
-                e.UnitMainE(idx_from).ShiftTo.Idx = idx_to;
+                new UnitShiftS(idx_from, idx_to, e);
 
                 e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }

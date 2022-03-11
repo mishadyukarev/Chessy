@@ -32,10 +32,13 @@ namespace Chessy.Game
 
                     case CellClickTypes.SetUnit:
                         {
-                            if (E.CanSetUnit(idx_0, E.UnitTC(idx_0).HaveUnit, E.CurPlayerITC.Player))
+                            if (E.CellEs(idx_0).CellE.IsStartedCell(E.CurPlayerITC.Player))
                             {
-                                _isActive = true;
-                                _color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                                if (!E.UnitTC(idx_0).HaveUnit)
+                                {
+                                    _isActive = true;
+                                    _color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                                }
                             }
                         }
                         break;

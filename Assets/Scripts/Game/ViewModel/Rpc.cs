@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.EventsUI;
 using Chessy.Game.Model.System;
+using Chessy.Game.System.Model;
 using Chessy.Game.System.Model.Master;
 using Chessy.Game.System.Model.Master.Methods;
 using Chessy.Game.Values;
@@ -18,9 +19,6 @@ namespace Chessy.Game
     public sealed class Rpc : MonoBehaviour
     {
         static EntitiesModel _e;
-        static Action _updateView;
-        static Action _updateUI;
-        static Action _runAfterDoing;
         static EventsUIManager _eventsUI;
 
         int _idx_cur;
@@ -38,12 +36,9 @@ namespace Chessy.Game
             }
         }
 
-        public Rpc GiveData(in EntitiesModel ents, in Action updateView, in Action updateUI, in Action runAfterDoing, in EventsUIManager eventsUI)
+        public Rpc GiveData(in EntitiesModel ents, in EventsUIManager eventsUI)
         {
             _e = ents;
-            _updateUI = updateUI;
-            _updateView = updateView;
-            _runAfterDoing = runAfterDoing;
             _eventsUI = eventsUI;
 
             return this;
@@ -98,12 +93,12 @@ namespace Chessy.Game
                                             {
                                                 if (_e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
                                                 {
-                                                    _e.UnitExtraTWE(idx_1).DamageBrokeShieldC.Damage = 1f;
+                                                    new AttackShieldS(1f, idx_1, _e);
                                                 }
 
                                                 else
                                                 {
-                                                    _e.AttackUnitE(idx_1).Set(HpValues.MAX / 4, _e.UnitPlayerTC(idx_0).Player);
+                                                    new UnitAttackUnitS(HpValues.MAX / 4, _e.UnitPlayerTC(idx_0).Player, idx_0, _e);
                                                 }
                                             }
                                         }
@@ -292,10 +287,7 @@ namespace Chessy.Game
 
                                             _e.YoungForestC(idx_0).Resources = 0;
 
-                                            _e.BuildingTC(idx_0).Building = BuildingTypes.Farm;
-                                            _e.BuildingLevelTC(idx_0).Level = LevelTypes.First;
-                                            _e.BuildingPlayerTC(idx_0).Player = whoseMove;
-                                            _e.BuildHpC(idx_0).Health = BuildingValues.MAX_HP;
+                                            new BuildS(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, idx_0, _e);
 
                                             _e.UnitStepC(idx_0).Steps -= StepValues.SET_FARM;
                                         }
@@ -351,7 +343,7 @@ namespace Chessy.Game
                                         _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
                                         _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
-                                        _e.BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, BuildingValues.MAX_HP, whoseMove);
+                                        new BuildS(BuildingTypes.City, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, idx_0, _e);
 
                                         _e.UnitStepC(idx_0).Steps -= StepValues.PAWN_CITY_BUILDING;
 
@@ -387,8 +379,7 @@ namespace Chessy.Game
                             {
                                 _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-                                _e.BuildingMainE(idx_0).AttackBuildingC.Damage = 1;
-                                _e.BuildingMainE(idx_0).KillerC.Player = _e.UnitPlayerTC(idx_0).Player;
+                                new DestroyBuildingS(1f, _e.UnitPlayerTC(idx_0).Player, idx_0, _e);
 
                                 _e.UnitStepC(idx_0).Steps -= StepValues.DESTROY_BUILDING;
                             }
@@ -1116,9 +1107,8 @@ namespace Chessy.Game
         [PunRPC]
         void UpdateDataAndView(object[] objects)
         {
-            _runAfterDoing.Invoke();
-            _updateUI.Invoke();
-            _updateView.Invoke();
+            //_updateUI.Invoke();
+            //_updateView.Invoke();
         }
 
         #endregion

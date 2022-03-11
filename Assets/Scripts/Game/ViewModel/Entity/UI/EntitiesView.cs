@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Entity.View.Cell;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,8 +14,8 @@ namespace Chessy.Game
         public CellUnitVEs UnitEs(in byte idx) => CellEs(idx).UnitVEs;
         public CellUnitVE UnitE(in byte idx, in bool isSelected, in LevelTypes levT, in UnitTypes unitT) => UnitEs(idx).UnitE(isSelected, levT, unitT);
         public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
-        public CellEnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
-        public CellEnvironmentVE EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
+        public EnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
+        public EnvironmentVE EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
 
 
         public EntityVPool EntityVPool;

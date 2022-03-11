@@ -13,7 +13,6 @@ namespace Chessy
     {
         [SerializeField] TestModes _testMode = default;
 
-        EcsWorld _commonW;
         EcsWorld _toggleW;
 
         ActionC _runUpdate;
@@ -22,7 +21,6 @@ namespace Chessy
 
         void Start()
         {
-            _commonW = new EcsWorld();
 
             new Common.CreateCs(transform, _testMode);
 
@@ -107,13 +105,18 @@ namespace Chessy
                         var uIEs = new EntitiesViewUI();
                         var ents = new EntitiesModel(forData, Rpc.NamesMethods);
 
-                        new SystemViewUI(ref _runUpdate, ref _runFixedUpdate, resources, uIEs, ents,  out var updateUI);
-                        new SystemsView(ref _runUpdate, ref _runFixedUpdate, ents, entViews, out var updateView);
-                        new SystemsModel(ref _runUpdate, ents, updateUI, updateView, out var runAfterDoing);
 
-                        var eventsUI = new EventsUIManager(updateView, updateUI, uIEs,  ents);
+                        _runUpdate.Action = new UpdateModelS(ents).Run;
+                        new SystemViewUI(ref _runUpdate, resources, uIEs, ents);
+                        new SystemsView(ref _runUpdate, ents, entViews);
+                        new SystemsModel(ents);
 
-                        entViews.EntityVPool.Photon.AddComponent<Rpc>().GiveData(ents, updateView,  updateUI, runAfterDoing, eventsUI);
+
+
+
+                        var eventsUI = new EventsUIManager(uIEs,  ents);
+
+                        entViews.EntityVPool.Photon.AddComponent<Rpc>().GiveData(ents, eventsUI);
                         Rpc.SyncAllMaster();
 
                         break;

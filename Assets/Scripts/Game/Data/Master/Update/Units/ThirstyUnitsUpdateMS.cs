@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game
@@ -45,7 +46,7 @@ namespace Chessy.Game
                             {
                                 float percent = HpValues.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                E.AttackUnitE(idx_0).Set(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player);
+                                new UnitAttackUnitS(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, E);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);

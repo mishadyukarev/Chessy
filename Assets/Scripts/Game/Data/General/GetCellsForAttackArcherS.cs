@@ -1,92 +1,89 @@
-﻿namespace Chessy.Game.System.Model
+﻿using System;
+
+namespace Chessy.Game.System.Model
 {
-    sealed class GetCellsForAttackArcherS : SystemAbstract, IEcsRunSystem
+    public struct GetCellsForAttackArcherS
     {
-        internal GetCellsForAttackArcherS(in EntitiesModel eM) : base(eM) { }
-
-        public void Run()
+        public GetCellsForAttackArcherS(in byte idx_0, in EntitiesModel e)
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            if (!e.UnitTC(idx_0).HaveUnit) throw new Exception();
+
+
+            if (!e.UnitEffectStunC(idx_0).IsStunned)
             {
-                if (E.UnitTC(idx_0).HaveUnit)
+                if (e.UnitStepC(idx_0).HaveAnySteps)
                 {
-                    if (!E.UnitEffectStunC(idx_0).IsStunned)
+                    if (!e.IsMelee(idx_0))
                     {
-                        if (E.UnitStepC(idx_0).HaveAnySteps)
+                        for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                         {
-                            if (!E.IsMelee(idx_0))
+                            var idx_1 = e.CellEs(idx_0).AroundCellE(dir_1).IdxC.Idx;
+
+                            var isRight_0 = e.UnitIsRightArcherC(idx_0).IsRight;
+
+                            if (e.CellEs(idx_1).IsActiveParentSelf && !e.MountainC(idx_1).HaveAnyResources)
                             {
-                                for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
+                                if (e.UnitTC(idx_1).HaveUnit)
                                 {
-                                    var idx_1 = E.CellEs(idx_0).AroundCellE(dir_1).IdxC.Idx;
-
-                                    var isRight_0 = E.UnitIsRightArcherC(idx_0).IsRight;
-
-                                    if (E.CellEs(idx_1).IsActiveParentSelf && !E.MountainC(idx_1).HaveAnyResources)
+                                    if (!e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(idx_0).Player))
                                     {
-                                        if (E.UnitTC(idx_1).HaveUnit)
+                                        if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                         {
-                                            if (!E.UnitPlayerTC(idx_1).Is(E.UnitPlayerTC(idx_0).Player))
+                                            if (isRight_0)
                                             {
-                                                if (E.UnitTC(idx_0).Is(UnitTypes.Pawn) && E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                                if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                 {
-                                                    if (isRight_0)
-                                                    {
-                                                        if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
-                                                        {
-                                                            E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
-                                                        }
-                                                        else E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
-                                                    }
-                                                    else
-                                                    {
-                                                        if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
-                                                        {
-                                                            E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
-                                                        }
-                                                        else E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
-                                                    }
+                                                    e.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
                                                 }
-                                                else
-                                                {
-                                                    E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
-                                                }
-                                            }
-                                        }
-
-                                        var idx_2 = E.CellEs(idx_1).AroundCellE(dir_1).IdxC.Idx;
-
-
-                                        if (E.UnitTC(idx_2).HaveUnit && !E.IsAnimal(E.UnitTC(idx_2).Unit)
-                                            && E.UnitEs(idx_2).ForPlayer(E.UnitPlayerTC(idx_0).Player).IsVisible
-                                            && !E.UnitPlayerTC(idx_2).Is(E.UnitPlayerTC(idx_0).Player))
-                                        {
-                                            if (E.UnitTC(idx_0).Is(UnitTypes.Pawn) && E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
-                                            {
-                                                if (!isRight_0)
-                                                {
-                                                    if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
-                                                    {
-                                                        E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_2);
-                                                    }
-
-                                                    else E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
-                                                }
-                                                else
-                                                {
-                                                    if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
-                                                    {
-                                                        E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_2);
-                                                    }
-
-                                                    else E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
-                                                }
+                                                else e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
                                             }
                                             else
                                             {
-                                                E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                                if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
+                                                {
+                                                    e.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                                }
+                                                else e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
                                             }
                                         }
+                                        else
+                                        {
+                                            e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                        }
+                                    }
+                                }
+
+                                var idx_2 = e.CellEs(idx_1).AroundCellE(dir_1).IdxC.Idx;
+
+
+                                if (e.UnitTC(idx_2).HaveUnit && !e.IsAnimal(e.UnitTC(idx_2).Unit)
+                                    && e.UnitEs(idx_2).ForPlayer(e.UnitPlayerTC(idx_0).Player).IsVisible
+                                    && !e.UnitPlayerTC(idx_2).Is(e.UnitPlayerTC(idx_0).Player))
+                                {
+                                    if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                    {
+                                        if (!isRight_0)
+                                        {
+                                            if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
+                                            {
+                                                e.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_2);
+                                            }
+
+                                            else e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                        }
+                                        else
+                                        {
+                                            if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
+                                            {
+                                                e.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_2);
+                                            }
+
+                                            else e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_2);
                                     }
                                 }
                             }

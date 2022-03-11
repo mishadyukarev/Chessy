@@ -5,64 +5,8 @@ namespace Chessy.Game
 {
     public readonly struct SystemsModel
     {
-        public SystemsModel(ref ActionC update, in EntitiesModel ents, in Action updateView, in Action updateUI, out Action runAfterDoing)
+        public SystemsModel(in EntitiesModel ents)
         {
-            update.Action +=
-                (Action)
-                new InputS(ents).Run
-                + new RayS(ents).Run
-                + new SelectorS(ents, updateView, updateUI).Run;
-
-
-
-            runAfterDoing = (Action)
-                //ClearingCells
-                new ClearCellsForSetUnitS(ents).Run
-                + new ClearEffectsKingS(ents).Run
-
-                + new DestroyBuildingS(ents).Run
-                + new AttackShieldS(ents).Run
-                + new UnitGetEffectsS(ents).Run
-                + new WorldClearTrailsS(ents).Run
-                + new WoodcutterExtractGetCellsS(ents).Run
-                + new FarmExtractGetCellsS(ents).Run
-
-
-            #region World
-
-                 + new WorldCountsAmountBuildingInGameS(ents).Run
-
-            #endregion
-
-
-            #region Unit
-
-                //Moving
-                + new UnitAttackUnitS(ents).Run
-                + new UnitShiftS(ents).Run
-
-                //Extract
-                + new PawnGetExtractAdultForestS(ents).Run
-                + new PawnExtractHillS(ents).Run
-                + new GetDamageUnitsS(ents).Run
-                + new UnitAbilityS(ents).Run
-
-
-
-                //Attack
-                + new ClearAttackCellsS(ents).Run
-                + new GetAttackMeleeCellsS(ents).Run
-                + new GetCellsForAttackArcherS(ents).Run
-
-                + new VisibleUnitAndBuildingS(ents).Run
-                + new GetCellsForShiftUnitS(ents).Run
-                + new GetCellForArsonArcherS(ents).Run;
-
-            #endregion
-
-               
-
-
             var truce = (Action)new TruceMS(ents).Run;
 
             var updateMove =
@@ -85,9 +29,6 @@ namespace Chessy.Game
                 + new MineExtractUpdateMS(ents).Run
                 + new IceWallGiveWaterUnitsUpdMS(ents).Run
                 + new IceWallFertilizeAroundUpdateMS(ents).Run
-                + new CitySetWoodcuttersAroundUpdateMS(ents).Run
-                + new CityExtractHillMS(ents).Run
-                + new SmelterSmeltUpdateMS(ents).Run
 
             #endregion
 
@@ -104,7 +45,7 @@ namespace Chessy.Game
                 + new PawnExtractAdultForestMS(ents).Run
                 + new ResumeUnitUpdMS(ents).Run
                 + new UpdateHealingUnitMS(ents).Run
-                + new UpdateHungryMS(ents).Run
+                + new UnitEatFoodUpdateS_M(ents).Run
                 + new ThirstyUnitsUpdateMS(ents).Run
                 + new PawnExtractHillUpdateMS(ents).Run
 

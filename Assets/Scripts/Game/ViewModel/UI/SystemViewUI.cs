@@ -5,9 +5,9 @@ namespace Chessy.Game.View.UI.System
 {
     public readonly struct SystemViewUI
     {
-        public SystemViewUI(ref ActionC update, ref ActionC fixedUpdate, in Resources res, in EntitiesViewUI entsUI, in EntitiesModel ents, out Action updateUI)
+        public SystemViewUI(ref ActionC update, in Resources res, in EntitiesViewUI entsUI, in EntitiesModel ents)
         {
-            updateUI = (Action)
+            update.Action += (Action)
 
             ///Right
             new RightZoneUIS(entsUI, ents).Run
@@ -18,12 +18,12 @@ namespace Chessy.Game.View.UI.System
             + new RightEffectsUIS(res, entsUI, ents).Run;
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                updateUI += new UniqueButtonUIS(buttonT, entsUI.RightEs.Unique(buttonT), res, ents).Run;
+                update.Action += new UniqueButtonUIS(buttonT, entsUI.RightEs.Unique(buttonT), res, ents).Run;
             }
 
 
             ///Down
-            updateUI += (Action)
+            update.Action += (Action)
             new DonerUIS(entsUI.DownEs.DonerE, ents).Run
             + new DownPawnUIS(entsUI.DownEs.PawnE, ents).Run
             + new DownToolWeaponUIS(entsUI.DownEs.ToolWeaponE, ents).Run
@@ -52,10 +52,6 @@ namespace Chessy.Game.View.UI.System
             + new LeftZonesUIS(entsUI, ents).Run
             + new EnvUIS(entsUI, ents).Run
             + new LeftCityUIS(entsUI, ents).Run;
-
-
-
-            fixedUpdate.Action += updateUI;
         }
     }
 }

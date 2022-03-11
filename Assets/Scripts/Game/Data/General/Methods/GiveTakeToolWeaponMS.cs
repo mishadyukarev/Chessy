@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -223,8 +224,8 @@ namespace Chessy.Game
 
                                         if (twT == ToolWeaponTypes.Shield)
                                         {
-                                            protection = levTW == LevelTypes.First ? CellUnitToolWeapon_Values.SHIELD_PROTECTION_LEVEL_FIRST
-                                                : CellUnitToolWeapon_Values.SHIELD_PROTECTION_LEVEL_SECOND;
+                                            protection = levTW == LevelTypes.First ? ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST
+                                                : ToolWeaponValues.SHIELD_PROTECTION_LEVEL_SECOND;
                                         }
 
                                         e.UnitExtraTWE(idx_0).Set(twT, levTW, protection);

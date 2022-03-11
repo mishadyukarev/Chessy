@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Game.Entity.Model.Cell;
+using System.Collections.Generic;
 
 namespace Chessy.Game
 {
@@ -6,7 +7,7 @@ namespace Chessy.Game
     {
         readonly Dictionary<PlayerTypes, bool> _isVisibled;
 
-        public CellBuildingMainE MainE;
+        public BuildingE MainE;
         public CellBuildingExtractE ExtractE;
 
         public bool IsVisible(in PlayerTypes player) => _isVisibled[player];

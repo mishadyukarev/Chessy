@@ -161,7 +161,7 @@ namespace Chessy.Game
 
             CellE = new CellE(idx, xy, idCell);
             BuildEs = new CellBuildingEs((byte)PlayerTypes.End);
-            UnitEs = new UnitEs(default);
+            UnitEs = new UnitEs(xy);
             RiverEs = new CellRiverE(default);
         }
     }

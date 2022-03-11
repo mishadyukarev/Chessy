@@ -3,169 +3,186 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class SelectorS : SystemAbstract, IEcsRunSystem
+    public struct SelectorS
     {
-        readonly Action _updateView;
-        readonly Action _updateUI;
+        //readonly Action _updateView;
+        //readonly Action _updateUI;
 
-        public SelectorS(in EntitiesModel ents, in Action updateView, in Action updateUI) : base(ents)
+        public SelectorS(in RaycastTypes raycastT, in EntitiesModel e)
         {
-            _updateView = updateView;
-            _updateUI = updateUI;
-        }
-
-        public void Run()
-        {
-            var idx_cur = E.CurrentIdxC.Idx;
+            var idx_cur = e.CurrentIdxC.Idx;
 
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
             {
-                if (Input.GetKey(KeyCode.Alpha1)) E.PlayerInfoE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha2)) E.PlayerInfoE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha3)) E.PlayerInfoE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha4)) E.PlayerInfoE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
-                if (Input.GetKey(KeyCode.Alpha5)) E.PlayerInfoE(E.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
+                if (Input.GetKey(KeyCode.Alpha1)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha2)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha3)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha4)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
+                if (Input.GetKey(KeyCode.Alpha5)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
             }
 
 
 
 
-            if (E.IsClicked)
+            if (Input.GetMouseButtonDown(0))
             {
-                if (E.RayCastTC.Is(RaycastTypes.Cell))
+                if (raycastT == RaycastTypes.Cell)
                 {
-                    E.IsSelectedCity = false;
+                    e.IsSelectedCity = false;
 
-                    if (!E.CurPlayerITC.Is(E.WhoseMove.Player))
+                    if (!e.CurPlayerITC.Is(e.WhoseMove.Player))
                     {
-                        E.SelectedIdxC.Idx = E.CurrentIdxC.Idx;
+                        e.SelectedIdxC.Idx = e.CurrentIdxC.Idx;
                     }
 
                     else
                     {
-                        switch (E.CellClickTC.Click)
+                        switch (e.CellClickTC.Click)
                         {
                             case CellClickTypes.None: throw new Exception();
 
                             case CellClickTypes.SimpleClick:
                                 {
-                                    if (E.SelectedIdxC.Idx > 0)
+                                    if (e.SelectedIdxC.Idx > 0)
                                     {
-                                        var curPlayerI = E.CurPlayerITC.Player;
+                                        var curPlayerI = e.CurPlayerITC.Player;
 
-                                        if (E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Contains(E.CurrentIdxC.Idx)
-                                            || E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Contains(E.CurrentIdxC.Idx))
+                                        if (e.UnitTC(e.SelectedIdxC.Idx).HaveUnit)
                                         {
-                                            E.RpcPoolEs.AttackUnitToMaster(E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
-                                        }
+                                            if (e.UnitEs(e.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Contains(e.CurrentIdxC.Idx)
+                                            || e.UnitEs(e.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Contains(e.CurrentIdxC.Idx))
+                                            {
+                                                e.RpcPoolEs.AttackUnitToMaster(e.SelectedIdxC.Idx, e.CurrentIdxC.Idx);
+                                            }
 
-                                        else if (E.UnitEs(E.SelectedIdxC.Idx).ForShift.Contains(E.CurrentIdxC.Idx))
-                                        {
-                                            E.RpcPoolEs.ShiftUnitToMaster(E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
-                                        }
+                                            else if (e.UnitEs(e.SelectedIdxC.Idx).ForShift.Contains(e.CurrentIdxC.Idx))
+                                            {
+                                                e.RpcPoolEs.ShiftUnitToMaster(e.SelectedIdxC.Idx, e.CurrentIdxC.Idx);
+                                            }
 
+                                            else
+                                            {
+                                                if (e.UnitTC(idx_cur).HaveUnit)
+                                                {
+                                                    if (e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
+                                                    {
+                                                        if (e.IsMelee(idx_cur))
+                                                        {
+                                                            e.Sound(ClipTypes.PickMelee).Invoke();
+                                                        }
+                                                        else
+                                                        {
+                                                            e.Sound(ClipTypes.PickArcher).Invoke();
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
                                         else
                                         {
-                                            if (E.UnitTC(idx_cur).HaveUnit)
+                                            if (e.UnitTC(idx_cur).HaveUnit)
                                             {
-                                                if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
+                                                if (e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
                                                 {
-                                                    if (E.IsMelee(idx_cur))
+                                                    if (e.IsMelee(idx_cur))
                                                     {
-                                                        E.Sound(ClipTypes.PickMelee).Invoke();
+                                                        e.Sound(ClipTypes.PickMelee).Invoke();
                                                     }
                                                     else
                                                     {
-                                                        E.Sound(ClipTypes.PickArcher).Invoke();
+                                                        e.Sound(ClipTypes.PickArcher).Invoke();
                                                     }
                                                 }
                                             }
                                         }
 
-                                        E.SelectedIdxC.Idx = E.CurrentIdxC.Idx;
+
+
+                                        e.SelectedIdxC.Idx = e.CurrentIdxC.Idx;
                                     }
 
                                     else
                                     {
-                                        if (E.UnitTC(idx_cur).HaveUnit)
+                                        if (e.UnitTC(idx_cur).HaveUnit)
                                         {
-                                            if (E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
+                                            if (e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
                                             {
-                                                if (E.IsMelee(idx_cur))
+                                                if (e.IsMelee(idx_cur))
                                                 {
-                                                    E.Sound(ClipTypes.PickMelee).Invoke();
+                                                    e.Sound(ClipTypes.PickMelee).Invoke();
                                                 }
                                                 else
                                                 {
-                                                    E.Sound(ClipTypes.PickArcher).Invoke();
+                                                    e.Sound(ClipTypes.PickArcher).Invoke();
                                                 }
                                             }
                                         }
 
-                                        E.SelectedIdxC.Idx = E.CurrentIdxC.Idx;
+                                        e.SelectedIdxC.Idx = e.CurrentIdxC.Idx;
                                     }
                                 }
                                 break;
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    E.RpcPoolEs.SetUniToMaster(E.CurrentIdxC.Idx, E.SelectedUnitE.UnitTC.Unit);
-                                    E.CellClickTC.Click = CellClickTypes.SimpleClick;
+                                    e.RpcPoolEs.SetUniToMaster(e.CurrentIdxC.Idx, e.SelectedUnitE.UnitTC.Unit);
+                                    e.CellClickTC.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    if (E.UnitTC(idx_cur).Is(UnitTypes.Pawn) && E.UnitPlayerTC(idx_cur).Is(E.CurPlayerITC.Player))
+                                    if (e.UnitTC(idx_cur).Is(UnitTypes.Pawn) && e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
                                     {
-                                        E.RpcPoolEs.GiveTakeToolWeaponToMaster(E.CurrentIdxC.Idx, E.SelectedTWE.ToolWeaponTC.ToolWeapon, E.SelectedTWE.LevelTC.Level);
+                                        e.RpcPoolEs.GiveTakeToolWeaponToMaster(e.CurrentIdxC.Idx, e.SelectedTWE.ToolWeaponTC.ToolWeapon, e.SelectedTWE.LevelTC.Level);
                                     }
                                     else
                                     {
-                                        E.CellClickTC.Click = CellClickTypes.SimpleClick;
-                                        E.SelectedIdxC.Idx= E.CurrentIdxC.Idx;
+                                        e.CellClickTC.Click = CellClickTypes.SimpleClick;
+                                        e.SelectedIdxC.Idx= e.CurrentIdxC.Idx;
                                     }
                                 }
                                 break;
 
                             case CellClickTypes.UniqueAbility:
                                 {
-                                    switch (E.SelectedAbilityTC.Ability)
+                                    switch (e.SelectedAbilityTC.Ability)
                                     {
                                         case AbilityTypes.FireArcher:
-                                            E.RpcPoolEs.FireArcherToMas(E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
+                                            e.RpcPoolEs.FireArcherToMas(e.SelectedIdxC.Idx, e.CurrentIdxC.Idx);
                                             break;
 
                                         case AbilityTypes.StunElfemale:
-                                            E.RpcPoolEs.StunElfemaleToMas(E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
+                                            e.RpcPoolEs.StunElfemaleToMas(e.SelectedIdxC.Idx, e.CurrentIdxC.Idx);
                                             break;
 
                                         case AbilityTypes.ChangeDirectionWind:
                                             {
-                                                foreach (var cellE in E.CellEs(E.CenterCloudIdxC.Idx).AroundCellEs)
+                                                foreach (var cellE in e.CellEs(e.CenterCloudIdxC.Idx).AroundCellEs)
                                                 {
-                                                    if (cellE.IdxC.Idx == E.CurrentIdxC.Idx)
+                                                    if (cellE.IdxC.Idx == e.CurrentIdxC.Idx)
                                                     {
-                                                        E.RpcPoolEs.PutOutFireElffToMas(E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
+                                                        e.RpcPoolEs.PutOutFireElffToMas(e.SelectedIdxC.Idx, e.CurrentIdxC.Idx);
                                                     }
                                                 }
                                             }
                                             break;
 
                                         case AbilityTypes.DirectWave:
-                                            E.RpcPoolEs.DirectWaveToMaster(E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
+                                            e.RpcPoolEs.DirectWaveToMaster(e.SelectedIdxC.Idx, e.CurrentIdxC.Idx);
                                             break;
 
                                         case AbilityTypes.Resurrect:
-                                            E.RpcPoolEs.ResurrectToMaster(E.SelectedIdxC.Idx, E.CurrentIdxC.Idx);
+                                            e.RpcPoolEs.ResurrectToMaster(e.SelectedIdxC.Idx, e.CurrentIdxC.Idx);
                                             break;
 
                                         default: throw new Exception();
                                     }
 
-                                    E.CellClickTC.Click = CellClickTypes.SimpleClick;
-                                    E.SelectedIdxC.Idx = E.CurrentIdxC.Idx;
+                                    e.CellClickTC.Click = CellClickTypes.SimpleClick;
+                                    e.SelectedIdxC.Idx = e.CurrentIdxC.Idx;
                                 }
                                 break;
 
@@ -174,37 +191,37 @@ namespace Chessy.Game
                     }
                 }
 
-                else if (E.RayCastTC.Is(RaycastTypes.UI))
+                else if (raycastT == RaycastTypes.UI)
                 {
                     //cellClick.Click = CellClickTypes.SimpleClick;
                     //Es.SelectedIdxE.Reset();
                 }
 
-                else if (E.RayCastTC.Is(RaycastTypes.Background))
+                else if (raycastT == RaycastTypes.Background)
                 {
-                    E.CellClickTC.Click = CellClickTypes.SimpleClick;
-                    E.SelectedIdxC.Idx = 0;
+                    e.CellClickTC.Click = CellClickTypes.SimpleClick;
+                    e.SelectedIdxC.Idx = 0;
                 }
 
-                _updateView.Invoke();
-                _updateUI.Invoke();
+                //_updateView.Invoke();
+                //_updateUI.Invoke();
             }
 
             else
             {
-                if (E.RayCastTC.Is(RaycastTypes.Cell))
+                if (raycastT == RaycastTypes.Cell)
                 {
-                    if (E.CellClickTC.Is(CellClickTypes.SetUnit))
+                    if (e.CellClickTC.Is(CellClickTypes.SetUnit))
                     {
-                        if (!E.UnitTC(idx_cur).HaveUnit || !E.UnitEs(idx_cur).ForPlayer(E.CurPlayerITC.Player).IsVisible)
+                        if (!e.UnitTC(idx_cur).HaveUnit || !e.UnitEs(idx_cur).ForPlayer(e.CurPlayerITC.Player).IsVisible)
                         {
-                            if (E.CurrentIdxC.Idx == 0)
+                            if (e.CurrentIdxC.Idx == 0)
                             {
-                                E.PreviousVisionIdxC = E.CurrentIdxC;
+                                e.PreviousVisionIdxC = e.CurrentIdxC;
                             }
                             else
                             {
-                                E.PreviousVisionIdxC = E.CurrentIdxC;
+                                e.PreviousVisionIdxC = e.CurrentIdxC;
                             }
                         }
                     }

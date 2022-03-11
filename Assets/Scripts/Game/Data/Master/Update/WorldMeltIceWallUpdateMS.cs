@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.System.Model;
+
+namespace Chessy.Game
 {
     internal class WorldMeltIceWallUpdateMS : SystemAbstract, IEcsRunSystem
     {
@@ -12,7 +14,7 @@
             {
                 if (E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    E.BuildEs(idx_0).MainE.AttackBuildingC.Damage += 0.5f;
+                    new DestroyBuildingS(0.5f, E.NextPlayer(E.BuildingPlayerTC(idx_0).Player).Player, idx_0, E);
                 }
             }
         }

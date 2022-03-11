@@ -110,12 +110,12 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (e.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        e.UnitExtraTWE(idx_from).DamageBrokeShieldC.Damage = 1f;
+                        new AttackShieldS(1f, idx_from, e);
                     }
 
                     else if (minus_from > 0)
                     {
-                        e.AttackUnitE(idx_from).Set(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player);
+                        new UnitAttackUnitS(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, e);
                     }
                 }
                 else
@@ -135,7 +135,7 @@ namespace Chessy.Game.System.Model.Master
 
                 else if (e.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    e.UnitExtraTWE(idx_to).DamageBrokeShieldC.Damage = 1f;
+                    new AttackShieldS(1f, idx_to, e);
                 }
 
                 else if (minus_to > 0)
@@ -151,7 +151,7 @@ namespace Chessy.Game.System.Model.Master
                         killer = e.NextPlayer(e.UnitPlayerTC(idx_to)).Player;
                     }
 
-                    e.AttackUnitE(idx_to).Set(minus_to, killer, idx_from);
+                    new UnitAttackUnitS(minus_to, killer, idx_to, e, idx_from);
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Entity.Model.Cell.Unit;
 using System.Collections.Generic;
 
 namespace Chessy.Game.Entity.Cell.Unit
@@ -7,7 +8,7 @@ namespace Chessy.Game.Entity.Cell.Unit
     {
         readonly AbilityTC[] _uniqueButtons;
         readonly CooldownC[] _abilities;
-        readonly UnitForPlayerE[] _visibles;
+        readonly ForPlayerE[] _visibles;
         readonly StepsC[] _needStepsForShift;
         readonly Dictionary<AttackTypes, IdxsCellsC> _forAttack;
 
@@ -15,13 +16,12 @@ namespace Chessy.Game.Entity.Cell.Unit
         public IdxsCellsC ForShift;
 
         public CellUnitMainE MainE;
-        public CellUnitStatsE StatsE;
+        public StatsE StatsE;
         public CellUnitEffectsE EffectsE;
         public CellUnitMainToolWeaponE MainToolWeaponE;
         public CellUnitExtraToolWeaponE ExtraToolWeaponE;
         public CellUnitWhoLastDiedHereE WhoLastDiedHereE;
         public CellUnitExtractE ExtractE;
-        public AttackToUnitE AttackUnitE;
 
 
         public IdxsCellsC ForAttack(in AttackTypes attack) => _forAttack[attack];
@@ -29,19 +29,19 @@ namespace Chessy.Game.Entity.Cell.Unit
 
         public ref AbilityTC Ability(in ButtonTypes button) => ref _uniqueButtons[(byte)button - 1];
         public ref CooldownC CoolDownC(in AbilityTypes ability) => ref _abilities[(byte)ability - 1];
-        public ref UnitForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player];
+        public ref ForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player];
 
 
-        internal UnitEs(in bool def) : this()
+        internal UnitEs(in byte[] xy) : this()
         {
             _uniqueButtons = new AbilityTC[(byte)ButtonTypes.End - 1];
 
             _abilities = new CooldownC[(byte)AbilityTypes.End - 1];
 
-            _visibles = new UnitForPlayerE[(byte)PlayerTypes.End];
+            _visibles = new ForPlayerE[(byte)PlayerTypes.End];
             for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
             {
-                _visibles[(byte)player] = new UnitForPlayerE();
+                _visibles[(byte)player] = new ForPlayerE();
             }
 
             ForArson = new IdxsCellsC(new HashSet<byte>());

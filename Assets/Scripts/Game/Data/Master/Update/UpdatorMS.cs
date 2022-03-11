@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
@@ -93,6 +94,9 @@ namespace Chessy.Game
                         }
                     }
                     E.UnitStepC(idx_0).Steps = StepValues.MAX;
+
+
+                    new GetDataUnitOnCellS(idx_0, E);
                 }
             }
 

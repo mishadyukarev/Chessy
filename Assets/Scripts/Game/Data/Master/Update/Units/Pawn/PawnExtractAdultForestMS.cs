@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values.Cell;
+﻿using Chessy.Game.System.Model;
+using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
@@ -26,7 +27,7 @@ namespace Chessy.Game
                     {
                         if (E.BuildingTC(idx_0).Is(BuildingTypes.Camp) || !E.BuildingTC(idx_0).HaveBuilding)
                         {
-                            E.BuildingMainE(idx_0).Set(BuildingTypes.Woodcutter, LevelTypes.First, 1, E.UnitPlayerTC(idx_0).Player);
+                            new BuildS(BuildingTypes.Woodcutter, LevelTypes.First, E.UnitPlayerTC(idx_0).Player, 1, idx_0, E);
                         }
 
                         else if (!E.BuildingTC(idx_0).Is(BuildingTypes.Woodcutter))

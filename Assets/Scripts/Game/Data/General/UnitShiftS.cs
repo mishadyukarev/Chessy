@@ -5,116 +5,125 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.System.Model
 {
-    sealed class UnitShiftS : SystemAbstract, IEcsRunSystem
+    public struct UnitShiftS
     {
-        internal UnitShiftS(in EntitiesModel eM) : base(eM) { }
-
-        public void Run()
+        public UnitShiftS(in byte idx_from, in byte idx_to, in EntitiesModel e)
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            e.UnitEs(idx_to).Set(e.UnitEs(idx_from));
+            e.UnitConditionTC(idx_to).Condition = ConditionUnitTypes.None;
+
+            e.UnitTC(idx_from).Unit = UnitTypes.None;
+
+
+            var direct = e.CellEs(idx_from).Direct(idx_to);
+
+            if (!e.UnitTC(idx_to).Is(UnitTypes.Undead))
             {
-                var idx_from = idx_0;
-
-                var idx_to = E.UnitMainE(idx_from).ShiftTo.Idx;
-
-                if (idx_to == 0) continue;
-
-                E.UnitEs(idx_to).Set(E.UnitEs(idx_from));
-                E.UnitConditionTC(idx_to).Condition = ConditionUnitTypes.None;
-
-                E.UnitTC(idx_from).Unit = UnitTypes.None;
-
-
-                var direct = E.CellEs(idx_from).Direct(idx_to);
-
-                if (!E.UnitTC(idx_to).Is(UnitTypes.Undead))
+                if (e.AdultForestC(idx_from).HaveAnyResources)
                 {
-                    if (E.AdultForestC(idx_from).HaveAnyResources)
-                    {
-                        E.CellEs(idx_from).TrailHealthC(direct).Health = TrailValues.HEALTH_TRAIL;
-                    }
-                    if (E.AdultForestC(idx_to).HaveAnyResources)
-                    {
-                        //if (E.PlayerE(E.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
-                        //{
-                        //    E.UnitHpC(idx_to).Health = HpValues.MAX;
-                        //}
+                    e.CellEs(idx_from).TrailHealthC(direct).Health = TrailValues.HEALTH_TRAIL;
+                    new TrailsVisibleS(idx_from, direct, e);
+                }
+                if (e.AdultForestC(idx_to).HaveAnyResources)
+                {
+                    //if (E.PlayerE(E.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
+                    //{
+                    //    E.UnitHpC(idx_to).Health = HpValues.MAX;
+                    //}
 
-                        if (E.UnitTC(idx_to).Is(UnitTypes.Pawn))
+                    if (e.UnitTC(idx_to).Is(UnitTypes.Pawn))
+                    {
+                        if (e.PlayerInfoE(e.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
                         {
-                            if (E.PlayerInfoE(E.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
-                            {
+                            new BuildS(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(idx_to).Player, BuildingValues.MAX_HP, idx_to, e);
+                        }
+                    }
 
-                                E.BuildingMainE(idx_to).Set(BuildingTypes.Woodcutter, LevelTypes.First, BuildingValues.MAX_HP, E.UnitPlayerTC(idx_to).Player);
+                    var dirTrail = direct.Invert();
+
+                    e.CellEs(idx_to).TrailHealthC(dirTrail).Health = TrailValues.HEALTH_TRAIL;
+                    new TrailsVisibleS(idx_to, dirTrail, e);
+                }
+
+                if (e.RiverEs(idx_to).RiverTC.HaveRiverNear)
+                {
+                    e.UnitWaterC(idx_to).Water = WaterValues.MAX;
+
+
+                    if (e.PlayerInfoE(e.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
+                    {
+                        if (e.UnitTC(idx_to).Is(UnitTypes.Pawn))
+                        {
+                            if (e.UnitMainTWTC(idx_to).Is(ToolWeaponTypes.BowCrossbow))
+                            {
+                                e.UnitEffectFrozenArrawC(idx_to).Shoots = 1;
+                            }
+                            else
+                            {
+                                e.UnitEffectShield(idx_to).Protection = ShieldValues.AFTER_DIRECT_WAVE;
                             }
                         }
-
-
-                        E.CellEs(idx_to).TrailHealthC(direct.Invert()).Health = TrailValues.HEALTH_TRAIL;
-                    }
-
-                    if (E.RiverEs(idx_to).RiverTC.HaveRiverNear)
-                    {
-                        E.UnitWaterC(idx_to).Water = WaterValues.MAX;
-
-
-                        if (E.PlayerInfoE(E.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
+                        else if (e.UnitTC(idx_to).Is(UnitTypes.King))
                         {
-                            if (E.UnitTC(idx_to).Is(UnitTypes.Pawn))
-                            {
-                                if (E.UnitMainTWTC(idx_to).Is(ToolWeaponTypes.BowCrossbow))
-                                {
-                                    E.UnitEffectFrozenArrawC(idx_to).Shoots = 1;
-                                }
-                                else
-                                {
-                                    E.UnitEffectShield(idx_to).Protection = ShieldValues.AFTER_DIRECT_WAVE;
-                                }
-                            }
-                            else if (E.UnitTC(idx_to).Is(UnitTypes.King))
-                            {
-                                E.UnitEffectShield(idx_to).Protection = ShieldValues.AFTER_DIRECT_WAVE;
-                            }
+                            e.UnitEffectShield(idx_to).Protection = ShieldValues.AFTER_DIRECT_WAVE;
                         }
                     }
                 }
+            }
 
-                switch (E.UnitTC(idx_to).Unit)
+            switch (e.UnitTC(idx_to).Unit)
+            {
+                case UnitTypes.Elfemale:
+                    //if (E.AdultForestC(idx_to).HaveAnyResources)
+                    //{
+                    //    E.AdultForestC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
+                    //}
+                    break;
+
+                case UnitTypes.Snowy:
+                    if (e.UnitWaterC(idx_to).Water > 0)
+                    {
+                        e.FertilizeC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
+                        e.HaveFire(idx_to) = false;
+                        e.UnitWaterC(idx_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
+                    }
+                    break;
+
+                case UnitTypes.Hell:
+                    if (e.AdultForestC(idx_to).HaveAnyResources)
+                    {
+                        e.EffectEs(idx_to).HaveFire = true;
+                    }
+                    break;
+            }
+
+            if (e.BuildingTC(idx_to).HaveBuilding && !e.BuildingTC(idx_to).Is(BuildingTypes.City))
+            {
+                if (!e.BuildingPlayerTC(idx_to).Is(e.UnitPlayerTC(idx_to).Player))
                 {
-                    case UnitTypes.Elfemale:
-                        //if (E.AdultForestC(idx_to).HaveAnyResources)
-                        //{
-                        //    E.AdultForestC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
-                        //}
-                        break;
+                    e.BuildingTC(idx_to).Building = BuildingTypes.None;
+                }
+            }
 
-                    case UnitTypes.Snowy:
-                        if (E.UnitWaterC(idx_to).Water > 0)
-                        {
-                            E.FertilizeC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
-                            E.HaveFire(idx_to) = false;
-                            E.UnitWaterC(idx_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
-                        }
-                        break;
+            new GetDataUnitOnCellS(idx_to, e);
 
-                    case UnitTypes.Hell:
-                        if (E.AdultForestC(idx_to).HaveAnyResources)
-                        {
-                            E.EffectEs(idx_to).HaveFire = true;
-                        }
-                        break;
+            foreach (var idx_1 in e.CellEs(idx_to).IdxsAround)
+            {
+                if (e.UnitTC(idx_1).HaveUnit)
+                {
+                    new GetDataUnitOnCellS(idx_1, e);
                 }
 
-                if (E.BuildingTC(idx_to).HaveBuilding && !E.BuildingTC(idx_to).Is(BuildingTypes.City))
+                if (e.CellEs(idx_1).IsActiveParentSelf)
                 {
-                    if (!E.BuildingPlayerTC(idx_to).Is(E.UnitPlayerTC(idx_to).Player))
+                    foreach (var idx_2 in e.CellEs(idx_1).IdxsAround)
                     {
-                        E.BuildingTC(idx_to).Building = BuildingTypes.None;
+                        if (e.UnitTC(idx_2).HaveUnit)
+                        {
+                            new GetDataUnitOnCellS(idx_2, e);
+                        }
                     }
                 }
-
-                E.UnitMainE(idx_from).ShiftTo.Idx = 0;
-                E.UnitMainE(idx_to).ShiftTo.Idx = 0;
             }
         }
     }

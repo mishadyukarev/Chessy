@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values.Cell;
+﻿using Chessy.Game.System.Model;
+using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game
@@ -19,12 +20,10 @@ namespace Chessy.Game
 
                     E.ResourcesC(E.BuildingPlayerTC(idx_0).Player, ResourceTypes.Wood).Resources += extract;
 
-                    E.AdultForestC(idx_0).Resources -= extract;
+                    new ExtractAdultForestS(extract, idx_0, E);
 
                     if (!E.AdultForestC(idx_0).HaveAnyResources)
                     {
-                        E.AdultForestC(idx_0).Resources = 0;
-
                         E.BuildingTC(idx_0).Building = BuildingTypes.None;
 
                         if (UnityEngine.Random.Range(0, 100) < 30)

@@ -4,12 +4,8 @@ namespace Chessy.Game
 {
     sealed class DownEventUIS : SystemUIAbstract
     {
-        readonly Action _updateUI;
-
-        internal DownEventUIS(in Action updateUI, in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal DownEventUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
-            _updateUI = updateUI;
-
             UIE.DownEs.DonerE.ButtonC.AddListener(Done);
 
             //UIE.DownEs.ScoutE.ButtonC.AddListener(ExecuteScout);
@@ -148,7 +144,7 @@ namespace Chessy.Game
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
 
-            _updateUI.Invoke();
+            //_updateUI.Invoke();
         }
         void TryOnHint(VideoClipTypes videoClip)
         {

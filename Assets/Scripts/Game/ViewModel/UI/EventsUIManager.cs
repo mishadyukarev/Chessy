@@ -10,9 +10,9 @@ namespace Chessy.Game.EventsUI
         public readonly BuildingEventsUI CenterBuildingEnventsUI;
         public readonly RightUnitEventsUI RightUnitEventUI;
 
-        public EventsUIManager(in Action updateView, in Action updateUI,  in EntitiesViewUI entsUI, in EntitiesModel ents)
+        public EventsUIManager(in EntitiesViewUI entsUI, in EntitiesModel ents)
         {  
-            new DownEventUIS(updateUI, entsUI, ents);
+            new DownEventUIS(entsUI, ents);
             RightUnitEventUI = new RightUnitEventsUI(entsUI, ents);
             new UpEventUIS(entsUI, ents);
 
@@ -21,7 +21,7 @@ namespace Chessy.Game.EventsUI
 
 
             LeftCityEventUI = new CityEventsUI(entsUI.LeftEs, ents);
-            new LeftEnvironmentEventUIS(updateView, entsUI, ents);
+            new LeftEnvironmentEventUIS(entsUI, ents);
         }
     }
 }

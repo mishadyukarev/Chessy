@@ -1,6 +1,9 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.Cell;
 using Chessy.Game.Entity.Cell.Unit;
+using Chessy.Game.Entity.Model.Cell;
+using Chessy.Game.Entity.Model.Cell.Unit;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
@@ -22,7 +25,6 @@ namespace Chessy.Game
         readonly Dictionary<UnitTypes, bool> _isAnimal;
         readonly Dictionary<UnitTypes, bool> _isHero;
         readonly Dictionary<string, bool> _isMelee;
-        readonly Dictionary<string, bool> _canSetUnit = new Dictionary<string, bool>();
 
 
         public PlayerTC WhoseMove;
@@ -34,7 +36,7 @@ namespace Chessy.Game
         public StrengthC StrengthWind;
 
         public CellClickC CellClickTC;
-        public RayCastTC RayCastTC;
+        //public RayCastTC RayCastTC;
 
         public AbilityTC SelectedAbilityTC;
         public SelectedBuildingsC SelectedBuildingsC;
@@ -50,7 +52,7 @@ namespace Chessy.Game
         public bool EnvIsActive;
         public bool FriendIsActive;
         public bool IsStartedGame;
-        public bool IsClicked;
+        //public bool IsClicked;
         public bool IsSelectedCity;
 
         public int Motions;
@@ -69,7 +71,7 @@ namespace Chessy.Game
         public PlayerUnitInfoE UnitUnfo(in PlayerTypes playerT, in UnitTypes unitT) => PlayerInfoE(playerT).UnitE(unitT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTC playerT, in LevelTC levT, in BuildingTC buildT) => ref PlayerInfoE(playerT.Player).LevelE(levT.Level).BuildingInfoE(buildT.Building);
-        public ref PlayerLevelBuildingInfoE BuildingsInfo(in CellBuildingMainE buildMainE) => ref PlayerInfoE(buildMainE.PlayerC.Player).LevelE(buildMainE.LevelTC.Level).BuildingInfoE(buildMainE.BuildingC.Building);
+        public ref PlayerLevelBuildingInfoE BuildingsInfo(in BuildingE buildMainE) => ref PlayerInfoE(buildMainE.PlayerTC.Player).LevelE(buildMainE.LevelTC.Level).BuildingInfoE(buildMainE.BuildingTC.Building);
         public ActionC Sound(in ClipTypes clip) => _sounds0[clip];
         public ref ActionC Sound(in AbilityTypes unique) => ref _sounds1[(int)unique - 1];
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
@@ -84,7 +86,6 @@ namespace Chessy.Game
         public bool IsHero(in UnitTypes unitT) => _isHero[unitT];
         public bool IsMelee(in UnitTypes unitT, in bool haveBowCrossbow) => _isMelee[unitT.ToString() + haveBowCrossbow];
         public bool IsMelee(in byte idx_cell) => _isMelee[UnitTC(idx_cell).Unit.ToString() + UnitMainTWTC(idx_cell).Is(ToolWeaponTypes.BowCrossbow)];
-        public bool CanSetUnit(in byte idx_cell, in bool haveUnit, in PlayerTypes playerT) => _canSetUnit[idx_cell.ToString() + haveUnit + playerT];
 
 
         #region Cells
@@ -107,11 +108,11 @@ namespace Chessy.Game
         public ref ConditionUnitTC UnitConditionTC(in byte idx) => ref UnitMainE(idx).ConditionTC;
         public ref IsRightArcherC UnitIsRightArcherC(in byte idx) => ref UnitMainE(idx).IsRightArcherC;
 
-        public ref CellUnitStatsE UnitStatsE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
+        public ref StatsE UnitStatsE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
         public ref HealthC UnitHpC(in byte idx) => ref UnitStatsE(idx).HealthC;
         public ref StepsC UnitStepC(in byte idx) => ref UnitStatsE(idx).StepC;
         public ref WaterC UnitWaterC(in byte idx) => ref UnitStatsE(idx).WaterC;
-        public ref DamageC DamageAttackC(in byte idx) => ref UnitStatsE(idx).DamageAttackC;
+        public ref DamageC DamageAttackC(in byte idx) => ref UnitStatsE(idx).DamageSimpleAttackC;
         public ref DamageC DamageOnCellC(in byte idx) => ref UnitStatsE(idx).DamageOnCellC;
 
         public ref CellUnitMainToolWeaponE UnitMainTWE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
@@ -132,11 +133,6 @@ namespace Chessy.Game
         public ref LevelTC LastDiedLevelTC(in byte idx) => ref LastDiedE(idx).LevelTC;
         public ref PlayerTC LastDiedPlayerTC(in byte idx) => ref LastDiedE(idx).PlayerTC;
 
-        public ref AttackToUnitE AttackUnitE(in byte idx_cell) => ref UnitEs(idx_cell).AttackUnitE;
-        public ref DamageC DamageAttackUnitC(in byte idx_cell) => ref AttackUnitE(idx_cell).AttackDamageC;
-        public ref PlayerTC AttackUnitKillerTC(in byte idx_cell) => ref AttackUnitE(idx_cell).WhoKillerC;
-        public ref IdxCellC AttackUnitFromIdxC(in byte idx_cell) => ref AttackUnitE(idx_cell).FromIdx;
-
 
         #region Effects
 
@@ -153,12 +149,11 @@ namespace Chessy.Game
         #region Building
 
         public ref CellBuildingEs BuildEs(in byte idx) => ref CellEs(idx).BuildEs;
-        public ref CellBuildingMainE BuildingMainE(in byte idx_cell) => ref BuildEs(idx_cell).MainE;
-        public ref BuildingTC BuildingTC(in byte idx) => ref BuildingMainE(idx).BuildingC;
+        public ref BuildingE BuildingMainE(in byte idx_cell) => ref BuildEs(idx_cell).MainE;
+        public ref BuildingTC BuildingTC(in byte idx) => ref BuildingMainE(idx).BuildingTC;
         public ref LevelTC BuildingLevelTC(in byte idx) => ref BuildingMainE(idx).LevelTC;
-        public ref PlayerTC BuildingPlayerTC(in byte idx) => ref BuildingMainE(idx).PlayerC;
+        public ref PlayerTC BuildingPlayerTC(in byte idx) => ref BuildingMainE(idx).PlayerTC;
         public ref HealthC BuildHpC(in byte idx) => ref BuildingMainE(idx).HealthC;
-        public ref bool IsActiveSmelter(in byte idx) => ref BuildingMainE(idx).IsActiveSmelter;
 
         public ref CellBuildingExtractE BuildingExtractE(in byte idx_cell) => ref BuildEs(idx_cell).ExtractE;
         public ref ResourcesC WoodcutterExtractE(in byte idx) => ref BuildingExtractE(idx).WoodcutterExtractC;
@@ -325,41 +320,6 @@ namespace Chessy.Game
 
 
 
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
-            {
-                foreach (var haveUnit in new[] { true, false })
-                {
-                    for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-                    {
-                        var xy = CellEs(idx_0).CellE.XyC.Xy;
-                        var x = xy[0];
-                        var y = xy[1];
-
-                        var canSet = false;
-
-                        if (playerT == PlayerTypes.First)
-                        {
-                            if (y < 3 && x > 3 && x < 12)
-                            {
-                                canSet = true;
-                            }
-                        }
-                        else
-                        {
-                            if (y > 7 && x > 3 && x < 12)
-                            {
-                                canSet = true;
-                            }
-                        }
-
-
-                        _canSetUnit.Add(idx_0.ToString() + haveUnit + playerT, canSet);
-                    }
-                }
-            }
-
-
-
             switch (GameModeC.CurGameMode)
             {
                 case GameModes.TrainingOff:
@@ -478,21 +438,18 @@ namespace Chessy.Game
 
                         if (AdultForestC(idx_0).HaveAnyResources)
                         {
-                            AdultForestC(idx_0).Resources = 0;
-                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                            {
-                                CellEs(idx_0).TrailHealthC(dirT).Health = 0;
-                            }
+                            new ExtractAdultForestS(1f, idx_0, this);
                         }
                         UnitTC(idx_0).Unit = UnitTypes.King;
                         UnitLevelTC(idx_0).Level = LevelTypes.First;
                         UnitPlayerTC(idx_0).Player = PlayerTypes.Second;
                         UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
 
-
                         UnitHpC(idx_0).Health = HpValues.MAX;
                         UnitStepC(idx_0).Steps = StepValues.MAX;
                         UnitWaterC(idx_0).Water = WaterValues.MAX;
+
+                        new GetVisibleUnitS(idx_0, this);
                     }
 
                     else if (x == 8 && y == 8)
@@ -501,11 +458,7 @@ namespace Chessy.Game
 
                         if (AdultForestC(idx_0).HaveAnyResources)
                         {
-                            AdultForestC(idx_0).Resources = 0;
-                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                            {
-                                CellEs(idx_0).TrailHealthC(dirT).Health = 0;
-                            }
+                            new ExtractAdultForestS(1f, idx_0, this);
                         }
 
                         //BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, Building_Values.HELTH_CITY, PlayerTypes.Second);
@@ -538,8 +491,10 @@ namespace Chessy.Game
                         {
                             UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Shield;
                             UnitExtraLevelTC(idx_0).Level = LevelTypes.First;
-                            UnitExtraProtectionTC(idx_0).Protection = CellUnitToolWeapon_Values.SHIELD_PROTECTION_LEVEL_FIRST;
+                            UnitExtraProtectionTC(idx_0).Protection = ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST;
                         }
+
+                        new GetVisibleUnitS(idx_0, this);
                     }
                 }
             }

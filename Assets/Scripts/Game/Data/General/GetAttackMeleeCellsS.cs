@@ -1,51 +1,52 @@
 ﻿using Chessy.Game.Values.Cell.Unit.Stats;
+using System;
 
 namespace Chessy.Game.System.Model
 {
-    sealed class GetAttackMeleeCellsS : SystemAbstract, IEcsRunSystem
+    public struct GetAttackMeleeCellsS
     {
-        internal GetAttackMeleeCellsS(in EntitiesModel eM) : base(eM) { }
-
-        public void Run()
+        public GetAttackMeleeCellsS(in byte idx_0, in EntitiesModel e)
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            if (!e.UnitTC(idx_0).HaveUnit) throw new Exception();
+
+            e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Clear();
+            e.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Clear();
+
+            if (!e.UnitEffectStunC(idx_0).IsStunned)
             {
-                if (!E.UnitEffectStunC(idx_0).IsStunned)
+                if (e.UnitTC(idx_0).HaveUnit && e.IsMelee(idx_0) && !e.IsAnimal(e.UnitTC(idx_0).Unit)
+                    && !e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                 {
-                    if (E.UnitTC(idx_0).HaveUnit && E.IsMelee(idx_0) && !E.IsAnimal(E.UnitTC(idx_0).Unit)
-                        && !E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                    DirectTypes dir_cur = default;
+
+                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        DirectTypes dir_cur = default;
+                        var idx_1 = e.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                        dir_cur += 1;
+
+                        if (!e.MountainC(idx_1).HaveAnyResources)
                         {
-                            var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+                            var haveMaxSteps = e.UnitStepC(idx_0).Steps >= StepValues.MAX;
 
-                            dir_cur += 1;
-
-                            if (!E.EnvironmentEs(idx_1).MountainC.HaveAnyResources)
+                            if (e.UnitStepC(idx_0).Steps >= e.UnitEs(idx_0).NeedSteps(idx_1).Steps || haveMaxSteps)
                             {
-                                var haveMaxSteps = E.UnitStepC(idx_0).Steps >= StepValues.MAX;
-
-                                if (E.UnitStepC(idx_0).Steps >= E.UnitEs(idx_0).NeedSteps(idx_1).Steps || haveMaxSteps)
+                                if (e.UnitTC(idx_1).HaveUnit)
                                 {
-                                    if (E.UnitTC(idx_1).HaveUnit)
+                                    if (!e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(idx_0).Player))
                                     {
-                                        if (!E.UnitPlayerTC(idx_1).Is(E.UnitPlayerTC(idx_0).Player))
+                                        if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
                                         {
-                                            if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                                            if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
+                                           || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                             {
-                                                if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
-                                               || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
-                                                {
-                                                    E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
-                                                }
-                                                else E.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                                e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
                                             }
-                                            else
-                                            {
-                                                E.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
-                                            }
+                                            else e.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                        }
+                                        else
+                                        {
+                                            e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Add(idx_1);
                                         }
                                     }
                                 }

@@ -1,29 +1,29 @@
-﻿namespace Chessy.Game.System.Model
+﻿using System;
+
+namespace Chessy.Game.System.Model
 {
-    sealed class GetCellForArsonArcherS : SystemAbstract
+    public struct GetCellForArsonArcherS
     {
-        internal GetCellForArsonArcherS(in EntitiesModel ents) : base(ents) { }
-
-        public void Run()
+        public GetCellForArsonArcherS(in byte idx_0, in EntitiesModel e)
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            if (!e.UnitTC(idx_0).HaveUnit) throw new Exception();
+
+
+            e.UnitEs(idx_0).ForArson.Clear();
+
+            if (!e.UnitEffectStunC(idx_0).IsStunned)
             {
-                E.UnitEs(idx_0).ForArson.Clear();
-
-                if (!E.UnitEffectStunC(idx_0).IsStunned)
+                if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                 {
-                    if (E.UnitTC(idx_0).Is(UnitTypes.Pawn) && E.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                        {
-                            var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+                        var idx_1 = e.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
 
-                            if (!E.EffectEs(idx_1).HaveFire)
+                        if (!e.EffectEs(idx_1).HaveFire)
+                        {
+                            if (e.AdultForestC(idx_1).HaveAnyResources)
                             {
-                                if (E.AdultForestC(idx_1).HaveAnyResources)
-                                {
-                                    E.UnitEs(idx_0).ForArson.Add(idx_1);
-                                }
+                                e.UnitEs(idx_0).ForArson.Add(idx_1);
                             }
                         }
                     }

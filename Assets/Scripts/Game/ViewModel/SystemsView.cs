@@ -4,10 +4,14 @@ namespace Chessy.Game
 {
     public readonly struct SystemsView
     {
-        public SystemsView(ref ActionC update, ref ActionC fixedUpdate, in EntitiesModel ents, in EntitiesView entsView, out Action updateView)
+        public SystemsView(ref ActionC update, in EntitiesModel ents, in EntitiesView entsView)
         {
-            updateView = (Action)
-            new UnitStatCellSyncS(ents, entsView).Run
+            update.Action +=
+                (Action)
+            new CellUnitVS(ents, entsView).Run
+            + new CellUnitSelectedVS(ents, entsView).Run
+            + new CellSupportVS(ents, entsView).Run
+            + new UnitStatCellSyncS(ents, entsView).Run
             + new BuildCellVS(ents, entsView).Run
             + new EnvCellVS(ents, entsView).Run
             + new CellFireVS(ents, entsView).Run
@@ -23,16 +27,6 @@ namespace Chessy.Game
 
             + new RotateAllVS(ents, entsView).Run
             + new SoundVS(ents, entsView).Run;
-
-
-            update.Action +=
-                (Action)
-            new CellUnitVS(ents, entsView).Run
-            + new CellUnitSelectedVS(ents, entsView).Run
-            + new CellSupportVS(ents, entsView).Run;
-
-
-            fixedUpdate.Action += updateView;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chessy.Game.Entity.View.Cell;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,11 +14,11 @@ namespace Chessy.Game
         public GameObjectVC CellGO;
         public SpriteRendererVC CellSR;
 
-        public readonly CellFireVE FireVE;
-        public readonly CellEnvironmentVEs EnvironmentVEs;
+        public readonly FireVE FireVE;
+        public readonly EnvironmentVEs EnvironmentVEs;
         public readonly CellUnitVEs UnitVEs;
         public readonly CellBuildingVEs BuildingEs;
-        public SpriteRendererVC CloudCellVC;
+        public readonly SpriteRendererVC CloudCellVC;
 
         public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
         public SpriteRendererVC Block(in CellBlockTypes block) => _blocks[block];
@@ -39,12 +40,12 @@ namespace Chessy.Game
             CellSR = new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>());
 
 
-            FireVE = new CellFireVE(cell);
+            FireVE = new FireVE(cell);
 
 
 
             BuildingEs = new CellBuildingVEs(cell);
-            EnvironmentVEs = new CellEnvironmentVEs(cell, idx);
+            EnvironmentVEs = new EnvironmentVEs(cell, idx);
             UnitVEs = new CellUnitVEs(cell.transform);
 
 

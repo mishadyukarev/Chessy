@@ -3,148 +3,142 @@ using System;
 
 namespace Chessy.Game.System.Model
 {
-    sealed class GetDamageUnitsS : SystemAbstract, IEcsRunSystem
+    public struct GetDamageUnitsS
     {
-        internal GetDamageUnitsS(in EntitiesModel eM) : base(eM) { }
-
-        public void Run()
+        public GetDamageUnitsS(in byte idx_0, in EntitiesModel e)
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            if (!e.UnitTC(idx_0).HaveUnit) throw new Exception();
+
+            var powerDamage = 0f;
+
+
+            ref var unitTC = ref e.UnitTC(idx_0);
+
+            switch (e.UnitLevelTC(idx_0).Level)
             {
-                if (E.UnitTC(idx_0).HaveUnit)
-                {
-                    var powerDamage = 0f;
-
-
-                    ref var unitTC = ref E.UnitTC(idx_0);
-
-                    switch (E.UnitLevelTC(idx_0).Level)
+                case LevelTypes.First:
+                    switch (unitTC.Unit)
                     {
-                        case LevelTypes.First:
-                            switch (unitTC.Unit)
-                            {
-                                case UnitTypes.King:
-                                    powerDamage = DamageValues.KING;
-                                    break;
-
-                                case UnitTypes.Pawn:
-                                    powerDamage = DamageValues.PAWN;
-                                    break;
-
-                                case UnitTypes.Elfemale:
-                                    powerDamage = DamageValues.ELFEMALE;
-                                    break;
-
-                                case UnitTypes.Snowy:
-                                    powerDamage = DamageValues.SNOWY;
-                                    break;
-
-                                case UnitTypes.Undead:
-                                    powerDamage = DamageValues.UNDEAD;
-                                    break;
-
-                                case UnitTypes.Hell:
-                                    powerDamage = DamageValues.HELL;
-                                    break;
-
-                                case UnitTypes.Skeleton:
-                                    powerDamage = DamageValues.SKELETON;
-                                    break;
-
-                                case UnitTypes.Camel:
-                                    powerDamage = DamageValues.CAMEL;
-                                    break;
-
-                                default: throw new Exception();
-                            }
+                        case UnitTypes.King:
+                            powerDamage = DamageValues.KING;
                             break;
+
+                        case UnitTypes.Pawn:
+                            powerDamage = DamageValues.PAWN;
+                            break;
+
+                        case UnitTypes.Elfemale:
+                            powerDamage = DamageValues.ELFEMALE;
+                            break;
+
+                        case UnitTypes.Snowy:
+                            powerDamage = DamageValues.SNOWY;
+                            break;
+
+                        case UnitTypes.Undead:
+                            powerDamage = DamageValues.UNDEAD;
+                            break;
+
+                        case UnitTypes.Hell:
+                            powerDamage = DamageValues.HELL;
+                            break;
+
+                        case UnitTypes.Skeleton:
+                            powerDamage = DamageValues.SKELETON;
+                            break;
+
+                        case UnitTypes.Camel:
+                            powerDamage = DamageValues.CAMEL;
+                            break;
+
+                        default: throw new Exception();
                     }
+                    break;
+            }
 
-                    if (E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).WhereKingEffects.Contains(idx_0)) powerDamage *= 1.25f;
-
-
-                    if (E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Hell))
-                    {
-                        if (unitTC.Is(UnitTypes.Pawn))
-                        {
-                            powerDamage *= 1.5f;
-                        }
-                    }
+            if (e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).WhereKingEffects.Contains(idx_0)) powerDamage *= 1.25f;
 
 
-                    if (E.UnitMainTWTC(idx_0).HaveToolWeapon)
-                    {
-                        if (E.UnitLevelTC(idx_0).Is(LevelTypes.Second))
-                        {
-                            if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
-                            {
-                                powerDamage += powerDamage * DamageValues.BOW_CROSSBOW_SECOND;
-                            }
-                            else if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
-                            {
-                                powerDamage += powerDamage * DamageValues.AXE_SECOND;
-                            }
-                        }
-                    }
-                    if (E.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.Sword)) powerDamage += powerDamage * DamageValues.SWORD;
-
-                    if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
-
-
-                    E.DamageAttackC(idx_0).Damage = powerDamage;
-
-
-
-
-                    if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Protected))
-                    {
-                        powerDamage += powerDamage * DamageValues.PROTECTED;
-                    }
-                    else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
-                    {
-                        powerDamage += powerDamage * DamageValues.RELAXED;
-                    }
-
-                    if (E.BuildingTC(idx_0).HaveBuilding)
-                    {
-                        var p = 0f;
-
-                        switch (E.BuildingTC(idx_0).Building)
-                        {
-                            case BuildingTypes.City:
-                                p = DamageValues.CITY;
-                                break;
-
-                            case BuildingTypes.Farm:
-                                p = DamageValues.FARM;
-                                break;
-
-                            case BuildingTypes.Woodcutter:
-                                p = DamageValues.WOODCUTTER;
-                                break;
-
-                            default:
-                                break;
-                        }
-
-
-                        powerDamage += powerDamage * p;
-                    }
-
-                    float protectionPercent = 0;
-
-                    if (E.FertilizeC(idx_0).HaveAnyResources) protectionPercent += DamageValues.FERTILIZER;
-                    if (E.AdultForestC(idx_0).HaveAnyResources) protectionPercent += DamageValues.ADULT_FOREST;
-                    if (E.HillC(idx_0).HaveAnyResources) protectionPercent += DamageValues.HILL;
-
-                    powerDamage += powerDamage * protectionPercent;
-
-
-                    if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
-
-                    E.DamageOnCellC(idx_0).Damage = powerDamage;
+            if (e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Hell))
+            {
+                if (unitTC.Is(UnitTypes.Pawn))
+                {
+                    powerDamage *= 1.5f;
                 }
             }
+
+
+            if (e.UnitMainTWTC(idx_0).HaveToolWeapon)
+            {
+                if (e.UnitLevelTC(idx_0).Is(LevelTypes.Second))
+                {
+                    if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                    {
+                        powerDamage += powerDamage * DamageValues.BOW_CROSSBOW_SECOND;
+                    }
+                    else if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                    {
+                        powerDamage += powerDamage * DamageValues.AXE_SECOND;
+                    }
+                }
+            }
+            if (e.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.Sword)) powerDamage += powerDamage * DamageValues.SWORD;
+
+            if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
+
+
+            e.DamageAttackC(idx_0).Damage = powerDamage;
+
+
+
+
+            if (e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Protected))
+            {
+                powerDamage += powerDamage * DamageValues.PROTECTED;
+            }
+            else if (e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
+            {
+                powerDamage += powerDamage * DamageValues.RELAXED;
+            }
+
+            if (e.BuildingTC(idx_0).HaveBuilding)
+            {
+                var p = 0f;
+
+                switch (e.BuildingTC(idx_0).Building)
+                {
+                    case BuildingTypes.City:
+                        p = DamageValues.CITY;
+                        break;
+
+                    case BuildingTypes.Farm:
+                        p = DamageValues.FARM;
+                        break;
+
+                    case BuildingTypes.Woodcutter:
+                        p = DamageValues.WOODCUTTER;
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+                powerDamage += powerDamage * p;
+            }
+
+            float protectionPercent = 0;
+
+            if (e.FertilizeC(idx_0).HaveAnyResources) protectionPercent += DamageValues.FERTILIZER;
+            if (e.AdultForestC(idx_0).HaveAnyResources) protectionPercent += DamageValues.ADULT_FOREST;
+            if (e.HillC(idx_0).HaveAnyResources) protectionPercent += DamageValues.HILL;
+
+            powerDamage += powerDamage * protectionPercent;
+
+
+            if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
+
+            e.DamageOnCellC(idx_0).Damage = powerDamage;
         }
     }
 }
