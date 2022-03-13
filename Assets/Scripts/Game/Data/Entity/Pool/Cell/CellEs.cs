@@ -30,7 +30,11 @@ namespace Chessy.Game
         public CellE[] AroundCellEs => (CellE[])_aroundEs.Clone();
         public DirectTypes Direct(in byte idx_cell)
         {
-            return _aroundDirs_0.ContainsKey(idx_cell) ? _aroundDirs_0[idx_cell] : _aroundDirs_1[idx_cell];
+            if (_aroundDirs_0.ContainsKey(idx_cell)) return _aroundDirs_0[idx_cell];
+            else if(_aroundDirs_1.ContainsKey(idx_cell)) return _aroundDirs_1[idx_cell];
+
+            return DirectTypes.None;
+
         }
         public IdxCellC[] AroundCellIdxsC
         {

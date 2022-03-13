@@ -4,10 +4,9 @@ namespace Chessy.Game
 {
     public readonly struct SystemsView
     {
-        public SystemsView(ref ActionC update, in EntitiesModel ents, in EntitiesView entsView)
+        public SystemsView(ref Action update, in EntitiesModel ents, in EntitiesView entsView)
         {
-            update.Action +=
-                (Action)
+            update += (Action)
             new CellUnitVS(ents, entsView).Run
             + new CellUnitSelectedVS(ents, entsView).Run
             + new CellSupportVS(ents, entsView).Run

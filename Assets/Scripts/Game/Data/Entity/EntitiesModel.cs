@@ -62,6 +62,9 @@ namespace Chessy.Game
         public SelectedToolWeaponE SelectedTWE;
 
 
+        public readonly ResourcesE Resources;
+
+
         public ForPlayerPoolEs PlayerInfoE(in PlayerTypes player) => _forPlayerEs[player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);
         public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT);
@@ -128,7 +131,7 @@ namespace Chessy.Game
         public ref ResourcesC PawnExtractAdultForestE(in byte idx) => ref UnitExtactE(idx).PawnExtractAdultForestE;
         public ref ResourcesC PawnExtractHillE(in byte idx) => ref UnitExtactE(idx).PawnExtractHillE;
 
-        public ref CellUnitWhoLastDiedHereE LastDiedE(in byte idx) => ref UnitEs(idx).WhoLastDiedHereE;
+        public ref WhoLastDiedHereE LastDiedE(in byte idx) => ref UnitEs(idx).WhoLastDiedHereE;
         public ref UnitTC LastDiedUnitTC(in byte idx) => ref LastDiedE(idx).UnitTC;
         public ref LevelTC LastDiedLevelTC(in byte idx) => ref LastDiedE(idx).LevelTC;
         public ref PlayerTC LastDiedPlayerTC(in byte idx) => ref LastDiedE(idx).PlayerTC;
@@ -202,6 +205,9 @@ namespace Chessy.Game
             CellClickTC = new CellClickC(StartValues.CELL_CLICK);
             SelectedTWE = new SelectedToolWeaponE(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
             StrengthWind = new StrengthC(StartValues.STRENGTH_WIND);
+
+
+            Resources = new Game.ResourcesE(default);
 
             var i = 0;
 
@@ -418,6 +424,13 @@ namespace Chessy.Game
                         }
                     }
                 }
+
+
+                for (byte idx_0 = 0; idx_0 < LengthCells; idx_0++)
+                {
+                    new MountainThrowHillsUpdMS(idx_0, this);
+                }
+
             }
 
 
@@ -438,7 +451,7 @@ namespace Chessy.Game
 
                         if (AdultForestC(idx_0).HaveAnyResources)
                         {
-                            new ExtractAdultForestS(1f, idx_0, this);
+                            new TakeAdultForestResourcesS(1f, idx_0, this);
                         }
                         UnitTC(idx_0).Unit = UnitTypes.King;
                         UnitLevelTC(idx_0).Level = LevelTypes.First;
@@ -458,7 +471,7 @@ namespace Chessy.Game
 
                         if (AdultForestC(idx_0).HaveAnyResources)
                         {
-                            new ExtractAdultForestS(1f, idx_0, this);
+                            new TakeAdultForestResourcesS(1f, idx_0, this);
                         }
 
                         //BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, Building_Values.HELTH_CITY, PlayerTypes.Second);

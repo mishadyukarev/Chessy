@@ -1,11 +1,10 @@
-﻿using ECS;
-using Chessy.Common;
+﻿using Chessy.Common;
 using Chessy.Game;
+using Chessy.Game.EventsUI;
 using Chessy.Menu;
+using ECS;
 using System;
 using UnityEngine;
-using Chessy.Game.EventsUI;
-using Chessy.Game.View.UI.System;
 
 namespace Chessy
 {
@@ -99,22 +98,17 @@ namespace Chessy
 
                 case SceneTypes.Game:
                     {
-                        var resources = new Game.Resources(default);
-
                         var entViews = new EntitiesView(out var forData);
-                        var uIEs = new EntitiesViewUI();
                         var ents = new EntitiesModel(forData, Rpc.NamesMethods);
+                        var uIEs = new EntitiesViewUI(ents);
+
+                        _runUpdate.Action =
+                            new UpdateModelS(ents).Run
+                            + uIEs.UpdateC.Action;
+                            new SystemsView(ref _runUpdate.Action, ents, entViews);
 
 
-                        _runUpdate.Action = new UpdateModelS(ents).Run;
-                        new SystemViewUI(ref _runUpdate, resources, uIEs, ents);
-                        new SystemsView(ref _runUpdate, ents, entViews);
-                        new SystemsModel(ents);
-
-
-
-
-                        var eventsUI = new EventsUIManager(uIEs,  ents);
+                        var eventsUI = new EventsUIManager(uIEs, ents);
 
                         entViews.EntityVPool.Photon.AddComponent<Rpc>().GiveData(ents, eventsUI);
                         Rpc.SyncAllMaster();

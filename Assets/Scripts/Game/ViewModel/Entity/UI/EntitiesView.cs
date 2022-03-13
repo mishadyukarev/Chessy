@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.View.Cell;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Chessy.Game
         public CellUnitVE UnitE(in byte idx, in bool isSelected, in LevelTypes levT, in UnitTypes unitT) => UnitEs(idx).UnitE(isSelected, levT, unitT);
         public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
         public EnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
-        public EnvironmentVE EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
+        public SpriteRendererVC EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
 
 
         public EntityVPool EntityVPool;
@@ -94,6 +95,8 @@ namespace Chessy.Game
 
 
             CameraVC.Camera = Camera.main;
+
+
 
 
             var isActiveParenCells = new bool[StartValues.CELLS];

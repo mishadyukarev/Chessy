@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Entity.View.UI.Right;
 using Chessy.Game.View.UI.Entity.Right;
 using System.Collections.Generic;
 
@@ -15,7 +16,7 @@ namespace Chessy.Game
         public readonly GameObjectVC Zone;
         public RightStatsUIEs StatsE;
         public RightProtectUIE ProtectE;
-        public RightRelaxUIE RelaxE;
+        public RelaxUIE RelaxE;
 
         public RightUIEs(in bool def)
         {
@@ -29,7 +30,7 @@ namespace Chessy.Game
 
             var conditionZone = rightZone.Find("ConditionZone");
             ProtectE = new RightProtectUIE(conditionZone);
-            RelaxE = new RightRelaxUIE(conditionZone);
+            RelaxE = new RelaxUIE(conditionZone);
 
 
             _uniques = new Dictionary<ButtonTypes, UniqueButtonUIE>();

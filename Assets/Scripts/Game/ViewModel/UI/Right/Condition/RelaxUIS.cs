@@ -1,44 +1,55 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Entity.View.UI.Right;
+using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class RelaxUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class RelaxUIS : SystemAbstract, IEcsRunSystem
     {
-        internal RelaxUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        readonly RelaxUIE _relaxE;
+
+        internal RelaxUIS(in RelaxUIE relaxUIE, in EntitiesModel ents) : base(ents)
         {
+            _relaxE = relaxUIE;
         }
 
         public void Run()
         {
-            //var idx_sel = E.SelectedIdxC.Idx;
+            var idx_0 = E.SelectedIdxC.Idx;
 
-            //var activeButt = false;
+            var activeButt = false;
 
-            //if (E.UnitTC(idx_sel).HaveUnit)
-            //{
-            //    if (E.UnitPlayerTC(idx_sel).Is(E.CurPlayerITC.Player))
-            //    {
-            //        activeButt = true;
+            if (E.UnitTC(idx_0).HaveUnit)
+            {
+                if (E.UnitPlayerTC(idx_0).Is(E.CurPlayerITC.Player))
+                {
+                    activeButt = true;
 
-            //        if (E.UnitConditionTC(idx_sel).Is(ConditionUnitTypes.Relaxed))
-            //        {
-            //            RightRelaxUIE.Button<ImageUIC>().Color = Color.green;
-            //        }
-            //        else
-            //        {
-            //            RightRelaxUIE.Button<ImageUIC>().Color = Color.white;
-            //        }
+                    _relaxE.ImageUIC.Image.color = E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
 
-            //        RightRelaxUIE.Button<GameObjectVC>(UnitTypes.King).SetActive(false);
-            //        RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Pawn).SetActive(false);
-            //        RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Scout).SetActive(false);
-            //        RightRelaxUIE.Button<GameObjectVC>(UnitTypes.Elfemale).SetActive(false);
+                    for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
+                    {
+                        _relaxE.Button(unitT).SetActive(false);
+                    }
 
-            //        RightRelaxUIE.Button<GameObjectVC>(E.UnitTC(idx_sel).Unit).SetActive(true);
-            //    }
-            //}
+                    if (E.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                    {
+                        if (E.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                        {
+                            _relaxE.Button(E.UnitTC(idx_0).Unit).SetActive(true);
+                        }
+                        else
+                        {
+                            _relaxE.Button(E.UnitTC(idx_0).Unit).SetActive(false);
+                        }
+                    }
+                    else
+                    {
+                        _relaxE.Button(E.UnitTC(idx_0).Unit).SetActive(true);
+                    }
+                }
+            }
 
-            //RightRelaxUIE.Button<ButtonUIC>().SetActive(activeButt);
+            _relaxE.ButtonC.Button.gameObject.SetActive(activeButt);
         }
     }
 }

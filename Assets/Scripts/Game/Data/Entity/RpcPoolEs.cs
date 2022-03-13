@@ -7,8 +7,6 @@ namespace Chessy.Game
 {
     public struct RpcPoolEs
     {
-        public PlayerPhotonC SenderC;
-        public Action Doner;
         public Action<UnitTypes> UpgradeCenter;
         public UpgradeCenterUnitE CenterUpgradeUnitE;
 
@@ -117,7 +115,6 @@ namespace Chessy.Game
         public void ReadyToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Ready });
 
         public void DoneToMaster() => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Done, });
-        public void Done() => Doner.Invoke();
 
         public void GetHeroToMaster(UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GetHero, unit });
 

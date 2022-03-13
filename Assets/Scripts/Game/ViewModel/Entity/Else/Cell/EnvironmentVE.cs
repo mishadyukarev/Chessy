@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+﻿//using UnityEngine;
 
-namespace Chessy.Game
-{
-    public readonly struct EnvironmentVE
-    {
-        public readonly SpriteRendererVC SR;
+//namespace Chessy.Game
+//{
+//    public readonly struct EnvironmentVE
+//    {
+//        public readonly SpriteRendererVC SR;
 
-        internal EnvironmentVE(in SpriteRenderer sr)
-        {
-            SR = new SpriteRendererVC(sr);
-        }
-    }
-}
+//        internal EnvironmentVE(in SpriteRenderer sr)
+//        {
+//            SR = new SpriteRendererVC(sr);
+//        }
+//    }
+//}

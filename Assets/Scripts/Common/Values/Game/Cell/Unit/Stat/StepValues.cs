@@ -123,7 +123,6 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
 
         #endregion
 
-        public const float FERTILIZER = 0;
         public const float YOUNG_FOREST = 0;
         public const float ADULT_FOREST = 0.5f;
         public const float HILL = 0.5f;

@@ -45,7 +45,7 @@ namespace Chessy.Game
 
 
             BuildingEs = new CellBuildingVEs(cell);
-            EnvironmentVEs = new EnvironmentVEs(cell, idx);
+            EnvironmentVEs = new EnvironmentVEs(cell);
             UnitVEs = new CellUnitVEs(cell.transform);
 
 

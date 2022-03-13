@@ -4,10 +4,10 @@ namespace Chessy.Game
 {
     sealed class RightEffectsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        readonly Resources _resources;
+        readonly ResourcesE _resources;
         readonly Dictionary<EffectTypes, bool> _isFilled;
 
-        internal RightEffectsUIS(in Resources resources,  in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal RightEffectsUIS(in ResourcesE resources,  in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
         {
             _resources = resources;
 

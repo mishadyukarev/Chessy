@@ -5,20 +5,24 @@ namespace Chessy.Game.Entity.View.Cell
 {
     public struct EnvironmentVEs
     {
-        readonly Dictionary<EnvironmentTypes, EnvironmentVE> _envs;
+        readonly Dictionary<EnvironmentTypes, SpriteRendererVC> _envs;
 
-        public EnvironmentVE EnvironmentE(in EnvironmentTypes env) => _envs[env];
+        public readonly SpriteRendererVC HillUnderC;
 
-        public EnvironmentVEs(in GameObject cell, in byte idx)
+        public SpriteRendererVC EnvironmentE(in EnvironmentTypes env) => _envs[env];
+
+        public EnvironmentVEs(in GameObject cell)
         {
-            _envs = new Dictionary<EnvironmentTypes, EnvironmentVE>();
+            _envs = new Dictionary<EnvironmentTypes, SpriteRendererVC>();
 
             var parent = cell.transform.Find("Environments");
 
             for (var envT = EnvironmentTypes.None + 1; envT < EnvironmentTypes.End; envT++)
             {
-                _envs.Add(envT, new EnvironmentVE(parent.Find(envT.ToString() + "_SR").GetComponent<SpriteRenderer>()));
+                _envs.Add(envT, new SpriteRendererVC(parent.Find(envT.ToString() + "_SR").GetComponent<SpriteRenderer>()));
             }
+
+            HillUnderC = new SpriteRendererVC(parent.Find(EnvironmentTypes.Hill.ToString() + "Under" + "_SR").GetComponent<SpriteRenderer>());
         }
     }
 }

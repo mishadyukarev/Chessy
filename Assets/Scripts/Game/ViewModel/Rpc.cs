@@ -51,7 +51,6 @@ namespace Chessy.Game
             _idx_cur = 0;
 
             var sender = infoFrom.Sender;
-            _e.RpcPoolEs.SenderC.Player = sender;
             var obj = objects[_idx_cur++];
             var whoseMove = _e.WhoseMove.Player;
 
@@ -70,54 +69,7 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        {
-                            var idx_0 = (byte)objects[_idx_cur++];
-
-                            if (!_e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
-                            {
-                                if (_e.UnitStepC(idx_0).Steps >= StepValues.CIRCULAR_ATTACK)
-                                {
-                                    _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-
-                                    _e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
-                                    _e.UnitStepC(idx_0).Steps -= StepValues.CIRCULAR_ATTACK;
-
-
-                                    foreach (var idxC_0 in _e.CellEs(idx_0).AroundCellIdxsC)
-                                    {
-                                        var idx_1 = idxC_0.Idx;
-
-                                        if (_e.UnitTC(idx_1).HaveUnit)
-                                        {
-                                            if (!_e.UnitPlayerTC(idx_1).Is(_e.UnitPlayerTC(idx_0).Player))
-                                            {
-                                                if (_e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
-                                                {
-                                                    new AttackShieldS(1f, idx_1, _e);
-                                                }
-
-                                                else
-                                                {
-                                                    new UnitAttackUnitS(HpValues.MAX / 4, _e.UnitPlayerTC(idx_0).Player, idx_0, _e);
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    _e.UnitStepC(idx_0).Steps -= StepValues.CIRCULAR_ATTACK;
-                                    _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
-
-                                    _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
-                                }
-
-                                else
-                                {
-                                    _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                }
-                            }
-
-                            else _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
-                        }
+                        new CurcularAttackKingS_M((byte)objects[_idx_cur++], abilityT, sender, _e);              
                         break;
 
                     case AbilityTypes.KingPassiveNearBonus:
@@ -735,7 +687,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Done:
-                        _e.RpcPoolEs.Done();
+                        new DonerMS(sender, _e);
                         break;
 
                     case RpcMasterTypes.Shift:
@@ -747,64 +699,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        {
-                            idx_0 = (byte)objects[_idx_cur++];
-                            var condT = (ConditionUnitTypes)objects[_idx_cur++];
-
-                            switch (condT)
-                            {
-                                case ConditionUnitTypes.None:
-                                    _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
-                                    break;
-
-                                case ConditionUnitTypes.Protected:
-                                    if (_e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Protected))
-                                    {
-                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                                        _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
-                                    }
-
-                                    else if (_e.UnitStepC(idx_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
-                                    {
-                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                                        _e.UnitStepC(idx_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
-                                        _e.UnitConditionTC(idx_0).Condition = condT;
-                                    }
-
-                                    else
-                                    {
-                                        _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                    }
-                                    break;
-
-
-                                case ConditionUnitTypes.Relaxed:
-                                    if (_e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
-                                    {
-                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                                        _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
-                                    }
-
-                                    else if (_e.UnitStepC(idx_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
-                                    {
-                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                                        _e.UnitConditionTC(idx_0).Condition = condT;
-                                        _e.UnitStepC(idx_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
-                                    }
-
-                                    else
-                                    {
-                                        _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                    }
-                                    break;
-
-
-                                default:
-                                    throw new Exception();
-                            }
-
-
-                        }
+                        new SetConditionUnitS_M((byte)objects[_idx_cur++], (ConditionUnitTypes)objects[_idx_cur++], sender, _e);
                         break;
 
                     case RpcMasterTypes.SetUnit:
@@ -826,6 +721,9 @@ namespace Chessy.Game
 
             else throw new Exception();
 
+
+
+            new GetDataCells(_e);
             SyncAllMaster();
         }
 

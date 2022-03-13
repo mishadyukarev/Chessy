@@ -123,25 +123,28 @@ namespace Chessy.Game
 
             else
             {
-                if (E.UnitPlayerTC(E.SelectedIdxC.Idx).Is(E.CurPlayerITC.Player))
+                if (E.UnitTC(E.SelectedIdxC.Idx).HaveUnit)
                 {
-                    var idxs = E.UnitEs(E.SelectedIdxC.Idx).ForShift.Idxs;
+                    if (E.UnitPlayerTC(E.SelectedIdxC.Idx).Is(E.CurPlayerITC.Player))
+                    {
+                        var idxs = E.UnitEs(E.SelectedIdxC.Idx).ForShift.Idxs;
 
-                    foreach (var idx_0 in idxs)
-                    {
-                        SupportCellVEs.Support(idx_0).Enable();
-                        SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
-                    }
+                        foreach (var idx_0 in idxs)
+                        {
+                            SupportCellVEs.Support(idx_0).Enable();
+                            SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                        }
 
-                    foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Idxs)
-                    {
-                        SupportCellVEs.Support(idx_0).Enable();
-                        SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
-                    }
-                    foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Idxs)
-                    {
-                        SupportCellVEs.Support(idx_0).Enable();
-                        SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                        foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Simple).Idxs)
+                        {
+                            SupportCellVEs.Support(idx_0).Enable();
+                            SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
+                        }
+                        foreach (var idx_0 in E.UnitEs(E.SelectedIdxC.Idx).ForAttack(AttackTypes.Unique).Idxs)
+                        {
+                            SupportCellVEs.Support(idx_0).Enable();
+                            SupportCellVEs.Support(idx_0).Color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                        }
                     }
                 }
             }

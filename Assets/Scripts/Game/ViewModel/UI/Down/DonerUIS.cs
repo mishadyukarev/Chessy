@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Entity.View.UI.Down;
+using UnityEngine;
 
 namespace Chessy.Game
 {
     sealed class DonerUIS : SystemAbstract, IEcsRunSystem
     {
-        readonly DownDonerUIE _donerE;
+        readonly DonerUIE _donerE;
 
-        internal DonerUIS(in DownDonerUIE downDoner, in EntitiesModel ents) : base(ents)
+        internal DonerUIS(in DonerUIE downDoner, in EntitiesModel ents) : base(ents)
         {
             _donerE = downDoner;
         }
