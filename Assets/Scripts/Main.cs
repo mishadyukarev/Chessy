@@ -1,10 +1,12 @@
 ﻿using Chessy.Common;
 using Chessy.Game;
 using Chessy.Game.EventsUI;
+using Chessy.Game.System.View.UI;
 using Chessy.Menu;
 using ECS;
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Chessy
 {
@@ -14,20 +16,20 @@ namespace Chessy
 
         EcsWorld _toggleW;
 
-        ActionC _runUpdate;
-        ActionC _runFixedUpdate;
+        EntitiesModel _e;
+        EntitiesView _eV;
+        EntitiesViewUI _eUI;
 
+        float _timer;
 
         void Start()
         {
-
             new Common.CreateCs(transform, _testMode);
-
 
             new Common.CreateSs(ToggleScene);
             new Common.CreateVSs(gameObject);
 
-            ToggleScene(SceneTypes.Menu);
+            ToggleScene(SceneTypes.Menu);    
         }
 
         void Update()
@@ -41,13 +43,22 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    _runUpdate.Invoke();
+                    SystemModelUpdate.Run(ref _e);
+
+                    _timer += Time.deltaTime;   
+                    if (_timer >= 0.04f)
+                    {
+                        SystemViewUpdate.Run(_eV, _e);
+                        SystemViewUIUpdate.Run(_timer, _eUI, _e);
+                        _timer = 0;
+                    }
                     break;
 
                 default:
                     throw new Exception();
             }
         }
+
 
         void FixedUpdate()
         {
@@ -63,13 +74,14 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    _runFixedUpdate.Invoke();
+
                     break;
 
                 default:
                     throw new Exception();
             }
         }
+
 
         void ToggleScene(SceneTypes newScene)
         {
@@ -86,8 +98,6 @@ namespace Chessy
                         if (_toggleW != default)
                         {
                             _toggleW = default;
-                            _runUpdate.Action = default;
-                            _runFixedUpdate.Action = default;
                         }
 
                         _toggleW = new EcsWorld();
@@ -98,19 +108,13 @@ namespace Chessy
 
                 case SceneTypes.Game:
                     {
-                        var entViews = new EntitiesView(out var forData);
-                        var ents = new EntitiesModel(forData, Rpc.NamesMethods);
-                        var uIEs = new EntitiesViewUI(ents);
+                        _eV = new EntitiesView(out var forData);
+                        _e = new EntitiesModel(forData, Rpc.NamesMethods);
+                        _eUI = new EntitiesViewUI(_e);
 
-                        _runUpdate.Action =
-                            new UpdateModelS(ents).Run
-                            + uIEs.UpdateC.Action;
-                            new SystemsView(ref _runUpdate.Action, ents, entViews);
+                        var eventsUI = new EventsUIManager(_eUI, _e);
 
-
-                        var eventsUI = new EventsUIManager(uIEs, ents);
-
-                        entViews.EntityVPool.Photon.AddComponent<Rpc>().GiveData(ents, eventsUI);
+                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(_e, eventsUI);
                         Rpc.SyncAllMaster();
 
                         break;

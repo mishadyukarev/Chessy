@@ -43,9 +43,12 @@ namespace Chessy.Game
 
         public IdxCellC StartTeleportIdxC;
         public IdxCellC EndTeleportIdxC;
+
         public IdxCellC CurrentIdxC;
         public IdxCellC SelectedIdxC;
+        public IdxCellC PreviousSelectedIdxC;
         public IdxCellC PreviousVisionIdxC;
+
         public IdxCellC CenterCloudIdxC;
 
         public bool MotionIsActive;
@@ -54,7 +57,6 @@ namespace Chessy.Game
         public bool IsStartedGame;
         //public bool IsClicked;
         public bool IsSelectedCity;
-
         public int Motions;
 
         public RpcPoolEs RpcPoolEs;
@@ -511,6 +513,10 @@ namespace Chessy.Game
                     }
                 }
             }
+
+
+
+            new GetDataCells(this);
         }
     }
 }

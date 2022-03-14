@@ -168,7 +168,7 @@ namespace Chessy.Game
                     {
                         var ownUnit_0 = e.UnitPlayerTC(idx_0).Player;
 
-                        if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                        if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                         {
                             e.ToolWeaponsC(e.UnitPlayerTC(idx_0).Player, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
                             e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;

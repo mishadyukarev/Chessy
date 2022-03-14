@@ -11,7 +11,7 @@ namespace Chessy.Game
             {
                 e.UnitStepC(idx_from).Steps -= e.UnitEs(idx_from).NeedSteps(idx_to).Steps;
 
-                new UnitShiftS(idx_from, idx_to, e);
+                new ShiftUnitS(idx_from, idx_to, e);
 
                 e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }

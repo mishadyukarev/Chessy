@@ -4,20 +4,13 @@ using UnityEngine.EventSystems;
 
 namespace Chessy.Game
 {
-    public struct UpdateModelS : IEcsRunSystem
+    public static class SystemModelUpdate
     {
-        readonly EntitiesModel _e;
-
-        Ray _ray;
+        static Ray _ray;
         const float RAY_DISTANCE = 100;
 
 
-        public UpdateModelS(in EntitiesModel e) : this()
-        {
-            _e = e;
-        }
-
-        public void Run()
+        public static void Run(ref EntitiesModel e)
         {
             _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
@@ -43,20 +36,25 @@ namespace Chessy.Game
             {
                 for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
                 {
-                    int one = _e.CellEs(idx_0).CellE.InstanceIDC;
+                    int one = e.CellEs(idx_0).CellE.InstanceIDC;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        _e.CurrentIdxC.Idx = idx_0;
+                        if (e.CurrentIdxC.Idx != e.PreviousVisionIdxC.Idx)
+                        {
+                            e.PreviousVisionIdxC.Idx = e.CurrentIdxC.Idx;
+                        }
+
+                        e.CurrentIdxC.Idx = idx_0;
                         rayCastT = RaycastTypes.Cell;
                     }
                 }
 
-                if(rayCastT == RaycastTypes.Background) rayCastT = RaycastTypes.Background;
+                if(rayCastT == RaycastTypes.None) rayCastT = RaycastTypes.Background;
             }
 
-            new SelectorS(rayCastT, _e);
+            new SelectorS(rayCastT, ref e);
 
 
 #if UNITY_ANDROID

@@ -163,7 +163,7 @@ namespace Chessy.Game.System.Model.Master
                         {
                             if (e.IsMelee(idx_from))
                             {
-                                new UnitShiftS(idx_from, idx_to, e);
+                                new ShiftUnitS(idx_from, idx_to, e);
                             }
                         }
 

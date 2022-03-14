@@ -1,0 +1,22 @@
+﻿namespace Chessy.Game
+{
+    static class CloudVS
+    {
+        public static void Run(in EntitiesView eV, in EntitiesModel e)
+        {
+            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
+            {
+                eV.CellEs(idx_0).CloudCellVC.SetActive(false);
+            }
+
+            var centerCloud = e.CenterCloudIdxC.Idx;
+
+            foreach (var cellE in e.CellEs(centerCloud).AroundCellEs)
+            {
+                eV.CellEs(cellE.IdxC.Idx).CloudCellVC.SetActive(true);
+            }
+
+            eV.CellEs(centerCloud).CloudCellVC.SetActive(true);
+        }
+    }
+}

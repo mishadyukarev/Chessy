@@ -5,15 +5,15 @@ namespace Chessy.Common
 {
     public struct UnityEventC
     {
-        private EventSystem _eventSystem;
+        public static EventSystem EventSystem;
         private StandaloneInputModule _standaloneInputModule;
         private AudioListener _audioListener;
 
         public UnityEventC(EventSystem eventS, StandaloneInputModule sIM)
         {
-            _eventSystem = eventS;
+            EventSystem = eventS;
             _standaloneInputModule = sIM;
-            _audioListener = _eventSystem.gameObject.AddComponent<AudioListener>();
+            _audioListener = EventSystem.gameObject.AddComponent<AudioListener>();
         }
     }
 }

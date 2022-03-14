@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values.Cell;
+﻿using Chessy.Game.System.Model.Master;
+using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Effect;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -6,9 +7,9 @@ using UnityEngine;
 
 namespace Chessy.Game.System.Model
 {
-    public struct UnitShiftS
+    public struct ShiftUnitS
     {
-        public UnitShiftS(in byte idx_from, in byte idx_to, in EntitiesModel e)
+        public ShiftUnitS(in byte idx_from, in byte idx_to, in EntitiesModel e)
         {
             e.UnitEs(idx_to).Set(e.UnitEs(idx_from));
             e.UnitConditionTC(idx_to).Condition = ConditionUnitTypes.None;
@@ -65,6 +66,12 @@ namespace Chessy.Game.System.Model
             switch (e.UnitTC(idx_to).Unit)
             {
                 case UnitTypes.Elfemale:
+                    if (e.AdultForestC(idx_from).HaveAnyResources)
+                    {
+                        SetUnitS.Set(UnitTypes.Pawn, e.UnitPlayerTC(idx_to).Player, idx_from, e);
+                    }
+
+
                     if (!e.AdultForestC(idx_to).HaveAnyResources && !e.HillC(idx_to).HaveAnyResources)
                     {
                         if (Random.Range(0, 1f) <= 0.25f)

@@ -2,17 +2,13 @@
 
 namespace Chessy.Game
 {
-    sealed class SoundVS : SystemViewAbstract, IEcsRunSystem
+    static class SoundVS
     {
-        internal SoundVS(in EntitiesModel ents, in EntitiesView entsView) : base(ents, entsView)
+        public static void Sync(in EntitiesView eV)
         {
-        }
-
-        public void Run()
-        {
-            if (VEs.EntityVPool.SoundV(ClipTypes.Truce).IsPlaying
-                || VEs.EntityVPool.SoundV(ClipTypes.AfterBuildTown).IsPlaying
-                || VEs.EntityVPool.SoundV(ClipTypes.PickUpgrade).IsPlaying)
+            if (eV.EntityVPool.SoundV(ClipTypes.Truce).IsPlaying
+                || eV.EntityVPool.SoundV(ClipTypes.AfterBuildTown).IsPlaying
+                || eV.EntityVPool.SoundV(ClipTypes.PickUpgrade).IsPlaying)
             {
                 SoundC.Volume = 0;
             }

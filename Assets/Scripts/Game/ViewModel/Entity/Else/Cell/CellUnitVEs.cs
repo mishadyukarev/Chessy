@@ -1,19 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Game
 {
     public readonly struct CellUnitVEs
     {
-        readonly Dictionary<string, CellUnitVE> _ents;
-        readonly Dictionary<string, CellUnitToolWeaponVE> _extraTws;
-        readonly Dictionary<string, CellUnitToolWeaponVE> _mainTws;
-        readonly Dictionary<string, CellUnitToolWeaponVE> _bowCrossbows;
+        public readonly Dictionary<string, SpriteRendererVC> Ents;
+        public readonly Dictionary<string, SpriteRendererVC> ExtraTws;
+        public readonly Dictionary<string, SpriteRendererVC> MainTws;
+        public readonly Dictionary<string, SpriteRendererVC> BowCrossbows;
 
-        public CellUnitVE UnitE(in bool isSelected, in LevelTypes levT, in UnitTypes unit) => _ents[isSelected.ToString() + levT + unit];
-        public CellUnitToolWeaponVE ExtraToolWeaponE(in bool isSelected, in LevelTypes level, in ToolWeaponTypes tw) => _extraTws[isSelected.ToString() + level + tw];
-        public CellUnitToolWeaponVE MainToolWeaponE(in bool isSelected, in LevelTypes level, in ToolWeaponTypes tw) => _mainTws[isSelected.ToString() + level + tw];
-        public CellUnitToolWeaponVE MainBowCrossbowE(in bool isSelected, in LevelTypes levelT, in bool isRight) => _bowCrossbows[isSelected.ToString() + levelT + isRight];
+        public SpriteRendererVC UnitE(in bool isSelected, in LevelTypes levT, in UnitTypes unit) => Ents[isSelected.ToString() + levT + unit];
+        public SpriteRendererVC ExtraToolWeaponE(in bool isSelected, in LevelTypes level, in ToolWeaponTypes tw) => ExtraTws[isSelected.ToString() + level + tw];
+        public SpriteRendererVC MainToolWeaponE(in bool isSelected, in LevelTypes level, in ToolWeaponTypes tw) => MainTws[isSelected.ToString() + level + tw];
+        public SpriteRendererVC MainBowCrossbowE(in bool isSelected, in LevelTypes levelT, in bool isRight) => BowCrossbows[isSelected.ToString() + levelT + isRight];
 
         public readonly CellUnitEffectVEs EffectVEs;
 
@@ -22,10 +23,10 @@ namespace Chessy.Game
         {
             var cellUnitZone = cellT.Find("Unit+");
 
-            _ents = new Dictionary<string, CellUnitVE>();
-            _extraTws = new Dictionary<string, CellUnitToolWeaponVE>();
-            _mainTws = new Dictionary<string, CellUnitToolWeaponVE>();
-            _bowCrossbows = new Dictionary<string, CellUnitToolWeaponVE>();
+            Ents = new Dictionary<string, SpriteRendererVC>();
+            ExtraTws = new Dictionary<string, SpriteRendererVC>();
+            MainTws = new Dictionary<string, SpriteRendererVC>();
+            BowCrossbows = new Dictionary<string, SpriteRendererVC>();
 
 
 
@@ -44,7 +45,7 @@ namespace Chessy.Game
                     {
                         if (unitT != UnitTypes.Pawn)
                         {
-                            _ents.Add(isSelected.ToString() + levT + unitT, new CellUnitVE(zonee.Find(unitT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
+                            Ents.Add(isSelected.ToString() + levT + unitT, new SpriteRendererVC(zonee.Find(unitT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
                         }
                     }
 
@@ -52,7 +53,7 @@ namespace Chessy.Game
 
                     for (var twT = ToolWeaponTypes.Pick; twT <= ToolWeaponTypes.Shield; twT++)
                     {
-                        _extraTws.Add(isSelected.ToString() + levT + twT, new CellUnitToolWeaponVE(extraTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
+                        ExtraTws.Add(isSelected.ToString() + levT + twT, new SpriteRendererVC(extraTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
                     }
 
 
@@ -64,12 +65,12 @@ namespace Chessy.Game
                         {
                             var bowCrossbow = mainTwZone.Find(twT.ToString() + "+");
 
-                            _bowCrossbows.Add(isSelected.ToString() + levT + true, new CellUnitToolWeaponVE(bowCrossbow.Find("Right_SR+").GetComponent<SpriteRenderer>()));
-                            _bowCrossbows.Add(isSelected.ToString() + levT + false, new CellUnitToolWeaponVE(bowCrossbow.Find("Cornered_SR+").GetComponent<SpriteRenderer>()));
+                            BowCrossbows.Add(isSelected.ToString() + levT + true, new SpriteRendererVC(bowCrossbow.Find("Right_SR+").GetComponent<SpriteRenderer>()));
+                            BowCrossbows.Add(isSelected.ToString() + levT + false, new SpriteRendererVC(bowCrossbow.Find("Cornered_SR+").GetComponent<SpriteRenderer>()));
                         }
                         else
                         {
-                            _mainTws.Add(isSelected.ToString() + levT + twT, new CellUnitToolWeaponVE(mainTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
+                            MainTws.Add(isSelected.ToString() + levT + twT, new SpriteRendererVC(mainTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
                         }
                     }
                 }

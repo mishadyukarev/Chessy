@@ -5,10 +5,7 @@ namespace Chessy.Game
 {
     public struct SelectorS
     {
-        //readonly Action _updateView;
-        //readonly Action _updateUI;
-
-        public SelectorS(in RaycastTypes raycastT, in EntitiesModel e)
+        public SelectorS(in RaycastTypes raycastT, ref EntitiesModel e)
         {
             var idx_cur = e.CurrentIdxC.Idx;
 
@@ -99,8 +96,8 @@ namespace Chessy.Game
                                         }
 
 
-
-                                        e.SelectedIdxC.Idx = e.CurrentIdxC.Idx;
+                                        e.PreviousSelectedIdxC = e.SelectedIdxC;
+                                        e.SelectedIdxC = e.CurrentIdxC;
                                     }
 
                                     else
@@ -120,6 +117,7 @@ namespace Chessy.Game
                                             }
                                         }
 
+                                        e.PreviousSelectedIdxC = e.SelectedIdxC;
                                         e.SelectedIdxC.Idx = e.CurrentIdxC.Idx;
                                     }
                                 }
@@ -141,7 +139,8 @@ namespace Chessy.Game
                                     else
                                     {
                                         e.CellClickTC.Click = CellClickTypes.SimpleClick;
-                                        e.SelectedIdxC.Idx= e.CurrentIdxC.Idx;
+                                        e.PreviousSelectedIdxC = e.SelectedIdxC;
+                                        e.SelectedIdxC.Idx = e.CurrentIdxC.Idx;
                                     }
                                 }
                                 break;
@@ -200,6 +199,7 @@ namespace Chessy.Game
                 else if (raycastT == RaycastTypes.Background)
                 {
                     e.CellClickTC.Click = CellClickTypes.SimpleClick;
+                    e.PreviousSelectedIdxC = e.SelectedIdxC;
                     e.SelectedIdxC.Idx = 0;
                 }
 
@@ -211,20 +211,25 @@ namespace Chessy.Game
             {
                 if (raycastT == RaycastTypes.Cell)
                 {
-                    if (e.CellClickTC.Is(CellClickTypes.SetUnit))
-                    {
-                        if (!e.UnitTC(idx_cur).HaveUnit || !e.UnitEs(idx_cur).ForPlayer(e.CurPlayerITC.Player).IsVisible)
-                        {
-                            if (e.CurrentIdxC.Idx == 0)
-                            {
-                                e.PreviousVisionIdxC = e.CurrentIdxC;
-                            }
-                            else
-                            {
-                                e.PreviousVisionIdxC = e.CurrentIdxC;
-                            }
-                        }
-                    }
+
+
+
+
+
+                    //if (e.CellClickTC.Is(CellClickTypes.SetUnit))
+                    //{
+                    //    if (!e.UnitTC(idx_cur).HaveUnit || !e.UnitEs(idx_cur).ForPlayer(e.CurPlayerITC.Player).IsVisible)
+                    //    {
+                    //        if (e.CurrentIdxC.Idx == 0)
+                    //        {
+                    //            e.PreviousVisionIdxC = e.CurrentIdxC;
+                    //        }
+                    //        else
+                    //        {
+                    //            e.PreviousVisionIdxC = e.CurrentIdxC;
+                    //        }
+                    //    }
+                    //}
                 }
             }
         }

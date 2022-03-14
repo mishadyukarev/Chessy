@@ -86,6 +86,8 @@ namespace Chessy.Game
                 E.RpcPoolEs.GetHeroToMaster(unit);
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
+
+            //E.NeedUpdateUI = true;
         }
 
         void OpenShop()

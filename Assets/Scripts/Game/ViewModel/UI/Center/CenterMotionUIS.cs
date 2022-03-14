@@ -2,33 +2,29 @@
 
 namespace Chessy.Game
 {
-    sealed class CenterMotionUIS : SystemUIAbstract, IEcsRunSystem
+    static class CenterMotionUIS
     {
-        float _timer;
+        static float _timer;
 
-        internal CenterMotionUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        public static void Run(in float timer, in EntitiesViewUI eUI, in EntitiesModel e)
         {
-        }
-
-        public void Run()
-        {
-            if (E.MotionIsActive)
+            if (e.MotionIsActive)
             {
-                UIE.CenterEs.Motion.TextUI.text = E.Motions.ToString();
-                UIE.CenterEs.Motion.SetActiveParent(true);
+                eUI.CenterEs.Motion.TextUI.text = e.Motions.ToString();
+                eUI.CenterEs.Motion.SetActiveParent(true);
 
-                _timer += Time.deltaTime;
+                _timer += Time.deltaTime + timer;
 
                 if (_timer >= 1)
                 {
-                    UIE.CenterEs.Motion.SetActiveParent(false);
-                    E.MotionIsActive = false;
+                    eUI.CenterEs.Motion.SetActiveParent(false);
+                    e.MotionIsActive = false;
                     _timer = 0;
                 }
             }
             else
             {
-                UIE.CenterEs.Motion.SetActiveParent(false);
+                eUI.CenterEs.Motion.SetActiveParent(false);
             }
         }
     }
