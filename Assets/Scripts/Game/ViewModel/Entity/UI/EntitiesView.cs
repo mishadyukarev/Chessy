@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.View.Cell;
+using Chessy.Game.Entity.View.Cell.Unit.Effect;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace Chessy.Game
         public SpriteRendererVC BuildingE(in byte idx, in BuildingTypes buildT) => BuildingVEs(idx).Main(buildT);
         public CellUnitVEs UnitEs(in byte idx) => CellEs(idx).UnitVEs;
         public SpriteRendererVC UnitE(in byte idx, in bool isSelected, in LevelTypes levT, in UnitTypes unitT) => UnitEs(idx).UnitE(isSelected, levT, unitT);
-        public CellUnitEffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
+        public EffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
         public EnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
         public SpriteRendererVC EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
 

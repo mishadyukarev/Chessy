@@ -22,7 +22,7 @@ namespace Chessy.Game
         public readonly CenterKingUIE KingE;
         public readonly CenterUpgradeUIE UpgradeE;
         public readonly CenterSelectorUIE SelectorE;
-        public readonly CenterMistakeUIE MistakeE;
+        public readonly MistakeUIE MistakeE;
         public readonly CenterMarketUIE MarketE;
         public readonly CenterSmelterUIE SmelterE;
 
@@ -51,7 +51,7 @@ namespace Chessy.Game
             KingE = new CenterKingUIE(centerZone);
             UpgradeE = new CenterUpgradeUIE(centerZone);
             SelectorE = new CenterSelectorUIE(centerZone);
-            MistakeE = new CenterMistakeUIE(centerZone);
+            MistakeE = new MistakeUIE(centerZone);
 
             var buildingZone = centerZone.Find("Building+");
             MarketE = new CenterMarketUIE(buildingZone);

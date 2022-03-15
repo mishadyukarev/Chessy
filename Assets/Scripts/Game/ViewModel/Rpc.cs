@@ -660,8 +660,6 @@ namespace Chessy.Game
 
             else if (obj is RpcMasterTypes rpcT)
             {
-                byte idx_0;
-
                 switch (rpcT)
                 {
                     case RpcMasterTypes.None:
@@ -707,7 +705,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        new GetHeroS_M((UnitTypes)objects[_idx_cur++], _e);
+                        new GetHeroS_M((UnitTypes)objects[_idx_cur++], sender, _e);
                         break;
 
                     case RpcMasterTypes.Melt:

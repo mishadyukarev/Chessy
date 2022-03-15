@@ -42,9 +42,10 @@ namespace Chessy.Game
         {
             E.SelectedIdxC.Idx = 0;
 
-
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
+                E.Sound(ClipTypes.Click).Invoke();
+
                 if (E.PlayerInfoE(E.CurPlayerITC.Player).HaveKingInInventor)
                 {
                     E.SelectedUnitE.Set(UnitTypes.King, LevelTypes.First);
@@ -83,6 +84,8 @@ namespace Chessy.Game
         {
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
+                E.Sound(ClipTypes.Click).Invoke();
+
                 E.RpcPoolEs.GetHeroToMaster(unit);
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();

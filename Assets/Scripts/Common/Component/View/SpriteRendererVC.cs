@@ -25,21 +25,18 @@ namespace Chessy.Game
 
         public void SetActive(in bool needActive)
         {
-
-            SR.enabled = needActive;
-
-
+            if (SR.enabled != needActive)
+                SR.enabled = needActive;
         }
         public void Enable()
         {
-
-            SR.enabled = true;
+            if (SR.enabled == false)
+                SR.enabled = true;
         }
         public void Disable()
         {
-
-            SR.enabled = false;
-
+            if (SR.enabled == true)
+                SR.enabled = false;
         }
     }
 }

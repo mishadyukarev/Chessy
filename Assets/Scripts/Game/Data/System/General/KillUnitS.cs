@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model
         public KillUnitS(in byte idx_0, in PlayerTypes whoKiller, in EntitiesModel e)
         {
             if (e.UnitTC(idx_0).Is(UnitTypes.King)) e.WinnerC.Player = whoKiller;
-            else if (e.IsHero(e.UnitTC(idx_0).Unit))
+            else if (e.UnitTC(idx_0).IsHero)
             {
                 var cooldown = 0f;
 

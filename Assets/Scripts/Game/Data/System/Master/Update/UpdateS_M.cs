@@ -1,10 +1,12 @@
-﻿namespace Chessy.Game.System.Model.Master
+﻿using Chessy.Game.Values.Cell.Unit.Effect;
+using Photon.Pun;
+
+namespace Chessy.Game.System.Model.Master
 {
     public static class UpdateS_M
     {
-        public static void Update(in EntitiesModel e)
+        public static void UpdateMove(this EntitiesModel e)
         {
-
             new UpdatorMS(e).Run();
 
             new FireUpdateMS(e).Run();
@@ -50,23 +52,63 @@
             new UpdGiveWaterCloudScowyMS(e).Run();
 
             new CamelShiftUpdateMS(e).Run();
-            new CamelSpawnUpdateMS(e).Run();
+            e.SpawnCamelUpdate();
 
             #endregion
 
 
 
-
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            if (e.Motions % 3 == 0)
             {
-                //ElfemaleSeedS_M.TrySeed(idx_0, e);
+                for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+                {
+                    //e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterBuildTown);
+
+                    if (e.UnitTC(idx_0).Is(UnitTypes.Snowy))
+                    {
+                        foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
+                        {
+                            if (e.UnitTC(idx_1).HaveUnit)
+                            {
+                                if (e.UnitPlayerTC(idx_1).Player == e.UnitPlayerTC(idx_0).Player)
+                                {
+                                    if (e.UnitTC(idx_1).Is(UnitTypes.Pawn))
+                                    {
+                                        if (e.UnitMainTWTC(idx_1).Is(ToolWeaponTypes.BowCrossbow))
+                                        {
+                                            e.UnitEffectFrozenArrawC(idx_1).Shoots++;
+                                        }
+                                        else
+                                        {
+                                            e.UnitEffectShield(idx_1).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        e.UnitEffectShield(idx_1).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
+                    {
+                        foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
+                        {
+                            if (!e.UnitTC(idx_1).HaveUnit)
+                            {
+                                if (e.AdultForestC(idx_1).HaveAnyResources)
+                                {
+                                    e.UnitEs(idx_1).SetNewUnitHere(UnitTypes.Pawn, e.UnitPlayerTC(idx_0).Player, e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player));
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            
 
-
-
-
-
-            TryInvokeTruceUpdateMS.Run(e);
+            e.Truce();
         }
     }
 }

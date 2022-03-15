@@ -24,9 +24,10 @@ namespace Chessy.Game
 
             UIE.DownEs.CityButtonUIE.ButtonC.AddListener(City);
         }
-        
+
         void City()
         {
+            E.Sound(ClipTypes.Click).Invoke();
             E.IsSelectedCity = !E.IsSelectedCity;
         }
 
@@ -35,8 +36,13 @@ namespace Chessy.Game
             E.SelectedIdxC.Idx = 0;
             TryOnHint(VideoClipTypes.CreatingHero);
 
+
+
+
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
+                E.Sound(ClipTypes.Click).Invoke();
+
                 var curPlayer = E.CurPlayerITC.Player;
 
                 var myHeroT = E.PlayerInfoE(curPlayer).AvailableHeroTC.Unit;
@@ -60,6 +66,7 @@ namespace Chessy.Game
         {
             if (!E.PlayerInfoE(E.CurPlayerITC.Player).HaveKingInInventor)
             {
+                E.Sound(ClipTypes.Click).Invoke();
                 E.RpcPoolEs.DoneToMaster();
             }
             else
@@ -70,6 +77,8 @@ namespace Chessy.Game
         void GetPawn()
         {
             E.SelectedIdxC.Idx = 0;
+
+            E.Sound(ClipTypes.Click).Invoke();
 
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
@@ -92,13 +101,16 @@ namespace Chessy.Game
                     E.Sound(ClipTypes.Mistake).Action.Invoke();
                 }
 
-
+                
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
         }
         void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
             E.SelectedIdxC.Idx = 0;
+
+
+            E.Sound(ClipTypes.Click).Invoke();
 
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {

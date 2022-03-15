@@ -2,9 +2,9 @@
 
 namespace Chessy.Game
 {
-    public sealed class TryInvokeTruceUpdateMS
+    public static class TryInvokeTruceUpdateMS
     {
-        public static void Run(in EntitiesModel e)
+        public static void Truce(this EntitiesModel e)
         {
             var amountAdultForest = 0;
 

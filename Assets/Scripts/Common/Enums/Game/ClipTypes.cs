@@ -5,8 +5,6 @@
         None,
 
         AttackArcher,
-        First = AttackArcher,
-
         AttackMelee,
         Building,
         Mistake,
@@ -23,6 +21,10 @@
         PickArcher,
         PickUpgrade,
         GetHero,
+        //HeroAbility,
+        BackgroundInGame,
+        Click,
+        AfterUpdate,
 
         End,
     }

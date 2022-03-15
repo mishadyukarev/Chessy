@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.System.Model;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;

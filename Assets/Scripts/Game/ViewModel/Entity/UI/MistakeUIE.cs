@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public readonly struct CenterMistakeUIE
+    public readonly struct MistakeUIE
     {
         readonly Dictionary<MistakeTypes, GameObjectVC> _zones;
         readonly Dictionary<ResourceTypes, TextUIC> _needAmountRes;
@@ -36,7 +36,7 @@ namespace Chessy.Game
         }
 
 
-        public CenterMistakeUIE(in Transform centerZone)
+        public MistakeUIE(in Transform centerZone)
         {
             _zones = new Dictionary<MistakeTypes, GameObjectVC>();
             _needAmountRes = new Dictionary<ResourceTypes, TextUIC>();

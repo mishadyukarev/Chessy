@@ -1,29 +1,26 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Entity.Cell.Unit;
+using Chessy.Game.Entity.View.Cell.Unit.Effect;
+using UnityEngine;
 
 namespace Chessy.Game
 {
     static class SyncFrozenArrawVS
     {
-        static readonly Vector3 _mainLocalScale = new Vector3(1, 1, 1);
-        static readonly Vector3 _leftLocalScale = new Vector3(-1, 1, 1);
-
-        public static void Sync(in byte idx_0, in EntitiesView eV, in EntitiesModel e)
+        public static void SyncVision(this EffectVEs effectsVEs, in UnitEs unitEs, in bool isSelected)
         {
-            eV.UnitEffectVEs(idx_0).FrozenArrawVE.Disable();
+            effectsVEs.FrozenArraw(true, true).Disable();
+            effectsVEs.FrozenArraw(false, true).Disable();
 
-            if (e.UnitTC(idx_0).HaveUnit)
+            effectsVEs.FrozenArraw(true, false).Disable();
+            effectsVEs.FrozenArraw(false, false).Disable();
+
+            if (unitEs.MainE.UnitTC.HaveUnit)
             {
-                if (e.UnitEffectFrozenArrawC(idx_0).HaveEffect)
+                if (unitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
                 {
-                    eV.UnitEffectVEs(idx_0).FrozenArrawVE.Enable();
-
-                    if (e.SelectedIdxC.Idx == idx_0)
+                    if (unitEs.EffectsE.FrozenArrawC.HaveEffect)
                     {
-                        eV.UnitEffectVEs(idx_0).Parent.LocalScale = _leftLocalScale;
-                    }
-                    else
-                    {
-                        eV.UnitEffectVEs(idx_0).Parent.LocalScale = _mainLocalScale;
+                        effectsVEs.FrozenArraw(isSelected, unitEs.MainE.IsRightArcherC.IsRight).Enable();
                     }
                 }
             }

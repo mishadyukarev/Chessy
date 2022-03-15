@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Game.Entity.View.Cell.Unit.Effect;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace Chessy.Game
         public SpriteRendererVC MainToolWeaponE(in bool isSelected, in LevelTypes level, in ToolWeaponTypes tw) => MainTws[isSelected.ToString() + level + tw];
         public SpriteRendererVC MainBowCrossbowE(in bool isSelected, in LevelTypes levelT, in bool isRight) => BowCrossbows[isSelected.ToString() + levelT + isRight];
 
-        public readonly CellUnitEffectVEs EffectVEs;
+        public readonly EffectVEs EffectVEs;
 
 
         public CellUnitVEs(in Transform cellT)
@@ -76,7 +77,7 @@ namespace Chessy.Game
                 }
             }
 
-            EffectVEs = new CellUnitEffectVEs(cellUnitZone);
+            EffectVEs = new EffectVEs(cellUnitZone);
         }
     }
 }

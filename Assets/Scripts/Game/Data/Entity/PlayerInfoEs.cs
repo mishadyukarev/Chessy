@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    public sealed class ForPlayerPoolEs
+    public sealed class PlayerInfoEs
     {
         readonly Dictionary<BuildingTypes, bool> _haveBuilding;
         readonly PlayerLevelInfoE[] _levelInfoEs;
@@ -32,7 +32,7 @@ namespace Chessy.Game
         public bool HaveBuilding(in BuildingTypes buildingT) => _haveBuilding[buildingT];
 
 
-        internal ForPlayerPoolEs(in bool b)
+        internal PlayerInfoEs(in bool b)
         {
             _levelInfoEs = new PlayerLevelInfoE[(byte)LevelTypes.End - 1];
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];

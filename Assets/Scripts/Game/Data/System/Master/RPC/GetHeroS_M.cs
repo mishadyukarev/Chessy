@@ -1,8 +1,10 @@
-﻿namespace Chessy.Game.System.Model.Master
+﻿using Photon.Realtime;
+
+namespace Chessy.Game.System.Model.Master
 {
     public struct GetHeroS_M
     {
-        public GetHeroS_M(in UnitTypes unitT, in EntitiesModel e)
+        public GetHeroS_M(in UnitTypes unitT, in Player sender, in EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 

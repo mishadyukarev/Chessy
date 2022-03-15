@@ -4,17 +4,27 @@ namespace Chessy.Game
 {
     static class SoundVS
     {
+
         public static void Sync(in EntitiesView eV)
         {
-            if (eV.EntityVPool.SoundV(ClipTypes.Truce).IsPlaying
-                || eV.EntityVPool.SoundV(ClipTypes.AfterBuildTown).IsPlaying
-                || eV.EntityVPool.SoundV(ClipTypes.PickUpgrade).IsPlaying)
+            //if (eV.EntityVPool.SoundV(ClipTypes.Truce).IsPlaying
+            //    || eV.EntityVPool.SoundV(ClipTypes.AfterBuildTown).IsPlaying
+            //    || eV.EntityVPool.SoundV(ClipTypes.PickUpgrade).IsPlaying)
+            //{
+            //    SoundC.Volume = 0;
+            //}
+            //else
+            //{
+            //    SoundC.Volume = SoundC.SavedVolume;
+            //}
+
+            if (eV.EntityVPool.SoundV(ClipTypes.AfterUpdate).IsPlaying /*|| eV.EntityVPool.SoundV(ClipTypes.HeroAbility).IsPlaying*/)
             {
-                SoundC.Volume = 0;
+                eV.EntityVPool.SoundV(ClipTypes.BackgroundInGame).AudioSource.volume = 0.01f;
             }
             else
             {
-                SoundC.Volume = SoundC.SavedVolume;
+                eV.EntityVPool.SoundV(ClipTypes.BackgroundInGame).AudioSource.volume = 0.25f;
             }
         }
     }

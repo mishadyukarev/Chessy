@@ -1,8 +1,4 @@
-﻿using Chessy.Common;
-using Chessy.Game.View.UI.System;
-using System;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game
 {
     public class EntitiesViewUI
     {

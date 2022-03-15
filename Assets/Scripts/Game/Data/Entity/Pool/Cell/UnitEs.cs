@@ -19,7 +19,7 @@ namespace Chessy.Game.Entity.Cell.Unit
         public StatsE StatsE;
         public CellUnitEffectsE EffectsE;
         public CellUnitMainToolWeaponE MainToolWeaponE;
-        public CellUnitExtraToolWeaponE ExtraToolWeaponE;
+        public ExtraToolWeaponE ExtraToolWeaponE;
         public WhoLastDiedHereE WhoLastDiedHereE;
         public CellUnitExtractE ExtractE;
 

@@ -4,19 +4,15 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class CamelSpawnUpdateMS : SystemAbstract, IEcsRunSystem
+    static class CamelSpawnUpdateMS
     {
-        internal CamelSpawnUpdateMS(in EntitiesModel ents) : base(ents)
-        {
-        }
-
-        public void Run()
+        public static void SpawnCamelUpdate(this EntitiesModel e)
         {
             var haveCamel = false;
 
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
             {
-                if (E.UnitTC(idx_0).Is(UnitTypes.Camel))
+                if (e.UnitTC(idx_0).Is(UnitTypes.Camel))
                 {
                     haveCamel = true;
                     break;
@@ -27,15 +23,15 @@ namespace Chessy.Game
             {
                 byte idx_0 = (byte)Random.Range(0,  StartValues.CELLS);
 
-                if (E.CellEs(idx_0).IsActiveParentSelf)
+                if (e.CellEs(idx_0).IsActiveParentSelf)
                 {
-                    if (!E.UnitTC(idx_0).HaveUnit && !E.EnvironmentEs(idx_0).MountainC.HaveAnyResources)
+                    if (!e.UnitTC(idx_0).HaveUnit && !e.EnvironmentEs(idx_0).MountainC.HaveAnyResources)
                     {
                         bool haveNearUnit = false;
 
-                        foreach (var cellE in E.CellEs(idx_0).AroundCellEs)
+                        foreach (var cellE in e.CellEs(idx_0).AroundCellEs)
                         {
-                            if (E.UnitTC(cellE.IdxC.Idx).HaveUnit)
+                            if (e.UnitTC(cellE.IdxC.Idx).HaveUnit)
                             {
                                 haveNearUnit = true;
                                 break;
@@ -44,16 +40,16 @@ namespace Chessy.Game
 
                         if (!haveNearUnit)
                         {
-                            E.UnitTC(idx_0).Unit = UnitTypes.Camel;
-                            E.UnitLevelTC(idx_0).Level = LevelTypes.First;
-                            E.UnitPlayerTC(idx_0).Player = PlayerTypes.None;
-                            E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
+                            e.UnitTC(idx_0).Unit = UnitTypes.Camel;
+                            e.UnitLevelTC(idx_0).Level = LevelTypes.First;
+                            e.UnitPlayerTC(idx_0).Player = PlayerTypes.None;
+                            e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
 
-                            E.UnitHpC(idx_0).Health = HpValues.MAX;
-                            E.UnitStepC(idx_0).Steps = 1f;
-                            E.UnitWaterC(idx_0).Water = 1f;
+                            e.UnitHpC(idx_0).Health = HpValues.MAX;
+                            e.UnitStepC(idx_0).Steps = 1f;
+                            e.UnitWaterC(idx_0).Water = 1f;
 
-                            E.UnitEffectShield(idx_0).Protection = 0;
+                            e.UnitEffectShield(idx_0).Protection = 0;
 
 
                             //Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);

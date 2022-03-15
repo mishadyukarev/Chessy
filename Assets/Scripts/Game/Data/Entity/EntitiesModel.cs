@@ -20,10 +20,9 @@ namespace Chessy.Game
         readonly Dictionary<ClipTypes, ActionC> _sounds0;
         readonly ActionC[] _sounds1;
         readonly ResourcesC[] _mistakeEconomyEs;
-        readonly Dictionary<PlayerTypes, ForPlayerPoolEs> _forPlayerEs;
+        readonly Dictionary<PlayerTypes, PlayerInfoEs> _forPlayerEs;
         readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
         readonly Dictionary<UnitTypes, bool> _isAnimal;
-        readonly Dictionary<UnitTypes, bool> _isHero;
         readonly Dictionary<string, bool> _isMelee;
 
 
@@ -62,12 +61,13 @@ namespace Chessy.Game
         public RpcPoolEs RpcPoolEs;
         public SelectedUnitE SelectedUnitE;
         public SelectedToolWeaponE SelectedTWE;
+        public MistakeE MistakeE;
 
 
         public readonly ResourcesE Resources;
 
 
-        public ForPlayerPoolEs PlayerInfoE(in PlayerTypes player) => _forPlayerEs[player];
+        public PlayerInfoEs PlayerInfoE(in PlayerTypes player) => _forPlayerEs[player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);
         public ref AmountC ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT);
         public ref PlayerLevelInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT) => ref PlayerInfoE(playerT).LevelE(levT);
@@ -83,12 +83,11 @@ namespace Chessy.Game
         public PlayerTC NextPlayer(in PlayerTypes playerT) => _nextPlayer[playerT];
         public PlayerTC NextPlayer(in PlayerTC playerTC) => _nextPlayer[playerTC.Player];
 
-        public MistakeE MistakeE;
+
         public ref MistakeTC MistakeTC => ref MistakeE.MistakeTC;
         public ref TimerC MistakeTimerC => ref MistakeE.TimerC;
 
         public bool IsAnimal(in UnitTypes unitT) => _isAnimal[unitT];
-        public bool IsHero(in UnitTypes unitT) => _isHero[unitT];
         public bool IsMelee(in UnitTypes unitT, in bool haveBowCrossbow) => _isMelee[unitT.ToString() + haveBowCrossbow];
         public bool IsMelee(in byte idx_cell) => _isMelee[UnitTC(idx_cell).Unit.ToString() + UnitMainTWTC(idx_cell).Is(ToolWeaponTypes.BowCrossbow)];
 
@@ -124,7 +123,7 @@ namespace Chessy.Game
         public ref ToolWeaponTC UnitMainTWTC(in byte idx) => ref UnitMainTWE(idx).ToolWeaponTC;
         public ref LevelTC UnitMainTWLevelTC(in byte idx) => ref UnitMainTWE(idx).LevelTC;
 
-        public ref CellUnitExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
+        public ref ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
         public ref ToolWeaponTC UnitExtraTWTC(in byte idx) => ref UnitExtraTWE(idx).ToolWeaponTC;
         public ref LevelTC UnitExtraLevelTC(in byte idx) => ref UnitExtraTWE(idx).LevelTC;
         public ref ProtectionC UnitExtraProtectionTC(in byte idx) => ref UnitExtraTWE(idx).ProtectionC;
@@ -224,44 +223,21 @@ namespace Chessy.Game
             _nextPlayer.Add(PlayerTypes.First, new PlayerTC(PlayerTypes.Second));
             _nextPlayer.Add(PlayerTypes.Second, new PlayerTC(PlayerTypes.First));
 
-            _forPlayerEs = new Dictionary<PlayerTypes, ForPlayerPoolEs>();
+            _forPlayerEs = new Dictionary<PlayerTypes, PlayerInfoEs>();
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                _forPlayerEs.Add(playerT, new ForPlayerPoolEs(true));
+                _forPlayerEs.Add(playerT, new PlayerInfoEs(true));
             }
             _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
 
 
             _isAnimal = new Dictionary<UnitTypes, bool>();
-            _isHero = new Dictionary<UnitTypes, bool>();
             _isMelee = new Dictionary<string, bool>();
 
             for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
             {
                 if (unitT == UnitTypes.Camel) _isAnimal.Add(unitT, true);
                 else _isAnimal.Add(unitT, false);
-
-
-                var ishero = false;
-                switch (unitT)
-                {
-                    case UnitTypes.Elfemale:
-                        ishero = true;
-                        break;
-
-                    case UnitTypes.Snowy:
-                        ishero = true;
-                        break;
-
-                    case UnitTypes.Undead:
-                        ishero = true;
-                        break;
-
-                    case UnitTypes.Hell:
-                        ishero = true;
-                        break;
-                }
-                _isHero.Add(unitT, ishero);
 
 
                 foreach (var haveBowCrossbow in new[] { true, false })

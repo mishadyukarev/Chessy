@@ -9,10 +9,10 @@ namespace Chessy.Game
     {
         public DonerMS(in Player sender, in EntitiesModel e)
         {
-            e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-
             if (PhotonNetwork.OfflineMode)
             {
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
+
                 if (GameModeC.IsGameMode(GameModes.TrainingOff))
                 {
                     for (byte idx = 0; idx < StartValues.CELLS; idx++)
@@ -21,7 +21,7 @@ namespace Chessy.Game
                         //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
                     }
 
-                    UpdateS_M.Update(e);
+                    e.UpdateMove();
                     e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                 }
 
@@ -38,7 +38,7 @@ namespace Chessy.Game
 
                     if (nextPlayer == PlayerTypes.First)
                     {
-                        UpdateS_M.Update(e);
+                        e.UpdateMove();
                         e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                     }
 
