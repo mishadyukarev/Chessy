@@ -22,6 +22,9 @@ namespace Chessy.Game
             //    .Add(new ButtonUIC(button))
             //    .Add(new VideoPlayerVC(videoPlayer));
 
+
+            Debug.Log(Application.streamingAssetsPath);
+
             //_urls = new Dictionary<VideoClipTypes, string>();
             //_urls.Add(VideoClipTypes.Start, Path.Combine(Application.streamingAssetsPath, "Start.mp4"));
             //_urls.Add(VideoClipTypes.Start2, Path.Combine(Application.streamingAssetsPath, "Start2.mp4"));

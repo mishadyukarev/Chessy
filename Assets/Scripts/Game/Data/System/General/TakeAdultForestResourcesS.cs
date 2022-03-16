@@ -1,8 +1,8 @@
 ﻿namespace Chessy.Game.System.Model
 {
-    public class TakeAdultForestResourcesS
+    public static class TakeAdultForestResourcesS
     {
-        public TakeAdultForestResourcesS(in float extract, in byte idx, in EntitiesModel e)
+        public static void TakeAdultForestResources(in float extract, in byte idx, in EntitiesModel e)
         {
             e.AdultForestC(idx).Resources -= extract;
 

@@ -1,6 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.Cell;
 using Chessy.Game.Entity.Cell.Unit;
+using Chessy.Game.Entity.Model;
 using Chessy.Game.Entity.Model.Cell;
 using Chessy.Game.Entity.Model.Cell.Unit;
 using Chessy.Game.System.Model;
@@ -429,7 +430,7 @@ namespace Chessy.Game
 
                         if (AdultForestC(idx_0).HaveAnyResources)
                         {
-                            new TakeAdultForestResourcesS(1f, idx_0, this);
+                            TakeAdultForestResourcesS.TakeAdultForestResources(1f, idx_0, this);
                         }
                         UnitTC(idx_0).Unit = UnitTypes.King;
                         UnitLevelTC(idx_0).Level = LevelTypes.First;
@@ -449,7 +450,7 @@ namespace Chessy.Game
 
                         if (AdultForestC(idx_0).HaveAnyResources)
                         {
-                            new TakeAdultForestResourcesS(1f, idx_0, this);
+                            TakeAdultForestResourcesS.TakeAdultForestResources(1f, idx_0, this);
                         }
 
                         //BuildingMainE(idx_0).Set(BuildingTypes.City, LevelTypes.First, Building_Values.HELTH_CITY, PlayerTypes.Second);

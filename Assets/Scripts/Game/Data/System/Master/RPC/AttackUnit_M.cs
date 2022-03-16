@@ -116,7 +116,7 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (minus_from > 0)
                     {
-                        new AttackUnitS(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, e);
+                        AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, e);
                     }
                 }
                 else
@@ -155,7 +155,7 @@ namespace Chessy.Game.System.Model.Master
 
                     var wasUnitT_to = e.UnitTC(idx_to).Unit;
 
-                    new AttackUnitS(minus_to, killer, idx_to, e);
+                    AttackUnitS.AttackUnit(minus_to, killer, idx_to, e);
 
                     if (!e.UnitTC(idx_to).HaveUnit)
                     {

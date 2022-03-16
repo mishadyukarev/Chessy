@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.Model.Cell.Unit;
+using Chessy.Game.Values;
 using System.Collections.Generic;
 
 namespace Chessy.Game.Entity.Cell.Unit

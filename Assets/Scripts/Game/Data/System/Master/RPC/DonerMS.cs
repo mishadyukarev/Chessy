@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.System.Model.Master;
+using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
 

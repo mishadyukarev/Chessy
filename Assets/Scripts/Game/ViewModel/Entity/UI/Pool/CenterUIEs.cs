@@ -20,7 +20,6 @@ namespace Chessy.Game
 
         public readonly CenterFriendUIE FriendE;
         public readonly CenterKingUIE KingE;
-        public readonly CenterUpgradeUIE UpgradeE;
         public readonly CenterSelectorUIE SelectorE;
         public readonly MistakeUIE MistakeE;
         public readonly CenterMarketUIE MarketE;
@@ -49,7 +48,6 @@ namespace Chessy.Game
 
             FriendE = new CenterFriendUIE(centerZone);
             KingE = new CenterKingUIE(centerZone);
-            UpgradeE = new CenterUpgradeUIE(centerZone);
             SelectorE = new CenterSelectorUIE(centerZone);
             MistakeE = new MistakeUIE(centerZone);
 

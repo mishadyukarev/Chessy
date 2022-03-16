@@ -23,7 +23,7 @@ namespace Chessy.Game.System.Model
 
                         case UnitTypes.King:
                             e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.CircularAttack;
-                            e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Second).Ability = AbilityTypes.KingPassiveNearBonus;
+                            e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Fourth).Ability = AbilityTypes.KingPassiveNearBonus;
                             break;
 
                         case UnitTypes.Pawn:

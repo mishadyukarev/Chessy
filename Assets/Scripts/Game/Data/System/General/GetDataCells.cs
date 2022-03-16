@@ -1,9 +1,17 @@
-﻿namespace Chessy.Game.System.Model
+﻿using Chessy.Game.Values;
+
+namespace Chessy.Game.System.Model
 {
     public struct GetDataCells
     {
         public GetDataCells(in EntitiesModel e)
         {
+            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+            {
+                e.PlayerInfoE(playerT).WhereKingEffects.Clear();
+            }
+
+
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 new PawnGetExtractAdultForestS(idx_0, e);

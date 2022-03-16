@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.System.Model;
+using Chessy.Game.Values;
 
 namespace Chessy.Game
 {

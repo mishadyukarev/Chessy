@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Chessy.Game.System.Model;
+using Chessy.Game.Values;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

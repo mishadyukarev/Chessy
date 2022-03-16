@@ -10,6 +10,7 @@ namespace Chessy.Game
         public readonly DownHeroUIE HeroE;
         public readonly DownToolWeaponUIE ToolWeaponE;
         public readonly CityButtonUIE CityButtonUIE;
+        public readonly CostUIE CostE;
 
         public DownUIEs(in bool def)
         {
@@ -22,6 +23,7 @@ namespace Chessy.Game
             DonerE = new DonerUIE(downZone);
             HeroE = new DownHeroUIE(downZone);
             CityButtonUIE = new CityButtonUIE(downZone);
+            CostE = new CostUIE(downZone);
         }
     }
 }

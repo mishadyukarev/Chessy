@@ -20,7 +20,7 @@ namespace Chessy.Game
 
                     E.ResourcesC(E.BuildingPlayerTC(idx_0).Player, ResourceTypes.Wood).Resources += extract;
 
-                    new TakeAdultForestResourcesS(extract, idx_0, E);
+                    TakeAdultForestResourcesS.TakeAdultForestResources(extract, idx_0, E);
 
                     if (!E.AdultForestC(idx_0).HaveAnyResources)
                     {

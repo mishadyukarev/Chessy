@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values.Cell.Unit.Effect;
+﻿using Chessy.Game.Values;
+using Chessy.Game.Values.Cell.Unit.Effect;
 using Photon.Pun;
 
 namespace Chessy.Game.System.Model.Master
@@ -9,7 +10,7 @@ namespace Chessy.Game.System.Model.Master
         {
             new UpdatorMS(e).Run();
 
-            new FireUpdateMS(e).Run();
+            FireUpdateMS.Run(e);
             new RiverFertilizeAroundUpdateMS(e).Run();
             new WorldDryFertilizerMS(e).Run();
             new CitiesAddPeopleUpdateMS(e).Run();

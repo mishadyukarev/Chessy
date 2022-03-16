@@ -22,7 +22,7 @@
                             {
                                 if (E.UnitTC(idx_0).Is(unitT) && E.UnitLevelTC(idx_0).Is(levUnit) && E.UnitPlayerTC(idx_0).Is(player))
                                 {
-                                    new AttackUnitS(1, E.NextPlayer(E.UnitPlayerTC(idx_0).Player).Player, idx_0, E);
+                                    AttackUnitS.AttackUnit(1, E.NextPlayer(E.UnitPlayerTC(idx_0).Player).Player, idx_0, E);
                                     E.UnitTC(idx_0).Unit = UnitTypes.None;
                                 }
                             }

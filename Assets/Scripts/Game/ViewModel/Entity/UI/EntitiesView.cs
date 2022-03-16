@@ -1,6 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.View.Cell;
 using Chessy.Game.Entity.View.Cell.Unit.Effect;
+using Chessy.Game.Values;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Values;
 using UnityEngine;
 
 namespace Chessy.Game

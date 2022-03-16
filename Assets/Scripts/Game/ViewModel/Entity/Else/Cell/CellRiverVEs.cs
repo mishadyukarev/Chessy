@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Game.Values;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game

@@ -3,9 +3,9 @@ using System;
 
 namespace Chessy.Game.System.Model
 {
-    public struct AttackUnitS
+    public static class AttackUnitS
     {
-        public AttackUnitS(in float damage, in PlayerTypes whoKiller, in byte idx_to, in EntitiesModel e)
+        public static void AttackUnit(in float damage, in PlayerTypes whoKiller, in byte idx_to, in EntitiesModel e)
         {
             if (damage <= 0) throw new Exception();
 

@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Values;
+
+namespace Chessy.Game
 {
     sealed class ResumeUnitUpdMS : SystemAbstract, IEcsRunSystem
     {

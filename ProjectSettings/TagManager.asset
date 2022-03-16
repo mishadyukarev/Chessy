@@ -92,6 +92,9 @@ TagManager:
   - name: Stun
     uniqueID: 1229242323
     locked: 0
+  - name: HeroBar
+    uniqueID: 146751987
+    locked: 0
   - name: Weather
     uniqueID: 1231844777
     locked: 0
