@@ -4,17 +4,18 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct UpUIEs
+    public readonly struct UpUIEs
     {
-        public UpEconomyUIE EconomyE;
-        public UpSunsUIEs SunsE;
+        public readonly UpEconomyUIE EconomyE;
+        public readonly UpSunsUIEs SunsE;
 
-        public ButtonUIC LeaveC;
-        public ButtonUIC AlphaC;
+        public readonly ButtonUIC LeaveC;
+        public readonly ButtonUIC AlphaC;
 
-        public TransformVC WindTrC;
-        public ImageUIC WindC;
-        public TextUIC WindTextC;
+        public readonly TransformVC WindTrC;
+        public readonly ImageUIC WindC;
+        public readonly TextUIC WindTextC;
+        public readonly TextUIC MotionsTextC;
 
         public UpUIEs(in bool def)
         {
@@ -34,6 +35,8 @@ namespace Chessy.Game
 
 
             AlphaC = new ButtonUIC(upZone.Find("Alpha_Button").GetComponent<Button>());
+
+            MotionsTextC = new TextUIC(upZone.Find("Motions_TMP+").GetComponent<TextMeshProUGUI>());
         }
     }
 }

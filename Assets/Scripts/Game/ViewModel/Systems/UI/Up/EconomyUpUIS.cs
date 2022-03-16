@@ -48,7 +48,7 @@ namespace Chessy.Game
             }
 
             if (_extracts[ResourceTypes.Food] < 0) UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = (Math.Truncate(10 * _extracts[ResourceTypes.Food]) / 10).ToString();
-            else UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = "+ " + Math.Truncate(100 * _extracts[ResourceTypes.Food]) / 10;
+            else UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = "+ " + Math.Truncate(10 * _extracts[ResourceTypes.Food]) / 10;
 
             UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Wood).TextUI.text = "+ " + Math.Truncate(10 * _extracts[ResourceTypes.Wood]) / 10;
             UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Ore).TextUI.text = "+ " + Math.Truncate(10 * _extracts[ResourceTypes.Ore]) / 10;
@@ -58,6 +58,13 @@ namespace Chessy.Game
             {
                 UIE.UpEs.EconomyE.Economy(res).TextUI.text = (Math.Truncate(10 * E.PlayerInfoE(curPlayer).ResourcesC(res).Resources) / 10).ToString();
             }
+
+
+
+
+
+
+            UIE.UpEs.MotionsTextC.TextUI.text = E.Motions.ToString();
         }
     }
 }
