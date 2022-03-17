@@ -14,7 +14,7 @@ namespace Chessy.Game
             {
                 if (E.UnitTC(idx_0).Is(UnitTypes.Snowy))
                 {
-                    if (E.CellEs(E.CenterCloudIdxC.Idx).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
+                    if (E.CellEs(E.WeatherE.CloudC.Center).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
                     {
                         //Es.UnitE(idx_0).WaterC.Set(CellUnitStatWaterValues.WATER_MAX_STANDART);
                     }

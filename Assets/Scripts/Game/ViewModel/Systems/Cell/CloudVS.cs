@@ -9,7 +9,7 @@
                 eV.CellEs(idx_0).CloudCellVC.SetActive(false);
             }
 
-            var centerCloud = e.CenterCloudIdxC.Idx;
+            var centerCloud = e.WeatherE.CloudC.Center;
 
             foreach (var cellE in e.CellEs(centerCloud).AroundCellEs)
             {

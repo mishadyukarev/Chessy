@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         public static void Run(this in RightProtectUIE protectUIE, in EntitiesModel e)
         {
-            var idx_sel = e.SelectedIdxC.Idx;
+            var idx_sel = e.CellsC.Selected;
 
             var isEnableButt = false;
 

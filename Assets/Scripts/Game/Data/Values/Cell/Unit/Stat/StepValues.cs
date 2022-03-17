@@ -33,13 +33,13 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
         #region Ability
 
         public const float DESTROY_BUILDING = 0.5f;
-        public const float BUILDING_ICE_WALL = 0.5f;
+        //public const float BUILDING_ICE_WALL = 0.5f;
         public const float PAWN_CITY_BUILDING = 0.5f;
         public const float FIRE_PAWN = 0.5f;
         public const float PUT_OUT_FIRE_PAWN = 0.5f;
         public const float GROW_ADULT_FOREST = 0.5f;
-        public const float BONUS_AROUND_SNOWY = 0.5f;
-        public const float DIRECT_WAVE = 0.5f;
+        //public const float BONUS_AROUND_SNOWY = 0.5f;
+        //public const float DIRECT_WAVE = 0.5f;
         public const float CIRCULAR_ATTACK = 0.5f;
         public const float BONUS_NEAR = 0.5f;
         public const float SEED_PAWN = 0.5f;
@@ -73,9 +73,6 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
                 case AbilityTypes.SetFarm:
                     return SET_FARM;
 
-                case AbilityTypes.SetCity:
-                    return PAWN_CITY_BUILDING;
-
                 case AbilityTypes.DestroyBuilding:
                     return DESTROY_BUILDING;
 
@@ -91,17 +88,23 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
                 case AbilityTypes.StunElfemale:
                     return STUN_ELFEMALE;
 
+                case AbilityTypes.IncreaseWindSnowy:
+                    return 0.5f;
+
+                case AbilityTypes.DecreaseWindSnowy:
+                    return 0.5f;
+
                 case AbilityTypes.ChangeDirectionWind:
                     return CHANGE_DIRECTION_WIND;
 
-                case AbilityTypes.IceWall:
-                    return BUILDING_ICE_WALL;
+                //case AbilityTypes.IceWall:
+                //    return BUILDING_ICE_WALL;
 
-                case AbilityTypes.ActiveAroundBonusSnowy:
-                    return BONUS_AROUND_SNOWY;
+                //case AbilityTypes.ActiveAroundBonusSnowy:
+                //    return BONUS_AROUND_SNOWY;
 
-                case AbilityTypes.DirectWave:
-                    return DIRECT_WAVE;
+                //case AbilityTypes.DirectWave:
+                //    return DIRECT_WAVE;
 
                 case AbilityTypes.Resurrect:
                     return RESURRECT;

@@ -19,6 +19,7 @@ namespace Chessy.Game
         public readonly CellUnitVEs UnitVEs;
         public readonly CellBuildingVEs BuildingEs;
         public readonly SpriteRendererVC CloudCellVC;
+        public readonly SupportCellVEs SupportCellEs;
 
         public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
         public SpriteRendererVC Block(in CellBlockTypes block) => _blocks[block];
@@ -41,7 +42,7 @@ namespace Chessy.Game
 
 
             FireVE = new FireVE(cell);
-
+            SupportCellEs = new SupportCellVEs(cell.transform);
 
 
             BuildingEs = new CellBuildingVEs(cell);

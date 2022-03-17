@@ -9,7 +9,7 @@
 
 //        void Toggle()
 //        {
-//            E.IsActiveSmelter(E.SelectedIdxC.Idx) = !E.IsActiveSmelter(E.SelectedIdxC.Idx);
+//            E.IsActiveSmelter(E.CellsC.SelectedIdxC) = !E.IsActiveSmelter(E.CellsC.SelectedIdxC);
 //        }
 //    }
 //}

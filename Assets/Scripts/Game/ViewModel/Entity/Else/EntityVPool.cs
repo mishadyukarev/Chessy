@@ -87,7 +87,7 @@ namespace Chessy.Game
                     case ClipTypes.PickUpgrade: volume = 0.3f; break;
                     case ClipTypes.GetHero: volume = 0.25f; break;
                     //case ClipTypes.HeroAbility: volume = 0.25f; break;
-                    case ClipTypes.BackgroundInGame: volume = 0.25f; break;
+                    case ClipTypes.BackgroundInGame: volume = 1; break;
                     case ClipTypes.Click: volume = 0.25f; break;
                 }
 
@@ -120,7 +120,6 @@ namespace Chessy.Game
 
                     case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
                     case AbilityTypes.SetFarm: volume = 0.1f; break;
-                    case AbilityTypes.SetCity: volume = 0.1f; break;
                     case AbilityTypes.Seed: volume = 0.2f; break;
                     case AbilityTypes.FirePawn: volume = 0.2f; break;
 
@@ -130,9 +129,9 @@ namespace Chessy.Game
                     case AbilityTypes.StunElfemale: volume = 0.3f; break;
                     case AbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
 
-                    case AbilityTypes.IceWall: volume = 0.1f; break;
-                    case AbilityTypes.ActiveAroundBonusSnowy: volume = 0.1f; break;
-                    case AbilityTypes.DirectWave: volume = 0.1f; break;
+                    //case AbilityTypes.IceWall: volume = 0.1f; break;
+                    //case AbilityTypes.ActiveAroundBonusSnowy: volume = 0.1f; break;
+                    //case AbilityTypes.DirectWave: volume = 0.1f; break;
 
                     case AbilityTypes.Resurrect: volume = 0.1f; break;
                     case AbilityTypes.SetTeleport: volume = 0.1f; break;

@@ -1,11 +1,11 @@
-﻿namespace Chessy.Game
-{
-    public enum AnimalTypes
-    {
-        None,
+﻿//namespace Chessy.Game
+//{
+//    public enum AnimalTypes
+//    {
+//        None,
 
-        Camel,
+//        Camel,
 
-        End
-    }
-}
+//        End
+//    }
+//}

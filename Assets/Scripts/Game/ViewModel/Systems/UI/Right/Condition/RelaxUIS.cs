@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         public static void Run(in RelaxUIE relaxE, in EntitiesModel e)
         {
-            var idx_0 = e.SelectedIdxC.Idx;
+            var idx_0 = e.CellsC.Selected;
 
             var activeButt = false;
 

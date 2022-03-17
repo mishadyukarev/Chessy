@@ -1,8 +1,8 @@
 ﻿namespace Chessy.Game
 {
-    public readonly struct NameC
+    public struct NameC
     {
-        public readonly string Name;
+        public string Name;
 
         public NameC(in string name) => Name = name;
     }

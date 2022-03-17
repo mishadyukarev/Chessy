@@ -24,7 +24,7 @@ namespace Chessy.Game.EventsUI.Center
         void Exit(in BuildingTypes buildingT)
         {
             E.Sound(ClipTypes.Click).Invoke();
-            E.SelectedBuildingsC.Set(buildingT, false);
+            E.SelectedE.BuildingsC.Set(buildingT, false);
         }
 
         void Buy(in MarketBuyTypes marketBuyT)

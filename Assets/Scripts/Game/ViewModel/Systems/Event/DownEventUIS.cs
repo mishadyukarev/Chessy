@@ -33,7 +33,7 @@ namespace Chessy.Game
 
         void Hero()
         {
-            E.SelectedIdxC.Idx = 0;
+            E.CellsC.Selected = 0;
             TryOnHint(VideoClipTypes.CreatingHero);
 
 
@@ -51,7 +51,7 @@ namespace Chessy.Game
                 {
                     if (!E.PlayerInfoE(E.CurPlayerITC.Player).HeroCooldownC.HaveCooldown)
                     {
-                        E.SelectedUnitE.Set(myHeroT, LevelTypes.First);
+                        E.SelectedE.UnitC.Set(myHeroT, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;
                     }
                     else
@@ -76,7 +76,7 @@ namespace Chessy.Game
         }
         void GetPawn()
         {
-            E.SelectedIdxC.Idx = 0;
+            E.CellsC.Selected = 0;
 
             E.Sound(ClipTypes.Click).Invoke();
 
@@ -91,13 +91,13 @@ namespace Chessy.Game
 
                     if (pawnsInGame < E.PlayerInfoE(curPlayerI).MaxAvailablePawns)
                     {
-                        E.SelectedUnitE.Set(UnitTypes.Pawn, LevelTypes.First);
+                        E.SelectedE.UnitC.Set(UnitTypes.Pawn, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;
                     }
                 }
                 else
                 {
-                    E.MistakeE.Set(MistakeTypes.NeedMorePeopleInCity, 0);
+                    E.MistakeC.Set(MistakeTypes.NeedMorePeopleInCity, 0);
                     E.Sound(ClipTypes.Mistake).Action.Invoke();
                 }
 
@@ -107,7 +107,7 @@ namespace Chessy.Game
         }
         void ToggleToolWeapon(in ToolWeaponTypes tw)
         {
-            E.SelectedIdxC.Idx = 0;
+            E.CellsC.Selected = 0;
 
 
             E.Sound(ClipTypes.Click).Invoke();
@@ -132,13 +132,13 @@ namespace Chessy.Game
                     {
                         if (tw == ToolWeaponTypes.Shield || tw == ToolWeaponTypes.BowCrossbow)
                         {
-                            if (E.SelectedTWE.LevelTC.Is(LevelTypes.First)) levT = LevelTypes.Second;
+                            if (E.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
                         }
                         else if (tw != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
                     }
                     else
                     {
-                        levT = E.SelectedTWE.LevelTC.Level;
+                        levT = E.SelectedE.ToolWeaponC.LevelT;
                     }
                 }
                 else if (tw == ToolWeaponTypes.Axe || tw == ToolWeaponTypes.Sword)
@@ -146,8 +146,8 @@ namespace Chessy.Game
                     levT = LevelTypes.Second;
                 }
 
-                E.SelectedTWE.ToolWeaponTC.ToolWeapon = tw;
-                E.SelectedTWE.LevelTC.Level = levT;
+                E.SelectedE.ToolWeaponC.ToolWeaponT = tw;
+                E.SelectedE.ToolWeaponC.LevelT = levT;
 
 
 

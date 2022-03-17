@@ -6,7 +6,9 @@
 
         ///King
         CircularAttack,
+        ///Passive
         KingPassiveNearBonus,
+
 
         ///Pawn
         FirePawn,
@@ -14,23 +16,29 @@
         Seed,
         SetFarm,
         //Mine,
-        SetCity,
+        //SetCity,
         DestroyBuilding,
+
 
         ///Archer
         FireArcher,
         ChangeCornerArcher,
 
+
         ///Elfemale
         GrowAdultForest,
         StunElfemale,
 
+
         ///Snowy
-        IceWall,
-        ActiveAroundBonusSnowy,
-        DirectWave,
+        IncreaseWindSnowy,
+        DecreaseWindSnowy,
         ChangeDirectionWind,
+        //IceWall,
+        //ActiveAroundBonusSnowy,
+        //DirectWave,
         //DefendAround,
+
 
         ///Undead
         Resurrect,

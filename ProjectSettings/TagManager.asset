@@ -59,20 +59,17 @@ TagManager:
   - name: Fire
     uniqueID: 2994770637
     locked: 0
+  - name: River
+    uniqueID: 3922430727
+    locked: 0
   - name: SupportVision
     uniqueID: 3301346089
     locked: 0
   - name: SupportEnvironmentStatic
     uniqueID: 4170661099
     locked: 0
-  - name: IceWall
-    uniqueID: 4214796319
-    locked: 0
   - name: ShieldEffect
     uniqueID: 1898758555
-    locked: 0
-  - name: Water
-    uniqueID: 3922430727
     locked: 0
   - name: ToolWeapon
     uniqueID: 2026191041

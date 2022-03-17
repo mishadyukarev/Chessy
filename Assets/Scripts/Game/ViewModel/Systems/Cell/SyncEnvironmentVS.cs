@@ -16,6 +16,7 @@
             else
             {
                 vEs.EnvironmentVE(idx_0, EnvironmentTypes.AdultForest).SetActive(false);
+                vEs.EnvironmentVEs(idx_0).HillUnderC.SetActive(false);
                 vEs.EnvironmentVE(idx_0, EnvironmentTypes.Hill).SetActive(e.EnvironmentEs(idx_0).HillC.HaveAnyResources);
             }
 

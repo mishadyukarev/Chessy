@@ -14,7 +14,7 @@ namespace Chessy.Game
 
             if (GameModeC.IsGameMode(GameModes.WithFriendOff))
             {
-                if (E.FriendIsActive)
+                if (E.ZoneInfoC.FriendIsActive)
                 {
                     UIE.CenterEs.FriendE.TextC.SetActiveParent(true);
 

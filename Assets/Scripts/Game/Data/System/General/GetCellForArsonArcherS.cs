@@ -10,7 +10,7 @@ namespace Chessy.Game.System.Model
 
             if (!e.UnitEffectStunC(idx_0).IsStunned)
             {
-                if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {

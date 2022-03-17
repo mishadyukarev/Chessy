@@ -9,8 +9,8 @@ namespace Chessy.Game.System.View.UI.Down
         public static void Sync(this in CostUIE costUIE, in EntitiesModel e)
         {
             costUIE.StepsTextC.TextUI.text = StepValues.FOR_GIVE_TAKE_TOOLWEAPON.ToString();
-            costUIE.WoodTextC.TextUI.text = EconomyValues.ForBuyToolWeapon(e.SelectedTWE.ToolWeaponTC.ToolWeapon, e.SelectedTWE.LevelTC.Level, ResourceTypes.Wood).ToString();
-            costUIE.IronTextC.TextUI.text = EconomyValues.ForBuyToolWeapon(e.SelectedTWE.ToolWeaponTC.ToolWeapon, e.SelectedTWE.LevelTC.Level, ResourceTypes.Iron).ToString();
+            costUIE.WoodTextC.TextUI.text = EconomyValues.ForBuyToolWeapon(e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT, ResourceTypes.Wood).ToString();
+            costUIE.IronTextC.TextUI.text = EconomyValues.ForBuyToolWeapon(e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT, ResourceTypes.Iron).ToString();
         }
     }
 }

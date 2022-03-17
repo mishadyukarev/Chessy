@@ -8,7 +8,7 @@ namespace Chessy.Game
     {
         static readonly Vector3 _gamePosCamera = new Vector3(7.4f, 4.8f, -2);
 
-        public static void Run(in EntitiesView eV, in EntitiesModel e)
+        public static void Rotate(in EntitiesView eV, in EntitiesModel e)
         {
             var curPlayer = e.CurPlayerITC.Player;
 

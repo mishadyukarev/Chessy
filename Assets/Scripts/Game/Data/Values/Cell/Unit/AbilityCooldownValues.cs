@@ -17,8 +17,9 @@ namespace Chessy.Game.Values.Cell.Unit
                 case AbilityTypes.StunElfemale: return 5;
                 case AbilityTypes.ChangeDirectionWind: return 6;
 
-                case AbilityTypes.ActiveAroundBonusSnowy: return 5;
-                case AbilityTypes.IceWall: return 10;
+                //Snowy
+                case AbilityTypes.DecreaseWindSnowy: return 2;
+                case AbilityTypes.IncreaseWindSnowy: return 2;
 
                 case AbilityTypes.Resurrect: return 3;
                 case AbilityTypes.SetTeleport: return 10;

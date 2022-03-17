@@ -7,11 +7,14 @@
         Economy,
         NeedMoreSteps,
         NeedMoreHp,
-        NeedOtherPlace,
-        ThatIsForOtherUnit,
-        NeedCity,
-        NearBorder,
+
+        NeedOtherPlaceSeed,
+        NeedOtherPlaceFarm,
+        NeedOtherPlaceGrowAdultForest,
+
         NeedMorePeopleInCity,
+        MaxSpeedWind,
+        MinSpeedWind,
 
         End,
     }

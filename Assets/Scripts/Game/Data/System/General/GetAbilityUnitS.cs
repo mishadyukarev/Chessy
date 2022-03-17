@@ -82,8 +82,8 @@ namespace Chessy.Game.System.Model
                             break;
 
                         case UnitTypes.Snowy:
-                            //e.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.DirectWave;
-                            //e.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ActiveAroundBonusSnowy;
+                            e.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.IncreaseWindSnowy;
+                            e.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.DecreaseWindSnowy;
                             e.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
                             //E.UnitEs(Idx).Ability(ButtonTypes.Third).Ability = AbilityTypes.IceWall;
                             break;

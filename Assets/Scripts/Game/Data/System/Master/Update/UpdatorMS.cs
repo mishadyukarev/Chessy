@@ -18,18 +18,11 @@ namespace Chessy.Game
             {
                 //E.ResourcesC(player, ResourceTypes.Food).Resources -= E.PlayerE(player).PeopleInCity * Economy_VALUES.CostFoodForFeedingThem / 2;
 
-                E.PlayerInfoE(player).HeroCooldownC.Cooldown--;
-
                 E.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
             }
 
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
-                {
-                    E.UnitEs(idx_0).CoolDownC(abilityT).Cooldown--;
-                }
-
                 if (E.UnitTC(idx_0).HaveUnit && !E.IsAnimal(E.UnitTC(idx_0).Unit))
                 {
                     E.ResourcesC(E.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
@@ -97,8 +90,8 @@ namespace Chessy.Game
                 }
             }
 
-            E.Motions++;
-            E.SunSideTC.ToggleNext();
+            E.MotionsC.Motions++;
+            E.WeatherE.SunC.ToggleNext();
         }
     }
 }

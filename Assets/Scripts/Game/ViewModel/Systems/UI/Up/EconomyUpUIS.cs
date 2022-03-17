@@ -64,7 +64,7 @@ namespace Chessy.Game
 
 
 
-            UIE.UpEs.MotionsTextC.TextUI.text = E.Motions.ToString();
+            UIE.UpEs.MotionsTextC.TextUI.text =  "Motions: "+ E.MotionsC.Motions.ToString();
         }
     }
 }

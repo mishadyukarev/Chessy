@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct AttackUnit_M
     {
-        public AttackUnit_M(in byte idx_from, in byte idx_to, in EntitiesModel e)
+        public AttackUnit_M(in byte idx_from, in byte idx_to, in SystemsModelManager sMM, in EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 
@@ -35,11 +35,11 @@ namespace Chessy.Game.System.Model.Master
 
                 var dirAttack = e.CellEs(idx_from).Direct(idx_to);
 
-                if (e.SunSideTC.IsAcitveSun)
+                if (e.WeatherE.SunC.IsAcitveSun)
                 {
                     var isSunnedUnit = true;
 
-                    foreach (var dir in e.SunSideTC.RaysSun)
+                    foreach (var dir in e.WeatherE.SunC.RaysSun)
                     {
                         if (dirAttack == dir) isSunnedUnit = false;
                     }
@@ -116,7 +116,7 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (minus_from > 0)
                     {
-                        AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, e);
+                        sMM.AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, sMM, e);
                     }
                 }
                 else
@@ -155,7 +155,7 @@ namespace Chessy.Game.System.Model.Master
 
                     var wasUnitT_to = e.UnitTC(idx_to).Unit;
 
-                    AttackUnitS.AttackUnit(minus_to, killer, idx_to, e);
+                    sMM.AttackUnitS.AttackUnit(minus_to, killer, idx_to, sMM, e);
 
                     if (!e.UnitTC(idx_to).HaveUnit)
                     {

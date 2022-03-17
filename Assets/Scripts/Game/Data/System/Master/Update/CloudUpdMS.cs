@@ -10,29 +10,35 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (var i = 0; i < E.StrengthWind.Strength; i++)
+            for (var i = 0; i < E.WeatherE.WindC.Speed; i++)
             {
-                var idx_0 = E.CenterCloudIdxC.Idx;
-                var xy_next = E.CellEs(idx_0).AroundCellE(E.DirectWindTC.Direct).XyC.Xy;
-                var idx_next = E.CellEs(idx_0).AroundCellE(E.DirectWindTC.Direct).IdxC.Idx;
+                var idx_0 = E.WeatherE.CloudC.Center;
+                var xy_next = E.CellEs(idx_0).AroundCellE(E.WeatherE.WindC.Direct).XyC.Xy;
+                var idx_next = E.CellEs(idx_0).AroundCellE(E.WeatherE.WindC.Direct).IdxC.Idx;
 
 
-                if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
+                for (var ii = 0; ii < 10; ii++)
                 {
-                    E.CenterCloudIdxC.Idx = E.GetIdxCellByXy(xy_next);
-                }
-                else
-                {
-                    var newDir = E.DirectWindTC.Direct;
+                    if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
+                    {
+                        E.WeatherE.CloudC.Center = E.GetIdxCellByXy(xy_next);
+                    }
+                    else
+                    {
+                        var newDir = E.WeatherE.WindC.Direct;
 
-                    newDir = newDir.Invert();
-                    var newDirInt = (int)newDir;
-                    newDirInt += UnityEngine.Random.Range(-1, 2);
+                        newDir = newDir.Invert();
+                        var newDirInt = (int)newDir;
+                        newDirInt += UnityEngine.Random.Range(-1, 2);
 
-                    if (newDirInt <= 0) newDirInt = 1;
-                    else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                    E.DirectWindTC.Direct = (DirectTypes)newDirInt;
+                        if (newDirInt <= 0) newDirInt = 1;
+                        else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
+                        E.WeatherE.WindC.Direct = (DirectTypes)newDirInt;
+
+                        break;
+                    }
                 }
+                
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
@@ -40,7 +46,7 @@ namespace Chessy.Game
                 }
             }
 
-            if (Random.Range(0f, 1f) > UPDATE_VALUES.PERCENT_FOR_CHANGING_WIND) E.StrengthWind.Strength = Random.Range(1, 4);
+            if (Random.Range(0f, 1f) > UPDATE_VALUES.PERCENT_FOR_CHANGING_WIND) E.WeatherE.WindC.Speed = Random.Range(0, 4);
         }
     }
 }

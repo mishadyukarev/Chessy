@@ -21,7 +21,7 @@ namespace Chessy.Game
                     {
                         if (e.UnitExtraTWTC(idx_0).HaveToolWeapon)
                         {
-                            e.ToolWeaponsC(e.UnitPlayerTC(idx_0).Player, e.UnitExtraLevelTC(idx_0).Level, e.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
+                            e.ToolWeaponsC(e.UnitPlayerTC(idx_0).Player, e.UnitExtraLevelTC(idx_0).Level, e.UnitExtraTWTC(idx_0).ToolWeapon)++;
                             e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
 
                             e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -32,9 +32,9 @@ namespace Chessy.Game
                             {
                                 if (e.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
                                 {
-                                    if (e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT).HaveAny)
+                                    if (e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
                                     {
-                                        e.ToolWeaponsC(whoseMove, levTW, twT).Amount--;
+                                        e.ToolWeaponsC(whoseMove, levTW, twT)--;
                                         e.UnitMainTWTC(idx_0).ToolWeapon = twT;
                                         e.UnitMainTWLevelTC(idx_0).Level = levTW;
 
@@ -76,7 +76,7 @@ namespace Chessy.Game
                                 }
                                 else
                                 {
-                                    e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
+                                    e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon)++;
                                     e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                                     e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
@@ -86,7 +86,7 @@ namespace Chessy.Game
 
                             else
                             {
-                                e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
+                                e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon)++;
                                 e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                                 e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
@@ -101,9 +101,9 @@ namespace Chessy.Game
                         {
                             if (e.UnitMainTWLevelTC(idx_0).Is(LevelTypes.First))
                             {
-                                if (e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT).HaveAny)
+                                if (e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
                                 {
-                                    e.ToolWeaponsC(whoseMove, levTW, twT).Amount--;
+                                    e.ToolWeaponsC(whoseMove, levTW, twT)--;
                                     e.UnitMainTWTC(idx_0).ToolWeapon = twT;
                                     e.UnitMainTWLevelTC(idx_0).Level = levTW;
 
@@ -145,7 +145,7 @@ namespace Chessy.Game
                             }
                             else
                             {
-                                e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
+                                e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon)++;
                                 e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                                 e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
@@ -155,7 +155,7 @@ namespace Chessy.Game
 
                         else
                         {
-                            e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
+                            e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon)++;
                             e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                             e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
@@ -171,7 +171,7 @@ namespace Chessy.Game
 
                         if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                         {
-                            e.ToolWeaponsC(e.UnitPlayerTC(idx_0).Player, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon).Amount++;
+                            e.ToolWeaponsC(e.UnitPlayerTC(idx_0).Player, e.UnitMainTWLevelTC(idx_0).Level, e.UnitMainTWTC(idx_0).ToolWeapon)++;
                             e.UnitMainTWTC(idx_0).ToolWeapon = ToolWeaponTypes.Axe;
                             e.UnitMainTWLevelTC(idx_0).Level = LevelTypes.First;
 
@@ -184,7 +184,7 @@ namespace Chessy.Game
                             {
                                 if (e.UnitExtraTWTC(idx_0).HaveToolWeapon)
                                 {
-                                    e.PlayerInfoE(ownUnit_0).LevelE(e.UnitExtraLevelTC(idx_0).Level).ToolWeapons(e.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
+                                    e.PlayerInfoE(ownUnit_0).LevelE(e.UnitExtraLevelTC(idx_0).Level).ToolWeapons(e.UnitExtraTWTC(idx_0).ToolWeapon)++;
                                     e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
 
                                     e.UnitStepC(idx_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -192,9 +192,9 @@ namespace Chessy.Game
                                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
 
-                                else if (e.ToolWeaponsC(ownUnit_0, levTW, twT).HaveAny)
+                                else if (e.ToolWeaponsC(ownUnit_0, levTW, twT) > 0)
                                 {
-                                    e.PlayerInfoE(ownUnit_0).LevelE(levTW).ToolWeapons(twT).Amount--;
+                                    e.PlayerInfoE(ownUnit_0).LevelE(levTW).ToolWeapons(twT)--;
 
                                     e.UnitExtraTWE(idx_0).Set(twT, levTW, e.UnitExtraProtectionTC(idx_0).Protection);
 
@@ -247,7 +247,7 @@ namespace Chessy.Game
 
                 else
                 {
-                    e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 

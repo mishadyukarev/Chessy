@@ -20,11 +20,11 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (E.SelectedIdxC.Idx > 0)
+            if (E.CellsC.Selected > 0)
             {
-                var idx_sel = E.SelectedIdxC.Idx;
+                var idx_sel = E.CellsC.Selected;
 
-                if (E.UnitTC(E.SelectedIdxC.Idx).HaveUnit)
+                if (E.UnitTC(E.CellsC.Selected).HaveUnit)
                 {
                     for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++)
                     {

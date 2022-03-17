@@ -6,11 +6,11 @@ namespace Chessy.Game.System.Model.Master
 {
     public static class UpdateS_M
     {
-        public static void UpdateMove(this EntitiesModel e)
+        public static void UpdateMove(in SystemsModelManager sMM, in EntitiesModel e)
         {
             new UpdatorMS(e).Run();
 
-            FireUpdateMS.Run(e);
+            FireUpdateMS.Run(sMM, e);
             new RiverFertilizeAroundUpdateMS(e).Run();
             new WorldDryFertilizerMS(e).Run();
             new CitiesAddPeopleUpdateMS(e).Run();
@@ -43,8 +43,8 @@ namespace Chessy.Game.System.Model.Master
             new PawnExtractAdultForestMS(e).Run();
             new ResumeUnitUpdMS(e).Run();
             new UpdateHealingUnitMS(e).Run();
-            new UnitEatFoodUpdateS_M(e).Run();
-            new ThirstyUnitsUpdateMS(e).Run();
+            UnitEatFoodUpdateS_M.Run(sMM, e);
+            ThirstyUnitsUpdateMS.Run(sMM, e);
             new PawnExtractHillUpdateMS(e).Run();
 
             new UpdTryFireAroundHellMS(e).Run();
@@ -59,7 +59,7 @@ namespace Chessy.Game.System.Model.Master
 
 
 
-            if (e.Motions % 3 == 0)
+            if (e.MotionsC.Motions % 3 == 0)
             {
                 for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
                 {

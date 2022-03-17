@@ -15,13 +15,13 @@ namespace Chessy.Game
             foreach (var item in vEs.UnitEs(idx_0).BowCrossbows.Values) item.Disable();
 
 
-            if (e.CurrentIdxC.Is(idx_0))
+            if (e.CellsC.Current == idx_0)
             {
                 if (e.CellClickTC.Is(CellClickTypes.SetUnit))
                 {
-                    var idx_cur = e.CurrentIdxC.Idx;
-                    var selUnitT = e.SelectedUnitE.UnitTC.Unit;
-                    var levT = e.SelectedUnitE.LevelTC.Level;
+                    var idx_cur = e.CellsC.Current;
+                    var selUnitT = e.SelectedE.UnitC.UnitTC;
+                    var levT = e.SelectedE.UnitC.LevelTC;
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
@@ -38,7 +38,7 @@ namespace Chessy.Game
             {
                 if (e.UnitEs(idx_0).ForPlayer(e.CurPlayerITC.Player).IsVisible)
                 {
-                    var isSelected = idx_0 == e.SelectedIdxC.Idx;
+                    var isSelected = idx_0 == e.CellsC.Selected;
                     var isVisForNext = e.UnitEs(idx_0).ForPlayer(e.NextPlayer(e.CurPlayerITC.Player).Player).IsVisible;
 
                     var unitT = e.UnitTC(idx_0).Unit;

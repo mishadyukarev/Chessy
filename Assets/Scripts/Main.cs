@@ -1,6 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Game;
 using Chessy.Game.EventsUI;
+using Chessy.Game.System.Model;
 using Chessy.Game.System.View.UI;
 using Chessy.Menu;
 using ECS;
@@ -112,9 +113,11 @@ namespace Chessy
                         _e = new EntitiesModel(forData, Rpc.NamesMethods);
                         _eUI = new EntitiesViewUI(_e);
 
+                        var sMM = new SystemsModelManager();
+
                         var eventsUI = new EventsUIManager(_eUI, _e);
 
-                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(_e, eventsUI);
+                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(sMM, _e,  eventsUI);
                         Rpc.SyncAllMaster();
 
                         break;

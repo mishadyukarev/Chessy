@@ -8,9 +8,9 @@ namespace Chessy.Game
 
         public static void Sync(in float timer, in EntitiesViewUI eUI, in EntitiesModel e)
         {
-            if (e.MotionIsActive)
+            if (e.ZoneInfoC.MotionIsActive)
             {
-                eUI.CenterEs.Motion.TextUI.text = e.Motions.ToString();
+                eUI.CenterEs.Motion.TextUI.text = e.MotionsC.Motions.ToString();
                 eUI.CenterEs.Motion.SetActiveParent(true);
 
                 _timer += Time.deltaTime + timer;
@@ -18,7 +18,7 @@ namespace Chessy.Game
                 if (_timer >= 4)
                 {
                     eUI.CenterEs.Motion.SetActiveParent(false);
-                    e.MotionIsActive = false;
+                    e.ZoneInfoC.MotionIsActive = false;
                     _timer = 0;
                 }
             }

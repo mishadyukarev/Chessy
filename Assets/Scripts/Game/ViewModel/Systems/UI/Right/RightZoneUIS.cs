@@ -8,12 +8,12 @@
 
         public void Run()
         {
-            var idx_sel = E.SelectedIdxC.Idx;
+            var idx_sel = E.CellsC.Selected;
 
             var activeParent = false;
 
 
-            if (E.SelectedIdxC.Idx > 0)
+            if (E.CellsC.Selected > 0)
             {
                 if (E.UnitTC(idx_sel).HaveUnit)
                 {

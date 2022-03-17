@@ -4,13 +4,9 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game
 {
-    sealed class ThirstyUnitsUpdateMS : SystemAbstract, IEcsRunSystem
+    static class ThirstyUnitsUpdateMS
     {
-        internal ThirstyUnitsUpdateMS(in EntitiesModel ents) : base(ents)
-        {
-        }
-
-        public void Run()
+        public static void Run(in SystemsModelManager sMM, in EntitiesModel E)
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
@@ -46,7 +42,7 @@ namespace Chessy.Game
                             {
                                 float percent = HpValues.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                AttackUnitS.AttackUnit(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, E);
+                                sMM.AttackUnitS.AttackUnit(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, sMM, E);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);

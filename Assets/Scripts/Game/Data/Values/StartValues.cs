@@ -13,8 +13,11 @@ namespace Chessy.Game.Values
 
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;
 
-        public const byte START_WIND = 60;
+        public const byte START_CLOUD = 60;
         public const float STRENGTH_WIND = 1;
+        public const float MAX_STREANGTH_WIND = 3;
+        public const float MIN_SNREANGTH_WIND = 0;
+
         public const DirectTypes DIRECT_WIND = DirectTypes.Right;
         public const SunSideTypes SUN_SIDE = SunSideTypes.Dawn;
         public const PlayerTypes WHOSE_MOVE = PlayerTypes.First;

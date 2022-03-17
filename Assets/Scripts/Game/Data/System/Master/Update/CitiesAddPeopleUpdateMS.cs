@@ -8,7 +8,7 @@
 
         public void Run()
         {
-            if(E.Motions % 5 == 0)
+            if(E.MotionsC.Motions % 5 == 0)
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {

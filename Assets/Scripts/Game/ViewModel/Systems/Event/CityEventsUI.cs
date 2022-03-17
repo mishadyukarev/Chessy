@@ -20,14 +20,14 @@ namespace Chessy.Game.EventsUI.Left
 
             if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
             {
-                if (E.SelectedBuildingsC.Is(buildT))
+                if (E.SelectedE.BuildingsC.Is(buildT))
                 {
-                    E.SelectedBuildingsC.Set(buildT, false);
+                    E.SelectedE.BuildingsC.Set(buildT, false);
                     E.Sound(ClipTypes.Click).Invoke();
                 }
                 else if (E.PlayerInfoE(curPlayerI).HaveBuilding(buildT))
                 {
-                    E.SelectedBuildingsC.Set(buildT, true);
+                    E.SelectedE.BuildingsC.Set(buildT, true);
                     E.Sound(ClipTypes.Click).Invoke();
                 }
                 else

@@ -7,9 +7,9 @@ namespace Chessy.Game.System.Model
 {
     static class FireUpdateMS
     {
-        public static void Run(in EntitiesModel e)
+        public static void Run(in SystemsModelManager sMM, in EntitiesModel e)
         {
-            foreach (var cellE in e.CellEs(e.CenterCloudIdxC.Idx).AroundCellEs)
+            foreach (var cellE in e.CellEs(e.WeatherE.CloudC.Center).AroundCellEs)
             {
                 e.HaveFire(cellE.IdxC.Idx) = false;
             }
@@ -31,7 +31,14 @@ namespace Chessy.Game.System.Model
                         }
                         else
                         {
-                            AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, idx_0, e);
+                            if (e.UnitPlayerTC(idx_0).Is(PlayerTypes.None))
+                            {
+                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, PlayerTypes.None, idx_0, sMM, e);
+                            }
+                            else
+                            {
+                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, idx_0, sMM, e);
+                            }
                         }
                     }
 

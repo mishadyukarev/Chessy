@@ -19,17 +19,22 @@ namespace Chessy.Game.System.Model
 
             if (!e.UnitTC(idx_to).Is(UnitTypes.Undead))
             {
+                if (e.UnitTC(idx_to).Is(UnitTypes.Snowy))
+                {
+                    if (e.UnitWaterC(idx_to).Water > 0)
+                    {
+                        e.FertilizeC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
+                        e.HaveFire(idx_to) = false;
+                        e.UnitWaterC(idx_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
+                    }
+                }
+
                 if (e.AdultForestC(idx_from).HaveAnyResources)
                 {
                     e.CellEs(idx_from).TrailHealthC(direct).Health = TrailValues.HEALTH_TRAIL;
                 }
                 if (e.AdultForestC(idx_to).HaveAnyResources)
                 {
-                    //if (E.PlayerE(E.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
-                    //{
-                    //    E.UnitHpC(idx_to).Health = HpValues.MAX;
-                    //}
-
                     var dirTrail = direct.Invert();
 
                     e.CellEs(idx_to).TrailHealthC(dirTrail).Health = TrailValues.HEALTH_TRAIL;
@@ -38,56 +43,18 @@ namespace Chessy.Game.System.Model
                 if (e.RiverEs(idx_to).RiverTC.HaveRiverNear)
                 {
                     e.UnitWaterC(idx_to).Water = WaterValues.MAX;
-
-
-                    //if (e.PlayerInfoE(e.UnitPlayerTC(idx_to).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
-                    //{
-                    //    if (e.UnitTC(idx_to).Is(UnitTypes.Pawn))
-                    //    {
-                    //        if (e.UnitMainTWTC(idx_to).Is(ToolWeaponTypes.BowCrossbow))
-                    //        {
-                    //            e.UnitEffectFrozenArrawC(idx_to).Shoots = 1;
-                    //        }
-                    //        else
-                    //        {
-                    //            e.UnitEffectShield(idx_to).Protection = ShieldValues.AFTER_DIRECT_WAVE;
-                    //        }
-                    //    }
-                    //    else if (e.UnitTC(idx_to).Is(UnitTypes.King))
-                    //    {
-                    //        e.UnitEffectShield(idx_to).Protection = ShieldValues.AFTER_DIRECT_WAVE;
-                    //    }
-                    //}
                 }
             }
 
             switch (e.UnitTC(idx_to).Unit)
             {
                 case UnitTypes.Elfemale:
-                    //if (e.AdultForestC(idx_from).HaveAnyResources)
-                    //{
-                    //    if (Random.Range(0f, 1f) >= 0.25f)
-                    //    {
-                    //        e.UnitEs(idx_from).SetNewUnitHere(UnitTypes.Pawn, e.UnitPlayerTC(idx_to).Player, e.PlayerInfoE(e.UnitPlayerTC(idx_to).Player));
-                    //    }
-                    //}
-
-
                     if (!e.AdultForestC(idx_to).HaveAnyResources && !e.HillC(idx_to).HaveAnyResources)
                     {
                         if (Random.Range(0, 1f) <= 0.25f)
                         {
                             e.YoungForestC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
                         }
-                    }
-                    break;
-
-                case UnitTypes.Snowy:
-                    if (e.UnitWaterC(idx_to).Water > 0)
-                    {
-                        e.FertilizeC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
-                        e.HaveFire(idx_to) = false;
-                        e.UnitWaterC(idx_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
                     }
                     break;
 

@@ -32,9 +32,9 @@ namespace Chessy.Game
 
         public void Run()
         {
-            UIE.UpEs.WindTrC.EulerAngles = _directs[E.DirectWindTC.Direct];
+            UIE.UpEs.WindTrC.EulerAngles = _directs[E.WeatherE.WindC.Direct];
             if (E.CurPlayerITC.Player == PlayerTypes.Second) UIE.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-            UIE.UpEs.WindTextC.TextUI.text = E.StrengthWind.Strength.ToString();
+            UIE.UpEs.WindTextC.TextUI.text = E.WeatherE.WindC.Speed.ToString() + "/" + E.WeatherE.WindC.MaxSpeed;
         }
     }
 }

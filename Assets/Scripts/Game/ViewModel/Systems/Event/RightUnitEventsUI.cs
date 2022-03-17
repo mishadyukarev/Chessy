@@ -23,13 +23,13 @@ namespace Chessy.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (E.UnitConditionTC(E.SelectedIdxC.Idx).Is(condUnitType))
+                if (E.UnitConditionTC(E.CellsC.Selected).Is(condUnitType))
                 {
-                    E.RpcPoolEs.ConditionUnitToMaster(E.SelectedIdxC.Idx, ConditionUnitTypes.None);
+                    E.RpcPoolEs.ConditionUnitToMaster(E.CellsC.Selected, ConditionUnitTypes.None);
                 }
                 else
                 {
-                    E.RpcPoolEs.ConditionUnitToMaster(E.SelectedIdxC.Idx, condUnitType);
+                    E.RpcPoolEs.ConditionUnitToMaster(E.CellsC.Selected, condUnitType);
                 }
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
@@ -39,7 +39,7 @@ namespace Chessy.Game
         {
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                var idx_sel = E.SelectedIdxC.Idx;
+                var idx_sel = E.CellsC.Selected;
 
                 var abil = E.UnitEs(idx_sel).Ability(uniqueButton);
 
@@ -63,7 +63,7 @@ namespace Chessy.Game
                             break;
 
                         case AbilityTypes.FireArcher:
-                            E.SelectedAbilityTC.Set(AbilityTypes.FireArcher);
+                            E.SelectedE.AbilityTC.Set(AbilityTypes.FireArcher);
                             E.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             TryOnHint(VideoClipTypes.SeedFire);
                             break;
@@ -75,7 +75,7 @@ namespace Chessy.Game
 
                         case AbilityTypes.StunElfemale:
                             {
-                                E.SelectedAbilityTC.Ability = AbilityTypes.StunElfemale;
+                                E.SelectedE.AbilityTC.Ability = AbilityTypes.StunElfemale;
                                 E.CellClickTC.Click = CellClickTypes.UniqueAbility;
                                 TryOnHint(VideoClipTypes.StunElfemale);
                             }
@@ -86,10 +86,19 @@ namespace Chessy.Game
                             //TryOnHint(VideoClipTypes.BonusKing);
                             break;
 
+
+                        //Snowy
+
+                        case AbilityTypes.IncreaseWindSnowy:
+                            E.RpcPoolEs.IncreaseWindSnowy_ToMaster(idx_sel);
+                            break;
+
+                        case AbilityTypes.DecreaseWindSnowy:
+                            E.RpcPoolEs.DecreaseWindSnowy_ToMaster(idx_sel);
+                            break;
+
                         case AbilityTypes.ChangeCornerArcher:
-                            {
-                                E.RpcPoolEs.ChangeCornerArchToMas(idx_sel);
-                            }
+                            E.RpcPoolEs.ChangeCornerArchToMas(idx_sel);
                             break;
 
                         case AbilityTypes.GrowAdultForest:
@@ -100,7 +109,7 @@ namespace Chessy.Game
                         case AbilityTypes.ChangeDirectionWind:
                             {
                                 TryOnHint(VideoClipTypes.PutOutElfemale);
-                                E.SelectedAbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
+                                E.SelectedE.AbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
                                 E.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             }
                             break;
@@ -112,31 +121,27 @@ namespace Chessy.Game
                             }
                             break;
 
-                        case AbilityTypes.SetCity:
-                            E.RpcPoolEs.BuildCityToMaster(idx_sel);
-                            break;
-
                         case AbilityTypes.DestroyBuilding:
                             E.RpcPoolEs.DestroyBuildingToMaster(idx_sel);
                             break;
 
 
-                        case AbilityTypes.IceWall:
-                            E.RpcPoolEs.IceWallToMaster(idx_sel);
-                            break;
+                        //case AbilityTypes.IceWall:
+                        //    E.RpcPoolEs.IceWallToMaster(idx_sel);
+                        //    break;
 
-                        case AbilityTypes.ActiveAroundBonusSnowy:
-                            E.RpcPoolEs.ActiveSnowyAroundToMaster(idx_sel);
-                            break;
+                        //case AbilityTypes.ActiveAroundBonusSnowy:
+                        //    E.RpcPoolEs.ActiveSnowyAroundToMaster(idx_sel);
+                        //    break;
 
-                        case AbilityTypes.DirectWave:
-                            E.SelectedAbilityTC.Ability = AbilityTypes.DirectWave;
-                            E.CellClickTC.Click = CellClickTypes.UniqueAbility;
-                            break;
+                        //case AbilityTypes.DirectWave:
+                        //    E.SelectedAbilityTC.Ability = AbilityTypes.DirectWave;
+                        //    E.CellClickTC.Click = CellClickTypes.UniqueAbility;
+                        //    break;
 
 
                         case AbilityTypes.Resurrect:
-                            E.SelectedAbilityTC.Ability = AbilityTypes.Resurrect;
+                            E.SelectedE.AbilityTC.Ability = AbilityTypes.Resurrect;
                             E.CellClickTC.Click = CellClickTypes.UniqueAbility;
                             break;
 

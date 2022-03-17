@@ -10,7 +10,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            switch (E.SunSideTC.SunSide)
+            switch (E.WeatherE.SunC.SunSide)
             {
                 case SunSideTypes.Dawn:
                     UIE.UpEs.SunsE.RightSun.SetActive(false);

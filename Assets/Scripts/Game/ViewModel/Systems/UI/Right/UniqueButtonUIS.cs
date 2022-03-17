@@ -20,7 +20,7 @@ namespace Chessy.Game.View.UI.System
 
         public void Run()
         {
-            var ability_cur = E.UnitEs(E.SelectedIdxC.Idx).Ability(_buttonT).Ability;
+            var ability_cur = E.UnitEs(E.CellsC.Selected).Ability(_buttonT).Ability;
 
             if (ability_cur == default)
             {
@@ -30,8 +30,8 @@ namespace Chessy.Game.View.UI.System
             {
                 _buttonE.ParenC.SetActive(true);
 
-                _buttonE.CooldonwTextC.SetActiveParent(E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability_cur).HaveCooldown);
-                _buttonE.CooldonwTextC.TextUI.text = E.UnitEs(E.SelectedIdxC.Idx).CoolDownC(ability_cur).Cooldown.ToString();
+                _buttonE.CooldonwTextC.SetActiveParent(E.UnitEs(E.CellsC.Selected).CoolDownC(ability_cur).HaveCooldown);
+                _buttonE.CooldonwTextC.TextUI.text = E.UnitEs(E.CellsC.Selected).CoolDownC(ability_cur).Cooldown.ToString();
 
                 
 
@@ -47,25 +47,25 @@ namespace Chessy.Game.View.UI.System
                 _buttonE.WaterTextC.ParentG.SetActive(false);
                 switch (ability_cur)
                 {
-                    case AbilityTypes.IceWall:
-                        //_buttonE.WaterTextC.ParentG.SetActive(true);
-                        //_buttonE.WaterTextC.TextUI.text = WaterValues..ToString();
-                        break;
+                    //case AbilityTypes.IceWall:
+                    //    //_buttonE.WaterTextC.ParentG.SetActive(true);
+                    //    //_buttonE.WaterTextC.TextUI.text = WaterValues..ToString();
+                    //    break;
 
-                    case AbilityTypes.ActiveAroundBonusSnowy:
-                        _buttonE.WaterTextC.ParentG.SetActive(true);
-                        _buttonE.WaterTextC.TextUI.text = WaterValues.BONUS_AROUND_SNOWY.ToString();
-                        break;
+                    //case AbilityTypes.ActiveAroundBonusSnowy:
+                    //    _buttonE.WaterTextC.ParentG.SetActive(true);
+                    //    _buttonE.WaterTextC.TextUI.text = WaterValues.BONUS_AROUND_SNOWY.ToString();
+                    //    break;
 
-                    case AbilityTypes.DirectWave:
-                        _buttonE.WaterTextC.ParentG.SetActive(true);
-                        _buttonE.WaterTextC.TextUI.text = WaterValues.DIRECT_WAVE.ToString();
-                        break;
+                    //case AbilityTypes.DirectWave:
+                    //    _buttonE.WaterTextC.ParentG.SetActive(true);
+                    //    _buttonE.WaterTextC.TextUI.text = WaterValues.DIRECT_WAVE.ToString();
+                    //    break;
 
-                    case AbilityTypes.ChangeDirectionWind:
-                        _buttonE.WaterTextC.ParentG.SetActive(true);
-                        _buttonE.WaterTextC.TextUI.text = WaterValues.Need(ability_cur).ToString();
-                        break;
+                    //case AbilityTypes.ChangeDirectionWind:
+                    //    _buttonE.WaterTextC.ParentG.SetActive(true);
+                    //    _buttonE.WaterTextC.TextUI.text = WaterValues.Need(ability_cur).ToString();
+                    //    break;
                 }
 
                 _buttonE.WoodTextC.ParentG.SetActive(false);

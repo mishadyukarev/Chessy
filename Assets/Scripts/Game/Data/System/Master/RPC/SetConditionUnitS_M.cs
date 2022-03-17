@@ -30,7 +30,7 @@ namespace Chessy.Game.System.Model.Master
 
                     else
                     {
-                        e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 
@@ -62,7 +62,7 @@ namespace Chessy.Game.System.Model.Master
 
                     else
                     {
-                        e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 

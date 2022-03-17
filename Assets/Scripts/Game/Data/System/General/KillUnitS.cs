@@ -4,9 +4,13 @@ namespace Chessy.Game.System.Model
 {
     public struct KillUnitS
     {
-        public KillUnitS(in byte idx_0, in PlayerTypes whoKiller, in EntitiesModel e)
+        public void Kill(in byte idx_0, in PlayerTypes whoKiller, in EntitiesModel e)
         {
-            if (e.UnitTC(idx_0).Is(UnitTypes.King)) e.WinnerC.Player = whoKiller;
+            if (whoKiller != PlayerTypes.None)
+            {
+                if (e.UnitTC(idx_0).Is(UnitTypes.King)) e.WinnerC.Player = whoKiller;
+            }
+            
             else if (e.UnitTC(idx_0).IsHero)
             {
                 var cooldown = 0f;

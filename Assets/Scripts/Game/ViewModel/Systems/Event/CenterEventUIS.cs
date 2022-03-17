@@ -36,11 +36,11 @@ namespace Chessy.Game
         void Ready() => E.RpcPoolEs.ReadyToMaster();
         void FriendReady()
         {
-            E.FriendIsActive = false;
+            E.ZoneInfoC.FriendIsActive = false;
         }
         void GetKing()
         {
-            E.SelectedIdxC.Idx = 0;
+            E.CellsC.Selected = 0;
 
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
@@ -48,7 +48,7 @@ namespace Chessy.Game
 
                 if (E.PlayerInfoE(E.CurPlayerITC.Player).HaveKingInInventor)
                 {
-                    E.SelectedUnitE.Set(UnitTypes.King, LevelTypes.First);
+                    E.SelectedE.UnitC.Set(UnitTypes.King, LevelTypes.First);
                     E.CellClickTC.Click = CellClickTypes.SetUnit;
                 }
             }

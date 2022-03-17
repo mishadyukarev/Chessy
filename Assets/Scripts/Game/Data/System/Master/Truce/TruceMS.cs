@@ -32,7 +32,7 @@ namespace Chessy.Game
                         {
                             if (E.UnitExtraTWTC(idx_0).HaveToolWeapon)
                             {
-                                E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
+                                E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon)++;
                                 E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                             }
 
@@ -45,7 +45,7 @@ namespace Chessy.Game
 
                         if (E.UnitExtraTWTC(idx_0).HaveToolWeapon)
                         {
-                            E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon).Amount++;
+                            E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).LevelE(E.UnitExtraLevelTC(idx_0).Level).ToolWeapons(E.UnitExtraTWTC(idx_0).ToolWeapon)++;
 
                             E.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
                         }

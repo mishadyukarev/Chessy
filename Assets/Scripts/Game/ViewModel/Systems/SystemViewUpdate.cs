@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.System.Model;
+using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
@@ -16,8 +17,10 @@ namespace Chessy.Game
                 SyncRiverVS.Sync(idx_0, eV, e);
                 SyncBarsEnvironmentVS.Sync(idx_0, eV, e);
                 SyncTrailVS.Sync(idx_0, eV, e);
+                new SyncNoneVisionS().Sync(idx_0, eV.CellEs(idx_0).SupportCellEs.NoneSRC, e);
 
-                eV.CellEs(idx_0).UnitVEs.EffectVEs.SyncVision(e.UnitEs(idx_0), idx_0 == e.SelectedIdxC.Idx);
+
+                eV.CellEs(idx_0).UnitVEs.EffectVEs.SyncVision(e.UnitEs(idx_0), idx_0 == e.CellsC.Selected);
                 SyncStunVS.Sync(idx_0, eV, e);
                 ShieldVS.Run(idx_0, eV, e);
             }
@@ -25,7 +28,7 @@ namespace Chessy.Game
             SoundVS.Sync(eV);
             SupportVS.Sync(e, eV);
             CloudVS.Run(eV, e);
-            RotateAllVS.Run(eV, e);
+            RotateAllVS.Rotate(eV, e);
         }
     }
 }

@@ -9,9 +9,6 @@
         Shift,
         SimpleAttack,
         UniqueAttack,
-        Upgrade,
-        FireSelector,
-        TakePawnTool,
-        GivePawnTool,
+        GiveTakeToolWeapon,
     }
 }

@@ -11,7 +11,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var idx_sel = E.SelectedIdxC.Idx;
+            var idx_sel = E.CellsC.Selected;
 
 
             if (E.UnitTC(idx_sel).HaveUnit && !E.IsAnimal(E.UnitTC(idx_sel).Unit))
@@ -23,7 +23,18 @@ namespace Chessy.Game
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(true);
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(true);
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(true);
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(true);
+
+
+                if (E.UnitTC(idx_sel).Is(UnitTypes.Elfemale))
+                {
+                    UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
+                }
+                else
+                {
+                    UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(true);
+                }
+
+
 
 
                 UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * E.UnitHpC(idx_sel).Health).ToString();

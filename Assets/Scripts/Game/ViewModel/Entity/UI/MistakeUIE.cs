@@ -9,7 +9,7 @@ namespace Chessy.Game
         readonly Dictionary<MistakeTypes, GameObjectVC> _zones;
         readonly Dictionary<ResourceTypes, TextUIC> _needAmountRes;
 
-        public readonly GameObjectVC Background;
+        //public readonly GameObjectVC Background;
         public readonly TextUIC TextUIC;
 
         public GameObjectVC Zones(in MistakeTypes mistake) => _zones[mistake];
@@ -46,7 +46,7 @@ namespace Chessy.Game
 
 
 
-            Background = new GameObjectVC(mistakeZone.Find("BackgroudZone").gameObject);
+            //Background = new GameObjectVC(mistakeZone.Find("BackgroudZone").gameObject);
             TextUIC = new TextUIC(mistakeZone.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
 

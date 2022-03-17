@@ -4,11 +4,11 @@ using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Game
+namespace Chessy.Game.System.Model
 {
     public struct DonerMS
     {
-        public DonerMS(in Player sender, in EntitiesModel e)
+        public DonerMS(in Player sender, in SystemsModelManager sMM, in EntitiesModel e)
         {
             if (PhotonNetwork.OfflineMode)
             {
@@ -18,11 +18,20 @@ namespace Chessy.Game
                 {
                     for (byte idx = 0; idx < StartValues.CELLS; idx++)
                     {
-                        e.UnitEffectStunC(idx).Stun -= 2;
-                        //EntitiesPool.IceWalls[idx_0].Hp.Take(2);
+                        e.UnitEffectStunC(idx).Stun -= 1f;
+
+                        for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
+                        {
+                            e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 1;
+                        }
                     }
 
-                    e.UpdateMove();
+                    for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
+                    {
+                        e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 1;
+                    }
+
+                    UpdateS_M.UpdateMove(sMM, e);
                     e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                 }
 
@@ -30,16 +39,26 @@ namespace Chessy.Game
                 {
                     for (byte idx = 0; idx < StartValues.CELLS; idx++)
                     {
-                        e.UnitEffectStunC(idx).Stun -= 2;
-                        //EntitiesPool.IceWalls[idx_0].Hp.Take();
+                        e.UnitEffectStunC(idx).Stun -= 0.5f;
+
+                        for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
+                        {
+                            e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
+                        }
                     }
+
+                    for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
+                    {
+                        e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
+                    }
+
 
                     var curPlayer = e.CurPlayerITC.Player;
                     var nextPlayer = e.NextPlayer(curPlayer).Player;
 
                     if (nextPlayer == PlayerTypes.First)
                     {
-                        e.UpdateMove();
+                        UpdateS_M.UpdateMove(sMM, e);
                         e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                     }
 
@@ -50,11 +69,28 @@ namespace Chessy.Game
 
                     //ViewDataSC.RotateAll.Invoke();
 
-                    e.FriendIsActive = true;
+                    e.ZoneInfoC.FriendIsActive = true;
                 }
             }
             else
             {
+                for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
+                {
+                    e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
+                }
+
+                for (byte idx = 0; idx < StartValues.CELLS; idx++)
+                {
+                    e.UnitEffectStunC(idx).Stun -= 0.5f;
+
+                    for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
+                    {
+                        e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
+                    }
+                }
+
+
+
                 //if (WhoseMoveC.WhoseMove == playerSend)
                 //{
                 //    //if (!EntInventorUnits.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))

@@ -2,20 +2,17 @@
 
 namespace Chessy.Game
 {
-    public struct SupportCellVEs
+    public readonly struct SupportCellVEs
     {
-        static SpriteRendererVC[] _supports;
+        public readonly SpriteRendererVC Support;
+        public readonly SpriteRendererVC NoneSRC;
 
-        public static SpriteRendererVC Support(in byte idx) => _supports[idx];
-
-        public SupportCellVEs(in GameObject[] cells)
+        public SupportCellVEs(in Transform cells)
         {
-            _supports = new SpriteRendererVC[cells.Length];
+            var sV = cells.Find("SupportVision");
 
-            for (var idx = 0; idx < _supports.Length; idx++)
-            {
-                _supports[idx] = new SpriteRendererVC(cells[idx].transform.Find("SupportVision").GetComponent<SpriteRenderer>());
-            }
+            Support = new SpriteRendererVC(sV.Find("SupportVision_SR").GetComponent<SpriteRenderer>());
+            NoneSRC = new SpriteRendererVC(sV.Find("NoneVision_SR").GetComponent<SpriteRenderer>());
         }
     }
 }

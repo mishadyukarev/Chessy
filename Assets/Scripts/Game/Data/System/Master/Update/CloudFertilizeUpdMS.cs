@@ -11,7 +11,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var idx_0 = E.CenterCloudIdxC.Idx;
+            var idx_0 = E.WeatherE.CloudC.Center;
 
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {

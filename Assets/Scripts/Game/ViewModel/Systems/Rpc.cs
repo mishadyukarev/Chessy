@@ -20,6 +20,7 @@ namespace Chessy.Game
     {
         static EntitiesModel _e;
         static EventsUIManager _eventsUI;
+        static SystemsModelManager _sMM;
 
         int _idx_cur;
 
@@ -36,8 +37,9 @@ namespace Chessy.Game
             }
         }
 
-        public Rpc GiveData(in EntitiesModel ents, in EventsUIManager eventsUI)
+        public Rpc GiveData(in SystemsModelManager sMM, in EntitiesModel ents, in EventsUIManager eventsUI)
         {
+            _sMM = sMM;
             _e = ents;
             _eventsUI = eventsUI;
 
@@ -69,7 +71,7 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        CurcularAttackKingS_M.CurcularAttack((byte)objects[_idx_cur++], abilityT, sender, _e);              
+                        CurcularAttackKingS_M.CurcularAttack((byte)objects[_idx_cur++], abilityT, sender, _sMM, _e);              
                         break;
 
                     case AbilityTypes.KingPassiveNearBonus:
@@ -104,7 +106,7 @@ namespace Chessy.Game
 
                                 else
                                 {
-                                    _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
 
@@ -134,7 +136,7 @@ namespace Chessy.Game
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -152,7 +154,7 @@ namespace Chessy.Game
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -165,7 +167,7 @@ namespace Chessy.Game
                             {
                                 if (_e.BuildingTC(idx_0).HaveBuilding && !_e.BuildingTC(idx_0).Is(BuildingTypes.Camp))
                                 {
-                                    _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                                 }
 
                                 else
@@ -183,20 +185,20 @@ namespace Chessy.Game
 
                                         else
                                         {
-                                            _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                            _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                                         }
                                     }
 
                                     else
                                     {
-                                        _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                                     }
                                 }
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -252,73 +254,19 @@ namespace Chessy.Game
 
                                     else
                                     {
-                                        _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                                     }
                                 }
 
                                 else
                                 {
-                                    _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                                 }
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                            }
-                        }
-                        break;
-
-                    case AbilityTypes.SetCity:
-                        {
-                            var idx_0 = (byte)objects[_idx_cur++];
-
-                            if (_e.UnitStepC(idx_0).Steps >= StepValues.PAWN_CITY_BUILDING)
-                            {
-                                if (!_e.AdultForestC(idx_0).HaveAnyResources)
-                                {
-                                    bool haveNearBorder = false;
-
-                                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                                    {
-                                        var idx_1 = _e.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
-
-                                        if (!_e.CellEs(idx_1).IsActiveParentSelf)
-                                        {
-                                            haveNearBorder = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!haveNearBorder)
-                                    {
-                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
-                                        _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
-
-                                        new BuildS(BuildingTypes.City, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, idx_0, _e);
-
-                                        _e.UnitStepC(idx_0).Steps -= StepValues.PAWN_CITY_BUILDING;
-
-                                        _e.HaveFire(idx_0) = false;
-
-                                        _e.YoungForestC(idx_0).Resources = 0;
-                                    }
-
-                                    else
-                                    {
-                                        _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
-                                    }
-                                }
-
-                                else
-                                {
-                                    _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                                }
-                            }
-
-                            else
-                            {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -338,7 +286,7 @@ namespace Chessy.Game
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -348,20 +296,22 @@ namespace Chessy.Game
                             var idx_from = (byte)objects[_idx_cur++];
                             var idx_to = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_from).Steps >= StepValues.ARCHER_FIRE)
+                            if (_e.UnitEs(idx_from).ForArson.Contains(idx_to))
                             {
-                                if (_e.UnitEs(idx_from).ForArson.Contains(idx_to))
+                                if (_e.UnitStepC(idx_from).Steps >= StepValues.ARCHER_FIRE)
                                 {
+
                                     _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
                                     _e.UnitStepC(idx_from).Steps -= StepValues.ARCHER_FIRE;
-                                    _e.HaveFire(idx_to) = false;
-                                }
-                            }
+                                    _e.HaveFire(idx_to) = true;
 
-                            else
-                            {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                }
+
+                                else
+                                {
+                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                }
                             }
                         }
                         break;
@@ -416,10 +366,10 @@ namespace Chessy.Game
 
                                     }
 
-                                    else _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    else _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
                                 }
 
-                                else _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
 
                             else
@@ -463,7 +413,7 @@ namespace Chessy.Game
                                         }
                                     }
 
-                                    else _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                    else _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
 
@@ -486,26 +436,24 @@ namespace Chessy.Game
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
 
-                    case AbilityTypes.IceWall:
-                        new IceWallSnowyMS((byte)objects[_idx_cur++], _e);
-                        break;
-
-                    case AbilityTypes.ActiveAroundBonusSnowy:
-                        new ActiveAroundBonusSnowy((byte)objects[_idx_cur++], sender, _e);
-                        break;
-
-                    case AbilityTypes.DirectWave:
-                        new DirectWaveSnowyMS((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender, _e);            
-                        break;
-
+                        //Snowy
                     case AbilityTypes.ChangeDirectionWind:
                         new ChangeDirectionWindMS((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender, _e);
                         break;
+
+                    case AbilityTypes.IncreaseWindSnowy:
+                        _sMM.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender, _e);
+                        break;
+
+                        case AbilityTypes.DecreaseWindSnowy:
+                        _sMM.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender, _e);
+                        break;
+
 
                     case AbilityTypes.Resurrect:
                         {
@@ -530,7 +478,7 @@ namespace Chessy.Game
 
                                     else
                                     {
-                                        _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                        _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                     }
                                 }
                             }
@@ -552,26 +500,26 @@ namespace Chessy.Game
                                     {
                                         _e.UnitStepC(idx_0).Steps -= StepValues.SET_TELEPORT;
 
-                                        if (_e.StartTeleportIdxC.Idx > 0)
+                                        if (_e.WhereTeleportC.Start > 0)
                                         {
-                                            if (_e.EndTeleportIdxC.Idx > 0)
+                                            if (_e.WhereTeleportC.End > 0)
                                             {
-                                                _e.BuildingTC(_e.StartTeleportIdxC.Idx).Building = BuildingTypes.None;
+                                                _e.BuildingTC(_e.WhereTeleportC.Start).Building = BuildingTypes.None;
 
-                                                _e.StartTeleportIdxC = _e.EndTeleportIdxC;
+                                                _e.WhereTeleportC.Start = _e.WhereTeleportC.End;
 
-                                                _e.EndTeleportIdxC.Idx = idx_0;
+                                                _e.WhereTeleportC.End = idx_0;
                                                 _e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
                                             }
                                             else
                                             {
-                                                _e.EndTeleportIdxC.Idx = idx_0;
+                                                _e.WhereTeleportC.End = idx_0;
                                                 _e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
                                             }
                                         }
                                         else
                                         {
-                                            _e.StartTeleportIdxC.Idx = idx_0;
+                                            _e.WhereTeleportC.Start = idx_0;
                                         }
 
                                         _e.BuildingTC(idx_0).Building = BuildingTypes.Teleport;
@@ -592,10 +540,10 @@ namespace Chessy.Game
                             {
                                 if (_e.BuildingTC(idx_0).Is(BuildingTypes.Teleport))
                                 {
-                                    var idx_start = _e.StartTeleportIdxC.Idx;
-                                    var idx_end = _e.EndTeleportIdxC.Idx;
+                                    var idx_start = _e.WhereTeleportC.Start;
+                                    var idx_end = _e.WhereTeleportC.End;
 
-                                    if (_e.EndTeleportIdxC.Idx > 0 && idx_start == idx_0)
+                                    if (_e.WhereTeleportC.End > 0 && idx_start == idx_0)
                                     {
                                         if (!_e.UnitTC(idx_end).HaveUnit)
                                         {
@@ -604,7 +552,7 @@ namespace Chessy.Game
                                             //Teleport(idx_end, ents);
                                         }
                                     }
-                                    else if (_e.StartTeleportIdxC.Idx > 0 && idx_end == idx_0)
+                                    else if (_e.WhereTeleportC.Start > 0 && idx_end == idx_0)
                                     {
                                         if (!_e.UnitTC(idx_start).HaveUnit)
                                         {
@@ -617,7 +565,7 @@ namespace Chessy.Game
                             }
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -685,7 +633,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Done:
-                        new DonerMS(sender, _e);
+                        new DonerMS(sender, _sMM, _e);
                         break;
 
                     case RpcMasterTypes.Shift:
@@ -693,7 +641,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Attack:
-                        new AttackUnit_M((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _e);
+                        new AttackUnit_M((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _sMM, _e);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
@@ -734,7 +682,7 @@ namespace Chessy.Game
 
             if (obj is MistakeTypes mistakeT)
             {
-                _e.MistakeE.Set(mistakeT, 0);
+                _e.MistakeC.Set(mistakeT, 0);
                 _e.Sound(ClipTypes.Mistake).Action.Invoke();
 
                 if (mistakeT == MistakeTypes.Economy)
@@ -774,7 +722,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcGeneralTypes.ActiveMotion:
-                        _e.MotionIsActive = true;
+                        _e.ZoneInfoC.MotionIsActive = true;
                         break;
 
                     default:

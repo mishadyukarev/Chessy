@@ -10,7 +10,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var idx_sel = E.SelectedIdxC.Idx;
+            var idx_sel = E.CellsC.Selected;
 
             UIE.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = (Math.Truncate(100 * E.FertilizeC(idx_sel).Resources) / 100).ToString();
             UIE.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = (Math.Truncate(100 * E.AdultForestC(idx_sel).Resources) / 100).ToString();

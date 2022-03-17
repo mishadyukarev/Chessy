@@ -13,6 +13,9 @@ namespace Chessy.Game
             var whoseMove = E.WhoseMove.Player;
 
 
+            //UIE.LeftEs.CityE(BuildingTypes.Camp).Parent.SetActive(E.IsSelectedCity);
+
+
             for (var buildingT = BuildingTypes.None + 1; buildingT < BuildingTypes.End; buildingT++)
             {
                 if (buildingT == BuildingTypes.Market || buildingT == BuildingTypes.Smelter)

@@ -17,9 +17,9 @@
             }
             else
             {
-                var idx_sel = E.SelectedIdxC.Idx;
+                var idx_sel = E.CellsC.Selected;
 
-                if (E.SelectedIdxC.Idx > 0)
+                if (E.CellsC.Selected > 0)
                 {
                     if (E.BuildingTC(idx_sel).HaveBuilding)
                     {

@@ -19,7 +19,7 @@ namespace Chessy.Game
                         //Es.UnitE(idx_0).Take(Es, 0.15f);
                     }
 
-                    if (E.CellEs(E.CenterCloudIdxC.Idx).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
+                    if (E.CellEs(E.WeatherE.CloudC.Center).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
                     {
                         //Es.UnitE(idx_0).Take(Es, 0.15f);
                         break;

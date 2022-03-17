@@ -92,7 +92,6 @@ namespace Chessy.Game
             }
 
             new CellRiverVEs(cells);
-            new SupportCellVEs(cells);
 
 
 
