@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public static class CurcularAttackKingS_M
     {
-        public static void CurcularAttack(in byte idx_0, in AbilityTypes abilityT, in Player sender, in SystemsModelManager sMM, in EntitiesModel e)
+        public static void CurcularAttack(in byte idx_0, in AbilityTypes abilityT, in Player sender, in SystemsModel sMM, in EntitiesModel e)
         {
             if (!e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
             {
@@ -34,7 +34,7 @@ namespace Chessy.Game.System.Model.Master
 
                                 else
                                 {
-                                    sMM.AttackUnitS.AttackUnit(HpValues.MAX / 4, e.UnitPlayerTC(idx_0).Player, idx_1, sMM, e);
+                                    sMM.AttackUnitS.AttackUnit(HpValues.MAX / 4, e.UnitPlayerTC(idx_0).Player, idx_1, sMM.KillUnitS, e);
                                 }
                             }
                         }

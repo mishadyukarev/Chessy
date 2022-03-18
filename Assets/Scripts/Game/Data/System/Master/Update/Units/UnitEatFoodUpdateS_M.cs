@@ -2,7 +2,7 @@
 {
     static class UnitEatFoodUpdateS_M
     {
-        public static void Run(in SystemsModelManager sMM, in EntitiesModel e)
+        public static void Run(in SystemsModel sMM, in EntitiesModel e)
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
@@ -20,7 +20,7 @@
                             {
                                 if (e.UnitTC(idx_0).Is(unitT) && e.UnitLevelTC(idx_0).Is(levUnit) && e.UnitPlayerTC(idx_0).Is(player))
                                 {
-                                    sMM.AttackUnitS.AttackUnit(1, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, idx_0, sMM, e);
+                                    sMM.AttackUnitS.AttackUnit(1, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, idx_0, sMM.KillUnitS, e);
                                     e.UnitTC(idx_0).Unit = UnitTypes.None;
                                 }
                             }

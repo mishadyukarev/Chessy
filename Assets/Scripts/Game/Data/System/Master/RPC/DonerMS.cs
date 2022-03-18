@@ -8,7 +8,7 @@ namespace Chessy.Game.System.Model
 {
     public struct DonerMS
     {
-        public DonerMS(in Player sender, in SystemsModelManager sMM, in EntitiesModel e)
+        public DonerMS(in Player sender, in SystemsModel sMM, in EntitiesModel e)
         {
             if (PhotonNetwork.OfflineMode)
             {

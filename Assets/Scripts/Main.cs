@@ -2,6 +2,7 @@
 using Chessy.Game;
 using Chessy.Game.EventsUI;
 using Chessy.Game.System.Model;
+using Chessy.Game.System.View;
 using Chessy.Game.System.View.UI;
 using Chessy.Menu;
 using ECS;
@@ -16,12 +17,22 @@ namespace Chessy
         [SerializeField] TestModes _testMode = default;
 
         EcsWorld _toggleW;
+        float _timer;
+
+
+        #region Game
 
         EntitiesModel _e;
         EntitiesView _eV;
         EntitiesViewUI _eUI;
 
-        float _timer;
+        readonly SystemsModel _systemsM = default;
+        readonly SystemsViewUI _systemUI = default;
+        readonly SystemsView _systemsV = default;
+
+        #endregion
+
+  
 
         void Start()
         {
@@ -44,13 +55,13 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    SystemModelUpdate.Run(ref _e);
+                    _systemsM.UpdateS.Run(_systemsM, ref _e);
 
-                    _timer += Time.deltaTime;   
+                    _timer += Time.deltaTime;
                     if (_timer >= 0.04f)
                     {
-                        SystemViewUpdate.Run(_eV, _e);
-                        SystemViewUIUpdate.Run(_timer, _eUI, _e);
+                        _systemsV.UpdateS.Run(_systemsV, _eV, _e);
+                        _systemUI.UpdateS.Run(_timer, _systemUI, _eUI, _e);
                         _timer = 0;
                     }
                     break;
@@ -96,10 +107,7 @@ namespace Chessy
 
                 case SceneTypes.Menu:
                     {
-                        if (_toggleW != default)
-                        {
-                            _toggleW = default;
-                        }
+                        if (_toggleW != default) _toggleW = default;
 
                         _toggleW = new EcsWorld();
                         new EntitieManager(_toggleW);
@@ -113,11 +121,9 @@ namespace Chessy
                         _e = new EntitiesModel(forData, Rpc.NamesMethods);
                         _eUI = new EntitiesViewUI(_e);
 
-                        var sMM = new SystemsModelManager();
-
                         var eventsUI = new EventsUIManager(_eUI, _e);
 
-                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(sMM, _e,  eventsUI);
+                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(_systemsM, _e,  eventsUI);
                         Rpc.SyncAllMaster();
 
                         break;

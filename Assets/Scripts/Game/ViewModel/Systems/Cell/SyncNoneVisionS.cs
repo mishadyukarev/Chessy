@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chessy.Game.System.Model
+namespace Chessy.Game.System.View
 {
     public struct SyncNoneVisionS
     {
@@ -50,15 +50,10 @@ namespace Chessy.Game.System.Model
                 }
             }
 
-
-
-
-
-
-
             if (e.MistakeC.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
             {
-                if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources)
+                if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
+                    || e.BuildingMainE(idx_0).BuildingTC.HaveBuilding)
                 {
                     _isActive = true;
                 }
@@ -67,7 +62,7 @@ namespace Chessy.Game.System.Model
             else if (e.MistakeC.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
             {
                 if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
-                    || e.YoungForestC(idx_0).HaveAnyResources)
+                    || e.YoungForestC(idx_0).HaveAnyResources || e.BuildingMainE(idx_0).BuildingTC.HaveBuilding)
                 {
                     _isActive = true;
                 }

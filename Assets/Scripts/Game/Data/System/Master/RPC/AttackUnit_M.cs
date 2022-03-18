@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct AttackUnit_M
     {
-        public AttackUnit_M(in byte idx_from, in byte idx_to, in SystemsModelManager sMM, in EntitiesModel e)
+        public AttackUnit_M(in byte idx_from, in byte idx_to, in SystemsModel sMM, in EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 
@@ -116,7 +116,7 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (minus_from > 0)
                     {
-                        sMM.AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, sMM, e);
+                        sMM.AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, sMM.KillUnitS, e);
                     }
                 }
                 else
@@ -155,7 +155,7 @@ namespace Chessy.Game.System.Model.Master
 
                     var wasUnitT_to = e.UnitTC(idx_to).Unit;
 
-                    sMM.AttackUnitS.AttackUnit(minus_to, killer, idx_to, sMM, e);
+                    sMM.AttackUnitS.AttackUnit(minus_to, killer, idx_to, sMM.KillUnitS, e);
 
                     if (!e.UnitTC(idx_to).HaveUnit)
                     {

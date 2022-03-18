@@ -1,19 +1,20 @@
 ﻿using Chessy.Common;
+using Chessy.Game.System.Model;
 using Chessy.Game.System.View.UI.Down;
 using Chessy.Game.View.UI.System;
 using UnityEngine;
 
 namespace Chessy.Game.System.View.UI
 {
-    public static class SystemViewUIUpdate
+    public readonly struct SystemViewUIUpdate
     {
-        public static void Run(in float timer, in EntitiesViewUI eUI, in EntitiesModel e)
+        public void Run(in float timer, in SystemsViewUI systems, in EntitiesViewUI eUI, in EntitiesModel e)
         {
             ///Right
             new RightZoneUIS(eUI, e).Run();
             new StatsUIS(eUI, e).Run();
             ProtectUIS.Run(eUI.RightEs.ProtectE, e);
-            RelaxUIS.Run(eUI.RightEs.RelaxE, e);
+            systems.RelaxS.Run(eUI.RightEs.RelaxE, e);
             new ShieldUIS(eUI, e).Run();
             new RightEffectsUIS(e.Resources, eUI, e).Run();
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)

@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     static class ThirstyUnitsUpdateMS
     {
-        public static void Run(in SystemsModelManager sMM, in EntitiesModel E)
+        public static void Run(in SystemsModel sMM, in EntitiesModel E)
         {
             for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
             {
@@ -42,7 +42,7 @@ namespace Chessy.Game
                             {
                                 float percent = HpValues.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                sMM.AttackUnitS.AttackUnit(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, sMM, E);
+                                sMM.AttackUnitS.AttackUnit(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, sMM.KillUnitS, E);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);

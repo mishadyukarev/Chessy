@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 namespace Chessy.Game.Entity.View.UI.Right
 {
-    public struct RelaxUIE
+    public readonly struct RelaxUIE
     {
         readonly Dictionary<UnitTypes, GameObjectVC> _zones;
 
-        public ButtonUIC ButtonC;
-        public ImageUIC ImageUIC;
+        public readonly ButtonUIC ButtonC;
+        public readonly ImageUIC ImageC;
 
         public GameObjectVC Button(in UnitTypes unit) => _zones[unit];
 
@@ -20,7 +20,7 @@ namespace Chessy.Game.Entity.View.UI.Right
             var button = condZone.Find("StandartAbilityButton2").GetComponent<Button>();
 
             ButtonC = new ButtonUIC(button);
-            ImageUIC = new ImageUIC(button.transform.Find("Image").GetComponent<Image>());
+            ImageC = new ImageUIC(button.transform.Find("Image").GetComponent<Image>());
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
             {

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public static class HeroCooldown_VALUES
+    public static class HeroCooldownValues
     {
         public const float Elfemale = 5;
         public const float Snowy = 5;

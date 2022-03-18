@@ -1,11 +1,11 @@
-﻿using Chessy.Game.System.Model;
+﻿using Chessy.Game.System.View;
 using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
-    public static class SystemViewUpdate
+    public readonly struct SystemViewUpdate
     {
-        public static void Run(in EntitiesView eV, in EntitiesModel e)
+        public void Run(in SystemsView systems, in EntitiesView eV, in EntitiesModel e)
         {
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
@@ -17,7 +17,7 @@ namespace Chessy.Game
                 SyncRiverVS.Sync(idx_0, eV, e);
                 SyncBarsEnvironmentVS.Sync(idx_0, eV, e);
                 SyncTrailVS.Sync(idx_0, eV, e);
-                new SyncNoneVisionS().Sync(idx_0, eV.CellEs(idx_0).SupportCellEs.NoneSRC, e);
+                systems.SyncNoneVisionS.Sync(idx_0, eV.CellEs(idx_0).SupportCellEs.NoneSRC, e);
 
 
                 eV.CellEs(idx_0).UnitVEs.EffectVEs.SyncVision(e.UnitEs(idx_0), idx_0 == e.CellsC.Selected);

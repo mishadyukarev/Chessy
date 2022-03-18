@@ -94,6 +94,12 @@ namespace Chessy.Game
                         E.SelectedE.UnitC.Set(UnitTypes.Pawn, LevelTypes.First);
                         E.CellClickTC.Click = CellClickTypes.SetUnit;
                     }
+                    else
+                    {
+                        E.MistakeC.Set(MistakeTypes.NeedBuildingHouses, 0);
+                        E.Sound(ClipTypes.Mistake).Action.Invoke();
+                        E.IsSelectedCity = true;
+                    }
                 }
                 else
                 {

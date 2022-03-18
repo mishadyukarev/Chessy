@@ -44,7 +44,7 @@ namespace Chessy.Game
         public readonly SelectedE SelectedE;
         public readonly WeatherE WeatherE;
         public readonly ResourcesE Resources;
- 
+
 
         public PlayerInfoEs PlayerInfoE(in PlayerTypes player) => _forPlayerEs[player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);

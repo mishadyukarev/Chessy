@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class RelaxUIS
+    public struct RelaxUIS
     {
-        public static void Run(in RelaxUIE relaxE, in EntitiesModel e)
+        public void Run(in RelaxUIE relaxE, in EntitiesModel e)
         {
             var idx_0 = e.CellsC.Selected;
 
@@ -17,7 +17,7 @@ namespace Chessy.Game
                 {
                     activeButt = true;
 
-                    relaxE.ImageUIC.Image.color = e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
+                    relaxE.ImageC.Image.color = e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
 
                     for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
                     {

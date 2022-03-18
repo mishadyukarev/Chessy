@@ -5,19 +5,17 @@ namespace Chessy.Game.System.Model
 {
     public struct AttackUnitS
     {
-        public void AttackUnit(in float damage, in PlayerTypes whoKiller, in byte idx_to, in SystemsModelManager sMM, in EntitiesModel e)
+        public void AttackUnit(in float damage, in PlayerTypes whoKiller, in byte idx_0, in KillUnitS system, in EntitiesModel e)
         {
             if (damage <= 0) throw new Exception();
+            if (!e.CellEs(idx_0).IsActiveParentSelf) throw new Exception();
 
 
-            e.UnitHpC(idx_to).Health -= damage;
-            if (e.UnitHpC(idx_to).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
-                e.UnitHpC(idx_to).Health = 0;
+            ref var health = ref e.UnitHpC(idx_0).Health;
 
-            if (!e.UnitHpC(idx_to).IsAlive)
-            {
-                sMM.KillUnitS.Kill(idx_to, whoKiller, e);
-            }
+            health -= damage;
+            if (health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK) 
+                system.Kill(idx_0, whoKiller, e);
         }
     }
 }

@@ -18,19 +18,19 @@ namespace Chessy.Game.System.Model
                 switch (e.UnitTC(idx_0).Unit)
                 {
                     case UnitTypes.Elfemale:
-                        cooldown = HeroCooldown_VALUES.Elfemale;
+                        cooldown = HeroCooldownValues.Elfemale;
                         break;
 
                     case UnitTypes.Snowy:
-                        cooldown = HeroCooldown_VALUES.Snowy;
+                        cooldown = HeroCooldownValues.Snowy;
                         break;
 
                     case UnitTypes.Undead:
-                        cooldown = HeroCooldown_VALUES.Undead;
+                        cooldown = HeroCooldownValues.Undead;
                         break;
 
                     case UnitTypes.Hell:
-                        cooldown = HeroCooldown_VALUES.Hell;
+                        cooldown = HeroCooldownValues.Hell;
                         break;
 
                     default: throw new Exception();

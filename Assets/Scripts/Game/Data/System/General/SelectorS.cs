@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public struct SelectorS
     {
-        public SelectorS(in RaycastTypes raycastT, ref EntitiesModel e)
+        public void Run(in RaycastTypes raycastT, ref EntitiesModel e)
         {
             var idx_cur = e.CellsC.Current;
 

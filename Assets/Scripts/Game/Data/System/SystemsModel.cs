@@ -2,17 +2,13 @@
 
 namespace Chessy.Game.System.Model
 {
-    public class SystemsModelManager
+    public readonly struct SystemsModel
     {
+        public readonly SystemModelUpdate UpdateS;
+        public readonly SelectorS SelectorS;
         public readonly AttackUnitS AttackUnitS;
         public readonly KillUnitS KillUnitS;
 
-        //Master
         public readonly IncreaseWindSnowyS_M IncreaseWindSnowyS_M;
-
-        public SystemsModelManager()
-        {
-
-        }
     }
 }

@@ -7,6 +7,7 @@
         Economy,
         NeedMoreSteps,
         NeedMoreHp,
+        NeedBuildingHouses,
 
         NeedOtherPlaceSeed,
         NeedOtherPlaceFarm,

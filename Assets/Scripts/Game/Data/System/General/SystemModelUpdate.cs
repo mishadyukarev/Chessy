@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 
 namespace Chessy.Game
 {
-    public static class SystemModelUpdate
+    public struct SystemModelUpdate
     {
-        static Ray _ray;
+        Ray _ray;
         const float RAY_DISTANCE = 100;
 
 
-        public static void Run(ref EntitiesModel e)
+        public void Run(in SystemsModel systems, ref EntitiesModel e)
         {
             _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
@@ -56,7 +56,8 @@ namespace Chessy.Game
                 if(rayCastT == RaycastTypes.None) rayCastT = RaycastTypes.Background;
             }
 
-            new SelectorS(rayCastT, ref e);
+
+            systems.SelectorS.Run(rayCastT, ref e);
 
 
 #if UNITY_ANDROID

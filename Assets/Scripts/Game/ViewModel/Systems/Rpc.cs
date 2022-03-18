@@ -20,7 +20,7 @@ namespace Chessy.Game
     {
         static EntitiesModel _e;
         static EventsUIManager _eventsUI;
-        static SystemsModelManager _sMM;
+        static SystemsModel _sMM;
 
         int _idx_cur;
 
@@ -37,7 +37,7 @@ namespace Chessy.Game
             }
         }
 
-        public Rpc GiveData(in SystemsModelManager sMM, in EntitiesModel ents, in EventsUIManager eventsUI)
+        public Rpc GiveData(in SystemsModel sMM, in EntitiesModel ents, in EventsUIManager eventsUI)
         {
             _sMM = sMM;
             _e = ents;

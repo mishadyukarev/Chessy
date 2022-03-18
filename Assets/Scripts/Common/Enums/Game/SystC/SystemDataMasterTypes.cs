@@ -1,16 +1,16 @@
-﻿namespace Chessy.Game
-{
-    public enum SystemDataMasterTypes
-    {
-        None,
+﻿//namespace Chessy.Game
+//{
+//    public enum SystemDataMasterTypes
+//    {
+//        None,
 
-        Truce,
+//        Truce,
 
-        RunUpdate,
+//        RunUpdate,
 
-        End
-    }
-}
+//        End
+//    }
+//}
 
 
 

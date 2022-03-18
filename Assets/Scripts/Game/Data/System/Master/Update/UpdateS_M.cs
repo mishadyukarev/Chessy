@@ -6,7 +6,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public static class UpdateS_M
     {
-        public static void UpdateMove(in SystemsModelManager sMM, in EntitiesModel e)
+        public static void UpdateMove(in SystemsModel sMM, in EntitiesModel e)
         {
             new UpdatorMS(e).Run();
 
