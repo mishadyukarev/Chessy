@@ -4,9 +4,9 @@ using Photon.Pun;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public static class UpdateS_M
+    public struct UpdateS_M
     {
-        public static void UpdateMove(in SystemsModel sMM, in EntitiesModel e)
+        public void UpdateMove(in SystemsModel sMM, in EntitiesModel e)
         {
             new UpdatorMS(e).Run();
 
@@ -43,7 +43,7 @@ namespace Chessy.Game.System.Model.Master
             new PawnExtractAdultForestMS(e).Run();
             new ResumeUnitUpdMS(e).Run();
             new UpdateHealingUnitMS(e).Run();
-            UnitEatFoodUpdateS_M.Run(sMM, e);
+            sMM.UnitEatFoodUpdateS_M.Run(sMM, e);
             ThirstyUnitsUpdateMS.Run(sMM, e);
             new PawnExtractHillUpdateMS(e).Run();
 
@@ -59,7 +59,7 @@ namespace Chessy.Game.System.Model.Master
 
 
 
-            if (e.MotionsC.Motions % 3 == 0)
+            if (e.MotionsC.Motions % 5 == 0)
             {
                 for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
                 {
@@ -94,13 +94,19 @@ namespace Chessy.Game.System.Model.Master
                     }
                     else if (e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
                     {
-                        foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
+                        if (!e.HaveTreeUnit)
                         {
-                            if (!e.UnitTC(idx_1).HaveUnit)
+                            foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
                             {
-                                if (e.AdultForestC(idx_1).HaveAnyResources)
+                                if (!e.UnitTC(idx_1).HaveUnit)
                                 {
-                                    e.UnitEs(idx_1).SetNewUnitHere(UnitTypes.Pawn, e.UnitPlayerTC(idx_0).Player, e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player));
+                                    if (e.AdultForestC(idx_1).HaveAnyResources)
+                                    {
+                                        e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
+                                        e.UnitEs(idx_1).SetNewUnitHere(UnitTypes.Tree, e.UnitPlayerTC(idx_0).Player, e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player), e);
+
+                                        break;
+                                    }
                                 }
                             }
                         }

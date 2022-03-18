@@ -9,10 +9,6 @@ namespace Chessy.Game
 
         public static void Sync(this MistakeUIE mistakeUIE, in float timer, in EntitiesModel e)
         {
-            //mistakeUIE.Background.SetActive(false);
-            mistakeUIE.TextUIC.SetActive(false);
-
-
             foreach (var key in mistakeUIE.KeysMistake)
             {
                 mistakeUIE.Zones(key).SetActive(false);
@@ -55,7 +51,6 @@ namespace Chessy.Game
 
                 else
                 {
-                    //mistakeUIE.Background.SetActive(true);
                     mistakeUIE.Zones(e.MistakeC.MistakeT).SetActive(true);
 
                     if (e.MistakeC.Timer >= NEED_TIME_FOR_FADING)

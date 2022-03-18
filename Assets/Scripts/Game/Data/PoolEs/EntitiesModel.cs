@@ -29,6 +29,7 @@ namespace Chessy.Game
 
         public bool IsStartedGame;
         public bool IsSelectedCity;
+        public bool HaveTreeUnit;
 
         public MistakeC MistakeC;
         public InfoGameC MotionsC;

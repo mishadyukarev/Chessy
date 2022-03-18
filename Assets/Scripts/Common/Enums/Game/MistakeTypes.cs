@@ -8,6 +8,7 @@
         NeedMoreSteps,
         NeedMoreHp,
         NeedBuildingHouses,
+        NeedPawnsInGame,
 
         NeedOtherPlaceSeed,
         NeedOtherPlaceFarm,

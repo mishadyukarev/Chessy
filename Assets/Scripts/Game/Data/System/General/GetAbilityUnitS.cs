@@ -104,6 +104,9 @@ namespace Chessy.Game.System.Model
                         case UnitTypes.Skeleton:
                             break;
 
+                        case UnitTypes.Tree:
+                            break;
+
                         default: throw new Exception();
                     }
 

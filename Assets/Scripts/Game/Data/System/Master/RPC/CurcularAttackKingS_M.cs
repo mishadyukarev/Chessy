@@ -5,9 +5,9 @@ using Photon.Realtime;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public static class CurcularAttackKingS_M
+    public struct CurcularAttackKingS_M
     {
-        public static void CurcularAttack(in byte idx_0, in AbilityTypes abilityT, in Player sender, in SystemsModel sMM, in EntitiesModel e)
+        public void Attack(in byte idx_0, in AbilityTypes abilityT, in Player sender, in SystemsModel sMM, in EntitiesModel e)
         {
             if (!e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
             {
@@ -29,7 +29,7 @@ namespace Chessy.Game.System.Model.Master
                             {
                                 if (e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
-                                    new AttackShieldS(1f, idx_1, e);
+                                    sMM.AttackShieldS.Attack(1f, idx_1, e);
                                 }
 
                                 else

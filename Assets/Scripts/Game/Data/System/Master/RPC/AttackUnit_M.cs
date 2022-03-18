@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct AttackUnit_M
     {
-        public AttackUnit_M(in byte idx_from, in byte idx_to, in SystemsModel sMM, in EntitiesModel e)
+        public void Attack(in byte idx_from, in byte idx_to, in SystemsModel sMM, in EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 
@@ -111,7 +111,7 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (e.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        new AttackShieldS(1f, idx_from, e);
+                        sMM.AttackShieldS.Attack(1f, idx_from, e);
                     }
 
                     else if (minus_from > 0)
@@ -136,7 +136,7 @@ namespace Chessy.Game.System.Model.Master
 
                 else if (e.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    new AttackShieldS(1f, idx_to, e);
+                    sMM.AttackShieldS.Attack(1f, idx_to, e);
                 }
 
                 else if (minus_to > 0)

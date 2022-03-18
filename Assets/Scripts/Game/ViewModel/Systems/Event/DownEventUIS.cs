@@ -97,14 +97,16 @@ namespace Chessy.Game
                     else
                     {
                         E.MistakeC.Set(MistakeTypes.NeedBuildingHouses, 0);
-                        E.Sound(ClipTypes.Mistake).Action.Invoke();
+                        E.Sound(ClipTypes.WritePensil).Action.Invoke();
                         E.IsSelectedCity = true;
                     }
                 }
                 else
                 {
+                    E.Sound(ClipTypes.WritePensil).Action.Invoke();
+
                     E.MistakeC.Set(MistakeTypes.NeedMorePeopleInCity, 0);
-                    E.Sound(ClipTypes.Mistake).Action.Invoke();
+                    //..E.Sound(ClipTypes.Mistake).Action.Invoke();
                 }
 
                 
@@ -120,45 +122,52 @@ namespace Chessy.Game
 
             if (E.CurPlayerITC.Is(E.WhoseMove.Player))
             {
-                if (tw == ToolWeaponTypes.Pick)
+                if (E.PlayerInfoE(E.WhoseMove.Player).LevelE(LevelTypes.First).UnitsInGame(UnitTypes.Pawn) > 0)
                 {
-                    TryOnHint(VideoClipTypes.Pick);
-                }
-                else
-                {
-                    TryOnHint(VideoClipTypes.UpgToolWeapon);
-                }
-
-
-                var levT = LevelTypes.First;
-
-                if (tw == ToolWeaponTypes.Shield || tw == ToolWeaponTypes.BowCrossbow)
-                {
-                    if (E.CellClickTC.Is(CellClickTypes.GiveTakeTW))
+                    if (tw == ToolWeaponTypes.Pick)
                     {
-                        if (tw == ToolWeaponTypes.Shield || tw == ToolWeaponTypes.BowCrossbow)
-                        {
-                            if (E.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
-                        }
-                        else if (tw != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
+                        TryOnHint(VideoClipTypes.Pick);
                     }
                     else
                     {
-                        levT = E.SelectedE.ToolWeaponC.LevelT;
+                        TryOnHint(VideoClipTypes.UpgToolWeapon);
                     }
+
+
+                    var levT = LevelTypes.First;
+
+                    if (tw == ToolWeaponTypes.Shield || tw == ToolWeaponTypes.BowCrossbow)
+                    {
+                        if (E.CellClickTC.Is(CellClickTypes.GiveTakeTW))
+                        {
+                            if (tw == ToolWeaponTypes.Shield || tw == ToolWeaponTypes.BowCrossbow)
+                            {
+                                if (E.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                            }
+                            else if (tw != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
+                        }
+                        else
+                        {
+                            levT = E.SelectedE.ToolWeaponC.LevelT;
+                        }
+                    }
+                    else if (tw == ToolWeaponTypes.Axe || tw == ToolWeaponTypes.Sword)
+                    {
+                        levT = LevelTypes.Second;
+                    }
+
+                    E.SelectedE.ToolWeaponC.ToolWeaponT = tw;
+                    E.SelectedE.ToolWeaponC.LevelT = levT;
+
+
+                    E.CellClickTC.Click = CellClickTypes.GiveTakeTW;
                 }
-                else if (tw == ToolWeaponTypes.Axe || tw == ToolWeaponTypes.Sword)
+                else
                 {
-                    levT = LevelTypes.Second;
+                    E.MistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
+                    E.MistakeC.Timer = 0;
+                    E.Sound(ClipTypes.WritePensil).Invoke();
                 }
-
-                E.SelectedE.ToolWeaponC.ToolWeaponT = tw;
-                E.SelectedE.ToolWeaponC.LevelT = levT;
-
-
-
-
-                E.CellClickTC.Click = CellClickTypes.GiveTakeTW;
             }
             else E.Sound(ClipTypes.Mistake).Action.Invoke();
 

@@ -89,6 +89,7 @@ namespace Chessy.Game
                     //case ClipTypes.HeroAbility: volume = 0.25f; break;
                     case ClipTypes.BackgroundInGame: volume = 1; break;
                     case ClipTypes.Click: volume = 0.25f; break;
+                    case ClipTypes.WritePensil: volume = 0.2f; break;
                 }
 
                 aS.volume = volume;

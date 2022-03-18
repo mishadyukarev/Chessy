@@ -2,14 +2,15 @@
 {
     public static class DamageValues
     {
-        public const float KING = 3;
+        public const float KING = 4f;
         public const float PAWN = 1f;
-        public const float ELFEMALE = 2;
-        public const float SNOWY = 2;
-        public const float UNDEAD = 2;
-        public const float HELL = 2;
+        public const float ELFEMALE = 2f;
+        public const float SNOWY = 2f;
+        public const float UNDEAD = 2f;
+        public const float HELL = 2f;
         public const float SKELETON = 0.5f;
-        public const float CAMEL = 0;
+        public const float TREE = 3f;
+        public const float CAMEL = 0f;
 
 
         public const float UNIQUE_PERCENT_DAMAGE = 1.5f;
@@ -19,8 +20,8 @@
 
         public const float SWORD = 1;
 
-        public static float BOW_CROSSBOW_SECOND = 0.5f;
-        public static float AXE_SECOND = 0;
+        public const float BOW_CROSSBOW_SECOND = 0.5f;
+        public const float AXE_SECOND = 0;
 
         #endregion
 

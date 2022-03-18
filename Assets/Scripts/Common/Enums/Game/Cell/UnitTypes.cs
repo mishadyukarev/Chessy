@@ -15,6 +15,7 @@
 
         //FromHeroes
         Skeleton,
+        Tree,
 
         //Animals
         Camel,

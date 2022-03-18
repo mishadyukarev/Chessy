@@ -5,7 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public static class SetNewUnitS
     {
-        public static void SetNewUnitHere(this ref UnitEs units, in UnitTypes unitT, in PlayerTypes playerT, in PlayerInfoEs playerInfo)
+        public static void SetNewUnitHere(this ref UnitEs units, in UnitTypes unitT, in PlayerTypes playerT, in PlayerInfoEs playerInfo, in EntitiesModel e)
         {
             units.MainE.UnitTC.Unit = unitT;
             units.MainE.PlayerTC.Player = playerT;
@@ -38,6 +38,9 @@ namespace Chessy.Game.System.Model
 
             else
             {
+                if (units.MainE.UnitTC.Is(UnitTypes.Tree)) e.HaveTreeUnit = true;
+
+
                 if (units.MainE.UnitTC.IsHero)
                 {
                     playerInfo.HaveHeroInInventor = false;

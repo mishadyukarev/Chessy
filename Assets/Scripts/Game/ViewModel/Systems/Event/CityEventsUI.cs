@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Common;
+using Chessy.Game.Values;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace Chessy.Game.EventsUI.Left
             leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { Build(BuildingTypes.House); });
             leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { Build(BuildingTypes.Market); });
             leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(delegate { Build(BuildingTypes.Smelter); });
+
+            leftEs.PremiumButtonC.AddListener(Premium);
+
         }
 
         void Build(in BuildingTypes buildT)
@@ -52,6 +56,11 @@ namespace Chessy.Game.EventsUI.Left
 
                 default: throw new Exception();
             }
+        }
+
+        void Premium()
+        {
+            ShopUIC.EnableZone();
         }
 
         public void BuyBuilding_Master(in BuildingTypes buildT, in Player sender)

@@ -22,56 +22,63 @@ namespace Chessy.Game.System.Model
 
                         float needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
 
-                        if (!e.UnitTC(idx_0).Is(UnitTypes.Undead))
+                        if (e.UnitTC(idx_0).Is(UnitTypes.Tree))
                         {
-                            if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                            needSteps = 1;
+                        }
+                        else
+                        {
+                            if (!e.UnitTC(idx_0).Is(UnitTypes.Undead))
                             {
-                                needSteps /= 2;
-                            }
-                            else if (e.UnitTC(idx_0).Is(UnitTypes.Snowy))
-                            {
-                                if (e.FertilizeC(idx_to).HaveAnyResources)
+                                if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
                                 {
-                                    needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
+                                    needSteps /= 2;
                                 }
-                            }
-
-
-                            if (e.AdultForestC(idx_to).HaveAnyResources)
-                            {
-                                if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                                else if (e.UnitTC(idx_0).Is(UnitTypes.Snowy))
                                 {
-                                    if (!e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                                    if (e.FertilizeC(idx_to).HaveAnyResources)
+                                    {
+                                        needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
+                                    }
+                                }
+
+
+                                if (e.AdultForestC(idx_to).HaveAnyResources)
+                                {
+                                    if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                                    {
+                                        if (!e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                                        {
+                                            needSteps += StepValues.ADULT_FOREST;
+
+                                            if (e.CellEs(idx_to).TrailHealthC(dirT.Invert()).IsAlive) needSteps -= StepValues.BONUS_TRAIL;
+                                        }
+                                    }
+                                    else if (e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
+                                    {
+                                        needSteps /= 2;
+                                    }
+                                    else
                                     {
                                         needSteps += StepValues.ADULT_FOREST;
 
                                         if (e.CellEs(idx_to).TrailHealthC(dirT.Invert()).IsAlive) needSteps -= StepValues.BONUS_TRAIL;
                                     }
                                 }
-                                else if (e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
-                                {
-                                    needSteps /= 2;
-                                }
                                 else
                                 {
-                                    needSteps += StepValues.ADULT_FOREST;
+                                    if (!e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
+                                    {
 
-                                    if (e.CellEs(idx_to).TrailHealthC(dirT.Invert()).IsAlive) needSteps -= StepValues.BONUS_TRAIL;
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                if (!e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
-                                {
 
-                                }
-                            }
-
-                            if (e.HillC(idx_to).HaveAnyResources)
-                            {
-                                if (!e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                                if (e.HillC(idx_to).HaveAnyResources)
                                 {
-                                    needSteps += StepValues.HILL;
+                                    if (!e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                                    {
+                                        needSteps += StepValues.HILL;
+                                    }
                                 }
                             }
                         }

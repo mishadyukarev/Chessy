@@ -40,6 +40,9 @@ namespace Chessy.Game.System.Model
                 e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).HaveHeroInInventor = true;
             }
 
+            if (e.UnitTC(idx_0).Is(UnitTypes.Tree)) e.HaveTreeUnit = false;
+
+
 
             e.LastDiedE(idx_0).Set(e.UnitMainE(idx_0));
             e.UnitInfo(e.UnitMainE(idx_0)).Take(e.UnitTC(idx_0).Unit, 1);

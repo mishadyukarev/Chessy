@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class CamelSpawnUpdateMS
+    static class CamelSpawnUpdateS_M
     {
         public static void SpawnCamelUpdate(this EntitiesModel e)
         {

@@ -6,9 +6,9 @@ using Photon.Realtime;
 
 namespace Chessy.Game.System.Model
 {
-    public struct DonerMS
+    public struct DonerS_M
     {
-        public DonerMS(in Player sender, in SystemsModel sMM, in EntitiesModel e)
+        public DonerS_M(in Player sender, in SystemsModel sMM, in EntitiesModel e)
         {
             if (PhotonNetwork.OfflineMode)
             {
@@ -31,7 +31,7 @@ namespace Chessy.Game.System.Model
                         e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 1;
                     }
 
-                    UpdateS_M.UpdateMove(sMM, e);
+                    sMM.UpdateS_M.UpdateMove(sMM, e);
                     e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                 }
 
@@ -58,7 +58,7 @@ namespace Chessy.Game.System.Model
 
                     if (nextPlayer == PlayerTypes.First)
                     {
-                        UpdateS_M.UpdateMove(sMM, e);
+                        sMM.UpdateS_M.UpdateMove(sMM, e);
                         e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                     }
 

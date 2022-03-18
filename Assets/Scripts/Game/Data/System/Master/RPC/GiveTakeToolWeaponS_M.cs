@@ -7,9 +7,9 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public static class GiveTakeToolWeaponS_M
+    public struct GiveTakeToolWeaponS_M
     {
-        public static void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte idx_0, in Player sender, in EntitiesModel e)
+        public void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte idx_0, in Player sender, in EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 

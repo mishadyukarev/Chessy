@@ -25,6 +25,7 @@
         BackgroundInGame,
         Click,
         AfterUpdate,
+        WritePensil,
 
         End,
     }

@@ -62,7 +62,7 @@ namespace Chessy.Game
 
                 if (obj_1 is ToolWeaponTypes twT)
                 {
-                    GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], idx, sender, _e);
+                    _sMM.GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], idx, sender, _e);
                 }
             }
 
@@ -71,47 +71,7 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        CurcularAttackKingS_M.CurcularAttack((byte)objects[_idx_cur++], abilityT, sender, _sMM, _e);              
-                        break;
-
-                    case AbilityTypes.KingPassiveNearBonus:
-                        {
-                            var idx_0 = (byte)objects[_idx_cur++];
-
-                            if (!_e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
-                            {
-                                if (_e.UnitStepC(idx_0).Steps >= StepValues.BONUS_NEAR)
-                                {
-                                    _e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
-
-                                    _e.UnitStepC(idx_0).Steps -= StepValues.BONUS_NEAR;
-                                    _e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
-
-                                    _e.RpcPoolEs.SoundToGeneral(sender, abilityT);
-
-                                    foreach (var idx_1 in _e.CellEs(idx_0).IdxsAround)
-                                    {
-                                        if (_e.UnitTC(idx_1).HaveUnit)
-                                        {
-                                            if (_e.UnitPlayerTC(idx_1).Is(_e.UnitPlayerTC(idx_0).Player))
-                                            {
-                                                //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have)
-                                                //{
-                                                //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Damage, idx_1).Have = true;
-                                                //}
-                                            }
-                                        }
-                                    }
-                                }
-
-                                else
-                                {
-                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                }
-                            }
-
-                            else _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
-                        }
+                        _sMM.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender, _sMM, _e);              
                         break;
 
                     case AbilityTypes.FirePawn:
@@ -633,7 +593,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Done:
-                        new DonerMS(sender, _sMM, _e);
+                        new DonerS_M(sender, _sMM, _e);
                         break;
 
                     case RpcMasterTypes.Shift:
@@ -641,7 +601,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Attack:
-                        new AttackUnit_M((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _sMM, _e);
+                        _sMM.AttackUnit_M.Attack((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _sMM, _e);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
@@ -683,7 +643,21 @@ namespace Chessy.Game
             if (obj is MistakeTypes mistakeT)
             {
                 _e.MistakeC.Set(mistakeT, 0);
-                _e.Sound(ClipTypes.Mistake).Action.Invoke();
+
+                _e.Sound(ClipTypes.WritePensil).Action.Invoke();
+
+                //if (mistakeT == MistakeTypes.NeedMoreSteps || mistakeT == MistakeTypes.MinSpeedWind 
+                //    || mistakeT == MistakeTypes.MaxSpeedWind || mistakeT == MistakeTypes.NeedBuildingHouses
+                //    || mistakeT == MistakeTypes.NeedMoreHp || mistakeT == MistakeTypes.NeedMorePeopleInCity)
+                //{
+                    
+                //}
+                //else
+                //{
+                //    _e.Sound(ClipTypes.Mistake).Action.Invoke();
+                //}
+
+                
 
                 if (mistakeT == MistakeTypes.Economy)
                 {

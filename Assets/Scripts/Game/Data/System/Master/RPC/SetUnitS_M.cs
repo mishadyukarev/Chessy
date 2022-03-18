@@ -10,7 +10,7 @@ namespace Chessy.Game.System.Model.Master
 
             if (e.CellEs(idx_0).CellE.IsStartedCell(whoseMove) && !e.UnitTC(idx_0).HaveUnit)
             {
-                e.UnitEs(idx_0).SetNewUnitHere(unitT, whoseMove, e.PlayerInfoE(whoseMove));
+                e.UnitEs(idx_0).SetNewUnitHere(unitT, whoseMove, e.PlayerInfoE(whoseMove),e);
 
 
                 e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);

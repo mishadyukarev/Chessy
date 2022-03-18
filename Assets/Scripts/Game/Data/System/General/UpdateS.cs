@@ -1,12 +1,10 @@
-﻿using Chessy.Game.System.Model;
-using Chessy.Game.Values;
-using System;
+﻿using Chessy.Game.Values;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Chessy.Game
+namespace Chessy.Game.System.Model
 {
-    public struct SystemModelUpdate
+    public struct UpdateS
     {
         Ray _ray;
         const float RAY_DISTANCE = 100;
@@ -53,7 +51,7 @@ namespace Chessy.Game
                     }
                 }
 
-                if(rayCastT == RaycastTypes.None) rayCastT = RaycastTypes.Background;
+                if (rayCastT == RaycastTypes.None) rayCastT = RaycastTypes.Background;
             }
 
 

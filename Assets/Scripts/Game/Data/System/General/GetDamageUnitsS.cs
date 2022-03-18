@@ -47,6 +47,10 @@ namespace Chessy.Game.System.Model
                                 powerDamage = DamageValues.SKELETON;
                                 break;
 
+                            case UnitTypes.Tree:
+                                powerDamage = DamageValues.TREE;
+                                break;
+
                             case UnitTypes.Camel:
                                 powerDamage = DamageValues.CAMEL;
                                 break;
@@ -70,7 +74,7 @@ namespace Chessy.Game.System.Model
 
                 if (e.UnitMainTWTC(idx_0).HaveToolWeapon)
                 {
-                    if (e.UnitLevelTC(idx_0).Is(LevelTypes.Second))
+                    if (e.UnitMainTWLevelTC(idx_0).Is(LevelTypes.Second))
                     {
                         if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                         {

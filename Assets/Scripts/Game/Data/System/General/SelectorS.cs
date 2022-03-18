@@ -77,6 +77,7 @@ namespace Chessy.Game
 
                                             }
                                         }
+
                                         else
                                         {
                                             if (e.UnitTC(idx_cur).HaveUnit)
