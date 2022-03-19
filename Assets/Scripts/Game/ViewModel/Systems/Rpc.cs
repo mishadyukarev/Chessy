@@ -696,7 +696,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcGeneralTypes.ActiveMotion:
-                        _e.ZoneInfoC.MotionIsActive = true;
+                        _e.ZoneInfoC.IsActiveMotion = true;
                         break;
 
                     default:

@@ -20,7 +20,7 @@ namespace Chessy.Game
                 systems.SyncNoneVisionS.Sync(idx_0, eV.CellEs(idx_0).SupportCellEs.NoneSRC, e);
 
 
-                eV.CellEs(idx_0).UnitVEs.EffectVEs.SyncVision(e.UnitEs(idx_0), idx_0 == e.CellsC.Selected);
+                eV.CellEs(idx_0).UnitVEs.EffectVEs.SyncVision(e.UnitEs(idx_0), idx_0 == e.CellsC.Selected, e);
                 SyncStunVS.Sync(idx_0, eV, e);
                 ShieldVS.Run(idx_0, eV, e);
             }

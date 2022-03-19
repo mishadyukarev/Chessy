@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Chessy.Game.System.View
 {
@@ -24,7 +25,17 @@ namespace Chessy.Game.System.View
                         break;
 
                     case AbilityTypes.ChangeDirectionWind:
-                        _isActive = true;
+                        if (e.CellEs(idx_0).IsActiveParentSelf)
+                        {
+                            if (!e.CellEs(idx_0).IdxsAround.Contains(e.WeatherE.CloudC.Center))
+                            {
+                                _isActive = true;
+                            }
+                        }
+
+
+
+                        
                         //if (!e.AdultForestC(idx_0).HaveAnyResources) _isActive = true;
                         break;
                 }

@@ -1,26 +1,10 @@
-﻿using System;
-
-namespace Chessy.Menu
+﻿namespace Chessy.Menu
 {
-    public struct SystemsManager
+    public readonly struct SystemsManager
     {
-        static Action _runUpdate;
-        static Action _launchLikeGame;
-        public SystemsManager(in bool def)
-        {
-            new EventSys();
+        public readonly LaunchLikeGameAndShopS LaunchLikeGameAndShopS;
 
-            _launchLikeGame 
-                = new LaunchLikeGameAndShopSys().Run;
-
-            _runUpdate =
-                (Action)new SyncSys().Run + new ConnectorMenuSys().Run;
-
-
-            LaunchLikeGame();
-        }
-
-        public static void RunUpdate() => _runUpdate.Invoke();
-        public static void LaunchLikeGame() => _launchLikeGame.Invoke();
+        public readonly SyncS SyncS;
+        public readonly ConnectorMenuS ConnectorMenuS;
     }
 }

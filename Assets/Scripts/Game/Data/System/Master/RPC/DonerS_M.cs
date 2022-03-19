@@ -69,7 +69,7 @@ namespace Chessy.Game.System.Model
 
                     //ViewDataSC.RotateAll.Invoke();
 
-                    e.ZoneInfoC.FriendIsActive = true;
+                    e.ZoneInfoC.IsActiveFriend = true;
                 }
             }
             else

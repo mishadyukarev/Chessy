@@ -8,7 +8,7 @@ namespace Chessy.Game
     {
         public static void Sync(in byte idx_0, in EntitiesView vEs, in EntitiesModel e)
         {
-            if (e.ZoneInfoC.EnvIsActive)
+            if (e.ZoneInfoC.IsActiveEnvironment)
             {
                 if (e.EnvironmentEs(idx_0).FertilizeC.HaveAnyResources)
                 {

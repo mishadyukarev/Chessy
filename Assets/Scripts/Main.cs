@@ -20,6 +20,13 @@ namespace Chessy
         float _timer;
 
 
+        #region Menu
+
+        readonly SystemsManager SystemsManager = default;
+
+        #endregion
+
+
         #region Game
 
         EntitiesModel _e;
@@ -27,7 +34,7 @@ namespace Chessy
         EntitiesViewUI _eUI;
 
         readonly SystemsModel _systemsM = default;
-        readonly SystemsViewUI _systemUI = default;
+        SystemsViewUI _systemUI = default;
         readonly SystemsView _systemsV = default;
 
         #endregion
@@ -82,7 +89,8 @@ namespace Chessy
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    SystemsManager.RunUpdate();
+                    SystemsManager.SyncS.Run();
+                    SystemsManager.ConnectorMenuS.Run();
                     break;
 
                 case SceneTypes.Game:
@@ -111,7 +119,8 @@ namespace Chessy
 
                         _toggleW = new EcsWorld();
                         new EntitieManager(_toggleW);
-                        new SystemsManager(default);
+                        SystemsManager.LaunchLikeGameAndShopS.Run();
+                        new Menu.EventSys();
                         break;
                     }
 
@@ -120,6 +129,8 @@ namespace Chessy
                         _eV = new EntitiesView(out var forData);
                         _e = new EntitiesModel(forData, Rpc.NamesMethods);
                         _eUI = new EntitiesViewUI(_e);
+
+                        _systemUI = new SystemsViewUI(default);
 
                         var eventsUI = new EventsUIManager(_eUI, _e);
 

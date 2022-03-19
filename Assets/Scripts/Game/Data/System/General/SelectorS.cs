@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Game
@@ -53,47 +54,21 @@ namespace Chessy.Game
                                                 e.RpcPoolEs.AttackUnitToMaster(e.CellsC.Selected, e.CellsC.Current);
                                             }
 
-                                            else if (e.UnitEs(e.CellsC.Selected).ForShift.Contains(e.CellsC.Current))
+                                            else if (e.UnitPlayerTC(e.CellsC.Selected).Is(e.CurPlayerITC.Player) 
+                                                && e.UnitEs(e.CellsC.Selected).ForShift.Contains(e.CellsC.Current))
                                             {
                                                 e.RpcPoolEs.ShiftUnitToMaster(e.CellsC.Selected, e.CellsC.Current);
                                             }
 
                                             else
                                             {
-                                                if (e.UnitTC(idx_cur).HaveUnit)
-                                                {
-                                                    if (e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
-                                                    {
-                                                        if (e.IsMelee(idx_cur))
-                                                        {
-                                                            e.Sound(ClipTypes.PickMelee).Invoke();
-                                                        }
-                                                        else
-                                                        {
-                                                            e.Sound(ClipTypes.PickArcher).Invoke();
-                                                        }
-                                                    }
-                                                }
-
+                                                Sound(e);
                                             }
                                         }
 
                                         else
                                         {
-                                            if (e.UnitTC(idx_cur).HaveUnit)
-                                            {
-                                                if (e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
-                                                {
-                                                    if (e.IsMelee(idx_cur))
-                                                    {
-                                                        e.Sound(ClipTypes.PickMelee).Invoke();
-                                                    }
-                                                    else
-                                                    {
-                                                        e.Sound(ClipTypes.PickArcher).Invoke();
-                                                    }
-                                                }
-                                            }
+                                            Sound(e);
                                         }
 
 
@@ -103,20 +78,7 @@ namespace Chessy.Game
 
                                     else
                                     {
-                                        if (e.UnitTC(idx_cur).HaveUnit)
-                                        {
-                                            if (e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
-                                            {
-                                                if (e.IsMelee(idx_cur))
-                                                {
-                                                    e.Sound(ClipTypes.PickMelee).Invoke();
-                                                }
-                                                else
-                                                {
-                                                    e.Sound(ClipTypes.PickArcher).Invoke();
-                                                }
-                                            }
-                                        }
+                                        Sound(e);
 
                                         e.CellsC.PreviousSelected = e.CellsC.Selected;
                                         e.CellsC.Selected = e.CellsC.Current;
@@ -133,6 +95,8 @@ namespace Chessy.Game
 
                             case CellClickTypes.GiveTakeTW:
                                 {
+                                    e.CellsC.Selected = e.CellsC.Current;
+
                                     if (e.UnitTC(idx_cur).Is(UnitTypes.Pawn) && e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
                                     {
                                         e.RpcPoolEs.GiveTakeToolWeaponToMaster(e.CellsC.Current, e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT);
@@ -182,7 +146,6 @@ namespace Chessy.Game
                                     }
 
                                     e.CellClickTC.Click = CellClickTypes.SimpleClick;
-                                    e.CellsC.Selected = e.CellsC.Current;
                                 }
                                 break;
 
@@ -231,6 +194,50 @@ namespace Chessy.Game
                     //        }
                     //    }
                     //}
+                }
+            }
+        }
+
+
+        void Sound(in EntitiesModel e)
+        {
+            var idx_cur = e.CellsC.Current;
+
+            if (e.UnitTC(idx_cur).HaveUnit 
+                && e.UnitEs(idx_cur).ForPlayer(e.CurPlayerITC.Player).IsVisible)
+            {
+                if (e.IsMelee(idx_cur))
+                {
+                    e.Sound(ClipTypes.PickMelee).Invoke();
+                }
+                else
+                {
+                    e.Sound(ClipTypes.PickArcher).Invoke();
+                }
+            }
+            else
+            {
+                if (e.AdultForestC(idx_cur).HaveAnyResources)
+                {
+                    e.Sound(ClipTypes.Leaf).Invoke();
+                }
+                else if (e.HillC(idx_cur).HaveAnyResources)
+                {
+                    e.Sound(ClipTypes.Rock).Invoke();
+                }
+                else if (e.MountainC(idx_cur).HaveAnyResources)
+                {
+                    e.Sound(ClipTypes.ShortWind).Invoke();
+                }
+                else
+                {
+                    e.Sound(ClipTypes.KickGround).Invoke();
+                }
+
+
+                if (e.CellEs(e.WeatherE.CloudC.Center).IdxsAround.Contains(idx_cur) || e.WeatherE.CloudC.Center == idx_cur)
+                {
+                    e.Sound(ClipTypes.ShortRain).Invoke();
                 }
             }
         }

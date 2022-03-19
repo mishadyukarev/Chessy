@@ -65,47 +65,47 @@ namespace Chessy.Game.System.Model.Master
                 {
                     //e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterBuildTown);
 
-                    if (e.UnitTC(idx_0).Is(UnitTypes.Snowy))
+                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
+
+
+                    if (e.CellEs(idx_0).IsActiveParentSelf)
                     {
-                        foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
+                        if (e.UnitTC(idx_0).HaveUnit)
                         {
-                            if (e.UnitTC(idx_1).HaveUnit)
+                            if (e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
                             {
-                                if (e.UnitPlayerTC(idx_1).Player == e.UnitPlayerTC(idx_0).Player)
+                                if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
                                 {
-                                    if (e.UnitTC(idx_1).Is(UnitTypes.Pawn))
+                                    if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                     {
-                                        if (e.UnitMainTWTC(idx_1).Is(ToolWeaponTypes.BowCrossbow))
-                                        {
-                                            e.UnitEffectFrozenArrawC(idx_1).Shoots++;
-                                        }
-                                        else
-                                        {
-                                            e.UnitEffectShield(idx_1).Protection = ShieldValues.AFTER_DIRECT_WAVE;
-                                        }
+                                        e.UnitEffectFrozenArrawC(idx_0).Shoots++;
                                     }
                                     else
                                     {
-                                        e.UnitEffectShield(idx_1).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                        e.UnitEffectShield(idx_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
                                     }
+                                }
+                                else
+                                {
+                                    e.UnitEffectShield(idx_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
                                 }
                             }
                         }
-                    }
-                    else if (e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
-                    {
-                        if (!e.HaveTreeUnit)
+                        else
                         {
-                            foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
+                            if (e.AdultForestC(idx_0).HaveAnyResources)
                             {
-                                if (!e.UnitTC(idx_1).HaveUnit)
+                                if (!e.HaveTreeUnit)
                                 {
-                                    if (e.AdultForestC(idx_1).HaveAnyResources)
+                                    for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                                     {
-                                        e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
-                                        e.UnitEs(idx_1).SetNewUnitHere(UnitTypes.Tree, e.UnitPlayerTC(idx_0).Player, e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player), e);
+                                        if (e.PlayerInfoE(playerT).AvailableHeroTC.Is(UnitTypes.Elfemale))
+                                        {
 
-                                        break;
+                                            e.UnitEs(idx_0).SetNewUnitHere(UnitTypes.Tree, playerT, e.PlayerInfoE(playerT), e);
+
+                                            break;
+                                        }
                                     }
                                 }
                             }

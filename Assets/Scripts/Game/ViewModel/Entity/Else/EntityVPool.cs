@@ -77,27 +77,36 @@ namespace Chessy.Game
                     case ClipTypes.SoundGoldPack: volume = 0.3f; break;
                     case ClipTypes.Melting: volume = 0.3f; break;
                     case ClipTypes.Destroy: volume = 0.3f; break;
-                    case ClipTypes.UpgradeMelee: volume = 0.2f; break;
-                    case ClipTypes.UpgradeUnitArcher: volume = 1; break;
                     case ClipTypes.ClickToTable: volume = 0.6f; break;
                     case ClipTypes.Truce: volume = 0.6f; break;
-                    case ClipTypes.AfterBuildTown: volume = 0.2f; break;
                     case ClipTypes.PickMelee: volume = 0.1f; break;
                     case ClipTypes.PickArcher: volume = 0.7f; break;
-                    case ClipTypes.PickUpgrade: volume = 0.3f; break;
-                    case ClipTypes.GetHero: volume = 0.25f; break;
-                    //case ClipTypes.HeroAbility: volume = 0.25f; break;
-                    case ClipTypes.BackgroundInGame: volume = 1; break;
                     case ClipTypes.Click: volume = 0.25f; break;
                     case ClipTypes.WritePensil: volume = 0.2f; break;
+                    case ClipTypes.Leaf: volume = 0.4f; break;
+                    case ClipTypes.KickGround: volume = 0.1f; break;
+                    case ClipTypes.Rock: volume = 0.2f; break;
+                    case ClipTypes.ShortWind: volume = 0.2f; break;
+                    case ClipTypes.ShortRain: volume = 0.2f; break;
+
+                    case ClipTypes.Background1: volume = 1; break;
+                    case ClipTypes.Background2: volume = 0.05f; break;
                 }
 
                 aS.volume = volume;
 
-                if (clipT == ClipTypes.BackgroundInGame)
+                //if ()
+                //{
+
+                //}
+                //else
+                //{
+
+                //}
+
+                if (clipT == ClipTypes.Background2)
                 {
                     aS.Play();
-                    aS.loop = true;
                 }
 
 

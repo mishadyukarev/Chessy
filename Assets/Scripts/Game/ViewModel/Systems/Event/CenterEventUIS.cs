@@ -36,7 +36,7 @@ namespace Chessy.Game
         void Ready() => E.RpcPoolEs.ReadyToMaster();
         void FriendReady()
         {
-            E.ZoneInfoC.FriendIsActive = false;
+            E.ZoneInfoC.IsActiveFriend = false;
         }
         void GetKing()
         {

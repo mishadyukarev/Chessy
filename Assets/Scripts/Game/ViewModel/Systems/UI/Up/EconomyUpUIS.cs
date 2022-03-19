@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    sealed class EconomyUpUIS : SystemUIAbstract, IEcsRunSystem
+    public struct EconomyUpUIS
     {
         readonly Dictionary<ResourceTypes, float> _extracts;
 
-        internal EconomyUpUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal EconomyUpUIS(in Dictionary<ResourceTypes, float> dict)
         {
-            _extracts = new Dictionary<ResourceTypes, float>();
+            _extracts = dict;
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts.Add(res, default);
         }
 
-        public void Run()
+        public void Run(in EntitiesViewUI eUI, in EntitiesModel e)
         {
-            var curPlayer = E.CurPlayerITC.Player;
+            var curPlayer = e.CurPlayerITC.Player;
 
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
@@ -24,39 +24,44 @@ namespace Chessy.Game
             _extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
 
 
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
             {
 
 
-                if (E.UnitPlayerTC(idx_0).Is(curPlayer))
+                if (e.UnitPlayerTC(idx_0).Is(curPlayer))
                 {
-                    if (E.UnitTC(idx_0).HaveUnit)
+                    if (e.UnitTC(idx_0).HaveUnit)
                     {
                         _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
                     }
 
 
-                    _extracts[ResourceTypes.Ore] += E.PawnExtractHillE(idx_0).Resources;
-                    _extracts[ResourceTypes.Wood] += E.PawnExtractAdultForestE(idx_0).Resources;
+                    _extracts[ResourceTypes.Ore] += e.PawnExtractHillE(idx_0).Resources;
+                    _extracts[ResourceTypes.Wood] += e.PawnExtractAdultForestE(idx_0).Resources;
                 }
 
-                if (E.BuildingPlayerTC(idx_0).Is(curPlayer))
+                if (e.BuildingPlayerTC(idx_0).Is(curPlayer))
                 {
-                    _extracts[ResourceTypes.Wood] += E.WoodcutterExtractE(idx_0).Resources;
-                    _extracts[ResourceTypes.Food] += E.FarmExtractFertilizeE(idx_0).Resources;
+                    _extracts[ResourceTypes.Wood] += e.WoodcutterExtractE(idx_0).Resources;
+                    _extracts[ResourceTypes.Food] += e.FarmExtractFertilizeE(idx_0).Resources;
                 }
             }
 
-            if (_extracts[ResourceTypes.Food] < 0) UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = (Math.Truncate(100 * _extracts[ResourceTypes.Food]) / 100).ToString();
-            else UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = "+ " + Math.Truncate(100 * _extracts[ResourceTypes.Food]) / 100;
 
-            UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Wood).TextUI.text = "+ " + Math.Truncate(100 * _extracts[ResourceTypes.Wood]) / 100;
-            UIE.UpEs.EconomyE.EconomyExtract(ResourceTypes.Ore).TextUI.text = "+ " + Math.Truncate(100 * _extracts[ResourceTypes.Ore]) / 100;
+            var v = 100 * _extracts[ResourceTypes.Food];
+            var vv = (int)v;
+
+
+            if (_extracts[ResourceTypes.Food] < 0) eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = ((int)(100 * _extracts[ResourceTypes.Food])).ToString();
+            else eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Food]));
+
+            eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Wood).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Wood]));
+            eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Ore).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Ore]));
 
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
-                UIE.UpEs.EconomyE.Economy(res).TextUI.text = (Math.Truncate(10 * E.PlayerInfoE(curPlayer).ResourcesC(res).Resources) / 10).ToString();
+                eUI.UpEs.EconomyE.Economy(res).TextUI.text = ((int)(100 * e.PlayerInfoE(curPlayer).ResourcesC(res).Resources)).ToString();
             }
 
 
@@ -64,7 +69,7 @@ namespace Chessy.Game
 
 
 
-            UIE.UpEs.MotionsTextC.TextUI.text =  "Motions: "+ E.MotionsC.Motions.ToString();
+            eUI.UpEs.MotionsTextC.TextUI.text =  "Motions: "+ e.MotionsC.Motions.ToString();
         }
     }
 }

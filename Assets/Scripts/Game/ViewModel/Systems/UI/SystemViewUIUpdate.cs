@@ -32,7 +32,7 @@ namespace Chessy.Game.System.View.UI
 
 
             ///Up
-            new EconomyUpUIS(eUI, e).Run();
+            systems.EconomyUpS.Run(eUI, e);
             new UpWindUIS(eUI, e).Run();
             new UpSunsUIS(eUI, e).Run();
 

@@ -1,12 +1,11 @@
 ﻿using Chessy.Game.Entity.Cell.Unit;
 using Chessy.Game.Entity.View.Cell.Unit.Effect;
-using UnityEngine;
 
 namespace Chessy.Game
 {
     static class SyncFrozenArrawVS
     {
-        public static void SyncVision(this EffectVEs effectsVEs, in UnitEs unitEs, in bool isSelected)
+        public static void SyncVision(this EffectVEs effectsVEs, in UnitEs unitEs, in bool isSelected, in EntitiesModel e)
         {
             effectsVEs.FrozenArraw(true, true).Disable();
             effectsVEs.FrozenArraw(false, true).Disable();
@@ -16,11 +15,14 @@ namespace Chessy.Game
 
             if (unitEs.MainE.UnitTC.HaveUnit)
             {
-                if (unitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
+                if (unitEs.ForPlayer(e.CurPlayerITC.Player).IsVisible)
                 {
-                    if (unitEs.EffectsE.FrozenArrawC.HaveEffect)
+                    if (unitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
                     {
-                        effectsVEs.FrozenArraw(isSelected, unitEs.MainE.IsRightArcherC.IsRight).Enable();
+                        if (unitEs.EffectsE.FrozenArrawC.HaveEffect)
+                        {
+                            effectsVEs.FrozenArraw(isSelected, unitEs.MainE.IsRightArcherC.IsRight).Enable();
+                        }
                     }
                 }
             }

@@ -15,7 +15,7 @@ namespace Chessy.Game
         void EnvironmentInfo()
         {
             E.Sound(ClipTypes.Click).Invoke();
-            E.ZoneInfoC.EnvIsActive = !E.ZoneInfoC.EnvIsActive;
+            E.ZoneInfoC.IsActiveEnvironment = !E.ZoneInfoC.IsActiveEnvironment;
         }
     }
 }

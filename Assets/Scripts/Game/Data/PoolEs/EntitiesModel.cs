@@ -33,7 +33,7 @@ namespace Chessy.Game
 
         public MistakeC MistakeC;
         public InfoGameC MotionsC;
-        public ZoneInfoC ZoneInfoC;
+        public ZonesInfoC ZoneInfoC;
         public CellsC CellsC;
         public WhereTeleportC WhereTeleportC;
         public PlayerTC WhoseMove;
@@ -174,7 +174,7 @@ namespace Chessy.Game
 
         public EntitiesModel(in List<object> forData, in List<string> namesMethods)
         {
-            ZoneInfoC.FriendIsActive = GameModeC.IsGameMode(GameModes.WithFriendOff);
+            ZoneInfoC.IsActiveFriend = GameModeC.IsGameMode(GameModes.WithFriendOff);
             WhoseMove = new PlayerTC(StartValues.WHOSE_MOVE);
             CellClickTC = new CellClickC(StartValues.CELL_CLICK);
 
