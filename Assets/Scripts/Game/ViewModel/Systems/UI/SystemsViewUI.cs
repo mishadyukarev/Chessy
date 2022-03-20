@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Game.System.View.UI.Center;
+using System.Collections.Generic;
 
 namespace Chessy.Game.System.View.UI
 {
@@ -8,10 +9,13 @@ namespace Chessy.Game.System.View.UI
 
         public readonly RelaxUIS RelaxS;
         public readonly EconomyUpUIS EconomyUpS;
+        public readonly EffectsUIS EffectsS;
+        public readonly SyncBookUIS SyncBookUIS;
 
         public SystemsViewUI(in bool def) : this()
         {
             EconomyUpS = new EconomyUpUIS(new Dictionary<ResourceTypes, float>());
+            EffectsS = new EffectsUIS(new Dictionary<EffectTypes, bool>());
         }
     }
 }

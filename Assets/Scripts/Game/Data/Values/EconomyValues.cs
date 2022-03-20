@@ -4,7 +4,7 @@ namespace Chessy.Game.Values
 {
     public static class EconomyValues
     {
-        public const float ADDING_FOOD_AFTER_UPDATE = 0.3f;
+        public const float ADDING_FOOD_AFTER_UPDATE = 0.1f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;
 
         public const float FOOD_FOR_FEEDING_UNITS = 0.1f;

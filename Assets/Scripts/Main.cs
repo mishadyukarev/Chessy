@@ -120,7 +120,7 @@ namespace Chessy
                         _toggleW = new EcsWorld();
                         new EntitieManager(_toggleW);
                         SystemsManager.LaunchLikeGameAndShopS.Run();
-                        new Menu.EventSys();
+                        new Menu.Events();
                         break;
                     }
 
@@ -132,7 +132,7 @@ namespace Chessy
 
                         _systemUI = new SystemsViewUI(default);
 
-                        var eventsUI = new EventsUIManager(_eUI, _e);
+                        var eventsUI = new EventsUIManager(_systemsM, _eUI, _e);
 
                         _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(_systemsM, _e,  eventsUI);
                         Rpc.SyncAllMaster();

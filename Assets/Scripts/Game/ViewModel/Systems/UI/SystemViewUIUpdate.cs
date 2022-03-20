@@ -1,8 +1,6 @@
 ﻿using Chessy.Common;
-using Chessy.Game.System.Model;
 using Chessy.Game.System.View.UI.Down;
 using Chessy.Game.View.UI.System;
-using UnityEngine;
 
 namespace Chessy.Game.System.View.UI
 {
@@ -16,7 +14,7 @@ namespace Chessy.Game.System.View.UI
             ProtectUIS.Run(eUI.RightEs.ProtectE, e);
             systems.RelaxS.Run(eUI.RightEs.RelaxE, e);
             new ShieldUIS(eUI, e).Run();
-            new RightEffectsUIS(e.Resources, eUI, e).Run();
+            systems.EffectsS.Run(e.Resources, eUI, e);
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
                 new UniqueButtonUIS(buttonT, eUI.RightEs.Unique(buttonT), e.Resources, e).Run();
@@ -47,6 +45,8 @@ namespace Chessy.Game.System.View.UI
             new CenterBuildingZonesUIS(eUI, e).Run();
             MotionUIS.Sync(timer, eUI, e);
             eUI.CenterEs.MistakeE.Sync(timer, e);
+            systems.SyncBookUIS.Sync(eUI.CenterEs.BookE, e);
+
 
             ///Left
             new LeftZonesUIS(eUI, e).Run();

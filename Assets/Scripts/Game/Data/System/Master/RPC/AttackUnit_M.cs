@@ -116,12 +116,12 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (minus_from > 0)
                     {
-                        sMM.AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, sMM.KillUnitS, e);
+                        sMM.AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, sMM, e);
                     }
                 }
                 else
                 {
-                    if (e.UnitEffectFrozenArrawC(idx_from).HaveEffect)
+                    if (e.UnitEffectFrozenArrawC(idx_from).HaveShoots)
                     {
                         e.UnitEffectFrozenArrawC(idx_from).Shoots = 0;
 
@@ -155,7 +155,7 @@ namespace Chessy.Game.System.Model.Master
 
                     var wasUnitT_to = e.UnitTC(idx_to).Unit;
 
-                    sMM.AttackUnitS.AttackUnit(minus_to, killer, idx_to, sMM.KillUnitS, e);
+                    sMM.AttackUnitS.AttackUnit(minus_to, killer, idx_to, sMM, e);
 
                     if (!e.UnitTC(idx_to).HaveUnit)
                     {
@@ -167,7 +167,7 @@ namespace Chessy.Game.System.Model.Master
                             }
                         }
 
-                        if (wasUnitT_to == UnitTypes.Camel)
+                        if (wasUnitT_to == UnitTypes.Wolf)
                         {
                             e.ResourcesC(e.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                         }

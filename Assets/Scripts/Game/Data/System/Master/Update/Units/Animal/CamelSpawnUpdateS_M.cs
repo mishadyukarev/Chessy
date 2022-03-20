@@ -12,7 +12,7 @@ namespace Chessy.Game
 
             for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
             {
-                if (e.UnitTC(idx_0).Is(UnitTypes.Camel))
+                if (e.UnitTC(idx_0).Is(UnitTypes.Wolf))
                 {
                     haveCamel = true;
                     break;
@@ -40,7 +40,7 @@ namespace Chessy.Game
 
                         if (!haveNearUnit)
                         {
-                            e.UnitTC(idx_0).Unit = UnitTypes.Camel;
+                            e.UnitTC(idx_0).Unit = UnitTypes.Wolf;
                             e.UnitLevelTC(idx_0).Level = LevelTypes.First;
                             e.UnitPlayerTC(idx_0).Player = PlayerTypes.None;
                             e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;

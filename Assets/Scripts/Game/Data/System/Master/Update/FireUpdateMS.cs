@@ -33,11 +33,11 @@ namespace Chessy.Game.System.Model
                         {
                             if (e.UnitPlayerTC(idx_0).Is(PlayerTypes.None))
                             {
-                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, PlayerTypes.None, idx_0, sMM.KillUnitS, e);
+                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, PlayerTypes.None, idx_0, sMM, e);
                             }
                             else
                             {
-                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, idx_0, sMM.KillUnitS, e);
+                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, idx_0, sMM, e);
                             }
                         }
                     }

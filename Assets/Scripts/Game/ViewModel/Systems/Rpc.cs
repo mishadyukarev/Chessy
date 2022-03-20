@@ -1,10 +1,7 @@
 ﻿using Chessy.Game.EventsUI;
-using Chessy.Game.Model.System;
 using Chessy.Game.System.Model;
 using Chessy.Game.System.Model.Master;
-using Chessy.Game.System.Model.Master.Methods;
 using Chessy.Game.Values;
-using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Effect;
@@ -71,7 +68,7 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        _sMM.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender, _sMM, _e);              
+                        _sMM.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender, _sMM, _e);
                         break;
 
                     case AbilityTypes.FirePawn:
@@ -401,7 +398,7 @@ namespace Chessy.Game
                         }
                         break;
 
-                        //Snowy
+                    //Snowy
                     case AbilityTypes.ChangeDirectionWind:
                         new ChangeDirectionWindMS((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender, _e);
                         break;
@@ -410,7 +407,7 @@ namespace Chessy.Game
                         _sMM.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender, _e);
                         break;
 
-                        case AbilityTypes.DecreaseWindSnowy:
+                    case AbilityTypes.DecreaseWindSnowy:
                         _sMM.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender, _e);
                         break;
 
@@ -561,10 +558,10 @@ namespace Chessy.Game
 
             else if (obj is BuildingTypes buildT)
             {
-                _eventsUI.LeftCityEventUI.BuyBuilding_Master(buildT, sender);
+                _sMM.BuyBuildingS_M.Buy(buildT, sender, _e);
             }
 
-            else if (obj is MarketBuyTypes marketBuy) _eventsUI.CenterBuildingEnventsUI.Buy_Master(marketBuy, sender);
+            else if (obj is MarketBuyTypes marketBuy) _sMM.BuyS_M.Buy(marketBuy, sender, _e);
 
             else if (obj is RpcMasterTypes rpcT)
             {
@@ -617,7 +614,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Melt:
-                        _eventsUI.CenterBuildingEnventsUI.Melt_Master(sender);
+                       _sMM.MeltS_M.Melt(sender, _e);
                         break;
 
                     default:
@@ -650,14 +647,14 @@ namespace Chessy.Game
                 //    || mistakeT == MistakeTypes.MaxSpeedWind || mistakeT == MistakeTypes.NeedBuildingHouses
                 //    || mistakeT == MistakeTypes.NeedMoreHp || mistakeT == MistakeTypes.NeedMorePeopleInCity)
                 //{
-                    
+
                 //}
                 //else
                 //{
                 //    _e.Sound(ClipTypes.Mistake).Action.Invoke();
                 //}
 
-                
+
 
                 if (mistakeT == MistakeTypes.Economy)
                 {

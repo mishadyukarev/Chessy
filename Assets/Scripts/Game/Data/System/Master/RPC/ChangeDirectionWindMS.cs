@@ -3,7 +3,7 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Game.Model.System
+namespace Chessy.Game.System.Model
 {
     public struct ChangeDirectionWindMS
     {

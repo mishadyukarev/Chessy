@@ -6,8 +6,8 @@
 
         Shield,
         Stun,
-        FrozenArraw,
-        Speed,
+        Arraw,
+        DamageAdd,
 
         End
     }

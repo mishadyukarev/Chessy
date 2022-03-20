@@ -94,16 +94,6 @@ namespace Chessy.Game
                 }
 
                 aS.volume = volume;
-
-                //if ()
-                //{
-
-                //}
-                //else
-                //{
-
-                //}
-
                 if (clipT == ClipTypes.Background2)
                 {
                     aS.Play();

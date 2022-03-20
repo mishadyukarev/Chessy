@@ -38,7 +38,7 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
                 case UnitTypes.Hell: return 0;
                 case UnitTypes.Skeleton: return 0;
                 case UnitTypes.Tree: return 0;
-                case UnitTypes.Camel: return 0;
+                case UnitTypes.Wolf: return 0;
                 default: throw new Exception();
             }
         }

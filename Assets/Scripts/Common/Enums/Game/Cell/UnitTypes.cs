@@ -18,7 +18,7 @@
         Tree,
 
         //Animals
-        Camel,
+        Wolf,
 
         End,
     }

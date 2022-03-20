@@ -17,6 +17,9 @@
         NeedMorePeopleInCity,
         MaxSpeedWind,
         MinSpeedWind,
+        NeedSetKing,
+        NeedWaitQueue,
+        NeedGetHero,
 
         End,
     }

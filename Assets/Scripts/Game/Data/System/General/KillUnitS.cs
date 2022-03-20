@@ -4,14 +4,14 @@ namespace Chessy.Game.System.Model
 {
     public struct KillUnitS
     {
-        public void Kill(in byte idx_0, in PlayerTypes whoKiller, in EntitiesModel e)
+        public void Kill(in byte idx_0, in PlayerTypes whoKiller, in SetLastDiedS setLastDiedS, in EntitiesModel e)
         {
             if (whoKiller != PlayerTypes.None)
             {
                 if (e.UnitTC(idx_0).Is(UnitTypes.King)) e.WinnerC.Player = whoKiller;
             }
             
-            else if (e.UnitTC(idx_0).IsHero)
+            if (e.UnitTC(idx_0).IsHero)
             {
                 var cooldown = 0f;
 
@@ -43,8 +43,7 @@ namespace Chessy.Game.System.Model
             if (e.UnitTC(idx_0).Is(UnitTypes.Tree)) e.HaveTreeUnit = false;
 
 
-
-            e.LastDiedE(idx_0).Set(e.UnitMainE(idx_0));
+            setLastDiedS.Set(e.UnitMainE(idx_0), ref e.UnitEs(idx_0).WhoLastDiedHereE);
             e.UnitInfo(e.UnitMainE(idx_0)).Take(e.UnitTC(idx_0).Unit, 1);
 
 

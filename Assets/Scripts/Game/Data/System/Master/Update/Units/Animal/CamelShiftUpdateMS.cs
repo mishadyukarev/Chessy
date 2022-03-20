@@ -13,7 +13,7 @@ namespace Chessy.Game
         {
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                if (E.UnitTC(idx_0).Is(UnitTypes.Camel))
+                if (E.UnitTC(idx_0).Is(UnitTypes.Wolf))
                 {
                     var randDir = Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 

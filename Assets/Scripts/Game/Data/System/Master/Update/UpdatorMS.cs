@@ -25,7 +25,7 @@ namespace Chessy.Game
             {
                 if (E.UnitTC(idx_0).HaveUnit && !E.IsAnimal(E.UnitTC(idx_0).Unit))
                 {
-                    E.ResourcesC(E.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+                    if(E.UnitTC(idx_0).Is(UnitTypes.Pawn)) E.ResourcesC(E.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {

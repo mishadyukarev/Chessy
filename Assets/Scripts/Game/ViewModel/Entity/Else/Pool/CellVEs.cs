@@ -9,23 +9,21 @@ namespace Chessy.Game
     {
         readonly Dictionary<CellBarTypes, SpriteRendererVC> _bars;
         readonly Dictionary<CellBlockTypes, SpriteRendererVC> _blocks;
+        readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
-        public GameObjectVC CellParent;
-        public GameObjectVC CellGO;
-        public SpriteRendererVC CellSR;
+        public readonly GameObjectVC CellParent;
+        public readonly GameObjectVC CellGO;
+        public readonly SpriteRendererVC CellSR;
 
         public readonly FireVE FireVE;
         public readonly EnvironmentVEs EnvironmentVEs;
-        public readonly CellUnitVEs UnitVEs;
+        public readonly UnitVEs UnitVEs;
         public readonly CellBuildingVEs BuildingEs;
         public readonly SpriteRendererVC CloudCellVC;
         public readonly SupportCellVEs SupportCellEs;
 
         public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
         public SpriteRendererVC Block(in CellBlockTypes block) => _blocks[block];
-
-
-        readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
         public SpriteRendererVC TrailCellVC(in DirectTypes dir) => _trails[dir];
 
@@ -47,7 +45,7 @@ namespace Chessy.Game
 
             BuildingEs = new CellBuildingVEs(cell);
             EnvironmentVEs = new EnvironmentVEs(cell);
-            UnitVEs = new CellUnitVEs(cell.transform);
+            UnitVEs = new UnitVEs(cell.transform);
 
 
             CloudCellVC = new SpriteRendererVC(cell.transform.Find("Weather").Find("Cloud").GetComponent<SpriteRenderer>());

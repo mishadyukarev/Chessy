@@ -19,7 +19,7 @@ namespace Chessy.Game
                 {
                     if (unitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
                     {
-                        if (unitEs.EffectsE.FrozenArrawC.HaveEffect)
+                        if (unitEs.EffectsE.FrozenArrawC.HaveShoots)
                         {
                             effectsVEs.FrozenArraw(isSelected, unitEs.MainE.IsRightArcherC.IsRight).Enable();
                         }

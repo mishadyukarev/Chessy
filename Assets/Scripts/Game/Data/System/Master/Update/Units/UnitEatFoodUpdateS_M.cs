@@ -19,7 +19,7 @@ namespace Chessy.Game.System.Model
                     {
                         if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitPlayerTC(idx_0).Is(player))
                         {
-                            sMM.KillUnitS.Kill(idx_0, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, e);
+                            sMM.KillUnitS.Kill(idx_0, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, sMM.SetLastDiedS, e);
                             e.UnitTC(idx_0).Unit = UnitTypes.None;
                             break;
                         }

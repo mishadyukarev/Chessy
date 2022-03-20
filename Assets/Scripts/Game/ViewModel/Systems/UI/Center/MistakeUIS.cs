@@ -43,7 +43,7 @@ namespace Chessy.Game
                                 mistakeUIE.NeedAmountResources(res).SetActive(true);
 
                                 mistakeUIE.NeedAmountResources(res).TextUI.text
-                                    = ">= " + Math.Round(e.MistakeEconomy(res).Resources, 2);
+                                    = ">= " + ((int)(100 * e.MistakeEconomy(res).Resources));
                             }
                         }
                     }

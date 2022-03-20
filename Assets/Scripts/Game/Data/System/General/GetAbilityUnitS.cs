@@ -98,7 +98,7 @@ namespace Chessy.Game.System.Model
                         case UnitTypes.Hell:
                             break;
 
-                        case UnitTypes.Camel:
+                        case UnitTypes.Wolf:
                             break;
 
                         case UnitTypes.Skeleton:

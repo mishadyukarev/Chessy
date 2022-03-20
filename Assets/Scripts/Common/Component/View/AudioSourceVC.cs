@@ -8,10 +8,7 @@ namespace Chessy.Game
 
         public bool IsPlaying => AudioSource.isPlaying;
 
-        public AudioSourceVC(in AudioSource audioSource)
-        {
-            AudioSource = audioSource;
-        }
+        public AudioSourceVC(in AudioSource audioSource) => AudioSource = audioSource;
 
         public void Play() => AudioSource.Play();
     }

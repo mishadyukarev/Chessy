@@ -24,6 +24,11 @@
         ShortWind,
         ShortRain,
 
+        //Book
+        OpenBook,
+        CloseBook,
+        ShiftBookSheet,
+
         Background1,
         Background2,
 

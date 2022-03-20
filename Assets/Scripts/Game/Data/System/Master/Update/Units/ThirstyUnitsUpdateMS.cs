@@ -42,7 +42,7 @@ namespace Chessy.Game
                             {
                                 float percent = HpValues.ThirstyPercent(E.UnitTC(idx_0).Unit);
 
-                                sMM.AttackUnitS.AttackUnit(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, sMM.KillUnitS, E);
+                                sMM.AttackUnitS.AttackUnit(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, sMM, E);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);

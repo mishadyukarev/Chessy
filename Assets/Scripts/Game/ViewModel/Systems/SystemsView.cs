@@ -5,5 +5,7 @@
         public readonly SystemViewUpdate UpdateS;
 
         public readonly SyncNoneVisionS SyncNoneVisionS;
+        public readonly NeedFoodS NeedFoodS;
+        public readonly BuildingFlagVS BuildingFlagS;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.View.UI.Down;
+using UnityEngine.UI;
 
 namespace Chessy.Game
 {
@@ -11,6 +12,7 @@ namespace Chessy.Game
         public readonly DownToolWeaponUIE ToolWeaponE;
         public readonly CityButtonUIE CityButtonUIE;
         public readonly CostUIE CostE;
+        public readonly ButtonUIC BookButtonC;
 
         public DownUIEs(in bool def)
         {
@@ -24,6 +26,8 @@ namespace Chessy.Game
             HeroE = new DownHeroUIE(downZone);
             CityButtonUIE = new CityButtonUIE(downZone);
             CostE = new CostUIE(downZone);
+
+            BookButtonC = new ButtonUIC(downZone.Find("Book+").Find("Button+").GetComponent<Button>());
         }
     }
 }

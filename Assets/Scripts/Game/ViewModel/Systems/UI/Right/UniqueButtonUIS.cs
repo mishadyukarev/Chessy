@@ -73,7 +73,7 @@ namespace Chessy.Game.View.UI.System
                 {
                     case AbilityTypes.SetFarm:
                         _buttonE.WoodTextC.ParentG.SetActive(true);
-                        _buttonE.WoodTextC.TextUI.text = EconomyValues.WOOD_FOR_BUILDING_FARM.ToString();
+                        _buttonE.WoodTextC.TextUI.text = ((int)(100 * EconomyValues.WOOD_FOR_BUILDING_FARM)).ToString();
                         break;
                 }
 

@@ -18,6 +18,8 @@ namespace Chessy.Game
                 SyncBarsEnvironmentVS.Sync(idx_0, eV, e);
                 SyncTrailVS.Sync(idx_0, eV, e);
                 systems.SyncNoneVisionS.Sync(idx_0, eV.CellEs(idx_0).SupportCellEs.NoneSRC, e);
+                systems.NeedFoodS.Sync(idx_0, eV.CellEs(idx_0).UnitVEs.NeedFoodSRC, e);
+                systems.BuildingFlagS.Sync(eV.BuildingEs(idx_0).FlagSRC, idx_0, e);
 
 
                 eV.CellEs(idx_0).UnitVEs.EffectVEs.SyncVision(e.UnitEs(idx_0), idx_0 == e.CellsC.Selected, e);

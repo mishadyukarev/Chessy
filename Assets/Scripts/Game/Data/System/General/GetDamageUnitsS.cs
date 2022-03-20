@@ -51,7 +51,7 @@ namespace Chessy.Game.System.Model
                                 powerDamage = DamageValues.TREE;
                                 break;
 
-                            case UnitTypes.Camel:
+                            case UnitTypes.Wolf:
                                 powerDamage = DamageValues.CAMEL;
                                 break;
 

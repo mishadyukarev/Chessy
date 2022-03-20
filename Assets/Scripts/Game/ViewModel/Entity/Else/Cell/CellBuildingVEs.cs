@@ -7,6 +7,8 @@ namespace Chessy.Game
     {
         readonly Dictionary<BuildingTypes, SpriteRendererVC> _ents;
 
+        public readonly SpriteRendererVC FlagSRC;
+
         public SpriteRendererVC Main(in BuildingTypes buildT) => _ents[buildT];
 
         public CellBuildingVEs(in GameObject cell)
@@ -19,6 +21,9 @@ namespace Chessy.Game
             {
                 _ents.Add(buildT, new SpriteRendererVC(build.transform.Find(buildT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
             }
+
+
+            FlagSRC = new SpriteRendererVC(build.Find("Flag").GetComponent<SpriteRenderer>());
         }
     }
 }

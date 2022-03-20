@@ -30,14 +30,13 @@ namespace Chessy.Game
 
                 if (e.UnitPlayerTC(idx_0).Is(curPlayer))
                 {
-                    if (e.UnitTC(idx_0).HaveUnit)
+                    if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
                     {
                         _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+
+                        _extracts[ResourceTypes.Ore] += e.PawnExtractHillE(idx_0).Resources;
+                        _extracts[ResourceTypes.Wood] += e.PawnExtractAdultForestE(idx_0).Resources;
                     }
-
-
-                    _extracts[ResourceTypes.Ore] += e.PawnExtractHillE(idx_0).Resources;
-                    _extracts[ResourceTypes.Wood] += e.PawnExtractAdultForestE(idx_0).Resources;
                 }
 
                 if (e.BuildingPlayerTC(idx_0).Is(curPlayer))

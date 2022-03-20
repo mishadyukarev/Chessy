@@ -17,7 +17,11 @@ namespace Chessy.Game
             GameObject = gO;
         }
 
-        public void SetActive(in bool needActive) => GameObject.SetActive(needActive);
+        public void SetActive(in bool needActive)
+        {
+            if (needActive != GameObject.activeSelf)
+                GameObject.SetActive(needActive);
+        }
         public void SetActiveParent(in bool needActive) => GameObject.transform.parent.gameObject.SetActive(needActive);
     }
 }

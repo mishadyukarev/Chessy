@@ -201,12 +201,17 @@ namespace Chessy.Game
 
         void Sound(in EntitiesModel e)
         {
-            var idx_cur = e.CellsC.Current;
+            var idx_0 = e.CellsC.Current;
 
-            if (e.UnitTC(idx_cur).HaveUnit 
-                && e.UnitEs(idx_cur).ForPlayer(e.CurPlayerITC.Player).IsVisible)
+            if (e.UnitTC(idx_0).HaveUnit 
+                && e.UnitEs(idx_0).ForPlayer(e.CurPlayerITC.Player).IsVisible && !e.UnitTC(idx_0).Is(UnitTypes.Wolf))
             {
-                if (e.IsMelee(idx_cur))
+                if (e.UnitTC(idx_0).Is(UnitTypes.Tree))
+                {
+                    e.Sound(ClipTypes.Leaf).Invoke();
+                }
+
+                else if (e.IsMelee(idx_0))
                 {
                     e.Sound(ClipTypes.PickMelee).Invoke();
                 }
@@ -217,15 +222,15 @@ namespace Chessy.Game
             }
             else
             {
-                if (e.AdultForestC(idx_cur).HaveAnyResources)
+                if (e.AdultForestC(idx_0).HaveAnyResources)
                 {
                     e.Sound(ClipTypes.Leaf).Invoke();
                 }
-                else if (e.HillC(idx_cur).HaveAnyResources)
+                else if (e.HillC(idx_0).HaveAnyResources)
                 {
                     e.Sound(ClipTypes.Rock).Invoke();
                 }
-                else if (e.MountainC(idx_cur).HaveAnyResources)
+                else if (e.MountainC(idx_0).HaveAnyResources)
                 {
                     e.Sound(ClipTypes.ShortWind).Invoke();
                 }
@@ -235,7 +240,7 @@ namespace Chessy.Game
                 }
 
 
-                if (e.CellEs(e.WeatherE.CloudC.Center).IdxsAround.Contains(idx_cur) || e.WeatherE.CloudC.Center == idx_cur)
+                if (e.CellEs(e.WeatherE.CloudC.Center).IdxsAround.Contains(idx_0) || e.WeatherE.CloudC.Center == idx_0)
                 {
                     e.Sound(ClipTypes.ShortRain).Invoke();
                 }

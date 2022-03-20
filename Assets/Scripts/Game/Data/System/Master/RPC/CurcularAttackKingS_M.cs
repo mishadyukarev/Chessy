@@ -34,7 +34,7 @@ namespace Chessy.Game.System.Model.Master
 
                                 else
                                 {
-                                    sMM.AttackUnitS.AttackUnit(HpValues.MAX / 4, e.UnitPlayerTC(idx_0).Player, idx_1, sMM.KillUnitS, e);
+                                    sMM.AttackUnitS.AttackUnit(HpValues.MAX / 4, e.UnitPlayerTC(idx_0).Player, idx_1, sMM, e);
                                 }
                             }
                         }
