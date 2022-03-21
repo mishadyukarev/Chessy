@@ -5,7 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public struct GetCellsForShiftUnitS
     {
-        public GetCellsForShiftUnitS(in byte idx_0, in EntitiesModel e)
+        public GetCellsForShiftUnitS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.UnitEs(idx_0).ForShift.Clear();
 

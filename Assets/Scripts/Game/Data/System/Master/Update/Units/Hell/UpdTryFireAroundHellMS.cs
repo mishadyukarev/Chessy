@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class UpdTryFireAroundHellMS : SystemAbstract, IEcsRunSystem
     {
-        internal UpdTryFireAroundHellMS(in EntitiesModel ents) : base(ents)
+        internal UpdTryFireAroundHellMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.View.UI.Down;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game
@@ -14,11 +15,8 @@ namespace Chessy.Game
         public readonly CostUIE CostE;
         public readonly ButtonUIC BookButtonC;
 
-        public DownUIEs(in bool def)
+        public DownUIEs(in Transform downZone)
         {
-            var downZone = CanvasC.FindUnderCurZone("DownZone").transform;
-
-
             PawnE = new DownPawnUIE(downZone);
 
             ToolWeaponE = new DownToolWeaponUIE(downZone);

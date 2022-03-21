@@ -9,7 +9,7 @@ namespace Chessy.Game
         readonly Dictionary<DirectTypes, Vector3> _directs;
         readonly Vector3 _rotationForOtherPlayer = new Vector3(0, 0, 180);
 
-        internal UpWindUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal UpWindUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
             _directs = new Dictionary<DirectTypes, Vector3>();
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)

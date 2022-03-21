@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class CamelShiftUpdateMS : SystemAbstract, IEcsRunSystem
     {
-        internal CamelShiftUpdateMS(in EntitiesModel ents) : base(ents)
+        internal CamelShiftUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

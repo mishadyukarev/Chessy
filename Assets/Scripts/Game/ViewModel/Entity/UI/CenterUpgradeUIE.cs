@@ -9,7 +9,7 @@
 //    {
 //        readonly Dictionary<ButtonTypes, ButtonUIC> _buttons;
 
-//        public readonly GameObjectVC Parent;
+//        public readonly Chessy.Common.Component.GameObjectVC Parent;
 
 //        public ButtonUIC ButtonC(in ButtonTypes buttonT) => _buttons[buttonT];
 
@@ -17,7 +17,7 @@
 //        {
 //            var parent = centerZone.Find("PickUpgradeZone");
 
-//            Parent = new GameObjectVC(parent.gameObject);
+//            Parent = new Chessy.Common.Component.GameObjectVC(parent.gameObject);
 
 
 //            _buttons = new Dictionary<ButtonTypes, ButtonUIC>();

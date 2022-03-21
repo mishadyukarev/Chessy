@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model
 {
     public struct BuyBuildingS_M
     {
-        public void Buy(in BuildingTypes buildT, in Player sender, in EntitiesModel e)
+        public void Buy(in BuildingTypes buildT, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 

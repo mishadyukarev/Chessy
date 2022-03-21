@@ -6,7 +6,7 @@
 //    {
 //        //readonly Action _updateView;
 
-//        internal LeftEnvironmentEventUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+//        internal LeftEnvironmentEventUIS(in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
 //        {
 //            //_updateView = updateView;
 //            UIE.LeftEs.EnvironmentEs.InfoButtonC.AddListener(EnvironmentInfo);

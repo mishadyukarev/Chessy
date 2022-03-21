@@ -1,11 +1,12 @@
-﻿using Chessy.Game.Values.Cell.Unit;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values.Cell.Unit;
 using System;
 
 namespace Chessy.Game.System.Model
 {
     public struct GetDamageUnitsS
     {
-        public GetDamageUnitsS(in byte idx_0, in EntitiesModel e)
+        public GetDamageUnitsS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var powerDamage = 0f;
 

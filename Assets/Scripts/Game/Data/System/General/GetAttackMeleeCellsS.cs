@@ -5,7 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public struct GetAttackMeleeCellsS
     {
-        public GetAttackMeleeCellsS(in byte idx_0, in EntitiesModel e)
+        public GetAttackMeleeCellsS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.UnitEs(idx_0).ForAttack(AttackTypes.Simple).Clear();
             e.UnitEs(idx_0).ForAttack(AttackTypes.Unique).Clear();

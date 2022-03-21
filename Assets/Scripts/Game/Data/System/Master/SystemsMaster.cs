@@ -4,7 +4,7 @@
 //{
 //    public readonly struct SystemsMaster
 //    {
-//        public SystemsMaster(in EntitiesModel ents)
+//        public SystemsMaster(in Chessy.Game.Entity.Model.EntitiesModel ents)
 //        {
  
 //        }

@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using System;
+
+namespace Chessy.Game
 {
     public struct PlayerTC
     {
@@ -6,7 +8,7 @@
 
         public bool Is(params PlayerTypes[] players)
         {
-            if (players == default) throw new System.Exception();
+            if (players == default) throw new Exception();
 
             foreach (var player in players) if (player == Player) return true;
             return false;

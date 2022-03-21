@@ -1,11 +1,12 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Entity.Model;
 using System;
 
 namespace Chessy.Game.System.Model
 {
     public struct GetAbilityUnitS
     {
-        public GetAbilityUnitS(in byte idx_0, in EntitiesModel e)
+        public GetAbilityUnitS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.UnitEs(idx_0).Ability(ButtonTypes.First).Reset();
             e.UnitEs(idx_0).Ability(ButtonTypes.Second).Reset();

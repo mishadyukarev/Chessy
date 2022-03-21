@@ -2,7 +2,7 @@
 {
     public struct GetHeroDownS
     {
-        public void Get(in EntitiesModel e)
+        public void Get(in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.CellsC.Selected = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);

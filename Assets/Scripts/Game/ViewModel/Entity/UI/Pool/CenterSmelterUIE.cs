@@ -9,7 +9,7 @@ namespace Chessy.Game
     {
         readonly Dictionary<ResourceTypes, TextUIC> _texts;
 
-        public readonly GameObjectVC Zone;
+        public readonly Chessy.Common.Component.GameObjectVC Zone;
         public readonly ButtonUIC ButtonC;
         public readonly ButtonUIC ExitButtonC;
 
@@ -25,7 +25,7 @@ namespace Chessy.Game
 
             var button = toggler.Find("Button+").GetComponent<Button>();
 
-            Zone = new GameObjectVC(zone.gameObject);
+            Zone = new Chessy.Common.Component.GameObjectVC(zone.gameObject);
             ButtonC = new ButtonUIC(button);
             ExitButtonC = new ButtonUIC(zone.Find("Exit").Find("Button").GetComponent<Button>());
 

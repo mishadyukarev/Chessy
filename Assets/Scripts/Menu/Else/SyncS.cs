@@ -1,14 +1,15 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Entity;
 
 namespace Chessy.Menu
 {
     public struct SyncS
     {
-        public void Run()
+        public void Run(in EntitiesModel eC)
         {
-            SoundC.Volume = CenterZoneUICom.MusicVolume;
+            //SoundC.Volume = CenterZoneUICom.MusicVolume;
 
-            HintC.IsOnHint = CenterZoneUICom.IsOn;
+            //eC.IsOnHint = CenterZoneUICom.IsOn;
         }
     }
 }

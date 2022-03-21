@@ -2,7 +2,7 @@
 {
     static class SyncFireVS
     {
-        public static void Sync(in byte idx_0, in EntitiesView eV, in EntitiesModel e)
+        public static void Sync(in byte idx_0, in EntitiesView eV, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.EffectEs(idx_0).HaveFire)
             {

@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct GetFarmExtractCellsS
     {
-        public GetFarmExtractCellsS(in byte idx_0, in EntitiesModel e)
+        public GetFarmExtractCellsS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.FarmExtractFertilizeE(idx_0).Resources = 0;
 

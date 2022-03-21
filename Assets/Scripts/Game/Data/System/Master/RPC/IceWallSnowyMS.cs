@@ -2,7 +2,7 @@
 {
     public struct IceWallSnowyMS
     {
-        public IceWallSnowyMS(in byte idx_0, in EntitiesModel _e)
+        public IceWallSnowyMS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel _e)
         {
             //var ability = AbilityTypes.IceWall;
 

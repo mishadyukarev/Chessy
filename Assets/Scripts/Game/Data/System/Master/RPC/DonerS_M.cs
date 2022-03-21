@@ -1,5 +1,4 @@
 ﻿using Chessy.Common;
-using Chessy.Game.System.Model.Master;
 using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
@@ -8,7 +7,7 @@ namespace Chessy.Game.System.Model
 {
     public struct DonerS_M
     {
-        public DonerS_M(in Player sender, in SystemsModel sMM, in EntitiesModel e)
+        public DonerS_M(in Player sender, in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (PhotonNetwork.OfflineMode)
             {

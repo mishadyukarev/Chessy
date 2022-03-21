@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     sealed class WoodcutterExtractAdultForestUpdateMS : SystemAbstract, IEcsRunSystem
     {
-        internal WoodcutterExtractAdultForestUpdateMS(in EntitiesModel ents) : base(ents)
+        internal WoodcutterExtractAdultForestUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

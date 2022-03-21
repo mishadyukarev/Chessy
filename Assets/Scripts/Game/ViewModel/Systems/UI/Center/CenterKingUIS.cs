@@ -2,7 +2,7 @@
 {
     sealed class CenterKingUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterKingUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal CenterKingUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

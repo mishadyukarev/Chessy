@@ -5,7 +5,7 @@
 //{
 //    public sealed class RightUnitEventsUI : SystemUIAbstract
 //    {
-//        internal RightUnitEventsUI(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+//        internal RightUnitEventsUI(in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
 //        {
 
 //        }

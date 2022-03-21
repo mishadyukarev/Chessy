@@ -1,10 +1,12 @@
-﻿using Chessy.Game.Values.Cell.Environment;
+﻿using Chessy.Game.Entity;
+using Chessy.Game.Entity.Model;
+using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game.System.Model
 {
     public struct PawnExtractHillS
     {
-        public PawnExtractHillS(in byte idx_0, in EntitiesModel e)
+        public PawnExtractHillS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.PawnExtractHillE(idx_0).Resources = 0;
 

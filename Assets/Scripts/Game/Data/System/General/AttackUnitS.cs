@@ -5,7 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public struct AttackUnitS
     {
-        public void AttackUnit(in float damage, in PlayerTypes whoKiller, in byte idx_0, in SystemsModel systemsModel, in EntitiesModel e)
+        public void AttackUnit(in float damage, in PlayerTypes whoKiller, in byte idx_0, in SystemsModel systemsModel, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (damage <= 0) throw new Exception();
             if (!e.CellEs(idx_0).IsActiveParentSelf) throw new Exception();

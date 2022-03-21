@@ -2,6 +2,7 @@
 using Chessy.Game.Entity.View.UI.Right;
 using Chessy.Game.View.UI.Entity.Right;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -13,15 +14,14 @@ namespace Chessy.Game
         public EffectUIE Effect(in byte numberEffect) => _effects[numberEffect];
 
 
-        public readonly GameObjectVC Zone;
+        public readonly Chessy.Common.Component.GameObjectVC Zone;
         public RightStatsUIEs StatsE;
         public RightProtectUIE ProtectE;
         public RelaxUIE RelaxE;
 
-        public RightUIEs(in bool def)
+        public RightUIEs(in Transform rightZone)
         {
-            var rightZone = CanvasC.FindUnderCurZone("RightZone").transform;
-            Zone = new GameObjectVC(rightZone.gameObject);
+            Zone = new Chessy.Common.Component.GameObjectVC(rightZone.gameObject);
             StatsE = new RightStatsUIEs(rightZone.gameObject);
 
 

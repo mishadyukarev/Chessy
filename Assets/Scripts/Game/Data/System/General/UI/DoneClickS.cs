@@ -2,7 +2,7 @@
 {
     public struct DoneClickS
     {
-        public void Click(in MistakeS mistakeS, in EntitiesModel e)
+        public void Click(in MistakeS mistakeS, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (!e.PlayerInfoE(e.CurPlayerITC.Player).HaveKingInInventor)
             {

@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class IceWallFertilizeAroundUpdateMS : SystemAbstract, IEcsRunSystem
     {
-        internal IceWallFertilizeAroundUpdateMS(in EntitiesModel ents) : base(ents)
+        internal IceWallFertilizeAroundUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

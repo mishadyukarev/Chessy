@@ -2,7 +2,7 @@
 {
     sealed class SyncEnvironmentVS
     {
-        public static void Run(in byte idx_0, in EntitiesView vEs, in EntitiesModel e)
+        public static void Run(in byte idx_0, in EntitiesView vEs, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.EnvironmentEs(idx_0).AdultForestC.HaveAnyResources)
             {

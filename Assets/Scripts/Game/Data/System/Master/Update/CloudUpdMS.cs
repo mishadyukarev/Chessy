@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class CloudUpdMS : SystemAbstract, IEcsRunSystem
     {
-        internal CloudUpdMS(in EntitiesModel ents) : base(ents)
+        internal CloudUpdMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

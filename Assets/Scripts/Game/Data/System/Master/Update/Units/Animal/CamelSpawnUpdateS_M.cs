@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class CamelSpawnUpdateS_M
+    sealed class CamelSpawnUpdateS_M
     {
-        public static void SpawnCamelUpdate(this EntitiesModel e)
+        public void SpawnCamelUpdate(in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var haveCamel = false;
 

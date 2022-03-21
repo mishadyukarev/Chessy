@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class UpSunsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal UpSunsUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal UpSunsUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

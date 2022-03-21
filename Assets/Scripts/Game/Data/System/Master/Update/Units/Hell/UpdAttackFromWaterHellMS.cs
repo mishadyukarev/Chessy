@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class UpdAttackFromWaterHellMS : SystemAbstract, IEcsRunSystem
     {
-        internal UpdAttackFromWaterHellMS(in EntitiesModel ents) : base(ents)
+        internal UpdAttackFromWaterHellMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

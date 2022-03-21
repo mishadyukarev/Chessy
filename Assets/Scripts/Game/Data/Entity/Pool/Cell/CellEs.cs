@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Entity;
-using Chessy.Game.Entity.Cell.Unit;
+using Chessy.Game.Entity.Model;
+using Chessy.Game.Entity.Model.Cell.Unit;
 using System;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ namespace Chessy.Game
         public DirectTypes Direct(in byte idx_cell)
         {
             if (_aroundDirs_0.ContainsKey(idx_cell)) return _aroundDirs_0[idx_cell];
-            else if(_aroundDirs_1.ContainsKey(idx_cell)) return _aroundDirs_1[idx_cell];
+            else if (_aroundDirs_1.ContainsKey(idx_cell)) return _aroundDirs_1[idx_cell];
 
             return DirectTypes.None;
 
@@ -70,7 +71,7 @@ namespace Chessy.Game
         public ref HealthC TrailHealthC(in DirectTypes dir) => ref _trailHealthCs[(byte)dir - 1];
         public ref CellPlayerPoolEs Player(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
 
-        internal CellEs(in bool[] isActiveParents, in int idCell, byte[] xy, in byte idx, in EntitiesModel e) : this()
+        internal CellEs(in bool[] isActiveParents, in int idCell, byte[] xy, in byte idx, in Chessy.Game.Entity.Model.EntitiesModel e) : this()
         {
             IsActiveParentSelf = isActiveParents[idx];
 

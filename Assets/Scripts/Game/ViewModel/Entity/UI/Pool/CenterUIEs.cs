@@ -1,7 +1,7 @@
 ﻿using Chessy.Common;
-using Chessy.Game.Entity.View.UI.Center;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game
@@ -10,7 +10,7 @@ namespace Chessy.Game
     {
         readonly Dictionary<UnitTypes, CenterHeroUIE> _ents;
 
-        public readonly GameObjectVC Zone;
+        public readonly Chessy.Common.Component.GameObjectVC Zone;
 
         public readonly ButtonUIC JoinDiscordButtonC;
         public readonly ButtonUIC ReadyButtonC;
@@ -27,23 +27,18 @@ namespace Chessy.Game
         public readonly MistakeUIE MistakeE;
         public readonly CenterMarketUIE MarketE;
         public readonly CenterSmelterUIE SmelterE;
-        public readonly BookUIE BookE;
 
         public CenterHeroUIE HeroE(in UnitTypes unit) => _ents[unit];
 
 
-        internal CenterUIEs(in bool def)
+        internal CenterUIEs(in Transform centerZone)
         {
-            var centerZone = CanvasC.FindUnderCurZone("CenterZone").transform;
-
-
-
             var parent = centerZone.transform.Find("Heroes");
 
 
             OpenShopButtonC = new ButtonUIC(parent.Find("OpenShop_Button").GetComponent<Button>());
 
-            Zone = new GameObjectVC(parent.gameObject);
+            Zone = new Chessy.Common.Component.GameObjectVC(parent.gameObject);
 
             _ents = new Dictionary<UnitTypes, CenterHeroUIE>();
             for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
@@ -56,14 +51,11 @@ namespace Chessy.Game
             KingE = new CenterKingUIE(centerZone);
             SelectorE = new CenterSelectorUIE(centerZone);
             MistakeE = new MistakeUIE(centerZone);
-            BookE = new BookUIE(centerZone);
 
             var buildingZone = centerZone.Find("Building+");
             MarketE = new CenterMarketUIE(buildingZone);
             SmelterE = new CenterSmelterUIE(buildingZone);
 
-            new CenterHintUIE(centerZone);
-            
 
 
 

@@ -1,10 +1,12 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity;
+using Chessy.Game.Entity.Model;
+using Chessy.Game.Values;
 
 namespace Chessy.Game.System.Model
 {
     public struct GetDataCells
     {
-        public GetDataCells(in EntitiesModel e)
+        public GetDataCells(in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {

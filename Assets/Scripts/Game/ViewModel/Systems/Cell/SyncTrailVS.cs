@@ -2,7 +2,7 @@
 {
     sealed class SyncTrailVS
     {
-        public static void Sync(in byte idx_0, in EntitiesView eV, in EntitiesModel e)
+        public static void Sync(in byte idx_0, in EntitiesView eV, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {

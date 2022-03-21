@@ -6,10 +6,10 @@ namespace Chessy.Game
 {
     public readonly struct MistakeUIE
     {
-        readonly Dictionary<MistakeTypes, GameObjectVC> _zones;
+        readonly Dictionary<MistakeTypes, Chessy.Common.Component.GameObjectVC> _zones;
         readonly Dictionary<ResourceTypes, TextUIC> _needAmountRes;
 
-        public GameObjectVC Zones(in MistakeTypes mistake) => _zones[mistake];
+        public Chessy.Common.Component.GameObjectVC Zones(in MistakeTypes mistake) => _zones[mistake];
         public TextUIC NeedAmountResources(in ResourceTypes res) => _needAmountRes[res];
 
 
@@ -35,7 +35,7 @@ namespace Chessy.Game
 
         public MistakeUIE(in Transform centerZone)
         {
-            _zones = new Dictionary<MistakeTypes, GameObjectVC>();
+            _zones = new Dictionary<MistakeTypes, Chessy.Common.Component.GameObjectVC>();
             _needAmountRes = new Dictionary<ResourceTypes, TextUIC>();
 
 
@@ -45,7 +45,7 @@ namespace Chessy.Game
 
             for (var mistake = MistakeTypes.Economy; mistake < MistakeTypes.End; mistake++)
             {
-                _zones.Add(mistake, new GameObjectVC(mistakeZone.Find(mistake.ToString()).gameObject));
+                _zones.Add(mistake, new Chessy.Common.Component.GameObjectVC(mistakeZone.Find(mistake.ToString()).gameObject));
             }
 
             for (var res = ResourceTypes.Food; res < ResourceTypes.End; res++)

@@ -4,7 +4,7 @@
 //{
 //    sealed class UpdateIceWallMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal UpdateIceWallMS(in EntitiesModel ents) : base(ents)
+//        internal UpdateIceWallMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
 //        {
 //        }
 

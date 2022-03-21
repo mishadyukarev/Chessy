@@ -1,8 +1,10 @@
-﻿namespace Chessy.Game.System.Model
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game.System.Model
 {
     public struct GetTrailsVisibleS
     {
-        public GetTrailsVisibleS(in byte idx_0, in EntitiesModel e)
+        public GetTrailsVisibleS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.CellEs(idx_0).IsActiveParentSelf)
             {

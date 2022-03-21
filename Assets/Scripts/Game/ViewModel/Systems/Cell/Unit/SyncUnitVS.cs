@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Entity;
+using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -7,7 +8,7 @@ namespace Chessy.Game
         static readonly Color _color1 = new Color(1, 1, 1, 1f);
         static readonly Color _color2 = new Color(1, 1, 1, 0.6f);
 
-        internal static void Sync(in byte idx_0, in EntitiesView vEs, in EntitiesModel e)
+        internal static void Sync(in byte idx_0, in EntitiesView vEs, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             foreach (var item in vEs.UnitEs(idx_0).Ents.Values) item.Disable();
             foreach (var item in vEs.UnitEs(idx_0).ExtraTws.Values) item.Disable();

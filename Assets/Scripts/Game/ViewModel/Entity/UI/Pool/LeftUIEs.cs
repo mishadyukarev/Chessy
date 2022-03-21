@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game
@@ -13,11 +14,8 @@ namespace Chessy.Game
 
         public ButtonUIC PremiumButtonC;
 
-        internal LeftUIEs(in bool def)
+        internal LeftUIEs(in Transform leftZone)
         {
-            var leftZone = CanvasC.FindUnderCurZone("Left+").transform;
-
-
             _cityButtonEs = new Dictionary<BuildingTypes, LeftCityUIE>();
             var cityZone = leftZone.transform.Find("City+");
 

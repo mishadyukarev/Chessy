@@ -2,7 +2,7 @@
 //{
 //    public sealed class LeftMarketEventUIS : SystemUIAbstract
 //    {
-//        internal LeftMarketEventUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+//        internal LeftMarketEventUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
 //        {
 //            //UIE.LeftEs.MarketEs.FoodToWood.AddListener(delegate { BuyResource(MarketBuyTypes.FoodToWood); });
 //            //UIE.LeftEs.MarketEs.WoodToFood.AddListener(delegate { BuyResource(MarketBuyTypes.WoodToFood); });

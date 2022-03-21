@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct BuildBuildingClickS
     {
-        public void Click(in BuildingTypes buildT, in EntitiesModel e)
+        public void Click(in BuildingTypes buildT, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var curPlayerI = e.CurPlayerITC.Player;
 

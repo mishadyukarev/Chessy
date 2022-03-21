@@ -1,4 +1,7 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Entity;
+using Chessy.Common.Enum;
+using Chessy.Game.Entity.Model;
 using Chessy.Game.System.Model;
 using Photon.Pun;
 using UnityEngine;
@@ -7,7 +10,7 @@ namespace Chessy.Game.EventsUI
 {
     public sealed class EventsUIManager
     {
-        public EventsUIManager(SystemsModel systems, in EntitiesViewUI eUI, EntitiesModel e)
+        public EventsUIManager(Common.Entity.EntitiesModel eC, SystemsModel systems, in EntitiesViewUI eUI, Entity.Model.EntitiesModel e)
         {
             #region Down
 
@@ -23,9 +26,21 @@ namespace Chessy.Game.EventsUI
             eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { systems.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Staff, e); });
             eUI.DownEs.BookButtonC.AddListener(delegate
             {
-                e.ZoneInfoC.IsOpenedBook = !e.ZoneInfoC.IsOpenedBook;
-                e.Sound(e.ZoneInfoC.IsOpenedBook ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+                eC.IsOpenedBook = !eC.IsOpenedBook;
+                //e.Sound(eC.IsOpenedBook ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
 
+            });
+
+            #endregion
+
+
+            #region Up
+
+            eUI.UpEs.WindButtonC.AddListener(delegate
+            {
+                eC.CurrentPageBookT = PageBoookTypes.Wind;
+                eC.IsOpenedBook = true;
+                //e.Sound(ClipTypes.OpenBook).Invoke();
             });
 
             #endregion
@@ -76,31 +91,6 @@ namespace Chessy.Game.EventsUI
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToFood).AddListener(delegate { e.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToFood); });
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(delegate { e.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToWood); });
 
-            var bookE = centerEs.BookE;
-            bookE.ExitButtonC.AddListener(delegate
-            {
-                e.ZoneInfoC.IsOpenedBook = false;
-                e.Sound(ClipTypes.CloseBook).Invoke();
-            });
-
-            bookE.NextButtonC.AddListener(delegate
-            {
-                if(e.CurrentIdxPageBook < Values.Values.MAX_PAGES - 1)
-                {
-                    e.CurrentIdxPageBook++;
-                    e.Sound(ClipTypes.ShiftBookSheet).Invoke();
-                }
-            });
-
-            bookE.BackButtonC.AddListener(delegate
-            {
-                if (e.CurrentIdxPageBook > 0)
-                {
-                    e.CurrentIdxPageBook--;
-                    e.Sound(ClipTypes.ShiftBookSheet).Invoke();
-                }
-            });
-
 
             #endregion
 
@@ -113,13 +103,13 @@ namespace Chessy.Game.EventsUI
             eUI.UpEs.LeaveC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
         }
 
-        void Exit(in BuildingTypes buildingT, in EntitiesModel e)
+        void Exit(in BuildingTypes buildingT, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.Sound(ClipTypes.Click).Invoke();
             e.SelectedE.BuildingsC.Set(buildingT, false);
         }
 
-        void OpenShop(in EntitiesModel e)
+        void OpenShop(in Entity.Model.EntitiesModel e)
         {
             e.Sound(ClipTypes.Click).Invoke();
             ShopUIC.EnableZone();

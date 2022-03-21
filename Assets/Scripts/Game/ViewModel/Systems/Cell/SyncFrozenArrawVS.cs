@@ -1,11 +1,11 @@
-﻿using Chessy.Game.Entity.Cell.Unit;
+﻿using Chessy.Game.Entity.Model.Cell.Unit;
 using Chessy.Game.Entity.View.Cell.Unit.Effect;
 
 namespace Chessy.Game
 {
     static class SyncFrozenArrawVS
     {
-        public static void SyncVision(this EffectVEs effectsVEs, in UnitEs unitEs, in bool isSelected, in EntitiesModel e)
+        public static void SyncVision(this EffectVEs effectsVEs, in UnitEs unitEs, in bool isSelected, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             effectsVEs.FrozenArraw(true, true).Disable();
             effectsVEs.FrozenArraw(false, true).Disable();

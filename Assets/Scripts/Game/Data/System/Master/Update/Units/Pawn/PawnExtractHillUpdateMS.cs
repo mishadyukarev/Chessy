@@ -2,7 +2,7 @@
 {
     sealed class PawnExtractHillUpdateMS : SystemAbstract, IEcsRunSystem
     {
-        internal PawnExtractHillUpdateMS(in EntitiesModel ents) : base(ents)
+        internal PawnExtractHillUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

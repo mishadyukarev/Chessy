@@ -2,7 +2,7 @@
 {
     public abstract class SystemAbstract
     {
-        protected readonly EntitiesModel E;
-        protected SystemAbstract(in EntitiesModel ents) => E = ents;
+        protected readonly Chessy.Game.Entity.Model.EntitiesModel E;
+        protected SystemAbstract(in Chessy.Game.Entity.Model.EntitiesModel ents) => E = ents;
     }
 }

@@ -2,7 +2,7 @@
 {
     public struct GetKingClickS
     {
-        public void Click(in EntitiesModel e)
+        public void Click(in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.CellsC.Selected = 0;
 

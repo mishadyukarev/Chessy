@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class RiverFertilizeAroundUpdateMS : SystemAbstract, IEcsRunSystem
     {
-        internal RiverFertilizeAroundUpdateMS(in EntitiesModel ents) : base(ents)
+        internal RiverFertilizeAroundUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
 
         }

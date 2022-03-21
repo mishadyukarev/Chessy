@@ -2,7 +2,7 @@
 {
     sealed class CitiesAddPeopleUpdateMS : SystemAbstract, IEcsRunSystem
     {
-        internal CitiesAddPeopleUpdateMS(in EntitiesModel ents) : base(ents)
+        internal CitiesAddPeopleUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

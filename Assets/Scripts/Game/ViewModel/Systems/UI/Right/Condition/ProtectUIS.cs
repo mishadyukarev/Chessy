@@ -1,18 +1,17 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Entity.Model.Cell.Unit;
+using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class ProtectUIS
+    public struct ProtectUIS
     {
-        public static void Run(this in RightProtectUIE protectUIE, in EntitiesModel e)
+        public void Run(in RightProtectUIE protectUIE, in UnitEs unit_sel, in PlayerTypes curPlayer)
         {
-            var idx_sel = e.CellsC.Selected;
-
             var isEnableButt = false;
 
-            if (e.UnitTC(idx_sel).HaveUnit)
+            if (unit_sel.MainE.UnitTC.HaveUnit)
             {
-                if (e.UnitPlayerTC(idx_sel).Is(e.CurPlayerITC.Player))
+                if (unit_sel.MainE.PlayerTC.Is(curPlayer))
                 {
                     isEnableButt = true;
 
@@ -20,9 +19,9 @@ namespace Chessy.Game
                     protectUIE.Button(UnitTypes.Pawn).SetActive(false);
                     protectUIE.Button(UnitTypes.Elfemale).SetActive(false);
 
-                    protectUIE.Button(e.UnitTC(idx_sel).Unit).SetActive(true);
+                    protectUIE.Button(unit_sel.MainE.UnitTC.Unit).SetActive(true);
 
-                    if (e.UnitConditionTC(idx_sel).Is(ConditionUnitTypes.Protected))
+                    if (unit_sel.MainE.ConditionTC.Is(ConditionUnitTypes.Protected))
                     {
                         protectUIE.ImageUIC.Image.color = Color.yellow;
                     }

@@ -1,11 +1,12 @@
-﻿using Chessy.Game.Entity.Cell.Unit;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Entity.Model.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.System.Model
 {
     public static class SetNewUnitS
     {
-        public static void SetNewUnitHere(this ref UnitEs units, in UnitTypes unitT, in PlayerTypes playerT, in PlayerInfoEs playerInfo, in EntitiesModel e)
+        public static void SetNewUnitHere(this ref UnitEs units, in UnitTypes unitT, in PlayerTypes playerT, in PlayerInfoEs playerInfo, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             units.MainE.UnitTC.Unit = unitT;
             units.MainE.PlayerTC.Player = playerT;

@@ -1,44 +1,38 @@
-﻿using ECS;
-using Chessy.Common;
-using System.Collections.Generic;
+﻿using Chessy.Common;
+using Chessy.Common.Entity;
+using Chessy.Common.Entity.View;
 using UnityEngine;
 
 namespace Chessy.Menu
 {
     public sealed class EntitieManager
     {
-        static readonly Dictionary<string, Entity> _ents;
 
-        static EntitieManager()
+        public EntitieManager(in EntitiesView eVC, in EntitiesModel eC)
         {
-            _ents = new Dictionary<string, Entity>();
-        }
-        public EntitieManager(in EcsWorld worldEcs)
-        {
-            CanvasC.SetCurZone(SceneTypes.Menu);
+            eVC.GameGOC.SetActive(false);
+            eVC.MenuGOC.SetActive(true);
+
+            var menuZone = eVC.MenuGOC.Transform;
+
             ToggleZoneVC.ReplaceZone(SceneTypes.Menu);
 
 
-            var centerZone_Trans = CanvasC.FindUnderCurZone<Transform>("CenterZone");
+            var centerZone = menuZone.Find("Center+").GetComponent<Transform>();
+            new CenterZoneUICom(centerZone, 0.1f, eC.IsOnHint);
+            new LikeGameUICom(centerZone);
 
 
-            worldEcs.NewEntity()
-                .Add(new CenterZoneUICom(centerZone_Trans, SoundC.Volume, HintC.IsOnHint))
-                .Add(new LikeGameUICom(centerZone_Trans));
+            var rightZone = menuZone.Find("OnlineRightZone").GetComponent<RectTransform>();
+            new OnZoneUIC(rightZone);
+            new ConnectorUIC(true, rightZone);
+            new BackgroundUIC(true, rightZone);
 
 
-            var rightZone = CanvasC.FindUnderCurZone<RectTransform>("OnlineRightZone");
-            worldEcs.NewEntity()
-                .Add(new OnZoneUIC(rightZone))
-                .Add(new ConnectorUIC(true, rightZone))
-                .Add(new BackgroundUIC(true, rightZone));
-
-
-            var leftZone = CanvasC.FindUnderCurZone<RectTransform>("OfflineLeftZone");
-            worldEcs.NewEntity()
-                .Add(new OffZoneUIC(leftZone))
-                .Add(new ConUIC(false, leftZone))
-                .Add(new BackUIC(false, leftZone));
+            var leftZone = menuZone.Find("OfflineLeftZone").GetComponent<RectTransform>();
+            new OffZoneUIC(leftZone);
+            new ConUIC(false, leftZone);
+            new BackUIC(false, leftZone);
         }
     }
 }

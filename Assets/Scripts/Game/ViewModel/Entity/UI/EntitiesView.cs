@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public sealed class EntitiesView
+    public readonly struct EntitiesView
     {
         readonly CellVEs[] _cellVEs;
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
@@ -33,7 +33,7 @@ namespace Chessy.Game
 
 
 
-            CanvasC.SetCurZone(SceneTypes.Game);
+
 
 
             EntityVPool = new EntityVPool(out var actions, out var sounds0, out var sounds1);

@@ -11,7 +11,7 @@ namespace Chessy.Game
         readonly Dictionary<MarketBuyTypes, TextUIC> _texts1;
         readonly Dictionary<MarketBuyTypes, TextUIC> _texts2;
 
-        public readonly GameObjectVC Zone;
+        public readonly Chessy.Common.Component.GameObjectVC Zone;
         public readonly ButtonUIC ExitButtonC;
         public ButtonUIC ButtonUIC(in MarketBuyTypes marketBuyT) => _buttons[marketBuyT];
         public TextUIC Text1C(in MarketBuyTypes marketBuyT) => _texts1[marketBuyT];
@@ -27,7 +27,7 @@ namespace Chessy.Game
             var marketZone = leftZone.Find("Market+");
 
 
-            Zone = new GameObjectVC(marketZone.gameObject);
+            Zone = new Chessy.Common.Component.GameObjectVC(marketZone.gameObject);
 
             ExitButtonC = new ButtonUIC(marketZone.Find("Exit").Find("Button").GetComponent<Button>());
 

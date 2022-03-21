@@ -1,10 +1,11 @@
-﻿using Chessy.Game.Values.Cell.Environment;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game.System.Model
 {
     public struct GetWoodcutterExtractCellsS
     {
-        public GetWoodcutterExtractCellsS(in byte idx_0, in EntitiesModel e)
+        public GetWoodcutterExtractCellsS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.WoodcutterExtractE(idx_0).Resources = 0;
 

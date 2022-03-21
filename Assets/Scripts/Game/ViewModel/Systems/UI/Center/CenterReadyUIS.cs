@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class CenterReadyUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterReadyUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal CenterReadyUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

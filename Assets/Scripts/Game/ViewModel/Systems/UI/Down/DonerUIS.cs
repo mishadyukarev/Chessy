@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         readonly DonerUIE _donerE;
 
-        internal DonerUIS(in DonerUIE downDoner, in EntitiesModel ents) : base(ents)
+        internal DonerUIS(in DonerUIE downDoner, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
             _donerE = downDoner;
         }

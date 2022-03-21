@@ -7,7 +7,7 @@ namespace Chessy.Game.System.View
     {
         bool _isActive;
 
-        public void Sync(in byte idx_0, in SpriteRendererVC srC, in EntitiesModel e)
+        public void Sync(in byte idx_0, in SpriteRendererVC srC, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             _isActive = false;
 

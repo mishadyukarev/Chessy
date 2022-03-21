@@ -2,7 +2,7 @@
 {
     public struct ReadyS
     {
-        public void Ready(in EntitiesModel e)
+        public void Ready(in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.RpcPoolEs.ReadyToMaster();
         }

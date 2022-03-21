@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chessy.Game.Entity;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Chessy.Game
 {
     public struct SelectorS
     {
-        public void Run(in RaycastTypes raycastT, ref EntitiesModel e)
+        public void Run(in RaycastTypes raycastT, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var idx_cur = e.CellsC.Current;
 
@@ -199,7 +200,7 @@ namespace Chessy.Game
         }
 
 
-        void Sound(in EntitiesModel e)
+        void Sound(in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var idx_0 = e.CellsC.Current;
 

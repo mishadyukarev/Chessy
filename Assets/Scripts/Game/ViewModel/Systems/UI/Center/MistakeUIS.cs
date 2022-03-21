@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         const float NEED_TIME_FOR_FADING = 1.3f;
 
-        public static void Sync(this MistakeUIE mistakeUIE, in float timer, in EntitiesModel e)
+        public static void Sync(this MistakeUIE mistakeUIE, in float timer, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             foreach (var key in mistakeUIE.KeysMistake)
             {
@@ -43,7 +43,7 @@ namespace Chessy.Game
                                 mistakeUIE.NeedAmountResources(res).SetActive(true);
 
                                 mistakeUIE.NeedAmountResources(res).TextUI.text
-                                    = ">= " + ((int)(100 * e.MistakeEconomy(res).Resources));
+                                    = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + e.MistakeEconomy(res).Resources : ">= " + ((int)(100 * e.MistakeEconomy(res).Resources));
                             }
                         }
                     }

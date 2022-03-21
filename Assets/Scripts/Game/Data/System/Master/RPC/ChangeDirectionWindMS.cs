@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model
 {
     public struct ChangeDirectionWindMS
     {
-        public ChangeDirectionWindMS(in byte idx_from, in byte idx_to, in AbilityTypes abilityT, in Player sender, in EntitiesModel e)
+        public ChangeDirectionWindMS(in byte idx_from, in byte idx_to, in AbilityTypes abilityT, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.UnitStepC(idx_from).Steps >= StepValues.Need(abilityT))
             {

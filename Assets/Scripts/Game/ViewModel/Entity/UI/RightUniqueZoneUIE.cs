@@ -5,11 +5,11 @@
 //{
 //    public sealed class RightUniqueZoneUIE : EntityAbstract
 //    {
-//        public ref GameObjectVC Zone => ref Ent.Get<GameObjectVC>();
+//        public ref Chessy.Common.Component.GameObjectVC Zone => ref Ent.Get<GameObjectVC>();
 
 //        public RightUniqueZoneUIE(in EcsWorld gameW, in Transform uniqueZone) : base(gameW)
 //        {
-//            Ent.Add(new GameObjectVC(uniqueZone.gameObject));
+//            Ent.Add(new Chessy.Common.Component.GameObjectVC(uniqueZone.gameObject));
 //        }
 //    }
 //}

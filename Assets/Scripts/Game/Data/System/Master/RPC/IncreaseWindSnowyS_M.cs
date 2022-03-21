@@ -6,7 +6,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct IncreaseWindSnowyS_M
     {
-        public void Execute(in bool needIncrese, in byte idx_0, in AbilityTypes abilityT, in Player sender, in EntitiesModel e)
+        public void Execute(in bool needIncrese, in byte idx_0, in AbilityTypes abilityT, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (!e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
             {

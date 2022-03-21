@@ -11,6 +11,7 @@ namespace Chessy.Game.System.View.UI
         public readonly EconomyUpUIS EconomyUpS;
         public readonly EffectsUIS EffectsS;
         public readonly SyncBookUIS SyncBookUIS;
+        public readonly ProtectUIS ProtectS;
 
         public SystemsViewUI(in bool def) : this()
         {

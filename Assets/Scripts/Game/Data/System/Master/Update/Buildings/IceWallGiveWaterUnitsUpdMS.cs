@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class IceWallGiveWaterUnitsUpdMS : SystemAbstract, IEcsRunSystem
     {
-        internal IceWallGiveWaterUnitsUpdMS(in EntitiesModel ents) : base(ents)
+        internal IceWallGiveWaterUnitsUpdMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

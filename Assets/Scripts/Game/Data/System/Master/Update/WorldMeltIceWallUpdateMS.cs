@@ -3,19 +3,15 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
-    internal class WorldMeltIceWallUpdateMS : SystemAbstract, IEcsRunSystem
+    public struct WorldMeltIceWallUpdateMS
     {
-        internal WorldMeltIceWallUpdateMS(in EntitiesModel ents) : base(ents)
-        {
-        }
-
-        public void Run()
+        public void Run(in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                if (E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
+                if (e.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
                 {
-                    new DestroyBuildingS(0.5f, E.NextPlayer(E.BuildingPlayerTC(idx_0).Player).Player, idx_0, E);
+                    new DestroyBuildingS(0.5f, e.NextPlayer(e.BuildingPlayerTC(idx_0).Player).Player, idx_0, e);
                 }
             }
         }

@@ -8,7 +8,7 @@
 //{
 //    public sealed class CityEventsUI : SystemAbstract
 //    {
-//        internal CityEventsUI(in LeftUIEs leftEs, in EntitiesModel ents) : base(ents)
+//        internal CityEventsUI(in LeftUIEs leftEs, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
 //        {
 
 

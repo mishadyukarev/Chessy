@@ -2,7 +2,7 @@
 {
     sealed class FarmExtractFertilizeUpdateMS : SystemAbstract, IEcsRunSystem
     {
-        internal FarmExtractFertilizeUpdateMS(in EntitiesModel ents) : base(ents)
+        internal FarmExtractFertilizeUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

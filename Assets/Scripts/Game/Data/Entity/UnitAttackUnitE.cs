@@ -6,7 +6,7 @@
 //    {
 
 
-//        public UnitAttackUnitE(in EntitiesModel e) : this()
+//        public UnitAttackUnitE(in Chessy.Game.Entity.Model.EntitiesModel e) : this()
 //        {
 
 //        }

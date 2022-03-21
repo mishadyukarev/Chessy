@@ -2,7 +2,7 @@
 {
     public static class TakeAdultForestResourcesS
     {
-        public static void TakeAdultForestResources(in float extract, in byte idx, in EntitiesModel e)
+        public static void TakeAdultForestResources(in float extract, in byte idx, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.AdultForestC(idx).Resources -= extract;
 

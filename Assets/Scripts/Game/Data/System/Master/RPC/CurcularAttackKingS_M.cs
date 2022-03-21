@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct CurcularAttackKingS_M
     {
-        public void Attack(in byte idx_0, in AbilityTypes abilityT, in Player sender, in SystemsModel sMM, in EntitiesModel e)
+        public void Attack(in byte idx_0, in AbilityTypes abilityT, in Player sender, in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (!e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
             {

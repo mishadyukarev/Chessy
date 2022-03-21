@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game
@@ -12,21 +13,25 @@ namespace Chessy.Game
         public readonly ButtonUIC LeaveC;
         public readonly ButtonUIC AlphaC;
 
+        public readonly ButtonUIC WindButtonC;
         public readonly TransformVC WindTrC;
         public readonly ImageUIC WindC;
         public readonly TextUIC WindTextC;
         public readonly TextUIC MotionsTextC;
 
-        public UpUIEs(in bool def)
+        public UpUIEs(in Button leaveButton, in Transform upZone)
         {
-            var upZone = CanvasC.FindUnderCurZone("UpZone").transform;
             EconomyE = new UpEconomyUIE(upZone);
             SunsE = new UpSunsUIEs(upZone);
 
 
-            LeaveC = new ButtonUIC(CanvasC.FindUnderCurZone<Button>("ButtonLeave"));
+            LeaveC = new ButtonUIC(leaveButton);
 
-            var windZone = upZone.Find("WindZone");
+            var windZone = upZone.Find("Wind+");
+
+
+            WindButtonC = new ButtonUIC(windZone.Find("Button+").GetComponent<Button>());
+
             var image = windZone.Find("Direct_Image").GetComponent<Image>();
 
             WindTrC = new TransformVC(image.transform);

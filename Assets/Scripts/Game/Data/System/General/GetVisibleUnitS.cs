@@ -1,8 +1,10 @@
-﻿namespace Chessy.Game.System.Model
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game.System.Model
 {
     public struct GetVisibleUnitS
     {
-        public GetVisibleUnitS(in byte idx_0, in EntitiesModel e)
+        public GetVisibleUnitS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.UnitTC(idx_0).HaveUnit)
             {

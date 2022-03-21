@@ -2,7 +2,7 @@
 {
     public struct ConditionClickS
     {
-        public void Click(in ConditionUnitTypes conditionT, in EntitiesModel e)
+        public void Click(in ConditionUnitTypes conditionT, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {

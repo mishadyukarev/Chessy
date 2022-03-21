@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public static class TryInvokeTruceUpdateMS
     {
-        public static void Truce(this EntitiesModel e)
+        public static void Truce(this Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var amountAdultForest = 0;
 

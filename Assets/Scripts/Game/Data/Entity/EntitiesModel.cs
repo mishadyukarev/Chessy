@@ -1,6 +1,5 @@
 ﻿using Chessy.Common;
-using Chessy.Game.Entity.Cell.Unit;
-using Chessy.Game.Entity.Model;
+using Chessy.Common.Component;
 using Chessy.Game.Entity.Model.Cell;
 using Chessy.Game.Entity.Model.Cell.Unit;
 using Chessy.Game.System.Model;
@@ -12,7 +11,7 @@ using Photon.Pun;
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Chessy.Game.Entity.Model
 {
     public sealed class EntitiesModel
     {
@@ -24,11 +23,9 @@ namespace Chessy.Game
         readonly Dictionary<UnitTypes, bool> _isAnimal;
         readonly Dictionary<string, bool> _isMelee;
 
-
         public bool IsStartedGame;
         public bool IsSelectedCity;
         public bool HaveTreeUnit;
-        public byte CurrentIdxPageBook;
 
         public MistakeC MistakeC;
         public InfoGameC MotionsC;

@@ -2,7 +2,7 @@
 //{
 //    sealed class GetHeroMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal GetHeroMS(in EntitiesModel ents) : base(ents)
+//        internal GetHeroMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
 //        {
 
 //        }

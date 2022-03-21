@@ -1,4 +1,5 @@
-﻿using Chessy.Game.EventsUI;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.EventsUI;
 using Chessy.Game.System.Model;
 using Chessy.Game.System.Model.Master;
 using Chessy.Game.Values;
@@ -34,7 +35,7 @@ namespace Chessy.Game
             }
         }
 
-        public Rpc GiveData(in SystemsModel sMM, in EntitiesModel ents, in EventsUIManager eventsUI)
+        public Rpc GiveData(in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel ents, in EventsUIManager eventsUI)
         {
             _sMM = sMM;
             _e = ents;
@@ -614,7 +615,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Melt:
-                       _sMM.MeltS_M.Melt(sender, _e);
+                        _sMM.MeltS_M.Melt(sender, _e);
                         break;
 
                     default:

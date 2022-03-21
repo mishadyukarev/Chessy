@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct GetHeroS_M
     {
-        public GetHeroS_M(in UnitTypes unitT, in Player sender, in EntitiesModel e)
+        public GetHeroS_M(in UnitTypes unitT, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 

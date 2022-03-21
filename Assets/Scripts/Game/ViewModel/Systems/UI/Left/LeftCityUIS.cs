@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class LeftCityUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal LeftCityUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal LeftCityUIS(in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

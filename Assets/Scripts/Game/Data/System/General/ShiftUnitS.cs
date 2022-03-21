@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model
 {
     public struct ShiftUnitS
     {
-        public ShiftUnitS(in byte idx_from, in byte idx_to, in EntitiesModel e)
+        public ShiftUnitS(in byte idx_from, in byte idx_to, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.UnitEs(idx_to).Set(e.UnitEs(idx_from));
             e.UnitConditionTC(idx_to).Condition = ConditionUnitTypes.None;

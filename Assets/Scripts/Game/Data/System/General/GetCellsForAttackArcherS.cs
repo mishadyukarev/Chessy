@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct GetCellsForAttackArcherS
     {
-        public GetCellsForAttackArcherS(in byte idx_0, in EntitiesModel e)
+        public GetCellsForAttackArcherS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.UnitTC(idx_0).HaveUnit)
             {

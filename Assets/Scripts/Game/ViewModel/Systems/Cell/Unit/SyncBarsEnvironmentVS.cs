@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     sealed class SyncBarsEnvironmentVS
     {
-        public static void Sync(in byte idx_0, in EntitiesView vEs, in EntitiesModel e)
+        public static void Sync(in byte idx_0, in EntitiesView vEs, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.ZoneInfoC.IsActiveEnvironment)
             {

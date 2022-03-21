@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct AttackShieldS
     {
-        public void Attack(in float damage, in byte idx_0, in EntitiesModel e)
+        public void Attack(in float damage, in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (damage <= 0) throw new Exception();
 

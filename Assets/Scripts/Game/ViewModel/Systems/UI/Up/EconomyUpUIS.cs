@@ -14,7 +14,7 @@ namespace Chessy.Game
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts.Add(res, default);
         }
 
-        public void Run(in EntitiesViewUI eUI, in EntitiesModel e)
+        public void Run(in EntitiesViewUI eUI, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var curPlayer = e.CurPlayerITC.Player;
 
@@ -24,7 +24,7 @@ namespace Chessy.Game
             _extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
 
 
-            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
 
 
@@ -60,7 +60,17 @@ namespace Chessy.Game
 
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
             {
-                eUI.UpEs.EconomyE.Economy(res).TextUI.text = ((int)(100 * e.PlayerInfoE(curPlayer).ResourcesC(res).Resources)).ToString();
+                string name = default;
+                if (res == ResourceTypes.Iron || res == ResourceTypes.Gold)
+                {
+                    name = e.PlayerInfoE(curPlayer).ResourcesC(res).Resources.ToString();
+                }
+                else
+                {
+                    name = ((int)(100 * e.PlayerInfoE(curPlayer).ResourcesC(res).Resources)).ToString();
+                }
+
+                eUI.UpEs.EconomyE.Economy(res).TextUI.text = name;
             }
 
 

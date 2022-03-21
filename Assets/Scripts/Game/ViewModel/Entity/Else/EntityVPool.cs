@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Component;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace Chessy.Game
 
             var genZone = new GameObject("GeneralZone");
             ToggleZoneVC.Attach(genZone.transform);
-            GenegalZone = new GameObjectVC(genZone);
+            GenegalZone = new Chessy.Common.Component.GameObjectVC(genZone);
 
-            SoundC.SavedVolume = SoundC.Volume;
+            //SoundC.SavedVolume = SoundC.Volume;
 
 
             var backGroundGO = GameObject.Instantiate(PrefabResC.BackGroundCollider2D,
@@ -38,7 +39,7 @@ namespace Chessy.Game
 
             backGroundGO.transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
-            Background = new GameObjectVC(backGroundGO);
+            Background = new Chessy.Common.Component.GameObjectVC(backGroundGO);
 
 
             var aSParent = new GameObject("AudioSource");
@@ -97,6 +98,7 @@ namespace Chessy.Game
                 if (clipT == ClipTypes.Background2)
                 {
                     aS.Play();
+                    aS.loop = true;
                 }
 
 

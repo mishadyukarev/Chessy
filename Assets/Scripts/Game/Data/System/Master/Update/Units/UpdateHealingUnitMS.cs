@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class UpdateHealingUnitMS : SystemAbstract, IEcsRunSystem
     {
-        internal UpdateHealingUnitMS(in EntitiesModel ents) : base(ents)
+        internal UpdateHealingUnitMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

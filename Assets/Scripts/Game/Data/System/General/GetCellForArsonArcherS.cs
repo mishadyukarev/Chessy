@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct GetCellForArsonArcherS
     {
-        public GetCellForArsonArcherS(in byte idx_0, in EntitiesModel e)
+        public GetCellForArsonArcherS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.UnitEs(idx_0).ForArson.Clear();
 

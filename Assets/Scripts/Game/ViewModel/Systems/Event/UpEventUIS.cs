@@ -7,7 +7,7 @@
 //    {
 //        readonly EntitiesModel _e;
 
-//        internal UpEventUIS( in EntitiesViewUI entsUI, in EntitiesModel ents)
+//        internal UpEventUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents)
 //        {
 //            _e = ents;
 

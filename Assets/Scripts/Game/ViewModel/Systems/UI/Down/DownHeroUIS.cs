@@ -4,7 +4,7 @@
     {
         readonly DownHeroUIE _downHeroUIE;
 
-        internal DownHeroUIS(in DownHeroUIE downHeroUIE, in EntitiesModel ents) : base(ents)
+        internal DownHeroUIS(in DownHeroUIE downHeroUIE, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
             _downHeroUIE = downHeroUIE;
         }

@@ -1,12 +1,11 @@
-﻿using Chessy.Game.Values.Cell;
-using Chessy.Game.Values.Cell.Environment;
+﻿using Chessy.Game.Entity.Model;
 using UnityEngine;
 
 namespace Chessy.Game
 {
     sealed class MountainThrowHillsUpdMS
     {
-        internal MountainThrowHillsUpdMS(in byte idx_0, in EntitiesModel e)
+        internal MountainThrowHillsUpdMS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.CellEs(idx_0).IsActiveParentSelf)
             {

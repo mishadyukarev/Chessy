@@ -1,11 +1,12 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity;
+using Chessy.Game.Values;
 using UnityEngine;
 
 namespace Chessy.Game
 {
     static class SupportVS
     {
-        public static void Sync(in EntitiesModel e, in EntitiesView eV)
+        public static void Sync(in Chessy.Game.Entity.Model.EntitiesModel e, in EntitiesView eV)
         {
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {

@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         readonly DownPawnUIE _pawnE;
 
-        internal DownPawnUIS(in DownPawnUIE pawnE, in EntitiesModel ents) : base(ents)
+        internal DownPawnUIS(in DownPawnUIE pawnE, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
             _pawnE = pawnE;
         }

@@ -5,11 +5,11 @@
 //{
 //    public struct LeftRightZoneUIE
 //    {
-//        public GameObjectVC Parent;
+//        public Chessy.Common.Component.GameObjectVC Parent;
 
 //        internal LeftRightZoneUIE(in GameObject go)
 //        {
-//            Parent = new GameObjectVC(go);
+//            Parent = new Chessy.Common.Component.GameObjectVC(go);
 //        }
 //    }
 //}

@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct UnitEatFoodUpdateS_M
     {
-        public void Run(in SystemsModel sMM, in EntitiesModel e)
+        public void Run(in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {

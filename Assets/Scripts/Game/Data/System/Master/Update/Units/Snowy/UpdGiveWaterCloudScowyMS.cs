@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class UpdGiveWaterCloudScowyMS : SystemAbstract, IEcsRunSystem
     {
-        internal UpdGiveWaterCloudScowyMS(in EntitiesModel ents) : base(ents)
+        internal UpdGiveWaterCloudScowyMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

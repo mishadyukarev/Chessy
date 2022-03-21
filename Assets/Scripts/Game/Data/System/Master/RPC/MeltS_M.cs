@@ -6,7 +6,7 @@ namespace Chessy.Game.System.Model
 {
     public struct MeltS_M
     {
-        public void Melt(in Player sender, in EntitiesModel e)
+        public void Melt(in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 

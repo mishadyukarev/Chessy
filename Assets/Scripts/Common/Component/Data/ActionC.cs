@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chessy.Game
+namespace Chessy.Common.Component
 {
     public struct ActionC
     {

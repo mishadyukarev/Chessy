@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     static class SyncRiverVS
     {
-        public static void Sync(in byte idx_0, in EntitiesView eV, in EntitiesModel e)
+        public static void Sync(in byte idx_0, in EntitiesView eV, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             ref var river_0 = ref e.RiverEs(idx_0).RiverTC;
 

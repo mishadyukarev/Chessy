@@ -2,7 +2,7 @@
 {
     public struct ToggleToolWeaponS
     {
-        public void Toggle(in ToolWeaponTypes twT, in EntitiesModel e)
+        public void Toggle(in ToolWeaponTypes twT, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.CellsC.Selected = 0;
 

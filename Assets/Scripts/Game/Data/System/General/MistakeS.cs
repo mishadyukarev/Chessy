@@ -2,7 +2,7 @@
 {
     public struct MistakeS
     {
-        public void Mistake(in MistakeTypes mistakeT, in EntitiesModel e)
+        public void Mistake(in MistakeTypes mistakeT, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.MistakeC.MistakeT = mistakeT;
             e.MistakeC.Timer = 0;

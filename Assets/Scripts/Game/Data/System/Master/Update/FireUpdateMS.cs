@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model
 {
     static class FireUpdateMS
     {
-        public static void Run(in SystemsModel sMM, in EntitiesModel e)
+        public static void Run(in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             foreach (var cellE in e.CellEs(e.WeatherE.CloudC.Center).AroundCellEs)
             {

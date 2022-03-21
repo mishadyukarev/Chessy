@@ -6,7 +6,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct SetConditionUnitS_M
     {
-        public SetConditionUnitS_M(in byte idx_0, in ConditionUnitTypes condT, in Player sender, in EntitiesModel e)
+        public SetConditionUnitS_M(in byte idx_0, in ConditionUnitTypes condT, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             switch (condT)
             {
@@ -50,11 +50,17 @@ namespace Chessy.Game.System.Model.Master
 
                         if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
                         {
-                            if (e.UnitHpC(idx_0).Health >= HpValues.MAX)
+                            if (!e.BuildingTC(idx_0).HaveBuilding)
                             {
-                                if (e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
+                                if (e.AdultForestC(idx_0).HaveAnyResources)
                                 {
-                                    new BuildS(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(idx_0).Player, BuildingValues.MAX_HP, idx_0, e);
+                                    if (e.UnitHpC(idx_0).Health >= HpValues.MAX)
+                                    {
+                                        if (e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Elfemale))
+                                        {
+                                            new BuildS(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(idx_0).Player, BuildingValues.MAX_HP, idx_0, e);
+                                        }
+                                    }
                                 }
                             }
                         }

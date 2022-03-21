@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class WorldDryFertilizerMS : SystemAbstract, IEcsRunSystem
     {
-        internal WorldDryFertilizerMS(in EntitiesModel ents) : base(ents)
+        internal WorldDryFertilizerMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

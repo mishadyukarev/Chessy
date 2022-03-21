@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     static class SyncStatsVS
     {
-        public static void Sync(in byte idx_0, in EntitiesView vEs, in EntitiesModel e)
+        public static void Sync(in byte idx_0, in EntitiesView vEs, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Disable();
 

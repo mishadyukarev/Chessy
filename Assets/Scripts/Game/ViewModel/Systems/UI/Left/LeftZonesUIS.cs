@@ -2,7 +2,7 @@
 {
     sealed class LeftZonesUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal LeftZonesUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal LeftZonesUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

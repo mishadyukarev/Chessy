@@ -9,7 +9,7 @@ namespace Chessy.Game
     {
         readonly Dictionary<UnitTypes, ImageUIC> _units;
 
-        public readonly GameObjectVC Parent;
+        public readonly Chessy.Common.Component.GameObjectVC Parent;
         public readonly ButtonUIC ButtonC;
         public readonly TextUIC Cooldown;
 
@@ -20,7 +20,7 @@ namespace Chessy.Game
         {
             var hero = down.Find("Hero");
 
-            Parent = new GameObjectVC(hero.gameObject);
+            Parent = new Chessy.Common.Component.GameObjectVC(hero.gameObject);
             ButtonC = new ButtonUIC(hero.Find("Button").GetComponent<Button>());
             Cooldown = new TextUIC(hero.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 

@@ -6,7 +6,7 @@ namespace Chessy.Game.System.Model
 {
     public struct BuyS_M
     {
-        public void Buy(in MarketBuyTypes marketBuyT, in Player sender, in EntitiesModel e)
+        public void Buy(in MarketBuyTypes marketBuyT, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 

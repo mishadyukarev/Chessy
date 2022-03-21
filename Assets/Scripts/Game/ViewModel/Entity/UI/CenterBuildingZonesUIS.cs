@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class CenterBuildingZonesUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterBuildingZonesUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal CenterBuildingZonesUIS(in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
 
         }

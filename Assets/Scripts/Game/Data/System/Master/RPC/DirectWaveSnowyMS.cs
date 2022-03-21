@@ -8,7 +8,7 @@
 //{
 //    public struct DirectWaveSnowyMS
 //    {
-//        public DirectWaveSnowyMS(in byte idx_from, in byte idx_to, in Player sender, in EntitiesModel e)
+//        public DirectWaveSnowyMS(in byte idx_from, in byte idx_to, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
 //        {
 //            var whoseMove = e.WhoseMove.Player;
 

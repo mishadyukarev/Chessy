@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class EnvUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal EnvUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal EnvUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

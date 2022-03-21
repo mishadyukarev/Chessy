@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class ResumeUnitUpdMS : SystemAbstract, IEcsRunSystem
     {
-        public ResumeUnitUpdMS(in EntitiesModel ents) : base(ents)
+        public ResumeUnitUpdMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct DestroyBuildingS
     {
-        public DestroyBuildingS(in float damage, in PlayerTypes whoKiller, in byte idx_0, in EntitiesModel e)
+        public DestroyBuildingS(in float damage, in PlayerTypes whoKiller, in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (damage <= 0) throw new Exception();
 

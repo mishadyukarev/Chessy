@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Chessy.Game.Entity.Model;
 
 namespace Chessy.Game.System.Model
 {
     public struct GetEffectsForUnitsS
     {
-        public GetEffectsForUnitsS(in byte idx_0, in EntitiesModel e)
+        public GetEffectsForUnitsS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             e.UnitEffectsE(idx_0).HaveKingEffect = false;
 

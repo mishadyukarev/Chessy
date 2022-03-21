@@ -1,23 +1,31 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Enum;
 using Chessy.Game;
 using Chessy.Game.EventsUI;
 using Chessy.Game.System.Model;
 using Chessy.Game.System.View;
 using Chessy.Game.System.View.UI;
+using Chessy.Game.System.View.UI.Center;
 using Chessy.Menu;
 using ECS;
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Chessy
 {
     sealed class Main : MonoBehaviour
     {
-        [SerializeField] TestModes _testMode = default;
+        [SerializeField] TestModes testMode = default;
 
-        EcsWorld _toggleW;
         float _timer;
+
+
+        #region Common
+
+        Common.Entity.EntitiesModel _eC;
+        Common.Entity.View.EntitiesView _eVC;
+
+        #endregion
 
 
         #region Menu
@@ -29,30 +37,68 @@ namespace Chessy
 
         #region Game
 
-        EntitiesModel _e;
+        Game.Entity.Model.EntitiesModel _eGame;
         EntitiesView _eV;
-        EntitiesViewUI _eUI;
+        Game.EntitiesViewUI _eUI;
 
         readonly SystemsModel _systemsM = default;
-        SystemsViewUI _systemUI = default;
+        readonly SystemsViewUI _systemUI = new SystemsViewUI(default);
         readonly SystemsView _systemsV = default;
 
         #endregion
 
-  
+
 
         void Start()
         {
-            new Common.CreateCs(transform, _testMode);
+            _eC = new Common.Entity.EntitiesModel(testMode);
+            _eVC = new Common.Entity.View.EntitiesView(transform, testMode);
+
+
+            var bookE = _eVC.BookE;
+            bookE.ExitButtonC.AddListener(delegate
+            {
+                _eC.IsOpenedBook = false;
+                _eVC.Sound(Common.Enum.ClipTypes.CloseBook).Play();
+            });
+
+            bookE.NextButtonC.AddListener(delegate
+            {
+                if (_eC.CurrentPageBookT < PageBoookTypes.End - 1)
+                {
+                    _eC.CurrentPageBookT++;
+                    _eVC.Sound(Common.Enum.ClipTypes.ShiftBookSheet).Play();
+                }
+            });
+
+            bookE.BackButtonC.AddListener(delegate
+            {
+                if (_eC.CurrentPageBookT > 0)
+                {
+                    _eC.CurrentPageBookT--;
+                    _eVC.Sound(Common.Enum.ClipTypes.ShiftBookSheet).Play();
+                }
+            });
+
+
+            //_eC.IsOpenedBook = !_eC.IsOpenedBook;
+            //e.Sound(eC.IsOpenedBook ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+
+
+
+
 
             new Common.CreateSs(ToggleScene);
             new Common.CreateVSs(gameObject);
 
-            ToggleScene(SceneTypes.Menu);    
+            ToggleScene(SceneTypes.Menu);
         }
 
         void Update()
         {
+            new SyncBookUIS().Sync(_eVC.BookE, _eC);
+
+
             switch (CurSceneC.Scene)
             {
                 case SceneTypes.None:
@@ -62,13 +108,13 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    _systemsM.UpdateS.Run(_systemsM, ref _e);
+                    _systemsM.UpdateS.Run(_systemsM, _eGame);
 
                     _timer += Time.deltaTime;
                     if (_timer >= 0.04f)
                     {
-                        _systemsV.UpdateS.Run(_systemsV, _eV, _e);
-                        _systemUI.UpdateS.Run(_timer, _systemUI, _eUI, _e);
+                        _systemsV.UpdateS.Run(_systemsV, _eV, _eGame);
+                        _systemUI.UpdateS.Run(_timer, _systemUI, _eC, _eUI, _eGame);
                         _timer = 0;
                     }
                     break;
@@ -89,7 +135,7 @@ namespace Chessy
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    SystemsManager.SyncS.Run();
+                    SystemsManager.SyncS.Run(_eC);
                     SystemsManager.ConnectorMenuS.Run();
                     break;
 
@@ -115,10 +161,7 @@ namespace Chessy
 
                 case SceneTypes.Menu:
                     {
-                        if (_toggleW != default) _toggleW = default;
-
-                        _toggleW = new EcsWorld();
-                        new EntitieManager(_toggleW);
+                        new EntitieManager(_eVC, _eC);
                         SystemsManager.LaunchLikeGameAndShopS.Run();
                         new Menu.Events();
                         break;
@@ -126,15 +169,16 @@ namespace Chessy
 
                 case SceneTypes.Game:
                     {
+                        _eC.IsOpenedBook = true;
+                        _eC.CurrentPageBookT = PageBoookTypes.Main;
+
                         _eV = new EntitiesView(out var forData);
-                        _e = new EntitiesModel(forData, Rpc.NamesMethods);
-                        _eUI = new EntitiesViewUI(_e);
+                        _eGame = new Game.Entity.Model.EntitiesModel(forData, Rpc.NamesMethods);
+                        _eUI = new Game.EntitiesViewUI(_eVC, _eGame);
 
-                        _systemUI = new SystemsViewUI(default);
+                        var eventsUI = new EventsUIManager(_eC, _systemsM, _eUI, _eGame);
 
-                        var eventsUI = new EventsUIManager(_systemsM, _eUI, _e);
-
-                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(_systemsM, _e,  eventsUI);
+                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(_systemsM, _eGame, eventsUI);
                         Rpc.SyncAllMaster();
 
                         break;

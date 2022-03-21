@@ -10,7 +10,7 @@ namespace Chessy.Game.System.Model
         const float RAY_DISTANCE = 100;
 
 
-        public void Run(in SystemsModel systems, ref EntitiesModel e)
+        public void Run(in SystemsModel systems, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
@@ -55,7 +55,7 @@ namespace Chessy.Game.System.Model
             }
 
 
-            systems.SelectorS.Run(rayCastT, ref e);
+            systems.SelectorS.Run(rayCastT, e);
 
 
 #if UNITY_ANDROID

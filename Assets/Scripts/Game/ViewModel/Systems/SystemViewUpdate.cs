@@ -1,11 +1,12 @@
-﻿using Chessy.Game.System.View;
+﻿using Chessy.Game.Entity;
+using Chessy.Game.System.View;
 using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
     public readonly struct SystemViewUpdate
     {
-        public void Run(in SystemsView systems, in EntitiesView eV, in EntitiesModel e)
+        public void Run(in SystemsView systems, in EntitiesView eV, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {

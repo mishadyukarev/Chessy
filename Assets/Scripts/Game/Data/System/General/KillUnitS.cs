@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct KillUnitS
     {
-        public void Kill(in byte idx_0, in PlayerTypes whoKiller, in SetLastDiedS setLastDiedS, in EntitiesModel e)
+        public void Kill(in byte idx_0, in PlayerTypes whoKiller, in SetLastDiedS setLastDiedS, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (whoKiller != PlayerTypes.None)
             {

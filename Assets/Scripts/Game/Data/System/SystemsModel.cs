@@ -35,6 +35,8 @@ namespace Chessy.Game.System.Model
         #endregion
 
 
+        #region Master
+
         public readonly IncreaseWindSnowyS_M IncreaseWindSnowyS_M;
         public readonly UpdateS_M UpdateS_M;
         public readonly GiveTakeToolWeaponS_M GiveTakeToolWeaponS_M;
@@ -44,5 +46,9 @@ namespace Chessy.Game.System.Model
         public readonly BuyS_M BuyS_M;
         public readonly MeltS_M MeltS_M;
         public readonly BuyBuildingS_M BuyBuildingS_M;
+
+        public readonly WorldMeltIceWallUpdateMS WorldMeltIceWallUpdateS_M;
+
+        #endregion
     }
 }

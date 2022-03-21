@@ -9,7 +9,7 @@
 //{
 //    public struct ActiveAroundBonusSnowy
 //    {
-//        public ActiveAroundBonusSnowy(in byte idx_0, in Player sender, in EntitiesModel e)
+//        public ActiveAroundBonusSnowy(in byte idx_0, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
 //        {
 //            var whoseMove = e.WhoseMove.Player;
 //            var ability = AbilityTypes.ActiveAroundBonusSnowy;

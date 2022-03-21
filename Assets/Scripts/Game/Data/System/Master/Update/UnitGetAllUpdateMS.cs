@@ -5,7 +5,7 @@
 //{
 //    sealed class UnitGetAllUpdateMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal UnitGetAllUpdateMS(in EntitiesModel ents) : base(ents)
+//        internal UnitGetAllUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
 //        {
 //        }
 

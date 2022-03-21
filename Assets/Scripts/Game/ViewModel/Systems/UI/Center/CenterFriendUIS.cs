@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     sealed class CenterFriendUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterFriendUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal CenterFriendUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

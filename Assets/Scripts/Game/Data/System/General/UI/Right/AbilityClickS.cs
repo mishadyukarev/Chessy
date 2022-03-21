@@ -5,7 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public struct AbilityClickS
     {
-        public void Click(in ButtonTypes uniqueButton, in EntitiesModel e)
+        public void Click(in ButtonTypes uniqueButton, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {

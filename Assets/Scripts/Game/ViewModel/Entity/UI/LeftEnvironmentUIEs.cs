@@ -11,7 +11,7 @@ namespace Chessy.Game
         public Dictionary<ResourceTypes, TextUIC> Envs;
 
 
-        public readonly GameObjectVC Zone;
+        public readonly Chessy.Common.Component.GameObjectVC Zone;
 
         public LeftEnvironmentUIEs(in Transform leftZone)
         {
@@ -19,7 +19,7 @@ namespace Chessy.Game
 
             var envZone = leftZone.Find("Environment+");
 
-            Zone = new GameObjectVC(envZone.gameObject);
+            Zone = new Chessy.Common.Component.GameObjectVC(envZone.gameObject);
 
             InfoButtonC = new ButtonUIC(envZone.Find("EnvironmentInfoButton").GetComponent<Button>());
 

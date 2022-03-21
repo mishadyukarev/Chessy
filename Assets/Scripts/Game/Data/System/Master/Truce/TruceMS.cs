@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     sealed class TruceMS : SystemAbstract, IEcsRunSystem
     {
-        internal TruceMS(in EntitiesModel ents) : base(ents)
+        internal TruceMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

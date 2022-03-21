@@ -9,7 +9,7 @@
 //    {
 //        //readonly Dictionary<DirectTypes, Entity[]> _trails;
 
-//        //public GameObjectVC Parent(in byte idx) =>
+//        //public Chessy.Common.Component.GameObjectVC Parent(in byte idx) =>
 //        //public static ref T TrailCellVC<T>(in DirectTypes dir, in byte idx) => ref _trails[dir][idx].Get<T>();
 
 //        ////public ref C this[in DirectTypes dir, in int idx] => ref _trails[dir][idx].Get<C>();

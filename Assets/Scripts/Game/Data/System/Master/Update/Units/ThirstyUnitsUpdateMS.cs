@@ -6,43 +6,43 @@ namespace Chessy.Game
 {
     static class ThirstyUnitsUpdateMS
     {
-        public static void Run(in SystemsModel sMM, in EntitiesModel E)
+        public static void Run(in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
             {
-                if (E.UnitTC(idx_0).HaveUnit && !E.IsAnimal(E.UnitTC(idx_0).Unit))
+                if (e.UnitTC(idx_0).HaveUnit && !e.IsAnimal(e.UnitTC(idx_0).Unit))
                 {
                     var canExecute = false;
                     if (GameModeC.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (E.UnitPlayerTC(idx_0).Is(PlayerTypes.First)) canExecute = true;
+                        if (e.UnitPlayerTC(idx_0).Is(PlayerTypes.First)) canExecute = true;
                     }
                     else canExecute = true;
 
 
                     if (canExecute)
                     {
-                        if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
+                        if (e.RiverEs(idx_0).RiverTC.HaveRiverNear)
                         {
-                            E.UnitWaterC(idx_0).Water = WaterValues.MAX;
+                            e.UnitWaterC(idx_0).Water = WaterValues.MAX;
                         }
                         else
                         {
-                            var needWater = WaterValues.NeedWaterForThirsty(E.UnitTC(idx_0).Unit);
+                            var needWater = WaterValues.NeedWaterForThirsty(e.UnitTC(idx_0).Unit);
 
-                            if (E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
+                            if (e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).AvailableHeroTC.Is(UnitTypes.Snowy))
                             {
                                 needWater *= 0.75f;
                             }
 
 
-                            E.UnitWaterC(idx_0).Water -= needWater;
+                            e.UnitWaterC(idx_0).Water -= needWater;
 
-                            if (E.UnitWaterC(idx_0).Water <= 0)
+                            if (e.UnitWaterC(idx_0).Water <= 0)
                             {
-                                float percent = HpValues.ThirstyPercent(E.UnitTC(idx_0).Unit);
+                                float percent = HpValues.ThirstyPercent(e.UnitTC(idx_0).Unit);
 
-                                sMM.AttackUnitS.AttackUnit(HpValues.MAX * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0, sMM, E);
+                                sMM.AttackUnitS.AttackUnit(HpValues.MAX * percent, e.NextPlayer(e.UnitPlayerTC(idx_0)).Player, idx_0, sMM, e);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(idx_0)).Player, idx_0);

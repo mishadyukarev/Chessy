@@ -1,8 +1,10 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Entity;
+
+namespace Chessy.Game
 {
     static class CloudVS
     {
-        public static void Run(in EntitiesView eV, in EntitiesModel e)
+        public static void Run(in EntitiesView eV, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
             {

@@ -4,7 +4,7 @@
     {
         protected readonly EntitiesViewUI UIE;
 
-        protected SystemUIAbstract( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(ents)
+        protected SystemUIAbstract( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
             UIE = entsUI;
         }

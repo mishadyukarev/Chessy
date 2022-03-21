@@ -7,7 +7,7 @@ namespace Chessy.Game
 {
     sealed class PawnExtractAdultForestMS : SystemAbstract, IEcsRunSystem
     {
-        public PawnExtractAdultForestMS(in EntitiesModel ents) : base(ents)
+        public PawnExtractAdultForestMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
         }
 

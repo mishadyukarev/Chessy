@@ -2,7 +2,7 @@
 {
     sealed class RightZoneUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal RightZoneUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal RightZoneUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

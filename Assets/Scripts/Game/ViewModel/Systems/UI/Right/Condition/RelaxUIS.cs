@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public struct RelaxUIS
     {
-        public void Run(in RelaxUIE relaxE, in EntitiesModel e)
+        public void Run(in RelaxUIE relaxE, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var idx_0 = e.CellsC.Selected;
 

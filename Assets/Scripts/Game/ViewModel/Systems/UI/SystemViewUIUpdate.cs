@@ -1,4 +1,6 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Entity;
+using Chessy.Game.Entity.Model;
 using Chessy.Game.System.View.UI.Down;
 using Chessy.Game.View.UI.System;
 
@@ -6,15 +8,17 @@ namespace Chessy.Game.System.View.UI
 {
     public readonly struct SystemViewUIUpdate
     {
-        public void Run(in float timer, in SystemsViewUI systems, in EntitiesViewUI eUI, in EntitiesModel e)
+        public void Run(in float timer, in SystemsViewUI systemsUI, in Common.Entity.EntitiesModel eC, in EntitiesViewUI eUI, in Entity.Model.EntitiesModel e)
         {
             ///Right
+            ///
+            var rightEs = eUI.RightEs;
             new RightZoneUIS(eUI, e).Run();
             new StatsUIS(eUI, e).Run();
-            ProtectUIS.Run(eUI.RightEs.ProtectE, e);
-            systems.RelaxS.Run(eUI.RightEs.RelaxE, e);
+            systemsUI.ProtectS.Run(rightEs.ProtectE, e.UnitEs(e.CellsC.Selected), e.CurPlayerITC.Player);
+            systemsUI.RelaxS.Run(rightEs.RelaxE, e);
             new ShieldUIS(eUI, e).Run();
-            systems.EffectsS.Run(e.Resources, eUI, e);
+            systemsUI.EffectsS.Run(e.Resources, eUI, e);
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
                 new UniqueButtonUIS(buttonT, eUI.RightEs.Unique(buttonT), e.Resources, e).Run();
@@ -30,7 +34,7 @@ namespace Chessy.Game.System.View.UI
 
 
             ///Up
-            systems.EconomyUpS.Run(eUI, e);
+            systemsUI.EconomyUpS.Run(eUI, e);
             new UpWindUIS(eUI, e).Run();
             new UpSunsUIS(eUI, e).Run();
 
@@ -45,7 +49,6 @@ namespace Chessy.Game.System.View.UI
             new CenterBuildingZonesUIS(eUI, e).Run();
             MotionUIS.Sync(timer, eUI, e);
             eUI.CenterEs.MistakeE.Sync(timer, e);
-            systems.SyncBookUIS.Sync(eUI.CenterEs.BookE, e);
 
 
             ///Left

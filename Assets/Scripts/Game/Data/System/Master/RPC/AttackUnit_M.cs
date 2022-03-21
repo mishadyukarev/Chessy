@@ -7,7 +7,7 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct AttackUnit_M
     {
-        public void Attack(in byte idx_from, in byte idx_to, in SystemsModel sMM, in EntitiesModel e)
+        public void Attack(in byte idx_from, in byte idx_to, in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 

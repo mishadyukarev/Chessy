@@ -6,15 +6,15 @@ namespace Chessy.Game.System.Model.Master
 {
     public struct UpdateS_M
     {
-        public void UpdateMove(in SystemsModel sMM, in EntitiesModel e)
+        public void UpdateMove(in SystemsModel sMM, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
-            new UpdatorMS(e).Run();
+            new UpdatorMS().Run(e);
 
             FireUpdateMS.Run(sMM, e);
             new RiverFertilizeAroundUpdateMS(e).Run();
             new WorldDryFertilizerMS(e).Run();
             new CitiesAddPeopleUpdateMS(e).Run();
-            new WorldMeltIceWallUpdateMS(e).Run();
+            sMM.WorldMeltIceWallUpdateS_M.Run(e);
 
             new CloudUpdMS(e).Run();
             new CloudFertilizeUpdMS(e).Run();
@@ -53,7 +53,8 @@ namespace Chessy.Game.System.Model.Master
             new UpdGiveWaterCloudScowyMS(e).Run();
 
             new CamelShiftUpdateMS(e).Run();
-            e.SpawnCamelUpdate();
+
+            new CamelSpawnUpdateS_M().SpawnCamelUpdate(e);
 
             #endregion
 

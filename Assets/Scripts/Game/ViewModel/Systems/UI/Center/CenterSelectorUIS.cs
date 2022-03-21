@@ -2,7 +2,7 @@
 {
     sealed class CenterSelectorUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterSelectorUIS( in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal CenterSelectorUIS( in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

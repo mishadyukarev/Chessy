@@ -1,6 +1,9 @@
-﻿namespace Chessy.Game
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+namespace Chessy.Game
 {
-    public class EntitiesViewUI
+    public readonly struct EntitiesViewUI
     {
         public readonly LeftUIEs LeftEs;
         public readonly RightUIEs RightEs;
@@ -10,13 +13,18 @@
 
         public LeftEnvironmentUIEs LeftEnvEs => LeftEs.EnvironmentEs;
 
-        public EntitiesViewUI(in EntitiesModel ents)
+        public EntitiesViewUI(in Chessy.Common.Entity.View.EntitiesView eVC, in Entity.Model.EntitiesModel ents)
         {
-            LeftEs = new LeftUIEs(default);
-            RightEs = new RightUIEs(default);
-            CenterEs = new CenterUIEs(default);
-            DownEs = new DownUIEs(default);
-            UpEs = new UpUIEs(default);
+            eVC.MenuGOC.SetActive(false);
+            eVC.GameGOC.SetActive(true);
+
+            var gameZone = eVC.GameGOC.Transform;
+
+            LeftEs = new LeftUIEs(gameZone.Find("Left+"));
+            RightEs = new RightUIEs(gameZone.Find("RightZone"));
+            CenterEs = new CenterUIEs(gameZone.Find("CenterZone"));
+            DownEs = new DownUIEs(gameZone.Find("DownZone"));
+            UpEs = new UpUIEs(gameZone.Find("ButtonLeave").GetComponent<Button>(), gameZone.Find("UpZone"));
         }
     }
 }

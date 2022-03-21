@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     sealed class StatsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal StatsUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(entsUI, ents)
+        internal StatsUIS(in EntitiesViewUI entsUI, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(entsUI, ents)
         {
         }
 

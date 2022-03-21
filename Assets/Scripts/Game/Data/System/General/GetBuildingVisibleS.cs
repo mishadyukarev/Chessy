@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public struct GetBuildingVisibleS
     {
-        public GetBuildingVisibleS(in byte idx_0, in EntitiesModel e)
+        public GetBuildingVisibleS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.BuildingTC(idx_0).HaveBuilding)
             {

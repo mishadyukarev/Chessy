@@ -9,7 +9,7 @@ namespace Chessy.Game
 {
     public struct GiveTakeToolWeaponS_M
     {
-        public void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte idx_0, in Player sender, in EntitiesModel e)
+        public void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte idx_0, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             var whoseMove = e.WhoseMove.Player;
 

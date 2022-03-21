@@ -11,8 +11,8 @@ namespace Chessy.Game
         readonly Dictionary<CellBlockTypes, SpriteRendererVC> _blocks;
         readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
-        public readonly GameObjectVC CellParent;
-        public readonly GameObjectVC CellGO;
+        public readonly Chessy.Common.Component.GameObjectVC CellParent;
+        public readonly Chessy.Common.Component.GameObjectVC CellGO;
         public readonly SpriteRendererVC CellSR;
 
         public readonly FireVE FireVE;
@@ -30,12 +30,12 @@ namespace Chessy.Game
 
         public CellVEs(in GameObject cell, in byte idx)
         {
-            CellParent = new GameObjectVC(cell);
+            CellParent = new Chessy.Common.Component.GameObjectVC(cell);
 
             var cellUnder = cell.transform.Find("Cell");
 
 
-            CellGO = new GameObjectVC(cellUnder.gameObject);
+            CellGO = new Chessy.Common.Component.GameObjectVC(cellUnder.gameObject);
             CellSR = new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>());
 
 

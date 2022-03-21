@@ -1,8 +1,10 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Entity;
+
+namespace Chessy.Game
 {
     static class SyncStunVS
     {
-        public static void Sync(in byte idx_0, in EntitiesView eV, in EntitiesModel e)
+        public static void Sync(in byte idx_0, in EntitiesView eV, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             eV.UnitEffectVEs(idx_0).StunSRC.Disable();
 

@@ -2,7 +2,7 @@
 //{
 //    sealed class SmelterSmeltUpdateMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal SmelterSmeltUpdateMS(in EntitiesModel ents) : base(ents)
+//        internal SmelterSmeltUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
 //        {
 //        }
 

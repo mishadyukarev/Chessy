@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         readonly DownToolWeaponUIE _twE;
 
-        internal DownToolWeaponUIS(in DownToolWeaponUIE twE, in EntitiesModel ents) : base(ents)
+        internal DownToolWeaponUIS(in DownToolWeaponUIE twE, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
         {
             _twE = twE;
         }

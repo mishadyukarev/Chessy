@@ -2,7 +2,7 @@
 {
     public struct GetHeroClickCenterS
     {
-        public void Get(in UnitTypes unitT, in EntitiesModel e)
+        public void Get(in UnitTypes unitT, in Chessy.Game.Entity.Model.EntitiesModel e)
         {
             if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {
