@@ -40,10 +40,7 @@ namespace Chessy
 
         #region System
 
-        List<IEcsRunSystem> _runCommon;
-        List<IEcsRunSystem> _runMenu;
-        List<IEcsRunSystem> _runsGame;
-
+        List<IEcsRunSystem> _runs;
         List<IToggleScene> _togglerScenes;
 
         SystemsModelMenu _sMMenu;
@@ -74,23 +71,17 @@ namespace Chessy
 
             var sMCommon = new SystemsModelCommon();
             var sUICommon = new SystemsViewUICommon(_eMCommon, eVCommon, _eUICommon);
-            _runCommon = new List<IEcsRunSystem>()
+
+            _sMMenu = new SystemsModelMenu();
+
+            var sMGame = new SystemsModelGame(_eMGame, _eMCommon);
+            var sUIGame = new SystemsViewUIGame(_eMCommon, _eUIGame, _eMGame);
+            var sVGame = new SystemsViewGame(_eVGame, _eMGame, eVCommon, _eMCommon);
+
+            _runs = new List<IEcsRunSystem>()
             {
                 sMCommon,
                 sUICommon,
-            };
-
-            _sMMenu = new SystemsModelMenu();
-            _runMenu = new List<IEcsRunSystem>()
-            {
-
-            };
-
-            var sMGame = new SystemsModelGame(_eMGame);
-            var sUIGame = new SystemsViewUIGame(_eMCommon, _eUIGame, _eMGame);
-            var sVGame = new SystemsViewGame(_eVGame, _eMGame, eVCommon);
-            _runsGame = new List<IEcsRunSystem>()
-            {
                 sMGame,
                 sVGame,
                 sUIGame,
@@ -126,20 +117,18 @@ namespace Chessy
 
         void Update()
         {
-            _runCommon.ForEach((IEcsRunSystem iRun) => iRun.Run());
+            _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());
 
             new AdLaunchS().Run(ref _eMCommon.AdC, _eMCommon.SceneC);
 
             switch (_eMCommon.SceneC.Scene)
             {
                 case SceneTypes.Menu:
-                    _runMenu.ForEach((IEcsRunSystem iRun) => iRun.Run());
                     _sMMenu.SyncS.Run(_eUICommon, _eMCommon);
                     _sMMenu.ConnectorMenuS.Run(_eUIM);
                     break;
 
                 case SceneTypes.Game:
-                    _runsGame.ForEach((IEcsRunSystem iRun) => iRun.Run());
                     break;
 
                 default:

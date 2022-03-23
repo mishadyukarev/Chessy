@@ -18,7 +18,7 @@ namespace Chessy.Game
     public sealed class Rpc : MonoBehaviour
     {
         static EntitiesModelGame _e;
-        static SystemsModelGame _sMM;
+        static SystemsModelGame _sMGame;
         static EntitiesModelCommon _eMC;
 
         int _idx_cur;
@@ -38,7 +38,7 @@ namespace Chessy.Game
 
         public Rpc GiveData(in SystemsModelGame sMM, in EntitiesModelGame ents, in EntitiesModelCommon eMC)
         {
-            _sMM = sMM;
+            _sMGame = sMM;
             _e = ents;
             _eMC = eMC;
 
@@ -61,7 +61,7 @@ namespace Chessy.Game
 
                 if (obj_1 is ToolWeaponTypes twT)
                 {
-                    _sMM.GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], idx, sender, _e);
+                    _sMGame.GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], idx, sender, _e);
                 }
             }
 
@@ -70,7 +70,7 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        _sMM.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender, _sMM, _e);
+                        _sMGame.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender, _sMGame, _e);
                         break;
 
                     case AbilityTypes.FirePawn:
@@ -406,11 +406,11 @@ namespace Chessy.Game
                         break;
 
                     case AbilityTypes.IncreaseWindSnowy:
-                        _sMM.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender, _e);
+                        _sMGame.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender, _e);
                         break;
 
                     case AbilityTypes.DecreaseWindSnowy:
-                        _sMM.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender, _e);
+                        _sMGame.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender, _e);
                         break;
 
 
@@ -560,10 +560,10 @@ namespace Chessy.Game
 
             else if (obj is BuildingTypes buildT)
             {
-                _sMM.BuyBuildingS_M.Buy(buildT, sender, _e);
+                _sMGame.BuyBuildingS_M.Buy(buildT, sender, _e);
             }
 
-            else if (obj is MarketBuyTypes marketBuy) _sMM.BuyS_M.Buy(marketBuy, sender, _e);
+            else if (obj is MarketBuyTypes marketBuy) _sMGame.BuyS_M.Buy(marketBuy, sender, _e);
 
             else if (obj is RpcMasterTypes rpcT)
             {
@@ -592,7 +592,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Done:
-                        new DonerS_M(_eMC.GameModeTC, sender, _sMM, _e);
+                        new DonerS_M(_eMC.GameModeTC, sender, _sMGame, _e);
                         break;
 
                     case RpcMasterTypes.Shift:
@@ -600,7 +600,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _sMM.AttackUnit_M.Attack((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _sMM, _e);
+                        _sMGame.AttackUnit_M.Attack((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _sMGame, _e);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
@@ -616,7 +616,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Melt:
-                        _sMM.MeltS_M.Melt(sender, _e);
+                        _sMGame.MeltS_M.Melt(sender, _e);
                         break;
 
                     default:

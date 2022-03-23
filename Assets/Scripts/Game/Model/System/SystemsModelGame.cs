@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Entity;
 using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
 using Chessy.Game.System.Model.Master;
@@ -8,8 +9,9 @@ using UnityEngine.EventSystems;
 
 namespace Chessy.Game.System.Model
 {
-    public struct SystemsModelGame : IToggleScene, IEcsRunSystem
+    public sealed class SystemsModelGame : IToggleScene, IEcsRunSystem
     {
+        readonly EntitiesModelCommon _eMCommon;
         readonly EntitiesModelGame _eMGame;
 
         Ray _ray;
@@ -63,9 +65,12 @@ namespace Chessy.Game.System.Model
         #endregion
 
 
-        public SystemsModelGame(in EntitiesModelGame eMGame) : this()
+        public SystemsModelGame(in EntitiesModelGame eMGame, in EntitiesModelCommon eMCommon)
         {
             _eMGame = eMGame;
+            _eMCommon = eMCommon;
+
+            UpdateS_M = new UpdateS_M(this, eMGame);
         }
 
         public void ToggleScene(in SceneTypes newSceneT)
@@ -75,50 +80,52 @@ namespace Chessy.Game.System.Model
 
         public void Run()
         {
-            _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
-            var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
-
-            //#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
-
-            //            if (EventSystem.current.IsPointerOverGameObject())
-            //            {
-            //                raycastC.Raycast = RaycastTypes.UI;
-            //                return;
-            //            }
-
-            //#endif
-
-
-            var rayCastT = RaycastTypes.None;
-
-            if (EventSystem.current.IsPointerOverGameObject())
+            if (_eMCommon.SceneC.Scene == SceneTypes.Game)
             {
-                rayCastT = RaycastTypes.UI;
-            }
-            else if (raycast)
-            {
-                for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+                _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
+                var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
+
+                //#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+
+                //            if (EventSystem.current.IsPointerOverGameObject())
+                //            {
+                //                raycastC.Raycast = RaycastTypes.UI;
+                //                return;
+                //            }
+
+                //#endif
+
+
+                var rayCastT = RaycastTypes.None;
+
+                if (EventSystem.current.IsPointerOverGameObject())
                 {
-                    int one = _eMGame.CellEs(idx_0).CellE.InstanceIDC;
-                    int two = raycast.transform.gameObject.GetInstanceID();
-
-                    if (one == two)
+                    rayCastT = RaycastTypes.UI;
+                }
+                else if (raycast)
+                {
+                    for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
                     {
-                        if (_eMGame.CellsC.Current != _eMGame.CellsC.PreviousVision)
-                        {
-                            _eMGame.CellsC.PreviousVision = _eMGame.CellsC.Current;
-                        }
+                        int one = _eMGame.CellEs(idx_0).CellE.InstanceIDC;
+                        int two = raycast.transform.gameObject.GetInstanceID();
 
-                        _eMGame.CellsC.Current = idx_0;
-                        rayCastT = RaycastTypes.Cell;
+                        if (one == two)
+                        {
+                            if (_eMGame.CellsC.Current != _eMGame.CellsC.PreviousVision)
+                            {
+                                _eMGame.CellsC.PreviousVision = _eMGame.CellsC.Current;
+                            }
+
+                            _eMGame.CellsC.Current = idx_0;
+                            rayCastT = RaycastTypes.Cell;
+                        }
                     }
+
+                    if (rayCastT == RaycastTypes.None) rayCastT = RaycastTypes.Background;
                 }
 
-                if (rayCastT == RaycastTypes.None) rayCastT = RaycastTypes.Background;
-            }
 
-
-            SelectorS.Run(rayCastT, _eMGame);
+                SelectorS.Run(rayCastT, _eMGame);
 
 
 #if UNITY_ANDROID
@@ -130,6 +137,7 @@ namespace Chessy.Game.System.Model
             //    }
             //}
 #endif
+            }
         }
     }
 }

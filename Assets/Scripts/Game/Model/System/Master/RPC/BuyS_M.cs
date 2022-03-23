@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values;
 using Photon.Realtime;
 using System.Collections.Generic;
 
@@ -6,7 +7,7 @@ namespace Chessy.Game.System.Model
 {
     public struct BuyS_M
     {
-        public void Buy(in MarketBuyTypes marketBuyT, in Player sender, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Buy(in MarketBuyTypes marketBuyT, in Player sender, in EntitiesModelGame e)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 

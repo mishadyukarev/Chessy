@@ -6,29 +6,39 @@ using Photon.Pun;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public struct UpdateS_M
+    public readonly struct UpdateS_M
     {
-        public void UpdateMove(in GameModeTC gameModeTC, in SystemsModelGame sMM, in EntitiesModelGame e)
+        readonly SystemsModelGame _sMGame;
+        readonly EntitiesModelGame _eMGame;
+
+        public UpdateS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame)
         {
-            new UpdatorMS().Run(gameModeTC, e);
+            _sMGame = sMGame;
+            _eMGame = eMGame;
+        }
 
-            FireUpdateMS.Run(sMM, e);
-            new RiverFertilizeAroundUpdateMS(e).Run();
-            new WorldDryFertilizerMS(e).Run();
-            new CitiesAddPeopleUpdateMS(e).Run();
-            sMM.WorldMeltIceWallUpdateS_M.Run(e);
 
-            new CloudUpdMS(e).Run();
-            new CloudFertilizeUpdMS(e).Run();
+        public void Run(in GameModeTC gameModeTC)
+        {
+            new UpdatorMS().Run(gameModeTC, _eMGame);
+
+            FireUpdateMS.Run(_sMGame, _eMGame);
+            new RiverFertilizeAroundUpdateMS(_eMGame).Run();
+            new WorldDryFertilizerMS(_eMGame).Run();
+            new CitiesAddPeopleUpdateMS(_eMGame).Run();
+            _sMGame.WorldMeltIceWallUpdateS_M.Run(_eMGame);
+
+            new CloudUpdMS(_eMGame).Run();
+            new CloudFertilizeUpdMS(_eMGame).Run();
 
 
             #region Building
 
-            new WoodcutterExtractAdultForestUpdateMS(e).Run();
-            new FarmExtractFertilizeUpdateMS(e).Run();
-            new MineExtractUpdateMS(e).Run();
-            new IceWallGiveWaterUnitsUpdMS(e).Run();
-            new IceWallFertilizeAroundUpdateMS(e).Run();
+            new WoodcutterExtractAdultForestUpdateMS(_eMGame).Run();
+            new FarmExtractFertilizeUpdateMS(_eMGame).Run();
+            new MineExtractUpdateMS(_eMGame).Run();
+            new IceWallGiveWaterUnitsUpdMS(_eMGame).Run();
+            new IceWallFertilizeAroundUpdateMS(_eMGame).Run();
 
             #endregion
 
@@ -42,70 +52,70 @@ namespace Chessy.Game.System.Model.Master
 
             #region Unit
 
-            new PawnExtractAdultForestMS(e).Run();
-            new ResumeUnitUpdMS(e).Run();
-            new UpdateHealingUnitMS(e).Run();
-            sMM.UnitEatFoodUpdateS_M.Run(sMM, e);
-            ThirstyUnitsUpdateMS.Run(gameModeTC, sMM, e);
-            new PawnExtractHillUpdateMS(e).Run();
+            new PawnExtractAdultForestMS(_eMGame).Run();
+            new ResumeUnitUpdMS(_eMGame).Run();
+            new UpdateHealingUnitMS(_eMGame).Run();
+            _sMGame.UnitEatFoodUpdateS_M.Run(_sMGame, _eMGame);
+            ThirstyUnitsUpdateMS.Run(gameModeTC, _sMGame, _eMGame);
+            new PawnExtractHillUpdateMS(_eMGame).Run();
 
-            new UpdTryFireAroundHellMS(e).Run();
-            new UpdAttackFromWaterHellMS(e).Run();
+            new UpdTryFireAroundHellMS(_eMGame).Run();
+            new UpdAttackFromWaterHellMS(_eMGame).Run();
 
-            new UpdGiveWaterCloudScowyMS(e).Run();
+            new UpdGiveWaterCloudScowyMS(_eMGame).Run();
 
-            new CamelShiftUpdateMS(e).Run();
+            new CamelShiftUpdateMS(_eMGame).Run();
 
-            new CamelSpawnUpdateS_M().SpawnCamelUpdate(e);
+            new CamelSpawnUpdateS_M().SpawnCamelUpdate(_eMGame);
 
             #endregion
 
 
 
-            if (e.MotionsC.Motions % 5 == 0)
+            if (_eMGame.MotionsC.Motions % 5 == 0)
             {
                 for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
                 {
                     //e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterBuildTown);
 
-                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
+                    _eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
 
 
-                    if (e.CellEs(idx_0).IsActiveParentSelf)
+                    if (_eMGame.CellEs(idx_0).IsActiveParentSelf)
                     {
-                        if (e.UnitTC(idx_0).HaveUnit)
+                        if (_eMGame.UnitTC(idx_0).HaveUnit)
                         {
-                            if (e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).MyHeroTC.Is(UnitTypes.Snowy))
+                            if (_eMGame.PlayerInfoE(_eMGame.UnitPlayerTC(idx_0).Player).MyHeroTC.Is(UnitTypes.Snowy))
                             {
-                                if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                                if (_eMGame.UnitTC(idx_0).Is(UnitTypes.Pawn))
                                 {
-                                    if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                                    if (_eMGame.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
                                     {
-                                        e.UnitEffectFrozenArrawC(idx_0).Shoots++;
+                                        _eMGame.UnitEffectFrozenArrawC(idx_0).Shoots++;
                                     }
                                     else
                                     {
-                                        e.UnitEffectShield(idx_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                        _eMGame.UnitEffectShield(idx_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
                                     }
                                 }
                                 else
                                 {
-                                    e.UnitEffectShield(idx_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                    _eMGame.UnitEffectShield(idx_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
                                 }
                             }
                         }
                         else
                         {
-                            if (e.AdultForestC(idx_0).HaveAnyResources)
+                            if (_eMGame.AdultForestC(idx_0).HaveAnyResources)
                             {
-                                if (!e.HaveTreeUnit)
+                                if (!_eMGame.HaveTreeUnit)
                                 {
                                     for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                                     {
-                                        if (e.PlayerInfoE(playerT).MyHeroTC.Is(UnitTypes.Elfemale))
+                                        if (_eMGame.PlayerInfoE(playerT).MyHeroTC.Is(UnitTypes.Elfemale))
                                         {
 
-                                            e.UnitEs(idx_0).SetNewUnitHere(UnitTypes.Tree, playerT, e.PlayerInfoE(playerT), e);
+                                            _eMGame.UnitEs(idx_0).SetNewUnitHere(UnitTypes.Tree, playerT, _eMGame.PlayerInfoE(playerT), _eMGame);
 
                                             break;
                                         }
@@ -117,7 +127,7 @@ namespace Chessy.Game.System.Model.Master
                 }
             }
 
-            TryInvokeTruceUpdateMS.Truce(gameModeTC, e);
+            TryInvokeTruceUpdateMS.Truce(gameModeTC, _eMGame);
         }
     }
 }

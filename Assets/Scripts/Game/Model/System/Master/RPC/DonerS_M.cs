@@ -31,7 +31,7 @@ namespace Chessy.Game.System.Model
                         e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 1;
                     }
 
-                    sMM.UpdateS_M.UpdateMove(gameModeTC, sMM, e);
+                    sMM.UpdateS_M.Run(gameModeTC);
                     e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                 }
 
@@ -58,7 +58,7 @@ namespace Chessy.Game.System.Model
 
                     if (nextPlayer == PlayerTypes.First)
                     {
-                        sMM.UpdateS_M.UpdateMove(gameModeTC, sMM, e);
+                        sMM.UpdateS_M.Run(gameModeTC);
                         e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                     }
 

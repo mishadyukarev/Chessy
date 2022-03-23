@@ -5,7 +5,7 @@ using Chessy.Game.System.View.UI.Center;
 
 namespace Chessy.Common.View.UI.System
 {
-    public readonly struct SystemsViewUICommon : IEcsRunSystem
+    public sealed class SystemsViewUICommon : IEcsRunSystem
     {
         readonly EntitiesModelCommon _eMC;
         readonly EntitiesViewCommon _eVC;

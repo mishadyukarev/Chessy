@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Common.Model.System
 {
-    public readonly struct SystemsModelCommon : IEcsRunSystem
+    public sealed class SystemsModelCommon : IEcsRunSystem
     {
         public void Run()
         {
