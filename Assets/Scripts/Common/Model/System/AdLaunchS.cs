@@ -1,6 +1,6 @@
 ﻿using Photon.Pun;
 using System;
-using Yodo1.MAS;
+//using Yodo1.MAS;
 
 namespace Chessy.Common
 {
@@ -17,11 +17,11 @@ namespace Chessy.Common
                 {
                     if (difTime.Minutes >= AdC.MINUTES_FOR_AD)
                     {
-                        if (Yodo1U3dMas.IsInterstitialAdLoaded())
-                        {
-                            Yodo1U3dMas.ShowInterstitialAd();
-                            adC.LastTimeAd = DateTime.Now;
-                        }
+                        //if (Yodo1U3dMas.IsInterstitialAdLoaded())
+                        //{
+                        //    Yodo1U3dMas.ShowInterstitialAd();
+                        //    adC.LastTimeAd = DateTime.Now;
+                        //}
                     }
                 }
             }

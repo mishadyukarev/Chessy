@@ -1,15 +1,17 @@
-﻿using Chessy.Game;
+﻿using Chessy.Common.Interface;
+using Chessy.Game;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
+using System.Collections.Generic;
 
 namespace Chessy.Common
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
-        Action<SceneTypes> _toggleScene;
+        List<IToggleScene> _toggleScene;
 
-        public void StartMy(in Action<SceneTypes> toggleScene)
+        public void StartMy(in List<IToggleScene> toggleScene)
         {
             _toggleScene = toggleScene;
         }
@@ -19,7 +21,7 @@ namespace Chessy.Common
         {
             base.OnLeftRoom();
 
-            _toggleScene(SceneTypes.Menu);
+            _toggleScene.ForEach((IToggleScene i) => i.ToggleScene(SceneTypes.Menu));
         }
 
         //public override sealed void OnPhotonPlayerDisconnected(Player otherPlayer)
@@ -34,7 +36,7 @@ namespace Chessy.Common
             base.OnPlayerLeftRoom(otherPlayer);
 
             PhotonNetwork.LeaveRoom();
-            _toggleScene(SceneTypes.Menu);
+            _toggleScene.ForEach((IToggleScene i) => i.ToggleScene(SceneTypes.Menu));
         }
 
         public override sealed void OnMasterClientSwitched(Player newMasterClient)
@@ -52,7 +54,7 @@ namespace Chessy.Common
 
         public override sealed void OnJoinedRoom()
         {
-            _toggleScene(SceneTypes.Game);
+            _toggleScene.ForEach((IToggleScene i) => i.ToggleScene(SceneTypes.Game));
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)

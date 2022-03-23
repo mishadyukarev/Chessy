@@ -1,4 +1,6 @@
-﻿using Chessy.Common.Entity;
+﻿using Chessy.Common;
+using Chessy.Common.Entity;
+using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
 using Chessy.Game.EventsUI;
 using Chessy.Game.System.Model;
@@ -15,7 +17,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public sealed class Rpc : MonoBehaviour
+    public sealed class Rpc : MonoBehaviour, IToggleScene
     {
         static EntitiesModelGame _e;
         static SystemsModelGame _sMGame;
@@ -43,6 +45,12 @@ namespace Chessy.Game
             _eMC = eMC;
 
             return this;
+        }
+
+        public void ToggleScene(in SceneTypes newSceneT)
+        {
+            if (newSceneT != SceneTypes.Game) return;
+            SyncAllMaster();
         }
 
 

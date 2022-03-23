@@ -10,7 +10,7 @@ namespace Chessy.Menu
     {
         public void Run(in EntitiesViewUICommon eUIC, in EntitiesModelCommon eC)
         {
-            eC.VolumeMusic = eUIC.SettingsE.SliderC.Slider.value;
+            
             //SoundC.Volume = CenterZoneUICom.MusicVolume;
 
             //eC.IsOnHint = CenterZoneUICom.IsOn;
