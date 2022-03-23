@@ -1,44 +1,152 @@
-﻿using Game.Common;
-using Game.Game;
-using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Chessy.Common;
+using Chessy.Common.Entity;
+using Chessy.Common.Entity.View;
+using Chessy.Common.Enum;
+using Chessy.Common.Model.System;
+using Chessy.Common.View.UI;
+using Chessy.Common.View.UI.System;
+using Chessy.Game;
+using Chessy.Game.Entity.Model;
+using Chessy.Game.EventsUI;
+using Chessy.Game.System.Model;
+using Chessy.Game.System.View;
+using Chessy.Game.System.View.UI;
+using Chessy.Menu;
+using Chessy.Menu.View.UI;
 using System;
 using UnityEngine;
 
-namespace Game
+namespace Chessy
 {
-    public sealed class Main : MonoBehaviour
+    sealed class Main : MonoBehaviour
     {
-        private EcsWorld _menuW;
-        private EcsWorld _gameW;
+        [SerializeField] TestModes testMode = default;
+
+        float _timer;
 
 
-        private void Start()
+        #region Entity
+
+        EntitiesModelCommon _eMCommon;
+        EntitiesViewCommon _eVCommon;
+        EntitiesViewUICommon _eUICommon;
+
+        EntitiesModelMenu _eMM;
+        EntitiesViewMenu _eVM;
+        EntitiesViewUIMenu _eUIM;
+
+        EntitiesModelGame _eMGame;
+        EntitiesViewGame _eVGame;
+        EntitiesViewUIGame _eUIGame;
+
+        #endregion
+
+
+        #region System
+
+        readonly SystemsModelCommon _sMCommon = default;
+        readonly SystemsViewUICommon _sUICommon = default;
+
+        readonly SystemsModelMenu _sMMenu = default;
+
+        readonly SystemsModelGame _sMGame = default;
+        readonly SystemsViewUIGame _sUIGame = new SystemsViewUIGame(default);
+        readonly SystemsViewGame _sVGame = default;
+
+        #endregion
+
+
+        void Start()
         {
-            var comW = new EcsWorld();
-            var comSysts = new EcsSystems(comW);
-            new Common.FillEntitiesSys(comSysts, ToggleScene, gameObject);
+            #region Entity
 
-            ToggleScene(SceneTypes.Menu);
+            _eVCommon = new EntitiesViewCommon(transform, testMode, out var sound, out var commonZone);
+            _eUICommon = new EntitiesViewUICommon(GameObject.Instantiate(Resources.Load<Canvas>("Canvas")), commonZone);
+            _eMCommon = new EntitiesModelCommon(testMode, sound);
+
+            _eVM = new EntitiesViewMenu();
+            _eUIM = new EntitiesViewUIMenu(_eUICommon);
+            _eMM = new EntitiesModelMenu(_eVCommon);
+
+            _eVGame = new EntitiesViewGame(out var forData, _eVCommon);
+            _eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods, _eMCommon);
+            _eUIGame = new EntitiesViewUIGame(_eUICommon);
+
+            #endregion
+
+
+            #region System
+
+            new EventsCommon(_eUICommon, _eVCommon, _eMCommon);
+            new IAPCore(_eUICommon.ShopE);
+            new MyYodo();
+            gameObject.AddComponent<PhotonSceneManager>().StartMy(ToggleScene);
+            _eVGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(_sMGame, _eMGame, _eMCommon);
+
+            #endregion
+
+
+            #region Event
+
+            new EventsMenu(_eMCommon, _eUIM);
+            new EventsUIGame(_eUICommon, _eMCommon, _sMGame, _eUIGame, _eMGame);
+
+            #endregion
         }
 
-        private void Update()
+        void Update()
         {
-            Common.DataSC.RunUpdate();
-
-            switch (CurSceneC.Scene)
+            switch (_eMCommon.SceneC.Scene)
             {
                 case SceneTypes.None:
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    Menu.DataSC.RunUpdate();
                     break;
 
                 case SceneTypes.Game:
-                    Game.DataSC.RunUpdate();
-                    DataMastSC.RunUpdate();
-                    DataViewSC.RunUpdate();
+                    _sMGame.UpdateS.Run(_sMGame, _eMGame);
+
+                    _timer += Time.deltaTime;
+                    if (_timer >= 0.04f)
+                    {
+                        _sVGame.UpdateS.Run(_sVGame, _eVGame, _eMGame, _eVCommon);
+                        _sUIGame.UpdateS.Run(_timer, _sUIGame, _eMCommon, _eUIGame, _eMGame);
+                        _timer = 0;
+                    }
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+
+
+            #region NeedReplace
+
+
+
+            #endregion
+        }
+
+
+        void FixedUpdate()
+        {
+            _sUICommon.UpdateS.Update(_eMCommon, _eVCommon, _eUICommon, _sUICommon); 
+
+            new AdLaunchS().Run(ref _eMCommon.AdC, _eMCommon.SceneC);
+
+            switch (_eMCommon.SceneC.Scene)
+            {
+                case SceneTypes.None:
+                    throw new Exception();
+
+                case SceneTypes.Menu:
+                    _sMMenu.SyncS.Run(_eUICommon, _eMCommon);
+                    _sMMenu.ConnectorMenuS.Run(_eUIM);
+                    break;
+
+                case SceneTypes.Game:
+
                     break;
 
                 default:
@@ -46,93 +154,40 @@ namespace Game
             }
         }
 
-        private void ToggleScene(SceneTypes scene)
+
+        void ToggleScene(SceneTypes newScene)
         {
-            CurSceneC.Scene = scene;
-            switch (scene)
+            if (_eMCommon.SceneC.Is(newScene)) throw new Exception("Need other scene");
+
+            _eMCommon.SceneC.Scene = newScene;
+
+            switch (newScene)
             {
                 case SceneTypes.None:
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    if (_gameW != default)
                     {
-                        _gameW.Destroy();
-                    }
+                        _eUICommon.CanvasE.MenuCanvasGOC.SetActive(true);
+                        _eUICommon.CanvasE.GameCanvasGOC.SetActive(false);
 
-                    _menuW = new EcsWorld();
-                    new Menu.FillEntitieSys(_menuW);
-                    break;
+                        _sMMenu.LaunchLikeGameAndShopS.Run(ref _eMCommon.WasLikeGameZone, ref _eMCommon.TimeStartGameC, _eUICommon.ShopE);
+                        break;
+                    }
 
                 case SceneTypes.Game:
-                    if (_menuW != default)
                     {
-                        _menuW.Destroy();
+                        _eUICommon.CanvasE.MenuCanvasGOC.SetActive(false);
+                        _eUICommon.CanvasE.GameCanvasGOC.SetActive(true);
+
+                        _eMCommon.BookC.IsOpenedBook = true;
+                        _eMCommon.BookC.PageBookT = PageBoookTypes.Main;
+
+                        _eMGame.StartGame(_eMCommon.GameModeTC);
+
+                        Rpc.SyncAllMaster();
+                        break;
                     }
-
-                    _gameW = new EcsWorld();
-                    var gameSysts = new EcsSystems(_gameW);
-
-                    gameSysts
-                        .Add(new ViewECreate())
-                        .Add(new ViewUIECreate())
-                        .Add(new DataECreate())
-                        .Add(new FillCells());
-
-
-                    #region Creating
-
-                    ToggleZoneVC.ReplaceZone(SceneTypes.Game);
-
-                    var genZone = new GameObject("GeneralZone");
-                    ToggleZoneVC.Attach(genZone.transform);
-
-
-                    SoundComC.SavedVolume = SoundComC.Volume;
-
-
-                    var backGroundGO = GameObject.Instantiate(PrefabResComC.BackGroundCollider2D,
-                        MainGoVC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGoVC.Main_GO.transform.rotation);
-
-                    var aSParent = new GameObject("AudioSource");
-                    aSParent.transform.SetParent(genZone.transform);
-
-
-
-
-
-                    new ClipResourcesVC(true);
-                    new SoundEffectC(aSParent);
-                    new BackgroundVC(backGroundGO, PhotonNetwork.IsMasterClient);
-                    new GenerZoneVC(genZone);
-                    new CameraVC(Camera.main, new Vector3(7.4f, 4.8f, -2));
-
-                    var rpc = new GameObject("RpcView");
-                    rpc.AddComponent<RpcSys>();
-                    GenerZoneVC.Attach(rpc.transform);
-                    new RpcVC(rpc);
-
-                    GenerZoneVC.Attach(backGroundGO.transform);
-
-                    #endregion
-
-
-
-                    new DataSCreate(gameSysts);
-                    new DataMasSCreate(gameSysts);
-                    new ViewDataSCreate(gameSysts);
-
-
-                    gameSysts.Add(RpcVC.RpcView_GO.GetComponent<RpcSys>());
-
-                    gameSysts.Init();
-
-                    DataViewSC.RotateAll?.Invoke();
-
-                    
-
-                    break;
-
                 default: throw new Exception();
             }
         }

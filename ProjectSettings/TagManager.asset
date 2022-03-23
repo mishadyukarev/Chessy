@@ -47,9 +47,6 @@ TagManager:
   - name: Cell
     uniqueID: 3112104483
     locked: 0
-  - name: Water
-    uniqueID: 3922430727
-    locked: 0
   - name: Environment
     uniqueID: 156443979
     locked: 0
@@ -59,17 +56,29 @@ TagManager:
   - name: Building
     uniqueID: 801937539
     locked: 0
+  - name: River
+    uniqueID: 3922430727
+    locked: 0
+  - name: BuildingFlag
+    uniqueID: 3666748625
+    locked: 0
   - name: Fire
     uniqueID: 2994770637
-    locked: 0
-  - name: Weather
-    uniqueID: 1231844777
     locked: 0
   - name: SupportVision
     uniqueID: 3301346089
     locked: 0
-  - name: SupportEnvStatic
+  - name: SupportEnvironmentStatic
     uniqueID: 4170661099
+    locked: 0
+  - name: ShieldEffect
+    uniqueID: 1898758555
+    locked: 0
+  - name: ToolWeapon
+    uniqueID: 2026191041
+    locked: 0
+  - name: NeedFood
+    uniqueID: 1049715089
     locked: 0
   - name: Unit
     uniqueID: 1121464767
@@ -85,4 +94,10 @@ TagManager:
     locked: 0
   - name: Stun
     uniqueID: 1229242323
+    locked: 0
+  - name: HeroBar
+    uniqueID: 146751987
+    locked: 0
+  - name: Weather
+    uniqueID: 1231844777
     locked: 0

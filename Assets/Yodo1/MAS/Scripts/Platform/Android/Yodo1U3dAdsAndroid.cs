@@ -183,6 +183,52 @@ namespace Yodo1.MAS
                 javaClass.CallStatic("dismissBannerAd", currentActivity, destroy);
             }
         }
+
+        public static void BannerV2(string methodName, string param)
+        {
+            if (Application.platform == RuntimePlatform.Android && javaClass != null)
+            {
+                javaClass.CallStatic(methodName, currentActivity, param);
+            }
+        }
+
+        public static int GetBannerHeight(int type)
+        {
+            if (Application.platform == RuntimePlatform.Android && javaClass != null)
+            {
+                int value = javaClass.CallStatic<int>("getBannerHeight", type);
+                return value;
+            }
+            return 0;
+        }
+        public static int GetBannerWidth(int type)
+        {
+            if (Application.platform == RuntimePlatform.Android && javaClass != null)
+            {
+                int value = javaClass.CallStatic<int>("getBannerWidth", type);
+                return value;
+            }
+            return 0;
+        }
+
+        public static float GetBannerHeightInPixels(int type)
+        {
+            if (Application.platform == RuntimePlatform.Android && javaClass != null)
+            {
+                float value = javaClass.CallStatic<float>("getBannerHeightInPixels", type);
+                return value;
+            }
+            return 0;
+        }
+        public static float GetBannerWidthInPixels(int type)
+        {
+            if (Application.platform == RuntimePlatform.Android && javaClass != null)
+            {
+                float value = javaClass.CallStatic<float>("getBannerWidthInPixels", type);
+                return value;
+            }
+            return 0;
+        }
 #endif
     }
 }

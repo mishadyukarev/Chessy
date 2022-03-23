@@ -8,11 +8,14 @@
 #import "Yodo1MasBridge.h"
 #import "Yodo1Mas.h"
 #import "Yodo1MasUnityTool.h"
+#import "Yodo1MasBannerAdView.h"
+#import "Yodo1MasBannerHelper.h"
+#import "UnityAppController.h"
 
 static NSString* kYodo1MasGameObject;
 static NSString* kYodo1MasMethodName;
 
-@interface Yodo1MasBridge : NSObject <Yodo1MasRewardAdDelegate, Yodo1MasInterstitialAdDelegate, Yodo1MasBannerAdDelegate>
+@interface Yodo1MasBridge : NSObject <Yodo1MasRewardAdDelegate, Yodo1MasInterstitialAdDelegate, Yodo1MasBannerAdDelegate, Yodo1MasBannerAdViewDelegate>
 
 + (UIViewController*)getRootViewController;
 
@@ -46,6 +49,20 @@ static NSString* kYodo1MasMethodName;
 - (void)showBannerAdWithPlacement:(NSString *)placement align:(Yodo1MasAdBannerAlign)align offset:(CGPoint)offset;
 - (void)dismissBannerAd;
 - (void)dismissBannerAdWithDestroy:(BOOL)destroy;
+
+- (void)loadBannerAdV2:(NSString *)param;
+- (void)showBannerAdV2:(NSString *)param;
+- (void)hideBannerAdV2:(NSString *)param;
+- (void)destroyBannerAdV2:(NSString *)param;
+- (CGFloat)getBannerWidthInPixels;
+- (CGFloat)getBannerHeightInPixels;
+
+@property (nonatomic, strong) Yodo1MasBannerAdView *bannerView;
+@property (nonatomic, assign) Yodo1MasBannerAdSize adSize;
+@property (nonatomic, assign) NSInteger adPosition;
+@property (nonatomic, assign) CGPoint customPosition;
+@property (nonatomic, assign) NSString *adPlacement;
+
 @end
 
 @implementation Yodo1MasBridge
@@ -65,6 +82,12 @@ static NSString* kYodo1MasMethodName;
     [Yodo1Mas sharedInstance].bannerAdDelegate = self;
     
     [[Yodo1Mas sharedInstance] initWithAppId:appId successful:successful fail:fail];
+    
+    if (![UIDevice currentDevice].generatesDeviceOrientationNotifications) {
+        [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDeviceOrientationChange:)
+                                         name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (BOOL)isRewardedAdLoaded {
@@ -120,6 +143,174 @@ static NSString* kYodo1MasMethodName;
 - (void)dismissBannerAdWithDestroy:(BOOL)destroy
 {
     [[Yodo1Mas sharedInstance] dismissBannerAdWithDestroy:destroy];
+}
+
+- (void)loadBannerAdV2:(NSString *)jsonString {
+    NSError * error = nil;
+    id dict = [Yodo1MasBridge JSONObjectWithString:jsonString error:&error];
+    if (error) {
+        return;
+    }
+    
+    self.adSize = Yodo1MasBannerAdSizeBanner;
+    if (dict[@"adSize"]) {
+        int size = [dict[@"adSize"] intValue];
+        if (size == 0) {
+            self.adSize = Yodo1MasBannerAdSizeBanner;
+        } else if (size == 1) {
+            self.adSize = Yodo1MasBannerAdSizeLargeBanner;
+        } else if (size == 2) {
+            self.adSize = Yodo1MasBannerAdSizeIABMediumRectangle;
+        } else if (size == 3) {
+            self.adSize = Yodo1MasBannerAdSizeSmartBanner;
+        } else if (size == 4) {
+            self.adSize = Yodo1MasBannerAdSizeAdaptiveBanner;
+        }
+    }
+    self.adPosition = Yodo1MasAdBannerAlignBottom | Yodo1MasAdBannerAlignHorizontalCenter;
+    if (dict[@"adPosition"]) {
+        self.adPosition = [dict[@"adPosition"] integerValue];
+    }
+    
+    int customAdPositionX = 0;
+    if (dict[@"customAdPositionX"]) {
+        customAdPositionX = [dict[@"customAdPositionX"] intValue];
+    }
+    
+    int customAdPositionY = 0;
+    if (dict[@"customAdPositionY"]) {
+        customAdPositionY = [dict[@"customAdPositionY"] intValue];
+    }
+    
+    self.adPlacement = @"";
+    if (dict[@"adPlacement"]) {
+        self.adPlacement = dict[@"adPlacement"];
+    }
+    
+    if (self.bannerView == nil) {
+        self.bannerView = [[Yodo1MasBannerAdView alloc] init];
+        [self.bannerView setAdSize:self.adSize];
+        if (self.adPlacement != nil && self.adPlacement.length > 0) {
+            [self.bannerView setAdPlacement:self.adPlacement];
+        }
+        self.bannerView.adDelegate = self;
+        [self.bannerView loadAd];
+    }
+    self.customPosition = CGPointMake(customAdPositionX/UIScreen.mainScreen.scale, customAdPositionY/UIScreen.mainScreen.scale);
+    
+    UnityAppController * controller = GetAppController();
+    [controller.rootViewController.view addSubview:self.bannerView];
+    [self adjustFrame];
+}
+
+- (void)handleDeviceOrientationChange:(NSNotification *)notification {
+    
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationLandscapeLeft:
+        case UIDeviceOrientationLandscapeRight:
+        case UIDeviceOrientationPortrait:
+        case UIDeviceOrientationPortraitUpsideDown:
+            [self adjustFrame];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)adjustFrame {
+    if (self.bannerView) {
+        if (self.customPosition.x > 0 || self.customPosition.y > 0) {
+            [[Yodo1MasBannerHelper sharedInstance] adjustFrame:self.bannerView adPosition:Yodo1MasAdBannerAlignLeft | Yodo1MasAdBannerAlignTop offset:self.customPosition];
+        } else {
+            [[Yodo1MasBannerHelper sharedInstance] adjustFrame:self.bannerView adPosition:self.adPosition offset:CGPointMake(0, 0)];
+        }
+    }
+}
+
+- (void)showBannerAdV2:(NSString *)param {
+    if (self.bannerView) {
+        [self.bannerView removeFromSuperview];
+        UnityAppController * controller = GetAppController();
+        [controller.rootViewController.view addSubview:self.bannerView];
+        [self adjustFrame];
+    }
+}
+- (void)hideBannerAdV2:(NSString *)param {
+    if (self.bannerView) {
+        [self.bannerView removeFromSuperview];
+    }
+}
+- (void)destroyBannerAdV2:(NSString *)param {
+    if (self.bannerView) {
+        [self.bannerView removeFromSuperview];
+        [self.bannerView destroy];
+        self.bannerView = nil;
+    }
+}
+
+- (CGFloat)getBannerWidth:(int) type {
+    return [Yodo1MasBanner sizeFromAdSize:(Yodo1MasBannerAdSize)type].width;
+}
+
+- (CGFloat)getBannerHeight:(int) type {
+    return [Yodo1MasBanner sizeFromAdSize:(Yodo1MasBannerAdSize)type].height;
+}
+
+- (CGFloat)getBannerWidthInPixels:(int) type {
+    return [Yodo1MasBanner pixelsFromAdSize:(Yodo1MasBannerAdSize)type].width;
+}
+
+- (CGFloat)getBannerHeightInPixels:(int) type {
+    return [Yodo1MasBanner pixelsFromAdSize:(Yodo1MasBannerAdSize)type].height;
+}
+#pragma mark - Banner V2
+- (void)onBannerAdLoaded:(Yodo1MasBannerAdView *)banner {
+    [self adjustFrame];
+
+    Yodo1MasAdEvent *event = [[Yodo1MasAdEvent alloc] initWithCode:Yodo1MasAdEventCodeLoaded type:Yodo1MasAdTypeBanner];
+    if (event == nil) {
+        return;
+    }
+    NSString* data = [Yodo1MasBridge stringWithJSONObject:event.getJsonObject error:nil];
+    NSString* msg = [Yodo1MasBridge getSendMessage:1 data:data];
+    UnitySendMessage([kYodo1MasGameObject cStringUsingEncoding:NSUTF8StringEncoding], [kYodo1MasMethodName cStringUsingEncoding:NSUTF8StringEncoding], [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+- (void)onBannerAdFailedToLoad:(Yodo1MasBannerAdView *)banner withError:(Yodo1MasError *)error {
+    Yodo1MasAdEvent *event = [[Yodo1MasAdEvent alloc] initWithCode:(Yodo1MasAdEventCode)1004 type:Yodo1MasAdTypeBanner error:error];
+    if (event == nil) {
+        return;
+    }
+    NSString* data = [Yodo1MasBridge stringWithJSONObject:event.getJsonObject error:nil];
+    NSString* msg = [Yodo1MasBridge getSendMessage:1 data:data];
+    UnitySendMessage([kYodo1MasGameObject cStringUsingEncoding:NSUTF8StringEncoding], [kYodo1MasMethodName cStringUsingEncoding:NSUTF8StringEncoding], [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+- (void)onBannerAdOpened:(Yodo1MasBannerAdView *)banner {
+    Yodo1MasAdEvent *event = [[Yodo1MasAdEvent alloc] initWithCode:Yodo1MasAdEventCodeOpened type:Yodo1MasAdTypeBanner];
+    if (event == nil) {
+        return;
+    }
+    NSString* data = [Yodo1MasBridge stringWithJSONObject:event.getJsonObject error:nil];
+    NSString* msg = [Yodo1MasBridge getSendMessage:1 data:data];
+    UnitySendMessage([kYodo1MasGameObject cStringUsingEncoding:NSUTF8StringEncoding], [kYodo1MasMethodName cStringUsingEncoding:NSUTF8StringEncoding], [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+- (void)onBannerAdClosed:(Yodo1MasBannerAdView *)banner {
+//    Yodo1MasAdEvent *event = [[Yodo1MasAdEvent alloc] initWithCode:Yodo1MasAdEventCodeClosed type:Yodo1MasAdTypeBanner];
+//    if (event == nil) {
+//        return;
+//    }
+//    NSString* data = [Yodo1MasBridge stringWithJSONObject:event.getJsonObject error:nil];
+//    NSString* msg = [Yodo1MasBridge getSendMessage:1 data:data];
+//    UnitySendMessage([kYodo1MasGameObject cStringUsingEncoding:NSUTF8StringEncoding], [kYodo1MasMethodName cStringUsingEncoding:NSUTF8StringEncoding], [msg cStringUsingEncoding:NSUTF8StringEncoding]);
+}
+- (void)onBannerAdFailedToOpen:(Yodo1MasBannerAdView *)banner withError:(Yodo1MasError *)error {
+    Yodo1MasAdEvent *event = [[Yodo1MasAdEvent alloc] initWithCode:(Yodo1MasAdEventCode)1005 type:Yodo1MasAdTypeBanner error:error];
+    if (event == nil) {
+        return;
+    }
+    NSString* data = [Yodo1MasBridge stringWithJSONObject:event.getJsonObject error:nil];
+    NSString* msg = [Yodo1MasBridge getSendMessage:1 data:data];
+    UnitySendMessage([kYodo1MasGameObject cStringUsingEncoding:NSUTF8StringEncoding], [kYodo1MasMethodName cStringUsingEncoding:NSUTF8StringEncoding], [msg cStringUsingEncoding:NSUTF8StringEncoding]);
 }
 
 #pragma mark - Yodo1MasAdDelegate
@@ -382,13 +573,13 @@ void UnityShowBannerAdWithAlign(int align)
 
 void UnityShowBannerAdWithAlignAndOffset(int align, int offsetX, int offsetY)
 {
-    [[Yodo1MasBridge sharedInstance] showBannerAdWithAlign:(Yodo1MasAdBannerAlign)align offset:CGPointMake(offsetX, offsetY)];
+    [[Yodo1MasBridge sharedInstance] showBannerAdWithAlign:(Yodo1MasAdBannerAlign)align offset:CGPointMake(offsetX/UIScreen.mainScreen.scale, offsetY/UIScreen.mainScreen.scale)];
 }
 
 void UnityShowBannerAdWithPlacementAndAlignAndOffset(const char* placementId, int align, int offsetX, int offsetY)
 {
     NSString* m_placementId = Yodo1MasCreateNSString(placementId);
-    [[Yodo1MasBridge sharedInstance] showBannerAdWithPlacement:m_placementId align:(Yodo1MasAdBannerAlign)align offset:CGPointMake(offsetX, offsetY)];
+    [[Yodo1MasBridge sharedInstance] showBannerAdWithPlacement:m_placementId align:(Yodo1MasAdBannerAlign)align offset:CGPointMake(offsetX/UIScreen.mainScreen.scale, offsetY/UIScreen.mainScreen.scale)];
 }
 
 void UnityDismissBannerAd()
@@ -399,6 +590,42 @@ void UnityDismissBannerAd()
 void UnityDismissBannerAdWithDestroy(bool destroy)
 {
     [[Yodo1MasBridge sharedInstance] dismissBannerAdWithDestroy:destroy];
+}
+
+#pragma mark - Unity Banner V2
+void UnityLoadBannerAdV2(const char* param) {
+    NSString* m_param = Yodo1MasCreateNSString(param);
+    [[Yodo1MasBridge sharedInstance] loadBannerAdV2:m_param];
+}
+void UnityShowBannerAdV2(const char* param) {
+    NSString* m_param = Yodo1MasCreateNSString(param);
+    [[Yodo1MasBridge sharedInstance] showBannerAdV2:m_param];
+}
+void UnityHideBannerAdV2(const char* param) {
+    NSString* m_param = Yodo1MasCreateNSString(param);
+    [[Yodo1MasBridge sharedInstance] hideBannerAdV2:m_param];
+}
+void UnityDestroyBannerAdV2(const char* param) {
+    NSString* m_param = Yodo1MasCreateNSString(param);
+    [[Yodo1MasBridge sharedInstance] destroyBannerAdV2:m_param];
+}
+
+int UnityGetBannerWidthV2(int type) {
+    return (int)[[Yodo1MasBridge sharedInstance] getBannerWidth:type];
+}
+
+int UnityGetBannerHeightV2(int type) {
+    return (int)[[Yodo1MasBridge sharedInstance] getBannerHeight:type];
+}
+
+float UnityGetBannerWidthInPixelsV2(int type) {
+    float width =  [[Yodo1MasBridge sharedInstance] getBannerWidthInPixels:type];
+    return width;
+}
+
+float UnityGetBannerHeightInPixelsV2(int type) {
+    float height = [[Yodo1MasBridge sharedInstance] getBannerHeightInPixels:type];
+    return height;
 }
 
 #pragma mark - Unity Interstitial
