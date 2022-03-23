@@ -1,19 +1,27 @@
-﻿using Photon.Pun;
+﻿using Chessy.Common.Entity;
+using Photon.Pun;
 using System;
 //using Yodo1.MAS;
 
 namespace Chessy.Common
 {
-    public struct AdLaunchS
+    public struct AdLaunchS : IEcsRunSystem
     {
-        public void Run(ref AdC adC, in SceneC sceneC)
+        readonly EntitiesModelCommon _eMCommon;
+
+        public AdLaunchS(in EntitiesModelCommon eMCommon)
         {
-            var difTime = DateTime.Now - adC.LastTimeAd;
+            _eMCommon = eMCommon;
+        }
+
+        public void Run()
+        {
+            var difTime = DateTime.Now - _eMCommon.AdC.LastTimeAd;
 
 
-            if (!ShopC.HasReceipt(ShopC.PREMIUM_NAME))
+            if (!_eMCommon.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME).hasReceipt)
             {
-                if (PhotonNetwork.OfflineMode || sceneC.Is(SceneTypes.Menu))
+                if (PhotonNetwork.OfflineMode || _eMCommon.SceneC.Is(SceneTypes.Menu))
                 {
                     if (difTime.Minutes >= AdC.MINUTES_FOR_AD)
                     {

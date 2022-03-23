@@ -27,12 +27,12 @@ namespace Chessy.Game
 
 
 
-        public EntitiesViewGame(out List<object> forData, EntitiesViewCommon eVC)
+        public EntitiesViewGame(out List<object> forData, in EntitiesViewCommon eVCommon)
         {
-            eVC.ToggleZoneGOC.GameObject = new GameObject(NameConst.GAME);
+            eVCommon.ToggleZoneGOC.GameObject = new GameObject(NameConst.GAME);
 
             var genZone = new GameObject("GeneralZone");
-            genZone.transform.SetParent(eVC.ToggleZoneGOC.Transform);
+            genZone.transform.SetParent(eVCommon.ToggleZoneGOC.Transform);
 
 
 
@@ -81,7 +81,7 @@ namespace Chessy.Game
                     //: ResourceSpriteEs.Sprite(false).SpriteC.Sprite;
 
 
-                    var cell = GameObject.Instantiate(Resources.Load<GameObject>("CellPrefab"), eVC.MainGOC.Transform.position + new Vector3(x, y, eVC.MainGOC.Transform.position.z), eVC.MainGOC.Transform.rotation);
+                    var cell = GameObject.Instantiate(Resources.Load<GameObject>("CellPrefab"), eVCommon.MainGOC.Transform.position + new Vector3(x, y, eVCommon.MainGOC.Transform.position.z), eVCommon.MainGOC.Transform.rotation);
                     cell.name = "CellMain";
                     //cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
 

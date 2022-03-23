@@ -13,8 +13,10 @@ namespace Chessy.Common.View.UI
         public readonly ShopUIE ShopE;
         public readonly SettingsUIE SettingsE;
 
-        public EntitiesViewUICommon(in Canvas canvas, in Transform commonZone)
+        public EntitiesViewUICommon(in Transform commonZone)
         {
+            var canvas = GameObject.Instantiate(Resources.Load<Canvas>("Canvas"));
+
             canvas.name = "Canvas";
             canvas.transform.SetParent(commonZone);
             CanvasE = new CanvasUIE(canvas);

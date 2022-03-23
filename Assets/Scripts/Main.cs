@@ -13,7 +13,6 @@ using Chessy.Game.System.View;
 using Chessy.Game.System.View.UI;
 using Chessy.Menu;
 using Chessy.Menu.View.UI;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +30,7 @@ namespace Chessy
             #region Entity
 
             var eVCommon = new EntitiesViewCommon(transform, TestMode, out var sound, out var commonZone);
-            var eUICommon = new EntitiesViewUICommon(GameObject.Instantiate(Resources.Load<Canvas>("Canvas")), commonZone);
+            var eUICommon = new EntitiesViewUICommon(commonZone);
             var eMCommon = new EntitiesModelCommon(TestMode, sound);
 
             var eVMenu = new EntitiesViewMenu();
@@ -50,19 +49,19 @@ namespace Chessy
             var sMCommon = new SystemsModelCommon(eMCommon);
             var sUICommon = new SystemsViewUICommon(eMCommon, eVCommon, eUICommon);
 
-            var _sMMenu = new SystemsModelMenu(eUIMenu, eUICommon, eMCommon);
+            var sMMenu = new SystemsModelMenu(eUIMenu, eUICommon, eMCommon);
 
             var sMGame = new SystemsModelGame(eMGame, eMCommon);
             var sUIGame = new SystemsViewUIGame(eMCommon, eUIGame, eMGame);
             var sVGame = new SystemsViewGame(eVGame, eMGame, eVCommon, eMCommon);
 
-   
+
             #region NeedReplace
 
             var rpc = eVGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sMGame, eMGame, eMCommon);
 
             new EventsCommon(eUICommon, eVCommon, eMCommon);
-            new IAPCore(eUICommon.ShopE);
+            new IAPCore(eUICommon.ShopE, eMCommon);
             new MyYodo();
 
             var togglerScenes = new List<IToggleScene>()
@@ -73,7 +72,7 @@ namespace Chessy
                 rpc,
             };
 
-            gameObject.AddComponent<PhotonSceneManager>().StartMy(togglerScenes);
+            gameObject.AddComponent<PhotonSceneManager>().StartMy(rpc, togglerScenes);
 
             #endregion
 
@@ -85,7 +84,7 @@ namespace Chessy
                 sMGame,
                 sVGame,
                 sUIGame,
-                _sMMenu,
+                sMMenu,
             };
 
 

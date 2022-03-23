@@ -9,10 +9,12 @@ namespace Chessy.Common
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
+        Rpc _rpc;
         List<IToggleScene> _toggleScene;
 
-        public void StartMy(in List<IToggleScene> toggleScene)
+        public void StartMy(in Rpc rpc, in List<IToggleScene> toggleScene)
         {
+            _rpc = rpc;
             _toggleScene = toggleScene;
         }
 
@@ -64,7 +66,7 @@ namespace Chessy.Common
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            Rpc.SyncAllMaster();
+            _rpc.SyncAllMaster();
         }
 
         //public override sealed void OnDisconnectedFromPhoton()

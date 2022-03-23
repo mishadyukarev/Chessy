@@ -8,9 +8,9 @@ namespace Chessy.Menu.View.UI
         public readonly CenterUIEs CenterE;
         public readonly BackUIE BackE;
 
-        public EntitiesViewUIMenu(in EntitiesViewUICommon eUIC)
+        public EntitiesViewUIMenu(in EntitiesViewUICommon eUICcommon)
         {
-            var menuZoneUI = eUIC.CanvasE.MenuCanvasGOC.Transform;
+            var menuZoneUI = eUICcommon.CanvasE.MenuCanvasGOC.Transform;
 
             var centerZoneUI = menuZoneUI.Find("Center+");
             CenterE = new CenterUIEs(centerZoneUI);

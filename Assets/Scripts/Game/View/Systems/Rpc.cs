@@ -2,7 +2,6 @@
 using Chessy.Common.Entity;
 using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
-using Chessy.Game.EventsUI;
 using Chessy.Game.System.Model;
 using Chessy.Game.System.Model.Master;
 using Chessy.Game.Values;
@@ -19,9 +18,9 @@ namespace Chessy.Game
 {
     public sealed class Rpc : MonoBehaviour, IToggleScene
     {
-        static EntitiesModelGame _e;
-        static SystemsModelGame _sMGame;
-        static EntitiesModelCommon _eMC;
+        EntitiesModelGame _eMGame;
+        SystemsModelGame _sMGame;
+        EntitiesModelCommon _eMCommon;
 
         int _idx_cur;
 
@@ -38,11 +37,11 @@ namespace Chessy.Game
             }
         }
 
-        public Rpc GiveData(in SystemsModelGame sMM, in EntitiesModelGame ents, in EntitiesModelCommon eMC)
+        public Rpc GiveData(in SystemsModelGame sMGame, in EntitiesModelGame eMGame, in EntitiesModelCommon eMCommon)
         {
-            _sMGame = sMM;
-            _e = ents;
-            _eMC = eMC;
+            _sMGame = sMGame;
+            _eMGame = eMGame;
+            _eMCommon = eMCommon;
 
             return this;
         }
@@ -61,7 +60,7 @@ namespace Chessy.Game
 
             var sender = infoFrom.Sender;
             var obj = objects[_idx_cur++];
-            var whoseMove = _e.WhoseMove.Player;
+            var whoseMove = _eMGame.WhoseMove.Player;
 
             if (obj is byte idx)
             {
@@ -69,7 +68,7 @@ namespace Chessy.Game
 
                 if (obj_1 is ToolWeaponTypes twT)
                 {
-                    _sMGame.GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], idx, sender, _e);
+                    _sMGame.GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], idx, sender, _eMGame);
                 }
             }
 
@@ -78,21 +77,21 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        _sMGame.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender, _sMGame, _e);
+                        _sMGame.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender, _sMGame, _eMGame);
                         break;
 
                     case AbilityTypes.FirePawn:
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= StepValues.FIRE_PAWN)
+                            if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.FIRE_PAWN)
                             {
-                                if (_e.AdultForestC(idx_0).HaveAnyResources)
+                                if (_eMGame.AdultForestC(idx_0).HaveAnyResources)
                                 {
-                                    _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
+                                    _eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
-                                    _e.HaveFire(idx_0) = true;
-                                    _e.UnitStepC(idx_0).Steps -= StepValues.FIRE_PAWN;
+                                    _eMGame.HaveFire(idx_0) = true;
+                                    _eMGame.UnitStepC(idx_0).Steps -= StepValues.FIRE_PAWN;
                                 }
 
                                 else
@@ -103,7 +102,7 @@ namespace Chessy.Game
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -112,16 +111,16 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
+                            if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
                             {
-                                _e.HaveFire(idx_0) = false;
+                                _eMGame.HaveFire(idx_0) = false;
 
-                                _e.UnitStepC(idx_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
+                                _eMGame.UnitStepC(idx_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -130,42 +129,42 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= StepValues.SEED_PAWN)
+                            if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.SEED_PAWN)
                             {
-                                if (_e.BuildingTC(idx_0).HaveBuilding && !_e.BuildingTC(idx_0).Is(BuildingTypes.Camp))
+                                if (_eMGame.BuildingTC(idx_0).HaveBuilding && !_eMGame.BuildingTC(idx_0).Is(BuildingTypes.Camp))
                                 {
-                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
+                                    _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                                 }
 
                                 else
                                 {
-                                    if (!_e.AdultForestC(idx_0).HaveAnyResources)
+                                    if (!_eMGame.AdultForestC(idx_0).HaveAnyResources)
                                     {
-                                        if (!_e.YoungForestC(idx_0).HaveAnyResources)
+                                        if (!_eMGame.YoungForestC(idx_0).HaveAnyResources)
                                         {
-                                            _e.RpcPoolEs.SoundToGeneral(sender, abilityT);
+                                            _eMGame.RpcPoolEs.SoundToGeneral(sender, abilityT);
 
-                                            _e.YoungForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                                            _eMGame.YoungForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                                            _e.UnitStepC(idx_0).Steps -= StepValues.SEED_PAWN;
+                                            _eMGame.UnitStepC(idx_0).Steps -= StepValues.SEED_PAWN;
                                         }
 
                                         else
                                         {
-                                            _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
+                                            _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                                         }
                                     }
 
                                     else
                                     {
-                                        _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                                        _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                                     }
                                 }
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -174,11 +173,11 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= StepValues.SET_FARM)
+                            if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.SET_FARM)
                             {
-                                if (!_e.BuildingTC(idx_0).HaveBuilding || _e.BuildingTC(idx_0).Is(BuildingTypes.Camp))
+                                if (!_eMGame.BuildingTC(idx_0).HaveBuilding || _eMGame.BuildingTC(idx_0).Is(BuildingTypes.Camp))
                                 {
-                                    if (!_e.AdultForestC(idx_0).HaveAnyResources)
+                                    if (!_eMGame.AdultForestC(idx_0).HaveAnyResources)
                                     {
                                         var needRes = new Dictionary<ResourceTypes, float>();
                                         var canBuild = true;
@@ -194,46 +193,46 @@ namespace Chessy.Game
                                                 needRes.Add(resT, 0);
                                             }
 
-                                            if (needRes[resT] > _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                                            if (needRes[resT] > _eMGame.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
                                         }
 
                                         if (canBuild)
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             {
-                                                _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                                                _eMGame.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                                             }
 
-                                            _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
+                                            _eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
 
-                                            _e.YoungForestC(idx_0).Resources = 0;
+                                            _eMGame.YoungForestC(idx_0).Resources = 0;
 
-                                            new BuildS(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, idx_0, _e);
+                                            new BuildS(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, idx_0, _eMGame);
 
-                                            _e.UnitStepC(idx_0).Steps -= StepValues.SET_FARM;
+                                            _eMGame.UnitStepC(idx_0).Steps -= StepValues.SET_FARM;
                                         }
 
                                         else
                                         {
-                                            _e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                                            _eMGame.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
                                         }
                                     }
 
                                     else
                                     {
-                                        _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                                        _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                                     }
                                 }
 
                                 else
                                 {
-                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                                    _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                                 }
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -242,18 +241,18 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).HaveAnySteps)
+                            if (_eMGame.UnitStepC(idx_0).HaveAnySteps)
                             {
-                                _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                                _eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-                                new DestroyBuildingS(1f, _e.UnitPlayerTC(idx_0).Player, idx_0, _e);
+                                new DestroyBuildingS(1f, _eMGame.UnitPlayerTC(idx_0).Player, idx_0, _eMGame);
 
-                                _e.UnitStepC(idx_0).Steps -= StepValues.DESTROY_BUILDING;
+                                _eMGame.UnitStepC(idx_0).Steps -= StepValues.DESTROY_BUILDING;
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -263,21 +262,21 @@ namespace Chessy.Game
                             var idx_from = (byte)objects[_idx_cur++];
                             var idx_to = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitEs(idx_from).ForArson.Contains(idx_to))
+                            if (_eMGame.UnitEs(idx_from).ForArson.Contains(idx_to))
                             {
-                                if (_e.UnitStepC(idx_from).Steps >= StepValues.ARCHER_FIRE)
+                                if (_eMGame.UnitStepC(idx_from).Steps >= StepValues.ARCHER_FIRE)
                                 {
 
-                                    _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
+                                    _eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                                    _e.UnitStepC(idx_from).Steps -= StepValues.ARCHER_FIRE;
-                                    _e.HaveFire(idx_to) = true;
+                                    _eMGame.UnitStepC(idx_from).Steps -= StepValues.ARCHER_FIRE;
+                                    _eMGame.HaveFire(idx_to) = true;
 
                                 }
 
                                 else
                                 {
-                                    _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                    _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
                         }
@@ -287,41 +286,41 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (!_e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
+                            if (!_eMGame.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
                             {
-                                if (_e.UnitStepC(idx_0).Steps >= StepValues.GROW_ADULT_FOREST)
+                                if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.GROW_ADULT_FOREST)
                                 {
-                                    if (_e.YoungForestC(idx_0).HaveAnyResources)
+                                    if (_eMGame.YoungForestC(idx_0).HaveAnyResources)
                                     {
-                                        _e.YoungForestC(idx_0).Resources = 0;
+                                        _eMGame.YoungForestC(idx_0).Resources = 0;
 
-                                        _e.AdultForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                                        _eMGame.AdultForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                                        _e.UnitStepC(idx_0).Steps -= StepValues.GROW_ADULT_FOREST;
+                                        _eMGame.UnitStepC(idx_0).Steps -= StepValues.GROW_ADULT_FOREST;
 
-                                        _e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
+                                        _eMGame.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
 
 
-                                        foreach (var idx_1 in _e.CellEs(idx_0).IdxsAround)
+                                        foreach (var idx_1 in _eMGame.CellEs(idx_0).IdxsAround)
                                         {
-                                            if (_e.YoungForestC(idx_1).HaveAnyResources)
+                                            if (_eMGame.YoungForestC(idx_1).HaveAnyResources)
                                             {
-                                                _e.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+                                                _eMGame.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                                             }
                                         }
 
 
 
-                                        _e.RpcPoolEs.SoundToGeneral(sender, abilityT);
+                                        _eMGame.RpcPoolEs.SoundToGeneral(sender, abilityT);
 
 
-                                        foreach (var idxC_1 in _e.CellEs(idx_0).AroundCellIdxsC)
+                                        foreach (var idxC_1 in _eMGame.CellEs(idx_0).AroundCellIdxsC)
                                         {
                                             var idx_1 = idxC_1.Idx;
 
-                                            if (_e.UnitTC(idx_1).HaveUnit)
+                                            if (_eMGame.UnitTC(idx_1).HaveUnit)
                                             {
-                                                if (_e.UnitPlayerTC(idx_1).Is(_e.UnitPlayerTC(idx_0).Player))
+                                                if (_eMGame.UnitPlayerTC(idx_1).Is(_eMGame.UnitPlayerTC(idx_0).Player))
                                                 {
                                                     //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have)
                                                     //{
@@ -333,15 +332,15 @@ namespace Chessy.Game
 
                                     }
 
-                                    else _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
+                                    else _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
                                 }
 
-                                else _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                else _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                                _eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
                             }
                         }
                         break;
@@ -351,40 +350,40 @@ namespace Chessy.Game
                             var idx_from = (byte)objects[_idx_cur++];
                             var idx_to = (byte)objects[_idx_cur++];
 
-                            if (!_e.UnitEs(idx_from).CoolDownC(abilityT).HaveCooldown)
+                            if (!_eMGame.UnitEs(idx_from).CoolDownC(abilityT).HaveCooldown)
                             {
-                                if (_e.AdultForestC(idx_to).HaveAnyResources)
+                                if (_eMGame.AdultForestC(idx_to).HaveAnyResources)
                                 {
-                                    if (_e.UnitStepC(idx_from).Steps >= StepValues.STUN_ELFEMALE)
+                                    if (_eMGame.UnitStepC(idx_from).Steps >= StepValues.STUN_ELFEMALE)
                                     {
-                                        if (!_e.UnitPlayerTC(idx_from).Is(_e.UnitPlayerTC(idx_to).Player))
+                                        if (!_eMGame.UnitPlayerTC(idx_from).Is(_eMGame.UnitPlayerTC(idx_to).Player))
                                         {
-                                            _e.UnitEffectStunC(idx_to).Stun = StunValues.ELFEMALE;
-                                            _e.UnitEs(idx_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                                            _eMGame.UnitEffectStunC(idx_to).Stun = StunValues.ELFEMALE;
+                                            _eMGame.UnitEs(idx_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
-                                            _e.UnitStepC(idx_from).Steps -= StepValues.STUN_ELFEMALE;
+                                            _eMGame.UnitStepC(idx_from).Steps -= StepValues.STUN_ELFEMALE;
 
-                                            _e.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
+                                            _eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
 
 
-                                            foreach (var idx_1 in _e.CellEs(idx_to).IdxsAround)
+                                            foreach (var idx_1 in _eMGame.CellEs(idx_to).IdxsAround)
                                             {
-                                                if (_e.AdultForestC(idx_1).HaveAnyResources)
+                                                if (_eMGame.AdultForestC(idx_1).HaveAnyResources)
                                                 {
-                                                    if (_e.UnitTC(idx_1).HaveUnit && _e.UnitPlayerTC(idx_1).Is(_e.UnitPlayerTC(idx_to).Player))
+                                                    if (_eMGame.UnitTC(idx_1).HaveUnit && _eMGame.UnitPlayerTC(idx_1).Is(_eMGame.UnitPlayerTC(idx_to).Player))
                                                     {
-                                                        _e.UnitEffectStunC(idx_1).Stun = StunValues.ELFEMALE;
+                                                        _eMGame.UnitEffectStunC(idx_1).Stun = StunValues.ELFEMALE;
                                                     }
                                                 }
                                             }
                                         }
                                     }
 
-                                    else _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                    else _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
 
-                            else _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                            else _eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
                         }
                         break;
 
@@ -392,33 +391,33 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= StepValues.Need(abilityT))
+                            if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.Need(abilityT))
                             {
-                                _e.UnitIsRightArcherC(idx_0).ToggleSide();
+                                _eMGame.UnitIsRightArcherC(idx_0).ToggleSide();
 
-                                _e.UnitStepC(idx_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
+                                _eMGame.UnitStepC(idx_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
 
-                                _e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
+                                _eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
                             }
 
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
 
                     //Snowy
                     case AbilityTypes.ChangeDirectionWind:
-                        new ChangeDirectionWindMS((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender, _e);
+                        new ChangeDirectionWindMS((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender, _eMGame);
                         break;
 
                     case AbilityTypes.IncreaseWindSnowy:
-                        _sMGame.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender, _e);
+                        _sMGame.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender, _eMGame);
                         break;
 
                     case AbilityTypes.DecreaseWindSnowy:
-                        _sMGame.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender, _e);
+                        _sMGame.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender, _eMGame);
                         break;
 
 
@@ -427,25 +426,25 @@ namespace Chessy.Game
                             var idx_from = (byte)objects[_idx_cur++];
                             var idx_to = (byte)objects[_idx_cur++];
 
-                            if (!_e.UnitTC(idx_to).HaveUnit)
+                            if (!_eMGame.UnitTC(idx_to).HaveUnit)
                             {
-                                if (!_e.UnitEs(idx_from).CoolDownC(abilityT).HaveCooldown)
+                                if (!_eMGame.UnitEs(idx_from).CoolDownC(abilityT).HaveCooldown)
                                 {
-                                    if (_e.UnitStepC(idx_from).Steps >= StepValues.RESURRECT)
+                                    if (_eMGame.UnitStepC(idx_from).Steps >= StepValues.RESURRECT)
                                     {
-                                        _e.UnitEs(idx_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
-                                        _e.UnitStepC(idx_from).Steps -= StepValues.RESURRECT;
+                                        _eMGame.UnitEs(idx_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                                        _eMGame.UnitStepC(idx_from).Steps -= StepValues.RESURRECT;
 
-                                        if (_e.LastDiedE(idx_to).UnitTC.HaveUnit)
+                                        if (_eMGame.LastDiedE(idx_to).UnitTC.HaveUnit)
                                         {
                                             //e.UnitE(idx_to).SetNew((e.LastDiedUnitTC(idx_to).Unit, e.LastDiedLevelTC(idx_to).Level, e.LastDiedPlayerTC(idx_to).Player, ConditionUnitTypes.None, false), e);
-                                            _e.LastDiedUnitTC(idx_to).Unit = UnitTypes.None;
+                                            _eMGame.LastDiedUnitTC(idx_to).Unit = UnitTypes.None;
                                         }
                                     }
 
                                     else
                                     {
-                                        _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                        _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                     }
                                 }
                             }
@@ -456,43 +455,43 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (!_e.BuildingTC(idx_0).HaveBuilding)
+                            if (!_eMGame.BuildingTC(idx_0).HaveBuilding)
                             {
-                                if (!_e.AdultForestC(idx_0).HaveAnyResources)
+                                if (!_eMGame.AdultForestC(idx_0).HaveAnyResources)
                                 {
-                                    _e.YoungForestC(idx_0).Resources = 0;
-                                    _e.FertilizeC(idx_0).Resources = 0;
+                                    _eMGame.YoungForestC(idx_0).Resources = 0;
+                                    _eMGame.FertilizeC(idx_0).Resources = 0;
 
-                                    if (_e.UnitStepC(idx_0).Steps >= StepValues.SET_TELEPORT)
+                                    if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.SET_TELEPORT)
                                     {
-                                        _e.UnitStepC(idx_0).Steps -= StepValues.SET_TELEPORT;
+                                        _eMGame.UnitStepC(idx_0).Steps -= StepValues.SET_TELEPORT;
 
-                                        if (_e.WhereTeleportC.Start > 0)
+                                        if (_eMGame.WhereTeleportC.Start > 0)
                                         {
-                                            if (_e.WhereTeleportC.End > 0)
+                                            if (_eMGame.WhereTeleportC.End > 0)
                                             {
-                                                _e.BuildingTC(_e.WhereTeleportC.Start).Building = BuildingTypes.None;
+                                                _eMGame.BuildingTC(_eMGame.WhereTeleportC.Start).Building = BuildingTypes.None;
 
-                                                _e.WhereTeleportC.Start = _e.WhereTeleportC.End;
+                                                _eMGame.WhereTeleportC.Start = _eMGame.WhereTeleportC.End;
 
-                                                _e.WhereTeleportC.End = idx_0;
-                                                _e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                                                _eMGame.WhereTeleportC.End = idx_0;
+                                                _eMGame.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
                                             }
                                             else
                                             {
-                                                _e.WhereTeleportC.End = idx_0;
-                                                _e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                                                _eMGame.WhereTeleportC.End = idx_0;
+                                                _eMGame.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
                                             }
                                         }
                                         else
                                         {
-                                            _e.WhereTeleportC.Start = idx_0;
+                                            _eMGame.WhereTeleportC.Start = idx_0;
                                         }
 
-                                        _e.BuildingTC(idx_0).Building = BuildingTypes.Teleport;
-                                        _e.BuildingLevelTC(idx_0).Level = LevelTypes.First;
-                                        _e.BuildingPlayerTC(idx_0).Player = whoseMove;
-                                        _e.BuildHpC(idx_0).Health = BuildingValues.MAX_HP;
+                                        _eMGame.BuildingTC(idx_0).Building = BuildingTypes.Teleport;
+                                        _eMGame.BuildingLevelTC(idx_0).Level = LevelTypes.First;
+                                        _eMGame.BuildingPlayerTC(idx_0).Player = whoseMove;
+                                        _eMGame.BuildHpC(idx_0).Health = BuildingValues.MAX_HP;
                                     }
                                 }
                             }
@@ -503,27 +502,27 @@ namespace Chessy.Game
                         {
                             var idx_0 = (byte)objects[_idx_cur++];
 
-                            if (_e.UnitStepC(idx_0).Steps >= StepValues.TELEPORT)
+                            if (_eMGame.UnitStepC(idx_0).Steps >= StepValues.TELEPORT)
                             {
-                                if (_e.BuildingTC(idx_0).Is(BuildingTypes.Teleport))
+                                if (_eMGame.BuildingTC(idx_0).Is(BuildingTypes.Teleport))
                                 {
-                                    var idx_start = _e.WhereTeleportC.Start;
-                                    var idx_end = _e.WhereTeleportC.End;
+                                    var idx_start = _eMGame.WhereTeleportC.Start;
+                                    var idx_end = _eMGame.WhereTeleportC.End;
 
-                                    if (_e.WhereTeleportC.End > 0 && idx_start == idx_0)
+                                    if (_eMGame.WhereTeleportC.End > 0 && idx_start == idx_0)
                                     {
-                                        if (!_e.UnitTC(idx_end).HaveUnit)
+                                        if (!_eMGame.UnitTC(idx_end).HaveUnit)
                                         {
-                                            _e.UnitStepC(idx_0).Steps -= StepValues.TELEPORT;
+                                            _eMGame.UnitStepC(idx_0).Steps -= StepValues.TELEPORT;
 
                                             //Teleport(idx_end, ents);
                                         }
                                     }
-                                    else if (_e.WhereTeleportC.Start > 0 && idx_end == idx_0)
+                                    else if (_eMGame.WhereTeleportC.Start > 0 && idx_end == idx_0)
                                     {
-                                        if (!_e.UnitTC(idx_start).HaveUnit)
+                                        if (!_eMGame.UnitTC(idx_start).HaveUnit)
                                         {
-                                            _e.UnitStepC(idx_0).Steps -= StepValues.TELEPORT;
+                                            _eMGame.UnitStepC(idx_0).Steps -= StepValues.TELEPORT;
 
                                             //Teleport(idx_start, _e);
                                         }
@@ -532,7 +531,7 @@ namespace Chessy.Game
                             }
                             else
                             {
-                                _e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                _eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         break;
@@ -568,10 +567,10 @@ namespace Chessy.Game
 
             else if (obj is BuildingTypes buildT)
             {
-                _sMGame.BuyBuildingS_M.Buy(buildT, sender, _e);
+                _sMGame.BuyBuildingS_M.Buy(buildT, sender, _eMGame);
             }
 
-            else if (obj is MarketBuyTypes marketBuy) _sMGame.BuyS_M.Buy(marketBuy, sender, _e);
+            else if (obj is MarketBuyTypes marketBuy) _sMGame.BuyS_M.Buy(marketBuy, sender, _eMGame);
 
             else if (obj is RpcMasterTypes rpcT)
             {
@@ -584,47 +583,47 @@ namespace Chessy.Game
                         {
                             var playerSend = sender.GetPlayer();
 
-                            _e.PlayerInfoE(playerSend).IsReadyC = !_e.PlayerInfoE(playerSend).IsReadyC;
+                            _eMGame.PlayerInfoE(playerSend).IsReadyC = !_eMGame.PlayerInfoE(playerSend).IsReadyC;
 
-                            if (_e.PlayerInfoE(PlayerTypes.First).IsReadyC
-                                && _e.PlayerInfoE(PlayerTypes.Second).IsReadyC)
+                            if (_eMGame.PlayerInfoE(PlayerTypes.First).IsReadyC
+                                && _eMGame.PlayerInfoE(PlayerTypes.Second).IsReadyC)
                             {
-                                _e.IsStartedGame = true;
+                                _eMGame.IsStartedGame = true;
                             }
 
                             else
                             {
-                                _e.IsStartedGame = false;
+                                _eMGame.IsStartedGame = false;
                             }
                         }
                         break;
 
                     case RpcMasterTypes.Done:
-                        new DonerS_M(_eMC.GameModeTC, sender, _sMGame, _e);
+                        new DonerS_M(_eMCommon.GameModeTC, sender, _sMGame, _eMGame);
                         break;
 
                     case RpcMasterTypes.Shift:
-                        new ShiftUnitS_M((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender, _e);
+                        new ShiftUnitS_M((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender, _eMGame);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _sMGame.AttackUnit_M.Attack((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _sMGame, _e);
+                        _sMGame.AttackUnit_M.Attack((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], _sMGame, _eMGame);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        new SetConditionUnitS_M((byte)objects[_idx_cur++], (ConditionUnitTypes)objects[_idx_cur++], sender, _e);
+                        new SetConditionUnitS_M((byte)objects[_idx_cur++], (ConditionUnitTypes)objects[_idx_cur++], sender, _eMGame);
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        new SetUnitS_M((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++], sender, _e);
+                        new SetUnitS_M((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++], sender, _eMGame);
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        new GetHeroS_M((UnitTypes)objects[_idx_cur++], sender, _e);
+                        new GetHeroS_M((UnitTypes)objects[_idx_cur++], sender, _eMGame);
                         break;
 
                     case RpcMasterTypes.Melt:
-                        _sMGame.MeltS_M.Melt(sender, _e);
+                        _sMGame.MeltS_M.Melt(sender, _eMGame);
                         break;
 
                     default:
@@ -636,7 +635,7 @@ namespace Chessy.Game
 
 
 
-            new GetDataCells(_e);
+            new GetDataCells(_eMGame);
             SyncAllMaster();
         }
 
@@ -649,9 +648,9 @@ namespace Chessy.Game
 
             if (obj is MistakeTypes mistakeT)
             {
-                _e.MistakeC.Set(mistakeT, 0);
+                _eMGame.MistakeC.Set(mistakeT, 0);
 
-                _e.Sound(ClipTypes.WritePensil).Action.Invoke();
+                _eMGame.Sound(ClipTypes.WritePensil).Action.Invoke();
 
                 //if (mistakeT == MistakeTypes.NeedMoreSteps || mistakeT == MistakeTypes.MinSpeedWind 
                 //    || mistakeT == MistakeTypes.MaxSpeedWind || mistakeT == MistakeTypes.NeedBuildingHouses
@@ -668,19 +667,19 @@ namespace Chessy.Game
 
                 if (mistakeT == MistakeTypes.Economy)
                 {
-                    _e.MistakeEconomy(ResourceTypes.Food).Resources = 0;
-                    _e.MistakeEconomy(ResourceTypes.Wood).Resources = 0;
-                    _e.MistakeEconomy(ResourceTypes.Ore).Resources = 0;
-                    _e.MistakeEconomy(ResourceTypes.Iron).Resources = 0;
-                    _e.MistakeEconomy(ResourceTypes.Gold).Resources = 0;
+                    _eMGame.MistakeEconomy(ResourceTypes.Food).Resources = 0;
+                    _eMGame.MistakeEconomy(ResourceTypes.Wood).Resources = 0;
+                    _eMGame.MistakeEconomy(ResourceTypes.Ore).Resources = 0;
+                    _eMGame.MistakeEconomy(ResourceTypes.Iron).Resources = 0;
+                    _eMGame.MistakeEconomy(ResourceTypes.Gold).Resources = 0;
 
                     var needRes = (float[])objects[_idx_cur++];
 
-                    _e.MistakeEconomy(ResourceTypes.Food).Resources = needRes[0];
-                    _e.MistakeEconomy(ResourceTypes.Wood).Resources = needRes[1];
-                    _e.MistakeEconomy(ResourceTypes.Ore).Resources = needRes[2];
-                    _e.MistakeEconomy(ResourceTypes.Iron).Resources = needRes[3];
-                    _e.MistakeEconomy(ResourceTypes.Gold).Resources = needRes[4];
+                    _eMGame.MistakeEconomy(ResourceTypes.Food).Resources = needRes[0];
+                    _eMGame.MistakeEconomy(ResourceTypes.Wood).Resources = needRes[1];
+                    _eMGame.MistakeEconomy(ResourceTypes.Ore).Resources = needRes[2];
+                    _eMGame.MistakeEconomy(ResourceTypes.Iron).Resources = needRes[3];
+                    _eMGame.MistakeEconomy(ResourceTypes.Gold).Resources = needRes[4];
                 }
             }
             else if (obj is RpcGeneralTypes rpcT)
@@ -691,11 +690,11 @@ namespace Chessy.Game
                         throw new Exception();
 
                     case RpcGeneralTypes.SoundEff:
-                        _e.Sound((ClipTypes)objects[_idx_cur++]).Invoke();
+                        _eMGame.Sound((ClipTypes)objects[_idx_cur++]).Invoke();
                         break;
 
                     case RpcGeneralTypes.SoundUniqueAbility:
-                        _e.Sound((AbilityTypes)objects[_idx_cur++]).Invoke();
+                        _eMGame.Sound((AbilityTypes)objects[_idx_cur++]).Invoke();
                         break;
 
                     case RpcGeneralTypes.SoundRpcMaster:
@@ -703,7 +702,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcGeneralTypes.ActiveMotion:
-                        _e.ZoneInfoC.IsActiveMotion = true;
+                        _eMGame.ZoneInfoC.IsActiveMotion = true;
                         break;
 
                     default:
@@ -713,27 +712,27 @@ namespace Chessy.Game
         }
 
         [PunRPC]
-        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => _e.RpcPoolEs.OtherRpc(objects, infoFrom);
+        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => _eMGame.RpcPoolEs.OtherRpc(objects, infoFrom);
 
 
         #region SyncData
 
-        public static void SyncAllMaster()
+        public void SyncAllMaster()
         {
             var objs = new List<object>();
 
 
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                objs.Add(_e.UnitTC(idx_0).Unit);
+                objs.Add(_eMGame.UnitTC(idx_0).Unit);
                 //objs.Add(_e.CellEs(idx_0).UnitEs.MainE.LevelTC.Level);
-                objs.Add(_e.UnitPlayerTC(idx_0).Player);
+                objs.Add(_eMGame.UnitPlayerTC(idx_0).Player);
 
-                objs.Add(_e.UnitHpC(idx_0).Health);
-                objs.Add(_e.UnitStepC(idx_0).Steps);
-                objs.Add(_e.UnitWaterC(idx_0).Water);
+                objs.Add(_eMGame.UnitHpC(idx_0).Health);
+                objs.Add(_eMGame.UnitStepC(idx_0).Steps);
+                objs.Add(_eMGame.UnitWaterC(idx_0).Water);
 
-                objs.Add(_e.UnitConditionTC(idx_0).Condition);
+                objs.Add(_eMGame.UnitConditionTC(idx_0).Condition);
                 //foreach (var item in CellUnitEffectsEs.Keys) objs.Add(CellUnitEffectsEs.HaveEffect<HaveEffectC>(item, idx_0).Have);
 
 
@@ -741,9 +740,9 @@ namespace Chessy.Game
                 //objs.Add(_e.CellEs(idx_0).UnitEs.ExtraTWLevelTC.Level);
                 //objs.Add(_e.CellEs(idx_0).UnitEs.ExtraTWShieldC.Protection);
 
-                objs.Add(_e.UnitEffectStunC(idx_0).Stun);
+                objs.Add(_eMGame.UnitEffectStunC(idx_0).Stun);
 
-                objs.Add(_e.UnitIsRightArcherC(idx_0).IsRight);
+                objs.Add(_eMGame.UnitIsRightArcherC(idx_0).IsRight);
 
                 //foreach (var item in _e.CellEs(idx_0).UnitEs.CooldownKeys) objs.Add(_e.CellEs(idx_0).UnitEs.Ability(item).CooldownC);
 
@@ -764,7 +763,7 @@ namespace Chessy.Game
 
 
 
-                objs.Add(_e.CellEs(idx_0).RiverEs.RiverTC.River);
+                objs.Add(_eMGame.CellEs(idx_0).RiverEs.RiverTC.River);
                 //foreach (var item_0 in _e.CellEs(idx_0).RiverEs.Keys)
                 //    objs.Add(_e.CellEs(idx_0).RiverEs.HaveRive(item_0).HaveRiver.Have);
 
@@ -822,9 +821,9 @@ namespace Chessy.Game
             for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
 
-            _e.RpcPoolEs.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            _eMGame.RpcPoolEs.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
 
-            _e.RpcPoolEs.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
+            _eMGame.RpcPoolEs.RPC(nameof(UpdateDataAndView), RpcTarget.All, new object[] { });
         }
 
         [PunRPC]

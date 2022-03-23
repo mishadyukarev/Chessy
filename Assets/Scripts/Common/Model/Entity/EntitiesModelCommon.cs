@@ -22,6 +22,7 @@ namespace Chessy.Common.Entity
         public TimeStartGameC TimeStartGameC;
         public SceneC SceneC;
         public GameModeTC GameModeTC;
+        public ShopC ShopC;
 
         public ActionC SoundActionC(in ClipTypes clipT) => _sound[clipT];
 

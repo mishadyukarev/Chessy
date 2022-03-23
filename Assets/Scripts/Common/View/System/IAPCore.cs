@@ -1,4 +1,5 @@
-﻿using Chessy.Common.Entity.View.UI;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Entity.View.UI;
 using System;
 using UnityEngine;
 using UnityEngine.Purchasing; //библиотека с покупками, будет доступна когда активируем сервисы
@@ -7,8 +8,12 @@ namespace Chessy.Common
 {
     public sealed class IAPCore : IStoreListener //для получения сообщений из Unity Purchasing
     {
-        public IAPCore(in ShopUIE shopUIE)
+        readonly EntitiesModelCommon _eMCommon;
+
+        public IAPCore(in ShopUIE shopUIE, in EntitiesModelCommon eMCommon)
         {
+            _eMCommon = eMCommon;
+
             //if (PlayerPrefs.HasKey("ads") == true)
             //{
             //    //panelAds.SetActive(false);
@@ -31,7 +36,7 @@ namespace Chessy.Common
             //    //panelVIP_Done.SetActive(false);
             //}
 
-            if (!ShopC.IsInitialized) //если еще не инициализаровали систему Unity Purchasing, тогда инициализируем
+            if (!eMCommon.ShopC.IsInitialized) //если еще не инициализаровали систему Unity Purchasing, тогда инициализируем
             {
                 var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
@@ -53,16 +58,16 @@ namespace Chessy.Common
 
         private void BuyProductID(string productId)
         {
-            if (ShopC.IsInitialized) //если покупка инициализирована 
+            if (_eMCommon.ShopC.IsInitialized) //если покупка инициализирована 
             {
-                var product = ShopC.Product(productId); //находим продукт покупки 
+                var product = _eMCommon.ShopC.StoreController.products.WithID(productId); //находим продукт покупки 
 
                 if (product == default) throw new Exception();
 
                 if (product.availableToPurchase) //если продукт найдет и готов для продажи
                 {
                     Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
-                    ShopC.InitiatePurchase(product); //покупаем
+                    _eMCommon.ShopC.StoreController.InitiatePurchase(product); //покупаем
                 }
                 else
                 {
@@ -106,8 +111,8 @@ namespace Chessy.Common
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
             Debug.Log("OnInitialized: PASS");
-            ShopC.Set(controller);
-            ShopC.Set(extensions);
+            _eMCommon.ShopC.StoreController = controller;
+            _eMCommon.ShopC.StoreExtProvider = extensions;
         }
 
         public void OnInitializeFailed(InitializationFailureReason error)
