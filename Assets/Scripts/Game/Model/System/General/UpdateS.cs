@@ -1,16 +1,27 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Chessy.Game.System.Model
 {
-    public struct UpdateS
+    public struct UpdateS : IEcsRunSystem
     {
+        readonly SystemsModelGame _sMGame;
+        readonly EntitiesModelGame _eMGame;
+
         Ray _ray;
         const float RAY_DISTANCE = 100;
 
 
-        public void Run(in SystemsModelGame systems, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public UpdateS(in SystemsModelGame systems, in EntitiesModelGame e) : this()
+        {
+            _sMGame = systems;
+            _eMGame = e;
+        }
+
+
+        public void Run()
         {
             _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
@@ -36,17 +47,17 @@ namespace Chessy.Game.System.Model
             {
                 for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
                 {
-                    int one = e.CellEs(idx_0).CellE.InstanceIDC;
+                    int one = _eMGame.CellEs(idx_0).CellE.InstanceIDC;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        if (e.CellsC.Current != e.CellsC.PreviousVision)
+                        if (_eMGame.CellsC.Current != _eMGame.CellsC.PreviousVision)
                         {
-                            e.CellsC.PreviousVision = e.CellsC.Current;
+                            _eMGame.CellsC.PreviousVision = _eMGame.CellsC.Current;
                         }
 
-                        e.CellsC.Current = idx_0;
+                        _eMGame.CellsC.Current = idx_0;
                         rayCastT = RaycastTypes.Cell;
                     }
                 }
@@ -55,7 +66,7 @@ namespace Chessy.Game.System.Model
             }
 
 
-            systems.SelectorS.Run(rayCastT, e);
+            _sMGame.SelectorS.Run(rayCastT, _eMGame);
 
 
 #if UNITY_ANDROID

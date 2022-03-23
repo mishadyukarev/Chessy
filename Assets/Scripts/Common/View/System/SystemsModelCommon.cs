@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Common.Model.System
 {
-    public readonly struct SystemsModelCommon
+    public sealed class SystemsModelCommon
     {
         public readonly UpdateModelS UpdateS;
     }

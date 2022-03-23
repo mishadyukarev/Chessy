@@ -14,6 +14,7 @@ using Chessy.Game.System.View.UI;
 using Chessy.Menu;
 using Chessy.Menu.View.UI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy
@@ -42,12 +43,14 @@ namespace Chessy
 
         #region System
 
-        readonly SystemsModelCommon _sMCommon = default;
-        readonly SystemsViewUICommon _sUICommon = default;
+        List<IEcsRunSystem> _runsGame = new List<IEcsRunSystem>();
 
-        readonly SystemsModelMenu _sMMenu = default;
+        SystemsModelCommon _sMCommon;
+        SystemsViewUICommon _sUICommon;
 
-        readonly SystemsModelGame _sMGame = default;
+        SystemsModelMenu _sMMenu;
+
+        SystemsModelGame _sMGame;
         SystemsViewUIGame _sUIGame;
         SystemsViewGame _sVGame;
 
@@ -56,6 +59,7 @@ namespace Chessy
 
         void Start()
         {
+
             #region Entity
 
             _eVCommon = new EntitiesViewCommon(transform, testMode, out var sound, out var commonZone);
@@ -75,8 +79,17 @@ namespace Chessy
 
             #region System
 
+            _sMCommon = new SystemsModelCommon();
+            _sUICommon = new SystemsViewUICommon();
+
+            _sMMenu = new SystemsModelMenu();
+
+            _sMGame = new SystemsModelGame(_eMGame);
             _sUIGame = new SystemsViewUIGame(_eMCommon, _eUIGame, _eMGame);
             _sVGame = new SystemsViewGame(_eVGame, _eMGame, _eVCommon);
+
+
+            #region NeedReplace
 
             new EventsCommon(_eUICommon, _eVCommon, _eMCommon);
             new IAPCore(_eUICommon.ShopE);
@@ -85,6 +98,18 @@ namespace Chessy
             _eVGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(_sMGame, _eMGame, _eMCommon);
 
             #endregion
+
+
+            _runsGame = new List<IEcsRunSystem>()
+            {
+                _sMGame.UpdateS,
+                _sVGame.UpdateS,
+                _sUIGame.UpdateS,
+            };
+
+
+            #endregion
+
 
 
             #region Event
@@ -106,27 +131,12 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    _sMGame.UpdateS.Run(_sMGame, _eMGame);
-
-                    _eMGame.TimerUpdateUIC.Timer += Time.deltaTime;
-                    if (_eMGame.TimerUpdateUIC.Timer >= 0.04f)
-                    {
-                        _sVGame.UpdateS.Run();
-                        _sUIGame.UpdateS.Run();
-                        _eMGame.TimerUpdateUIC.Timer = 0;
-                    }
+                    _runsGame.ForEach((IEcsRunSystem IRun) => IRun.Run());
                     break;
 
                 default:
                     throw new Exception();
             }
-
-
-            #region NeedReplace
-
-
-
-            #endregion
         }
 
 

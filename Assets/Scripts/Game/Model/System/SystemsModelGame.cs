@@ -1,8 +1,9 @@
-﻿using Chessy.Game.System.Model.Master;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model.Master;
 
 namespace Chessy.Game.System.Model
 {
-    public readonly struct SystemsModelGame
+    public sealed class SystemsModelGame
     {
         public readonly UpdateS UpdateS;
         public readonly SelectorS SelectorS;
@@ -50,5 +51,12 @@ namespace Chessy.Game.System.Model
         public readonly WorldMeltIceWallUpdateMS WorldMeltIceWallUpdateS_M;
 
         #endregion
+
+
+        public SystemsModelGame(in EntitiesModelGame eMGame)
+        {
+            UpdateS = new UpdateS(this, eMGame);
+        }
+
     }
 }

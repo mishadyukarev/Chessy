@@ -3,7 +3,7 @@ using Chessy.Game.System.View.UI.Center;
 
 namespace Chessy.Common.View.UI.System
 {
-    public struct SystemsViewUICommon
+    public sealed class SystemsViewUICommon
     {
         public readonly UpdateUIS UpdateS;
 
