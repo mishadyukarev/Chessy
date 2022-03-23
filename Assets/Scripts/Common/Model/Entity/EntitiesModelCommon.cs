@@ -1,11 +1,12 @@
 ﻿using Chessy.Common.Component;
 using Chessy.Common.Enum;
+using Chessy.Common.Interface;
 using System;
 using System.Collections.Generic;
 
 namespace Chessy.Common.Entity
 {
-    public sealed class EntitiesModelCommon
+    public sealed class EntitiesModelCommon : IToggleScene
     {
         readonly Dictionary<ClipTypes, ActionC> _sound;
 
@@ -39,6 +40,32 @@ namespace Chessy.Common.Entity
             TestModeC = new TestModeC(testMode);
 
             SceneC.Scene = SceneTypes.Menu;
+        }
+
+        public void ToggleScene(in SceneTypes newSceneT)
+        {
+            if (SceneC.Is(newSceneT)) throw new Exception("Need other scene");
+
+            SceneC.Scene = newSceneT;
+
+            switch (newSceneT)
+            {
+                case SceneTypes.None:
+                    throw new Exception();
+
+                case SceneTypes.Menu:
+                    {
+                        break;
+                    }
+
+                case SceneTypes.Game:
+                    {
+                        BookC.IsOpenedBook = true;
+                        BookC.PageBookT = PageBoookTypes.Main;
+                        break;
+                    }
+                default: throw new Exception();
+            }
         }
     }
 }

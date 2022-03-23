@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Menu
 {
-    public sealed class SystemsModelMenu
+    public readonly struct SystemsModelMenu
     {
         public readonly LaunchLikeGameAndShopS LaunchLikeGameAndShopS;
 

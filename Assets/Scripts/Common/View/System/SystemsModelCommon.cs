@@ -1,7 +1,10 @@
 ﻿namespace Chessy.Common.Model.System
 {
-    public sealed class SystemsModelCommon
+    public readonly struct SystemsModelCommon : IEcsRunSystem
     {
-        public readonly UpdateModelS UpdateS;
+        public void Run()
+        {
+            
+        }
     }
 }

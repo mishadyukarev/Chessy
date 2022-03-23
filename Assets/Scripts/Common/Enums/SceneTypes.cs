@@ -6,5 +6,7 @@
 
         Menu,
         Game,
+
+        End,
     }
 }
