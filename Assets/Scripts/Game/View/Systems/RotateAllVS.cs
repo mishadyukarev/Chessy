@@ -1,6 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity.View;
 using Chessy.Game.Entity;
+using Chessy.Game.Entity.Model;
 using System;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Chessy.Game
     {
         static readonly Vector3 _gamePosCamera = new Vector3(7.4f, 4.8f, -2);
 
-        public static void Rotate(in EntitiesViewGame eV, in Entity.Model.EntitiesModelGame e, in EntitiesViewCommon eVC)
+        public static void Rotate(in EntitiesViewGame eV, in EntitiesModelGame e, in EntitiesViewCommon eVC)
         {
             var curPlayer = e.CurPlayerITC.Player;
 

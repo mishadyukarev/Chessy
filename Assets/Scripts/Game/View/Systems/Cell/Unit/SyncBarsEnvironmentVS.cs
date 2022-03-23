@@ -1,12 +1,12 @@
-﻿using Chessy.Game.Values.Cell;
+﻿using Chessy.Game.Entity.Model;
 using Chessy.Game.Values.Cell.Environment;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class SyncBarsEnvironmentVS
+    public struct SyncBarsEnvironmentVS
     {
-        public static void Sync(in byte idx_0, in EntitiesViewGame vEs, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Sync(in byte idx_0, in EntitiesViewGame vEs, in EntitiesModelGame e)
         {
             if (e.ZoneInfoC.IsActiveEnvironment)
             {

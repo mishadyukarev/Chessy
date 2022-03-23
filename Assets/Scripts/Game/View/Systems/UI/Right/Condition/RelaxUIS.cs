@@ -1,11 +1,12 @@
-﻿using Chessy.Game.Entity.View.UI.Right;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Entity.View.UI.Right;
 using UnityEngine;
 
 namespace Chessy.Game
 {
     public struct RelaxUIS
     {
-        public void Run(in RelaxUIE relaxE, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Run(in RelaxUIE relaxE, in EntitiesModelGame e)
         {
             var idx_0 = e.CellsC.Selected;
 

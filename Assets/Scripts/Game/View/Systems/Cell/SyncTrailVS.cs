@@ -1,16 +1,18 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game
 {
-    sealed class SyncTrailVS
+    public struct SyncTrailVS
     {
-        public static void Sync(in byte idx_0, in EntitiesViewGame eV, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Sync(in byte idx_0, in EntitiesViewGame eVGame, in EntitiesModelGame eMGame)
         {
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {
-                if (e.CellEs(idx_0).Player(e.CurPlayerITC.Player).IsVisibleTrail)
+                if (eMGame.CellEs(idx_0).Player(eMGame.CurPlayerITC.Player).IsVisibleTrail)
                 {
-                    eV.CellEs(idx_0).TrailCellVC(dirT).SetActive(e.CellEs(idx_0).TrailHealthC(dirT).IsAlive);
+                    eVGame.CellEs(idx_0).TrailCellVC(dirT).SetActive(eMGame.CellEs(idx_0).TrailHealthC(dirT).IsAlive);
                 }
-                else eV.CellEs(idx_0).TrailCellVC(dirT).Disable();
+                else eVGame.CellEs(idx_0).TrailCellVC(dirT).Disable();
             }
         }
     }

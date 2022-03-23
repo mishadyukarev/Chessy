@@ -1,8 +1,10 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game
 {
-    sealed class SyncEnvironmentVS
+    public struct SyncEnvironmentVS
     {
-        public static void Run(in byte idx_0, in EntitiesViewGame vEs, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Run(in byte idx_0, in EntitiesViewGame vEs, in EntitiesModelGame e)
         {
             if (e.EnvironmentEs(idx_0).AdultForestC.HaveAnyResources)
             {

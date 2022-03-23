@@ -1,9 +1,9 @@
-﻿using ECS;
+﻿//using ECS;
 
-namespace Chessy.Game
-{
-    public sealed class CellBuildingVisibleE
-    {
-        public bool IsVisibleC;
-    }
-}
+//namespace Chessy.Game
+//{
+//    public sealed class CellBuildingVisibleE
+//    {
+//        public bool IsVisibleC;
+//    }
+//}

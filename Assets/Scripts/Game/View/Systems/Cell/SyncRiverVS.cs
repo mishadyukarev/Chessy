@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Chessy.Game.Entity.Model;
+using System;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class SyncRiverVS
+    public struct SyncRiverVS
     {
-        public static void Sync(in byte idx_0, in EntitiesViewGame eV, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Sync(in byte idx_0, in EntitiesViewGame eV, in EntitiesModelGame e)
         {
             ref var river_0 = ref e.RiverEs(idx_0).RiverTC;
 

@@ -1,11 +1,12 @@
-﻿using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values.Cell.Unit.Stats;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class SyncStatsVS
+    public struct SyncStatsVS
     {
-        public static void Sync(in byte idx_0, in EntitiesViewGame vEs, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Sync(in byte idx_0, in EntitiesViewGame vEs, in EntitiesModelGame e)
         {
             vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Disable();
 

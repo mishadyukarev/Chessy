@@ -1,8 +1,10 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game
 {
-    static class SyncFireVS
+    public struct SyncFireVS
     {
-        public static void Sync(in byte idx_0, in EntitiesViewGame eV, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Sync(in byte idx_0, in EntitiesViewGame eV, in EntitiesModelGame e)
         {
             if (e.EffectEs(idx_0).HaveFire)
             {

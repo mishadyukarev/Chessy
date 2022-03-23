@@ -5,9 +5,9 @@ using Chessy.Game.View.UI.System;
 
 namespace Chessy.Game.System.View.UI
 {
-    public readonly struct SystemViewUIUpdate
+    public readonly struct UpdateViewUIS
     {
-        public void Run(in float timer, in SystemsViewUI systemsUI, in EntitiesModelCommon eMC, in EntitiesViewUIGame eUI, in Entity.Model.EntitiesModelGame e)
+        public void Run(in float timer, in SystemsViewUIGame systemsUI, in EntitiesModelCommon eMC, in EntitiesViewUIGame eUI, in Entity.Model.EntitiesModelGame e)
         {
             ///Right
             ///
