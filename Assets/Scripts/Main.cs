@@ -22,8 +22,6 @@ namespace Chessy
     {
         [SerializeField] TestModes testMode = default;
 
-        float _timer;
-
 
         #region Entity
 
@@ -50,8 +48,8 @@ namespace Chessy
         readonly SystemsModelMenu _sMMenu = default;
 
         readonly SystemsModelGame _sMGame = default;
-        readonly SystemsViewUIGame _sUIGame = new SystemsViewUIGame(default);
-        readonly SystemsViewGame _sVGame = default;
+        SystemsViewUIGame _sUIGame;
+        SystemsViewGame _sVGame;
 
         #endregion
 
@@ -76,6 +74,9 @@ namespace Chessy
 
 
             #region System
+
+            _sUIGame = new SystemsViewUIGame(_eMCommon, _eUIGame, _eMGame);
+            _sVGame = new SystemsViewGame(_eVGame, _eMGame, _eVCommon);
 
             new EventsCommon(_eUICommon, _eVCommon, _eMCommon);
             new IAPCore(_eUICommon.ShopE);
@@ -107,12 +108,12 @@ namespace Chessy
                 case SceneTypes.Game:
                     _sMGame.UpdateS.Run(_sMGame, _eMGame);
 
-                    _timer += Time.deltaTime;
-                    if (_timer >= 0.04f)
+                    _eMGame.TimerUpdateUIC.Timer += Time.deltaTime;
+                    if (_eMGame.TimerUpdateUIC.Timer >= 0.04f)
                     {
-                        _sVGame.UpdateS.Run(_sVGame, _eVGame, _eMGame, _eVCommon);
-                        _sUIGame.UpdateS.Run(_timer, _sUIGame, _eMCommon, _eUIGame, _eMGame);
-                        _timer = 0;
+                        _sVGame.UpdateS.Run();
+                        _sUIGame.UpdateS.Run();
+                        _eMGame.TimerUpdateUIC.Timer = 0;
                     }
                     break;
 

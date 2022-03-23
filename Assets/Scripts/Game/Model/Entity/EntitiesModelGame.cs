@@ -38,6 +38,7 @@ namespace Chessy.Game.Entity.Model
         public PlayerTC WinnerC;
         public PlayerTC CurPlayerITC;
         public CellClickC CellClickTC;
+        public TimerC TimerUpdateUIC;
 
 
         public readonly ResourcesE Resources;

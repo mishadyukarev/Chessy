@@ -1,6 +1,9 @@
-﻿namespace Chessy.Game.System.View
+﻿using Chessy.Common.Entity.View;
+using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game.System.View
 {
-    public readonly struct SystemsViewGame
+    public sealed class SystemsViewGame
     {
         public readonly UpdateViewS UpdateS;
 
@@ -13,5 +16,11 @@
         public readonly SyncFireVS SyncFireS;
         public readonly SyncEnvironmentVS SyncEnvironmentS;
         public readonly SyncStatsVS SyncStatsS;
+
+        public SystemsViewGame(in EntitiesViewGame eVGame, in EntitiesModelGame eMGame, in EntitiesViewCommon eVCommon)
+        {
+            UpdateS = new UpdateViewS(this, eVGame, eMGame, eVCommon);
+        }
+
     }
 }
