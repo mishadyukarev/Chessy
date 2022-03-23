@@ -1,13 +1,17 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Entity;
+using Chessy.Common.Entity.View;
 using Chessy.Common.Enum;
+using Chessy.Common.View.UI;
+using Chessy.Common.View.UI.System;
 using Chessy.Game;
+using Chessy.Game.Entity.Model;
 using Chessy.Game.EventsUI;
 using Chessy.Game.System.Model;
 using Chessy.Game.System.View;
 using Chessy.Game.System.View.UI;
-using Chessy.Game.System.View.UI.Center;
 using Chessy.Menu;
-using ECS;
+using Chessy.Menu.View.UI;
 using System;
 using UnityEngine;
 
@@ -22,26 +26,34 @@ namespace Chessy
 
         #region Common
 
-        Common.Entity.EntitiesModel _eC;
-        Common.Entity.View.EntitiesView _eVC;
+        EntitiesModelCommon _eMC;
+        EntitiesViewCommon _eVC;
+        EntitiesViewUICommon _eUIC;
+
+
+        SystemsViewUICommon _sUIC = default;
 
         #endregion
 
 
         #region Menu
 
-        readonly SystemsManager SystemsManager = default;
+        EntitiesModelMenu _eMM;
+        EntitiesViewMenu _eVM;
+        EntitiesViewUIMenu _eUIM;
+
+        readonly SystemsModelMenu _sMM = default;
 
         #endregion
 
 
         #region Game
 
-        Game.Entity.Model.EntitiesModel _eGame;
-        EntitiesView _eV;
-        Game.EntitiesViewUI _eUI;
+        EntitiesModelGame _eMGame;
+        EntitiesViewGame _eV;
+        EntitiesViewUIGame _eUI;
 
-        readonly SystemsModel _systemsM = default;
+        readonly SystemsModelGame _systemsM = default;
         readonly SystemsViewUI _systemUI = new SystemsViewUI(default);
         readonly SystemsView _systemsV = default;
 
@@ -51,55 +63,45 @@ namespace Chessy
 
         void Start()
         {
-            _eC = new Common.Entity.EntitiesModel(testMode);
-            _eVC = new Common.Entity.View.EntitiesView(transform, testMode);
+            #region Entity
+
+            _eVC = new EntitiesViewCommon(transform, testMode, out var sound, out var commonZone);
+            _eUIC = new EntitiesViewUICommon(GameObject.Instantiate(Resources.Load<Canvas>("Canvas")), commonZone);
+            _eMC = new EntitiesModelCommon(testMode, sound);
+
+            _eVM = new EntitiesViewMenu();
+            _eUIM = new EntitiesViewUIMenu(_eUIC);
+            _eMM = new EntitiesModelMenu(_eVC);
+
+            _eV = new EntitiesViewGame(out var forData, _eVC);
+            _eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods, _eMC);
+            _eUI = new EntitiesViewUIGame(_eUIC);
+
+            #endregion
 
 
-            var bookE = _eVC.BookE;
-            bookE.ExitButtonC.AddListener(delegate
-            {
-                _eC.IsOpenedBook = false;
-                _eVC.Sound(Common.Enum.ClipTypes.CloseBook).Play();
-            });
+            #region System
 
-            bookE.NextButtonC.AddListener(delegate
-            {
-                if (_eC.CurrentPageBookT < PageBoookTypes.End - 1)
-                {
-                    _eC.CurrentPageBookT++;
-                    _eVC.Sound(Common.Enum.ClipTypes.ShiftBookSheet).Play();
-                }
-            });
+            new EventsCommon(_eUIC, _eVC, _eMC);
+            new IAPCore(_eUIC.ShopE);
+            new MyYodo();
+            gameObject.AddComponent<PhotonSceneManager>().StartMy(ToggleScene);
+            _eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(_systemsM, _eMGame, _eMC);
 
-            bookE.BackButtonC.AddListener(delegate
-            {
-                if (_eC.CurrentPageBookT > 0)
-                {
-                    _eC.CurrentPageBookT--;
-                    _eVC.Sound(Common.Enum.ClipTypes.ShiftBookSheet).Play();
-                }
-            });
+            #endregion
 
 
-            //_eC.IsOpenedBook = !_eC.IsOpenedBook;
-            //e.Sound(eC.IsOpenedBook ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+            #region Event
 
+            new EventsMenu(_eMC, _eUIM);
+            new EventsUIGame(_eUIC, _eMC, _systemsM, _eUI, _eMGame);
 
-
-
-
-            new Common.CreateSs(ToggleScene);
-            new Common.CreateVSs(gameObject);
-
-            ToggleScene(SceneTypes.Menu);
+            #endregion
         }
 
         void Update()
         {
-            new SyncBookUIS().Sync(_eVC.BookE, _eC);
-
-
-            switch (CurSceneC.Scene)
+            switch (_eMC.SceneC.Scene)
             {
                 case SceneTypes.None:
                     throw new Exception();
@@ -108,13 +110,13 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    _systemsM.UpdateS.Run(_systemsM, _eGame);
+                    _systemsM.UpdateS.Run(_systemsM, _eMGame);
 
                     _timer += Time.deltaTime;
                     if (_timer >= 0.04f)
                     {
-                        _systemsV.UpdateS.Run(_systemsV, _eV, _eGame);
-                        _systemUI.UpdateS.Run(_timer, _systemUI, _eC, _eUI, _eGame);
+                        _systemsV.UpdateS.Run(_systemsV, _eV, _eMGame, _eVC);
+                        _systemUI.UpdateS.Run(_timer, _systemUI, _eMC, _eUI, _eMGame);
                         _timer = 0;
                     }
                     break;
@@ -127,16 +129,20 @@ namespace Chessy
 
         void FixedUpdate()
         {
-            Common.DataSC.RunUpdate();
+            _sUIC.SyncBookS.Sync(_eUIC.BookE, _eMC.BookC);
+            _sUIC.SyncMusicSoundS.Sync(_eMC, _eVC);
+            _sUIC.SyncSettingsS.Sync(_eMC.IsOpenSettings, _eUIC.SettingsE);
 
-            switch (CurSceneC.Scene)
+            new AdLaunchS().Run(ref _eMC.AdC, _eMC.SceneC);
+
+            switch (_eMC.SceneC.Scene)
             {
                 case SceneTypes.None:
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    SystemsManager.SyncS.Run(_eC);
-                    SystemsManager.ConnectorMenuS.Run();
+                    _sMM.SyncS.Run(_eUIC, _eMC);
+                    _sMM.ConnectorMenuS.Run(_eUIM);
                     break;
 
                 case SceneTypes.Game:
@@ -151,9 +157,10 @@ namespace Chessy
 
         void ToggleScene(SceneTypes newScene)
         {
-            if (CurSceneC.Is(newScene)) throw new Exception("Need other scene");
+            if (_eMC.SceneC.Is(newScene)) throw new Exception("Need other scene");
 
-            CurSceneC.Scene = newScene;
+            _eMC.SceneC.Scene = newScene;
+
             switch (newScene)
             {
                 case SceneTypes.None:
@@ -161,26 +168,24 @@ namespace Chessy
 
                 case SceneTypes.Menu:
                     {
-                        new EntitieManager(_eVC, _eC);
-                        SystemsManager.LaunchLikeGameAndShopS.Run();
-                        new Menu.Events();
+                        _eUIC.CanvasE.MenuCanvasGOC.SetActive(true);
+                        _eUIC.CanvasE.GameCanvasGOC.SetActive(false);
+
+                        _sMM.LaunchLikeGameAndShopS.Run(ref _eMC.WasLikeGameZone, ref _eMC.TimeStartGameC, _eUIC.ShopE);
                         break;
                     }
 
                 case SceneTypes.Game:
                     {
-                        _eC.IsOpenedBook = true;
-                        _eC.CurrentPageBookT = PageBoookTypes.Main;
+                        _eUIC.CanvasE.MenuCanvasGOC.SetActive(false);
+                        _eUIC.CanvasE.GameCanvasGOC.SetActive(true);
 
-                        _eV = new EntitiesView(out var forData);
-                        _eGame = new Game.Entity.Model.EntitiesModel(forData, Rpc.NamesMethods);
-                        _eUI = new Game.EntitiesViewUI(_eVC, _eGame);
+                        _eMC.BookC.IsOpenedBook = true;
+                        _eMC.BookC.PageBookT = PageBoookTypes.Main;
 
-                        var eventsUI = new EventsUIManager(_eC, _systemsM, _eUI, _eGame);
+                        _eMGame.StartGame(_eMC.GameModeTC);
 
-                        _eV.EntityVPool.Photon.AddComponent<Rpc>().GiveData(_systemsM, _eGame, eventsUI);
                         Rpc.SyncAllMaster();
-
                         break;
                     }
                 default: throw new Exception();
