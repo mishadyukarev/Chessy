@@ -13,6 +13,7 @@ using Chessy.Game.System.View;
 using Chessy.Game.System.View.UI;
 using Chessy.Menu;
 using Chessy.Menu.View.UI;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Chessy
 {
     sealed class Main : MonoBehaviour
     {
-        [SerializeField] TestModes TestMode = default;
+        [SerializeField] TestModes TestModeT = default;
 
         List<IEcsRunSystem> _runs;
 
@@ -29,9 +30,9 @@ namespace Chessy
         {
             #region Common
 
-            var eVCommon = new EntitiesViewCommon(transform, TestMode, out var sound, out var commonZone);
+            var eVCommon = new EntitiesViewCommon(transform, TestModeT, out var sound, out var commonZone);
             var eUICommon = new EntitiesViewUICommon(commonZone);
-            var eMCommon = new EntitiesModelCommon(TestMode, sound);
+            var eMCommon = new EntitiesModelCommon(TestModeT, sound);
 
             var sMCommon = new SystemsModelCommon(eMCommon);
             var sUICommon = new SystemsViewUICommon(eMCommon, eVCommon, eUICommon);
@@ -57,7 +58,7 @@ namespace Chessy
             #region Game
 
             var eVGame = new EntitiesViewGame(out var forData, eVCommon);
-            var eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods, eMCommon);
+            var eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
             var sMGame = new SystemsModelGame(eMGame, eMCommon);
@@ -99,6 +100,18 @@ namespace Chessy
                 sUIGame,
                 sMMenu,
             };
+
+
+
+            #region ComeToTraining
+
+            eMCommon.VolumeMusic = eUICommon.SettingsE.SliderC.Slider.value;
+
+            PhotonNetwork.OfflineMode = true;
+            eMCommon.GameModeTC.GameMode = GameModes.TrainingOff;
+            PhotonNetwork.CreateRoom(default);
+
+            #endregion
         }
 
         void Update() => _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());

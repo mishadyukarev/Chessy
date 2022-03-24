@@ -17,7 +17,7 @@ namespace Chessy.Game
 
             if (e.UnitEs(idx_0).ForPlayer(e.CurPlayerITC.Player).IsVisible)
             {
-                if (e.UnitTC(idx_0).HaveUnit && !e.IsAnimal(e.UnitTC(idx_0).Unit))
+                if (e.UnitTC(idx_0).HaveUnit && !e.UnitTC(idx_0).IsAnimal)
                 {
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Enable();
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).SR.color = Color.red;

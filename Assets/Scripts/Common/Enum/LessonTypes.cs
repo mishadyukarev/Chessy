@@ -5,6 +5,9 @@
         None,
 
         SettingKing,
+        PickGod,
+        SettingGod,
+        SettingPawn,
 
         End,
     }

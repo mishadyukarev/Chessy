@@ -11,7 +11,7 @@ namespace Chessy.Game.System.Model
                 if (e.UnitTC(idx_0).Is(UnitTypes.King)) e.WinnerC.Player = whoKiller;
             }
             
-            if (e.UnitTC(idx_0).IsHero)
+            if (e.UnitTC(idx_0).IsGod)
             {
                 var cooldown = 0f;
 

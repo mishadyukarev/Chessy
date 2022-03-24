@@ -31,6 +31,7 @@ namespace Chessy.Game.System.Model
         public readonly AttackShieldS AttackShieldS;
         public readonly SetLastDiedS SetLastDiedS;
         public readonly MistakeS MistakeS;
+        public readonly SetNewUnitS SetNewUnitS;
 
 
         #region UI
@@ -66,6 +67,8 @@ namespace Chessy.Game.System.Model
         public readonly BuyS_M BuyS_M;
         public readonly MeltS_M MeltS_M;
         public readonly BuyBuildingS_M BuyBuildingS_M;
+        public readonly SetUnitS_M SetUnitS_M;
+        public readonly GetHeroS_M GetHeroS_M;
 
         public readonly WorldMeltIceWallUpdateMS WorldMeltIceWallUpdateS_M;
 
@@ -78,15 +81,13 @@ namespace Chessy.Game.System.Model
             _eMCommon = eMCommon;
 
             UpdateS_M = new UpdateS_M(this, eMGame);
+            SetUnitS_M = new SetUnitS_M(SetNewUnitS, eMGame, eMCommon);
+            GetHeroS_M = new GetHeroS_M(_eMGame);
         }
 
         public void ToggleScene(in SceneTypes newSceneT)
         {
             if (newSceneT != SceneTypes.Game) return;
-
-
-            _eMGame.LessonTC.LessonT = LessonTypes.SettingKing;
-
 
 
             _eMGame.ZoneInfoC.IsActiveFriend = _eMCommon.GameModeTC.Is(GameModes.WithFriendOff);
@@ -105,8 +106,6 @@ namespace Chessy.Game.System.Model
 
 
             _eMGame.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
-
-
 
 
 
@@ -130,7 +129,11 @@ namespace Chessy.Game.System.Model
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                _eMGame.PlayerInfoE(playerT).StartGame();
+                _eMGame.PlayerInfoE(playerT).ToggleScene(newSceneT);
+
+
+                if (_eMCommon.GameModeTC.GameMode == GameModes.TrainingOff) _eMGame.LessonTC.LessonT = (LessonTypes)1;
+
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {

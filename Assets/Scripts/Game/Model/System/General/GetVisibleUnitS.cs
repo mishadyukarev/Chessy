@@ -4,13 +4,13 @@ namespace Chessy.Game.System.Model
 {
     public struct GetVisibleUnitS
     {
-        public GetVisibleUnitS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public GetVisibleUnitS(in byte idx_0, in EntitiesModelGame e)
         {
             if (e.UnitTC(idx_0).HaveUnit)
             {
                 if (e.UnitPlayerTC(idx_0).Is(PlayerTypes.None))
                 {
-                    if (e.IsAnimal(e.UnitTC(idx_0).Unit))
+                    if (e.UnitTC(idx_0).IsAnimal)
                     {
                         var isVisForFirst = true;
                         var isVisForSecond = true;

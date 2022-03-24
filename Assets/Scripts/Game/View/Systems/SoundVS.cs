@@ -20,11 +20,11 @@ namespace Chessy.Game
 
             if (eV.EntityVPool.SoundV(ClipTypes.AfterUpdate).IsPlaying /*|| eV.EntityVPool.SoundV(ClipTypes.HeroAbility).IsPlaying*/)
             {
-                eV.EntityVPool.SoundV(ClipTypes.Background1).AudioSource.volume = 0.01f;
+                eV.EntityVPool.SoundV(ClipTypes.Background1).AS.volume = 0.01f;
             }
             else
             {
-                eV.EntityVPool.SoundV(ClipTypes.Background1).AudioSource.volume = 0.25f;
+                eV.EntityVPool.SoundV(ClipTypes.Background1).AS.volume = 0.25f;
             }
         }
     }

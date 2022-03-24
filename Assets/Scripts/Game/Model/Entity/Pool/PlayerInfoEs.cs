@@ -1,9 +1,13 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Common;
+using Chessy.Common.Interface;
+using Chessy.Game.Enum;
+using Chessy.Game.Model.Component;
+using Chessy.Game.Values;
 using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public sealed class PlayerInfoEs
+    public sealed class PlayerInfoEs : IToggleScene
     {
         readonly Dictionary<BuildingTypes, bool> _haveBuilding;
         readonly PlayerLevelInfoE[] _levelInfoEs;
@@ -54,7 +58,7 @@ namespace Chessy.Game
         public void SetHaveBuilding(in BuildingTypes buildingT, in bool have) => _haveBuilding[buildingT] = have;
 
 
-        public void StartGame()
+        public void ToggleScene(in SceneTypes newSceneT)
         {
             PeopleInCity = StartValues.PEOPLE_IN_CITY;
             MaxAvailablePawns = StartValues.MAX_AVAILABLE_PAWN;

@@ -7,7 +7,7 @@ namespace Chessy.Common.View.System
     {
         public void Sync(in EntitiesModelCommon eMC, in EntitiesViewCommon eVC)
         {
-            eVC.Sound(Enum.ClipTypes.Music).AudioSource.volume = eMC.VolumeMusic;
+            eVC.Sound(Enum.ClipTypes.Music).AS.volume = eMC.VolumeMusic;
         }
     }
 }

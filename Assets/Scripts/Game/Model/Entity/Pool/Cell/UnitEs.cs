@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Entity.Model.Cell.Unit
 {
-    public struct UnitEs
+    public sealed class UnitEs
     {
         readonly AbilityTC[] _uniqueButtons;
         readonly CooldownC[] _abilities;
@@ -32,7 +32,7 @@ namespace Chessy.Game.Entity.Model.Cell.Unit
         public ref ForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player];
 
 
-        internal UnitEs(in byte[] xy) : this()
+        internal UnitEs(in byte[] xy)
         {
             _uniqueButtons = new AbilityTC[(byte)ButtonTypes.End - 1];
 

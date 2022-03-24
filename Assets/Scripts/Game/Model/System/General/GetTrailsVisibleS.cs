@@ -20,7 +20,7 @@ namespace Chessy.Game.System.Model
                     {
                         var idx_1 = e.CellEs(idx_0).AroundCellE(dir).IdxC.Idx;
 
-                        if (e.UnitTC(idx_1).HaveUnit && !e.IsAnimal(e.UnitTC(idx_1).Unit))
+                        if (e.UnitTC(idx_1).HaveUnit && !e.UnitTC(idx_0).IsAnimal)
                         {
                             e.CellEs(idx_0).Player(e.UnitPlayerTC(idx_1).Player).IsVisibleTrail = true;
                         }

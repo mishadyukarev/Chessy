@@ -4,12 +4,12 @@ namespace Chessy.Common.Component
 {
     public struct AudioSourceVC
     {
-        public AudioSource AudioSource;
+        public AudioSource AS;
 
-        public bool IsPlaying => AudioSource.isPlaying;
+        public bool IsPlaying => AS.isPlaying;
 
-        public AudioSourceVC(in AudioSource audioSource) => AudioSource = audioSource;
+        public AudioSourceVC(in AudioSource audioSource) => AS = audioSource;
 
-        public void Play() => AudioSource.Play();
+        public void Play() => AS.Play();
     }
 }

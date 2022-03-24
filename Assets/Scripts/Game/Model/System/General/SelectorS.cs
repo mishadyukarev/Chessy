@@ -212,7 +212,7 @@ namespace Chessy.Game
                     e.Sound(ClipTypes.Leaf).Invoke();
                 }
 
-                else if (e.IsMelee(idx_0))
+                else if (e.UnitTC(idx_0).IsMelee(e.UnitMainTWTC(idx_0).ToolWeapon))
                 {
                     e.Sound(ClipTypes.PickMelee).Invoke();
                 }

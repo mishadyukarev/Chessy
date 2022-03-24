@@ -17,8 +17,6 @@ namespace Chessy.Game.Entity.Model
         readonly ResourcesC[] _mistakeEconomyEs;
         readonly Dictionary<PlayerTypes, PlayerInfoEs> _forPlayerEs;
         readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
-        readonly Dictionary<UnitTypes, bool> _isAnimal;
-        readonly Dictionary<string, bool> _isMelee;
 
         public bool IsStartedGame;
         public bool IsSelectedCity;
@@ -56,11 +54,6 @@ namespace Chessy.Game.Entity.Model
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
         public PlayerTC NextPlayer(in PlayerTypes playerT) => _nextPlayer[playerT];
         public PlayerTC NextPlayer(in PlayerTC playerTC) => _nextPlayer[playerTC.Player];
-
-        public bool IsAnimal(in UnitTypes unitT) => _isAnimal[unitT];
-        public bool IsMelee(in UnitTypes unitT, in bool haveBowCrossbow) => _isMelee[unitT.ToString() + haveBowCrossbow];
-        public bool IsMelee(in byte idx_cell) => _isMelee[UnitTC(idx_cell).Unit.ToString() + UnitMainTWTC(idx_cell).Is(ToolWeaponTypes.BowCrossbow)];
-
 
         #region Cells
 
@@ -167,7 +160,7 @@ namespace Chessy.Game.Entity.Model
         #endregion
 
 
-        public EntitiesModelGame(in List<object> forData, in List<string> namesMethods, in EntitiesModelCommon eMC)
+        public EntitiesModelGame(in List<object> forData, in List<string> namesMethods)
         {
             Resources = new ResourcesE(default);
 
@@ -185,48 +178,11 @@ namespace Chessy.Game.Entity.Model
             _nextPlayer.Add(PlayerTypes.Second, new PlayerTC(PlayerTypes.First));
             _forPlayerEs = new Dictionary<PlayerTypes, PlayerInfoEs>();
             _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
-            _isAnimal = new Dictionary<UnitTypes, bool>();
-            _isMelee = new Dictionary<string, bool>();
 
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
                 _forPlayerEs.Add(playerT, new PlayerInfoEs(true));
-            }
-
-            for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
-            {
-                if (unitT == UnitTypes.Wolf) _isAnimal.Add(unitT, true);
-                else _isAnimal.Add(unitT, false);
-
-
-                foreach (var haveBowCrossbow in new[] { true, false })
-                {
-                    var isMelee = true;
-
-                    switch (unitT)
-                    {
-                        case UnitTypes.Pawn:
-                            if (haveBowCrossbow) isMelee = false;
-                            break;
-
-                        case UnitTypes.Elfemale:
-                            isMelee = false;
-                            break;
-
-                        case UnitTypes.Snowy:
-                            isMelee = false;
-                            break;
-
-                        case UnitTypes.Undead:
-                            break;
-
-                        case UnitTypes.Hell:
-                            break;
-                    }
-
-                    _isMelee.Add(unitT.ToString() + haveBowCrossbow, isMelee);
-                }
             }
 
             var selectedBuildings = new Dictionary<BuildingTypes, bool>();

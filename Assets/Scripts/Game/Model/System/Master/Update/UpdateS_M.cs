@@ -114,8 +114,7 @@ namespace Chessy.Game.System.Model.Master
                                     {
                                         if (_eMGame.PlayerInfoE(playerT).MyHeroTC.Is(UnitTypes.Elfemale))
                                         {
-
-                                            _eMGame.UnitEs(idx_0).SetNewUnitHere(UnitTypes.Tree, playerT, _eMGame.PlayerInfoE(playerT), _eMGame);
+                                            _sMGame.SetNewUnitS.SetNewUnitHere(_eMGame.UnitEs(idx_0), UnitTypes.Tree, playerT, _eMGame.PlayerInfoE(playerT), _eMGame);
 
                                             break;
                                         }

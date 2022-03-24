@@ -19,7 +19,7 @@ namespace Chessy.Game.System.Model.Master
                 e.UnitStepC(idx_from).Steps = 0;
                 e.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
 
-                if (e.IsMelee(idx_from))
+                if (e.UnitTC(idx_from).IsMelee(e.UnitMainTWTC(idx_from).ToolWeapon))
                     e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 else e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
@@ -102,7 +102,7 @@ namespace Chessy.Game.System.Model.Master
                     }
                 }
 
-                if (e.IsMelee(idx_from))
+                if (e.UnitTC(idx_from).IsMelee(e.UnitMainTWTC(idx_from).ToolWeapon))
                 {
                     if (e.UnitEffectShield(idx_from).HaveAnyProtection)
                     {
@@ -143,7 +143,7 @@ namespace Chessy.Game.System.Model.Master
                 {
                     var killer = PlayerTypes.None;
 
-                    if (e.IsAnimal(e.UnitTC(idx_to).Unit))
+                    if (e.UnitTC(idx_to).IsAnimal)
                     {
                         killer = e.UnitPlayerTC(idx_from).Player;
                     }
@@ -161,7 +161,7 @@ namespace Chessy.Game.System.Model.Master
                     {
                         if (e.UnitTC(idx_from).HaveUnit)
                         {
-                            if (e.IsMelee(idx_from))
+                            if (e.UnitTC(idx_from).IsMelee(e.UnitMainTWTC(idx_from).ToolWeapon))
                             {
                                 new ShiftUnitS(idx_from, idx_to, e);
                             }

@@ -12,7 +12,7 @@ namespace Chessy.Game.System.Model
             {
                 if (e.UnitStepC(idx_0).HaveAnySteps)
                 {
-                        if (!e.IsMelee(idx_0))
+                        if (!e.UnitTC(idx_0).IsMelee(e.UnitMainTWE(idx_0).ToolWeaponTC.ToolWeapon))
                         {
                             for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                             {
@@ -55,7 +55,7 @@ namespace Chessy.Game.System.Model
                                     var idx_2 = e.CellEs(idx_1).AroundCellE(dir_1).IdxC.Idx;
 
 
-                                    if (e.UnitTC(idx_2).HaveUnit && !e.IsAnimal(e.UnitTC(idx_2).Unit)
+                                    if (e.UnitTC(idx_2).HaveUnit && !e.UnitTC(idx_2).IsAnimal
                                         && e.UnitEs(idx_2).ForPlayer(e.UnitPlayerTC(idx_0).Player).IsVisible
                                         && !e.UnitPlayerTC(idx_2).Is(e.UnitPlayerTC(idx_0).Player))
                                     {

@@ -2,6 +2,8 @@
 using Chessy.Common.Enum;
 using Chessy.Common.Interface;
 using Chessy.Common.Model.Entity;
+using Chessy.Game;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 
@@ -27,7 +29,6 @@ namespace Chessy.Common.Entity
         public BookE BookE;
 
         public ActionC SoundActionC(in ClipTypes clipT) => _sound[clipT];
-
 
         public EntitiesModelCommon(in TestModes testMode, in Dictionary<ClipTypes, ActionC> sound)
         {

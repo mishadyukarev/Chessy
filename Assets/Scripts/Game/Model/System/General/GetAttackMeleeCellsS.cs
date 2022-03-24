@@ -12,8 +12,7 @@ namespace Chessy.Game.System.Model
 
             if (!e.UnitEffectStunC(idx_0).IsStunned)
             {
-                if (e.UnitTC(idx_0).HaveUnit && e.IsMelee(idx_0) && !e.IsAnimal(e.UnitTC(idx_0).Unit)
-                    && !e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                if (e.UnitTC(idx_0).HaveUnit && e.UnitTC(idx_0).IsMelee(e.UnitMainTWTC(idx_0).ToolWeapon) && !e.UnitTC(idx_0).IsAnimal)
                 {
                     DirectTypes dir_cur = default;
 

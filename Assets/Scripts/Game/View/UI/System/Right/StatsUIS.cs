@@ -14,7 +14,7 @@ namespace Chessy.Game
             var idx_sel = E.CellsC.Selected;
 
 
-            if (E.UnitTC(idx_sel).HaveUnit && !E.IsAnimal(E.UnitTC(idx_sel).Unit))
+            if (E.UnitTC(idx_sel).HaveUnit && !E.UnitTC(idx_sel).IsAnimal)
             {
                 var damageOnCell = E.DamageOnCellC(idx_sel).Damage;
                 var damageAttack = E.DamageAttackC(idx_sel).Damage;

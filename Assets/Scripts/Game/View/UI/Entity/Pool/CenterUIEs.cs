@@ -1,5 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Component;
+using Chessy.Game.Enum;
+using Chessy.Game.View.UI.Center;
 using Chessy.Game.View.UI.Entity;
 using System.Collections.Generic;
 using TMPro;
@@ -35,6 +37,9 @@ namespace Chessy.Game
 
         public readonly SelectionBookGuidUIE BookGuidSelectionE;
         public readonly SettingUnitLessonUIE SettingUnitLessonE;
+        public readonly GettingUnitLessonUIE GettingUnitLessonE;
+        public readonly SettingPawnUIE SettingPawnE;
+        public readonly SettingGodLessonUIE SettingGodLessonE;
 
         #endregion
 
@@ -66,6 +71,9 @@ namespace Chessy.Game
             var training = centerZone.Find("Lesson+");
             BookGuidSelectionE = new SelectionBookGuidUIE(training.Find("SelectionGuidBook+"));
             SettingUnitLessonE = new SettingUnitLessonUIE(training.Find("NeedSetKing+"));
+            GettingUnitLessonE = new GettingUnitLessonUIE(training.Find("GettingGod+"));
+            SettingPawnE = new SettingPawnUIE(training.Find("SettingPawn+"));
+            SettingGodLessonE = new SettingGodLessonUIE(training.Find("SettingGod+"));
 
 
             var buildingZone = centerZone.Find("Building+");

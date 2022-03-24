@@ -18,7 +18,7 @@ namespace Chessy.Game
 
             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
-                if (e.UnitTC(idx_0).HaveUnit && !e.IsAnimal(e.UnitTC(idx_0).Unit))
+                if (e.UnitTC(idx_0).HaveUnit && !e.UnitTC(idx_0).IsAnimal)
                 {
                     if (e.UnitTC(idx_0).Is(UnitTypes.Pawn)) e.ResourcesC(e.UnitPlayerTC(idx_0).Player, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 

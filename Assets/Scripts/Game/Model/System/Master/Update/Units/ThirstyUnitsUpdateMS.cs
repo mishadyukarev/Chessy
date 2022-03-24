@@ -11,7 +11,7 @@ namespace Chessy.Game
         {
             for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
             {
-                if (e.UnitTC(idx_0).HaveUnit && !e.IsAnimal(e.UnitTC(idx_0).Unit))
+                if (e.UnitTC(idx_0).HaveUnit && !e.UnitTC(idx_0).IsAnimal)
                 {
                     var canExecute = false;
                     if (gameModeTC.Is(GameModes.TrainingOff))

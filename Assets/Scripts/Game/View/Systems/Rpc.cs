@@ -615,11 +615,11 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        new SetUnitS_M((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++], sender, _eMGame);
+                        _sMGame.SetUnitS_M.Set((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        new GetHeroS_M((UnitTypes)objects[_idx_cur++], sender, _eMGame);
+                        _sMGame.GetHeroS_M.Get((UnitTypes)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.Melt:

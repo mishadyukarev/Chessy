@@ -14,7 +14,7 @@ namespace Chessy.Game.System.Model
 
             if (e.CellEs(idx_0).IsActiveParentSelf)
             {
-                if (!e.UnitEffectStunC(idx_0).IsStunned && e.UnitTC(idx_0).HaveUnit && !e.IsAnimal(e.UnitTC(idx_0).Unit))
+                if (!e.UnitEffectStunC(idx_0).IsStunned && e.UnitTC(idx_0).HaveUnit && !e.UnitTC(idx_0).IsAnimal)
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {

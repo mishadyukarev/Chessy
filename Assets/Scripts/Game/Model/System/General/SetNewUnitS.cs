@@ -4,9 +4,9 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.System.Model
 {
-    public static class SetNewUnitS
+    public struct SetNewUnitS
     {
-        public static void SetNewUnitHere(this ref UnitEs units, in UnitTypes unitT, in PlayerTypes playerT, in PlayerInfoEs playerInfo, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void SetNewUnitHere(in UnitEs units, in UnitTypes unitT, in PlayerTypes playerT, in PlayerInfoEs playerInfo, in EntitiesModelGame e)
         {
             units.MainE.UnitTC.Unit = unitT;
             units.MainE.PlayerTC.Player = playerT;
@@ -42,7 +42,7 @@ namespace Chessy.Game.System.Model
                 if (units.MainE.UnitTC.Is(UnitTypes.Tree)) e.HaveTreeUnit = true;
 
 
-                if (units.MainE.UnitTC.IsHero)
+                if (units.MainE.UnitTC.IsGod)
                 {
                     playerInfo.HaveHeroInInventor = false;
                 }
