@@ -16,6 +16,7 @@ namespace Chessy.Common.Extension
                 default: return false;
             }
         }
+        public static bool IsGod(this UnitTC unitTC) => IsGod(unitTC.Unit);
         public static bool Is(this UnitTypes unitT, params UnitTypes[] units)
         {
             if (units == default) throw new Exception();
@@ -23,10 +24,10 @@ namespace Chessy.Common.Extension
             foreach (var unit in units) if (unit == unitT) return true;
             return false;
         }
+        public static bool Is(this UnitTC unitTC, params UnitTypes[] units) => Is(unitTC.Unit, units);
         public static bool HaveUnit(this UnitTypes unitT) => !Is(unitT, UnitTypes.None, UnitTypes.End);
-
         public static bool IsAnimal(this UnitTypes unitT) => unitT == UnitTypes.Wolf;
-
+        public static bool IsAnimal(this UnitTC unitTC) => IsAnimal(unitTC.Unit);
         public static bool IsMelee(this UnitTypes unitT, in ToolWeaponTypes mainTW)
         {
             switch (unitT)
@@ -43,5 +44,6 @@ namespace Chessy.Common.Extension
             }
             return true;
         }
+        public static bool IsMelee(this UnitTC unitTC, in ToolWeaponTypes mainTW) => IsMelee(unitTC.Unit, mainTW);
     }
 }
