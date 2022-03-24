@@ -2,6 +2,7 @@
 using Chessy.Common.Entity;
 using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 using Chessy.Game.System.Model.Master;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Environment;
@@ -82,6 +83,11 @@ namespace Chessy.Game.System.Model
         public void ToggleScene(in SceneTypes newSceneT)
         {
             if (newSceneT != SceneTypes.Game) return;
+
+
+            _eMGame.LessonTC.LessonT = LessonTypes.SettingKing;
+
+
 
             _eMGame.ZoneInfoC.IsActiveFriend = _eMCommon.GameModeTC.Is(GameModes.WithFriendOff);
             _eMGame.WhoseMove = new PlayerTC(StartValues.WHOSE_MOVE);
@@ -320,7 +326,7 @@ namespace Chessy.Game.System.Model
 
         public void Run()
         {
-            if (_eMCommon.SceneC.Scene == SceneTypes.Game)
+            if (_eMCommon.SceneTC.Scene == SceneTypes.Game)
             {
                 _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
                 var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);

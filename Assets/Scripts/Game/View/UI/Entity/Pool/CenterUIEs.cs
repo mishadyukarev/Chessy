@@ -1,4 +1,6 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Component;
+using Chessy.Game.View.UI.Entity;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,7 +12,7 @@ namespace Chessy.Game
     {
         readonly Dictionary<UnitTypes, CenterHeroUIE> _ents;
 
-        public readonly Chessy.Common.Component.GameObjectVC Zone;
+        public readonly GameObjectVC Zone;
 
         public readonly ButtonUIC JoinDiscordButtonC;
         public readonly ButtonUIC ReadyButtonC;
@@ -28,6 +30,15 @@ namespace Chessy.Game
         public readonly CenterMarketUIE MarketE;
         public readonly CenterSmelterUIE SmelterE;
 
+
+        #region Lesson
+
+        public readonly SelectionBookGuidUIE BookGuidSelectionE;
+        public readonly SettingUnitLessonUIE SettingUnitLessonE;
+
+        #endregion
+
+
         public CenterHeroUIE HeroE(in UnitTypes unit) => _ents[unit];
 
 
@@ -38,7 +49,7 @@ namespace Chessy.Game
 
             OpenShopButtonC = new ButtonUIC(parent.Find("OpenShop_Button").GetComponent<Button>());
 
-            Zone = new Chessy.Common.Component.GameObjectVC(parent.gameObject);
+            Zone = new GameObjectVC(parent.gameObject);
 
             _ents = new Dictionary<UnitTypes, CenterHeroUIE>();
             for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
@@ -52,12 +63,14 @@ namespace Chessy.Game
             SelectorE = new CenterSelectorUIE(centerZone);
             MistakeE = new MistakeUIE(centerZone);
 
+            var training = centerZone.Find("Lesson+");
+            BookGuidSelectionE = new SelectionBookGuidUIE(training.Find("SelectionGuidBook+"));
+            SettingUnitLessonE = new SettingUnitLessonUIE(training.Find("NeedSetKing+"));
+
+
             var buildingZone = centerZone.Find("Building+");
             MarketE = new CenterMarketUIE(buildingZone);
             SmelterE = new CenterSmelterUIE(buildingZone);
-
-
-
 
 
             EndGame = new TextUIC(centerZone.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>());

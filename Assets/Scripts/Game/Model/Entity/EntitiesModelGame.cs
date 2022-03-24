@@ -3,6 +3,7 @@ using Chessy.Common.Component;
 using Chessy.Common.Entity;
 using Chessy.Game.Entity.Model.Cell;
 using Chessy.Game.Entity.Model.Cell.Unit;
+using Chessy.Game.Model.Component;
 using Chessy.Game.Values;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace Chessy.Game.Entity.Model
         public PlayerTC WinnerC;
         public PlayerTC CurPlayerITC;
         public CellClickC CellClickTC;
+        public LessonTC LessonTC;
 
 
         public readonly ResourcesE Resources;

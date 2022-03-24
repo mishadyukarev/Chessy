@@ -10,7 +10,7 @@ namespace Chessy.Common.Entity.View.UI
 {
     public readonly struct BookUIE
     {
-        readonly Dictionary<PageBoookTypes, GameObjectVC> _pages;
+        readonly Dictionary<PageBookTypes, GameObjectVC> _pages;
 
         public readonly GameObjectVC ParenGOC;
 
@@ -21,7 +21,7 @@ namespace Chessy.Common.Entity.View.UI
         public readonly TextUIC LeftPageTextC;
         public readonly TextUIC RightPageTextC;
 
-        public GameObjectVC PageGOC(in PageBoookTypes pageT) => _pages[pageT];
+        public GameObjectVC PageGOC(in PageBookTypes pageT) => _pages[pageT];
 
         public BookUIE(in Transform commonZone)
         {
@@ -32,8 +32,8 @@ namespace Chessy.Common.Entity.View.UI
             NextButtonC = new ButtonUIC(parent.Find("Next_Button+").GetComponent<Button>());
             BackButtonC = new ButtonUIC(parent.Find("Back_Button+").GetComponent<Button>());
 
-            _pages = new Dictionary<PageBoookTypes, GameObjectVC>();
-            for (var pageT = PageBoookTypes.None + 1; pageT < PageBoookTypes.End; pageT++) 
+            _pages = new Dictionary<PageBookTypes, GameObjectVC>();
+            for (var pageT = PageBookTypes.None + 1; pageT < PageBookTypes.End; pageT++) 
                 _pages.Add(pageT, new GameObjectVC(parent.Find(pageT + "+").gameObject));
 
 

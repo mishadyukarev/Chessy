@@ -27,7 +27,7 @@ namespace Chessy.Menu
 
         public void Run()
         {
-            if(_eMCommon.SceneC.Scene == SceneTypes.Menu)
+            if(_eMCommon.SceneTC.Scene == SceneTypes.Menu)
             {
                 SyncS.Run(_eUICommon, _eMCommon);
                 ConnectorMenuS.Run(_eUIMenu);

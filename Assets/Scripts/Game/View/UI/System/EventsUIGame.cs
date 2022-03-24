@@ -3,6 +3,8 @@ using Chessy.Common.Entity;
 using Chessy.Common.Entity.View.UI;
 using Chessy.Common.Enum;
 using Chessy.Common.View.UI;
+using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 using Chessy.Game.System.Model;
 using Photon.Pun;
 using UnityEngine;
@@ -11,24 +13,24 @@ namespace Chessy.Game.EventsUI
 {
     public sealed class EventsUIGame
     {
-        public EventsUIGame(EntitiesViewUICommon eUIC, EntitiesModelCommon eC, SystemsModelGame systems, in EntitiesViewUIGame eUI, Entity.Model.EntitiesModelGame e)
+        public EventsUIGame(EntitiesViewUICommon eUICommon, EntitiesModelCommon eMCommon, SystemsModelGame sMGame, in EntitiesViewUIGame eUIGame, EntitiesModelGame eMGame)
         {
             #region Down
 
-            eUI.DownEs.DonerE.ButtonC.AddListener(delegate { systems.DoneClickS.Click(systems.MistakeS, e); });
-            eUI.DownEs.HeroE.ButtonC.AddListener(delegate { systems.GetHeroClickDownS.Get(e); });
-            eUI.DownEs.PawnE.ButtonUIC.AddListener(delegate { systems.GetPawnClickS.Get(e); });
-            eUI.DownEs.CityButtonUIE.ButtonC.AddListener(delegate { systems.OpenCityClickS.Click(e); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Pick).AddListener(delegate { systems.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Pick, e); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Sword).AddListener(delegate { systems.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Sword, e); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Shield).AddListener(delegate { systems.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Shield, e); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddListener(delegate { systems.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.BowCrossbow, e); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddListener(delegate { systems.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Axe, e); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { systems.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Staff, e); });
-            eUI.DownEs.BookButtonC.AddListener(delegate
+            eUIGame.DownEs.DonerE.ButtonC.AddListener(delegate { sMGame.DoneClickS.Click(sMGame.MistakeS, eMGame); });
+            eUIGame.DownEs.HeroE.ButtonC.AddListener(delegate { sMGame.GetHeroClickDownS.Get(eMGame); });
+            eUIGame.DownEs.PawnE.ButtonUIC.AddListener(delegate { sMGame.GetPawnClickS.Get(eMGame); });
+            eUIGame.DownEs.CityButtonUIE.ButtonC.AddListener(delegate { sMGame.OpenCityClickS.Click(eMGame); });
+            eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Pick).AddListener(delegate { sMGame.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Pick, eMGame); });
+            eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Sword).AddListener(delegate { sMGame.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Sword, eMGame); });
+            eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Shield).AddListener(delegate { sMGame.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Shield, eMGame); });
+            eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddListener(delegate { sMGame.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.BowCrossbow, eMGame); });
+            eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddListener(delegate { sMGame.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Axe, eMGame); });
+            eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { sMGame.ToggleToolWeaponClickS.Toggle(ToolWeaponTypes.Staff, eMGame); });
+            eUIGame.DownEs.BookButtonC.AddListener(delegate
             {
-                eC.BookC.IsOpenedBook = !eC.BookC.IsOpenedBook;
-                //e.Sound(eC.IsOpenedBook ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+                eMCommon.BookE.IsOpenedBook = !eMCommon.BookE.IsOpenedBook;
+                eMCommon.SoundActionC(eMCommon.BookE.IsOpenedBook ? Common.Enum.ClipTypes.OpenBook : Common.Enum.ClipTypes.CloseBook).Invoke();
 
             });
 
@@ -37,10 +39,10 @@ namespace Chessy.Game.EventsUI
 
             #region Up
 
-            eUI.UpEs.WindButtonC.AddListener(delegate
+            eUIGame.UpEs.WindButtonC.AddListener(delegate
             {
-                eC.BookC.PageBookT = PageBoookTypes.Wind;
-                eC.BookC.IsOpenedBook = true;
+                eMCommon.BookE.PageBookTC.PageBookT = PageBookTypes.Wind;
+                eMCommon.BookE.IsOpenedBook = true;
                 //e.Sound(ClipTypes.OpenBook).Invoke();
             });
 
@@ -48,69 +50,68 @@ namespace Chessy.Game.EventsUI
 
 
             //Left
-            var leftEs = eUI.LeftEs;
-            eUI.LeftEs.EnvironmentEs.InfoButtonC.AddListener(delegate { systems.EnvironmentInfoClickS.Info(e); });
+            var leftEs = eUIGame.LeftEs;
+            eUIGame.LeftEs.EnvironmentEs.InfoButtonC.AddListener(delegate { sMGame.EnvironmentInfoClickS.Info(eMGame); });
             //City
-            leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { systems.BuildBuildingClickS.Click(BuildingTypes.House, e); });
-            leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { systems.BuildBuildingClickS.Click(BuildingTypes.Market, e); });
-            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(delegate { systems.BuildBuildingClickS.Click(BuildingTypes.Smelter, e); });
+            leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { sMGame.BuildBuildingClickS.Click(BuildingTypes.House, eMGame); });
+            leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { sMGame.BuildBuildingClickS.Click(BuildingTypes.Market, eMGame); });
+            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(delegate { sMGame.BuildBuildingClickS.Click(BuildingTypes.Smelter, eMGame); });
 
             leftEs.PremiumButtonC.AddListener(delegate
             {
-                OpenShop(eUIC.ShopE, e);
+                OpenShop(eUICommon.ShopE, eMGame);
             });
 
 
             //Right
-            eUI.RightEs.Unique(ButtonTypes.First).ButtonC.AddListener(delegate { systems.AbilityClickS.Click(ButtonTypes.First, e); });
-            eUI.RightEs.Unique(ButtonTypes.Second).ButtonC.AddListener(delegate { systems.AbilityClickS.Click(ButtonTypes.Second, e); });
-            eUI.RightEs.Unique(ButtonTypes.Third).ButtonC.AddListener(delegate { systems.AbilityClickS.Click(ButtonTypes.Third, e); });
-            eUI.RightEs.Unique(ButtonTypes.Fourth).ButtonC.AddListener(delegate { systems.AbilityClickS.Click(ButtonTypes.Fourth, e); });
-            eUI.RightEs.Unique(ButtonTypes.Fifth).ButtonC.AddListener(delegate { systems.AbilityClickS.Click(ButtonTypes.Fifth, e); });
+            eUIGame.RightEs.Unique(ButtonTypes.First).ButtonC.AddListener(delegate { sMGame.AbilityClickS.Click(ButtonTypes.First, eMGame); });
+            eUIGame.RightEs.Unique(ButtonTypes.Second).ButtonC.AddListener(delegate { sMGame.AbilityClickS.Click(ButtonTypes.Second, eMGame); });
+            eUIGame.RightEs.Unique(ButtonTypes.Third).ButtonC.AddListener(delegate { sMGame.AbilityClickS.Click(ButtonTypes.Third, eMGame); });
+            eUIGame.RightEs.Unique(ButtonTypes.Fourth).ButtonC.AddListener(delegate { sMGame.AbilityClickS.Click(ButtonTypes.Fourth, eMGame); });
+            eUIGame.RightEs.Unique(ButtonTypes.Fifth).ButtonC.AddListener(delegate { sMGame.AbilityClickS.Click(ButtonTypes.Fifth, eMGame); });
 
-            eUI.RightEs.ProtectE.ButtonC.AddListener(delegate { systems.ConditionClickS.Click(ConditionUnitTypes.Protected, e); });
-            eUI.RightEs.RelaxE.ButtonC.AddListener(delegate { systems.ConditionClickS.Click(ConditionUnitTypes.Relaxed, e); });
+            eUIGame.RightEs.ProtectE.ButtonC.AddListener(delegate { sMGame.ConditionClickS.Click(ConditionUnitTypes.Protected, eMGame); });
+            eUIGame.RightEs.RelaxE.ButtonC.AddListener(delegate { sMGame.ConditionClickS.Click(ConditionUnitTypes.Relaxed, eMGame); });
 
 
             #region Center
 
-            var centerEs = eUI.CenterEs;
-            centerEs.ReadyButtonC.AddListener(delegate { systems.ReadyClickS.Ready(e); });
+            var centerEs = eUIGame.CenterEs;
+            centerEs.ReadyButtonC.AddListener(delegate { sMGame.ReadyClickS.Ready(eMGame); });
             centerEs.JoinDiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
-            centerEs.KingE.Button.AddListener(delegate { systems.GetKingClickS.Click(e); });
-            centerEs.FriendE.ButtonC.AddListener(delegate { e.ZoneInfoC.IsActiveFriend = false; });
-            centerEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { systems.GetHeroClickCenterS.Get(UnitTypes.Elfemale, e); });
-            centerEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { systems.GetHeroClickCenterS.Get(UnitTypes.Snowy, e); });
-            centerEs.OpenShopButtonC.AddListener(delegate { OpenShop(eUIC.ShopE, e); });
+            centerEs.KingE.Button.AddListener(delegate { sMGame.GetKingClickS.Click(eMGame); });
+            centerEs.FriendE.ButtonC.AddListener(delegate { eMGame.ZoneInfoC.IsActiveFriend = false; });
+            centerEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { sMGame.GetHeroClickCenterS.Get(UnitTypes.Elfemale, eMGame); });
+            centerEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { sMGame.GetHeroClickCenterS.Get(UnitTypes.Snowy, eMGame); });
+            centerEs.OpenShopButtonC.AddListener(delegate { OpenShop(eUICommon.ShopE, eMGame); });
 
             //Building
-            centerEs.MarketE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Market, e); });
-            centerEs.SmelterE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Smelter, e); });
-            centerEs.SmelterE.ButtonC.AddListener(delegate { e.RpcPoolEs.Melt_ToMaster(); });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.FoodToWood).AddListener(delegate { e.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.FoodToWood); });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.WoodToFood).AddListener(delegate { e.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.WoodToFood); });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToFood).AddListener(delegate { e.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToFood); });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(delegate { e.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToWood); });
-
+            centerEs.MarketE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Market, eMGame); });
+            centerEs.SmelterE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Smelter, eMGame); });
+            centerEs.SmelterE.ButtonC.AddListener(delegate { eMGame.RpcPoolEs.Melt_ToMaster(); });
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.FoodToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.FoodToWood); });
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.WoodToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.WoodToFood); });
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToFood); });
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToWood); });
 
             #endregion
 
 
             //Up
-            eUI.UpEs.AlphaC.AddListener(delegate
+            eUIGame.UpEs.AlphaC.AddListener(delegate
             {
-                OpenShop(eUIC.ShopE, e);
+                OpenShop(eUICommon.ShopE, eMGame);
             });
-            eUI.UpEs.LeaveC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
+            eUIGame.UpEs.LeaveC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
         }
 
-        void Exit(in BuildingTypes buildingT, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        void Exit(in BuildingTypes buildingT, in EntitiesModelGame e)
         {
             e.Sound(ClipTypes.Click).Invoke();
             e.SelectedE.BuildingsC.Set(buildingT, false);
         }
 
-        void OpenShop(in ShopUIE shopUIE, in Entity.Model.EntitiesModelGame e)
+        void OpenShop(in ShopUIE shopUIE, in EntitiesModelGame e)
         {
             e.Sound(ClipTypes.Click).Invoke();
             shopUIE.ShopZoneGOC.SetActive(false);

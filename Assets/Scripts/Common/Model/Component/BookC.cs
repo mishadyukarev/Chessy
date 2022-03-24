@@ -1,16 +1,16 @@
-﻿using Chessy.Common.Enum;
+﻿//using Chessy.Common.Enum;
 
-namespace Chessy.Common.Component
-{
-    public struct BookC
-    {
-        public PageBoookTypes PageBookT;
-        public bool IsOpenedBook;
+//namespace Chessy.Common.Component
+//{
+//    public struct BookC
+//    {
+//        public PageBookTypes PageBookT;
+//        public bool IsOpenedBook;
 
-        public BookC(in PageBoookTypes pageBookT, in bool isOpen)
-        {
-            PageBookT = pageBookT;
-            IsOpenedBook = isOpen;
-        }
-    }
-}
+//        public BookC(in PageBookTypes pageBookT, in bool isOpen)
+//        {
+//            PageBookT = pageBookT;
+//            IsOpenedBook = isOpen;
+//        }
+//    }
+//}

@@ -21,7 +21,7 @@ namespace Chessy.Common
 
             if (!_eMCommon.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME).hasReceipt)
             {
-                if (PhotonNetwork.OfflineMode || _eMCommon.SceneC.Is(SceneTypes.Menu))
+                if (PhotonNetwork.OfflineMode || _eMCommon.SceneTC.Is(SceneTypes.Menu))
                 {
                     if (difTime.Minutes >= AdC.MINUTES_FOR_AD)
                     {

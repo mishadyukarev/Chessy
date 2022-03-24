@@ -1,10 +1,12 @@
-﻿//namespace Scripts.Common
-//{
-//    public enum PlayerTypes
-//    {
-//        None,
+﻿namespace Chessy.Game
+{
+    public enum PlayerTypes
+    {
+        None,
 
-//        First,
-//        Second,
-//    }
-//}
+        First,
+        Second,
+
+        End,
+    }
+}

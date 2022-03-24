@@ -38,7 +38,7 @@ namespace Chessy.Game.System.View
 
         public void Run()
         {
-            if (_eMCommon.SceneC.Scene == SceneTypes.Game)
+            if (_eMCommon.SceneTC.Scene == SceneTypes.Game)
             {
                 _timerForUpdate += Time.deltaTime;
 

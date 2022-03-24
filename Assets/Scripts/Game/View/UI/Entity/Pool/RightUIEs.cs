@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Component;
 using Chessy.Game.Entity.View.UI.Right;
 using Chessy.Game.View.UI.Entity.Right;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Chessy.Game
         public EffectUIE Effect(in byte numberEffect) => _effects[numberEffect];
 
 
-        public readonly Chessy.Common.Component.GameObjectVC Zone;
+        public readonly GameObjectVC Zone;
         public RightStatsUIEs StatsE;
         public RightProtectUIE ProtectE;
         public RelaxUIE RelaxE;

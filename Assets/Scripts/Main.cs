@@ -27,47 +27,60 @@ namespace Chessy
 
         void Start()
         {
-            #region Entity
+            #region Common
 
             var eVCommon = new EntitiesViewCommon(transform, TestMode, out var sound, out var commonZone);
             var eUICommon = new EntitiesViewUICommon(commonZone);
             var eMCommon = new EntitiesModelCommon(TestMode, sound);
 
+            var sMCommon = new SystemsModelCommon(eMCommon);
+            var sUICommon = new SystemsViewUICommon(eMCommon, eVCommon, eUICommon);
+
+            new EventsCommon(eUICommon, eVCommon, eMCommon);
+
+            #endregion
+
+
+            #region Menu
+
             var eVMenu = new EntitiesViewMenu();
             var eUIMenu = new EntitiesViewUIMenu(eUICommon);
             var eMMenu = new EntitiesModelMenu();
+
+            var sMMenu = new SystemsModelMenu(eUIMenu, eUICommon, eMCommon);
+
+            new EventsMenu(eMCommon, eUIMenu);
+
+            #endregion
+
+
+            #region Game
 
             var eVGame = new EntitiesViewGame(out var forData, eVCommon);
             var eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods, eMCommon);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
-            #endregion
-
-
-            #region System
-
-            var sMCommon = new SystemsModelCommon(eMCommon);
-            var sUICommon = new SystemsViewUICommon(eMCommon, eVCommon, eUICommon);
-
-            var sMMenu = new SystemsModelMenu(eUIMenu, eUICommon, eMCommon);
-
             var sMGame = new SystemsModelGame(eMGame, eMCommon);
             var sUIGame = new SystemsViewUIGame(eMCommon, eUIGame, eMGame);
             var sVGame = new SystemsViewGame(eVGame, eMGame, eVCommon, eMCommon);
+
+            new EventsUIGame(eUICommon, eMCommon, sMGame, eUIGame, eMGame);
+
+            #endregion
 
 
             #region NeedReplace
 
             var rpc = eVGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sMGame, eMGame, eMCommon);
 
-            new EventsCommon(eUICommon, eVCommon, eMCommon);
+
             new IAPCore(eUICommon.ShopE, eMCommon);
             new MyYodo();
 
             var togglerScenes = new List<IToggleScene>()
             {
-                eMCommon,
-                eUICommon,
+                sMCommon,
+                sUICommon,
                 sMGame,
                 rpc,
             };
@@ -86,18 +99,6 @@ namespace Chessy
                 sUIGame,
                 sMMenu,
             };
-
-
-
-            #endregion
-
-
-            #region Event
-
-            new EventsMenu(eMCommon, eUIMenu);
-            new EventsUIGame(eUICommon, eMCommon, sMGame, eUIGame, eMGame);
-
-            #endregion
         }
 
         void Update() => _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());

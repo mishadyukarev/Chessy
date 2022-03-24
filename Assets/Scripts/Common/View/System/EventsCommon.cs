@@ -16,24 +16,24 @@ namespace Chessy.Common
             var bookE = eUICommon.BookE;
             bookE.ExitButtonC.AddListener(delegate
             {
-                eMCommon.BookC.IsOpenedBook = false;
+                eMCommon.BookE.IsOpenedBook = false;
                 eVCommon.Sound(ClipTypes.CloseBook).Play();
             });
 
             bookE.NextButtonC.AddListener(delegate
             {
-                if (eMCommon.BookC.PageBookT < PageBoookTypes.End - 1)
+                if (eMCommon.BookE.PageBookTC.PageBookT < PageBookTypes.End - 1)
                 {
-                    eMCommon.BookC.PageBookT++;
+                    eMCommon.BookE.PageBookTC.PageBookT++;
                     eVCommon.Sound(ClipTypes.ShiftBookSheet).Play();
                 }
             });
 
             bookE.BackButtonC.AddListener(delegate
             {
-                if (eMCommon.BookC.PageBookT > 0)
+                if (eMCommon.BookE.PageBookTC.PageBookT > 0)
                 {
-                    eMCommon.BookC.PageBookT--;
+                    eMCommon.BookE.PageBookTC.PageBookT--;
                     eVCommon.Sound(ClipTypes.ShiftBookSheet).Play();
                 }
             });

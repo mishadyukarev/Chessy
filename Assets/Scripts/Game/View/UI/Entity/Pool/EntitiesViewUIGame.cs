@@ -18,10 +18,10 @@ namespace Chessy.Game
             var gameZone = eUIC.CanvasE.GameCanvasGOC.Transform;
 
             LeftEs = new LeftUIEs(gameZone.Find("Left+"));
-            RightEs = new RightUIEs(gameZone.Find("RightZone"));
-            CenterEs = new CenterUIEs(gameZone.Find("CenterZone"));
-            DownEs = new DownUIEs(gameZone.Find("DownZone"));
-            UpEs = new UpUIEs(gameZone.Find("Exit+").Find("Button+").GetComponent<Button>(), gameZone.Find("UpZone"));
+            RightEs = new RightUIEs(gameZone.Find("Right+"));
+            CenterEs = new CenterUIEs(gameZone.Find("Center+"));
+            DownEs = new DownUIEs(gameZone.Find("Down+"));
+            UpEs = new UpUIEs(gameZone.Find("Exit+").Find("Button+").GetComponent<Button>(), gameZone.Find("Up+"));
         }
     }
 }

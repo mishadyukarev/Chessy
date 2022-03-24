@@ -1,27 +1,28 @@
 ﻿using Chessy.Common.Component;
 using Chessy.Common.Entity.View.UI;
 using Chessy.Common.Enum;
+using Chessy.Common.Model.Entity;
 
 namespace Chessy.Game.System.View.UI.Center
 {
     public struct SyncBookUIS
     {
-        public void Sync(in BookUIE bookE, in BookC bookC)
+        public void Sync(in BookUIE bookUIE, in BookE bookE)
         {
-            bookE.ParenGOC.SetActive(bookC.IsOpenedBook);
+            bookUIE.ParenGOC.SetActive(bookE.IsOpenedBook);
 
-            if (bookC.IsOpenedBook)
+            if (bookE.IsOpenedBook)
             {
-                for (var pageT = PageBoookTypes.None + 1; pageT < PageBoookTypes.End; pageT++)
+                for (var pageT = PageBookTypes.None + 1; pageT < PageBookTypes.End; pageT++)
                 {
-                    bookE.PageGOC(pageT).SetActive(pageT == bookC.PageBookT);
+                    bookUIE.PageGOC(pageT).SetActive(pageT == bookE.PageBookTC.PageBookT);
                 }
 
-                bookE.BackButtonC.SetActive(bookC.PageBookT != PageBoookTypes.Main);
-                bookE.NextButtonC.SetActive(bookC.PageBookT < PageBoookTypes.End - 1);
+                bookUIE.BackButtonC.SetActive(bookE.PageBookTC.PageBookT != PageBookTypes.Main);
+                bookUIE.NextButtonC.SetActive(bookE.PageBookTC.PageBookT < PageBookTypes.End - 1);
 
-                bookE.LeftPageTextC.TextUI.text = ((int)bookC.PageBookT).ToString() + "/" + bookC.PageBookT;
-                bookE.RightPageTextC.TextUI.text = ((int)bookC.PageBookT + 1).ToString() + "/" + bookC.PageBookT;
+                bookUIE.LeftPageTextC.TextUI.text = ((int)bookE.PageBookTC.PageBookT).ToString() + "/" + bookE.PageBookTC.PageBookT;
+                bookUIE.RightPageTextC.TextUI.text = ((int)bookE.PageBookTC.PageBookT + 1).ToString() + "/" + bookE.PageBookTC.PageBookT;
             }
         }
     }

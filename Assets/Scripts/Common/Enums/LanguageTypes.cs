@@ -8,5 +8,7 @@
         Russian,
         Chinese,
         Spanish,
+
+        End,
     }
 }

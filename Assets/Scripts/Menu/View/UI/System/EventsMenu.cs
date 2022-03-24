@@ -41,8 +41,8 @@ namespace Chessy.Menu
 
             eUIM.CenterE.BookButtonC.AddListener(delegate
             {
-                eMC.BookC.IsOpenedBook = !eMC.BookC.IsOpenedBook;
-                eMC.SoundActionC(eMC.BookC.IsOpenedBook ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+                eMC.BookE.IsOpenedBook = !eMC.BookE.IsOpenedBook;
+                eMC.SoundActionC(eMC.BookE.IsOpenedBook ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
             });
 
             eUIM.CenterE.SettingsButtonC.AddListener(delegate

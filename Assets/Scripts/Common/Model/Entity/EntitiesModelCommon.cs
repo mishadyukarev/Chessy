@@ -1,12 +1,13 @@
 ﻿using Chessy.Common.Component;
 using Chessy.Common.Enum;
 using Chessy.Common.Interface;
+using Chessy.Common.Model.Entity;
 using System;
 using System.Collections.Generic;
 
 namespace Chessy.Common.Entity
 {
-    public sealed class EntitiesModelCommon : IToggleScene
+    public sealed class EntitiesModelCommon
     {
         readonly Dictionary<ClipTypes, ActionC> _sound;
 
@@ -16,13 +17,14 @@ namespace Chessy.Common.Entity
         public float VolumeMusic;
 
 
-        public BookC BookC;
         public TestModeC TestModeC;
         public AdC AdC;
         public TimeStartGameC TimeStartGameC;
-        public SceneC SceneC;
+        public SceneC SceneTC;
         public GameModeTC GameModeTC;
         public ShopC ShopC;
+
+        public BookE BookE;
 
         public ActionC SoundActionC(in ClipTypes clipT) => _sound[clipT];
 
@@ -36,37 +38,14 @@ namespace Chessy.Common.Entity
 
             var nowTime = DateTime.Now;
             AdC = new AdC(nowTime);
-            TimeStartGameC = new TimeStartGameC(nowTime);
-            BookC = new BookC(PageBoookTypes.Main, false);
+            TimeStartGameC = new TimeStartGameC(nowTime);  
             TestModeC = new TestModeC(testMode);
 
-            SceneC.Scene = SceneTypes.Menu;
-        }
 
-        public void ToggleScene(in SceneTypes newSceneT)
-        {
-            if (SceneC.Is(newSceneT)) throw new Exception("Need other scene");
 
-            SceneC.Scene = newSceneT;
+            BookE = new BookE(PageBookTypes.Main, false);
 
-            switch (newSceneT)
-            {
-                case SceneTypes.None:
-                    throw new Exception();
-
-                case SceneTypes.Menu:
-                    {
-                        break;
-                    }
-
-                case SceneTypes.Game:
-                    {
-                        BookC.IsOpenedBook = true;
-                        BookC.PageBookT = PageBoookTypes.Main;
-                        break;
-                    }
-                default: throw new Exception();
-            }
+            SceneTC.Scene = SceneTypes.Menu;
         }
     }
 }
