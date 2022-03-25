@@ -52,8 +52,8 @@ namespace Chessy.Game
 
                                         if (eMGame.UnitTC(eMGame.CellsC.Selected).HaveUnit)
                                         {
-                                            if (eMGame.UnitEs(eMGame.CellsC.Selected).ForAttack(AttackTypes.Simple).Contains(eMGame.CellsC.Current)
-                                            || eMGame.UnitEs(eMGame.CellsC.Selected).ForAttack(AttackTypes.Unique).Contains(eMGame.CellsC.Current))
+                                            if (eMGame.UnitEs(eMGame.CellsC.Selected).SimpleAttack.Contains(eMGame.CellsC.Current)
+                                            || eMGame.UnitEs(eMGame.CellsC.Selected).UniqueAttack.Contains(eMGame.CellsC.Current))
                                             {
                                                 eMGame.RpcPoolEs.AttackUnitToMaster(eMGame.CellsC.Selected, eMGame.CellsC.Current);
                                             }

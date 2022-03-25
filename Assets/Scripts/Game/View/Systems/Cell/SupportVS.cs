@@ -127,12 +127,12 @@ namespace Chessy.Game
                                 eV.CellEs(idx_0).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.Shift);
                             }
 
-                            foreach (var idx_0 in e.UnitEs(e.CellsC.Selected).ForAttack(AttackTypes.Simple).Idxs)
+                            foreach (var idx_0 in e.UnitEs(e.CellsC.Selected).SimpleAttack.Idxs)
                             {
                                 eV.CellEs(idx_0).SupportCellEs.Support.Enable();
                                 eV.CellEs(idx_0).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
                             }
-                            foreach (var idx_0 in e.UnitEs(e.CellsC.Selected).ForAttack(AttackTypes.Unique).Idxs)
+                            foreach (var idx_0 in e.UnitEs(e.CellsC.Selected).UniqueAttack.Idxs)
                             {
                                 eV.CellEs(idx_0).SupportCellEs.Support.Enable();
                                 eV.CellEs(idx_0).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);

@@ -6,24 +6,24 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public struct CellEs
+    public sealed class CellEs
     {
-        readonly CellPlayerPoolEs[] _forPlayerEs;
+        readonly CellPlayerPoolEs[] _forPlayerEs = new CellPlayerPoolEs[(byte)PlayerTypes.End];
 
         readonly CellE[] _aroundEs;
         readonly Dictionary<byte, DirectTypes> _aroundDirs_0;
         readonly Dictionary<byte, DirectTypes> _aroundDirs_1;
 
-        readonly HealthC[] _trailHealthCs;
+        readonly HealthC[] _trailHealthCs = new HealthC[(byte)DirectTypes.End - 1];
 
-        public bool IsActiveParentSelf;
+        public readonly bool IsActiveParentSelf;
 
         public readonly CellE CellE;
-        public UnitEs UnitEs;
-        public CellBuildingEs BuildEs;
-        public CellEnvironmentEs EnvironmentEs;
-        public CellEffectE EffectEs;
-        public CellRiverE RiverEs;
+        public readonly UnitEs UnitEs = new UnitEs();
+        public readonly CellBuildingEs BuildEs = new CellBuildingEs();
+        public readonly CellEnvironmentEs EnvironmentEs = new CellEnvironmentEs();
+        public readonly CellEffectE EffectEs = new CellEffectE();
+        public readonly CellRiverE RiverEs = new CellRiverE();
 
 
         public CellE AroundCellE(in byte idx_array) => _aroundEs[idx_array];
@@ -71,7 +71,7 @@ namespace Chessy.Game
         public ref HealthC TrailHealthC(in DirectTypes dir) => ref _trailHealthCs[(byte)dir - 1];
         public ref CellPlayerPoolEs Player(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
 
-        internal CellEs(in bool[] isActiveParents, in int idCell, byte[] xy, in byte idx, in Chessy.Game.Entity.Model.EntitiesModelGame e) : this()
+        internal CellEs(in bool[] isActiveParents, in int idCell, byte[] xy, in byte idx, in EntitiesModelGame eMGame)
         {
             IsActiveParentSelf = isActiveParents[idx];
 
@@ -140,7 +140,7 @@ namespace Chessy.Game
 
                     var xy_0 = new[] { x, y };
 
-                    var cell_0 = e.GetIdxCellByXy(xy_0);
+                    var cell_0 = eMGame.GetIdxCellByXy(xy_0);
 
                     _aroundDirs_0.Add(cell_0, dir);
                     _aroundEs[(byte)dir - 1] = new CellE(cell_0, xy_0, default);
@@ -153,21 +153,12 @@ namespace Chessy.Game
 
                         var xy_1 = new[] { x, y };
 
-                        _aroundDirs_1.Add(e.GetIdxCellByXy(xy_1), dir);
+                        _aroundDirs_1.Add(eMGame.GetIdxCellByXy(xy_1), dir);
                     }
                 }
-
-                //IdxsAround = new IdxsArrayC(idxsAround);
             }
 
-            _forPlayerEs = new CellPlayerPoolEs[(byte)PlayerTypes.End];
-
-            _trailHealthCs = new HealthC[(byte)DirectTypes.End - 1];
-
             CellE = new CellE(idx, xy, idCell);
-            BuildEs = new CellBuildingEs((byte)PlayerTypes.End);
-            UnitEs = new UnitEs(xy);
-            RiverEs = new CellRiverE(default);
         }
     }
 }

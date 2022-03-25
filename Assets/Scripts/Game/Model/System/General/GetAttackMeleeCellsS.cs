@@ -7,8 +7,8 @@ namespace Chessy.Game.System.Model
     {
         public GetAttackMeleeCellsS(in byte cell_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
         {
-            e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Clear();
-            e.UnitEs(cell_0).ForAttack(AttackTypes.Unique).Clear();
+            e.UnitEs(cell_0).SimpleAttack.Clear();
+            e.UnitEs(cell_0).UniqueAttack.Clear();
 
             if (!e.UnitEffectStunC(cell_0).IsStunned)
             {
@@ -37,13 +37,13 @@ namespace Chessy.Game.System.Model
                                             if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                            || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                             {
-                                                e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                                e.UnitEs(cell_0).SimpleAttack.Add(idx_1);
                                             }
-                                            else e.UnitEs(cell_0).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                            else e.UnitEs(cell_0).UniqueAttack.Add(idx_1);
                                         }
                                         else
                                         {
-                                            e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                            e.UnitEs(cell_0).SimpleAttack.Add(idx_1);
                                         }
                                     }
                                 }

@@ -32,22 +32,22 @@ namespace Chessy.Game.System.Model
                                                 {
                                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                     {
-                                                        e.UnitEs(cell_0).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                                        e.UnitEs(cell_0).UniqueAttack.Add(idx_1);
                                                     }
-                                                    else e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                                    else e.UnitEs(cell_0).SimpleAttack.Add(idx_1);
                                                 }
                                                 else
                                                 {
                                                     if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                     {
-                                                        e.UnitEs(cell_0).ForAttack(AttackTypes.Unique).Add(idx_1);
+                                                        e.UnitEs(cell_0).UniqueAttack.Add(idx_1);
                                                     }
-                                                    else e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                                    else e.UnitEs(cell_0).SimpleAttack.Add(idx_1);
                                                 }
                                             }
                                             else
                                             {
-                                                e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_1);
+                                                e.UnitEs(cell_0).SimpleAttack.Add(idx_1);
                                             }
                                         }
                                     }
@@ -65,24 +65,24 @@ namespace Chessy.Game.System.Model
                                             {
                                                 if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                                 {
-                                                    e.UnitEs(cell_0).ForAttack(AttackTypes.Unique).Add(idx_2);
+                                                    e.UnitEs(cell_0).UniqueAttack.Add(idx_2);
                                                 }
 
-                                                else e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                                else e.UnitEs(cell_0).SimpleAttack.Add(idx_2);
                                             }
                                             else
                                             {
                                                 if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
                                                 {
-                                                    e.UnitEs(cell_0).ForAttack(AttackTypes.Unique).Add(idx_2);
+                                                    e.UnitEs(cell_0).UniqueAttack.Add(idx_2);
                                                 }
 
-                                                else e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                                else e.UnitEs(cell_0).SimpleAttack.Add(idx_2);
                                             }
                                         }
                                         else
                                         {
-                                            e.UnitEs(cell_0).ForAttack(AttackTypes.Simple).Add(idx_2);
+                                            e.UnitEs(cell_0).SimpleAttack.Add(idx_2);
                                         }
                                     }
                                 }

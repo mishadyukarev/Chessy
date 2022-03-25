@@ -23,8 +23,8 @@ namespace Chessy.Game.System.Model.Master
         {
             var whoseMove = eMGame.WhoseMove.Player;
 
-            var canAttack = eMGame.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to)
-                || eMGame.UnitEs(idx_from).ForAttack(AttackTypes.Simple).Contains(idx_to);
+            var canAttack = eMGame.UnitEs(idx_from).UniqueAttack.Contains(idx_to)
+                || eMGame.UnitEs(idx_from).SimpleAttack.Contains(idx_to);
 
             if (canAttack && eMGame.UnitPlayerTC(idx_from).Is(whoseMove))
             {
@@ -37,7 +37,7 @@ namespace Chessy.Game.System.Model.Master
 
 
                 float powerDam_from = eMGame.DamageAttackC(idx_from).Damage; 
-                if (eMGame.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to))
+                if (eMGame.UnitEs(idx_from).UniqueAttack.Contains(idx_to))
                 {
                     powerDam_from *= DamageValues.UNIQUE_PERCENT_DAMAGE;
                 }

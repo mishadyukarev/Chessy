@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game.Entity.Model.Cell
 {
-    public struct BuildingE
+    public sealed class BuildingE
     {
         public BuildingTC BuildingTC;
         public PlayerTC PlayerTC;

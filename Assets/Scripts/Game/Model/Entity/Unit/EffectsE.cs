@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game.Entity.Model.Cell.Unit
 {
-    public struct EffectsE
+    public sealed class EffectsE
     {
         public StunC StunC;
         public ProtectionC ShieldEffectC;

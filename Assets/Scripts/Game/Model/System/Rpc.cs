@@ -3,11 +3,8 @@ using Chessy.Common.Entity;
 using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
 using Chessy.Game.System.Model;
-using Chessy.Game.System.Model.Master;
 using Chessy.Game.Values;
-using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit;
-using Chessy.Game.Values.Cell.Unit.Effect;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using System;
@@ -25,7 +22,7 @@ namespace Chessy.Game
         int _idx_cur;
 
 
-        public static List<string> NamesMethods
+        public static List<string> NamesMethods_S
         {
             get
             {
@@ -302,7 +299,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        _sMGame.MasterSystems.SetConditionUnitS_M.Set((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++],  sender);
+                        _sMGame.MasterSystems.SetConditionUnitS_M.Set((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.SetUnit:

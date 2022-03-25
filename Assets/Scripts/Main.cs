@@ -58,7 +58,7 @@ namespace Chessy
             #region Game
 
             var eVGame = new EntitiesViewGame(out var forData, eVCommon);
-            var eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods);
+            var eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods_S);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
             var sMGame = new SystemsModelGame(eMCommon, eMGame);

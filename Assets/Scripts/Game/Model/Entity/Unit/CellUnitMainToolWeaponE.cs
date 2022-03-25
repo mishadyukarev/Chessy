@@ -1,14 +1,8 @@
 ﻿namespace Chessy.Game
 {
-    public struct CellUnitMainToolWeaponE
+    public sealed class CellUnitMainToolWeaponE
     {
         public ToolWeaponTC ToolWeaponTC;
         public LevelTC LevelTC;
-
-        public void Set(in ToolWeaponTypes twT, in LevelTypes levT)
-        {
-            ToolWeaponTC.ToolWeapon = twT;
-            LevelTC.Level = levT;
-        }
     }
 }

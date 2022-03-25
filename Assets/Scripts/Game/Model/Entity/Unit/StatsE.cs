@@ -2,11 +2,11 @@
 
 namespace Chessy.Game.Entity.Model.Cell.Unit
 {
-    public struct StatsE
+    public sealed class StatsE
     {
+        public HealthC HealthC;
         public StepsC StepC;
         public WaterC WaterC;
-        public HealthC HealthC;
 
         public DamageC DamageSimpleAttackC;
         public DamageC DamageOnCellC;

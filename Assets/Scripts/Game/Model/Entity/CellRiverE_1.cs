@@ -2,18 +2,12 @@
 
 namespace Chessy.Game
 {
-    public struct CellRiverE
+    public sealed class CellRiverE
     {
         public RiverTC RiverTC;
 
-        readonly bool[] _haveRive;
+        readonly bool[] _haveRive = new bool[(byte)DirectTypes.End - 1];
         public ref bool HaveRive(in DirectTypes dir) => ref _haveRive[(byte)dir - 1];
-
-
-        public CellRiverE(in bool def) : this()
-        {
-            _haveRive = new bool[(byte)DirectTypes.End - 1];
-        }
 
         public void SetStart(params DirectTypes[] dirs)
         {

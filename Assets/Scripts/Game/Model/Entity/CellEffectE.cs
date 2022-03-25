@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public struct CellEffectE
+    public sealed class CellEffectE
     {
         public bool HaveFire;
     }

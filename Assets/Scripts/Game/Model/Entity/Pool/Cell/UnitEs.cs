@@ -6,61 +6,55 @@ namespace Chessy.Game.Entity.Model.Cell.Unit
 {
     public sealed class UnitEs
     {
-        readonly AbilityTC[] _uniqueButtons;
-        readonly CooldownC[] _abilities;
-        readonly ForPlayerE[] _visibles;
-        readonly StepsC[] _needStepsForShift;
-        readonly Dictionary<AttackTypes, IdxsCellsC> _forAttack;
+        readonly AbilityTC[] _uniqueButtons = new AbilityTC[(byte)ButtonTypes.End - 1];
+        readonly CooldownC[] _abilities = new CooldownC[(byte)AbilityTypes.End - 1];
+        readonly ForPlayerE[] _visibles = new ForPlayerE[(byte)PlayerTypes.End];
+        readonly StepsC[] _needStepsForShift = new StepsC[StartValues.CELLS];
 
-        public IdxsCellsC ForArson;
-        public IdxsCellsC ForShift;
+        public readonly IdxsCellsC SimpleAttack = new IdxsCellsC(new HashSet<byte>());
+        public readonly IdxsCellsC UniqueAttack = new IdxsCellsC(new HashSet<byte>());
 
-        public UnitMainE MainE;
-        public StatsE StatsE;
-        public EffectsE EffectsE;
-        public CellUnitMainToolWeaponE MainToolWeaponE;
-        public ExtraToolWeaponE ExtraToolWeaponE;
-        public WhoLastDiedHereE WhoLastDiedHereE;
-        public CellUnitExtractE ExtractE;
+        public readonly IdxsCellsC ForArson = new IdxsCellsC(new HashSet<byte>());
+        public readonly IdxsCellsC ForShift = new IdxsCellsC(new HashSet<byte>());
+
+        public readonly UnitMainE MainE = new UnitMainE();
+        public readonly StatsE StatsE = new StatsE();
+        public readonly EffectsE EffectsE = new EffectsE();
+        public readonly CellUnitMainToolWeaponE MainToolWeaponE = new CellUnitMainToolWeaponE();
+        public readonly ExtraToolWeaponE ExtraToolWeaponE = new ExtraToolWeaponE();
+        public readonly WhoLastDiedHereE WhoLastDiedHereE = new WhoLastDiedHereE();
+        public readonly CellUnitExtractE ExtractE = new CellUnitExtractE();
 
 
-        public IdxsCellsC ForAttack(in AttackTypes attack) => _forAttack[attack];
         public ref StepsC NeedSteps(in byte idx_cell) => ref _needStepsForShift[idx_cell];
 
         public ref AbilityTC Ability(in ButtonTypes button) => ref _uniqueButtons[(byte)button - 1];
         public ref CooldownC CoolDownC(in AbilityTypes ability) => ref _abilities[(byte)ability - 1];
         public ref ForPlayerE ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player];
 
-
-        internal UnitEs(in byte[] xy)
-        {
-            _uniqueButtons = new AbilityTC[(byte)ButtonTypes.End - 1];
-
-            _abilities = new CooldownC[(byte)AbilityTypes.End - 1];
-
-            _visibles = new ForPlayerE[(byte)PlayerTypes.End];
-            for (var player = PlayerTypes.None + 1; player < PlayerTypes.End; player++)
-            {
-                _visibles[(byte)player] = new ForPlayerE();
-            }
-
-            ForArson = new IdxsCellsC(new HashSet<byte>());
-            ForShift = new IdxsCellsC(new HashSet<byte>());
-
-            _needStepsForShift = new StepsC[StartValues.CELLS];
-            _forAttack = new Dictionary<AttackTypes, IdxsCellsC>();
-
-            _forAttack[AttackTypes.Simple] = new IdxsCellsC(new HashSet<byte>());
-            _forAttack[AttackTypes.Unique] = new IdxsCellsC(new HashSet<byte>());
-        }
-
         public void Set(in UnitEs unitE)
         {
-            MainE = unitE.MainE;
-            EffectsE = unitE.EffectsE;
-            StatsE = unitE.StatsE;
-            MainToolWeaponE = unitE.MainToolWeaponE;
-            ExtraToolWeaponE = unitE.ExtraToolWeaponE;
+            MainE.UnitTC = unitE.MainE.UnitTC;
+            MainE.LevelTC = unitE.MainE.LevelTC;
+            MainE.PlayerTC = unitE.MainE.PlayerTC;
+            MainE.ConditionTC = unitE.MainE.ConditionTC;
+            MainE.IsRightArcherC = unitE.MainE.IsRightArcherC;
+
+            EffectsE.StunC = unitE.EffectsE.StunC;
+            EffectsE.ShieldEffectC = unitE.EffectsE.ShieldEffectC;
+            EffectsE.FrozenArrawC = unitE.EffectsE.FrozenArrawC;
+            EffectsE.HaveKingEffect = unitE.EffectsE.HaveKingEffect;
+
+            StatsE.HealthC = unitE.StatsE.HealthC;
+            StatsE.StepC = unitE.StatsE.StepC;
+            StatsE.WaterC = unitE.StatsE.WaterC;
+
+            MainToolWeaponE.ToolWeaponTC = unitE.MainToolWeaponE.ToolWeaponTC;
+            MainToolWeaponE.LevelTC = unitE.MainToolWeaponE.LevelTC;
+
+            ExtraToolWeaponE.ToolWeaponTC = unitE.ExtraToolWeaponE.ToolWeaponTC;
+            ExtraToolWeaponE.LevelTC = unitE.ExtraToolWeaponE.LevelTC;
+            ExtraToolWeaponE.ProtectionC = unitE.ExtraToolWeaponE.ProtectionC;
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {

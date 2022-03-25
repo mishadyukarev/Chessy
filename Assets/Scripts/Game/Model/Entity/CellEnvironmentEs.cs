@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public struct CellEnvironmentEs
+    public sealed class CellEnvironmentEs
     {
         public ResourcesC FertilizeC;
         public ResourcesC YoungForestC;
