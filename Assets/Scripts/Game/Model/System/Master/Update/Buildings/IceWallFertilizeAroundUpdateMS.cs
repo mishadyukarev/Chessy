@@ -3,7 +3,7 @@ using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game
 {
-    sealed class IceWallFertilizeAroundUpdateMS : SystemAbstract, IEcsRunSystem
+    sealed class IceWallFertilizeAroundUpdateMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal IceWallFertilizeAroundUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -11,20 +11,20 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < eMGame.LengthCells; cell_0++)
             {
-                if (E.BuildingTC(idx_0).HaveBuilding && E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
+                if (eMGame.BuildingTC(cell_0).HaveBuilding && eMGame.BuildingTC(cell_0).Is(BuildingTypes.IceWall))
                 {
-                    var aroundIdxs = E.CellEs(idx_0).IdxsAroundHashSet;
-                    aroundIdxs.Add(idx_0);
+                    var aroundIdxs = eMGame.CellEs(cell_0).IdxsAroundHashSet;
+                    aroundIdxs.Add(cell_0);
 
-                    foreach (var idx_0_1 in aroundIdxs)
+                    foreach (var cell_0_1 in aroundIdxs)
                     {
-                        if (!E.BuildingTC(idx_0_1).Is(BuildingTypes.City) && !E.MountainC(idx_0_1).HaveAnyResources)
+                        if (!eMGame.BuildingTC(cell_0_1).Is(BuildingTypes.City) && !eMGame.MountainC(cell_0_1).HaveAnyResources)
                         {
-                            if (!E.HillC(idx_0_1).HaveAnyResources)
+                            if (!eMGame.HillC(cell_0_1).HaveAnyResources)
                             {
-                                E.FertilizeC(idx_0_1).Resources = EnvironmentValues.ADDING_FROM_ICE_WALL;
+                                eMGame.FertilizeC(cell_0_1).Resources = EnvironmentValues.ADDING_FROM_ICE_WALL;
                             }
                         }
                     }

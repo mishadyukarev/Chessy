@@ -11,55 +11,55 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var idx_sel = E.CellsC.Selected;
+            var idx_sel = eMGame.CellsC.Selected;
 
 
-            if (E.UnitTC(idx_sel).HaveUnit && !E.UnitTC(idx_sel).IsAnimal)
+            if (eMGame.UnitTC(idx_sel).HaveUnit && !eMGame.UnitTC(idx_sel).IsAnimal)
             {
-                var damageOnCell = E.DamageOnCellC(idx_sel).Damage;
-                var damageAttack = E.DamageAttackC(idx_sel).Damage;
+                var damageOnCell = eMGame.DamageOnCellC(idx_sel).Damage;
+                var damageAttack = eMGame.DamageAttackC(idx_sel).Damage;
 
 
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(true);
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(true);
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(true);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(true);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(true);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(true);
 
 
-                if (E.UnitTC(idx_sel).Is(UnitTypes.Elfemale))
+                if (eMGame.UnitTC(idx_sel).Is(UnitTypes.Elfemale))
                 {
-                    UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
+                    eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
                 }
                 else
                 {
-                    UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(true);
+                    eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(true);
                 }
 
 
 
 
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * E.UnitHpC(idx_sel).Health).ToString();
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = (Math.Truncate(10 * damageOnCell) / 10).ToString();
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = (Math.Truncate(100 * E.UnitStepC(idx_sel).Steps) / 100).ToString();
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = (Math.Truncate(100 * E.UnitWaterC(idx_sel).Water) / 100).ToString();
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * eMGame.UnitHpC(idx_sel).Health).ToString();
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = (Math.Truncate(10 * damageOnCell) / 10).ToString();
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = (Math.Truncate(100 * eMGame.UnitStepC(idx_sel).Steps) / 100).ToString();
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = (Math.Truncate(100 * eMGame.UnitWaterC(idx_sel).Water) / 100).ToString();
 
-                var v = E.UnitHpC(idx_sel).Health / HpValues.MAX;
+                var v = eMGame.UnitHpC(idx_sel).Health / HpValues.MAX;
 
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = E.UnitHpC(idx_sel).Health / HpValues.MAX;
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = eMGame.UnitHpC(idx_sel).Health / HpValues.MAX;
 
 
 
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)E.UnitStepC(idx_sel).Steps / StepValues.MAX;
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = E.UnitWaterC(idx_sel).Water / (float)WaterValues.MAX;
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)eMGame.UnitStepC(idx_sel).Steps / StepValues.MAX;
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = eMGame.UnitWaterC(idx_sel).Water / (float)WaterValues.MAX;
             }
 
             else
             {
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(false);
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(false);
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(false);
-                UIE.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(false);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(false);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(false);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
             }
         }
     }

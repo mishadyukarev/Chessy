@@ -1,34 +1,38 @@
-﻿using Chessy.Game.System.Model;
-using Chessy.Game.Values.Cell;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game
 {
-    sealed class WoodcutterExtractAdultForestUpdateMS : SystemAbstract, IEcsRunSystem
+    sealed class WoodcutterExtractAdultForestUpdateMS : SystemModelGameAbs, IEcsRunSystem
     {
-        internal WoodcutterExtractAdultForestUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        readonly TakeAdultForestResourcesS _takeAdultForestS;
+
+        internal WoodcutterExtractAdultForestUpdateMS(in TakeAdultForestResourcesS takeAdultForestS, in EntitiesModelGame ents) : base(ents)
         {
+            _takeAdultForestS = takeAdultForestS;
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (E.WoodcutterExtractE(idx_0).HaveAnyResources)
+                if (eMGame.WoodcutterExtractE(cell_0).HaveAnyResources)
                 {
-                    var extract = E.WoodcutterExtractE(idx_0).Resources;
+                    var extract = eMGame.WoodcutterExtractE(cell_0).Resources;
 
-                    E.ResourcesC(E.BuildingPlayerTC(idx_0).Player, ResourceTypes.Wood).Resources += extract;
+                    eMGame.ResourcesC(eMGame.BuildingPlayerTC(cell_0).Player, ResourceTypes.Wood).Resources += extract;
 
-                    TakeAdultForestResourcesS.TakeAdultForestResources(extract, idx_0, E);
+                    _takeAdultForestS.Take(extract, cell_0);
 
-                    if (!E.AdultForestC(idx_0).HaveAnyResources)
+                    if (!eMGame.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        E.BuildingTC(idx_0).Building = BuildingTypes.None;
+                        eMGame.BuildingTC(cell_0).Building = BuildingTypes.None;
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {
-                            E.YoungForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                            eMGame.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                         }
                     }
                 }

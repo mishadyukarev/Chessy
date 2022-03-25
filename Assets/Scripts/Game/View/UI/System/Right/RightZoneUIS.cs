@@ -8,23 +8,23 @@
 
         public void Run()
         {
-            var idx_sel = E.CellsC.Selected;
+            var idx_sel = eMGame.CellsC.Selected;
 
             var activeParent = false;
 
 
-            if (E.CellsC.Selected > 0)
+            if (eMGame.CellsC.Selected > 0)
             {
-                if (E.UnitTC(idx_sel).HaveUnit)
+                if (eMGame.UnitTC(idx_sel).HaveUnit)
                 {
-                    if (E.UnitEs(idx_sel).ForPlayer(E.CurPlayerITC.Player).IsVisible)
+                    if (eMGame.UnitEs(idx_sel).ForPlayer(eMGame.CurPlayerITC.Player).IsVisible)
                     {
                         activeParent = true;
                     }
                 }
             }
 
-            UIE.RightEs.Zone.SetActive(activeParent);
+            eUI.RightEs.Zone.SetActive(activeParent);
         }
     }
 }

@@ -3,7 +3,7 @@ using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game
 {
-    sealed class RiverFertilizeAroundUpdateMS : SystemAbstract, IEcsRunSystem
+    sealed class RiverFertilizeAroundUpdateMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal RiverFertilizeAroundUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -12,13 +12,13 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < eMGame.LengthCells; cell_0++)
             {
-                if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
+                if (eMGame.RiverEs(cell_0).RiverTC.HaveRiverNear)
                 {
-                    if (!E.MountainC(idx_0).HaveAnyResources)
+                    if (!eMGame.MountainC(cell_0).HaveAnyResources)
                     {
-                        E.FertilizeC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                        eMGame.FertilizeC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
             }

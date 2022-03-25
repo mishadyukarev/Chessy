@@ -1,91 +1,99 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model.Master;
 using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
 
 namespace Chessy.Game.System.Model
 {
-    public struct DonerS_M
+    public sealed class DonerS_M : SystemModelGameAbs
     {
-        public DonerS_M(in GameModeTC gameModeTC, in Player sender, in SystemsModelGame sMM, in EntitiesModelGame e)
+        readonly UpdateS_M _updateS_M;
+
+        public DonerS_M(in UpdateS_M updateS_M, in EntitiesModelGame eMGame) : base(eMGame)
+        {
+            _updateS_M = updateS_M;
+        }
+
+        public void Done(in GameModeTC gameModeTC, in Player sender)
         {
             if (PhotonNetwork.OfflineMode)
             {
-                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
+                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
 
                 if (gameModeTC.Is(GameModes.TrainingOff))
                 {
                     for (byte idx = 0; idx < StartValues.CELLS; idx++)
                     {
-                        e.UnitEffectStunC(idx).Stun -= 1f;
+                        eMGame.UnitEffectStunC(idx).Stun -= 1f;
 
                         for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                         {
-                            e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 1;
+                            eMGame.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 1;
                         }
                     }
 
                     for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                     {
-                        e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 1;
+                        eMGame.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 1;
                     }
 
-                    sMM.UpdateS_M.Run(gameModeTC);
-                    e.RpcPoolEs.ActiveMotionZoneToGen(sender);
+                    _updateS_M.Run(gameModeTC);
+                    eMGame.RpcPoolEs.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (gameModeTC.Is(GameModes.WithFriendOff))
                 {
                     for (byte idx = 0; idx < StartValues.CELLS; idx++)
                     {
-                        e.UnitEffectStunC(idx).Stun -= 0.5f;
+                        eMGame.UnitEffectStunC(idx).Stun -= 0.5f;
 
                         for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                         {
-                            e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
+                            eMGame.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
                         }
                     }
 
                     for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                     {
-                        e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
+                        eMGame.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
                     }
 
 
-                    var curPlayer = e.CurPlayerITC.Player;
-                    var nextPlayer = e.NextPlayer(curPlayer).Player;
+                    var curPlayer = eMGame.CurPlayerITC.Player;
+                    var nextPlayer = eMGame.NextPlayer(curPlayer).Player;
 
                     if (nextPlayer == PlayerTypes.First)
                     {
-                        sMM.UpdateS_M.Run(gameModeTC);
-                        e.RpcPoolEs.ActiveMotionZoneToGen(sender);
+                        _updateS_M.Run(gameModeTC);
+                        eMGame.RpcPoolEs.ActiveMotionZoneToGen(sender);
                     }
 
-                    e.WhoseMove.Player = nextPlayer;
+                    eMGame.WhoseMove.Player = nextPlayer;
 
 
-                    curPlayer = e.CurPlayerITC.Player;
+                    curPlayer = eMGame.CurPlayerITC.Player;
 
                     //ViewDataSC.RotateAll.Invoke();
 
-                    e.ZoneInfoC.IsActiveFriend = true;
+                    eMGame.ZoneInfoC.IsActiveFriend = true;
                 }
             }
             else
             {
                 for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                 {
-                    e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
+                    eMGame.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
                 }
 
                 for (byte idx = 0; idx < StartValues.CELLS; idx++)
                 {
-                    e.UnitEffectStunC(idx).Stun -= 0.5f;
+                    eMGame.UnitEffectStunC(idx).Stun -= 0.5f;
 
                     for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                     {
-                        e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
+                        eMGame.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
                     }
                 }
 

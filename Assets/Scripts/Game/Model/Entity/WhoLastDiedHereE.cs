@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game.Entity.Model.Cell.Unit
 {
-    public struct WhoLastDiedHereE
+    public sealed class WhoLastDiedHereE
     {
         public UnitTC UnitTC;
         public LevelTC LevelTC;

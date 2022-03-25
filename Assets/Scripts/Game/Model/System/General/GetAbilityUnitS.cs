@@ -6,59 +6,59 @@ namespace Chessy.Game.System.Model
 {
     public struct GetAbilityUnitS
     {
-        public GetAbilityUnitS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public GetAbilityUnitS(in byte cell_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
         {
-            e.UnitEs(idx_0).Ability(ButtonTypes.First).Reset();
-            e.UnitEs(idx_0).Ability(ButtonTypes.Second).Reset();
-            e.UnitEs(idx_0).Ability(ButtonTypes.Third).Reset();
-            e.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Reset();
-            e.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Reset();
+            e.UnitEs(cell_0).Ability(ButtonTypes.First).Reset();
+            e.UnitEs(cell_0).Ability(ButtonTypes.Second).Reset();
+            e.UnitEs(cell_0).Ability(ButtonTypes.Third).Reset();
+            e.UnitEs(cell_0).Ability(ButtonTypes.Fourth).Reset();
+            e.UnitEs(cell_0).Ability(ButtonTypes.Fifth).Reset();
 
-            if (e.UnitPlayerTC(idx_0).Is(e.CurPlayerITC.Player))
+            if (e.UnitPlayerTC(cell_0).Is(e.CurPlayerITC.Player))
             {
-                if (e.UnitTC(idx_0).HaveUnit)
+                if (e.UnitTC(cell_0).HaveUnit)
                 {
-                    switch (e.UnitTC(idx_0).Unit)
+                    switch (e.UnitTC(cell_0).Unit)
                     {
                         case UnitTypes.None: throw new Exception();
 
                         case UnitTypes.King:
-                            e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.CircularAttack;
-                            e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.Fourth).Ability = AbilityTypes.KingPassiveNearBonus;
+                            e.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.CircularAttack;
+                            e.CellEs(cell_0).UnitEs.Ability(ButtonTypes.Fourth).Ability = AbilityTypes.KingPassiveNearBonus;
                             break;
 
                         case UnitTypes.Pawn:
 
-                            if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.BowCrossbow))
+                            if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                             {
-                                e.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.FireArcher;
-                                e.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ChangeCornerArcher;
+                                e.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.FireArcher;
+                                e.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ChangeCornerArcher;
                             }
-                            else if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Staff))
+                            else if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff))
                             {
 
                             }
                             else
                             {
-                                if (e.AdultForestC(idx_0).HaveAnyResources)
+                                if (e.AdultForestC(cell_0).HaveAnyResources)
                                 {
-                                    if (e.HaveFire(idx_0)) e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.PutOutFirePawn;
-                                    else e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.FirePawn;
+                                    if (e.HaveFire(cell_0)) e.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.PutOutFirePawn;
+                                    else e.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.FirePawn;
                                 }
                                 else
                                 {
-                                    e.CellEs(idx_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.Seed;
+                                    e.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.Seed;
                                 }
 
 
 
-                                if (e.BuildingTC(idx_0).HaveBuilding)
+                                if (e.BuildingTC(cell_0).HaveBuilding)
                                 {
-                                    e.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
+                                    e.UnitEs(cell_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
                                 }
                                 else
                                 {
-                                    e.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetFarm;
+                                    e.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetFarm;
                                 }
 
                                 //else
@@ -77,23 +77,23 @@ namespace Chessy.Game.System.Model
                             break;
 
                         case UnitTypes.Elfemale:
-                            e.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
-                            e.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
 
                             break;
 
                         case UnitTypes.Snowy:
-                            e.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.IncreaseWindSnowy;
-                            e.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.DecreaseWindSnowy;
-                            e.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.IncreaseWindSnowy;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.DecreaseWindSnowy;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
                             //E.UnitEs(Idx).Ability(ButtonTypes.Third).Ability = AbilityTypes.IceWall;
                             break;
 
                         case UnitTypes.Undead:
-                            e.UnitEs(idx_0).Ability(ButtonTypes.First).Ability = AbilityTypes.Resurrect;
-                            e.UnitEs(idx_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetTeleport;
-                            e.UnitEs(idx_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.InvokeSkeletons;
-                            if (e.BuildingTC(idx_0).HaveBuilding) e.UnitEs(idx_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.Resurrect;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetTeleport;
+                            e.UnitEs(cell_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.InvokeSkeletons;
+                            if (e.BuildingTC(cell_0).HaveBuilding) e.UnitEs(cell_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
                             break;
 
                         case UnitTypes.Hell:
@@ -111,9 +111,9 @@ namespace Chessy.Game.System.Model
                         default: throw new Exception();
                     }
 
-                    if (e.BuildingTC(idx_0).Is(BuildingTypes.Teleport))
+                    if (e.BuildingTC(cell_0).Is(BuildingTypes.Teleport))
                     {
-                        e.UnitEs(idx_0).Ability(ButtonTypes.Fifth).Ability = AbilityTypes.Teleport;
+                        e.UnitEs(cell_0).Ability(ButtonTypes.Fifth).Ability = AbilityTypes.Teleport;
                     }
 
                 }

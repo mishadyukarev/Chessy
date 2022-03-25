@@ -140,13 +140,13 @@ namespace Chessy.Game
 
                     var xy_0 = new[] { x, y };
 
-                    var idx_0 = e.GetIdxCellByXy(xy_0);
+                    var cell_0 = e.GetIdxCellByXy(xy_0);
 
-                    _aroundDirs_0.Add(idx_0, dir);
-                    _aroundEs[(byte)dir - 1] = new CellE(idx_0, xy_0, default);
+                    _aroundDirs_0.Add(cell_0, dir);
+                    _aroundEs[(byte)dir - 1] = new CellE(cell_0, xy_0, default);
 
 
-                    if (isActiveParents[idx_0])
+                    if (isActiveParents[cell_0])
                     {
                         x = (byte)(xy_0[EntitiesModelGame.X] + xyDirect[EntitiesModelGame.X]);
                         y = (byte)(xy_0[EntitiesModelGame.Y] + xyDirect[EntitiesModelGame.Y]);

@@ -5,7 +5,7 @@ using Chessy.Game.View.UI.Entity.Right;
 
 namespace Chessy.Game.View.UI.System
 {
-    sealed class UniqueButtonUIS : SystemAbstract, IEcsRunSystem
+    sealed class UniqueButtonUIS : SystemModelGameAbs, IEcsRunSystem
     {
         readonly ButtonTypes _buttonT;
         readonly UniqueButtonUIE _buttonE;
@@ -20,7 +20,7 @@ namespace Chessy.Game.View.UI.System
 
         public void Run()
         {
-            var ability_cur = E.UnitEs(E.CellsC.Selected).Ability(_buttonT).Ability;
+            var ability_cur = eMGame.UnitEs(eMGame.CellsC.Selected).Ability(_buttonT).Ability;
 
             if (ability_cur == default)
             {
@@ -30,8 +30,8 @@ namespace Chessy.Game.View.UI.System
             {
                 _buttonE.ParenC.SetActive(true);
 
-                _buttonE.CooldonwTextC.SetActiveParent(E.UnitEs(E.CellsC.Selected).CoolDownC(ability_cur).HaveCooldown);
-                _buttonE.CooldonwTextC.TextUI.text = E.UnitEs(E.CellsC.Selected).CoolDownC(ability_cur).Cooldown.ToString();
+                _buttonE.CooldonwTextC.SetActiveParent(eMGame.UnitEs(eMGame.CellsC.Selected).CoolDownC(ability_cur).HaveCooldown);
+                _buttonE.CooldonwTextC.TextUI.text = eMGame.UnitEs(eMGame.CellsC.Selected).CoolDownC(ability_cur).Cooldown.ToString();
 
                 
 

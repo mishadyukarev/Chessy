@@ -10,9 +10,9 @@ namespace Chessy.Game
         {
             var haveCamel = false;
 
-            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < e.LengthCells; cell_0++)
             {
-                if (e.UnitTC(idx_0).Is(UnitTypes.Wolf))
+                if (e.UnitTC(cell_0).Is(UnitTypes.Wolf))
                 {
                     haveCamel = true;
                     break;
@@ -21,15 +21,15 @@ namespace Chessy.Game
 
             if (!haveCamel)
             {
-                byte idx_0 = (byte)Random.Range(0,  StartValues.CELLS);
+                byte cell_0 = (byte)Random.Range(0,  StartValues.CELLS);
 
-                if (e.CellEs(idx_0).IsActiveParentSelf)
+                if (e.CellEs(cell_0).IsActiveParentSelf)
                 {
-                    if (!e.UnitTC(idx_0).HaveUnit && !e.EnvironmentEs(idx_0).MountainC.HaveAnyResources)
+                    if (!e.UnitTC(cell_0).HaveUnit && !e.EnvironmentEs(cell_0).MountainC.HaveAnyResources)
                     {
                         bool haveNearUnit = false;
 
-                        foreach (var cellE in e.CellEs(idx_0).AroundCellEs)
+                        foreach (var cellE in e.CellEs(cell_0).AroundCellEs)
                         {
                             if (e.UnitTC(cellE.IdxC.Idx).HaveUnit)
                             {
@@ -40,19 +40,19 @@ namespace Chessy.Game
 
                         if (!haveNearUnit)
                         {
-                            e.UnitTC(idx_0).Unit = UnitTypes.Wolf;
-                            e.UnitLevelTC(idx_0).Level = LevelTypes.First;
-                            e.UnitPlayerTC(idx_0).Player = PlayerTypes.None;
-                            e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
+                            e.UnitTC(cell_0).Unit = UnitTypes.Wolf;
+                            e.UnitLevelTC(cell_0).Level = LevelTypes.First;
+                            e.UnitPlayerTC(cell_0).Player = PlayerTypes.None;
+                            e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
 
-                            e.UnitHpC(idx_0).Health = HpValues.MAX;
-                            e.UnitStepC(idx_0).Steps = 1f;
-                            e.UnitWaterC(idx_0).Water = 1f;
+                            e.UnitHpC(cell_0).Health = HpValues.MAX;
+                            e.UnitStepC(cell_0).Steps = 1f;
+                            e.UnitWaterC(cell_0).Water = 1f;
 
-                            e.UnitEffectShield(idx_0).Protection = 0;
+                            e.UnitEffectShield(cell_0).Protection = 0;
 
 
-                            //Es.UnitE(idx_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
+                            //Es.UnitE(cell_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
                         }
                     }

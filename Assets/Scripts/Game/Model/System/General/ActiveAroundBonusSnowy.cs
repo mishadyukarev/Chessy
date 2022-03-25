@@ -9,22 +9,22 @@
 //{
 //    public struct ActiveAroundBonusSnowy
 //    {
-//        public ActiveAroundBonusSnowy(in byte idx_0, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
+//        public ActiveAroundBonusSnowy(in byte cell_0, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
 //        {
 //            var whoseMove = e.WhoseMove.Player;
 //            var ability = AbilityTypes.ActiveAroundBonusSnowy;
 
-//            if (e.UnitWaterC(idx_0).Water >= WaterValues.BONUS_AROUND_SNOWY || e.RiverEs(idx_0).RiverTC.HaveRiverNear)
+//            if (e.UnitWaterC(cell_0).Water >= WaterValues.BONUS_AROUND_SNOWY || e.RiverEs(cell_0).RiverTC.HaveRiverNear)
 //            {
-//                if (e.UnitStepC(idx_0).Steps >= StepValues.BONUS_AROUND_SNOWY)
+//                if (e.UnitStepC(cell_0).Steps >= StepValues.BONUS_AROUND_SNOWY)
 //                {
-//                    if (!e.RiverEs(idx_0).RiverTC.HaveRiverNear) e.UnitWaterC(idx_0).Water -= WaterValues.BONUS_AROUND_SNOWY;
-//                    e.UnitStepC(idx_0).Steps -= StepValues.BONUS_AROUND_SNOWY;
-//                    e.UnitEs(idx_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
+//                    if (!e.RiverEs(cell_0).RiverTC.HaveRiverNear) e.UnitWaterC(cell_0).Water -= WaterValues.BONUS_AROUND_SNOWY;
+//                    e.UnitStepC(cell_0).Steps -= StepValues.BONUS_AROUND_SNOWY;
+//                    e.UnitEs(cell_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.NeedAfterAbility(ability);
 
-//                    e.FertilizeC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
+//                    e.FertilizeC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-//                    foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
+//                    foreach (var idx_1 in e.CellEs(cell_0).IdxsAround)
 //                    {
 //                        e.FertilizeC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
 

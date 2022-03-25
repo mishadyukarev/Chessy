@@ -1,18 +1,25 @@
-﻿namespace Chessy.Game.System.Model
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game.System.Model
 {
-    public static class TakeAdultForestResourcesS
+    sealed class TakeAdultForestResourcesS : SystemModelGameAbs
     {
-        public static void TakeAdultForestResources(in float extract, in byte idx, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        internal TakeAdultForestResourcesS(in EntitiesModelGame eMGame) : base(eMGame) { }
+
+        internal void Take(in float extract, in byte idx)
         {
-            e.AdultForestC(idx).Resources -= extract;
-
-            if (!e.AdultForestC(idx).HaveAnyResources)
+            if (eMGame.AdultForestC(idx).HaveAnyResources)
             {
-                e.AdultForestC(idx).Resources = 0;
+                eMGame.AdultForestC(idx).Resources -= extract;
 
-                for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                if (!eMGame.AdultForestC(idx).HaveAnyResources)
                 {
-                    e.CellEs(idx).TrailHealthC(dirT).Health = 0;
+                    eMGame.AdultForestC(idx).Resources = 0;
+
+                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                    {
+                        eMGame.CellEs(idx).TrailHealthC(dirT).Health = 0;
+                    }
                 }
             }
         }

@@ -7,17 +7,17 @@
 //            //var unitEs = Ents.CellEs.UnitEs;
 
 
-//            //foreach (var idx_0 in Ents.CellEsWorker.Idxs)
+//            //foreach (var cell_0 in Ents.CellEsWorker.Idxs)
 //            //{
-//            //    if (unitEs.Else(idx_0).UnitC.Is(UnitTypes.Snowy))
+//            //    if (unitEs.Else(cell_0).UnitC.Is(UnitTypes.Snowy))
 //            //    {
-//            //        if (unitEs.Else(idx_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
+//            //        if (unitEs.Else(cell_0).ConditionC.Is(ConditionUnitTypes.Relaxed))
 //            //        {
-//            //            unitEs.Water(idx_0).SetMax(unitEs.Else(idx_0), Ent.UnitStatUpgradesEs);
+//            //            unitEs.Water(cell_0).SetMax(unitEs.Else(cell_0), Ent.UnitStatUpgradesEs);
 
-//            //            foreach (var idx_1 in Ents.CellEsWorker.GetIdxsAround(idx_0))
+//            //            foreach (var idx_1 in Ents.CellEsWorker.GetIdxsAround(cell_0))
 //            //            {
-//            //                if (unitEs.Else(idx_1).UnitC.Have && unitEs.Else(idx_0).OwnerC.Is(unitEs.Else(idx_1).OwnerC.Player))
+//            //                if (unitEs.Else(idx_1).UnitC.Have && unitEs.Else(cell_0).OwnerC.Is(unitEs.Else(idx_1).OwnerC.Player))
 //            //                {
 //            //                    unitEs.Water(idx_1).SetMax();
 //            //                }

@@ -3,7 +3,7 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game
 {
-    sealed class UpdateHealingUnitMS : SystemAbstract, IEcsRunSystem
+    sealed class UpdateHealingUnitMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal UpdateHealingUnitMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -11,11 +11,11 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < eMGame.LengthCells; cell_0++)
             {
-                if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed))
+                if (eMGame.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    E.UnitHpC(idx_0).Health = HpValues.MAX;
+                    eMGame.UnitHpC(cell_0).Health = HpValues.MAX;
                 }
             }
         }

@@ -10,22 +10,22 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (E.WinnerC.Player == default)
+            if (eMGame.WinnerC.Player == default)
             {
-                UIE.CenterEs.EndGame.SetActiveParent(false);
+                eUI.CenterEs.EndGame.SetActiveParent(false);
             }
 
-            else if (E.WinnerC.Player != E.CurPlayerITC.Player)
+            else if (eMGame.WinnerC.Player != eMGame.CurPlayerITC.Player)
             {
-                UIE.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
-                UIE.CenterEs.EndGame.SetActiveParent(true);
+                eUI.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
+                eUI.CenterEs.EndGame.SetActiveParent(true);
             }
             else
             {
 
-                UIE.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreWinner);
+                eUI.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreWinner);
 
-                UIE.CenterEs.EndGame.SetActiveParent(true);
+                eUI.CenterEs.EndGame.SetActiveParent(true);
             }
         }
     }

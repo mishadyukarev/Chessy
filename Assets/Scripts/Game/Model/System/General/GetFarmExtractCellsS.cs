@@ -4,13 +4,13 @@ namespace Chessy.Game.System.Model
 {
     public struct GetFarmExtractCellsS
     {
-        public GetFarmExtractCellsS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public GetFarmExtractCellsS(in byte cell_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
         {
-            e.FarmExtractFertilizeE(idx_0).Resources = 0;
+            e.FarmExtractFertilizeE(cell_0).Resources = 0;
 
-            if (e.BuildingTC(idx_0).Is(BuildingTypes.Farm))
+            if (e.BuildingTC(cell_0).Is(BuildingTypes.Farm))
             {
-                if (e.FertilizeC(idx_0).HaveAnyResources)
+                if (e.FertilizeC(cell_0).HaveAnyResources)
                 {
                     var extract = EnvironmentValues.FARM_EXTRACT;
 
@@ -19,9 +19,9 @@ namespace Chessy.Game.System.Model
                     //    extract += Environment_Values.FARM_CENTER_UPGRADE;
                     //}
 
-                    if (e.FertilizeC(idx_0).Resources < extract) extract = e.FertilizeC(idx_0).Resources;
+                    if (e.FertilizeC(cell_0).Resources < extract) extract = e.FertilizeC(cell_0).Resources;
 
-                    e.FarmExtractFertilizeE(idx_0).Resources = extract;
+                    e.FarmExtractFertilizeE(cell_0).Resources = extract;
                 }
             }
         }

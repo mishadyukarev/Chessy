@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    sealed class FarmExtractFertilizeUpdateMS : SystemAbstract, IEcsRunSystem
+    sealed class FarmExtractFertilizeUpdateMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal FarmExtractFertilizeUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -8,18 +8,18 @@
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < eMGame.LengthCells; cell_0++)
             {
-                if (E.FarmExtractFertilizeE(idx_0).HaveAnyResources)
+                if (eMGame.FarmExtractFertilizeE(cell_0).HaveAnyResources)
                 {
-                    var extract = E.FarmExtractFertilizeE(idx_0).Resources;
+                    var extract = eMGame.FarmExtractFertilizeE(cell_0).Resources;
 
-                    E.ResourcesC(E.BuildingPlayerTC(idx_0).Player, ResourceTypes.Food).Resources += extract;
-                    E.FertilizeC(idx_0).Resources -= extract;
+                    eMGame.ResourcesC(eMGame.BuildingPlayerTC(cell_0).Player, ResourceTypes.Food).Resources += extract;
+                    eMGame.FertilizeC(cell_0).Resources -= extract;
 
-                    //if (!E.FertilizeC(idx_0).HaveAnyResources)
+                    //if (!E.FertilizeC(cell_0).HaveAnyResources)
                     //{
-                    //    E.BuildingTC(idx_0).Building = BuildingTypes.None;
+                    //    E.BuildingTC(cell_0).Building = BuildingTypes.None;
                     //}
                 }
             }

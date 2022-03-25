@@ -5,9 +5,13 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.System.Model
 {
-    public struct BuyS_M
+    public sealed class BuyS_M : SystemModelGameAbs
     {
-        public void Buy(in MarketBuyTypes marketBuyT, in Player sender, in EntitiesModelGame e)
+        public BuyS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        {
+        }
+
+        public void Buy(in MarketBuyTypes marketBuyT, in Player sender)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 
@@ -40,7 +44,7 @@ namespace Chessy.Game.System.Model
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(resT).Resources)
+                if (needRes[resT] > eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -51,36 +55,36 @@ namespace Chessy.Game.System.Model
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
+                    eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
                 }
                 switch (marketBuyT)
                 {
                     case MarketBuyTypes.FoodToWood:
-                        e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
+                        eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD;
                         break;
 
                     case MarketBuyTypes.WoodToFood:
-                        e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
+                        eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToFood:
-                        e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
+                        eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Food).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToWood:
-                        e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
+                        eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Wood).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD;
                         break;
                 }
 
-                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                eMGame.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

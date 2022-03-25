@@ -8,18 +8,18 @@
 
         public void Run()
         {
-            var isActiveKingZone = UIE.CenterEs.KingE.Paren.IsActiveSelf;
-            var curPlayerI = E.CurPlayerITC.Player;
+            var isActiveKingZone = eUI.CenterEs.KingE.Paren.IsActiveSelf;
+            var curPlayerI = eMGame.CurPlayerITC.Player;
 
-            if (!isActiveKingZone && E.PlayerInfoE(curPlayerI).MyHeroTC.Is(UnitTypes.None))
+            if (!isActiveKingZone && eMGame.PlayerInfoE(curPlayerI).MyHeroTC.Is(UnitTypes.None))
             {
                 //var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 
-                UIE.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
+                eUI.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(true);
             }
             else
             {
-                UIE.CenterEs.HeroE(UnitTypes.Elfemale).Parent
+                eUI.CenterEs.HeroE(UnitTypes.Elfemale).Parent
                     .SetActive(false);
             }
         }

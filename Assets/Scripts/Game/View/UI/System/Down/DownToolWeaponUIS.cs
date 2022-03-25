@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class DownToolWeaponUIS : SystemAbstract, IEcsRunSystem
+    sealed class DownToolWeaponUIS : SystemModelGameAbs, IEcsRunSystem
     {
         readonly DownToolWeaponUIE _twE;
 
@@ -28,8 +28,8 @@ namespace Chessy.Game
             }
 
 
-            var tw_sel = E.SelectedE.ToolWeaponC.ToolWeaponT;
-            var levTw_sel = E.SelectedE.ToolWeaponC.LevelT;
+            var tw_sel = eMGame.SelectedE.ToolWeaponC.ToolWeaponT;
+            var levTw_sel = eMGame.SelectedE.ToolWeaponC.LevelT;
 
             color = _twE.ImageC(tw_sel).Image.color;
             color.a = 1;
@@ -44,14 +44,14 @@ namespace Chessy.Game
                 _twE.LevelImageC(twT, levTw_sel).SetActive(true);
             }
 
-            var curPlayerI = E.CurPlayerITC.Player;
+            var curPlayerI = eMGame.CurPlayerITC.Player;
 
-            _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).ToString();
-            _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).ToString();
-            _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).ToString();
-            _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(E.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.Shield).ToString();
-            _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(E.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.BowCrossbow).ToString();
-            _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = E.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).ToString();
+            _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = eMGame.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).ToString();
+            _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = eMGame.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).ToString();
+            _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = eMGame.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).ToString();
+            _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = eMGame.PlayerInfoE(curPlayerI).LevelE(eMGame.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.Shield).ToString();
+            _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = eMGame.PlayerInfoE(curPlayerI).LevelE(eMGame.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.BowCrossbow).ToString();
+            _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = eMGame.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).ToString();
         }
     }
 }

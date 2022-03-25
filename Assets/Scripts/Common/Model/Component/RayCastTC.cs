@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public struct RayCastTC
+    public struct RaycastTC
     {
         public RaycastTypes Raycast;
 

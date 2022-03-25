@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class UpdAttackFromWaterHellMS : SystemAbstract, IEcsRunSystem
+    sealed class UpdAttackFromWaterHellMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal UpdAttackFromWaterHellMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -10,26 +10,26 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < eMGame.LengthCells; cell_0++)
             {
-                if (E.UnitTC(idx_0).Is(UnitTypes.Hell))
+                if (eMGame.UnitTC(cell_0).Is(UnitTypes.Hell))
                 {
-                    if (E.RiverEs(idx_0).RiverTC.HaveRiverNear)
+                    if (eMGame.RiverEs(cell_0).RiverTC.HaveRiverNear)
                     {
-                        //Es.UnitE(idx_0).Take(Es, 0.15f);
+                        //Es.UnitE(cell_0).Take(Es, 0.15f);
                     }
 
-                    if (E.CellEs(E.WeatherE.CloudC.Center).AroundCellEs.Any(e => e.IdxC.Idx == idx_0))
+                    if (eMGame.CellEs(eMGame.WeatherE.CloudC.Center).AroundCellEs.Any(e => e.IdxC.Idx == cell_0))
                     {
-                        //Es.UnitE(idx_0).Take(Es, 0.15f);
+                        //Es.UnitE(cell_0).Take(Es, 0.15f);
                         break;
                     }
 
-                    foreach (var cellE in E.CellEs(idx_0).AroundCellEs)
+                    foreach (var cellE in eMGame.CellEs(cell_0).AroundCellEs)
                     {
-                        if (E.BuildingTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
+                        if (eMGame.BuildingTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
                         {
-                            //Es.UnitE(idx_0).Take(Es, 0.15f);
+                            //Es.UnitE(cell_0).Take(Es, 0.15f);
                             break;
                         }
                     }

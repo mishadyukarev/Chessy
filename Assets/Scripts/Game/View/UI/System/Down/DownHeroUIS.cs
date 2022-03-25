@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    sealed class DownHeroUIS : SystemAbstract, IEcsRunSystem
+    sealed class DownHeroUIS : SystemModelGameAbs, IEcsRunSystem
     {
         readonly DownHeroUIE _downHeroUIE;
 
@@ -11,15 +11,15 @@
 
         public void Run()
         {
-            var curPlayerI = E.CurPlayerITC.Player;
+            var curPlayerI = eMGame.CurPlayerITC.Player;
 
-            var myHeroT = E.PlayerInfoE(curPlayerI).MyHeroTC.Unit;
+            var myHeroT = eMGame.PlayerInfoE(curPlayerI).MyHeroTC.Unit;
 
-            if (myHeroT != UnitTypes.None && E.PlayerInfoE(curPlayerI).HaveHeroInInventor)
+            if (myHeroT != UnitTypes.None && eMGame.PlayerInfoE(curPlayerI).HaveHeroInInventor)
             {
                 _downHeroUIE.Parent.SetActive(true);
 
-                var cooldown = E.PlayerInfoE(curPlayerI).HeroCooldownC.Cooldown;
+                var cooldown = eMGame.PlayerInfoE(curPlayerI).HeroCooldownC.Cooldown;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

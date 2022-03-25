@@ -1,50 +1,55 @@
-﻿using Chessy.Game.System.Model;
-using Chessy.Game.Values.Cell;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game
 {
-    sealed class PawnExtractAdultForestMS : SystemAbstract, IEcsRunSystem
+    sealed class PawnExtractAdultForestMS : SystemModelGameAbs, IEcsRunSystem
     {
-        public PawnExtractAdultForestMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        readonly TakeAdultForestResourcesS _takeAdultForestS;
+        readonly BuildS _buildS;
+
+        public PawnExtractAdultForestMS(in TakeAdultForestResourcesS takeAdultForestS, in BuildS buildS, in EntitiesModelGame ents) : base(ents)
         {
+            _takeAdultForestS = takeAdultForestS;
+            _buildS = buildS;
         }
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < eMGame.LengthCells; cell_0++)
             {
-                if (E.PawnExtractAdultForestE(idx_0).HaveAnyResources)
+                if (eMGame.PawnExtractAdultForestE(cell_0).HaveAnyResources)
                 {
-                    var extract = E.PawnExtractAdultForestE(idx_0).Resources;
-     
-                    E.PlayerInfoE(E.UnitPlayerTC(idx_0).Player).ResourcesC(ResourceTypes.Wood).Resources += extract;
-                    TakeAdultForestResourcesS.TakeAdultForestResources(extract, idx_0, E);
+                    var extract = eMGame.PawnExtractAdultForestE(cell_0).Resources;
 
-                    if (E.AdultForestC(idx_0).HaveAnyResources)
+                    eMGame.PlayerInfoE(eMGame.UnitPlayerTC(cell_0).Player).ResourcesC(ResourceTypes.Wood).Resources += extract;
+                    _takeAdultForestS.Take(extract, cell_0);
+
+                    if (eMGame.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        if (E.BuildingTC(idx_0).Is(BuildingTypes.Camp) || !E.BuildingTC(idx_0).HaveBuilding)
+                        if (eMGame.BuildingTC(cell_0).Is(BuildingTypes.Camp) || !eMGame.BuildingTC(cell_0).HaveBuilding)
                         {
-                            new BuildS(BuildingTypes.Woodcutter, LevelTypes.First, E.UnitPlayerTC(idx_0).Player, 1, idx_0, E);
+                            _buildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMGame.UnitPlayerTC(cell_0).Player, 1, cell_0);
                         }
 
-                        else if (!E.BuildingTC(idx_0).Is(BuildingTypes.Woodcutter))
+                        else if (!eMGame.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter))
                         {
-                            E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
+                            eMGame.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.Protected;
                         }
                     }
                     else
                     {
-                        E.BuildingTC(idx_0).Building = BuildingTypes.None;
+                        eMGame.BuildingTC(cell_0).Building = BuildingTypes.None;
 
-                        E.YoungForestC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                        eMGame.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
-                else if (E.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed)
-                    && E.UnitHpC(idx_0).Health >= HpValues.MAX)
+                else if (eMGame.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed)
+                    && eMGame.UnitHpC(cell_0).Health >= HpValues.MAX)
                 {
-                    E.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.Protected;
+                    eMGame.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.Protected;
                 }
             }
         }

@@ -8,13 +8,13 @@
 
 //        public void Run()
 //        {
-//            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+//            for (byte cell_0 = 0; cell_0 < E.LengthCells; cell_0++)
 //            {
-//                if (E.BuildingTC(idx_0).HaveBuilding)
+//                if (E.BuildingTC(cell_0).HaveBuilding)
 //                {
-//                    if (E.IsActiveSmelter(idx_0))
+//                    if (E.IsActiveSmelter(cell_0))
 //                    {
-//                        //Es.InventorResourcesEs.Melt_Master(Es.BuildPlayerTC(idx_0).Player);
+//                        //Es.InventorResourcesEs.Melt_Master(Es.BuildPlayerTC(cell_0).Player);
 //                    }
 //                }
 //            }

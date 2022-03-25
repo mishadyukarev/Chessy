@@ -27,26 +27,26 @@
 
 //                    e.FertilizeC(idx_from).Resources = EnvironmentValues.MAX_RESOURCES;
 
-//                    var idx_0 = idx_to;
+//                    var cell_0 = idx_to;
 
 //                    for (var i = 0; i < 3; i++)
 //                    {
-//                        if (!e.CellEs(idx_0).IsActiveParentSelf) break;
+//                        if (!e.CellEs(cell_0).IsActiveParentSelf) break;
 
 
-//                        e.FertilizeC(idx_0).Resources = EnvironmentValues.MAX_RESOURCES;
+//                        e.FertilizeC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-//                        if (e.UnitTC(idx_0).HaveUnit)
+//                        if (e.UnitTC(cell_0).HaveUnit)
 //                        {
-//                            if (e.UnitPlayerTC(idx_0).Is(whoseMove))
+//                            if (e.UnitPlayerTC(cell_0).Is(whoseMove))
 //                            {
-//                                e.UnitWaterC(idx_0).Water = WaterValues.MAX;
+//                                e.UnitWaterC(cell_0).Water = WaterValues.MAX;
 //                            }
 //                        }
 
-//                        e.HaveFire(idx_0) = false;
+//                        e.HaveFire(cell_0) = false;
 
-//                        idx_0 = e.CellEs(idx_0).AroundCellE(direct).IdxC.Idx;
+//                        cell_0 = e.CellEs(cell_0).AroundCellE(direct).IdxC.Idx;
 //                    }
 //                }
 

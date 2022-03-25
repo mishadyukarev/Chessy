@@ -1,135 +1,138 @@
-﻿using Chessy.Game.Entity;
+﻿using Chessy.Game.Entity.Model;
 using System;
 using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    public struct SelectorS
+    public sealed class SelectorS : SystemModelGameAbs, IEcsRunSystem
     {
-        public void Run(in RaycastTypes raycastT, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public SelectorS(in EntitiesModelGame eMGame) : base(eMGame)
         {
-            var idx_cur = e.CellsC.Current;
+
+        }
+
+        public void Run()
+        {
+            var idx_cur = eMGame.CellsC.Current;
 
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
             {
-                if (Input.GetKey(KeyCode.Alpha1)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha2)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha3)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha4)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
-                if (Input.GetKey(KeyCode.Alpha5)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
+                if (Input.GetKey(KeyCode.Alpha1)) eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha2)) eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha3)) eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
+                if (Input.GetKey(KeyCode.Alpha4)) eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
+                if (Input.GetKey(KeyCode.Alpha5)) eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
             }
 
 
-
-
-            if (Input.GetMouseButtonDown(0))
+            if (eMGame.IsClicked)
             {
-                if (raycastT == RaycastTypes.Cell)
+                if (eMGame.RaycastTC.Raycast == RaycastTypes.Cell)
                 {
-                    e.IsSelectedCity = false;
+                    eMGame.IsSelectedCity = false;
 
-                    if (!e.CurPlayerITC.Is(e.WhoseMove.Player))
+                    if (!eMGame.CurPlayerITC.Is(eMGame.WhoseMove.Player))
                     {
-                        e.CellsC.Selected = e.CellsC.Current;
+                        eMGame.CellsC.Selected = eMGame.CellsC.Current;
                     }
 
                     else
                     {
-                        switch (e.CellClickTC.Click)
+                        switch (eMGame.CellClickTC.Click)
                         {
                             case CellClickTypes.None: throw new Exception();
 
                             case CellClickTypes.SimpleClick:
                                 {
-                                    if (e.CellsC.Selected > 0)
+                                    if (eMGame.CellsC.Selected > 0)
                                     {
-                                        var curPlayerI = e.CurPlayerITC.Player;
+                                        var curPlayerI = eMGame.CurPlayerITC.Player;
 
-                                        if (e.UnitTC(e.CellsC.Selected).HaveUnit)
+                                        if (eMGame.UnitTC(eMGame.CellsC.Selected).HaveUnit)
                                         {
-                                            if (e.UnitEs(e.CellsC.Selected).ForAttack(AttackTypes.Simple).Contains(e.CellsC.Current)
-                                            || e.UnitEs(e.CellsC.Selected).ForAttack(AttackTypes.Unique).Contains(e.CellsC.Current))
+                                            if (eMGame.UnitEs(eMGame.CellsC.Selected).ForAttack(AttackTypes.Simple).Contains(eMGame.CellsC.Current)
+                                            || eMGame.UnitEs(eMGame.CellsC.Selected).ForAttack(AttackTypes.Unique).Contains(eMGame.CellsC.Current))
                                             {
-                                                e.RpcPoolEs.AttackUnitToMaster(e.CellsC.Selected, e.CellsC.Current);
+                                                eMGame.RpcPoolEs.AttackUnitToMaster(eMGame.CellsC.Selected, eMGame.CellsC.Current);
                                             }
 
-                                            else if (e.UnitPlayerTC(e.CellsC.Selected).Is(e.CurPlayerITC.Player) 
-                                                && e.UnitEs(e.CellsC.Selected).ForShift.Contains(e.CellsC.Current))
+                                            else if (eMGame.UnitPlayerTC(eMGame.CellsC.Selected).Is(eMGame.CurPlayerITC.Player)
+                                                && eMGame.UnitEs(eMGame.CellsC.Selected).ForShift.Contains(eMGame.CellsC.Current))
                                             {
-                                                e.RpcPoolEs.ShiftUnitToMaster(e.CellsC.Selected, e.CellsC.Current);
+                                                eMGame.RpcPoolEs.ShiftUnitToMaster(eMGame.CellsC.Selected, eMGame.CellsC.Current);
                                             }
 
                                             else
                                             {
-                                                Sound(e);
+                                                Sound(eMGame);
                                             }
                                         }
 
                                         else
                                         {
-                                            Sound(e);
+                                            Sound(eMGame);
                                         }
 
 
-                                        e.CellsC.PreviousSelected = e.CellsC.Selected;
-                                        e.CellsC.Selected = e.CellsC.Current;
+                                        eMGame.CellsC.PreviousSelected = eMGame.CellsC.Selected;
+                                        eMGame.CellsC.Selected = eMGame.CellsC.Current;
                                     }
 
                                     else
                                     {
-                                        Sound(e);
+                                        Sound(eMGame);
 
-                                        e.CellsC.PreviousSelected = e.CellsC.Selected;
-                                        e.CellsC.Selected = e.CellsC.Current;
+                                        eMGame.CellsC.PreviousSelected = eMGame.CellsC.Selected;
+                                        eMGame.CellsC.Selected = eMGame.CellsC.Current;
                                     }
                                 }
                                 break;
 
                             case CellClickTypes.SetUnit:
                                 {
-                                    e.RpcPoolEs.SetUniToMaster(e.CellsC.Current, e.SelectedE.UnitC.UnitTC);
-                                    e.CellClickTC.Click = CellClickTypes.SimpleClick;
+                                    eMGame.RpcPoolEs.SetUniToMaster(eMGame.CellsC.Current, eMGame.SelectedE.UnitC.UnitTC);
+                                    eMGame.CellClickTC.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 
                             case CellClickTypes.GiveTakeTW:
                                 {
-                                    e.CellsC.Selected = e.CellsC.Current;
+                                    eMGame.CellsC.Selected = eMGame.CellsC.Current;
 
-                                    if (e.UnitTC(idx_cur).Is(UnitTypes.Pawn) && e.UnitPlayerTC(idx_cur).Is(e.CurPlayerITC.Player))
+                                    if (eMGame.UnitTC(idx_cur).Is(UnitTypes.Pawn) && eMGame.UnitPlayerTC(idx_cur).Is(eMGame.CurPlayerITC.Player))
                                     {
-                                        e.RpcPoolEs.GiveTakeToolWeaponToMaster(e.CellsC.Current, e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT);
+                                        eMGame.RpcPoolEs.GiveTakeToolWeaponToMaster(eMGame.CellsC.Current, eMGame.SelectedE.ToolWeaponC.ToolWeaponT, eMGame.SelectedE.ToolWeaponC.LevelT);
                                     }
                                     else
                                     {
-                                        e.CellClickTC.Click = CellClickTypes.SimpleClick;
-                                        e.CellsC.PreviousSelected = e.CellsC.Selected;
-                                        e.CellsC.Selected = e.CellsC.Current;
+                                        eMGame.CellClickTC.Click = CellClickTypes.SimpleClick;
+                                        eMGame.CellsC.PreviousSelected = eMGame.CellsC.Selected;
+                                        eMGame.CellsC.Selected = eMGame.CellsC.Current;
                                     }
                                 }
                                 break;
 
                             case CellClickTypes.UniqueAbility:
                                 {
-                                    switch (e.SelectedE.AbilityTC.Ability)
+                                    switch (eMGame.SelectedE.AbilityTC.Ability)
                                     {
                                         case AbilityTypes.FireArcher:
-                                            e.RpcPoolEs.FireArcherToMas(e.CellsC.Selected, e.CellsC.Current);
+                                            eMGame.RpcPoolEs.FireArcherToMas(eMGame.CellsC.Selected, eMGame.CellsC.Current);
                                             break;
 
                                         case AbilityTypes.StunElfemale:
-                                            e.RpcPoolEs.StunElfemaleToMas(e.CellsC.Selected, e.CellsC.Current);
+                                            eMGame.RpcPoolEs.StunElfemaleToMas(eMGame.CellsC.Selected, eMGame.CellsC.Current);
                                             break;
 
                                         case AbilityTypes.ChangeDirectionWind:
                                             {
-                                                foreach (var cellE in e.CellEs(e.WeatherE.CloudC.Center).AroundCellEs)
+                                                foreach (var cellE in eMGame.CellEs(eMGame.WeatherE.CloudC.Center).AroundCellEs)
                                                 {
-                                                    if (cellE.IdxC.Idx == e.CellsC.Current)
+                                                    if (cellE.IdxC.Idx == eMGame.CellsC.Current)
                                                     {
-                                                        e.RpcPoolEs.PutOutFireElffToMas(e.CellsC.Selected, e.CellsC.Current);
+                                                        eMGame.RpcPoolEs.PutOutFireElffToMas(eMGame.CellsC.Selected, eMGame.CellsC.Current);
                                                     }
                                                 }
                                             }
@@ -140,13 +143,13 @@ namespace Chessy.Game
                                         //    break;
 
                                         case AbilityTypes.Resurrect:
-                                            e.RpcPoolEs.ResurrectToMaster(e.CellsC.Selected, e.CellsC.Current);
+                                            eMGame.RpcPoolEs.ResurrectToMaster(eMGame.CellsC.Selected, eMGame.CellsC.Current);
                                             break;
 
                                         default: throw new Exception();
                                     }
 
-                                    e.CellClickTC.Click = CellClickTypes.SimpleClick;
+                                    eMGame.CellClickTC.Click = CellClickTypes.SimpleClick;
                                 }
                                 break;
 
@@ -155,17 +158,17 @@ namespace Chessy.Game
                     }
                 }
 
-                else if (raycastT == RaycastTypes.UI)
+                else if (eMGame.RaycastTC.Raycast == RaycastTypes.UI)
                 {
                     //cellClick.Click = CellClickTypes.SimpleClick;
                     //Es.SelectedIdxE.Reset();
                 }
 
-                else if (raycastT == RaycastTypes.Background)
+                else if (eMGame.RaycastTC.Raycast == RaycastTypes.Background)
                 {
-                    e.CellClickTC.Click = CellClickTypes.SimpleClick;
-                    e.CellsC.PreviousSelected = e.CellsC.Selected;
-                    e.CellsC.Selected = 0;
+                    eMGame.CellClickTC.Click = CellClickTypes.SimpleClick;
+                    eMGame.CellsC.PreviousSelected = eMGame.CellsC.Selected;
+                    eMGame.CellsC.Selected = 0;
                 }
 
                 //_updateView.Invoke();
@@ -174,7 +177,7 @@ namespace Chessy.Game
 
             else
             {
-                if (raycastT == RaycastTypes.Cell)
+                if (eMGame.RaycastTC.Raycast == RaycastTypes.Cell)
                 {
 
 
@@ -202,17 +205,17 @@ namespace Chessy.Game
 
         void Sound(in Chessy.Game.Entity.Model.EntitiesModelGame e)
         {
-            var idx_0 = e.CellsC.Current;
+            var cell_0 = e.CellsC.Current;
 
-            if (e.UnitTC(idx_0).HaveUnit 
-                && e.UnitEs(idx_0).ForPlayer(e.CurPlayerITC.Player).IsVisible && !e.UnitTC(idx_0).Is(UnitTypes.Wolf))
+            if (e.UnitTC(cell_0).HaveUnit
+                && e.UnitEs(cell_0).ForPlayer(e.CurPlayerITC.Player).IsVisible && !e.UnitTC(cell_0).Is(UnitTypes.Wolf))
             {
-                if (e.UnitTC(idx_0).Is(UnitTypes.Tree))
+                if (e.UnitTC(cell_0).Is(UnitTypes.Tree))
                 {
                     e.Sound(ClipTypes.Leaf).Invoke();
                 }
 
-                else if (e.UnitTC(idx_0).IsMelee(e.UnitMainTWTC(idx_0).ToolWeapon))
+                else if (e.UnitTC(cell_0).IsMelee(e.UnitMainTWTC(cell_0).ToolWeapon))
                 {
                     e.Sound(ClipTypes.PickMelee).Invoke();
                 }
@@ -223,15 +226,15 @@ namespace Chessy.Game
             }
             else
             {
-                if (e.AdultForestC(idx_0).HaveAnyResources)
+                if (e.AdultForestC(cell_0).HaveAnyResources)
                 {
                     e.Sound(ClipTypes.Leaf).Invoke();
                 }
-                else if (e.HillC(idx_0).HaveAnyResources)
+                else if (e.HillC(cell_0).HaveAnyResources)
                 {
                     e.Sound(ClipTypes.Rock).Invoke();
                 }
-                else if (e.MountainC(idx_0).HaveAnyResources)
+                else if (e.MountainC(cell_0).HaveAnyResources)
                 {
                     e.Sound(ClipTypes.ShortWind).Invoke();
                 }
@@ -241,7 +244,7 @@ namespace Chessy.Game
                 }
 
 
-                if (e.CellEs(e.WeatherE.CloudC.Center).IdxsAround.Contains(idx_0) || e.WeatherE.CloudC.Center == idx_0)
+                if (e.CellEs(e.WeatherE.CloudC.Center).IdxsAround.Contains(cell_0) || e.WeatherE.CloudC.Center == cell_0)
                 {
                     e.Sound(ClipTypes.ShortRain).Invoke();
                 }

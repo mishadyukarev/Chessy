@@ -1,12 +1,18 @@
-﻿namespace Chessy.Game.System.Model
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game.System.Model
 {
-    public struct MistakeS
+    public sealed class MistakeS : SystemModelGameAbs
     {
-        public void Mistake(in MistakeTypes mistakeT, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public MistakeS(in EntitiesModelGame eMGame) : base(eMGame)
         {
-            e.MistakeC.MistakeT = mistakeT;
-            e.MistakeC.Timer = 0;
-            e.Sound(ClipTypes.WritePensil).Action.Invoke();
+        }
+
+        public void Mistake(in MistakeTypes mistakeT)
+        {
+            eMGame.MistakeC.MistakeT = mistakeT;
+            eMGame.MistakeC.Timer = 0;
+            eMGame.Sound(ClipTypes.WritePensil).Action.Invoke();
         }
     }
 }

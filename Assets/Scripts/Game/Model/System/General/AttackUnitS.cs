@@ -1,21 +1,30 @@
-﻿using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.System;
+using Chessy.Game.Values.Cell.Unit.Stats;
 using System;
 
 namespace Chessy.Game.System.Model
 {
-    public struct AttackUnitS
+    sealed class AttackUnitS : SystemModelGameAbs
     {
-        public void AttackUnit(in float damage, in PlayerTypes whoKiller, in byte idx_0, in SystemsModelGame systemsModel, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        readonly KillUnitS _killUnitS;
+
+        internal AttackUnitS(in KillUnitS killUnitS, in EntitiesModelGame eMGame) : base(eMGame)
+        {
+            _killUnitS = killUnitS;
+        }
+
+        public void Attack(in float damage, in PlayerTypes whoKiller, in byte cell_0)
         {
             if (damage <= 0) throw new Exception();
-            if (!e.CellEs(idx_0).IsActiveParentSelf) throw new Exception();
+            if (!eMGame.CellEs(cell_0).IsActiveParentSelf) throw new Exception();
 
 
-            ref var health = ref e.UnitHpC(idx_0).Health;
+            ref var health = ref eMGame.UnitHpC(cell_0).Health;
 
             health -= damage;
             if (health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
-                systemsModel.KillUnitS.Kill(idx_0, whoKiller, systemsModel.SetLastDiedS, e);
+                _killUnitS.Kill(cell_0, whoKiller);
         }
     }
 }

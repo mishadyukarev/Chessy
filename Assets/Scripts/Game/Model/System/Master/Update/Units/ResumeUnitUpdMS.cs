@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class ResumeUnitUpdMS : SystemAbstract, IEcsRunSystem
+    sealed class ResumeUnitUpdMS : SystemModelGameAbs, IEcsRunSystem
     {
         public ResumeUnitUpdMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -10,27 +10,27 @@ namespace Chessy.Game
 
         public void Run()
         {
-             for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                //var unit_0 = UnitEs(idx_0).Main.UnitC;
-                //ref var condUnit_0 = UnitEs(idx_0).Main.ConditionTC;
+                //var unit_0 = UnitEs(cell_0).Main.UnitC;
+                //ref var condUnit_0 = UnitEs(cell_0).Main.ConditionTC;
 
-                //if (Unit<UnitCellEC>(idx_0).CanResume(out var resume, out var env))
+                //if (Unit<UnitCellEC>(cell_0).CanResume(out var resume, out var env))
                 //{
-                //    if (Environment<AmountC>(env, idx_0).Amount == Max(env))
+                //    if (Environment<AmountC>(env, cell_0).Amount == Max(env))
                 //    {
                 //        condUnit_0.Condition = ConditionUnitTypes.Protected;
                 //    }
                 //    else
                 //    {
-                //        Environment<AmountC>(env, idx_0).Amount += resume;
+                //        Environment<AmountC>(env, cell_0).Amount += resume;
                 //    }
                 //}
-                //else if (!Unit<UnitCellEC>(idx_0).CanExtract(out resume, out env, out var res))
+                //else if (!Unit<UnitCellEC>(cell_0).CanExtract(out resume, out env, out var res))
                 //{
-                //    if (EntPool.CellUnitHpEs.HaveMax(idx_0))
+                //    if (EntPool.CellUnitHpEs.HaveMax(cell_0))
                 //    {
-                //        if (unit_0.Have && EntitiesPool.CellUnitStepEs.HaveMin(idx_0))
+                //        if (unit_0.Have && EntitiesPool.CellUnitStepEs.HaveMin(cell_0))
                 //        {
                 //            condUnit_0.Condition = ConditionUnitTypes.Protected;
                 //        }

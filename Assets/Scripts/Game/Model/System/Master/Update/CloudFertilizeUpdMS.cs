@@ -3,7 +3,7 @@ using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game
 {
-    sealed class CloudFertilizeUpdMS : SystemAbstract, IEcsRunSystem
+    sealed class CloudFertilizeUpdMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal CloudFertilizeUpdMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -11,15 +11,15 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var idx_0 = E.WeatherE.CloudC.Center;
+            var cell_0 = eMGame.WeatherE.CloudC.Center;
 
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {
-                var idx_1 = E.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+                var idx_1 = eMGame.CellEs(cell_0).AroundCellE(dirT).IdxC.Idx;
 
-                if (!E.MountainC(idx_1).HaveAnyResources)
+                if (!eMGame.MountainC(idx_1).HaveAnyResources)
                 {
-                    E.FertilizeC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+                    eMGame.FertilizeC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                 }
             }
         }

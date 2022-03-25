@@ -1,45 +1,57 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public struct AttackUnit_M
+    sealed class AttackUnit_M : SystemModelGameAbs
     {
-        public void Attack(in byte idx_from, in byte idx_to, in SystemsModelGame sMM, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        readonly AttackUnitS _attackUnitS;
+        readonly AttackShieldS _attackShieldS;
+        readonly ShiftUnitS _shiftUnitS;
+
+        internal AttackUnit_M(in AttackUnitS attackUnitS, in AttackShieldS attackShieldS, in ShiftUnitS shiftUnitS, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            var whoseMove = e.WhoseMove.Player;
+            _attackUnitS = attackUnitS;
+            _attackShieldS = attackShieldS;
+            _shiftUnitS = shiftUnitS;
+        }
 
-            var canAttack = e.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to)
-                || e.UnitEs(idx_from).ForAttack(AttackTypes.Simple).Contains(idx_to);
+        public void Attack(in byte idx_from, in byte idx_to)
+        {
+            var whoseMove = eMGame.WhoseMove.Player;
 
-            if (canAttack && e.UnitPlayerTC(idx_from).Is(whoseMove))
+            var canAttack = eMGame.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to)
+                || eMGame.UnitEs(idx_from).ForAttack(AttackTypes.Simple).Contains(idx_to);
+
+            if (canAttack && eMGame.UnitPlayerTC(idx_from).Is(whoseMove))
             {
-                e.UnitStepC(idx_from).Steps = 0;
-                e.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
+                eMGame.UnitStepC(idx_from).Steps = 0;
+                eMGame.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
 
-                if (e.UnitTC(idx_from).IsMelee(e.UnitMainTWTC(idx_from).ToolWeapon))
-                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-                else e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+                if (eMGame.UnitTC(idx_from).IsMelee(eMGame.UnitMainTWTC(idx_from).ToolWeapon))
+                    eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                else eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
-                float powerDam_from = e.DamageAttackC(idx_from).Damage; 
-                if (e.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to))
+                float powerDam_from = eMGame.DamageAttackC(idx_from).Damage; 
+                if (eMGame.UnitEs(idx_from).ForAttack(AttackTypes.Unique).Contains(idx_to))
                 {
                     powerDam_from *= DamageValues.UNIQUE_PERCENT_DAMAGE;
                 }
 
-                float powerDam_to = e.DamageOnCellC(idx_to).Damage;
+                float powerDam_to = eMGame.DamageOnCellC(idx_to).Damage;
 
 
-                var dirAttack = e.CellEs(idx_from).Direct(idx_to);
+                var dirAttack = eMGame.CellEs(idx_from).Direct(idx_to);
 
-                if (e.WeatherE.SunC.IsAcitveSun)
+                if (eMGame.WeatherE.SunC.IsAcitveSun)
                 {
                     var isSunnedUnit = true;
 
-                    foreach (var dir in e.WeatherE.SunC.RaysSun)
+                    foreach (var dir in eMGame.WeatherE.SunC.RaysSun)
                     {
                         if (dirAttack == dir) isSunnedUnit = false;
                     }
@@ -102,74 +114,74 @@ namespace Chessy.Game.System.Model.Master
                     }
                 }
 
-                if (e.UnitTC(idx_from).IsMelee(e.UnitMainTWTC(idx_from).ToolWeapon))
+                if (eMGame.UnitTC(idx_from).IsMelee(eMGame.UnitMainTWTC(idx_from).ToolWeapon))
                 {
-                    if (e.UnitEffectShield(idx_from).HaveAnyProtection)
+                    if (eMGame.UnitEffectShield(idx_from).HaveAnyProtection)
                     {
-                        e.UnitEffectShield(idx_from).Protection--;
+                        eMGame.UnitEffectShield(idx_from).Protection--;
                     }
 
-                    else if (e.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
+                    else if (eMGame.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        sMM.AttackShieldS.Attack(1f, idx_from, e);
+                        _attackShieldS.Attack(1f, idx_from);
                     }
 
                     else if (minus_from > 0)
                     {
-                        sMM.AttackUnitS.AttackUnit(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from, sMM, e);
+                        _attackUnitS.Attack(minus_from, eMGame.NextPlayer(eMGame.UnitPlayerTC(idx_from).Player).Player, idx_from);
                     }
                 }
                 else
                 {
-                    if (e.UnitEffectFrozenArrawC(idx_from).HaveShoots)
+                    if (eMGame.UnitEffectFrozenArrawC(idx_from).HaveShoots)
                     {
-                        e.UnitEffectFrozenArrawC(idx_from).Shoots = 0;
+                        eMGame.UnitEffectFrozenArrawC(idx_from).Shoots = 0;
 
-                        e.UnitEffectStunC(idx_to).Stun = 2;
+                        eMGame.UnitEffectStunC(idx_to).Stun = 2;
                     }
                 }
 
-                if (e.UnitEffectShield(idx_to).HaveAnyProtection)
+                if (eMGame.UnitEffectShield(idx_to).HaveAnyProtection)
                 {
-                    e.UnitEffectShield(idx_to).Protection--;
+                    eMGame.UnitEffectShield(idx_to).Protection--;
                 }
 
-                else if (e.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
+                else if (eMGame.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    sMM.AttackShieldS.Attack(1f, idx_to, e);
+                    _attackShieldS.Attack(1f, idx_to);
                 }
 
                 else if (minus_to > 0)
                 {
                     var killer = PlayerTypes.None;
 
-                    if (e.UnitTC(idx_to).IsAnimal)
+                    if (eMGame.UnitTC(idx_to).IsAnimal)
                     {
-                        killer = e.UnitPlayerTC(idx_from).Player;
+                        killer = eMGame.UnitPlayerTC(idx_from).Player;
                     }
                     else
                     {
-                        killer = e.NextPlayer(e.UnitPlayerTC(idx_to)).Player;
+                        killer = eMGame.NextPlayer(eMGame.UnitPlayerTC(idx_to)).Player;
                     }
 
 
-                    var wasUnitT_to = e.UnitTC(idx_to).Unit;
+                    var wasUnitT_to = eMGame.UnitTC(idx_to).Unit;
 
-                    sMM.AttackUnitS.AttackUnit(minus_to, killer, idx_to, sMM, e);
+                    _attackUnitS.Attack(minus_to, killer, idx_to);
 
-                    if (!e.UnitTC(idx_to).HaveUnit)
+                    if (!eMGame.UnitTC(idx_to).HaveUnit)
                     {
-                        if (e.UnitTC(idx_from).HaveUnit)
+                        if (eMGame.UnitTC(idx_from).HaveUnit)
                         {
-                            if (e.UnitTC(idx_from).IsMelee(e.UnitMainTWTC(idx_from).ToolWeapon))
+                            if (eMGame.UnitTC(idx_from).IsMelee(eMGame.UnitMainTWTC(idx_from).ToolWeapon))
                             {
-                                new ShiftUnitS(idx_from, idx_to, e);
+                                _shiftUnitS.Shift(idx_from, idx_to);
                             }
                         }
 
                         if (wasUnitT_to == UnitTypes.Wolf)
                         {
-                            e.ResourcesC(e.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                            eMGame.ResourcesC(eMGame.UnitPlayerTC(idx_from).Player, ResourceTypes.Food).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                         }
                     }
                 }

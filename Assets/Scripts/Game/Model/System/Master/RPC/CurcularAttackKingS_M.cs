@@ -1,57 +1,67 @@
-﻿using Chessy.Game.Values.Cell.Unit;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public struct CurcularAttackKingS_M
+    sealed class CurcularAttackKingS_M : SystemModelGameAbs
     {
-        public void Attack(in byte idx_0, in AbilityTypes abilityT, in Player sender, in SystemsModelGame sMM, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        readonly AttackUnitS _attackUnitS;
+        readonly AttackShieldS _attackShieldS;
+
+        internal CurcularAttackKingS_M(in AttackUnitS attackUnitS, in AttackShieldS attackShieldS, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            if (!e.UnitEs(idx_0).CoolDownC(abilityT).HaveCooldown)
+            _attackUnitS = attackUnitS;
+            _attackShieldS = attackShieldS;
+        }
+
+        public void Attack(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        {
+            if (!eMGame.UnitEs(cell_0).CoolDownC(abilityT).HaveCooldown)
             {
-                if (e.UnitStepC(idx_0).Steps >= StepValues.Need(abilityT))
+                if (eMGame.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
                 {
-                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    e.UnitEs(idx_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
-                    e.UnitStepC(idx_0).Steps -= StepValues.Need(abilityT);
+                    eMGame.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                    eMGame.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
 
 
-                    foreach (var idxC_0 in e.CellEs(idx_0).AroundCellIdxsC)
+                    foreach (var idxC_0 in eMGame.CellEs(cell_0).AroundCellIdxsC)
                     {
                         var idx_1 = idxC_0.Idx;
 
-                        if (e.UnitTC(idx_1).HaveUnit)
+                        if (eMGame.UnitTC(idx_1).HaveUnit)
                         {
-                            if (!e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(idx_0).Player))
+                            if (!eMGame.UnitPlayerTC(idx_1).Is(eMGame.UnitPlayerTC(cell_0).Player))
                             {
-                                if (e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
+                                if (eMGame.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
-                                    sMM.AttackShieldS.Attack(1f, idx_1, e);
+                                    _attackShieldS.Attack(1f, idx_1);
                                 }
 
                                 else
                                 {
-                                    sMM.AttackUnitS.AttackUnit(HpValues.MAX / 4, e.UnitPlayerTC(idx_0).Player, idx_1, sMM, e);
+                                    _attackUnitS.Attack(HpValues.MAX / 4, eMGame.UnitPlayerTC(cell_0).Player, idx_1);
                                 }
                             }
                         }
                     }
 
-                    e.UnitConditionTC(idx_0).Condition = ConditionUnitTypes.None;
+                    eMGame.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
 
-                    e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
                 }
 
                 else
                 {
-                    e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+            else eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

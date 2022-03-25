@@ -10,11 +10,11 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var idx_sel = E.CellsC.Selected;
+            var idx_sel = eMGame.CellsC.Selected;
 
-            UIE.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(100 * E.FertilizeC(idx_sel).Resources)).ToString();
-            UIE.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(100 * E.AdultForestC(idx_sel).Resources)).ToString();
-            UIE.LeftEnvEs.Envs[ResourceTypes.Ore].TextUI.text = ((int)(100 * E.HillC(idx_sel).Resources)).ToString();
+            eUI.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(100 * eMGame.FertilizeC(idx_sel).Resources)).ToString();
+            eUI.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(100 * eMGame.AdultForestC(idx_sel).Resources)).ToString();
+            eUI.LeftEnvEs.Envs[ResourceTypes.Ore].TextUI.text = ((int)(100 * eMGame.HillC(idx_sel).Resources)).ToString();
         }
     }
 }

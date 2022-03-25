@@ -17,45 +17,45 @@ namespace Chessy.Game.System.Model
 
             var needForFireNext = new List<byte>();
 
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (e.HaveFire(idx_0))
+                if (e.HaveFire(cell_0))
                 {
-                    TakeAdultForestResourcesS.TakeAdultForestResources(EnvironmentValues.FIRE_ADULT_FOREST, idx_0, e);
+                    sMM.TakeAdultForestResourcesS.Take(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
 
-                    if (e.UnitTC(idx_0).HaveUnit)
+                    if (e.UnitTC(cell_0).HaveUnit)
                     {
-                        if (e.UnitTC(idx_0).Is(UnitTypes.Hell))
+                        if (e.UnitTC(cell_0).Is(UnitTypes.Hell))
                         {
-                            e.UnitHpC(idx_0).Health = HpValues.MAX;
+                            e.UnitHpC(cell_0).Health = HpValues.MAX;
                         }
                         else
                         {
-                            if (e.UnitPlayerTC(idx_0).Is(PlayerTypes.None))
+                            if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
                             {
-                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, PlayerTypes.None, idx_0, sMM, e);
+                                sMM.UnitSystems.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                sMM.AttackUnitS.AttackUnit(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, idx_0, sMM, e);
+                                sMM.UnitSystems.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player, cell_0);
                             }
                         }
                     }
 
-                    if (!e.AdultForestC(idx_0).HaveAnyResources)
+                    if (!e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        e.BuildingTC(idx_0).Building = BuildingTypes.None;
+                        e.BuildingTC(cell_0).Building = BuildingTypes.None;
 
                         if (UnityEngine.Random.Range(0f, 1f) < EnvironmentValues.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
                         {
-                            e.YoungForestC(idx_0).Resources -= EnvironmentValues.FIRE_ADULT_FOREST;
+                            e.YoungForestC(cell_0).Resources -= EnvironmentValues.FIRE_ADULT_FOREST;
                         }
 
 
-                        e.HaveFire(idx_0) = false;
+                        e.HaveFire(cell_0) = false;
 
 
-                        foreach (var cellE in e.CellEs(idx_0).AroundCellEs)
+                        foreach (var cellE in e.CellEs(cell_0).AroundCellEs)
                         {
                             needForFireNext.Add(cellE.IdxC.Idx);
                         }
@@ -63,13 +63,13 @@ namespace Chessy.Game.System.Model
                 }
             }
 
-            foreach (var idx_0 in needForFireNext)
+            foreach (var cell_0 in needForFireNext)
             {
-                if (e.CellEs(idx_0).IsActiveParentSelf)
+                if (e.CellEs(cell_0).IsActiveParentSelf)
                 {
-                    if (e.AdultForestC(idx_0).HaveAnyResources)
+                    if (e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        e.HaveFire(idx_0) = true;
+                        e.HaveFire(cell_0) = true;
                     }
                 }
             }

@@ -10,30 +10,30 @@ namespace Chessy.Game
 
         public void Run()
         {
-            UIE.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
-            UIE.LeftEnvEs.Zone.SetActive(false);
+            eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
+            eUI.LeftEnvEs.Zone.SetActive(false);
 
-            if (E.IsSelectedCity)
+            if (eMGame.IsSelectedCity)
             {
-                UIE.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
+                eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
             }
             else
             {
-                var idx_sel = E.CellsC.Selected;
+                var idx_sel = eMGame.CellsC.Selected;
 
-                if (E.CellsC.Selected > 0)
+                if (eMGame.CellsC.Selected > 0)
                 {
-                    if (E.BuildingTC(idx_sel).HaveBuilding)
+                    if (eMGame.BuildingTC(idx_sel).HaveBuilding)
                     {
 
-                        if (E.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || E.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
+                        if (eMGame.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || eMGame.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
                         {
-                            UIE.LeftEnvEs.Zone.SetActive(true);
+                            eUI.LeftEnvEs.Zone.SetActive(true);
                         }
                     }
                     else
                     {
-                        UIE.LeftEnvEs.Zone.SetActive(true);
+                        eUI.LeftEnvEs.Zone.SetActive(true);
                     }
                 }
             }

@@ -1,20 +1,21 @@
-﻿using Chessy.Game.Entity.View.UI.Down;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Entity.View.UI.Down;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class DonerUIS : SystemAbstract, IEcsRunSystem
+    sealed class DonerUIS : SystemModelGameAbs, IEcsRunSystem
     {
         readonly DonerUIE _donerE;
 
-        internal DonerUIS(in DonerUIE downDoner, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        internal DonerUIS(in DonerUIE downDoner, in EntitiesModelGame ents) : base(ents)
         {
             _donerE = downDoner;
         }
 
         public void Run()
         {
-            if (E.CurPlayerITC.Is(E.WhoseMove.Player))
+            if (eMGame.CurPlayerITC.Is(eMGame.WhoseMove.Player))
             {
                 _donerE.WaitGoC.SetActive(false);
                 _donerE.ButtonC.Image.color = Color.white;

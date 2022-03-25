@@ -10,12 +10,12 @@
 
 //        public void Run()
 //        {
-//            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+//            for (byte cell_0 = 0; cell_0 < E.LengthCells; cell_0++)
 //            {
-//                if (E.BuildingTC(idx_0).HaveBuilding && E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
+//                if (E.BuildingTC(cell_0).HaveBuilding && E.BuildingTC(cell_0).Is(BuildingTypes.IceWall))
 //                {
-//                    E.BuildHpC(idx_0).Health--;
-//                    //if (!Es.BuildHpC(idx_0).IsAlive) //Es.BuildTC(idx_0).Destroy(Es);
+//                    E.BuildHpC(cell_0).Health--;
+//                    //if (!Es.BuildHpC(cell_0).IsAlive) //Es.BuildTC(cell_0).Destroy(Es);
 //                }
 //            }
 //        }

@@ -11,75 +11,75 @@ namespace Chessy.Game
         {
             int random;
 
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                e.HaveFire(idx_0) = false;
+                e.HaveFire(cell_0) = false;
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    e.CellEs(idx_0).TrailHealthC(dirT).Health = 0;
+                    e.CellEs(cell_0).TrailHealthC(dirT).Health = 0;
                 }
                 
 
-                if (e.UnitTC(idx_0).HaveUnit)
+                if (e.UnitTC(cell_0).HaveUnit)
                 {
                     if (gameModeTC.Is(GameModes.TrainingOff))
                     {
-                        if (e.UnitPlayerTC(idx_0).Is(PlayerTypes.First))
+                        if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                         {
-                            if (e.UnitExtraTWTC(idx_0).HaveToolWeapon)
+                            if (e.UnitExtraTWTC(cell_0).HaveToolWeapon)
                             {
-                                e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).LevelE(e.UnitExtraLevelTC(idx_0).Level).ToolWeapons(e.UnitExtraTWTC(idx_0).ToolWeapon)++;
-                                e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
+                                e.PlayerInfoE(e.UnitPlayerTC(cell_0).Player).LevelE(e.UnitExtraLevelTC(cell_0).Level).ToolWeapons(e.UnitExtraTWTC(cell_0).ToolWeapon)++;
+                                e.UnitExtraTWTC(cell_0).ToolWeapon = ToolWeaponTypes.None;
                             }
 
-                            //E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level).HaveInInventor = true;
-                            e.UnitTC(idx_0).Unit = UnitTypes.None;
+                            //E.UnitInfoE(E.UnitPlayerTC(cell_0).Player, E.UnitLevelTC(cell_0).Level).HaveInInventor = true;
+                            e.UnitTC(cell_0).Unit = UnitTypes.None;
                         }
                     }
                     else
                     {
 
-                        if (e.UnitExtraTWTC(idx_0).HaveToolWeapon)
+                        if (e.UnitExtraTWTC(cell_0).HaveToolWeapon)
                         {
-                            e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).LevelE(e.UnitExtraLevelTC(idx_0).Level).ToolWeapons(e.UnitExtraTWTC(idx_0).ToolWeapon)++;
+                            e.PlayerInfoE(e.UnitPlayerTC(cell_0).Player).LevelE(e.UnitExtraLevelTC(cell_0).Level).ToolWeapons(e.UnitExtraTWTC(cell_0).ToolWeapon)++;
 
-                            e.UnitExtraTWTC(idx_0).ToolWeapon = ToolWeaponTypes.None;
+                            e.UnitExtraTWTC(cell_0).ToolWeapon = ToolWeaponTypes.None;
                         }
 
-                        //E.UnitInfoE(E.UnitPlayerTC(idx_0).Player, E.UnitLevelTC(idx_0).Level).HaveInInventor = true;
-                        e.UnitTC(idx_0).Unit = UnitTypes.None;
+                        //E.UnitInfoE(E.UnitPlayerTC(cell_0).Player, E.UnitLevelTC(cell_0).Level).HaveInInventor = true;
+                        e.UnitTC(cell_0).Unit = UnitTypes.None;
                     }
                 }
 
 
-                if (e.BuildingTC(idx_0).HaveBuilding)
+                if (e.BuildingTC(cell_0).HaveBuilding)
                 {
-                    if (e.BuildingTC(idx_0).Is(BuildingTypes.Camp))
+                    if (e.BuildingTC(cell_0).Is(BuildingTypes.Camp))
                     {
-                        //Es.WhereBuildingEs.HaveBuild(BuildEs(idx_0).BuildingE, idx_0).HaveBuilding.Have = false;
-                        //Es.BuildE(idx_0).BuildingE.Destroy(Es);
+                        //Es.WhereBuildingEs.HaveBuild(BuildEs(cell_0).BuildingE, cell_0).HaveBuilding.Have = false;
+                        //Es.BuildE(cell_0).BuildingE.Destroy(Es);
                     }
                 }
 
                 else
                 {
-                    if (e.YoungForestC(idx_0).HaveAnyResources)
+                    if (e.YoungForestC(cell_0).HaveAnyResources)
                     {
-                        e.YoungForestC(idx_0).Resources = 0;
+                        e.YoungForestC(cell_0).Resources = 0;
 
-                       // Es.AdultForestC(idx_0).SetRandomResources();
+                       // Es.AdultForestC(cell_0).SetRandomResources();
                     }
 
-                    if (!e.EnvironmentEs(idx_0).FertilizeC.HaveAnyResources
-                        && !e.EnvironmentEs(idx_0).MountainC.HaveAnyResources
-                        && !e.AdultForestC(idx_0).HaveAnyResources)
+                    if (!e.EnvironmentEs(cell_0).FertilizeC.HaveAnyResources
+                        && !e.EnvironmentEs(cell_0).MountainC.HaveAnyResources
+                        && !e.AdultForestC(cell_0).HaveAnyResources)
                     {
                         random = Random.Range(0, 100);
 
                         if (random <= 3)
                         {
-                            //Es.EnvironmentEs(idx_0).FertilizeC.Resources = CellEnvironmentValues.
+                            //Es.EnvironmentEs(cell_0).FertilizeC.Resources = CellEnvironmentValues.
                         }
                     }
                 }

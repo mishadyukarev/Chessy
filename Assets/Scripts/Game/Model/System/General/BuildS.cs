@@ -1,15 +1,21 @@
-﻿namespace Chessy.Game.System.Model
-{
-    public struct BuildS
-    {
-        public BuildS(in BuildingTypes buildingT, in LevelTypes levelT, in PlayerTypes playerT, in float hp, in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
-        {
-            e.BuildingTC(idx_0).Building = buildingT;
-            e.BuildingLevelTC(idx_0).Level = levelT;
-            e.BuildingPlayerTC(idx_0).Player = playerT;
-            e.BuildHpC(idx_0).Health = hp;
+﻿using Chessy.Game.Entity.Model;
 
-            e.BuildingsInfo(playerT, levelT, buildingT).IdxC.Add(idx_0);
+namespace Chessy.Game.System.Model
+{
+    public sealed class BuildS : SystemModelGameAbs
+    {
+        public BuildS(in EntitiesModelGame eMGame) : base(eMGame)
+        {
+        }
+
+        public void Build(in BuildingTypes buildingT, in LevelTypes levelT, in PlayerTypes playerT, in float hp, in byte cell_0)
+        {
+            eMGame.BuildingTC(cell_0).Building = buildingT;
+            eMGame.BuildingLevelTC(cell_0).Level = levelT;
+            eMGame.BuildingPlayerTC(cell_0).Player = playerT;
+            eMGame.BuildHpC(cell_0).Health = hp;
+
+            eMGame.BuildingsInfo(playerT, levelT, buildingT).IdxC.Add(cell_0);
         }
     }
 }

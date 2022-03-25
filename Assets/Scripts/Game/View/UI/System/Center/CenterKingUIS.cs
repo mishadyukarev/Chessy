@@ -8,13 +8,13 @@
 
         public void Run()
         {
-            if (E.PlayerInfoE(E.CurPlayerITC.Player).HaveKingInInventor)
+            if (eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).HaveKingInInventor)
             {
-                UIE.CenterEs.KingE.Paren.SetActive(true);
+                eUI.CenterEs.KingE.Paren.SetActive(true);
             }
             else
             {
-                UIE.CenterEs.KingE.Paren.SetActive(false);
+                eUI.CenterEs.KingE.Paren.SetActive(false);
             }
         }
     }

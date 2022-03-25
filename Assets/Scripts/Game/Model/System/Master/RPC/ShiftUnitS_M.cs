@@ -1,19 +1,27 @@
-﻿using Chessy.Game.System.Model;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Photon.Realtime;
 
 namespace Chessy.Game
 {
-    public struct ShiftUnitS_M
+    public sealed class ShiftUnitS_M : SystemModelGameAbs
     {
-        public ShiftUnitS_M(in byte idx_from, in byte idx_to, in Player sender, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        readonly ShiftUnitS _shiftUnitS;
+
+        public ShiftUnitS_M(in ShiftUnitS shiftUnitS, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            if (e.UnitEs(idx_from).ForShift.Contains(idx_to) && e.UnitPlayerTC(idx_from).Is(e.WhoseMove.Player))
+            _shiftUnitS = shiftUnitS;
+        }
+
+        public void Shift(in byte idx_from, in byte idx_to, in Player sender)
+        {
+            if (eMGame.UnitEs(idx_from).ForShift.Contains(idx_to) && eMGame.UnitPlayerTC(idx_from).Is(eMGame.WhoseMove.Player))
             {
-                e.UnitStepC(idx_from).Steps -= e.UnitEs(idx_from).NeedSteps(idx_to).Steps;
+                eMGame.UnitStepC(idx_from).Steps -= eMGame.UnitEs(idx_from).NeedSteps(idx_to).Steps;
 
-                new ShiftUnitS(idx_from, idx_to, e);
+                _shiftUnitS.Shift(idx_from, idx_to);
 
-                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

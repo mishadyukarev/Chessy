@@ -21,6 +21,7 @@ namespace Chessy.Game.Entity.Model
         public bool IsStartedGame;
         public bool IsSelectedCity;
         public bool HaveTreeUnit;
+        public bool IsClicked;
 
         public MistakeC MistakeC;
         public InfoGameC MotionsC;
@@ -32,7 +33,7 @@ namespace Chessy.Game.Entity.Model
         public PlayerTC CurPlayerITC;
         public CellClickC CellClickTC;
         public LessonTC LessonTC;
-
+        public RaycastTC RaycastTC;
 
         public readonly ResourcesE Resources;
         public RpcPoolEs RpcPoolEs;

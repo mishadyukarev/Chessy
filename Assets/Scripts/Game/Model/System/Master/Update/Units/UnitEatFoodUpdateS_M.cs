@@ -1,26 +1,35 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.System;
+using Chessy.Game.Values;
 
 namespace Chessy.Game.System.Model
 {
-    public struct UnitEatFoodUpdateS_M
+    sealed class UnitEatFoodUpdateS_M : SystemModelGameAbs, IEcsRunSystem
     {
-        public void Run(in SystemsModelGame sMM, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        readonly KillUnitS _killUnitS;
+
+        internal UnitEatFoodUpdateS_M(in KillUnitS killUnitS, in EntitiesModelGame eMGame) : base(eMGame)
+        {
+            _killUnitS = killUnitS;
+        }
+
+        public void Run()
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
                 var res = ResourceTypes.Food;
 
-                if (e.PlayerInfoE(player).ResourcesC(res).Resources < 0)
+                if (eMGame.PlayerInfoE(player).ResourcesC(res).Resources < 0)
                 {
-                    e.PlayerInfoE(player).ResourcesC(res).Resources = 0;
+                    eMGame.PlayerInfoE(player).ResourcesC(res).Resources = 0;
 
 
-                    for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+                    for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                     {
-                        if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitPlayerTC(idx_0).Is(player))
+                        if (eMGame.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMGame.UnitPlayerTC(cell_0).Is(player))
                         {
-                            sMM.KillUnitS.Kill(idx_0, e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player, sMM.SetLastDiedS, e);
-                            e.UnitTC(idx_0).Unit = UnitTypes.None;
+                            _killUnitS.Kill(cell_0, eMGame.NextPlayer(eMGame.UnitPlayerTC(cell_0).Player).Player);
+                            eMGame.UnitTC(cell_0).Unit = UnitTypes.None;
                             break;
                         }
                     }

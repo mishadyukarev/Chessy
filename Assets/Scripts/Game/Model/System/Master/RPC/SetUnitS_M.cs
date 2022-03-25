@@ -7,53 +7,49 @@ using Photon.Realtime;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public readonly struct SetUnitS_M
+    sealed class SetUnitS_M : SystemModelGameAbs
     {
-        readonly SetNewUnitS _setNewUnitS;
-        readonly EntitiesModelGame _eMGame;
-        readonly EntitiesModelCommon _eMCommon;
+        readonly SetNewUnitOnCellS _setNewUnitS;
 
-        public SetUnitS_M(in SetNewUnitS setNewUnitS, in EntitiesModelGame eMGame, in EntitiesModelCommon eMCommon)
+        internal SetUnitS_M(in SetNewUnitOnCellS setNewUnitS, in EntitiesModelGame eMGame) : base(eMGame)
         {
             _setNewUnitS = setNewUnitS;
-            _eMGame = eMGame;
-            _eMCommon = eMCommon;
         }
 
-        public void Set(in byte idx_0, in UnitTypes unitT, in Player sender)
+        internal void Set(in byte cell_0, in UnitTypes unitT, in Player sender)
         {
-            var whoseMove = _eMGame.WhoseMove.Player;
+            var whoseMove = eMGame.WhoseMove.Player;
 
-            if (_eMGame.CellEs(idx_0).CellE.IsStartedCell(whoseMove) && !_eMGame.UnitTC(idx_0).HaveUnit)
+            if (eMGame.CellEs(cell_0).CellE.IsStartedCell(whoseMove) && !eMGame.UnitTC(cell_0).HaveUnit)
             {
                 if (unitT == UnitTypes.King)
                 {
-                    if (_eMGame.LessonTC.LessonT == LessonTypes.SettingKing)
+                    if (eMGame.LessonTC.LessonT == LessonTypes.SettingKing)
                     {
-                        _eMGame.LessonTC.SetNextLesson();
+                        eMGame.LessonTC.SetNextLesson();
                     }
                 }
                 else if (unitT == UnitTypes.Pawn)
                 {
-                    if (_eMGame.LessonTC.LessonT == LessonTypes.SettingPawn)
+                    if (eMGame.LessonTC.LessonT == LessonTypes.SettingPawn)
                     {
-                        _eMGame.LessonTC.SetNextLesson();
-                        _eMGame.ResourcesC(whoseMove, ResourceTypes.Wood).Resources += EconomyValues.ForBuyToolWeapon(ToolWeaponTypes.Staff, LevelTypes.First, ResourceTypes.Wood);
+                        eMGame.LessonTC.SetNextLesson();
+                        eMGame.ResourcesC(whoseMove, ResourceTypes.Wood).Resources += EconomyValues.ForBuyToolWeapon(ToolWeaponTypes.Staff, LevelTypes.First, ResourceTypes.Wood);
                     }
                 }
                 else if (unitT.IsGod())
                 {
-                    if (_eMGame.LessonTC.LessonT == LessonTypes.SettingGod)
+                    if (eMGame.LessonTC.LessonT == LessonTypes.SettingGod)
                     {
-                        _eMGame.LessonTC.SetNextLesson();
+                        eMGame.LessonTC.SetNextLesson();
                     }
                 }
 
 
-                _setNewUnitS.SetNewUnitHere(_eMGame.UnitEs(idx_0), unitT, whoseMove, _eMGame.PlayerInfoE(whoseMove), _eMGame);
+                _setNewUnitS.Set(unitT, whoseMove, cell_0);
 
 
-                _eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

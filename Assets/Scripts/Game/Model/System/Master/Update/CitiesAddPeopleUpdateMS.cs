@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    sealed class CitiesAddPeopleUpdateMS : SystemAbstract, IEcsRunSystem
+    sealed class CitiesAddPeopleUpdateMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal CitiesAddPeopleUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -8,11 +8,11 @@
 
         public void Run()
         {
-            if(E.MotionsC.Motions % 5 == 0)
+            if(eMGame.MotionsC.Motions % 5 == 0)
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {
-                    E.PlayerInfoE(playerT).PeopleInCity += 1;
+                    eMGame.PlayerInfoE(playerT).PeopleInCity += 1;
                 }
             }
 

@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class IceWallGiveWaterUnitsUpdMS : SystemAbstract, IEcsRunSystem
+    sealed class IceWallGiveWaterUnitsUpdMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal IceWallGiveWaterUnitsUpdMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -10,18 +10,18 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < E.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < eMGame.LengthCells; cell_0++)
             {
-                if (E.BuildingTC(idx_0).HaveBuilding && E.BuildingTC(idx_0).Is(BuildingTypes.IceWall))
+                if (eMGame.BuildingTC(cell_0).HaveBuilding && eMGame.BuildingTC(cell_0).Is(BuildingTypes.IceWall))
                 {
-                    var idxs_01 = E.CellEs(idx_0).IdxsAroundHashSet;
-                    idxs_01.Add(idx_0);
+                    var idxs_01 = eMGame.CellEs(cell_0).IdxsAroundHashSet;
+                    idxs_01.Add(cell_0);
 
-                    foreach (var idx_01 in E.CellEs(idx_0).IdxsAround)
+                    foreach (var cell_01 in eMGame.CellEs(cell_0).IdxsAround)
                     {
-                        if (E.UnitTC(idx_01).HaveUnit && E.UnitPlayerTC(idx_01).Is(E.BuildingPlayerTC(idx_0).Player))
+                        if (eMGame.UnitTC(cell_01).HaveUnit && eMGame.UnitPlayerTC(cell_01).Is(eMGame.BuildingPlayerTC(cell_0).Player))
                         {
-                            E.UnitWaterC(idx_01).Water = WaterValues.MAX;
+                            eMGame.UnitWaterC(cell_01).Water = WaterValues.MAX;
                         }
                     }
                 }

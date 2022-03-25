@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class CamelShiftUpdateMS : SystemAbstract, IEcsRunSystem
+    sealed class CamelShiftUpdateMS : SystemModelGameAbs, IEcsRunSystem
     {
         internal CamelShiftUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
@@ -11,19 +11,19 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (E.UnitTC(idx_0).Is(UnitTypes.Wolf))
+                if (eMGame.UnitTC(cell_0).Is(UnitTypes.Wolf))
                 {
                     var randDir = Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 
-                    var idx_1 = E.CellEs(idx_0).AroundCellE((DirectTypes)randDir).IdxC.Idx;
+                    var idx_1 = eMGame.CellEs(cell_0).AroundCellE((DirectTypes)randDir).IdxC.Idx;
 
-                    if (E.CellEs(idx_1).IsActiveParentSelf && !E.MountainC(idx_1).HaveAnyResources
-                        && !E.UnitTC(idx_1).HaveUnit)
+                    if (eMGame.CellEs(idx_1).IsActiveParentSelf && !eMGame.MountainC(idx_1).HaveAnyResources
+                        && !eMGame.UnitTC(idx_1).HaveUnit)
                     {
-                        E.UnitEs(idx_1).Set(E.UnitEs(idx_0));
-                        E.UnitTC(idx_0).Unit = UnitTypes.None;
+                        eMGame.UnitEs(idx_1).Set(eMGame.UnitEs(cell_0));
+                        eMGame.UnitTC(cell_0).Unit = UnitTypes.None;
                     }
                 }
             }

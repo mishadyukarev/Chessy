@@ -4,25 +4,21 @@ using Photon.Realtime;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public struct GetHeroS_M
+    public sealed class GetHeroS_M : SystemModelGameAbs
     {
-        readonly EntitiesModelGame _eMGame;
+        public GetHeroS_M(in EntitiesModelGame eMGame) : base(eMGame) { }
 
-        public GetHeroS_M(in EntitiesModelGame eMGame)
-        {
-            _eMGame = eMGame;
-        }
         public void Get(in UnitTypes unitT, in Player sender)
         {
-            var whoseMove = _eMGame.WhoseMove.Player;
+            var whoseMove = eMGame.WhoseMove.Player;
 
-            if (_eMGame.LessonTC.LessonT == LessonTypes.PickGod)
+            if (eMGame.LessonTC.LessonT == LessonTypes.PickGod)
             {
-                _eMGame.LessonTC.SetNextLesson();
+                eMGame.LessonTC.SetNextLesson();
             }
 
-            _eMGame.PlayerInfoE(whoseMove).MyHeroTC.Unit = unitT;
-            _eMGame.PlayerInfoE(whoseMove).HaveHeroInInventor = true;
+            eMGame.PlayerInfoE(whoseMove).MyHeroTC.Unit = unitT;
+            eMGame.PlayerInfoE(whoseMove).HaveHeroInInventor = true;
         }
     }
 }

@@ -4,25 +4,25 @@ namespace Chessy.Game.System.Model
 {
     public struct GetVisibleUnitS
     {
-        public GetVisibleUnitS(in byte idx_0, in EntitiesModelGame e)
+        public GetVisibleUnitS(in byte cell_0, in EntitiesModelGame e)
         {
-            if (e.UnitTC(idx_0).HaveUnit)
+            if (e.UnitTC(cell_0).HaveUnit)
             {
-                if (e.UnitPlayerTC(idx_0).Is(PlayerTypes.None))
+                if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
                 {
-                    if (e.UnitTC(idx_0).IsAnimal)
+                    if (e.UnitTC(cell_0).IsAnimal)
                     {
                         var isVisForFirst = true;
                         var isVisForSecond = true;
 
-                        if (e.AdultForestC(idx_0).HaveAnyResources)
+                        if (e.AdultForestC(cell_0).HaveAnyResources)
                         {
                             isVisForFirst = false;
                             isVisForSecond = false;
 
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var idx_1 = e.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+                                var idx_1 = e.CellEs(cell_0).AroundCellE(dirT).IdxC.Idx;
 
                                 if (e.UnitTC(idx_1).HaveUnit)
                                 {
@@ -32,25 +32,25 @@ namespace Chessy.Game.System.Model
                             }
                         }
 
-                        e.UnitEs(idx_0).ForPlayer(PlayerTypes.First).IsVisible = isVisForFirst;
-                        e.UnitEs(idx_0).ForPlayer(PlayerTypes.Second).IsVisible = isVisForSecond;
+                        e.UnitEs(cell_0).ForPlayer(PlayerTypes.First).IsVisible = isVisForFirst;
+                        e.UnitEs(cell_0).ForPlayer(PlayerTypes.Second).IsVisible = isVisForSecond;
                     }
                 }
                 else
                 {
-                    e.UnitEs(idx_0).ForPlayer(e.UnitPlayerTC(idx_0).Player).IsVisible = true;
+                    e.UnitEs(cell_0).ForPlayer(e.UnitPlayerTC(cell_0).Player).IsVisible = true;
 
-                    if (e.AdultForestC(idx_0).HaveAnyResources)
+                    if (e.AdultForestC(cell_0).HaveAnyResources)
                     {
                         var isVisibledNextPlayer = false;
 
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = e.CellEs(idx_0).AroundCellE(dirT).IdxC.Idx;
+                            var idx_1 = e.CellEs(cell_0).AroundCellE(dirT).IdxC.Idx;
 
                             if (e.UnitTC(idx_1).HaveUnit)
                             {
-                                if (!e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(idx_0).Player))
+                                if (!e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(cell_0).Player))
                                 {
                                     isVisibledNextPlayer = true;
                                     break;
@@ -58,11 +58,11 @@ namespace Chessy.Game.System.Model
                             }
                         }
 
-                        e.UnitEs(idx_0).ForPlayer(e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player).IsVisible = isVisibledNextPlayer;
+                        e.UnitEs(cell_0).ForPlayer(e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player).IsVisible = isVisibledNextPlayer;
                     }
                     else
                     {
-                        e.UnitEs(idx_0).ForPlayer(e.NextPlayer(e.UnitPlayerTC(idx_0).Player).Player).IsVisible = true;
+                        e.UnitEs(cell_0).ForPlayer(e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player).IsVisible = true;
                     }
                 }
             }

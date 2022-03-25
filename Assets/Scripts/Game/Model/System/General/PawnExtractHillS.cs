@@ -6,21 +6,21 @@ namespace Chessy.Game.System.Model
 {
     public struct PawnExtractHillS
     {
-        public PawnExtractHillS(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public PawnExtractHillS(in byte cell_0, in Chessy.Game.Entity.Model.EntitiesModelGame e)
         {
-            e.PawnExtractHillE(idx_0).Resources = 0;
+            e.PawnExtractHillE(cell_0).Resources = 0;
 
-            if (e.UnitTC(idx_0).Is(UnitTypes.Pawn) && e.UnitExtraTWTC(idx_0).Is(ToolWeaponTypes.Pick))
+            if (e.UnitTC(cell_0).Is(UnitTypes.Pawn) && e.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Pick))
             {
-                if (e.HillC(idx_0).HaveAnyResources)
+                if (e.HillC(cell_0).HaveAnyResources)
                 {
                     var extract = EnvironmentValues.PAWN_PICK_EXTRACT_HILL;
 
 
-                    if (e.HillC(idx_0).Resources < extract) extract = e.HillC(idx_0).Resources;
+                    if (e.HillC(cell_0).Resources < extract) extract = e.HillC(cell_0).Resources;
 
 
-                    e.PawnExtractHillE(idx_0).Resources = extract;
+                    e.PawnExtractHillE(cell_0).Resources = extract;
 
                 }
             }

@@ -10,9 +10,9 @@ namespace Chessy.Game
         {
             var amountAdultForest = 0;
 
-            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
+            for (byte cell_0 = 0; cell_0 < e.LengthCells; cell_0++)
             {
-                if (e.AdultForestC(idx_0).HaveAnyResources)
+                if (e.AdultForestC(cell_0).HaveAnyResources)
                     amountAdultForest++;
             }
 

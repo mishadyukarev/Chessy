@@ -1,21 +1,30 @@
-﻿using System;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
+using System;
 
-namespace Chessy.Game.System.Model
+namespace Chessy.Game.Model.System
 {
-    public struct KillUnitS
+    sealed class KillUnitS : SystemModelGameAbs
     {
-        public void Kill(in byte idx_0, in PlayerTypes whoKiller, in SetLastDiedS setLastDiedS, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        readonly SystemsModelGameUnit _unitSs;
+
+        internal KillUnitS(in SystemsModelGameUnit unitSs, in EntitiesModelGame eMGame) : base(eMGame)
+        {
+            _unitSs = unitSs;
+        }
+
+        public void Kill(in byte cell_0, in PlayerTypes whoKiller)
         {
             if (whoKiller != PlayerTypes.None)
             {
-                if (e.UnitTC(idx_0).Is(UnitTypes.King)) e.WinnerC.Player = whoKiller;
+                if (eMGame.UnitTC(cell_0).Is(UnitTypes.King)) eMGame.WinnerC.Player = whoKiller;
             }
             
-            if (e.UnitTC(idx_0).IsGod)
+            if (eMGame.UnitTC(cell_0).IsGod)
             {
                 var cooldown = 0f;
 
-                switch (e.UnitTC(idx_0).Unit)
+                switch (eMGame.UnitTC(cell_0).Unit)
                 {
                     case UnitTypes.Elfemale:
                         cooldown = HeroCooldownValues.Elfemale;
@@ -36,19 +45,18 @@ namespace Chessy.Game.System.Model
                     default: throw new Exception();
                 }
 
-                e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).HeroCooldownC.Cooldown = cooldown;
-                e.PlayerInfoE(e.UnitPlayerTC(idx_0).Player).HaveHeroInInventor = true;
+                eMGame.PlayerInfoE(eMGame.UnitPlayerTC(cell_0).Player).HeroCooldownC.Cooldown = cooldown;
+                eMGame.PlayerInfoE(eMGame.UnitPlayerTC(cell_0).Player).HaveHeroInInventor = true;
             }
 
-            if (e.UnitTC(idx_0).Is(UnitTypes.Tree)) e.HaveTreeUnit = false;
+            if (eMGame.UnitTC(cell_0).Is(UnitTypes.Tree)) eMGame.HaveTreeUnit = false;
 
 
-            setLastDiedS.Set(e.UnitMainE(idx_0), ref e.UnitEs(idx_0).WhoLastDiedHereE);
-            e.UnitInfo(e.UnitMainE(idx_0)).Take(e.UnitTC(idx_0).Unit, 1);
+            _unitSs.SetLastDiedS.Set(cell_0);
+            eMGame.UnitInfo(eMGame.UnitMainE(cell_0)).Take(eMGame.UnitTC(cell_0).Unit, 1);
 
 
-
-            e.UnitTC(idx_0).Unit = UnitTypes.None;
+            _unitSs.ClearUnitS.Clear(cell_0);
         }
     }
 }

@@ -4,11 +4,11 @@
 //{
 //    public static class ElfemaleSeedS_M
 //    {
-//        public static void TrySeed(in byte idx_0, in Chessy.Game.Entity.Model.EntitiesModel e)
+//        public static void TrySeed(in byte cell_0, in Chessy.Game.Entity.Model.EntitiesModel e)
 //        {
-//            if (e.UnitTC(idx_0).Is(UnitTypes.Elfemale))
+//            if (e.UnitTC(cell_0).Is(UnitTypes.Elfemale))
 //            {
-//                foreach (var idx_1 in e.CellEs(idx_0).IdxsAround)
+//                foreach (var idx_1 in e.CellEs(cell_0).IdxsAround)
 //                {
 //                    if (!e.AdultForestC(idx_1).HaveAnyResources && !e.HillC(idx_1).HaveAnyResources && !e.YoungForestC(idx_1).HaveAnyResources)
 //                    {

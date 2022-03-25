@@ -1,12 +1,17 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values;
 using Photon.Realtime;
 using System.Collections.Generic;
 
 namespace Chessy.Game.System.Model
 {
-    public struct MeltS_M
+    public sealed class MeltS_M : SystemModelGameAbs
     {
-        public void Melt(in Player sender, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public MeltS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        {
+        }
+
+        public void Melt(in Player sender)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 
@@ -20,7 +25,7 @@ namespace Chessy.Game.System.Model
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(resT).Resources)
+                if (needRes[resT] > eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -31,17 +36,17 @@ namespace Chessy.Game.System.Model
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
+                    eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
-                e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
-                e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
+                eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
+                eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
 
-                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
+                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                eMGame.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }
