@@ -6,17 +6,20 @@ namespace Chessy.Game.Model.System
 {
     public sealed class PutOutFirePawnS_M : SystemModelGameAbs
     {
-        public PutOutFirePawnS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        readonly CellEs _cellEs;
+
+        public PutOutFirePawnS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
         }
 
-        public void PutOut(in byte cell_0, in Player sender)
+        public void PutOut(in Player sender)
         {
-            if (eMGame.UnitStepC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
+            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.PUT_OUT_FIRE_PAWN)
             {
-                eMGame.HaveFire(cell_0) = false;
+                _cellEs.EffectEs.HaveFire = false;
 
-                eMGame.UnitStepC(cell_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
+                _cellEs.UnitStatsE.StepC.Steps -= StepValues.PUT_OUT_FIRE_PAWN;
             }
 
             else

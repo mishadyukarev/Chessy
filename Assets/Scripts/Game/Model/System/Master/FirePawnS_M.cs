@@ -8,20 +8,23 @@ namespace Chessy.Game.Model.System
 {
     public sealed class FirePawnS_M : SystemModelGameAbs
     {
-        public FirePawnS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        readonly CellEs _cellEs;
+
+        public FirePawnS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
         }
 
-        public void Fire(in byte cell_0, in Player sender)
+        public void Fire(in Player sender)
         {
-            if (eMGame.UnitStepC(cell_0).Steps >= StepValues.FIRE_PAWN)
+            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.FIRE_PAWN)
             {
-                if (eMGame.AdultForestC(cell_0).HaveAnyResources)
+                if (_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
                 {
                     eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
-                    eMGame.HaveFire(cell_0) = true;
-                    eMGame.UnitStepC(cell_0).Steps -= StepValues.FIRE_PAWN;
+                    _cellEs.EffectEs.HaveFire = true;
+                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.FIRE_PAWN;
                 }
 
                 else

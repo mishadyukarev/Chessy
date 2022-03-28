@@ -9,29 +9,32 @@ namespace Chessy.Game.Model.System
 {
     public sealed class StunElfemaleS_M : SystemModelGameAbs
     {
-        public StunElfemaleS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        readonly CellEs _cellEs;
+
+        public StunElfemaleS_M(in CellEs cellEs,  in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
         }
 
-        public void Stun(in byte idx_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
+        public void Stun(in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMGame.UnitEs(idx_from).CoolDownC(abilityT).HaveCooldown)
+            if (!_cellEs.UnitEs.CoolDownC(abilityT).HaveCooldown)
             {
                 if (eMGame.AdultForestC(idx_to).HaveAnyResources)
                 {
-                    if (eMGame.UnitStepC(idx_from).Steps >= StepValues.STUN_ELFEMALE)
+                    if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.STUN_ELFEMALE)
                     {
-                        if (!eMGame.UnitPlayerTC(idx_from).Is(eMGame.UnitPlayerTC(idx_to).Player))
+                        if (!_cellEs.UnitMainE.PlayerTC.Is(eMGame.UnitPlayerTC(idx_to).Player))
                         {
                             eMGame.UnitEffectStunC(idx_to).Stun = StunValues.ELFEMALE;
-                            eMGame.UnitEs(idx_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                            _cellEs.UnitEs.CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
-                            eMGame.UnitStepC(idx_from).Steps -= StepValues.STUN_ELFEMALE;
+                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.STUN_ELFEMALE;
 
                             eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
 
 
-                            foreach (var idx_1 in eMGame.CellEs(idx_to).IdxsAround)
+                            foreach (var idx_1 in eMGame.CellEs(idx_to).AroundCellsEs.IdxsAround)
                             {
                                 if (eMGame.AdultForestC(idx_1).HaveAnyResources)
                                 {

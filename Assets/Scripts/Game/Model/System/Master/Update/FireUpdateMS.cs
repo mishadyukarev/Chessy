@@ -1,17 +1,25 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using System.Collections.Generic;
 
 namespace Chessy.Game.System.Model
 {
-    static class FireUpdateMS
+    sealed class FireUpdateMS : SystemModelGameAbs
     {
-        public static void Run(in SystemsModelGame sMM, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        readonly SystemsModelGame _sMM;
+
+        internal FireUpdateMS(in SystemsModelGame sMM, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            foreach (var cellE in e.CellEs(e.WeatherE.CloudC.Center).AroundCellEs)
+            _sMM = sMM;
+        }
+
+        public void Run()
+        {
+            foreach (var cellE in eMGame.CellEs(eMGame.WeatherE.CloudC.Center).AroundCellsEs.AroundCellEs)
             {
-                e.HaveFire(cellE.IdxC.Idx) = false;
+                eMGame.HaveFire(cellE.IdxC.Idx) = false;
             }
 
 
@@ -19,43 +27,43 @@ namespace Chessy.Game.System.Model
 
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (e.HaveFire(cell_0))
+                if (eMGame.HaveFire(cell_0))
                 {
-                    sMM.TakeAdultForestResourcesS.Take(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
+                    _sMM.TakeAdultForestResourcesS.Take(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
 
-                    if (e.UnitTC(cell_0).HaveUnit)
+                    if (eMGame.UnitTC(cell_0).HaveUnit)
                     {
-                        if (e.UnitTC(cell_0).Is(UnitTypes.Hell))
+                        if (eMGame.UnitTC(cell_0).Is(UnitTypes.Hell))
                         {
-                            e.UnitHpC(cell_0).Health = HpValues.MAX;
+                            eMGame.UnitHpC(cell_0).Health = HpValues.MAX;
                         }
                         else
                         {
-                            if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
+                            if (eMGame.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
                             {
-                                sMM.UnitSystems.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                                _sMM.CellSs(cell_0).AttackUnitS.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None);
                             }
                             else
                             {
-                                sMM.UnitSystems.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player, cell_0);
+                                _sMM.CellSs(cell_0).AttackUnitS.Attack(HpValues.FIRE_DAMAGE, eMGame.NextPlayer(eMGame.UnitPlayerTC(cell_0).Player).Player);
                             }
                         }
                     }
 
-                    if (!e.AdultForestC(cell_0).HaveAnyResources)
+                    if (!eMGame.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        e.BuildingTC(cell_0).Building = BuildingTypes.None;
+                        eMGame.BuildingTC(cell_0).Building = BuildingTypes.None;
 
                         if (UnityEngine.Random.Range(0f, 1f) < EnvironmentValues.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
                         {
-                            e.YoungForestC(cell_0).Resources -= EnvironmentValues.FIRE_ADULT_FOREST;
+                            eMGame.YoungForestC(cell_0).Resources -= EnvironmentValues.FIRE_ADULT_FOREST;
                         }
 
 
-                        e.HaveFire(cell_0) = false;
+                        eMGame.HaveFire(cell_0) = false;
 
 
-                        foreach (var cellE in e.CellEs(cell_0).AroundCellEs)
+                        foreach (var cellE in eMGame.CellEs(cell_0).AroundCellsEs.AroundCellEs)
                         {
                             needForFireNext.Add(cellE.IdxC.Idx);
                         }
@@ -65,11 +73,11 @@ namespace Chessy.Game.System.Model
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (e.CellEs(cell_0).IsActiveParentSelf)
+                if (eMGame.CellEs(cell_0).IsActiveParentSelf)
                 {
-                    if (e.AdultForestC(cell_0).HaveAnyResources)
+                    if (eMGame.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        e.HaveFire(cell_0) = true;
+                        eMGame.HaveFire(cell_0) = true;
                     }
                 }
             }

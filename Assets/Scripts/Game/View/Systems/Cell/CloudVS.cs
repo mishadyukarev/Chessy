@@ -13,7 +13,7 @@ namespace Chessy.Game
 
             var centerCloud = e.WeatherE.CloudC.Center;
 
-            foreach (var cellE in e.CellEs(centerCloud).AroundCellEs)
+            foreach (var cellE in e.CellEs(centerCloud).AroundCellsEs.AroundCellEs)
             {
                 eV.CellEs(cellE.IdxC.Idx).CloudCellVC.SetActive(true);
             }

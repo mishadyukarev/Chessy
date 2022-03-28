@@ -1,34 +1,28 @@
-﻿namespace Chessy.Game
-{
-    sealed class CitiesAddPeopleUpdateMS : SystemModelGameAbs, IEcsRunSystem
-    {
-        internal CitiesAddPeopleUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
-        {
-        }
+﻿//namespace Chessy.Game
+//{
+//    sealed class CitiesAddPeopleUpdateMS : SystemModelGameAbs, IEcsRunSystem
+//    {
+//        internal CitiesAddPeopleUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+//        {
+//        }
 
-        public void Run()
-        {
-            if(eMGame.MotionsC.Motions % 5 == 0)
-            {
-                for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-                {
-                    eMGame.PlayerInfoE(playerT).PeopleInCity += 1;
-                }
-            }
+//        public void Run()
+//        {
 
 
-            //for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-            //{
-            //    E.PlayerE(playerT).PeopleInCity 
-            //        += E.PlayerE(playerT).MaxAvailablePawns 
-            //        * E.PlayerE(playerT).ResourcesC(ResourceTypes.Food).Resources 
-            //        / Update_VALUES.FROM_MAX_AVAILABLE_PAWNS;
 
-            //    if (E.PlayerE(playerT).PeopleInCity > E.PlayerE(playerT).MaxPeopleInCity)
-            //    {
-            //        E.PlayerE(playerT).PeopleInCity = E.PlayerE(playerT).MaxPeopleInCity;
-            //    }
-            //}
-        }
-    }
-}
+//            //for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+//            //{
+//            //    E.PlayerE(playerT).PeopleInCity 
+//            //        += E.PlayerE(playerT).MaxAvailablePawns 
+//            //        * E.PlayerE(playerT).ResourcesC(ResourceTypes.Food).Resources 
+//            //        / Update_VALUES.FROM_MAX_AVAILABLE_PAWNS;
+
+//            //    if (E.PlayerE(playerT).PeopleInCity > E.PlayerE(playerT).MaxPeopleInCity)
+//            //    {
+//            //        E.PlayerE(playerT).PeopleInCity = E.PlayerE(playerT).MaxPeopleInCity;
+//            //    }
+//            //}
+//        }
+//    }
+//}

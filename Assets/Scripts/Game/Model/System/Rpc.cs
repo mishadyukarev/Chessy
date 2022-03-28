@@ -59,13 +59,13 @@ namespace Chessy.Game
             var obj = objects[_idx_cur++];
             var whoseMove = _eMGame.WhoseMove.Player;
 
-            if (obj is byte idx)
+            if (obj is byte cell_0)
             {
                 var obj_1 = objects[_idx_cur++];
 
                 if (obj_1 is ToolWeaponTypes twT)
                 {
-                    _sMGame.MasterSystems.GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], idx, sender);
+                    _sMGame.CellSs(cell_0).GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], sender);
                 }
             }
 
@@ -74,56 +74,56 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        _sMGame.MasterSystems.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).CurcularAttackKingS_M.Attack(abilityT, sender);
                         break;
 
                     case AbilityTypes.FirePawn:
-                        _sMGame.MasterSystems.FirePawnS_M.Fire((byte)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).FirePawnS_M.Fire(sender);
                         break;
 
                     case AbilityTypes.PutOutFirePawn:
-                        _sMGame.MasterSystems.PutOutFirePawnS_M.PutOut((byte)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).PutOutFirePawnS_M.PutOut(sender);
                         break;
 
                     case AbilityTypes.Seed:
-                        _sMGame.MasterSystems.SeedPawnS_M.Seed((byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).SeedPawnS_M.Seed(abilityT, sender);
                         break;
 
                     case AbilityTypes.SetFarm:
-                        _sMGame.MasterSystems.BuildFarmS_M.Build((byte)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).BuildFarmS_M.Build(sender);
                         break;
 
                     case AbilityTypes.DestroyBuilding:
-                        _sMGame.MasterSystems.DestroyBuildingS_M.Destroy((byte)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).DestroyBuildingS_M.Destroy(sender);
                         break;
 
                     case AbilityTypes.FireArcher:
-                        _sMGame.MasterSystems.FireArcherS_M.Fire((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).FireArcherS_M.Fire((byte)objects[_idx_cur++], sender);
                         break;
 
                     case AbilityTypes.GrowAdultForest:
-                        _sMGame.MasterSystems.GrowAdultForestS_M.Grow((byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).GrowAdultForestS_M.Grow(abilityT, sender);
                         break;
 
                     case AbilityTypes.StunElfemale:
-                        _sMGame.MasterSystems.StunElfemaleS_M.Stun((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).StunElfemaleS_M.Stun((byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     case AbilityTypes.ChangeCornerArcher:
-                        _sMGame.MasterSystems.ChangeCornerArcherS_M.Change((byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).ChangeCornerArcherS_M.Change(abilityT, sender);
                         break;
 
                     //Snowy
                     case AbilityTypes.ChangeDirectionWind:
-                        _sMGame.MasterSystems.ChangeDirectionWindS_M.Change((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).ChangeDirectionWindS_M.Change((byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     case AbilityTypes.IncreaseWindSnowy:
-                        _sMGame.MasterSystems.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     case AbilityTypes.DecreaseWindSnowy:
-                        _sMGame.MasterSystems.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
 
@@ -159,7 +159,7 @@ namespace Chessy.Game
 
                     case AbilityTypes.SetTeleport:
                         {
-                            var cell_0 = (byte)objects[_idx_cur++];
+                            cell_0 = (byte)objects[_idx_cur++];
 
                             if (!_eMGame.BuildingTC(cell_0).HaveBuilding)
                             {
@@ -206,7 +206,7 @@ namespace Chessy.Game
 
                     case AbilityTypes.Teleport:
                         {
-                            var cell_0 = (byte)objects[_idx_cur++];
+                            cell_0 = (byte)objects[_idx_cur++];
 
                             if (_eMGame.UnitStepC(cell_0).Steps >= StepValues.TELEPORT)
                             {
@@ -273,45 +273,47 @@ namespace Chessy.Game
 
             else if (obj is BuildingTypes buildT)
             {
-                _sMGame.MasterSystems.BuyBuildingS_M.Buy(buildT, sender);
+                _sMGame.BuyBuildingS_M.Buy(buildT, sender);
             }
 
-            else if (obj is MarketBuyTypes marketBuy) _sMGame.MasterSystems.BuyS_M.Buy(marketBuy, sender);
+            else if (obj is MarketBuyTypes marketBuy) _sMGame.BuyS_M.Buy(marketBuy, sender);
 
             else if (obj is RpcMasterTypes rpcT)
             {
                 switch (rpcT)
                 {
                     case RpcMasterTypes.Ready:
-                        _sMGame.MasterSystems.ReadyS_M.Ready(sender);
+                        _sMGame.ReadyS_M.Ready(sender);
                         break;
 
                     case RpcMasterTypes.Done:
-                        _sMGame.MasterSystems.DonerS_M.Done(_eMCommon.GameModeTC, sender);
+                        _sMGame.DonerS_M.Done(_eMCommon.GameModeTC, sender);
                         break;
 
                     case RpcMasterTypes.Shift:
-                        _sMGame.MasterSystems.ShiftUnitS_M.Shift((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).ShiftUnitS_M.Shift((byte)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        _sMGame.MasterSystems.AttackUnit_M.Attack((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
+                        var cell_from = (byte)objects[_idx_cur++];
+                        var cell_to = (byte)objects[_idx_cur++];
+                        _sMGame.AttackUnit_M.Attack(cell_from, cell_to);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        _sMGame.MasterSystems.SetConditionUnitS_M.Set((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).SetConditionUnitS_M.Set((ConditionUnitTypes)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        _sMGame.MasterSystems.SetUnitS_M.Set((byte)objects[_idx_cur++], (UnitTypes)objects[_idx_cur++], sender);
+                        _sMGame.CellSs((byte)objects[_idx_cur++]).SetUnitS_M.Set((UnitTypes)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        _sMGame.MasterSystems.GetHeroS_M.Get((UnitTypes)objects[_idx_cur++], sender);
+                        _sMGame.GetHeroS_M.Get((UnitTypes)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.Melt:
-                        _sMGame.MasterSystems.MeltS_M.Melt(sender);
+                        _sMGame.MeltS_M.Melt(sender);
                         break;
 
                     default: throw new Exception();
@@ -321,7 +323,7 @@ namespace Chessy.Game
             else throw new Exception();
 
 
-            _sMGame.MasterSystems.GetDataCellsS.Run();
+            _sMGame.GetDataCellsS.Run();
             SyncAllMaster();
         }
 

@@ -1,9 +1,9 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Component;
-using Chessy.Common.Entity;
 using Chessy.Game.Entity.Model.Cell;
 using Chessy.Game.Entity.Model.Cell.Unit;
 using Chessy.Game.Model.Component;
+using Chessy.Game.Model.Entity.Cell.Unit;
 using Chessy.Game.Values;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Chessy.Game.Entity.Model
     public sealed class EntitiesModelGame
     {
         readonly Dictionary<ClipTypes, ActionC> _sounds0;
-        readonly ActionC[] _sounds1;
+        readonly Dictionary<AbilityTypes, ActionC> _sounds1 = new Dictionary<AbilityTypes, ActionC>();
         readonly ResourcesC[] _mistakeEconomyEs;
         readonly Dictionary<PlayerTypes, PlayerInfoEs> _forPlayerEs;
         readonly Dictionary<PlayerTypes, PlayerTC> _nextPlayer;
@@ -46,12 +46,11 @@ namespace Chessy.Game.Entity.Model
         public ref PlayerLevelInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT) => ref PlayerInfoE(playerT).LevelE(levT);
         public ref PlayerLevelInfoE UnitInfo(in PlayerTC playerTC, in LevelTC levTC) => ref PlayerInfoE(playerTC.Player).LevelE(levTC.Level);
         public ref PlayerLevelInfoE UnitInfo(in UnitMainE unitMainE) => ref PlayerInfoE(unitMainE.PlayerTC.Player).LevelE(unitMainE.LevelTC.Level);
-        public PlayerUnitInfoE UnitUnfo(in PlayerTypes playerT, in UnitTypes unitT) => PlayerInfoE(playerT).UnitE(unitT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTC playerT, in LevelTC levT, in BuildingTC buildT) => ref PlayerInfoE(playerT.Player).LevelE(levT.Level).BuildingInfoE(buildT.Building);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in BuildingE buildMainE) => ref PlayerInfoE(buildMainE.PlayerTC.Player).LevelE(buildMainE.LevelTC.Level).BuildingInfoE(buildMainE.BuildingTC.Building);
         public ActionC Sound(in ClipTypes clip) => _sounds0[clip];
-        public ref ActionC Sound(in AbilityTypes unique) => ref _sounds1[(int)unique - 1];
+        public ActionC Sound(in AbilityTypes unique) => _sounds1[unique];
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
         public PlayerTC NextPlayer(in PlayerTypes playerT) => _nextPlayer[playerT];
         public PlayerTC NextPlayer(in PlayerTC playerTC) => _nextPlayer[playerTC.Player];
@@ -62,7 +61,7 @@ namespace Chessy.Game.Entity.Model
         public byte LengthCells => (byte)_cellEs.Length;
 
 
-        public ref CellEs CellEs(in byte idx) => ref _cellEs[idx];
+        public CellEs CellEs(in byte idx) => _cellEs[idx];
 
 
         #region Unit
@@ -83,7 +82,7 @@ namespace Chessy.Game.Entity.Model
         public ref DamageC DamageAttackC(in byte idx) => ref UnitStatsE(idx).DamageSimpleAttackC;
         public ref DamageC DamageOnCellC(in byte idx) => ref UnitStatsE(idx).DamageOnCellC;
 
-        public CellUnitMainToolWeaponE UnitMainTWE(in byte idx) => UnitEs(idx).MainToolWeaponE;
+        public MainToolWeaponE UnitMainTWE(in byte idx) => UnitEs(idx).MainToolWeaponE;
         public ref ToolWeaponTC UnitMainTWTC(in byte idx) => ref UnitMainTWE(idx).ToolWeaponTC;
         public ref LevelTC UnitMainTWLevelTC(in byte idx) => ref UnitMainTWE(idx).LevelTC;
 
@@ -194,9 +193,8 @@ namespace Chessy.Game.Entity.Model
 
 
             _sounds0 = new Dictionary<ClipTypes, ActionC>();
-            _sounds1 = new ActionC[(int)AbilityTypes.End - 1];
             foreach (var item in sounds0) _sounds0[item.Key] = new ActionC(item.Value);
-            foreach (var item in sounds1) _sounds1[(int)item.Key - 1] = new ActionC(item.Value);
+            foreach (var item in sounds1) _sounds1.Add(item.Key, new ActionC(item.Value));
 
             RpcPoolEs = new RpcPoolEs(actions, namesMethods);
 

@@ -6,19 +6,22 @@ using Photon.Realtime;
 
 namespace Chessy.Game.System.Model
 {
-    public sealed class ChangeDirectionWindMS : SystemModelGameAbs
+    sealed class ChangeDirectionWindMS : SystemModelGameAbs
     {
-        public ChangeDirectionWindMS(in EntitiesModelGame eMGame) : base(eMGame)
+        readonly CellEs _cellEs;
+
+        internal ChangeDirectionWindMS(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
         }
 
-        public void Change(in byte idx_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
+        internal void Change(in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (eMGame.UnitStepC(idx_from).Steps >= StepValues.Need(abilityT))
+            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.Need(abilityT))
             {
-                eMGame.WeatherE.WindC.Direct = eMGame.CellEs(eMGame.WeatherE.CloudC.Center).Direct(idx_to);
-                eMGame.UnitStepC(idx_from).Steps -= StepValues.Need(abilityT);
-                eMGame.UnitEs(idx_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                eMGame.WeatherE.WindC.Direct = eMGame.CellEs(eMGame.WeatherE.CloudC.Center).AroundCellsEs.Direct(idx_to);
+                _cellEs.UnitStatsE.StepC.Steps -= StepValues.Need(abilityT);
+                _cellEs.UnitEs.CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
                 eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
             }

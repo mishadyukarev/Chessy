@@ -7,24 +7,26 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class BuildFarmS_M : SystemModelGameAbs
+    sealed class BuildFarmS_M : SystemModelGameAbs
     {
+        readonly CellEs _cellEs;
         readonly BuildS _buildS;
 
-        public BuildFarmS_M(in BuildS buildS, in EntitiesModelGame eMGame) : base(eMGame)
+        internal BuildFarmS_M(in CellEs cellEs, in BuildS buildS, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
             _buildS = buildS;
         }
 
-        public void Build(in byte cell_0, in Player sender)
+        internal void Build(in Player sender)
         {
             var whoseMove = eMGame.WhoseMove.Player;
 
-            if (eMGame.UnitStepC(cell_0).Steps >= StepValues.SET_FARM)
+            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.SET_FARM)
             {
-                if (!eMGame.BuildingTC(cell_0).HaveBuilding || eMGame.BuildingTC(cell_0).Is(BuildingTypes.Camp))
+                if (!_cellEs.BuildEs.MainE.BuildingTC.HaveBuilding || _cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.Camp))
                 {
-                    if (!eMGame.AdultForestC(cell_0).HaveAnyResources)
+                    if (!_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
                     {
                         var needRes = new Dictionary<ResourceTypes, float>();
                         var canBuild = true;
@@ -52,12 +54,12 @@ namespace Chessy.Game.Model.System
 
                             eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
 
-                            eMGame.YoungForestC(cell_0).Resources = 0;
+                            _cellEs.EnvironmentEs.YoungForestC.Resources = 0;
 
 
-                            _buildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
+                            _buildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP);
 
-                            eMGame.UnitStepC(cell_0).Steps -= StepValues.SET_FARM;
+                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.SET_FARM;
                         }
 
                         else

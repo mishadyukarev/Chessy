@@ -93,7 +93,7 @@ namespace Chessy.Game
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_1 = e.CellEs(e.WeatherE.CloudC.Center).AroundCellE(dirT).IdxC.Idx;
+                        var idx_1 = e.CellEs(e.WeatherE.CloudC.Center).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
 
                         eV.CellEs(idx_1).SupportCellEs.Support.Enable();
                         eV.CellEs(idx_1).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.Shift);

@@ -57,22 +57,22 @@ namespace Chessy
 
             #region Game
 
-            var eVGame = new EntitiesViewGame(out var forData, eVCommon);
-            var eMGame = new EntitiesModelGame(forData, Rpc.NamesMethods_S);
+            var eViewGame = new EntitiesViewGame(out var forData, eVCommon);
+            var eModelGame = new EntitiesModelGame(forData, Rpc.NamesMethods_S);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
-            var sMGame = new SystemsModelGame(eMCommon, eMGame);
-            var sUIGame = new SystemsViewUIGame(eMCommon, eUIGame, eMGame);
-            var sVGame = new SystemsViewGame(eVGame, eMGame, eVCommon, eMCommon);
+            var sModelGame = new SystemsModelGame(eMCommon, eModelGame);
+            var sUIGame = new SystemsViewUIGame(eMCommon, eUIGame, eModelGame);
+            var sViewGame = new SystemsViewGame(eViewGame, eModelGame, eVCommon, eMCommon);
 
-            new EventsUIGame(eUICommon, eMCommon, sMGame, eUIGame, eMGame);
+            new EventsUIGame(eUICommon, eMCommon, sModelGame, eUIGame, eModelGame);
 
             #endregion
 
 
             #region NeedReplace
 
-            var rpc = eVGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sMGame, eMGame, eMCommon);
+            var rpc = eViewGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, eMCommon);
 
 
             new IAPCore(eUICommon.ShopE, eMCommon);
@@ -82,7 +82,7 @@ namespace Chessy
             {
                 sMCommon,
                 sUICommon,
-                sMGame,
+                sModelGame,
                 rpc,
             };
 
@@ -95,8 +95,8 @@ namespace Chessy
             {
                 sMCommon,
                 sUICommon,
-                sMGame,
-                sVGame,
+                sModelGame,
+                sViewGame,
                 sUIGame,
                 sMMenu,
             };

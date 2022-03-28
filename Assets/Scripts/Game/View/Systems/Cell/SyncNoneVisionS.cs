@@ -27,7 +27,7 @@ namespace Chessy.Game.System.View
                     case AbilityTypes.ChangeDirectionWind:
                         if (e.CellEs(idx_0).IsActiveParentSelf)
                         {
-                            if (!e.CellEs(idx_0).IdxsAround.Contains(e.WeatherE.CloudC.Center))
+                            if (!e.CellEs(idx_0).AroundCellsEs.IdxsAround.Contains(e.WeatherE.CloudC.Center))
                             {
                                 _isActive = true;
                             }

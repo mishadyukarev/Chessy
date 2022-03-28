@@ -4,9 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class MistakeS : SystemModelGameAbs
     {
-        public MistakeS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        public MistakeS(in EntitiesModelGame eMGame) : base(eMGame) { }
 
         public void Mistake(in MistakeTypes mistakeT)
         {

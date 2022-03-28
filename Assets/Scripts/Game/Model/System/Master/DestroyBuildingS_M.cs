@@ -6,21 +6,26 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class DestroyBuildingS_M : SystemModelGameAbs
+    sealed class DestroyBuildingS_M : SystemModelGameAbs
     {
-        public DestroyBuildingS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        readonly CellEs _cellEs;
+        readonly AttackBuildingS _destroyBuildingS;
+
+        internal DestroyBuildingS_M(in CellEs cellEs, in AttackBuildingS destroyBuildingS, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
+            _destroyBuildingS = destroyBuildingS;
         }
 
-        public void Destroy(in byte cell_0, in Player sender)
+        internal void Destroy(in Player sender)
         {
-            if (eMGame.UnitStepC(cell_0).HaveAnySteps)
+            if (_cellEs.UnitStatsE.StepC.HaveAnySteps)
             {
                 eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-                new DestroyBuildingS(1f, eMGame.UnitPlayerTC(cell_0).Player, cell_0, eMGame);
+                _destroyBuildingS.Attack(1f, _cellEs.UnitMainE.PlayerTC.Player);
 
-                eMGame.UnitStepC(cell_0).Steps -= StepValues.DESTROY_BUILDING;
+                _cellEs.UnitStatsE.StepC.Steps -= StepValues.DESTROY_BUILDING;
             }
 
             else

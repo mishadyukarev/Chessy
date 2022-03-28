@@ -8,15 +8,11 @@ namespace Chessy.Game.System.Model.Master
 {
     sealed class AttackUnit_M : SystemModelGameAbs
     {
-        readonly AttackUnitS _attackUnitS;
-        readonly AttackShieldS _attackShieldS;
-        readonly ShiftUnitS _shiftUnitS;
+        readonly SystemsModelGame _sMGame;
 
-        internal AttackUnit_M(in AttackUnitS attackUnitS, in AttackShieldS attackShieldS, in ShiftUnitS shiftUnitS, in EntitiesModelGame eMGame) : base(eMGame)
+        internal AttackUnit_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            _attackUnitS = attackUnitS;
-            _attackShieldS = attackShieldS;
-            _shiftUnitS = shiftUnitS;
+            _sMGame = sMGame;
         }
 
         public void Attack(in byte idx_from, in byte idx_to)
@@ -36,7 +32,7 @@ namespace Chessy.Game.System.Model.Master
                 else eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
-                float powerDam_from = eMGame.DamageAttackC(idx_from).Damage; 
+                float powerDam_from = eMGame.DamageAttackC(idx_from).Damage;
                 if (eMGame.UnitEs(idx_from).UniqueAttack.Contains(idx_to))
                 {
                     powerDam_from *= DamageValues.UNIQUE_PERCENT_DAMAGE;
@@ -45,7 +41,7 @@ namespace Chessy.Game.System.Model.Master
                 float powerDam_to = eMGame.DamageOnCellC(idx_to).Damage;
 
 
-                var dirAttack = eMGame.CellEs(idx_from).Direct(idx_to);
+                var dirAttack = eMGame.CellEs(idx_from).AroundCellsEs.Direct(idx_to);
 
                 if (eMGame.WeatherE.SunC.IsAcitveSun)
                 {
@@ -123,12 +119,12 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (eMGame.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        _attackShieldS.Attack(1f, idx_from);
+                        _sMGame.CellSs(idx_from).AttackShieldS.Attack(1f);
                     }
 
                     else if (minus_from > 0)
                     {
-                        _attackUnitS.Attack(minus_from, eMGame.NextPlayer(eMGame.UnitPlayerTC(idx_from).Player).Player, idx_from);
+                        _sMGame.CellSs(idx_from).AttackUnitS.Attack(minus_from, eMGame.NextPlayer(eMGame.UnitPlayerTC(idx_from).Player).Player);
                     }
                 }
                 else
@@ -148,7 +144,7 @@ namespace Chessy.Game.System.Model.Master
 
                 else if (eMGame.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    _attackShieldS.Attack(1f, idx_to);
+                    _sMGame.CellSs(idx_to).AttackShieldS.Attack(1f);
                 }
 
                 else if (minus_to > 0)
@@ -167,7 +163,7 @@ namespace Chessy.Game.System.Model.Master
 
                     var wasUnitT_to = eMGame.UnitTC(idx_to).Unit;
 
-                    _attackUnitS.Attack(minus_to, killer, idx_to);
+                    _sMGame.CellSs(idx_to).AttackUnitS.Attack(minus_to, killer);
 
                     if (!eMGame.UnitTC(idx_to).HaveUnit)
                     {
@@ -175,7 +171,7 @@ namespace Chessy.Game.System.Model.Master
                         {
                             if (eMGame.UnitTC(idx_from).IsMelee(eMGame.UnitMainTWTC(idx_from).ToolWeapon))
                             {
-                                _shiftUnitS.Shift(idx_from, idx_to);
+                                _sMGame.CellSs(idx_from).ShiftUnitS.Shift(idx_to);
                             }
                         }
 

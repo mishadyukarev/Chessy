@@ -4,6 +4,7 @@ using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
 using Chessy.Game.Enum;
 using Chessy.Game.Model.System;
+using Chessy.Game.System.Model.Master;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit;
@@ -13,19 +14,30 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.System.Model
 {
-    public class SystemsModelGame : SystemModelGameAbs, IToggleScene, IEcsRunSystem
+    public sealed class SystemsModelGame : SystemModelGameAbs, IToggleScene, IEcsRunSystem
     {
         readonly EntitiesModelCommon _eMCommon;
         readonly List<IEcsRunSystem> _runs;
+        readonly CellSs[] _cellSs = new CellSs[StartValues.CELLS];
 
         internal readonly MistakeS MistakeS;
-        internal readonly BuildS BuildS;
-        internal readonly ClearAllEnvironmentS ClearAllEnvironmentS;
         internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
-        internal readonly SystemsModelGameUnit UnitSystems;
-        internal readonly SystemsModelGameMaster MasterSystems;
+
+        internal readonly IncreaseWindSnowyS_M IncreaseWindSnowyS_M;
+        internal readonly BuyS_M BuyS_M;
+        internal readonly MeltS_M MeltS_M;
+        internal readonly BuyBuildingS_M BuyBuildingS_M;
+        internal readonly GetHeroS_M GetHeroS_M;
+        internal readonly ReadyS_M ReadyS_M;
+        internal readonly DonerS_M DonerS_M;
+        internal readonly UpdateS_M UpdateS_M;
+        internal readonly GetDataCellsS_M GetDataCellsS;
+        internal readonly AttackUnit_M AttackUnit_M;
 
         public readonly SystemsModelGameForUI ForUISystems;
+
+        internal CellSs CellSs(in byte cell_0) => _cellSs[cell_0];
+
 
         public SystemsModelGame(in EntitiesModelCommon eMCommon, in EntitiesModelGame eMGame) : base(eMGame)
         {
@@ -38,13 +50,26 @@ namespace Chessy.Game.System.Model
                 new SelectorS(eMGame),
             };
 
-            UnitSystems = new SystemsModelGameUnit(this, eMGame);
+
+            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            {
+                _cellSs[cell_0] = new CellSs(cell_0, this, eMGame);
+            }
+
             MistakeS = new MistakeS(eMGame);
-            BuildS = new BuildS(eMGame);
-            ClearAllEnvironmentS = new ClearAllEnvironmentS(eMGame);
             TakeAdultForestResourcesS = new TakeAdultForestResourcesS(eMGame);
 
-            MasterSystems = new SystemsModelGameMaster(this, eMGame);
+            IncreaseWindSnowyS_M = new IncreaseWindSnowyS_M(eMGame);
+            BuyS_M = new BuyS_M(eMGame);
+            MeltS_M = new MeltS_M(eMGame);
+            BuyBuildingS_M = new BuyBuildingS_M(eMGame);
+            GetHeroS_M = new GetHeroS_M(eMGame);
+            ReadyS_M = new ReadyS_M(eMGame);
+            UpdateS_M = new UpdateS_M(this, eMGame);
+            DonerS_M = new DonerS_M(UpdateS_M, eMGame);
+            GetDataCellsS = new GetDataCellsS_M(this, eMGame);
+            AttackUnit_M = new AttackUnit_M(this, eMGame);
+
             ForUISystems = new SystemsModelGameForUI(this, eMGame);
         }
 
@@ -54,8 +79,8 @@ namespace Chessy.Game.System.Model
 
 
             eMGame.ZoneInfoC.IsActiveFriend = _eMCommon.GameModeTC.Is(GameModes.WithFriendOff);
-            eMGame.WhoseMove = new PlayerTC(StartValues.WHOSE_MOVE);
-            eMGame.CellClickTC = new CellClickC(StartValues.CELL_CLICK);
+            eMGame.WhoseMove.Player = StartValues.WHOSE_MOVE;
+            eMGame.CellClickTC.Click = StartValues.CELL_CLICK;
             eMGame.IsSelectedCity = false;
             eMGame.HaveTreeUnit = false;
             eMGame.MistakeC.MistakeT = MistakeTypes.None;
@@ -73,8 +98,8 @@ namespace Chessy.Game.System.Model
 
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                ClearAllEnvironmentS.Clear(cell_0);
-                UnitSystems.ClearUnitS.Clear(cell_0);
+                CellSs(cell_0).ClearAllEnvironmentS.Clear();
+                CellSs(cell_0).ClearUnitS.Clear();
 
                 eMGame.BuildingTC(cell_0).Building = BuildingTypes.None;
 
@@ -164,17 +189,22 @@ namespace Chessy.Game.System.Model
 
                         if (x >= 3 && x < 4 && y == 5)
                         {
-                            eMGame.RiverEs(cell_0).SetStart(DirectTypes.Up);
+                            eMGame.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
+                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
                         }
                         else if (x == 4 && y == 5)
                         {
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
-                            eMGame.RiverEs(cell_0).SetStart(DirectTypes.Up, DirectTypes.Right);
+
+                            eMGame.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
+                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
+                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Right) = true;
                         }
                         else if (x >= 5 && x < 7 && y == 4)
                         {
-                            eMGame.RiverEs(cell_0).SetStart(DirectTypes.Up);
+                            eMGame.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
+                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
                         }
 
 
@@ -182,7 +212,7 @@ namespace Chessy.Game.System.Model
                         {
                             if (eMGame.RiverEs(cell_0).HaveRive(dir))
                             {
-                                var idx_next = eMGame.CellEs(cell_0).AroundCellE(dir).IdxC.Idx;
+                                var idx_next = eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
 
                                 eMGame.RiverEs(idx_next).RiverTC.River = RiverTypes.EndRiver;
                             }
@@ -190,7 +220,7 @@ namespace Chessy.Game.System.Model
 
                         foreach (var dir in corners)
                         {
-                            var idx_next = eMGame.CellEs(cell_0).AroundCellE(dir).IdxC.Idx;
+                            var idx_next = eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
 
                             eMGame.RiverEs(idx_next).RiverTC.River = RiverTypes.Corner;
                         }
@@ -200,7 +230,24 @@ namespace Chessy.Game.System.Model
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    new MountainThrowHillsUpdMS(cell_0, eMGame);
+                    if (eMGame.CellEs(cell_0).IsActiveParentSelf)
+                    {
+                        if (eMGame.MountainC(cell_0).HaveAnyResources)
+                        {
+                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                            {
+                                var idx_1 = eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
+
+                                if (UnityEngine.Random.Range(0f, 1f) <= 0.5)
+                                {
+                                    if (!eMGame.MountainC(eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx).HaveAnyResources && !eMGame.BuildingTC(idx_1).HaveBuilding)
+                                    {
+                                        eMGame.HillC(idx_1).Resources = UnityEngine.Random.Range(0f, 1f);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
             }
@@ -223,7 +270,7 @@ namespace Chessy.Game.System.Model
 
                         TakeAdultForestResourcesS.Take(1f, cell_0);
 
-                        UnitSystems.SetNewUnitS.Set(UnitTypes.King, PlayerTypes.Second, cell_0);
+                        CellSs(cell_0).SetNewUnitS.Set(UnitTypes.King, PlayerTypes.Second);
                     }
 
 
@@ -236,15 +283,15 @@ namespace Chessy.Game.System.Model
                     {
                         eMGame.MountainC(cell_0).Resources = 0;
 
-                        UnitSystems.SetNewUnitS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
-                        UnitSystems.SetExtraTWS.Set(UnityEngine.Random.Range(0f, 1f) >= 0.5f ? ToolWeaponTypes.Sword : ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST, cell_0);
+                        CellSs(cell_0).SetNewUnitS.Set(UnitTypes.Pawn, PlayerTypes.Second);
+                        CellSs(cell_0).SetExtraTWS.Set(UnityEngine.Random.Range(0f, 1f) >= 0.5f ? ToolWeaponTypes.Sword : ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST);
                     }
                 }
             }
 
 
 
-           MasterSystems.GetDataCellsS.Run();
+           GetDataCellsS.Run();
         }
 
         public void Run()

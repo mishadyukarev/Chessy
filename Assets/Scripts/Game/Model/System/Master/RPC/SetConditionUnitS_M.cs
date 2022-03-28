@@ -5,35 +5,37 @@ using System;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public sealed class SetConditionUnitS_M : SystemModelGameAbs
+    sealed class SetConditionUnitS_M : SystemModelGameAbs
     {
+        readonly CellEs _cellEs;
         readonly BuildS _buildS;
 
-        public SetConditionUnitS_M(in BuildS buildS, in EntitiesModelGame eMGame) : base(eMGame)
+        internal SetConditionUnitS_M(in CellEs cellEs, in BuildS buildS, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
             _buildS = buildS;
         }
 
-        public void Set(in ConditionUnitTypes condT, in byte cell_0,  in Player sender)
+        internal void Set(in ConditionUnitTypes condT, in Player sender)
         {
             switch (condT)
             {
                 case ConditionUnitTypes.None:
-                    eMGame.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                    _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
                     break;
 
                 case ConditionUnitTypes.Protected:
-                    if (eMGame.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Protected))
+                    if (_cellEs.UnitMainE.ConditionTC.Is(ConditionUnitTypes.Protected))
                     {
                         eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        eMGame.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                        _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
                     }
 
-                    else if (eMGame.UnitStepC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                    else if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                     {
                         eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        eMGame.UnitStepC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
-                        eMGame.UnitConditionTC(cell_0).Condition = condT;
+                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                        _cellEs.UnitMainE.ConditionTC.Condition = condT;
                     }
 
                     else
@@ -44,29 +46,29 @@ namespace Chessy.Game.System.Model.Master
 
 
                 case ConditionUnitTypes.Relaxed:
-                    if (eMGame.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
+                    if (_cellEs.UnitMainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
                     {
                         eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        eMGame.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                        _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
                     }
 
-                    else if (eMGame.UnitStepC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                    else if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                     {
                         eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        eMGame.UnitConditionTC(cell_0).Condition = condT;
-                        eMGame.UnitStepC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                        _cellEs.UnitMainE.ConditionTC.Condition = condT;
+                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
-                        if (eMGame.UnitTC(cell_0).Is(UnitTypes.Pawn))
+                        if (_cellEs.UnitMainE.UnitTC.Is(UnitTypes.Pawn))
                         {
-                            if (!eMGame.BuildingTC(cell_0).HaveBuilding)
+                            if (!_cellEs.BuildEs.MainE.BuildingTC.HaveBuilding)
                             {
-                                if (eMGame.AdultForestC(cell_0).HaveAnyResources)
+                                if (_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
                                 {
-                                    if (eMGame.UnitHpC(cell_0).Health >= HpValues.MAX)
+                                    if (_cellEs.UnitStatsE.HealthC.Health >= HpValues.MAX)
                                     {
-                                        if (eMGame.PlayerInfoE(eMGame.UnitPlayerTC(cell_0).Player).MyHeroTC.Is(UnitTypes.Elfemale))
+                                        if (eMGame.PlayerInfoE(_cellEs.UnitMainE.PlayerTC.Player).MyHeroTC.Is(UnitTypes.Elfemale))
                                         {
-                                            _buildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMGame.UnitPlayerTC(cell_0).Player, BuildingValues.MAX_HP, cell_0);
+                                            _buildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, _cellEs.UnitMainE.PlayerTC.Player, BuildingValues.MAX_HP);
                                         }
                                     }
                                 }

@@ -6,17 +6,20 @@ namespace Chessy.Game.Model.System
 {
     public sealed class ChangeCornerArcherS_M : SystemModelGameAbs
     {
-        public ChangeCornerArcherS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        readonly CellEs _cellEs;
+
+        public ChangeCornerArcherS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
         }
 
-        public void Change(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        public void Change(in AbilityTypes abilityT, in Player sender)
         {
-            if (eMGame.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
+            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.Need(abilityT))
             {
-                eMGame.UnitIsRightArcherC(cell_0).ToggleSide();
+                _cellEs.UnitMainE.IsRightArcherC.ToggleSide();
 
-                eMGame.UnitStepC(cell_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
+                _cellEs.UnitStatsE.StepC.Steps -= StepValues.CHANGE_CORNER_ARCHER;
 
                 eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
             }

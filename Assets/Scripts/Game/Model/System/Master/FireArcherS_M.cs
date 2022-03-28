@@ -7,19 +7,22 @@ namespace Chessy.Game.Model.System
 {
     public sealed class FireArcherS_M : SystemModelGameAbs
     {
-        public FireArcherS_M(in EntitiesModelGame eMGame) : base(eMGame)
+        readonly CellEs _cellEs;
+
+        public FireArcherS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
         {
+            _cellEs = cellEs;
         }
 
-        public void Fire(in byte idx_from, in byte idx_to, in Player sender)
+        public void Fire(in byte idx_to, in Player sender)
         {
-            if (eMGame.UnitEs(idx_from).ForArson.Contains(idx_to))
+            if (_cellEs.UnitEs.ForArson.Contains(idx_to))
             {
-                if (eMGame.UnitStepC(idx_from).Steps >= StepValues.ARCHER_FIRE)
+                if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.ARCHER_FIRE)
                 {
                     eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    eMGame.UnitStepC(idx_from).Steps -= StepValues.ARCHER_FIRE;
+                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.ARCHER_FIRE;
                     eMGame.HaveFire(idx_to) = true;
 
                 }
