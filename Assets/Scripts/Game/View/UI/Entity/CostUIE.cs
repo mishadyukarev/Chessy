@@ -9,11 +9,11 @@ namespace Chessy.Game.Entity.View.UI.Down
         public readonly TextUIC WoodTextC;
         public readonly TextUIC IronTextC;
 
-        public CostUIE(in Transform downZone)
+        public CostUIE(in TextMeshProUGUI steps, in TextMeshProUGUI wood, in TextMeshProUGUI iron)
         {
-            StepsTextC = new TextUIC(downZone.Find("StepsCost_TMP").GetComponent<TextMeshProUGUI>());
-            WoodTextC = new TextUIC(downZone.Find("WoodCost_TMP").GetComponent<TextMeshProUGUI>());
-            IronTextC = new TextUIC(downZone.Find("IronCost_TMP").GetComponent<TextMeshProUGUI>());
+            StepsTextC = new TextUIC(steps);
+            WoodTextC = new TextUIC(wood);
+            IronTextC = new TextUIC(iron);
         }
     }
 }

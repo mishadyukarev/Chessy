@@ -8,6 +8,8 @@ namespace Chessy.Game.Entity.Model.Cell.Unit
 {
     public sealed class UnitEs
     {
+        public bool NeedUpdateView;
+
         readonly AbilityTC[] _uniqueButtons = new AbilityTC[(byte)ButtonTypes.End - 1];
         readonly CooldownC[] _abilities = new CooldownC[(byte)AbilityTypes.End - 1];
         readonly ForPlayerE[] _visibles = new ForPlayerE[(byte)PlayerTypes.End];

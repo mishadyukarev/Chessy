@@ -24,7 +24,7 @@ namespace Chessy.Game.System.Model.Master
             {
                 if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.Need(abilityT))
                 {
-                    eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     _cellEs.UnitEs.CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
                     _cellEs.UnitStatsE.StepC.Steps -= StepValues.Need(abilityT);
@@ -34,11 +34,11 @@ namespace Chessy.Game.System.Model.Master
                     {
                         var idx_1 = idxC_0.Idx;
 
-                        if (eMGame.UnitTC(idx_1).HaveUnit)
+                        if (e.UnitTC(idx_1).HaveUnit)
                         {
-                            if (!eMGame.UnitPlayerTC(idx_1).Is(_cellEs.UnitMainE.PlayerTC.Player))
+                            if (!e.UnitPlayerTC(idx_1).Is(_cellEs.UnitMainE.PlayerTC.Player))
                             {
-                                if (eMGame.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
+                                if (e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
                                     _systems.CellSs(idx_1).AttackShieldS.Attack(1f);
                                 }
@@ -53,16 +53,16 @@ namespace Chessy.Game.System.Model.Master
 
                     _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
 
-                    eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
                 }
 
                 else
                 {
-                    eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+            else e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

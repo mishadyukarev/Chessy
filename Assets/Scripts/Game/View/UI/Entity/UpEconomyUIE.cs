@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Component;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,30 +7,36 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct UpEconomyUIE
+    public readonly struct UpEconomyUIE
     {
         readonly Dictionary<ResourceTypes, TextUIC> _economy;
         readonly Dictionary<ResourceTypes, TextUIC> _economyExtract;
 
+        public readonly GameObjectVC ParenGOC;
+
         public TextUIC Economy(in ResourceTypes res) => _economy[res];
         public TextUIC EconomyExtract(in ResourceTypes res) => _economyExtract[res];
+
 
         public UpEconomyUIE(in Transform upZone)
         {
             _economy = new Dictionary<ResourceTypes, TextUIC>();
             _economyExtract = new Dictionary<ResourceTypes, TextUIC>();
 
+            var res = upZone.Find("ResourcesZone");
 
-            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
+            ParenGOC = new GameObjectVC(res.gameObject);
+
+            for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                var resZone = upZone.Find("ResourcesZone").Find(res.ToString());
+                var resZone = res.Find(resT.ToString());
 
-                _economy.Add(res, new TextUIC(resZone.Find(res.ToString() + "_TMP").GetComponent<TextMeshProUGUI>()));
+                _economy.Add(resT, new TextUIC(resZone.Find(resT.ToString() + "_TMP").GetComponent<TextMeshProUGUI>()));
 
 
-                if (res != ResourceTypes.Gold && res != ResourceTypes.Iron)
+                if (resT != ResourceTypes.Gold && resT != ResourceTypes.Iron)
                 {
-                    _economyExtract.Add(res, new TextUIC(resZone.Find(res.ToString() + "Adding_TMP").GetComponent<TextMeshProUGUI>()));
+                    _economyExtract.Add(resT, new TextUIC(resZone.Find(resT.ToString() + "Adding_TMP").GetComponent<TextMeshProUGUI>()));
                 }
             }
         }

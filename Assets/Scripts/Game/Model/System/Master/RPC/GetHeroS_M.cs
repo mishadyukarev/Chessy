@@ -10,15 +10,15 @@ namespace Chessy.Game.System.Model.Master
 
         public void Get(in UnitTypes unitT, in Player sender)
         {
-            var whoseMove = eMGame.WhoseMove.Player;
+            var whoseMove = e.WhoseMove.Player;
 
-            if (eMGame.LessonTC.LessonT == LessonTypes.PickGod)
+            if (e.LessonTC.LessonT == LessonTypes.PickGod)
             {
-                eMGame.LessonTC.SetNextLesson();
+                e.LessonTC.SetNextLesson();
             }
 
-            eMGame.PlayerInfoE(whoseMove).MyHeroTC.Unit = unitT;
-            eMGame.PlayerInfoE(whoseMove).HaveHeroInInventor = true;
+            e.PlayerInfoE(whoseMove).MyHeroTC.Unit = unitT;
+            e.PlayerInfoE(whoseMove).HaveHeroInInventor = true;
         }
     }
 }

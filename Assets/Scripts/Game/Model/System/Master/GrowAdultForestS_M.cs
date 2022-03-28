@@ -34,24 +34,24 @@ namespace Chessy.Game.Model.System
 
                         foreach (var idx_1 in _cellEs.AroundCellsEs.IdxsAround)
                         {
-                            if (eMGame.YoungForestC(idx_1).HaveAnyResources)
+                            if (e.YoungForestC(idx_1).HaveAnyResources)
                             {
-                                eMGame.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+                                e.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                             }
                         }
 
 
 
-                        eMGame.RpcPoolEs.SoundToGeneral(sender, abilityT);
+                        e.RpcPoolEs.SoundToGeneral(sender, abilityT);
 
 
                         foreach (var idxC_1 in _cellEs.AroundCellsEs.AroundCellIdxsC)
                         {
                             var idx_1 = idxC_1.Idx;
 
-                            if (eMGame.UnitTC(idx_1).HaveUnit)
+                            if (e.UnitTC(idx_1).HaveUnit)
                             {
-                                if (eMGame.UnitPlayerTC(idx_1).Is(_cellEs.UnitEs.MainE.PlayerTC.Player))
+                                if (e.UnitPlayerTC(idx_1).Is(_cellEs.UnitEs.MainE.PlayerTC.Player))
                                 {
                                     //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have)
                                     //{
@@ -63,15 +63,15 @@ namespace Chessy.Game.Model.System
 
                     }
 
-                    else eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
+                    else e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
                 }
 
-                else eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
 
             else
             {
-                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

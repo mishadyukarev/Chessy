@@ -29,15 +29,15 @@ namespace Chessy.Game.System.Model
 
                         dir_cur += 1;
 
-                        if (!eMGame.MountainC(idx_1).HaveAnyResources)
+                        if (!e.MountainC(idx_1).HaveAnyResources)
                         {
                             var haveMaxSteps = _cellEs.UnitStatsE.StepC.Steps >= StepValues.MAX;
 
                             if (_cellEs.UnitStatsE.StepC.Steps >= _cellEs.UnitEs.NeedSteps(idx_1).Steps || haveMaxSteps)
                             {
-                                if (eMGame.UnitTC(idx_1).HaveUnit)
+                                if (e.UnitTC(idx_1).HaveUnit)
                                 {
-                                    if (!eMGame.UnitPlayerTC(idx_1).Is(_cellEs.UnitPlayerTC.Player))
+                                    if (!e.UnitPlayerTC(idx_1).Is(_cellEs.UnitPlayerTC.Player))
                                     {
                                         if (_cellEs.UnitTC.Is(UnitTypes.Pawn))
                                         {

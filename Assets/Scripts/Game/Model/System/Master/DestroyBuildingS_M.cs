@@ -21,7 +21,7 @@ namespace Chessy.Game.Model.System
         {
             if (_cellEs.UnitStatsE.StepC.HaveAnySteps)
             {
-                eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 _destroyBuildingS.Attack(1f, _cellEs.UnitMainE.PlayerTC.Player);
 
@@ -30,7 +30,7 @@ namespace Chessy.Game.Model.System
 
             else
             {
-                eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

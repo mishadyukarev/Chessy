@@ -11,19 +11,23 @@ namespace Chessy.Game.System.Model
 
         public void Click()
         {
-            eMGame.CellsC.Selected = 0;
+            e.CellsC.Selected = 0;
 
-            if (eMGame.CurPlayerITC.Is(eMGame.WhoseMove.Player))
+            if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {
-                eMGame.Sound(ClipTypes.Click).Invoke();
+                e.Sound(ClipTypes.Click).Invoke();
 
-                if (eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).HaveKingInInventor)
+                if (e.PlayerInfoE(e.CurPlayerITC.Player).HaveKingInInventor)
                 {
-                    eMGame.SelectedE.UnitC.Set(UnitTypes.King, LevelTypes.First);
-                    eMGame.CellClickTC.Click = CellClickTypes.SetUnit;
+                    e.SelectedUnitE.UnitTC.Unit = UnitTypes.King;
+                    e.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+
+                    e.CellClickTC.Click = CellClickTypes.SetUnit;
                 }
             }
-            else eMGame.Sound(ClipTypes.Mistake).Action.Invoke();
+            else e.Sound(ClipTypes.Mistake).Action.Invoke();
+
+            e.NeedUpdateView = true;
         }
     }
 }

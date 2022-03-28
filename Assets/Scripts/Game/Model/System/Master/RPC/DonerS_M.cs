@@ -20,80 +20,80 @@ namespace Chessy.Game.System.Model
         {
             if (PhotonNetwork.OfflineMode)
             {
-                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
 
                 if (gameModeTC.Is(GameModes.TrainingOff))
                 {
                     for (byte idx = 0; idx < StartValues.CELLS; idx++)
                     {
-                        eMGame.UnitEffectStunC(idx).Stun -= 1f;
+                        e.UnitEffectStunC(idx).Stun -= 1f;
 
                         for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                         {
-                            eMGame.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 1;
+                            e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 1;
                         }
                     }
 
                     for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                     {
-                        eMGame.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 1;
+                        e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 1;
                     }
 
                     _updateS_M.Run(gameModeTC);
-                    eMGame.RpcPoolEs.ActiveMotionZoneToGen(sender);
+                    e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (gameModeTC.Is(GameModes.WithFriendOff))
                 {
                     for (byte idx = 0; idx < StartValues.CELLS; idx++)
                     {
-                        eMGame.UnitEffectStunC(idx).Stun -= 0.5f;
+                        e.UnitEffectStunC(idx).Stun -= 0.5f;
 
                         for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                         {
-                            eMGame.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
+                            e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
                         }
                     }
 
                     for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                     {
-                        eMGame.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
+                        e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
                     }
 
 
-                    var curPlayer = eMGame.CurPlayerITC.Player;
-                    var nextPlayer = eMGame.NextPlayer(curPlayer).Player;
+                    var curPlayer = e.CurPlayerITC.Player;
+                    var nextPlayer = e.NextPlayer(curPlayer).Player;
 
                     if (nextPlayer == PlayerTypes.First)
                     {
                         _updateS_M.Run(gameModeTC);
-                        eMGame.RpcPoolEs.ActiveMotionZoneToGen(sender);
+                        e.RpcPoolEs.ActiveMotionZoneToGen(sender);
                     }
 
-                    eMGame.WhoseMove.Player = nextPlayer;
+                    e.WhoseMove.Player = nextPlayer;
 
 
-                    curPlayer = eMGame.CurPlayerITC.Player;
+                    curPlayer = e.CurPlayerITC.Player;
 
                     //ViewDataSC.RotateAll.Invoke();
 
-                    eMGame.ZoneInfoC.IsActiveFriend = true;
+                    e.ZoneInfoC.IsActiveFriend = true;
                 }
             }
             else
             {
                 for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                 {
-                    eMGame.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
+                    e.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= 0.5f;
                 }
 
                 for (byte idx = 0; idx < StartValues.CELLS; idx++)
                 {
-                    eMGame.UnitEffectStunC(idx).Stun -= 0.5f;
+                    e.UnitEffectStunC(idx).Stun -= 0.5f;
 
                     for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                     {
-                        eMGame.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
+                        e.UnitEs(idx).CoolDownC(abilityT).Cooldown -= 0.5f;
                     }
                 }
 

@@ -16,7 +16,7 @@ namespace Chessy.Game.System.Model
         {
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                eMGame.PlayerInfoE(playerT).WhereKingEffects.Clear();
+                e.PlayerInfoE(playerT).WhereKingEffects.Clear();
             }
 
 

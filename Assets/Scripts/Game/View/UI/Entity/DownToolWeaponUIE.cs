@@ -1,16 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Common.Component;
+using Chessy.Game.Entity.View.UI.Down;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public sealed class DownToolWeaponUIE
+    public readonly struct DownToolWeaponUIE
     {
         readonly Dictionary<string, ImageUIC> _toolWeapon;
         readonly Dictionary<ToolWeaponTypes, ButtonUIC> _buttons;
         readonly Dictionary<ToolWeaponTypes, ImageUIC> _images;
         readonly Dictionary<ToolWeaponTypes, TextUIC> _texts;
+
+        public readonly GameObjectVC ParentGOC;
+        public readonly CostUIE CostE;
 
         public ImageUIC LevelImageC(in ToolWeaponTypes tw, in LevelTypes level) => _toolWeapon[tw.ToString() + level];
         public ButtonUIC ButtonC(in ToolWeaponTypes tw) => _buttons[tw];
@@ -21,10 +26,21 @@ namespace Chessy.Game
         {
             var gTZone = downZone.Find("GiveTake");
 
+            ParentGOC = new GameObjectVC(gTZone.gameObject);
+
+
             _toolWeapon = new Dictionary<string, ImageUIC>();
             _buttons = new Dictionary<ToolWeaponTypes, ButtonUIC>();
             _images = new Dictionary<ToolWeaponTypes, ImageUIC>();
             _texts = new Dictionary<ToolWeaponTypes, TextUIC>();
+
+
+            var costZone = gTZone.Find("Cost+");
+
+            CostE = new CostUIE(
+                costZone.Find("StepsCost_TMP").GetComponent<TextMeshProUGUI>(), 
+                costZone.Find("WoodCost_TMP").GetComponent<TextMeshProUGUI>(), 
+                costZone.Find("IronCost_TMP").GetComponent<TextMeshProUGUI>());
 
 
             for (var tw = ToolWeaponTypes.None + 1; tw < ToolWeaponTypes.End; tw++)

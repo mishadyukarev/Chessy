@@ -9,11 +9,11 @@ namespace Chessy.Game.System.Model
 
         internal void Get(in byte cell_0)
         {
-            eMGame.FarmExtractFertilizeE(cell_0).Resources = 0;
+            e.FarmExtractFertilizeE(cell_0).Resources = 0;
 
-            if (eMGame.BuildingTC(cell_0).Is(BuildingTypes.Farm))
+            if (e.BuildingTC(cell_0).Is(BuildingTypes.Farm))
             {
-                if (eMGame.FertilizeC(cell_0).HaveAnyResources)
+                if (e.FertilizeC(cell_0).HaveAnyResources)
                 {
                     var extract = EnvironmentValues.FARM_EXTRACT;
 
@@ -22,9 +22,9 @@ namespace Chessy.Game.System.Model
                     //    extract += Environment_Values.FARM_CENTER_UPGRADE;
                     //}
 
-                    if (eMGame.FertilizeC(cell_0).Resources < extract) extract = eMGame.FertilizeC(cell_0).Resources;
+                    if (e.FertilizeC(cell_0).Resources < extract) extract = e.FertilizeC(cell_0).Resources;
 
-                    eMGame.FarmExtractFertilizeE(cell_0).Resources = extract;
+                    e.FarmExtractFertilizeE(cell_0).Resources = extract;
                 }
             }
         }

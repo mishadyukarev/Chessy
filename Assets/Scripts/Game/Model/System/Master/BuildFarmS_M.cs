@@ -20,7 +20,7 @@ namespace Chessy.Game.Model.System
 
         internal void Build(in Player sender)
         {
-            var whoseMove = eMGame.WhoseMove.Player;
+            var whoseMove = e.WhoseMove.Player;
 
             if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.SET_FARM)
             {
@@ -42,17 +42,17 @@ namespace Chessy.Game.Model.System
                                 needRes.Add(resT, 0);
                             }
 
-                            if (needRes[resT] > eMGame.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                            if (needRes[resT] > e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
                         }
 
                         if (canBuild)
                         {
                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                             {
-                                eMGame.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                                e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                             }
 
-                            eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
+                            e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
 
                             _cellEs.EnvironmentEs.YoungForestC.Resources = 0;
 
@@ -64,25 +64,25 @@ namespace Chessy.Game.Model.System
 
                         else
                         {
-                            eMGame.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                            e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
                         }
                     }
 
                     else
                     {
-                        eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                        e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                     }
                 }
 
                 else
                 {
-                    eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                    e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                 }
             }
 
             else
             {
-                eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

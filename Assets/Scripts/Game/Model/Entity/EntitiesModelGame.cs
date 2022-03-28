@@ -3,6 +3,7 @@ using Chessy.Common.Component;
 using Chessy.Game.Entity.Model.Cell;
 using Chessy.Game.Entity.Model.Cell.Unit;
 using Chessy.Game.Model.Component;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.Entity.Cell.Unit;
 using Chessy.Game.Values;
 using System;
@@ -22,6 +23,7 @@ namespace Chessy.Game.Entity.Model
         public bool IsSelectedCity;
         public bool HaveTreeUnit;
         public bool IsClicked;
+        public bool NeedUpdateView;
 
         public MistakeC MistakeC;
         public InfoGameC MotionsC;
@@ -39,6 +41,7 @@ namespace Chessy.Game.Entity.Model
         public RpcPoolEs RpcPoolEs;
         public WeatherE WeatherE;
         public SelectedE SelectedE;
+        public readonly SelectedUnitE SelectedUnitE = new SelectedUnitE();
 
         public PlayerInfoEs PlayerInfoE(in PlayerTypes player) => _forPlayerEs[player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);

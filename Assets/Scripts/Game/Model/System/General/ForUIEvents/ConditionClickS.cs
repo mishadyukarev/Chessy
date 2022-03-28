@@ -10,18 +10,20 @@ namespace Chessy.Game.System.Model
 
         public void Click(in ConditionUnitTypes conditionT)
         {
-            if (eMGame.CurPlayerITC.Is(eMGame.WhoseMove.Player))
+            if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {
-                if (eMGame.UnitConditionTC(eMGame.CellsC.Selected).Is(conditionT))
+                if (e.UnitConditionTC(e.CellsC.Selected).Is(conditionT))
                 {
-                    eMGame.RpcPoolEs.ConditionUnitToMaster(eMGame.CellsC.Selected, ConditionUnitTypes.None);
+                    e.RpcPoolEs.ConditionUnitToMaster(e.CellsC.Selected, ConditionUnitTypes.None);
                 }
                 else
                 {
-                    eMGame.RpcPoolEs.ConditionUnitToMaster(eMGame.CellsC.Selected, conditionT);
+                    e.RpcPoolEs.ConditionUnitToMaster(e.CellsC.Selected, conditionT);
                 }
             }
-            else eMGame.Sound(ClipTypes.Mistake).Action.Invoke();
+            else e.Sound(ClipTypes.Mistake).Action.Invoke();
+
+            e.NeedUpdateView = true;
         }
     }
 }

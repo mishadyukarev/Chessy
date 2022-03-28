@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
 
         public void Run()
         {
-            eMGame.IsClicked = Input.GetMouseButtonDown(0);
+            e.IsClicked = Input.GetMouseButtonDown(0);
         }
     }
 }

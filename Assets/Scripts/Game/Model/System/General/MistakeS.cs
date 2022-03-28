@@ -8,9 +8,9 @@ namespace Chessy.Game.System.Model
 
         public void Mistake(in MistakeTypes mistakeT)
         {
-            eMGame.MistakeC.MistakeT = mistakeT;
-            eMGame.MistakeC.Timer = 0;
-            eMGame.Sound(ClipTypes.WritePensil).Action.Invoke();
+            e.MistakeC.MistakeT = mistakeT;
+            e.MistakeC.Timer = 0;
+            e.Sound(ClipTypes.WritePensil).Action.Invoke();
         }
     }
 }

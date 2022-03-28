@@ -25,7 +25,7 @@ namespace Chessy.Game.System.Model
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(resT).Resources)
+                if (needRes[resT] > e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -36,17 +36,17 @@ namespace Chessy.Game.System.Model
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
+                    e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
-                eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
-                eMGame.PlayerInfoE(eMGame.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
+                e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
+                e.PlayerInfoE(e.WhoseMove.Player).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
 
-                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                eMGame.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

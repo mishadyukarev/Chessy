@@ -8,16 +8,16 @@
 
         public void Run()
         {
-            var idx_sel = eMGame.CellsC.Selected;
+            var idx_sel = e.CellsC.Selected;
 
             var activeParent = false;
 
 
-            if (eMGame.CellsC.Selected > 0)
+            if (e.CellsC.Selected > 0)
             {
-                if (eMGame.UnitTC(idx_sel).HaveUnit)
+                if (e.UnitTC(idx_sel).HaveUnit)
                 {
-                    if (eMGame.UnitEs(idx_sel).ForPlayer(eMGame.CurPlayerITC.Player).IsVisible)
+                    if (e.UnitEs(idx_sel).ForPlayer(e.CurPlayerITC.Player).IsVisible)
                     {
                         activeParent = true;
                     }

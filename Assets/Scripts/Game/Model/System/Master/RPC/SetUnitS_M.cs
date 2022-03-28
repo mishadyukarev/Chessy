@@ -9,49 +9,39 @@ namespace Chessy.Game.System.Model.Master
 {
     sealed class SetUnitS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
-        readonly SetNewUnitOnCellS _setNewUnitS;
+        readonly SystemsModelGame _sMGame;
 
-        internal SetUnitS_M(in CellEs cellEs, in SetNewUnitOnCellS setNewUnitS, in EntitiesModelGame eMGame) : base(eMGame)
+        internal SetUnitS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            _cellEs = cellEs;
-            _setNewUnitS = setNewUnitS;
+            _sMGame = sMGame;
         }
 
-        internal void Set(in UnitTypes unitT, in Player sender)
+        internal void Set(in UnitTypes unitT, in Player sender, in byte cell)
         {
-            var whoseMove = eMGame.WhoseMove.Player;
+            var whoseMove = e.WhoseMove.Player;
 
-            if (_cellEs.CellE.IsStartedCell(whoseMove) && !_cellEs.UnitMainE.UnitTC.HaveUnit)
+            if (e.CellEs(cell).CellE.IsStartedCell(whoseMove) && !e.UnitMainE(cell).UnitTC.HaveUnit)
             {
                 if (unitT == UnitTypes.King)
                 {
-                    if (eMGame.LessonTC.LessonT == LessonTypes.SettingKing)
+                    if (e.LessonTC.LessonT == LessonTypes.SettingKing)
                     {
-                        eMGame.LessonTC.SetNextLesson();
-                    }
-                }
-                else if (unitT == UnitTypes.Pawn)
-                {
-                    if (eMGame.LessonTC.LessonT == LessonTypes.SettingPawn)
-                    {
-                        eMGame.LessonTC.SetNextLesson();
-                        eMGame.ResourcesC(whoseMove, ResourceTypes.Wood).Resources += EconomyValues.ForBuyToolWeapon(ToolWeaponTypes.Staff, LevelTypes.First, ResourceTypes.Wood);
+                        e.LessonTC.SetNextLesson();
                     }
                 }
                 else if (unitT.IsGod())
                 {
-                    if (eMGame.LessonTC.LessonT == LessonTypes.SettingGod)
+                    if (e.LessonTC.LessonT == LessonTypes.SettingGod)
                     {
-                        eMGame.LessonTC.SetNextLesson();
+                        e.LessonTC.SetNextLesson();
                     }
                 }
 
 
-                _setNewUnitS.Set(unitT, whoseMove);
+                _sMGame.SetNewUnitS.Set(unitT, whoseMove, cell);
 
 
-                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

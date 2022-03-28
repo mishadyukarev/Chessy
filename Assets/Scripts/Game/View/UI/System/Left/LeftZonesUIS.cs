@@ -13,20 +13,20 @@ namespace Chessy.Game
             eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
             eUI.LeftEnvEs.Zone.SetActive(false);
 
-            if (eMGame.IsSelectedCity)
+            if (e.IsSelectedCity)
             {
                 eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
             }
             else
             {
-                var idx_sel = eMGame.CellsC.Selected;
+                var idx_sel = e.CellsC.Selected;
 
-                if (eMGame.CellsC.Selected > 0)
+                if (e.CellsC.Selected > 0)
                 {
-                    if (eMGame.BuildingTC(idx_sel).HaveBuilding)
+                    if (e.BuildingTC(idx_sel).HaveBuilding)
                     {
 
-                        if (eMGame.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || eMGame.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
+                        if (e.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || e.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
                         {
                             eUI.LeftEnvEs.Zone.SetActive(true);
                         }

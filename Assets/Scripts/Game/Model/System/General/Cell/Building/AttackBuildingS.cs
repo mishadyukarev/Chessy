@@ -24,7 +24,7 @@ namespace Chessy.Game.System.Model
                 {
                     if (_cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.City))
                     {
-                        eMGame.WinnerC.Player = eMGame.NextPlayer(whoKiller).Player;
+                        e.WinnerC.Player = e.NextPlayer(whoKiller).Player;
                     }
 
                     else if (_cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.Farm))

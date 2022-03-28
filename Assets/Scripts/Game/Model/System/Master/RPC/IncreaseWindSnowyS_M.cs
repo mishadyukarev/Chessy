@@ -13,48 +13,48 @@ namespace Chessy.Game.System.Model.Master
 
         public void Execute(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMGame.UnitEs(cell_0).CoolDownC(abilityT).HaveCooldown)
+            if (!e.UnitEs(cell_0).CoolDownC(abilityT).HaveCooldown)
             {
-                if (eMGame.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
+                if (e.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
                 {
                     if (needIncrese)
                     {
-                        if (!eMGame.WeatherE.WindC.IsMaxSpeed)
+                        if (!e.WeatherE.WindC.IsMaxSpeed)
                         {
-                            eMGame.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
-                            eMGame.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                            e.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
+                            e.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
-                            eMGame.WeatherE.WindC.Speed++;
+                            e.WeatherE.WindC.Speed++;
 
-                            eMGame.RpcPoolEs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
+                            e.RpcPoolEs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                         }
                         else
                         {
-                            eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.MaxSpeedWind, sender);
+                            e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.MaxSpeedWind, sender);
                         }
                     }
 
                     else
                     {
-                        if (!eMGame.WeatherE.WindC.IsMinSpeed)
+                        if (!e.WeatherE.WindC.IsMinSpeed)
                         {
-                            eMGame.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
-                            eMGame.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                            e.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
+                            e.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
-                            eMGame.WeatherE.WindC.Speed--;
+                            e.WeatherE.WindC.Speed--;
 
-                            eMGame.RpcPoolEs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
+                            e.RpcPoolEs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                         }
                         else
                         {
-                            eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.MinSpeedWind, sender);
+                            e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.MinSpeedWind, sender);
                         }
                     }
 
                 }
                 else
                 {
-                    eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

@@ -20,8 +20,6 @@ namespace Chessy.Game.Model.System
         internal readonly ClearUnitS ClearUnitS;
 
         internal readonly SetUnitS SetUnitS;
-        internal readonly ShiftUnitS ShiftUnitS;
-        internal readonly SetNewUnitOnCellS SetNewUnitS;
         internal readonly AttackUnitS AttackUnitS;
         internal readonly GetAttackMeleeCellsS GetAttackMeleeCellsS;
         internal readonly GetAbilityUnitS GetAbilityUnitS;
@@ -62,10 +60,8 @@ namespace Chessy.Game.Model.System
 
         internal readonly GiveTakeToolWeaponS_M GiveTakeToolWeaponS_M;
         internal readonly CurcularAttackKingS_M CurcularAttackKingS_M;
-        internal readonly SetUnitS_M SetUnitS_M;
         internal readonly FirePawnS_M FirePawnS_M;
         internal readonly PutOutFirePawnS_M PutOutFirePawnS_M;
-        internal readonly ShiftUnitS_M ShiftUnitS_M;
         internal readonly SeedPawnS_M SeedPawnS_M;
         internal readonly ChangeCornerArcherS_M ChangeCornerArcherS_M;
         internal readonly StunElfemaleS_M StunElfemaleS_M;
@@ -106,10 +102,8 @@ namespace Chessy.Game.Model.System
             SetLastDiedS = new SetLastDiedS(cellUnitE.WhoLastDiedHereE, cellUnitE.MainE);
             ClearUnitS = new ClearUnitS(cellUnitE);
 
-            SetUnitS = new SetUnitS(this, cellUnitE);
-            SetNewUnitS = new SetNewUnitOnCellS(cellUnitE.MainE, this, eMGame);
+            SetUnitS = new SetUnitS(this, cellUnitE);    
             AttackShieldS = new AttackShieldS(cellUnitE.ExtraToolWeaponE);
-            ShiftUnitS = new ShiftUnitS(sMGame, cellE_0, eMGame);
             GetAttackMeleeCellsS = new GetAttackMeleeCellsS(cellE_0, eMGame);
             GetAbilityUnitS = new GetAbilityUnitS(eMGame);
             PawnGetExtractAdultForestS = new PawnGetExtractAdultForestS(cellE_0, eMGame);
@@ -138,10 +132,8 @@ namespace Chessy.Game.Model.System
 
             GiveTakeToolWeaponS_M = new GiveTakeToolWeaponS_M(cellE_0, this, eMGame);
             CurcularAttackKingS_M = new CurcularAttackKingS_M(cellE_0, sMGame, eMGame);
-            SetUnitS_M = new SetUnitS_M(cellE_0, SetNewUnitS, eMGame);
             FirePawnS_M = new FirePawnS_M(cellE_0, eMGame);
             PutOutFirePawnS_M = new PutOutFirePawnS_M(cellE_0, eMGame);
-            ShiftUnitS_M = new ShiftUnitS_M(cellUnitE, ShiftUnitS, eMGame);
             SeedPawnS_M = new SeedPawnS_M(cellE_0, eMGame);
             ChangeCornerArcherS_M = new ChangeCornerArcherS_M(cellE_0, eMGame);
             StunElfemaleS_M = new StunElfemaleS_M(cellE_0, eMGame);

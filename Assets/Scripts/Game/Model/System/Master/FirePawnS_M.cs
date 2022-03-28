@@ -21,7 +21,7 @@ namespace Chessy.Game.Model.System
             {
                 if (_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
                 {
-                    eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
+                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                     _cellEs.EffectEs.HaveFire = true;
                     _cellEs.UnitStatsE.StepC.Steps -= StepValues.FIRE_PAWN;
@@ -35,7 +35,7 @@ namespace Chessy.Game.Model.System
 
             else
             {
-                eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

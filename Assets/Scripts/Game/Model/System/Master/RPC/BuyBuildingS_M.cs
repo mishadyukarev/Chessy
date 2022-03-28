@@ -14,7 +14,7 @@ namespace Chessy.Game.System.Model
 
         public void Buy(in BuildingTypes buildT, in Player sender)
         {
-            var whoseMove = eMGame.WhoseMove.Player;
+            var whoseMove = e.WhoseMove.Player;
 
             var needRes = new Dictionary<ResourceTypes, float>();
             var canBuild = true;
@@ -50,7 +50,7 @@ namespace Chessy.Game.System.Model
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = eMGame.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                                need = e.PlayerInfoE(whoseMove).WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
@@ -130,41 +130,41 @@ namespace Chessy.Game.System.Model
                 }
 
                 needRes.Add(resT, need);
-                if (need > eMGame.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                if (need > e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
             }
 
             if (canBuild)
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    eMGame.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                    e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        eMGame.PlayerInfoE(whoseMove).MaxAvailablePawns++;
+                        e.PlayerInfoE(whoseMove).MaxAvailablePawns++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).MaxAvailablePawns + E.PlayerE(whoseMove).MaxAvailablePawns);
-                        eMGame.PlayerInfoE(whoseMove).WoodForBuyHouse += eMGame.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                        e.PlayerInfoE(whoseMove).WoodForBuyHouse += e.PlayerInfoE(whoseMove).WoodForBuyHouse;
                         break;
 
                     case BuildingTypes.Market:
-                        eMGame.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Market, true);
+                        e.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Market, true);
                         break;
 
                     case BuildingTypes.Smelter:
-                        eMGame.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Smelter, true);
+                        e.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Smelter, true);
                         break;
 
                     default: throw new Exception();
                 }
 
-                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
             }
 
             else
             {
-                eMGame.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

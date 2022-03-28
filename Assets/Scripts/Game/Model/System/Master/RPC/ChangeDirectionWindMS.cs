@@ -19,14 +19,14 @@ namespace Chessy.Game.System.Model
         {
             if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.Need(abilityT))
             {
-                eMGame.WeatherE.WindC.Direct = eMGame.CellEs(eMGame.WeatherE.CloudC.Center).AroundCellsEs.Direct(idx_to);
+                e.WeatherE.WindC.Direct = e.CellEs(e.WeatherE.CloudC.Center).AroundCellsEs.Direct(idx_to);
                 _cellEs.UnitStatsE.StepC.Steps -= StepValues.Need(abilityT);
                 _cellEs.UnitEs.CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
-                eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
+                e.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
             }
 
-            else eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            else e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
         }
     }
 }

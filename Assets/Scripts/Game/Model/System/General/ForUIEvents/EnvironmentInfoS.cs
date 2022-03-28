@@ -11,8 +11,10 @@ namespace Chessy.Game.System.Model
 
         public void Click()
         {
-            eMGame.Sound(ClipTypes.Click).Invoke();
-            eMGame.ZoneInfoC.IsActiveEnvironment = !eMGame.ZoneInfoC.IsActiveEnvironment;
+            e.Sound(ClipTypes.Click).Invoke();
+            e.ZoneInfoC.IsActiveEnvironment = !e.ZoneInfoC.IsActiveEnvironment;
+
+            e.NeedUpdateView = true;
         }
     }
 }

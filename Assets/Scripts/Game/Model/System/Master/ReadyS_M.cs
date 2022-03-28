@@ -11,17 +11,17 @@ namespace Chessy.Game.Model.System
         {
             var playerSend = sender.GetPlayer();
 
-            eMGame.PlayerInfoE(playerSend).IsReadyC = !eMGame.PlayerInfoE(playerSend).IsReadyC;
+            e.PlayerInfoE(playerSend).IsReadyC = !e.PlayerInfoE(playerSend).IsReadyC;
 
-            if (eMGame.PlayerInfoE(PlayerTypes.First).IsReadyC
-                && eMGame.PlayerInfoE(PlayerTypes.Second).IsReadyC)
+            if (e.PlayerInfoE(PlayerTypes.First).IsReadyC
+                && e.PlayerInfoE(PlayerTypes.Second).IsReadyC)
             {
-                eMGame.IsStartedGame = true;
+                e.IsStartedGame = true;
             }
 
             else
             {
-                eMGame.IsStartedGame = false;
+                e.IsStartedGame = false;
             }
         }
     }

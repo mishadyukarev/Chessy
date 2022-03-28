@@ -9,9 +9,9 @@
         public void Run()
         {
             var isActiveKingZone = eUI.CenterEs.KingE.Paren.IsActiveSelf;
-            var curPlayerI = eMGame.CurPlayerITC.Player;
+            var curPlayerI = e.CurPlayerITC.Player;
 
-            if (!isActiveKingZone && eMGame.PlayerInfoE(curPlayerI).MyHeroTC.Is(UnitTypes.None))
+            if (!isActiveKingZone && e.PlayerInfoE(curPlayerI).MyHeroTC.Is(UnitTypes.None))
             {
                 //var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 

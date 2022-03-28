@@ -20,16 +20,16 @@ namespace Chessy.Game.Model.System
             {
                 if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.ARCHER_FIRE)
                 {
-                    eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
+                    e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
                     _cellEs.UnitStatsE.StepC.Steps -= StepValues.ARCHER_FIRE;
-                    eMGame.HaveFire(idx_to) = true;
+                    e.HaveFire(idx_to) = true;
 
                 }
 
                 else
                 {
-                    eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

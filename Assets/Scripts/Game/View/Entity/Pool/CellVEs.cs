@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Entity.View.Cell;
+﻿using Chessy.Common.Component;
+using Chessy.Game.Entity.View.Cell;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,8 @@ namespace Chessy.Game
         readonly Dictionary<CellBlockTypes, SpriteRendererVC> _blocks;
         readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
-        public readonly Chessy.Common.Component.GameObjectVC CellParent;
-        public readonly Chessy.Common.Component.GameObjectVC CellGO;
+        public readonly GameObjectVC CellParent;
+        public readonly GameObjectVC CellGO;
         public readonly SpriteRendererVC CellSR;
 
         public readonly FireVE FireVE;
@@ -28,14 +29,14 @@ namespace Chessy.Game
         public SpriteRendererVC TrailCellVC(in DirectTypes dir) => _trails[dir];
 
 
-        public CellVEs(in GameObject cell, in byte idx)
+        public CellVEs(in GameObject cell)
         {
-            CellParent = new Chessy.Common.Component.GameObjectVC(cell);
+            CellParent = new GameObjectVC(cell);
 
             var cellUnder = cell.transform.Find("Cell");
 
 
-            CellGO = new Chessy.Common.Component.GameObjectVC(cellUnder.gameObject);
+            CellGO = new GameObjectVC(cellUnder.gameObject);
             CellSR = new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>());
 
 

@@ -20,7 +20,7 @@ namespace Chessy.Game.Model.System
         {
             if (whoKiller != PlayerTypes.None)
             {
-                if (_unitMainE.UnitTC.Is(UnitTypes.King)) eMGame.WinnerC.Player = whoKiller;
+                if (_unitMainE.UnitTC.Is(UnitTypes.King)) e.WinnerC.Player = whoKiller;
             }
             
             if (_unitMainE.UnitTC.IsGod)
@@ -48,15 +48,15 @@ namespace Chessy.Game.Model.System
                     default: throw new Exception();
                 }
 
-                eMGame.PlayerInfoE(_unitMainE.PlayerTC.Player).HeroCooldownC.Cooldown = cooldown;
-                eMGame.PlayerInfoE(_unitMainE.PlayerTC.Player).HaveHeroInInventor = true;
+                e.PlayerInfoE(_unitMainE.PlayerTC.Player).HeroCooldownC.Cooldown = cooldown;
+                e.PlayerInfoE(_unitMainE.PlayerTC.Player).HaveHeroInInventor = true;
             }
 
-            if (_unitMainE.UnitTC.Is(UnitTypes.Tree)) eMGame.HaveTreeUnit = false;
+            if (_unitMainE.UnitTC.Is(UnitTypes.Tree)) e.HaveTreeUnit = false;
 
 
             _unitSs.SetLastDiedS.Set();
-            eMGame.UnitInfo(_unitMainE).Take(_unitMainE.UnitTC.Unit, 1);
+            e.UnitInfo(_unitMainE).Take(_unitMainE.UnitTC.Unit, 1);
 
 
             _unitSs.ClearUnitS.Clear();

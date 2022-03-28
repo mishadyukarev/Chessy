@@ -1,15 +1,20 @@
-﻿using UnityEngine;
+﻿using Chessy.Common.Component;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game.Entity.View.UI.Down
 {
     public struct CityButtonUIE
     {
+        public readonly GameObjectVC ParentGOC;
         public readonly ButtonUIC ButtonC;
 
         public CityButtonUIE(in Transform down)
         {
-            ButtonC = new ButtonUIC(down.Find("City+").Find("Button+").GetComponent<Button>());
+            var parent = down.Find("City+");
+
+            ParentGOC = new GameObjectVC(parent.gameObject);
+            ButtonC = new ButtonUIC(parent.Find("Button+").GetComponent<Button>());
         }
     }
 }

@@ -20,38 +20,38 @@ namespace Chessy.Game.Model.System
         {
             if (!_cellEs.UnitEs.CoolDownC(abilityT).HaveCooldown)
             {
-                if (eMGame.AdultForestC(idx_to).HaveAnyResources)
+                if (e.AdultForestC(idx_to).HaveAnyResources)
                 {
                     if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.STUN_ELFEMALE)
                     {
-                        if (!_cellEs.UnitMainE.PlayerTC.Is(eMGame.UnitPlayerTC(idx_to).Player))
+                        if (!_cellEs.UnitMainE.PlayerTC.Is(e.UnitPlayerTC(idx_to).Player))
                         {
-                            eMGame.UnitEffectStunC(idx_to).Stun = StunValues.ELFEMALE;
+                            e.UnitEffectStunC(idx_to).Stun = StunValues.ELFEMALE;
                             _cellEs.UnitEs.CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
                             _cellEs.UnitStatsE.StepC.Steps -= StepValues.STUN_ELFEMALE;
 
-                            eMGame.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
+                            e.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
 
 
-                            foreach (var idx_1 in eMGame.CellEs(idx_to).AroundCellsEs.IdxsAround)
+                            foreach (var idx_1 in e.CellEs(idx_to).AroundCellsEs.IdxsAround)
                             {
-                                if (eMGame.AdultForestC(idx_1).HaveAnyResources)
+                                if (e.AdultForestC(idx_1).HaveAnyResources)
                                 {
-                                    if (eMGame.UnitTC(idx_1).HaveUnit && eMGame.UnitPlayerTC(idx_1).Is(eMGame.UnitPlayerTC(idx_to).Player))
+                                    if (e.UnitTC(idx_1).HaveUnit && e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(idx_to).Player))
                                     {
-                                        eMGame.UnitEffectStunC(idx_1).Stun = StunValues.ELFEMALE;
+                                        e.UnitEffectStunC(idx_1).Stun = StunValues.ELFEMALE;
                                     }
                                 }
                             }
                         }
                     }
 
-                    else eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    else e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+            else e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

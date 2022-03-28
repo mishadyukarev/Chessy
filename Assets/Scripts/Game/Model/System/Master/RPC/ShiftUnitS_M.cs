@@ -7,25 +7,23 @@ namespace Chessy.Game
 {
     public sealed class ShiftUnitS_M : SystemModelGameAbs
     {
-        readonly UnitEs _unitEs;
-        readonly ShiftUnitS _shiftUnitS;
+        readonly SystemsModelGame _sMGame;
 
-        public ShiftUnitS_M(in UnitEs unitEs, in ShiftUnitS shiftUnitS, in EntitiesModelGame eMGame) : base(eMGame)
+        public ShiftUnitS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            _unitEs = unitEs;
-            _shiftUnitS = shiftUnitS;
+            _sMGame = sMGame;
         }
 
-        public void Shift(in byte idx_to, in Player sender)
+        public void Shift(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (_unitEs.ForShift.Contains(idx_to) && _unitEs.MainE.PlayerTC.Is(eMGame.WhoseMove.Player))
+            if (e.UnitEs(cell_from).ForShift.Contains(cell_to) && e.UnitPlayerTC(cell_from).Is(e.WhoseMove.Player))
             {
-                _unitEs.StatsE.StepC.Steps -= _unitEs.NeedSteps(idx_to).Steps;
+                e.UnitStepC(cell_from).Steps -= e.UnitEs(cell_from).NeedSteps(cell_to).Steps;
 
 
-                _shiftUnitS.Shift(idx_to);
+                _sMGame.ShiftUnitS.Shift(cell_from, cell_to);
 
-                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

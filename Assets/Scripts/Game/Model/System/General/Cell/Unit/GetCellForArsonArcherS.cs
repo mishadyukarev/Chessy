@@ -8,21 +8,21 @@ namespace Chessy.Game.System.Model
 
         internal void Get(in byte cell_0)
         {
-            eMGame.UnitEs(cell_0).ForArson.Clear();
+            e.UnitEs(cell_0).ForArson.Clear();
 
-            if (!eMGame.UnitEffectStunC(cell_0).IsStunned)
+            if (!e.UnitEffectStunC(cell_0).IsStunned)
             {
-                if (eMGame.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMGame.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
+                if (e.UnitTC(cell_0).Is(UnitTypes.Pawn) && e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_1 = eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
+                        var idx_1 = e.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
 
-                        if (!eMGame.EffectEs(idx_1).HaveFire)
+                        if (!e.EffectEs(idx_1).HaveFire)
                         {
-                            if (eMGame.AdultForestC(idx_1).HaveAnyResources)
+                            if (e.AdultForestC(idx_1).HaveAnyResources)
                             {
-                                eMGame.UnitEs(cell_0).ForArson.Add(idx_1);
+                                e.UnitEs(cell_0).ForArson.Add(idx_1);
                             }
                         }
                     }

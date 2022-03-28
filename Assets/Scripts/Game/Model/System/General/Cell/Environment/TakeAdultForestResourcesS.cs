@@ -8,17 +8,17 @@ namespace Chessy.Game.System.Model
 
         internal void Take(in float extract, in byte idx)
         {
-            if (eMGame.AdultForestC(idx).HaveAnyResources)
+            if (e.AdultForestC(idx).HaveAnyResources)
             {
-                eMGame.AdultForestC(idx).Resources -= extract;
+                e.AdultForestC(idx).Resources -= extract;
 
-                if (!eMGame.AdultForestC(idx).HaveAnyResources)
+                if (!e.AdultForestC(idx).HaveAnyResources)
                 {
-                    eMGame.AdultForestC(idx).Resources = 0;
+                    e.AdultForestC(idx).Resources = 0;
 
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        eMGame.CellEs(idx).TrailHealthC(dirT).Health = 0;
+                        e.CellEs(idx).TrailHealthC(dirT).Health = 0;
                     }
                 }
             }

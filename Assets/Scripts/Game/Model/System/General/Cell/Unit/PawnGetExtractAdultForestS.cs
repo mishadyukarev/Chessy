@@ -23,7 +23,7 @@ namespace Chessy.Game.System.Model
                 {
                     var extract = EnvironmentValues.EXTRACT_PAWM_ADULT_FOREST;
 
-                    if (eMGame.PlayerInfoE(_cellEs.UnitEs.MainE.PlayerTC.Player).MyHeroTC.Is(UnitTypes.Elfemale))
+                    if (e.PlayerInfoE(_cellEs.UnitEs.MainE.PlayerTC.Player).MyHeroTC.Is(UnitTypes.Elfemale))
                     {
                         if (_cellEs.UnitEs.MainE.UnitTC.Is(UnitTypes.Pawn))
                         {

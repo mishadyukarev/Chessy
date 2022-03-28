@@ -50,7 +50,7 @@ namespace Chessy.Common
 
         void ExitShop(in ShopUIE shopUIE)
         {
-            shopUIE.ExitButtonC.GameObject.SetActive(false);
+            shopUIE.ShopZoneGOC.SetActive(false);
         }
     }
 }

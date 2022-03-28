@@ -11,23 +11,23 @@ namespace Chessy.Game.System.Model
 
         public void Click(in BuildingTypes buildT)
         {
-            var curPlayerI = eMGame.CurPlayerITC.Player;
+            var curPlayerI = e.CurPlayerITC.Player;
 
             if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
             {
-                if (eMGame.SelectedE.BuildingsC.Is(buildT))
+                if (e.SelectedE.BuildingsC.Is(buildT))
                 {
-                    eMGame.SelectedE.BuildingsC.Set(buildT, false);
-                    eMGame.Sound(ClipTypes.Click).Invoke();
+                    e.SelectedE.BuildingsC.Set(buildT, false);
+                    e.Sound(ClipTypes.Click).Invoke();
                 }
-                else if (eMGame.PlayerInfoE(curPlayerI).HaveBuilding(buildT))
+                else if (e.PlayerInfoE(curPlayerI).HaveBuilding(buildT))
                 {
-                    eMGame.SelectedE.BuildingsC.Set(buildT, true);
-                    eMGame.Sound(ClipTypes.Click).Invoke();
+                    e.SelectedE.BuildingsC.Set(buildT, true);
+                    e.Sound(ClipTypes.Click).Invoke();
                 }
                 else
                 {
-                    eMGame.RpcPoolEs.CityBuyBuildingToMaster(buildT);
+                    e.RpcPoolEs.CityBuyBuildingToMaster(buildT);
                 }
             }
 
@@ -36,7 +36,7 @@ namespace Chessy.Game.System.Model
             switch (buildT)
             {
                 case BuildingTypes.House:
-                    eMGame.RpcPoolEs.CityBuyBuildingToMaster(buildT);
+                    e.RpcPoolEs.CityBuyBuildingToMaster(buildT);
                     break;
 
                 case BuildingTypes.Market:
@@ -47,6 +47,8 @@ namespace Chessy.Game.System.Model
 
                 default: throw new Exception();
             }
+
+            e.NeedUpdateView = true;
         }
     }
 }

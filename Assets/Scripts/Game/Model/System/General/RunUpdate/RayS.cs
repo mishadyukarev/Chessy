@@ -28,32 +28,38 @@ namespace Chessy.Game.Model.System
             //#endif
 
 
-            eMGame.RaycastTC.Raycast = RaycastTypes.None;
+            e.RaycastTC.Raycast = RaycastTypes.None;
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                eMGame.RaycastTC.Raycast = RaycastTypes.UI;
+                e.RaycastTC.Raycast = RaycastTypes.UI;
             }
             else if (raycast)
             {
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    int one = eMGame.CellEs(cell_0).CellE.InstanceIDC;
+                    int one = e.CellEs(cell_0).CellE.InstanceIDC;
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        if (eMGame.CellsC.Current != eMGame.CellsC.PreviousVision)
+                        if (e.CellsC.Current != e.CellsC.PreviousVision)
                         {
-                            eMGame.CellsC.PreviousVision = eMGame.CellsC.Current;
+                            if (e.CellClickTC.Is(CellClickTypes.SetUnit))
+                            {
+                                e.UnitEs(e.CellsC.Current).NeedUpdateView = true;
+                                e.UnitEs(e.CellsC.PreviousVision).NeedUpdateView = true;
+                            }
+                            
+                            e.CellsC.PreviousVision = e.CellsC.Current;
                         }
 
-                        eMGame.CellsC.Current = cell_0;
-                        eMGame.RaycastTC.Raycast = RaycastTypes.Cell;
+                        e.CellsC.Current = cell_0;
+                        e.RaycastTC.Raycast = RaycastTypes.Cell;
                     }
                 }
 
-                if (eMGame.RaycastTC.Raycast == RaycastTypes.None) eMGame.RaycastTC.Raycast = RaycastTypes.Background;
+                if (e.RaycastTC.Raycast == RaycastTypes.None) e.RaycastTC.Raycast = RaycastTypes.Background;
             }
 
 #if UNITY_ANDROID

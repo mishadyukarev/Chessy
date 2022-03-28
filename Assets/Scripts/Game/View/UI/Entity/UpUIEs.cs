@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Component;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ namespace Chessy.Game
         public readonly ButtonUIC LeaveC;
         public readonly ButtonUIC AlphaC;
 
+        public readonly GameObjectVC ParentWindGOC;
         public readonly ButtonUIC WindButtonC;
         public readonly TransformVC WindTrC;
         public readonly ImageUIC WindC;
@@ -29,6 +31,7 @@ namespace Chessy.Game
 
             var windZone = upZone.Find("Wind+");
 
+            ParentWindGOC = new GameObjectVC(windZone.gameObject);
 
             WindButtonC = new ButtonUIC(windZone.Find("Button+").GetComponent<Button>());
 

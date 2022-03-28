@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Chessy.Common.Component;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ namespace Chessy.Game
 {
     public readonly struct DownPawnUIE
     {
+        public readonly GameObjectVC ParenGOC;
         public readonly ButtonUIC ButtonUIC;
         public readonly TextUIC AmountTextC;
         public readonly TextUIC MaxPawnsTextC;
@@ -13,6 +15,8 @@ namespace Chessy.Game
         public DownPawnUIE(in Transform downZone)
         {
             var pawnT = downZone.Find(UnitTypes.Pawn.ToString());
+
+            ParenGOC = new GameObjectVC(pawnT.gameObject);
 
             var button = pawnT.Find("Button").GetComponent<Button>();
 

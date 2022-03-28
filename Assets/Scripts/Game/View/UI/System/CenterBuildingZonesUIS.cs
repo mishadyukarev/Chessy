@@ -11,8 +11,8 @@ namespace Chessy.Game
 
         public void Run()
         {
-            eUI.CenterEs.MarketE.Zone.SetActive(eMGame.SelectedE.BuildingsC.Is(BuildingTypes.Market));
-            eUI.CenterEs.SmelterE.Zone.SetActive(eMGame.SelectedE.BuildingsC.Is(BuildingTypes.Smelter));
+            eUI.CenterEs.MarketE.Zone.SetActive(e.SelectedE.BuildingsC.Is(BuildingTypes.Market));
+            eUI.CenterEs.SmelterE.Zone.SetActive(e.SelectedE.BuildingsC.Is(BuildingTypes.Smelter));
 
 
             eUI.CenterEs.MarketE.Text1C(MarketBuyTypes.FoodToWood).TextUI.text = EconomyValues.FOR_BUY_FROM_MARKET_FOOD_TO_WOOD.ToString();

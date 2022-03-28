@@ -9,9 +9,9 @@ namespace Chessy.Game.System.Model
 
         public void Get(in byte cell_0)
         {
-            eMGame.WoodcutterExtractE(cell_0).Resources = 0;
+            e.WoodcutterExtractE(cell_0).Resources = 0;
 
-            if (eMGame.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter))
+            if (e.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter))
             {
                 var extract = EnvironmentValues.WOODCUTTER_EXTRACT;
 
@@ -21,10 +21,10 @@ namespace Chessy.Game.System.Model
                 //}
 
 
-                if (eMGame.AdultForestC(cell_0).Resources < extract) extract = eMGame.AdultForestC(cell_0).Resources;
+                if (e.AdultForestC(cell_0).Resources < extract) extract = e.AdultForestC(cell_0).Resources;
 
 
-                eMGame.WoodcutterExtractE(cell_0).Resources = extract;
+                e.WoodcutterExtractE(cell_0).Resources = extract;
             }
         }
     }

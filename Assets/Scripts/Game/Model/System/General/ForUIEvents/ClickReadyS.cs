@@ -11,7 +11,9 @@ namespace Chessy.Game.System.Model
 
         public void Click()
         {
-            eMGame.RpcPoolEs.ReadyToMaster();
+            e.RpcPoolEs.ReadyToMaster();
+
+            e.NeedUpdateView = true;
         }
     }
 }

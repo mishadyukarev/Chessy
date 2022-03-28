@@ -11,47 +11,74 @@ namespace Chessy.Game.System.Model
 
         public void Click()
         {
-            eMGame.CellsC.Selected = 0;
+            e.CellsC.Selected = 0;
 
-            eMGame.Sound(ClipTypes.Click).Invoke();
+            e.Sound(ClipTypes.Click).Invoke();
 
-            if (eMGame.CurPlayerITC.Is(eMGame.WhoseMove.Player))
+            var curPlayerI = e.CurPlayerITC.Player;
+
+            if (e.LessonTC.HaveLesson)
             {
-                var curPlayerI = eMGame.CurPlayerITC.Player;
-
-                if (eMGame.PlayerInfoE(curPlayerI).PeopleInCity >= 1)
+                if(e.LessonTC.LessonT == Enum.LessonTypes.SettingPawn)
                 {
-                    var pawnsInGame = eMGame.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
-                        + eMGame.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
+                    var pawnsInGame = e.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
+                        + e.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
 
-                    if (pawnsInGame < eMGame.PlayerInfoE(curPlayerI).MaxAvailablePawns)
+                    if (pawnsInGame < e.PlayerInfoE(curPlayerI).MaxAvailablePawns)
                     {
-                        eMGame.SelectedE.UnitC.Set(UnitTypes.Pawn, LevelTypes.First);
-                        eMGame.CellClickTC.Click = CellClickTypes.SetUnit;
+                        e.SelectedUnitE.UnitTC.Unit = UnitTypes.Pawn;
+                        e.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+
+                        e.CellClickTC.Click = CellClickTypes.SetUnit;
                     }
                     else
                     {
-                        eMGame.MistakeC.Set(MistakeTypes.NeedBuildingHouses, 0);
-                        eMGame.Sound(ClipTypes.WritePensil).Action.Invoke();
-                        eMGame.IsSelectedCity = true;
+                        e.LessonTC.SetNextLesson();
                     }
                 }
-                else
-                {
-                    eMGame.Sound(ClipTypes.WritePensil).Action.Invoke();
-
-                    eMGame.MistakeC.Set(MistakeTypes.NeedMorePeopleInCity, 0);
-                    //..E.Sound(ClipTypes.Mistake).Action.Invoke();
-                }
-
-
             }
             else
             {
-                eMGame.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
-                eMGame.MistakeC.Timer = 0;
-                eMGame.Sound(ClipTypes.WritePensil).Action.Invoke();
+                if (e.CurPlayerITC.Is(e.WhoseMove.Player))
+                {
+                    if (e.PlayerInfoE(curPlayerI).PeopleInCity >= 1)
+                    {
+                        var pawnsInGame = e.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
+                            + e.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
+
+                        if (pawnsInGame < e.PlayerInfoE(curPlayerI).MaxAvailablePawns)
+                        {
+                            e.SelectedUnitE.UnitTC.Unit = UnitTypes.Pawn;
+                            e.SelectedUnitE.LevelTC.Level = LevelTypes.First;
+
+                            e.CellClickTC.Click = CellClickTypes.SetUnit;
+                        }
+                        else
+                        {
+                            e.MistakeC.Set(MistakeTypes.NeedBuildingHouses, 0);
+                            e.Sound(ClipTypes.WritePensil).Action.Invoke();
+                            e.IsSelectedCity = true;
+                        }
+                    }
+                    else
+                    {
+                        e.Sound(ClipTypes.WritePensil).Action.Invoke();
+
+                        e.MistakeC.Set(MistakeTypes.NeedMorePeopleInCity, 0);
+                        //..E.Sound(ClipTypes.Mistake).Action.Invoke();
+                    }
+
+
+                }
+                else
+                {
+                    e.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
+                    e.MistakeC.Timer = 0;
+                    e.Sound(ClipTypes.WritePensil).Action.Invoke();
+                }
             }
+
+            e.NeedUpdateView = true;
         }
     }
 }

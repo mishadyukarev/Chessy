@@ -11,68 +11,70 @@ namespace Chessy.Game.System.Model
 
         public void Click(in ToolWeaponTypes twT)
         {
-            eMGame.CellsC.Selected = 0;
+            e.CellsC.Selected = 0;
 
+            e.Sound(ClipTypes.Click).Invoke();
 
-            eMGame.Sound(ClipTypes.Click).Invoke();
-
-            if (eMGame.CurPlayerITC.Is(eMGame.WhoseMove.Player))
+            if (e.LessonTC.LessonT == Enum.LessonTypes.None)
             {
-                if (eMGame.PlayerInfoE(eMGame.WhoseMove.Player).LevelE(LevelTypes.First).UnitsInGame(UnitTypes.Pawn) > 0)
+                if (e.CurPlayerITC.Is(e.WhoseMove.Player))
                 {
-                    //if (tw == ToolWeaponTypes.Pick)
-                    //{
-                    //    TryOnHint(VideoClipTypes.Pick);
-                    //}
-                    //else
-                    //{
-                    //    TryOnHint(VideoClipTypes.UpgToolWeapon);
-                    //}
-
-
-                    var levT = LevelTypes.First;
-
-                    if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
+                    if (e.PlayerInfoE(e.WhoseMove.Player).LevelE(LevelTypes.First).UnitsInGame(UnitTypes.Pawn) > 0)
                     {
-                        if (eMGame.CellClickTC.Is(CellClickTypes.GiveTakeTW))
+                        //if (tw == ToolWeaponTypes.Pick)
+                        //{
+                        //    TryOnHint(VideoClipTypes.Pick);
+                        //}
+                        //else
+                        //{
+                        //    TryOnHint(VideoClipTypes.UpgToolWeapon);
+                        //}
+
+
+                        var levT = LevelTypes.First;
+
+                        if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
                         {
-                            if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
+                            if (e.CellClickTC.Is(CellClickTypes.GiveTakeTW))
                             {
-                                if (eMGame.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                                if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
+                                {
+                                    if (e.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                                }
+                                else if (twT != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
                             }
-                            else if (twT != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
+                            else
+                            {
+                                levT = e.SelectedE.ToolWeaponC.LevelT;
+                            }
                         }
-                        else
+                        else if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.Sword)
                         {
-                            levT = eMGame.SelectedE.ToolWeaponC.LevelT;
+                            levT = LevelTypes.Second;
                         }
+
+                        e.SelectedE.ToolWeaponC.ToolWeaponT = twT;
+                        e.SelectedE.ToolWeaponC.LevelT = levT;
+
+
+                        e.CellClickTC.Click = CellClickTypes.GiveTakeTW;
                     }
-                    else if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.Sword)
+                    else
                     {
-                        levT = LevelTypes.Second;
+                        e.MistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
+                        e.MistakeC.Timer = 0;
+                        e.Sound(ClipTypes.WritePensil).Invoke();
                     }
-
-                    eMGame.SelectedE.ToolWeaponC.ToolWeaponT = twT;
-                    eMGame.SelectedE.ToolWeaponC.LevelT = levT;
-
-
-                    eMGame.CellClickTC.Click = CellClickTypes.GiveTakeTW;
                 }
                 else
                 {
-                    eMGame.MistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
-                    eMGame.MistakeC.Timer = 0;
-                    eMGame.Sound(ClipTypes.WritePensil).Invoke();
+                    e.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
+                    e.MistakeC.Timer = 0;
+                    e.Sound(ClipTypes.WritePensil).Action.Invoke();
                 }
             }
-            else
-            {
-                eMGame.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
-                eMGame.MistakeC.Timer = 0;
-                eMGame.Sound(ClipTypes.WritePensil).Action.Invoke();
-            }
 
-            //_updateUI.Invoke();
+            e.NeedUpdateView = true;
         }
     }
 }

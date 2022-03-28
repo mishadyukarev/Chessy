@@ -9,78 +9,83 @@ namespace Chessy.Game.System.Model
     public sealed class ShiftUnitS : SystemModelGameAbs
     {
         readonly SystemsModelGame _systems;
-        readonly CellEs _cellEs;
 
-        public ShiftUnitS(in SystemsModelGame systems, in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
+        public ShiftUnitS(in SystemsModelGame systems, in EntitiesModelGame eMGame) : base(eMGame)
         {
             _systems = systems;
-            _cellEs = cellEs;
         }
 
-        public void Shift(in byte idx_to)
+        public void Shift(in byte cell_from, in byte cell_to)
         {
-            _systems.CellSs(idx_to).SetUnitS.Set(_cellEs.UnitEs);
-            eMGame.UnitConditionTC(idx_to).Condition = ConditionUnitTypes.None;
+            _systems.CellSs(cell_to).SetUnitS.Set(e.UnitEs(cell_from));
+            e.UnitConditionTC(cell_to).Condition = ConditionUnitTypes.None;
 
-            _cellEs.UnitMainE.UnitTC.Unit = UnitTypes.None;
+            e.UnitTC(cell_from).Unit = UnitTypes.None;
 
 
-            var direct = _cellEs.AroundCellsEs.Direct(idx_to);
+            var direct = e.CellEs(cell_from).AroundCellsEs.Direct(cell_to);
 
-            if (!eMGame.UnitTC(idx_to).Is(UnitTypes.Undead))
+            if (!e.UnitTC(cell_to).Is(UnitTypes.Undead))
             {
-                if (eMGame.UnitTC(idx_to).Is(UnitTypes.Snowy))
+                if (e.UnitTC(cell_to).Is(UnitTypes.Snowy))
                 {
-                    if (eMGame.UnitWaterC(idx_to).Water > 0)
+                    if (e.UnitWaterC(cell_to).Water > 0)
                     {
-                        eMGame.FertilizeC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
-                        eMGame.HaveFire(idx_to) = false;
-                        eMGame.UnitWaterC(idx_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
+                        e.FertilizeC(cell_to).Resources = EnvironmentValues.MAX_RESOURCES;
+                        e.HaveFire(cell_to) = false;
+                        e.UnitWaterC(cell_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
                     }
                 }
 
-                if (_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
+                if (e.AdultForestC(cell_from).HaveAnyResources)
                 {
-                    _cellEs.TrailHealthC(direct).Health = TrailValues.HEALTH_TRAIL;
+                    e.CellEs(cell_from).TrailHealthC(direct).Health = TrailValues.HEALTH_TRAIL;
                 }
-                if (eMGame.AdultForestC(idx_to).HaveAnyResources)
+                if (e.AdultForestC(cell_to).HaveAnyResources)
                 {
                     var dirTrail = direct.Invert();
 
-                    eMGame.CellEs(idx_to).TrailHealthC(dirTrail).Health = TrailValues.HEALTH_TRAIL;
+                    e.CellEs(cell_to).TrailHealthC(dirTrail).Health = TrailValues.HEALTH_TRAIL;
                 }
 
-                if (eMGame.RiverEs(idx_to).RiverTC.HaveRiverNear)
+                if (e.RiverEs(cell_to).RiverTC.HaveRiverNear)
                 {
-                    eMGame.UnitWaterC(idx_to).Water = WaterValues.MAX;
+                    e.UnitWaterC(cell_to).Water = WaterValues.MAX;
                 }
+
+
+                if (e.UnitTC(cell_to).Is(UnitTypes.King))
+                {
+                    e.PlayerInfoE(e.UnitPlayerTC(cell_to).Player).KingCell = cell_to;
+                }
+
             }
 
-            switch (eMGame.UnitTC(idx_to).Unit)
+            switch (e.UnitTC(cell_to).Unit)
             {
                 case UnitTypes.Elfemale:
-                    if (!eMGame.AdultForestC(idx_to).HaveAnyResources && !eMGame.HillC(idx_to).HaveAnyResources)
+                    if (!e.AdultForestC(cell_to).HaveAnyResources && !e.HillC(cell_to).HaveAnyResources)
                     {
                         if (Random.Range(0, 1f) <= 0.25f)
                         {
-                            eMGame.YoungForestC(idx_to).Resources = EnvironmentValues.MAX_RESOURCES;
+                            e.YoungForestC(cell_to).Resources = EnvironmentValues.MAX_RESOURCES;
                         }
                     }
                     break;
 
                 case UnitTypes.Hell:
-                    if (eMGame.AdultForestC(idx_to).HaveAnyResources)
+                    if (e.AdultForestC(cell_to).HaveAnyResources)
                     {
-                        eMGame.EffectEs(idx_to).HaveFire = true;
+                        e.EffectEs(cell_to).HaveFire = true;
                     }
                     break;
             }
 
-            if (eMGame.BuildingTC(idx_to).HaveBuilding && !eMGame.BuildingTC(idx_to).Is(BuildingTypes.City))
+            if (e.BuildingTC(cell_to).HaveBuilding && !e.BuildingTC(cell_to).Is(BuildingTypes.City))
             {
-                if (!eMGame.BuildingPlayerTC(idx_to).Is(eMGame.UnitPlayerTC(idx_to).Player))
+                if (!e.BuildingPlayerTC(cell_to).Is(e.UnitPlayerTC(cell_to).Player))
                 {
-                    eMGame.BuildingTC(idx_to).Building = BuildingTypes.None;
+                    e.BuildingTC(cell_to).Building = BuildingTypes.None;
                 }
             }
         }

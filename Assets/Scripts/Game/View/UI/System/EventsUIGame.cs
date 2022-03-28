@@ -30,7 +30,7 @@ namespace Chessy.Game.EventsUI
             {
                 eMCommon.BookE.IsOpenedBook = !eMCommon.BookE.IsOpenedBook;
                 eMCommon.SoundActionC(eMCommon.BookE.IsOpenedBook ? Common.Enum.ClipTypes.OpenBook : Common.Enum.ClipTypes.CloseBook).Invoke();
-
+                eMGame.NeedUpdateView = true;
             });
 
             #endregion
@@ -40,9 +40,19 @@ namespace Chessy.Game.EventsUI
 
             eUIGame.UpEs.WindButtonC.AddListener(delegate
             {
-                eMCommon.BookE.PageBookTC.PageBookT = PageBookTypes.Wind;
-                eMCommon.BookE.IsOpenedBook = true;
-                //e.Sound(ClipTypes.OpenBook).Invoke();
+                if (eMCommon.BookE.IsOpenedBook)
+                {
+                    eMCommon.BookE.IsOpenedBook = false;
+                    eMCommon.SoundActionC(Common.Enum.ClipTypes.CloseBook).Invoke();
+                }
+                else
+                {
+                    eMCommon.BookE.IsOpenedBook = true;
+                    eMCommon.BookE.PageBookTC.PageBookT = PageBookTypes.Wind;
+                    eMCommon.SoundActionC(Common.Enum.ClipTypes.OpenBook).Invoke();     
+                }
+
+                eMGame.NeedUpdateView = true;
             });
 
             #endregion
@@ -77,17 +87,49 @@ namespace Chessy.Game.EventsUI
 
             var centerEs = eUIGame.CenterEs;
             centerEs.ReadyButtonC.AddListener(delegate { sMGame.ForUISystems.ReadyClickS.Click(); });
-            centerEs.JoinDiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
+            centerEs.JoinDiscordButtonC.AddListener(delegate
+            {
+                Application.OpenURL(URLC.URL_DISCORD);
+                eMGame.NeedUpdateView = true;
+            });
             centerEs.KingE.Button.AddListener(sMGame.ForUISystems.GetKingClickS.Click);
-            centerEs.FriendE.ButtonC.AddListener(delegate { eMGame.ZoneInfoC.IsActiveFriend = false; });
-            centerEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate { sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Elfemale); });
-            centerEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate { sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Snowy); });
-            centerEs.OpenShopButtonC.AddListener(delegate { OpenShop(eUICommon.ShopE, eMGame); });
+            centerEs.FriendE.ButtonC.AddListener(delegate
+            {
+                eMGame.ZoneInfoC.IsActiveFriend = false;
+                eMGame.NeedUpdateView = true;
+            });
+            centerEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate
+            {
+                sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Elfemale);
+            });
+            centerEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate
+            {
+                if (!eMGame.LessonTC.HaveLesson)
+                {
+                    sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Snowy);
+                }
+            });
+            centerEs.OpenShopButtonC.AddListener(delegate
+            {
+                OpenShop(eUICommon.ShopE, eMGame);
+                eMGame.NeedUpdateView = true;
+            });
 
             //Building
-            centerEs.MarketE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Market, eMGame); });
-            centerEs.SmelterE.ExitButtonC.AddListener(delegate { Exit(BuildingTypes.Smelter, eMGame); });
-            centerEs.SmelterE.ButtonC.AddListener(delegate { eMGame.RpcPoolEs.Melt_ToMaster(); });
+            centerEs.MarketE.ExitButtonC.AddListener(delegate
+            {
+                Exit(BuildingTypes.Market, eMGame);
+                eMGame.NeedUpdateView = true;
+            });
+            centerEs.SmelterE.ExitButtonC.AddListener(delegate
+            {
+                Exit(BuildingTypes.Smelter, eMGame);
+                eMGame.NeedUpdateView = true;
+            });
+            centerEs.SmelterE.ButtonC.AddListener(delegate
+            {
+                eMGame.RpcPoolEs.Melt_ToMaster();
+            });
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.FoodToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.FoodToWood); });
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.WoodToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.WoodToFood); });
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToFood); });
@@ -108,12 +150,16 @@ namespace Chessy.Game.EventsUI
         {
             e.Sound(ClipTypes.Click).Invoke();
             e.SelectedE.BuildingsC.Set(buildingT, false);
+
+            e.NeedUpdateView = true;
         }
 
         void OpenShop(in ShopUIE shopUIE, in EntitiesModelGame e)
         {
             e.Sound(ClipTypes.Click).Invoke();
-            shopUIE.ShopZoneGOC.SetActive(false);
+            shopUIE.ShopZoneGOC.SetActive(true);
+
+            e.NeedUpdateView = true;
         }
     }
 }

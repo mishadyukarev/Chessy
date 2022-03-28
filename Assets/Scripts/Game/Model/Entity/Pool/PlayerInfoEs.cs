@@ -19,8 +19,10 @@ namespace Chessy.Game
         public float PeopleInCity;
         public int MaxAvailablePawns;
         public float WoodForBuyHouse;
-        public bool HaveKingInInventor;
         public bool HaveHeroInInventor;
+
+        public bool HaveKingInInventor;
+        public byte KingCell;
 
 
         public UnitTC MyHeroTC;

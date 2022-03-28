@@ -1,8 +1,10 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Component;
 using Chessy.Common.Entity.View;
 using Chessy.Game.Entity.View.Cell;
 using Chessy.Game.Entity.View.Cell.Unit.Effect;
 using Chessy.Game.Values;
+using Chessy.Game.View.Entity;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +13,9 @@ namespace Chessy.Game
 {
     public sealed class EntitiesViewGame
     {
+        readonly Dictionary<PlayerTypes, UnitVE> _kings = new Dictionary<PlayerTypes, UnitVE>();
+        readonly UnitVE[] _pawnEs = new UnitVE[StartValues.CELLS]; 
+
         readonly CellVEs[] _cellVEs;
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
         public CellBuildingVEs BuildingEs(in byte idx) => CellEs(idx).BuildingEs;
@@ -25,6 +30,8 @@ namespace Chessy.Game
         public readonly EntityVPool EntityVPool;
         public readonly PhotonVC PhotonC;
 
+        public UnitVE KingE(in PlayerTypes playerT) => _kings[playerT];
+        public UnitVE PawnE(in byte idxUnit) => _pawnEs[idxUnit];
 
 
         public EntitiesViewGame(out List<object> forData, in EntitiesViewCommon eVCommon)
@@ -55,6 +62,39 @@ namespace Chessy.Game
 
 
             EntityVPool = new EntityVPool(out var sounds0, out var sounds1, genZone.transform);
+
+
+
+            var parent = new GameObject("Kings").transform;
+            parent.SetParent(genZone.transform);
+
+            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+            {
+                var kingTran = GameObject.Instantiate(Resources.Load<Transform>("King+"));
+                kingTran.SetParent(parent);
+                kingTran.name = "King" + playerT;
+
+                _kings.Add(playerT, new UnitVE(kingTran.gameObject, kingTran.Find("Selected_SR+").GetComponent<SpriteRenderer>(), kingTran.Find("NotSelected_SR+").GetComponent<SpriteRenderer>()));
+            }
+
+
+            parent = new GameObject("Pawns").transform;
+            parent.SetParent(genZone.transform);
+
+            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            {
+                var pawnTran = GameObject.Instantiate(Resources.Load<Transform>("Pawn+"));
+                pawnTran.SetParent(parent);
+                pawnTran.name = "Pawn" + cell_0;
+
+                _pawnEs[cell_0] = new UnitVE(pawnTran.gameObject, pawnTran.Find("Selected_SR+").GetComponent<SpriteRenderer>(), pawnTran.Find("NotSelected_SR+").GetComponent<SpriteRenderer>());
+            }
+
+
+
+
+
+
 
             var parCells = new GameObject("Cells");
             parCells.transform.SetParent(genZone.transform);
@@ -106,8 +146,10 @@ namespace Chessy.Game
             _cellVEs = new CellVEs[cells.Length];
             for (byte idx_0 = 0; idx_0 < _cellVEs.Length; idx_0++)
             {
-                _cellVEs[idx_0] = new CellVEs(cells[idx_0], idx_0);
+                _cellVEs[idx_0] = new CellVEs(cells[idx_0]);
             }
+
+
 
             new CellRiverVEs(cells);
 

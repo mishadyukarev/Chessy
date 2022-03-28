@@ -6,6 +6,8 @@ namespace Chessy.Game.Model.Component
     {
         public LessonTypes LessonT;
 
+        public bool HaveLesson => LessonT != LessonTypes.None || LessonT != LessonTypes.End;
+
         public void SetNextLesson() => LessonT++;
     }
 }

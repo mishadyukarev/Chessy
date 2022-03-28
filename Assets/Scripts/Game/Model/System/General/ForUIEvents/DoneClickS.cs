@@ -13,22 +13,29 @@ namespace Chessy.Game.System.Model
 
         public void Click()
         {
-            if (!eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).HaveKingInInventor)
+            e.Sound(ClipTypes.Click).Invoke();
+
+            if (e.LessonTC.LessonT == Enum.LessonTypes.None)
             {
-                if (eMGame.PlayerInfoE(eMGame.CurPlayerITC.Player).MyHeroTC.HaveUnit)
+                if (!e.PlayerInfoE(e.CurPlayerITC.Player).HaveKingInInventor)
                 {
-                    eMGame.Sound(ClipTypes.Click).Invoke();
-                    eMGame.RpcPoolEs.DoneToMaster();
+                    if (e.PlayerInfoE(e.CurPlayerITC.Player).MyHeroTC.HaveUnit)
+                    {
+                        e.RpcPoolEs.DoneToMaster();
+                    }
+                    else
+                    {
+                        _mistakeS.Mistake(MistakeTypes.NeedGetHero);
+                    }
                 }
                 else
                 {
-                    _mistakeS.Mistake(MistakeTypes.NeedGetHero);
+                    _mistakeS.Mistake(MistakeTypes.NeedSetKing);
                 }
             }
-            else
-            {
-                _mistakeS.Mistake(MistakeTypes.NeedSetKing);
-            }
+
+
+            e.NeedUpdateView = true;
         }
     }
 }

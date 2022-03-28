@@ -11,8 +11,11 @@ namespace Chessy.Game.System.Model
 
         public void Click()
         {
-            eMGame.Sound(ClipTypes.Click).Invoke();
-            eMGame.IsSelectedCity = !eMGame.IsSelectedCity;
+            e.Sound(ClipTypes.Click).Invoke();
+
+            e.IsSelectedCity = !e.IsSelectedCity;
+
+            e.NeedUpdateView = true;
         }
     }
 }

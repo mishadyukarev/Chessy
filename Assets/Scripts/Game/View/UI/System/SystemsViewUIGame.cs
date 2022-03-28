@@ -44,59 +44,79 @@ namespace Chessy.Game.System.View.UI
         {
             if (_eMCommon.SceneTC.Scene != SceneTypes.Game) return;
 
+
             _timer += Time.deltaTime;
-            if (_timer < 0.04f) return;
 
-
-            _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());
-
-            ///Right
-            ///
-            var rightEs = _eUIGame.RightEs;
-            new RightZoneUIS(_eUIGame, _eMGame).Run();
-            new StatsUIS(_eUIGame, _eMGame).Run();
-            ProtectS.Run(rightEs.ProtectE, _eMGame.UnitEs(_eMGame.CellsC.Selected), _eMGame.CurPlayerITC.Player);
-            RelaxS.Run(rightEs.RelaxE, _eMGame);
-            new ShieldUIS(_eUIGame, _eMGame).Run();
-            EffectsS.Run(_eMGame.Resources, _eUIGame, _eMGame);
-            for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
+            if (_eMGame.NeedUpdateView || _timer > 0.5f)
             {
-                new UniqueButtonUIS(buttonT, _eUIGame.RightEs.Unique(buttonT), _eMGame.Resources, _eMGame).Run();
+                _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());
+
+                ///Right
+                ///
+                var rightEs = _eUIGame.RightEs;
+                new RightZoneUIS(_eUIGame, _eMGame).Run();
+                new StatsUIS(_eUIGame, _eMGame).Run();
+                ProtectS.Run(rightEs.ProtectE, _eMGame.UnitEs(_eMGame.CellsC.Selected), _eMGame.CurPlayerITC.Player);
+                RelaxS.Run(rightEs.RelaxE, _eMGame);
+                new ShieldUIS(_eUIGame, _eMGame).Run();
+                EffectsS.Run(_eMGame.Resources, _eUIGame, _eMGame);
+                for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
+                {
+                    new UniqueButtonUIS(buttonT, _eUIGame.RightEs.Unique(buttonT), _eMGame.Resources, _eMGame).Run();
+                }
+
+
+                ///Down
+                new DonerUIS(_eUIGame.DownEs.DonerE, _eMGame).Run();
+                new DownPawnUIS(_eUIGame.DownEs.PawnE, _eMGame).Run();
+                new DownToolWeaponUIS(_eUIGame.DownEs.ToolWeaponE, _eMGame).Run();
+                new DownHeroUIS(_eUIGame.DownEs.HeroE, _eMGame).Run();
+                new CostUIS().Sync(_eUIGame.DownEs.ToolWeaponE.CostE, _eMGame);
+
+                if (_eMGame.LessonTC.HaveLesson)
+                {
+                    _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(false);
+                }
+                else
+                {
+                    _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(true);
+                }
+
+
+
+
+
+
+
+
+
+
+                ///Up
+                EconomyUpS.Run(_eUIGame, _eMGame);
+                new UpWindUIS(_eUIGame, _eMGame).Run();
+                new UpSunsUIS(_eUIGame, _eMGame).Run();
+
+
+                ///Center
+                new CenterSelectorUIS(_eUIGame, _eMGame).Run();
+                new CenterEndGameUIS(_eUIGame, _eMGame).Run();
+                new CenterReadyUIS(_eUIGame, _eMGame).Run();
+                new CenterKingUIS(_eUIGame, _eMGame).Run();
+                new CenterFriendUIS().Run(_eMCommon.GameModeTC, _eUIGame, _eMGame);
+                new CenterHeroesUIS(_eUIGame, _eMGame).Run();
+                new CenterBuildingZonesUIS(_eUIGame, _eMGame).Run();
+                _eUIGame.CenterEs.MistakeE.Sync(_timer, _eMGame);
+                MotionUIS.Sync(_timer, _eUIGame, _eMGame);
+
+
+                ///Left
+                new LeftZonesUIS(_eUIGame, _eMGame).Run();
+                new EnvUIS(_eUIGame, _eMGame).Run();
+                new LeftCityUIS(_eUIGame, _eMGame).Run();
+
+                _eMGame.NeedUpdateView = false;
+                _timer = 0;
             }
-
-
-            ///Down
-            new DonerUIS(_eUIGame.DownEs.DonerE, _eMGame).Run();
-            new DownPawnUIS(_eUIGame.DownEs.PawnE, _eMGame).Run();
-            new DownToolWeaponUIS(_eUIGame.DownEs.ToolWeaponE, _eMGame).Run();
-            new DownHeroUIS(_eUIGame.DownEs.HeroE, _eMGame).Run();
-            _eUIGame.DownEs.CostE.Sync(_eMGame);
-
-
-            ///Up
-            EconomyUpS.Run(_eUIGame, _eMGame);
-            new UpWindUIS(_eUIGame, _eMGame).Run();
-            new UpSunsUIS(_eUIGame, _eMGame).Run();
-
-
-            ///Center
-            new CenterSelectorUIS(_eUIGame, _eMGame).Run();
-            new CenterEndGameUIS(_eUIGame, _eMGame).Run();
-            new CenterReadyUIS(_eUIGame, _eMGame).Run();
-            new CenterKingUIS(_eUIGame, _eMGame).Run();
-            new CenterFriendUIS().Run(_eMCommon.GameModeTC, _eUIGame, _eMGame);
-            new CenterHeroesUIS(_eUIGame, _eMGame).Run();
-            new CenterBuildingZonesUIS(_eUIGame, _eMGame).Run();
-            MotionUIS.Sync(_timer, _eUIGame, _eMGame);
-            _eUIGame.CenterEs.MistakeE.Sync(_timer, _eMGame);
-
-
-            ///Left
-            new LeftZonesUIS(_eUIGame, _eMGame).Run();
-            new EnvUIS(_eUIGame, _eMGame).Run();
-            new LeftCityUIS(_eUIGame, _eMGame).Run();
-
-            _timer = 0;
         }
     }
 }

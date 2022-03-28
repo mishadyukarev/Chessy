@@ -20,7 +20,7 @@ namespace Chessy.Game.Model.System
             {
                 if (_cellEs.BuildEs.MainE.BuildingTC.HaveBuilding && !_cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.Camp))
                 {
-                    eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
+                    e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                 }
 
                 else
@@ -29,7 +29,7 @@ namespace Chessy.Game.Model.System
                     {
                         if (!_cellEs.EnvironmentEs.YoungForestC.HaveAnyResources)
                         {
-                            eMGame.RpcPoolEs.SoundToGeneral(sender, abilityT);
+                            e.RpcPoolEs.SoundToGeneral(sender, abilityT);
 
                             _cellEs.EnvironmentEs.YoungForestC.Resources = EnvironmentValues.MAX_RESOURCES;
 
@@ -38,20 +38,20 @@ namespace Chessy.Game.Model.System
 
                         else
                         {
-                            eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
+                            e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                         }
                     }
 
                     else
                     {
-                        eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                        e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                     }
                 }
             }
 
             else
             {
-                eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

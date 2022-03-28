@@ -10,13 +10,15 @@ namespace Chessy.Game.System.Model
 
         public void Get(in UnitTypes unitT)
         {
-            if (eMGame.CurPlayerITC.Is(eMGame.WhoseMove.Player))
+            if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {
-                eMGame.Sound(ClipTypes.Click).Invoke();
+                e.Sound(ClipTypes.Click).Invoke();
 
-                eMGame.RpcPoolEs.GetHeroToMaster(unitT);
+                e.RpcPoolEs.GetHeroToMaster(unitT);
             }
-            else eMGame.Sound(ClipTypes.Mistake).Action.Invoke();
+            else e.Sound(ClipTypes.Mistake).Action.Invoke();
+
+            e.NeedUpdateView = true;
         }
     }
 }

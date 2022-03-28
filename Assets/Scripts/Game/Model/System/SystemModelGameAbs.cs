@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public abstract class SystemModelGameAbs
     {
-        protected readonly EntitiesModelGame eMGame;
-        protected SystemModelGameAbs(in EntitiesModelGame eMGame) => this.eMGame = eMGame;
+        protected readonly EntitiesModelGame e;
+        protected SystemModelGameAbs(in EntitiesModelGame eMGame) => e = eMGame;
     }
 }

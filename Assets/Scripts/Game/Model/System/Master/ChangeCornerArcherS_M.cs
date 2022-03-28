@@ -21,12 +21,12 @@ namespace Chessy.Game.Model.System
 
                 _cellEs.UnitStatsE.StepC.Steps -= StepValues.CHANGE_CORNER_ARCHER;
 
-                eMGame.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
+                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
             }
 
             else
             {
-                eMGame.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

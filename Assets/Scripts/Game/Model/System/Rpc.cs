@@ -291,7 +291,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.Shift:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).ShiftUnitS_M.Shift((byte)objects[_idx_cur++], sender);
+                        _sMGame.ShiftUnitS_M.Shift((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.Attack:
@@ -305,7 +305,8 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).SetUnitS_M.Set((UnitTypes)objects[_idx_cur++], sender);
+                        var cell = (byte)objects[_idx_cur++];
+                        _sMGame.SetUnitS_M.Set((UnitTypes)objects[_idx_cur++], sender, cell);
                         break;
 
                     case RpcMasterTypes.GetHero:
@@ -324,6 +325,8 @@ namespace Chessy.Game
 
 
             _sMGame.GetDataCellsS.Run();
+            _eMGame.NeedUpdateView = true;
+
             SyncAllMaster();
         }
 

@@ -10,12 +10,12 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (eMGame.WinnerC.Player == default)
+            if (e.WinnerC.Player == default)
             {
                 eUI.CenterEs.EndGame.SetActiveParent(false);
             }
 
-            else if (eMGame.WinnerC.Player != eMGame.CurPlayerITC.Player)
+            else if (e.WinnerC.Player != e.CurPlayerITC.Player)
             {
                 eUI.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
                 eUI.CenterEs.EndGame.SetActiveParent(true);

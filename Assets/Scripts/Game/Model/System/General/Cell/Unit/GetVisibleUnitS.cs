@@ -33,8 +33,8 @@ namespace Chessy.Game.System.Model
 
                                 if (_cellEs.UnitTC.HaveUnit)
                                 {
-                                    if (eMGame.UnitPlayerTC(idx_1).Is(PlayerTypes.First)) isVisForFirst = true;
-                                    if (eMGame.UnitPlayerTC(idx_1).Is(PlayerTypes.Second)) isVisForSecond = true;
+                                    if (e.UnitPlayerTC(idx_1).Is(PlayerTypes.First)) isVisForFirst = true;
+                                    if (e.UnitPlayerTC(idx_1).Is(PlayerTypes.Second)) isVisForSecond = true;
                                 }
                             }
                         }
@@ -55,9 +55,9 @@ namespace Chessy.Game.System.Model
                         {
                             var idx_1 = _cellEs.AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
 
-                            if (eMGame.UnitTC(idx_1).HaveUnit)
+                            if (e.UnitTC(idx_1).HaveUnit)
                             {
-                                if (!eMGame.UnitPlayerTC(idx_1).Is(_cellEs.UnitPlayerTC.Player))
+                                if (!e.UnitPlayerTC(idx_1).Is(_cellEs.UnitPlayerTC.Player))
                                 {
                                     isVisibledNextPlayer = true;
                                     break;
@@ -65,11 +65,11 @@ namespace Chessy.Game.System.Model
                             }
                         }
 
-                        _cellEs.UnitEs.ForPlayer(eMGame.NextPlayer(_cellEs.UnitPlayerTC.Player).Player).IsVisible = isVisibledNextPlayer;
+                        _cellEs.UnitEs.ForPlayer(e.NextPlayer(_cellEs.UnitPlayerTC.Player).Player).IsVisible = isVisibledNextPlayer;
                     }
                     else
                     {
-                        _cellEs.UnitEs.ForPlayer(eMGame.NextPlayer(_cellEs.UnitPlayerTC.Player).Player).IsVisible = true;
+                        _cellEs.UnitEs.ForPlayer(e.NextPlayer(_cellEs.UnitPlayerTC.Player).Player).IsVisible = true;
                     }
                 }
             }

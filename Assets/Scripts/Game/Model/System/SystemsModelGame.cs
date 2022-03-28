@@ -23,6 +23,10 @@ namespace Chessy.Game.System.Model
         internal readonly MistakeS MistakeS;
         internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
 
+
+        internal readonly SetNewUnitOnCellS SetNewUnitS;
+        internal readonly ShiftUnitS ShiftUnitS;
+
         internal readonly IncreaseWindSnowyS_M IncreaseWindSnowyS_M;
         internal readonly BuyS_M BuyS_M;
         internal readonly MeltS_M MeltS_M;
@@ -33,6 +37,9 @@ namespace Chessy.Game.System.Model
         internal readonly UpdateS_M UpdateS_M;
         internal readonly GetDataCellsS_M GetDataCellsS;
         internal readonly AttackUnit_M AttackUnit_M;
+        internal readonly SetUnitS_M SetUnitS_M;
+        internal readonly ShiftUnitS_M ShiftUnitS_M;
+
 
         public readonly SystemsModelGameForUI ForUISystems;
 
@@ -59,6 +66,9 @@ namespace Chessy.Game.System.Model
             MistakeS = new MistakeS(eMGame);
             TakeAdultForestResourcesS = new TakeAdultForestResourcesS(eMGame);
 
+            SetNewUnitS = new SetNewUnitOnCellS(this, eMGame);
+            ShiftUnitS = new ShiftUnitS(this, eMGame);
+
             IncreaseWindSnowyS_M = new IncreaseWindSnowyS_M(eMGame);
             BuyS_M = new BuyS_M(eMGame);
             MeltS_M = new MeltS_M(eMGame);
@@ -69,6 +79,8 @@ namespace Chessy.Game.System.Model
             DonerS_M = new DonerS_M(UpdateS_M, eMGame);
             GetDataCellsS = new GetDataCellsS_M(this, eMGame);
             AttackUnit_M = new AttackUnit_M(this, eMGame);
+            SetUnitS_M = new SetUnitS_M(this, eMGame);
+            ShiftUnitS_M = new ShiftUnitS_M(this, eMGame);
 
             ForUISystems = new SystemsModelGameForUI(this, eMGame);
         }
@@ -78,22 +90,24 @@ namespace Chessy.Game.System.Model
             if (newSceneT != SceneTypes.Game) return;
 
 
-            eMGame.ZoneInfoC.IsActiveFriend = _eMCommon.GameModeTC.Is(GameModes.WithFriendOff);
-            eMGame.WhoseMove.Player = StartValues.WHOSE_MOVE;
-            eMGame.CellClickTC.Click = StartValues.CELL_CLICK;
-            eMGame.IsSelectedCity = false;
-            eMGame.HaveTreeUnit = false;
-            eMGame.MistakeC.MistakeT = MistakeTypes.None;
-            eMGame.WinnerC.Player = PlayerTypes.None;
-            eMGame.ZoneInfoC = default;
-            eMGame.CellsC = default;
+            e.NeedUpdateView = true;
 
-            eMGame.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.STRENGTH_WIND, StartValues.MAX_STREANGTH_WIND, StartValues.MIN_SNREANGTH_WIND);
-            eMGame.WeatherE.SunC = new SunC(StartValues.SUN_SIDE);
-            eMGame.WeatherE.CloudC = new CloudC(StartValues.START_CLOUD);
+            e.ZoneInfoC.IsActiveFriend = _eMCommon.GameModeTC.Is(GameModes.WithFriendOff);
+            e.WhoseMove.Player = StartValues.WHOSE_MOVE;
+            e.CellClickTC.Click = StartValues.CELL_CLICK;
+            e.IsSelectedCity = false;
+            e.HaveTreeUnit = false;
+            e.MistakeC.MistakeT = MistakeTypes.None;
+            e.WinnerC.Player = PlayerTypes.None;
+            e.ZoneInfoC = default;
+            e.CellsC = default;
+
+            e.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.STRENGTH_WIND, StartValues.MAX_STREANGTH_WIND, StartValues.MIN_SNREANGTH_WIND);
+            e.WeatherE.SunC = new SunC(StartValues.SUN_SIDE);
+            e.WeatherE.CloudC = new CloudC(StartValues.START_CLOUD);
 
 
-            eMGame.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
+            e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
 
 
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
@@ -101,26 +115,26 @@ namespace Chessy.Game.System.Model
                 CellSs(cell_0).ClearAllEnvironmentS.Clear();
                 CellSs(cell_0).ClearUnitS.Clear();
 
-                eMGame.BuildingTC(cell_0).Building = BuildingTypes.None;
+                e.BuildingTC(cell_0).Building = BuildingTypes.None;
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    eMGame.CellEs(cell_0).TrailHealthC(dirT).Health = 0;
+                    e.CellEs(cell_0).TrailHealthC(dirT).Health = 0;
                 }
             }
 
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                eMGame.PlayerInfoE(playerT).ToggleScene(newSceneT);
+                e.PlayerInfoE(playerT).ToggleScene(newSceneT);
 
 
-                if (_eMCommon.GameModeTC.GameMode == GameModes.TrainingOff) eMGame.LessonTC.LessonT = (LessonTypes)1;
+                if (_eMCommon.GameModeTC.GameMode == GameModes.TrainingOff) e.LessonTC.LessonT = (LessonTypes)1;
 
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    eMGame.PlayerInfoE(playerT).ResourcesC(resT) = new ResourcesC(StartValues.Resources(resT));
+                    e.PlayerInfoE(playerT).ResourcesC(resT) = new ResourcesC(StartValues.Resources(resT));
                 }
             }
 
@@ -128,19 +142,19 @@ namespace Chessy.Game.System.Model
             switch (_eMCommon.GameModeTC.GameMode)
             {
                 case GameModes.TrainingOff:
-                    eMGame.CurPlayerITC.Player = PlayerTypes.First;
+                    e.CurPlayerITC.Player = PlayerTypes.First;
                     break;
 
                 case GameModes.WithFriendOff:
-                    eMGame.CurPlayerITC.Player = eMGame.WhoseMove.Player;
+                    e.CurPlayerITC.Player = e.WhoseMove.Player;
                     break;
 
                 case GameModes.PublicOn:
-                    eMGame.CurPlayerITC.Player = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                    e.CurPlayerITC.Player = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
                     break;
 
                 case GameModes.WithFriendOn:
-                    eMGame.CurPlayerITC.Player = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                    e.CurPlayerITC.Player = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
                     break;
 
                 default: throw new Exception();
@@ -152,17 +166,17 @@ namespace Chessy.Game.System.Model
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    var xy_0 = eMGame.CellEs(cell_0).CellE.XyC.Xy;
+                    var xy_0 = e.CellEs(cell_0).CellE.XyC.Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
-                    if (eMGame.CellEs(cell_0).IsActiveParentSelf)
+                    if (e.CellEs(cell_0).IsActiveParentSelf)
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
                             if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.Mountain))
                             {
-                                eMGame.MountainC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                e.MountainC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                                 amountMountains++;
                             }
 
@@ -172,7 +186,7 @@ namespace Chessy.Game.System.Model
                             {
                                 if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                                 {
-                                    eMGame.AdultForestC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                    e.AdultForestC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                                 }
                             }
                         }
@@ -181,7 +195,7 @@ namespace Chessy.Game.System.Model
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
                             {
-                                eMGame.AdultForestC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                e.AdultForestC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
                             }
                         }
 
@@ -189,40 +203,40 @@ namespace Chessy.Game.System.Model
 
                         if (x >= 3 && x < 4 && y == 5)
                         {
-                            eMGame.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
-                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
+                            e.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
+                            e.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
                         }
                         else if (x == 4 && y == 5)
                         {
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
 
-                            eMGame.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
-                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
-                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Right) = true;
+                            e.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
+                            e.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
+                            e.RiverEs(cell_0).HaveRive(DirectTypes.Right) = true;
                         }
                         else if (x >= 5 && x < 7 && y == 4)
                         {
-                            eMGame.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
-                            eMGame.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
+                            e.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
+                            e.RiverEs(cell_0).HaveRive(DirectTypes.Up) = true;
                         }
 
 
                         for (var dir = DirectTypes.Up; dir <= DirectTypes.Left; dir++)
                         {
-                            if (eMGame.RiverEs(cell_0).HaveRive(dir))
+                            if (e.RiverEs(cell_0).HaveRive(dir))
                             {
-                                var idx_next = eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
+                                var idx_next = e.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
 
-                                eMGame.RiverEs(idx_next).RiverTC.River = RiverTypes.EndRiver;
+                                e.RiverEs(idx_next).RiverTC.River = RiverTypes.EndRiver;
                             }
                         }
 
                         foreach (var dir in corners)
                         {
-                            var idx_next = eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
+                            var idx_next = e.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
 
-                            eMGame.RiverEs(idx_next).RiverTC.River = RiverTypes.Corner;
+                            e.RiverEs(idx_next).RiverTC.River = RiverTypes.Corner;
                         }
                     }
                 }
@@ -230,19 +244,19 @@ namespace Chessy.Game.System.Model
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    if (eMGame.CellEs(cell_0).IsActiveParentSelf)
+                    if (e.CellEs(cell_0).IsActiveParentSelf)
                     {
-                        if (eMGame.MountainC(cell_0).HaveAnyResources)
+                        if (e.MountainC(cell_0).HaveAnyResources)
                         {
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var idx_1 = eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
+                                var idx_1 = e.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
 
                                 if (UnityEngine.Random.Range(0f, 1f) <= 0.5)
                                 {
-                                    if (!eMGame.MountainC(eMGame.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx).HaveAnyResources && !eMGame.BuildingTC(idx_1).HaveBuilding)
+                                    if (!e.MountainC(e.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx).HaveAnyResources && !e.BuildingTC(idx_1).HaveBuilding)
                                     {
-                                        eMGame.HillC(idx_1).Resources = UnityEngine.Random.Range(0f, 1f);
+                                        e.HillC(idx_1).Resources = UnityEngine.Random.Range(0f, 1f);
                                     }
                                 }
                             }
@@ -255,36 +269,38 @@ namespace Chessy.Game.System.Model
 
             if (_eMCommon.GameModeTC.Is(GameModes.TrainingOff))
             {
-                eMGame.PlayerInfoE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
+                e.PlayerInfoE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
 
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    var xy_0 = eMGame.CellEs(cell_0).CellE.XyC.Xy;
+                    var xy_0 = e.CellEs(cell_0).CellE.XyC.Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
                     if (x == 7 && y == 8)
                     {
-                        eMGame.MountainC(cell_0).Resources = 0;
+                        e.MountainC(cell_0).Resources = 0;
 
                         TakeAdultForestResourcesS.Take(1f, cell_0);
 
-                        CellSs(cell_0).SetNewUnitS.Set(UnitTypes.King, PlayerTypes.Second);
+                        SetNewUnitS.Set(UnitTypes.King, PlayerTypes.Second, cell_0);
                     }
 
 
                     if (x == 8 && y == 3)
                     {
-                        eMGame.AdultForestC(cell_0).Resources = 1;
+                        e.AdultForestC(cell_0).Resources = 1;
                     }
 
                     else if (x == 6 && y == 8 || x == 8 && y == 8 || x <= 8 && x >= 6 && y == 7 || x <= 8 && x >= 6 && y == 9)
                     {
-                        eMGame.MountainC(cell_0).Resources = 0;
+                        e.MountainC(cell_0).Resources = 0;
 
-                        CellSs(cell_0).SetNewUnitS.Set(UnitTypes.Pawn, PlayerTypes.Second);
-                        CellSs(cell_0).SetExtraTWS.Set(UnityEngine.Random.Range(0f, 1f) >= 0.5f ? ToolWeaponTypes.Sword : ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST);
+                        SetNewUnitS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
+
+                        var needSword = UnityEngine.Random.Range(0f, 1f) >= 0.5f;
+                        CellSs(cell_0).SetExtraTWS.Set(needSword ? ToolWeaponTypes.Sword : ToolWeaponTypes.Shield, needSword ? LevelTypes.Second : LevelTypes.First, ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST);
                     }
                 }
             }
