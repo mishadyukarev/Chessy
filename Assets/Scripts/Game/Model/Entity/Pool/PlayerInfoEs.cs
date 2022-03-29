@@ -62,6 +62,10 @@ namespace Chessy.Game
 
         public void ToggleScene(in SceneTypes newSceneT)
         {
+            _haveBuilding[BuildingTypes.Market] = false;
+            _haveBuilding[BuildingTypes.Smelter] = false;
+
+
             PeopleInCity = StartValues.PEOPLE_IN_CITY;
             MaxAvailablePawns = StartValues.MAX_AVAILABLE_PAWN;
             HaveKingInInventor = true;

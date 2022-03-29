@@ -136,7 +136,7 @@ namespace Chessy.Game.System.Model
 
                 float protectionPercent = 0;
 
-                if (e.FertilizeC(cell_0).HaveAnyResources) protectionPercent += DamageValues.FERTILIZER;
+                //if (e.FertilizeC(cell_0).HaveAnyResources) protectionPercent += DamageValues.FERTILIZER;
                 if (e.AdultForestC(cell_0).HaveAnyResources) protectionPercent += DamageValues.ADULT_FOREST;
                 if (e.HillC(cell_0).HaveAnyResources) protectionPercent += DamageValues.HILL;
 

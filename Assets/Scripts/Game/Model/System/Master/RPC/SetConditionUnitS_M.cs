@@ -1,4 +1,6 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System;
@@ -7,35 +9,33 @@ namespace Chessy.Game.System.Model.Master
 {
     sealed class SetConditionUnitS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
-        readonly BuildS _buildS;
+        readonly SystemsModelGame _sMGame;
 
-        internal SetConditionUnitS_M(in CellEs cellEs, in BuildS buildS, in EntitiesModelGame eMGame) : base(eMGame)
+        internal SetConditionUnitS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            _cellEs = cellEs;
-            _buildS = buildS;
+            _sMGame = sMGame;
         }
 
-        internal void Set(in ConditionUnitTypes condT, in Player sender)
+        internal void Set(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
         {
             switch (condT)
             {
                 case ConditionUnitTypes.None:
-                    _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
+                    e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
                     break;
 
                 case ConditionUnitTypes.Protected:
-                    if (_cellEs.UnitMainE.ConditionTC.Is(ConditionUnitTypes.Protected))
+                    if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Protected))
                     {
                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
+                        e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
                     }
 
-                    else if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                    else if (e.UnitStepC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                     {
                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
-                        _cellEs.UnitMainE.ConditionTC.Condition = condT;
+                        e.UnitStepC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                        e.UnitConditionTC(cell_0).Condition = condT;
                     }
 
                     else
@@ -46,30 +46,49 @@ namespace Chessy.Game.System.Model.Master
 
 
                 case ConditionUnitTypes.Relaxed:
-                    if (_cellEs.UnitMainE.ConditionTC.Is(ConditionUnitTypes.Relaxed))
+                    if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
                     {
                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
+                        e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
                     }
 
-                    else if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                    else if (e.UnitStepC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                     {
                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        _cellEs.UnitMainE.ConditionTC.Condition = condT;
-                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                        e.UnitConditionTC(cell_0).Condition = condT;
+                        e.UnitStepC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
-                        if (_cellEs.UnitMainE.UnitTC.Is(UnitTypes.Pawn))
+                        if (e.UnitTC(cell_0).Is(UnitTypes.Pawn))
                         {
-                            if (!_cellEs.BuildEs.MainE.BuildingTC.HaveBuilding)
+                            if (!e.BuildingTC(cell_0).HaveBuilding)
                             {
-                                if (_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
+                                if (e.AdultForestC(cell_0).HaveAnyResources)
                                 {
-                                    if (_cellEs.UnitStatsE.HealthC.Health >= HpValues.MAX)
+                                    if (e.UnitHpC(cell_0).Health >= HpValues.MAX)
                                     {
-                                        if (e.PlayerInfoE(_cellEs.UnitMainE.PlayerTC.Player).MyHeroTC.Is(UnitTypes.Elfemale))
+                                        if (e.PlayerInfoE(e.UnitPlayerTC(cell_0).Player).MyHeroTC.Is(UnitTypes.Elfemale))
                                         {
-                                            _buildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, _cellEs.UnitMainE.PlayerTC.Player, BuildingValues.MAX_HP);
+                                            _sMGame.CellSs(cell_0).BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(cell_0).Player, BuildingValues.MAX_HP);
                                         }
+                                    }
+                                }
+                            }
+
+                            if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            {
+                                if (e.LessonTC.Is(LessonTypes.RelaxExtractPawn))
+                                {
+                                    e.LessonTC.SetNextLesson();
+                                }
+                            }
+                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                            {
+                                if (e.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Pick))
+                                {
+                                    if (e.LessonTC.Is(LessonTypes.ExtractHillPawnHere))
+                                    {
+                                        e.LessonTC.SetNextLesson();
+                                        e.IsSelectedCity = true;
                                     }
                                 }
                             }

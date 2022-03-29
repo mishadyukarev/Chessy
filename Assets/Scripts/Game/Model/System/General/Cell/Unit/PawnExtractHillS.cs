@@ -14,7 +14,7 @@ namespace Chessy.Game.System.Model
 
         internal void Get()
         {
-            _cellEs.UnitEs.ExtractE.PawnExtractAdultForestE.Resources = 0;
+            _cellEs.UnitEs.ExtractE.PawnExtractHillE.Resources = 0;
 
             if (_cellEs.UnitTC.Is(UnitTypes.Pawn) && _cellEs.UnitExtraTWE.ToolWeaponTC.Is(ToolWeaponTypes.Pick))
             {
@@ -26,7 +26,7 @@ namespace Chessy.Game.System.Model
                     if (_cellEs.EnvironmentEs.HillC.Resources < extract) extract = _cellEs.EnvironmentEs.HillC.Resources;
 
 
-                    _cellEs.UnitEs.ExtractE.PawnExtractAdultForestE.Resources = extract;
+                    _cellEs.UnitEs.ExtractE.PawnExtractHillE.Resources = extract;
 
                 }
             }

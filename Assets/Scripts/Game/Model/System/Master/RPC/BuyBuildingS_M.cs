@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Photon.Realtime;
 using System;
@@ -164,8 +165,19 @@ namespace Chessy.Game.System.Model
 
             else
             {
+                if(e.LessonTC.LessonT == Enum.LessonTypes.BuyingHouse)
+                {
+                    e.LessonTC.SetNextLesson();
+                }
+
                 e.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
+
+            if (e.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
+            {
+                e.LessonTC.SetNextLesson();
+            }
+
         }
     }
 }

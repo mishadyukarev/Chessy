@@ -1,0 +1,28 @@
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game.View.UI
+{
+    sealed class MotionUpUIS : SystemModelGameAbs, IEcsRunSystem
+    {
+        readonly TextUIC _motionTextC;
+
+        internal MotionUpUIS(in TextUIC motionTextC, in EntitiesModelGame eMGame) : base(eMGame)
+        {
+            _motionTextC = motionTextC;
+        }
+
+        public void Run()
+        {
+            if (e.LessonTC.HaveLesson)
+            {
+                _motionTextC.GameObject.SetActive(false);
+            }
+            else
+            {
+                _motionTextC.Parent_T.gameObject.SetActive(true);
+
+                _motionTextC.TextUI.text = "Motions: " + e.MotionsC.Motions.ToString();
+            }
+        }
+    }
+}

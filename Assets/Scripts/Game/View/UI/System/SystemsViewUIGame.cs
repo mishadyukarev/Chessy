@@ -1,8 +1,10 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 using Chessy.Game.System.View.UI.Center;
 using Chessy.Game.System.View.UI.Down;
+using Chessy.Game.View.UI;
 using Chessy.Game.View.UI.System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,11 +20,12 @@ namespace Chessy.Game.System.View.UI
         readonly EntitiesViewUIGame _eUIGame;
         readonly EntitiesModelGame _eMGame;
 
-        public readonly RelaxUIS RelaxS;
-        public readonly EconomyUpUIS EconomyUpS;
-        public readonly EffectsUIS EffectsS;
-        public readonly SyncBookUIS SyncBookUIS;
-        public readonly ProtectUIS ProtectS;
+        readonly MotionUpUIS _motionUpS;
+        readonly RelaxUIS _relaxS;
+        readonly EconomyUpUIS _economyUpS;
+        readonly EffectsUIS _effectsS;
+        readonly SyncBookUIS _syncBookS;
+        readonly ProtectUIS _protectS;
 
 
         public SystemsViewUIGame(in EntitiesModelCommon eMCommon, in EntitiesViewUIGame eUIGame, in EntitiesModelGame eMGame)
@@ -31,8 +34,11 @@ namespace Chessy.Game.System.View.UI
             _eUIGame = eUIGame;
             _eMGame = eMGame;
 
-            EconomyUpS = new EconomyUpUIS(new Dictionary<ResourceTypes, float>());
-            EffectsS = new EffectsUIS(new Dictionary<EffectTypes, bool>());
+            _economyUpS = new EconomyUpUIS(new Dictionary<ResourceTypes, float>());
+            _effectsS = new EffectsUIS(new Dictionary<EffectTypes, bool>());
+
+
+            _motionUpS = new MotionUpUIS(eUIGame.UpEs.MotionsTextC, eMGame);
 
             _runs = new List<IEcsRunSystem>()
             {
@@ -43,7 +49,7 @@ namespace Chessy.Game.System.View.UI
         public void Run()
         {
             if (_eMCommon.SceneTC.Scene != SceneTypes.Game) return;
-
+            
 
             _timer += Time.deltaTime;
 
@@ -56,10 +62,10 @@ namespace Chessy.Game.System.View.UI
                 var rightEs = _eUIGame.RightEs;
                 new RightZoneUIS(_eUIGame, _eMGame).Run();
                 new StatsUIS(_eUIGame, _eMGame).Run();
-                ProtectS.Run(rightEs.ProtectE, _eMGame.UnitEs(_eMGame.CellsC.Selected), _eMGame.CurPlayerITC.Player);
-                RelaxS.Run(rightEs.RelaxE, _eMGame);
+                _protectS.Run(rightEs.ProtectE, _eMGame.UnitEs(_eMGame.CellsC.Selected), _eMGame.CurPlayerITC.Player);
+                _relaxS.Run(rightEs.RelaxE, _eMGame);
                 new ShieldUIS(_eUIGame, _eMGame).Run();
-                EffectsS.Run(_eMGame.Resources, _eUIGame, _eMGame);
+                _effectsS.Run(_eMGame.Resources, _eUIGame, _eMGame);
                 for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
                 {
                     new UniqueButtonUIS(buttonT, _eUIGame.RightEs.Unique(buttonT), _eMGame.Resources, _eMGame).Run();
@@ -73,13 +79,13 @@ namespace Chessy.Game.System.View.UI
                 new DownHeroUIS(_eUIGame.DownEs.HeroE, _eMGame).Run();
                 new CostUIS().Sync(_eUIGame.DownEs.ToolWeaponE.CostE, _eMGame);
 
-                if (_eMGame.LessonTC.HaveLesson)
+                if (_eMGame.LessonTC.LessonT  == LessonTypes.None || _eMGame.LessonTC.LessonT >= LessonTypes.OpenTown)
                 {
-                    _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(false);
+                    _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(true);
                 }
                 else
                 {
-                    _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(true);
+                    _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(false);
                 }
 
 
@@ -92,9 +98,10 @@ namespace Chessy.Game.System.View.UI
 
 
                 ///Up
-                EconomyUpS.Run(_eUIGame, _eMGame);
+                _economyUpS.Run(_eUIGame, _eMGame);
                 new UpWindUIS(_eUIGame, _eMGame).Run();
                 new UpSunsUIS(_eUIGame, _eMGame).Run();
+                _motionUpS.Run();
 
 
                 ///Center

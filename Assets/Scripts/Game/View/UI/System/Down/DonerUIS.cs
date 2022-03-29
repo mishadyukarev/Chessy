@@ -16,7 +16,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (e.LessonTC.LessonT == LessonTypes.None)
+            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
             {
                 _donerE.ButtonC.SetActive(true);
                 _donerE.WaitGoC.SetActive(true);

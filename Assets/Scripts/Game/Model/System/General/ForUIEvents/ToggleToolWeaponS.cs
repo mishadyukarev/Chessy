@@ -1,5 +1,6 @@
 ﻿using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 
 namespace Chessy.Game.System.Model
 {
@@ -15,64 +16,71 @@ namespace Chessy.Game.System.Model
 
             e.Sound(ClipTypes.Click).Invoke();
 
-            if (e.LessonTC.LessonT == Enum.LessonTypes.None)
+
+            if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {
-                if (e.CurPlayerITC.Is(e.WhoseMove.Player))
+                if (e.LessonTC.Is(LessonTypes.GiveTakePickPawn))
                 {
-                    if (e.PlayerInfoE(e.WhoseMove.Player).LevelE(LevelTypes.First).UnitsInGame(UnitTypes.Pawn) > 0)
+                    if (twT == ToolWeaponTypes.Pick)
                     {
-                        //if (tw == ToolWeaponTypes.Pick)
-                        //{
-                        //    TryOnHint(VideoClipTypes.Pick);
-                        //}
-                        //else
-                        //{
-                        //    TryOnHint(VideoClipTypes.UpgToolWeapon);
-                        //}
-
-
-                        var levT = LevelTypes.First;
-
-                        if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
-                        {
-                            if (e.CellClickTC.Is(CellClickTypes.GiveTakeTW))
-                            {
-                                if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
-                                {
-                                    if (e.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
-                                }
-                                else if (twT != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
-                            }
-                            else
-                            {
-                                levT = e.SelectedE.ToolWeaponC.LevelT;
-                            }
-                        }
-                        else if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.Sword)
-                        {
-                            levT = LevelTypes.Second;
-                        }
-
-                        e.SelectedE.ToolWeaponC.ToolWeaponT = twT;
-                        e.SelectedE.ToolWeaponC.LevelT = levT;
-
-
-                        e.CellClickTC.Click = CellClickTypes.GiveTakeTW;
+                        e.LessonTC.SetNextLesson();
                     }
-                    else
+                }
+
+                if (e.PlayerInfoE(e.WhoseMove.Player).LevelE(LevelTypes.First).UnitsInGame(UnitTypes.Pawn) > 0)
+                {
+                    //if (tw == ToolWeaponTypes.Pick)
+                    //{
+                    //    TryOnHint(VideoClipTypes.Pick);
+                    //}
+                    //else
+                    //{
+                    //    TryOnHint(VideoClipTypes.UpgToolWeapon);
+                    //}
+
+
+                    var levT = LevelTypes.First;
+
+                    if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
                     {
-                        e.MistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
-                        e.MistakeC.Timer = 0;
-                        e.Sound(ClipTypes.WritePensil).Invoke();
+                        if (e.CellClickTC.Is(CellClickTypes.GiveTakeTW))
+                        {
+                            if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
+                            {
+                                if (e.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                            }
+                            else if (twT != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
+                        }
+                        else
+                        {
+                            levT = e.SelectedE.ToolWeaponC.LevelT;
+                        }
                     }
+                    else if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.Sword)
+                    {
+                        levT = LevelTypes.Second;
+                    }
+
+                    e.SelectedE.ToolWeaponC.ToolWeaponT = twT;
+                    e.SelectedE.ToolWeaponC.LevelT = levT;
+
+
+                    e.CellClickTC.Click = CellClickTypes.GiveTakeTW;
                 }
                 else
                 {
-                    e.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
+                    e.MistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
                     e.MistakeC.Timer = 0;
-                    e.Sound(ClipTypes.WritePensil).Action.Invoke();
+                    e.Sound(ClipTypes.WritePensil).Invoke();
                 }
             }
+            else
+            {
+                e.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
+                e.MistakeC.Timer = 0;
+                e.Sound(ClipTypes.WritePensil).Action.Invoke();
+            }
+
 
             e.NeedUpdateView = true;
         }

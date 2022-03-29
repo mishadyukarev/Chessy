@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 using Chessy.Game.System.Model;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -9,24 +10,22 @@ namespace Chessy.Game.Model.System
 {
     sealed class BuildFarmS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
-        readonly BuildS _buildS;
+        readonly SystemsModelGame _sMGame;
 
-        internal BuildFarmS_M(in CellEs cellEs, in BuildS buildS, in EntitiesModelGame eMGame) : base(eMGame)
+        internal BuildFarmS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            _cellEs = cellEs;
-            _buildS = buildS;
+            _sMGame = sMGame;
         }
 
-        internal void Build(in Player sender)
+        internal void Build(in byte cell_0, in Player sender)
         {
             var whoseMove = e.WhoseMove.Player;
 
-            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.SET_FARM)
+            if (e.UnitStepC(cell_0).Steps >= StepValues.SET_FARM)
             {
-                if (!_cellEs.BuildEs.MainE.BuildingTC.HaveBuilding || _cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.Camp))
+                if (!e.BuildingTC(cell_0).HaveBuilding || e.BuildingTC(cell_0).Is(BuildingTypes.Camp))
                 {
-                    if (!_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
+                    if (!e.AdultForestC(cell_0).HaveAnyResources)
                     {
                         var needRes = new Dictionary<ResourceTypes, float>();
                         var canBuild = true;
@@ -54,12 +53,21 @@ namespace Chessy.Game.Model.System
 
                             e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
 
-                            _cellEs.EnvironmentEs.YoungForestC.Resources = 0;
+                            e.YoungForestC(cell_0).Resources = 0;
+
+                            _sMGame.CellSs(cell_0).BuildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP);
+
+                            e.UnitStepC(cell_0).Steps -= StepValues.SET_FARM;
 
 
-                            _buildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP);
+                            if (e.LessonTC.Is(LessonTypes.BuildingFarmHere))
+                            {
+                                if(cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
+                                {
+                                    e.LessonTC.SetNextLesson();
+                                }
+                            }
 
-                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.SET_FARM;
                         }
 
                         else

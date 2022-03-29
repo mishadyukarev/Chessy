@@ -1,4 +1,6 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -27,6 +29,29 @@ namespace Chessy.Game.System.Model
 
             if (!e.UnitTC(cell_to).Is(UnitTypes.Undead))
             {
+                if (e.UnitTC(cell_to).Is(UnitTypes.Pawn))
+                {
+                    if (cell_to == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                    {
+                        if (e.LessonTC.Is(LessonTypes.ShiftPawnHere))
+                        {
+                            e.LessonTC.SetNextLesson();
+                        }
+                    }
+
+                    if (cell_to == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
+                    {
+                        if (e.LessonTC.Is(LessonTypes.DrinkWaterHere))
+                        {
+                            e.LessonTC.SetNextLesson();
+                        }
+                    }
+                }
+
+
+
+
+
                 if (e.UnitTC(cell_to).Is(UnitTypes.Snowy))
                 {
                     if (e.UnitWaterC(cell_to).Water > 0)

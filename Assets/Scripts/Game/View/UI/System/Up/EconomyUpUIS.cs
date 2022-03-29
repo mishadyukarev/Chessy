@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public struct EconomyUpUIS
+    public sealed class EconomyUpUIS
     {
         readonly Dictionary<ResourceTypes, float> _extracts;
 
@@ -16,11 +16,7 @@ namespace Chessy.Game
 
         public void Run(in EntitiesViewUIGame eUI, in Chessy.Game.Entity.Model.EntitiesModelGame e)
         {
-            if (e.LessonTC.HaveLesson)
-            {
-                eUI.UpEs.EconomyE.ParenGOC.SetActive(false);
-            }
-            else
+            if (e.LessonTC.LessonT >= Enum.LessonTypes.BuyingHouse || !e.LessonTC.HaveLesson)
             {
                 eUI.UpEs.EconomyE.ParenGOC.SetActive(true);
 
@@ -81,13 +77,10 @@ namespace Chessy.Game
 
                     eUI.UpEs.EconomyE.Economy(res).TextUI.text = name;
                 }
-
-
-
-
-
-
-                eUI.UpEs.MotionsTextC.TextUI.text = "Motions: " + e.MotionsC.Motions.ToString();
+            }
+            else
+            {
+                eUI.UpEs.EconomyE.ParenGOC.SetActive(false);
             }
         }
     }

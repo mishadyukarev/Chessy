@@ -86,11 +86,11 @@ namespace Chessy.Game
                         break;
 
                     case AbilityTypes.Seed:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).SeedPawnS_M.Seed(abilityT, sender);
+                        _sMGame.SeedPawnS_M.Seed(abilityT, sender, (byte)objects[_idx_cur++]);
                         break;
 
                     case AbilityTypes.SetFarm:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).BuildFarmS_M.Build(sender);
+                        _sMGame.BuildFarmS_M.Build((byte)objects[_idx_cur++], sender);
                         break;
 
                     case AbilityTypes.DestroyBuilding:
@@ -301,7 +301,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).SetConditionUnitS_M.Set((ConditionUnitTypes)objects[_idx_cur++], sender);
+                        _sMGame.SetConditionUnitS_M.Set((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                         break;
 
                     case RpcMasterTypes.SetUnit:

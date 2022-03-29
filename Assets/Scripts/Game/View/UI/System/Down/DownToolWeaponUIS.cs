@@ -15,7 +15,7 @@ namespace Chessy.Game
         public void Run()
         {
 
-            if (e.LessonTC.LessonT == Enum.LessonTypes.None)
+            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.GiveTakePickPawn)
             {
                 _twE.ParentGOC.SetActive(true);
 

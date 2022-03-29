@@ -62,14 +62,12 @@ namespace Chessy.Game.Model.System
         internal readonly CurcularAttackKingS_M CurcularAttackKingS_M;
         internal readonly FirePawnS_M FirePawnS_M;
         internal readonly PutOutFirePawnS_M PutOutFirePawnS_M;
-        internal readonly SeedPawnS_M SeedPawnS_M;
         internal readonly ChangeCornerArcherS_M ChangeCornerArcherS_M;
         internal readonly StunElfemaleS_M StunElfemaleS_M;
         internal readonly FireArcherS_M FireArcherS_M;
         internal readonly GrowAdultForestS_M GrowAdultForestS_M;
-        internal readonly BuildFarmS_M BuildFarmS_M;
         internal readonly DestroyBuildingS_M DestroyBuildingS_M;
-        internal readonly SetConditionUnitS_M SetConditionUnitS_M;
+
         internal readonly ChangeDirectionWindMS ChangeDirectionWindS_M;
   
 
@@ -134,7 +132,6 @@ namespace Chessy.Game.Model.System
             CurcularAttackKingS_M = new CurcularAttackKingS_M(cellE_0, sMGame, eMGame);
             FirePawnS_M = new FirePawnS_M(cellE_0, eMGame);
             PutOutFirePawnS_M = new PutOutFirePawnS_M(cellE_0, eMGame);
-            SeedPawnS_M = new SeedPawnS_M(cellE_0, eMGame);
             ChangeCornerArcherS_M = new ChangeCornerArcherS_M(cellE_0, eMGame);
             StunElfemaleS_M = new StunElfemaleS_M(cellE_0, eMGame);
             FireArcherS_M = new FireArcherS_M(cellE_0, eMGame);
@@ -145,11 +142,9 @@ namespace Chessy.Game.Model.System
 
             BuildS = new BuildS(cellE_0.BuildEs.MainE);
             DestroyBuildingS = new AttackBuildingS(cellE_0, eMGame);
-            BuildFarmS_M = new BuildFarmS_M(cellE_0, BuildS, eMGame);
             DestroyBuildingS_M = new DestroyBuildingS_M(cellE_0, DestroyBuildingS, eMGame);
 
             ChangeDirectionWindS_M = new ChangeDirectionWindMS(cellE_0, eMGame);
-            SetConditionUnitS_M = new SetConditionUnitS_M(cellE_0, BuildS, eMGame);
         }
 
     }

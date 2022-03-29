@@ -21,11 +21,17 @@ namespace Chessy.Game.View.UI.System
         {
             var whoseMove = _eMGame.WhoseMove.Player;
 
+
+            for (var lessonT = (LessonTypes)1; lessonT < LessonTypes.End; lessonT++)
+            {
+                _centerUIEs.LessonGOC(lessonT).SetActive(lessonT == _eMGame.LessonTC.LessonT);
+            }
+
             _centerUIEs.BookGuidSelectionE.ParentGOVC.SetActive(_eMCommon.BookE.IsOpenedBook);
-            _centerUIEs.SettingUnitLessonE.ParengGOVC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingKing);
-            _centerUIEs.GettingUnitLessonE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.PickGod);
-            _centerUIEs.SettingPawnE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingPawn);
-            _centerUIEs.SettingGodLessonE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingGod);
+            //_centerUIEs.SettingUnitLessonE.ParengGOVC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingKing);
+            //_centerUIEs.GettingUnitLessonE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.PickGod);
+            //_centerUIEs.SettingPawnE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingPawn);
+            //_centerUIEs.SettingGodLessonE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingGod);
         }
     }
 }

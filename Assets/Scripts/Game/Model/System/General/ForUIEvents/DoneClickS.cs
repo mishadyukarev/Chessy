@@ -15,25 +15,22 @@ namespace Chessy.Game.System.Model
         {
             e.Sound(ClipTypes.Click).Invoke();
 
-            if (e.LessonTC.LessonT == Enum.LessonTypes.None)
+
+            if (!e.PlayerInfoE(e.CurPlayerITC.Player).HaveKingInInventor)
             {
-                if (!e.PlayerInfoE(e.CurPlayerITC.Player).HaveKingInInventor)
+                if (e.PlayerInfoE(e.CurPlayerITC.Player).MyHeroTC.HaveUnit)
                 {
-                    if (e.PlayerInfoE(e.CurPlayerITC.Player).MyHeroTC.HaveUnit)
-                    {
-                        e.RpcPoolEs.DoneToMaster();
-                    }
-                    else
-                    {
-                        _mistakeS.Mistake(MistakeTypes.NeedGetHero);
-                    }
+                    e.RpcPoolEs.DoneToMaster();
                 }
                 else
                 {
-                    _mistakeS.Mistake(MistakeTypes.NeedSetKing);
+                    _mistakeS.Mistake(MistakeTypes.NeedGetHero);
                 }
             }
-
+            else
+            {
+                _mistakeS.Mistake(MistakeTypes.NeedSetKing);
+            }
 
             e.NeedUpdateView = true;
         }

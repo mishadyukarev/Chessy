@@ -1,7 +1,5 @@
-﻿using Chessy.Common;
-using Chessy.Common.Component;
+﻿using Chessy.Common.Component;
 using Chessy.Game.Enum;
-using Chessy.Game.View.UI.Center;
 using Chessy.Game.View.UI.Entity;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +11,7 @@ namespace Chessy.Game
     public struct CenterUIEs
     {
         readonly Dictionary<UnitTypes, CenterHeroUIE> _ents;
+        readonly Dictionary<LessonTypes, GameObjectVC> _lessonGOs;
 
         public readonly GameObjectVC Zone;
 
@@ -36,15 +35,16 @@ namespace Chessy.Game
         #region Lesson
 
         public readonly SelectionBookGuidUIE BookGuidSelectionE;
-        public readonly SettingUnitLessonUIE SettingUnitLessonE;
-        public readonly GettingUnitLessonUIE GettingUnitLessonE;
-        public readonly SettingPawnUIE SettingPawnE;
-        public readonly SettingGodLessonUIE SettingGodLessonE;
+        //public readonly SettingUnitLessonUIE SettingUnitLessonE;
+        //public readonly GettingUnitLessonUIE GettingUnitLessonE;
+        //public readonly SettingPawnUIE SettingPawnE;
+        //public readonly SettingGodLessonUIE SettingGodLessonE;
 
         #endregion
 
 
         public CenterHeroUIE HeroE(in UnitTypes unit) => _ents[unit];
+        public GameObjectVC LessonGOC(in LessonTypes lessonT) => _lessonGOs[lessonT];
 
 
         internal CenterUIEs(in Transform centerZone)
@@ -69,11 +69,18 @@ namespace Chessy.Game
             MistakeE = new MistakeUIE(centerZone);
 
             var training = centerZone.Find("Lesson+");
+
+            _lessonGOs = new Dictionary<LessonTypes, GameObjectVC>();
+            for (var lessonT = (LessonTypes)1; lessonT < LessonTypes.End; lessonT++)
+            {
+                _lessonGOs.Add(lessonT, new GameObjectVC(training.Find(lessonT.ToString() + "+").gameObject));
+            }
+
             BookGuidSelectionE = new SelectionBookGuidUIE(training.Find("SelectionGuidBook+"));
-            SettingUnitLessonE = new SettingUnitLessonUIE(training.Find("NeedSetKing+"));
-            GettingUnitLessonE = new GettingUnitLessonUIE(training.Find("GettingGod+"));
-            SettingPawnE = new SettingPawnUIE(training.Find("SettingPawn+"));
-            SettingGodLessonE = new SettingGodLessonUIE(training.Find("SettingGod+"));
+            //SettingUnitLessonE = new SettingUnitLessonUIE(training.Find("NeedSetKing+"));
+            //GettingUnitLessonE = new GettingUnitLessonUIE(training.Find("GettingGod+"));
+            //SettingPawnE = new SettingPawnUIE(training.Find("SettingPawn+"));
+            //SettingGodLessonE = new SettingGodLessonUIE(training.Find("SettingGod+"));
 
 
             var buildingZone = centerZone.Find("Building+");

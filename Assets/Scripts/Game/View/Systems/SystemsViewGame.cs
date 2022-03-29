@@ -57,9 +57,9 @@ namespace Chessy.Game.System.View
                 }
 
 
-                _timerForUpdate += Time.deltaTime;
+                //_timerForUpdate += Time.deltaTime;
 
-                if (_eMGame.NeedUpdateView || _timerForUpdate >= 0.5f)
+                if (_eMGame.NeedUpdateView/* || _timerForUpdate >= 0.5f*/)
                 {
                     for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                     {

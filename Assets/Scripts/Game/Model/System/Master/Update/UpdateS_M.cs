@@ -125,72 +125,76 @@ namespace Chessy.Game.System.Model.Master
 
 
 
-                    if (!e.UnitTC(cell_0).IsAnimal)
+
+                    if (e.UnitTC(cell_0).Is(UnitTypes.Pawn)) e.ResourcesC(e.UnitPlayerTC(cell_0).Player, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+
+                    if (gameModeTC.Is(GameModes.TrainingOff))
                     {
-                        if (e.UnitTC(cell_0).Is(UnitTypes.Pawn)) e.ResourcesC(e.UnitPlayerTC(cell_0).Player, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
-
-                        if (gameModeTC.Is(GameModes.TrainingOff))
+                        if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.Second))
                         {
-                            if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.Second))
-                            {
-                                e.UnitHpC(cell_0).Health = HpValues.MAX;
-                            }
+                            e.UnitHpC(cell_0).Health = HpValues.MAX;
                         }
+                    }
 
 
-                        if (e.HaveFire(cell_0))
+                    if (e.HaveFire(cell_0))
+                    {
+                        e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                    }
+
+                    else
+                    {
+                        if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Protected))
                         {
-                            e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
-                        }
-
-                        else
-                        {
-                            if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Protected))
+                            if (e.UnitHpC(cell_0).Health >= HpValues.MAX)
                             {
-                                if (e.UnitHpC(cell_0).Health >= HpValues.MAX)
+                                if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff))
                                 {
-                                    if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff))
+                                    if (e.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter) || !e.BuildingTC(cell_0).HaveBuilding)
                                     {
-                                        if (e.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter) || !e.BuildingTC(cell_0).HaveBuilding)
+                                        if (gameModeTC.Is(GameModes.TrainingOff))
                                         {
-                                            if (gameModeTC.Is(GameModes.TrainingOff))
+                                            if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                                             {
-                                                if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
+                                                if (e.BuildingsInfo(e.UnitPlayerTC(cell_0).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
                                                 {
-                                                    if (e.BuildingsInfo(e.UnitPlayerTC(cell_0).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
-                                                    {
-                                                        //Es.BuildE(idx_camp).BuildingE.Destroy(Es);
-                                                    }
-
-
-                                                    //Es.BuildE(cell_0).BuildingE.SetNew(BuildingTypes.Camp, Es.UnitPlayerTC(cell_0).Player);
+                                                    //Es.BuildE(idx_camp).BuildingE.Destroy(Es);
                                                 }
-                                            }
-                                            else
-                                            {
-                                                if (e.BuildingsInfo(e.UnitPlayerTC(cell_0).Player, e.BuildingLevelTC(cell_0).Level, BuildingTypes.Camp).IdxC.HaveAny)
-                                                {
-                                                    //Es.BuildingE(idx_camp).Destroy(Es);
-                                                }
+
 
                                                 //Es.BuildE(cell_0).BuildingE.SetNew(BuildingTypes.Camp, Es.UnitPlayerTC(cell_0).Player);
                                             }
                                         }
+                                        else
+                                        {
+                                            if (e.BuildingsInfo(e.UnitPlayerTC(cell_0).Player, e.BuildingLevelTC(cell_0).Level, BuildingTypes.Camp).IdxC.HaveAny)
+                                            {
+                                                //Es.BuildingE(idx_camp).Destroy(Es);
+                                            }
+
+                                            //Es.BuildE(cell_0).BuildingE.SetNew(BuildingTypes.Camp, Es.UnitPlayerTC(cell_0).Player);
+                                        }
                                     }
                                 }
                             }
+                        }
 
-                            else if (!e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
+                        else if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
+                        {
+
+                        }
+
+                        else
+                        {
+                            if (e.UnitStepC(cell_0).HaveAnySteps)
                             {
-                                if (e.UnitStepC(cell_0).HaveAnySteps)
-                                {
-                                    e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.Protected;
-                                }
+                                e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.Protected;
                             }
                         }
-                        e.UnitStepC(cell_0).Steps = StepValues.MAX;
                     }
+                    e.UnitStepC(cell_0).Steps = StepValues.MAX;
                 }
+                
 
 
 
@@ -336,31 +340,19 @@ namespace Chessy.Game.System.Model.Master
                         e.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
-                else if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed)
-                    && e.UnitHpC(cell_0).Health >= HpValues.MAX)
-                {
-                    e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.Protected;
-                }
 
-
-                if (e.PawnExtractHillE(cell_0).HaveAnyResources)
+                else if (e.PawnExtractHillE(cell_0).HaveAnyResources)
                 {
                     var extract = e.PawnExtractHillE(cell_0).Resources;
 
                     e.HillC(cell_0).Resources -= extract;
                     e.PlayerInfoE(e.UnitPlayerTC(cell_0).Player).ResourcesC(ResourceTypes.Ore).Resources += extract;
+                }
 
-
-                    //if (E.AdultForestC(cell_0).HaveAny)
-                    //{
-
-                    //}
-                    //else
-                    //{
-                    //    E.BuildTC(cell_0).Build = BuildingTypes.None;
-
-                    //    E.YoungForestC(cell_0).Resources = CellEnvironment_Values.ENVIRONMENT_MAX;
-                    //}
+                else if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed)
+                    && e.UnitHpC(cell_0).Health >= HpValues.MAX)
+                {
+                    e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.Protected;
                 }
 
 

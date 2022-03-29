@@ -27,6 +27,13 @@ namespace Chessy.Game.Values
 
         public const float NEED_WOOD_FOR_BUILDING_HOUSE = 0.15f;
 
+        public const byte CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON = 69;
+        public const byte CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON = 58;
+        public const byte CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON = 59;
+        public const byte CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON = 59;
+        public const byte CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON = 70;
+        public const byte CELL_MOUNTAIN_LESSON = 81;
+
         public static float SpawnPercent(in EnvironmentTypes env)
         {
             switch (env)

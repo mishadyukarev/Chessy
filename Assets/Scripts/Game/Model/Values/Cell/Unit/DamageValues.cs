@@ -30,7 +30,7 @@
         public const float PROTECTED = 0.25f;
         public const float RELAXED = -0.25f;
 
-        public const float FERTILIZER = -0.1f;
+        //public const float FERTILIZER = -0.1f;
         public const float ADULT_FOREST = 0.3f;
         public const float HILL = 0.2f;
 

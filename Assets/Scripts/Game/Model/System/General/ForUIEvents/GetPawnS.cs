@@ -1,5 +1,6 @@
 ﻿using Chessy.Common.Interface;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 
 namespace Chessy.Game.System.Model
 {
@@ -17,9 +18,10 @@ namespace Chessy.Game.System.Model
 
             var curPlayerI = e.CurPlayerITC.Player;
 
-            if (e.LessonTC.HaveLesson)
+
+            if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {
-                if(e.LessonTC.LessonT == Enum.LessonTypes.SettingPawn)
+                if (e.PlayerInfoE(curPlayerI).PeopleInCity >= 1)
                 {
                     var pawnsInGame = e.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
                         + e.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
@@ -33,50 +35,42 @@ namespace Chessy.Game.System.Model
                     }
                     else
                     {
-                        e.LessonTC.SetNextLesson();
-                    }
-                }
-            }
-            else
-            {
-                if (e.CurPlayerITC.Is(e.WhoseMove.Player))
-                {
-                    if (e.PlayerInfoE(curPlayerI).PeopleInCity >= 1)
-                    {
-                        var pawnsInGame = e.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
-                            + e.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
-
-                        if (pawnsInGame < e.PlayerInfoE(curPlayerI).MaxAvailablePawns)
+                        if (e.LessonTC.LessonT == LessonTypes.SettingPawn)
                         {
-                            e.SelectedUnitE.UnitTC.Unit = UnitTypes.Pawn;
-                            e.SelectedUnitE.LevelTC.Level = LevelTypes.First;
-
-                            e.CellClickTC.Click = CellClickTypes.SetUnit;
+                            e.LessonTC.SetNextLesson();
                         }
+                        else if (e.LessonTC.LessonT == LessonTypes.OpenTown || e.LessonTC.LessonT == LessonTypes.BuyingHouse)
+                        {
+
+                        }
+
                         else
                         {
+
                             e.MistakeC.Set(MistakeTypes.NeedBuildingHouses, 0);
                             e.Sound(ClipTypes.WritePensil).Action.Invoke();
                             e.IsSelectedCity = true;
                         }
+
                     }
-                    else
-                    {
-                        e.Sound(ClipTypes.WritePensil).Action.Invoke();
-
-                        e.MistakeC.Set(MistakeTypes.NeedMorePeopleInCity, 0);
-                        //..E.Sound(ClipTypes.Mistake).Action.Invoke();
-                    }
-
-
                 }
                 else
                 {
-                    e.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
-                    e.MistakeC.Timer = 0;
                     e.Sound(ClipTypes.WritePensil).Action.Invoke();
+
+                    e.MistakeC.Set(MistakeTypes.NeedMorePeopleInCity, 0);
+                    //..E.Sound(ClipTypes.Mistake).Action.Invoke();
                 }
+
+
             }
+            else
+            {
+                e.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
+                e.MistakeC.Timer = 0;
+                e.Sound(ClipTypes.WritePensil).Action.Invoke();
+            }
+
 
             e.NeedUpdateView = true;
         }

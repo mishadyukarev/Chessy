@@ -7,6 +7,7 @@ namespace Chessy.Game
     {
         public TextMeshProUGUI TextUI;
 
+        public GameObject GameObject => TextUI.gameObject;
         public Transform Transform => TextUI.transform;
         public Transform Parent_T => Transform.parent;
         public GameObject ParentG => Parent_T.gameObject;

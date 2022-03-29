@@ -15,6 +15,8 @@ namespace Chessy.Game.System.Model
 
             e.IsSelectedCity = !e.IsSelectedCity;
 
+            if (e.LessonTC.LessonT == Enum.LessonTypes.OpenTown) e.LessonTC.SetNextLesson();
+
             e.NeedUpdateView = true;
         }
     }

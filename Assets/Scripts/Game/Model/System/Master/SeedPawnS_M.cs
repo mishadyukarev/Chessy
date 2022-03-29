@@ -1,4 +1,7 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
+using Chessy.Game.System.Model;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
@@ -7,33 +10,42 @@ namespace Chessy.Game.Model.System
 {
     public sealed class SeedPawnS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        readonly SystemsModelGame _sMGame;
 
-        public SeedPawnS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
+        public SeedPawnS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
         {
-            _cellEs = cellEs;
+            _sMGame = sMGame;
         }
 
-        public void Seed(in AbilityTypes abilityT, in Player sender)
+        public void Seed(in AbilityTypes abilityT, in Player sender, in byte cell_0)
         {
-            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.SEED_PAWN)
+            if (e.UnitStepC(cell_0).Steps >= StepValues.SEED_PAWN)
             {
-                if (_cellEs.BuildEs.MainE.BuildingTC.HaveBuilding && !_cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.Camp))
+                if (e.BuildingTC(cell_0).HaveBuilding && !e.BuildingTC(cell_0).Is(BuildingTypes.Camp))
                 {
                     e.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                 }
 
                 else
                 {
-                    if (!_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
+                    if (!e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        if (!_cellEs.EnvironmentEs.YoungForestC.HaveAnyResources)
+                        if (!e.YoungForestC(cell_0).HaveAnyResources)
                         {
                             e.RpcPoolEs.SoundToGeneral(sender, abilityT);
 
-                            _cellEs.EnvironmentEs.YoungForestC.Resources = EnvironmentValues.MAX_RESOURCES;
+                            e.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.SEED_PAWN;
+                            e.UnitStepC(cell_0).Steps -= StepValues.SEED_PAWN;
+
+                            if(cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
+                            {
+                                if (e.LessonTC.Is(LessonTypes.SeedingPawn))
+                                {
+                                    e.LessonTC.SetNextLesson();
+                                }
+                            }
+
                         }
 
                         else

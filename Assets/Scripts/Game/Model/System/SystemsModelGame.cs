@@ -39,6 +39,9 @@ namespace Chessy.Game.System.Model
         internal readonly AttackUnit_M AttackUnit_M;
         internal readonly SetUnitS_M SetUnitS_M;
         internal readonly ShiftUnitS_M ShiftUnitS_M;
+        internal readonly SeedPawnS_M SeedPawnS_M;
+        internal readonly BuildFarmS_M BuildFarmS_M;
+        internal readonly SetConditionUnitS_M SetConditionUnitS_M;
 
 
         public readonly SystemsModelGameForUI ForUISystems;
@@ -54,7 +57,7 @@ namespace Chessy.Game.System.Model
             {
                 new InputS(eMGame),
                 new RayS(eMGame),
-                new SelectorS(eMGame),
+                new SelectorS(eMCommon, eMGame),
             };
 
 
@@ -81,6 +84,9 @@ namespace Chessy.Game.System.Model
             AttackUnit_M = new AttackUnit_M(this, eMGame);
             SetUnitS_M = new SetUnitS_M(this, eMGame);
             ShiftUnitS_M = new ShiftUnitS_M(this, eMGame);
+            SeedPawnS_M = new SeedPawnS_M(this, eMGame);
+            BuildFarmS_M = new BuildFarmS_M(this, eMGame);
+            SetConditionUnitS_M = new SetConditionUnitS_M(this, eMGame);
 
             ForUISystems = new SystemsModelGameForUI(this, eMGame);
         }
@@ -110,6 +116,10 @@ namespace Chessy.Game.System.Model
             e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
 
 
+
+
+
+
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
                 CellSs(cell_0).ClearAllEnvironmentS.Clear();
@@ -129,12 +139,20 @@ namespace Chessy.Game.System.Model
                 e.PlayerInfoE(playerT).ToggleScene(newSceneT);
 
 
-                if (_eMCommon.GameModeTC.GameMode == GameModes.TrainingOff) e.LessonTC.LessonT = (LessonTypes)1;
-
-
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
                     e.PlayerInfoE(playerT).ResourcesC(resT) = new ResourcesC(StartValues.Resources(resT));
+                }
+
+                if (_eMCommon.GameModeTC.Is(GameModes.TrainingOff))
+                {
+                    if (playerT == PlayerTypes.First)
+                    {
+                        e.ResourcesC(playerT, ResourceTypes.Food).Resources = 3;
+                        e.ResourcesC(playerT, ResourceTypes.Wood).Resources = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
+                    }
+
+                    e.LessonTC.LessonT = (LessonTypes)1;
                 }
             }
 
@@ -169,6 +187,9 @@ namespace Chessy.Game.System.Model
                     var xy_0 = e.CellEs(cell_0).CellE.XyC.Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
+
+                    e.HaveFire(cell_0) = false;
+
 
                     if (e.CellEs(cell_0).IsActiveParentSelf)
                     {
@@ -237,6 +258,33 @@ namespace Chessy.Game.System.Model
                             var idx_next = e.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
 
                             e.RiverEs(idx_next).RiverTC.River = RiverTypes.Corner;
+                        }
+
+
+                        if (_eMCommon.GameModeTC.Is(GameModes.TrainingOff))
+                        {
+                            if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            {
+                                e.AdultForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                            }
+                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
+                            {
+                                CellSs(cell_0).ClearAllEnvironmentS.Clear();
+                            }
+                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
+                            {
+                                CellSs(cell_0).ClearAllEnvironmentS.Clear();
+                            }
+                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                            {
+                                CellSs(cell_0).ClearAllEnvironmentS.Clear();
+                                e.HillC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                            }
+                            else if (cell_0 == StartValues.CELL_MOUNTAIN_LESSON)
+                            {
+                                CellSs(cell_0).ClearAllEnvironmentS.Clear();
+                                e.MountainC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                            }
                         }
                     }
                 }

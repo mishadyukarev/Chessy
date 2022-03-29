@@ -1,4 +1,6 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common;
+using Chessy.Common.Entity;
+using Chessy.Game.Entity.Model;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -7,9 +9,11 @@ namespace Chessy.Game
 {
     public sealed class SelectorS : SystemModelGameAbs, IEcsRunSystem
     {
-        public SelectorS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
+        readonly EntitiesModelCommon _eMCommon;
 
+        public SelectorS(in EntitiesModelCommon eMCommon, in EntitiesModelGame eMGame) : base(eMGame)
+        {
+            _eMCommon = eMCommon;
         }
 
         public void Run()
@@ -17,14 +21,23 @@ namespace Chessy.Game
             var idx_cur = e.CellsC.Current;
 
 
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
+            if (_eMCommon.TestModeC.Is(TestModes.Standart))
             {
-                if (Input.GetKey(KeyCode.Alpha1)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha2)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha3)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
-                if (Input.GetKey(KeyCode.Alpha4)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
-                if (Input.GetKey(KeyCode.Alpha5)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
+                {
+                    if (Input.GetKey(KeyCode.Alpha1)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
+                    if (Input.GetKey(KeyCode.Alpha2)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
+                    if (Input.GetKey(KeyCode.Alpha3)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
+                    if (Input.GetKey(KeyCode.Alpha4)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
+                    if (Input.GetKey(KeyCode.Alpha5)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
+                }
+                if (Input.GetKeyDown(KeyCode.LeftAlt))
+                {
+                    e.LessonTC.SetNextLesson();
+                }
             }
+
+
 
 
             if (e.IsClicked)
@@ -36,7 +49,7 @@ namespace Chessy.Game
 
                 if (e.RaycastTC.Raycast == RaycastTypes.Cell)
                 {
-                    e.IsSelectedCity = false;
+                    
 
                     if (!e.CurPlayerITC.Is(e.WhoseMove.Player))
                     {
@@ -51,7 +64,7 @@ namespace Chessy.Game
 
                             case CellClickTypes.SimpleClick:
                                 {
-                                    if (e.LessonTC.HaveLesson) return;
+                                    e.IsSelectedCity = false;
 
                                     if (e.CellsC.Selected > 0)
                                     {
@@ -94,7 +107,7 @@ namespace Chessy.Game
                                         e.CellsC.PreviousSelected = e.CellsC.Selected;
                                         e.CellsC.Selected = e.CellsC.Current;
                                     }
-                                }
+                                }    
                                 break;
 
                             case CellClickTypes.SetUnit:
