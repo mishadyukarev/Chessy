@@ -65,7 +65,7 @@ namespace Chessy.Game
 
                 if (obj_1 is ToolWeaponTypes twT)
                 {
-                    _sMGame.CellSs(cell_0).GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], sender);
+                    _sMGame.GiveTakeToolWeaponS_M.GiveTake(twT, (LevelTypes)objects[_idx_cur++], cell_0, sender);
                 }
             }
 
@@ -74,15 +74,15 @@ namespace Chessy.Game
                 switch (abilityT)
                 {
                     case AbilityTypes.CircularAttack:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).CurcularAttackKingS_M.Attack(abilityT, sender);
+                        _sMGame.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     case AbilityTypes.FirePawn:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).FirePawnS_M.Fire(sender);
+                        _sMGame.FirePawnS_M.Fire((byte)objects[_idx_cur++], sender);
                         break;
 
                     case AbilityTypes.PutOutFirePawn:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).PutOutFirePawnS_M.PutOut(sender);
+                        _sMGame.PutOutFirePawnS_M.PutOut((byte)objects[_idx_cur++], sender);
                         break;
 
                     case AbilityTypes.Seed:
@@ -94,28 +94,28 @@ namespace Chessy.Game
                         break;
 
                     case AbilityTypes.DestroyBuilding:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).DestroyBuildingS_M.Destroy(sender);
+                        _sMGame.DestroyBuildingS_M.Destroy((byte)objects[_idx_cur++], sender);
                         break;
 
                     case AbilityTypes.FireArcher:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).FireArcherS_M.Fire((byte)objects[_idx_cur++], sender);
+                        _sMGame.FireArcherS_M.Fire((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                         break;
 
                     case AbilityTypes.GrowAdultForest:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).GrowAdultForestS_M.Grow(abilityT, sender);
+                        _sMGame.GrowAdultForestS_M.Grow((byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     case AbilityTypes.StunElfemale:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).StunElfemaleS_M.Stun((byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.StunElfemaleS_M.Stun((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     case AbilityTypes.ChangeCornerArcher:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).ChangeCornerArcherS_M.Change(abilityT, sender);
+                        _sMGame.ChangeCornerArcherS_M.Change((byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     //Snowy
                     case AbilityTypes.ChangeDirectionWind:
-                        _sMGame.CellSs((byte)objects[_idx_cur++]).ChangeDirectionWindS_M.Change((byte)objects[_idx_cur++], abilityT, sender);
+                        _sMGame.ChangeDirectionWindS_M.Change((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
                         break;
 
                     case AbilityTypes.IncreaseWindSnowy:
@@ -197,7 +197,7 @@ namespace Chessy.Game
                                         _eMGame.BuildingTC(cell_0).Building = BuildingTypes.Teleport;
                                         _eMGame.BuildingLevelTC(cell_0).Level = LevelTypes.First;
                                         _eMGame.BuildingPlayerTC(cell_0).Player = whoseMove;
-                                        _eMGame.BuildHpC(cell_0).Health = BuildingValues.MAX_HP;
+                                        _eMGame.BuildingHpC(cell_0).Health = BuildingValues.MAX_HP;
                                     }
                                 }
                             }

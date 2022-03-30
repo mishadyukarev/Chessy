@@ -4,9 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class ConditionClickS : SystemModelGameAbs
     {
-        public ConditionClickS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal ConditionClickS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click(in ConditionUnitTypes conditionT)
         {

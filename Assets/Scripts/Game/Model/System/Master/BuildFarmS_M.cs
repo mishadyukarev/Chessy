@@ -10,12 +10,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class BuildFarmS_M : SystemModelGameAbs
     {
-        readonly SystemsModelGame _sMGame;
-
-        internal BuildFarmS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _sMGame = sMGame;
-        }
+        internal BuildFarmS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Build(in byte cell_0, in Player sender)
         {
@@ -55,7 +50,7 @@ namespace Chessy.Game.Model.System
 
                             e.YoungForestC(cell_0).Resources = 0;
 
-                            _sMGame.CellSs(cell_0).BuildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP);
+                            s.BuildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
 
                             e.UnitStepC(cell_0).Steps -= StepValues.SET_FARM;
 

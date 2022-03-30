@@ -6,19 +6,14 @@ namespace Chessy.Game.System.Model
 {
     sealed class SetNewUnitOnCellS : SystemModelGameAbs
     {
-        readonly SystemsModelGame _sMGame;
-
-        internal SetNewUnitOnCellS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _sMGame = sMGame;
-        }
+        internal SetNewUnitOnCellS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Set(in UnitTypes unitT, in PlayerTypes playerT, in byte cell)
         {
-            _sMGame.CellSs(cell).SetMainS.Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
-            _sMGame.CellSs(cell).SetStatsS.Set(HpValues.MAX, StepValues.MAX, WaterValues.MAX);
-            _sMGame.CellSs(cell).SetExtraTWS.Set(ToolWeaponTypes.None, LevelTypes.None, 0);
-            _sMGame.CellSs(cell).SetEffectsS.Set(0, 0, 0, false);
+            s.SetMainS.Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false, cell);
+            s.SetStatsS.Set(HpValues.MAX, StepValues.MAX, WaterValues.MAX, cell);
+            s.SetExtraTWS.Set(ToolWeaponTypes.None, LevelTypes.None, 0, cell);
+            s.SetEffectsS.Set(0, 0, 0, false, cell);
 
             e.PlayerInfoE(playerT).LevelE(e.UnitLevelTC(cell).Level).Add(unitT, 1);
 
@@ -27,7 +22,7 @@ namespace Chessy.Game.System.Model
             {
                 e.PlayerInfoE(playerT).PeopleInCity--;
 
-                _sMGame.CellSs(cell).SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First);
+                s.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell);
             }
 
             else
@@ -45,7 +40,7 @@ namespace Chessy.Game.System.Model
                     e.PlayerInfoE(playerT).HaveKingInInventor = false;
                 }
 
-                _sMGame.CellSs(cell).SetMainTWS.Set(ToolWeaponTypes.None, LevelTypes.None);
+                s.SetMainTWS.Set(ToolWeaponTypes.None, LevelTypes.None, cell);
             }
         }
     }

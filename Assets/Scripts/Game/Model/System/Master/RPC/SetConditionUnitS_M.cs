@@ -9,12 +9,7 @@ namespace Chessy.Game.System.Model.Master
 {
     sealed class SetConditionUnitS_M : SystemModelGameAbs
     {
-        readonly SystemsModelGame _sMGame;
-
-        internal SetConditionUnitS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _sMGame = sMGame;
-        }
+        internal SetConditionUnitS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Set(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
         {
@@ -68,7 +63,7 @@ namespace Chessy.Game.System.Model.Master
                                     {
                                         if (e.PlayerInfoE(e.UnitPlayerTC(cell_0).Player).MyHeroTC.Is(UnitTypes.Elfemale))
                                         {
-                                            _sMGame.CellSs(cell_0).BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(cell_0).Player, BuildingValues.MAX_HP);
+                                            s.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(cell_0).Player, BuildingValues.MAX_HP, cell_0);
                                         }
                                     }
                                 }
@@ -81,17 +76,17 @@ namespace Chessy.Game.System.Model.Master
                                     e.LessonTC.SetNextLesson();
                                 }
                             }
-                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                            {
-                                if (e.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Pick))
-                                {
-                                    if (e.LessonTC.Is(LessonTypes.ExtractHillPawnHere))
-                                    {
-                                        e.LessonTC.SetNextLesson();
-                                        e.IsSelectedCity = true;
-                                    }
-                                }
-                            }
+                            //else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                            //{
+                            //    if (e.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Pick))
+                            //    {
+                            //        if (e.LessonTC.Is(LessonTypes.ShiftHereWithPick))
+                            //        {
+                            //            e.LessonTC.SetNextLesson();
+                            //            e.IsSelectedCity = true;
+                            //        }
+                            //    }
+                            //}
                         }
                     }
 

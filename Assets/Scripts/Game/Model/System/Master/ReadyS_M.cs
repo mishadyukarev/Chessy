@@ -1,13 +1,14 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class ReadyS_M : SystemModelGameAbs
+    sealed class ReadyS_M : SystemModelGameAbs
     {
-        public ReadyS_M(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal ReadyS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public void Ready(in Player sender)
+        internal void Ready(in Player sender)
         {
             var playerSend = sender.GetPlayer();
 

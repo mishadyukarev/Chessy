@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+using Chessy.Game.Enum;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -8,46 +9,44 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public sealed class GiveTakeToolWeaponS_M : SystemModelGameAbs
+    sealed class GiveTakeToolWeaponS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
-        readonly CellSs _unitSMGame;
+        internal GiveTakeToolWeaponS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal GiveTakeToolWeaponS_M(in CellEs cellEs, in CellSs unitSMGame, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _cellEs = cellEs;
-            _unitSMGame = unitSMGame;
-        }
-
-        public void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in Player sender)
+        internal void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte cell_0, in Player sender)
         {
             var whoseMove = e.WhoseMove.Player;
 
-            if (_cellEs.UnitTC.Is(UnitTypes.Pawn))
+            if (e.UnitTC(cell_0).Is(UnitTypes.Pawn))
             {
-                if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
+                if (e.UnitStepC(cell_0).Steps >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
                 {
                     if (twT == ToolWeaponTypes.BowCrossbow || twT == ToolWeaponTypes.Staff)
                     {
-                        if (_cellEs.UnitExtraTWE.ToolWeaponTC.HaveToolWeapon)
+                        if (e.UnitExtraTWTC(cell_0).HaveToolWeapon)
                         {
-                            e.ToolWeaponsC(_cellEs.UnitMainE.PlayerTC.Player, _cellEs.UnitExtraTWE.LevelTC.Level, _cellEs.UnitExtraTWE.ToolWeaponTC.ToolWeapon)++;
-                            _cellEs.UnitExtraTWE.ToolWeaponTC.ToolWeapon = ToolWeaponTypes.None;
+                            e.ToolWeaponsC(e.UnitPlayerTC(cell_0).Player, e.UnitExtraLevelTC(cell_0).Level, e.UnitExtraTWTC(cell_0).ToolWeapon)++;
+                            e.UnitExtraTWTC(cell_0).ToolWeapon = ToolWeaponTypes.None;
 
-                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
                         else
                         {
-                            if (_cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Axe))
+
+
+                            if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
                             {
-                                if (_cellEs.UnitMainE.LevelTC.Is(LevelTypes.First))
+
+
+                                if (e.UnitMainTWLevelTC(cell_0).Is(LevelTypes.First))
                                 {
                                     if (e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
                                     {
                                         e.ToolWeaponsC(whoseMove, levTW, twT)--;
-                                        _unitSMGame.SetMainTWS.Set(twT, levTW);
 
-                                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        s.SetMainTWS.Set(twT, levTW, cell_0);
+
+                                        e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                     }
@@ -69,9 +68,9 @@ namespace Chessy.Game
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                                 e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
-                                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                            e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                            _unitSMGame.SetMainTWS.Set(twT, levTW);
+                                            s.SetMainTWS.Set(twT, levTW, cell_0);
 
                                             e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                         }
@@ -84,35 +83,35 @@ namespace Chessy.Game
                                 }
                                 else
                                 {
-                                    e.ToolWeaponsC(whoseMove, _cellEs.UnitMainE.LevelTC.Level, _cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.ToolWeapon)++;
-                                    _unitSMGame.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First);
+                                    e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(cell_0).Level, e.UnitMainTWTC(cell_0).ToolWeapon)++;
+                                    s.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                                 }
                             }
 
                             else
                             {
-                                e.ToolWeaponsC(whoseMove, _cellEs.UnitMainE.LevelTC.Level, _cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.ToolWeapon)++;
-                                _unitSMGame.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First);
+                                e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(cell_0).Level, e.UnitMainTWTC(cell_0).ToolWeapon)++;
+                                s.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                                _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
                     }
 
                     else if (twT == ToolWeaponTypes.Axe)
                     {
-                        if (_cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Axe))
+                        if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
                         {
-                            if (_cellEs.UnitMainE.LevelTC.Is(LevelTypes.First))
+                            if (e.UnitMainTWLevelTC(cell_0).Is(LevelTypes.First))
                             {
                                 if (e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
                                 {
                                     e.ToolWeaponsC(whoseMove, levTW, twT)--;
-                                    _unitSMGame.SetMainTWS.Set(twT, levTW);
+                                    s.SetMainTWS.Set(twT, levTW, cell_0);
 
-                                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -134,9 +133,9 @@ namespace Chessy.Game
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
-                                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                        _unitSMGame.SetMainTWS.Set(twT, levTW);
+                                        s.SetMainTWS.Set(twT, levTW, cell_0);
 
                                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                     }
@@ -149,19 +148,19 @@ namespace Chessy.Game
                             }
                             else
                             {
-                                e.ToolWeaponsC(whoseMove, _cellEs.UnitMainE.LevelTC.Level, _cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.ToolWeapon)++;
-                                _unitSMGame.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First);
+                                e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(cell_0).Level, e.UnitMainTWTC(cell_0).ToolWeapon)++;
+                                s.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                                _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
 
                         else
                         {
-                            e.ToolWeaponsC(whoseMove, _cellEs.UnitMainE.LevelTC.Level, _cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.ToolWeapon)++;
-                            _unitSMGame.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First);
+                            e.ToolWeaponsC(whoseMove, e.UnitMainTWLevelTC(cell_0).Level, e.UnitMainTWTC(cell_0).ToolWeapon)++;
+                            s.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                             e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -169,26 +168,26 @@ namespace Chessy.Game
 
                     else
                     {
-                        var ownUnit_0 = _cellEs.UnitMainE.PlayerTC.Player;
+                        var ownUnit_0 = e.UnitPlayerTC(cell_0).Player;
 
-                        if (_cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
+                        if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                         {
-                            e.ToolWeaponsC(_cellEs.UnitMainE.PlayerTC.Player, _cellEs.UnitMainE.LevelTC.Level, _cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.ToolWeapon)++;
-                            _unitSMGame.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First);
+                            e.ToolWeaponsC(e.UnitPlayerTC(cell_0).Player, e.UnitMainTWLevelTC(cell_0).Level, e.UnitMainTWTC(cell_0).ToolWeapon)++;
+                            s.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                            _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
 
                         else
                         {
-                            if (_cellEs.UnitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.Axe))
+                            if (e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
                             {
-                                if (_cellEs.UnitExtraTWE.ToolWeaponTC.HaveToolWeapon)
+                                if (e.UnitExtraTWTC(cell_0).HaveToolWeapon)
                                 {
-                                    e.PlayerInfoE(ownUnit_0).LevelE(_cellEs.UnitExtraTWE.LevelTC.Level).ToolWeapons(_cellEs.UnitExtraTWE.ToolWeaponTC.ToolWeapon)++;
-                                    _cellEs.UnitExtraTWE.ToolWeaponTC.ToolWeapon = ToolWeaponTypes.None;
+                                    e.PlayerInfoE(ownUnit_0).LevelE(e.UnitExtraLevelTC(cell_0).Level).ToolWeapons(e.UnitExtraTWTC(cell_0).ToolWeapon)++;
+                                    e.UnitExtraTWTC(cell_0).ToolWeapon = ToolWeaponTypes.None;
 
-                                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -199,9 +198,9 @@ namespace Chessy.Game
 
 
 
-                                    _unitSMGame.SetExtraTWS.Set(twT, levTW, _cellEs.UnitExtraTWE.ProtectionC.Protection);
+                                    s.SetExtraTWS.Set(twT, levTW, e.UnitExtraProtectionC(cell_0).Protection, cell_0);
 
-                                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -232,11 +231,18 @@ namespace Chessy.Game
                                                 : ToolWeaponValues.SHIELD_PROTECTION_LEVEL_SECOND;
                                         }
 
-                                        _unitSMGame.SetExtraTWS.Set(twT, levTW, protection);
+                                        s.SetExtraTWS.Set(twT, levTW, protection, cell_0);
 
-                                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        e.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+
+
+                                        if (e.LessonTC.Is(LessonTypes.GiveTakePickPawn))
+                                        {
+                                            e.LessonTC.SetNextLesson();
+                                        }
+
                                     }
                                     else
                                     {

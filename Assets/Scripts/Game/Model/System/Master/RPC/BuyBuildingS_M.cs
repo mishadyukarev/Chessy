@@ -7,13 +7,11 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.System.Model
 {
-    public sealed class BuyBuildingS_M : SystemModelGameAbs
+    sealed class BuyBuildingS_M : SystemModelGameAbs
     {
-        public BuyBuildingS_M(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal BuyBuildingS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public void Buy(in BuildingTypes buildT, in Player sender)
+        internal void Buy(in BuildingTypes buildT, in Player sender)
         {
             var whoseMove = e.WhoseMove.Player;
 

@@ -3,30 +3,25 @@ using Chessy.Game.Values.Cell.Environment;
 
 namespace Chessy.Game.System.Model
 {
-    sealed class PawnExtractHillS
+    sealed class PawnExtractHillS : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        internal PawnExtractHillS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal PawnExtractHillS(in CellEs cellEs)
+        internal void Get(in byte cell_0)
         {
-            _cellEs = cellEs;
-        }
+            e.PawnExtractHillE(cell_0).Resources = 0;
 
-        internal void Get()
-        {
-            _cellEs.UnitEs.ExtractE.PawnExtractHillE.Resources = 0;
-
-            if (_cellEs.UnitTC.Is(UnitTypes.Pawn) && _cellEs.UnitExtraTWE.ToolWeaponTC.Is(ToolWeaponTypes.Pick))
+            if (e.UnitTC(cell_0).Is(UnitTypes.Pawn) && e.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Pick))
             {
-                if (_cellEs.EnvironmentEs.HillC.HaveAnyResources)
+                if (e.HillC(cell_0).HaveAnyResources)
                 {
                     var extract = EnvironmentValues.PAWN_PICK_EXTRACT_HILL;
 
 
-                    if (_cellEs.EnvironmentEs.HillC.Resources < extract) extract = _cellEs.EnvironmentEs.HillC.Resources;
+                    if (e.HillC(cell_0).Resources < extract) extract = e.HillC(cell_0).Resources;
 
 
-                    _cellEs.UnitEs.ExtractE.PawnExtractHillE.Resources = extract;
+                    e.PawnExtractHillE(cell_0).Resources = extract;
 
                 }
             }

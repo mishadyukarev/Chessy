@@ -4,9 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class GetHeroClickCenterS : SystemModelGameAbs
     {
-        public GetHeroClickCenterS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal GetHeroClickCenterS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Get(in UnitTypes unitT)
         {

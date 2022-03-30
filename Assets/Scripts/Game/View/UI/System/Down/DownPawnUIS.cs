@@ -4,7 +4,7 @@ using System;
 
 namespace Chessy.Game
 {
-    sealed class DownPawnUIS : SystemModelGameAbs, IEcsRunSystem
+    sealed class DownPawnUIS : SystemUIAbstract
     {
         readonly DownPawnUIE _pawnE;
 
@@ -13,7 +13,7 @@ namespace Chessy.Game
             _pawnE = pawnE;
         }
 
-        public void Run()
+        internal void Run()
         {
             if (e.LessonTC.LessonT == LessonTypes.None || e.LessonTC.LessonT >= LessonTypes.SettingPawn)
             {

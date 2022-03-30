@@ -1,26 +1,23 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Effect;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
-using System;
 using System.Linq;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public sealed class UpdateS_M : SystemModelGameAbs
+    sealed class UpdateS_M : SystemModelGameAbs
     {
-        readonly SystemsModelGame _sMGame;
-
         readonly TruceMS _truceS_M;
         readonly FireUpdateMS _fireUpdateS_M;
 
-        public UpdateS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
+        public UpdateS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame)
         {
-            _sMGame = sMGame;
-            _truceS_M = new TruceMS(eMGame);
+            _truceS_M = new TruceMS(sMGame, eMGame);
             _fireUpdateS_M = new FireUpdateMS(sMGame, eMGame);
         }
 
@@ -117,9 +114,9 @@ namespace Chessy.Game.System.Model.Master
                         if (e.CellEs(idx_1).IsActiveParentSelf && !e.MountainC(idx_1).HaveAnyResources
                             && !e.UnitTC(idx_1).HaveUnit)
                         {
-                            _sMGame.CellSs(idx_1).SetUnitS.Set(e.UnitEs(cell_0));
+                            s.SetUnitS.Set(cell_0, idx_1);
 
-                            _sMGame.CellSs(cell_0).ClearUnitS.Clear();
+                            s.ClearUnitS.Clear(cell_0);
                         }
                     }
 
@@ -194,7 +191,7 @@ namespace Chessy.Game.System.Model.Master
                     }
                     e.UnitStepC(cell_0).Steps = StepValues.MAX;
                 }
-                
+
 
 
 
@@ -250,11 +247,11 @@ namespace Chessy.Game.System.Model.Master
                     var extract = e.WoodcutterExtractE(cell_0).Resources;
 
                     e.ResourcesC(e.BuildingPlayerTC(cell_0).Player, ResourceTypes.Wood).Resources += extract;
-                    _sMGame.TakeAdultForestResourcesS.Take(extract, cell_0);
+                    s.TakeAdultForestResourcesS.Take(extract, cell_0);
 
                     if (!e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        e.BuildingTC(cell_0).Building = BuildingTypes.None;
+                        e.BuildingT(cell_0) = BuildingTypes.None;
 
                         if (UnityEngine.Random.Range(0, 100) < 30)
                         {
@@ -298,7 +295,7 @@ namespace Chessy.Game.System.Model.Master
                             {
                                 float percent = HpValues.ThirstyPercent(e.UnitTC(cell_0).Unit);
 
-                                _sMGame.CellSs(cell_0).AttackUnitS.Attack(HpValues.MAX * percent, e.NextPlayer(e.UnitPlayerTC(cell_0)).Player);
+                                s.AttackUnitS.Attack(HpValues.MAX * percent, e.NextPlayer(e.UnitPlayerTC(cell_0)).Player, cell_0);
 
 
                                 //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(cell_0)).Player, cell_0);
@@ -319,13 +316,13 @@ namespace Chessy.Game.System.Model.Master
                     var extract = e.PawnExtractAdultForestE(cell_0).Resources;
 
                     e.PlayerInfoE(e.UnitPlayerTC(cell_0).Player).ResourcesC(ResourceTypes.Wood).Resources += extract;
-                    _sMGame.TakeAdultForestResourcesS.Take(extract, cell_0);
+                    s.TakeAdultForestResourcesS.Take(extract, cell_0);
 
                     if (e.AdultForestC(cell_0).HaveAnyResources)
                     {
                         if (e.BuildingTC(cell_0).Is(BuildingTypes.Camp) || !e.BuildingTC(cell_0).HaveBuilding)
                         {
-                            _sMGame.CellSs(cell_0).BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(cell_0).Player, 1);
+                            s.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, e.UnitPlayerTC(cell_0).Player, 1, cell_0);
                         }
 
                         else if (!e.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter))
@@ -335,7 +332,7 @@ namespace Chessy.Game.System.Model.Master
                     }
                     else
                     {
-                        e.BuildingTC(cell_0).Building = BuildingTypes.None;
+                        s.ClearBuildingS.Clear(cell_0);
 
                         e.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
@@ -347,6 +344,13 @@ namespace Chessy.Game.System.Model.Master
 
                     e.HillC(cell_0).Resources -= extract;
                     e.PlayerInfoE(e.UnitPlayerTC(cell_0).Player).ResourcesC(ResourceTypes.Ore).Resources += extract;
+
+                    if (!e.HillC(cell_0).HaveAnyResources)
+                    {
+                        if (e.LessonTC.Is(LessonTypes.ExtractHillPawnHere)) e.LessonTC.SetNextLesson();
+
+                    }
+
                 }
 
                 else if (e.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed)
@@ -408,9 +412,9 @@ namespace Chessy.Game.System.Model.Master
                     {
                         if (e.UnitTC(cell_0).Is(UnitTypes.Pawn) && e.UnitPlayerTC(cell_0).Is(player))
                         {
-                            _sMGame.CellSs(cell_0).KillUnitS.Kill(e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player);
+                            s.KillUnitS.Kill(e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player, cell_0);
 
-                            _sMGame.CellSs(cell_0).ClearUnitS.Clear();
+                            s.ClearUnitS.Clear(cell_0);
                             break;
                         }
                     }
@@ -450,7 +454,7 @@ namespace Chessy.Game.System.Model.Master
 
                         if (!haveNearUnit)
                         {
-                            _sMGame.SetNewUnitS.Set(UnitTypes.Wolf, PlayerTypes.None, cell_0);
+                            s.SetNewUnitS.Set(UnitTypes.Wolf, PlayerTypes.None, cell_0);
 
                             //Es.UnitE(cell_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
@@ -504,7 +508,7 @@ namespace Chessy.Game.System.Model.Master
                                     {
                                         if (e.PlayerInfoE(playerT).MyHeroTC.Is(UnitTypes.Elfemale))
                                         {
-                                            _sMGame.SetNewUnitS.Set(UnitTypes.Tree, playerT, cell_0);
+                                            s.SetNewUnitS.Set(UnitTypes.Tree, playerT, cell_0);
 
                                             break;
                                         }

@@ -1,25 +1,21 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class ChangeCornerArcherS_M : SystemModelGameAbs
+    sealed class ChangeCornerArcherS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        internal ChangeCornerArcherS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public ChangeCornerArcherS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
+        internal void Change(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            _cellEs = cellEs;
-        }
-
-        public void Change(in AbilityTypes abilityT, in Player sender)
-        {
-            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.Need(abilityT))
+            if (e.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
             {
-                _cellEs.UnitMainE.IsRightArcherC.ToggleSide();
+                e.UnitIsRightArcherC(cell_0).ToggleSide();
 
-                _cellEs.UnitStatsE.StepC.Steps -= StepValues.CHANGE_CORNER_ARCHER;
+                e.UnitStepC(cell_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
 
                 e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
             }

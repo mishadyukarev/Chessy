@@ -1,12 +1,17 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game
 {
-    sealed class RightZoneUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class RightZoneUIS : SystemUIAbstract
     {
-        internal RightZoneUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame eUI;
+
+        internal RightZoneUIS( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
         {
+            eUI = entsUI;
         }
 
-        public void Run()
+        internal void Run()
         {
             var idx_sel = e.CellsC.Selected;
 

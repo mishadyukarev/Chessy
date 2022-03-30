@@ -1,12 +1,16 @@
-﻿using Photon.Pun;
+﻿using Chessy.Game.Entity.Model;
+using Photon.Pun;
 using UnityEngine;
 
 namespace Chessy.Game
 {
     sealed class CenterReadyUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterReadyUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame eUI;
+
+        internal CenterReadyUIS( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
         {
+            eUI = entsUI;
         }
 
         public void Run()

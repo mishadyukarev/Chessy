@@ -5,7 +5,7 @@ using Chessy.Game.View.UI.Entity.Right;
 
 namespace Chessy.Game.View.UI.System
 {
-    sealed class UniqueButtonUIS : SystemModelGameAbs, IEcsRunSystem
+    sealed class UniqueButtonUIS : SystemUIAbstract, IEcsRunSystem
     {
         readonly ButtonTypes _buttonT;
         readonly UniqueButtonUIE _buttonE;

@@ -8,24 +8,17 @@ namespace Chessy.Game.Model.System
 {
     sealed class DestroyBuildingS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
-        readonly AttackBuildingS _destroyBuildingS;
+        internal DestroyBuildingS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal DestroyBuildingS_M(in CellEs cellEs, in AttackBuildingS destroyBuildingS, in EntitiesModelGame eMGame) : base(eMGame)
+        internal void Destroy(in byte cell_0, in Player sender)
         {
-            _cellEs = cellEs;
-            _destroyBuildingS = destroyBuildingS;
-        }
-
-        internal void Destroy(in Player sender)
-        {
-            if (_cellEs.UnitStatsE.StepC.HaveAnySteps)
+            if (e.UnitStepC(cell_0).HaveAnySteps)
             {
                 e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-                _destroyBuildingS.Attack(1f, _cellEs.UnitMainE.PlayerTC.Player);
+                s.DestroyBuildingS.Attack(cell_0, 1f, e.UnitPlayerTC(cell_0).Player);
 
-                _cellEs.UnitStatsE.StepC.Steps -= StepValues.DESTROY_BUILDING;
+                e.UnitStepC(cell_0).Steps -= StepValues.DESTROY_BUILDING;
             }
 
             else

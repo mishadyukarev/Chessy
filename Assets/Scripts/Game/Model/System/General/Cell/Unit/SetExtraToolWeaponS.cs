@@ -1,24 +1,18 @@
-﻿using Chessy.Game.Entity.Model.Cell.Unit;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetExtraToolWeaponS
+    sealed class SetExtraToolWeaponS : SystemModelGameAbs
     {
-        readonly ExtraToolWeaponE _extraTWE;
+        internal SetExtraToolWeaponS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal SetExtraToolWeaponS(in ExtraToolWeaponE extraTWE)  { _extraTWE = extraTWE; }
-
-        internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT, in float protection)
+        internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT, in float protection, in byte cell_0)
         {
-            _extraTWE.ToolWeaponTC.ToolWeapon = twT;
-            _extraTWE.LevelTC.Level = levelT;
-            _extraTWE.ProtectionC.Protection = protection;
+            e.UnitExtraTWTC(cell_0).ToolWeapon = twT;
+            e.UnitExtraLevelTC(cell_0).Level = levelT;
+            e.UnitExtraProtectionC(cell_0).Protection = protection;
         }
-        internal void Set(in ExtraToolWeaponE extraToolWeaponE)
-        {
-            _extraTWE.ToolWeaponTC = extraToolWeaponE.ToolWeaponTC;
-            _extraTWE.LevelTC = extraToolWeaponE.LevelTC;
-            _extraTWE.ProtectionC = extraToolWeaponE.ProtectionC;
-        }
+        internal void Set(in byte cell_from, in byte cell_to) => e.UnitExtraTWE(cell_to) = e.UnitExtraTWE(cell_from);
     }
 }

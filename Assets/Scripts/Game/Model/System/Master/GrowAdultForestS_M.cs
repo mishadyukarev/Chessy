@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -6,33 +7,28 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class GrowAdultForestS_M : SystemModelGameAbs
+    sealed class GrowAdultForestS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        internal GrowAdultForestS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public GrowAdultForestS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
+        internal void Grow(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            _cellEs = cellEs;
-        }
-
-        public void Grow(in AbilityTypes abilityT, in Player sender)
-        {
-            if (!_cellEs.UnitEs.CoolDownC(abilityT).HaveCooldown)
+            if (!e.UnitEs(cell_0).CoolDownC(abilityT).HaveCooldown)
             {
-                if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.GROW_ADULT_FOREST)
+                if (e.UnitStepC(cell_0).Steps >= StepValues.GROW_ADULT_FOREST)
                 {
-                    if (_cellEs.EnvironmentEs.YoungForestC.HaveAnyResources)
+                    if (e.YoungForestC(cell_0).HaveAnyResources)
                     {
-                        _cellEs.EnvironmentEs.YoungForestC.Resources = 0;
+                        e.YoungForestC(cell_0).Resources = 0;
 
-                        _cellEs.EnvironmentEs.AdultForestC.Resources = EnvironmentValues.MAX_RESOURCES;
+                        e.AdultForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                        _cellEs.UnitStatsE.StepC.Steps -= StepValues.GROW_ADULT_FOREST;
+                        e.UnitStepC(cell_0).Steps -= StepValues.GROW_ADULT_FOREST;
 
-                        _cellEs.UnitEs.CoolDownC(abilityT).Cooldown = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
+                        e.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
 
 
-                        foreach (var idx_1 in _cellEs.AroundCellsEs.IdxsAround)
+                        foreach (var idx_1 in e.CellEs(cell_0).AroundCellsEs.IdxsAround)
                         {
                             if (e.YoungForestC(idx_1).HaveAnyResources)
                             {
@@ -45,13 +41,13 @@ namespace Chessy.Game.Model.System
                         e.RpcPoolEs.SoundToGeneral(sender, abilityT);
 
 
-                        foreach (var idxC_1 in _cellEs.AroundCellsEs.AroundCellIdxsC)
+                        foreach (var idxC_1 in e.CellEs(cell_0).AroundCellsEs.AroundCellIdxsC)
                         {
                             var idx_1 = idxC_1.Idx;
 
                             if (e.UnitTC(idx_1).HaveUnit)
                             {
-                                if (e.UnitPlayerTC(idx_1).Is(_cellEs.UnitEs.MainE.PlayerTC.Player))
+                                if (e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(cell_0).Player))
                                 {
                                     //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have)
                                     //{

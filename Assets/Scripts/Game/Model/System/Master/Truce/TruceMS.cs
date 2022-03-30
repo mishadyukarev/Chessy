@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values;
 using UnityEngine;
 
@@ -7,12 +8,9 @@ namespace Chessy.Game
 {
     sealed class TruceMS : SystemModelGameAbs
     {
-        internal TruceMS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
+        internal TruceMS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        }
-
-        public void Run(in GameModeTC gameModeTC)
+        internal void Run(in GameModeTC gameModeTC)
         {
             int random;
 

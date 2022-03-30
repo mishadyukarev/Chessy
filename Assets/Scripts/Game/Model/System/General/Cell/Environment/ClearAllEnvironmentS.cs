@@ -1,20 +1,19 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ClearAllEnvironmentS
+    sealed class ClearAllEnvironmentS : SystemModelGameAbs
     {
-        readonly CellEnvironmentEs _envE;
+        internal ClearAllEnvironmentS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal ClearAllEnvironmentS(in CellEnvironmentEs envE) { _envE = envE; }
-
-        internal void Clear()
+        internal void Clear(in byte cell_0)
         {
-            _envE.FertilizeC.Resources = 0;
-            _envE.AdultForestC.Resources = 0;
-            _envE.YoungForestC.Resources = 0;
-            _envE.HillC.Resources = 0;
-            _envE.MountainC.Resources = 0;
+            e.FertilizeC(cell_0).Resources = 0;
+            e.AdultForestC(cell_0).Resources = 0;
+            e.YoungForestC(cell_0).Resources = 0;
+            e.HillC(cell_0).Resources = 0;
+            e.MountainC(cell_0).Resources = 0;
         }
     }
 }

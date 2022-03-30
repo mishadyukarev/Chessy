@@ -5,9 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class ClickReadyS : SystemModelGameAbs, IClickUI
     {
-        public ClickReadyS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal ClickReadyS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click()
         {

@@ -1,17 +1,20 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Game.Entity.Model;
+using Chessy.Game.Enum;
+using Chessy.Game.System.Model;
+using Chessy.Game.Values;
 using System;
 using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    public sealed class SelectorS : SystemModelGameAbs, IEcsRunSystem
+    sealed class SelectorS : SystemModelGameAbs, IEcsRunSystem
     {
         readonly EntitiesModelCommon _eMCommon;
 
-        public SelectorS(in EntitiesModelCommon eMCommon, in EntitiesModelGame eMGame) : base(eMGame)
+        internal SelectorS(in EntitiesModelCommon eMCommon, in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame)
         {
             _eMCommon = eMCommon;
         }
@@ -31,9 +34,20 @@ namespace Chessy.Game
                     if (Input.GetKey(KeyCode.Alpha4)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Iron).Resources += 1;
                     if (Input.GetKey(KeyCode.Alpha5)) e.PlayerInfoE(e.CurPlayerITC.Player).ResourcesC(ResourceTypes.Gold).Resources += 1;
                 }
-                if (Input.GetKeyDown(KeyCode.LeftAlt))
+
+                if (Input.GetKeyDown(KeyCode.Mouse4))
                 {
                     e.LessonTC.SetNextLesson();
+                }
+
+                if(Input.GetKeyDown(KeyCode.Mouse3))
+                {
+                    e.LessonTC.SetPreviousLesson();
+                }
+
+                if (Input.GetKeyDown(KeyCode.Mouse2))
+                {
+                    e.LessonTC.LessonT = LessonTypes.None;
                 }
             }
 
@@ -44,13 +58,8 @@ namespace Chessy.Game
             {
                 e.NeedUpdateView = true;
 
-                
-
-
-                if (e.RaycastTC.Raycast == RaycastTypes.Cell)
-                {
-                    
-
+                if (e.RaycastTC.Is(RaycastTypes.Cell))
+                { 
                     if (!e.CurPlayerITC.Is(e.WhoseMove.Player))
                     {
                         e.CellsC.Selected = e.CellsC.Current;
@@ -60,52 +69,137 @@ namespace Chessy.Game
                     {
                         switch (e.CellClickTC.Click)
                         {
-                            case CellClickTypes.None: throw new Exception();
-
                             case CellClickTypes.SimpleClick:
-                                {
-                                    e.IsSelectedCity = false;
-
-                                    if (e.CellsC.Selected > 0)
+                                {  
+                                    if (e.CellsC.IsSelectedCell)
                                     {
-                                        var curPlayerI = e.CurPlayerITC.Player;
+                                        e.IsSelectedCity = false;
 
-                                        if (e.UnitTC(e.CellsC.Selected).HaveUnit)
+                                        if (e.LessonTC.HaveLesson)
                                         {
-                                            if (e.UnitEs(e.CellsC.Selected).SimpleAttack.Contains(e.CellsC.Current)
-                                            || e.UnitEs(e.CellsC.Selected).UniqueAttack.Contains(e.CellsC.Current))
+                                            if (e.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
                                             {
-                                                e.RpcPoolEs.AttackUnitToMaster(e.CellsC.Selected, e.CellsC.Current);
-                                            }
+                                                if (e.UnitTC(e.CellsC.Current).Is(UnitTypes.Pawn) || !e.UnitTC(e.CellsC.Current).HaveUnit)
+                                                {
+                                                    if (e.UnitTC(e.CellsC.Selected).HaveUnit)
+                                                    {
+                                                        if (e.UnitEs(e.CellsC.Selected).SimpleAttack.Contains(e.CellsC.Current)
+                                                        || e.UnitEs(e.CellsC.Selected).UniqueAttack.Contains(e.CellsC.Current))
+                                                        {
+                                                            e.RpcPoolEs.TryAttackUnit_ToMaster(e.CellsC.Selected, e.CellsC.Current);
+                                                        }
 
-                                            else if (e.UnitPlayerTC(e.CellsC.Selected).Is(e.CurPlayerITC.Player)
-                                                && e.UnitEs(e.CellsC.Selected).ForShift.Contains(e.CellsC.Current))
-                                            {
-                                                e.RpcPoolEs.ShiftUnitToMaster(e.CellsC.Selected, e.CellsC.Current);
-                                            }
+                                                        else if (e.UnitPlayerTC(e.CellsC.Selected).Is(e.CurPlayerITC.Player)
+                                                            && e.UnitEs(e.CellsC.Selected).ForShift.Contains(e.CellsC.Current))
+                                                        {
+                                                            e.RpcPoolEs.TryShiftUnit_ToMaster(e.CellsC.Selected, e.CellsC.Current);
+                                                        }
 
+                                                        else
+                                                        {
+
+                                                            Sound();
+                                                        }
+
+                                                        SetNewSelectedCell();
+                                                    }
+
+                                                    else
+                                                    {
+                                                    }
+
+
+                                                    e.IsSelectedCity = false;
+
+                                                    if (e.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                                                    {
+                                                        if (e.LessonTC.Is(LessonTypes.ShiftPawnHere))
+                                                        {
+                                                            if (e.UnitTC(e.CellsC.Current).Is(UnitTypes.Pawn))
+                                                            {
+                                                                e.LessonTC.SetNextLesson();
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (e.LessonTC.Is(LessonTypes.RelaxExtractPawn)) e.LessonTC.SetPreviousLesson();
+                                                    }
+
+
+                                                    SetNewSelectedCell();
+                                                    Sound();
+                                                }
+                                            }
                                             else
                                             {
-                                                Sound(e);
+
                                             }
                                         }
 
                                         else
                                         {
-                                            Sound(e);
+                                            if (e.UnitTC(e.CellsC.Selected).HaveUnit)
+                                            {
+                                                if (e.UnitEs(e.CellsC.Selected).SimpleAttack.Contains(e.CellsC.Current)
+                                                || e.UnitEs(e.CellsC.Selected).UniqueAttack.Contains(e.CellsC.Current))
+                                                {
+                                                    e.RpcPoolEs.TryAttackUnit_ToMaster(e.CellsC.Selected, e.CellsC.Current);
+                                                }
+
+                                                else if (e.UnitPlayerTC(e.CellsC.Selected).Is(e.CurPlayerITC.Player)
+                                                    && e.UnitEs(e.CellsC.Selected).ForShift.Contains(e.CellsC.Current))
+                                                {
+                                                    e.RpcPoolEs.TryShiftUnit_ToMaster(e.CellsC.Selected, e.CellsC.Current);
+                                                }
+
+                                                else
+                                                {
+                                                    Sound();
+                                                }
+                                            }
+
+                                            else
+                                            {
+                                                Sound();
+                                            }
+
+                                            SetNewSelectedCell();
                                         }
-
-
-                                        e.CellsC.PreviousSelected = e.CellsC.Selected;
-                                        e.CellsC.Selected = e.CellsC.Current;
                                     }
 
                                     else
                                     {
-                                        Sound(e);
+                                        if (e.LessonTC.HaveLesson)
+                                        {
+                                            if (e.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
+                                            {
+                                                if (e.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                                                {
+                                                    if (e.LessonTC.Is(LessonTypes.ShiftPawnHere))
+                                                    {
+                                                        if (e.UnitTC(e.CellsC.Current).Is(UnitTypes.Pawn))
+                                                        {
+                                                            e.LessonTC.SetNextLesson();
+                                                        }
+                                                    }
+                                                }
 
-                                        e.CellsC.PreviousSelected = e.CellsC.Selected;
-                                        e.CellsC.Selected = e.CellsC.Current;
+                                                if (e.UnitTC(e.CellsC.Current).Is(UnitTypes.Pawn) || !e.UnitTC(e.CellsC.Current).HaveUnit)
+                                                {
+                                                    SetNewSelectedCell();
+                                                    Sound();
+                                                }
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            e.IsSelectedCity = false;
+
+                                            SetNewSelectedCell();
+                                            Sound();
+                                        }
                                     }
                                 }    
                                 break;
@@ -178,14 +272,17 @@ namespace Chessy.Game
                     }
                 }
 
-                else if (e.RaycastTC.Raycast == RaycastTypes.UI)
+                else if (e.RaycastTC.Is(RaycastTypes.UI))
                 {
                     //cellClick.Click = CellClickTypes.SimpleClick;
                     //Es.SelectedIdxE.Reset();
                 }
 
-                else if (e.RaycastTC.Raycast == RaycastTypes.Background)
+                else if (e.RaycastTC.Is(RaycastTypes.Background))
                 {
+                    if (e.LessonTC.Is(LessonTypes.RelaxExtractPawn)) e.LessonTC.SetPreviousLesson();
+                    
+
                     e.CellClickTC.Click = CellClickTypes.SimpleClick;
                     e.CellsC.PreviousSelected = e.CellsC.Selected;
                     e.CellsC.Selected = 0;
@@ -197,7 +294,7 @@ namespace Chessy.Game
 
             else
             {
-                if (e.RaycastTC.Raycast == RaycastTypes.Cell)
+                if (e.RaycastTC.Is(RaycastTypes.Cell))
                 {
 
                 }
@@ -205,7 +302,7 @@ namespace Chessy.Game
         }
 
 
-        void Sound(in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        void Sound()
         {
             var cell_0 = e.CellsC.Current;
 
@@ -251,6 +348,12 @@ namespace Chessy.Game
                     e.Sound(ClipTypes.ShortRain).Invoke();
                 }
             }
+        }
+
+        void SetNewSelectedCell()
+        {
+            e.CellsC.PreviousSelected = e.CellsC.Selected;
+            e.CellsC.Selected = e.CellsC.Current;
         }
     }
 }

@@ -8,21 +8,16 @@ using UnityEngine;
 
 namespace Chessy.Game.System.Model
 {
-    public sealed class ShiftUnitS : SystemModelGameAbs
+    sealed class ShiftUnitS : SystemModelGameAbs
     {
-        readonly SystemsModelGame _systems;
+        internal ShiftUnitS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public ShiftUnitS(in SystemsModelGame systems, in EntitiesModelGame eMGame) : base(eMGame)
+        internal void Shift(in byte cell_from, in byte cell_to)
         {
-            _systems = systems;
-        }
-
-        public void Shift(in byte cell_from, in byte cell_to)
-        {
-            _systems.CellSs(cell_to).SetUnitS.Set(e.UnitEs(cell_from));
+            s.SetUnitS.Set(cell_from, cell_to);
             e.UnitConditionTC(cell_to).Condition = ConditionUnitTypes.None;
 
-            e.UnitTC(cell_from).Unit = UnitTypes.None;
+            s.ClearUnitS.Clear(cell_from);
 
 
             var direct = e.CellEs(cell_from).AroundCellsEs.Direct(cell_to);
@@ -46,6 +41,15 @@ namespace Chessy.Game.System.Model
                             e.LessonTC.SetNextLesson();
                         }
                     }
+
+                    if (e.UnitExtraTWTC(cell_to).Is(ToolWeaponTypes.Pick))
+                    {
+                        if (cell_to == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                        {
+                            e.LessonTC.SetNextLesson();
+                        }
+                    }
+
                 }
 
 

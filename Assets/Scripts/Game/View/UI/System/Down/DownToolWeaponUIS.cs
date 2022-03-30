@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class DownToolWeaponUIS : SystemModelGameAbs, IEcsRunSystem
+    sealed class DownToolWeaponUIS : SystemUIAbstract
     {
         readonly DownToolWeaponUIE _twE;
 
@@ -12,10 +12,10 @@ namespace Chessy.Game
             _twE = twE;
         }
 
-        public void Run()
+        internal void Run()
         {
 
-            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.GiveTakePickPawn)
+            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.ClickPick)
             {
                 _twE.ParentGOC.SetActive(true);
 

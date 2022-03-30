@@ -3,7 +3,7 @@ using Chessy.Game.System.Model;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class SystemsModelGameForUI : SystemModelGameAbs
+    public sealed class SystemsModelGameForUI
     {
         //Down
         public readonly DoneClickS DoneClickS;
@@ -26,23 +26,23 @@ namespace Chessy.Game.Model.System
         public readonly ConditionClickS ConditionClickS;
 
 
-        public SystemsModelGameForUI(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
+        public SystemsModelGameForUI(in SystemsModelGame sMGame, in EntitiesModelGame eMGame)
         {
-            DoneClickS = new DoneClickS(sMGame.MistakeS, eMGame);
-            OpenCityClickS = new OpenCityClickS(eMGame);
-            GetHeroClickDownS = new GetHeroDownS(eMGame);
-            GetPawnClickS = new GetPawnS(eMGame);
-            ToggleToolWeaponClickS = new ToggleToolWeaponS(eMGame);
+            DoneClickS = new DoneClickS(sMGame, eMGame);
+            OpenCityClickS = new OpenCityClickS(sMGame, eMGame);
+            GetHeroClickDownS = new GetHeroDownS(sMGame, eMGame);
+            GetPawnClickS = new GetPawnS(sMGame, eMGame);
+            ToggleToolWeaponClickS = new ToggleToolWeaponS(sMGame, eMGame);
 
-            EnvironmentInfoClickS = new EnvironmentInfoS(eMGame);
-            ReadyClickS = new ClickReadyS(eMGame);
-            GetKingClickS = new GetKingClickS(eMGame);
-            BuildBuildingClickS = new BuildBuildingClickS(eMGame);
+            EnvironmentInfoClickS = new EnvironmentInfoS(sMGame, eMGame);
+            ReadyClickS = new ClickReadyS(sMGame, eMGame);
+            GetKingClickS = new GetKingClickS(sMGame, eMGame);
+            BuildBuildingClickS = new BuildBuildingClickS(sMGame, eMGame);
 
-            GetHeroClickCenterS = new GetHeroClickCenterS(eMGame);
+            GetHeroClickCenterS = new GetHeroClickCenterS(sMGame, eMGame);
 
-            AbilityClickS = new AbilityClickS(eMGame);
-            ConditionClickS = new ConditionClickS(eMGame);
+            AbilityClickS = new AbilityClickS(sMGame, eMGame);
+            ConditionClickS = new ConditionClickS(sMGame, eMGame);
         }
     }
 }

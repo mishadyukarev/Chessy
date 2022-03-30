@@ -1,5 +1,4 @@
 ﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
@@ -9,49 +8,42 @@ namespace Chessy.Game.System.Model.Master
 {
     sealed class CurcularAttackKingS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
-        readonly SystemsModelGame _systems;
+        internal CurcularAttackKingS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal CurcularAttackKingS_M(in CellEs cellEs, in SystemsModelGame systems, in EntitiesModelGame eMGame) : base(eMGame)
+        internal void Attack(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            _cellEs = cellEs;
-            _systems = systems;
-        }
-
-        internal void Attack(in AbilityTypes abilityT, in Player sender)
-        {
-            if (!_cellEs.UnitEs.CoolDownC(abilityT).HaveCooldown)
+            if (!e.UnitEs(cell_0).CoolDownC(abilityT).HaveCooldown)
             {
-                if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.Need(abilityT))
+                if (e.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
                 {
                     e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    _cellEs.UnitEs.CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
-                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.Need(abilityT);
+                    e.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                    e.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
 
 
-                    foreach (var idxC_0 in _cellEs.AroundCellsEs.AroundCellIdxsC)
+                    foreach (var idxC_0 in e.CellEs(cell_0).AroundCellsEs.AroundCellIdxsC)
                     {
                         var idx_1 = idxC_0.Idx;
 
                         if (e.UnitTC(idx_1).HaveUnit)
                         {
-                            if (!e.UnitPlayerTC(idx_1).Is(_cellEs.UnitMainE.PlayerTC.Player))
+                            if (!e.UnitPlayerTC(idx_1).Is(e.UnitPlayerTC(cell_0).Player))
                             {
                                 if (e.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
-                                    _systems.CellSs(idx_1).AttackShieldS.Attack(1f);
+                                    s.AttackShieldS.Attack(1f, idx_1);
                                 }
 
                                 else
                                 {
-                                    _systems.CellSs(idx_1).AttackUnitS.Attack(HpValues.MAX / 4, _cellEs.UnitMainE.PlayerTC.Player);
+                                    s.AttackUnitS.Attack(HpValues.MAX / 4, e.UnitPlayerTC(cell_0).Player, idx_1);
                                 }
                             }
                         }
                     }
 
-                    _cellEs.UnitMainE.ConditionTC.Condition = ConditionUnitTypes.None;
+                    e.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
 
                     e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
                 }

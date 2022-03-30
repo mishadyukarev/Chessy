@@ -1,25 +1,21 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class PutOutFirePawnS_M : SystemModelGameAbs
+    sealed class PutOutFirePawnS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        internal PutOutFirePawnS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public PutOutFirePawnS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
+        public void PutOut(in byte cell_0, in Player sender)
         {
-            _cellEs = cellEs;
-        }
-
-        public void PutOut(in Player sender)
-        {
-            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.PUT_OUT_FIRE_PAWN)
+            if (e.UnitStepC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
             {
-                _cellEs.EffectEs.HaveFire = false;
+                e.HaveFire(cell_0) = false;
 
-                _cellEs.UnitStatsE.StepC.Steps -= StepValues.PUT_OUT_FIRE_PAWN;
+                e.UnitStepC(cell_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
             }
 
             else

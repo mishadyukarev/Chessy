@@ -5,9 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class GetKingClickS : SystemModelGameAbs, IClickUI
     {
-        public GetKingClickS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal GetKingClickS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click()
         {

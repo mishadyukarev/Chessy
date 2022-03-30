@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class GetEffectsForUnitsS : SystemModelGameAbs
     {
-        internal GetEffectsForUnitsS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetEffectsForUnitsS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Get(in byte cell_0)
         {

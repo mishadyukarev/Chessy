@@ -15,26 +15,26 @@ namespace Chessy.Game
 
         public readonly bool IsActiveParentSelf;
 
-        public readonly CellE CellE;
-        public readonly AroundCellsE AroundCellsEs;
-        public readonly UnitEs UnitEs = new UnitEs();
-        public readonly CellBuildingEs BuildEs = new CellBuildingEs();
-        public readonly CellEnvironmentEs EnvironmentEs = new CellEnvironmentEs();
-        public readonly CellEffectE EffectEs = new CellEffectE();
-        public readonly CellRiverE RiverEs = new CellRiverE();
+        public CellE CellE;
+        public AroundCellsE AroundCellsEs;
+        public UnitEs UnitEs;
+        public CellBuildingEs BuildEs;
+        public CellEnvironmentEs EnvironmentEs;
+        public CellEffectE EffectEs;
+        public CellRiverE RiverEs;
 
         public ref HealthC TrailHealthC(in DirectTypes dir) => ref _trailHealthCs[(byte)dir - 1];
         public ref CellPlayerPoolEs Player(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
 
 
-        public UnitMainE UnitMainE => UnitEs.MainE;
+        public ref UnitMainE UnitMainE => ref UnitEs.MainE;
         public ref UnitTC UnitTC => ref UnitMainE.UnitTC;
         public ref PlayerTC UnitPlayerTC => ref UnitMainE.PlayerTC;
 
-        public StatsE UnitStatsE => UnitEs.StatsE;
+        public ref StatsE UnitStatsE => ref UnitEs.StatsE;
 
-        public MainToolWeaponE UnitMainTWE => UnitEs.MainToolWeaponE;
-        public ExtraToolWeaponE UnitExtraTWE => UnitEs.ExtraToolWeaponE;
+        public ref MainToolWeaponE UnitMainTWE => ref UnitEs.MainToolWeaponE;
+        public ref ExtraToolWeaponE UnitExtraTWE => ref UnitEs.ExtraToolWeaponE;
 
 
         internal CellEs(in bool[] isActiveParents, in int idCell, byte[] xy, in byte idx, in EntitiesModelGame eMGame)
@@ -44,6 +44,11 @@ namespace Chessy.Game
             AroundCellsEs = new AroundCellsE(idx, isActiveParents, xy, eMGame);
 
             CellE = new CellE(idx, xy, idCell);
+
+            UnitEs = new UnitEs(default);
+
+            BuildEs = new CellBuildingEs(default);
+            RiverEs = new CellRiverE(new bool[(byte)DirectTypes.End - 1]);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Chessy.Game.Entity
 {
-    public sealed class CellE
+    public struct CellE
     {
         readonly Dictionary<PlayerTypes, bool> _isStartedCell;
 

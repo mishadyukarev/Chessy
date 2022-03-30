@@ -5,31 +5,26 @@ namespace Chessy.Game.System.Model
 {
     sealed class AttackBuildingS : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        internal AttackBuildingS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal AttackBuildingS(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _cellEs = cellEs;
-        }
-
-        internal void Attack(in float damage, in PlayerTypes whoKiller)
+        internal void Attack(in byte cell_0, in float damage, in PlayerTypes whoKiller)
         {
             if (damage <= 0) throw new Exception();
 
-            if (_cellEs.BuildEs.MainE.BuildingTC.HaveBuilding)
+            if (e.BuildingTC(cell_0).HaveBuilding)
             {
-                _cellEs.BuildEs.MainE.HealthC.Health -= damage;
+                e.BuildingHpC(cell_0).Health -= damage;
 
-                if (!_cellEs.BuildEs.MainE.HealthC.IsAlive)
+                if (!e.BuildingHpC(cell_0).IsAlive)
                 {
-                    if (_cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.City))
+                    if (e.BuildingTC(cell_0).Is(BuildingTypes.City))
                     {
                         e.WinnerC.Player = e.NextPlayer(whoKiller).Player;
                     }
 
-                    else if (_cellEs.BuildEs.MainE.BuildingTC.Is(BuildingTypes.Farm))
+                    else if (e.BuildingTC(cell_0).Is(BuildingTypes.Farm))
                     {
-                        _cellEs.EnvironmentEs.FertilizeC.Resources = 0;
+                        e.FertilizeC(cell_0).Resources = 0;
                     }
 
                     //else if (E.BuildingTC(Idx).Is(BuildingTypes.House))
@@ -38,7 +33,7 @@ namespace Chessy.Game.System.Model
                     //}
 
 
-                    _cellEs.BuildEs.MainE.BuildingTC.Building = BuildingTypes.None;
+                    e.BuildingTC(cell_0).Building = BuildingTypes.None;
                 }
             }
             else

@@ -5,7 +5,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class GetWoodcutterExtractCellsS : SystemModelGameAbs
     {
-        internal GetWoodcutterExtractCellsS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetWoodcutterExtractCellsS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Get(in byte cell_0)
         {

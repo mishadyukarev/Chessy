@@ -6,9 +6,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class ToggleToolWeaponS : SystemModelGameAbs
     {
-        public ToggleToolWeaponS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal ToggleToolWeaponS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click(in ToolWeaponTypes twT)
         {
@@ -19,7 +17,7 @@ namespace Chessy.Game.System.Model
 
             if (e.CurPlayerITC.Is(e.WhoseMove.Player))
             {
-                if (e.LessonTC.Is(LessonTypes.GiveTakePickPawn))
+                if (e.LessonTC.Is(LessonTypes.ClickPick))
                 {
                     if (twT == ToolWeaponTypes.Pick)
                     {

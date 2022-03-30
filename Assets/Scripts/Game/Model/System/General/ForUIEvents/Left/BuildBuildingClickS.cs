@@ -5,9 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class BuildBuildingClickS : SystemModelGameAbs
     {
-        public BuildBuildingClickS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal BuildBuildingClickS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click(in BuildingTypes buildT)
         {

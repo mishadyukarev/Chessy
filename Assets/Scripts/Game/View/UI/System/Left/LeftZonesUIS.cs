@@ -4,37 +4,29 @@ namespace Chessy.Game
 {
     sealed class LeftZonesUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal LeftZonesUIS( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame _eUI;
+
+        internal LeftZonesUIS( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
         {
+            _eUI = entsUI;
         }
 
         public void Run()
         {
-            eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
-            eUI.LeftEnvEs.Zone.SetActive(false);
+            _eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
+            _eUI.LeftEnvEs.Zone.SetActive(false);
 
             if (e.IsSelectedCity)
             {
-                eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
+                _eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
             }
             else
             {
                 var idx_sel = e.CellsC.Selected;
 
-                if (e.CellsC.Selected > 0)
+                if (e.CellsC.IsSelectedCell)
                 {
-                    if (e.BuildingTC(idx_sel).HaveBuilding)
-                    {
-
-                        if (e.BuildingTC(idx_sel).Is(BuildingTypes.Farm) || e.BuildingTC(idx_sel).Is(BuildingTypes.Woodcutter))
-                        {
-                            eUI.LeftEnvEs.Zone.SetActive(true);
-                        }
-                    }
-                    else
-                    {
-                        eUI.LeftEnvEs.Zone.SetActive(true);
-                    }
+                    _eUI.LeftEnvEs.Zone.SetActive(true);
                 }
             }
         }

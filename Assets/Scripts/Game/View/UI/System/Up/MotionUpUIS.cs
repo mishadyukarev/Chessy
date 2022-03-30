@@ -2,7 +2,7 @@
 
 namespace Chessy.Game.View.UI
 {
-    sealed class MotionUpUIS : SystemModelGameAbs, IEcsRunSystem
+    sealed class MotionUpUIS : SystemUIAbstract, IEcsRunSystem
     {
         readonly TextUIC _motionTextC;
 

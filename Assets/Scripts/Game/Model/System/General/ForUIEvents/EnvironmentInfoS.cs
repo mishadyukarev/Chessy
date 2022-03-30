@@ -5,9 +5,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class EnvironmentInfoS : SystemModelGameAbs, IClickUI
     {
-        public EnvironmentInfoS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal EnvironmentInfoS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click()
         {

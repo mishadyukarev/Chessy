@@ -2,13 +2,13 @@
 
 namespace Chessy.Game
 {
-    public abstract class SystemUIAbstract : SystemModelGameAbs
+    internal abstract class SystemUIAbstract
     {
-        protected readonly EntitiesViewUIGame eUI;
+        protected readonly EntitiesModelGame e;
 
-        protected SystemUIAbstract( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
+        protected SystemUIAbstract(in EntitiesModelGame eMG)
         {
-            eUI = entsUI;
+            e = eMG;
         }
     }
 }

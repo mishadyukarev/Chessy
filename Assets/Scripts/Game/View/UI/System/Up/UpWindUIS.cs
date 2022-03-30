@@ -9,7 +9,9 @@ namespace Chessy.Game
         readonly Dictionary<DirectTypes, Vector3> _directs;
         readonly Vector3 _rotationForOtherPlayer = new Vector3(0, 0, 180);
 
-        internal UpWindUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame _eUI;
+
+        internal UpWindUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
             _directs = new Dictionary<DirectTypes, Vector3>();
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
@@ -28,21 +30,22 @@ namespace Chessy.Game
                     default: throw new Exception();
                 }
             }
+            _eUI = entsUI;
         }
 
         public void Run()
         {
             if (e.LessonTC.HaveLesson)
             {
-                eUI.UpEs.ParentWindGOC.SetActive(false);
+                _eUI.UpEs.ParentWindGOC.SetActive(false);
             }
             else
             {
-                eUI.UpEs.ParentWindGOC.SetActive(true);
+                _eUI.UpEs.ParentWindGOC.SetActive(true);
 
-                eUI.UpEs.WindTrC.EulerAngles = _directs[e.WeatherE.WindC.Direct];
-                if (e.CurPlayerITC.Player == PlayerTypes.Second) eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-                eUI.UpEs.WindTextC.TextUI.text = e.WeatherE.WindC.Speed.ToString() + "/" + e.WeatherE.WindC.MaxSpeed;
+                _eUI.UpEs.WindTrC.EulerAngles = _directs[e.WeatherE.WindC.Direct];
+                if (e.CurPlayerITC.Player == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
+                _eUI.UpEs.WindTextC.TextUI.text = e.WeatherE.WindC.Speed.ToString() + "/" + e.WeatherE.WindC.MaxSpeed;
             }
 
 

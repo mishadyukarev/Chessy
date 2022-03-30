@@ -1,26 +1,20 @@
-﻿using Chessy.Game.Entity.Model.Cell.Unit;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetEffectsUnitS
+    sealed class SetEffectsUnitS : SystemModelGameAbs
     {
-        readonly EffectsE _unitEffectE;
+        internal SetEffectsUnitS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal SetEffectsUnitS(in EffectsE unitEffectE) { _unitEffectE = unitEffectE; }
+        internal void Set(in float stun, in float protection, in int shoots, in bool haveKingEffect, in byte cell_0)
+        {
+            e.UnitEffectStunC(cell_0).Stun = stun;
+            e.UnitEffectShield(cell_0).Protection = protection;
+            e.UnitEffectFrozenArrawC(cell_0).Shoots = shoots;
+            e.UnitEffectsE(cell_0).HaveKingEffect = haveKingEffect;
+        }
 
-        internal void Set(in float stun, in float protection, in int shoots, in bool haveKingEffect)
-        {
-            _unitEffectE.StunC.Stun = stun;
-            _unitEffectE.ShieldEffectC.Protection = protection;
-            _unitEffectE.FrozenArrawC.Shoots = shoots;
-            _unitEffectE.HaveKingEffect = haveKingEffect;
-        }
-        internal void Set(in EffectsE unitEffectsE)
-        {
-            _unitEffectE.StunC = unitEffectsE.StunC;
-            _unitEffectE.ShieldEffectC = unitEffectsE.ShieldEffectC;
-            _unitEffectE.FrozenArrawC = unitEffectsE.FrozenArrawC;
-            _unitEffectE.HaveKingEffect = unitEffectsE.HaveKingEffect;
-        }
+        internal void Set(in byte cell_from, in byte cell_to) => e.UnitEffectsE(cell_to) = e.UnitEffectsE(cell_from);
     }
 }

@@ -1,16 +1,17 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class RayS : SystemModelGameAbs, IEcsRunSystem
+    sealed class RayS : SystemModelGameAbs, IEcsRunSystem
     {
         Ray _ray;
         const float RAY_DISTANCE = 100;
 
-        public RayS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal RayS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Run()
         {

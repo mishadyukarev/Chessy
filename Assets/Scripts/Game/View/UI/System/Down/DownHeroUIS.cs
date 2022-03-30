@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    sealed class DownHeroUIS : SystemModelGameAbs, IEcsRunSystem
+    sealed class DownHeroUIS : SystemUIAbstract, IEcsRunSystem
     {
         readonly DownHeroUIE _downHeroUIE;
 

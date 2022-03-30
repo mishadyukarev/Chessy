@@ -1,25 +1,19 @@
 ﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Entity.Model.Cell.Unit;
 using System;
 
 namespace Chessy.Game.System.Model
 {
-    sealed class AttackShieldS
+    sealed class AttackShieldS : SystemModelGameAbs
     {
-        readonly ExtraToolWeaponE _extraTWE;
+        internal AttackShieldS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal AttackShieldS(in ExtraToolWeaponE extraTWE)
-        {
-            _extraTWE = extraTWE;
-        }
-
-        internal void Attack(in float damage)
+        internal void Attack(in float damage, in byte cell_0)
         {
             if (damage <= 0) throw new Exception();
 
-            _extraTWE.ProtectionC.Protection -= damage;
-            if (!_extraTWE.ProtectionC.HaveAnyProtection)
-                _extraTWE.ToolWeaponTC.ToolWeapon = ToolWeaponTypes.None;
+            e.UnitExtraProtectionC(cell_0).Protection -= damage;
+            if (!e.UnitExtraProtectionC(cell_0).HaveAnyProtection)
+                e.UnitExtraTWTC(cell_0).ToolWeapon = ToolWeaponTypes.None;
         }
     }
 }

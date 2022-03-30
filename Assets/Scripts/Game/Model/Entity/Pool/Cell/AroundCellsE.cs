@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.Entity
 {
-    public sealed class AroundCellsE
+    public readonly struct AroundCellsE
     {
-        readonly CellE[] _aroundEs = new CellE[(byte)DirectTypes.End - 1];
-        readonly Dictionary<byte, DirectTypes> _aroundDirs_0 = new Dictionary<byte, DirectTypes>();
-        readonly Dictionary<byte, DirectTypes> _aroundDirs_1 = new Dictionary<byte, DirectTypes>();
+        readonly CellE[] _aroundEs;
+        readonly Dictionary<byte, DirectTypes> _aroundDirs_0;
+        readonly Dictionary<byte, DirectTypes> _aroundDirs_1;
 
         public CellE AroundCellE(in byte idx_array) => _aroundEs[idx_array];
         public CellE AroundCellE(in DirectTypes dirT) => _aroundEs[(byte)dirT - 1];
@@ -54,6 +54,11 @@ namespace Chessy.Game.Model.Entity
 
         internal AroundCellsE(in byte idx, in bool[] isActiveParents, in byte[] xy, in EntitiesModelGame eMGame)
         {
+            _aroundDirs_0 = new Dictionary<byte, DirectTypes>();
+            _aroundDirs_1 = new Dictionary<byte, DirectTypes>();
+
+            _aroundEs = new CellE[(byte)DirectTypes.End - 1];
+
             if (isActiveParents[idx])
             {
                 for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)

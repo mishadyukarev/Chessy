@@ -124,8 +124,8 @@ namespace Chessy.Game
 
         public void GetHeroToMaster(UnitTypes unit) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GetHero, unit });
 
-        public void ShiftUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
-        public void AttackUnitToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
+        public void TryShiftUnit_ToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
+        public void TryAttackUnit_ToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
         public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, cond, idx });
 
         public void GiveTakeToolWeaponToMaster(in byte idx, in ToolWeaponTypes tw, in LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { idx, tw, level});

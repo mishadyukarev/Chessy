@@ -5,13 +5,11 @@ using Photon.Realtime;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public sealed class IncreaseWindSnowyS_M : SystemModelGameAbs
+    sealed class IncreaseWindSnowyS_M : SystemModelGameAbs
     {
-        public IncreaseWindSnowyS_M(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal IncreaseWindSnowyS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public void Execute(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void Execute(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (!e.UnitEs(cell_0).CoolDownC(abilityT).HaveCooldown)
             {

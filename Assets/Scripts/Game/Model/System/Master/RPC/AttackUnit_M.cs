@@ -8,14 +8,11 @@ namespace Chessy.Game.System.Model.Master
 {
     sealed class AttackUnit_M : SystemModelGameAbs
     {
-        readonly SystemsModelGame _sMGame;
-
-        internal AttackUnit_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
+        internal AttackUnit_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame)
         {
-            _sMGame = sMGame;
         }
 
-        public void Attack(in byte idx_from, in byte idx_to)
+        internal void Attack(in byte idx_from, in byte idx_to)
         {
             var whoseMove = e.WhoseMove.Player;
 
@@ -119,12 +116,12 @@ namespace Chessy.Game.System.Model.Master
 
                     else if (e.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
-                        _sMGame.CellSs(idx_from).AttackShieldS.Attack(1f);
+                        s.AttackShieldS.Attack(1f, idx_from);
                     }
 
                     else if (minus_from > 0)
                     {
-                        _sMGame.CellSs(idx_from).AttackUnitS.Attack(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player);
+                        s.AttackUnitS.Attack(minus_from, e.NextPlayer(e.UnitPlayerTC(idx_from).Player).Player, idx_from);
                     }
                 }
                 else
@@ -144,7 +141,7 @@ namespace Chessy.Game.System.Model.Master
 
                 else if (e.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
-                    _sMGame.CellSs(idx_to).AttackShieldS.Attack(1f);
+                    s.AttackShieldS.Attack(1f, idx_to);
                 }
 
                 else if (minus_to > 0)
@@ -163,7 +160,7 @@ namespace Chessy.Game.System.Model.Master
 
                     var wasUnitT_to = e.UnitTC(idx_to).Unit;
 
-                    _sMGame.CellSs(idx_to).AttackUnitS.Attack(minus_to, killer);
+                    s.AttackUnitS.Attack(minus_to, killer, idx_to);
 
                     if (!e.UnitTC(idx_to).HaveUnit)
                     {
@@ -171,7 +168,7 @@ namespace Chessy.Game.System.Model.Master
                         {
                             if (e.UnitTC(idx_from).IsMelee(e.UnitMainTWTC(idx_from).ToolWeapon))
                             {
-                                _sMGame.ShiftUnitS.Shift(idx_from, idx_to);
+                                s.ShiftUnitS.Shift(idx_from, idx_to);
                             }
                         }
 

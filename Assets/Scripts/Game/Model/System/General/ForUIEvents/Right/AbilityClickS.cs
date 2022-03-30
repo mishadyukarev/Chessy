@@ -6,10 +6,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class AbilityClickS : SystemModelGameAbs
     {
-        public AbilityClickS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-
-        }
+        internal AbilityClickS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click(in ButtonTypes uniqueButton)
         {

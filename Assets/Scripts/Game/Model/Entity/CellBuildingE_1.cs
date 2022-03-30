@@ -3,18 +3,20 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public sealed class CellBuildingEs
+    public struct CellBuildingEs
     {
-        readonly Dictionary<PlayerTypes, bool> _isVisibled = new Dictionary<PlayerTypes, bool>();
+        readonly Dictionary<PlayerTypes, bool> _isVisibled;
 
-        public readonly BuildingE MainE = new BuildingE();
-        public readonly CellBuildingExtractE ExtractE = new CellBuildingExtractE();
+        public BuildingE MainE;
+        public CellBuildingExtractE ExtractE;
 
         public bool IsVisible(in PlayerTypes player) => _isVisibled[player];
 
 
-        public CellBuildingEs()
+        public CellBuildingEs(in bool b) : this()
         {
+            _isVisibled = new Dictionary<PlayerTypes, bool>();
+
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 _isVisibled.Add(playerT, default);
         }

@@ -2,11 +2,11 @@
 
 namespace Chessy.Game.System.Model
 {
-    public sealed class MistakeS : SystemModelGameAbs
+    sealed class MistakeS : SystemModelGameAbs
     {
-        public MistakeS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal MistakeS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public void Mistake(in MistakeTypes mistakeT)
+        internal void Mistake(in MistakeTypes mistakeT)
         {
             e.MistakeC.MistakeT = mistakeT;
             e.MistakeC.Timer = 0;

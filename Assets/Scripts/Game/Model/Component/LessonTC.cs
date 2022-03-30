@@ -8,7 +8,6 @@ namespace Chessy.Game.Model.Component
 
         public bool HaveLesson => !LessonT.Is(LessonTypes.None, LessonTypes.End);
         public bool Is(params LessonTypes[] lessonTs) => LessonT.Is(lessonTs);
-        public bool IsMore(in LessonTypes lessonT) => LessonT > lessonT;
 
         public void SetNextLesson()
         {
@@ -17,6 +16,10 @@ namespace Chessy.Game.Model.Component
                 LessonT = LessonTypes.None;
             }
             else LessonT++;
+        }
+        public void SetPreviousLesson()
+        {
+            LessonT--;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class GetAbilityUnitS : SystemModelGameAbs
     {
-        internal GetAbilityUnitS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetAbilityUnitS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Get(in byte cell_0)
         {

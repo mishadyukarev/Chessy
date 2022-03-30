@@ -8,14 +8,9 @@ namespace Chessy.Game.System.Model
 {
     sealed class FireUpdateMS : SystemModelGameAbs
     {
-        readonly SystemsModelGame _sMM;
+        internal FireUpdateMS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal FireUpdateMS(in SystemsModelGame sMM, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _sMM = sMM;
-        }
-
-        public void Run()
+        internal void Run()
         {
             foreach (var cellE in e.CellEs(e.WeatherE.CloudC.Center).AroundCellsEs.AroundCellEs)
             {
@@ -29,7 +24,7 @@ namespace Chessy.Game.System.Model
             {
                 if (e.HaveFire(cell_0))
                 {
-                    _sMM.TakeAdultForestResourcesS.Take(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
+                    s.TakeAdultForestResourcesS.Take(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
 
                     if (e.UnitTC(cell_0).HaveUnit)
                     {
@@ -41,11 +36,11 @@ namespace Chessy.Game.System.Model
                         {
                             if (e.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
                             {
-                                _sMM.CellSs(cell_0).AttackUnitS.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None);
+                                s.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                _sMM.CellSs(cell_0).AttackUnitS.Attack(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player);
+                                s.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, e.NextPlayer(e.UnitPlayerTC(cell_0).Player).Player, cell_0);
                             }
                         }
                     }

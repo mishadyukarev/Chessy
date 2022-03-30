@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class DonerUIS : SystemModelGameAbs, IEcsRunSystem
+    sealed class DonerUIS : SystemUIAbstract, IEcsRunSystem
     {
         readonly DonerUIE _donerE;
 

@@ -6,9 +6,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class GetPawnS : SystemModelGameAbs, IClickUI
     {
-        public GetPawnS(in EntitiesModelGame eMGame) : base(eMGame)
-        {
-        }
+        internal GetPawnS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click()
         {
@@ -39,7 +37,7 @@ namespace Chessy.Game.System.Model
                         {
                             e.LessonTC.SetNextLesson();
                         }
-                        else if (e.LessonTC.LessonT == LessonTypes.OpenTown || e.LessonTC.LessonT == LessonTypes.BuyingHouse)
+                        else if (e.LessonTC.LessonT == LessonTypes.OpeningTown || e.LessonTC.LessonT == LessonTypes.BuyingHouse)
                         {
 
                         }

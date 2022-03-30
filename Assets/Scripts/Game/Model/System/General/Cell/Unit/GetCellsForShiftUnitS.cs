@@ -6,7 +6,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class GetCellsForShiftUnitS : SystemModelGameAbs
     {
-        internal GetCellsForShiftUnitS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetCellsForShiftUnitS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Get(in byte cell_0)
         {

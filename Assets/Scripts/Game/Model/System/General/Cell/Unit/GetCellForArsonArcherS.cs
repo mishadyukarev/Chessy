@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class GetCellForArsonArcherS : SystemModelGameAbs
     {
-        internal GetCellForArsonArcherS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetCellForArsonArcherS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Get(in byte cell_0)
         {

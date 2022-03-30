@@ -9,12 +9,7 @@ namespace Chessy.Game.System.Model.Master
 {
     sealed class SetUnitS_M : SystemModelGameAbs
     {
-        readonly SystemsModelGame _sMGame;
-
-        internal SetUnitS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _sMGame = sMGame;
-        }
+        internal SetUnitS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Set(in UnitTypes unitT, in Player sender, in byte cell)
         {
@@ -38,7 +33,7 @@ namespace Chessy.Game.System.Model.Master
                 }
 
 
-                _sMGame.SetNewUnitS.Set(unitT, whoseMove, cell);
+                s.SetNewUnitS.Set(unitT, whoseMove, cell);
 
 
                 e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);

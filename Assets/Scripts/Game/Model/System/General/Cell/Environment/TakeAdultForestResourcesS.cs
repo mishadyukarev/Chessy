@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class TakeAdultForestResourcesS : SystemModelGameAbs
     {
-        internal TakeAdultForestResourcesS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal TakeAdultForestResourcesS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Take(in float extract, in byte idx)
         {

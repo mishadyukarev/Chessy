@@ -5,8 +5,11 @@ namespace Chessy.Game
 {
     sealed class StatsUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal StatsUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame eUI;
+
+        internal StatsUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
         {
+            eUI = entsUI;
         }
 
         public void Run()

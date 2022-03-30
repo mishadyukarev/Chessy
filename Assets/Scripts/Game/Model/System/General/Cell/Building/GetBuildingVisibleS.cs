@@ -4,7 +4,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class GetBuildingVisibleS : SystemModelGameAbs
     {
-        internal GetBuildingVisibleS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetBuildingVisibleS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Get(in byte cell_0)
         {

@@ -64,7 +64,6 @@ namespace Chessy.Game.System.View.UI
                 new StatsUIS(_eUIGame, _eMGame).Run();
                 _protectS.Run(rightEs.ProtectE, _eMGame.UnitEs(_eMGame.CellsC.Selected), _eMGame.CurPlayerITC.Player);
                 _relaxS.Run(rightEs.RelaxE, _eMGame);
-                new ShieldUIS(_eUIGame, _eMGame).Run();
                 _effectsS.Run(_eMGame.Resources, _eUIGame, _eMGame);
                 for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
                 {
@@ -79,7 +78,7 @@ namespace Chessy.Game.System.View.UI
                 new DownHeroUIS(_eUIGame.DownEs.HeroE, _eMGame).Run();
                 new CostUIS().Sync(_eUIGame.DownEs.ToolWeaponE.CostE, _eMGame);
 
-                if (_eMGame.LessonTC.LessonT  == LessonTypes.None || _eMGame.LessonTC.LessonT >= LessonTypes.OpenTown)
+                if (_eMGame.LessonTC.LessonT  == LessonTypes.None || _eMGame.LessonTC.LessonT >= LessonTypes.OpeningTown)
                 {
                     _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(true);
                 }
@@ -105,7 +104,6 @@ namespace Chessy.Game.System.View.UI
 
 
                 ///Center
-                new CenterSelectorUIS(_eUIGame, _eMGame).Run();
                 new CenterEndGameUIS(_eUIGame, _eMGame).Run();
                 new CenterReadyUIS(_eUIGame, _eMGame).Run();
                 new CenterKingUIS(_eUIGame, _eMGame).Run();

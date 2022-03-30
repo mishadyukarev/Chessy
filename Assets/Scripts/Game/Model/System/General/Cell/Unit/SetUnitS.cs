@@ -1,38 +1,34 @@
 ﻿using Chessy.Common;
-using Chessy.Game.Entity.Model.Cell.Unit;
+using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetUnitS
+    sealed class SetUnitS : SystemModelGameAbs
     {
-        readonly CellSs _cellSs;
-        readonly UnitEs _unitEs;
+        internal SetUnitS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal SetUnitS(in CellSs cellSs, in UnitEs unitEs)
+        public void Set(in byte cell_from, in byte cell_to)
         {
-            _cellSs = cellSs;
-            _unitEs = unitEs;
-        }
-
-        public void Set(in UnitEs unitE)
-        {
-            _cellSs.SetMainS.Set(unitE.MainE);
-            _cellSs.SetEffectsS.Set(unitE.EffectsE);
-            _cellSs.SetStatsS.Set(unitE.StatsE);
-            _cellSs.SetMainTWS.Set(unitE.MainToolWeaponE);
-            _cellSs.SetExtraTWS.Set(unitE.ExtraToolWeaponE);
+            s.SetMainS.Set(cell_from, cell_to);
+            s.SetEffectsS.Set(cell_from, cell_to);
+            s.SetStatsS.Set(cell_from, cell_to);
+            s.SetMainTWS.Set(cell_from, cell_to);
+            s.SetExtraTWS.Set(cell_from, cell_to);
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                _unitEs.Ability(buttonT) = unitE.Ability(buttonT);
+                e.UnitEs(cell_to).Ability(buttonT) = e.UnitEs(cell_from).Ability(buttonT);
             }
+
             for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
             {
-                _unitEs.CoolDownC(abilityT) = unitE.CoolDownC(abilityT);
+                e.UnitEs(cell_to).CoolDownC(abilityT) = e.UnitEs(cell_from).CoolDownC(abilityT);
             }
+
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                _unitEs.ForPlayer(playerT) = unitE.ForPlayer(playerT);
+                e.UnitEs(cell_to).ForPlayer(playerT) = e.UnitEs(cell_from).ForPlayer(playerT);
             }
         }
     }

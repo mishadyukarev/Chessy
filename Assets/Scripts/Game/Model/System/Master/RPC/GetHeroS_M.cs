@@ -4,15 +4,15 @@ using Photon.Realtime;
 
 namespace Chessy.Game.System.Model.Master
 {
-    public sealed class GetHeroS_M : SystemModelGameAbs
+    sealed class GetHeroS_M : SystemModelGameAbs
     {
-        public GetHeroS_M(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetHeroS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public void Get(in UnitTypes unitT, in Player sender)
+        internal void Get(in UnitTypes unitT, in Player sender)
         {
             var whoseMove = e.WhoseMove.Player;
 
-            if (e.LessonTC.LessonT == LessonTypes.PickGod)
+            if (e.LessonTC.LessonT == LessonTypes.PickingGod)
             {
                 e.LessonTC.SetNextLesson();
             }

@@ -5,7 +5,7 @@ namespace Chessy.Game.System.Model
 {
     sealed class GetFarmExtractCellsS : SystemModelGameAbs
     {
-        internal GetFarmExtractCellsS(in EntitiesModelGame eMGame) : base(eMGame) { }
+        internal GetFarmExtractCellsS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         internal void Get(in byte cell_0)
         {

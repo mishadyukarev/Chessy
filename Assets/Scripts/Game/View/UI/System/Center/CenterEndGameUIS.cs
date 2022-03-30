@@ -1,11 +1,15 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Entity.Model;
 
 namespace Chessy.Game
 {
     sealed class CenterEndGameUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterEndGameUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame eUI;
+
+        internal CenterEndGameUIS( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
         {
+            eUI = entsUI;
         }
 
         public void Run()

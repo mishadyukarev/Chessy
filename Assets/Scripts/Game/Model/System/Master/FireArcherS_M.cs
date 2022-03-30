@@ -1,29 +1,25 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class FireArcherS_M : SystemModelGameAbs
+    sealed class FireArcherS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        internal FireArcherS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public FireArcherS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
+        internal void Fire(in byte cell_from, in byte cell_to, in Player sender)
         {
-            _cellEs = cellEs;
-        }
-
-        public void Fire(in byte idx_to, in Player sender)
-        {
-            if (_cellEs.UnitEs.ForArson.Contains(idx_to))
+            if (e.UnitEs(cell_from).ForArson.Contains(cell_to))
             {
-                if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.ARCHER_FIRE)
+                if (e.UnitStepC(cell_from).Steps >= StepValues.ARCHER_FIRE)
                 {
                     e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.ARCHER_FIRE;
-                    e.HaveFire(idx_to) = true;
+                    e.UnitStepC(cell_from).Steps -= StepValues.ARCHER_FIRE;
+                    e.HaveFire(cell_to) = true;
 
                 }
 

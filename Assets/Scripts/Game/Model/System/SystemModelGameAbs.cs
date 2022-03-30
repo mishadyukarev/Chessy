@@ -6,6 +6,12 @@ namespace Chessy.Game
     public abstract class SystemModelGameAbs
     {
         protected readonly EntitiesModelGame e;
-        protected SystemModelGameAbs(in EntitiesModelGame eMGame) => e = eMGame;
+        protected readonly SystemsModelGame s;
+
+        protected SystemModelGameAbs(in SystemsModelGame sMGame, in EntitiesModelGame eMGame)
+        {
+            e = eMGame;
+            s = sMGame;
+        }
     }
 }

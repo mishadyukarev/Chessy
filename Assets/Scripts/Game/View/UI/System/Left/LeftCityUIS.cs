@@ -1,11 +1,15 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
     sealed class LeftCityUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal LeftCityUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame eUI;
+
+        internal LeftCityUIS(in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
         {
+            eUI = entsUI;
         }
 
         public void Run()

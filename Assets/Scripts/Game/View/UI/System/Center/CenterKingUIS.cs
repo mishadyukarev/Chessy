@@ -1,20 +1,25 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Entity.Model;
+
+namespace Chessy.Game
 {
     sealed class CenterKingUIS : SystemUIAbstract, IEcsRunSystem
     {
-        internal CenterKingUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame _eUI;
+
+        internal CenterKingUIS(in EntitiesViewUIGame eUI, in EntitiesModelGame ents) : base(ents)
         {
+            _eUI = eUI;
         }
 
         public void Run()
         {
             if (e.PlayerInfoE(e.CurPlayerITC.Player).HaveKingInInventor)
             {
-                eUI.CenterEs.KingE.Paren.SetActive(true);
+                _eUI.CenterEs.KingE.Paren.SetActive(true);
             }
             else
             {
-                eUI.CenterEs.KingE.Paren.SetActive(false);
+                _eUI.CenterEs.KingE.Paren.SetActive(false);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Entity.Model;
+using Chessy.Game.System.Model;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
@@ -6,25 +7,20 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class FirePawnS_M : SystemModelGameAbs
+    sealed class FirePawnS_M : SystemModelGameAbs
     {
-        readonly CellEs _cellEs;
+        internal FirePawnS_M(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        public FirePawnS_M(in CellEs cellEs, in EntitiesModelGame eMGame) : base(eMGame)
+        internal void Fire(in byte cell_0, in Player sender)
         {
-            _cellEs = cellEs;
-        }
-
-        public void Fire(in Player sender)
-        {
-            if (_cellEs.UnitStatsE.StepC.Steps >= StepValues.FIRE_PAWN)
+            if (e.UnitStepC(cell_0).Steps >= StepValues.FIRE_PAWN)
             {
-                if (_cellEs.EnvironmentEs.AdultForestC.HaveAnyResources)
+                if (e.AdultForestC(cell_0).HaveAnyResources)
                 {
                     e.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
-                    _cellEs.EffectEs.HaveFire = true;
-                    _cellEs.UnitStatsE.StepC.Steps -= StepValues.FIRE_PAWN;
+                    e.HaveFire(cell_0) = true;
+                    e.UnitStepC(cell_0).Steps -= StepValues.FIRE_PAWN;
                 }
 
                 else

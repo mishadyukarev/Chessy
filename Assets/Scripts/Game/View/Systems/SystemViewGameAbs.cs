@@ -2,12 +2,14 @@
 
 namespace Chessy.Game.View.System
 {
-    abstract class SystemViewGameAbs : SystemModelGameAbs
+    abstract class SystemViewGameAbs
     {
+        protected readonly EntitiesModelGame e;
         protected readonly EntitiesViewGame eV;
 
-        protected SystemViewGameAbs(in EntitiesViewGame eV, in EntitiesModelGame eMGame) : base(eMGame)
+        protected SystemViewGameAbs(in EntitiesViewGame eV, in EntitiesModelGame eMGame)
         {
+            e = eMGame;
             this.eV = eV;
         }
     }

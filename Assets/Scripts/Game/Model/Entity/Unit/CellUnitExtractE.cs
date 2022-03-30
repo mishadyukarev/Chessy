@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public sealed class CellUnitExtractE
+    public struct CellUnitExtractE
     {
         public ResourcesC PawnExtractAdultForestE;
         public ResourcesC PawnExtractHillE;

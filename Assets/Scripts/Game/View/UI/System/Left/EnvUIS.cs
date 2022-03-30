@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Chessy.Game.Entity.Model;
+using System;
 
 namespace Chessy.Game
 {
-    sealed class EnvUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class EnvUIS : SystemUIAbstract
     {
-        internal EnvUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+        readonly EntitiesViewUIGame eUI;
+
+        internal EnvUIS( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
         {
+            eUI = entsUI;
         }
 
-        public void Run()
+        internal void Run()
         {
             var idx_sel = e.CellsC.Selected;
 

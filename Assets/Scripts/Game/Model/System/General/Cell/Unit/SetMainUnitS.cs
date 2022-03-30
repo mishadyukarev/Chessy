@@ -1,29 +1,21 @@
 ﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Entity.Model.Cell.Unit;
+using Chessy.Game.System.Model;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetMainUnitS
+    sealed class SetMainUnitS : SystemModelGameAbs
     {
-        readonly UnitMainE _unitMainE;
+        internal SetMainUnitS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal SetMainUnitS(in UnitMainE unitMainE) { _unitMainE = unitMainE; }
+        internal void Set(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in ConditionUnitTypes conditionT, in bool isRight, in byte cell_0)
+        {
+            e.UnitTC(cell_0).Unit = unitT;
+            e.UnitLevelTC(cell_0).Level = levelT;
+            e.UnitPlayerTC(cell_0).Player = playerT;
+            e.UnitConditionTC(cell_0).Condition = conditionT;
+            e.UnitIsRightArcherC(cell_0).IsRight = isRight;
+        }
 
-        internal void Set(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in ConditionUnitTypes conditionT, in bool isRight)
-        {
-            _unitMainE.UnitTC.Unit = unitT;
-            _unitMainE.LevelTC.Level = levelT;
-            _unitMainE.PlayerTC.Player = playerT;
-            _unitMainE.ConditionTC.Condition = conditionT;
-            _unitMainE.IsRightArcherC.IsRight = isRight;
-        }
-        internal void Set(in UnitMainE unitMainE)
-        {
-            _unitMainE.UnitTC = unitMainE.UnitTC;
-            _unitMainE.LevelTC = unitMainE.LevelTC;
-            _unitMainE.PlayerTC = unitMainE.PlayerTC;
-            _unitMainE.ConditionTC = unitMainE.ConditionTC;
-            _unitMainE.IsRightArcherC = unitMainE.IsRightArcherC;
-        }
+        internal void Set(in byte cell_from, in byte cell_to) => e.UnitMainE(cell_to) = e.UnitMainE(cell_from);
     }
 }

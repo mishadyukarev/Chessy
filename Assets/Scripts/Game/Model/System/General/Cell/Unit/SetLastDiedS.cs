@@ -1,30 +1,25 @@
-﻿using Chessy.Game.Entity.Model.Cell.Unit;
+﻿using Chessy.Game.Entity.Model;
 
 namespace Chessy.Game.System.Model
 {
-    sealed class SetLastDiedS
+    sealed class SetLastDiedS : SystemModelGameAbs
     {
-        readonly WhoLastDiedHereE _whoLastDiedHereE;
-        readonly UnitMainE _unitMainE;
+        internal SetLastDiedS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal SetLastDiedS(in WhoLastDiedHereE whoLastDiedHereE, in UnitMainE unitMainE)
+        internal void Set(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in byte cell_0)
         {
-            _whoLastDiedHereE = whoLastDiedHereE;
-            _unitMainE = unitMainE;
+            e.LastDiedUnitTC(cell_0).Unit = unitT;
+            e.LastDiedLevelTC(cell_0).Level = levelT;
+            e.LastDiedPlayerTC(cell_0).Player = playerT;
         }
 
-        internal void Set()
-        {
-            _whoLastDiedHereE.UnitTC = _unitMainE.UnitTC;
-            _whoLastDiedHereE.LevelTC = _unitMainE.LevelTC;
-            _whoLastDiedHereE.PlayerTC = _unitMainE.PlayerTC;
-        }
+        internal void Set(in byte cell_from, in byte cell_to) => e.LastDiedE(cell_to) = e.LastDiedE(cell_from);
 
-        internal void Set(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT)
+        internal void Set(in byte cell_0)
         {
-            _whoLastDiedHereE.UnitTC.Unit = unitT;
-            _whoLastDiedHereE.LevelTC.Level = levelT;
-            _whoLastDiedHereE.PlayerTC.Player = playerT;
+            e.LastDiedUnitTC(cell_0) = e.UnitTC(cell_0);
+            e.LastDiedPlayerTC(cell_0) = e.UnitPlayerTC(cell_0);
+            e.LastDiedLevelTC(cell_0) = e.UnitLevelTC(cell_0);
         }
     }
 }

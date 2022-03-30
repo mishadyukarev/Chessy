@@ -41,7 +41,7 @@ namespace Chessy.Game.Entity.Model
         public RpcPoolEs RpcPoolEs;
         public WeatherE WeatherE;
         public SelectedE SelectedE;
-        public readonly SelectedUnitE SelectedUnitE = new SelectedUnitE();
+        public SelectedUnitE SelectedUnitE;
 
         public PlayerInfoEs PlayerInfoE(in PlayerTypes player) => _forPlayerEs[player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);
@@ -69,36 +69,36 @@ namespace Chessy.Game.Entity.Model
 
         #region Unit
 
-        public UnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
+        public ref UnitEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
 
-        public UnitMainE UnitMainE(in byte idx_cell) => UnitEs(idx_cell).MainE;
+        public ref UnitMainE UnitMainE(in byte idx_cell) => ref UnitEs(idx_cell).MainE;
         public ref UnitTC UnitTC(in byte idx) => ref UnitMainE(idx).UnitTC;
         public ref PlayerTC UnitPlayerTC(in byte idx) => ref UnitMainE(idx).PlayerTC;
         public ref LevelTC UnitLevelTC(in byte idx) => ref UnitMainE(idx).LevelTC;
         public ref ConditionUnitTC UnitConditionTC(in byte idx) => ref UnitMainE(idx).ConditionTC;
         public ref IsRightArcherC UnitIsRightArcherC(in byte idx) => ref UnitMainE(idx).IsRightArcherC;
 
-        public StatsE UnitStatsE(in byte idx_cell) => UnitEs(idx_cell).StatsE;
+        public ref StatsE UnitStatsE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
         public ref HealthC UnitHpC(in byte idx) => ref UnitStatsE(idx).HealthC;
         public ref StepsC UnitStepC(in byte idx) => ref UnitStatsE(idx).StepC;
         public ref WaterC UnitWaterC(in byte idx) => ref UnitStatsE(idx).WaterC;
         public ref DamageC DamageAttackC(in byte idx) => ref UnitStatsE(idx).DamageSimpleAttackC;
         public ref DamageC DamageOnCellC(in byte idx) => ref UnitStatsE(idx).DamageOnCellC;
 
-        public MainToolWeaponE UnitMainTWE(in byte idx) => UnitEs(idx).MainToolWeaponE;
+        public ref MainToolWeaponE UnitMainTWE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
         public ref ToolWeaponTC UnitMainTWTC(in byte idx) => ref UnitMainTWE(idx).ToolWeaponTC;
         public ref LevelTC UnitMainTWLevelTC(in byte idx) => ref UnitMainTWE(idx).LevelTC;
 
-        public ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => UnitEs(idx_cell).ExtraToolWeaponE;
+        public ref ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
         public ref ToolWeaponTC UnitExtraTWTC(in byte idx) => ref UnitExtraTWE(idx).ToolWeaponTC;
         public ref LevelTC UnitExtraLevelTC(in byte idx) => ref UnitExtraTWE(idx).LevelTC;
-        public ref ProtectionC UnitExtraProtectionTC(in byte idx) => ref UnitExtraTWE(idx).ProtectionC;
+        public ref ProtectionC UnitExtraProtectionC(in byte idx) => ref UnitExtraTWE(idx).ProtectionC;
 
-        public CellUnitExtractE UnitExtactE(in byte idx_cell) => UnitEs(idx_cell).ExtractE;
+        public ref CellUnitExtractE UnitExtactE(in byte idx_cell) => ref UnitEs(idx_cell).ExtractE;
         public ref ResourcesC PawnExtractAdultForestE(in byte idx) => ref UnitExtactE(idx).PawnExtractAdultForestE;
         public ref ResourcesC PawnExtractHillE(in byte idx) => ref UnitExtactE(idx).PawnExtractHillE;
 
-        public WhoLastDiedHereE LastDiedE(in byte idx) => UnitEs(idx).WhoLastDiedHereE;
+        public ref WhoLastDiedHereE LastDiedE(in byte idx) => ref UnitEs(idx).WhoLastDiedHereE;
         public ref UnitTC LastDiedUnitTC(in byte idx) => ref LastDiedE(idx).UnitTC;
         public ref LevelTC LastDiedLevelTC(in byte idx) => ref LastDiedE(idx).LevelTC;
         public ref PlayerTC LastDiedPlayerTC(in byte idx) => ref LastDiedE(idx).PlayerTC;
@@ -106,7 +106,7 @@ namespace Chessy.Game.Entity.Model
 
         #region Effects
 
-        public EffectsE UnitEffectsE(in byte idx_cell) => UnitEs(idx_cell).EffectsE;
+        public ref EffectsE UnitEffectsE(in byte idx_cell) => ref UnitEs(idx_cell).EffectsE;
         public ref StunC UnitEffectStunC(in byte idx) => ref UnitEffectsE(idx).StunC;
         public ref ProtectionC UnitEffectShield(in byte idx) => ref UnitEffectsE(idx).ShieldEffectC;
         public ref ShootsC UnitEffectFrozenArrawC(in byte idx) => ref UnitEffectsE(idx).FrozenArrawC;
@@ -118,30 +118,31 @@ namespace Chessy.Game.Entity.Model
 
         #region Building
 
-        public CellBuildingEs BuildEs(in byte idx) => CellEs(idx).BuildEs;
-        public BuildingE BuildingMainE(in byte idx_cell) => BuildEs(idx_cell).MainE;
+        public ref CellBuildingEs BuildEs(in byte idx) => ref CellEs(idx).BuildEs;
+        public ref BuildingE BuildingMainE(in byte idx_cell) => ref BuildEs(idx_cell).MainE;
         public ref BuildingTC BuildingTC(in byte idx) => ref BuildingMainE(idx).BuildingTC;
+        public ref BuildingTypes BuildingT(in byte cell) => ref BuildingTC(cell).Building;
         public ref LevelTC BuildingLevelTC(in byte idx) => ref BuildingMainE(idx).LevelTC;
         public ref PlayerTC BuildingPlayerTC(in byte idx) => ref BuildingMainE(idx).PlayerTC;
-        public ref HealthC BuildHpC(in byte idx) => ref BuildingMainE(idx).HealthC;
+        public ref HealthC BuildingHpC(in byte idx) => ref BuildingMainE(idx).HealthC;
 
-        public CellBuildingExtractE BuildingExtractE(in byte idx_cell) => BuildEs(idx_cell).ExtractE;
+        public ref CellBuildingExtractE BuildingExtractE(in byte idx_cell) => ref BuildEs(idx_cell).ExtractE;
         public ref ResourcesC WoodcutterExtractE(in byte idx) => ref BuildingExtractE(idx).WoodcutterExtractC;
         public ref ResourcesC FarmExtractFertilizeE(in byte idx) => ref BuildingExtractE(idx).FarmExtractC;
 
         #endregion
 
 
-        public CellEnvironmentEs EnvironmentEs(in byte idx) => CellEs(idx).EnvironmentEs;
+        public ref CellEnvironmentEs EnvironmentEs(in byte idx) => ref CellEs(idx).EnvironmentEs;
         public ref ResourcesC YoungForestC(in byte idx) => ref EnvironmentEs(idx).YoungForestC;
         public ref ResourcesC AdultForestC(in byte idx) => ref EnvironmentEs(idx).AdultForestC;
         public ref ResourcesC MountainC(in byte idx) => ref EnvironmentEs(idx).MountainC;
         public ref ResourcesC HillC(in byte idx) => ref EnvironmentEs(idx).HillC;
         public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentEs(idx).FertilizeC;
 
-        public CellRiverE RiverEs(in byte idx) => CellEs(idx).RiverEs;
+        public ref CellRiverE RiverEs(in byte idx) => ref CellEs(idx).RiverEs;
 
-        public CellEffectE EffectEs(in byte idx) => CellEs(idx).EffectEs;
+        public ref CellEffectE EffectEs(in byte idx) => ref CellEs(idx).EffectEs;
         public ref bool HaveFire(in byte idx) => ref EffectEs(idx).HaveFire;
 
 

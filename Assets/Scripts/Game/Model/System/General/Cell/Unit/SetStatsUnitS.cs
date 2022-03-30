@@ -1,25 +1,19 @@
 ﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Entity.Model.Cell.Unit;
+using Chessy.Game.System.Model;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetStatsUnitS
+    sealed class SetStatsUnitS : SystemModelGameAbs
     {
-        readonly StatsE _statsE;
+        internal SetStatsUnitS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
-        internal SetStatsUnitS(in StatsE statsE) { _statsE = statsE; }
+        internal void Set(in float hp, in float steps, in float water, in byte cell_0)
+        {
+            e.UnitHpC(cell_0).Health = hp;
+            e.UnitStepC(cell_0).Steps = steps;
+            e.UnitWaterC(cell_0).Water = water;
+        }
 
-        internal void Set(in float hp, in float steps, in float water)
-        {
-            _statsE.HealthC.Health = hp;
-            _statsE.StepC.Steps = steps;
-            _statsE.WaterC.Water = water;
-        }
-        internal void Set(in StatsE statsE)
-        {
-            _statsE.HealthC = statsE.HealthC;
-            _statsE.StepC = statsE.StepC;
-            _statsE.WaterC = statsE.WaterC;
-        }
+        internal void Set(in byte cell_from, in byte cell_to) => e.UnitStatsE(cell_to) = e.UnitStatsE(cell_from);
     }
 }

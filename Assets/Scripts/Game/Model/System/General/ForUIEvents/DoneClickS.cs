@@ -4,12 +4,7 @@ namespace Chessy.Game.System.Model
 {
     public sealed class DoneClickS : SystemModelGameAbs
     {
-        readonly MistakeS _mistakeS;
-
-        public DoneClickS(in MistakeS mistakeS, in EntitiesModelGame eMGame) : base(eMGame)
-        {
-            _mistakeS = mistakeS;
-        }
+        internal DoneClickS(in SystemsModelGame sMGame, in EntitiesModelGame eMGame) : base(sMGame, eMGame) { }
 
         public void Click()
         {
@@ -24,12 +19,12 @@ namespace Chessy.Game.System.Model
                 }
                 else
                 {
-                    _mistakeS.Mistake(MistakeTypes.NeedGetHero);
+                    s.MistakeS.Mistake(MistakeTypes.NeedGetHero);
                 }
             }
             else
             {
-                _mistakeS.Mistake(MistakeTypes.NeedSetKing);
+                s.MistakeS.Mistake(MistakeTypes.NeedSetKing);
             }
 
             e.NeedUpdateView = true;
