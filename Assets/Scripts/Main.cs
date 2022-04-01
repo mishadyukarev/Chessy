@@ -8,12 +8,13 @@ using Chessy.Common.View.UI.System;
 using Chessy.Game;
 using Chessy.Game.Entity.Model;
 using Chessy.Game.EventsUI;
-using Chessy.Game.System.Model;
+using Chessy.Game.Model.System;
 using Chessy.Game.System.View;
 using Chessy.Game.System.View.UI;
 using Chessy.Menu;
 using Chessy.Menu.View.UI;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,11 @@ namespace Chessy
     {
         [SerializeField] TestModes TestModeT = default;
 
-        List<IEcsRunSystem> _runs;
+        List<IEcsRunSystem> _commonRuns;
+        List<IEcsRunSystem> _gameRuns;
+        List<IEcsRunSystem> _menuRuns;
+
+        EntitiesModelCommon _eMC;
 
 
         void Start()
@@ -32,12 +37,12 @@ namespace Chessy
 
             var eVCommon = new EntitiesViewCommon(transform, TestModeT, out var sound, out var commonZone);
             var eUICommon = new EntitiesViewUICommon(commonZone);
-            var eMCommon = new EntitiesModelCommon(TestModeT, sound);
+            _eMC = new EntitiesModelCommon(TestModeT, sound);
 
-            var sMCommon = new SystemsModelCommon(eMCommon);
-            var sUICommon = new SystemsViewUICommon(eMCommon, eVCommon, eUICommon);
+            var sMCommon = new SystemsModelCommon(_eMC);
+            var sUICommon = new SystemsViewUICommon(_eMC, eVCommon, eUICommon);
 
-            new EventsCommon(eUICommon, eVCommon, eMCommon);
+            new EventsCommon(eUICommon, eVCommon, _eMC);
 
             #endregion
 
@@ -48,9 +53,10 @@ namespace Chessy
             var eUIMenu = new EntitiesViewUIMenu(eUICommon);
             var eMMenu = new EntitiesModelMenu();
 
-            var sMMenu = new SystemsModelMenu(eUIMenu, eUICommon, eMCommon);
+            var sMMenu = new SystemsModelMenu(_eMC);
+            var sUIMenu = new SystemsViewUIMenu(eUIMenu, _eMC);
 
-            new EventsMenu(eMCommon, eUIMenu);
+            new EventsMenu(_eMC, eUIMenu);
 
             #endregion
 
@@ -61,21 +67,21 @@ namespace Chessy
             var eModelGame = new EntitiesModelGame(forData, Rpc.NamesMethods_S);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
-            var sModelGame = new SystemsModelGame(eMCommon, eModelGame);
-            var sUIGame = new SystemsViewUIGame(eMCommon, eUIGame, eModelGame);
-            var sViewGame = new SystemsViewGame(eViewGame, eModelGame, eVCommon, eMCommon);
+            var sModelGame = new SystemsModelGame(sMCommon, _eMC, eModelGame);
+            var sUIGame = new SystemsViewUIGame(_eMC, eUIGame, eModelGame);
+            var sViewGame = new SystemsViewGame(eViewGame, eModelGame, eVCommon, _eMC);
 
-            new EventsUIGame(eUICommon, eMCommon, sModelGame, eUIGame, eModelGame);
+            new EventsUIGame(eUICommon, _eMC, sModelGame, eUIGame, eModelGame);
 
             #endregion
 
 
             #region NeedReplace
 
-            var rpc = eViewGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, eMCommon);
+            var rpc = eViewGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
 
 
-            new IAPCore(eUICommon.ShopE, eMCommon);
+            new IAPCore(_eMC);
             new MyYodo();
 
             var togglerScenes = new List<IToggleScene>()
@@ -91,29 +97,54 @@ namespace Chessy
             #endregion
 
 
-            _runs = new List<IEcsRunSystem>()
+            _commonRuns = new List<IEcsRunSystem>()
             {
                 sMCommon,
                 sUICommon,
+            };
+
+            _menuRuns = new List<IEcsRunSystem>()
+            {
+                sMMenu,
+                sUIMenu,
+            };
+
+            _gameRuns = new List<IEcsRunSystem>()
+            {
                 sModelGame,
                 sViewGame,
                 sUIGame,
-                sMMenu,
             };
 
 
 
             #region ComeToTraining
 
-            eMCommon.VolumeMusic = eUICommon.SettingsE.SliderC.Slider.value;
+            _eMC.VolumeMusic = eUICommon.SettingsE.SliderC.Slider.value;
 
             PhotonNetwork.OfflineMode = true;
-            eMCommon.GameModeTC.GameMode = GameModes.TrainingOff;
+            _eMC.GameModeTC.GameModeT = GameModes.TrainingOff;
             PhotonNetwork.CreateRoom(default);
 
             #endregion
         }
 
-        void Update() => _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());
+        void Update()
+        {
+            _commonRuns.ForEach((IEcsRunSystem iRun) => iRun.Run());
+
+            switch (_eMC.SceneTC.Scene)
+            {
+                case SceneTypes.Menu:
+                    _menuRuns.ForEach((IEcsRunSystem iRun) => iRun.Run());
+                    break;
+
+                case SceneTypes.Game:
+                    _gameRuns.ForEach((IEcsRunSystem iRun) => iRun.Run());
+                    break;
+
+                default: throw new Exception();
+            }
+        }
     }
 }
