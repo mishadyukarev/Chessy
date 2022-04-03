@@ -6,7 +6,7 @@ using Chessy.Common.Model.System;
 using Chessy.Common.View.UI;
 using Chessy.Common.View.UI.System;
 using Chessy.Game;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.EventsUI;
 using Chessy.Game.Model.System;
 using Chessy.Game.System.View;

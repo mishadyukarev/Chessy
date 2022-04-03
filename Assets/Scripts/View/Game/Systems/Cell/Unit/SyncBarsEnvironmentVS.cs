@@ -1,5 +1,5 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Values.Cell.Environment;
+﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 using UnityEngine;
 
 namespace Chessy.Game

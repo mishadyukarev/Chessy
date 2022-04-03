@@ -1,11 +1,11 @@
 ﻿using Chessy.Common;
-using Chessy.Game.Entity.Model;
+using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Extensions;
 using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {
@@ -15,9 +15,9 @@ namespace Chessy.Game.Model.System
 
         internal void TryDone(in GameModeTC gameModeTC, in Player sender, in PlayerTypes senderPlayerT)
         {
-            if (!eMG.PlayerInfoE(senderPlayerT).HaveKingInInventor)
+            if (!eMG.PlayerInfoE(senderPlayerT).KingInfoE.HaveInInventor)
             {
-                if (eMG.PlayerInfoE(senderPlayerT).MyHeroTC.HaveUnit)
+                if (eMG.PlayerInfoE(senderPlayerT).GodInfoE.UnitTC.HaveUnit)
                 {
                     if (PhotonNetwork.OfflineMode)
                     {
@@ -70,7 +70,7 @@ namespace Chessy.Game.Model.System
                         //}
                     }
 
-                    
+
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace Chessy.Game.Model.System
         {
             for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
             {
-                eMG.PlayerInfoE(playerT).HeroCooldownC.Cooldown -= taking;
+                eMG.PlayerInfoE(playerT).GodInfoE.CooldownC.Cooldown -= taking;
             }
 
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
@@ -97,7 +97,7 @@ namespace Chessy.Game.Model.System
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
-                    eMG.UnitEs(idx).CoolDownC(abilityT).Cooldown -= taking;
+                    eMG.UnitAbilityE(idx).Cooldown(abilityT) -= taking;
                 }
             }
         }

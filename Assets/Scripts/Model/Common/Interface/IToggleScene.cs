@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Chessy.Common.Interface
+﻿namespace Chessy.Common.Interface
 {
     public interface IToggleScene
     {

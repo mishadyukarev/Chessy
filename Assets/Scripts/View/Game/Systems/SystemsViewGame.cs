@@ -1,7 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Entity.View;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Chessy.Game.View.System;
 using UnityEngine;
@@ -10,8 +10,6 @@ namespace Chessy.Game.System.View
 {
     public sealed class SystemsViewGame : IEcsRunSystem
     {
-        float _timerForUpdate;
-
         readonly SyncNoneVisionS SyncNoneVisionS;
         readonly NeedFoodS SyncNeedFoodS;
         readonly BuildingFlagVS SyncBuildingFlagS;
@@ -21,7 +19,7 @@ namespace Chessy.Game.System.View
         readonly SyncFireVS SyncFireS;
         readonly SyncEnvironmentVS SyncEnvironmentS;
         readonly SyncStatsVS SyncStatsS;
-        readonly SyncKingVS SyncUnitVS;
+        readonly SyncUnitVS SyncUnitVS;
         readonly SyncPawnVS SyncPawnS;
 
         readonly EntitiesViewGame _eVGame;
@@ -39,30 +37,26 @@ namespace Chessy.Game.System.View
             _eMCommon = eMCommon;
 
 
-            SyncUnitVS = new SyncKingVS(eVGame, eMGame);
+            SyncUnitVS = new SyncUnitVS(eVGame, eMGame);
 
         }
 
         public void Run()
         {
-
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (_eMGame.UnitEs(cell_0).NeedUpdateView)
+                if (_eMGame.UnitNeedUpdateViewC(cell_0).NeedUpdateView)
                 {
                     SyncUnitVS.Sync(cell_0);
-                    _eMGame.UnitEs(cell_0).NeedUpdateView = false;
+                    _eMGame.UnitNeedUpdateViewC(cell_0).NeedUpdateView = false;
                 }
             }
 
-
-            //_timerForUpdate += Time.deltaTime;
-
-            if (_eMGame.NeedUpdateView/* || _timerForUpdate >= 0.5f*/)
+            if (_eMGame.NeedUpdateView)
             {
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    if (_eMGame.CellEs(cell_0).IsActiveParentSelf)
+                    if (_eMGame.CellE(cell_0).IsActiveParentSelf)
                     {
                         SyncUnitVS.Sync(cell_0);
 
@@ -88,8 +82,6 @@ namespace Chessy.Game.System.View
                 SupportVS.Sync(_eMGame, _eVGame);
                 CloudVS.Run(_eVGame, _eMGame);
                 RotateAllVS.Rotate(_eVGame, _eMGame, _eVCommon);
-
-                _timerForUpdate = 0;
             }
         }
     }

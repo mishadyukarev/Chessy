@@ -2,7 +2,7 @@
 //{
 //    sealed class CitiesAddPeopleUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal CitiesAddPeopleUpdateMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+//        internal CitiesAddPeopleUpdateMS(in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 
@@ -14,7 +14,7 @@
 //            //for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
 //            //{
 //            //    E.PlayerE(playerT).PeopleInCity 
-//            //        += E.PlayerE(playerT).MaxAvailablePawns 
+//            //        += E.PlayerE(playerT).PawnInfoE.MaxAvailablePawns 
 //            //        * E.PlayerE(playerT).ResourcesC(ResourceTypes.Food).Resources 
 //            //        / Update_VALUES.FROM_MAX_AVAILABLE_PAWNS;
 

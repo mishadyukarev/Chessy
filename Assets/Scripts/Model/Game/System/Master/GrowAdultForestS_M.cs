@@ -1,8 +1,7 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
-using Chessy.Game.Values.Cell.Environment;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
@@ -15,7 +14,7 @@ namespace Chessy.Game.Model.System
 
         internal void Grow(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMG.UnitEs(cell_0).CoolDownC(abilityT).HaveCooldown)
+            if (!eMG.UnitAbilityE(cell_0).HaveCooldown(abilityT))
             {
                 if (eMG.UnitStepC(cell_0).Steps >= StepValues.GROW_ADULT_FOREST)
                 {
@@ -27,10 +26,10 @@ namespace Chessy.Game.Model.System
 
                         eMG.UnitStepC(cell_0).Steps -= StepValues.GROW_ADULT_FOREST;
 
-                        eMG.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
+                        eMG.UnitAbilityE(cell_0).Cooldown(abilityT) = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
 
 
-                        foreach (var idx_1 in eMG.CellEs(cell_0).AroundCellsEs.IdxsAround)
+                        foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
                         {
                             if (eMG.YoungForestC(idx_1).HaveAnyResources)
                             {
@@ -43,9 +42,8 @@ namespace Chessy.Game.Model.System
                         eMG.RpcPoolEs.SoundToGeneral(sender, abilityT);
 
 
-                        foreach (var idxC_1 in eMG.CellEs(cell_0).AroundCellsEs.AroundCellIdxsC)
+                        foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
                         {
-                            var idx_1 = idxC_1.Idx;
 
                             if (eMG.UnitTC(idx_1).HaveUnit)
                             {

@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Extensions;
 using System;
 
@@ -32,7 +32,7 @@ namespace Chessy.Game.Model.System
 
                     //else if (E.BuildingTC(Idx).Is(BuildingTypes.House))
                     //{
-                    //    E.PlayerE(E.BuildingPlayerTC(Idx).Player).MaxAvailablePawns--;
+                    //    E.PlayerE(E.BuildingPlayerTC(Idx).Player).PawnInfoE.MaxAvailablePawns--;
                     //}
 
 

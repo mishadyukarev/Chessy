@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Photon.Realtime;
 
@@ -19,8 +19,8 @@ namespace Chessy.Game.Model.System.Master
                 eMG.LessonTC.SetNextLesson();
             }
 
-            eMG.PlayerInfoE(whoseMove).MyHeroTC.UnitT = unitT;
-            eMG.PlayerInfoE(whoseMove).HaveHeroInInventor = true;
+            eMG.PlayerInfoE(whoseMove).GodInfoE.UnitT = unitT;
+            eMG.PlayerInfoE(whoseMove).GodInfoE.HaveHeroInInventor = true;
         }
     }
 }

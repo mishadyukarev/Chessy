@@ -1,7 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -50,10 +49,10 @@ namespace Chessy.Game.Model.System
                         {
                             if (eMG.CellClickTC.Is(CellClickTypes.SetUnit))
                             {
-                                eMG.UnitEs(eMG.CellsC.Current).NeedUpdateView = true;
-                                eMG.UnitEs(eMG.CellsC.PreviousVision).NeedUpdateView = true;
+                                eMG.UnitNeedUpdateViewC(eMG.CellsC.Current).NeedUpdateView = true;
+                                eMG.UnitNeedUpdateViewC(eMG.CellsC.PreviousVision).NeedUpdateView = true;
                             }
-                            
+
                             eMG.CellsC.PreviousVision = eMG.CellsC.Current;
                         }
 

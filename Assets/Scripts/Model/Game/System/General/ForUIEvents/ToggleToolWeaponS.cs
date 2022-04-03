@@ -1,8 +1,7 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Enum;
-using Chessy.Common.Interface;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 
 namespace Chessy.Game.Model.System
@@ -30,7 +29,7 @@ namespace Chessy.Game.Model.System
                     }
                 }
 
-                if (eMG.PlayerInfoE(eMG.WhoseMove.PlayerT).LevelE(LevelTypes.First).UnitsInGame(UnitTypes.Pawn) > 0)
+                if (eMG.PlayerInfoE(eMG.WhoseMove.PlayerT).PawnInfoE.PawnsInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -72,15 +71,15 @@ namespace Chessy.Game.Model.System
                 }
                 else
                 {
-                    eMG.MistakeC.MistakeT = MistakeTypes.NeedPawnsInGame;
-                    eMG.MistakeC.Timer = 0;
+                    eMG.MistakeE.MistakeT = MistakeTypes.NeedPawnsInGame;
+                    eMG.MistakeE.Timer = 0;
                     eMG.SoundActionC(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
-                eMG.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
-                eMG.MistakeC.Timer = 0;
+                eMG.MistakeE.MistakeT = MistakeTypes.NeedWaitQueue;
+                eMG.MistakeE.Timer = 0;
                 eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
             }
 

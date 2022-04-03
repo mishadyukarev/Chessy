@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         static float _timer;
 
-        public static void Sync(in float timer, in EntitiesViewUIGame eUI, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public static void Sync(in float timer, in EntitiesViewUIGame eUI, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
             if (e.ZoneInfoC.IsActiveMotion)
             {

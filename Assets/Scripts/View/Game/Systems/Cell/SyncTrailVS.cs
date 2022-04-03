@@ -1,4 +1,4 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
@@ -8,9 +8,9 @@ namespace Chessy.Game
         {
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {
-                if (eMGame.CellEs(idx_0).Player(eMGame.CurPlayerITC.PlayerT).IsVisibleTrail)
+                if (eMGame.TrailVisibleC(idx_0).IsVisible(eMGame.CurPlayerITC.PlayerT))
                 {
-                    eVGame.CellEs(idx_0).TrailCellVC(dirT).SetActive(eMGame.CellEs(idx_0).TrailHealthC(dirT).IsAlive);
+                    eVGame.CellEs(idx_0).TrailCellVC(dirT).SetActive(eMGame.HealthTrail(idx_0).IsAlive(dirT));
                 }
                 else eVGame.CellEs(idx_0).TrailCellVC(dirT).Disable();
             }

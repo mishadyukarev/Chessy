@@ -1,8 +1,7 @@
-﻿namespace Chessy.Game
-{
-    public struct CellBuildingExtractE
-    {
-        public ResourcesC WoodcutterExtractC;
-        public ResourcesC FarmExtractC;
-    }
-}
+﻿//namespace Chessy.Game
+//{
+//    public struct CellBuildingExtractE
+//    {
+
+//    }
+//}

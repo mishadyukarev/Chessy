@@ -1,4 +1,4 @@
-﻿//using Chessy.Game.Entity.Model;
+﻿//using Chessy.Game.Model.Entity;
 //using Chessy.Game.Model.System;
 //using Chessy.Game.Model.System.Master;
 //using Chessy.Game.Values;

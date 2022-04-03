@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -63,7 +63,7 @@ namespace Chessy.Game.Model.System.Master
                                 {
                                     if (eMG.UnitHpC(cell_0).Health >= HpValues.MAX)
                                     {
-                                        if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).MyHeroTC.Is(UnitTypes.Elfemale))
+                                        if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
                                         {
                                             sMG.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMG.UnitPlayerTC(cell_0).PlayerT, BuildingValues.MAX_HP, cell_0);
                                         }

@@ -1,7 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using System;
 
 namespace Chessy.Game.Model.System
@@ -16,11 +16,11 @@ namespace Chessy.Game.Model.System
             {
                 var idx_sel = eMG.CellsC.Selected;
 
-                var abil = eMG.UnitEs(idx_sel).Ability(uniqueButton);
+                var abil = eMG.UnitButtonAbilitiesC(idx_sel).Ability(uniqueButton);
 
-                if (!eMG.UnitEs(idx_sel).CoolDownC(abil.Ability).HaveCooldown)
+                if (!eMG.UnitAbilityE(idx_sel).HaveCooldown(abil))
                 {
-                    switch (abil.Ability)
+                    switch (abil)
                     {
                         case AbilityTypes.FirePawn:
                             eMG.RpcPoolEs.FirePawnToMas(idx_sel);

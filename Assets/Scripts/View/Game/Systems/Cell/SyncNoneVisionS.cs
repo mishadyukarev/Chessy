@@ -7,7 +7,7 @@ namespace Chessy.Game.System.View
     {
         bool _isActive;
 
-        public void Sync(in byte idx_0, in SpriteRendererVC srC, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Sync(in byte idx_0, in SpriteRendererVC srC, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
             _isActive = false;
 
@@ -25,9 +25,9 @@ namespace Chessy.Game.System.View
                         break;
 
                     case AbilityTypes.ChangeDirectionWind:
-                        if (e.CellEs(idx_0).IsActiveParentSelf)
+                        if (e.CellE(idx_0).IsActiveParentSelf)
                         {
-                            if (!e.CellEs(idx_0).AroundCellsEs.IdxsAround.Contains(e.WeatherE.CloudC.Center))
+                            if (!e.AroundCellsE(idx_0).CellsAround.Contains(e.WeatherE.CloudC.Center))
                             {
                                 _isActive = true;
                             }
@@ -61,26 +61,26 @@ namespace Chessy.Game.System.View
                 }
             }
 
-            if (e.MistakeC.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
+            if (e.MistakeE.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
             {
                 if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
-                    || e.BuildingMainE(idx_0).BuildingTC.HaveBuilding)
+                    || e.BuildingEs(idx_0).BuildingTC.HaveBuilding)
                 {
                     _isActive = true;
                 }
             }
 
-            else if (e.MistakeC.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
+            else if (e.MistakeE.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
             {
                 if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
-                    || e.YoungForestC(idx_0).HaveAnyResources || e.BuildingMainE(idx_0).BuildingTC.HaveBuilding)
+                    || e.YoungForestC(idx_0).HaveAnyResources || e.BuildingEs(idx_0).BuildingTC.HaveBuilding)
                 {
                     _isActive = true;
                 }
             }
 
 
-            else if (e.MistakeC.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
+            else if (e.MistakeE.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
             {
                 if (!e.YoungForestC(idx_0).HaveAnyResources)
                 {

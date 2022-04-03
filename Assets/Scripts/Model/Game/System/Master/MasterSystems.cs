@@ -1,7 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System.Master;
 
 namespace Chessy.Game.Model.System
@@ -37,7 +36,7 @@ namespace Chessy.Game.Model.System
         internal readonly BuildFarmS_M BuildFarmS_M;
         internal readonly SetConditionUnitS_M SetConditionUnitS_M;
         internal readonly GiveTakeToolWeaponS_M GiveTakeToolWeaponS_M;
-        
+
 
         internal readonly GetDataCellsS_M GetDataCellsS_M;
 

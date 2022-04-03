@@ -1,7 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+using Chessy.Game.Model.Entity;
 using System.Linq;
 
 namespace Chessy.Game.Model.System
@@ -17,7 +16,7 @@ namespace Chessy.Game.Model.System
             var cell_0 = eMG.CellsC.Current;
 
             if (eMG.UnitTC(cell_0).HaveUnit
-                && eMG.UnitEs(cell_0).ForPlayer(eMG.CurPlayerITC.PlayerT).IsVisible && !eMG.UnitTC(cell_0).Is(UnitTypes.Wolf))
+                && eMG.UnitVisibleC(cell_0).IsVisible(eMG.CurPlayerITC.PlayerT) && !eMG.UnitTC(cell_0).Is(UnitTypes.Wolf))
             {
                 if (eMG.UnitTC(cell_0).Is(UnitTypes.Tree))
                 {
@@ -53,7 +52,7 @@ namespace Chessy.Game.Model.System
                 }
 
 
-                if (eMG.CellEs(eMG.WeatherE.CloudC.Center).AroundCellsEs.IdxsAround.Contains(cell_0) || eMG.WeatherE.CloudC.Center == cell_0)
+                if (eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround.Contains(cell_0) || eMG.WeatherE.CloudC.Center == cell_0)
                 {
                     eMG.SoundActionC(ClipTypes.ShortRain).Invoke();
                 }

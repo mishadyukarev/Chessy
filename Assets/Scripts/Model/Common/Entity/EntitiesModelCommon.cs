@@ -1,9 +1,6 @@
 ﻿using Chessy.Common.Component;
 using Chessy.Common.Enum;
-using Chessy.Common.Interface;
 using Chessy.Common.Model.Entity;
-using Chessy.Game;
-using Photon.Pun;
 using System;
 using System.Collections.Generic;
 
@@ -39,7 +36,7 @@ namespace Chessy.Common.Entity
 
             var nowTime = DateTime.Now;
             AdC = new AdC(nowTime);
-            TimeStartGameC = new TimeStartGameC(nowTime);  
+            TimeStartGameC = new TimeStartGameC(nowTime);
             TestModeC = new TestModeC(testMode);
 
 

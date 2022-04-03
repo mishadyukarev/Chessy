@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Values;
 
@@ -17,7 +17,7 @@ namespace Chessy.Game.Model.System
 
         internal void Execute()
         {
-            eMG.MistakeC.MistakeT = MistakeTypes.None;
+            eMG.MistakeE.MistakeT = MistakeTypes.None;
 
             if (eMG.CellsC.IsSelectedCell)
             {
@@ -96,7 +96,7 @@ namespace Chessy.Game.Model.System
                             if (eMG.UnitTC(eMG.CellsC.Current).HaveUnit)
                             {
 
-                                if (eMG.UnitEs(eMG.CellsC.Selected).SimpleAttack.Contains(eMG.CellsC.Current) || eMG.UnitEs(eMG.CellsC.Selected).UniqueAttack.Contains(eMG.CellsC.Current))
+                                if (eMG.UnitAttackE(eMG.CellsC.Selected).Simple.Contains(eMG.CellsC.Current) || eMG.UnitAttackE(eMG.CellsC.Selected).Unique.Contains(eMG.CellsC.Current))
                                 {
                                     eMG.RpcPoolEs.TryAttackUnit_ToMaster(eMG.CellsC.Selected, eMG.CellsC.Current);
                                     SetNewSelectedCell();
@@ -112,7 +112,7 @@ namespace Chessy.Game.Model.System
 
                             else
                             {
-                                if (eMG.UnitPlayerTC(eMG.CellsC.Selected).Is(eMG.CurPlayerITC.PlayerT) && eMG.UnitEs(eMG.CellsC.Selected).ForShift.Contains(eMG.CellsC.Current))
+                                if (eMG.UnitPlayerTC(eMG.CellsC.Selected).Is(eMG.CurPlayerITC.PlayerT) && eMG.CellsForShift(eMG.CellsC.Selected).Contains(eMG.CellsC.Current))
                                 {
                                     eMG.RpcPoolEs.TryShiftUnit_ToMaster(eMG.CellsC.Selected, eMG.CellsC.Current);
                                 }
@@ -147,14 +147,14 @@ namespace Chessy.Game.Model.System
                 {
                     if (eMG.UnitTC(eMG.CellsC.Selected).HaveUnit)
                     {
-                        if (eMG.UnitEs(eMG.CellsC.Selected).SimpleAttack.Contains(eMG.CellsC.Current)
-                        || eMG.UnitEs(eMG.CellsC.Selected).UniqueAttack.Contains(eMG.CellsC.Current))
+                        if (eMG.UnitAttackE(eMG.CellsC.Selected).Simple.Contains(eMG.CellsC.Current)
+                        || eMG.UnitAttackE(eMG.CellsC.Selected).Unique.Contains(eMG.CellsC.Current))
                         {
                             eMG.RpcPoolEs.TryAttackUnit_ToMaster(eMG.CellsC.Selected, eMG.CellsC.Current);
                         }
 
                         else if (eMG.UnitPlayerTC(eMG.CellsC.Selected).Is(eMG.CurPlayerITC.PlayerT)
-                            && eMG.UnitEs(eMG.CellsC.Selected).ForShift.Contains(eMG.CellsC.Current))
+                            && eMG.CellsForShift(eMG.CellsC.Selected).Contains(eMG.CellsC.Current))
                         {
                             eMG.RpcPoolEs.TryShiftUnit_ToMaster(eMG.CellsC.Selected, eMG.CellsC.Current);
                         }

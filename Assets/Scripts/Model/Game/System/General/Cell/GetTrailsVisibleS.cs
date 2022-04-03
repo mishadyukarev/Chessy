@@ -1,6 +1,6 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -10,23 +10,23 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            if (eMG.CellEs(cell_0).IsActiveParentSelf)
+            if (eMG.CellE(cell_0).IsActiveParentSelf)
             {
                 for (var dir_0 = DirectTypes.None + 1; dir_0 < DirectTypes.End; dir_0++)
                 {
-                    eMG.CellEs(cell_0).Player(PlayerTypes.First).IsVisibleTrail = false;
-                    eMG.CellEs(cell_0).Player(PlayerTypes.Second).IsVisibleTrail = false;
+                    eMG.TrailVisibleC(cell_0).Set(PlayerTypes.First, false);
+                    eMG.TrailVisibleC(cell_0).Set(PlayerTypes.Second, false);
 
-                    if (eMG.UnitTC(cell_0).HaveUnit) eMG.CellEs(cell_0).Player(eMG.UnitPlayerTC(cell_0).PlayerT).IsVisibleTrail = true;
+                    if (eMG.UnitTC(cell_0).HaveUnit) eMG.TrailVisibleC(cell_0).Set(eMG.UnitPlayerTC(cell_0).PlayerT, true);
 
 
                     for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
                     {
-                        var idx_1 = eMG.CellEs(cell_0).AroundCellsEs.AroundCellE(dir).IdxC.Idx;
+                        var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dir);
 
                         if (eMG.UnitTC(idx_1).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
                         {
-                            eMG.CellEs(cell_0).Player(eMG.UnitPlayerTC(idx_1).PlayerT).IsVisibleTrail = true;
+                            eMG.TrailVisibleC(cell_0).Set(eMG.UnitPlayerTC(idx_1).PlayerT, true);
                         }
                     }
                 }

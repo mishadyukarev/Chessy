@@ -7,8 +7,6 @@ namespace Chessy.Game
 {
     public struct RpcPoolEs
     {
-        public Action<UnitTypes> UpgradeCenter;
-
         int _idx_cur;
 
         readonly ActionMy<string, RpcTarget, object[]> _action0;
@@ -95,7 +93,7 @@ namespace Chessy.Game
         public void DecreaseWindSnowy_ToMaster(in byte idxCell) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.DecreaseWindSnowy, idxCell });
 
 
-        
+
         public void PutOutFireElffToMas(byte fromIdx, byte toIdx) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { AbilityTypes.ChangeDirectionWind, fromIdx, toIdx });
 
 
@@ -128,7 +126,7 @@ namespace Chessy.Game
         public void TryAttackUnit_ToMaster(byte idx_from, byte idx_to) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
         public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, cond, idx });
 
-        public void GiveTakeToolWeaponToMaster(in byte idx, in ToolWeaponTypes tw, in LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { idx, tw, level});
+        public void GiveTakeToolWeaponToMaster(in byte idx, in ToolWeaponTypes tw, in LevelTypes level) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { idx, tw, level });
 
         public void TrySetUnit_ToMaster(byte idxCell, UnitTypes unitType) => _action0(_masterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.SetUnit, idxCell, unitType });
 

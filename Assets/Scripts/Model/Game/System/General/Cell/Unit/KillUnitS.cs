@@ -1,8 +1,7 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
-using System;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
+using System;
 
 namespace Chessy.Game.Model.System
 {
@@ -42,15 +41,21 @@ namespace Chessy.Game.Model.System
                     default: throw new Exception();
                 }
 
-                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).HeroCooldownC.Cooldown = cooldown;
-                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).HaveHeroInInventor = true;
+                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.Cooldown = cooldown;
+                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.HaveHeroInInventor = true;
             }
 
             if (eMG.UnitTC(cell_0).Is(UnitTypes.Tree)) eMG.HaveTreeUnit = false;
 
 
             sMG.UnitSs.SetLastDiedS.Set(cell_0);
-            eMG.UnitInfoE(eMG.UnitPlayerTC(cell_0).PlayerT, eMG.UnitLevelTC(cell_0).LevelT).Take(eMG.UnitTC(cell_0).UnitT, 1);
+
+            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
+            {
+                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).PawnInfoE.PawnsInGame--;
+            }
+
+            
 
 
             sMG.UnitSs.ClearUnitS.Clear(cell_0);

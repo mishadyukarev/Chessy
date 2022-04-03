@@ -4,13 +4,13 @@
 //{
 //    sealed class CloudUpdMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal CloudUpdMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+//        internal CloudUpdMS(in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 
 //        public void Run()
 //        {
-            
+
 //        }
 //    }
 //}

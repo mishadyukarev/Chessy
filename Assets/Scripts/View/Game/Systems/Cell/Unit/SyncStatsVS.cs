@@ -1,4 +1,4 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using UnityEngine;
 
@@ -15,7 +15,7 @@ namespace Chessy.Game
             vEs.CellEs(idx_0).Block(CellBlockTypes.NeedWater).Disable();
 
 
-            if (e.UnitEs(idx_0).ForPlayer(e.CurPlayerITC.PlayerT).IsVisible)
+            if (e.UnitVisibleC(idx_0).IsVisible(e.CurPlayerITC.PlayerT))
             {
                 if (e.UnitTC(idx_0).HaveUnit && !e.UnitTC(idx_0).IsAnimal)
                 {

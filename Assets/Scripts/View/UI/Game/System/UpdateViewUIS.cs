@@ -1,6 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.System.View.UI.Down;
 using Chessy.Game.View.UI.System;
 //using UnityEngine;

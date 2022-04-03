@@ -1,11 +1,10 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Extensions;
 using Chessy.Game.Values;
-using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Effect;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
@@ -37,7 +36,7 @@ namespace Chessy.Game.Model.System.Master
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {
-                    eMG.PlayerInfoE(playerT).PeopleInCity += 1;
+                    eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People++;
                 }
             }
 
@@ -45,8 +44,8 @@ namespace Chessy.Game.Model.System.Master
             for (var i = 0; i < eMG.WeatherE.WindC.Speed; i++)
             {
                 var cell = eMG.WeatherE.CloudC.Center;
-                var xy_next = eMG.CellEs(cell).AroundCellsEs.AroundCellE(eMG.WeatherE.WindC.DirectT).XyC.Xy;
-                var idx_next = eMG.CellEs(cell).AroundCellsEs.AroundCellE(eMG.WeatherE.WindC.DirectT).IdxC.Idx;
+                var xy_next = eMG.AroundCellsE(cell).AroundCellE(eMG.WeatherE.WindC.DirectT).XyC.Xy;
+                var idx_next = eMG.AroundCellsE(cell).IdxCell(eMG.WeatherE.WindC.DirectT);
 
 
                 for (var ii = 0; ii < 10; ii++)
@@ -74,7 +73,7 @@ namespace Chessy.Game.Model.System.Master
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    eMG.CellEs(idx_next).TrailHealthC(dirT).Health = 0;
+                    eMG.HealthTrail(idx_next).Health(dirT) = 0;
                 }
             }
 
@@ -86,7 +85,7 @@ namespace Chessy.Game.Model.System.Master
 
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
             {
-                var idx_1 = eMG.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
+                var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dirT);
 
                 if (!eMG.MountainC(idx_1).HaveAnyResources)
                 {
@@ -101,7 +100,7 @@ namespace Chessy.Game.Model.System.Master
                 {
                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Snowy))
                     {
-                        if (eMG.CellEs(eMG.WeatherE.CloudC.Center).AroundCellsEs.AroundCellEs.Any(e => e.IdxC.Idx == cell_0))
+                        if (eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround.Any(cell => cell == cell_0))
                         {
                             eMG.UnitWaterC(cell_0).Water = WaterValues.MAX;
                         }
@@ -112,9 +111,9 @@ namespace Chessy.Game.Model.System.Master
                     {
                         var randDir = UnityEngine.Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 
-                        var idx_1 = eMG.CellEs(cell_0).AroundCellsEs.AroundCellE((DirectTypes)randDir).IdxC.Idx;
+                        var idx_1 = eMG.AroundCellsE(cell_0).IdxCell((DirectTypes)randDir);
 
-                        if (eMG.CellEs(idx_1).IsActiveParentSelf && !eMG.MountainC(idx_1).HaveAnyResources
+                        if (eMG.CellE(idx_1).IsActiveParentSelf && !eMG.MountainC(idx_1).HaveAnyResources
                             && !eMG.UnitTC(idx_1).HaveUnit)
                         {
                             sMG.UnitSs.SetUnitS.Set(cell_0, idx_1);
@@ -262,11 +261,6 @@ namespace Chessy.Game.Model.System.Master
                     if (!eMG.AdultForestC(cell_0).HaveAnyResources)
                     {
                         eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
-
-                        if (UnityEngine.Random.Range(0, 100) < 30)
-                        {
-                            eMG.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
-                        }
                     }
                 }
 
@@ -293,7 +287,7 @@ namespace Chessy.Game.Model.System.Master
                         {
                             var needWater = WaterValues.NeedWaterForThirsty(eMG.UnitTC(cell_0).UnitT);
 
-                            if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).MyHeroTC.Is(UnitTypes.Snowy))
+                            if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Snowy))
                             {
                                 needWater *= 0.75f;
                             }
@@ -343,8 +337,6 @@ namespace Chessy.Game.Model.System.Master
                     else
                     {
                         sMG.ClearBuildingS.Clear(cell_0);
-
-                        eMG.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
 
@@ -378,13 +370,13 @@ namespace Chessy.Game.Model.System.Master
 
                 if (eMG.UnitTC(cell_0).Is(UnitTypes.Hell))
                 {
-                    foreach (var cellE in eMG.CellEs(cell_0).AroundCellsEs.AroundCellEs)
+                    foreach (var cellE in eMG.AroundCellsE(cell_0).CellsAround)
                     {
-                        if (eMG.AdultForestC(cellE.IdxC.Idx).HaveAnyResources)
+                        if (eMG.AdultForestC(cellE).HaveAnyResources)
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
                             {
-                                eMG.HaveFire(cellE.IdxC.Idx) = true;
+                                eMG.HaveFire(cellE) = true;
                             }
                         }
                     }
@@ -394,15 +386,15 @@ namespace Chessy.Game.Model.System.Master
                         //Es.UnitE(cell_0).Take(Es, 0.15f);
                     }
 
-                    if (eMG.CellEs(eMG.WeatherE.CloudC.Center).AroundCellsEs.AroundCellEs.Any(e => e.IdxC.Idx == cell_0))
+                    if (eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround.Any(cell => cell == cell_0))
                     {
                         //Es.UnitE(cell_0).Take(Es, 0.15f);
                         break;
                     }
 
-                    foreach (var cellE in eMG.CellEs(cell_0).AroundCellsEs.AroundCellEs)
+                    foreach (var cellE in eMG.AroundCellsE(cell_0).CellsAround)
                     {
-                        if (eMG.BuildingTC(cellE.IdxC.Idx).Is(BuildingTypes.IceWall))
+                        if (eMG.BuildingTC(cellE).Is(BuildingTypes.IceWall))
                         {
                             //Es.UnitE(cell_0).Take(Es, 0.15f);
                             break;
@@ -453,15 +445,15 @@ namespace Chessy.Game.Model.System.Master
             {
                 cell_0 = (byte)UnityEngine.Random.Range(0, StartValues.CELLS);
 
-                if (eMG.CellEs(cell_0).IsActiveParentSelf)
+                if (eMG.CellE(cell_0).IsActiveParentSelf)
                 {
                     if (!eMG.UnitTC(cell_0).HaveUnit && !eMG.EnvironmentEs(cell_0).MountainC.HaveAnyResources)
                     {
                         bool haveNearUnit = false;
 
-                        foreach (var cellE in eMG.CellEs(cell_0).AroundCellsEs.AroundCellEs)
+                        foreach (var cell_1 in eMG.AroundCellsE(cell_0).CellsAround)
                         {
-                            if (eMG.UnitTC(cellE.IdxC.Idx).HaveUnit)
+                            if (eMG.UnitTC(cell_1).HaveUnit)
                             {
                                 haveNearUnit = true;
                                 break;
@@ -491,11 +483,11 @@ namespace Chessy.Game.Model.System.Master
                     eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
 
 
-                    if (eMG.CellEs(cell_0).IsActiveParentSelf)
+                    if (eMG.CellE(cell_0).IsActiveParentSelf)
                     {
                         if (eMG.UnitTC(cell_0).HaveUnit)
                         {
-                            if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).MyHeroTC.Is(UnitTypes.Snowy))
+                            if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Snowy))
                             {
                                 if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
                                 {
@@ -522,7 +514,7 @@ namespace Chessy.Game.Model.System.Master
                                 {
                                     for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                                     {
-                                        if (eMG.PlayerInfoE(playerT).MyHeroTC.Is(UnitTypes.Elfemale))
+                                        if (eMG.PlayerInfoE(playerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
                                         {
                                             sMG.UnitSs.SetNewUnitS.Set(UnitTypes.Tree, playerT, cell_0);
 
@@ -547,11 +539,16 @@ namespace Chessy.Game.Model.System.Master
                     amountAdultForest++;
             }
 
-            if (amountAdultForest <= UpdateValues.NEED_ADULT_FORESTS_FOR_TRUCE)
+            var can = !eMG.PlayerInfoE(PlayerTypes.First).PawnInfoE.PeopleInCityC.HaveAny
+                && !eMG.PlayerInfoE(PlayerTypes.Second).PawnInfoE.PeopleInCityC.HaveAny;
+
+
+
+            if (amountAdultForest <= UpdateValues.NEED_ADULT_FORESTS_FOR_TRUCE || can)
             {
                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
 
-                _truceS_M.Run(gameModeTC);
+                _truceS_M.Truce();
             }
         }
     }

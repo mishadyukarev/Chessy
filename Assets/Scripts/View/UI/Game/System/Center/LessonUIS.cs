@@ -1,5 +1,5 @@
 ﻿using Chessy.Common.Entity;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 
 namespace Chessy.Game.View.UI.System

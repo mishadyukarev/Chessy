@@ -11,7 +11,7 @@ namespace Chessy.Game
 
         readonly EntitiesViewUIGame _eUI;
 
-        internal UpWindUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        internal UpWindUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
         {
             _directs = new Dictionary<DirectTypes, Vector3>();
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)

@@ -1,6 +1,6 @@
 ﻿using Chessy.Common;
 
-namespace Chessy.Game.Entity.Model
+namespace Chessy.Game.Model.Entity
 {
     public struct WeatherE
     {

@@ -1,11 +1,10 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {

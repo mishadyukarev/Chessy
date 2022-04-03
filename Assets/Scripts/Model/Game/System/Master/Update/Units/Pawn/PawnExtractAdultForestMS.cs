@@ -1,4 +1,4 @@
-﻿//using Chessy.Game.Entity.Model;
+﻿//using Chessy.Game.Model.Entity;
 //using Chessy.Game.Model.System;
 //using Chessy.Game.Values;
 //using Chessy.Game.Values.Cell.Environment;
@@ -19,7 +19,7 @@
 
 //        public void Run()
 //        {
-            
+
 //        }
 //    }
 //}

@@ -1,4 +1,4 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Game.Model.Entity;
 using System;
 using UnityEngine;
 
@@ -31,7 +31,7 @@ namespace Chessy.Game
                 {
                     if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                     {
-                        CellRiverVEs.River(dir_1, idx_0).SetActive(e.CellEs(idx_0).RiverEs.HaveRive(dir_1));
+                        CellRiverVEs.River(dir_1, idx_0).SetActive(e.CellEs(idx_0).RiverEs.HaveRiverC.HaveRive(dir_1));
                     }
                 }
             }

@@ -1,8 +1,8 @@
-﻿using Chessy.Common.Extension;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Values.Cell.Unit.Stats;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Extension;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
 {
@@ -17,12 +17,18 @@ namespace Chessy.Game.Model.System
             sMG.UnitSs.SetExtraTWS.Set(ToolWeaponTypes.None, LevelTypes.None, 0, cell);
             sMG.UnitSs.SetEffectsS.Set(0, 0, 0, false, cell);
 
-            eMG.PlayerInfoE(playerT).LevelE(eMG.UnitLevelTC(cell).LevelT).Add(unitT, 1);
+
+
+            if (eMG.UnitTC(cell).Is(UnitTypes.Pawn))
+            {
+                eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame++;
+            }
+           
 
 
             if (unitT == UnitTypes.Pawn)
             {
-                eMG.PlayerInfoE(playerT).PeopleInCity--;
+                eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People--;
 
                 sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell);
             }
@@ -34,12 +40,12 @@ namespace Chessy.Game.Model.System
 
                 if (unitT.IsGod())
                 {
-                    eMG.PlayerInfoE(playerT).HaveHeroInInventor = false;
+                    eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = false;
                 }
                 else if (unitT == UnitTypes.King)
                 {
-                    eMG.PlayerInfoE(playerT).KingCell = cell;
-                    eMG.PlayerInfoE(playerT).HaveKingInInventor = false;
+                    eMG.PlayerInfoE(playerT).KingInfoE.CellKing = cell;
+                    eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = false;
                 }
 
                 sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.None, LevelTypes.None, cell);

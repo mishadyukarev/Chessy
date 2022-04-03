@@ -1,9 +1,8 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Extensions;
 using Chessy.Game.Values;
-using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using System.Collections.Generic;
 
@@ -15,9 +14,9 @@ namespace Chessy.Game.Model.System
 
         internal void Run()
         {
-            foreach (var cellE in eMG.CellEs(eMG.WeatherE.CloudC.Center).AroundCellsEs.AroundCellEs)
+            foreach (var cellE in eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround)
             {
-                eMG.HaveFire(cellE.IdxC.Idx) = false;
+                eMG.HaveFire(cellE) = false;
             }
 
 
@@ -52,18 +51,13 @@ namespace Chessy.Game.Model.System
                     {
                         eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
 
-                        if (UnityEngine.Random.Range(0f, 1f) < EnvironmentValues.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
-                        {
-                            eMG.YoungForestC(cell_0).Resources -= EnvironmentValues.FIRE_ADULT_FOREST;
-                        }
-
 
                         eMG.HaveFire(cell_0) = false;
 
 
-                        foreach (var cellE in eMG.CellEs(cell_0).AroundCellsEs.AroundCellEs)
+                        foreach (var cellE in eMG.AroundCellsE(cell_0).CellsAround)
                         {
-                            needForFireNext.Add(cellE.IdxC.Idx);
+                            needForFireNext.Add(cellE);
                         }
                     }
                 }
@@ -71,7 +65,7 @@ namespace Chessy.Game.Model.System
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (eMG.CellEs(cell_0).IsActiveParentSelf)
+                if (eMG.CellE(cell_0).IsActiveParentSelf)
                 {
                     if (eMG.AdultForestC(cell_0).HaveAnyResources)
                     {

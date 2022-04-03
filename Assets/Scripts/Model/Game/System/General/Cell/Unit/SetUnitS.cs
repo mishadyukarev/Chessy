@@ -1,8 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -20,17 +19,17 @@ namespace Chessy.Game.Model.System
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
-                eMG.UnitEs(cell_to).Ability(buttonT) = eMG.UnitEs(cell_from).Ability(buttonT);
+                eMG.UnitButtonAbilitiesC(cell_to).SetAbility(buttonT, eMG.UnitButtonAbilitiesC(cell_from).Ability(buttonT));
             }
 
             for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
             {
-                eMG.UnitEs(cell_to).CoolDownC(abilityT) = eMG.UnitEs(cell_from).CoolDownC(abilityT);
+                eMG.UnitAbilityE(cell_to).Cooldown(abilityT) = eMG.UnitAbilityE(cell_from).Cooldown(abilityT);
             }
 
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                eMG.UnitEs(cell_to).ForPlayer(playerT) = eMG.UnitEs(cell_from).ForPlayer(playerT);
+                eMG.CanSetUnitHereC(cell_to).ForPlayer(playerT) = eMG.CanSetUnitHereC(cell_from).ForPlayer(playerT);
             }
         }
     }

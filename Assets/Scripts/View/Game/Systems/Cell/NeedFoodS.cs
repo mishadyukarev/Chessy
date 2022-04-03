@@ -4,7 +4,7 @@
     {
         bool _needActive;
 
-        public void Sync(in byte idx_0, in SpriteRendererVC needFoodSR, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Sync(in byte idx_0, in SpriteRendererVC needFoodSR, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
             _needActive = false;
 

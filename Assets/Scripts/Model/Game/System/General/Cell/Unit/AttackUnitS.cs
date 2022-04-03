@@ -1,9 +1,8 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using System;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {
@@ -14,7 +13,7 @@ namespace Chessy.Game.Model.System
         internal void Attack(in float damage, in PlayerTypes whoKiller, in byte cell_0)
         {
             if (damage <= 0) throw new Exception();
-            if (!eMG.CellEs(cell_0).IsActiveParentSelf) throw new Exception();
+            if (!eMG.CellE(cell_0).IsActiveParentSelf) throw new Exception();
 
             eMG.UnitHpC(cell_0).Health -= damage;
             if (eMG.UnitHpC(cell_0).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)

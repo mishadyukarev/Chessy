@@ -1,9 +1,9 @@
-﻿using Chessy.Common.Interface;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Enum;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Enum;
+using Chessy.Common.Interface;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Enum;
 
 namespace Chessy.Game.Model.System
 {
@@ -28,7 +28,7 @@ namespace Chessy.Game.Model.System
                 if (!eMG.IsSelectedCity) eMG.LessonTC.SetPreviousLesson();
             }
 
-            
+
 
             eMG.NeedUpdateView = true;
         }

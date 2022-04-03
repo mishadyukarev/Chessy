@@ -1,4 +1,4 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
@@ -22,7 +22,7 @@ namespace Chessy.Game
             {
                 if (e.UnitTC(idx_sel).HaveUnit)
                 {
-                    if (e.UnitEs(idx_sel).ForPlayer(e.CurPlayerITC.PlayerT).IsVisible)
+                    if (e.UnitVisibleC(idx_sel).IsVisible(e.CurPlayerITC.PlayerT))
                     {
                         activeParent = true;
                     }

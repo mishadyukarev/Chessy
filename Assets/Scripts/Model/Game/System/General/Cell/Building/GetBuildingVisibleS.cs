@@ -1,7 +1,7 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Extensions;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Extensions;
 
 namespace Chessy.Game.Model.System
 {
@@ -13,7 +13,7 @@ namespace Chessy.Game.Model.System
         {
             if (eMG.BuildingTC(cell_0).HaveBuilding)
             {
-                eMG.BuildEs(cell_0).SetVisible(eMG.BuildingPlayerTC(cell_0).PlayerT, true);
+                eMG.BuildingEs(cell_0).VisibleC.Set(eMG.BuildingPlayerTC(cell_0).PlayerT, true);
 
                 if (eMG.AdultForestC(cell_0).HaveAnyResources)
                 {
@@ -21,7 +21,7 @@ namespace Chessy.Game.Model.System
 
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_1 = eMG.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
+                        var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dirT);
 
                         if (eMG.UnitTC(idx_1).HaveUnit)
                         {
@@ -32,13 +32,13 @@ namespace Chessy.Game.Model.System
                             }
                         }
                     }
-                    eMG.BuildEs(cell_0).SetVisible(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), isVisibledNextPlayer);
+                    eMG.BuildingEs(cell_0).VisibleC.Set(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), isVisibledNextPlayer);
                 }
-                else eMG.BuildEs(cell_0).SetVisible(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), true);
+                else eMG.BuildingEs(cell_0).VisibleC.Set(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), true);
 
 
-                eMG.BuildEs(cell_0).SetVisible(PlayerTypes.First, true);
-                eMG.BuildEs(cell_0).SetVisible(PlayerTypes.Second, true);
+                eMG.BuildingVisibleC(cell_0).Set(PlayerTypes.First, true);
+                eMG.BuildingVisibleC(cell_0).Set(PlayerTypes.Second, true);
             }
         }
     }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game
 {
     public static class BuildingValues
     {

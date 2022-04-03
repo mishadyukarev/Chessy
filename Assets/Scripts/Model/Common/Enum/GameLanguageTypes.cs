@@ -6,7 +6,7 @@
 
         YouAreWinner,
         YouAreLoser,
-        
+
         End,
     }
 }

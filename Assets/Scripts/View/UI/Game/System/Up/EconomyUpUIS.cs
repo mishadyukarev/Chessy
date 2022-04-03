@@ -14,7 +14,7 @@ namespace Chessy.Game
             for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts.Add(res, default);
         }
 
-        public void Run(in EntitiesViewUIGame eUI, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Run(in EntitiesViewUIGame eUI, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
             if (e.LessonTC.LessonT >= Enum.LessonTypes.BuyingHouse || !e.LessonTC.HaveLesson)
             {

@@ -1,5 +1,4 @@
-﻿using Chessy.Common;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
 
 namespace Chessy.Menu
 {

@@ -1,10 +1,11 @@
-﻿namespace Chessy.Game.Values.Cell.Environment
+﻿namespace Chessy.Game.Values
 {
     public static class EnvironmentValues
     {
         #region Common
 
         public const float MAX_RESOURCES = 1;
+        public const float MIN_RESOURCES_FOR_SPAWN = 0.1f;
 
         #endregion
 
@@ -34,8 +35,6 @@
 
         public const float FIRE_ADULT_FOREST = MAX_RESOURCES / 4;
         public const float AddingAfterBuildingFarm = MAX_RESOURCES / 2;
-        public const float EXTRACT_PAWM_ADULT_FOREST = MAX_RESOURCES / 10;
-        public const float PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT = 1.5f;
 
         public const float WOODCUTTER_EXTRACT = MAX_RESOURCES / 10;
         public const float WOODCUTTER_CENTER_UPGRADE = WOODCUTTER_EXTRACT * 0.5f;
@@ -45,7 +44,7 @@
 
         #region YoungFores
 
-        public const float PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE = 0.5f;
+        public const float PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE = 0.75f;
 
         #endregion
 

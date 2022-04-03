@@ -1,7 +1,8 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity.View;
 using Chessy.Game.Entity;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 using System;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Chessy.Game
         {
             var curPlayer = e.CurPlayerITC.PlayerT;
 
-            for (byte idx_0 = 0; idx_0 < e.LengthCells; idx_0++)
+            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
             {
                 if (curPlayer == PlayerTypes.None) throw new Exception();
                 eV.CellEs(idx_0).CellSR.ParentTransform.rotation = curPlayer == PlayerTypes.First

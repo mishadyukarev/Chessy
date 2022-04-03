@@ -4,7 +4,7 @@
 //{
 //    public static class ElfemaleSeedS_M
 //    {
-//        public static void TrySeed(in byte cell_0, in Chessy.Game.Entity.Model.EntitiesModel e)
+//        public static void TrySeed(in byte cell_0, in Chessy.Game.Model.Entity.EntitiesModel e)
 //        {
 //            if (e.UnitTC(cell_0).Is(UnitTypes.Elfemale))
 //            {

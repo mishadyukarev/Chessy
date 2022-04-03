@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
@@ -18,7 +18,7 @@ namespace Chessy.Game.Model.System
             {
                 eMG.WeatherE.WindC.DirectT = eMG.CellEs(eMG.WeatherE.CloudC.Center).AroundCellsEs.Direct(idx_to);
                 eMG.UnitStepC(cell_from).Steps -= StepValues.Need(abilityT);
-                eMG.UnitEs(cell_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                eMG.UnitAbilityE(cell_from).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
 
                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
             }

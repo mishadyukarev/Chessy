@@ -1,9 +1,9 @@
-﻿using Chessy.Common.Interface;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Enum;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Enum;
+using Chessy.Common.Interface;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Enum;
 
 namespace Chessy.Game.Model.System
 {
@@ -24,12 +24,9 @@ namespace Chessy.Game.Model.System
             {
                 if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
                 {
-                    if (eMG.PlayerInfoE(curPlayerI).PeopleInCity >= 1)
+                    if (eMG.PlayerInfoE(curPlayerI).PawnInfoE.PeopleInCityC.HaveAny)
                     {
-                        var pawnsInGame = eMG.UnitInfoE(curPlayerI, LevelTypes.First).UnitsInGame(UnitTypes.Pawn)
-                            + eMG.UnitInfoE(curPlayerI, LevelTypes.Second).UnitsInGame(UnitTypes.Pawn);
-
-                        if (pawnsInGame < eMG.PlayerInfoE(curPlayerI).MaxAvailablePawns)
+                        if (eMG.PlayerInfoE(curPlayerI).PawnInfoE.PawnsInGame < eMG.PlayerInfoE(curPlayerI).PawnInfoE.MaxAvailable)
                         {
                             eMG.SelectedUnitE.UnitTC.UnitT = UnitTypes.Pawn;
                             eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
@@ -38,11 +35,11 @@ namespace Chessy.Game.Model.System
                         }
                         else
                         {
-                            if (eMG.LessonTC.LessonT == LessonTypes.SettingPawn)
+                            if (eMG.LessonTC.Is(LessonTypes.SettingPawn))
                             {
                                 eMG.LessonTC.SetNextLesson();
                             }
-                            else if (eMG.LessonTC.LessonT == LessonTypes.OpeningTown || eMG.LessonTC.LessonT == LessonTypes.BuyingHouse)
+                            else if (eMG.LessonTC.Is(LessonTypes.OpeningTown, LessonTypes.BuyingHouse))
                             {
 
                             }
@@ -50,7 +47,7 @@ namespace Chessy.Game.Model.System
                             else
                             {
 
-                                eMG.MistakeC.Set(MistakeTypes.NeedBuildingHouses, 0);
+                                sMG.SetMistakeS.Set(MistakeTypes.NeedBuildingHouses, 0);
                                 eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
                                 eMG.IsSelectedCity = true;
                             }
@@ -61,7 +58,7 @@ namespace Chessy.Game.Model.System
                     {
                         eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
 
-                        eMG.MistakeC.Set(MistakeTypes.NeedMorePeopleInCity, 0);
+                        sMG.SetMistakeS.Set(MistakeTypes.NeedMorePeopleInCity, 0);
                         //..E.Sound(ClipTypes.Mistake).Action.Invoke();
                     }
 
@@ -69,8 +66,8 @@ namespace Chessy.Game.Model.System
                 }
                 else
                 {
-                    eMG.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
-                    eMG.MistakeC.Timer = 0;
+                    eMG.MistakeE.MistakeT = MistakeTypes.NeedWaitQueue;
+                    eMG.MistakeE.Timer = 0;
                     eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
                 }
             }

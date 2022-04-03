@@ -1,8 +1,8 @@
 ﻿using Chessy.Common;
-using Chessy.Game.Entity.Model;
-using System;
 using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
+using System;
 
 namespace Chessy.Game.Model.System
 {
@@ -12,11 +12,11 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.UnitEs(cell_0).Ability(ButtonTypes.First).Reset();
-            eMG.UnitEs(cell_0).Ability(ButtonTypes.Second).Reset();
-            eMG.UnitEs(cell_0).Ability(ButtonTypes.Third).Reset();
-            eMG.UnitEs(cell_0).Ability(ButtonTypes.Fourth).Reset();
-            eMG.UnitEs(cell_0).Ability(ButtonTypes.Fifth).Reset();
+            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.None);
+            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.None);
+            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.None);
+            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fourth, AbilityTypes.None);
+            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fifth, AbilityTypes.None);
 
             if (eMG.UnitPlayerTC(cell_0).Is(eMG.CurPlayerITC.PlayerT))
             {
@@ -27,16 +27,16 @@ namespace Chessy.Game.Model.System
                         case UnitTypes.None: throw new Exception();
 
                         case UnitTypes.King:
-                            eMG.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.CircularAttack;
-                            eMG.CellEs(cell_0).UnitEs.Ability(ButtonTypes.Fourth).Ability = AbilityTypes.KingPassiveNearBonus;
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.CircularAttack);
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fourth, AbilityTypes.KingPassiveNearBonus);
                             break;
 
                         case UnitTypes.Pawn:
 
                             if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                             {
-                                eMG.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.FireArcher;
-                                eMG.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.ChangeCornerArcher;
+                                eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
+                                eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
                             }
                             else if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff))
                             {
@@ -46,23 +46,23 @@ namespace Chessy.Game.Model.System
                             {
                                 if (eMG.AdultForestC(cell_0).HaveAnyResources)
                                 {
-                                    if (eMG.HaveFire(cell_0)) eMG.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.PutOutFirePawn;
-                                    else eMG.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.FirePawn;
+                                    if (eMG.HaveFire(cell_0)) eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.PutOutFirePawn);
+                                    else eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.FirePawn);
                                 }
                                 else
                                 {
-                                    eMG.CellEs(cell_0).UnitEs.Ability(ButtonTypes.First).Ability = AbilityTypes.Seed;
+                                    eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.Seed);
                                 }
 
 
 
                                 if (eMG.BuildingTC(cell_0).HaveBuilding)
                                 {
-                                    eMG.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.DestroyBuilding;
+                                    eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.DestroyBuilding);
                                 }
                                 else
                                 {
-                                    eMG.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetFarm;
+                                    eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
                                 }
 
                                 //else
@@ -73,7 +73,7 @@ namespace Chessy.Game.Model.System
                                 //    }
                                 //    else
                                 //    {
-                                //        E.UnitEs(Idx).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.SetCity;
+                                //        E.UnitEs(Idx).Ability(ButtonTypes.Fourth, AbilityTypes.SetCity;
                                 //    }
                                 //}
                             }
@@ -81,23 +81,23 @@ namespace Chessy.Game.Model.System
                             break;
 
                         case UnitTypes.Elfemale:
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.StunElfemale;
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.GrowAdultForest;
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.StunElfemale);
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.GrowAdultForest);
 
                             break;
 
                         case UnitTypes.Snowy:
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.IncreaseWindSnowy;
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.DecreaseWindSnowy;
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.ChangeDirectionWind;
-                            //E.UnitEs(Idx).Ability(ButtonTypes.Third).Ability = AbilityTypes.IceWall;
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.IncreaseWindSnowy);
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.DecreaseWindSnowy);
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.ChangeDirectionWind);
+                            //E.UnitEs(Idx).Ability(ButtonTypes.Third, AbilityTypes.IceWall;
                             break;
 
                         case UnitTypes.Undead:
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.First).Ability = AbilityTypes.Resurrect;
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.Second).Ability = AbilityTypes.SetTeleport;
-                            eMG.UnitEs(cell_0).Ability(ButtonTypes.Third).Ability = AbilityTypes.InvokeSkeletons;
-                            if (eMG.BuildingTC(cell_0).HaveBuilding) eMG.UnitEs(cell_0).Ability(ButtonTypes.Fourth).Ability = AbilityTypes.DestroyBuilding;
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.Resurrect);
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.SetTeleport);
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.InvokeSkeletons);
+                            if (eMG.BuildingTC(cell_0).HaveBuilding) eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
                             break;
 
                         case UnitTypes.Hell:
@@ -117,7 +117,7 @@ namespace Chessy.Game.Model.System
 
                     if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Teleport))
                     {
-                        eMG.UnitEs(cell_0).Ability(ButtonTypes.Fifth).Ability = AbilityTypes.Teleport;
+                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fifth, AbilityTypes.Teleport);
                     }
 
                 }

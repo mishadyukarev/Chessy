@@ -2,7 +2,7 @@
 
 namespace Chessy.Game.Values.Cell.Unit
 {
-    public struct AbilityCooldownValues
+    public static class AbilityCooldownValues
     {
         public const float AFTER_GROW_ADULT_FOREST = 5;
 

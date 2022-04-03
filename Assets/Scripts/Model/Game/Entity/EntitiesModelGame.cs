@@ -1,22 +1,20 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Component;
-using Chessy.Game.Entity.Model.Cell;
-using Chessy.Game.Entity.Model.Cell.Unit;
+using Chessy.Game.Entity;
 using Chessy.Game.Model.Component;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.Entity.Cell.Unit;
 using Chessy.Game.Values;
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Game.Entity.Model
+namespace Chessy.Game.Model.Entity
 {
     public sealed class EntitiesModelGame
     {
         readonly Dictionary<ClipTypes, ActionC> _sounds0 = new Dictionary<ClipTypes, ActionC>();
         readonly Dictionary<AbilityTypes, ActionC> _sounds1 = new Dictionary<AbilityTypes, ActionC>();
-        readonly ResourcesC[] _mistakeEconomyEs;
-        readonly Dictionary<PlayerTypes, PlayerInfoEs> _forPlayerEs;
+        readonly ResourcesC[] _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
+        readonly Dictionary<PlayerTypes, PlayerInfoEs> _forPlayerEs = new Dictionary<PlayerTypes, PlayerInfoEs>();
 
         public bool NeedUpdateView;
 
@@ -24,9 +22,8 @@ namespace Chessy.Game.Entity.Model
         public bool IsSelectedCity { get; internal set; }
         public bool HaveTreeUnit { get; internal set; }
         public bool IsClicked { get; internal set; }
- 
 
-        public MistakeC MistakeC;
+
         public InfoGameC MotionsC;
         public ZonesInfoC ZoneInfoC;
         public CellsC CellsC;
@@ -39,6 +36,7 @@ namespace Chessy.Game.Entity.Model
         public RaycastTC RaycastTC;
 
         public readonly ResourcesE Resources;
+        public MistakeE MistakeE;
         public RpcPoolEs RpcPoolEs;
         public WeatherE WeatherE;
         public SelectedE SelectedE;
@@ -56,22 +54,28 @@ namespace Chessy.Game.Entity.Model
         #region Cells
 
         readonly CellEs[] _cellEs;
-        public byte LengthCells => (byte)_cellEs.Length;
 
 
-        public CellEs CellEs(in byte idx) => _cellEs[idx];
+        public ref CellEs CellEs(in byte idx) => ref _cellEs[idx];
+        public CellE CellE(in byte cell) => CellEs(cell).CellE;
+        public AroundCellsEs AroundCellsE(in byte cell) => CellEs(cell).AroundCellsEs; 
 
 
         #region Unit
 
         public ref UnitEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
 
-        public ref UnitMainE UnitMainE(in byte idx_cell) => ref UnitEs(idx_cell).MainE;
+        public ref UnitMainE UnitMainE(in byte idx) => ref UnitEs(idx).MainE;
         public ref UnitTC UnitTC(in byte idx) => ref UnitMainE(idx).UnitTC;
         public ref PlayerTC UnitPlayerTC(in byte idx) => ref UnitMainE(idx).PlayerTC;
+        public PlayerTypes UnitPlayerT(in byte idx) => UnitPlayerTC(idx).PlayerT;
         public ref LevelTC UnitLevelTC(in byte idx) => ref UnitMainE(idx).LevelTC;
         public ref ConditionUnitTC UnitConditionTC(in byte idx) => ref UnitMainE(idx).ConditionTC;
         public ref IsRightArcherC UnitIsRightArcherC(in byte idx) => ref UnitMainE(idx).IsRightArcherC;
+        public VisibleC UnitVisibleC(in byte cell) => UnitMainE(cell).VisibleC;
+        public CanSetUnitHereC CanSetUnitHereC(in byte cell) => UnitMainE(cell).CanSetUnitHereC;
+        public IdxsCellsC UnitForArsonC(in byte cell) => UnitMainE(cell).ForArson;
+        public ref NeedUpdateViewC UnitNeedUpdateViewC(in byte cell) => ref UnitMainE(cell).NeedUpdateViewC;
 
         public ref StatsE UnitStatsE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
         public ref HealthC UnitHpC(in byte idx) => ref UnitStatsE(idx).HealthC;
@@ -98,6 +102,14 @@ namespace Chessy.Game.Entity.Model
         public ref LevelTC LastDiedLevelTC(in byte idx) => ref LastDiedE(idx).LevelTC;
         public ref PlayerTC LastDiedPlayerTC(in byte idx) => ref LastDiedE(idx).PlayerTC;
 
+        public ref UnitAttackE UnitAttackE(in byte cell) => ref UnitEs(cell).AttackE;
+
+        public ref ShiftUnitE UnitShiftE(in byte cell) => ref UnitEs(cell).ShiftE;
+        public IdxsCellsC CellsForShift(in byte cell) => UnitShiftE(cell).ForShift;
+
+        public ref AbilityUnitE UnitAbilityE(in byte cell) => ref UnitEs(cell).AbilityE;
+        public UniqueButtonsC UnitButtonAbilitiesC(in byte cell) => UnitAbilityE(cell).UniqueButtonsC;
+
 
         #region Effects
 
@@ -113,31 +125,33 @@ namespace Chessy.Game.Entity.Model
 
         #region Building
 
-        public ref CellBuildingEs BuildEs(in byte idx) => ref CellEs(idx).BuildEs;
-        public ref BuildingE BuildingMainE(in byte idx_cell) => ref BuildEs(idx_cell).MainE;
-        public ref BuildingTC BuildingTC(in byte idx) => ref BuildingMainE(idx).BuildingTC;
-        public ref LevelTC BuildingLevelTC(in byte idx) => ref BuildingMainE(idx).LevelTC;
-        public ref PlayerTC BuildingPlayerTC(in byte idx) => ref BuildingMainE(idx).PlayerTC;
-        public ref HealthC BuildingHpC(in byte idx) => ref BuildingMainE(idx).HealthC;
-
-        public ref CellBuildingExtractE BuildingExtractE(in byte idx_cell) => ref BuildEs(idx_cell).ExtractE;
-        public ref ResourcesC WoodcutterExtractE(in byte idx) => ref BuildingExtractE(idx).WoodcutterExtractC;
-        public ref ResourcesC FarmExtractFertilizeE(in byte idx) => ref BuildingExtractE(idx).FarmExtractC;
+        public ref BuildingE BuildingEs(in byte idx) => ref CellEs(idx).BuildEs;
+        public ref BuildingTC BuildingTC(in byte idx) => ref BuildingEs(idx).BuildingTC;
+        public ref LevelTC BuildingLevelTC(in byte idx) => ref BuildingEs(idx).LevelTC;
+        public ref PlayerTC BuildingPlayerTC(in byte idx) => ref BuildingEs(idx).PlayerTC;
+        public ref HealthC BuildingHpC(in byte idx) => ref BuildingEs(idx).HealthC;
+        public VisibleC BuildingVisibleC(in byte cell) => BuildingEs(cell).VisibleC;
+        public ref ResourcesC WoodcutterExtractE(in byte idx) => ref BuildingEs(idx).WoodcutterExtractC;
+        public ref ResourcesC FarmExtractFertilizeE(in byte idx) => ref BuildingEs(idx).FarmExtractC;
 
         #endregion
 
 
-        public ref CellEnvironmentEs EnvironmentEs(in byte idx) => ref CellEs(idx).EnvironmentEs;
+        public ref EnvironmentE EnvironmentEs(in byte idx) => ref CellEs(idx).EnvironmentEs;
         public ref ResourcesC YoungForestC(in byte idx) => ref EnvironmentEs(idx).YoungForestC;
         public ref ResourcesC AdultForestC(in byte idx) => ref EnvironmentEs(idx).AdultForestC;
         public ref ResourcesC MountainC(in byte idx) => ref EnvironmentEs(idx).MountainC;
         public ref ResourcesC HillC(in byte idx) => ref EnvironmentEs(idx).HillC;
         public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentEs(idx).FertilizeC;
 
-        public ref CellRiverE RiverEs(in byte idx) => ref CellEs(idx).RiverEs;
+        public ref RiverE RiverEs(in byte idx) => ref CellEs(idx).RiverEs;
 
-        public ref CellEffectE EffectEs(in byte idx) => ref CellEs(idx).EffectEs;
+        public ref EffectE EffectEs(in byte idx) => ref CellEs(idx).EffectEs;
         public ref bool HaveFire(in byte idx) => ref EffectEs(idx).HaveFire;
+
+        public TrailE TrailE(in byte cell) => CellEs(cell).TrailE;
+        public VisibleC TrailVisibleC(in byte cell) => TrailE(cell).VisibleC;
+        public HealthTrailC HealthTrail(in byte cell) => TrailE(cell).HealthC;
 
 
         #region Space
@@ -169,9 +183,6 @@ namespace Chessy.Game.Entity.Model
             var sounds1 = (Dictionary<AbilityTypes, Action>)forData[i++];
             var isActiveParenCells = (bool[])forData[i++];
             var idCells = (int[])forData[i++];
-
-            _forPlayerEs = new Dictionary<PlayerTypes, PlayerInfoEs>();
-            _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
 
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)

@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         readonly EntitiesViewUIGame eUI;
 
-        internal StatsUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        internal StatsUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
         {
             eUI = entsUI;
         }

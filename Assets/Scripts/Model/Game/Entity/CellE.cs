@@ -2,18 +2,21 @@
 
 namespace Chessy.Game.Entity
 {
-    public struct CellE
+    public readonly struct CellE
     {
         readonly Dictionary<PlayerTypes, bool> _isStartedCell;
 
+        public readonly bool IsActiveParentSelf;
         public readonly IdxCellC IdxC;
         public readonly XyCellC XyC;
         public readonly int InstanceIDC;
 
         public bool IsStartedCell(in PlayerTypes playerT) => _isStartedCell[playerT];
 
-        public CellE(in byte idx, in byte[] xy, in int instanceID)
+        internal CellE(in bool isActiveParent, in byte idx, in byte[] xy, in int instanceID)
         {
+            IsActiveParentSelf = isActiveParent;
+
             var x = xy[0];
             var y = xy[1];
 

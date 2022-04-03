@@ -1,7 +1,7 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Game.Values.Cell.Environment;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
@@ -19,7 +19,7 @@ namespace Chessy.Game.Model.System
                 {
                     var extract = EnvironmentValues.FARM_EXTRACT;
 
-                    //if (E.BuildingsInfo(E.BuildingMainE(Idx)).HaveCenterUpgrade)
+                    //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
                     //{
                     //    extract += Environment_Values.FARM_CENTER_UPGRADE;
                     //}

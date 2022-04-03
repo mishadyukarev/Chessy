@@ -1,8 +1,7 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
-using Chessy.Game.Model.System;
 using System;
 
 namespace Chessy.Game.Model.System
@@ -24,7 +23,7 @@ namespace Chessy.Game.Model.System
             if (eMG.IsClicked)
             {
                 eMG.NeedUpdateView = true;
-                eMG.MistakeC.MistakeT = MistakeTypes.None;
+                eMG.MistakeE.MistakeT = MistakeTypes.None;
 
                 switch (eMG.RaycastTC.RaycastT)
                 {
@@ -76,9 +75,9 @@ namespace Chessy.Game.Model.System
 
                                                 case AbilityTypes.ChangeDirectionWind:
                                                     {
-                                                        foreach (var cellE in eMG.CellEs(eMG.WeatherE.CloudC.Center).AroundCellsEs.AroundCellEs)
+                                                        foreach (var cellE in eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround)
                                                         {
-                                                            if (cellE.IdxC.Idx == eMG.CellsC.Current)
+                                                            if (cellE == eMG.CellsC.Current)
                                                             {
                                                                 eMG.RpcPoolEs.PutOutFireElffToMas(eMG.CellsC.Selected, eMG.CellsC.Current);
                                                             }

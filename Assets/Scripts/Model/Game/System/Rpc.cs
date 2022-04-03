@@ -1,7 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Interface;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
@@ -136,11 +136,11 @@ namespace Chessy.Game
 
                             if (!_eMGame.UnitTC(idx_to).HaveUnit)
                             {
-                                if (!_eMGame.UnitEs(idx_from).CoolDownC(abilityT).HaveCooldown)
+                                if (!_eMGame.UnitAbilityE(idx_from).HaveCooldown(abilityT))
                                 {
                                     if (_eMGame.UnitStepC(idx_from).Steps >= StepValues.RESURRECT)
                                     {
-                                        _eMGame.UnitEs(idx_from).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                                        _eMGame.UnitAbilityE(idx_from).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
                                         _eMGame.UnitStepC(idx_from).Steps -= StepValues.RESURRECT;
 
                                         if (_eMGame.LastDiedE(idx_to).UnitTC.HaveUnit)
@@ -183,12 +183,12 @@ namespace Chessy.Game
                                                 _eMGame.WhereTeleportC.Start = _eMGame.WhereTeleportC.End;
 
                                                 _eMGame.WhereTeleportC.End = cell_0;
-                                                _eMGame.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                                                _eMGame.UnitAbilityE(cell_0).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
                                             }
                                             else
                                             {
                                                 _eMGame.WhereTeleportC.End = cell_0;
-                                                _eMGame.UnitEs(cell_0).CoolDownC(abilityT).Cooldown = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                                                _eMGame.UnitAbilityE(cell_0).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
                                             }
                                         }
                                         else
@@ -341,7 +341,7 @@ namespace Chessy.Game
 
             if (obj is MistakeTypes mistakeT)
             {
-                _eMGame.MistakeC.Set(mistakeT, 0);
+                _sMGame.SetMistakeS.Set(mistakeT, 0);
 
                 _eMGame.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
 

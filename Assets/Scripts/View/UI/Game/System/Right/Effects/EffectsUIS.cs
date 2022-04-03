@@ -12,7 +12,7 @@ namespace Chessy.Game
             for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled.Add(effectT, false);
         }
 
-        public void Run(in ResourcesE resources, in EntitiesViewUIGame eUI, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public void Run(in ResourcesE resources, in EntitiesViewUIGame eUI, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
             if (e.CellsC.IsSelectedCell)
             {

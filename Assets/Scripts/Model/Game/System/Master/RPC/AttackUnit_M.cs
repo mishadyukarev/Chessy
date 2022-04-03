@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Extensions;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
@@ -19,8 +19,8 @@ namespace Chessy.Game.Model.System.Master
         {
             var whoseMove = eMG.WhoseMove.PlayerT;
 
-            var canAttack = eMG.UnitEs(idx_from).UniqueAttack.Contains(idx_to)
-                || eMG.UnitEs(idx_from).SimpleAttack.Contains(idx_to);
+            var canAttack = eMG.UnitAttackE(idx_from).Unique.Contains(idx_to)
+                || eMG.UnitAttackE(idx_from).Simple.Contains(idx_to);
 
             if (canAttack && eMG.UnitPlayerTC(idx_from).Is(whoseMove))
             {
@@ -33,7 +33,7 @@ namespace Chessy.Game.Model.System.Master
 
 
                 float powerDam_from = eMG.DamageAttackC(idx_from).Damage;
-                if (eMG.UnitEs(idx_from).UniqueAttack.Contains(idx_to))
+                if (eMG.UnitAttackE(idx_from).Unique.Contains(idx_to))
                 {
                     powerDam_from *= DamageValues.UNIQUE_PERCENT_DAMAGE;
                 }

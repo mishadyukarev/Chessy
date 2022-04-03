@@ -6,7 +6,7 @@
 //{
 //    sealed class WorldDryFertilizerMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal WorldDryFertilizerMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+//        internal WorldDryFertilizerMS(in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

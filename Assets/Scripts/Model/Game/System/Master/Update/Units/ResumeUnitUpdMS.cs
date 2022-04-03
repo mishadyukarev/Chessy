@@ -4,7 +4,7 @@
 //{
 //    sealed class ResumeUnitUpdMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        public ResumeUnitUpdMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+//        public ResumeUnitUpdMS(in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

@@ -1,10 +1,7 @@
-﻿namespace Chessy.Game.Entity.Model.Cell
-{
-    public struct BuildingE
-    {
-        public BuildingTC BuildingTC;
-        public PlayerTC PlayerTC;
-        public LevelTC LevelTC;
-        public HealthC HealthC;
-    }
-}
+﻿//namespace Chessy.Game.Model.Entity.Cell
+//{
+//    public struct BuildingE
+//    {
+
+//    }
+//}

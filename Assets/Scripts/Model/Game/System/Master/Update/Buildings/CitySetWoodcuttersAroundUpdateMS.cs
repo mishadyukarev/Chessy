@@ -2,7 +2,7 @@
 //{
 //    sealed class CitySetWoodcuttersAroundUpdateMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal CitySetWoodcuttersAroundUpdateMS(in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
+//        internal CitySetWoodcuttersAroundUpdateMS(in Chessy.Game.Model.Entity.EntitiesModel ents) : base(ents)
 //        {
 //        }
 
@@ -22,7 +22,7 @@
 //                            {
 //                                if (!E.BuildingTC(idx_1).HaveBuilding)
 //                                {
-//                                    E.BuildingMainE(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, BuildingValues.MAX_HP, E.BuildingPlayerTC(cell_0).Player);
+//                                    E.BuildEs(idx_1).Set(BuildingTypes.Woodcutter, LevelTypes.First, BuildingValues.MAX_HP, E.BuildingPlayerTC(cell_0).Player);
 //                                }
 //                            }
 //                        }

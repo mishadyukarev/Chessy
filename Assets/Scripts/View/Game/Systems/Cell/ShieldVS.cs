@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     static class ShieldVS
     {
-        public static void Run(in byte idx_0, in EntitiesViewGame eV, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+        public static void Run(in byte idx_0, in EntitiesViewGame eV, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
             eV.UnitEffectVEs(idx_0).ShieldSRC.Disable();
 
@@ -12,7 +12,7 @@ namespace Chessy.Game
             {
                 if (e.UnitTC(idx_0).HaveUnit)
                 {
-                    if (e.UnitEs(idx_0).ForPlayer(e.CurPlayerITC.PlayerT).IsVisible)
+                    if (e.UnitVisibleC(idx_0).IsVisible(e.CurPlayerITC.PlayerT))
                     {
                         eV.UnitEffectVEs(idx_0).ShieldSRC.SetActive(true);
                     }

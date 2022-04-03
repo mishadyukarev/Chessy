@@ -1,11 +1,10 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
-using Chessy.Game.Model.System;
-using UnityEditor;
 using UnityEngine;
+using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
@@ -41,6 +40,18 @@ namespace Chessy.Game.Model.System
                 if (Input.GetKeyDown(KeyCode.Mouse2))
                 {
                     eMG.LessonTC.LessonT = LessonTypes.None;
+                }
+
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                    {
+                        if (eMG.AdultForestC(cell_0).HaveAnyResources)
+                        {
+                            sMG.DestroyAdultForestS.Destroy(cell_0);
+                        }
+                        
+                    }
                 }
             }
         }

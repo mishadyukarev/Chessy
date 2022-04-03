@@ -3,7 +3,7 @@
 //{
 //    sealed class ShieldUIS : SystemUIAbstract, IEcsRunSystem
 //    {
-//        internal ShieldUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(entsUI, ents)
+//        internal ShieldUIS( in EntitiesViewUIGame entsUI, in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(entsUI, ents)
 //        {
 //        }
 

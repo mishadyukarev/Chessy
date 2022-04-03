@@ -1,48 +1,56 @@
-﻿using System;
+﻿using Chessy.Game.Model.Entity;
+using System;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class MistakeUIS
+    sealed class MistakeUIS : SystemUIAbstract
     {
         const float NEED_TIME_FOR_FADING = 1.3f;
+        readonly MistakeUIE _mistakeUIE;
 
-        public static void Sync(this MistakeUIE mistakeUIE, in float timer, in Chessy.Game.Entity.Model.EntitiesModelGame e)
+
+        internal MistakeUIS(in MistakeUIE mistakeUIE, in EntitiesModelGame eMG) : base(eMG)
         {
-            foreach (var key in mistakeUIE.KeysMistake)
+            _mistakeUIE = mistakeUIE;
+        }
+
+        public void Sync(in float timer)
+        {
+            foreach (var key in _mistakeUIE.KeysMistake)
             {
-                mistakeUIE.Zones(key).SetActive(false);
+                _mistakeUIE.Zones(key).SetActive(false);
             }
 
-            foreach (var key in mistakeUIE.KeysResource)
+            foreach (var key in _mistakeUIE.KeysResource)
             {
-                mistakeUIE.NeedAmountResources(key).SetActive(false);
+                _mistakeUIE.NeedAmountResources(key).SetActive(false);
             }
 
 
 
-            if (e.MistakeC.MistakeT != MistakeTypes.None)
+            if (e.MistakeE.MistakeT != MistakeTypes.None)
             {
-                e.MistakeC.Timer += Time.deltaTime + timer;
+                e.MistakeE.Timer += Time.deltaTime + timer;
 
-                if (e.MistakeC.MistakeT == MistakeTypes.Economy)
+                if (e.MistakeE.MistakeT == MistakeTypes.Economy)
                 {
-                    if (e.MistakeC.Timer >= NEED_TIME_FOR_FADING)
+                    if (e.MistakeE.Timer >= NEED_TIME_FOR_FADING)
                     {
-                        e.MistakeC.MistakeT = MistakeTypes.None;
+                        e.MistakeE.MistakeT = MistakeTypes.None;
                     }
 
                     else
                     {
-                        mistakeUIE.Zones(e.MistakeC.MistakeT).SetActive(true);
+                        _mistakeUIE.Zones(e.MistakeE.MistakeT).SetActive(true);
 
                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                         {
                             if (e.MistakeEconomy(res).Resources > 0)
                             {
-                                mistakeUIE.NeedAmountResources(res).SetActive(true);
+                                _mistakeUIE.NeedAmountResources(res).SetActive(true);
 
-                                mistakeUIE.NeedAmountResources(res).TextUI.text
+                                _mistakeUIE.NeedAmountResources(res).TextUI.text
                                     = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + e.MistakeEconomy(res).Resources : ">= " + ((int)(100 * e.MistakeEconomy(res).Resources));
                             }
                         }
@@ -51,11 +59,11 @@ namespace Chessy.Game
 
                 else
                 {
-                    mistakeUIE.Zones(e.MistakeC.MistakeT).SetActive(true);
+                    _mistakeUIE.Zones(e.MistakeE.MistakeT).SetActive(true);
 
-                    if (e.MistakeC.Timer >= NEED_TIME_FOR_FADING)
+                    if (e.MistakeE.Timer >= NEED_TIME_FOR_FADING)
                     {
-                        e.MistakeC.MistakeT = MistakeTypes.None;
+                        e.MistakeE.MistakeT = MistakeTypes.None;
                     }
                 }
             }

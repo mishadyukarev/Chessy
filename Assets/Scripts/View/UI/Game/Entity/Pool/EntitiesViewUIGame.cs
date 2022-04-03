@@ -1,4 +1,5 @@
 ﻿using Chessy.Common.View.UI;
+using Chessy.Game.View.UI.Entity;
 using UnityEngine.UI;
 
 namespace Chessy.Game

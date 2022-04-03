@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
 
         internal void Fire(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (eMG.UnitEs(cell_from).ForArson.Contains(cell_to))
+            if (eMG.CellsForShift(cell_from).Contains(cell_to))
             {
                 if (eMG.UnitStepC(cell_from).Steps >= StepValues.ARCHER_FIRE)
                 {

@@ -1,11 +1,11 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {
@@ -144,17 +144,17 @@ namespace Chessy.Game.Model.System
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        eMG.PlayerInfoE(whoseMove).MaxAvailablePawns++;
-                        //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).MaxAvailablePawns + E.PlayerE(whoseMove).MaxAvailablePawns);
+                        eMG.PlayerInfoE(whoseMove).PawnInfoE.MaxAvailable++;
+                        //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
                         eMG.PlayerInfoE(whoseMove).WoodForBuyHouse += eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
                         break;
 
                     case BuildingTypes.Market:
-                        eMG.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Market, true);
+                        eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Market);
                         break;
 
                     case BuildingTypes.Smelter:
-                        eMG.PlayerInfoE(whoseMove).SetHaveBuilding(BuildingTypes.Smelter, true);
+                        eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Smelter);
                         break;
 
                     default: throw new Exception();
@@ -165,7 +165,7 @@ namespace Chessy.Game.Model.System
 
             else
             {
-                if(eMG.LessonTC.LessonT == Enum.LessonTypes.BuyingHouse)
+                if (eMG.LessonTC.LessonT == Enum.LessonTypes.BuyingHouse)
                 {
                     eMG.LessonTC.SetNextLesson();
                 }

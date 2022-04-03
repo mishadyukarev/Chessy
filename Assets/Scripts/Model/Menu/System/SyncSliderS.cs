@@ -10,7 +10,7 @@
 //    {
 //        public void Run(in EntitiesViewUICommon eUIC, in EntitiesModelCommon eC)
 //        {
-            
+
 //            //SoundC.Volume = CenterZoneUICom.MusicVolume;
 
 //            //eC.IsOnHint = CenterZoneUICom.IsOn;

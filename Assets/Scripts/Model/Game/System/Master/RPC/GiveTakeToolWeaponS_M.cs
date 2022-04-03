@@ -1,4 +1,6 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Model.System;
 using Chessy.Game.Values;
@@ -6,8 +8,6 @@ using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System.Collections.Generic;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game
 {

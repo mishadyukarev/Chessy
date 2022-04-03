@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         readonly EntitiesViewUIGame eUI;
 
-        internal CenterBuildingZonesUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        internal CenterBuildingZonesUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
         {
             eUI = entsUI;
         }

@@ -8,7 +8,7 @@
 //{
 //    public struct DirectWaveSnowyMS
 //    {
-//        public DirectWaveSnowyMS(in byte idx_from, in byte idx_to, in Player sender, in Chessy.Game.Entity.Model.EntitiesModel e)
+//        public DirectWaveSnowyMS(in byte idx_from, in byte idx_to, in Player sender, in Chessy.Game.Model.Entity.EntitiesModel e)
 //        {
 //            var whoseMove = e.WhoseMove.Player;
 
@@ -31,7 +31,7 @@
 
 //                    for (var i = 0; i < 3; i++)
 //                    {
-//                        if (!e.CellEs(cell_0).IsActiveParentSelf) break;
+//                        if (!e.CellE(cell_0).IsActiveParentSelf) break;
 
 
 //                        e.FertilizeC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;

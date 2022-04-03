@@ -8,7 +8,7 @@
         {
             if (gameModes == default) throw new System.Exception();
 
-            foreach (var gameMode in gameModes) 
+            foreach (var gameMode in gameModes)
                 if (gameMode == GameModeT) return true;
             return false;
         }

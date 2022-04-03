@@ -1,8 +1,8 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Photon.Realtime;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game
 {
@@ -12,9 +12,9 @@ namespace Chessy.Game
 
         internal void TryShift(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (eMG.UnitEs(cell_from).ForShift.Contains(cell_to) && eMG.UnitPlayerTC(cell_from).Is(eMG.WhoseMove.PlayerT))
+            if (eMG.CellsForShift(cell_from).Contains(cell_to) && eMG.UnitPlayerTC(cell_from).Is(eMG.WhoseMove.PlayerT))
             {
-                eMG.UnitStepC(cell_from).Steps -= eMG.UnitEs(cell_from).NeedSteps(cell_to).Steps;
+                eMG.UnitStepC(cell_from).Steps -= eMG.UnitShiftE(cell_from).NeedSteps(cell_to);
 
 
                 sMG.UnitSs.ShiftUnitS.Shift(cell_from, cell_to);

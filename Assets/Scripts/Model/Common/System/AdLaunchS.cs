@@ -1,6 +1,4 @@
 ﻿using Chessy.Common.Entity;
-using Photon.Pun;
-using System;
 //using Yodo1.MAS;
 
 namespace Chessy.Common

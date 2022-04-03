@@ -1,12 +1,11 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
-using Chessy.Game.Values.Cell.Environment;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using UnityEngine;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {
@@ -80,13 +79,13 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.AdultForestC(cell_from).HaveAnyResources)
                 {
-                    eMG.CellEs(cell_from).TrailHealthC(direct).Health = TrailValues.HEALTH_TRAIL;
+                    eMG.HealthTrail(cell_from).Health(direct) = TrailValues.HEALTH_TRAIL;
                 }
                 if (eMG.AdultForestC(cell_to).HaveAnyResources)
                 {
                     var dirTrail = direct.Invert();
 
-                    eMG.CellEs(cell_to).TrailHealthC(dirTrail).Health = TrailValues.HEALTH_TRAIL;
+                    eMG.HealthTrail(cell_to).Health(dirTrail) = TrailValues.HEALTH_TRAIL;
                 }
 
                 if (eMG.RiverEs(cell_to).RiverTC.HaveRiverNear)
@@ -97,7 +96,7 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.UnitTC(cell_to).Is(UnitTypes.King))
                 {
-                    eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_to).PlayerT).KingCell = cell_to;
+                    eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_to).PlayerT).KingInfoE.CellKing = cell_to;
                 }
 
             }

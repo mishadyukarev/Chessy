@@ -1,9 +1,8 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Extension;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
-using Chessy.Game.Values;
 using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
@@ -16,7 +15,7 @@ namespace Chessy.Game.Model.System.Master
         {
             var whoseMove = eMG.WhoseMove.PlayerT;
 
-            if (eMG.CellEs(cell).CellE.IsStartedCell(whoseMove) && !eMG.UnitMainE(cell).UnitTC.HaveUnit)
+            if (eMG.CellEs(cell).CellE.IsStartedCell(whoseMove) && !eMG.UnitTC(cell).HaveUnit)
             {
                 if (unitT == UnitTypes.King)
                 {

@@ -1,8 +1,8 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit;
 using System;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {
@@ -68,7 +68,7 @@ namespace Chessy.Game.Model.System
                 if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).WhereKingEffects.Contains(cell_0)) powerDamage *= 1.25f;
 
 
-                if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).MyHeroTC.Is(UnitTypes.Hell))
+                if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Hell))
                 {
                     if (unitTC.Is(UnitTypes.Pawn))
                     {
@@ -149,5 +149,6 @@ namespace Chessy.Game.Model.System
 
                 eMG.DamageOnCellC(cell_0).Damage = powerDamage;
             }
-        } }
+        }
+    }
 }

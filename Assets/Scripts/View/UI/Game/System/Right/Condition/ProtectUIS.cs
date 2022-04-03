@@ -1,4 +1,4 @@
-﻿using Chessy.Game.Entity.Model.Cell.Unit;
+﻿using Chessy.Game.Model.Entity.Cell.Unit;
 using UnityEngine;
 
 namespace Chessy.Game

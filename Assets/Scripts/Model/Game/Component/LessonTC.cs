@@ -22,5 +22,9 @@ namespace Chessy.Game.Model.Component
         {
             LessonT--;
         }
+        public void EndLesson()
+        {
+            LessonT = LessonTypes.None;
+        }
     }
 }

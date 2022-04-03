@@ -1,12 +1,11 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
-using Chessy.Game.Model.System;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System.Collections.Generic;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {
@@ -59,7 +58,7 @@ namespace Chessy.Game.Model.System
 
                             if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere))
                             {
-                                if(cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
+                                if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
                                 {
                                     eMG.LessonTC.SetNextLesson();
                                 }

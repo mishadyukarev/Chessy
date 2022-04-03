@@ -11,7 +11,7 @@ namespace Chessy.Game.View.UI.System
         readonly UniqueButtonUIE _buttonE;
         readonly ResourcesE _resources;
 
-        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in ResourcesE res, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in ResourcesE res, in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
         {
             _buttonT = buttonT;
             _buttonE = uniqueButtonUIE;
@@ -20,7 +20,7 @@ namespace Chessy.Game.View.UI.System
 
         public void Run()
         {
-            var ability_cur = e.UnitEs(e.CellsC.Selected).Ability(_buttonT).Ability;
+            var ability_cur = e.UnitButtonAbilitiesC(e.CellsC.Selected).Ability(_buttonT);
 
             if (ability_cur == default)
             {
@@ -30,8 +30,8 @@ namespace Chessy.Game.View.UI.System
             {
                 _buttonE.ParenC.SetActive(true);
 
-                _buttonE.CooldonwTextC.SetActiveParent(e.UnitEs(e.CellsC.Selected).CoolDownC(ability_cur).HaveCooldown);
-                _buttonE.CooldonwTextC.TextUI.text = e.UnitEs(e.CellsC.Selected).CoolDownC(ability_cur).Cooldown.ToString();
+                _buttonE.CooldonwTextC.SetActiveParent(e.UnitAbilityE(e.CellsC.Selected).HaveCooldown(ability_cur));
+                _buttonE.CooldonwTextC.TextUI.text = e.UnitAbilityE(e.CellsC.Selected).Cooldown(ability_cur).ToString();
 
                 
 

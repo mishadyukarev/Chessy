@@ -1,8 +1,8 @@
-﻿using Chessy.Common.Interface;
-using Chessy.Game.Entity.Model;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Enum;
+using Chessy.Common.Interface;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -21,11 +21,11 @@ namespace Chessy.Game.Model.System
 
                 var curPlayer = eMG.CurPlayerITC.PlayerT;
 
-                var myHeroT = eMG.PlayerInfoE(curPlayer).MyHeroTC.UnitT;
+                var myHeroT = eMG.PlayerInfoE(curPlayer).GodInfoE.UnitT;
 
-                if (eMG.PlayerInfoE(curPlayer).HaveHeroInInventor)
+                if (eMG.PlayerInfoE(curPlayer).GodInfoE.HaveHeroInInventor)
                 {
-                    if (!eMG.PlayerInfoE(eMG.CurPlayerITC.PlayerT).HeroCooldownC.HaveCooldown)
+                    if (!eMG.PlayerInfoE(eMG.CurPlayerITC.PlayerT).GodInfoE.CooldownC.HaveCooldown)
                     {
                         eMG.SelectedUnitE.UnitTC.UnitT = myHeroT;
                         eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
@@ -37,8 +37,7 @@ namespace Chessy.Game.Model.System
             }
             else
             {
-                eMG.MistakeC.MistakeT = MistakeTypes.NeedWaitQueue;
-                eMG.MistakeC.Timer = 0;
+                sMG.SetMistakeS.Set(MistakeTypes.NeedWaitQueue, 0);
                 eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
             }
 

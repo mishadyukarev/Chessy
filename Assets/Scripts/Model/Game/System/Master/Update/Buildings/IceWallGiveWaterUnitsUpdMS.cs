@@ -5,7 +5,7 @@
 //{
 //    sealed class IceWallGiveWaterUnitsUpdMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal IceWallGiveWaterUnitsUpdMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+//        internal IceWallGiveWaterUnitsUpdMS(in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

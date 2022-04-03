@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game.Entity.Model.Cell.Unit
+﻿namespace Chessy.Game.Model.Entity.Cell.Unit
 {
     public struct WhoLastDiedHereE
     {

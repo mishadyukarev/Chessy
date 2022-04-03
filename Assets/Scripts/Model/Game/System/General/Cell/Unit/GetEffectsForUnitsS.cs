@@ -1,6 +1,6 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -12,9 +12,9 @@ namespace Chessy.Game.Model.System
         {
             eMG.UnitEffectsE(cell_0).HaveKingEffect = false;
 
-            if (eMG.CellEs(cell_0).IsActiveParentSelf)
+            if (eMG.CellE(cell_0).IsActiveParentSelf)
             {
-                foreach (var idx_1 in eMG.CellEs(cell_0).AroundCellsEs.IdxsAround)
+                foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
                 {
                     if (eMG.UnitTC(idx_1).Is(UnitTypes.King))
                     {

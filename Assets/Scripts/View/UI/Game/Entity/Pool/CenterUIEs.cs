@@ -31,6 +31,8 @@ namespace Chessy.Game
         public readonly CenterMarketUIE MarketE;
         public readonly CenterSmelterUIE SmelterE;
 
+        public readonly SkipLessonUIE SkipLessonE;
+
 
         #region Lesson
 
@@ -81,6 +83,12 @@ namespace Chessy.Game
             //GettingUnitLessonE = new GettingUnitLessonUIE(training.Find("GettingGod+"));
             //SettingPawnE = new SettingPawnUIE(training.Find("SettingPawn+"));
             //SettingGodLessonE = new SettingGodLessonUIE(training.Find("SettingGod+"));
+
+
+
+            SkipLessonE = new SkipLessonUIE(centerZone.Find("SkipLesson+").Find("Button+").GetComponent<Button>());
+
+
 
 
             var buildingZone = centerZone.Find("Building+");

@@ -1,4 +1,4 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 
 namespace Chessy.Game
@@ -24,7 +24,7 @@ namespace Chessy.Game
             {
                 if (buildingT == BuildingTypes.Market || buildingT == BuildingTypes.Smelter)
                 {
-                    eUI.LeftEs.CityE(buildingT).CostGOC.SetActive(!e.PlayerInfoE(whoseMove).HaveBuilding(buildingT));
+                    eUI.LeftEs.CityE(buildingT).CostGOC.SetActive(!e.PlayerInfoE(whoseMove).BuildingsInfoC.HaveBuilding(buildingT));
                 }
             }
 

@@ -5,7 +5,7 @@
 //{
 //    sealed class CloudFertilizeUpdMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal CloudFertilizeUpdMS(in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+//        internal CloudFertilizeUpdMS(in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

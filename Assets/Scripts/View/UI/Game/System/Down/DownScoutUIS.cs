@@ -4,7 +4,7 @@
 //    {
 //        readonly DownScoutUIE _scoutE;
 
-//        internal DownScoutUIS(in DownScoutUIE scoutUIE, in Chessy.Game.Entity.Model.EntitiesModel ents) : base(ents)
+//        internal DownScoutUIS(in DownScoutUIE scoutUIE, in Chessy.Game.Model.Entity.EntitiesModel ents) : base(ents)
 //        {
 //            _scoutE = scoutUIE;
 //        }

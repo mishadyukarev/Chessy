@@ -1,8 +1,8 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Common.Entity;
+using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 
 namespace Chessy.Game.Model.System
 {
@@ -12,18 +12,18 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.UnitEs(cell_0).ForShift.Clear();
+            eMG.UnitShiftE(cell_0).ForShift.Clear();
 
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
-                eMG.UnitEs(cell_0).NeedSteps(idx).Steps = 0;
+                eMG.UnitShiftE(cell_0).Set(idx, 0);
 
-            if (eMG.CellEs(cell_0).IsActiveParentSelf)
+            if (eMG.CellE(cell_0).IsActiveParentSelf)
             {
                 if (!eMG.UnitEffectStunC(cell_0).IsStunned && eMG.UnitTC(cell_0).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_to = eMG.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
+                        var idx_to = eMG.AroundCellsE(cell_0).IdxCell(dirT);
 
                         float needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
 
@@ -56,7 +56,7 @@ namespace Chessy.Game.Model.System
                                         {
                                             needSteps += StepValues.ADULT_FOREST;
 
-                                            if (eMG.CellEs(idx_to).TrailHealthC(dirT.Invert()).IsAlive) needSteps -= StepValues.BONUS_TRAIL;
+                                            if (eMG.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
                                         }
                                     }
                                     else if (eMG.UnitTC(cell_0).Is(UnitTypes.Elfemale))
@@ -67,7 +67,7 @@ namespace Chessy.Game.Model.System
                                     {
                                         needSteps += StepValues.ADULT_FOREST;
 
-                                        if (eMG.CellEs(idx_to).TrailHealthC(dirT.Invert()).IsAlive) needSteps -= StepValues.BONUS_TRAIL;
+                                        if (eMG.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
                                     }
                                 }
                                 else
@@ -90,13 +90,13 @@ namespace Chessy.Game.Model.System
 
 
 
-                        eMG.UnitEs(cell_0).NeedSteps(idx_to).Steps = needSteps;
+                        eMG.UnitShiftE(cell_0).Set(idx_to, needSteps);
 
                         if (!eMG.MountainC(idx_to).HaveAnyResources && !eMG.UnitTC(idx_to).HaveUnit)
                         {
                             if (needSteps <= eMG.UnitStepC(cell_0).Steps || eMG.UnitStepC(cell_0).Steps >= StepValues.MAX)
                             {
-                                eMG.UnitEs(cell_0).ForShift.Add(idx_to);
+                                eMG.UnitShiftE(cell_0).ForShift.Add(idx_to);
 
                             }
                         }

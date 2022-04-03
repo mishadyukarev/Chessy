@@ -1,17 +1,27 @@
-﻿//using ECS;
-//using Photon.Realtime;
-//using System;
+﻿using Chessy.Game.Model.Component;
+using System.Collections.Generic;
 
-//namespace Game.Game
-//{
-//    public sealed class CellBuildingE : CellEntityAbstract
-//    {
-       
+namespace Chessy.Game
+{
+    public struct BuildingE
+    {
+        public BuildingTC BuildingTC;
+        public PlayerTC PlayerTC;
+        public LevelTC LevelTC;
+        public HealthC HealthC;
+        public readonly VisibleC VisibleC;
 
-//        internal CellBuildingE(in CellEs cellEs, in EcsWorld world) : base(cellEs, world)
-//        {
-//        }
+        public ResourcesC WoodcutterExtractC;
+        public ResourcesC FarmExtractC;
 
-       
-//    }
-//}
+        internal BuildingE(in bool b) : this()
+        {
+            var isVisibled = new Dictionary<PlayerTypes, bool>();
+
+            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+                isVisibled.Add(playerT, default);
+
+            VisibleC = new VisibleC(isVisibled);
+        }
+    }
+}

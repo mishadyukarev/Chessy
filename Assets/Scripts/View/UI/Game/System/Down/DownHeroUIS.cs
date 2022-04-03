@@ -1,10 +1,12 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Model.Entity;
+
+namespace Chessy.Game
 {
     sealed class DownHeroUIS : SystemUIAbstract, IEcsRunSystem
     {
         readonly DownHeroUIE _downHeroUIE;
 
-        internal DownHeroUIS(in DownHeroUIE downHeroUIE, in Chessy.Game.Entity.Model.EntitiesModelGame ents) : base(ents)
+        internal DownHeroUIS(in DownHeroUIE downHeroUIE, in EntitiesModelGame ents) : base(ents)
         {
             _downHeroUIE = downHeroUIE;
         }
@@ -13,13 +15,13 @@
         {
             var curPlayerI = e.CurPlayerITC.PlayerT;
 
-            var myHeroT = e.PlayerInfoE(curPlayerI).MyHeroTC.UnitT;
+            var myHeroT = e.PlayerInfoE(curPlayerI).GodInfoE.UnitT;
 
-            if (myHeroT != UnitTypes.None && e.PlayerInfoE(curPlayerI).HaveHeroInInventor)
+            if (myHeroT != UnitTypes.None && e.PlayerInfoE(curPlayerI).GodInfoE.HaveHeroInInventor)
             {
                 _downHeroUIE.Parent.SetActive(true);
 
-                var cooldown = e.PlayerInfoE(curPlayerI).HeroCooldownC.Cooldown;
+                var cooldown = e.PlayerInfoE(curPlayerI).GodInfoE.CooldownC.Cooldown;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

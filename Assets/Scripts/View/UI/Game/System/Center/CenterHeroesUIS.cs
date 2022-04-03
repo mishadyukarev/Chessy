@@ -1,4 +1,4 @@
-﻿using Chessy.Game.Entity.Model;
+﻿using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
@@ -16,7 +16,7 @@ namespace Chessy.Game
             var isActiveKingZone = _eUI.CenterEs.KingE.Paren.IsActiveSelf;
             var curPlayerI = e.CurPlayerITC.PlayerT;
 
-            if (!isActiveKingZone && e.PlayerInfoE(curPlayerI).MyHeroTC.Is(UnitTypes.None))
+            if (!isActiveKingZone && e.PlayerInfoE(curPlayerI).GodInfoE.UnitTC.Is(UnitTypes.None))
             {
                 //var myHeroT = E.PlayerE(curPlayerI).AvailableHeroTC.Unit;
 

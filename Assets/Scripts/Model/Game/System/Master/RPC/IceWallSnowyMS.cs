@@ -2,7 +2,7 @@
 {
     public struct IceWallSnowyMS
     {
-        public IceWallSnowyMS(in byte cell_0, in Chessy.Game.Entity.Model.EntitiesModelGame _e)
+        public IceWallSnowyMS(in byte cell_0, in Chessy.Game.Model.Entity.EntitiesModelGame _e)
         {
             //var ability = AbilityTypes.IceWall;
 
@@ -21,7 +21,7 @@
 
             //                _e.UnitEs(cell_0).CoolDownC(ability).Cooldown = AbilityCooldownValues.AFTER_ICE_WALL;
 
-            //                _e.BuildingMainE(cell_0).Set(BuildingTypes.IceWall, LevelTypes.First, HpValues.MAX, _e.UnitPlayerTC(cell_0).Player);
+            //                _e.BuildEs(cell_0).Set(BuildingTypes.IceWall, LevelTypes.First, HpValues.MAX, _e.UnitPlayerTC(cell_0).Player);
             //            }
             //        }
             //    }

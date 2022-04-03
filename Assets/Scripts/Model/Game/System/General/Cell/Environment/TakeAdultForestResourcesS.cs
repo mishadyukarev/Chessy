@@ -1,6 +1,6 @@
-﻿using Chessy.Game.Entity.Model;
-using Chessy.Common.Entity;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -8,20 +8,15 @@ namespace Chessy.Game.Model.System
     {
         internal TakeAdultForestResourcesS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
-        internal void Take(in float extract, in byte idx)
+        internal void Take(in float extract, in byte cell)
         {
-            if (eMG.AdultForestC(idx).HaveAnyResources)
+            if (eMG.AdultForestC(cell).HaveAnyResources)
             {
-                eMG.AdultForestC(idx).Resources -= extract;
+                eMG.AdultForestC(cell).Resources -= extract;
 
-                if (!eMG.AdultForestC(idx).HaveAnyResources)
+                if (!eMG.AdultForestC(cell).HaveAnyResources)
                 {
-                    eMG.AdultForestC(idx).Resources = 0;
-
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                    {
-                        eMG.CellEs(idx).TrailHealthC(dirT).Health = 0;
-                    }
+                    sMG.DestroyAdultForestS.Destroy(cell);
                 }
             }
         }

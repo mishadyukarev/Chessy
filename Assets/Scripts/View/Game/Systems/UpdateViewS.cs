@@ -1,5 +1,5 @@
 ﻿//using Chessy.Common.Entity.View;
-//using Chessy.Game.Entity.Model;
+//using Chessy.Game.Model.Entity;
 //using Chessy.Game.System.View;
 //using Chessy.Game.Values;
 //using UnityEngine;

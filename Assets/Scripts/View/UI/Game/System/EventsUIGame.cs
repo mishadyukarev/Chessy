@@ -3,7 +3,7 @@ using Chessy.Common.Entity;
 using Chessy.Common.Entity.View.UI;
 using Chessy.Common.Enum;
 using Chessy.Common.View.UI;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Photon.Pun;
 using UnityEngine;
@@ -140,6 +140,14 @@ namespace Chessy.Game.EventsUI
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.WoodToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.WoodToFood); });
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToFood); });
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToWood); });
+
+
+            centerEs.SkipLessonE.ButtonUIC.AddListener(delegate
+            {
+                eMGame.LessonTC.EndLesson();
+                eMGame.NeedUpdateView = true;
+            });
+
 
             #endregion
 

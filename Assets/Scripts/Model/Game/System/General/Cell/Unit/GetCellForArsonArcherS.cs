@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.UnitEs(cell_0).ForArson.Clear();
+            eMG.UnitForArsonC(cell_0).Clear();
 
             if (!eMG.UnitEffectStunC(cell_0).IsStunned)
             {
@@ -18,13 +18,13 @@ namespace Chessy.Game.Model.System
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_1 = eMG.CellEs(cell_0).AroundCellsEs.AroundCellE(dirT).IdxC.Idx;
+                        var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dirT);
 
                         if (!eMG.EffectEs(idx_1).HaveFire)
                         {
                             if (eMG.AdultForestC(idx_1).HaveAnyResources)
                             {
-                                eMG.UnitEs(cell_0).ForArson.Add(idx_1);
+                                eMG.UnitForArsonC(cell_0).Add(idx_1);
                             }
                         }
                     }

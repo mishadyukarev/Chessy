@@ -1,6 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
@@ -59,12 +59,12 @@ namespace Chessy.Game.Model.System
                 _getDamageUnitsS.Get(cell_0);
                 _getAbilityUnitS.Get(cell_0);
 
-                _getTrailsVisibleS.Get(cell_0);
+                //_getTrailsVisibleS.Get(cell_0);
 
 
                 _getWoodcutterExtractCellsS.Get(cell_0);
                 _getFarmExtractCellsS.Get(cell_0);
-                _getBuildingVisibleS.Get(cell_0);
+                //_getBuildingVisibleS.Get(cell_0);
             }
 
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
@@ -74,6 +74,8 @@ namespace Chessy.Game.Model.System
                 _getCellsForAttackArcherS.Get(cell_0);
                 _getCellForArsonArcherS.Get(cell_0);
             }
+
+ 
         }
     }
 }

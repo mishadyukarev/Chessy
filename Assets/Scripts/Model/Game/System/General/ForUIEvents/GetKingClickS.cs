@@ -2,7 +2,7 @@
 using Chessy.Common.Enum;
 using Chessy.Common.Interface;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -18,7 +18,7 @@ namespace Chessy.Game.Model.System
             {
                 eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-                if (eMG.PlayerInfoE(eMG.CurPlayerITC.PlayerT).HaveKingInInventor)
+                if (eMG.PlayerInfoE(eMG.CurPlayerITC.PlayerT).KingInfoE.HaveInInventor)
                 {
                     eMG.SelectedUnitE.UnitTC.UnitT = UnitTypes.King;
                     eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;

@@ -1,7 +1,6 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Model.System;
-using Chessy.Game.Entity.Model;
-using Chessy.Game.Model.System;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -28,7 +27,7 @@ namespace Chessy.Game.Model.System
         public readonly ConditionClickS ConditionClickS;
 
 
-        public SystemsModelGameForUI(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG)
+        internal SystemsModelGameForUI(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
             DoneClickS = new DoneClickS(sMC, eMC, sMG, eMG);
             OpenCityClickS = new OpenCityClickS(sMC, eMC, sMG, eMG);
