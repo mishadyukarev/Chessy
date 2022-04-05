@@ -14,7 +14,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var whoseMove = e.WhoseMove.PlayerT;
+            var whoseMove = e.WhoseMovePlayerTC.PlayerT;
 
 
             //UIE.LeftEs.CityE(BuildingTypes.Camp).Parent.SetActive(E.IsSelectedCity);

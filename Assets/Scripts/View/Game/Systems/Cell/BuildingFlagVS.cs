@@ -10,7 +10,7 @@ namespace Chessy.Game.System.View
         {
             _needActive = false;
 
-            if (e.BuildingEs(idx_0).BuildingTC.HaveBuilding)
+            if (e.BuildingTC(idx_0).HaveBuilding)
             {
                 _needActive = true;
                 srC.SR.color = e.BuildingPlayerTC(idx_0).Is(PlayerTypes.First) ? Color.blue : Color.red;

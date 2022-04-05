@@ -27,7 +27,7 @@ namespace Chessy.Game
 
                     if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
                     {
-                        if (e.UnitMainTWTC(idx_0).Is(ToolWeaponTypes.Axe))
+                        if (e.MainToolWeaponTC(idx_0).Is(ToolWeaponTypes.Axe))
                         {
                             relaxE.Button(e.UnitTC(idx_0).UnitT).SetActive(true);
                         }

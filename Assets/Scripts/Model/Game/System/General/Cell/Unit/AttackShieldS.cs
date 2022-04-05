@@ -13,9 +13,9 @@ namespace Chessy.Game.Model.System
         {
             if (damage <= 0) throw new Exception();
 
-            eMG.UnitExtraProtectionC(cell_0).Protection -= damage;
-            if (!eMG.UnitExtraProtectionC(cell_0).HaveAnyProtection)
-                eMG.UnitExtraTWTC(cell_0).ToolWeaponT = ToolWeaponTypes.None;
+            eMG.ExtraTWProtectionC(cell_0).Protection -= damage;
+            if (!eMG.ExtraTWProtectionC(cell_0).HaveAnyProtection)
+                eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT = ToolWeaponTypes.None;
         }
     }
 }

@@ -23,13 +23,19 @@ namespace Chessy.Game.Model.System
             if (eMG.IsClicked)
             {
                 eMG.NeedUpdateView = true;
-                eMG.MistakeE.MistakeT = MistakeTypes.None;
+                eMG.MistakeTC.MistakeT = MistakeTypes.None;
+
+
+                if (eMG.LessonTC.Is(LessonTypes.LookInfoAboutSun))
+                {
+                    eMG.LessonTC.SetNextLesson();
+                }
 
                 switch (eMG.RaycastTC.RaycastT)
                 {
                     case RaycastTypes.Cell:
                         {
-                            if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+                            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
                             {
                                 switch (eMG.CellClickTC.CellClickT)
                                 {

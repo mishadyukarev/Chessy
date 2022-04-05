@@ -12,10 +12,7 @@ namespace Chessy.Game.Model.Entity
         {
             var vis = new Dictionary<PlayerTypes, bool>();
 
-            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++) 
-                vis.Add(playerT, default);
-
-            VisibleC = new VisibleC(vis);
+            VisibleC = new VisibleC(default);
             HealthC = new HealthTrailC(new float[(byte)DirectTypes.End - 1]);
         }
     }

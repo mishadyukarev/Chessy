@@ -135,23 +135,23 @@ namespace Chessy.Game
 
                     if (unitT == UnitTypes.Pawn)
                     {
-                        if (_e.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
+                        if (_e.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            sr = _eV.UnitEs(cell_0).MainBowCrossbowE(isSelected, _e.UnitMainTWLevelTC(cell_0).LevelT, _e.UnitIsRightArcherC(cell_0).IsRight);
+                            sr = _eV.UnitEs(cell_0).MainBowCrossbowE(isSelected, _e.MainTWLevelTC(cell_0).LevelT, _e.UnitIsRightArcherC(cell_0).IsRight);
                         }
                         else
                         {
-                            sr = _eV.UnitEs(cell_0).MainToolWeaponE(isSelected, _e.UnitMainTWLevelTC(cell_0).LevelT, _e.UnitMainTWTC(cell_0).ToolWeaponT);
+                            sr = _eV.UnitEs(cell_0).MainToolWeaponE(isSelected, _e.MainTWLevelTC(cell_0).LevelT, _e.MainToolWeaponTC(cell_0).ToolWeaponT);
                         }
 
 
                         //if (isVisForNext) SR.SR.color = new Color(SR.Color.r, SR.Color.g, SR.Color.b, 1);
                         //else SR.SR.color = new Color(SR.Color.r, SR.Color.g, SR.Color.b, 0.6f);
 
-                        if (_e.UnitExtraTWTC(cell_0).HaveToolWeapon)
+                        if (_e.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
                         {
-                            var twT = _e.UnitExtraTWTC(cell_0).ToolWeaponT;
-                            var levT = _e.UnitExtraLevelTC(cell_0).LevelT;
+                            var twT = _e.ExtraToolWeaponTC(cell_0).ToolWeaponT;
+                            var levT = _e.ExtraTWLevelTC(cell_0).LevelT;
 
                             var sr2 = _eV.UnitEs(cell_0).ExtraToolWeaponE(isSelected, levT, twT);
 

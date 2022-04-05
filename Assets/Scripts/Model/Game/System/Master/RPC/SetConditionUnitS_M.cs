@@ -28,10 +28,10 @@ namespace Chessy.Game.Model.System.Master
                         eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
                     }
 
-                    else if (eMG.UnitStepC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                    else if (eMG.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                     {
                         eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                        eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                         eMG.UnitConditionTC(cell_0).Condition = condT;
                     }
 
@@ -49,11 +49,11 @@ namespace Chessy.Game.Model.System.Master
                         eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
                     }
 
-                    else if (eMG.UnitStepC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                    else if (eMG.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                     {
                         eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         eMG.UnitConditionTC(cell_0).Condition = condT;
-                        eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                        eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
                         if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
                         {
@@ -61,7 +61,7 @@ namespace Chessy.Game.Model.System.Master
                             {
                                 if (eMG.AdultForestC(cell_0).HaveAnyResources)
                                 {
-                                    if (eMG.UnitHpC(cell_0).Health >= HpValues.MAX)
+                                    if (eMG.HpUnitC(cell_0).Health >= HpValues.MAX)
                                     {
                                         if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
                                         {

@@ -2,8 +2,8 @@
 {
     public struct RiverTC
     {
-        public RiverTypes River { get; internal set; }
+        public RiverTypes RiverT { get; internal set; }
 
-        public bool HaveRiverNear => River != RiverTypes.None && River != RiverTypes.End;
+        public bool HaveRiverNear => RiverT != RiverTypes.None && RiverT != RiverTypes.End;
     }
 }

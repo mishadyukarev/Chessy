@@ -17,7 +17,7 @@ namespace Chessy.Game
         {
             var readyBut = eUI.CenterEs.ReadyButtonC;
 
-            readyBut.Image.color = e.PlayerInfoE(e.CurPlayerITC.PlayerT).IsReadyC ? Color.red : Color.white;
+            readyBut.Image.color = e.PlayerInfoE(e.CurPlayerITC.PlayerT).IsReady ? Color.red : Color.white;
 
             if (e.IsStartedGame || PhotonNetwork.OfflineMode)
             {

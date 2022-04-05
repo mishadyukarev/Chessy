@@ -3,8 +3,11 @@
     public struct CanSetUnitHereC
     {
         readonly bool[] _visibles;
-        public ref bool ForPlayer(in PlayerTypes player) => ref _visibles[(byte)player];
+
+        public bool ForPlayer(in PlayerTypes player) => _visibles[(byte)player];
 
         internal CanSetUnitHereC(in bool[] canSet) => _visibles = canSet;
+
+        internal void Set(in PlayerTypes playerT, in bool canSet) => _visibles[(byte)playerT] = canSet;
     }
 }

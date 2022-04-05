@@ -17,6 +17,13 @@ namespace Chessy.Game.Model.System
             eMG.UnitIsRightArcherC(cell_0).IsRight = isRight;
         }
 
-        internal void Set(in byte cell_from, in byte cell_to) => eMG.UnitMainE(cell_to) = eMG.UnitMainE(cell_from);
+        internal void Set(in byte cell_from, in byte cell_to)
+        {
+            eMG.UnitTC(cell_to) = eMG.UnitTC(cell_from);
+            eMG.UnitLevelTC(cell_to) = eMG.UnitLevelTC(cell_from);
+            eMG.UnitPlayerTC(cell_to) = eMG.UnitPlayerTC(cell_from);
+            eMG.UnitConditionTC(cell_to) = eMG.UnitConditionTC(cell_from);
+            eMG.UnitIsRightArcherC(cell_to) = eMG.UnitIsRightArcherC(cell_from);
+        }
     }
 }

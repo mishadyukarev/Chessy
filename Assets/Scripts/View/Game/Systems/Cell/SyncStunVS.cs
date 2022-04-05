@@ -12,7 +12,7 @@ namespace Chessy.Game
             {
                 if (e.UnitVisibleC(idx_0).IsVisible(e.CurPlayerITC.PlayerT))
                 {
-                    eV.UnitEffectVEs(idx_0).StunSRC.SetActive(e.UnitEffectStunC(idx_0).IsStunned);
+                    eV.UnitEffectVEs(idx_0).StunSRC.SetActive(e.StunUnitC(idx_0).IsStunned);
                 }
             }
         }

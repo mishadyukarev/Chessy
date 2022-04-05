@@ -14,9 +14,9 @@ namespace Chessy.Game.Model.System
 
         internal void Grow(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMG.UnitAbilityE(cell_0).HaveCooldown(abilityT))
+            if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (eMG.UnitStepC(cell_0).Steps >= StepValues.GROW_ADULT_FOREST)
+                if (eMG.StepUnitC(cell_0).Steps >= StepValues.GROW_ADULT_FOREST)
                 {
                     if (eMG.YoungForestC(cell_0).HaveAnyResources)
                     {
@@ -24,9 +24,9 @@ namespace Chessy.Game.Model.System
 
                         eMG.AdultForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                        eMG.UnitStepC(cell_0).Steps -= StepValues.GROW_ADULT_FOREST;
+                        eMG.StepUnitC(cell_0).Steps -= StepValues.GROW_ADULT_FOREST;
 
-                        eMG.UnitAbilityE(cell_0).Cooldown(abilityT) = AbilityCooldownValues.AFTER_GROW_ADULT_FOREST;
+                        eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.AFTER_GROW_ADULT_FOREST);
 
 
                         foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)

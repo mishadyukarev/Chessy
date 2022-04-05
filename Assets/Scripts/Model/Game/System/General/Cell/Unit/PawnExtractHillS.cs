@@ -11,9 +11,9 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.PawnExtractHillE(cell_0).Resources = 0;
+            eMG.PawnExtractHillC(cell_0).Resources = 0;
 
-            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Pick))
+            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(cell_0).Is(ToolWeaponTypes.Pick))
             {
                 if (eMG.HillC(cell_0).HaveAnyResources)
                 {
@@ -23,7 +23,7 @@ namespace Chessy.Game.Model.System
                     if (eMG.HillC(cell_0).Resources < extract) extract = eMG.HillC(cell_0).Resources;
 
 
-                    eMG.PawnExtractHillE(cell_0).Resources = extract;
+                    eMG.PawnExtractHillC(cell_0).Resources = extract;
 
                 }
             }

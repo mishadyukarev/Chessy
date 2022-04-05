@@ -15,8 +15,12 @@ namespace Chessy.Game.Model.System
             eMG.LastDiedPlayerTC(cell_0).PlayerT = playerT;
         }
 
-        internal void Set(in byte cell_from, in byte cell_to) => eMG.LastDiedE(cell_to) = eMG.LastDiedE(cell_from);
-
+        internal void Set(in byte cell_from, in byte cell_to)
+        {
+            eMG.LastDiedUnitTC(cell_to) = eMG.LastDiedUnitTC(cell_from);
+            eMG.LastDiedPlayerTC(cell_to) = eMG.LastDiedPlayerTC(cell_from);
+            eMG.LastDiedLevelTC(cell_to) = eMG.LastDiedLevelTC(cell_from);
+        }
         internal void Set(in byte cell_0)
         {
             eMG.LastDiedUnitTC(cell_0) = eMG.UnitTC(cell_0);

@@ -21,7 +21,7 @@ namespace Chessy.Game
                 _donerE.ButtonC.SetActive(true);
                 _donerE.WaitGoC.SetActive(true);
 
-                if (e.CurPlayerITC.Is(e.WhoseMove.PlayerT))
+                if (e.CurPlayerITC.Is(e.WhoseMovePlayerTC.PlayerT))
                 {
                     _donerE.WaitGoC.SetActive(false);
                     _donerE.ButtonC.Image.color = Color.white;

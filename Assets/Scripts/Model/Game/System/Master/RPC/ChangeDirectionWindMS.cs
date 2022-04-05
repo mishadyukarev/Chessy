@@ -14,11 +14,11 @@ namespace Chessy.Game.Model.System
 
         internal void Change(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (eMG.UnitStepC(cell_from).Steps >= StepValues.Need(abilityT))
+            if (eMG.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))
             {
-                eMG.WeatherE.WindC.DirectT = eMG.CellEs(eMG.WeatherE.CloudC.Center).AroundCellsEs.Direct(idx_to);
-                eMG.UnitStepC(cell_from).Steps -= StepValues.Need(abilityT);
-                eMG.UnitAbilityE(cell_from).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                eMG.WeatherE.WindC.DirectT = eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).Direct(idx_to);
+                eMG.StepUnitC(cell_from).Steps -= StepValues.Need(abilityT);
+                eMG.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
             }

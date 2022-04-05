@@ -18,11 +18,7 @@ namespace Chessy.Game.Model.Entity.Cell.Unit
 
         internal UnitEs(in bool b) : this()
         {
-            var isVisibled = new Dictionary<PlayerTypes, bool>();
-            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
-                isVisibled.Add(playerT, false);
-
-            MainE = new UnitMainE(isVisibled);
+            MainE = new UnitMainE(default);
             AttackE = new UnitAttackE(new HashSet<byte>(), new HashSet<byte>());
             ShiftE = new ShiftUnitE(new float[StartValues.CELLS], new HashSet<byte>());
             AbilityE = new AbilityUnitE(new float[(byte)AbilityTypes.End - 1]);

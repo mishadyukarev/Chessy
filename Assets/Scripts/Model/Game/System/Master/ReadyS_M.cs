@@ -15,10 +15,10 @@ namespace Chessy.Game.Model.System
         {
             var playerSend = sender.GetPlayer();
 
-            eMG.PlayerInfoE(playerSend).IsReadyC = !eMG.PlayerInfoE(playerSend).IsReadyC;
+            eMG.PlayerInfoE(playerSend).IsReady = !eMG.PlayerInfoE(playerSend).IsReady;
 
-            if (eMG.PlayerInfoE(PlayerTypes.First).IsReadyC
-                && eMG.PlayerInfoE(PlayerTypes.Second).IsReadyC)
+            if (eMG.PlayerInfoE(PlayerTypes.First).IsReady
+                && eMG.PlayerInfoE(PlayerTypes.Second).IsReady)
             {
                 eMG.IsStartedGame = true;
             }

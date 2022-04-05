@@ -97,12 +97,14 @@ namespace Chessy.Game.Model.System
 
             _eMG.NeedUpdateView = true;
 
+            _eMG.IsStartedGame = false;
+            _eMG.MotionsC.Motions = 0;
             _eMG.ZoneInfoC.IsActiveFriend = _eMC.GameModeTC.Is(GameModes.WithFriendOff);
-            _eMG.WhoseMove.PlayerT = StartValues.WHOSE_MOVE;
+            _eMG.WhoseMovePlayerTC.PlayerT = StartValues.WHOSE_MOVE;
             _eMG.CellClickTC.CellClickT = StartValues.CELL_CLICK;
             _eMG.IsSelectedCity = false;
             _eMG.HaveTreeUnit = false;
-            _eMG.MistakeE.MistakeT = MistakeTypes.None;
+            _eMG.MistakeTC.MistakeT = MistakeTypes.None;
             _eMG.WinnerPlayerTC.PlayerT = PlayerTypes.None;
             _eMG.ZoneInfoC = default;
             _eMG.CellsC = default;
@@ -139,6 +141,8 @@ namespace Chessy.Game.Model.System
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
+                _eMG.PlayerInfoE(playerT).IsReady = false;
+
                 _eMG.PlayerInfoE(playerT).BuildingsInfoC.Destroy(BuildingTypes.Market);
                 _eMG.PlayerInfoE(playerT).BuildingsInfoC.Destroy(BuildingTypes.Smelter);
 
@@ -149,7 +153,7 @@ namespace Chessy.Game.Model.System
 
                 _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
                 _eMG.PlayerInfoE(playerT).WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
-                _eMG.PlayerInfoE(playerT).IsReadyC = false;
+                _eMG.PlayerInfoE(playerT).IsReady = false;
 
                 _eMG.PlayerInfoE(playerT).GodInfoE = default;
                 _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
@@ -186,7 +190,7 @@ namespace Chessy.Game.Model.System
                     break;
 
                 case GameModes.WithFriendOff:
-                    _eMG.CurPlayerITC.PlayerT = _eMG.WhoseMove.PlayerT;
+                    _eMG.CurPlayerITC.PlayerT = _eMG.WhoseMovePlayerTC.PlayerT;
                     break;
 
                 case GameModes.PublicOn:
@@ -206,14 +210,14 @@ namespace Chessy.Game.Model.System
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    var xy_0 = _eMG.CellEs(cell_0).CellE.XyC.Xy;
+                    var xy_0 = _eMG.XyCellC(cell_0).Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
                     _eMG.HaveFire(cell_0) = false;
 
 
-                    if (_eMG.CellE(cell_0).IsActiveParentSelf)
+                    if (_eMG.IsActiveParentSelf(cell_0))
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
@@ -246,32 +250,32 @@ namespace Chessy.Game.Model.System
 
                         if (x >= 3 && x < 4 && y == 5)
                         {
-                            _eMG.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
-                            _eMG.RiverEs(cell_0).HaveRiverC.HaveRive(DirectTypes.Up) = true;
+                            _eMG.RiverTC(cell_0).RiverT = RiverTypes.Start;
+                            _eMG.HaveRiverC(cell_0).HaveRive(DirectTypes.Up) = true;
                         }
                         else if (x == 4 && y == 5)
                         {
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
 
-                            _eMG.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
-                            _eMG.RiverEs(cell_0).HaveRiverC.HaveRive(DirectTypes.Up) = true;
-                            _eMG.RiverEs(cell_0).HaveRiverC.HaveRive(DirectTypes.Right) = true;
+                            _eMG.RiverTC(cell_0).RiverT = RiverTypes.Start;
+                            _eMG.HaveRiverC(cell_0).HaveRive(DirectTypes.Up) = true;
+                            _eMG.HaveRiverC(cell_0).HaveRive(DirectTypes.Right) = true;
                         }
                         else if (x >= 5 && x < 7 && y == 4)
                         {
-                            _eMG.RiverEs(cell_0).RiverTC.River = RiverTypes.Start;
-                            _eMG.RiverEs(cell_0).HaveRiverC.HaveRive(DirectTypes.Up) = true;
+                            _eMG.RiverTC(cell_0).RiverT = RiverTypes.Start;
+                            _eMG.HaveRiverC(cell_0).HaveRive(DirectTypes.Up) = true;
                         }
 
 
                         for (var dir = DirectTypes.Up; dir <= DirectTypes.Left; dir++)
                         {
-                            if (_eMG.RiverEs(cell_0).HaveRiverC.HaveRive(dir))
+                            if (_eMG.HaveRiverC(cell_0).HaveRive(dir))
                             {
                                 var idx_next = _eMG.AroundCellsE(cell_0).IdxCell(dir);
 
-                                _eMG.RiverEs(idx_next).RiverTC.River = RiverTypes.EndRiver;
+                                _eMG.RiverTC(idx_next).RiverT = RiverTypes.EndRiver;
                             }
                         }
 
@@ -279,34 +283,13 @@ namespace Chessy.Game.Model.System
                         {
                             var idx_next = _eMG.AroundCellsE(cell_0).IdxCell(dir);
 
-                            _eMG.RiverEs(idx_next).RiverTC.River = RiverTypes.Corner;
+                            _eMG.RiverTC(idx_next).RiverT = RiverTypes.Corner;
                         }
 
 
-                        if (_eMC.GameModeTC.Is(GameModes.TrainingOff))
+                        if(cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_1_PLAYER || cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_2_PLAYER)
                         {
-                            if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
-                            {
-                                _eMG.AdultForestC(cell_0).Resources = 0.4f;
-                            }
-                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
-                            {
-                                ClearAllEnvironmentS.Clear(cell_0);
-                            }
-                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
-                            {
-                                ClearAllEnvironmentS.Clear(cell_0);
-                            }
-                            else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                            {
-                                ClearAllEnvironmentS.Clear(cell_0);
-                                _eMG.HillC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES / 5;
-                            }
-                            else if (cell_0 == StartValues.CELL_MOUNTAIN_LESSON)
-                            {
-                                ClearAllEnvironmentS.Clear(cell_0);
-                                _eMG.MountainC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
-                            }
+                            ClearAllEnvironmentS.Clear(cell_0);
                         }
                     }
                 }
@@ -314,7 +297,7 @@ namespace Chessy.Game.Model.System
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    if (_eMG.CellE(cell_0).IsActiveParentSelf)
+                    if (_eMG.IsActiveParentSelf(cell_0))
                     {
                         if (_eMG.MountainC(cell_0).HaveAnyResources)
                         {
@@ -322,11 +305,11 @@ namespace Chessy.Game.Model.System
                             {
                                 var idx_1 = _eMG.AroundCellsE(cell_0).IdxCell(dirT);
 
-                                if (UnityEngine.Random.Range(0f, 1f) <= 0.5)
+                                if (UnityEngine.Random.Range(0f, 1f) <= 0.7)
                                 {
                                     if (!_eMG.MountainC(_eMG.AroundCellsE(cell_0).IdxCell(dirT)).HaveAnyResources && !_eMG.BuildingTC(idx_1).HaveBuilding)
                                     {
-                                        _eMG.HillC(idx_1).Resources = UnityEngine.Random.Range(0f, 1f);
+                                        _eMG.HillC(idx_1).Resources = UnityEngine.Random.Range(0.5f, 1f);
                                     }
                                 }
                             }
@@ -344,7 +327,7 @@ namespace Chessy.Game.Model.System
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    var xy_0 = _eMG.CellEs(cell_0).CellE.XyC.Xy;
+                    var xy_0 = _eMG.XyCellC(cell_0).Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
@@ -371,6 +354,29 @@ namespace Chessy.Game.Model.System
 
                         var needSword = UnityEngine.Random.Range(0f, 1f) >= 0.5f;
                         UnitSs.SetExtraTWS.Set(needSword ? ToolWeaponTypes.Sword : ToolWeaponTypes.Shield, needSword ? LevelTypes.Second : LevelTypes.First, ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST, cell_0);
+                    }
+
+                    if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                    {
+                        _eMG.AdultForestC(cell_0).Resources = 0.4f;
+                    }
+                    else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
+                    {
+                        ClearAllEnvironmentS.Clear(cell_0);
+                    }
+                    else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
+                    {
+                        ClearAllEnvironmentS.Clear(cell_0);
+                    }
+                    else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                    {
+                        ClearAllEnvironmentS.Clear(cell_0);
+                        _eMG.HillC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES / 5;
+                    }
+                    else if (cell_0 == StartValues.CELL_MOUNTAIN_LESSON)
+                    {
+                        ClearAllEnvironmentS.Clear(cell_0);
+                        _eMG.MountainC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
             }

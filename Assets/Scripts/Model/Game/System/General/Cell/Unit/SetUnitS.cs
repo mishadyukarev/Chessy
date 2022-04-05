@@ -22,15 +22,7 @@ namespace Chessy.Game.Model.System
                 eMG.UnitButtonAbilitiesC(cell_to).SetAbility(buttonT, eMG.UnitButtonAbilitiesC(cell_from).Ability(buttonT));
             }
 
-            for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
-            {
-                eMG.UnitAbilityE(cell_to).Cooldown(abilityT) = eMG.UnitAbilityE(cell_from).Cooldown(abilityT);
-            }
-
-            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-            {
-                eMG.CanSetUnitHereC(cell_to).ForPlayer(playerT) = eMG.CanSetUnitHereC(cell_from).ForPlayer(playerT);
-            }
+            eMG.UnitCooldownAbilitiesC(cell_to).Set(eMG.UnitCooldownAbilitiesC(cell_from));
         }
     }
 }

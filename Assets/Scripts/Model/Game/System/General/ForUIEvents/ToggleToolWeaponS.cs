@@ -19,7 +19,7 @@ namespace Chessy.Game.Model.System
             eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
 
 
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
                 if (eMG.LessonTC.Is(LessonTypes.ClickPick))
                 {
@@ -29,7 +29,7 @@ namespace Chessy.Game.Model.System
                     }
                 }
 
-                if (eMG.PlayerInfoE(eMG.WhoseMove.PlayerT).PawnInfoE.PawnsInGame > 0)
+                if (eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).PawnInfoE.PawnsInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -71,15 +71,15 @@ namespace Chessy.Game.Model.System
                 }
                 else
                 {
-                    eMG.MistakeE.MistakeT = MistakeTypes.NeedPawnsInGame;
-                    eMG.MistakeE.Timer = 0;
+                    eMG.MistakeTC.MistakeT = MistakeTypes.NeedPawnsInGame;
+                    eMG.MistakeTimerC.Timer = 0;
                     eMG.SoundActionC(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
-                eMG.MistakeE.MistakeT = MistakeTypes.NeedWaitQueue;
-                eMG.MistakeE.Timer = 0;
+                eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
+                eMG.MistakeTimerC.Timer = 0;
                 eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
             }
 

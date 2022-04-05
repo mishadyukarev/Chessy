@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Common
 {
-    public struct InfoGameC
+    public struct MotionsC
     {
         public int Motions { get; internal set; }
     }

@@ -12,8 +12,8 @@ namespace Chessy.Game.Model.System
 
         public void Set(in MistakeTypes mistakeT, in float timer)
         {
-            eMG.MistakeE.MistakeT = mistakeT;
-            eMG.MistakeE.Timer = timer;
+            eMG.MistakeTC.MistakeT = mistakeT;
+            eMG.MistakeTimerC.Timer = timer;
         }
     }
 }

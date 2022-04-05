@@ -13,16 +13,16 @@ namespace Chessy.Game.Model.System.Master
 
         internal void Execute(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMG.UnitAbilityE(cell_0).HaveCooldown(abilityT))
+            if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (eMG.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
+                if (eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
                 {
                     if (needIncrese)
                     {
                         if (!eMG.WeatherE.WindC.IsMaxSpeed)
                         {
-                            eMG.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
-                            eMG.UnitAbilityE(cell_0).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                            eMG.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
+                            eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                             eMG.WeatherE.WindC.Speed++;
 
@@ -38,8 +38,8 @@ namespace Chessy.Game.Model.System.Master
                     {
                         if (!eMG.WeatherE.WindC.IsMinSpeed)
                         {
-                            eMG.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
-                            eMG.UnitAbilityE(cell_0).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                            eMG.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
+                            eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                             eMG.WeatherE.WindC.Speed--;
 

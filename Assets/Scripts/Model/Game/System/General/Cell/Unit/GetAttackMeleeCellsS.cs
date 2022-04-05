@@ -11,12 +11,12 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.UnitAttackE(cell_0).Simple.Clear();
-            eMG.UnitAttackE(cell_0).Unique.Clear();
+            eMG.AttackSimpleCellsC(cell_0).Clear();
+            eMG.AttackUniqueCellsC(cell_0).Clear();
 
-            if (!eMG.UnitEs(cell_0).EffectsE.StunC.IsStunned)
+            if (!eMG.StunUnitC(cell_0).IsStunned)
             {
-                if (eMG.UnitTC(cell_0).HaveUnit && eMG.UnitTC(cell_0).IsMelee(eMG.UnitMainTWTC(cell_0).ToolWeaponT) && !eMG.UnitTC(cell_0).IsAnimal)
+                if (eMG.UnitTC(cell_0).HaveUnit && eMG.UnitTC(cell_0).IsMelee(eMG.MainToolWeaponTC(cell_0).ToolWeaponT) && !eMG.UnitTC(cell_0).IsAnimal)
                 {
                     DirectTypes dir_cur = default;
 
@@ -28,9 +28,9 @@ namespace Chessy.Game.Model.System
 
                         if (!eMG.MountainC(idx_1).HaveAnyResources)
                         {
-                            var haveMaxSteps = eMG.UnitStepC(cell_0).Steps >= StepValues.MAX;
+                            var haveMaxSteps = eMG.StepUnitC(cell_0).Steps >= StepValues.MAX;
 
-                            if (eMG.UnitStepC(cell_0).Steps >= eMG.UnitShiftE(cell_0).NeedSteps(idx_1) || haveMaxSteps)
+                            if (eMG.StepUnitC(cell_0).Steps >= eMG.UnitNeedStepsForShiftC(cell_0).NeedSteps(idx_1) || haveMaxSteps)
                             {
                                 if (eMG.UnitTC(idx_1).HaveUnit)
                                 {
@@ -41,13 +41,13 @@ namespace Chessy.Game.Model.System
                                             if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                            || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                             {
-                                                eMG.UnitAttackE(cell_0).Simple.Add(idx_1);
+                                                eMG.AttackSimpleCellsC(cell_0).Add(idx_1);
                                             }
-                                            else eMG.UnitAttackE(cell_0).Unique.Add(idx_1);
+                                            else eMG.AttackUniqueCellsC(cell_0).Add(idx_1);
                                         }
                                         else
                                         {
-                                            eMG.UnitAttackE(cell_0).Simple.Add(idx_1);
+                                            eMG.AttackSimpleCellsC(cell_0).Add(idx_1);
                                         }
                                     }
                                 }

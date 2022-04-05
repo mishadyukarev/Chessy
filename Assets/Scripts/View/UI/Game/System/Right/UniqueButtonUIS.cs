@@ -20,20 +20,17 @@ namespace Chessy.Game.View.UI.System
 
         public void Run()
         {
-            var ability_cur = e.UnitButtonAbilitiesC(e.CellsC.Selected).Ability(_buttonT);
+            var ability_cur = e.UnitButtonAbilitiesC(e.SelectedCell).Ability(_buttonT);
 
-            if (ability_cur == default)
-            {
-                _buttonE.ParenC.SetActive(false);
-            }
-            else
+
+            if (e.UnitPlayerT(e.SelectedCell) == e.CurPlayerIT && ability_cur != AbilityTypes.None)
             {
                 _buttonE.ParenC.SetActive(true);
 
-                _buttonE.CooldonwTextC.SetActiveParent(e.UnitAbilityE(e.CellsC.Selected).HaveCooldown(ability_cur));
-                _buttonE.CooldonwTextC.TextUI.text = e.UnitAbilityE(e.CellsC.Selected).Cooldown(ability_cur).ToString();
+                _buttonE.CooldonwTextC.SetActiveParent(e.UnitCooldownAbilitiesC(e.CellsC.Selected).HaveCooldown(ability_cur));
+                _buttonE.CooldonwTextC.TextUI.text = e.UnitCooldownAbilitiesC(e.CellsC.Selected).Cooldown(ability_cur).ToString();
 
-                
+
 
                 _buttonE.AbilityImageC.Image.sprite = _resources.Sprite(ability_cur);
 
@@ -87,6 +84,10 @@ namespace Chessy.Game.View.UI.System
                 }
 
                 _buttonE.StepsTextC.TextUI.text = StepValues.Need(ability_cur).ToString();
+            }
+            else
+            {
+                _buttonE.ParenC.SetActive(false);
             }
         }
     }

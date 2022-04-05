@@ -40,7 +40,7 @@ namespace Chessy.Game.Model.System
             {
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    int one = eMG.CellEs(cell_0).CellE.InstanceIDC;
+                    int one = eMG.InstanceID(cell_0);
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)

@@ -4,13 +4,12 @@
     {
         None,
 
-        GetUnit,
-
-        SoundEff,
+        SoundEffect,
         SoundUniqueAbility,
-        SoundRpcMaster,
 
         ActiveMotion,
-        Sync,
+        Mistake,
+
+        End,
     }
 }

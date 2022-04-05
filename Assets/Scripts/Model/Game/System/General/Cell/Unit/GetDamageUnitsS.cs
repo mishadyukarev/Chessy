@@ -77,23 +77,23 @@ namespace Chessy.Game.Model.System
                 }
 
 
-                if (eMG.UnitMainTWTC(cell_0).HaveToolWeapon)
+                if (eMG.MainToolWeaponTC(cell_0).HaveToolWeapon)
                 {
-                    if (eMG.UnitMainTWLevelTC(cell_0).Is(LevelTypes.Second))
+                    if (eMG.MainTWLevelTC(cell_0).Is(LevelTypes.Second))
                     {
-                        if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
+                        if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
                             powerDamage += powerDamage * DamageValues.BOW_CROSSBOW_SECOND;
                         }
-                        else if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
+                        else if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Axe))
                         {
                             powerDamage += powerDamage * DamageValues.AXE_SECOND;
                         }
                     }
                 }
-                if (eMG.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Sword)) powerDamage += powerDamage * DamageValues.SWORD;
+                if (eMG.ExtraToolWeaponTC(cell_0).Is(ToolWeaponTypes.Sword)) powerDamage += powerDamage * DamageValues.SWORD;
 
-                if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
+                if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
 
 
                 eMG.DamageAttackC(cell_0).Damage = powerDamage;
@@ -145,7 +145,7 @@ namespace Chessy.Game.Model.System
                 powerDamage += powerDamage * protectionPercent;
 
 
-                if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
+                if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
 
                 eMG.DamageOnCellC(cell_0).Damage = powerDamage;
             }

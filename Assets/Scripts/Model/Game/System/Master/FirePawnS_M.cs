@@ -14,14 +14,14 @@ namespace Chessy.Game.Model.System
 
         internal void Fire(in byte cell_0, in Player sender)
         {
-            if (eMG.UnitStepC(cell_0).Steps >= StepValues.FIRE_PAWN)
+            if (eMG.StepUnitC(cell_0).Steps >= StepValues.FIRE_PAWN)
             {
                 if (eMG.AdultForestC(cell_0).HaveAnyResources)
                 {
                     eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
                     eMG.HaveFire(cell_0) = true;
-                    eMG.UnitStepC(cell_0).Steps -= StepValues.FIRE_PAWN;
+                    eMG.StepUnitC(cell_0).Steps -= StepValues.FIRE_PAWN;
                 }
 
                 else

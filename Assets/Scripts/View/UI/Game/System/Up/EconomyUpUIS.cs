@@ -39,15 +39,15 @@ namespace Chessy.Game
                         {
                             _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 
-                            _extracts[ResourceTypes.Ore] += e.PawnExtractHillE(idx_0).Resources;
-                            _extracts[ResourceTypes.Wood] += e.PawnExtractAdultForestE(idx_0).Resources;
+                            _extracts[ResourceTypes.Ore] += e.PawnExtractHillC(idx_0).Resources;
+                            _extracts[ResourceTypes.Wood] += e.PawnExtractAdultForestC(idx_0).Resources;
                         }
                     }
 
                     if (e.BuildingPlayerTC(idx_0).Is(curPlayer))
                     {
-                        _extracts[ResourceTypes.Wood] += e.WoodcutterExtractE(idx_0).Resources;
-                        _extracts[ResourceTypes.Food] += e.FarmExtractFertilizeE(idx_0).Resources;
+                        _extracts[ResourceTypes.Wood] += e.WoodcutterExtractC(idx_0).Resources;
+                        _extracts[ResourceTypes.Food] += e.FarmExtractFertilizeC(idx_0).Resources;
                     }
                 }
 

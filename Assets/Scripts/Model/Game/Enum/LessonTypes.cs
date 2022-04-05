@@ -23,6 +23,9 @@
         ExtractHillPawnHere,
         ClickOpenTown2,
         ClickBuyMelterInTown,
+        ClickBuyMarketInTown,
+        ClickWindInfo,
+        LookInfoAboutSun,
 
         End,
     }

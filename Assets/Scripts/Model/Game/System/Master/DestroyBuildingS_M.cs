@@ -15,13 +15,13 @@ namespace Chessy.Game.Model.System
 
         internal void Destroy(in byte cell_0, in Player sender)
         {
-            if (eMG.UnitStepC(cell_0).HaveAnySteps)
+            if (eMG.StepUnitC(cell_0).HaveAnySteps)
             {
                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 sMG.DestroyBuildingS.Attack(cell_0, 1f, eMG.UnitPlayerTC(cell_0).PlayerT);
 
-                eMG.UnitStepC(cell_0).Steps -= StepValues.DESTROY_BUILDING;
+                eMG.StepUnitC(cell_0).Steps -= StepValues.DESTROY_BUILDING;
             }
 
             else

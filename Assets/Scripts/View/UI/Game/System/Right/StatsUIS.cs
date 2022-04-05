@@ -40,21 +40,21 @@ namespace Chessy.Game
 
 
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * e.UnitHpC(idx_sel).Health).ToString();
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * e.HpUnitC(idx_sel).Health).ToString();
                 eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = (Math.Truncate(10 * damageOnCell) / 10).ToString();
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = (Math.Truncate(100 * e.UnitStepC(idx_sel).Steps) / 100).ToString();
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = (Math.Truncate(100 * e.UnitWaterC(idx_sel).Water) / 100).ToString();
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = (Math.Truncate(100 * e.StepUnitC(idx_sel).Steps) / 100).ToString();
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = (Math.Truncate(100 * e.WaterUnitC(idx_sel).Water) / 100).ToString();
 
-                var v = e.UnitHpC(idx_sel).Health / HpValues.MAX;
+                var v = e.HpUnitC(idx_sel).Health / HpValues.MAX;
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = e.UnitHpC(idx_sel).Health / HpValues.MAX;
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = e.HpUnitC(idx_sel).Health / HpValues.MAX;
 
 
 
                 eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)e.UnitStepC(idx_sel).Steps / StepValues.MAX;
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = e.UnitWaterC(idx_sel).Water / (float)WaterValues.MAX;
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)e.StepUnitC(idx_sel).Steps / StepValues.MAX;
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = e.WaterUnitC(idx_sel).Water / (float)WaterValues.MAX;
             }
 
             else

@@ -11,12 +11,12 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.PawnExtractAdultForestE(cell_0).Resources = 0;
+            eMG.PawnExtractAdultForestC(cell_0).Resources = 0;
 
             if (eMG.AdultForestC(cell_0).HaveAnyResources)
             {
                 if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed)
-                    && !eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
+                    && !eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                 {
                     var extract = ExtractPawnForestValues.EXTRACT_PAWM_ADULT_FOREST;
 
@@ -30,9 +30,9 @@ namespace Chessy.Game.Model.System
 
 
 
-                    if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
+                    if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Axe))
                     {
-                        if (eMG.UnitMainTWLevelTC(cell_0).Is(LevelTypes.Second))
+                        if (eMG.MainTWLevelTC(cell_0).Is(LevelTypes.Second))
                         {
                             extract *= ExtractPawnForestValues.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
                         }
@@ -40,7 +40,7 @@ namespace Chessy.Game.Model.System
 
                     if (eMG.AdultForestC(cell_0).Resources < extract) extract = eMG.AdultForestC(cell_0).Resources;
 
-                    eMG.PawnExtractAdultForestE(cell_0).Resources = extract;
+                    eMG.PawnExtractAdultForestC(cell_0).Resources = extract;
                 }
             }
         }

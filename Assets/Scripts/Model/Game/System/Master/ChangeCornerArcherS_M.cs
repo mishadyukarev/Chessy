@@ -12,11 +12,11 @@ namespace Chessy.Game.Model.System
 
         internal void Change(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (eMG.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
+            if (eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
             {
                 eMG.UnitIsRightArcherC(cell_0).ToggleSide();
 
-                eMG.UnitStepC(cell_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
+                eMG.StepUnitC(cell_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
 
                 eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
             }

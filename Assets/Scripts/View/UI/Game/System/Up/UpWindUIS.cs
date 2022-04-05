@@ -35,17 +35,19 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (e.LessonTC.HaveLesson)
-            {
-                _eUI.UpEs.ParentWindGOC.SetActive(false);
-            }
-            else
+            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.ClickWindInfo)
             {
                 _eUI.UpEs.ParentWindGOC.SetActive(true);
 
                 _eUI.UpEs.WindTrC.EulerAngles = _directs[e.WeatherE.WindC.DirectT];
                 if (e.CurPlayerITC.PlayerT == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
                 _eUI.UpEs.WindTextC.TextUI.text = e.WeatherE.WindC.Speed.ToString() + "/" + e.WeatherE.WindC.MaxSpeed;
+
+
+            }
+            else
+            {
+                _eUI.UpEs.ParentWindGOC.SetActive(false);
             }
 
 

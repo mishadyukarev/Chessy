@@ -3,6 +3,7 @@ using Chessy.Common.Entity;
 using Chessy.Common.Entity.View.UI;
 using Chessy.Common.Enum;
 using Chessy.Common.View.UI;
+using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Photon.Pun;
@@ -46,16 +47,23 @@ namespace Chessy.Game.EventsUI
             });
             eUIGame.UpEs.WindButtonC.AddListener(delegate
             {
-                if (eMCommon.BookE.IsOpenedBook)
+                if (eMGame.LessonTC.Is(LessonTypes.ClickWindInfo))
                 {
-                    eMCommon.BookE.IsOpenedBook = false;
-                    eMCommon.SoundActionC(ClipCommonTypes.CloseBook).Invoke();
+                    eMGame.LessonTC.SetNextLesson();
                 }
                 else
                 {
-                    eMCommon.BookE.IsOpenedBook = true;
-                    eMCommon.BookE.PageBookTC.PageBookT = PageBookTypes.Wind;
-                    eMCommon.SoundActionC(ClipCommonTypes.OpenBook).Invoke();     
+                    if (eMCommon.BookE.IsOpenedBook)
+                    {
+                        eMCommon.BookE.IsOpenedBook = false;
+                        eMCommon.SoundActionC(ClipCommonTypes.CloseBook).Invoke();
+                    }
+                    else
+                    {
+                        eMCommon.BookE.IsOpenedBook = true;
+                        eMCommon.BookE.PageBookTC.PageBookT = PageBookTypes.Wind;
+                        eMCommon.SoundActionC(ClipCommonTypes.OpenBook).Invoke();
+                    }
                 }
 
                 eMGame.NeedUpdateView = true;

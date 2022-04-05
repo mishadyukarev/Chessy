@@ -14,14 +14,14 @@ namespace Chessy.Game.Model.System.Master
 
         internal void Attack(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMG.UnitAbilityE(cell_0).HaveCooldown(abilityT))
+            if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (eMG.UnitStepC(cell_0).Steps >= StepValues.Need(abilityT))
+                if (eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
                 {
                     eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    eMG.UnitAbilityE(cell_0).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
-                    eMG.UnitStepC(cell_0).Steps -= StepValues.Need(abilityT);
+                    eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
+                    eMG.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
 
 
                     foreach (byte idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
@@ -30,7 +30,7 @@ namespace Chessy.Game.Model.System.Master
                         {
                             if (!eMG.UnitPlayerTC(idx_1).Is(eMG.UnitPlayerTC(cell_0).PlayerT))
                             {
-                                if (eMG.UnitExtraTWTC(idx_1).Is(ToolWeaponTypes.Shield))
+                                if (eMG.ExtraToolWeaponTC(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
                                     sMG.UnitSs.AttackShieldS.Attack(1f, idx_1);
                                 }

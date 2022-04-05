@@ -15,18 +15,18 @@ namespace Chessy.Game.Model.System
 
         internal void Stun(in byte cell_from, in byte cell_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMG.UnitAbilityE(cell_from).HaveCooldown(abilityT))
+            if (!eMG.UnitCooldownAbilitiesC(cell_from).HaveCooldown(abilityT))
             {
                 if (eMG.AdultForestC(cell_to).HaveAnyResources)
                 {
-                    if (eMG.UnitStepC(cell_from).Steps >= StepValues.STUN_ELFEMALE)
+                    if (eMG.StepUnitC(cell_from).Steps >= StepValues.STUN_ELFEMALE)
                     {
                         if (!eMG.UnitPlayerTC(cell_from).Is(eMG.UnitPlayerTC(cell_to).PlayerT))
                         {
-                            eMG.UnitEffectStunC(cell_to).Stun = StunValues.ELFEMALE;
-                            eMG.UnitAbilityE(cell_from).Cooldown(abilityT) = AbilityCooldownValues.NeedAfterAbility(abilityT);
+                            eMG.StunUnitC(cell_to).Stun = StunValues.ELFEMALE;
+                            eMG.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
-                            eMG.UnitStepC(cell_from).Steps -= StepValues.STUN_ELFEMALE;
+                            eMG.StepUnitC(cell_from).Steps -= StepValues.STUN_ELFEMALE;
 
                             eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
 
@@ -37,7 +37,7 @@ namespace Chessy.Game.Model.System
                                 {
                                     if (eMG.UnitTC(idx_1).HaveUnit && eMG.UnitPlayerTC(idx_1).Is(eMG.UnitPlayerTC(cell_to).PlayerT))
                                     {
-                                        eMG.UnitEffectStunC(idx_1).Stun = StunValues.ELFEMALE;
+                                        eMG.StunUnitC(idx_1).Stun = StunValues.ELFEMALE;
                                     }
                                 }
                             }

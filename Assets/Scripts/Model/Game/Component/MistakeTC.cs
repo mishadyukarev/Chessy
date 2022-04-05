@@ -2,7 +2,7 @@
 {
     public struct MistakeTC
     {
-        public MistakeTypes MistakeT { get; internal set; }
+        public MistakeTypes MistakeT;/* { get; internal set; }*/
 
         public bool HaveMistake => !Is(MistakeTypes.None, MistakeTypes.End);
         public bool Is(params MistakeTypes[] mistakes)

@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     public static class Support
     {
-        public static PlayerTypes GetPlayer(this Player player) => player.IsMasterClient == true ? PlayerTypes.First : PlayerTypes.Second;
+        public static PlayerTypes GetPlayer(this Player player) => player.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
 
         public static Player GetPlayer(this PlayerTypes playerType) => playerType == PlayerTypes.First ? PhotonNetwork.PlayerList[0] : PhotonNetwork.PlayerList[1];
 

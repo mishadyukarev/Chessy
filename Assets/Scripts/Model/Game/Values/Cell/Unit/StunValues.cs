@@ -2,6 +2,6 @@
 {
     public struct StunValues
     {
-        public const float ELFEMALE = 4;
+        public const float ELFEMALE = 1;
     }
 }

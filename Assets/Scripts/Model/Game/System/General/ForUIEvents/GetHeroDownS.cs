@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
             eMG.CellsC.Selected = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
                 eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
 

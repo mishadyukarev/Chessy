@@ -1,5 +1,4 @@
-﻿using Chessy.Common;
-using Chessy.Game.Model.Component;
+﻿using Chessy.Game.Model.Component;
 using System.Collections.Generic;
 
 namespace Chessy.Game.Model.Entity.Cell.Unit
@@ -16,9 +15,9 @@ namespace Chessy.Game.Model.Entity.Cell.Unit
         public readonly IdxsCellsC ForArson;
         public NeedUpdateViewC NeedUpdateViewC;
 
-        internal UnitMainE(in Dictionary<PlayerTypes, bool> isVisibled) : this()
+        internal UnitMainE(in bool def) : this()
         {
-            VisibleC = new VisibleC(isVisibled);
+            VisibleC = new VisibleC(default);
             CanSetUnitHereC = new CanSetUnitHereC(new bool[(byte)PlayerTypes.End]);
             ForArson = new IdxsCellsC(new HashSet<byte>());
         }

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public enum AbilityTypes
+    public enum AbilityTypes : byte
     {
         None,
 

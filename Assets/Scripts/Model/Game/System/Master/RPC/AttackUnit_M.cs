@@ -6,6 +6,7 @@ using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
+using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
 {
@@ -15,25 +16,25 @@ namespace Chessy.Game.Model.System.Master
         {
         }
 
-        internal void Attack(in byte idx_from, in byte idx_to)
+        internal void Attack(in byte idx_from, in byte idx_to, in Player sender)
         {
-            var whoseMove = eMG.WhoseMove.PlayerT;
+            var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 
-            var canAttack = eMG.UnitAttackE(idx_from).Unique.Contains(idx_to)
-                || eMG.UnitAttackE(idx_from).Simple.Contains(idx_to);
+            var canAttack = eMG.AttackUniqueCellsC(idx_from).Contains(idx_to)
+                || eMG.AttackSimpleCellsC(idx_from).Contains(idx_to);
 
             if (canAttack && eMG.UnitPlayerTC(idx_from).Is(whoseMove))
             {
-                eMG.UnitStepC(idx_from).Steps = 0;
+                eMG.StepUnitC(idx_from).Steps = 0;
                 eMG.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
 
-                if (eMG.UnitTC(idx_from).IsMelee(eMG.UnitMainTWTC(idx_from).ToolWeaponT))
+                if (eMG.UnitTC(idx_from).IsMelee(eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
                     eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
                 else eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
                 float powerDam_from = eMG.DamageAttackC(idx_from).Damage;
-                if (eMG.UnitAttackE(idx_from).Unique.Contains(idx_to))
+                if (eMG.AttackUniqueCellsC(idx_from).Contains(idx_to))
                 {
                     powerDam_from *= DamageValues.UNIQUE_PERCENT_DAMAGE;
                 }
@@ -41,7 +42,7 @@ namespace Chessy.Game.Model.System.Master
                 float powerDam_to = eMG.DamageOnCellC(idx_to).Damage;
 
 
-                var dirAttack = eMG.CellEs(idx_from).AroundCellsEs.Direct(idx_to);
+                var dirAttack = eMG.AroundCellsE(idx_from).Direct(idx_to);
 
                 if (eMG.WeatherE.SunSideTC.IsAcitveSun)
                 {
@@ -110,14 +111,14 @@ namespace Chessy.Game.Model.System.Master
                     }
                 }
 
-                if (eMG.UnitTC(idx_from).IsMelee(eMG.UnitMainTWTC(idx_from).ToolWeaponT))
+                if (eMG.UnitTC(idx_from).IsMelee(eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
                 {
-                    if (eMG.UnitEffectShield(idx_from).HaveAnyProtection)
+                    if (eMG.ShieldUnitEffectC(idx_from).HaveAnyProtection)
                     {
-                        eMG.UnitEffectShield(idx_from).Protection--;
+                        eMG.ShieldUnitEffectC(idx_from).Protection--;
                     }
 
-                    else if (eMG.UnitExtraTWTC(idx_from).Is(ToolWeaponTypes.Shield))
+                    else if (eMG.ExtraToolWeaponTC(idx_from).Is(ToolWeaponTypes.Shield))
                     {
                         sMG.UnitSs.AttackShieldS.Attack(1f, idx_from);
                     }
@@ -129,20 +130,20 @@ namespace Chessy.Game.Model.System.Master
                 }
                 else
                 {
-                    if (eMG.UnitEffectFrozenArrawC(idx_from).HaveShoots)
+                    if (eMG.FrozenArrawEffectC(idx_from).HaveShoots)
                     {
-                        eMG.UnitEffectFrozenArrawC(idx_from).Shoots = 0;
+                        eMG.FrozenArrawEffectC(idx_from).Shoots = 0;
 
-                        eMG.UnitEffectStunC(idx_to).Stun = 2;
+                        eMG.StunUnitC(idx_to).Stun = 2;
                     }
                 }
 
-                if (eMG.UnitEffectShield(idx_to).HaveAnyProtection)
+                if (eMG.ShieldUnitEffectC(idx_to).HaveAnyProtection)
                 {
-                    eMG.UnitEffectShield(idx_to).Protection--;
+                    eMG.ShieldUnitEffectC(idx_to).Protection--;
                 }
 
-                else if (eMG.UnitExtraTWTC(idx_to).Is(ToolWeaponTypes.Shield))
+                else if (eMG.ExtraToolWeaponTC(idx_to).Is(ToolWeaponTypes.Shield))
                 {
                     sMG.UnitSs.AttackShieldS.Attack(1f, idx_to);
                 }
@@ -169,7 +170,7 @@ namespace Chessy.Game.Model.System.Master
                     {
                         if (eMG.UnitTC(idx_from).HaveUnit)
                         {
-                            if (eMG.UnitTC(idx_from).IsMelee(eMG.UnitMainTWTC(idx_from).ToolWeaponT))
+                            if (eMG.UnitTC(idx_from).IsMelee(eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
                             {
                                 sMG.UnitSs.ShiftUnitS.Shift(idx_from, idx_to);
                             }

@@ -31,7 +31,7 @@
 
 //                    for (var i = 0; i < 3; i++)
 //                    {
-//                        if (!e.CellE(cell_0).IsActiveParentSelf) break;
+//                        if (!e.IsActiveParentSelf(cell_0)) break;
 
 
 //                        e.FertilizeC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;

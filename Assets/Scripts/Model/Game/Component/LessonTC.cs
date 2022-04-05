@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.Component
         public bool HaveLesson => !LessonT.Is(LessonTypes.None, LessonTypes.End);
         public bool Is(params LessonTypes[] lessonTs) => LessonT.Is(lessonTs);
 
-        internal void SetNextLesson()
+        public void SetNextLesson()
         {
             if (LessonT == LessonTypes.End - 1)
             {

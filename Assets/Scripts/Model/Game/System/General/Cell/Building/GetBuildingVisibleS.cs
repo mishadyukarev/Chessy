@@ -13,7 +13,7 @@ namespace Chessy.Game.Model.System
         {
             if (eMG.BuildingTC(cell_0).HaveBuilding)
             {
-                eMG.BuildingEs(cell_0).VisibleC.Set(eMG.BuildingPlayerTC(cell_0).PlayerT, true);
+                eMG.BuildingVisibleC(cell_0).Set(eMG.BuildingPlayerTC(cell_0).PlayerT, true);
 
                 if (eMG.AdultForestC(cell_0).HaveAnyResources)
                 {
@@ -32,9 +32,9 @@ namespace Chessy.Game.Model.System
                             }
                         }
                     }
-                    eMG.BuildingEs(cell_0).VisibleC.Set(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), isVisibledNextPlayer);
+                    eMG.BuildingVisibleC(cell_0).Set(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), isVisibledNextPlayer);
                 }
-                else eMG.BuildingEs(cell_0).VisibleC.Set(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), true);
+                else eMG.BuildingVisibleC(cell_0).Set(eMG.BuildingPlayerTC(cell_0).PlayerT.NextPlayer(), true);
 
 
                 eMG.BuildingVisibleC(cell_0).Set(PlayerTypes.First, true);

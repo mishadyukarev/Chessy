@@ -45,9 +45,9 @@ namespace Chessy.Game
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                         {
-                            if (eMG.UnitExtraTWTC(cell_0).HaveToolWeapon)
+                            if (eMG.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
                             {
-                                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.UnitExtraLevelTC(cell_0).LevelT).ToolWeapons(eMG.UnitExtraTWTC(cell_0).ToolWeaponT)++;
+                                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                             }
 
                             sMG.UnitSs.ClearUnitS.Clear(cell_0);
@@ -56,9 +56,9 @@ namespace Chessy.Game
                     else
                     {
 
-                        if (eMG.UnitExtraTWTC(cell_0).HaveToolWeapon)
+                        if (eMG.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
                         {
-                            eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.UnitExtraLevelTC(cell_0).LevelT).ToolWeapons(eMG.UnitExtraTWTC(cell_0).ToolWeaponT)++;
+                            eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                         }
 
                         sMG.UnitSs.ClearUnitS.Clear(cell_0);

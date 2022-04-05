@@ -41,6 +41,7 @@ namespace Chessy.Game.System.View.UI
             _effectsS = new EffectsUIS(new Dictionary<EffectTypes, bool>());
             _mistakeS = new MistakeUIS(_eUIGame.CenterEs.MistakeE, eMGame);
             _skipLessonUIS = new SkipLessonUIS(_eUIGame.CenterEs.SkipLessonE, eMGame);
+            _protectS = new ProtectUIS(_eUIGame.RightEs.ProtectE, eMGame);
 
 
             _motionUpS = new MotionUpUIS(eUIGame.UpEs.MotionsTextC, eMGame);
@@ -71,7 +72,7 @@ namespace Chessy.Game.System.View.UI
                     var rightEs = _eUIGame.RightEs;
                     new RightZoneUIS(_eUIGame, _e).Run();
                     new StatsUIS(_eUIGame, _e).Run();
-                    _protectS.Run(rightEs.ProtectE, _e.UnitEs(_e.CellsC.Selected), _e.CurPlayerITC.PlayerT);
+                    _protectS.Run();
                     _relaxS.Run(rightEs.RelaxE, _e);
                     _effectsS.Run(_e.Resources, _eUIGame, _e);
                     for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)

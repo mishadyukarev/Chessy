@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Component;
+using Chessy.Game.Values;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -35,33 +36,7 @@ namespace Chessy.Game
                 aS = aSParent.AddComponent<AudioSource>();
                 aS.clip = UnityEngine.Resources.Load<AudioClip>(clipT.ToString());
 
-                var volume = 1f;
-
-                switch (clipT)
-                {
-                    case ClipTypes.AttackArcher: volume = 0.6f; break;
-                    case ClipTypes.AttackMelee: volume = 1; break;
-                    case ClipTypes.Building: volume = 0.1f; break;
-                    case ClipTypes.Mistake: volume = 0.4f; break;
-                    case ClipTypes.SoundGoldPack: volume = 0.3f; break;
-                    case ClipTypes.Melting: volume = 0.3f; break;
-                    case ClipTypes.Destroy: volume = 0.3f; break;
-                    case ClipTypes.ClickToTable: volume = 0.6f; break;
-                    case ClipTypes.Truce: volume = 0.6f; break;
-                    case ClipTypes.PickMelee: volume = 0.1f; break;
-                    case ClipTypes.PickArcher: volume = 0.7f; break;
-                    case ClipTypes.WritePensil: volume = 0.2f; break;
-                    case ClipTypes.Leaf: volume = 0.4f; break;
-                    case ClipTypes.KickGround: volume = 0.1f; break;
-                    case ClipTypes.Rock: volume = 0.2f; break;
-                    case ClipTypes.ShortWind: volume = 0.2f; break;
-                    case ClipTypes.ShortRain: volume = 0.2f; break;
-
-                    case ClipTypes.Background1: volume = 1; break;
-                    case ClipTypes.Background2: volume = 0.05f; break;
-                }
-
-                aS.volume = volume;
+                aS.volume = StartValues.Volume(clipT);
                 if (clipT == ClipTypes.Background2)
                 {
                     aS.Play();
@@ -82,33 +57,7 @@ namespace Chessy.Game
 
                 _sounds1.Add(unique, new AudioSourceVC(aS));
 
-                var volume = 1f;
-                switch (unique)
-                {
-                    case AbilityTypes.KingPassiveNearBonus: volume = 0.3f; break;
-
-                    case AbilityTypes.DestroyBuilding: volume = 0.1f; break;
-                    case AbilityTypes.SetFarm: volume = 0.1f; break;
-                    case AbilityTypes.Seed: volume = 0.2f; break;
-                    case AbilityTypes.FirePawn: volume = 0.2f; break;
-
-                    case AbilityTypes.FireArcher: volume = 0.2f; break;
-
-                    case AbilityTypes.GrowAdultForest: volume = 0.3f; break;
-                    case AbilityTypes.StunElfemale: volume = 0.3f; break;
-                    case AbilityTypes.ChangeDirectionWind: volume = 0.1f; break;
-
-                    //case AbilityTypes.IceWall: volume = 0.1f; break;
-                    //case AbilityTypes.ActiveAroundBonusSnowy: volume = 0.1f; break;
-                    //case AbilityTypes.DirectWave: volume = 0.1f; break;
-
-                    case AbilityTypes.Resurrect: volume = 0.1f; break;
-                    case AbilityTypes.SetTeleport: volume = 0.1f; break;
-                    case AbilityTypes.Teleport: volume = 0.1f; break;
-                    case AbilityTypes.InvokeSkeletons: volume = 0.1f; break;
-                }
-
-                aS.volume = volume;
+                aS.volume = StartValues.Volume(unique);
             }
 
 

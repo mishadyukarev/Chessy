@@ -11,10 +11,14 @@ namespace Chessy.Game.Model.System
 
         internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT, in byte cell_0)
         {
-            eMG.UnitMainTWTC(cell_0).ToolWeaponT = twT;
-            eMG.UnitMainTWLevelTC(cell_0).LevelT = levelT;
+            eMG.MainToolWeaponTC(cell_0).ToolWeaponT = twT;
+            eMG.MainTWLevelTC(cell_0).LevelT = levelT;
         }
 
-        internal void Set(in byte cell_from, in byte cell_to) => eMG.UnitMainTWE(cell_to) = eMG.UnitMainTWE(cell_from);
+        internal void Set(in byte cell_from, in byte cell_to)
+        {
+            eMG.MainToolWeaponTC(cell_to) = eMG.MainToolWeaponTC(cell_from);
+            eMG.MainTWLevelTC(cell_to) = eMG.MainTWLevelTC(cell_from);
+        }
     }
 }

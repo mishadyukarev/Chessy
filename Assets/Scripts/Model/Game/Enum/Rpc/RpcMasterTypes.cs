@@ -14,6 +14,10 @@
         Sound,
         GetHero,
         Melt,
+        GiveTakeToolWeapon,
+        BuyBuilding,
+        MarketBuy,
+
         UniqueAbility,
 
         End

@@ -6,7 +6,7 @@
         readonly PlayerLevelBuildingInfoE[] _buildingInfoEs;
 
         public ref int ToolWeapons(in ToolWeaponTypes tw) => ref _twTC[(byte)tw];
-        public ref PlayerLevelBuildingInfoE BuildingInfoE(in BuildingTypes buildT) => ref _buildingInfoEs[(byte)buildT - 1];
+        public ref PlayerLevelBuildingInfoE BuildingInfoE(in BuildingTypes buildT) => ref _buildingInfoEs[(byte)buildT];
 
         public PlayerLevelInfoE(in LevelTypes levT) : this()
         {
@@ -15,7 +15,7 @@
 
             for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)
             {
-                _buildingInfoEs[(byte)buildT - 1] = new PlayerLevelBuildingInfoE(default);
+                _buildingInfoEs[(byte)buildT] = new PlayerLevelBuildingInfoE(default);
             }
         }
 
@@ -29,7 +29,7 @@
 
             for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)
             {
-                _buildingInfoEs[(byte)buildT - 1].IdxC.Clear();
+                _buildingInfoEs[(byte)buildT].IdxC.Clear();
             }
         }
     }

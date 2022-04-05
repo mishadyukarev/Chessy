@@ -19,7 +19,7 @@ namespace Chessy.Game.View.UI.System
 
         public void Run()
         {
-            var whoseMove = _eMGame.WhoseMove.PlayerT;
+            var whoseMove = _eMGame.WhoseMovePlayerTC.PlayerT;
 
 
             for (var lessonT = (LessonTypes)1; lessonT < LessonTypes.End; lessonT++)

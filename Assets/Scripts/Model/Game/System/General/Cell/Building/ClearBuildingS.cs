@@ -12,7 +12,7 @@ namespace Chessy.Game.Model.System
 
         internal void Clear(in byte cell_0)
         {
-            eMG.BuildingEs(cell_0) = default;
+            eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
         }
     }
 }

@@ -12,15 +12,15 @@ namespace Chessy.Game.Model.System
         {
             eMG.UnitForArsonC(cell_0).Clear();
 
-            if (!eMG.UnitEffectStunC(cell_0).IsStunned)
+            if (!eMG.StunUnitC(cell_0).IsStunned)
             {
-                if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
+                if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
                         var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dirT);
 
-                        if (!eMG.EffectEs(idx_1).HaveFire)
+                        if (!eMG.HaveFire(idx_1))
                         {
                             if (eMG.AdultForestC(idx_1).HaveAnyResources)
                             {

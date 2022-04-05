@@ -8,8 +8,8 @@ namespace Chessy.Game
         {
             var curPlayerI = e.CurPlayerITC.PlayerT;
 
-            var isVisForMe = e.BuildingEs(idx_0).VisibleC.IsVisible(curPlayerI);
-            var isVisForNext = e.BuildingEs(idx_0).VisibleC.IsVisible(curPlayerI.NextPlayer());
+            var isVisForMe = e.BuildingVisibleC(idx_0).IsVisible(curPlayerI);
+            var isVisForNext = e.BuildingVisibleC(idx_0).IsVisible(curPlayerI.NextPlayer());
 
             for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
             {

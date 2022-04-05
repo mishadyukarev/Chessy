@@ -21,8 +21,6 @@ namespace Chessy.Common
 
         public override sealed void OnLeftRoom()
         {
-            base.OnLeftRoom();
-
             _toggleScene.ForEach((IToggleScene i) => i.ToggleScene(SceneTypes.Menu));
         }
 
@@ -35,17 +33,12 @@ namespace Chessy.Common
         //}
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            base.OnPlayerLeftRoom(otherPlayer);
-
-            PhotonNetwork.LeaveRoom();
-            _toggleScene.ForEach((IToggleScene i) => i.ToggleScene(SceneTypes.Menu));
+            if(PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         }
 
         public override sealed void OnMasterClientSwitched(Player newMasterClient)
         {
-            base.OnMasterClientSwitched(newMasterClient);
-
-            PhotonNetwork.LeaveRoom();
+            if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         }
 
 

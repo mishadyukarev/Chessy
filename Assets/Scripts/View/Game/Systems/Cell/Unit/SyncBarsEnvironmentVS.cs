@@ -10,12 +10,12 @@ namespace Chessy.Game
         {
             if (e.ZoneInfoC.IsActiveEnvironment)
             {
-                if (e.EnvironmentEs(idx_0).FertilizeC.HaveAnyResources)
+                if (e.FertilizeC(idx_0).HaveAnyResources)
                 {
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Food).Enable();
 
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Food).Transform.localScale
-                        = new Vector3(e.EnvironmentEs(idx_0).FertilizeC.Resources / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
+                        = new Vector3(e.FertilizeC(idx_0).Resources / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
                 }
                 else
                 {
@@ -34,11 +34,11 @@ namespace Chessy.Game
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Wood).Disable();
                 }
 
-                if (e.EnvironmentEs(idx_0).HillC.HaveAnyResources)
+                if (e.HillC(idx_0).HaveAnyResources)
                 {
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Ore).Enable();
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Ore).Transform.localScale
-                        = new Vector3(e.EnvironmentEs(idx_0).HillC.Resources
+                        = new Vector3(e.HillC(idx_0).Resources
                         / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
                 }
                 else

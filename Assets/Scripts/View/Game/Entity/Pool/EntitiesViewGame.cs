@@ -28,7 +28,6 @@ namespace Chessy.Game
 
 
         public readonly EntityVPool EntityVPool;
-        public readonly PhotonVC PhotonC;
 
         public UnitVE KingE(in PlayerTypes playerT) => _kings[playerT];
         public UnitVE PawnE(in byte idxUnit) => _pawnEs[idxUnit];
@@ -47,17 +46,6 @@ namespace Chessy.Game
 
 
             //SoundC.SavedVolume = SoundC.Volume;
-
-
-
-            var photonView_Rpc = new GameObject("PhotonView_Rpc");
-            photonView_Rpc.transform.SetParent(genZone.transform);
-
-            var photonV = photonView_Rpc.AddComponent<PhotonView>();
-
-            if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(photonV);
-            else photonV.ViewID = 1001;
-            PhotonC = new PhotonVC(photonV, out var actions);
 
 
 
@@ -164,7 +152,6 @@ namespace Chessy.Game
             }
 
             forData = new List<object>();
-            forData.Add(actions);
             forData.Add(sounds0);
             forData.Add(sounds1);
             forData.Add(isActiveParenCells);

@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.FarmExtractFertilizeE(cell_0).Resources = 0;
+            eMG.FarmExtractFertilizeC(cell_0).Resources = 0;
 
             if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Farm))
             {
@@ -26,7 +26,7 @@ namespace Chessy.Game.Model.System
 
                     if (eMG.FertilizeC(cell_0).Resources < extract) extract = eMG.FertilizeC(cell_0).Resources;
 
-                    eMG.FarmExtractFertilizeE(cell_0).Resources = extract;
+                    eMG.FarmExtractFertilizeC(cell_0).Resources = extract;
                 }
             }
         }

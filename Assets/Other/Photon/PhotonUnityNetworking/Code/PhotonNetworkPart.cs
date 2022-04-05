@@ -855,8 +855,8 @@ namespace Photon.Pun
             
             foundPVs.Clear();           // as foundPVs is re-used, clean it to avoid lingering references
 
-            go.SetActive(false);        // PUN 2 disables objects before the return to the pool
-            prefabPool.Destroy(go);     // PUN 2 always uses a PrefabPool (even for the default implementation)
+            //go.SetActive(false);        // PUN 2 disables objects before the return to the pool
+            //prefabPool.Destroy(go);     // PUN 2 always uses a PrefabPool (even for the default implementation)
         }
 
 

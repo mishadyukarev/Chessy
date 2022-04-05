@@ -6,6 +6,7 @@ using Chessy.Game.Values;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
+using Photon.Pun;
 
 namespace Chessy.Game.Model.System
 {
@@ -15,7 +16,7 @@ namespace Chessy.Game.Model.System
 
         internal void Buy(in BuildingTypes buildT, in Player sender)
         {
-            var whoseMove = eMG.WhoseMove.PlayerT;
+            var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 
             var needRes = new Dictionary<ResourceTypes, float>();
             var canBuild = true;

@@ -10,11 +10,16 @@ namespace Chessy.Game.Model.System
 
         internal void Set(in float hp, in float steps, in float water, in byte cell_0)
         {
-            eMG.UnitHpC(cell_0).Health = hp;
-            eMG.UnitStepC(cell_0).Steps = steps;
-            eMG.UnitWaterC(cell_0).Water = water;
+            eMG.HpUnitC(cell_0).Health = hp;
+            eMG.StepUnitC(cell_0).Steps = steps;
+            eMG.WaterUnitC(cell_0).Water = water;
         }
 
-        internal void Set(in byte cell_from, in byte cell_to) => eMG.UnitStatsE(cell_to) = eMG.UnitStatsE(cell_from);
+        internal void Set(in byte cell_from, in byte cell_to)
+        {
+            eMG.HpUnitC(cell_to) = eMG.HpUnitC(cell_from);
+            eMG.StepUnitC(cell_to) = eMG.StepUnitC(cell_from);
+            eMG.WaterUnitC(cell_to) = eMG.WaterUnitC(cell_from);
+        }
     }
 }

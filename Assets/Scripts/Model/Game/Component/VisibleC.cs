@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
-
-namespace Chessy.Game.Model.Component
+﻿namespace Chessy.Game.Model.Component
 {
     public struct VisibleC
     {
-        readonly Dictionary<PlayerTypes, bool> _isVisible;
-        public bool IsVisible(in PlayerTypes player) => _isVisible[player];
+        readonly bool[] _isVisible;
 
-        internal VisibleC(in Dictionary<PlayerTypes, bool> isVisibled)
+        internal bool[] IsVisibleClone => (bool[])_isVisible.Clone();
+        public bool IsVisible(in PlayerTypes playerT) => _isVisible[(byte)playerT];
+
+        internal VisibleC(in bool def) => _isVisible = new bool[(byte)PlayerTypes.End];
+
+        internal void Set(in PlayerTypes playerT, in bool isVisible) => _isVisible[(byte)playerT] = isVisible;
+
+        internal void Sync(in bool[] isVisible)
         {
-            _isVisible = new Dictionary<PlayerTypes, bool>();
-            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+            for (var i = 0; i < isVisible.Length; i++)
             {
-                _isVisible.Add(playerT, false);
+                _isVisible[i] = isVisible[i];
             }
-
-            //_isVisibled = isVisibled;
         }
-        internal void Set(in PlayerTypes playerT, in bool isVisible) => _isVisible[playerT] = isVisible;
     }
 }

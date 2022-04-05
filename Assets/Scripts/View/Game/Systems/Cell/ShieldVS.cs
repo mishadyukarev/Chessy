@@ -8,7 +8,7 @@ namespace Chessy.Game
         {
             eV.UnitEffectVEs(idx_0).ShieldSRC.Disable();
 
-            if (e.UnitEffectShield(idx_0).HaveAnyProtection)
+            if (e.ShieldUnitEffectC(idx_0).HaveAnyProtection)
             {
                 if (e.UnitTC(idx_0).HaveUnit)
                 {

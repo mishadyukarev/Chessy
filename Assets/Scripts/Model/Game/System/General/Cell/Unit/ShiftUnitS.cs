@@ -21,7 +21,7 @@ namespace Chessy.Game.Model.System
             sMG.UnitSs.ClearUnitS.Clear(cell_from);
 
 
-            var direct = eMG.CellEs(cell_from).AroundCellsEs.Direct(cell_to);
+            var direct = eMG.AroundCellsE(cell_from).Direct(cell_to);
 
             if (!eMG.UnitTC(cell_to).Is(UnitTypes.Undead))
             {
@@ -53,7 +53,7 @@ namespace Chessy.Game.Model.System
 
 
 
-                    if (eMG.UnitExtraTWTC(cell_to).Is(ToolWeaponTypes.Pick))
+                    if (eMG.ExtraToolWeaponTC(cell_to).Is(ToolWeaponTypes.Pick))
                     {
                         if (cell_to == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
                         {
@@ -69,11 +69,11 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.UnitTC(cell_to).Is(UnitTypes.Snowy))
                 {
-                    if (eMG.UnitWaterC(cell_to).Water > 0)
+                    if (eMG.WaterUnitC(cell_to).Water > 0)
                     {
                         eMG.FertilizeC(cell_to).Resources = EnvironmentValues.MAX_RESOURCES;
                         eMG.HaveFire(cell_to) = false;
-                        eMG.UnitWaterC(cell_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
+                        eMG.WaterUnitC(cell_to).Water -= WaterValues.AFTER_SHIFT_SNOWY;
                     }
                 }
 
@@ -88,9 +88,9 @@ namespace Chessy.Game.Model.System
                     eMG.HealthTrail(cell_to).Health(dirTrail) = TrailValues.HEALTH_TRAIL;
                 }
 
-                if (eMG.RiverEs(cell_to).RiverTC.HaveRiverNear)
+                if (eMG.RiverTC(cell_to).HaveRiverNear)
                 {
-                    eMG.UnitWaterC(cell_to).Water = WaterValues.MAX;
+                    eMG.WaterUnitC(cell_to).Water = WaterValues.MAX;
                 }
 
 
@@ -116,7 +116,7 @@ namespace Chessy.Game.Model.System
                 case UnitTypes.Hell:
                     if (eMG.AdultForestC(cell_to).HaveAnyResources)
                     {
-                        eMG.EffectEs(cell_to).HaveFire = true;
+                        eMG.HaveFire(cell_to) = true;
                     }
                     break;
             }

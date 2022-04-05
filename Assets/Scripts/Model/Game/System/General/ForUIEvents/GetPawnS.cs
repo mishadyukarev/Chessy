@@ -22,7 +22,7 @@ namespace Chessy.Game.Model.System
 
             if (!eMG.LessonTC.Is(LessonTypes.BuyingHouse, LessonTypes.ClickOpenTown2))
             {
-                if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+                if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
                 {
                     if (eMG.PlayerInfoE(curPlayerI).PawnInfoE.PeopleInCityC.HaveAny)
                     {
@@ -66,8 +66,8 @@ namespace Chessy.Game.Model.System
                 }
                 else
                 {
-                    eMG.MistakeE.MistakeT = MistakeTypes.NeedWaitQueue;
-                    eMG.MistakeE.Timer = 0;
+                    eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
+                    eMG.MistakeTimerC.Timer = 0;
                     eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
                 }
             }

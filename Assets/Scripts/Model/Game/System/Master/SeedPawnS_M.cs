@@ -14,7 +14,7 @@ namespace Chessy.Game.Model.System
 
         internal void Seed(in AbilityTypes abilityT, in Player sender, in byte cell_0)
         {
-            if (eMG.UnitStepC(cell_0).Steps >= StepValues.SEED_PAWN)
+            if (eMG.StepUnitC(cell_0).Steps >= StepValues.SEED_PAWN)
             {
                 if (eMG.BuildingTC(cell_0).HaveBuilding && !eMG.BuildingTC(cell_0).Is(BuildingTypes.Camp))
                 {
@@ -31,7 +31,7 @@ namespace Chessy.Game.Model.System
 
                             eMG.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                            eMG.UnitStepC(cell_0).Steps -= StepValues.SEED_PAWN;
+                            eMG.StepUnitC(cell_0).Steps -= StepValues.SEED_PAWN;
 
                             if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
                             {

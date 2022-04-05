@@ -15,9 +15,9 @@ namespace Chessy.Game.Model.System
 
         internal void Build(in byte cell_0, in Player sender)
         {
-            var whoseMove = eMG.WhoseMove.PlayerT;
+            var whoseMove = eMG.WhoseMovePlayerTC.PlayerT;
 
-            if (eMG.UnitStepC(cell_0).Steps >= StepValues.SET_FARM)
+            if (eMG.StepUnitC(cell_0).Steps >= StepValues.SET_FARM)
             {
                 if (!eMG.BuildingTC(cell_0).HaveBuilding || eMG.BuildingTC(cell_0).Is(BuildingTypes.Camp))
                 {
@@ -53,7 +53,7 @@ namespace Chessy.Game.Model.System
 
                             sMG.BuildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
 
-                            eMG.UnitStepC(cell_0).Steps -= StepValues.SET_FARM;
+                            eMG.StepUnitC(cell_0).Steps -= StepValues.SET_FARM;
 
 
                             if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere))

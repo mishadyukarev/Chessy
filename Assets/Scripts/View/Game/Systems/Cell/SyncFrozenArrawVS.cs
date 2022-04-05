@@ -1,27 +1,40 @@
 ﻿using Chessy.Game.Model.Entity.Cell.Unit;
 using Chessy.Game.Entity.View.Cell.Unit.Effect;
+using Chessy.Common.Model.System;
+using Chessy.Common.Entity;
+using Chessy.Game.Model.System;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
-    static class SyncFrozenArrawVS
+    sealed class SyncFrozenArrawVS
     {
-        public static void SyncVision(this EffectVEs effectsVEs, in UnitEs unitEs, in bool isSelected, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        readonly EntitiesModelGame _eMG;
+        readonly EntitiesViewGame _eVG;
+
+        internal SyncFrozenArrawVS(in EntitiesModelGame eMG, in EntitiesViewGame eVG)
         {
-            effectsVEs.FrozenArraw(true, true).Disable();
-            effectsVEs.FrozenArraw(false, true).Disable();
+            _eMG = eMG;
+            _eVG = eVG;
+        }
 
-            effectsVEs.FrozenArraw(true, false).Disable();
-            effectsVEs.FrozenArraw(false, false).Disable();
+        internal void SyncVision(in byte cell)
+        {
+            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(true, true).Disable();
+            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(false, true).Disable();
 
-            if (unitEs.MainE.UnitTC.HaveUnit)
+            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(true, false).Disable();
+            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(false, false).Disable();
+
+            if (_eMG.UnitTC(cell).HaveUnit)
             {
-                if (unitEs.MainE.VisibleC.IsVisible(e.CurPlayerITC.PlayerT))
+                if (_eMG.UnitVisibleC(cell).IsVisible(_eMG.CurPlayerITC.PlayerT))
                 {
-                    if (unitEs.MainToolWeaponE.ToolWeaponTC.Is(ToolWeaponTypes.BowCrossbow))
+                    if (_eMG.MainToolWeaponTC(cell).Is(ToolWeaponTypes.BowCrossbow))
                     {
-                        if (unitEs.EffectsE.FrozenArrawC.HaveShoots)
+                        if (_eMG.FrozenArrawEffectC(cell).HaveShoots)
                         {
-                            effectsVEs.FrozenArraw(isSelected, unitEs.MainE.IsRightArcherC.IsRight).Enable();
+                            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(_eMG.CellsC.IsSelectedCell, _eMG.UnitIsRightArcherC(cell).IsRight).Enable();
                         }
                     }
                 }

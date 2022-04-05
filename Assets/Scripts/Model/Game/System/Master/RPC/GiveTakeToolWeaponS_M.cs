@@ -8,6 +8,7 @@ using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System.Collections.Generic;
+using Photon.Pun;
 
 namespace Chessy.Game
 {
@@ -17,30 +18,30 @@ namespace Chessy.Game
 
         internal void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte cell_0, in Player sender)
         {
-            var whoseMove = eMG.WhoseMove.PlayerT;
+            var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 
             if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
             {
-                if (eMG.UnitStepC(cell_0).Steps >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
+                if (eMG.StepUnitC(cell_0).Steps >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
                 {
                     if (twT == ToolWeaponTypes.BowCrossbow || twT == ToolWeaponTypes.Staff)
                     {
-                        if (eMG.UnitExtraTWTC(cell_0).HaveToolWeapon)
+                        if (eMG.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
                         {
-                            eMG.ToolWeaponsC(eMG.UnitPlayerTC(cell_0).PlayerT, eMG.UnitExtraLevelTC(cell_0).LevelT, eMG.UnitExtraTWTC(cell_0).ToolWeaponT)++;
-                            eMG.UnitExtraTWTC(cell_0).ToolWeaponT = ToolWeaponTypes.None;
+                            eMG.ToolWeaponsC(eMG.UnitPlayerTC(cell_0).PlayerT, eMG.ExtraTWLevelTC(cell_0).LevelT, eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
+                            eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT = ToolWeaponTypes.None;
 
-                            eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
                         else
                         {
 
 
-                            if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
+                            if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Axe))
                             {
 
 
-                                if (eMG.UnitMainTWLevelTC(cell_0).Is(LevelTypes.First))
+                                if (eMG.MainTWLevelTC(cell_0).Is(LevelTypes.First))
                                 {
                                     if (eMG.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
                                     {
@@ -48,7 +49,7 @@ namespace Chessy.Game
 
                                         sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
 
-                                        eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                     }
@@ -70,7 +71,7 @@ namespace Chessy.Game
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                                 eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
-                                            eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                            eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                             sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
 
@@ -85,35 +86,35 @@ namespace Chessy.Game
                                 }
                                 else
                                 {
-                                    eMG.ToolWeaponsC(whoseMove, eMG.UnitMainTWLevelTC(cell_0).LevelT, eMG.UnitMainTWTC(cell_0).ToolWeaponT)++;
+                                    eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
                                     sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                                    eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                                 }
                             }
 
                             else
                             {
-                                eMG.ToolWeaponsC(whoseMove, eMG.UnitMainTWLevelTC(cell_0).LevelT, eMG.UnitMainTWTC(cell_0).ToolWeaponT)++;
+                                eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
                                 sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                                eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
                     }
 
                     else if (twT == ToolWeaponTypes.Axe)
                     {
-                        if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
+                        if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Axe))
                         {
-                            if (eMG.UnitMainTWLevelTC(cell_0).Is(LevelTypes.First))
+                            if (eMG.MainTWLevelTC(cell_0).Is(LevelTypes.First))
                             {
                                 if (eMG.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
                                 {
                                     eMG.ToolWeaponsC(whoseMove, levTW, twT)--;
                                     sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
 
-                                    eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -135,7 +136,7 @@ namespace Chessy.Game
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
-                                        eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
 
@@ -150,19 +151,19 @@ namespace Chessy.Game
                             }
                             else
                             {
-                                eMG.ToolWeaponsC(whoseMove, eMG.UnitMainTWLevelTC(cell_0).LevelT, eMG.UnitMainTWTC(cell_0).ToolWeaponT)++;
+                                eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
                                 sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                                eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
 
                         else
                         {
-                            eMG.ToolWeaponsC(whoseMove, eMG.UnitMainTWLevelTC(cell_0).LevelT, eMG.UnitMainTWTC(cell_0).ToolWeaponT)++;
+                            eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
                             sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                            eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -172,24 +173,24 @@ namespace Chessy.Game
                     {
                         var ownUnit_0 = eMG.UnitPlayerTC(cell_0).PlayerT;
 
-                        if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
+                        if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                         {
-                            eMG.ToolWeaponsC(eMG.UnitPlayerTC(cell_0).PlayerT, eMG.UnitMainTWLevelTC(cell_0).LevelT, eMG.UnitMainTWTC(cell_0).ToolWeaponT)++;
+                            eMG.ToolWeaponsC(eMG.UnitPlayerTC(cell_0).PlayerT, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
                             sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
 
-                            eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
 
                         else
                         {
-                            if (eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Axe))
+                            if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Axe))
                             {
-                                if (eMG.UnitExtraTWTC(cell_0).HaveToolWeapon)
+                                if (eMG.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
                                 {
-                                    eMG.PlayerInfoE(ownUnit_0).LevelE(eMG.UnitExtraLevelTC(cell_0).LevelT).ToolWeapons(eMG.UnitExtraTWTC(cell_0).ToolWeaponT)++;
-                                    eMG.UnitExtraTWTC(cell_0).ToolWeaponT = ToolWeaponTypes.None;
+                                    eMG.PlayerInfoE(ownUnit_0).LevelE(eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
+                                    eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT = ToolWeaponTypes.None;
 
-                                    eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -200,9 +201,9 @@ namespace Chessy.Game
 
 
 
-                                    sMG.UnitSs.SetExtraTWS.Set(twT, levTW, eMG.UnitExtraProtectionC(cell_0).Protection, cell_0);
+                                    sMG.UnitSs.SetExtraTWS.Set(twT, levTW, eMG.ExtraTWProtectionC(cell_0).Protection, cell_0);
 
-                                    eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -235,7 +236,7 @@ namespace Chessy.Game
 
                                         sMG.UnitSs.SetExtraTWS.Set(twT, levTW, protection, cell_0);
 
-                                        eMG.UnitStepC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
 

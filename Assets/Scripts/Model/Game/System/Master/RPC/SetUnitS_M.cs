@@ -4,6 +4,7 @@ using Chessy.Common.Model.System;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Photon.Realtime;
+using Photon.Pun;
 
 namespace Chessy.Game.Model.System.Master
 {
@@ -13,9 +14,9 @@ namespace Chessy.Game.Model.System.Master
 
         internal void Set(in UnitTypes unitT, in Player sender, in byte cell)
         {
-            var whoseMove = eMG.WhoseMove.PlayerT;
+            var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 
-            if (eMG.CellEs(cell).CellE.IsStartedCell(whoseMove) && !eMG.UnitTC(cell).HaveUnit)
+            if (eMG.IsStartedCellC(cell).IsStartedCell(whoseMove) && !eMG.UnitTC(cell).HaveUnit)
             {
                 if (unitT == UnitTypes.King)
                 {

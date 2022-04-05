@@ -17,11 +17,11 @@ namespace Chessy.Game.Model.System
         {
             if (eMG.CellsForShift(cell_from).Contains(cell_to))
             {
-                if (eMG.UnitStepC(cell_from).Steps >= StepValues.ARCHER_FIRE)
+                if (eMG.StepUnitC(cell_from).Steps >= StepValues.ARCHER_FIRE)
                 {
                     eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    eMG.UnitStepC(cell_from).Steps -= StepValues.ARCHER_FIRE;
+                    eMG.StepUnitC(cell_from).Steps -= StepValues.ARCHER_FIRE;
                     eMG.HaveFire(cell_to) = true;
 
                 }

@@ -1,5 +1,6 @@
 ﻿using Chessy.Common.Component;
 using Chessy.Common.Enum;
+using Chessy.Game;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,12 @@ namespace Chessy.Common.Entity.View
 
         public GameObjectVC ToggleZoneGOC;
 
+        public readonly PhotonVC PhotonC;
+
+
         public AudioSourceVC Sound(in Enum.ClipCommonTypes clip) => _sound[clip];
 
-        public EntitiesViewCommon(in Transform main, in TestModes testMode, out Dictionary<Enum.ClipCommonTypes, Action> sound, out Transform commonZone)
+        public EntitiesViewCommon(in Transform main, in TestModes testMode, out Dictionary<Enum.ClipCommonTypes, Action> sound, out Transform commonZone, out List<object> actions)
         {
             MainGOC = new GameObjectVC(main.gameObject);
 
@@ -30,6 +34,9 @@ namespace Chessy.Common.Entity.View
             camera.orthographicSize = 5.7f;
 
             CameraVC = new CameraVC(camera);
+
+
+
 
 
 
@@ -72,6 +79,21 @@ namespace Chessy.Common.Entity.View
 
 
             ToggleZoneGOC = new GameObjectVC(new GameObject());
+
+
+
+
+
+
+
+            var photonView_Rpc = new GameObject("PhotonView_Rpc");
+            photonView_Rpc.transform.SetParent(commonZone);
+
+            var photonV = photonView_Rpc.AddComponent<PhotonView>();
+
+            if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(photonV);
+            else photonV.ViewID = 1001;
+            PhotonC = new PhotonVC(photonV, out actions);
 
 
 

@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.Entity
 {
-    public readonly struct AroundCellsEs
+    public readonly struct AroundCellsE
     {
-        readonly Dictionary<DirectTypes, CellAroundE> _aroundEs;
+        readonly CellAroundE[] _aroundEs;
 
         readonly Dictionary<byte, DirectTypes> _aroundDirs_0;
         readonly Dictionary<byte, DirectTypes> _aroundDirs_1;
 
-        public CellAroundE AroundCellE(in DirectTypes dirT) => _aroundEs[dirT];
+        public CellAroundE AroundCellE(in DirectTypes dirT) => _aroundEs[(byte)dirT];
         public byte[] CellsAround
         {
             get
             {
-                var cells = new byte[_aroundEs.Count];
+                var cells = new byte[_aroundEs.Length];
                 var i = 0;
                 foreach (var item in _aroundEs)
                 {
-                    cells[i] = item.Value.IdxC.Idx;
+                    cells[i] = item.IdxC.Idx;
                     i++;
                 }
                 return cells;
@@ -28,29 +28,34 @@ namespace Chessy.Game.Model.Entity
         public byte IdxCell(in DirectTypes dirT) => AroundCellE(dirT).IdxC.Idx;
         public byte[] XyCell(in DirectTypes dirT) => AroundCellE(dirT).XyC.Xy;
 
-        public DirectTypes Direct(in byte idx_cell)
+        public DirectTypes Direct(in byte cell_0)
         {
-            if (_aroundDirs_0.ContainsKey(idx_cell)) return _aroundDirs_0[idx_cell];
-            else if (_aroundDirs_1.ContainsKey(idx_cell)) return _aroundDirs_1[idx_cell];
+            if (_aroundDirs_0.ContainsKey(cell_0)) return _aroundDirs_0[cell_0];
+            else if (_aroundDirs_1.ContainsKey(cell_0)) return _aroundDirs_1[cell_0];
 
             return DirectTypes.None;
         }
 
-        internal AroundCellsEs(in byte idx, in bool[] isActiveParents, in byte[] xy, in EntitiesModelGame eMGame)
+        internal AroundCellsE(in byte idx, in bool[] isActiveParents, in EntitiesModelGame eMGame, params byte[] xy)
         {
             _aroundDirs_0 = new Dictionary<byte, DirectTypes>();
             _aroundDirs_1 = new Dictionary<byte, DirectTypes>();
 
-            _aroundEs = new Dictionary<DirectTypes, CellAroundE>();
+            _aroundEs = new CellAroundE[(byte)DirectTypes.End];
 
             if (isActiveParents[idx])
             {
-                for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
+                for (var dir = (DirectTypes)1; dir < DirectTypes.End; dir++)
                 {
                     var xyDirect = new short[EntitiesModelGame.XY_FOR_ARRAY];
 
                     switch (dir)
                     {
+                        case DirectTypes.None:
+                            xyDirect[EntitiesModelGame.X] = 0;
+                            xyDirect[EntitiesModelGame.Y] = 0;
+                            break;
+
                         case DirectTypes.Right:
                             xyDirect[EntitiesModelGame.X] = 1;
                             xyDirect[EntitiesModelGame.Y] = 0;
@@ -104,7 +109,7 @@ namespace Chessy.Game.Model.Entity
                     var cell_0 = eMGame.GetIdxCellByXy(xy_0);
 
                     _aroundDirs_0.Add(cell_0, dir);
-                    _aroundEs.Add(dir, new CellAroundE(cell_0, xy_0));
+                    _aroundEs[(byte)dir] = new CellAroundE(cell_0, xy_0);
 
 
                     if (isActiveParents[cell_0])

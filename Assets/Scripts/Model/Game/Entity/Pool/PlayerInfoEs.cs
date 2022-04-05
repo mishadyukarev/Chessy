@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public sealed class PlayerInfoEs
+    public struct PlayerInfoEs
     {
         readonly PlayerLevelInfoE[] _levelInfoEs;
         readonly ResourcesC[] _resourceCs;
-        readonly Dictionary<UnitTypes, PlayerUnitInfoE> _unitEs;
+        readonly PlayerUnitInfoE[] _unitEs;
 
-        public bool IsReadyC;
+        public bool IsReady;
         public float WoodForBuyHouse;
 
         public BuildingsInfoC BuildingsInfoC;
@@ -21,30 +21,28 @@ namespace Chessy.Game
         public GodInfoE GodInfoE;
 
 
-        public ref PlayerLevelInfoE LevelE(in LevelTypes levT) => ref _levelInfoEs[(byte)levT - 1];
-        public ref ResourcesC ResourcesC(in ResourceTypes resT) => ref _resourceCs[(byte)resT - 1];
-        public PlayerUnitInfoE UnitE(in UnitTypes unitT) => _unitEs[unitT];
+        public ref PlayerLevelInfoE LevelE(in LevelTypes levT) => ref _levelInfoEs[(byte)levT];
+        public ref ResourcesC ResourcesC(in ResourceTypes resT) => ref _resourceCs[(byte)resT];
+        public PlayerUnitInfoE UnitE(in UnitTypes unitT) => _unitEs[(byte)unitT];
 
-        internal PlayerInfoEs(in bool b)
+        internal PlayerInfoEs(in bool def) : this()
         {
-            _levelInfoEs = new PlayerLevelInfoE[(byte)LevelTypes.End - 1];
-            _resourceCs = new ResourcesC[(byte)ResourceTypes.End - 1];
-            _unitEs = new Dictionary<UnitTypes, PlayerUnitInfoE>();
+            _levelInfoEs = new PlayerLevelInfoE[(byte)LevelTypes.End];
+            _resourceCs = new ResourcesC[(byte)ResourceTypes.End ];
+            _unitEs = new PlayerUnitInfoE[(byte)UnitTypes.End];
             WhereKingEffects = new IdxsCellsC(new HashSet<byte>());
 
-            var haveBuilding = new Dictionary<BuildingTypes, bool>();
-            haveBuilding.Add(BuildingTypes.Market, false);
-            haveBuilding.Add(BuildingTypes.Smelter, false);
+            var haveBuilding = new bool[(byte)BuildingTypes.End];
             BuildingsInfoC = new BuildingsInfoC(haveBuilding);
 
 
             for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
             {
-                _levelInfoEs[(byte)levT - 1] = new PlayerLevelInfoE(levT);
+                _levelInfoEs[(byte)levT] = new PlayerLevelInfoE(levT);
             }
             for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
             {
-                _unitEs.Add(unitT, new PlayerUnitInfoE(unitT));
+                _unitEs[(byte)unitT] = new PlayerUnitInfoE(unitT);
             }
         }
     }

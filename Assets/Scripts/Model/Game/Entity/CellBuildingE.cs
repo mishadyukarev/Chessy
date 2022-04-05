@@ -16,12 +16,7 @@ namespace Chessy.Game
 
         internal BuildingE(in bool b) : this()
         {
-            var isVisibled = new Dictionary<PlayerTypes, bool>();
-
-            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-                isVisibled.Add(playerT, default);
-
-            VisibleC = new VisibleC(isVisibled);
+            VisibleC = new VisibleC(default);
         }
     }
 }

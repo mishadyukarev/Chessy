@@ -25,7 +25,7 @@ namespace Chessy.Game.System.View
                         break;
 
                     case AbilityTypes.ChangeDirectionWind:
-                        if (e.CellE(idx_0).IsActiveParentSelf)
+                        if (e.IsActiveParentSelf(idx_0))
                         {
                             if (!e.AroundCellsE(idx_0).CellsAround.Contains(e.WeatherE.CloudC.Center))
                             {
@@ -55,32 +55,32 @@ namespace Chessy.Game.System.View
 
             else if (e.CellClickTC.CellClickT == CellClickTypes.SetUnit)
             {
-                if (!e.CellEs(idx_0).CellE.IsStartedCell(e.CurPlayerITC.PlayerT))
+                if (!e.IsStartedCellC(idx_0).IsStartedCell(e.CurPlayerITC.PlayerT))
                 {
                     _isActive = true;
                 }
             }
 
-            if (e.MistakeE.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
+            if (e.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
             {
                 if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
-                    || e.BuildingEs(idx_0).BuildingTC.HaveBuilding)
+                    || e.BuildingTC(idx_0).HaveBuilding)
                 {
                     _isActive = true;
                 }
             }
 
-            else if (e.MistakeE.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
+            else if (e.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
             {
                 if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
-                    || e.YoungForestC(idx_0).HaveAnyResources || e.BuildingEs(idx_0).BuildingTC.HaveBuilding)
+                    || e.YoungForestC(idx_0).HaveAnyResources || e.BuildingTC(idx_0).HaveBuilding)
                 {
                     _isActive = true;
                 }
             }
 
 
-            else if (e.MistakeE.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
+            else if (e.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
             {
                 if (!e.YoungForestC(idx_0).HaveAnyResources)
                 {

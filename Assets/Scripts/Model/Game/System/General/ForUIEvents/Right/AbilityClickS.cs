@@ -8,17 +8,17 @@ namespace Chessy.Game.Model.System
 {
     public sealed class AbilityClickS : SystemModelGameAbs
     {
-        public AbilityClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal AbilityClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
         public void Click(in ButtonTypes uniqueButton)
         {
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
                 var idx_sel = eMG.CellsC.Selected;
 
                 var abil = eMG.UnitButtonAbilitiesC(idx_sel).Ability(uniqueButton);
 
-                if (!eMG.UnitAbilityE(idx_sel).HaveCooldown(abil))
+                if (!eMG.UnitCooldownAbilitiesC(idx_sel).HaveCooldown(abil))
                 {
                     switch (abil)
                     {
@@ -129,7 +129,8 @@ namespace Chessy.Game.Model.System
 
                 else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
             }
-            else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
+
+            else sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
 
 
             eMG.NeedUpdateView = true;

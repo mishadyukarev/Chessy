@@ -13,64 +13,60 @@ namespace Chessy.Game.Model.System
     {
         internal TryExecuteDoneS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
-        internal void TryDone(in GameModeTC gameModeTC, in Player sender, in PlayerTypes senderPlayerT)
+        internal void TryDone(in GameModeTC gameModeTC, in Player sender)
         {
+            var senderPlayerT = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
+
             if (!eMG.PlayerInfoE(senderPlayerT).KingInfoE.HaveInInventor)
             {
                 if (eMG.PlayerInfoE(senderPlayerT).GodInfoE.UnitTC.HaveUnit)
                 {
-                    if (PhotonNetwork.OfflineMode)
+                    if(eMG.WhoseMovePlayerT == senderPlayerT)
                     {
-                        eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
-
-                        if (gameModeTC.Is(GameModes.TrainingOff))
+                        if (PhotonNetwork.OfflineMode)
                         {
-                            UpdateCooldonsStunsAndOther(1);
-
-                            sMG.MasterSs.UpdateS_M.Run(gameModeTC);
                             eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
-                        }
+                            eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
 
-                        else if (gameModeTC.Is(GameModes.WithFriendOff))
+                            if (gameModeTC.Is(GameModes.TrainingOff))
+                            {
+                                UpdateCooldonsStunsAndOther(1);
+
+                                sMG.MasterSs.UpdateS_M.Run(gameModeTC);
+                            }
+
+                            else if (gameModeTC.Is(GameModes.WithFriendOff))
+                            {
+                                UpdateCooldonsStunsAndOther(0.5f);
+
+                                var nextPlayer = eMG.CurPlayerITC.PlayerT.NextPlayer();
+
+                                if (nextPlayer == PlayerTypes.First)
+                                {
+                                    sMG.MasterSs.UpdateS_M.Run(gameModeTC);
+                                }
+
+                                eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
+                                eMG.CurPlayerITC.PlayerT = nextPlayer;
+
+                                eMG.ZoneInfoC.IsActiveFriend = true;
+                            }
+                        }
+                        else
                         {
                             UpdateCooldonsStunsAndOther(0.5f);
 
-                            var nextPlayer = eMG.CurPlayerITC.PlayerT.NextPlayer();
+                            eMG.WhoseMovePlayerTC.PlayerT = senderPlayerT.NextPlayer();
 
-                            if (nextPlayer == PlayerTypes.First)
+                            if(senderPlayerT == PlayerTypes.Second)
                             {
                                 sMG.MasterSs.UpdateS_M.Run(gameModeTC);
-                                eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
+
+                                eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
+                                eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
                             }
-
-                            eMG.WhoseMove.PlayerT = nextPlayer;
-                            eMG.CurPlayerITC.PlayerT = nextPlayer;
-
-                            eMG.ZoneInfoC.IsActiveFriend = true;
                         }
                     }
-                    else
-                    {
-                        UpdateCooldonsStunsAndOther(0.5f);
-
-                        //if (WhoseMoveC.WhoseMove == playerSend)
-                        //{
-                        //    //if (!EntInventorUnits.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayer()))
-                        //    //{
-                        //    //    if (playerSend == PlayerTypes.Second)
-                        //    //    {
-                        //    //        SystemDataMasterManager.InvokeRun(SystemDataMasterTypes.Update);
-
-                        //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayer());
-                        //    //        Ents.Rpc.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayer());
-                        //    //    }
-
-                        //    //    WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
-                        //    //}
-                        //}
-                    }
-
-
                 }
                 else
                 {
@@ -93,11 +89,11 @@ namespace Chessy.Game.Model.System
 
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
             {
-                eMG.UnitEffectStunC(idx).Stun -= taking;
+                eMG.StunUnitC(idx).Stun -= taking;
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
-                    eMG.UnitAbilityE(idx).Cooldown(abilityT) -= taking;
+                    eMG.UnitCooldownAbilitiesC(idx).Take(abilityT, taking);
                 }
             }
         }

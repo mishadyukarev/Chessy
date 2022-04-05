@@ -26,25 +26,25 @@ namespace Chessy.Game
                     {
                         eUI.RightEs.Effect(idx_eff).GO.SetActive(false);
 
-                        if (!_isFilled[EffectTypes.Shield] && e.UnitEffectShield(idx_sel).HaveAnyProtection)
+                        if (!_isFilled[EffectTypes.Shield] && e.ShieldUnitEffectC(idx_sel).HaveAnyProtection)
                         {
                             eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                             eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.Shield);
                             _isFilled[EffectTypes.Shield] = true;
                         }
-                        else if (!_isFilled[EffectTypes.Arraw] && e.UnitEffectFrozenArrawC(idx_sel).HaveShoots)
+                        else if (!_isFilled[EffectTypes.Arraw] && e.FrozenArrawEffectC(idx_sel).HaveShoots)
                         {
                             eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                             eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.Arraw);
                             _isFilled[EffectTypes.Arraw] = true;
                         }
-                        else if (!_isFilled[EffectTypes.Stun] && e.UnitEffectStunC(idx_sel).IsStunned)
+                        else if (!_isFilled[EffectTypes.Stun] && e.StunUnitC(idx_sel).IsStunned)
                         {
                             eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                             eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.Stun);
                             _isFilled[EffectTypes.Stun] = true;
                         }
-                        else if (!_isFilled[EffectTypes.DamageAdd] && e.UnitEffectsE(idx_sel).HaveKingEffect)
+                        else if (!_isFilled[EffectTypes.DamageAdd] && e.HaveKingEffect(idx_sel))
                         {
                             eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                             eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.DamageAdd);

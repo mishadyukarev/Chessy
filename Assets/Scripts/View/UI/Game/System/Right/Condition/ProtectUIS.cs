@@ -1,39 +1,49 @@
-﻿using Chessy.Game.Model.Entity.Cell.Unit;
+﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.Model.Entity.Cell.Unit;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    public struct ProtectUIS
+    sealed class ProtectUIS
     {
-        public void Run(in RightProtectUIE protectUIE, in UnitEs unit_sel, in PlayerTypes curPlayer)
+        readonly RightProtectUIE _protectUIE;
+        readonly EntitiesModelGame _eMG;
+
+        internal ProtectUIS(in RightProtectUIE protectUIE, in EntitiesModelGame eMG)
+        {
+            _protectUIE = protectUIE;
+            _eMG = eMG;
+        }
+
+        public void Run()
         {
             var isEnableButt = false;
 
-            if (unit_sel.MainE.UnitTC.HaveUnit)
+            if (_eMG.UnitTC(_eMG.SelectedCell).HaveUnit)
             {
-                if (unit_sel.MainE.PlayerTC.Is(curPlayer))
+                if (_eMG.UnitPlayerTC(_eMG.SelectedCell).Is(_eMG.CurPlayerIT))
                 {
                     isEnableButt = true;
 
-                    protectUIE.Button(UnitTypes.King).SetActive(false);
-                    protectUIE.Button(UnitTypes.Pawn).SetActive(false);
-                    protectUIE.Button(UnitTypes.Elfemale).SetActive(false);
+                    _protectUIE.Button(UnitTypes.King).SetActive(false);
+                    _protectUIE.Button(UnitTypes.Pawn).SetActive(false);
+                    _protectUIE.Button(UnitTypes.Elfemale).SetActive(false);
 
-                    protectUIE.Button(unit_sel.MainE.UnitTC.UnitT).SetActive(true);
+                    _protectUIE.Button(_eMG.UnitT(_eMG.SelectedCell)).SetActive(true);
 
-                    if (unit_sel.MainE.ConditionTC.Is(ConditionUnitTypes.Protected))
+                    if (_eMG.UnitConditionTC(_eMG.SelectedCell).Is(ConditionUnitTypes.Protected))
                     {
-                        protectUIE.ImageUIC.Image.color = Color.yellow;
+                        _protectUIE.ImageUIC.Image.color = Color.yellow;
                     }
 
                     else
                     {
-                        protectUIE.ImageUIC.Image.color = Color.white;
+                        _protectUIE.ImageUIC.Image.color = Color.white;
                     }
                 }
             }
 
-            protectUIE.ImageUIC.SetActiveParent(isEnableButt);
+            _protectUIE.ImageUIC.SetActiveParent(isEnableButt);
         }
     }
 }

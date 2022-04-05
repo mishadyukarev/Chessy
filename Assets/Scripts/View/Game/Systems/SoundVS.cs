@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
@@ -18,13 +19,26 @@ namespace Chessy.Game
             //    SoundC.Volume = SoundC.SavedVolume;
             //}
 
-            if (eV.EntityVPool.SoundV(ClipTypes.AfterUpdate).IsPlaying /*|| eV.EntityVPool.SoundV(ClipTypes.HeroAbility).IsPlaying*/)
+            if (eV.EntityVPool.SoundV(ClipTypes.AfterUpdate).IsPlaying 
+                || eV.EntityVPool.SoundV(AbilityTypes.GrowAdultForest).IsPlaying
+                || eV.EntityVPool.SoundV(ClipTypes.Truce).IsPlaying)
             {
-                eV.EntityVPool.SoundV(ClipTypes.Background1).AS.volume = 0.01f;
+
+                eV.EntityVPool.SoundV(ClipTypes.Background2).AS.volume =  0;
             }
             else
             {
-                eV.EntityVPool.SoundV(ClipTypes.Background1).AS.volume = 0.25f;
+                eV.EntityVPool.SoundV(ClipTypes.Background2).AS.volume = StartValues.Volume(ClipTypes.Background2);
+            }
+
+
+            if (eV.EntityVPool.SoundV(ClipTypes.Truce).IsPlaying)
+            {
+                eV.EntityVPool.SoundV(ClipTypes.AfterUpdate).AS.volume = 0f;
+            }
+            else
+            {
+                eV.EntityVPool.SoundV(ClipTypes.AfterUpdate).AS.volume = StartValues.Volume(ClipTypes.AfterUpdate);
             }
         }
     }

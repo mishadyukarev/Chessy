@@ -32,7 +32,7 @@ namespace Chessy.Game.Model.System
                     {
                         if (eMG.UnitTC(cell_0).Is(UnitTypes.Hell))
                         {
-                            eMG.UnitHpC(cell_0).Health = HpValues.MAX;
+                            eMG.HpUnitC(cell_0).Health = HpValues.MAX;
                         }
                         else
                         {
@@ -65,7 +65,7 @@ namespace Chessy.Game.Model.System
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (eMG.CellE(cell_0).IsActiveParentSelf)
+                if (eMG.IsActiveParentSelf(cell_0))
                 {
                     if (eMG.AdultForestC(cell_0).HaveAnyResources)
                     {

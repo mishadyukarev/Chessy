@@ -10,8 +10,8 @@ namespace Chessy.Game.Model.System
 
         internal void Mistake(in MistakeTypes mistakeT)
         {
-            eMG.MistakeE.MistakeT = mistakeT;
-            eMG.MistakeE.Timer = 0;
+            eMG.MistakeTC.MistakeT = mistakeT;
+            eMG.MistakeTimerC.Timer = 0;
             eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
         }
     }

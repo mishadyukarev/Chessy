@@ -2,7 +2,11 @@
 {
     public struct ResourcesC
     {
-        public float Resources { get; internal set; }
+        public float Resources
+        {
+            get; 
+            internal set;
+        }
 
         public bool HaveAnyResources => Resources > 0;
 

@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
 
         public void Click(in ConditionUnitTypes conditionT)
         {
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
                 if (eMG.UnitConditionTC(eMG.CellsC.Selected).Is(conditionT))
                 {
@@ -21,7 +21,7 @@ namespace Chessy.Game.Model.System
                     eMG.RpcPoolEs.ConditionUnitToMaster(eMG.CellsC.Selected, conditionT);
                 }
             }
-            else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
+            else sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
 
             eMG.NeedUpdateView = true;
         }

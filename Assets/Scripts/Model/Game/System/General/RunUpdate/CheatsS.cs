@@ -53,6 +53,11 @@ namespace Chessy.Game.Model.System
                         
                     }
                 }
+
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    eMG.UnitTC(eMG.CellsC.Current).UnitT = UnitTypes.None;
+                }
             }
         }
     }

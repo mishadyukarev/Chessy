@@ -8,9 +8,7 @@ namespace Chessy.Game
     {
         public void Sync(in byte idx_0, in EntitiesViewGame eV, in EntitiesModelGame e)
         {
-            ref var river_0 = ref e.RiverEs(idx_0).RiverTC;
-
-            switch (e.CurPlayerITC.PlayerT)
+            switch (e.CurPlayerIT)
             {
                 case PlayerTypes.None: throw new Exception();
                 case PlayerTypes.First:
@@ -25,13 +23,13 @@ namespace Chessy.Game
             }
 
 
-            if (river_0.River == RiverTypes.Start)
+            if (e.RiverT(idx_0) == RiverTypes.Start)
             {
                 for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                 {
                     if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                     {
-                        CellRiverVEs.River(dir_1, idx_0).SetActive(e.CellEs(idx_0).RiverEs.HaveRiverC.HaveRive(dir_1));
+                        CellRiverVEs.River(dir_1, idx_0).SetActive(e.HaveRiverC(idx_0).HaveRive(dir_1));
                     }
                 }
             }

@@ -17,7 +17,7 @@ namespace Chessy.Game.Model.System
 
         internal void Execute()
         {
-            eMG.MistakeE.MistakeT = MistakeTypes.None;
+            eMG.MistakeTC.MistakeT = MistakeTypes.None;
 
             if (eMG.CellsC.IsSelectedCell)
             {
@@ -63,7 +63,7 @@ namespace Chessy.Game.Model.System
                         {
                             if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
                             {
-                                if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) && eMG.UnitExtraTWTC(eMG.CellsC.Current).Is(ToolWeaponTypes.Pick))
+                                if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(eMG.CellsC.Current).Is(ToolWeaponTypes.Pick))
                                 {
                                     eMG.LessonTC.SetNextLesson();
                                 }
@@ -96,14 +96,14 @@ namespace Chessy.Game.Model.System
                             if (eMG.UnitTC(eMG.CellsC.Current).HaveUnit)
                             {
 
-                                if (eMG.UnitAttackE(eMG.CellsC.Selected).Simple.Contains(eMG.CellsC.Current) || eMG.UnitAttackE(eMG.CellsC.Selected).Unique.Contains(eMG.CellsC.Current))
+                                if (eMG.AttackSimpleCellsC(eMG.CellsC.Selected).Contains(eMG.CellsC.Current) || eMG.AttackUniqueCellsC(eMG.CellsC.Selected).Contains(eMG.CellsC.Current))
                                 {
                                     eMG.RpcPoolEs.TryAttackUnit_ToMaster(eMG.CellsC.Selected, eMG.CellsC.Current);
                                     SetNewSelectedCell();
                                     _selectorSoundS.Sound();
                                 }
-                                else if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) && eMG.UnitPlayerTC(eMG.CellsC.Current).Is(eMG.WhoseMove.PlayerT)
-                                    || !eMG.UnitPlayerTC(eMG.CellsC.Current).Is(eMG.WhoseMove.PlayerT))
+                                else if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) && eMG.UnitPlayerTC(eMG.CellsC.Current).Is(eMG.WhoseMovePlayerTC.PlayerT)
+                                    || !eMG.UnitPlayerTC(eMG.CellsC.Current).Is(eMG.WhoseMovePlayerTC.PlayerT))
                                 {
                                     SetNewSelectedCell();
                                     _selectorSoundS.Sound();
@@ -147,8 +147,8 @@ namespace Chessy.Game.Model.System
                 {
                     if (eMG.UnitTC(eMG.CellsC.Selected).HaveUnit)
                     {
-                        if (eMG.UnitAttackE(eMG.CellsC.Selected).Simple.Contains(eMG.CellsC.Current)
-                        || eMG.UnitAttackE(eMG.CellsC.Selected).Unique.Contains(eMG.CellsC.Current))
+                        if (eMG.AttackSimpleCellsC(eMG.CellsC.Selected).Contains(eMG.CellsC.Current)
+                        || eMG.AttackUniqueCellsC(eMG.CellsC.Selected).Contains(eMG.CellsC.Current))
                         {
                             eMG.RpcPoolEs.TryAttackUnit_ToMaster(eMG.CellsC.Selected, eMG.CellsC.Current);
                         }

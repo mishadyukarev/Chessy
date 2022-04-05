@@ -10,9 +10,9 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.UnitEffectsE(cell_0).HaveKingEffect = false;
+            eMG.HaveKingEffect(cell_0) = false;
 
-            if (eMG.CellE(cell_0).IsActiveParentSelf)
+            if (eMG.IsActiveParentSelf(cell_0))
             {
                 foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
                 {
@@ -21,7 +21,7 @@ namespace Chessy.Game.Model.System
                         if (eMG.UnitPlayerTC(idx_1).Is(eMG.UnitPlayerTC(cell_0).PlayerT))
                         {
                             eMG.PlayerInfoE(eMG.UnitPlayerTC(idx_1).PlayerT).WhereKingEffects.Add(cell_0);
-                            eMG.UnitEffectsE(cell_0).HaveKingEffect = true;
+                            eMG.HaveKingEffect(cell_0) = true;
                         }
                     }
                 }

@@ -12,7 +12,7 @@ namespace Chessy.Game.Model.System
 
         public void Get(in UnitTypes unitT)
         {
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
                 eMC.SoundActionC(Common.Enum.ClipCommonTypes.Click).Invoke();
 

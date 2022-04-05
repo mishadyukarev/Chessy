@@ -29,20 +29,20 @@ namespace Chessy.Game
 
 
 
-            if (e.MistakeE.MistakeT != MistakeTypes.None)
+            if (e.MistakeT != MistakeTypes.None)
             {
-                e.MistakeE.Timer += Time.deltaTime + timer;
+                e.MistakeTimerC.Timer += Time.deltaTime + timer;
 
-                if (e.MistakeE.MistakeT == MistakeTypes.Economy)
+                if (e.MistakeT == MistakeTypes.Economy)
                 {
-                    if (e.MistakeE.Timer >= NEED_TIME_FOR_FADING)
+                    if (e.MistakeTimer >= NEED_TIME_FOR_FADING)
                     {
-                        e.MistakeE.MistakeT = MistakeTypes.None;
+                        e.MistakeTC.MistakeT = MistakeTypes.None;
                     }
 
                     else
                     {
-                        _mistakeUIE.Zones(e.MistakeE.MistakeT).SetActive(true);
+                        _mistakeUIE.Zones(e.MistakeT).SetActive(true);
 
                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                         {
@@ -59,11 +59,11 @@ namespace Chessy.Game
 
                 else
                 {
-                    _mistakeUIE.Zones(e.MistakeE.MistakeT).SetActive(true);
+                    _mistakeUIE.Zones(e.MistakeT).SetActive(true);
 
-                    if (e.MistakeE.Timer >= NEED_TIME_FOR_FADING)
+                    if (e.MistakeTimer >= NEED_TIME_FOR_FADING)
                     {
-                        e.MistakeE.MistakeT = MistakeTypes.None;
+                        e.MistakeTC.MistakeT = MistakeTypes.None;
                     }
                 }
             }

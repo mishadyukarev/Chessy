@@ -12,14 +12,14 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            eMG.UnitShiftE(cell_0).ForShift.Clear();
+            eMG.CellsForShift(cell_0).Clear();
 
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
-                eMG.UnitShiftE(cell_0).Set(idx, 0);
+                eMG.UnitNeedStepsForShiftC(cell_0).Set(idx, 0);
 
-            if (eMG.CellE(cell_0).IsActiveParentSelf)
+            if (eMG.IsActiveParentSelf(cell_0))
             {
-                if (!eMG.UnitEffectStunC(cell_0).IsStunned && eMG.UnitTC(cell_0).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
+                if (!eMG.StunUnitC(cell_0).IsStunned && eMG.UnitTC(cell_0).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
@@ -35,7 +35,7 @@ namespace Chessy.Game.Model.System
                         {
                             if (!eMG.UnitTC(cell_0).Is(UnitTypes.Undead))
                             {
-                                if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff))
+                                if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff))
                                 {
                                     needSteps /= 2;
                                 }
@@ -52,7 +52,7 @@ namespace Chessy.Game.Model.System
                                 {
                                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
                                     {
-                                        if (!eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff))
+                                        if (!eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff))
                                         {
                                             needSteps += StepValues.ADULT_FOREST;
 
@@ -80,7 +80,7 @@ namespace Chessy.Game.Model.System
 
                                 if (eMG.HillC(idx_to).HaveAnyResources)
                                 {
-                                    if (!eMG.UnitMainTWTC(cell_0).Is(ToolWeaponTypes.Staff))
+                                    if (!eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff))
                                     {
                                         needSteps += StepValues.HILL;
                                     }
@@ -90,13 +90,13 @@ namespace Chessy.Game.Model.System
 
 
 
-                        eMG.UnitShiftE(cell_0).Set(idx_to, needSteps);
+                        eMG.UnitNeedStepsForShiftC(cell_0).Set(idx_to, needSteps);
 
                         if (!eMG.MountainC(idx_to).HaveAnyResources && !eMG.UnitTC(idx_to).HaveUnit)
                         {
-                            if (needSteps <= eMG.UnitStepC(cell_0).Steps || eMG.UnitStepC(cell_0).Steps >= StepValues.MAX)
+                            if (needSteps <= eMG.StepUnitC(cell_0).Steps || eMG.StepUnitC(cell_0).Steps >= StepValues.MAX)
                             {
-                                eMG.UnitShiftE(cell_0).ForShift.Add(idx_to);
+                                eMG.CellsForShift(cell_0).Add(idx_to);
 
                             }
                         }

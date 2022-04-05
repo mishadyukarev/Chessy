@@ -23,7 +23,7 @@ namespace Chessy.Game.Model.System
                     eMG.SoundActionC(ClipTypes.Leaf).Invoke();
                 }
 
-                else if (eMG.UnitTC(cell_0).IsMelee(eMG.UnitMainTWTC(cell_0).ToolWeaponT))
+                else if (eMG.UnitTC(cell_0).IsMelee(eMG.MainToolWeaponTC(cell_0).ToolWeaponT))
                 {
                     eMG.SoundActionC(ClipTypes.PickMelee).Invoke();
                 }

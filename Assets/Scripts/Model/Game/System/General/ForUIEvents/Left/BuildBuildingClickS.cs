@@ -1,6 +1,7 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Enum;
 using Chessy.Common.Model.System;
+using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using System;
 
@@ -12,41 +13,55 @@ namespace Chessy.Game.Model.System
 
         public void Click(in BuildingTypes buildT)
         {
-            var curPlayerI = eMG.CurPlayerITC.PlayerT;
 
-            if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
+
+
+            if(eMG.CurPlayerIT == eMG.WhoseMovePlayerT)
             {
-                if (eMG.SelectedE.BuildingsC.Is(buildT))
+                if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
                 {
-                    eMG.SelectedE.BuildingsC.Set(buildT, false);
-                    eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                    if (eMG.SelectedE.BuildingsC.Is(buildT))
+                    {
+                        eMG.SelectedE.BuildingsC.Set(buildT, false);
+                        eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                    }
+                    else if (eMG.PlayerInfoE(eMG.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
+                    {
+                        eMG.SelectedE.BuildingsC.Set(buildT, true);
+                        eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                    }
+                    else
+                    {
+                        eMG.RpcPoolEs.CityBuyBuildingToMaster(buildT);
+                    }
                 }
-                else if (eMG.PlayerInfoE(curPlayerI).BuildingsInfoC.HaveBuilding(buildT))
+
+
+
+                switch (buildT)
                 {
-                    eMG.SelectedE.BuildingsC.Set(buildT, true);
-                    eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                    case BuildingTypes.House:
+                        eMG.RpcPoolEs.CityBuyBuildingToMaster(buildT);
+                        break;
+
+                    case BuildingTypes.Market:
+                        if (eMG.LessonTC.Is(LessonTypes.ClickBuyMarketInTown))
+                        {
+                            eMG.LessonTC.SetNextLesson();
+                        }
+                        break;
+
+                    case BuildingTypes.Smelter:
+                        break;
+
+                    default: throw new Exception();
                 }
-                else
-                {
-                    eMG.RpcPoolEs.CityBuyBuildingToMaster(buildT);
-                }
+
+                
             }
-
-
-
-            switch (buildT)
+            else
             {
-                case BuildingTypes.House:
-                    eMG.RpcPoolEs.CityBuyBuildingToMaster(buildT);
-                    break;
-
-                case BuildingTypes.Market:
-                    break;
-
-                case BuildingTypes.Smelter:
-                    break;
-
-                default: throw new Exception();
+                sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
             }
 
             eMG.NeedUpdateView = true;

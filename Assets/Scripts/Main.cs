@@ -35,7 +35,7 @@ namespace Chessy
         {
             #region Common
 
-            var eVCommon = new EntitiesViewCommon(transform, TestModeT, out var sound, out var commonZone);
+            var eVCommon = new EntitiesViewCommon(transform, TestModeT, out var sound, out var commonZone, out var actions);
             var eUICommon = new EntitiesViewUICommon(commonZone);
             _eMC = new EntitiesModelCommon(TestModeT, sound);
 
@@ -64,7 +64,7 @@ namespace Chessy
             #region Game
 
             var eViewGame = new EntitiesViewGame(out var forData, eVCommon);
-            var eModelGame = new EntitiesModelGame(forData, Rpc.NamesMethods_S);
+            var eModelGame = new EntitiesModelGame(forData, Rpc.NamesMethods_S, actions);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
             var sModelGame = new SystemsModelGame(sMCommon, _eMC, eModelGame);
@@ -78,7 +78,9 @@ namespace Chessy
 
             #region NeedReplace
 
-            var rpc = eViewGame.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
+            var go = new GameObject();
+
+            var rpc = eVCommon.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
 
 
             new IAPCore(_eMC);

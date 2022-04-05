@@ -14,7 +14,7 @@ namespace Chessy.Game.Model.System
         {
             eMG.CellsC.Selected = 0;
 
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMove.PlayerT))
+            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
                 eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
 
@@ -26,7 +26,7 @@ namespace Chessy.Game.Model.System
                     eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
                 }
             }
-            else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
+            else sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
 
             eMG.NeedUpdateView = true;
         }

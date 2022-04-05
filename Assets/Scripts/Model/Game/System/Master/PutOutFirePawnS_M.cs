@@ -12,11 +12,11 @@ namespace Chessy.Game.Model.System
 
         public void PutOut(in byte cell_0, in Player sender)
         {
-            if (eMG.UnitStepC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
+            if (eMG.StepUnitC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
             {
                 eMG.HaveFire(cell_0) = false;
 
-                eMG.UnitStepC(cell_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
+                eMG.StepUnitC(cell_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
             }
 
             else
