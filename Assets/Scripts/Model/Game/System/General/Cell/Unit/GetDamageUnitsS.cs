@@ -6,7 +6,7 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetDamageUnitsS : SystemModelGameAbs
+    sealed class GetDamageUnitsS : SystemModel
     {
         internal GetDamageUnitsS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

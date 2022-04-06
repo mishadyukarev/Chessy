@@ -6,8 +6,8 @@ using Chessy.Common.Model.System;
 using Chessy.Common.View.UI;
 using Chessy.Common.View.UI.System;
 using Chessy.Game;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.EventsUI;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Chessy.Game.System.View;
 using Chessy.Game.System.View.UI;
@@ -24,9 +24,9 @@ namespace Chessy
     {
         [SerializeField] TestModes TestModeT = default;
 
-        List<IEcsRunSystem> _commonRuns;
-        List<IEcsRunSystem> _gameRuns;
-        List<IEcsRunSystem> _menuRuns;
+        List<IUpdate> _commonRuns;
+        List<IUpdate> _gameRuns;
+        List<IUpdate> _menuRuns;
 
         EntitiesModelCommon _eMC;
 
@@ -40,9 +40,9 @@ namespace Chessy
             _eMC = new EntitiesModelCommon(TestModeT, sound);
 
             var sMCommon = new SystemsModelCommon(_eMC);
-            var sUICommon = new SystemsViewUICommon(_eMC, eVCommon, eUICommon);
+            var sUICommon = new SystemsViewUICommon(_eMC, eUICommon);
 
-            new EventsCommon(eUICommon, eVCommon, _eMC);
+            new EventsCommon(sMCommon, eUICommon, eVCommon, _eMC);
 
             #endregion
 
@@ -82,8 +82,6 @@ namespace Chessy
 
             var rpc = eVCommon.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
 
-
-            new IAPCore(_eMC);
             new MyYodo();
 
             var togglerScenes = new List<IToggleScene>()
@@ -99,19 +97,20 @@ namespace Chessy
             #endregion
 
 
-            _commonRuns = new List<IEcsRunSystem>()
+            _commonRuns = new List<IUpdate>()
             {
                 sMCommon,
                 sUICommon,
+                new IAPCore(_eMC),
             };
 
-            _menuRuns = new List<IEcsRunSystem>()
+            _menuRuns = new List<IUpdate>()
             {
                 sMMenu,
                 sUIMenu,
             };
 
-            _gameRuns = new List<IEcsRunSystem>()
+            _gameRuns = new List<IUpdate>()
             {
                 sModelGame,
                 sViewGame,
@@ -119,30 +118,36 @@ namespace Chessy
             };
 
 
+            Screen.fullScreen = true;
+
 
             #region ComeToTraining
-
-            _eMC.VolumeMusic = eUICommon.SettingsE.SliderC.Slider.value;
 
             PhotonNetwork.OfflineMode = true;
             _eMC.GameModeTC.GameModeT = GameModes.TrainingOff;
             PhotonNetwork.CreateRoom(default);
 
             #endregion
+
+
+
+
+            //Resolution[] resolutions = Screen.resolutions;
+            //Screen.SetResolution(resolutions[resolutions.Length - 1].width, resolutions[resolutions.Length - 1].height, true);
         }
 
         void Update()
         {
-            _commonRuns.ForEach((IEcsRunSystem iRun) => iRun.Run());
+            _commonRuns.ForEach((IUpdate iRun) => iRun.Update());
 
-            switch (_eMC.SceneTC.Scene)
+            switch (_eMC.SceneTC.SceneT)
             {
                 case SceneTypes.Menu:
-                    _menuRuns.ForEach((IEcsRunSystem iRun) => iRun.Run());
+                    _menuRuns.ForEach((IUpdate iRun) => iRun.Update());
                     break;
 
                 case SceneTypes.Game:
-                    _gameRuns.ForEach((IEcsRunSystem iRun) => iRun.Run());
+                    _gameRuns.ForEach((IUpdate iRun) => iRun.Update());
                     break;
 
                 default: throw new Exception();

@@ -8,7 +8,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GrowAdultForestS_M : SystemModelGameAbs
+    sealed class GrowAdultForestS_M : SystemModel
     {
         internal GrowAdultForestS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

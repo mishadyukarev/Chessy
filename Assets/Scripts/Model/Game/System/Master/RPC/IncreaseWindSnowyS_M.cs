@@ -7,7 +7,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class IncreaseWindSnowyS_M : SystemModelGameAbs
+    sealed class IncreaseWindSnowyS_M : SystemModel
     {
         internal IncreaseWindSnowyS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

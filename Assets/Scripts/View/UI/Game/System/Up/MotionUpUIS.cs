@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Chessy.Game.View.UI
 {
-    sealed class MotionUpUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class MotionUpUIS : SystemUIAbstract
     {
         readonly TextUIC _motionTextC;
 
@@ -12,7 +12,7 @@ namespace Chessy.Game.View.UI
             _motionTextC = motionTextC;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             if (e.LessonTC.HaveLesson)
             {

@@ -8,7 +8,7 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class FirePawnS_M : SystemModelGameAbs
+    sealed class FirePawnS_M : SystemModel
     {
         internal FirePawnS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
@@ -23,10 +23,9 @@ namespace Chessy.Game.Model.System
                     eMG.HaveFire(cell_0) = true;
                     eMG.StepUnitC(cell_0).Steps -= StepValues.FIRE_PAWN;
                 }
-
                 else
                 {
-                    throw new Exception();
+                    eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
                 }
             }
 

@@ -35,7 +35,7 @@
         public const float HILL = 0.2f;
 
         public const float CITY = 0.1f;
-        public const float FARM = -0.1f;
-        public const float WOODCUTTER = -0.1f;
+        public const float FARM = 0;
+        public const float WOODCUTTER = 0;
     }
 }

@@ -11,7 +11,7 @@ namespace Chessy.Game
             eUI = entsUI;
         }
 
-        internal void Run()
+        internal override void Sync()
         {
             var idx_sel = e.CellsC.Selected;
 

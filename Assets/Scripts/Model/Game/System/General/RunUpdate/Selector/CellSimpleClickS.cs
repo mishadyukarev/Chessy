@@ -6,7 +6,7 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class CellSimpleClickS : SystemModelGameAbs
+    sealed class CellSimpleClickS : SystemModel
     {
         readonly SelectorSoundS _selectorSoundS;
 

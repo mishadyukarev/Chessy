@@ -2,7 +2,7 @@
 
 namespace Chessy.Menu
 {
-    public sealed class SystemsModelMenu : IEcsRunSystem
+    public sealed class SystemsModelMenu : IUpdate
     {
         //public readonly LaunchLikeGameAndShopS LaunchLikeGameAndShopS;
 
@@ -16,7 +16,7 @@ namespace Chessy.Menu
             _eMCommon = eMCommon;
         }
 
-        public void Run()
+        public void Update()
         {
             //SyncS.Run(_eUICommon, _eMCommon);
             //ConnectorMenuS.Run(_eUIMenu);

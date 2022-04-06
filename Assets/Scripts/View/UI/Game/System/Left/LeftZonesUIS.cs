@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class LeftZonesUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class LeftZonesUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame _eUI;
 
@@ -11,14 +11,14 @@ namespace Chessy.Game
             _eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
-            _eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(false);
+            _eUI.LeftEs.CityE(BuildingTypes.House).ParentGOC.SetActive(false);
             _eUI.LeftEnvEs.Zone.SetActive(false);
 
             if (e.IsSelectedCity)
             {
-                _eUI.LeftEs.CityE(BuildingTypes.House).Parent.SetActive(true);
+                _eUI.LeftEs.CityE(BuildingTypes.House).ParentGOC.SetActive(true);
             }
             else
             {
@@ -26,7 +26,10 @@ namespace Chessy.Game
 
                 if (e.CellsC.IsSelectedCell)
                 {
-                    _eUI.LeftEnvEs.Zone.SetActive(true);
+                    if (!e.LessonTC.HaveLesson)
+                    {
+                        _eUI.LeftEnvEs.Zone.SetActive(true);
+                    }
                 }
             }
         }

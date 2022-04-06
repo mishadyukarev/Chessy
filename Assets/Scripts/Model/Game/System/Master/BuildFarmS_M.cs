@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class BuildFarmS_M : SystemModelGameAbs
+    sealed class BuildFarmS_M : SystemModel
     {
         internal BuildFarmS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

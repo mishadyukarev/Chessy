@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SelectorSoundS : SystemModelGameAbs
+    sealed class SelectorSoundS : SystemModel
     {
         internal SelectorSoundS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {

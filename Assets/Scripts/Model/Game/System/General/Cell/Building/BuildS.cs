@@ -4,7 +4,7 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    internal sealed class BuildS : SystemModelGameAbs
+    internal sealed class BuildS : SystemModel
     {
         internal BuildS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {

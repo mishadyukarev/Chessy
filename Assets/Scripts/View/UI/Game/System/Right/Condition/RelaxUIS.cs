@@ -4,9 +4,16 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public struct RelaxUIS
+    sealed class RelaxUIS : SystemUIAbstract
     {
-        public void Run(in RelaxUIE relaxE, in EntitiesModelGame e)
+        readonly RelaxUIE _relaxUIE;
+
+        internal RelaxUIS(in RelaxUIE relaxUIE, in EntitiesModelGame eMG) : base(eMG)
+        {
+            _relaxUIE = relaxUIE;
+        }
+
+        internal override void Sync()
         {
             var idx_0 = e.CellsC.Selected;
 
@@ -16,34 +23,37 @@ namespace Chessy.Game
             {
                 if (e.UnitPlayerTC(idx_0).Is(e.CurPlayerITC.PlayerT))
                 {
-                    activeButt = true;
-
-                    relaxE.ImageC.Image.color = e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
-
-                    for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
+                    if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.RelaxExtractPawn)
                     {
-                        relaxE.Button(unitT).SetActive(false);
-                    }
+                        activeButt = true;
 
-                    if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
-                    {
-                        if (e.MainToolWeaponTC(idx_0).Is(ToolWeaponTypes.Axe))
+                        _relaxUIE.ImageC.Image.color = e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
+
+                        for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
                         {
-                            relaxE.Button(e.UnitTC(idx_0).UnitT).SetActive(true);
+                            _relaxUIE.Button(unitT).SetActive(false);
+                        }
+
+                        if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                        {
+                            if (e.MainToolWeaponTC(idx_0).Is(ToolWeaponTypes.Axe))
+                            {
+                                _relaxUIE.Button(e.UnitTC(idx_0).UnitT).SetActive(true);
+                            }
+                            else
+                            {
+                                _relaxUIE.Button(e.UnitTC(idx_0).UnitT).SetActive(false);
+                            }
                         }
                         else
                         {
-                            relaxE.Button(e.UnitTC(idx_0).UnitT).SetActive(false);
+                            _relaxUIE.Button(e.UnitTC(idx_0).UnitT).SetActive(true);
                         }
-                    }
-                    else
-                    {
-                        relaxE.Button(e.UnitTC(idx_0).UnitT).SetActive(true);
                     }
                 }
             }
 
-            relaxE.ButtonC.Button.gameObject.SetActive(activeButt);
+            _relaxUIE.ButtonC.Button.gameObject.SetActive(activeButt);
         }
     }
 }

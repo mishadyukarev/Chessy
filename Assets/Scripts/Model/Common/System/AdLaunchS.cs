@@ -3,7 +3,7 @@
 
 namespace Chessy.Common
 {
-    public struct AdLaunchS : IEcsRunSystem
+    public struct AdLaunchS : IUpdate
     {
         readonly EntitiesModelCommon _eMCommon;
 
@@ -12,7 +12,7 @@ namespace Chessy.Common
             _eMCommon = eMCommon;
         }
 
-        public void Run()
+        public void Update()
         {
             //var difTime = DateTime.Now - _eMCommon.AdC.LastTimeAd;
 

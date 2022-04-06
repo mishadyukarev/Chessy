@@ -12,12 +12,53 @@ namespace Chessy.Game
             _twE = twE;
         }
 
-        internal void Run()
+        internal override void Sync()
         {
+            var needActiveZone = false;
+
 
             if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.ClickPick)
             {
-                _twE.ParentGOC.SetActive(true);
+                needActiveZone = true;
+
+            }
+
+
+            _twE.ParentGOC.SetActive(needActiveZone);
+
+
+            if (needActiveZone)
+            {
+                var needStaff = false;
+                var needBowCrossbow = false;
+                var needAxe = false;
+                var needPick = false;
+                var needShield = false;
+                var needSword = false;
+
+
+                if (e.LessonTC.HaveLesson)
+                {
+                    needPick = true;
+                }
+                else
+                {
+                    needStaff = true;
+                    needBowCrossbow = true;
+                    needAxe = true;
+                    needPick = true;
+                    needShield = true;
+                    needSword = true;
+                }
+
+                _twE.ButtonC(ToolWeaponTypes.Staff).SetActiveParent(needStaff);
+                _twE.ButtonC(ToolWeaponTypes.BowCrossbow).SetActiveParent(needBowCrossbow);
+                _twE.ButtonC(ToolWeaponTypes.Axe).SetActiveParent(needAxe);
+                _twE.ButtonC(ToolWeaponTypes.Pick).SetActiveParent(needPick);
+                _twE.ButtonC(ToolWeaponTypes.Shield).SetActiveParent(needShield);
+                _twE.ButtonC(ToolWeaponTypes.Sword).SetActiveParent(needSword);
+
+
 
                 Color color;
 
@@ -58,10 +99,6 @@ namespace Chessy.Game
                 _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.Shield).ToString();
                 _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.BowCrossbow).ToString();
                 _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).ToString();
-            }
-            else
-            {
-                _twE.ParentGOC.SetActive(false);
             }
         }
     }

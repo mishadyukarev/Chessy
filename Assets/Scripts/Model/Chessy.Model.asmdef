@@ -2,7 +2,6 @@
     "name": "Chessy.Model",
     "rootNamespace": "",
     "references": [
-        "GUID:f8b9587ab9104e74586dec6b8477f11e",
         "GUID:57c32fc907df0f54e8e6e8f0d2488336",
         "GUID:831409e8f9d13b5479a3baef9822ad34",
         "GUID:60bfecf5cb232594891bc622f40d6bed"

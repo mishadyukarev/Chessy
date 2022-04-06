@@ -1,9 +1,4 @@
-﻿using Chessy.Game.Model.Entity.Cell.Unit;
-using Chessy.Game.Entity.View.Cell.Unit.Effect;
-using Chessy.Common.Model.System;
-using Chessy.Common.Entity;
-using Chessy.Game.Model.System;
-using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
@@ -34,7 +29,7 @@ namespace Chessy.Game
                     {
                         if (_eMG.FrozenArrawEffectC(cell).HaveShoots)
                         {
-                            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(_eMG.CellsC.IsSelectedCell, _eMG.UnitIsRightArcherC(cell).IsRight).Enable();
+                            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(_eMG.SelectedCell == cell, _eMG.UnitIsRightArcherC(cell).IsRight).Enable();
                         }
                     }
                 }

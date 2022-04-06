@@ -5,7 +5,7 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetMainToolWeaponUnitS : SystemModelGameAbs
+    sealed class SetMainToolWeaponUnitS : SystemModel
     {
         internal SetMainToolWeaponUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

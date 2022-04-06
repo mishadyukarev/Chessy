@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class DownHeroUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class DownHeroUIS : SystemUIAbstract
     {
         readonly DownHeroUIE _downHeroUIE;
 
@@ -11,7 +11,7 @@ namespace Chessy.Game
             _downHeroUIE = downHeroUIE;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             var curPlayerI = e.CurPlayerITC.PlayerT;
 
@@ -44,7 +44,6 @@ namespace Chessy.Game
             {
                 _downHeroUIE.Parent.SetActive(false);
             }
-
         }
     }
 }

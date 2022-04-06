@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ShiftUnitS : SystemModelGameAbs
+    sealed class ShiftUnitS : SystemModel
     {
         internal ShiftUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

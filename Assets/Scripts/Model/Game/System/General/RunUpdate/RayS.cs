@@ -7,27 +7,20 @@ using UnityEngine.EventSystems;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class RayS : SystemModelGameAbs, IEcsRunSystem
+    sealed class RayS : SystemModel, IUpdate
     {
         Ray _ray;
         const float RAY_DISTANCE = 100;
 
         internal RayS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
-        public void Run()
+        public void Update()
         {
             _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
-            //#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
-
-            //            if (EventSystem.current.IsPointerOverGameObject())
-            //            {
-            //                raycastC.Raycast = RaycastTypes.UI;
-            //                return;
-            //            }
-
-            //#endif
+//#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+//#endif
 
 
             eMG.RaycastTC.RaycastT = RaycastTypes.None;
@@ -64,14 +57,19 @@ namespace Chessy.Game.Model.System
                 if (eMG.RaycastTC.RaycastT == RaycastTypes.None) eMG.RaycastTC.RaycastT = RaycastTypes.Background;
             }
 
+
+
+
+
+
 #if UNITY_ANDROID
-            //if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-            //{
-            //    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-            //    {
-            //        RayCastC.Set(RaycastTypes.UI);
-            //    }
-            //}
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
+                    eMG.RaycastTC.RaycastT = RaycastTypes.UI;
+                }
+            }
 #endif
         }
     }

@@ -6,7 +6,7 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class EnvironmentInfoS : SystemModelGameAbs, IClickUI
+    public sealed class EnvironmentInfoS : SystemModel, IClickUI
     {
         public EnvironmentInfoS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {

@@ -10,7 +10,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class AttackUnit_M : SystemModelGameAbs
+    sealed class AttackUnit_M : SystemModel
     {
         internal AttackUnit_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {
@@ -132,9 +132,15 @@ namespace Chessy.Game.Model.System.Master
                 {
                     if (eMG.FrozenArrawEffectC(idx_from).HaveShoots)
                     {
-                        eMG.FrozenArrawEffectC(idx_from).Shoots = 0;
+                        eMG.FrozenArrawEffectC(idx_from).Shoots--;
 
-                        eMG.StunUnitC(idx_to).Stun = 2;
+                        eMG.StunUnitC(idx_to).Stun = 1;
+                    }
+                    else if(eMG.UnitT(idx_from) == UnitTypes.Snowy)
+                    {
+                        eMG.FrozenArrawEffectC(idx_from).Shoots--;
+
+                        eMG.StunUnitC(idx_to).Stun = 1;
                     }
                 }
 

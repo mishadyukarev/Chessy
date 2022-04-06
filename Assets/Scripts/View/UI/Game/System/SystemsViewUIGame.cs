@@ -1,138 +1,83 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
-using Chessy.Game.Model.Entity;
+using Chessy.Common.View.UI;
 using Chessy.Game.Enum;
 using Chessy.Game.Extensions;
-using Chessy.Game.Model;
-using Chessy.Game.System.View.UI.Center;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.System.View.UI.Down;
 using Chessy.Game.View.UI;
 using Chessy.Game.View.UI.System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game.System.View.UI
 {
-    public sealed class SystemsViewUIGame : IEcsRunSystem
+    public sealed class SystemsViewUIGame : IUpdate
     {
-        readonly List<IEcsRunSystem> _runs;
-
-        float _timer;
-        readonly EntitiesModelCommon _eMC;
-        readonly EntitiesViewUIGame _eUIGame;
         readonly EntitiesModelGame _e;
 
-        readonly MotionUpUIS _motionUpS;
-        readonly RelaxUIS _relaxS;
-        readonly EconomyUpUIS _economyUpS;
-        readonly EffectsUIS _effectsS;
-        readonly SyncBookUIS _syncBookS;
-        readonly ProtectUIS _protectS;
-        readonly MistakeUIS _mistakeS;
-        readonly SkipLessonUIS _skipLessonUIS;
+        readonly List<Action> _syncUpdates;
 
         public SystemsViewUIGame(in EntitiesModelCommon eMCommon, in EntitiesViewUIGame eUIGame, in EntitiesModelGame eMGame)
         {
-            _eMC = eMCommon;
-            _eUIGame = eUIGame;
             _e = eMGame;
 
-            _economyUpS = new EconomyUpUIS(new Dictionary<ResourceTypes, float>());
-            _effectsS = new EffectsUIS(new Dictionary<EffectTypes, bool>());
-            _mistakeS = new MistakeUIS(_eUIGame.CenterEs.MistakeE, eMGame);
-            _skipLessonUIS = new SkipLessonUIS(_eUIGame.CenterEs.SkipLessonE, eMGame);
-            _protectS = new ProtectUIS(_eUIGame.RightEs.ProtectE, eMGame);
-
-
-            _motionUpS = new MotionUpUIS(eUIGame.UpEs.MotionsTextC, eMGame);
-
-            _runs = new List<IEcsRunSystem>()
+            _syncUpdates = new List<Action>()
             {
-                new LessonUIS(eUIGame.CenterEs, eMCommon, eMGame),
+                //Up
+                new EconomyUpUIS(eUIGame.UpEs.EconomyE, eMGame).Sync,
+                new UpWindUIS(eUIGame, eMGame).Sync,
+                new UpSunsUIS(eUIGame, eMGame).Sync,
+
+                //Center
+                new MotionUpUIS(eUIGame.UpEs.MotionsTextC, eMGame).Sync,
+                new SkipLessonUIS(eUIGame.CenterEs.SkipLessonE, eMGame).Sync,
+                new LessonUIS(eUIGame.CenterEs, eMCommon, eMGame).Sync,
+                new CenterEndGameUIS(eUIGame, eMGame).Sync,
+                new CenterReadyUIS(eUIGame, eMGame).Sync,
+                new CenterKingUIS(eUIGame, eMGame).Sync,
+                new CenterHeroesUIS(eUIGame, eMGame).Sync,
+                new CenterBuildingZonesUIS(eUIGame, eMGame).Sync,
+                new CenterFriendUIS(eMCommon, eUIGame, eMGame).Sync,
+                new MistakeUIS(eUIGame.CenterEs.MistakeE, eMGame).Sync,
+                new MotionUIS(eUIGame, eMGame).Sync,
+
+                //Down
+                new DonerUIS(eUIGame.DownEs.DonerE, eMGame).Sync,
+                new DownPawnUIS(eUIGame.DownEs.PawnE, eMGame).Sync,
+                new DownToolWeaponUIS(eUIGame.DownEs.ToolWeaponE, eMGame).Sync,
+                new DownHeroUIS(eUIGame.DownEs.HeroE, eMGame).Sync,
+                new CostUIS(eUIGame.DownEs.ToolWeaponE.CostE, eMGame).Sync,
+                new CityButtonUIS(eUIGame.DownEs.CityButtonUIE, eMGame).Sync,
+
+                //Right
+                new ProtectUIS(eUIGame.RightEs.ProtectE, eMGame).Sync,
+                new RelaxUIS(eUIGame.RightEs.RelaxE,  eMGame).Sync,
+                new EffectsUIS(eMGame.Resources, eUIGame, eMGame).Sync,
+                new RightZoneUIS(eUIGame, eMGame).Sync,
+                new StatsUIS(eUIGame, eMGame).Sync,
+
+                //Left
+                new LeftZonesUIS(eUIGame, eMGame).Sync,
+                new EnvUIS(eUIGame, eMGame).Sync,
+                new LeftCityUIS(eUIGame, eMGame).Sync,
             };
+
+
+
+            for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
+            {
+                _syncUpdates.Add(new UniqueButtonUIS(buttonT, eUIGame.RightEs.Unique(buttonT), eMGame.Resources, eMGame).Sync);
+            }
         }
 
-        public void Run()
+        public void Update()
         {
-            _timer += Time.deltaTime;
-
-            if (_e.NeedUpdateView || _timer > 0.5f)
+            if (_e.NeedUpdateView)
             {
-                _mistakeS.Sync(_timer);
-                MotionUIS.Sync(_timer, _eUIGame, _e);
-
-                _timer = 0;
-
-                if (_e.NeedUpdateView)
-                {
-                    _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());
-
-                    ///Right
-                    ///
-                    var rightEs = _eUIGame.RightEs;
-                    new RightZoneUIS(_eUIGame, _e).Run();
-                    new StatsUIS(_eUIGame, _e).Run();
-                    _protectS.Run();
-                    _relaxS.Run(rightEs.RelaxE, _e);
-                    _effectsS.Run(_e.Resources, _eUIGame, _e);
-                    for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
-                    {
-                        new UniqueButtonUIS(buttonT, _eUIGame.RightEs.Unique(buttonT), _e.Resources, _e).Run();
-                    }
-
-
-                    ///Down
-                    new DonerUIS(_eUIGame.DownEs.DonerE, _e).Run();
-                    new DownPawnUIS(_eUIGame.DownEs.PawnE, _e).Run();
-                    new DownToolWeaponUIS(_eUIGame.DownEs.ToolWeaponE, _e).Run();
-                    new DownHeroUIS(_eUIGame.DownEs.HeroE, _e).Run();
-                    new CostUIS().Sync(_eUIGame.DownEs.ToolWeaponE.CostE, _e);
-
-                    if (!_e.LessonTC.HaveLesson || _e.LessonTC.LessonT >= LessonTypes.OpeningTown)
-                    {
-                        _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(true);
-                    }
-                    else
-                    {
-                        _eUIGame.DownEs.CityButtonUIE.ParentGOC.SetActive(false);
-                    }
-
-
-
-
-
-                    ///Up
-                    _economyUpS.Run(_eUIGame, _e);
-                    new UpWindUIS(_eUIGame, _e).Run();
-                    _motionUpS.Run();
-
-
-                    ///Center
-                    new CenterEndGameUIS(_eUIGame, _e).Run();
-                    new CenterReadyUIS(_eUIGame, _e).Run();
-                    new CenterKingUIS(_eUIGame, _e).Run();
-                    new CenterFriendUIS().Run(_eMC.GameModeTC, _eUIGame, _e);
-                    new CenterHeroesUIS(_eUIGame, _e).Run();
-                    new CenterBuildingZonesUIS(_eUIGame, _e).Run();
-                    _skipLessonUIS.Sync();
-
-                    new UpSunsUIS(_eUIGame, _e).Run();
-
-
-                    var nextPlayerT = _e.CurPlayerITC.PlayerT.NextPlayer();
-                    var haveElfemaleEnemy = _e.PlayerInfoE(nextPlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale);
-                    var haveSnowyEnemy = _e.PlayerInfoE(nextPlayerT).GodInfoE.UnitTC.Is(UnitTypes.Snowy);
-                    _eUIGame.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.SetActiveParent(!haveElfemaleEnemy);
-                    _eUIGame.CenterEs.HeroE(UnitTypes.Snowy).ButtonC.SetActiveParent(!haveSnowyEnemy);
-
-
-                    ///Left
-                    new LeftZonesUIS(_eUIGame, _e).Run();
-                    new EnvUIS(_eUIGame, _e).Run();
-                    new LeftCityUIS(_eUIGame, _e).Run();
-
-                    _e.NeedUpdateView = false;
-                }
+                _syncUpdates.ForEach((Action action) => action());
+                _e.NeedUpdateView = false;
             }
         }
     }

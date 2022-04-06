@@ -16,11 +16,9 @@ namespace Chessy.Game.Model.Entity
             get
             {
                 var cells = new byte[_aroundEs.Length];
-                var i = 0;
-                foreach (var item in _aroundEs)
+                for (var i = 1; i < _aroundEs.Length; i++)
                 {
-                    cells[i] = item.IdxC.Idx;
-                    i++;
+                    cells[i] = _aroundEs[i].IdxC.Idx;
                 }
                 return cells;
             }
@@ -45,7 +43,7 @@ namespace Chessy.Game.Model.Entity
 
             if (isActiveParents[idx])
             {
-                for (var dir = (DirectTypes)1; dir < DirectTypes.End; dir++)
+                for (var dir = (DirectTypes)0; dir < DirectTypes.End; dir++)
                 {
                     var xyDirect = new short[EntitiesModelGame.XY_FOR_ARRAY];
 

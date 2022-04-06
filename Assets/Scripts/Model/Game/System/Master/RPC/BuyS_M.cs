@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class BuyS_M : SystemModelGameAbs
+    sealed class BuyS_M : SystemModel
     {
         internal BuyS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

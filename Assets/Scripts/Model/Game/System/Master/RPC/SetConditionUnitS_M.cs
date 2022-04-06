@@ -9,7 +9,7 @@ using System;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class SetConditionUnitS_M : SystemModelGameAbs
+    sealed class SetConditionUnitS_M : SystemModel
     {
         internal SetConditionUnitS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

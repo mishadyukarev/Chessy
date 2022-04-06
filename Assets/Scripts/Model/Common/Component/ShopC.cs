@@ -2,13 +2,13 @@
 
 namespace Chessy.Common
 {
-    internal struct ShopC
+    public struct ShopC
     {
-        internal IStoreController StoreController;       //доступ к системе Unity Purchasing
-        internal IExtensionProvider StoreExtProvider; // подсистемы закупок для конкретных магазинов
+        public IStoreController StoreController;       //доступ к системе Unity Purchasing
+        public IExtensionProvider StoreExtProvider; // подсистемы закупок для конкретных магазинов
 
-        internal const string PREMIUM_NAME = "premium";
+        public const string PREMIUM_NAME = "premium";
 
-        internal bool IsInitialized => StoreController != default && StoreExtProvider != default;
+        public bool IsInitialized => StoreController != default && StoreExtProvider != default;
     }
 }

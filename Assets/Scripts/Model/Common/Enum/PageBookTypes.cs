@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Common.Enum
 {
-    public enum PageBookTypes
+    public enum PageBookTypes : byte
     {
         None,
 

@@ -7,7 +7,7 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class BuildBuildingClickS : SystemModelGameAbs
+    public sealed class BuildBuildingClickS : SystemModel
     {
         internal BuildBuildingClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

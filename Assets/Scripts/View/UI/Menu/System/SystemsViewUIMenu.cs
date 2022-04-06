@@ -5,7 +5,7 @@ using Chessy.Menu.View.UI;
 
 namespace Chessy.Menu
 {
-    public sealed class SystemsViewUIMenu : IEcsRunSystem
+    public sealed class SystemsViewUIMenu : IUpdate
     {
         public readonly ConnectorMenuS ConnectorMenuS;
 
@@ -20,7 +20,7 @@ namespace Chessy.Menu
         }
 
 
-        public void Run()
+        public void Update()
         {
 
             //SyncS.Run(_eUICommon, _eMCommon);

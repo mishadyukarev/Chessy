@@ -1,28 +1,35 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Common.Entity;
 using Chessy.Common.Entity.View.UI;
 using Chessy.Common.Enum;
-using Chessy.Common.Model.Entity;
+using Chessy.Common.Model;
 
-namespace Chessy.Game.System.View.UI.Center
+namespace Chessy.Common.View.UI
 {
-    public struct SyncBookUIS
+    sealed class SyncBookUIS : SyncUISystem
     {
-        public void Sync(in BookUIE bookUIE, in BookE bookE)
-        {
-            bookUIE.ParenGOC.SetActive(bookE.IsOpenedBook);
+        readonly BookUIE _bookUIE;
 
-            if (bookE.IsOpenedBook)
+        internal SyncBookUIS(in BookUIE bookUIE, in EntitiesModelCommon eMC) : base(eMC)
+        {
+            _bookUIE = bookUIE;
+        }
+
+        internal override void Sync()
+        {
+            _bookUIE.ParenGOC.SetActive(e.IsOpenedBook);
+
+            if (e.IsOpenedBook)
             {
                 for (var pageT = PageBookTypes.None + 1; pageT < PageBookTypes.End; pageT++)
                 {
-                    bookUIE.PageGOC(pageT).SetActive(pageT == bookE.PageBookTC.PageBookT);
+                    _bookUIE.PageGOC(pageT).SetActive(pageT == e.PageBookT);
                 }
 
-                bookUIE.BackButtonC.SetActive(bookE.PageBookTC.PageBookT != PageBookTypes.Main);
-                bookUIE.NextButtonC.SetActive(bookE.PageBookTC.PageBookT < PageBookTypes.End - 1);
+                _bookUIE.BackButtonC.SetActive(e.PageBookT != PageBookTypes.Main);
+                _bookUIE.NextButtonC.SetActive(e.PageBookT < PageBookTypes.End - 1);
 
-                bookUIE.LeftPageTextC.TextUI.text = ((int)bookE.PageBookTC.PageBookT).ToString() + "/" + bookE.PageBookTC.PageBookT;
-                bookUIE.RightPageTextC.TextUI.text = ((int)bookE.PageBookTC.PageBookT + 1).ToString() + "/" + bookE.PageBookTC.PageBookT;
+                _bookUIE.LeftPageTextC.TextUI.text = ((int)e.PageBookT).ToString() + "/" + e.PageBookT;
+                _bookUIE.RightPageTextC.TextUI.text = ((int)e.PageBookT + 1).ToString() + "/" + e.PageBookT;
             }
         }
     }

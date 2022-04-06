@@ -1,13 +1,18 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Entity.View;
+﻿//using Chessy.Common.Entity;
+//using Chessy.Common.Entity.View;
+//using Chessy.Common.View.UI;
 
-namespace Chessy.Common.View.System
-{
-    public struct SyncMusicSoundVS
-    {
-        public void Sync(in EntitiesModelCommon eMC, in EntitiesViewCommon eVC)
-        {
-            eVC.Sound(Enum.ClipCommonTypes.Music).AS.volume = eMC.VolumeMusic;
-        }
-    }
-}
+//namespace Chessy.Common.View.System
+//{
+//    sealed class SyncMusicSoundVS : SystemUI
+//    {
+//        internal SyncMusicSoundVS(in EntitiesModelCommon eMC) : base(eMC)
+//        {
+//        }
+
+//        internal override void Sync()
+//        {
+            
+//        }
+//    }
+//}

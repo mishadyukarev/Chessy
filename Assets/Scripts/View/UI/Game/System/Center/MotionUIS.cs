@@ -1,30 +1,28 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
-    static class MotionUIS
+    sealed class MotionUIS : SystemUIAbstract
     {
-        static float _timer;
+        readonly EntitiesViewUIGame _eUI;
 
-        public static void Sync(in float timer, in EntitiesViewUIGame eUI, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        internal MotionUIS(in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
         {
-            if (e.ZoneInfoC.IsActiveMotion)
+            _eUI = eUI;
+        }
+
+        internal override void Sync()
+        {
+            if (e.MotionTimer > 0)
             {
-                eUI.CenterEs.Motion.TextUI.text = e.MotionsC.Motions.ToString();
-                eUI.CenterEs.Motion.SetActiveParent(true);
+                _eUI.CenterEs.Motion.SetActiveParent(false);
 
-                _timer += Time.deltaTime + timer;
-
-                if (_timer >= 4)
-                {
-                    eUI.CenterEs.Motion.SetActiveParent(false);
-                    e.ZoneInfoC.IsActiveMotion = false;
-                    _timer = 0;
-                }
+                _eUI.CenterEs.Motion.TextUI.text = e.MotionsC.Motions.ToString();
+                _eUI.CenterEs.Motion.SetActiveParent(true);
             }
             else
             {
-                eUI.CenterEs.Motion.SetActiveParent(false);
+                _eUI.CenterEs.Motion.SetActiveParent(false);
             }
         }
     }

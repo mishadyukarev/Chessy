@@ -5,13 +5,20 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.System.View.UI.Down
 {
-    public sealed class CostUIS
+    sealed class CostUIS : SystemUIAbstract
     {
-        public void Sync(in CostUIE costUIE, in EntitiesModelGame e)
+        readonly CostUIE _costUIE;
+
+        internal CostUIS(in CostUIE costUIE, in EntitiesModelGame eMG) : base(eMG)
         {
-            costUIE.StepsTextC.TextUI.text = StepValues.FOR_GIVE_TAKE_TOOLWEAPON.ToString();
-            costUIE.WoodTextC.TextUI.text = ((int)(100 * EconomyValues.ForBuyToolWeapon(e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT, ResourceTypes.Wood))).ToString();
-            costUIE.IronTextC.TextUI.text = EconomyValues.ForBuyToolWeapon(e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT, ResourceTypes.Iron).ToString();
+            _costUIE = costUIE;
+        }
+
+        internal override void Sync()
+        {
+            _costUIE.StepsTextC.TextUI.text = StepValues.FOR_GIVE_TAKE_TOOLWEAPON.ToString();
+            _costUIE.WoodTextC.TextUI.text = ((int)(100 * EconomyValues.ForBuyToolWeapon(e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT, ResourceTypes.Wood))).ToString();
+            _costUIE.IronTextC.TextUI.text = EconomyValues.ForBuyToolWeapon(e.SelectedE.ToolWeaponC.ToolWeaponT, e.SelectedE.ToolWeaponC.LevelT, ResourceTypes.Iron).ToString();
         }
     }
 }

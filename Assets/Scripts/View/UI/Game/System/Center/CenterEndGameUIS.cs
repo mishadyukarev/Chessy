@@ -3,7 +3,7 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
-    sealed class CenterEndGameUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class CenterEndGameUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame eUI;
 
@@ -12,7 +12,7 @@ namespace Chessy.Game
             eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             if (e.WinnerPlayerTC.PlayerT == default)
             {

@@ -5,7 +5,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ReadyS_M : SystemModelGameAbs
+    sealed class ReadyS_M : SystemModel
     {
         public ReadyS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {

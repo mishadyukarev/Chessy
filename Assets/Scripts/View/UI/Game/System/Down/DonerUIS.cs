@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class DonerUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class DonerUIS : SystemUIAbstract
     {
         readonly DonerUIE _donerE;
 
@@ -14,7 +14,7 @@ namespace Chessy.Game
             _donerE = downDoner;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
             {

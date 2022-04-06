@@ -7,7 +7,7 @@ using Chessy.Game.Enum;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class OpenCityClickS : SystemModelGameAbs, IClickUI
+    public sealed class OpenCityClickS : SystemModel, IClickUI
     {
         internal OpenCityClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

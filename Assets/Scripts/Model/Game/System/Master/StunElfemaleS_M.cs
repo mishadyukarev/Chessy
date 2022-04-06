@@ -9,7 +9,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class StunElfemaleS_M : SystemModelGameAbs
+    sealed class StunElfemaleS_M : SystemModel
     {
         internal StunElfemaleS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

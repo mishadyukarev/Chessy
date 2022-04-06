@@ -4,7 +4,7 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetCellsForAttackArcherS : SystemModelGameAbs
+    sealed class GetCellsForAttackArcherS : SystemModel
     {
         internal GetCellsForAttackArcherS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

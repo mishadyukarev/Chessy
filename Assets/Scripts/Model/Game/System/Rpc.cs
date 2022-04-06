@@ -337,7 +337,7 @@ namespace Chessy.Game
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
-                    _eMG.ZoneInfoC.IsActiveMotion = true;
+                    _eMG.MotionTimer = 4;
                     break;
 
                 case RpcGeneralTypes.Mistake:

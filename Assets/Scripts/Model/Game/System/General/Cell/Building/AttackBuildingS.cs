@@ -6,7 +6,7 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class AttackBuildingS : SystemModelGameAbs
+    sealed class AttackBuildingS : SystemModel
     {
         internal AttackBuildingS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

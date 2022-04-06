@@ -1,6 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Component;
 using Chessy.Game.Entity;
+using Chessy.Game.Enum;
 using Chessy.Game.Model.Component;
 using Chessy.Game.Model.Entity.Cell.Unit;
 using Chessy.Game.Values;
@@ -17,7 +18,11 @@ namespace Chessy.Game.Model.Entity
         readonly PlayerInfoEs[] _forPlayerEs = new PlayerInfoEs[(byte)PlayerTypes.End];
 
         public NeedUpdateViewC NeedUpdateViewC;
-        public ref bool NeedUpdateView => ref NeedUpdateViewC.NeedUpdateView;
+        public bool NeedUpdateView
+        {
+            get => NeedUpdateViewC.NeedUpdateView;
+            set => NeedUpdateViewC.NeedUpdateView = value;
+        }
 
         public bool IsStartedGame { get; internal set; }
         public bool IsSelectedCity { get; internal set; }
@@ -25,11 +30,32 @@ namespace Chessy.Game.Model.Entity
         public bool IsClicked { get; internal set; }
 
 
+
+
+        internal float ForUpdateViewTimer;
         public ZonesInfoC ZoneInfoC;
         public WhereTeleportC WhereTeleportC;
         public CellClickTC CellClickTC;
-        public LessonTC LessonTC;
+ 
+
+
+        public TimerC MotionTimerC;
+        public float MotionTimer
+        {
+            get => MotionTimerC.Timer;
+            internal set => MotionTimerC.Timer = value;
+        }
+
+
         public RaycastTC RaycastTC;
+
+
+        public LessonTC LessonTC;
+        public LessonTypes LessonT
+        {
+            get => LessonTC.LessonT;
+            internal set => LessonTC.LessonT = value;
+        }
 
 
         public MotionsC MotionsC;
@@ -41,7 +67,11 @@ namespace Chessy.Game.Model.Entity
 
 
         public CellsC CellsC;
-        public byte SelectedCell => CellsC.Selected;
+        public byte SelectedCell
+        {
+            get => CellsC.Selected;
+            internal set => CellsC.Selected = value;
+        }
 
 
         public PlayerTC CurPlayerITC;
@@ -54,9 +84,17 @@ namespace Chessy.Game.Model.Entity
 
         MistakeE _mistakeE;
         public ref MistakeTC MistakeTC => ref _mistakeE.MistakeTC;
-        public MistakeTypes MistakeT => MistakeTC.MistakeT;
+        public MistakeTypes MistakeT
+        {
+            get => MistakeTC.MistakeT;
+            internal set => MistakeTC.MistakeT = value;
+        }
         public ref TimerC MistakeTimerC => ref _mistakeE.TimerC;
-        public float MistakeTimer => MistakeTimerC.Timer;
+        public float MistakeTimer
+        {
+            get => MistakeTimerC.Timer;
+            internal set => MistakeTimerC.Timer = value;
+        }
 
 
         public readonly ResourcesE Resources;

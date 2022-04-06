@@ -6,16 +6,14 @@ namespace Chessy.Game
 {
     sealed class MistakeUIS : SystemUIAbstract
     {
-        const float NEED_TIME_FOR_FADING = 1.3f;
         readonly MistakeUIE _mistakeUIE;
-
 
         internal MistakeUIS(in MistakeUIE mistakeUIE, in EntitiesModelGame eMG) : base(eMG)
         {
             _mistakeUIE = mistakeUIE;
         }
 
-        public void Sync(in float timer)
+        internal override void Sync()
         {
             foreach (var key in _mistakeUIE.KeysMistake)
             {
@@ -28,31 +26,20 @@ namespace Chessy.Game
             }
 
 
-
             if (e.MistakeT != MistakeTypes.None)
             {
-                e.MistakeTimerC.Timer += Time.deltaTime + timer;
-
                 if (e.MistakeT == MistakeTypes.Economy)
                 {
-                    if (e.MistakeTimer >= NEED_TIME_FOR_FADING)
-                    {
-                        e.MistakeTC.MistakeT = MistakeTypes.None;
-                    }
+                    _mistakeUIE.Zones(e.MistakeT).SetActive(true);
 
-                    else
+                    for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                     {
-                        _mistakeUIE.Zones(e.MistakeT).SetActive(true);
-
-                        for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
+                        if (e.MistakeEconomy(res).Resources > 0)
                         {
-                            if (e.MistakeEconomy(res).Resources > 0)
-                            {
-                                _mistakeUIE.NeedAmountResources(res).SetActive(true);
+                            _mistakeUIE.NeedAmountResources(res).SetActive(true);
 
-                                _mistakeUIE.NeedAmountResources(res).TextUI.text
-                                    = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + e.MistakeEconomy(res).Resources : ">= " + ((int)(100 * e.MistakeEconomy(res).Resources));
-                            }
+                            _mistakeUIE.NeedAmountResources(res).TextUI.text
+                                = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + e.MistakeEconomy(res).Resources : ">= " + ((int)(100 * e.MistakeEconomy(res).Resources));
                         }
                     }
                 }
@@ -60,11 +47,6 @@ namespace Chessy.Game
                 else
                 {
                     _mistakeUIE.Zones(e.MistakeT).SetActive(true);
-
-                    if (e.MistakeTimer >= NEED_TIME_FOR_FADING)
-                    {
-                        e.MistakeTC.MistakeT = MistakeTypes.None;
-                    }
                 }
             }
         }

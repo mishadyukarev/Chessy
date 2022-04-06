@@ -9,15 +9,16 @@ using Chessy.Game.Values.Cell.Unit;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class SystemsModelGame : IToggleScene, IEcsRunSystem
+    public sealed class SystemsModelGame : IToggleScene, IUpdate
     {
         readonly EntitiesModelCommon _eMC;
         readonly EntitiesModelGame _eMG;
 
-        readonly List<IEcsRunSystem> _runs;
+        readonly List<Action> _runs;
 
 
         #region Environment
@@ -63,12 +64,14 @@ namespace Chessy.Game.Model.System
             _eMC = eMC;
             _eMG = eMG;
 
-            _runs = new List<IEcsRunSystem>()
+            _runs = new List<Action>()
             {
-                new InputS(sMC, eMC, this, eMG),
-                new CheatsS(sMC, eMC, this, eMG),
-                new RayS(sMC, eMC, this, eMG),
-                new SelectorS(sMC, eMC, this, eMG),
+                new InputS(sMC, eMC, this, eMG).Update,
+                new CheatsS(sMC, eMC, this, eMG).Update,
+                new RayS(sMC, eMC, this, eMG).Update,
+                new SelectorS(sMC, eMC, this, eMG).Update,
+
+                new Chessy.Game.MistakeS(sMC, eMC, this, eMG).Update,
             };
 
             MistakeS = new MistakeS(sMC, eMC, this, eMG);
@@ -386,11 +389,17 @@ namespace Chessy.Game.Model.System
             MasterSs.GetDataCellsS_M.Run();
         }
 
-        public void Run()
+        public void Update()
         {
-            _runs.ForEach((IEcsRunSystem iRun) => iRun.Run());
+            _runs.ForEach((Action action) => action());
 
-            //MasterSs.GetDataCellsS_M.Run();
+            _eMG.ForUpdateViewTimer += Time.deltaTime;
+
+            if (_eMG.ForUpdateViewTimer >= 1)
+            {
+                _eMG.NeedUpdateView = true;
+                _eMG.ForUpdateViewTimer = 0;
+            }
         }
     }
 }

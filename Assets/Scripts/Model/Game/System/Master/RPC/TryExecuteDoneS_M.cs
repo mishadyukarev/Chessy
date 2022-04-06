@@ -9,7 +9,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class TryExecuteDoneS_M : SystemModelGameAbs
+    sealed class TryExecuteDoneS_M : SystemModel
     {
         internal TryExecuteDoneS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

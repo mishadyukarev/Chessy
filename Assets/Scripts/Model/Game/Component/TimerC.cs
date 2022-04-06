@@ -2,6 +2,6 @@
 {
     public struct TimerC
     {
-        public float Timer; /*{ get; internal set; }*/
+        public float Timer { get; internal set; }
     }
 }

@@ -3,7 +3,7 @@ using System;
 
 namespace Chessy.Game
 {
-    sealed class StatsUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class StatsUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame eUI;
 
@@ -12,7 +12,7 @@ namespace Chessy.Game
             eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             var idx_sel = e.CellsC.Selected;
 
@@ -23,19 +23,30 @@ namespace Chessy.Game
                 var damageAttack = e.DamageAttackC(idx_sel).Damage;
 
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(true);
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(true);
+
+                var needActiveWater = false;
+                var needActiveHp = false;
+                var needActiveDamage = false;
+
+                if (!e.LessonTC.HaveLesson)
+                {
+                    needActiveHp = true;
+                    needActiveDamage = true;
+                }
+
+                if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.DrinkWaterHere)
+                {
+                    if (!e.UnitTC(idx_sel).Is(UnitTypes.Elfemale))
+                    {
+                        needActiveWater = true;
+                    }
+                }
+
+
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(needActiveWater);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(needActiveHp);
+                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(needActiveDamage);
                 eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(true);
-
-
-                if (e.UnitTC(idx_sel).Is(UnitTypes.Elfemale))
-                {
-                    eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
-                }
-                else
-                {
-                    eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(true);
-                }
 
 
 

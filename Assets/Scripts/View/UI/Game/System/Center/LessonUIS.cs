@@ -4,27 +4,22 @@ using Chessy.Game.Enum;
 
 namespace Chessy.Game.View.UI.System
 {
-    public struct LessonUIS : IEcsRunSystem
+    sealed class LessonUIS : SystemUIAbstract
     {
         readonly CenterUIEs _centerUIEs;
         readonly EntitiesModelCommon _eMCommon;
-        readonly EntitiesModelGame _eMGame;
 
-        public LessonUIS(in CenterUIEs centerUIEs, in EntitiesModelCommon eMCommon, in EntitiesModelGame eMGame)
+        internal LessonUIS(in CenterUIEs centerUIEs, in EntitiesModelCommon eMCommon, in EntitiesModelGame eMGame) : base(eMGame)
         {
             _centerUIEs = centerUIEs;
             _eMCommon = eMCommon;
-            _eMGame = eMGame;
         }
 
-        public void Run()
+        internal override void Sync()
         {
-            var whoseMove = _eMGame.WhoseMovePlayerTC.PlayerT;
-
-
             for (var lessonT = (LessonTypes)1; lessonT < LessonTypes.End; lessonT++)
             {
-                _centerUIEs.LessonGOC(lessonT).SetActive(lessonT == _eMGame.LessonTC.LessonT);
+                _centerUIEs.LessonGOC(lessonT).SetActive(lessonT == e.LessonT);
             }
 
             _centerUIEs.BookGuidSelectionE.ParentGOVC.SetActive(_eMCommon.BookE.IsOpenedBook);

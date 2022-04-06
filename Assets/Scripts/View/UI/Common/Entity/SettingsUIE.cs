@@ -8,14 +8,14 @@ namespace Chessy.Common.View.UI
 {
     public struct SettingsUIE
     {
-        public readonly GameObjectVC ParentGOC;
+        internal readonly GameObjectVC ParentGOC;
 
-        public readonly ButtonUIC ExitButtonC;
-        public readonly SliderUIC SliderC;
-        public readonly ToggleUIC HintToggleC;
-  
+        internal readonly ButtonUIC ExitButtonC;
+        internal readonly SliderUIC SliderC;
+        internal readonly ToggleUIC HintToggleC;
 
-        public SettingsUIE(in Transform settingsZone)
+
+        internal SettingsUIE(in Transform settingsZone)
         {
             ParentGOC = new GameObjectVC(settingsZone.gameObject);
             ExitButtonC = new ButtonUIC(settingsZone.Find("ExitCross+").Find("Button+").GetComponent<Button>());

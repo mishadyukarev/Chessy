@@ -1,27 +1,37 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Entity;
 using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
-    struct CenterFriendUIS
+    sealed class CenterFriendUIS : SystemUIAbstract
     {
-        public void Run(in GameModeTC gameModeTC, in EntitiesViewUIGame eUI, in EntitiesModelGame e)
-        {
-            eUI.CenterEs.FriendE.ButtonC.SetActiveParent(false);
+        readonly EntitiesModelCommon _eMC;
+        readonly EntitiesViewUIGame _eUI;
 
-            if (gameModeTC.Is(GameModes.WithFriendOff))
+        internal CenterFriendUIS(in EntitiesModelCommon eMC, in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
+        {
+            _eMC = eMC;
+            _eUI = eUI;
+        }
+
+        internal override void Sync()
+        {
+            _eUI.CenterEs.FriendE.ButtonC.SetActiveParent(false);
+
+            if (_eMC.GameModeTC.Is(GameModes.WithFriendOff))
             {
                 if (e.ZoneInfoC.IsActiveFriend)
                 {
-                    eUI.CenterEs.FriendE.TextC.SetActiveParent(true);
+                    _eUI.CenterEs.FriendE.TextC.SetActiveParent(true);
 
                     if (e.CurPlayerITC.PlayerT == PlayerTypes.First)
                     {
-                        eUI.CenterEs.FriendE.TextC.TextUI.text = "1";
+                        _eUI.CenterEs.FriendE.TextC.TextUI.text = "1";
                     }
                     else
                     {
-                        eUI.CenterEs.FriendE.TextC.TextUI.text = "2";
+                        _eUI.CenterEs.FriendE.TextC.TextUI.text = "2";
                     }
                 }
             }

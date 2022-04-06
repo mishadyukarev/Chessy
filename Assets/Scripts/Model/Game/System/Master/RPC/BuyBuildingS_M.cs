@@ -10,7 +10,7 @@ using Photon.Pun;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class BuyBuildingS_M : SystemModelGameAbs
+    sealed class BuyBuildingS_M : SystemModel
     {
         internal BuyBuildingS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
@@ -166,7 +166,7 @@ namespace Chessy.Game.Model.System
 
             else
             {
-                if (eMG.LessonTC.LessonT == Enum.LessonTypes.BuyingHouse)
+                if (eMG.LessonTC.Is(Enum.LessonTypes.BuyingHouse))
                 {
                     eMG.LessonTC.SetNextLesson();
                 }

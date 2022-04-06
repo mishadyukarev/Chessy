@@ -1,8 +1,6 @@
 ﻿using Chessy.Common.Component;
 using Chessy.Common.Enum;
-using Chessy.Common.View.UI.Component;
 using Chessy.Game;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,22 +8,22 @@ using UnityEngine.Video;
 
 namespace Chessy.Common.Entity.View.UI
 {
-    public readonly struct BookUIE
+    readonly struct BookUIE
     {
-        readonly Dictionary<PageBookTypes, GameObjectVC> _pages;
+        readonly GameObjectVC[] _pages;
 
-        public readonly GameObjectVC ParenGOC;
+        internal readonly GameObjectVC ParenGOC;
 
-        public readonly ButtonUIC ExitButtonC;
-        public readonly ButtonUIC NextButtonC;
-        public readonly ButtonUIC BackButtonC;
+        internal readonly ButtonUIC ExitButtonC;
+        internal readonly ButtonUIC NextButtonC;
+        internal readonly ButtonUIC BackButtonC;
 
-        public readonly TextUIC LeftPageTextC;
-        public readonly TextUIC RightPageTextC;
+        internal readonly TextUIC LeftPageTextC;
+        internal readonly TextUIC RightPageTextC;
 
-        public GameObjectVC PageGOC(in PageBookTypes pageT) => _pages[pageT];
+        internal GameObjectVC PageGOC(in PageBookTypes pageT) => _pages[(byte)pageT];
 
-        public BookUIE(in Transform commonZone)
+        internal BookUIE(in Transform commonZone)
         {
             var parent = commonZone.Find("Book+");
 
@@ -34,14 +32,14 @@ namespace Chessy.Common.Entity.View.UI
             NextButtonC = new ButtonUIC(parent.Find("Next_Button+").GetComponent<Button>());
             BackButtonC = new ButtonUIC(parent.Find("Back_Button+").GetComponent<Button>());
 
-            _pages = new Dictionary<PageBookTypes, GameObjectVC>();
+            _pages = new GameObjectVC[(byte)PageBookTypes.End];
 
             var zone = parent.Find("Zones+");
 
             for (var pageT = PageBookTypes.None + 1; pageT < PageBookTypes.End; pageT++)
             {
                 var page = zone.Find(pageT + "+");
-                _pages.Add(pageT, new GameObjectVC(page.gameObject));
+                _pages[(byte)pageT] = new GameObjectVC(page.gameObject);
 
                 if (pageT == PageBookTypes.Main ||
                    pageT == PageBookTypes.God ||

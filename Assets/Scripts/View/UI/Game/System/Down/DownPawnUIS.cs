@@ -13,7 +13,7 @@ namespace Chessy.Game
             _pawnE = pawnE;
         }
 
-        internal void Run()
+        internal override void Sync()
         {
             if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.SettingPawn)
             {

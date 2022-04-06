@@ -12,7 +12,7 @@ namespace Chessy.Game
             _skipLessonUIE = skipLessonUIE;
         }
 
-        internal void Sync()
+        internal override void Sync()
         {
             _skipLessonUIE.ButtonUIC.SetActiveParent(e.LessonTC.HaveLesson);
         }

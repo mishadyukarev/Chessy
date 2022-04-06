@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class CenterKingUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class CenterKingUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame _eUI;
 
@@ -11,7 +11,7 @@ namespace Chessy.Game
             _eUI = eUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             if (e.PlayerInfoE(e.CurPlayerITC.PlayerT).KingInfoE.HaveInInventor)
             {

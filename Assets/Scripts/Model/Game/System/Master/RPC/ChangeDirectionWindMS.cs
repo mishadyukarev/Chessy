@@ -8,7 +8,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ChangeDirectionWindMS : SystemModelGameAbs
+    sealed class ChangeDirectionWindMS : SystemModel
     {
         internal ChangeDirectionWindMS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

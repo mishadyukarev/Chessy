@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class FireUpdateMS : SystemModelGameAbs
+    sealed class FireUpdateMS : SystemModel
     {
         internal FireUpdateMS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

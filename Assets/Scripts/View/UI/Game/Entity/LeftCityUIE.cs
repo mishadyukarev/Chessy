@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Chessy.Common.Component;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,15 +7,17 @@ namespace Chessy.Game
 {
     public readonly struct LeftCityUIE
     {
-        public readonly Chessy.Common.Component.GameObjectVC Parent;
+        public readonly GameObjectVC ParentGOC;
+        public readonly GameObjectVC ZoneGOC;
         public readonly ButtonUIC Button;
 
-        public readonly Chessy.Common.Component.GameObjectVC CostGOC;
+        public readonly GameObjectVC CostGOC;
         public readonly TextUIC CostTextC;
 
         internal LeftCityUIE(in Transform buildingZone)
         {
-            Parent = new Chessy.Common.Component.GameObjectVC(buildingZone.parent.gameObject);
+            ParentGOC = new Chessy.Common.Component.GameObjectVC(buildingZone.parent.gameObject);
+            ZoneGOC = new GameObjectVC(buildingZone.gameObject);
             Button = new ButtonUIC(buildingZone.Find("Button+").GetComponent<Button>());
 
             var cost = buildingZone.Find("Cost+");

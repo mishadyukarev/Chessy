@@ -4,7 +4,7 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class GetHeroClickCenterS : SystemModelGameAbs
+    public sealed class GetHeroClickCenterS : SystemModel
     {
         internal GetHeroClickCenterS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {

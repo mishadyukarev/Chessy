@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     public struct ButtonUIC
     {
-        public Button Button;
+        public readonly Button Button;
 
 
         public GameObject GameObject => Button.gameObject;

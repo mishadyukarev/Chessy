@@ -1,18 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Game.Model.Entity;
+using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public struct EffectsUIS
+    sealed class EffectsUIS : SystemUIAbstract
     {
-        readonly Dictionary<EffectTypes, bool> _isFilled;
+        readonly ResourcesE _resourcesE;
+        readonly EntitiesViewUIGame _eUI;
 
-        internal EffectsUIS(in Dictionary<EffectTypes, bool> dict)
+        readonly Dictionary<EffectTypes, bool> _isFilled = new Dictionary<EffectTypes, bool>();
+
+        internal EffectsUIS(in ResourcesE resources, in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
         {
-            _isFilled = dict;
+            _resourcesE = resources;
+            _eUI = eUI;
+
             for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled.Add(effectT, false);
         }
 
-        public void Run(in ResourcesE resources, in EntitiesViewUIGame eUI, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        internal override void Sync()
         {
             if (e.CellsC.IsSelectedCell)
             {
@@ -24,31 +30,36 @@ namespace Chessy.Game
 
                     for (byte idx_eff = 0; idx_eff < 5; idx_eff++)
                     {
-                        eUI.RightEs.Effect(idx_eff).GO.SetActive(false);
+                        _eUI.RightEs.Effect(idx_eff).GO.SetActive(false);
 
-                        if (!_isFilled[EffectTypes.Shield] && e.ShieldUnitEffectC(idx_sel).HaveAnyProtection)
+                        if (!e.LessonTC.HaveLesson)
                         {
-                            eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                            eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.Shield);
-                            _isFilled[EffectTypes.Shield] = true;
-                        }
-                        else if (!_isFilled[EffectTypes.Arraw] && e.FrozenArrawEffectC(idx_sel).HaveShoots)
-                        {
-                            eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                            eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.Arraw);
-                            _isFilled[EffectTypes.Arraw] = true;
-                        }
-                        else if (!_isFilled[EffectTypes.Stun] && e.StunUnitC(idx_sel).IsStunned)
-                        {
-                            eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                            eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.Stun);
-                            _isFilled[EffectTypes.Stun] = true;
-                        }
-                        else if (!_isFilled[EffectTypes.DamageAdd] && e.HaveKingEffect(idx_sel))
-                        {
-                            eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                            eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = resources.Sprite(EffectTypes.DamageAdd);
-                            _isFilled[EffectTypes.DamageAdd] = true;
+
+
+                            if (!_isFilled[EffectTypes.Shield] && e.ShieldUnitEffectC(idx_sel).HaveAnyProtection)
+                            {
+                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
+                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Shield);
+                                _isFilled[EffectTypes.Shield] = true;
+                            }
+                            else if (!_isFilled[EffectTypes.Arraw] && e.FrozenArrawEffectC(idx_sel).HaveShoots)
+                            {
+                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
+                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Arraw);
+                                _isFilled[EffectTypes.Arraw] = true;
+                            }
+                            else if (!_isFilled[EffectTypes.Stun] && e.StunUnitC(idx_sel).IsStunned)
+                            {
+                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
+                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Stun);
+                                _isFilled[EffectTypes.Stun] = true;
+                            }
+                            else if (!_isFilled[EffectTypes.DamageAdd] && e.HaveKingEffect(idx_sel))
+                            {
+                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
+                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.DamageAdd);
+                                _isFilled[EffectTypes.DamageAdd] = true;
+                            }
                         }
                     }
                 }

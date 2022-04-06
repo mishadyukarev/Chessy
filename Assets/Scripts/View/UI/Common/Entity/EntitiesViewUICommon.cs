@@ -1,7 +1,5 @@
 ﻿using Chessy.Common.Entity.View.UI;
-using Chessy.Common.Interface;
 using Chessy.Common.View.UI.Entity;
-using System;
 using UnityEngine;
 
 namespace Chessy.Common.View.UI
@@ -9,7 +7,7 @@ namespace Chessy.Common.View.UI
     public sealed class EntitiesViewUICommon
     {
         public readonly CanvasUIE CanvasE;
-        public readonly BookUIE BookE;
+        internal readonly BookUIE BookE;
         public readonly ShopUIE ShopE;
         public readonly SettingsUIE SettingsE;
 

@@ -1,8 +1,9 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Extensions;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
-    sealed class CenterHeroesUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class CenterHeroesUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame _eUI;
 
@@ -11,7 +12,7 @@ namespace Chessy.Game
             _eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             var isActiveKingZone = _eUI.CenterEs.KingE.Paren.IsActiveSelf;
             var curPlayerI = e.CurPlayerITC.PlayerT;
@@ -27,6 +28,13 @@ namespace Chessy.Game
                 _eUI.CenterEs.HeroE(UnitTypes.Elfemale).Parent
                     .SetActive(false);
             }
+
+
+            var nextPlayerT = e.CurPlayerIT.NextPlayer();
+            var haveElfemaleEnemy = e.PlayerInfoE(nextPlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale);
+            var haveSnowyEnemy = e.PlayerInfoE(nextPlayerT).GodInfoE.UnitTC.Is(UnitTypes.Snowy);
+            _eUI.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.SetActiveParent(!haveElfemaleEnemy);
+            _eUI.CenterEs.HeroE(UnitTypes.Snowy).ButtonC.SetActiveParent(!haveSnowyEnemy);
         }
     }
 }

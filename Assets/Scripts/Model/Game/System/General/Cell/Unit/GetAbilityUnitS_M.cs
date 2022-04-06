@@ -6,7 +6,7 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetAbilityUnitS_M : SystemModelGameAbs
+    sealed class GetAbilityUnitS_M : SystemModel
     {
         internal GetAbilityUnitS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
@@ -43,17 +43,7 @@ namespace Chessy.Game.Model.System
                         }
                         else
                         {
-                            if (eMG.AdultForestC(cell_0).HaveAnyResources)
-                            {
-                                if (eMG.HaveFire(cell_0)) eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.PutOutFirePawn);
-                                else eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.FirePawn);
-                            }
-                            else
-                            {
-                                eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.Seed);
-                            }
-
-
+                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.Seed);
 
                             if (eMG.BuildingTC(cell_0).HaveBuilding)
                             {
@@ -63,6 +53,14 @@ namespace Chessy.Game.Model.System
                             {
                                 eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
                             }
+
+                            if (eMG.HaveFire(cell_0)) eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
+                            else eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
+ 
+
+
+
+
 
                             //else
                             //{

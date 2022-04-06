@@ -1,9 +1,10 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
-    sealed class LeftCityUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class LeftCityUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame eUI;
 
@@ -12,12 +13,41 @@ namespace Chessy.Game
             eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             var whoseMove = e.WhoseMovePlayerTC.PlayerT;
 
 
             //UIE.LeftEs.CityE(BuildingTypes.Camp).Parent.SetActive(E.IsSelectedCity);
+
+            var isActiveSmelter = false;
+            var needActiveMarket = false;
+            var needActiveFuture = false;
+            var needActivePremum = false;
+
+            if (e.LessonTC.HaveLesson)
+            {
+                if (e.LessonT >= LessonTypes.ClickBuyMelterInTown)
+                {
+                    isActiveSmelter = true;
+                }
+                if (e.LessonT >= LessonTypes.ClickBuyMarketInTown)
+                {
+                    needActiveMarket = true;
+                }
+            }
+            else
+            {
+                isActiveSmelter = true;
+                needActiveMarket = true;
+                needActiveFuture = true;
+                needActivePremum = true;
+            }
+
+            eUI.LeftEs.CityE(BuildingTypes.Smelter).ZoneGOC.SetActive(isActiveSmelter);
+            eUI.LeftEs.CityE(BuildingTypes.Market).ZoneGOC.SetActive(needActiveMarket);
+            eUI.LeftEs.FutureGOC.SetActive(needActiveFuture);
+            eUI.LeftEs.PremiumButtonC.SetActive(needActivePremum);
 
 
             for (var buildingT = BuildingTypes.None + 1; buildingT < BuildingTypes.End; buildingT++)

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class TruceMS : SystemModelGameAbs
+    sealed class TruceMS : SystemModel
     {
         const float PEOPLE_AFTER_TRUCE = 15;
 

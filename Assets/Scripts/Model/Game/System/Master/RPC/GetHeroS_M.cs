@@ -7,7 +7,7 @@ using Photon.Pun;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class GetHeroS_M : SystemModelGameAbs
+    sealed class GetHeroS_M : SystemModel
     {
         internal GetHeroS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

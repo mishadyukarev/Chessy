@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class InputS : SystemModelGameAbs, IEcsRunSystem
+    sealed class InputS : SystemModel
     {
         internal InputS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
-        public void Run()
+        internal void Update()
         {
             eMG.IsClicked = Input.GetMouseButtonDown(0);
         }

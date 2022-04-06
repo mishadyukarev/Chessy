@@ -3,7 +3,7 @@ using System;
 
 namespace Chessy.Game
 {
-    sealed class UpSunsUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class UpSunsUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame eUI;
 
@@ -12,7 +12,7 @@ namespace Chessy.Game
             eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             var isFirstPlayer = e.CurPlayerITC.Is(PlayerTypes.First);
 

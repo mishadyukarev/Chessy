@@ -5,7 +5,7 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetWoodcutterExtractCellsS : SystemModelGameAbs
+    sealed class GetWoodcutterExtractCellsS : SystemModel
     {
         internal GetWoodcutterExtractCellsS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

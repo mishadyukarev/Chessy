@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class CenterReadyUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class CenterReadyUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame eUI;
 
@@ -13,7 +13,7 @@ namespace Chessy.Game
             eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             var readyBut = eUI.CenterEs.ReadyButtonC;
 

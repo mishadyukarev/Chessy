@@ -10,5 +10,7 @@ namespace Chessy.Game
         {
             e = eMG;
         }
+
+        internal abstract void Sync();
     }
 }

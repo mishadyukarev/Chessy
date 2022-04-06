@@ -6,7 +6,7 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetDataCellsS_M : SystemModelGameAbs
+    sealed class GetDataCellsS_M : SystemModel
     {
         readonly GetVisibleUnitS _getVisibleS;
         readonly GetCellForArsonArcherS _getCellForArsonArcherS;

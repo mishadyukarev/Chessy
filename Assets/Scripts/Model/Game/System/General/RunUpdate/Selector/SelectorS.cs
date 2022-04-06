@@ -6,7 +6,7 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SelectorS : SystemModelGameAbs, IEcsRunSystem
+    sealed class SelectorS : SystemModel, IUpdate
     {
         readonly CellSimpleClickS _cellSimpleClickS;
 
@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
             _cellSimpleClickS = new CellSimpleClickS(sMC, eMC, sMG, eMG);
         }
 
-        public void Run()
+        public void Update()
         {
             var idx_cur = eMG.CellsC.Current;
 

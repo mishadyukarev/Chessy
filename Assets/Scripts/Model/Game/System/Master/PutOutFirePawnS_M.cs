@@ -6,7 +6,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class PutOutFirePawnS_M : SystemModelGameAbs
+    sealed class PutOutFirePawnS_M : SystemModel
     {
         internal PutOutFirePawnS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

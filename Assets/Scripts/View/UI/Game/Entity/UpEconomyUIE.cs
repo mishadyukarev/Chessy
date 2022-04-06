@@ -1,27 +1,24 @@
-﻿using Chessy.Common;
-using Chessy.Common.Component;
-using System.Collections.Generic;
+﻿using Chessy.Common.Component;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Chessy.Game
 {
     public readonly struct UpEconomyUIE
     {
-        readonly Dictionary<ResourceTypes, TextUIC> _economy;
-        readonly Dictionary<ResourceTypes, TextUIC> _economyExtract;
+        readonly TextUIC[] _economy;
+        readonly TextUIC[] _economyExtract;
 
         public readonly GameObjectVC ParenGOC;
 
-        public TextUIC Economy(in ResourceTypes res) => _economy[res];
-        public TextUIC EconomyExtract(in ResourceTypes res) => _economyExtract[res];
+        public TextUIC Economy(in ResourceTypes res) => _economy[(byte)res];
+        public TextUIC EconomyExtract(in ResourceTypes res) => _economyExtract[(byte)res];
 
 
         public UpEconomyUIE(in Transform upZone)
         {
-            _economy = new Dictionary<ResourceTypes, TextUIC>();
-            _economyExtract = new Dictionary<ResourceTypes, TextUIC>();
+            _economy = new TextUIC[(byte)ResourceTypes.End];
+            _economyExtract = new TextUIC[(byte)ResourceTypes.End];
 
             var res = upZone.Find("ResourcesZone");
 
@@ -31,12 +28,12 @@ namespace Chessy.Game
             {
                 var resZone = res.Find(resT.ToString());
 
-                _economy.Add(resT, new TextUIC(resZone.Find(resT.ToString() + "_TMP").GetComponent<TextMeshProUGUI>()));
+                _economy[(byte)resT] = new TextUIC(resZone.Find(resT.ToString() + "_TMP").GetComponent<TextMeshProUGUI>());
 
 
                 if (resT != ResourceTypes.Gold && resT != ResourceTypes.Iron)
                 {
-                    _economyExtract.Add(resT, new TextUIC(resZone.Find(resT.ToString() + "Adding_TMP").GetComponent<TextMeshProUGUI>()));
+                    _economyExtract[(byte)resT] = new TextUIC(resZone.Find(resT.ToString() + "Adding_TMP").GetComponent<TextMeshProUGUI>());
                 }
             }
         }

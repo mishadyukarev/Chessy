@@ -4,16 +4,16 @@ using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game
 {
-    public struct CellEs
+    internal struct CellEs
     {
-        public CellE CellE;
-        public AroundCellsE AroundCellsEs;
-        public UnitEs UnitEs;
-        public BuildingE BuildEs;
-        public EnvironmentE EnvironmentEs;
-        public EffectE EffectEs;
-        public RiverE RiverEs;
-        public TrailE TrailE;
+        internal CellE CellE;
+        internal AroundCellsE AroundCellsEs;
+        internal UnitEs UnitEs;
+        internal BuildingE BuildEs;
+        internal EnvironmentE EnvironmentEs;
+        internal EffectE EffectEs;
+        internal RiverE RiverEs;
+        internal TrailE TrailE;
 
         internal CellEs(in bool[] isActiveParents, in int idCell, in byte idx, in EntitiesModelGame eMGame, params byte[] xy) : this()
         {

@@ -6,7 +6,7 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetNewUnitOnCellS : SystemModelGameAbs
+    sealed class SetNewUnitOnCellS : SystemModel
     {
         internal SetNewUnitOnCellS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

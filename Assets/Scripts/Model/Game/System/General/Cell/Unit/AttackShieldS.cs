@@ -5,7 +5,7 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class AttackShieldS : SystemModelGameAbs
+    sealed class AttackShieldS : SystemModel
     {
         internal AttackShieldS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

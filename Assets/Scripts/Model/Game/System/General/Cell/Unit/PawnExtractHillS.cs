@@ -5,7 +5,7 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class PawnExtractHillS : SystemModelGameAbs
+    sealed class PawnExtractHillS : SystemModel
     {
         internal PawnExtractHillS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
@@ -13,7 +13,7 @@ namespace Chessy.Game.Model.System
         {
             eMG.PawnExtractHillC(cell_0).Resources = 0;
 
-            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(cell_0).Is(ToolWeaponTypes.Pick))
+            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(cell_0).Is(ToolWeaponTypes.Pick) && eMG.UnitConditionT(cell_0) == ConditionUnitTypes.Relaxed)
             {
                 if (eMG.HillC(cell_0).HaveAnyResources)
                 {

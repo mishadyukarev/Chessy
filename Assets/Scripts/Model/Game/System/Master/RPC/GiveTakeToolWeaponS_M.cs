@@ -12,7 +12,7 @@ using Photon.Pun;
 
 namespace Chessy.Game
 {
-    sealed class GiveTakeToolWeaponS_M : SystemModelGameAbs
+    sealed class GiveTakeToolWeaponS_M : SystemModel
     {
         internal GiveTakeToolWeaponS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

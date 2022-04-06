@@ -8,7 +8,7 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class CurcularAttackKingS_M : SystemModelGameAbs
+    sealed class CurcularAttackKingS_M : SystemModel
     {
         internal CurcularAttackKingS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 

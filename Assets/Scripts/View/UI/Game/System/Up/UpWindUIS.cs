@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class UpWindUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class UpWindUIS : SystemUIAbstract
     {
         readonly Dictionary<DirectTypes, Vector3> _directs;
         readonly Vector3 _rotationForOtherPlayer = new Vector3(0, 0, 180);
@@ -33,7 +33,7 @@ namespace Chessy.Game
             _eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.ClickWindInfo)
             {
@@ -49,8 +49,6 @@ namespace Chessy.Game
             {
                 _eUI.UpEs.ParentWindGOC.SetActive(false);
             }
-
-
         }
     }
 }

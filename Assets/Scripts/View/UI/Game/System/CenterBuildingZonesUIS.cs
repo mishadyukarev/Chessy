@@ -2,7 +2,7 @@
 
 namespace Chessy.Game
 {
-    sealed class CenterBuildingZonesUIS : SystemUIAbstract, IEcsRunSystem
+    sealed class CenterBuildingZonesUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame eUI;
 
@@ -11,7 +11,7 @@ namespace Chessy.Game
             eUI = entsUI;
         }
 
-        public void Run()
+        internal override void Sync()
         {
             eUI.CenterEs.MarketE.Zone.SetActive(e.SelectedE.BuildingsC.Is(BuildingTypes.Market));
             eUI.CenterEs.SmelterE.Zone.SetActive(e.SelectedE.BuildingsC.Is(BuildingTypes.Smelter));
@@ -33,13 +33,6 @@ namespace Chessy.Game
 
             eUI.CenterEs.SmelterE.TextC(ResourceTypes.Iron).TextUI.text = EconomyValues.IRON_AFTER_MELTING.ToString();
             eUI.CenterEs.SmelterE.TextC(ResourceTypes.Gold).TextUI.text = EconomyValues.GOLD_AFTER_MELTING.ToString();
-
-
-            //if (UIE.CenterEs.SmelterE.ButtonC.Button.Cli)
-            //{
-
-            //}
-            
         }
     }
 }

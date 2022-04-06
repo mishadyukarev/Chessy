@@ -2,36 +2,34 @@
 using Chessy.Common.Enum;
 using Chessy.Common.Interface;
 using System;
-using System.Collections.Generic;
 
 namespace Chessy.Common.Model.System
 {
-    public sealed class SystemsModelCommon : IEcsRunSystem, IToggleScene
+    public sealed class SystemsModelCommon : IUpdate, IToggleScene
     {
         readonly EntitiesModelCommon _eMCommon;
-        readonly List<IEcsRunSystem> _updates;
+        readonly AdLaunchS _adLaunchS;
+
+        public BuyPremiumProductS BuyProductS;
 
         public SystemsModelCommon(in EntitiesModelCommon eMCommon)
         {
             _eMCommon = eMCommon;
 
-            _updates = new List<IEcsRunSystem>()
-            {
-                new AdLaunchS(eMCommon),
-            };
+            _adLaunchS = new AdLaunchS(eMCommon);
+
+            BuyProductS = new BuyPremiumProductS(eMCommon);
         }
 
-        public void Run()
+        public void Update()
         {
-            _updates.ForEach((IEcsRunSystem iRun) => iRun.Run());
+            _adLaunchS.Update();
         }
 
 
         public void ToggleScene(in SceneTypes newSceneT)
         {
-            if (_eMCommon.SceneTC.Is(newSceneT)) throw new Exception("Need other scene");
-
-            _eMCommon.SceneTC.Scene = newSceneT;
+            _eMCommon.SceneTC.SceneT = newSceneT;
 
             switch (newSceneT)
             {
@@ -45,13 +43,12 @@ namespace Chessy.Common.Model.System
 
                 case SceneTypes.Game:
                     {
-                        _eMCommon.BookE.IsOpenedBook = true;
-                        _eMCommon.BookE.PageBookTC.PageBookT = PageBookTypes.Main;
+                        _eMCommon.IsOpenedBook = true;
+                        _eMCommon.PageBookTC.PageBookT = PageBookTypes.Main;
                         break;
                     }
                 default: throw new Exception();
             }
         }
-
     }
 }

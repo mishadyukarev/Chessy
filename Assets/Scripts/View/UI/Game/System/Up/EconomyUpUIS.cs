@@ -1,30 +1,78 @@
-﻿using Chessy.Game.Values;
-using System;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public sealed class EconomyUpUIS
+    sealed class EconomyUpUIS : SystemUIAbstract
     {
-        readonly Dictionary<ResourceTypes, float> _extracts;
+        readonly UpEconomyUIE _economyUIE;
+        readonly Dictionary<ResourceTypes, float> _extracts = new Dictionary<ResourceTypes, float>();
+        readonly Dictionary<ResourceTypes, bool> _needActive = new Dictionary<ResourceTypes, bool>();
 
-        internal EconomyUpUIS(in Dictionary<ResourceTypes, float> dict)
+        internal EconomyUpUIS(in UpEconomyUIE economyUIE, in EntitiesModelGame eMG) : base(eMG)
         {
-            _extracts = dict;
-            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts.Add(res, default);
+            _economyUIE = economyUIE;
+            for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
+            {
+                _extracts.Add(res, 0);
+                _needActive.Add(res, false);
+            }
         }
 
-        public void Run(in EntitiesViewUIGame eUI, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        internal override void Sync()
         {
-            if (e.LessonTC.LessonT >= Enum.LessonTypes.BuyingHouse || !e.LessonTC.HaveLesson)
+            var activeResZone = false;
+            for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++) _needActive[resT] = false;
+
+
+            if (!e.LessonTC.HaveLesson)
             {
-                eUI.UpEs.EconomyE.ParenGOC.SetActive(true);
+                activeResZone = true;
+                for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++) _needActive[resT] = true;
+
+            }
+            else if (e.LessonT >= LessonTypes.BuyingHouse)
+            {
+                activeResZone = true;
+
+                _needActive[ResourceTypes.Wood] = true;
+
+                if (e.LessonT >= LessonTypes.BuildingFarmHere)
+                {
+                    _needActive[ResourceTypes.Food] = true;
+
+                    if (e.LessonT >= LessonTypes.ExtractHillPawnHere)
+                    {
+                        _needActive[ResourceTypes.Ore] = true;
+
+                        if (e.LessonT >= LessonTypes.ClickBuyMelterInTown)
+                        {
+                            _needActive[ResourceTypes.Iron] = true;
+                            _needActive[ResourceTypes.Gold] = true;
+                        }
+                    }
+                }
+            }
+
+            _economyUIE.ParenGOC.SetActive(activeResZone);
 
 
-                var curPlayer = e.CurPlayerITC.PlayerT;
+
+            if (activeResZone)
+            {
+
+                for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
+                {
+                    _economyUIE.Economy(resT).SetActiveParent(_needActive[resT]);
+                }
 
 
-                for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
+
+
+
+                    for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++) _extracts[res] = default;
 
                 _extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
 
@@ -33,7 +81,7 @@ namespace Chessy.Game
                 {
 
 
-                    if (e.UnitPlayerTC(idx_0).Is(curPlayer))
+                    if (e.UnitPlayerTC(idx_0).Is(e.CurPlayerIT))
                     {
                         if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
                         {
@@ -44,7 +92,7 @@ namespace Chessy.Game
                         }
                     }
 
-                    if (e.BuildingPlayerTC(idx_0).Is(curPlayer))
+                    if (e.BuildingPlayerTC(idx_0).Is(e.CurPlayerIT))
                     {
                         _extracts[ResourceTypes.Wood] += e.WoodcutterExtractC(idx_0).Resources;
                         _extracts[ResourceTypes.Food] += e.FarmExtractFertilizeC(idx_0).Resources;
@@ -52,15 +100,11 @@ namespace Chessy.Game
                 }
 
 
-                var v = 100 * _extracts[ResourceTypes.Food];
-                var vv = (int)v;
+                if (_extracts[ResourceTypes.Food] < 0) _economyUIE.EconomyExtract(ResourceTypes.Food).TextUI.text = ((int)(100 * _extracts[ResourceTypes.Food])).ToString();
+                else _economyUIE.EconomyExtract(ResourceTypes.Food).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Food]));
 
-
-                if (_extracts[ResourceTypes.Food] < 0) eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = ((int)(100 * _extracts[ResourceTypes.Food])).ToString();
-                else eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Food).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Food]));
-
-                eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Wood).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Wood]));
-                eUI.UpEs.EconomyE.EconomyExtract(ResourceTypes.Ore).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Ore]));
+                _economyUIE.EconomyExtract(ResourceTypes.Wood).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Wood]));
+                _economyUIE.EconomyExtract(ResourceTypes.Ore).TextUI.text = "+ " + ((int)(100 * _extracts[ResourceTypes.Ore]));
 
 
                 for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
@@ -68,19 +112,15 @@ namespace Chessy.Game
                     string name = default;
                     if (res == ResourceTypes.Iron || res == ResourceTypes.Gold)
                     {
-                        name = e.PlayerInfoE(curPlayer).ResourcesC(res).Resources.ToString();
+                        name = e.PlayerInfoE(e.CurPlayerIT).ResourcesC(res).Resources.ToString();
                     }
                     else
                     {
-                        name = ((int)(100 * e.PlayerInfoE(curPlayer).ResourcesC(res).Resources)).ToString();
+                        name = ((int)(100 * e.PlayerInfoE(e.CurPlayerIT).ResourcesC(res).Resources)).ToString();
                     }
 
-                    eUI.UpEs.EconomyE.Economy(res).TextUI.text = name;
+                    _economyUIE.Economy(res).TextUI.text = name;
                 }
-            }
-            else
-            {
-                eUI.UpEs.EconomyE.ParenGOC.SetActive(false);
             }
         }
     }

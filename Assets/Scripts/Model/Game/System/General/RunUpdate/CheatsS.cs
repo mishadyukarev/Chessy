@@ -8,13 +8,13 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class CheatsS : SystemModelGameAbs, IEcsRunSystem
+    sealed class CheatsS : SystemModel, IUpdate
     {
         public CheatsS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {
         }
 
-        public void Run()
+        public void Update()
         {
             if (eMC.TestModeC.Is(TestModes.Standart))
             {

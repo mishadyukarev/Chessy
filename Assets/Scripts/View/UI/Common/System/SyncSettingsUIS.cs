@@ -1,10 +1,19 @@
-﻿namespace Chessy.Common.View.UI.System
+﻿using Chessy.Common.Entity;
+
+namespace Chessy.Common.View.UI.System
 {
-    public struct SyncSettingsUIS
+    sealed class SyncSettingsUIS : SyncUISystem
     {
-        public void Sync(in bool isOpenSettings, in SettingsUIE settingsUIE)
+        readonly SettingsUIE _settingsUIE;
+
+        internal SyncSettingsUIS(in SettingsUIE settingsUIE, in EntitiesModelCommon eMC) : base(eMC)
         {
-            settingsUIE.ParentGOC.SetActive(isOpenSettings);
+            _settingsUIE = settingsUIE;
+        }
+
+        internal override void Sync()
+        {
+            _settingsUIE.ParentGOC.SetActive(e.IsOpenSettings);
         }
     }
 }

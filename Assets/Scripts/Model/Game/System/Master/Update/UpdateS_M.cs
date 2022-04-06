@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class UpdateS_M : SystemModelGameAbs
+    sealed class UpdateS_M : SystemModel
     {
         readonly TruceMS _truceS_M;
         readonly FireUpdateMS _fireUpdateS_M;
@@ -83,7 +83,7 @@ namespace Chessy.Game.Model.System.Master
 
             var cell_0 = eMG.WeatherE.CloudC.Center;
 
-            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+            for (var dirT = DirectTypes.None; dirT < DirectTypes.End; dirT++)
             {
                 var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dirT);
 

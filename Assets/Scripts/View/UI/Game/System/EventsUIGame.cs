@@ -15,6 +15,14 @@ namespace Chessy.Game.EventsUI
     {
         public EventsUIGame(EntitiesViewUICommon eUICommon, EntitiesModelCommon eMCommon, SystemsModelGame sMGame, in EntitiesViewUIGame eUIGame, EntitiesModelGame eMGame)
         {
+            eUICommon.BookE.ExitButtonC.AddListener(delegate
+            {
+                eMGame.NeedUpdateView = true;
+            });
+
+
+
+
             #region Down
 
             eUIGame.DownEs.DonerE.ButtonC.AddListener(sMGame.ForUISystems.DoneClickS.Click);
