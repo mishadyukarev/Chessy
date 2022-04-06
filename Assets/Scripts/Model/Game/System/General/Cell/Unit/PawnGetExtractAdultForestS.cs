@@ -20,13 +20,13 @@ namespace Chessy.Game.Model.System
                 {
                     var extract = ExtractPawnForestValues.EXTRACT_PAWM_ADULT_FOREST;
 
-                    if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
-                    {
-                        if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
-                        {
-                            extract *= ExtractPawnForestValues.ELFEMALE_PAWN_ADULT_FOREST;
-                        }
-                    }
+                    //if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
+                    //{
+                    //    if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
+                    //    {
+                    //        extract *= ExtractPawnForestValues.ELFEMALE_PAWN_ADULT_FOREST;
+                    //    }
+                    //}
 
 
 

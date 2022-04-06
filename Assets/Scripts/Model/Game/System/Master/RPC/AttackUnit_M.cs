@@ -12,6 +12,8 @@ namespace Chessy.Game.Model.System.Master
 {
     sealed class AttackUnit_M : SystemModel
     {
+        int _snowyArrow;
+
         internal AttackUnit_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
         {
         }
@@ -138,9 +140,18 @@ namespace Chessy.Game.Model.System.Master
                     }
                     else if(eMG.UnitT(idx_from) == UnitTypes.Snowy)
                     {
-                        eMG.FrozenArrawEffectC(idx_from).Shoots--;
+                        if (_snowyArrow <= 0)
+                        {
+                            eMG.FrozenArrawEffectC(idx_from).Shoots--;
 
-                        eMG.StunUnitC(idx_to).Stun = 1;
+                            eMG.StunUnitC(idx_to).Stun = 1;
+
+                            _snowyArrow = 1;
+                        }
+                        else
+                        {
+                            _snowyArrow--;
+                        }
                     }
                 }
 

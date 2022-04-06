@@ -47,6 +47,20 @@ namespace Chessy.Game.View.UI.System
                         needActive = true;
                     }
                 }
+                else if (_buttonT == ButtonTypes.Fourth)
+                {
+                    if (!e.LessonTC.HaveLesson)
+                    {
+                        needActive = true;
+                    }
+                }
+                else if (_buttonT == ButtonTypes.Fifth)
+                {
+                    if (!e.LessonTC.HaveLesson)
+                    {
+                        needActive = true;
+                    }
+                }
             }
 
 
