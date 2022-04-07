@@ -76,6 +76,10 @@ namespace Chessy.Game.EventsUI
 
                 eMGame.NeedUpdateView = true;
             });
+            eUIGame.UpEs.DiscordButtonC.AddListener(() =>
+            {
+                Application.OpenURL(URLC.URL_DISCORD);
+            });
 
             #endregion
 
@@ -112,7 +116,6 @@ namespace Chessy.Game.EventsUI
             centerEs.JoinDiscordButtonC.AddListener(delegate
             {
                 Application.OpenURL(URLC.URL_DISCORD);
-                eMGame.NeedUpdateView = true;
             });
             centerEs.KingE.Button.AddListener(sMGame.ForUISystems.GetKingClickS.Click);
             centerEs.FriendE.ButtonC.AddListener(delegate

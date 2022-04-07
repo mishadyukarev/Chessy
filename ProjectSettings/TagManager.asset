@@ -101,3 +101,6 @@ TagManager:
   - name: Weather
     uniqueID: 1231844777
     locked: 0
+  - name: NoneSupportVision
+    uniqueID: 4260119031
+    locked: 0

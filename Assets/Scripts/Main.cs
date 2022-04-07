@@ -130,6 +130,7 @@ namespace Chessy
             #endregion
 
 
+            Application.runInBackground = true;
 
 
             //Resolution[] resolutions = Screen.resolutions;
@@ -153,5 +154,8 @@ namespace Chessy
                 default: throw new Exception();
             }
         }
+
+
+        
     }
 }

@@ -122,13 +122,17 @@ namespace Chessy.Game.Model.System
 
                     case RaycastTypes.Background:
                         {
-                            if (eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn)) eMG.LessonTC.SetPreviousLesson();
+                            if (!eMG.LessonTC.HaveLesson/* Is(LessonTypes.RelaxExtractPawn, LessonTypes.SeedingPawn)*/)
+                            {
+                                eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
 
+                                eMG.CellsC.PreviousSelected = eMG.CellsC.Selected;
+                                eMG.SelectedCell = 0;
 
-                            eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
+                                eMG.IsSelectedCity = false;
 
-                            eMG.CellsC.PreviousSelected = eMG.CellsC.Selected;
-                            eMG.CellsC.Selected = 0;
+                                //eMG.LessonTC.SetPreviousLesson();
+                            }
                         }
                         break;
 

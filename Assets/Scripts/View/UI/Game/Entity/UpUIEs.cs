@@ -22,6 +22,8 @@ namespace Chessy.Game
         public readonly TextUIC WindTextC;
         public readonly TextUIC MotionsTextC;
 
+        internal readonly ButtonUIC DiscordButtonC;
+
         public UpUIEs(in Button leaveButton, in Transform upZone)
         {
             EconomyE = new UpEconomyUIE(upZone);
@@ -45,8 +47,8 @@ namespace Chessy.Game
 
 
             AlphaC = new ButtonUIC(upZone.Find("Alpha_Button").GetComponent<Button>());
-
             MotionsTextC = new TextUIC(upZone.Find("Motions_TMP+").GetComponent<TextMeshProUGUI>());
+            DiscordButtonC = new ButtonUIC(upZone.Find("Discord_Button+").GetComponent<Button>());
         }
     }
 }

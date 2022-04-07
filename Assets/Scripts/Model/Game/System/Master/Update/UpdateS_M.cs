@@ -47,6 +47,7 @@ namespace Chessy.Game.Model.System.Master
                 var xy_next = eMG.AroundCellsE(cell).AroundCellE(eMG.WeatherE.WindC.DirectT).XyC.Xy;
                 var idx_next = eMG.AroundCellsE(cell).IdxCell(eMG.WeatherE.WindC.DirectT);
 
+                bool isBorder = false;
 
                 for (var ii = 0; ii < 10; ii++)
                 {
@@ -66,9 +67,13 @@ namespace Chessy.Game.Model.System.Master
                         else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
                         eMG.WeatherE.WindC.DirectT = (DirectTypes)newDirInt;
 
+                        isBorder = true;
+
                         break;
                     }
                 }
+
+                if (isBorder) break;
 
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
@@ -77,7 +82,7 @@ namespace Chessy.Game.Model.System.Master
                 }
             }
 
-            if (UnityEngine.Random.Range(0f, 1f) > UpdateValues.PERCENT_FOR_CHANGING_WIND) eMG.WeatherE.WindC.Speed = UnityEngine.Random.Range(0, 4);
+            if (UnityEngine.Random.Range(0f, 1f) > UpdateValues.PERCENT_FOR_CHANGING_WIND) eMG.WeatherE.WindC.Speed = UnityEngine.Random.Range(1, 4);
 
 
 
@@ -357,6 +362,11 @@ namespace Chessy.Game.Model.System.Master
                             {
                                 eMG.LessonTC.SetNextLesson();
                             }
+                        }
+                        else if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
+                        {
+                            eMG.LessonTC.SetNextLesson();
+                            eMG.LessonTC.SetNextLesson();
                         }
                     }
                 }

@@ -13,8 +13,6 @@ namespace Chessy.Game.Model.System
 
         public void Click()
         {
-            eMG.CellsC.Selected = 0;
-
             eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
 
             var curPlayerI = eMG.CurPlayerITC.PlayerT;
@@ -28,6 +26,8 @@ namespace Chessy.Game.Model.System
                     {
                         if (eMG.PlayerInfoE(curPlayerI).PawnInfoE.PawnsInGame < eMG.PlayerInfoE(curPlayerI).PawnInfoE.MaxAvailable)
                         {
+                            eMG.SelectedCell = 0;
+
                             eMG.SelectedUnitE.UnitTC.UnitT = UnitTypes.Pawn;
                             eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
 
