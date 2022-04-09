@@ -105,11 +105,13 @@ namespace Chessy.Game.Model.System.Master
                 {
                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Snowy))
                     {
-                        if (eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround.Any(cell => cell == cell_0))
-                        {
-                            eMG.WaterUnitC(cell_0).Water = WaterValues.MAX;
-                        }
+                        //if (eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround.Any(cell => cell == cell_0))
+                        //{
+                        //    eMG.WaterUnitC(cell_0).Water = WaterValues.MAX;
+                        //}
 
+
+                        sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.Give(cell_0);
                     }
 
                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Wolf))
@@ -290,19 +292,11 @@ namespace Chessy.Game.Model.System.Master
                         }
                         else
                         {
-                            var needWater = WaterValues.NeedWaterForThirsty(eMG.UnitTC(cell_0).UnitT);
-
-                            if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Snowy))
-                            {
-                                needWater *= 0.75f;
-                            }
-
-
-                            eMG.WaterUnitC(cell_0).Water -= needWater;
+                            eMG.WaterUnitC(cell_0).Water -= WaterValues.NeedWaterForThirsty(eMG.UnitT(cell_0));
 
                             if (eMG.WaterUnitC(cell_0).Water <= 0)
                             {
-                                float percent = HpValues.ThirstyPercent(eMG.UnitTC(cell_0).UnitT);
+                                var percent = HpValues.ThirstyPercent(eMG.UnitTC(cell_0).UnitT);
 
                                 sMG.UnitSs.AttackUnitS.Attack(HpValues.MAX * percent, eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
 
@@ -507,12 +501,12 @@ namespace Chessy.Game.Model.System.Master
                                     }
                                     else
                                     {
-                                        eMG.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                        eMG.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_5_MOTIONS_RAINY;
                                     }
                                 }
                                 else
                                 {
-                                    eMG.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_DIRECT_WAVE;
+                                    eMG.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_5_MOTIONS_RAINY;
                                 }
                             }
                         }

@@ -7,6 +7,7 @@ using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
+using Chessy.Game.Values.Cell.Unit.Effect;
 
 namespace Chessy.Game.Model.System.Master
 {
@@ -35,13 +36,13 @@ namespace Chessy.Game.Model.System.Master
                 else eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
-                float powerDam_from = eMG.DamageAttackC(idx_from).Damage;
+                var powerDam_from = eMG.DamageAttackC(idx_from).Damage;
                 if (eMG.AttackUniqueCellsC(idx_from).Contains(idx_to))
                 {
-                    powerDam_from *= DamageValues.UNIQUE_PERCENT_DAMAGE;
+                    powerDam_from *= DamageUnitValues.UNIQUE_ATTACK_PERCENT_DAMAGE;
                 }
 
-                float powerDam_to = eMG.DamageOnCellC(idx_to).Damage;
+                var powerDam_to = eMG.DamageOnCellC(idx_to).Damage;
 
 
                 var dirAttack = eMG.AroundCellsE(idx_from).Direct(idx_to);
@@ -57,7 +58,7 @@ namespace Chessy.Game.Model.System.Master
 
                     if (isSunnedUnit)
                     {
-                        powerDam_from *= 0.9f;
+                        powerDam_from *= DamageUnitValues.SUN_EFFECT;
                     }
                 }
 
@@ -66,10 +67,10 @@ namespace Chessy.Game.Model.System.Master
 
 
 
-                float min_limit = 0;
-                float max_limit = 0;
-                float minus_to = 0;
-                float minus_from = 0;
+                double min_limit = 0;
+                double max_limit = 0;
+                double minus_to = 0;
+                double minus_from = 0;
 
                 var maxDamage = HpValues.MAX;
                 var minDamage = 0;
@@ -136,7 +137,7 @@ namespace Chessy.Game.Model.System.Master
                     {
                         eMG.FrozenArrawEffectC(idx_from).Shoots--;
 
-                        eMG.StunUnitC(idx_to).Stun = 1;
+                        eMG.StunUnitC(idx_to).Stun = StunValues.AFTER_FROZEN_ARRAW_PAWN;
                     }
                     else if(eMG.UnitT(idx_from) == UnitTypes.Snowy)
                     {
@@ -146,7 +147,7 @@ namespace Chessy.Game.Model.System.Master
 
                             eMG.StunUnitC(idx_to).Stun = 1;
 
-                            _snowyArrow = 1;
+                            _snowyArrow = Values.Values.RAINY_COOLDOWN_FROZEN_ARRAW;
                         }
                         else
                         {

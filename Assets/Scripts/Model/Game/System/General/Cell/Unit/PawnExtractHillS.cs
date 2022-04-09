@@ -17,7 +17,7 @@ namespace Chessy.Game.Model.System
             {
                 if (eMG.HillC(cell_0).HaveAnyResources)
                 {
-                    var extract = EnvironmentValues.PAWN_PICK_EXTRACT_HILL;
+                    var extract = ExtractPawnValues.PAWN_PICK_EXTRACT_HILL;
 
 
                     if (eMG.HillC(cell_0).Resources < extract) extract = eMG.HillC(cell_0).Resources;

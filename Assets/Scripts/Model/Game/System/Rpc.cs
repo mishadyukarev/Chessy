@@ -547,12 +547,12 @@ namespace Chessy.Game
                 for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
                     _eMG.UnitVisibleC(cell_0).Set(playerT, (bool)objects[_idx_cur++]);
 
-                _eMG.HpUnitC(cell_0).Health = (float)objects[_idx_cur++];
-                _eMG.StepUnitC(cell_0).Steps = (float)objects[_idx_cur++];
-                _eMG.WaterUnitC(cell_0).Water = (float)objects[_idx_cur++];
+                _eMG.HpUnitC(cell_0).Health = (double)objects[_idx_cur++];
+                _eMG.StepUnitC(cell_0).Steps = (double)objects[_idx_cur++];
+                _eMG.WaterUnitC(cell_0).Water = (double)objects[_idx_cur++];
 
-                _eMG.DamageAttackC(cell_0).Damage = (float)objects[_idx_cur++];
-                _eMG.DamageOnCellC(cell_0).Damage = (float)objects[_idx_cur++];
+                _eMG.DamageAttackC(cell_0).Damage = (double)objects[_idx_cur++];
+                _eMG.DamageOnCellC(cell_0).Damage = (double)objects[_idx_cur++];
 
                 _eMG.MainToolWeaponTC(cell_0).ToolWeaponT = (ToolWeaponTypes)objects[_idx_cur++];
                 _eMG.MainTWLevelTC(cell_0).LevelT = (LevelTypes)objects[_idx_cur++];
@@ -590,7 +590,7 @@ namespace Chessy.Game
                 _eMG.BuildingTC(cell_0).BuildingT = (BuildingTypes)objects[_idx_cur++];
                 _eMG.BuildingLevelTC(cell_0).LevelT = (LevelTypes)objects[_idx_cur++];
                 _eMG.BuildingPlayerTC(cell_0).PlayerT = (PlayerTypes)objects[_idx_cur++];
-                _eMG.BuildingHpC(cell_0).Health = (float)objects[_idx_cur++];
+                _eMG.BuildingHpC(cell_0).Health = (double)objects[_idx_cur++];
                 _eMG.BuildingVisibleC(cell_0).Sync((bool[])objects[_idx_cur++]);
                 _eMG.WoodcutterExtractC(cell_0).Resources = (float)objects[_idx_cur++];
                 _eMG.FarmExtractFertilizeC(cell_0).Resources = (float)objects[_idx_cur++];

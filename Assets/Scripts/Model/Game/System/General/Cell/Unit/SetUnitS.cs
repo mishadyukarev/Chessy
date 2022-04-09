@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
             sMG.UnitSs.SetEffectsS.Set(cell_from, cell_to);
             sMG.UnitSs.SetStatsS.Set(cell_from, cell_to);
             sMG.UnitSs.SetMainTWS.Set(cell_from, cell_to);
-            sMG.UnitSs.SetExtraTWS.Set(cell_from, cell_to);
+            sMG.UnitSs.SetExtraTWS.SetCopy(cell_from, cell_to);
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {

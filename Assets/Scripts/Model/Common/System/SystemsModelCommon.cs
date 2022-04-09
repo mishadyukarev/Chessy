@@ -2,34 +2,48 @@
 using Chessy.Common.Enum;
 using Chessy.Common.Interface;
 using System;
+using UnityEngine;
 
 namespace Chessy.Common.Model.System
 {
     public sealed class SystemsModelCommon : IUpdate, IToggleScene
     {
-        readonly EntitiesModelCommon _eMCommon;
-        readonly AdLaunchS _adLaunchS;
+        readonly EntitiesModelCommon _eMC;
 
         public BuyPremiumProductS BuyProductS;
 
-        public SystemsModelCommon(in EntitiesModelCommon eMCommon)
+        public SystemsModelCommon(in TestModes testModeT, in EntitiesModelCommon eMC)
         {
-            _eMCommon = eMCommon;
+            _eMC = eMC;
 
-            _adLaunchS = new AdLaunchS(eMCommon);
 
-            BuyProductS = new BuyPremiumProductS(eMCommon);
+
+            BuyProductS = new BuyPremiumProductS(eMC);
+
+            Application.runInBackground = true;
+
+            var nowTime = DateTime.Now;
+            _eMC.AdC = new AdC(nowTime);
+            _eMC.TimeStartGameC = new TimeStartGameC(nowTime);
+            _eMC.TestModeC = new TestModeC(testModeT);
+
+
+
+            _eMC.IsOpenedBook = false;
+            _eMC.PageBookT = PageBookTypes.Main;
+
+            _eMC.SceneTC.SceneT = SceneTypes.Menu;
         }
 
         public void Update()
         {
-            _adLaunchS.Update();
+
         }
 
 
         public void ToggleScene(in SceneTypes newSceneT)
         {
-            _eMCommon.SceneTC.SceneT = newSceneT;
+            _eMC.SceneTC.SceneT = newSceneT;
 
             switch (newSceneT)
             {
@@ -43,8 +57,8 @@ namespace Chessy.Common.Model.System
 
                 case SceneTypes.Game:
                     {
-                        _eMCommon.IsOpenedBook = true;
-                        _eMCommon.PageBookTC.PageBookT = PageBookTypes.Main;
+                        _eMC.IsOpenedBook = true;
+                        _eMC.PageBookTC.PageBookT = PageBookTypes.Main;
                         break;
                     }
                 default: throw new Exception();

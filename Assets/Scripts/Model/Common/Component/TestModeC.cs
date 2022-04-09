@@ -2,7 +2,7 @@
 {
     public struct TestModeC
     {
-        public TestModes TestModeT;
+        public TestModes TestModeT { get; internal set; }
 
         public bool Is(params TestModes[] testModes)
         {

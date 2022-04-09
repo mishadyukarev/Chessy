@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
     {
         internal SetStatsUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
-        internal void Set(in float hp, in float steps, in float water, in byte cell_0)
+        internal void Set(in double hp, in double steps, in double water, in byte cell_0)
         {
             eMG.HpUnitC(cell_0).Health = hp;
             eMG.StepUnitC(cell_0).Steps = steps;

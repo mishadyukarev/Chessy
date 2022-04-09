@@ -21,13 +21,10 @@ namespace Chessy.Game.Model.System
                     if (eMG.YoungForestC(cell_0).HaveAnyResources)
                     {
                         eMG.YoungForestC(cell_0).Resources = 0;
-
                         eMG.AdultForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
                         eMG.StepUnitC(cell_0).Steps -= StepValues.GROW_ADULT_FOREST;
-
-                        eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.AFTER_GROW_ADULT_FOREST);
-
+                        eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                         foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
                         {
@@ -36,27 +33,7 @@ namespace Chessy.Game.Model.System
                                 eMG.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                             }
                         }
-
-
-
                         eMG.RpcPoolEs.SoundToGeneral(sender, abilityT);
-
-
-                        foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
-                        {
-
-                            if (eMG.UnitTC(idx_1).HaveUnit)
-                            {
-                                if (eMG.UnitPlayerTC(idx_1).Is(eMG.UnitPlayerTC(cell_0).PlayerT))
-                                {
-                                    //if (!CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have)
-                                    //{
-                                    //    CellUnitEffectsEs.HaveEffect<HaveEffectC>(UnitStatTypes.Steps, idx_1).Have = true;
-                                    //}
-                                }
-                            }
-                        }
-
                     }
 
                     else eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);

@@ -18,36 +18,26 @@ namespace Chessy.Common.Entity
         public TimeStartGameC TimeStartGameC;
         public GameModeTC GameModeTC;
 
-        public BookE BookE;
-        public ref PageBookTC PageBookTC => ref BookE.PageBookTC;
-        public PageBookTypes PageBookT => PageBookTC.PageBookT;
-        public ref bool IsOpenedBook => ref BookE.IsOpenedBook;
+        BookE _bookE;
+        public ref PageBookTC PageBookTC => ref _bookE.PageBookTC;
+        public PageBookTypes PageBookT
+        {
+            get => PageBookTC.PageBookT;
+            internal set => PageBookTC.PageBookT = value;
+        }
+        public ref bool IsOpenedBook => ref _bookE.IsOpenedBook;
 
         public SceneTC SceneTC;
         public SceneTypes SceneT => SceneTC.SceneT;
 
-        public bool IsOnHint { get; internal set; }
         public bool WasLikeGameZone { get; internal set; }
         public bool IsOpenSettings;
 
         public ActionC SoundActionC(in Enum.ClipCommonTypes clipT) => _sound[clipT];
 
-        public EntitiesModelCommon(in TestModes testMode, in Dictionary<Enum.ClipCommonTypes, Action> sound)
+        public EntitiesModelCommon(in Dictionary<Enum.ClipCommonTypes, Action> sound)
         {
             foreach (var item in sound) _sound.Add(item.Key, new ActionC(item.Value));
-
-            IsOnHint = testMode != TestModes.Standart;
-
-            var nowTime = DateTime.Now;
-            AdC = new AdC(nowTime);
-            TimeStartGameC = new TimeStartGameC(nowTime);
-            TestModeC = new TestModeC(testMode);
-
-
-
-            BookE = new BookE(PageBookTypes.Main, false);
-
-            SceneTC.SceneT = SceneTypes.Menu;
         }
     }
 }

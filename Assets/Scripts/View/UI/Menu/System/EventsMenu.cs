@@ -41,8 +41,8 @@ namespace Chessy.Menu
 
             eUIM.CenterE.BookButtonC.AddListener(delegate
             {
-                eMC.BookE.IsOpenedBook = !eMC.BookE.IsOpenedBook;
-                eMC.SoundActionC(eMC.BookE.IsOpenedBook ? ClipCommonTypes.OpenBook : ClipCommonTypes.CloseBook).Invoke();
+                eMC.IsOpenedBook = !eMC.IsOpenedBook;
+                eMC.SoundActionC(eMC.IsOpenedBook ? ClipCommonTypes.OpenBook : ClipCommonTypes.CloseBook).Invoke();
             });
 
             eUIM.CenterE.SettingsButtonC.AddListener(delegate
@@ -119,15 +119,6 @@ namespace Chessy.Menu
         {
             gameModeC.GameModeT = offGameMode;
             PhotonNetwork.CreateRoom(default);
-        }
-
-        private void ShopZone(in ShopUIE shopUIE)
-        {
-            shopUIE.ShopZoneGOC.SetActive(true);
-        }
-        private void ExitLikeGame()
-        {
-            //LikeGameUICom.SetActiveZone(false);
         }
     }
 }

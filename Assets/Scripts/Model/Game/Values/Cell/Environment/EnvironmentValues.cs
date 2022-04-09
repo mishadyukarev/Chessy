@@ -25,7 +25,6 @@
 
         #region Hill
 
-        public const float PAWN_PICK_EXTRACT_HILL = MAX_RESOURCES * 0.1f;
         public const float CITY_EXTRACT_HILL = MAX_RESOURCES * 0.1f;
 
         #endregion

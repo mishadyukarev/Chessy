@@ -11,6 +11,7 @@
         UsingAbilities,
         ToolWeapons,
         AttackUnits,
+        Damage,
         Doner,
 
         Truce,
@@ -18,6 +19,9 @@
         Town,
         Wind,
         Sun,
+
+        Elfemale,
+        Rainy,
 
         End,
     }

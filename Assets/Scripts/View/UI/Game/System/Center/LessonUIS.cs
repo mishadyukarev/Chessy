@@ -22,7 +22,7 @@ namespace Chessy.Game.View.UI.System
                 _centerUIEs.LessonGOC(lessonT).SetActive(lessonT == e.LessonT);
             }
 
-            _centerUIEs.BookGuidSelectionE.ParentGOVC.SetActive(_eMCommon.BookE.IsOpenedBook);
+            _centerUIEs.BookGuidSelectionE.ParentGOVC.SetActive(_eMCommon.IsOpenedBook);
             //_centerUIEs.SettingUnitLessonE.ParengGOVC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingKing);
             //_centerUIEs.GettingUnitLessonE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.PickGod);
             //_centerUIEs.SettingPawnE.ParentGOC.SetActive(_eMGame.LessonTC.LessonT == LessonTypes.SettingPawn);

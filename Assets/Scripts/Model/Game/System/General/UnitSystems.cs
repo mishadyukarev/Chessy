@@ -13,7 +13,7 @@ namespace Chessy.Game.Model.System
         internal readonly SetMainUnitS SetMainS;
         internal readonly SetStatsUnitS SetStatsS;
         internal readonly SetMainToolWeaponUnitS SetMainTWS;
-        internal readonly SetExtraToolWeaponS SetExtraTWS;
+        internal readonly SetExtraToolWeaponS_M SetExtraTWS;
         internal readonly SetLastDiedS SetLastDiedS;
         internal readonly AttackShieldS AttackShieldS;
         internal readonly SetUnitS SetUnitS;
@@ -29,7 +29,7 @@ namespace Chessy.Game.Model.System
             SetMainS = new SetMainUnitS(sMC, eMC, sMG, eMG);
             SetStatsS = new SetStatsUnitS(sMC, eMC, sMG, eMG);
             SetMainTWS = new SetMainToolWeaponUnitS(sMC, eMC, sMG, eMG);
-            SetExtraTWS = new SetExtraToolWeaponS(sMC, eMC, sMG, eMG);
+            SetExtraTWS = new SetExtraToolWeaponS_M(sMC, eMC, sMG, eMG);
             SetLastDiedS = new SetLastDiedS(sMC, eMC, sMG, eMG);
             SetUnitS = new SetUnitS(sMC, eMC, sMG, eMG);
             AttackShieldS = new AttackShieldS(sMC, eMC, sMG, eMG);

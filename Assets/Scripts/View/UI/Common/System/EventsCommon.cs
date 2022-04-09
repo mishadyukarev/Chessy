@@ -11,30 +11,30 @@ namespace Chessy.Common
     {
         public EventsCommon(SystemsModelCommon sMC, EntitiesViewUICommon eUICommon, EntitiesViewCommon eVCommon, EntitiesModelCommon eMCommon)
         {
-            eUICommon.ShopE.ExitButtonC.AddListener(delegate { ExitShop(eUICommon.ShopE); });
+            eUICommon.ShopE.ExitButtonC.AddListener(() => { eMCommon.ShopC.IsOpenedShopZone = false; });
 
 
             var bookE = eUICommon.BookE;
             bookE.ExitButtonC.AddListener(() =>
             {
-                eMCommon.BookE.IsOpenedBook = false;
+                eMCommon.IsOpenedBook = false;
                 eVCommon.Sound(ClipCommonTypes.CloseBook).Play();
             });
 
             bookE.NextButtonC.AddListener(() =>
             {
-                if (eMCommon.BookE.PageBookTC.PageBookT < PageBookTypes.End - 1)
+                if (eMCommon.PageBookT < PageBookTypes.End - 1)
                 {
-                    eMCommon.BookE.PageBookTC.PageBookT++;
+                    eMCommon.PageBookTC.PageBookT++;
                     eVCommon.Sound(ClipCommonTypes.ShiftBookSheet).Play();
                 }
             });
 
             bookE.BackButtonC.AddListener(() =>
             {
-                if (eMCommon.BookE.PageBookTC.PageBookT > 0)
+                if (eMCommon.PageBookT > 0)
                 {
-                    eMCommon.BookE.PageBookTC.PageBookT--;
+                    eMCommon.PageBookTC.PageBookT--;
                     eVCommon.Sound(ClipCommonTypes.ShiftBookSheet).Play();
                 }
             });
@@ -49,11 +49,6 @@ namespace Chessy.Common
 
             eUICommon.ShopE.BuyButtonC.AddListener(sMC.BuyProductS.Buy);
 
-        }
-
-        void ExitShop(in ShopUIE shopUIE)
-        {
-            shopUIE.ShopZoneGOC.SetActive(false);
         }
     }
 }

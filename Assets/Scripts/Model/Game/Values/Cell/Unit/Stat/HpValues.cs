@@ -4,12 +4,12 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
 {
     public static class HpValues
     {
-        public const float MAX = 1;
+        public const double MAX = 1;
 
-        public const float FIRE_DAMAGE = 0.4f;
-        public const float HP_FOR_DEATH_AFTER_ATTACK = 0.15f;
+        public const double FIRE_DAMAGE = 0.4f;
+        public const double HP_FOR_DEATH_AFTER_ATTACK = 0.15f;
 
-        public static float ThirstyPercent(in UnitTypes unit)
+        public static double ThirstyPercent(in UnitTypes unit)
         {
             switch (unit)
             {

@@ -2,7 +2,7 @@
 {
     public struct HealthC
     {
-        public float Health { get; internal set; }
+        public double Health { get; internal set; }
 
         public bool IsAlive => Health > 0;
 

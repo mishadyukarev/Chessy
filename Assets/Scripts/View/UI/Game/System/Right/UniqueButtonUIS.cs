@@ -125,7 +125,10 @@ namespace Chessy.Game.View.UI.System
                     _buttonE.StepsTextC.ParentG.SetActive(true);
                 }
 
-                _buttonE.StepsTextC.TextUI.text = StepValues.Need(ability_cur).ToString();
+                if(ability_cur != AbilityTypes.KingPassiveNearBonus)
+                {
+                    _buttonE.StepsTextC.TextUI.text = StepValues.Need(ability_cur).ToString();
+                }
             }
         }
     }

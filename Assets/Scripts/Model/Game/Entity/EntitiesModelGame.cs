@@ -154,15 +154,15 @@ namespace Chessy.Game.Model.Entity
 
         ref StatsE StatsUnitE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
         public ref HealthC HpUnitC(in byte idx) => ref StatsUnitE(idx).HealthC;
-        public float HpUnit(in byte cell) => HpUnitC(cell).Health;
+        public double HpUnit(in byte cell) => HpUnitC(cell).Health;
         public ref StepsC StepUnitC(in byte idx) => ref StatsUnitE(idx).StepC;
-        public float StepUnit(in byte idx) => StepUnitC(idx).Steps;
+        public double StepUnit(in byte idx) => StepUnitC(idx).Steps;
         public ref WaterC WaterUnitC(in byte idx) => ref StatsUnitE(idx).WaterC;
-        public float WaterUnit(in byte idx) => WaterUnitC(idx).Water;
+        public double WaterUnit(in byte idx) => WaterUnitC(idx).Water;
         public ref DamageC DamageAttackC(in byte idx) => ref StatsUnitE(idx).DamageSimpleAttackC;
-        public float DamageAttack(in byte cell) => DamageAttackC(cell).Damage;
+        public double DamageAttack(in byte cell) => DamageAttackC(cell).Damage;
         public ref DamageC DamageOnCellC(in byte idx) => ref StatsUnitE(idx).DamageOnCellC;
-        public float DamageOnCell(in byte cell) => DamageOnCellC(cell).Damage;
+        public double DamageOnCell(in byte cell) => DamageOnCellC(cell).Damage;
 
         ref MainToolWeaponE MainToolWeaponE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
         public ref ToolWeaponTC MainToolWeaponTC(in byte idx) => ref MainToolWeaponE(idx).ToolWeaponTC;
@@ -170,7 +170,7 @@ namespace Chessy.Game.Model.Entity
         public ref LevelTC MainTWLevelTC(in byte idx) => ref MainToolWeaponE(idx).LevelTC;
         public LevelTypes MainTWLevelT(in byte idx) => MainTWLevelTC(idx).LevelT;
 
-        ref ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
+        public ref ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
         public ref ToolWeaponTC ExtraToolWeaponTC(in byte idx) => ref UnitExtraTWE(idx).ToolWeaponTC;
         public ToolWeaponTypes ExtraToolWeaponT(in byte idx) => ExtraToolWeaponTC(idx).ToolWeaponT;
         public ref LevelTC ExtraTWLevelTC(in byte idx) => ref UnitExtraTWE(idx).LevelTC;
@@ -228,7 +228,7 @@ namespace Chessy.Game.Model.Entity
         public ref PlayerTC BuildingPlayerTC(in byte idx) => ref BuildingEs(idx).PlayerTC;
         public PlayerTypes BuildingPlayerT(in byte idx) => BuildingPlayerTC(idx).PlayerT;
         public ref HealthC BuildingHpC(in byte idx) => ref BuildingEs(idx).HealthC;
-        public float BuildingHp(in byte idx) => BuildingHpC(idx).Health;
+        public double BuildingHp(in byte idx) => BuildingHpC(idx).Health;
         public VisibleC BuildingVisibleC(in byte cell) => BuildingEs(cell).VisibleC;
         public ref ResourcesC WoodcutterExtractC(in byte idx) => ref BuildingEs(idx).WoodcutterExtractC;
         public ref ResourcesC FarmExtractFertilizeC(in byte idx) => ref BuildingEs(idx).FarmExtractC;

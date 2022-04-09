@@ -9,7 +9,7 @@
 
         //Heros
         Elfemale,
-        Snowy,
+        Snowy,//Rainy
         Undead,
         Hell,
 

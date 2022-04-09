@@ -1,15 +1,16 @@
-﻿using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.Values.Cell.Unit.Stats;
 using System;
 
 namespace Chessy.Game
 {
     sealed class StatsUIS : SystemUIAbstract
     {
-        readonly EntitiesViewUIGame eUI;
+        readonly RightStatsUIEs _statsUIE;
 
-        internal StatsUIS(in EntitiesViewUIGame entsUI, in Chessy.Game.Model.Entity.EntitiesModelGame ents) : base(ents)
+        internal StatsUIS(in RightStatsUIEs rightStatsUIE, in EntitiesModelGame ents) : base(ents)
         {
-            eUI = entsUI;
+            _statsUIE = rightStatsUIE;
         }
 
         internal override void Sync()
@@ -43,37 +44,35 @@ namespace Chessy.Game
                 }
 
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(needActiveWater);
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(needActiveHp);
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(needActiveDamage);
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(true);
+                _statsUIE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(needActiveWater);
+                _statsUIE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(needActiveHp);
+                _statsUIE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(needActiveDamage);
+                _statsUIE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(true);
 
 
 
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * e.HpUnitC(idx_sel).Health).ToString();
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = (Math.Truncate(10 * damageOnCell) / 10).ToString();
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = (Math.Truncate(100 * e.StepUnitC(idx_sel).Steps) / 100).ToString();
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = (Math.Truncate(100 * e.WaterUnitC(idx_sel).Water) / 100).ToString();
+                _statsUIE.Stat(UnitStatTypes.Hp).TextUIC.TextUI.text = Math.Truncate(100 * e.HpUnitC(idx_sel).Health).ToString();
+                _statsUIE.Stat(UnitStatTypes.Damage).TextUIC.TextUI.text = (Math.Truncate(10 * damageAttack) / 10) + "/" + (Math.Truncate(10 * damageOnCell) / 10).ToString();
+                _statsUIE.Stat(UnitStatTypes.Steps).TextUIC.TextUI.text = (Math.Truncate(100 * e.StepUnitC(idx_sel).Steps) / 100).ToString();
+                _statsUIE.Stat(UnitStatTypes.Water).TextUIC.TextUI.text = (Math.Truncate(100 * e.WaterUnitC(idx_sel).Water) / 100).ToString();
 
-                var v = e.HpUnitC(idx_sel).Health / HpValues.MAX;
-
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = e.HpUnitC(idx_sel).Health / HpValues.MAX;
+                _statsUIE.Stat(UnitStatTypes.Hp).ImageUIC.Image.fillAmount = (float)(e.HpUnitC(idx_sel).Health / HpValues.MAX);
 
 
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
+                _statsUIE.Stat(UnitStatTypes.Damage).ImageUIC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)e.StepUnitC(idx_sel).Steps / StepValues.MAX;
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = e.WaterUnitC(idx_sel).Water / (float)WaterValues.MAX;
+                _statsUIE.Stat(UnitStatTypes.Steps).ImageUIC.Image.fillAmount = (float)e.StepUnitC(idx_sel).Steps / StepValues.MAX;
+                _statsUIE.Stat(UnitStatTypes.Water).ImageUIC.Image.fillAmount = (float)(e.WaterUnitC(idx_sel).Water / WaterValues.MAX);
             }
 
             else
             {
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(false);
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(false);
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(false);
-                eUI.RightEs.StatsE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
+                _statsUIE.Stat(UnitStatTypes.Hp).ImageUIC.SetActiveParent(false);
+                _statsUIE.Stat(UnitStatTypes.Damage).ImageUIC.SetActiveParent(false);
+                _statsUIE.Stat(UnitStatTypes.Steps).ImageUIC.SetActiveParent(false);
+                _statsUIE.Stat(UnitStatTypes.Water).ImageUIC.SetActiveParent(false);
             }
         }
     }

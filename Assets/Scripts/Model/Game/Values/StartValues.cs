@@ -44,6 +44,11 @@ namespace Chessy.Game.Values
         public const byte CELL_FOR_CLEAR_FOREST_FOR_2_PLAYER = 61;
 
 
+        #region Bot
+
+        public const float PERCENT_SHIELD_LEVEL_FIRST_OR_SECOND_FOR_BOT = 0.5f;
+
+        #endregion
 
         public static float Volume(in ClipTypes clipT)
         {

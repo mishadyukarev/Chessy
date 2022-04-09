@@ -45,10 +45,6 @@ namespace Chessy.Common
 
                 UnityPurchasing.Initialize(this, builder);
             }
-
-
-
-            //shopUIE.BuyButtonC.AddListener(delegate { BuyProductID(ShopC.PREMIUM_NAME); });
         }
 
         public void Update()
@@ -57,21 +53,7 @@ namespace Chessy.Common
             {
                 Debug.Log(item.hasReceipt);
             }
-
-
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                BuyProductID(ShopC.PREMIUM_NAME);
-            }
-
         }
-
-        void BuyProductID(string productId)
-        {
-            
-        }
-
-
 
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args) //контроль покупок
         {

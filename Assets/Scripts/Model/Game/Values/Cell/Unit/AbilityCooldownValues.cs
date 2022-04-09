@@ -4,14 +4,15 @@ namespace Chessy.Game.Values.Cell.Unit
 {
     public static class AbilityCooldownValues
     {
-        public const float AFTER_GROW_ADULT_FOREST = 5;
+        public const int AFTER_GROW_ADULT_FOREST = 5;
 
         public static int NeedAfterAbility(in AbilityTypes ability)
         {
             switch (ability)
             {
                 case AbilityTypes.CircularAttack: return 2;
-                case AbilityTypes.KingPassiveNearBonus: return 3;
+
+                case AbilityTypes.GrowAdultForest: return AFTER_GROW_ADULT_FOREST;
                 case AbilityTypes.StunElfemale: return 5;
                 case AbilityTypes.ChangeDirectionWind: return 6;
 

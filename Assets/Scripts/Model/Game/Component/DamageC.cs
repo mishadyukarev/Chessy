@@ -2,6 +2,6 @@
 {
     public struct DamageC
     {
-        public float Damage { get; internal set; }
+        public double Damage { get; internal set; }
     }
 }

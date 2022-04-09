@@ -37,9 +37,9 @@ namespace Chessy
 
             var eVCommon = new EntitiesViewCommon(transform, TestModeT, out var sound, out var commonZone, out var actions);
             var eUICommon = new EntitiesViewUICommon(commonZone);
-            _eMC = new EntitiesModelCommon(TestModeT, sound);
+            _eMC = new EntitiesModelCommon(sound);
 
-            var sMCommon = new SystemsModelCommon(_eMC);
+            var sMCommon = new SystemsModelCommon(TestModeT, _eMC);
             var sUICommon = new SystemsViewUICommon(_eMC, eUICommon);
 
             new EventsCommon(sMCommon, eUICommon, eVCommon, _eMC);
@@ -78,11 +78,9 @@ namespace Chessy
 
             #region NeedReplace
 
-            var go = new GameObject();
+            var adLaunchS = new TryLaunchAdS(_eMC);
 
             var rpc = eVCommon.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
-
-            new MyYodo();
 
             var togglerScenes = new List<IToggleScene>()
             {
@@ -102,6 +100,7 @@ namespace Chessy
                 sMCommon,
                 sUICommon,
                 new IAPCore(_eMC),
+                adLaunchS,
             };
 
             _menuRuns = new List<IUpdate>()
@@ -118,7 +117,7 @@ namespace Chessy
             };
 
 
-            Screen.fullScreen = true;
+            //Screen.fullScreen = true;
 
 
             #region ComeToTraining
@@ -130,7 +129,7 @@ namespace Chessy
             #endregion
 
 
-            Application.runInBackground = true;
+
 
 
             //Resolution[] resolutions = Screen.resolutions;

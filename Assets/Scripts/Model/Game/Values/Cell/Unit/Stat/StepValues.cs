@@ -4,15 +4,12 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
 {
     public static class StepValues
     {
-        public const float MAX = 1;
+        public const float MAX = 1; //NOT_CHANGE_CONS!!!
 
-        public const float FOR_SHIFT_ATTACK_EMPTY_CELL = 0.5f;
-        public const float BONUS_TRAIL = 0.5f;
-        public const float FOR_GIVE_TAKE_TOOLWEAPON = 0.25f;
-        public const float FOR_TOGGLE_CONDITION_UNIT = 0.5f;
-
-
-        public const float SCOUT_FIRST = 2f;
+        public const float FOR_SHIFT_ATTACK_EMPTY_CELL = 0.5f; //NOT_CHANGE_CONS!!!
+        public const float BONUS_TRAIL = 0.5f; //NOT_CHANGE_CONS!!!
+        public const float FOR_GIVE_TAKE_TOOLWEAPON = 0.25f; //NOT_CHANGE_CONS!!!
+        public const float FOR_TOGGLE_CONDITION_UNIT = 0.5f; //NOT_CHANGE_CONS!!!
 
 
         #region CenterUpgrade
@@ -27,21 +24,17 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
         #region Costs
 
         public const float CHANGE_CORNER_ARCHER = 0.5f;
-        public const float ARCHER_FIRE = 1;
+        public const float ARCHER_FIRE = 0.5f;
 
 
         #region Ability
 
         public const float DESTROY_BUILDING = 0.5f;
-        //public const float BUILDING_ICE_WALL = 0.5f;
         public const float PAWN_CITY_BUILDING = 0.5f;
         public const float FIRE_PAWN = 0.5f;
         public const float PUT_OUT_FIRE_PAWN = 0.5f;
         public const float GROW_ADULT_FOREST = 0.5f;
-        //public const float BONUS_AROUND_SNOWY = 0.5f;
-        //public const float DIRECT_WAVE = 0.5f;
         public const float CIRCULAR_ATTACK = 0.5f;
-        public const float BONUS_NEAR = 0.5f;
         public const float SEED_PAWN = 0.5f;
         public const float SET_FARM = 0.5f;
         public const float STUN_ELFEMALE = 0.5f;
@@ -57,9 +50,6 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
             {
                 case AbilityTypes.CircularAttack:
                     return CIRCULAR_ATTACK;
-
-                case AbilityTypes.KingPassiveNearBonus:
-                    return BONUS_NEAR;
 
                 case AbilityTypes.FirePawn:
                     return FIRE_PAWN;

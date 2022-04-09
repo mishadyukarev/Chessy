@@ -1,8 +1,5 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
-using Chessy.Common.View.UI;
-using Chessy.Game.Enum;
-using Chessy.Game.Extensions;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.System.View.UI.Down;
 using Chessy.Game.View.UI;
@@ -56,7 +53,7 @@ namespace Chessy.Game.System.View.UI
                 new RelaxUIS(eUIGame.RightEs.RelaxE,  eMGame).Sync,
                 new EffectsUIS(eMGame.Resources, eUIGame, eMGame).Sync,
                 new RightZoneUIS(eUIGame, eMGame).Sync,
-                new StatsUIS(eUIGame, eMGame).Sync,
+                new StatsUIS(eUIGame.RightEs.StatsEs, eMGame).Sync,
 
                 //Left
                 new LeftZonesUIS(eUIGame, eMGame).Sync,
@@ -77,6 +74,7 @@ namespace Chessy.Game.System.View.UI
             if (_e.NeedUpdateView)
             {
                 _syncUpdates.ForEach((Action action) => action());
+
                 _e.NeedUpdateView = false;
             }
         }

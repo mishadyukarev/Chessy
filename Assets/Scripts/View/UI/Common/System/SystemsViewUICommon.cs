@@ -6,7 +6,8 @@ namespace Chessy.Common.View.UI.System
 {
     public sealed class SystemsViewUICommon : IUpdate, IToggleScene
     {
-        readonly EntitiesViewUICommon _eUICommon;
+        readonly EntitiesViewUICommon _eUIC;
+        readonly EntitiesModelCommon _eMC;
 
         readonly ToggleSceneUIS _toggleSceneS;
 
@@ -16,18 +17,23 @@ namespace Chessy.Common.View.UI.System
 
         public SystemsViewUICommon(in EntitiesModelCommon eMC, in EntitiesViewUICommon eUIC)
         {
-            _eUICommon = eUIC;
+            _eMC = eMC;
+            _eUIC = eUIC;
 
             _toggleSceneS = new ToggleSceneUIS(eUIC);
 
             _syncBookS = new SyncBookUIS(eUIC.BookE, eMC);
-            _syncSettingsS = new SyncSettingsUIS(_eUICommon.SettingsE, eMC);
+            _syncSettingsS = new SyncSettingsUIS(_eUIC.SettingsE, eMC);
         }
 
         public void Update()
         {
             _syncBookS.Sync();
             _syncSettingsS.Sync();
+
+            _eUIC.ShopE.ShopZoneGOC.SetActive(_eMC.ShopC.IsOpenedShopZone);
+
+
         }
 
         public void ToggleScene(in SceneTypes newSceneT)

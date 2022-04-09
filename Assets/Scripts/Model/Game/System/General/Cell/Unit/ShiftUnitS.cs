@@ -55,9 +55,12 @@ namespace Chessy.Game.Model.System
 
                     if (eMG.ExtraToolWeaponTC(cell_to).Is(ToolWeaponTypes.Pick))
                     {
-                        if (cell_to == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                        if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
                         {
-                            eMG.LessonTC.SetNextLesson();
+                            if (cell_to == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                            {
+                                eMG.LessonTC.SetNextLesson();
+                            }
                         }
                     }
 
@@ -100,6 +103,13 @@ namespace Chessy.Game.Model.System
                 }
 
             }
+
+
+            if(eMG.UnitT(cell_to) == UnitTypes.Snowy)
+            {
+                sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.Give(cell_to);
+            }
+
 
             switch (eMG.UnitTC(cell_to).UnitT)
             {

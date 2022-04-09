@@ -16,14 +16,14 @@ namespace Chessy.Game
 
 
         public readonly GameObjectVC Zone;
-        public RightStatsUIEs StatsE;
+        public RightStatsUIEs StatsEs;
         public RightProtectUIE ProtectE;
         public RelaxUIE RelaxE;
 
         public RightUIEs(in Transform rightZone)
         {
             Zone = new Chessy.Common.Component.GameObjectVC(rightZone.gameObject);
-            StatsE = new RightStatsUIEs(rightZone.gameObject);
+            StatsEs = new RightStatsUIEs(rightZone.gameObject);
 
 
             new UIEntExtraTW(rightZone);

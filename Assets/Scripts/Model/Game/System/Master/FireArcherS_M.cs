@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
 
         internal void Fire(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (eMG.CellsForShift(cell_from).Contains(cell_to))
+            if (eMG.UnitForArsonC(cell_from).Contains(cell_to))
             {
                 if (eMG.StepUnitC(cell_from).Steps >= StepValues.ARCHER_FIRE)
                 {

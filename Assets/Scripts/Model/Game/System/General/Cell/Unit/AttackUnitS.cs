@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
     {
         internal AttackUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
 
-        internal void Attack(in float damage, in PlayerTypes whoKiller, in byte cell_0)
+        internal void Attack(in double damage, in PlayerTypes whoKiller, in byte cell_0)
         {
             if (damage <= 0) throw new Exception();
             if (!eMG.IsActiveParentSelf(cell_0)) throw new Exception();

@@ -4,10 +4,16 @@ namespace Chessy.Game.Values
 {
     public static class EconomyValues
     {
+        public const float FOOD_FOR_FEEDING_UNITS = 0.1f; //NOT_CHANGE!!!
+        public const float WOOD_FOR_BUILDING_FARM = 0.5f;  //NOT_CHANGE!!!
+
+
+
+
         public const float ADDING_FOOD_AFTER_UPDATE = 0.2f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;
 
-        public const float FOOD_FOR_FEEDING_UNITS = 0.1f;
+
 
 
         #region Costs
@@ -29,9 +35,6 @@ namespace Chessy.Game.Values
         public const float AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD = 0.1f;
         public const float AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD = 1;
         public const float AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD = 0.5f;
-
-
-        public const float WOOD_FOR_BUILDING_FARM = 0.5f;
 
 
         public const float NEED_FOOD_FOR_BUILDING_HOUSE = 0;

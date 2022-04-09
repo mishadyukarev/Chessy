@@ -34,6 +34,10 @@ namespace Chessy.Game.Model.System.Master
                                 {
                                     sMG.UnitSs.AttackShieldS.Attack(1f, idx_1);
                                 }
+                                else if (eMG.ShieldUnitEffectC(idx_1).HaveAnyProtection)
+                                {
+                                    eMG.ShieldUnitEffectC(idx_1).Protection--;
+                                }
 
                                 else
                                 {

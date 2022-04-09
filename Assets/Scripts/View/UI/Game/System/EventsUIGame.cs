@@ -37,8 +37,8 @@ namespace Chessy.Game.EventsUI
             eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { sMGame.ForUISystems.ToggleToolWeaponClickS.Click(ToolWeaponTypes.Staff); });
             eUIGame.DownEs.BookButtonC.AddListener(delegate
             {
-                eMCommon.BookE.IsOpenedBook = !eMCommon.BookE.IsOpenedBook;
-                eMCommon.SoundActionC(eMCommon.BookE.IsOpenedBook ? Common.Enum.ClipCommonTypes.OpenBook : Common.Enum.ClipCommonTypes.CloseBook).Invoke();
+                eMCommon.IsOpenedBook = !eMCommon.IsOpenedBook;
+                eMCommon.SoundActionC(eMCommon.IsOpenedBook ? Common.Enum.ClipCommonTypes.OpenBook : Common.Enum.ClipCommonTypes.CloseBook).Invoke();
                 eMGame.NeedUpdateView = true;
             });
 
@@ -61,15 +61,15 @@ namespace Chessy.Game.EventsUI
                 }
                 else
                 {
-                    if (eMCommon.BookE.IsOpenedBook)
+                    if (eMCommon.IsOpenedBook)
                     {
-                        eMCommon.BookE.IsOpenedBook = false;
+                        eMCommon.IsOpenedBook = false;
                         eMCommon.SoundActionC(ClipCommonTypes.CloseBook).Invoke();
                     }
                     else
                     {
-                        eMCommon.BookE.IsOpenedBook = true;
-                        eMCommon.BookE.PageBookTC.PageBookT = PageBookTypes.Wind;
+                        eMCommon.IsOpenedBook = true;
+                        eMCommon.PageBookTC.PageBookT = PageBookTypes.Wind;
                         eMCommon.SoundActionC(ClipCommonTypes.OpenBook).Invoke();
                     }
                 }
@@ -94,7 +94,7 @@ namespace Chessy.Game.EventsUI
 
             leftEs.PremiumButtonC.AddListener(delegate
             {
-                OpenShop(eUICommon.ShopE, eMGame, eMCommon);
+                OpenShop(eMGame, eMCommon);
             });
 
 
@@ -136,7 +136,7 @@ namespace Chessy.Game.EventsUI
             });
             centerEs.OpenShopButtonC.AddListener(delegate
             {
-                OpenShop(eUICommon.ShopE, eMGame, eMCommon);
+                OpenShop(eMGame, eMCommon);
                 eMGame.NeedUpdateView = true;
             });
 
@@ -174,7 +174,7 @@ namespace Chessy.Game.EventsUI
             //Up
             eUIGame.UpEs.AlphaC.AddListener(delegate
             {
-                OpenShop(eUICommon.ShopE, eMGame, eMCommon);
+                OpenShop(eMGame, eMCommon);
             });
             eUIGame.UpEs.LeaveC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
         }
@@ -187,10 +187,11 @@ namespace Chessy.Game.EventsUI
             eMG.NeedUpdateView = true;
         }
 
-        void OpenShop(in ShopUIE shopUIE, in EntitiesModelGame e, in EntitiesModelCommon eMC)
+        void OpenShop(in EntitiesModelGame e, in EntitiesModelCommon eMC)
         {
             eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
-            shopUIE.ShopZoneGOC.SetActive(true);
+
+            eMC.ShopC.IsOpenedShopZone = true;
 
             e.NeedUpdateView = true;
         }

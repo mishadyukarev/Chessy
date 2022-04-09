@@ -18,7 +18,7 @@ namespace Chessy.Game.Model.System
                 if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed)
                     && !eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                 {
-                    var extract = ExtractPawnForestValues.EXTRACT_PAWM_ADULT_FOREST;
+                    var extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
 
                     //if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
                     //{
@@ -34,7 +34,7 @@ namespace Chessy.Game.Model.System
                     {
                         if (eMG.MainTWLevelTC(cell_0).Is(LevelTypes.Second))
                         {
-                            extract *= ExtractPawnForestValues.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
+                            extract *= ExtractPawnValues.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
                         }
                     }
 

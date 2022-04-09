@@ -1,8 +1,18 @@
 ﻿namespace Chessy.Game.Values.Cell.Unit
 {
-    public static class ToolWeaponValues
+    static class ToolWeaponValues
     {
-        public const float SHIELD_PROTECTION_LEVEL_FIRST = 1;
-        public const float SHIELD_PROTECTION_LEVEL_SECOND = 4;
+        internal const float SHIELD_PROTECTION_LEVEL_FIRST = 1; //CONST!
+        internal const float SHIELD_PROTECTION_LEVEL_SECOND = 5; //CONST!
+
+        internal static float ShieldProtection(in LevelTypes levelT)
+        {
+            switch (levelT)
+            {
+                case LevelTypes.First: return SHIELD_PROTECTION_LEVEL_FIRST;
+                case LevelTypes.Second: return SHIELD_PROTECTION_LEVEL_SECOND;
+                default: throw new System.Exception();
+            }
+        }
     }
 }

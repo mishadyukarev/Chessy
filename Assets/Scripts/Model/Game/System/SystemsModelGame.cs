@@ -355,8 +355,18 @@ namespace Chessy.Game.Model.System
 
                         UnitSs.SetNewUnitS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
 
-                        var needSword = UnityEngine.Random.Range(0f, 1f) >= 0.5f;
-                        UnitSs.SetExtraTWS.Set(needSword ? ToolWeaponTypes.Sword : ToolWeaponTypes.Shield, needSword ? LevelTypes.Second : LevelTypes.First, ToolWeaponValues.SHIELD_PROTECTION_LEVEL_FIRST, cell_0);
+                        UnitSs.SetExtraTWS.Set(ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second), cell_0);
+
+                        var needShield = UnityEngine.Random.Range(0f, 1f) >= StartValues.PERCENT_SHIELD_LEVEL_FIRST_OR_SECOND_FOR_BOT;
+
+                        if (needShield)
+                        {
+                            UnitSs.SetExtraTWS.Set(ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second), cell_0);
+                        }
+                        else
+                        {
+                            UnitSs.SetExtraTWS.Set(ToolWeaponTypes.Shield, LevelTypes.First, ToolWeaponValues.ShieldProtection(LevelTypes.First), cell_0);
+                        }
                     }
 
                     if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)

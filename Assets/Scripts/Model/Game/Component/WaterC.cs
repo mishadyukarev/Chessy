@@ -2,6 +2,6 @@
 {
     public struct WaterC
     {
-        public float Water { get; internal set; }
+        public double Water { get; internal set; }
     }
 }

@@ -37,6 +37,8 @@ namespace Chessy.Game.Model.System
         internal readonly SetConditionUnitS_M SetConditionUnitS_M;
         internal readonly GiveTakeToolWeaponS_M GiveTakeToolWeaponS_M;
 
+        internal readonly RainyGiveWaterToUnitsAroundS_M RainyGiveWaterToUnitsAroundS_M;
+
 
         internal readonly GetDataCellsS_M GetDataCellsS_M;
 
@@ -69,6 +71,8 @@ namespace Chessy.Game.Model.System
             GrowAdultForestS_M = new GrowAdultForestS_M(sMC, eMC, sMG, eMG);
             DestroyBuildingS_M = new DestroyBuildingS_M(sMC, eMC, sMG, eMG);
             ChangeDirectionWindS_M = new ChangeDirectionWindMS(sMC, eMC, sMG, eMG);
+
+            RainyGiveWaterToUnitsAroundS_M = new RainyGiveWaterToUnitsAroundS_M(sMC, eMC, sMG, eMG);
         }
     }
 }

@@ -25,39 +25,39 @@ namespace Chessy.Game.Model.System
                         switch (unitTC.UnitT)
                         {
                             case UnitTypes.King:
-                                powerDamage = DamageValues.KING;
+                                powerDamage = DamageUnitValues.KING_DAMAGE;
                                 break;
 
                             case UnitTypes.Pawn:
-                                powerDamage = DamageValues.PAWN;
+                                powerDamage = DamageUnitValues.PAWN_DAMAGE;
                                 break;
 
                             case UnitTypes.Elfemale:
-                                powerDamage = DamageValues.ELFEMALE;
+                                powerDamage = DamageUnitValues.ELFEMALE;
                                 break;
 
                             case UnitTypes.Snowy:
-                                powerDamage = DamageValues.SNOWY;
+                                powerDamage = DamageUnitValues.SNOWY;
                                 break;
 
                             case UnitTypes.Undead:
-                                powerDamage = DamageValues.UNDEAD;
+                                powerDamage = DamageUnitValues.UNDEAD;
                                 break;
 
                             case UnitTypes.Hell:
-                                powerDamage = DamageValues.HELL;
+                                powerDamage = DamageUnitValues.HELL;
                                 break;
 
                             case UnitTypes.Skeleton:
-                                powerDamage = DamageValues.SKELETON;
+                                powerDamage = DamageUnitValues.SKELETON;
                                 break;
 
                             case UnitTypes.Tree:
-                                powerDamage = DamageValues.TREE;
+                                powerDamage = DamageUnitValues.TREE;
                                 break;
 
                             case UnitTypes.Wolf:
-                                powerDamage = DamageValues.CAMEL;
+                                powerDamage = DamageUnitValues.CAMEL;
                                 break;
 
                             default: throw new Exception();
@@ -65,15 +65,9 @@ namespace Chessy.Game.Model.System
                         break;
                 }
 
-                if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).WhereKingEffects.Contains(cell_0)) powerDamage *= 1.25f;
-
-
-                if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Hell))
+                if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).WhereKingEffects.Contains(cell_0))
                 {
-                    if (unitTC.Is(UnitTypes.Pawn))
-                    {
-                        powerDamage *= 1.5f;
-                    }
+                    powerDamage *= DamageUnitValues.KING_EFFECT_ON_NEAR_UNITS;
                 }
 
 
@@ -83,17 +77,13 @@ namespace Chessy.Game.Model.System
                     {
                         if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            powerDamage += powerDamage * DamageValues.BOW_CROSSBOW_SECOND;
-                        }
-                        else if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Axe))
-                        {
-                            powerDamage += powerDamage * DamageValues.AXE_SECOND;
+                            powerDamage += DamageUnitValues.BOW_CROSSBOW_SECOND_ADDING;
                         }
                     }
                 }
-                if (eMG.ExtraToolWeaponTC(cell_0).Is(ToolWeaponTypes.Sword)) powerDamage += powerDamage * DamageValues.SWORD;
+                if (eMG.ExtraToolWeaponTC(cell_0).Is(ToolWeaponTypes.Sword)) powerDamage += DamageUnitValues.SWORD_ADDING;
 
-                if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
+                if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff)) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
 
 
                 eMG.DamageAttackC(cell_0).Damage = powerDamage;
@@ -103,11 +93,11 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Protected))
                 {
-                    powerDamage += powerDamage * DamageValues.PROTECTED;
+                    powerDamage += powerDamage * DamageUnitValues.PROTECTED;
                 }
                 else if (eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
                 {
-                    powerDamage += powerDamage * DamageValues.RELAXED;
+                    powerDamage += powerDamage * DamageUnitValues.RELAXED;
                 }
 
                 if (eMG.BuildingTC(cell_0).HaveBuilding)
@@ -116,16 +106,12 @@ namespace Chessy.Game.Model.System
 
                     switch (eMG.BuildingTC(cell_0).BuildingT)
                     {
-                        case BuildingTypes.City:
-                            p = DamageValues.CITY;
-                            break;
-
                         case BuildingTypes.Farm:
-                            p = DamageValues.FARM;
+                            p = DamageUnitValues.FARM;
                             break;
 
                         case BuildingTypes.Woodcutter:
-                            p = DamageValues.WOODCUTTER;
+                            p = DamageUnitValues.WOODCUTTER;
                             break;
 
                         default:
@@ -139,13 +125,10 @@ namespace Chessy.Game.Model.System
                 float protectionPercent = 0;
 
                 //if (e.FertilizeC(cell_0).HaveAnyResources) protectionPercent += DamageValues.FERTILIZER;
-                if (eMG.AdultForestC(cell_0).HaveAnyResources) protectionPercent += DamageValues.ADULT_FOREST;
-                if (eMG.HillC(cell_0).HaveAnyResources) protectionPercent += DamageValues.HILL;
+                if (eMG.AdultForestC(cell_0).HaveAnyResources) protectionPercent += DamageUnitValues.ADULT_FOREST;
+                if (eMG.HillC(cell_0).HaveAnyResources) protectionPercent += DamageUnitValues.HILL;
 
                 powerDamage += powerDamage * protectionPercent;
-
-
-                if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff)) powerDamage /= 2;
 
                 eMG.DamageOnCellC(cell_0).Damage = powerDamage;
             }

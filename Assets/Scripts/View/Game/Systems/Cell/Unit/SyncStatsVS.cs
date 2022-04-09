@@ -22,7 +22,7 @@ namespace Chessy.Game
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Enable();
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).SR.color = Color.red;
 
-                    float xCordinate = (float)e.HpUnitC(idx_0).Health / HpValues.MAX;
+                    var xCordinate = (float)(e.HpUnitC(idx_0).Health / HpValues.MAX);
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
                     vEs.CellEs(idx_0).Block(CellBlockTypes.NeedWater).SetActive(e.WaterUnitC(idx_0).Water <= WaterValues.MAX * 0.4f);
