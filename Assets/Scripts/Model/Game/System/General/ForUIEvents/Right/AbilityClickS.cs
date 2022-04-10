@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed class AbilityClickS : SystemModel
     {
-        internal AbilityClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal AbilityClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click(in ButtonTypes uniqueButton)
         {

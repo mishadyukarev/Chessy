@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class ShiftUnitS : SystemModel
     {
-        internal ShiftUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal ShiftUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Shift(in byte cell_from, in byte cell_to)
         {

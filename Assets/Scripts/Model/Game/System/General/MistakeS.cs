@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class MistakeS : SystemModel
     {
-        internal MistakeS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal MistakeS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Mistake(in MistakeTypes mistakeT)
         {

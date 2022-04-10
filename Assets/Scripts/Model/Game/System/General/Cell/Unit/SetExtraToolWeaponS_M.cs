@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class SetExtraToolWeaponS_M : SystemModel
     {
-        internal SetExtraToolWeaponS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal SetExtraToolWeaponS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT, in float protection, in byte cell_0)
         {

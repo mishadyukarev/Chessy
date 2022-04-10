@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class PutOutFirePawnS_M : SystemModel
     {
-        internal PutOutFirePawnS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal PutOutFirePawnS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void PutOut(in byte cell_0, in Player sender)
         {

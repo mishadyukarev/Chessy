@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System.Master
 {
     sealed class GetHeroS_M : SystemModel
     {
-        internal GetHeroS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal GetHeroS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Get(in UnitTypes unitT, in Player sender)
         {

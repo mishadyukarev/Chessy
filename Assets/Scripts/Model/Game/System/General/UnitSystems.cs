@@ -20,21 +20,21 @@ namespace Chessy.Game.Model.System
         internal readonly AttackUnitS AttackUnitS;
         internal readonly KillUnitS KillUnitS;
 
-        internal UnitSystems(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG)
+        internal UnitSystems(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
-            SetNewUnitS = new SetNewUnitOnCellS(sMC, eMC, sMG, eMG);
-            ShiftUnitS = new ShiftUnitS(sMC, eMC, sMG, eMG);
-            ClearUnitS = new ClearUnitS(sMC, eMC, sMG, eMG);
-            SetEffectsS = new SetEffectsUnitS(sMC, eMC, sMG, eMG);
-            SetMainS = new SetMainUnitS(sMC, eMC, sMG, eMG);
-            SetStatsS = new SetStatsUnitS(sMC, eMC, sMG, eMG);
-            SetMainTWS = new SetMainToolWeaponUnitS(sMC, eMC, sMG, eMG);
-            SetExtraTWS = new SetExtraToolWeaponS_M(sMC, eMC, sMG, eMG);
-            SetLastDiedS = new SetLastDiedS(sMC, eMC, sMG, eMG);
-            SetUnitS = new SetUnitS(sMC, eMC, sMG, eMG);
-            AttackShieldS = new AttackShieldS(sMC, eMC, sMG, eMG);
-            KillUnitS = new KillUnitS(sMC, eMC, sMG, eMG);
-            AttackUnitS = new AttackUnitS(sMC, eMC, sMG, eMG);
+            SetNewUnitS = new SetNewUnitOnCellS(sMG, eMG);
+            ShiftUnitS = new ShiftUnitS(sMG, eMG);
+            ClearUnitS = new ClearUnitS(sMG, eMG);
+            SetEffectsS = new SetEffectsUnitS(sMG, eMG);
+            SetMainS = new SetMainUnitS(sMG, eMG);
+            SetStatsS = new SetStatsUnitS(sMG, eMG);
+            SetMainTWS = new SetMainToolWeaponUnitS(sMG, eMG);
+            SetExtraTWS = new SetExtraToolWeaponS_M(sMG, eMG);
+            SetLastDiedS = new SetLastDiedS(sMG, eMG);
+            SetUnitS = new SetUnitS(sMG, eMG);
+            AttackShieldS = new AttackShieldS(sMG, eMG);
+            KillUnitS = new KillUnitS(sMG, eMG);
+            AttackUnitS = new AttackUnitS(sMG, eMG);
         }
     }
 }

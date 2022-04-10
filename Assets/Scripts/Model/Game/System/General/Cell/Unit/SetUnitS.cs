@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class SetUnitS : SystemModel
     {
-        internal SetUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal SetUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Set(in byte cell_from, in byte cell_to)
         {

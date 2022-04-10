@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Chessy.Menu
 {
-    public struct CenterUIEs
+    public struct CenterUIE
     {
         public readonly TextUIC LogTextC;
         public readonly ButtonUIC DiscordButtonC;
@@ -14,7 +14,7 @@ namespace Chessy.Menu
         public readonly ButtonUIC LikeGameButtonC;
         public readonly ButtonUIC ExitButtonC;
 
-        public CenterUIEs(in Transform centerZone)
+        public CenterUIE(in Transform centerZone)
         {
             LogTextC = new TextUIC(centerZone.Find("Log_TextMP").GetComponent<TextMeshProUGUI>());
 

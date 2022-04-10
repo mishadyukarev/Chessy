@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class InputS : SystemModel
     {
-        internal InputS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal InputS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Update()
         {

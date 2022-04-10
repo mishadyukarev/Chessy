@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class ChangeCornerArcherS_M : SystemModel
     {
-        internal ChangeCornerArcherS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal ChangeCornerArcherS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Change(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {

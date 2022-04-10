@@ -12,7 +12,7 @@ namespace Chessy.Game
     {
         const float PEOPLE_AFTER_TRUCE = 15;
 
-        internal TruceMS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal TruceMS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
@@ -41,7 +41,7 @@ namespace Chessy.Game
 
                 if (eMG.UnitTC(cell_0).HaveUnit)
                 {
-                    if (eMC.GameModeTC.Is(GameModes.TrainingOff))
+                    if (eMG.Common.GameModeTC.Is(GameModes.TrainingOff))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                         {

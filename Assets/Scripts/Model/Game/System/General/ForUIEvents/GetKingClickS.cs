@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed class GetKingClickS : SystemModel, IClickUI
     {
-        internal GetKingClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal GetKingClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click()
         {
@@ -16,7 +16,7 @@ namespace Chessy.Game.Model.System
 
             if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
-                eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
                 if (eMG.PlayerInfoE(eMG.CurPlayerITC.PlayerT).KingInfoE.HaveInInventor)
                 {

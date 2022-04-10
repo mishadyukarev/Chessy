@@ -10,9 +10,9 @@ namespace Chessy.Game.Model.System
     {
         readonly SelectorSoundS _selectorSoundS;
 
-        internal CellSimpleClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal CellSimpleClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
-            _selectorSoundS = new SelectorSoundS(sMC, eMC, sMG, eMG);
+            _selectorSoundS = new SelectorSoundS(sMG, eMG);
         }
 
         internal void Execute()

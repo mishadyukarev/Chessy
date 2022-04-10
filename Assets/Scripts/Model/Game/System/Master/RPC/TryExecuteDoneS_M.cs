@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class TryExecuteDoneS_M : SystemModel
     {
-        internal TryExecuteDoneS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal TryExecuteDoneS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void TryDone(in GameModeTC gameModeTC, in Player sender)
         {

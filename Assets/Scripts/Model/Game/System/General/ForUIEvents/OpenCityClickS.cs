@@ -9,11 +9,11 @@ namespace Chessy.Game.Model.System
 {
     public sealed class OpenCityClickS : SystemModel, IClickUI
     {
-        internal OpenCityClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal OpenCityClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click()
         {
-            eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+            eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
 
             eMG.IsSelectedCity = !eMG.IsSelectedCity;

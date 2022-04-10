@@ -12,7 +12,7 @@ namespace Chessy.Game.Model.System
         Ray _ray;
         const float RAY_DISTANCE = 100;
 
-        internal RayS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal RayS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Update()
         {

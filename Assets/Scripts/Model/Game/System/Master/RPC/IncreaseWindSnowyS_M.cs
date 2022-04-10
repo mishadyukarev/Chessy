@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System.Master
 {
     sealed class IncreaseWindSnowyS_M : SystemModel
     {
-        internal IncreaseWindSnowyS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal IncreaseWindSnowyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Execute(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {

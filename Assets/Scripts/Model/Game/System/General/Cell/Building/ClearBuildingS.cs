@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class ClearBuildingS : SystemModel
     {
-        public ClearBuildingS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        public ClearBuildingS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

@@ -27,23 +27,23 @@ namespace Chessy.Game.Model.System
         public readonly ConditionClickS ConditionClickS;
 
 
-        internal SystemsModelGameForUI(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG)
+        internal SystemsModelGameForUI(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
-            DoneClickS = new DoneClickS(sMC, eMC, sMG, eMG);
-            OpenCityClickS = new OpenCityClickS(sMC, eMC, sMG, eMG);
-            GetHeroClickDownS = new GetHeroDownS(sMC, eMC, sMG, eMG);
-            GetPawnClickS = new GetPawnS(sMC, eMC, sMG, eMG);
-            ToggleToolWeaponClickS = new ToggleToolWeaponS(sMC, eMC, sMG, eMG);
+            DoneClickS = new DoneClickS(sMG, eMG);
+            OpenCityClickS = new OpenCityClickS(sMG, eMG);
+            GetHeroClickDownS = new GetHeroDownS(sMG, eMG);
+            GetPawnClickS = new GetPawnS(sMG, eMG);
+            ToggleToolWeaponClickS = new ToggleToolWeaponS(sMG, eMG);
 
-            EnvironmentInfoClickS = new EnvironmentInfoS(sMC, eMC, sMG, eMG);
-            ReadyClickS = new ClickReadyS(sMC, eMC, sMG, eMG);
-            GetKingClickS = new GetKingClickS(sMC, eMC, sMG, eMG);
-            BuildBuildingClickS = new BuildBuildingClickS(sMC, eMC, sMG, eMG);
+            EnvironmentInfoClickS = new EnvironmentInfoS(sMG, eMG);
+            ReadyClickS = new ClickReadyS(sMG, eMG);
+            GetKingClickS = new GetKingClickS(sMG, eMG);
+            BuildBuildingClickS = new BuildBuildingClickS(sMG, eMG);
 
-            GetHeroClickCenterS = new GetHeroClickCenterS(sMC, eMC, sMG, eMG);
+            GetHeroClickCenterS = new GetHeroClickCenterS(sMG, eMG);
 
-            AbilityClickS = new AbilityClickS(sMC, eMC, sMG, eMG);
-            ConditionClickS = new ConditionClickS(sMC, eMC, sMG, eMG);
+            AbilityClickS = new AbilityClickS(sMG, eMG);
+            ConditionClickS = new ConditionClickS(sMG, eMG);
         }
     }
 }

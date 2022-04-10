@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class BuildFarmS_M : SystemModel
     {
-        internal BuildFarmS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal BuildFarmS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Build(in byte cell_0, in Player sender)
         {

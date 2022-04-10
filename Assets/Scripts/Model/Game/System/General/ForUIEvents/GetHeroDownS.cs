@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed class GetHeroDownS : SystemModel, IClickUI
     {
-        internal GetHeroDownS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal GetHeroDownS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click()
         {
@@ -17,7 +17,7 @@ namespace Chessy.Game.Model.System
 
             if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {
-                eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
                 var curPlayer = eMG.CurPlayerITC.PlayerT;
 

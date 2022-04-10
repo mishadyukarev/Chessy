@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class FireArcherS_M : SystemModel
     {
-        public FireArcherS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        public FireArcherS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

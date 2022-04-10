@@ -1,6 +1,5 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
-using Chessy.Common.Entity.View.UI;
 using Chessy.Common.Enum;
 using Chessy.Menu.View.UI;
 using Photon.Pun;
@@ -15,22 +14,21 @@ namespace Chessy.Menu
 
         public EventsMenu(EntitiesModelCommon eMC, EntitiesViewUIMenu eUIM)
         {
-            eUIM.CenterE.DiscordButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_DISCORD); });
-            eUIM.CenterE.LikeGameButtonC.AddListener(delegate { Application.OpenURL(URLC.URL_GAME_IN_GOOGLE_PLAY); });
-            eUIM.CenterE.ExitButtonC.AddListener(delegate { Application.Quit(); });
+            eUIM.CenterE.DiscordButtonC.AddListener(() => Application.OpenURL(URLC.URL_DISCORD));
+            eUIM.CenterE.LikeGameButtonC.AddListener(() => Application.OpenURL(URLC.URL_GAME_IN_GOOGLE_PLAY));
+            eUIM.CenterE.ExitButtonC.AddListener(() => Application.Quit());
 
 
-            ConnectorUIC.AddListConnect_Button(ConnectOnline);
-            OnZoneUIC.AddListCreatePublicRoom(delegate { CreateRoom(ref eMC.GameModeTC); });
-            OnZoneUIC.AddListJoinRandomPublicRoom(delegate { JoinRandomRoom(ref eMC.GameModeTC); });
+            eUIM.OnlineZoneE.JoinButtonC.AddListener(ConnectOnline);
+            eUIM.OnlineZoneE.CreatePublicRoomButtonC.AddListener(() => CreateRoom(ref eMC.GameModeTC));
+            eUIM.OnlineZoneE.JoinRandomPublicRoomButtonC.AddListener(() => JoinRandomRoom(ref eMC.GameModeTC));
+            eUIM.OnlineZoneE.CreateFriendRoomButtonC.AddListener(() => CreateFriendRoom(eUIM, ref eMC.GameModeTC));
+            eUIM.OnlineZoneE.JoinFriendRoomButtonC.AddListener(() => JoinFriendRoom(eUIM, ref eMC.GameModeTC));
 
-            OnZoneUIC.AddListCreateFriendRoom(delegate { CreateFriendRoom(ref eMC.GameModeTC); });
-            OnZoneUIC.AddListJoinFriendRoom(delegate { JoinFriendRoom(ref eMC.GameModeTC); });
 
-
-            ConUIC.AddListConnect_Button(ConnectOffline);
-            OffZoneUIC.AddListTrain(delegate { CreateOffGame(ref eMC.GameModeTC, GameModes.TrainingOff); });
-            OffZoneUIC.AddListFriend(delegate { CreateOffGame(ref eMC.GameModeTC, GameModes.WithFriendOff); });
+            eUIM.OfflineZoneE.JoinButtonC.AddListener(ConnectOffline);
+            eUIM.OfflineZoneE.TrainingButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModes.TrainingOff));
+            eUIM.OfflineZoneE.WithFriendButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModes.WithFriendOff));
 
 
 
@@ -88,9 +86,9 @@ namespace Chessy.Menu
             PhotonNetwork.CreateRoom(roomName, roomOptions, default, default);// CreateRoom(roomName, roomOptions);
         }
 
-        private void CreateFriendRoom(ref GameModeTC gameModeC)
+        private void CreateFriendRoom(in EntitiesViewUIMenu eUIM, ref GameModeTC gameModeC)
         {
-            var roomName = OnZoneUIC.TextCreateFriendRoom;
+            var roomName = eUIM.OnlineZoneE.CreateFriendRoomInputFieldC.InputField.text;
 
             gameModeC.GameModeT = GameModes.WithFriendOn;
 
@@ -109,10 +107,10 @@ namespace Chessy.Menu
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
 
-        private void JoinFriendRoom(ref GameModeTC gameModeC)
+        private void JoinFriendRoom(in EntitiesViewUIMenu eUIM, ref GameModeTC gameModeC)
         {
             gameModeC.GameModeT = GameModes.WithFriendOn;
-            PhotonNetwork.JoinRoom(OnZoneUIC.TextJoinFriendRoom);
+            PhotonNetwork.JoinRoom(eUIM.OnlineZoneE.JoinFriendRoomInputFieldC.InputField.text);
         }
 
         private void CreateOffGame(ref GameModeTC gameModeC, in GameModes offGameMode)

@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class StunElfemaleS_M : SystemModel
     {
-        internal StunElfemaleS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal StunElfemaleS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Stun(in byte cell_from, in byte cell_to, in AbilityTypes abilityT, in Player sender)
         {

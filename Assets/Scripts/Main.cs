@@ -64,7 +64,7 @@ namespace Chessy
             #region Game
 
             var eViewGame = new EntitiesViewGame(out var forData, eVCommon);
-            var eModelGame = new EntitiesModelGame(forData, Rpc.NamesMethods_S, actions);
+            var eModelGame = new EntitiesModelGame(_eMC, forData, Rpc.NamesMethods_S, actions);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
             var sModelGame = new SystemsModelGame(sMCommon, _eMC, eModelGame);
@@ -79,6 +79,7 @@ namespace Chessy
             #region NeedReplace
 
             var adLaunchS = new TryLaunchAdS(_eMC);
+            new ShopS(_eMC);
 
             var rpc = eVCommon.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
 
@@ -90,6 +91,8 @@ namespace Chessy
                 rpc,
             };
 
+
+
             gameObject.AddComponent<PhotonSceneManager>().StartMy(rpc, togglerScenes);
 
             #endregion
@@ -99,7 +102,6 @@ namespace Chessy
             {
                 sMCommon,
                 sUICommon,
-                new IAPCore(_eMC),
                 adLaunchS,
             };
 
@@ -116,10 +118,6 @@ namespace Chessy
                 sUIGame,
             };
 
-
-            //Screen.fullScreen = true;
-
-
             #region ComeToTraining
 
             PhotonNetwork.OfflineMode = true;
@@ -127,13 +125,6 @@ namespace Chessy
             PhotonNetwork.CreateRoom(default);
 
             #endregion
-
-
-
-
-
-            //Resolution[] resolutions = Screen.resolutions;
-            //Screen.SetResolution(resolutions[resolutions.Length - 1].width, resolutions[resolutions.Length - 1].height, true);
         }
 
         void Update()

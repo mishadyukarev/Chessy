@@ -44,35 +44,35 @@ namespace Chessy.Game.Model.System
 
         internal readonly UpdateS_M UpdateS_M;
 
-        internal MasterSystems(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG)
+        internal MasterSystems(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
-            IncreaseWindSnowyS_M = new IncreaseWindSnowyS_M(sMC, eMC, sMG, eMG);
-            BuyS_M = new BuyS_M(sMC, eMC, sMG, eMG);
-            MeltS_M = new MeltS_M(sMC, eMC, sMG, eMG);
-            BuyBuildingS_M = new BuyBuildingS_M(sMC, eMC, sMG, eMG);
-            GetHeroS_M = new GetHeroS_M(sMC, eMC, sMG, eMG);
-            ReadyS_M = new ReadyS_M(sMC, eMC, sMG, eMG);
-            UpdateS_M = new UpdateS_M(sMC, eMC, sMG, eMG);
-            DonerS_M = new TryExecuteDoneS_M(sMC, eMC, sMG, eMG);
-            GetDataCellsS_M = new GetDataCellsS_M(sMC, eMC, sMG, eMG);
-            AttackUnit_M = new AttackUnit_M(sMC, eMC, sMG, eMG);
-            SetUnitS_M = new SetUnitS_M(sMC, eMC, sMG, eMG);
-            ShiftUnitS_M = new TryShiftUnitS_M(sMC, eMC, sMG, eMG);
-            SeedPawnS_M = new SeedPawnS_M(sMC, eMC, sMG, eMG);
-            BuildFarmS_M = new BuildFarmS_M(sMC, eMC, sMG, eMG);
-            SetConditionUnitS_M = new SetConditionUnitS_M(sMC, eMC, sMG, eMG);
-            GiveTakeToolWeaponS_M = new GiveTakeToolWeaponS_M(sMC, eMC, sMG, eMG);
-            CurcularAttackKingS_M = new CurcularAttackKingS_M(sMC, eMC, sMG, eMG);
-            FirePawnS_M = new FirePawnS_M(sMC, eMC, sMG, eMG);
-            PutOutFirePawnS_M = new PutOutFirePawnS_M(sMC, eMC, sMG, eMG);
-            ChangeCornerArcherS_M = new ChangeCornerArcherS_M(sMC, eMC, sMG, eMG);
-            StunElfemaleS_M = new StunElfemaleS_M(sMC, eMC, sMG, eMG);
-            FireArcherS_M = new FireArcherS_M(sMC, eMC, sMG, eMG);
-            GrowAdultForestS_M = new GrowAdultForestS_M(sMC, eMC, sMG, eMG);
-            DestroyBuildingS_M = new DestroyBuildingS_M(sMC, eMC, sMG, eMG);
-            ChangeDirectionWindS_M = new ChangeDirectionWindMS(sMC, eMC, sMG, eMG);
+            IncreaseWindSnowyS_M = new IncreaseWindSnowyS_M(sMG, eMG);
+            BuyS_M = new BuyS_M(sMG, eMG);
+            MeltS_M = new MeltS_M(sMG, eMG);
+            BuyBuildingS_M = new BuyBuildingS_M(sMG, eMG);
+            GetHeroS_M = new GetHeroS_M(sMG, eMG);
+            ReadyS_M = new ReadyS_M(sMG, eMG);
+            UpdateS_M = new UpdateS_M(sMG, eMG);
+            DonerS_M = new TryExecuteDoneS_M(sMG, eMG);
+            GetDataCellsS_M = new GetDataCellsS_M(sMG, eMG);
+            AttackUnit_M = new AttackUnit_M(sMG, eMG);
+            SetUnitS_M = new SetUnitS_M(sMG, eMG);
+            ShiftUnitS_M = new TryShiftUnitS_M(sMG, eMG);
+            SeedPawnS_M = new SeedPawnS_M(sMG, eMG);
+            BuildFarmS_M = new BuildFarmS_M(sMG, eMG);
+            SetConditionUnitS_M = new SetConditionUnitS_M(sMG, eMG);
+            GiveTakeToolWeaponS_M = new GiveTakeToolWeaponS_M(sMG, eMG);
+            CurcularAttackKingS_M = new CurcularAttackKingS_M(sMG, eMG);
+            FirePawnS_M = new FirePawnS_M(sMG, eMG);
+            PutOutFirePawnS_M = new PutOutFirePawnS_M(sMG, eMG);
+            ChangeCornerArcherS_M = new ChangeCornerArcherS_M(sMG, eMG);
+            StunElfemaleS_M = new StunElfemaleS_M(sMG, eMG);
+            FireArcherS_M = new FireArcherS_M(sMG, eMG);
+            GrowAdultForestS_M = new GrowAdultForestS_M(sMG, eMG);
+            DestroyBuildingS_M = new DestroyBuildingS_M(sMG, eMG);
+            ChangeDirectionWindS_M = new ChangeDirectionWindMS(sMG, eMG);
 
-            RainyGiveWaterToUnitsAroundS_M = new RainyGiveWaterToUnitsAroundS_M(sMC, eMC, sMG, eMG);
+            RainyGiveWaterToUnitsAroundS_M = new RainyGiveWaterToUnitsAroundS_M(sMG, eMG);
         }
     }
 }

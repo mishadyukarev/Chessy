@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class RainyGiveWaterToUnitsAroundS_M : SystemModel
     {
-        internal RainyGiveWaterToUnitsAroundS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal RainyGiveWaterToUnitsAroundS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

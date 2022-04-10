@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed class BuildBuildingClickS : SystemModel
     {
-        internal BuildBuildingClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal BuildBuildingClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click(in BuildingTypes buildT)
         {
@@ -23,12 +23,12 @@ namespace Chessy.Game.Model.System
                     if (eMG.SelectedE.BuildingsC.Is(buildT))
                     {
                         eMG.SelectedE.BuildingsC.Set(buildT, false);
-                        eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
                     else if (eMG.PlayerInfoE(eMG.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
                     {
                         eMG.SelectedE.BuildingsC.Set(buildT, true);
-                        eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
                     else
                     {

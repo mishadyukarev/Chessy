@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System.Master
 {
     sealed class SetUnitS_M : SystemModel
     {
-        internal SetUnitS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal SetUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Set(in UnitTypes unitT, in Player sender, in byte cell)
         {

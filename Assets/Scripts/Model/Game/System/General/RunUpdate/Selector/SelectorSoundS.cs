@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class SelectorSoundS : SystemModel
     {
-        internal SelectorSoundS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal SelectorSoundS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

@@ -20,10 +20,12 @@ namespace Chessy.Game.Model.System
 
         readonly List<Action> _runs;
 
+        public readonly SystemsModelCommon SCommon;
+
 
         #region Environment
 
-        internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
+internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
         internal readonly DestroyAdultForestS DestroyAdultForestS;
         internal readonly ClearAllEnvironmentS ClearAllEnvironmentS;
 
@@ -61,36 +63,38 @@ namespace Chessy.Game.Model.System
 
         public SystemsModelGame(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in EntitiesModelGame eMG)
         {
+            SCommon = sMC;
+
             _eMC = eMC;
             _eMG = eMG;
 
             _runs = new List<Action>()
             {
-                new InputS(sMC, eMC, this, eMG).Update,
-                new CheatsS(sMC, eMC, this, eMG).Update,
-                new RayS(sMC, eMC, this, eMG).Update,
-                new SelectorS(sMC, eMC, this, eMG).Update,
+                new InputS(this, eMG).Update,
+                new CheatsS(this, eMG).Update,
+                new RayS(this, eMG).Update,
+                new SelectorS(this, eMG).Update,
 
-                new Chessy.Game.MistakeS(sMC, eMC, this, eMG).Update,
+                new Chessy.Game.MistakeS(this, eMG).Update,
             };
 
-            MistakeS = new MistakeS(sMC, eMC, this, eMG);
-            SetMistakeS = new SetMistakeS(sMC, eMC, this, eMG);
+            MistakeS = new MistakeS(this, eMG);
+            SetMistakeS = new SetMistakeS(this, eMG);
 
-            TakeAdultForestResourcesS = new TakeAdultForestResourcesS(sMC, eMC, this, eMG);
-            ClearAllEnvironmentS = new ClearAllEnvironmentS(sMC, eMC, this, eMG);
-            DestroyAdultForestS = new DestroyAdultForestS(sMC, eMC, this, eMG);
+            TakeAdultForestResourcesS = new TakeAdultForestResourcesS(this, eMG);
+            ClearAllEnvironmentS = new ClearAllEnvironmentS(this, eMG);
+            DestroyAdultForestS = new DestroyAdultForestS(this, eMG);
 
-            BuildS = new BuildS(sMC, eMC, this, eMG);
-            ClearBuildingS = new ClearBuildingS(sMC, eMC, this, eMG);
-            DestroyBuildingS = new AttackBuildingS(sMC, eMC, this, eMG);
+            BuildS = new BuildS(this, eMG);
+            ClearBuildingS = new ClearBuildingS(this, eMG);
+            DestroyBuildingS = new AttackBuildingS(this, eMG);
 
-            DestroyAllTrailS = new DestroyAllTrailS(sMC, eMC, this, eMG);
+            DestroyAllTrailS = new DestroyAllTrailS(this, eMG);
 
-            UnitSs = new UnitSystems(sMC, eMC, this, eMG);
-            MasterSs = new MasterSystems(sMC, eMC, this, eMG);
+            UnitSs = new UnitSystems(this, eMG);
+            MasterSs = new MasterSystems(this, eMG);
 
-            ForUISystems = new SystemsModelGameForUI(sMC, eMC, this, eMG);
+            ForUISystems = new SystemsModelGameForUI(this, eMG);
         }
 
         public void ToggleScene(in SceneTypes newSceneT)

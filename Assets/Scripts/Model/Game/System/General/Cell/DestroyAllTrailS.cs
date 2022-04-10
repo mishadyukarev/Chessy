@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class DestroyAllTrailS : SystemModel
     {
-        internal DestroyAllTrailS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal DestroyAllTrailS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

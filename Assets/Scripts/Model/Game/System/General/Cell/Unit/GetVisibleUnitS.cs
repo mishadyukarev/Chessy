@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class GetVisibleUnitS : SystemModel
     {
-        internal GetVisibleUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal GetVisibleUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Get(in byte cell_0)
         {

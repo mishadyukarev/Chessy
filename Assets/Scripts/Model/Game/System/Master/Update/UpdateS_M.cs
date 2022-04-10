@@ -17,10 +17,10 @@ namespace Chessy.Game.Model.System.Master
         readonly TruceMS _truceS_M;
         readonly FireUpdateMS _fireUpdateS_M;
 
-        internal UpdateS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal UpdateS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
-            _truceS_M = new TruceMS(sMC, eMC, sMG, eMG);
-            _fireUpdateS_M = new FireUpdateMS(sMC, eMC, sMG, eMG);
+            _truceS_M = new TruceMS(sMG, eMG);
+            _fireUpdateS_M = new FireUpdateMS(sMG, eMG);
         }
 
         internal void Run(in GameModeTC gameModeTC)

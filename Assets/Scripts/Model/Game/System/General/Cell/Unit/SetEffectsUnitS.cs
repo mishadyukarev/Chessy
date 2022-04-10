@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class SetEffectsUnitS : SystemModel
     {
-        internal SetEffectsUnitS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal SetEffectsUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Set(in float stun, in float protection, in int shoots, in bool haveKingEffect, in byte cell_0)
         {

@@ -10,13 +10,13 @@ namespace Chessy.Game.Model.System
 {
     sealed class CheatsS : SystemModel, IUpdate
     {
-        public CheatsS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        public CheatsS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
         public void Update()
         {
-            if (eMC.TestModeC.Is(TestModes.Standart))
+            if (eMG.Common.TestModeC.Is(TestModes.Standart))
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
                 {

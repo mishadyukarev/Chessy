@@ -14,7 +14,7 @@ namespace Chessy.Game
 {
     sealed class GiveTakeToolWeaponS_M : SystemModel
     {
-        internal GiveTakeToolWeaponS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal GiveTakeToolWeaponS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte cell_0, in Player sender)
         {

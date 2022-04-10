@@ -5,27 +5,25 @@ namespace Chessy.Menu.View.UI
 {
     public class EntitiesViewUIMenu
     {
-        public readonly CenterUIEs CenterE;
-        public readonly BackUIE BackE;
+        public readonly CenterUIE CenterE;
+
+        public readonly OnlineZoneUIE OnlineZoneE;
+        public readonly OfflineZoneUIE OfflineZoneE;
 
         public EntitiesViewUIMenu(in EntitiesViewUICommon eUICcommon)
         {
             var menuZoneUI = eUICcommon.CanvasE.MenuCanvasGOC.Transform;
 
             var centerZoneUI = menuZoneUI.Find("Center+");
-            CenterE = new CenterUIEs(centerZoneUI);
+            CenterE = new CenterUIE(centerZoneUI);
 
 
             var rightZone = menuZoneUI.Find("OnlineRightZone").GetComponent<RectTransform>();
-            new OnZoneUIC(rightZone);
-            new ConnectorUIC(true, rightZone);
-            new BackgroundUIC(true, rightZone);
+            OnlineZoneE = new OnlineZoneUIE(rightZone);
 
 
             var leftZone = menuZoneUI.Find("OfflineLeftZone").GetComponent<RectTransform>();
-            new OffZoneUIC(leftZone);
-            new ConUIC(false, leftZone);
-            BackE = new BackUIE(false, leftZone);
+            OfflineZoneE = new OfflineZoneUIE(leftZone);
         }
     }
 }

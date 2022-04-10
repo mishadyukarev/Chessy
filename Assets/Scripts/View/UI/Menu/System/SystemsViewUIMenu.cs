@@ -1,13 +1,11 @@
-using Chessy.Common;
 using Chessy.Common.Entity;
-using Chessy.Common.View.UI;
 using Chessy.Menu.View.UI;
 
 namespace Chessy.Menu
 {
-    public sealed class SystemsViewUIMenu : IUpdate
+    public class SystemsViewUIMenu : IUpdate
     {
-        public readonly ConnectorMenuS ConnectorMenuS;
+        readonly ConnectorMenuUIS _connectorMenuS;
 
         readonly EntitiesModelCommon _eMCommon;
         readonly EntitiesViewUIMenu _eUIMenu;
@@ -17,15 +15,14 @@ namespace Chessy.Menu
         {
             _eMCommon = eMCommon;
             _eUIMenu = eUIMenu;
+
+            _connectorMenuS = new ConnectorMenuUIS();
         }
 
 
         public void Update()
         {
-
-            //SyncS.Run(_eUICommon, _eMCommon);
-            ConnectorMenuS.Run(_eUIMenu);
-
+            _connectorMenuS.Run(_eUIMenu);
         }
     }
 }

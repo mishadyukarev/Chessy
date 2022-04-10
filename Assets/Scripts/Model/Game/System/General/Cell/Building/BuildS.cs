@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     internal sealed class BuildS : SystemModel
     {
-        internal BuildS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal BuildS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

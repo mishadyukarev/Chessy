@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class DestroyAdultForestS : SystemModel
     {
-        internal DestroyAdultForestS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal DestroyAdultForestS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

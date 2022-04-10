@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed class ToggleToolWeaponS : SystemModel
     {
-        public ToggleToolWeaponS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        public ToggleToolWeaponS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
@@ -16,7 +16,7 @@ namespace Chessy.Game.Model.System
         {
             eMG.CellsC.Selected = 0;
 
-            eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+            eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
 
             if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))

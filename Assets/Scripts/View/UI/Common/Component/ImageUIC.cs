@@ -19,11 +19,9 @@ namespace Chessy.Game
 
         public void SetActive(in bool needActive)
         {
-            if (needActive != Image.gameObject.activeSelf)
-            {
-                Image.gameObject.SetActive(needActive);
-            }
+            if (needActive != GameObject.activeSelf) 
+                GameObject.SetActive(needActive);
         }
-        public void SetActiveParent(in bool needActive) => Image.transform.parent.gameObject.SetActive(needActive);
+        public void SetActiveParent(in bool needActive) => Transform.parent.gameObject.SetActive(needActive);
     }
 }

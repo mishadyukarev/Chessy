@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed class ConditionClickS : SystemModel
     {
-        internal ConditionClickS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal ConditionClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click(in ConditionUnitTypes conditionT)
         {

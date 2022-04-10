@@ -8,7 +8,7 @@ namespace Chessy.Game
 {
     sealed class TryShiftUnitS_M : SystemModel
     {
-        internal TryShiftUnitS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal TryShiftUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void TryShift(in byte cell_from, in byte cell_to, in Player sender)
         {

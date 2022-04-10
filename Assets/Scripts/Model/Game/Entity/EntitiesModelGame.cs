@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Component;
+using Chessy.Common.Entity;
 using Chessy.Game.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Model.Component;
@@ -17,6 +18,9 @@ namespace Chessy.Game.Model.Entity
         readonly ResourcesC[] _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
         readonly PlayerInfoEs[] _forPlayerEs = new PlayerInfoEs[(byte)PlayerTypes.End];
 
+        public readonly EntitiesModelCommon Common;
+
+
         public NeedUpdateViewC NeedUpdateViewC;
         public bool NeedUpdateView
         {
@@ -28,8 +32,6 @@ namespace Chessy.Game.Model.Entity
         public bool IsSelectedCity { get; internal set; }
         public bool HaveTreeUnit { get; internal set; }
         public bool IsClicked { get; internal set; }
-
-
 
 
         internal float ForUpdateViewTimer;
@@ -274,8 +276,11 @@ namespace Chessy.Game.Model.Entity
         #endregion
 
 
-        public EntitiesModelGame(in List<object> forData, in List<string> namesMethods, in List<object> actions)
+        public EntitiesModelGame(in EntitiesModelCommon eMC, in List<object> forData, in List<string> namesMethods, in List<object> actions)
         {
+            Common = eMC;
+
+
             Resources = new ResourcesE(default);
 
             var i = 0;

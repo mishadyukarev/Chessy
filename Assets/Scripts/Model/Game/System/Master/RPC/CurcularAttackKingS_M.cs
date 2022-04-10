@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System.Master
 {
     sealed class CurcularAttackKingS_M : SystemModel
     {
-        internal CurcularAttackKingS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal CurcularAttackKingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Attack(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {

@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System.Master
 {
     sealed class SetConditionUnitS_M : SystemModel
     {
-        internal SetConditionUnitS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal SetConditionUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Set(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
         {

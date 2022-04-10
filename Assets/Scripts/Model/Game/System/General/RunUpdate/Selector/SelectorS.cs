@@ -10,9 +10,9 @@ namespace Chessy.Game.Model.System
     {
         readonly CellSimpleClickS _cellSimpleClickS;
 
-        public SelectorS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        public SelectorS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
-            _cellSimpleClickS = new CellSimpleClickS(sMC, eMC, sMG, eMG);
+            _cellSimpleClickS = new CellSimpleClickS(sMG, eMG);
         }
 
         public void Update()

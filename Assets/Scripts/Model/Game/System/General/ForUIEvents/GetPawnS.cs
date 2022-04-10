@@ -9,11 +9,11 @@ namespace Chessy.Game.Model.System
 {
     public sealed class GetPawnS : SystemModel, IClickUI
     {
-        internal GetPawnS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal GetPawnS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click()
         {
-            eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+            eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
             var curPlayerI = eMG.CurPlayerITC.PlayerT;
 

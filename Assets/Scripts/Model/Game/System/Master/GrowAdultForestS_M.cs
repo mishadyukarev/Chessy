@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class GrowAdultForestS_M : SystemModel
     {
-        internal GrowAdultForestS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal GrowAdultForestS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Grow(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {

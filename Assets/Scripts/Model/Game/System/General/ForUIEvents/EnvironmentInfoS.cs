@@ -8,13 +8,13 @@ namespace Chessy.Game.Model.System
 {
     public sealed class EnvironmentInfoS : SystemModel, IClickUI
     {
-        public EnvironmentInfoS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        public EnvironmentInfoS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
         public void Click()
         {
-            eMC.SoundActionC(ClipCommonTypes.Click).Invoke();
+            eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
             eMG.ZoneInfoC.IsActiveEnvironment = !eMG.ZoneInfoC.IsActiveEnvironment;
 
             eMG.NeedUpdateView = true;

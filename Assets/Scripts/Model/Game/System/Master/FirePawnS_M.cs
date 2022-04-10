@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class FirePawnS_M : SystemModel
     {
-        internal FirePawnS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal FirePawnS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Fire(in byte cell_0, in Player sender)
         {

@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class ReadyS_M : SystemModel
     {
-        public ReadyS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        public ReadyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

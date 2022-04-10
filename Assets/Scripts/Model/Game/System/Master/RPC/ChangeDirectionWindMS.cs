@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class ChangeDirectionWindMS : SystemModel
     {
-        internal ChangeDirectionWindMS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal ChangeDirectionWindMS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Change(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {

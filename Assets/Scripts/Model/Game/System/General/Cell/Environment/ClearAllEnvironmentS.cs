@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class ClearAllEnvironmentS : SystemModel
     {
-        internal ClearAllEnvironmentS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal ClearAllEnvironmentS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Clear(in byte cell_0)
         {

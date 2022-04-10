@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class BuyS_M : SystemModel
     {
-        internal BuyS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal BuyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Buy(in MarketBuyTypes marketBuyT, in Player sender)
         {

@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class FireUpdateMS : SystemModel
     {
-        internal FireUpdateMS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal FireUpdateMS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Run()
         {

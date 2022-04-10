@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System.Master
     {
         int _snowyArrow;
 
-        internal AttackUnit_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal AttackUnit_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

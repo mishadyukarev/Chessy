@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     sealed class AttackBuildingS : SystemModel
     {
-        internal AttackBuildingS(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG) { }
+        internal AttackBuildingS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Attack(in byte cell_0, in float damage, in PlayerTypes whoKiller)
         {

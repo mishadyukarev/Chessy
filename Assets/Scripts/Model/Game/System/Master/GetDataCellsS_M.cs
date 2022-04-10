@@ -23,22 +23,22 @@ namespace Chessy.Game.Model.System
         readonly GetWoodcutterExtractCellsS _getWoodcutterExtractCellsS;
         readonly GetFarmExtractCellsS _getFarmExtractCellsS;
 
-        internal GetDataCellsS_M(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMC, eMC, sMG, eMG)
+        internal GetDataCellsS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
-            _getBuildingVisibleS = new GetBuildingVisibleS(sMC, eMC, sMG, eMG);
-            _getTrailsVisibleS = new GetTrailsVisibleS(sMC, eMC, sMG, eMG);
-            _getWoodcutterExtractCellsS = new GetWoodcutterExtractCellsS(sMC, eMC, sMG, eMG);
-            _getFarmExtractCellsS = new GetFarmExtractCellsS(sMC, eMC, sMG, eMG);
-            _getAttackMeleeCellsS = new GetAttackMeleeCellsS(sMC, eMC, sMG, eMG);
-            _getAbilityUnitS = new GetAbilityUnitS_M(sMC, eMC, sMG, eMG);
-            _pawnGetExtractAdultForestS = new PawnGetExtractAdultForestS(sMC, eMC, sMG, eMG);
-            _pawnExtractHillS = new PawnExtractHillS(sMC, eMC, sMG, eMG);
-            _getVisibleS = new GetVisibleUnitS(sMC, eMC, sMG, eMG);
-            _getCellForArsonArcherS = new GetCellForArsonArcherS(sMC, eMC, sMG, eMG);
-            _getCellsForAttackArcherS = new GetCellsForAttackArcherS(sMC, eMC, sMG, eMG);
-            _getCellsForShiftUnitS = new GetCellsForShiftUnitS(sMC, eMC, sMG, eMG);
-            _getEffectsForUnitsS = new GetEffectsForUnitsS(sMC, eMC, sMG, eMG);
-            _getDamageUnitsS = new GetDamageUnitsS(sMC, eMC, sMG, eMG);
+            _getBuildingVisibleS = new GetBuildingVisibleS(sMG, eMG);
+            _getTrailsVisibleS = new GetTrailsVisibleS(sMG, eMG);
+            _getWoodcutterExtractCellsS = new GetWoodcutterExtractCellsS(sMG, eMG);
+            _getFarmExtractCellsS = new GetFarmExtractCellsS(sMG, eMG);
+            _getAttackMeleeCellsS = new GetAttackMeleeCellsS(sMG, eMG);
+            _getAbilityUnitS = new GetAbilityUnitS_M(sMG, eMG);
+            _pawnGetExtractAdultForestS = new PawnGetExtractAdultForestS(sMG, eMG);
+            _pawnExtractHillS = new PawnExtractHillS(sMG, eMG);
+            _getVisibleS = new GetVisibleUnitS(sMG, eMG);
+            _getCellForArsonArcherS = new GetCellForArsonArcherS(sMG, eMG);
+            _getCellsForAttackArcherS = new GetCellsForAttackArcherS(sMG, eMG);
+            _getCellsForShiftUnitS = new GetCellsForShiftUnitS(sMG, eMG);
+            _getEffectsForUnitsS = new GetEffectsForUnitsS(sMG, eMG);
+            _getDamageUnitsS = new GetDamageUnitsS(sMG, eMG);
         }
 
         internal void Run()
