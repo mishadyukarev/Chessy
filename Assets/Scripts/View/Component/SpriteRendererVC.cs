@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         public SpriteRenderer SR;
 
-        public GameObject GameObject => SR.gameObject;
+        public GameObject GO => SR.gameObject;
         public Transform Transform => SR.transform;
         public Transform ParentTransform => Transform.parent;
 
@@ -23,7 +23,7 @@ namespace Chessy.Game
 
         public SpriteRendererVC(in SpriteRenderer sr) => SR = sr;
 
-        public void SetActive(in bool needActive)
+        public void SetEnabled(in bool needActive)
         {
             if (SR.enabled != needActive)
                 SR.enabled = needActive;

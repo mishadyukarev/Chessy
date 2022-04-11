@@ -18,7 +18,7 @@ namespace Chessy.Game
                 }
             }
 
-            eV.UnitEffectVEs(idx_0).StunSRC.GameObject.SetActive(_needActive);
+            eV.UnitEffectVEs(idx_0).StunSRC.GO.SetActive(_needActive);
         }
     }
 }

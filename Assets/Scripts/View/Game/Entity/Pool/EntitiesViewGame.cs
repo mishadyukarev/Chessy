@@ -22,7 +22,6 @@ namespace Chessy.Game
         public CellBuildingVEs BuildingEs(in byte idx) => CellEs(idx).BuildingEs;
         public SpriteRendererVC BuildingE(in byte idx, in BuildingTypes buildT) => BuildingEs(idx).Main(buildT);
         public UnitVEs UnitEs(in byte idx) => CellEs(idx).UnitVEs;
-        public SpriteRendererVC UnitE(in byte idx, in bool isSelected, in LevelTypes levT, in UnitTypes unitT) => UnitEs(idx).UnitE(isSelected, levT, unitT);
         public EffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
         public EnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
         public SpriteRendererVC EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);

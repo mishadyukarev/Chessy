@@ -89,7 +89,7 @@ namespace Chessy.Game.System.View
             }
 
 
-            srC.SetActive(_isActive);
+            srC.SetEnabled(_isActive);
         }
     }
 }

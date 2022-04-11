@@ -14,7 +14,7 @@ namespace Chessy.Game
                 {
                     if (e.UnitVisibleC(idx_0).IsVisible(e.CurPlayerITC.PlayerT))
                     {
-                        eV.UnitEffectVEs(idx_0).ShieldSRC.SetActive(true);
+                        eV.UnitEffectVEs(idx_0).ShieldSRC.SetEnabled(true);
                     }
                 }
             }

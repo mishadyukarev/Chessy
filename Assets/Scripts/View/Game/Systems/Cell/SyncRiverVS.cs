@@ -29,7 +29,7 @@ namespace Chessy.Game
                 {
                     if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                     {
-                        eV.CellEs(idx_0).RiverE.River(dir_1).SetActive(e.HaveRiverC(idx_0).HaveRive(dir_1));
+                        eV.CellEs(idx_0).RiverE.River(dir_1).SetEnabled(e.HaveRiverC(idx_0).HaveRive(dir_1));
                     }
                 }
             }

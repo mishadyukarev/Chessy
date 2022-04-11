@@ -5,21 +5,29 @@ namespace Chessy.Game
 {
     static class CloudVS
     {
+        static bool[] _needActive = new bool[StartValues.CELLS];
+
         public static void Run(in EntitiesViewGame eV, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+            for (byte cellStart = 0; cellStart < StartValues.CELLS; cellStart++)
             {
-                eV.CellEs(idx_0).CloudCellVC.SetActive(false);
+                _needActive[cellStart] = false;
             }
 
             var centerCloud = e.WeatherE.CloudC.Center;
+            _needActive[centerCloud] = true;
 
-            foreach (var cellE in e.AroundCellsE(centerCloud).CellsAround)
+            foreach (var cellStart in e.AroundCellsE(centerCloud).CellsAround)
             {
-                eV.CellEs(cellE).CloudCellVC.SetActive(true);
+                _needActive[cellStart] = true;
             }
 
-            eV.CellEs(centerCloud).CloudCellVC.SetActive(true);
+
+
+            for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
+            {
+                eV.CellEs(cell_start).CloudCellVC.GO.SetActive(_needActive[cell_start]);
+            }
         }
     }
 }

@@ -149,7 +149,7 @@ namespace Chessy.Game
 
             for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
             {
-                eV.CellEs(cell_start).SupportCellEs.Support.GameObject.SetActive(_needActive[cell_start]);
+                eV.CellEs(cell_start).SupportCellEs.Support.GO.SetActive(_needActive[cell_start]);
                 eV.CellEs(cell_start).SupportCellEs.Support.SR.color = _needColor[cell_start];
             }
         } }

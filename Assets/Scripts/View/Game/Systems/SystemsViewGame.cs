@@ -15,21 +15,19 @@ namespace Chessy.Game.System.View
         readonly SyncNoneVisionS SyncNoneVisionS;
         readonly NeedFoodS SyncNeedFoodS;
         readonly BuildingFlagVS SyncBuildingFlagS;
-        readonly SyncTrailVS SyncTrailS;
+        readonly SyncTrailVS SyncTrailS = new SyncTrailVS();
         readonly SyncBarsEnvironmentVS SyncBarsEnvironmentS;
         readonly SyncRiverVS SyncRiverS;
         readonly SyncFireVS SyncFireS;
         readonly SyncEnvironmentVS SyncEnvironmentS;
         readonly SyncStatsVS SyncStatsS;
-        readonly SyncUnitVS SyncUnitVS;
+        readonly SyncUnitVS[] _syncUnitVS = new SyncUnitVS[StartValues.CELLS];
+        readonly SyncBuildingVS[] _syncBuildingSs = new SyncBuildingVS[StartValues.CELLS];
         readonly SyncFrozenArrawVS _syncFrozenArrawVS;
 
         readonly EntitiesViewGame _eVGame;
         readonly EntitiesModelGame _eMGame;
         readonly EntitiesViewCommon _eVCommon;
-
-
-        readonly List<Action> _syncUpdates;
 
 
         public SystemsViewGame(in EntitiesViewGame eVG, in EntitiesModelGame eMG, in EntitiesViewCommon eVC, in EntitiesModelCommon eMC)
@@ -39,26 +37,25 @@ namespace Chessy.Game.System.View
             _eVCommon = eVC;
 
 
-            SyncUnitVS = new SyncUnitVS(eVG, eMG);
-            _syncFrozenArrawVS = new SyncFrozenArrawVS(eMG, eVG);
-
-
-
-            _syncUpdates = new List<Action>()
+            for (byte cell = 0; cell < StartValues.CELLS; cell++)
             {
+                _syncUnitVS[cell] = new SyncUnitVS(cell, eVG, eMG);
+                _syncBuildingSs[cell] = new SyncBuildingVS(cell);
+            }
 
-            };
 
+            
+            _syncFrozenArrawVS = new SyncFrozenArrawVS(eMG, eVG);
         }
 
         public void Update()
         {
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
             {
-                if (_eMGame.UnitNeedUpdateViewC(cell_0).NeedUpdateView)
+                if (_eMGame.UnitNeedUpdateViewC(cell_start).NeedUpdateView)
                 {
-                    SyncUnitVS.Sync(cell_0);
-                    _eMGame.UnitNeedUpdateViewC(cell_0).NeedUpdateView = false;
+                    _syncUnitVS[cell_start].Sync();
+                    _eMGame.UnitNeedUpdateViewC(cell_start).NeedUpdateView = false;
                 }
             }
 
@@ -66,27 +63,27 @@ namespace Chessy.Game.System.View
             {
                 SoundVS.Sync(_eVGame);
 
-                for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
                 {
-                    if (_eMGame.IsActiveParentSelf(cell_0))
+                    if (_eMGame.IsActiveParentSelf(cell_start))
                     {
-                        SyncUnitVS.Sync(cell_0);
+                        _syncUnitVS[cell_start].Sync();
 
-                        SyncBuildingVS.Sync(cell_0, _eVGame, _eMGame);
-                        SyncStatsS.Sync(cell_0, _eVGame, _eMGame);
-                        SyncEnvironmentS.Run(cell_0, _eVGame, _eMGame);
-                        SyncFireS.Sync(cell_0, _eVGame, _eMGame);
-                        SyncRiverS.Sync(cell_0, _eVGame, _eMGame);
-                        SyncBarsEnvironmentS.Sync(cell_0, _eVGame, _eMGame);
-                        SyncTrailS.Sync(cell_0, _eVGame, _eMGame);
-                        SyncNoneVisionS.Sync(cell_0, _eVGame.CellEs(cell_0).SupportCellEs.NoneSRC, _eMGame);
-                        SyncNeedFoodS.Sync(cell_0, _eVGame.CellEs(cell_0).UnitVEs.NeedFoodSRC, _eMGame);
-                        SyncBuildingFlagS.Sync(_eVGame.BuildingEs(cell_0).FlagSRC, cell_0, _eMGame);
+                        _syncBuildingSs[cell_start].Sync(_eVGame, _eMGame);
+                        SyncStatsS.Sync(cell_start, _eVGame, _eMGame);
+                        SyncEnvironmentS.Run(cell_start, _eVGame, _eMGame);
+                        SyncFireS.Sync(cell_start, _eVGame, _eMGame);
+                        SyncRiverS.Sync(cell_start, _eVGame, _eMGame);
+                        SyncBarsEnvironmentS.Sync(cell_start, _eVGame, _eMGame);
+                        SyncTrailS.Sync(cell_start, _eVGame, _eMGame);
+                        SyncNoneVisionS.Sync(cell_start, _eVGame.CellEs(cell_start).SupportCellEs.NoneSRC, _eMGame);
+                        SyncNeedFoodS.Sync(cell_start, _eVGame.CellEs(cell_start).UnitVEs.NeedFoodSRC, _eMGame);
+                        SyncBuildingFlagS.Sync(_eVGame.BuildingEs(cell_start).FlagSRC, cell_start, _eMGame);
 
 
-                        _syncFrozenArrawVS.SyncVision(cell_0);
-                        new SyncStunVS().Sync(cell_0, _eVGame, _eMGame);
-                        ShieldVS.Run(cell_0, _eVGame, _eMGame);
+                        _syncFrozenArrawVS.SyncVision(cell_start);
+                        new SyncStunVS().Sync(cell_start, _eVGame, _eMGame);
+                        ShieldVS.Run(cell_start, _eVGame, _eMGame);
                     }
                 }
 

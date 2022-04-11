@@ -27,7 +27,7 @@ namespace Chessy.Game.Entity.View.Cell
             HillUnderC = new SpriteRendererVC(parent.Find(EnvironmentTypes.Hill.ToString() + "Under" + "_SR+").GetComponent<SpriteRenderer>());
 
 
-            AnimationC = new AnimationVC(_envs[EnvironmentTypes.AdultForest].GameObject.GetComponent<Animation>());
+            AnimationC = new AnimationVC(_envs[EnvironmentTypes.AdultForest].GO.GetComponent<Animation>());
 
         }
     }

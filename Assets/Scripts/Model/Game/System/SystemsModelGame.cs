@@ -409,7 +409,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
 
             _eMG.ForUpdateViewTimer += Time.deltaTime;
 
-            if (_eMG.ForUpdateViewTimer >= 1)
+            if (_eMG.ForUpdateViewTimer >= 0.5f)
             {
                 _eMG.NeedUpdateView = true;
                 _eMG.ForUpdateViewTimer = 0;

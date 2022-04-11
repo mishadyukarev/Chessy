@@ -16,7 +16,7 @@
                 }
             }
 
-            needFoodSR.SetActive(_needActive);
+            needFoodSR.SetEnabled(_needActive);
         }
     }
 }

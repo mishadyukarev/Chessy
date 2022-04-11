@@ -16,7 +16,7 @@ namespace Chessy.Game.System.View
                 srC.SR.color = e.BuildingPlayerTC(idx_0).Is(PlayerTypes.First) ? Color.blue : Color.red;
             }
 
-            srC.SetActive(_needActive);
+            srC.SetEnabled(_needActive);
         }
     }
 }

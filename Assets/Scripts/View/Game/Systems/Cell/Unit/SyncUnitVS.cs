@@ -10,71 +10,39 @@ namespace Chessy.Game
         readonly EntitiesViewGame _eV;
         readonly EntitiesModelGame _e;
 
-        public readonly Color Color1 = new Color(1, 1, 1, 1f);
-        public readonly Color Color2 = new Color(1, 1, 1, 0.6f);
+        readonly Color _color1 = new Color(1, 1, 1, 1f);
+        readonly Color _color2 = new Color(1, 1, 1, 0.6f);
 
-        internal SyncUnitVS(in EntitiesViewGame eViewGame, in EntitiesModelGame eModelGame)
+
+        readonly bool[] _needActive = new bool[(byte)UnitTypes.End];
+        readonly Color[] _needColor = new Color[(byte)UnitTypes.End];
+
+        readonly byte _curCell;
+
+
+        internal SyncUnitVS(in byte cell, in EntitiesViewGame eViewGame, in EntitiesModelGame eModelGame)
         {
             _eV = eViewGame;
             _e = eModelGame;
+
+            _curCell = cell;
         }
 
-        internal void Sync(in byte cell_0)
+        internal void Sync()
         {
-            //for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
-            //{
-            //    if (playerT == _e.CurPlayerITC.Player)
-            //    {
-            //        if (_e.CellClickTC.Is(CellClickTypes.SetUnit))
-            //        {
-            //            if (_e.SelectedUnitE.UnitTC.Is(UnitTypes.King))
-            //            {
-            //                _eV.KingE(playerT).ParenGOC.SetActive(true);
-            //                _eV.KingE(playerT).ParenGOC.Transform.position = _eV.CellEs(_e.CellsC.Current).CellParent.Transform.position;
-            //            }
-            //        }
-            //    }
+            //foreach (var item in _eV.UnitEs(_curCell).Units.Values) item.GameObject.SetActive(false);
+            //foreach (var item in _eV.UnitEs(_curCell).ExtraTws.Values) item.GameObject.SetActive(false);
+            //foreach (var item in _eV.UnitEs(_curCell).MainTws.Values) item.GameObject.SetActive(false);
+            //foreach (var item in _eV.UnitEs(_curCell).BowCrossbows.Values) item.GameObject.SetActive(false);
 
-            //    if (_e.PlayerInfoE(playerT).HaveKingInInventor)
-            //    {
-            //        _eV.KingE(playerT).ParenGOC.SetActive(false);
-            //    }
-            //    else
-            //    {
-            //        _eV.KingE(playerT).ParenGOC.SetActive(true);
-
-            //        var _cell = _e.PlayerInfoE(playerT).KingCell;
-
-            //        _eV.KingE(playerT).ParenGOC.Transform.position = _eV.CellEs(_cell).CellParent.Transform.position;
-
-            //        if (_e.CellsC.Selected == _cell)
-            //        {
-            //            _eV.KingE(playerT).SelectedSRC.SetActive(true);
-            //            _eV.KingE(playerT).NotSelectedSRC.SetActive(false);
-
-            //            _eV.KingE(playerT).SelectedSRC.SR.color = _e.UnitEs(_cell).ForPlayer(_e.NextPlayer(playerT).Player).IsVisible ? Color1 : Color2;
-            //        }
-            //        else
-            //        {
-            //            _eV.KingE(playerT).SelectedSRC.SetActive(false);
-            //            _eV.KingE(playerT).NotSelectedSRC.SetActive(true);
-
-            //            _eV.KingE(playerT).NotSelectedSRC.SR.color = _e.UnitEs(_cell).ForPlayer(_e.NextPlayer(playerT).Player).IsVisible ? Color1 : Color2;
-            //        }
-            //    }
-            //}
+            for (var i = 0; i < _needActive.Length; i++)
+            {
+                _needActive[i] = false;
+                _needColor[i] = _color1;
+            }
 
 
-
-            foreach (var item in _eV.UnitEs(cell_0).Ents.Values) item.GameObject.SetActive(false);
-            foreach (var item in _eV.UnitEs(cell_0).ExtraTws.Values) item.GameObject.SetActive(false);
-            foreach (var item in _eV.UnitEs(cell_0).MainTws.Values) item.GameObject.SetActive(false);
-            foreach (var item in _eV.UnitEs(cell_0).BowCrossbows.Values) item.GameObject.SetActive(false);
-
-
-
-
-            if (_e.CellsC.Current == cell_0)
+            if (_e.CellsC.Current == _curCell)
             {
                 if (_e.CellClickTC.Is(CellClickTypes.SetUnit))
                 {
@@ -84,90 +52,95 @@ namespace Chessy.Game
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
-                        _eV.UnitEs(idx_cur).MainToolWeaponE(true, LevelTypes.First, ToolWeaponTypes.Axe).GameObject.SetActive(true);
+                        //_eV.UnitEs(idx_cur).MainToolWeaponE(true, LevelTypes.First, ToolWeaponTypes.Axe).GameObject.SetActive(true);
                     }
                     else
                     {
-                        _eV.UnitE(idx_cur, true, levT, selUnitT).GameObject.SetActive(true);
+                        //_eV.UnitE(idx_cur, true, levT, selUnitT).GameObject.SetActive(true);
                     }
                 }
             }
 
 
-            if (_e.UnitTC(cell_0).HaveUnit)
+            if (_e.UnitTC(_curCell).HaveUnit)
             {
-                if (_e.UnitVisibleC(cell_0).IsVisible(_e.CurPlayerITC.PlayerT))
+                if (_e.UnitVisibleC(_curCell).IsVisible(_e.CurPlayerITC.PlayerT))
                 {
-                    var isSelected = cell_0 == _e.CellsC.Selected;
+                    var isSelected = _curCell == _e.CellsC.Selected;
 
-
-                    if (_e.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
-                    {
-                        if (_e.UnitTC(cell_0).Is(UnitTypes.Elfemale))
-                        {
-
-                        }
-                        else if (_e.UnitTC(cell_0).Is(UnitTypes.King))
-                        {
-
-                        }
-                        else if (_e.UnitTC(cell_0).Is(UnitTypes.Pawn))
-                        {
-
-                        }
-                    }
-
-                    var nextPlayer = _e.UnitPlayerTC(cell_0).PlayerT.NextPlayer();
-
-                    var isVisForNext = _e.UnitVisibleC(cell_0).IsVisible(nextPlayer);
-
-                    //if (!_e.UnitTC(cell_0).IsAnimal)
-                    //{
-                    //    isVisForNext = _e.UnitVisibleC(cell_0).IsVisible(_e.CurPlayerITC.PlayerT.NextPlayer());
-                    //}
+                    var nextPlayer = _e.UnitPlayerTC(_curCell).PlayerT.NextPlayer();
+                    var isVisForNext = _e.UnitVisibleC(_curCell).IsVisible(nextPlayer);
 
 
 
-                    var unitT = _e.UnitTC(cell_0).UnitT;
+                    var unitT = _e.UnitT(_curCell);
 
+                    _needColor[(byte)unitT] = isVisForNext ? _color1 : _color2;
 
-                    SpriteRendererVC sr = default;
 
                     if (unitT == UnitTypes.Pawn)
                     {
-                        if (_e.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
+                        if (_e.MainToolWeaponTC(_curCell).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            sr = _eV.UnitEs(cell_0).MainBowCrossbowE(isSelected, _e.MainTWLevelTC(cell_0).LevelT, _e.UnitIsRightArcherC(cell_0).IsRight);
+                            //sr = _eV.UnitEs(_curCell).MainBowCrossbowE(isSelected, _e.MainTWLevelTC(_curCell).LevelT, _e.UnitIsRightArcherC(_curCell).IsRight);
                         }
                         else
                         {
-                            sr = _eV.UnitEs(cell_0).MainToolWeaponE(isSelected, _e.MainTWLevelTC(cell_0).LevelT, _e.MainToolWeaponTC(cell_0).ToolWeaponT);
+                            //sr = _eV.UnitEs(_curCell).MainToolWeaponE(isSelected, _e.MainTWLevelTC(_curCell).LevelT, _e.MainToolWeaponTC(_curCell).ToolWeaponT);
                         }
 
 
                         //if (isVisForNext) SR.SR.color = new Color(SR.Color.r, SR.Color.g, SR.Color.b, 1);
                         //else SR.SR.color = new Color(SR.Color.r, SR.Color.g, SR.Color.b, 0.6f);
 
-                        if (_e.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
+                        if (_e.ExtraToolWeaponTC(_curCell).HaveToolWeapon)
                         {
-                            var twT = _e.ExtraToolWeaponTC(cell_0).ToolWeaponT;
-                            var levT = _e.ExtraTWLevelTC(cell_0).LevelT;
+                            var twT = _e.ExtraToolWeaponTC(_curCell).ToolWeaponT;
+                            var levT = _e.ExtraTWLevelTC(_curCell).LevelT;
 
-                            var sr2 = _eV.UnitEs(cell_0).ExtraToolWeaponE(isSelected, levT, twT);
+                            //var sr2 = _eV.UnitEs(_curCell).ExtraToolWeaponE(isSelected, levT, twT);
 
-                            sr2.GameObject.SetActive(true);
-                            sr2.SR.color = isVisForNext ? Color1 : Color2;
+                            //sr2.GameObject.SetActive(true);
+                            //sr2.SR.color = isVisForNext ? Color1 : Color2;
                         }
                     }
                     else
                     {
-                        sr = _eV.UnitE(cell_0, isSelected, _e.UnitLevelTC(cell_0).LevelT, unitT);
+                        _needActive[(byte)unitT] = true;
                     }
-
-                    sr.GameObject.SetActive(true);
-                    sr.SR.color = isVisForNext ? Color1 : Color2;
                 }
             }
+
+            for (var unitT = (UnitTypes)1; unitT < UnitTypes.End; unitT++)
+            {
+                if(unitT != UnitTypes.Pawn)
+                {
+                    
+
+                    _eV.UnitEs(_curCell).UnitSRC(unitT).SR.color = _needColor[(byte)unitT];
+                    
+
+
+                    if (_eV.UnitEs(_curCell).UnitSRC(unitT).GO.activeSelf != _needActive[(byte)unitT])
+                    {
+                        _eV.UnitEs(_curCell).AnimationUnitC.Play();
+                    }
+
+
+
+                    if (_e.IsClicked)
+                    {
+                        if (_e.SelectedCell == _curCell)
+                        {
+                            _eV.UnitEs(_curCell).AnimationUnitC.Play();
+                        }
+                    }
+
+
+                    _eV.UnitEs(_curCell).UnitSRC(unitT).GO.SetActive(_needActive[(byte)unitT]);
+                }
+            }
+
         }
     }
 }

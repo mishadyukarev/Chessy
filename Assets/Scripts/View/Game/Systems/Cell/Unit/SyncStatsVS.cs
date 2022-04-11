@@ -25,8 +25,8 @@ namespace Chessy.Game
                     var xCordinate = (float)(e.HpUnitC(idx_0).Health / HpValues.MAX);
                     vEs.CellEs(idx_0).Bar(CellBarTypes.Hp).Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                    vEs.CellEs(idx_0).Block(CellBlockTypes.NeedWater).SetActive(e.WaterUnitC(idx_0).Water <= WaterValues.MAX * 0.4f);
-                    vEs.CellEs(idx_0).Block(CellBlockTypes.MaxSteps).SetActive(e.StepUnitC(idx_0).Steps >= StepValues.MAX);
+                    vEs.CellEs(idx_0).Block(CellBlockTypes.NeedWater).SetEnabled(e.WaterUnitC(idx_0).Water <= WaterValues.MAX * 0.4f);
+                    vEs.CellEs(idx_0).Block(CellBlockTypes.MaxSteps).SetEnabled(e.StepUnitC(idx_0).Steps >= StepValues.MAX);
 
 
 
