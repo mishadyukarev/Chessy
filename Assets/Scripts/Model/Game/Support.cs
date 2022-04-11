@@ -18,11 +18,11 @@ namespace Chessy.Game
                 case DirectTypes.Up: return DirectTypes.Down;
                 case DirectTypes.UpRight: return DirectTypes.DownLeft;
                 case DirectTypes.Right: return DirectTypes.Left;
-                case DirectTypes.DownRight: return DirectTypes.UpLeft;
+                case DirectTypes.RightDown: return DirectTypes.LeftUp;
                 case DirectTypes.Down: return DirectTypes.Up;
                 case DirectTypes.DownLeft: return DirectTypes.UpRight;
                 case DirectTypes.Left: return DirectTypes.Right;
-                case DirectTypes.UpLeft: return DirectTypes.DownRight;
+                case DirectTypes.LeftUp: return DirectTypes.RightDown;
                 default: throw new Exception();
             }
         }

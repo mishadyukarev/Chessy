@@ -2,19 +2,23 @@
 
 namespace Chessy.Game
 {
-    static class SyncStunVS
+    sealed class SyncStunVS
     {
-        public static void Sync(in byte idx_0, in EntitiesViewGame eV, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        bool _needActive;
+
+        public void Sync(in byte idx_0, in EntitiesViewGame eV, in Chessy.Game.Model.Entity.EntitiesModelGame e)
         {
-            eV.UnitEffectVEs(idx_0).StunSRC.Disable();
+            _needActive = false;
 
             if (e.UnitTC(idx_0).HaveUnit)
             {
                 if (e.UnitVisibleC(idx_0).IsVisible(e.CurPlayerITC.PlayerT))
                 {
-                    eV.UnitEffectVEs(idx_0).StunSRC.SetActive(e.StunUnitC(idx_0).IsStunned);
+                    _needActive = e.StunUnitC(idx_0).IsStunned;
                 }
             }
+
+            eV.UnitEffectVEs(idx_0).StunSRC.GameObject.SetActive(_needActive);
         }
     }
 }

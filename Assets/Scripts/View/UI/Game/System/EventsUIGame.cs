@@ -13,7 +13,7 @@ namespace Chessy.Game.EventsUI
 {
     public sealed class EventsUIGame
     {
-        public EventsUIGame(EntitiesViewUICommon eUICommon, EntitiesModelCommon eMCommon, SystemsModelGame sMGame, in EntitiesViewUIGame eUIGame, EntitiesModelGame eMGame)
+        public EventsUIGame(EntitiesViewUICommon eUICommon, EntitiesModelCommon eMCommon, SystemsModelGame sMGame, EntitiesViewUIGame eUIGame, EntitiesModelGame eMGame)
         {
             eUICommon.BookE.ExitButtonC.AddListener(delegate
             {
@@ -35,11 +35,13 @@ namespace Chessy.Game.EventsUI
             eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddListener(delegate { sMGame.ForUISystems.ToggleToolWeaponClickS.Click(ToolWeaponTypes.BowCrossbow); });
             eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddListener(delegate { sMGame.ForUISystems.ToggleToolWeaponClickS.Click(ToolWeaponTypes.Axe); });
             eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { sMGame.ForUISystems.ToggleToolWeaponClickS.Click(ToolWeaponTypes.Staff); });
-            eUIGame.DownEs.BookButtonC.AddListener(delegate
+            eUIGame.DownEs.BookLittleE.ButtonC.AddListener(delegate
             {
                 eMCommon.IsOpenedBook = !eMCommon.IsOpenedBook;
                 eMCommon.SoundActionC(eMCommon.IsOpenedBook ? Common.Enum.ClipCommonTypes.OpenBook : Common.Enum.ClipCommonTypes.CloseBook).Invoke();
                 eMGame.NeedUpdateView = true;
+
+                eUIGame.DownEs.BookLittleE.AnimationVC.Play();
             });
 
             #endregion

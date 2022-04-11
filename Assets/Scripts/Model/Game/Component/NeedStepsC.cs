@@ -4,7 +4,7 @@
     {
         readonly float[] _needStepsForShift;
 
-        internal float[] NeedStepsFloat => (float[])_needStepsForShift.Clone();
+        internal float[] NeedStepsCopy => (float[])_needStepsForShift.Clone();
         public float NeedSteps(in byte cell) => _needStepsForShift[cell];
 
         internal NeedStepsC(in float[] needSteps) => _needStepsForShift = needSteps;

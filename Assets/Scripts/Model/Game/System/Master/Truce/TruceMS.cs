@@ -41,7 +41,7 @@ namespace Chessy.Game
 
                 if (eMG.UnitTC(cell_0).HaveUnit)
                 {
-                    if (eMG.Common.GameModeTC.Is(GameModes.TrainingOff))
+                    if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOff))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                         {

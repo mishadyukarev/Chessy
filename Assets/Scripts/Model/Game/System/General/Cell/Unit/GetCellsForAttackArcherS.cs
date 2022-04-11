@@ -42,7 +42,7 @@ namespace Chessy.Game.Model.System
                                                 }
                                                 else
                                                 {
-                                                    if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
+                                                    if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
                                                     {
                                                         eMG.AttackUniqueCellsC(cell_0).Add(idx_1);
                                                     }
@@ -67,7 +67,7 @@ namespace Chessy.Game.Model.System
                                         {
                                             if (!isRight_0)
                                             {
-                                                if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
+                                                if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
                                                 {
                                                     eMG.AttackUniqueCellsC(cell_0).Add(idx_2);
                                                 }

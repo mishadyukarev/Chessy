@@ -16,16 +16,22 @@ namespace Chessy.Common.Entity
         public TestModeC TestModeC;
         public AdC AdC;
         public TimeStartGameC TimeStartGameC;
-        public GameModeTC GameModeTC;
 
-        BookE _bookE;
-        public ref PageBookTC PageBookTC => ref _bookE.PageBookTC;
+        public GameModeTC GameModeTC;
+        public GameModeTypes GameModeT
+        {
+            get => GameModeTC.GameModeT;
+            set => GameModeTC.GameModeT = value;
+        }
+
+        public BookE BookE;
+        public ref PageBookTC PageBookTC => ref BookE.PageBookTC;
         public PageBookTypes PageBookT
         {
             get => PageBookTC.PageBookT;
             internal set => PageBookTC.PageBookT = value;
         }
-        public ref bool IsOpenedBook => ref _bookE.IsOpenedBook;
+        public ref bool IsOpenedBook => ref BookE.IsOpenedBook;
 
         public SceneTC SceneTC;
         public SceneTypes SceneT => SceneTC.SceneT;

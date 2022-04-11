@@ -4,14 +4,19 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    static class SupportVS
+    sealed class SupportVS
     {
+        readonly static bool[] _needActive = new bool[StartValues.CELLS];
+        readonly static Color[] _needColor = new Color[StartValues.CELLS];
+
         public static void Sync(in Chessy.Game.Model.Entity.EntitiesModelGame e, in EntitiesViewGame eV)
         {
-            for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+
+
+
+            for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
             {
-                var isActive = false;
-                Color color = default;
+                _needActive[cell_start] = false;
 
 
                 switch (e.CellClickTC.CellClickT)
@@ -56,10 +61,10 @@ namespace Chessy.Game
                         switch (e.SelectedE.AbilityTC.Ability)
                         {
                             case AbilityTypes.ChangeDirectionWind:
-                                if (e.HaveFire(idx_0))
+                                if (e.HaveFire(cell_start))
                                 {
-                                    isActive = true;
-                                    color = ColorsValues.Color(e.SelectedE.AbilityTC.Ability);
+                                    _needActive[cell_start] = true;
+                                    _needColor[cell_start] = ColorsValues.Color(e.SelectedE.AbilityTC.Ability);
                                 }
                                 break;
 
@@ -78,25 +83,23 @@ namespace Chessy.Game
                 }
 
 
-                eV.CellEs(idx_0).SupportCellEs.Support.SetActive(isActive);
-                eV.CellEs(idx_0).SupportCellEs.Support.SR.color = color;
+
             }
 
-            eV.CellEs(e.CellsC.Selected).SupportCellEs.Support.Enable();
-            eV.CellEs(e.CellsC.Selected).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.Selector);
+            _needActive[e.SelectedCell] = true;
+            _needColor[e.SelectedCell] = ColorsValues.Color(SupportCellVisionTypes.Selector);
 
 
             if (e.CellClickTC.Is(CellClickTypes.UniqueAbility))
             {
-
                 if (e.SelectedE.AbilityTC.Is(AbilityTypes.ChangeDirectionWind))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_1 = e.AroundCellsE(e.WeatherE.CloudC.Center).IdxCell(dirT);
+                        var cell_target = e.AroundCellsE(e.WeatherE.CloudC.Center).IdxCell(dirT);
 
-                        eV.CellEs(idx_1).SupportCellEs.Support.Enable();
-                        eV.CellEs(idx_1).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                        _needActive[cell_target] = true;
+                        _needColor[cell_target] = ColorsValues.Color(SupportCellVisionTypes.Shift);
                     }
                 }
 
@@ -104,8 +107,8 @@ namespace Chessy.Game
                 {
                     foreach (var idx in e.UnitForArsonC(e.CellsC.Selected).Idxs)
                     {
-                        eV.CellEs(idx).SupportCellEs.Support.Enable();
-                        eV.CellEs(idx).SupportCellEs.Support.SR.color = ColorsValues.Color(AbilityTypes.FireArcher);
+                        _needActive[idx] = true;
+                        _needColor[idx] = ColorsValues.Color(AbilityTypes.FireArcher);
                     }
                 }
             }
@@ -123,19 +126,19 @@ namespace Chessy.Game
                         {
                             foreach (var idx_0 in idxs)
                             {
-                                eV.CellEs(idx_0).SupportCellEs.Support.Enable();
-                                eV.CellEs(idx_0).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                                _needActive[idx_0] = true;
+                                _needColor[idx_0] = ColorsValues.Color(SupportCellVisionTypes.Shift);
                             }
 
                             foreach (var idx_0 in e.AttackSimpleCellsC(e.CellsC.Selected).Idxs)
                             {
-                                eV.CellEs(idx_0).SupportCellEs.Support.Enable();
-                                eV.CellEs(idx_0).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
+                                _needActive[idx_0] = true;
+                                _needColor[idx_0] = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
                             }
                             foreach (var idx_0 in e.AttackUniqueCellsC(e.CellsC.Selected).Idxs)
                             {
-                                eV.CellEs(idx_0).SupportCellEs.Support.Enable();
-                                eV.CellEs(idx_0).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                                _needActive[idx_0] = true;
+                                _needColor[idx_0] = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
                             }
                         }
                     }
@@ -143,33 +146,11 @@ namespace Chessy.Game
             }
 
 
-            //foreach (var idx_0 in e.AroundCellsE(e.CellsC.Selected).CellsAround)
-            //{
-            //    eV.CellEs(idx_0).SupportCellEs.Support.Enable();
-            //    eV.CellEs(idx_0).SupportCellEs.Support.SR.color = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
-            //}
 
-
-            //switch (e.CellClickTC.Click)
-            //{
-            //    case CellClickTypes.UniqueAbility:
-            //        {
-            //            switch (e.SelectedAbilityTC.Ability)
-            //            {
-            //                case AbilityTypes.FireArcher:
-            //                    foreach (var idx_0 in e.UnitEs(e.CellsC.SelectedIdxC).ForArson.Idxs)
-            //                    {
-            //                        SupportCellVEs.Support(idx_0).Enable();
-            //                        SupportCellVEs.Support(idx_0).SR.color = ColorsValues.Color(SupportCellVisionTypes.FireSelector);
-            //                    }
-            //                    break;
-            //            }
-            //        }
-            //        break;
-            //}
-
-
-
-        }
-    }
+            for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
+            {
+                eV.CellEs(cell_start).SupportCellEs.Support.GameObject.SetActive(_needActive[cell_start]);
+                eV.CellEs(cell_start).SupportCellEs.Support.SR.color = _needColor[cell_start];
+            }
+        } }
 }

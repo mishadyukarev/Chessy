@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using Chessy.Common.Component;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game.Entity.View.UI.Down
 {
-    public sealed class DonerUIE
+    public struct DonerUIE
     {
         public readonly ButtonUIC ButtonC;
-        public readonly Chessy.Common.Component.GameObjectVC WaitGoC;
+        public readonly GameObjectVC WaitGoC;
 
         public DonerUIE(in Transform downZone)
         {

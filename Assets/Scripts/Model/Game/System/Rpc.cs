@@ -427,7 +427,7 @@ namespace Chessy.Game
                 objs.Add(_eMG.AttackUniqueCellsC(cell_0).IdxsByteClone);
 
                 objs.Add(_eMG.CellsForShift(cell_0).IdxsByteClone);
-                objs.Add(_eMG.UnitNeedStepsForShiftC(cell_0).NeedStepsFloat);
+                objs.Add(_eMG.UnitNeedStepsForShiftC(cell_0).NeedStepsCopy);
 
                 objs.Add(_eMG.UnitButtonAbilitiesC(cell_0).AbilityTypesClone);
                 objs.Add(_eMG.UnitCooldownAbilitiesC(cell_0).CooldonwsFloat);

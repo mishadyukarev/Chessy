@@ -2,9 +2,9 @@
 {
     public struct GameModeTC
     {
-        public GameModes GameModeT;
+        public GameModeTypes GameModeT;
 
-        public bool Is(params GameModes[] gameModes)
+        public bool Is(params GameModeTypes[] gameModes)
         {
             if (gameModes == default) throw new System.Exception();
 

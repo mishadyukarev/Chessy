@@ -20,7 +20,7 @@ namespace Chessy.Game.Model.System
 
         readonly List<Action> _runs;
 
-        public readonly SystemsModelCommon SCommon;
+        internal readonly SystemsModelCommon SCommon;
 
 
         #region Environment
@@ -106,7 +106,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
 
             _eMG.IsStartedGame = false;
             _eMG.MotionsC.Motions = 0;
-            _eMG.ZoneInfoC.IsActiveFriend = _eMC.GameModeTC.Is(GameModes.WithFriendOff);
+            _eMG.ZoneInfoC.IsActiveFriend = _eMC.GameModeTC.Is(GameModeTypes.WithFriendOff);
             _eMG.WhoseMovePlayerTC.PlayerT = StartValues.WHOSE_MOVE;
             _eMG.CellClickTC.CellClickT = StartValues.CELL_CLICK;
             _eMG.IsSelectedCity = false;
@@ -117,7 +117,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
             _eMG.CellsC = default;
 
 
-            _eMG.LessonTC.LessonT = _eMC.GameModeTC.Is(GameModes.TrainingOff) ? (LessonTypes)1 : LessonTypes.None;
+            _eMG.LessonTC.LessonT = _eMC.GameModeTC.Is(GameModeTypes.TrainingOff) ? (LessonTypes)1 : LessonTypes.None;
 
 
             _eMG.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND, StartValues.MAX_SPEED_WIND, StartValues.MIN_SPEED_WIND);
@@ -179,7 +179,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
                     _eMG.PlayerInfoE(playerT).ResourcesC(resT) = new ResourcesC(StartValues.Resources(resT));
                 }
 
-                if (_eMC.GameModeTC.Is(GameModes.TrainingOff))
+                if (_eMC.GameModeTC.Is(GameModeTypes.TrainingOff))
                 {
                     if (playerT == PlayerTypes.First)
                     {
@@ -192,19 +192,19 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
 
             switch (_eMC.GameModeTC.GameModeT)
             {
-                case GameModes.TrainingOff:
+                case GameModeTypes.TrainingOff:
                     _eMG.CurPlayerITC.PlayerT = PlayerTypes.First;
                     break;
 
-                case GameModes.WithFriendOff:
+                case GameModeTypes.WithFriendOff:
                     _eMG.CurPlayerITC.PlayerT = _eMG.WhoseMovePlayerTC.PlayerT;
                     break;
 
-                case GameModes.PublicOn:
+                case GameModeTypes.PublicOn:
                     _eMG.CurPlayerITC.PlayerT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
                     break;
 
-                case GameModes.WithFriendOn:
+                case GameModeTypes.WithFriendOn:
                     _eMG.CurPlayerITC.PlayerT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
                     break;
 
@@ -327,7 +327,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
             }
 
 
-            if (_eMC.GameModeTC.Is(GameModes.TrainingOff))
+            if (_eMC.GameModeTC.Is(GameModeTypes.TrainingOff))
             {
                 _eMG.PlayerInfoE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
 

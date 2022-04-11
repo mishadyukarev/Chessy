@@ -12,8 +12,7 @@ namespace Chessy.Game
         public readonly DownHeroUIE HeroE;
         public readonly DownToolWeaponUIE ToolWeaponE;
         public readonly CityButtonUIE CityButtonUIE;
-
-        public readonly ButtonUIC BookButtonC;
+        public readonly BookLittleUIE BookLittleE;
 
         public DownUIEs(in Transform downZone)
         {
@@ -25,8 +24,9 @@ namespace Chessy.Game
             CityButtonUIE = new CityButtonUIE(downZone);
 
 
+            var book = downZone.Find("Book+");
 
-            BookButtonC = new ButtonUIC(downZone.Find("Book+").Find("Button+").GetComponent<Button>());
+            BookLittleE = new BookLittleUIE(book.Find("Button+").GetComponent<Button>(), book.Find("Animation+").GetComponent<Animation>());
         }
     }
 }

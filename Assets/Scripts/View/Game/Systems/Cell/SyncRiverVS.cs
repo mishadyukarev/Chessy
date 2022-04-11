@@ -12,11 +12,11 @@ namespace Chessy.Game
             {
                 case PlayerTypes.None: throw new Exception();
                 case PlayerTypes.First:
-                    CellRiverVEs.Parent(idx_0).LocalEulerAngles = new Vector3(0, 0, 0);
+                    eV.CellEs(idx_0).RiverE.Parents.LocalEulerAngles = new Vector3(0, 0, 0);
                     break;
 
                 case PlayerTypes.Second:
-                    CellRiverVEs.Parent(idx_0).LocalEulerAngles = new Vector3(0, 0, 180);
+                    eV.CellEs(idx_0).RiverE.Parents.LocalEulerAngles = new Vector3(0, 0, 180);
                     break;
 
                 default: throw new Exception();
@@ -29,7 +29,7 @@ namespace Chessy.Game
                 {
                     if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                     {
-                        CellRiverVEs.River(dir_1, idx_0).SetActive(e.HaveRiverC(idx_0).HaveRive(dir_1));
+                        eV.CellEs(idx_0).RiverE.River(dir_1).SetActive(e.HaveRiverC(idx_0).HaveRive(dir_1));
                     }
                 }
             }

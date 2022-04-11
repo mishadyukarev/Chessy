@@ -22,6 +22,7 @@ namespace Chessy.Game
         public readonly CellBuildingVEs BuildingEs;
         public readonly SpriteRendererVC CloudCellVC;
         public readonly SupportCellVE SupportCellEs;
+        public readonly RiverVE RiverE;
 
         public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
         public SpriteRendererVC Block(in CellBlockTypes block) => _blocks[block];
@@ -78,12 +79,14 @@ namespace Chessy.Game
 
             _trails = new Dictionary<DirectTypes, SpriteRendererVC>();
 
-            var parent_Trans = cell.transform.Find("TrailZone");
+            var parent = cell.transform.Find("TrailZone");
 
-            for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
+            for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
             {
-                _trails.Add(dir, new SpriteRendererVC(parent_Trans.Find(dir.ToString()).GetComponent<SpriteRenderer>()));
+                _trails.Add(dirT, new SpriteRendererVC(parent.Find(dirT.ToString()).GetComponent<SpriteRenderer>()));
             }
+
+            RiverE = new RiverVE(cell.transform);
         }
     }
 }

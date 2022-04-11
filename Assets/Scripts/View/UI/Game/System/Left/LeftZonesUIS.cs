@@ -13,25 +13,27 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            _eUI.LeftEs.CityE(BuildingTypes.House).ParentGOC.SetActive(false);
-            _eUI.LeftEnvEs.Zone.SetActive(false);
+            var needActiveCity = false;
+            var needActiveEnvironment = false;
 
             if (e.IsSelectedCity)
             {
-                _eUI.LeftEs.CityE(BuildingTypes.House).ParentGOC.SetActive(true);
+                needActiveCity = true;
             }
             else
             {
-                var idx_sel = e.CellsC.Selected;
-
                 if (e.CellsC.IsSelectedCell)
                 {
                     if (!e.LessonTC.HaveLesson)
                     {
-                        _eUI.LeftEnvEs.Zone.SetActive(true);
+                        needActiveEnvironment = true;
                     }
                 }
             }
+
+
+            _eUI.LeftEs.CityE(BuildingTypes.House).ParentGOC.SetActive(needActiveCity);
+            _eUI.LeftEnvEs.Zone.SetActive(needActiveEnvironment);
         }
     }
 }

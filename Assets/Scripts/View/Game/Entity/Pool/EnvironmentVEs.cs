@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Common;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game.Entity.View.Cell
@@ -8,6 +9,7 @@ namespace Chessy.Game.Entity.View.Cell
         readonly Dictionary<EnvironmentTypes, SpriteRendererVC> _envs;
 
         public readonly SpriteRendererVC HillUnderC;
+        public readonly AnimationVC AnimationC;
 
         public SpriteRendererVC EnvironmentE(in EnvironmentTypes env) => _envs[env];
 
@@ -19,10 +21,14 @@ namespace Chessy.Game.Entity.View.Cell
 
             for (var envT = EnvironmentTypes.None + 1; envT < EnvironmentTypes.End; envT++)
             {
-                _envs.Add(envT, new SpriteRendererVC(parent.Find(envT.ToString() + "_SR").GetComponent<SpriteRenderer>()));
+                _envs.Add(envT, new SpriteRendererVC(parent.Find(envT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
             }
 
-            HillUnderC = new SpriteRendererVC(parent.Find(EnvironmentTypes.Hill.ToString() + "Under" + "_SR").GetComponent<SpriteRenderer>());
+            HillUnderC = new SpriteRendererVC(parent.Find(EnvironmentTypes.Hill.ToString() + "Under" + "_SR+").GetComponent<SpriteRenderer>());
+
+
+            AnimationC = new AnimationVC(_envs[EnvironmentTypes.AdultForest].GameObject.GetComponent<Animation>());
+
         }
     }
 }

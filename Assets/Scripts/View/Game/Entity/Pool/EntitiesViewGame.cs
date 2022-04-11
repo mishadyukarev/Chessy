@@ -6,6 +6,7 @@ using Chessy.Game.Entity.View.Cell.Unit.Effect;
 using Chessy.Game.Values;
 using Chessy.Game.View.Entity;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,8 +14,8 @@ namespace Chessy.Game
 {
     public sealed class EntitiesViewGame
     {
-        readonly Dictionary<PlayerTypes, UnitVE> _kings = new Dictionary<PlayerTypes, UnitVE>();
-        readonly UnitVE[] _pawnEs = new UnitVE[StartValues.CELLS]; 
+        readonly AudioSourceVC[] _sounds0 = new AudioSourceVC[(byte)ClipTypes.End];
+        readonly AudioSourceVC[] _sounds1 = new AudioSourceVC[(byte)AbilityTypes.End];
 
         readonly CellVEs[] _cellVEs;
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
@@ -26,11 +27,8 @@ namespace Chessy.Game
         public EnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
         public SpriteRendererVC EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
 
-
-        public readonly EntityVPool EntityVPool;
-
-        public UnitVE KingE(in PlayerTypes playerT) => _kings[playerT];
-        public UnitVE PawnE(in byte idxUnit) => _pawnEs[idxUnit];
+        public AudioSourceVC SoundV(in ClipTypes clip) => _sounds0[(byte)clip];
+        public AudioSourceVC SoundV(in AbilityTypes clip) => _sounds1[(byte)clip];
 
 
         public EntitiesViewGame(out List<object> forData, in EntitiesViewCommon eVCommon)
@@ -39,49 +37,6 @@ namespace Chessy.Game
 
             var genZone = new GameObject("GeneralZone");
             genZone.transform.SetParent(eVCommon.ToggleZoneGOC.Transform);
-
-
-
-            //genZone = new Chessy.Common.Component.GameObjectVC(genZone);
-
-
-            //SoundC.SavedVolume = SoundC.Volume;
-
-
-
-            EntityVPool = new EntityVPool(out var sounds0, out var sounds1, genZone.transform);
-
-
-
-            var parent = new GameObject("Kings").transform;
-            parent.SetParent(genZone.transform);
-
-            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
-            {
-                var kingTran = GameObject.Instantiate(Resources.Load<Transform>("King+"));
-                kingTran.SetParent(parent);
-                kingTran.name = "King" + playerT;
-
-                _kings.Add(playerT, new UnitVE(kingTran.gameObject, kingTran.Find("Selected_SR+").GetComponent<SpriteRenderer>(), kingTran.Find("NotSelected_SR+").GetComponent<SpriteRenderer>()));
-            }
-
-
-            parent = new GameObject("Pawns").transform;
-            parent.SetParent(genZone.transform);
-
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
-            {
-                var pawnTran = GameObject.Instantiate(Resources.Load<Transform>("Pawn+"));
-                pawnTran.SetParent(parent);
-                pawnTran.name = "Pawn" + cell_0;
-
-                _pawnEs[cell_0] = new UnitVE(pawnTran.gameObject, pawnTran.Find("Selected_SR+").GetComponent<SpriteRenderer>(), pawnTran.Find("NotSelected_SR+").GetComponent<SpriteRenderer>());
-            }
-
-
-
-
-
 
 
             var parCells = new GameObject("Cells");
@@ -138,10 +93,6 @@ namespace Chessy.Game
             }
 
 
-
-            new CellRiverVEs(cells);
-
-
             var isActiveParenCells = new bool[StartValues.CELLS];
             var idCells = new int[StartValues.CELLS];
 
@@ -150,6 +101,49 @@ namespace Chessy.Game
                 isActiveParenCells[idx] = CellEs(idx).CellParent.IsActiveSelf;
                 idCells[idx] = CellEs(idx).CellGO.InstanceID;
             }
+
+
+
+
+
+            var aSParent = new GameObject("AudioSource");
+
+            aSParent.transform.SetParent(genZone.transform);
+
+
+            AudioSource aS = default;
+            var sounds0 = new Dictionary<ClipTypes, Action>();
+
+            for (var clipT = ClipTypes.None + 1; clipT < ClipTypes.End; clipT++)
+            {
+                aS = aSParent.AddComponent<AudioSource>();
+                aS.clip = UnityEngine.Resources.Load<AudioClip>(clipT.ToString());
+
+                aS.volume = StartValues.Volume(clipT);
+                if (clipT == ClipTypes.Background2)
+                {
+                    aS.Play();
+                    aS.loop = true;
+                }
+
+
+                _sounds0[(byte)clipT] = new AudioSourceVC(aS);
+                sounds0.Add(clipT, aS.Play);
+            }
+
+            var sounds1 = new Dictionary<AbilityTypes, Action>();
+
+            for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
+            {
+                aS = aSParent.AddComponent<AudioSource>();
+                aS.clip = Resources.Load<AudioClip>("Unique/" + unique.ToString());
+
+                _sounds1[(byte)unique] = new AudioSourceVC(aS);
+                sounds1.Add(unique, aS.Play);
+
+                aS.volume = StartValues.Volume(unique);
+            }
+
 
             forData = new List<object>();
             forData.Add(sounds0);

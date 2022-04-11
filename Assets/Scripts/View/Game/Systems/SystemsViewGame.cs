@@ -85,7 +85,7 @@ namespace Chessy.Game.System.View
 
 
                         _syncFrozenArrawVS.SyncVision(cell_0);
-                        SyncStunVS.Sync(cell_0, _eVGame, _eMGame);
+                        new SyncStunVS().Sync(cell_0, _eVGame, _eMGame);
                         ShieldVS.Run(cell_0, _eVGame, _eMGame);
                     }
                 }

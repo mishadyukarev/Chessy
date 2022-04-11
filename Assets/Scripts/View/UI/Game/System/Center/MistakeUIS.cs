@@ -8,6 +8,8 @@ namespace Chessy.Game
     {
         readonly MistakeUIE _mistakeUIE;
 
+        readonly bool[] _needActiveMistakeZone = new bool[(byte)MistakeTypes.End];
+
         internal MistakeUIS(in MistakeUIE mistakeUIE, in EntitiesModelGame eMG) : base(eMG)
         {
             _mistakeUIE = mistakeUIE;
@@ -15,9 +17,9 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            foreach (var key in _mistakeUIE.KeysMistake)
+            for (var i = 0; i < _needActiveMistakeZone.Length; i++)
             {
-                _mistakeUIE.Zones(key).SetActive(false);
+                _needActiveMistakeZone[i] = false;
             }
 
             foreach (var key in _mistakeUIE.KeysResource)
@@ -30,7 +32,7 @@ namespace Chessy.Game
             {
                 if (e.MistakeT == MistakeTypes.Economy)
                 {
-                    _mistakeUIE.Zones(e.MistakeT).SetActive(true);
+                    _needActiveMistakeZone[(byte)e.MistakeT] = true;
 
                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                     {
@@ -46,8 +48,13 @@ namespace Chessy.Game
 
                 else
                 {
-                    _mistakeUIE.Zones(e.MistakeT).SetActive(true);
+                    _needActiveMistakeZone[(byte)e.MistakeT] = true;
                 }
+            }
+
+            for (var mistakeT = (MistakeTypes)1; mistakeT < MistakeTypes.End; mistakeT++)
+            {
+                _mistakeUIE.Zones(mistakeT).SetActive(_needActiveMistakeZone[(byte)mistakeT]);
             }
         }
     }

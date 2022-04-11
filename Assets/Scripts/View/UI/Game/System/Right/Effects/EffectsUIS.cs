@@ -20,6 +20,9 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
+            var needActiveZone = false;
+
+
             if (e.CellsC.IsSelectedCell)
             {
                 var idx_sel = e.CellsC.Selected;
@@ -41,29 +44,37 @@ namespace Chessy.Game
                                 _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Shield);
                                 _isFilled[EffectTypes.Shield] = true;
+
+                                needActiveZone = true;
                             }
                             else if (!_isFilled[EffectTypes.Arraw] && e.FrozenArrawEffectC(idx_sel).HaveShoots)
                             {
                                 _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Arraw);
                                 _isFilled[EffectTypes.Arraw] = true;
+                                needActiveZone = true;
                             }
                             else if (!_isFilled[EffectTypes.Stun] && e.StunUnitC(idx_sel).IsStunned)
                             {
                                 _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Stun);
                                 _isFilled[EffectTypes.Stun] = true;
+                                needActiveZone = true;
                             }
                             else if (!_isFilled[EffectTypes.DamageAdd] && e.HaveKingEffect(idx_sel))
                             {
                                 _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
                                 _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.DamageAdd);
                                 _isFilled[EffectTypes.DamageAdd] = true;
+                                needActiveZone = true;
                             }
                         }
                     }
                 }
             }
+
+            _eUI.RightEs.Effect(0).GO.Transform.parent.gameObject.SetActive(needActiveZone);
+
         }
     }
 }

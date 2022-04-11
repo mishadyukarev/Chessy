@@ -18,12 +18,12 @@ namespace Chessy.Common
                         {
                             directs[0] = DirectTypes.UpRight;
                             directs[1] = DirectTypes.Right;
-                            directs[2] = DirectTypes.DownRight;
+                            directs[2] = DirectTypes.RightDown;
                         }
                         break;
                     case SunSideTypes.Sunset:
                         {
-                            directs[0] = DirectTypes.UpLeft;
+                            directs[0] = DirectTypes.LeftUp;
                             directs[1] = DirectTypes.Left;
                             directs[2] = DirectTypes.DownLeft;
                         }

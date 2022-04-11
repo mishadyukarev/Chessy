@@ -34,17 +34,6 @@ namespace Chessy.Game
         public readonly SkipLessonUIE SkipLessonE;
 
 
-        #region Lesson
-
-        public readonly SelectionBookGuidUIE BookGuidSelectionE;
-        //public readonly SettingUnitLessonUIE SettingUnitLessonE;
-        //public readonly GettingUnitLessonUIE GettingUnitLessonE;
-        //public readonly SettingPawnUIE SettingPawnE;
-        //public readonly SettingGodLessonUIE SettingGodLessonE;
-
-        #endregion
-
-
         public CenterHeroUIE HeroE(in UnitTypes unit) => _ents[unit];
         public GameObjectVC LessonGOC(in LessonTypes lessonT) => _lessonGOs[lessonT];
 
@@ -77,14 +66,6 @@ namespace Chessy.Game
             {
                 _lessonGOs.Add(lessonT, new GameObjectVC(training.Find(lessonT.ToString() + "+").gameObject));
             }
-
-            BookGuidSelectionE = new SelectionBookGuidUIE(training.Find("SelectionGuidBook+"));
-            //SettingUnitLessonE = new SettingUnitLessonUIE(training.Find("NeedSetKing+"));
-            //GettingUnitLessonE = new GettingUnitLessonUIE(training.Find("GettingGod+"));
-            //SettingPawnE = new SettingPawnUIE(training.Find("SettingPawn+"));
-            //SettingGodLessonE = new SettingGodLessonUIE(training.Find("SettingGod+"));
-
-
 
             SkipLessonE = new SkipLessonUIE(centerZone.Find("SkipLesson+").Find("Button+").GetComponent<Button>());
 

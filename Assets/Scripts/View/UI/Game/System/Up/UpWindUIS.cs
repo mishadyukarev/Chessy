@@ -24,8 +24,8 @@ namespace Chessy.Game
                     case DirectTypes.Up: _directs.Add(dirT, new Vector3(0, 0, 90)); break;
                     case DirectTypes.Down: _directs.Add(dirT, new Vector3(0, 0, 270)); break;
                     case DirectTypes.UpRight: _directs.Add(dirT, new Vector3(0, 0, 45)); break;
-                    case DirectTypes.UpLeft: _directs.Add(dirT, new Vector3(0, 0, 135)); break;
-                    case DirectTypes.DownRight: _directs.Add(dirT, new Vector3(0, 0, 315)); break;
+                    case DirectTypes.LeftUp: _directs.Add(dirT, new Vector3(0, 0, 135)); break;
+                    case DirectTypes.RightDown: _directs.Add(dirT, new Vector3(0, 0, 315)); break;
                     case DirectTypes.DownLeft: _directs.Add(dirT, new Vector3(0, 0, 225)); break;
                     default: throw new Exception();
                 }

@@ -5,14 +5,13 @@
         None,
 
         Up,
-        Right,
-        Down,
-        Left,
-
         UpRight,
-        DownRight,
+        Right,
+        RightDown,
+        Down,
         DownLeft,
-        UpLeft,
+        Left,
+        LeftUp,
 
         End
     }

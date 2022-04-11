@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
+using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.System.View.UI.Down;
 using Chessy.Game.View.UI;
@@ -16,7 +17,7 @@ namespace Chessy.Game.System.View.UI
 
         readonly List<Action> _syncUpdates;
 
-        public SystemsViewUIGame(in EntitiesModelCommon eMCommon, in EntitiesViewUIGame eUIGame, in EntitiesModelGame eMGame)
+        public SystemsViewUIGame(EntitiesModelCommon eMCommon, EntitiesViewUIGame eUIGame, EntitiesModelGame eMGame)
         {
             _e = eMGame;
 
@@ -59,6 +60,32 @@ namespace Chessy.Game.System.View.UI
                 new LeftZonesUIS(eUIGame, eMGame).Sync,
                 new EnvUIS(eUIGame, eMGame).Sync,
                 new LeftCityUIS(eUIGame, eMGame).Sync,
+
+
+                () => 
+                {
+                    if (eMCommon.IsOpenedBook)
+                    {
+                        eUIGame.DownEs.BookLittleE.AnimationVC.Play();
+                    }
+
+
+                    if(eMGame.MistakeT == MistakeTypes.NeedMoreSteps)
+                    {
+                        eUIGame.RightEs.StatsEs.EnergyE.AnimationC.Play();
+                    }
+
+                    if (eMGame.LessonT == LessonTypes.RelaxExtractPawn)
+                    {
+                        eUIGame.RightEs.RelaxE.AnimationC.Play();
+                    }
+
+                    else if (eMGame.LessonT == LessonTypes.SettingPawn)
+                    {
+                        eUIGame.DownEs.PawnE.AnimationC.Play();
+                    }
+
+                },
             };
 
 
@@ -74,6 +101,10 @@ namespace Chessy.Game.System.View.UI
             if (_e.NeedUpdateView)
             {
                 _syncUpdates.ForEach((Action action) => action());
+
+
+
+
 
                 _e.NeedUpdateView = false;
             }

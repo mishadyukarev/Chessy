@@ -9,6 +9,9 @@ namespace Chessy.Game
     {
         readonly Dictionary<UnitStatTypes, RightUnitStatUIE> _stats;
 
+
+        public readonly EnergyUIE EnergyE;
+
         public RightUnitStatUIE Stat(in UnitStatTypes stat) => _stats[stat];
 
         public RightStatsUIEs(in GameObject rightZone)
@@ -16,6 +19,10 @@ namespace Chessy.Game
             _stats = new Dictionary<UnitStatTypes, RightUnitStatUIE>();
 
             var statZone = rightZone.transform.Find("StatsZone").gameObject;
+
+
+
+
 
 
             var zone = statZone.transform.Find("HpZone");
@@ -29,8 +36,8 @@ namespace Chessy.Game
 
 
             zone = statZone.transform.Find("Steps");
-            _stats.Add(UnitStatTypes.Steps, new RightUnitStatUIE(zone.transform.Find("Steps_Image").GetComponent<Image>(),
-                zone.transform.Find("StepsCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>()));
+            EnergyE = new EnergyUIE(new Common.AnimationVC(zone.GetComponent<Animation>()), new ImageUIC(zone.transform.Find("Steps_Image").GetComponent<Image>()),
+                new TextUIC(zone.transform.Find("StepsCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>()));
 
 
             zone = statZone.transform.Find("Water");

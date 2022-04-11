@@ -27,8 +27,8 @@ namespace Chessy.Menu
 
 
             eUIM.OfflineZoneE.JoinButtonC.AddListener(ConnectOffline);
-            eUIM.OfflineZoneE.TrainingButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModes.TrainingOff));
-            eUIM.OfflineZoneE.WithFriendButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModes.WithFriendOff));
+            eUIM.OfflineZoneE.TrainingButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModeTypes.TrainingOff));
+            eUIM.OfflineZoneE.WithFriendButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModeTypes.WithFriendOff));
 
 
 
@@ -72,7 +72,7 @@ namespace Chessy.Menu
         {
             RoomOptions roomOptions = new RoomOptions();
 
-            gameModeC.GameModeT = GameModes.PublicOn;
+            gameModeC.GameModeT = GameModeTypes.PublicOn;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
@@ -90,7 +90,7 @@ namespace Chessy.Menu
         {
             var roomName = eUIM.OnlineZoneE.CreateFriendRoomInputFieldC.InputField.text;
 
-            gameModeC.GameModeT = GameModes.WithFriendOn;
+            gameModeC.GameModeT = GameModeTypes.WithFriendOn;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -102,18 +102,18 @@ namespace Chessy.Menu
 
         private void JoinRandomRoom(ref GameModeTC gameModeC)
         {
-            gameModeC.GameModeT = GameModes.PublicOn;
+            gameModeC.GameModeT = GameModeTypes.PublicOn;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
 
         private void JoinFriendRoom(in EntitiesViewUIMenu eUIM, ref GameModeTC gameModeC)
         {
-            gameModeC.GameModeT = GameModes.WithFriendOn;
+            gameModeC.GameModeT = GameModeTypes.WithFriendOn;
             PhotonNetwork.JoinRoom(eUIM.OnlineZoneE.JoinFriendRoomInputFieldC.InputField.text);
         }
 
-        private void CreateOffGame(ref GameModeTC gameModeC, in GameModes offGameMode)
+        private void CreateOffGame(ref GameModeTC gameModeC, in GameModeTypes offGameMode)
         {
             gameModeC.GameModeT = offGameMode;
             PhotonNetwork.CreateRoom(default);

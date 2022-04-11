@@ -132,7 +132,7 @@ namespace Chessy.Game.Model.System.Master
                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn)) eMG.ResourcesC(eMG.UnitPlayerTC(cell_0).PlayerT, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 
 
-                    if (gameModeTC.Is(GameModes.TrainingOff))
+                    if (gameModeTC.Is(GameModeTypes.TrainingOff))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.Second))
                         {
@@ -165,7 +165,7 @@ namespace Chessy.Game.Model.System.Master
                                 {
                                     if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter) || !eMG.BuildingTC(cell_0).HaveBuilding)
                                     {
-                                        if (gameModeTC.Is(GameModes.TrainingOff))
+                                        if (gameModeTC.Is(GameModeTypes.TrainingOff))
                                         {
                                             if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                                             {
@@ -277,7 +277,7 @@ namespace Chessy.Game.Model.System.Master
                 if (eMG.UnitTC(cell_0).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
                 {
                     var canExecute = false;
-                    if (gameModeTC.Is(GameModes.TrainingOff))
+                    if (gameModeTC.Is(GameModeTypes.TrainingOff))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First)) canExecute = true;
                     }

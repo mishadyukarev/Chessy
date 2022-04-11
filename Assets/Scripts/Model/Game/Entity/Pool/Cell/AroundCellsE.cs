@@ -79,12 +79,12 @@ namespace Chessy.Game.Model.Entity
                             xyDirect[EntitiesModelGame.Y] = 1;
                             break;
 
-                        case DirectTypes.UpLeft:
+                        case DirectTypes.LeftUp:
                             xyDirect[EntitiesModelGame.X] = -1;
                             xyDirect[EntitiesModelGame.Y] = 1;
                             break;
 
-                        case DirectTypes.DownRight:
+                        case DirectTypes.RightDown:
                             xyDirect[EntitiesModelGame.X] = 1;
                             xyDirect[EntitiesModelGame.Y] = -1;
                             break;

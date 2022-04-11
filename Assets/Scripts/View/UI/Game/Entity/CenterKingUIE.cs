@@ -13,7 +13,7 @@ namespace Chessy.Game
             var king = centerZone.Find("KingZone");
 
             Paren = new Chessy.Common.Component.GameObjectVC(king.gameObject);
-            Button = new ButtonUIC(king.Find("SetKing_Button").GetComponent<Button>());
+            Button = new ButtonUIC(king.Find("King+").Find("SetKing_Button").GetComponent<Button>());
         }
     }
 }

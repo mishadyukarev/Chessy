@@ -30,7 +30,6 @@ namespace Chessy
 
         EntitiesModelCommon _eMC;
 
-
         void Start()
         {
             #region Common
@@ -121,7 +120,7 @@ namespace Chessy
             #region ComeToTraining
 
             PhotonNetwork.OfflineMode = true;
-            _eMC.GameModeTC.GameModeT = GameModes.TrainingOff;
+            _eMC.GameModeT = GameModeTypes.TrainingOff;
             PhotonNetwork.CreateRoom(default);
 
             #endregion

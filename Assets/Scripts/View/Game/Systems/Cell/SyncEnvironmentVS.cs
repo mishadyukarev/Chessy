@@ -4,26 +4,32 @@ namespace Chessy.Game
 {
     public struct SyncEnvironmentVS
     {
-        public void Run(in byte idx_0, in EntitiesViewGame vEs, in EntitiesModelGame e)
+        public void Run(in byte cell_start, in EntitiesViewGame vEs, in EntitiesModelGame e)
         {
-            if (e.AdultForestC(idx_0).HaveAnyResources)
+            if (e.SelectedCell == cell_start)
             {
-                vEs.EnvironmentVE(idx_0, EnvironmentTypes.AdultForest).SetActive(true);
+                vEs.EnvironmentVEs(cell_start).AnimationC.Play();
+            }
 
-                vEs.EnvironmentVEs(idx_0).HillUnderC.SetActive(e.HillC(idx_0).HaveAnyResources);
 
-                vEs.EnvironmentVE(idx_0, EnvironmentTypes.Hill).SetActive(false);
+            if (e.AdultForestC(cell_start).HaveAnyResources)
+            {
+                vEs.EnvironmentVE(cell_start, EnvironmentTypes.AdultForest).GameObject.SetActive(true);
+
+                vEs.EnvironmentVEs(cell_start).HillUnderC.GameObject.SetActive(e.HillC(cell_start).HaveAnyResources);
+
+                vEs.EnvironmentVE(cell_start, EnvironmentTypes.Hill).GameObject.SetActive(false);
             }
             else
             {
-                vEs.EnvironmentVE(idx_0, EnvironmentTypes.AdultForest).SetActive(false);
-                vEs.EnvironmentVEs(idx_0).HillUnderC.SetActive(false);
-                vEs.EnvironmentVE(idx_0, EnvironmentTypes.Hill).SetActive(e.HillC(idx_0).HaveAnyResources);
+                vEs.EnvironmentVE(cell_start, EnvironmentTypes.AdultForest).GameObject.SetActive(false);
+                vEs.EnvironmentVEs(cell_start).HillUnderC.GameObject.SetActive(false);
+                vEs.EnvironmentVE(cell_start, EnvironmentTypes.Hill).GameObject.SetActive(e.HillC(cell_start).HaveAnyResources);
             }
 
-            vEs.EnvironmentVE(idx_0, EnvironmentTypes.Fertilizer).SetActive(e.FertilizeC(idx_0).HaveAnyResources);
-            vEs.EnvironmentVE(idx_0, EnvironmentTypes.YoungForest).SetActive(e.YoungForestC(idx_0).HaveAnyResources);
-            vEs.EnvironmentVE(idx_0, EnvironmentTypes.Mountain).SetActive(e.MountainC(idx_0).HaveAnyResources);
+            vEs.EnvironmentVE(cell_start, EnvironmentTypes.Fertilizer).GameObject.SetActive(e.FertilizeC(cell_start).HaveAnyResources);
+            vEs.EnvironmentVE(cell_start, EnvironmentTypes.YoungForest).GameObject.SetActive(e.YoungForestC(cell_start).HaveAnyResources);
+            vEs.EnvironmentVE(cell_start, EnvironmentTypes.Mountain).GameObject.SetActive(e.MountainC(cell_start).HaveAnyResources);
         }
     }
 }

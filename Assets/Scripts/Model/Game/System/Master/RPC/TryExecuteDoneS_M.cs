@@ -28,14 +28,14 @@ namespace Chessy.Game.Model.System
                             eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
 
-                            if (gameModeTC.Is(GameModes.TrainingOff))
+                            if (gameModeTC.Is(GameModeTypes.TrainingOff))
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
                                 sMG.MasterSs.UpdateS_M.Run(gameModeTC);
                             }
 
-                            else if (gameModeTC.Is(GameModes.WithFriendOff))
+                            else if (gameModeTC.Is(GameModeTypes.WithFriendOff))
                             {
                                 UpdateCooldonsStunsAndOther(0.5f);
 
