@@ -6,6 +6,8 @@ namespace Chessy.Game
     {
         readonly EntitiesViewUIGame _eUI;
 
+        bool _needActive;
+
         internal MotionUIS(in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
         {
             _eUI = eUI;
@@ -15,15 +17,15 @@ namespace Chessy.Game
         {
             if (e.MotionTimer > 0)
             {
-                _eUI.CenterEs.Motion.SetActiveParent(false);
-
-                _eUI.CenterEs.Motion.TextUI.text = e.MotionsC.Motions.ToString();
-                _eUI.CenterEs.Motion.SetActiveParent(true);
+                _needActive = true;
+                _eUI.CenterEs.MotionTextC.TextUI.text = e.MotionsC.Motions.ToString();
             }
             else
             {
-                _eUI.CenterEs.Motion.SetActiveParent(false);
+                _needActive = false;
             }
+
+            _eUI.CenterEs.MotionTextC.SetActiveParent(_needActive);
         }
     }
 }

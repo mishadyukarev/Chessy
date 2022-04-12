@@ -47,6 +47,10 @@ namespace Chessy.Game.Model.System.Master
                         }
                     }
 
+
+                    eMG.NeedAnimationCircularAttack = true;
+
+
                     eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
 
                     eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);

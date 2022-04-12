@@ -4,17 +4,21 @@ namespace Chessy.Game
 {
     public struct SyncFireVS
     {
+        bool _needActive;
+
         public void Sync(in byte idx_0, in EntitiesViewGame eV, in EntitiesModelGame e)
         {
             if (e.HaveFire(idx_0))
             {
-                eV.CellEs(idx_0).FireVE.SR.Enable();
+                _needActive = true;
             }
 
             else
             {
-                eV.CellEs(idx_0).FireVE.SR.Disable();
+                _needActive = false;
             }
+
+            eV.CellEs(idx_0).FireVE.SRC.GO.SetActive(_needActive);
         }
     }
 }

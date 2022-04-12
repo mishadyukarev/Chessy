@@ -8,93 +8,72 @@ namespace Chessy.Game.Entity.View.Cell
     public readonly struct UnitVEs
     {
         readonly SpriteRendererVC[] _units;
-        //public readonly Dictionary<string, SpriteRendererVC> ExtraTws;
-        //public readonly Dictionary<string, SpriteRendererVC> MainTws;
-        //public readonly Dictionary<string, SpriteRendererVC> BowCrossbows;
+        readonly Dictionary<string, SpriteRendererVC> _mainToolWeapons;
+        readonly Dictionary<string, SpriteRendererVC> _bowCrossbows;
 
 
         public readonly EffectVEs EffectVEs;
         public readonly SpriteRendererVC NeedFoodSRC;
-
         public readonly AnimationVC AnimationUnitC;
+        public readonly AnimationVC CircularAttackAnimC;
 
         public SpriteRendererVC UnitSRC(in UnitTypes unitT) => _units[(byte)unitT];
-        //public SpriteRendererVC ExtraToolWeaponE(in LevelTypes level, in ToolWeaponTypes tw) => ExtraTws[level.ToString() + tw];
-        //public SpriteRendererVC MainToolWeaponE(in LevelTypes level, in ToolWeaponTypes tw) => MainTws[level.ToString() + tw];
-        //public SpriteRendererVC MainBowCrossbowE(in LevelTypes levelT, in bool isRight) => BowCrossbows[levelT.ToString() + isRight];
+        public SpriteRendererVC MainToolWeaponSRC(in LevelTypes level, in ToolWeaponTypes tw) => _mainToolWeapons[level.ToString() + tw];
+        public SpriteRendererVC MainBowCrossbowSRC(in LevelTypes level, in bool isRight) => _bowCrossbows[level.ToString() + isRight];
 
 
         public UnitVEs(in Transform cellT)
         {
+
             var unitZone = cellT.Find("Unit+");
 
             NeedFoodSRC = new SpriteRendererVC(unitZone.Find("NeedFood_SR").GetComponent<SpriteRenderer>());
             EffectVEs = new EffectVEs(unitZone);
+            CircularAttackAnimC = new AnimationVC(unitZone.Find("CircularAttackKing+").GetComponent<Animation>());
 
 
             _units = new SpriteRendererVC[(byte)UnitTypes.End];
-            //ExtraTws = new Dictionary<string, SpriteRendererVC>();
-            //MainTws = new Dictionary<string, SpriteRendererVC>();
-            //BowCrossbows = new Dictionary<string, SpriteRendererVC>();
-
-
             var unitZ = unitZone.Find("Unit+");
-
-
             AnimationUnitC = new AnimationVC(unitZ.GetComponent<Animation>());
+
 
             for (var unitT = (UnitTypes)1; unitT < UnitTypes.End; unitT++)
             {
-                if(unitT != UnitTypes.Pawn)
+                if (unitT != UnitTypes.Pawn)
                 {
                     _units[(byte)unitT] = new SpriteRendererVC(unitZ.Find(unitT.ToString() + "_" + "SR+").GetComponent<SpriteRenderer>());
                 }
-
-                
             }
 
 
 
-            for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
+            _mainToolWeapons = new Dictionary<string, SpriteRendererVC>();
+            _bowCrossbows = new Dictionary<string, SpriteRendererVC>();
+
+            var mainToolWeaponZone = unitZ.Find("MainToolWeapon+");
+
+            for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
             {
-                //var zonee = selZone.Find(levT.ToString() + "+");
+                var levelZone = mainToolWeaponZone.Find(levelT.ToString() + "Level+");
 
-                //for (var unitT = UnitTypes.None + 1; unitT < UnitTypes.End; unitT++)
-                //{
-                //    if (unitT != UnitTypes.Pawn)
-                //    {
-                //        Units.Add(isSelected.ToString() + levT + unitT, new SpriteRendererVC(zonee.Find(unitT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
-                //    }
-                //}
+                var nameSpriteRenderEnd = "_SR+";
 
-                //var extraTwZone = zonee.Find("ExtraToolWeapon+");
-
-                //for (var twT = ToolWeaponTypes.Pick; twT <= ToolWeaponTypes.Shield; twT++)
-                //{
-                //    ExtraTws.Add(isSelected.ToString() + levT + twT, new SpriteRendererVC(extraTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
-                //}
+                foreach (var twT in new[] { ToolWeaponTypes.Staff, ToolWeaponTypes.Axe })
+                {
+                    _mainToolWeapons.Add(levelT.ToString() + twT, new SpriteRendererVC(levelZone.Find(twT.ToString() + nameSpriteRenderEnd).GetComponent<SpriteRenderer>()));
+                }
 
 
-                //var mainTwZone = zonee.Find("MainToolWeapon+");
+                var bowCrossbowZone = levelZone.Find("BowCrossbow+");
 
-                //for (var twT = ToolWeaponTypes.Staff; twT <= ToolWeaponTypes.Axe; twT++)
-                //{
-                //    if (twT == ToolWeaponTypes.BowCrossbow)
-                //    {
-                //        var bowCrossbow = mainTwZone.Find(twT.ToString() + "+");
+                foreach (var isRight in new[] { true, false })
+                {
+                    var name = isRight ? "Right" : "Cornered";
+                    name += nameSpriteRenderEnd;
 
-                //        BowCrossbows.Add(isSelected.ToString() + levT + true, new SpriteRendererVC(bowCrossbow.Find("Right_SR+").GetComponent<SpriteRenderer>()));
-                //        BowCrossbows.Add(isSelected.ToString() + levT + false, new SpriteRendererVC(bowCrossbow.Find("Cornered_SR+").GetComponent<SpriteRenderer>()));
-                //    }
-                //    else
-                //    {
-                //        MainTws.Add(isSelected.ToString() + levT + twT, new SpriteRendererVC(mainTwZone.Find(twT.ToString() + "_SR+").GetComponent<SpriteRenderer>()));
-                //    }
-                //}
+                    _bowCrossbows.Add(levelT.ToString() + isRight, new SpriteRendererVC(bowCrossbowZone.Find(name).GetComponent<SpriteRenderer>()));
+                }
             }
-            
-
-
         }
     }
 }

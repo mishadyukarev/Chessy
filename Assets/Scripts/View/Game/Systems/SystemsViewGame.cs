@@ -84,6 +84,17 @@ namespace Chessy.Game.System.View
                         _syncFrozenArrawVS.SyncVision(cell_start);
                         new SyncStunVS().Sync(cell_start, _eVGame, _eMGame);
                         ShieldVS.Run(cell_start, _eVGame, _eMGame);
+
+
+                        if (_eMGame.NeedAnimationCircularAttack)
+                        {
+                            if(_eMGame.UnitT(cell_start) == UnitTypes.King)
+                            {
+                                _eVGame.CellEs(cell_start).UnitVEs.CircularAttackAnimC.Play();
+                                _eMGame.NeedAnimationCircularAttack = false;
+                            }
+                        }
+
                     }
                 }
 

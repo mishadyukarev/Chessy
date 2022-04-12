@@ -33,6 +33,8 @@ namespace Chessy.Game.Model.Entity
         public bool HaveTreeUnit { get; internal set; }
         public bool IsClicked { get; internal set; }
 
+        public bool NeedAnimationCircularAttack { get; set; }
+
 
         internal float ForUpdateViewTimer;
         public ZonesInfoC ZoneInfoC;
@@ -61,8 +63,11 @@ namespace Chessy.Game.Model.Entity
 
 
         public MotionsC MotionsC;
-        public int Motions => MotionsC.Motions;
-
+        public int Motions
+        {
+            get => MotionsC.Motions;
+            internal set => MotionsC.Motions = value;
+        }
 
         public PlayerTC WinnerPlayerTC;
         public PlayerTypes WinnerPlayerT => WinnerPlayerTC.PlayerT;

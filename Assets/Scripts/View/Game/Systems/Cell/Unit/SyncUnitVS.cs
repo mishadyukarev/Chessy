@@ -14,35 +14,52 @@ namespace Chessy.Game
         readonly Color _color2 = new Color(1, 1, 1, 0.6f);
 
 
-        readonly bool[] _needActive = new bool[(byte)UnitTypes.End];
-        readonly Color[] _needColor = new Color[(byte)UnitTypes.End];
+        readonly bool[] _needActiveUnit = new bool[(byte)UnitTypes.End];
+        readonly Color[] _needColorUnit = new Color[(byte)UnitTypes.End];
 
-        readonly byte _curCell;
+        readonly Dictionary<LevelTypes, bool[]> _needActiveMainTW = new Dictionary<LevelTypes, bool[]>();
+        readonly Dictionary<LevelTypes, bool[]> _needActiveBowCrossbow = new Dictionary<LevelTypes, bool[]>();
+
+        readonly byte _currentCell;
 
 
         internal SyncUnitVS(in byte cell, in EntitiesViewGame eViewGame, in EntitiesModelGame eModelGame)
         {
             _eV = eViewGame;
             _e = eModelGame;
+            _currentCell = cell;
 
-            _curCell = cell;
+            for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
+            {
+                _needActiveMainTW.Add(levelT, new bool[(byte)ToolWeaponTypes.End]);
+                _needActiveBowCrossbow.Add(levelT, new bool[2]);
+            }
+
         }
 
         internal void Sync()
         {
-            //foreach (var item in _eV.UnitEs(_curCell).Units.Values) item.GameObject.SetActive(false);
-            //foreach (var item in _eV.UnitEs(_curCell).ExtraTws.Values) item.GameObject.SetActive(false);
-            //foreach (var item in _eV.UnitEs(_curCell).MainTws.Values) item.GameObject.SetActive(false);
-            //foreach (var item in _eV.UnitEs(_curCell).BowCrossbows.Values) item.GameObject.SetActive(false);
-
-            for (var i = 0; i < _needActive.Length; i++)
+            for (var i = 0; i < _needActiveUnit.Length; i++)
             {
-                _needActive[i] = false;
-                _needColor[i] = _color1;
+                _needActiveUnit[i] = false;
+                _needColorUnit[i] = _color1;
+            }
+            for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
+            {
+                foreach (var toolWeaponT in new[] { ToolWeaponTypes.Staff, ToolWeaponTypes.Axe })
+                {
+                    _needActiveMainTW[levelT][(byte)toolWeaponT] = false;
+                }
+
+                foreach (var isRight in new[] { true, false })
+                {
+                    _needActiveBowCrossbow[levelT][isRight ? 0 : 1] = false;
+                }
             }
 
 
-            if (_e.CellsC.Current == _curCell)
+
+            if (_e.CellsC.Current == _currentCell)
             {
                 if (_e.CellClickTC.Is(CellClickTypes.SetUnit))
                 {
@@ -52,51 +69,51 @@ namespace Chessy.Game
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
-                        //_eV.UnitEs(idx_cur).MainToolWeaponE(true, LevelTypes.First, ToolWeaponTypes.Axe).GameObject.SetActive(true);
+                        _needActiveMainTW[LevelTypes.First][(byte)ToolWeaponTypes.Axe] = true;
                     }
                     else
                     {
-                        //_eV.UnitE(idx_cur, true, levT, selUnitT).GameObject.SetActive(true);
+                        _needActiveUnit[(byte)selUnitT] = true;
                     }
                 }
             }
 
 
-            if (_e.UnitTC(_curCell).HaveUnit)
+            if (_e.UnitTC(_currentCell).HaveUnit)
             {
-                if (_e.UnitVisibleC(_curCell).IsVisible(_e.CurPlayerITC.PlayerT))
+                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerITC.PlayerT))
                 {
-                    var isSelected = _curCell == _e.CellsC.Selected;
+                    var isSelectedCell = _currentCell == _e.SelectedCell;
 
-                    var nextPlayer = _e.UnitPlayerTC(_curCell).PlayerT.NextPlayer();
-                    var isVisForNext = _e.UnitVisibleC(_curCell).IsVisible(nextPlayer);
+                    var nextPlayer = _e.UnitPlayerTC(_currentCell).PlayerT.NextPlayer();
+                    var isVisForNext = _e.UnitVisibleC(_currentCell).IsVisible(nextPlayer);
 
 
 
-                    var unitT = _e.UnitT(_curCell);
+                    var unitT = _e.UnitT(_currentCell);
 
-                    _needColor[(byte)unitT] = isVisForNext ? _color1 : _color2;
+                    _needColorUnit[(byte)unitT] = isVisForNext ? _color1 : _color2;
 
 
                     if (unitT == UnitTypes.Pawn)
                     {
-                        if (_e.MainToolWeaponTC(_curCell).Is(ToolWeaponTypes.BowCrossbow))
+                        if (_e.MainToolWeaponTC(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            //sr = _eV.UnitEs(_curCell).MainBowCrossbowE(isSelected, _e.MainTWLevelTC(_curCell).LevelT, _e.UnitIsRightArcherC(_curCell).IsRight);
+                            _needActiveBowCrossbow[_e.MainTWLevelT(_currentCell)][_e.UnitIsRightArcherC(_currentCell).IsRight ? 0 : 1] = true;
                         }
                         else
                         {
-                            //sr = _eV.UnitEs(_curCell).MainToolWeaponE(isSelected, _e.MainTWLevelTC(_curCell).LevelT, _e.MainToolWeaponTC(_curCell).ToolWeaponT);
+                            _needActiveMainTW[_e.MainTWLevelT(_currentCell)][(byte)_e.MainToolWeaponT(_currentCell)] = true;
                         }
 
 
                         //if (isVisForNext) SR.SR.color = new Color(SR.Color.r, SR.Color.g, SR.Color.b, 1);
                         //else SR.SR.color = new Color(SR.Color.r, SR.Color.g, SR.Color.b, 0.6f);
 
-                        if (_e.ExtraToolWeaponTC(_curCell).HaveToolWeapon)
+                        if (_e.ExtraToolWeaponTC(_currentCell).HaveToolWeapon)
                         {
-                            var twT = _e.ExtraToolWeaponTC(_curCell).ToolWeaponT;
-                            var levT = _e.ExtraTWLevelTC(_curCell).LevelT;
+                            var twT = _e.ExtraToolWeaponTC(_currentCell).ToolWeaponT;
+                            var levT = _e.ExtraTWLevelTC(_currentCell).LevelT;
 
                             //var sr2 = _eV.UnitEs(_curCell).ExtraToolWeaponE(isSelected, levT, twT);
 
@@ -106,41 +123,56 @@ namespace Chessy.Game
                     }
                     else
                     {
-                        _needActive[(byte)unitT] = true;
+                        _needActiveUnit[(byte)unitT] = true;
                     }
                 }
             }
+
+
+
 
             for (var unitT = (UnitTypes)1; unitT < UnitTypes.End; unitT++)
             {
                 if(unitT != UnitTypes.Pawn)
                 {
+                    _eV.UnitEs(_currentCell).UnitSRC(unitT).SR.color = _needColorUnit[(byte)unitT];
                     
-
-                    _eV.UnitEs(_curCell).UnitSRC(unitT).SR.color = _needColor[(byte)unitT];
-                    
-
-
-                    if (_eV.UnitEs(_curCell).UnitSRC(unitT).GO.activeSelf != _needActive[(byte)unitT])
+                    if (_eV.UnitEs(_currentCell).UnitSRC(unitT).GO.activeSelf != _needActiveUnit[(byte)unitT])
                     {
-                        _eV.UnitEs(_curCell).AnimationUnitC.Play();
+                        _eV.UnitEs(_currentCell).AnimationUnitC.Play();
                     }
-
-
 
                     if (_e.IsClicked)
                     {
-                        if (_e.SelectedCell == _curCell)
+                        if (_e.SelectedCell == _currentCell)
                         {
-                            _eV.UnitEs(_curCell).AnimationUnitC.Play();
+                            _eV.UnitEs(_currentCell).AnimationUnitC.Play();
                         }
                     }
 
-
-                    _eV.UnitEs(_curCell).UnitSRC(unitT).GO.SetActive(_needActive[(byte)unitT]);
+                    _eV.UnitEs(_currentCell).UnitSRC(unitT).GO.SetActive(_needActiveUnit[(byte)unitT]);
                 }
             }
 
+
+            for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
+            {
+                foreach (var toolWeaponT in new[] { ToolWeaponTypes.Staff, ToolWeaponTypes.Axe })
+                {
+                    if (_eV.UnitEs(_currentCell).MainToolWeaponSRC(levelT, toolWeaponT).GO.activeSelf != _needActiveMainTW[levelT][(byte)toolWeaponT])
+                    {
+                        _eV.UnitEs(_currentCell).AnimationUnitC.Play();
+                    }
+
+                    _eV.UnitEs(_currentCell).MainToolWeaponSRC(levelT, toolWeaponT).SetActive(_needActiveMainTW[levelT][(byte)toolWeaponT]);
+                }
+
+
+                foreach (var isRight in new[] { true, false })
+                {
+                    _eV.UnitEs(_currentCell).MainBowCrossbowSRC(levelT, isRight).SetActive(_needActiveBowCrossbow[levelT][isRight ? 0 : 1]);
+                }
+            }
         }
     }
 }

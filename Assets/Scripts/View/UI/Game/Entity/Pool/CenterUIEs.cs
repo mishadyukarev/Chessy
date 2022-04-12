@@ -19,7 +19,7 @@ namespace Chessy.Game
         public readonly ButtonUIC ReadyButtonC;
 
         public readonly TextUIC EndGame;
-        public readonly TextUIC Motion;
+        public readonly TextUIC MotionTextC;
 
         public readonly ButtonUIC OpenShopButtonC;
 
@@ -78,7 +78,7 @@ namespace Chessy.Game
 
 
             EndGame = new TextUIC(centerZone.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>());
-            Motion = new TextUIC(centerZone.Find("MotionZone").Find("MotionText").GetComponent<TextMeshProUGUI>());
+            MotionTextC = new TextUIC(centerZone.Find("MotionZone").Find("MotionText").GetComponent<TextMeshProUGUI>());
 
 
             var readyZone = centerZone.Find("ReadyZone");

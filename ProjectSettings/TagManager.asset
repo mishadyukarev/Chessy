@@ -98,7 +98,10 @@ TagManager:
   - name: HeroBar
     uniqueID: 146751987
     locked: 0
-  - name: Weather
+  - name: HpBar
+    uniqueID: 584186309
+    locked: 0
+  - name: Cloud
     uniqueID: 1231844777
     locked: 0
   - name: NoneSupportVision

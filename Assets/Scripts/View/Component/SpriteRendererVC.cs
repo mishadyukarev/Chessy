@@ -38,5 +38,10 @@ namespace Chessy.Game
             if (SR.enabled == true)
                 SR.enabled = false;
         }
+
+        public void SetActive(in bool needActive)
+        {
+            if(GO.activeSelf != needActive) GO.SetActive(needActive);
+        }
     }
 }
