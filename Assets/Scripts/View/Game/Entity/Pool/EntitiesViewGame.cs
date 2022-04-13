@@ -1,11 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Component;
 using Chessy.Common.Entity.View;
-using Chessy.Game.Entity.View.Cell;
-using Chessy.Game.Entity.View.Cell.Unit.Effect;
 using Chessy.Game.Values;
-using Chessy.Game.View.Entity;
-using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,15 +15,9 @@ namespace Chessy.Game
 
         readonly CellVEs[] _cellVEs;
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
-        public CellBuildingVEs BuildingEs(in byte idx) => CellEs(idx).BuildingEs;
-        public SpriteRendererVC BuildingE(in byte idx, in BuildingTypes buildT) => BuildingEs(idx).Main(buildT);
-        public UnitVEs UnitEs(in byte idx) => CellEs(idx).UnitVEs;
-        public EffectVEs UnitEffectVEs(in byte idx) => UnitEs(idx).EffectVEs;
-        public EnvironmentVEs EnvironmentVEs(in byte idx) => CellEs(idx).EnvironmentVEs;
-        public SpriteRendererVC EnvironmentVE(in byte idx, in EnvironmentTypes envT) => EnvironmentVEs(idx).EnvironmentE(envT);
 
-        public AudioSourceVC SoundV(in ClipTypes clip) => _sounds0[(byte)clip];
-        public AudioSourceVC SoundV(in AbilityTypes clip) => _sounds1[(byte)clip];
+        public AudioSourceVC SoundASC(in ClipTypes clip) => _sounds0[(byte)clip];
+        public AudioSourceVC SoundASC(in AbilityTypes clip) => _sounds1[(byte)clip];
 
 
         public EntitiesViewGame(out List<object> forData, in EntitiesViewCommon eVCommon)

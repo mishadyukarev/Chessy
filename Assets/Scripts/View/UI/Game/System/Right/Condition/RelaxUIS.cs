@@ -58,7 +58,7 @@ namespace Chessy.Game
                 _relaxUIE.Button(unitT).SetActive(_needActiveZone[(byte)unitT]);
             }
 
-            _relaxUIE.ButtonC.Button.gameObject.SetActive(activeButt);
+            _relaxUIE.ButtonC.SetActiveParent(activeButt);
         }
     }
 }

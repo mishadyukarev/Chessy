@@ -2,24 +2,28 @@
 
 namespace Chessy.Game
 {
-    sealed class SyncTrailVS
+    sealed class SyncTrailVS : SystemViewCellGameAbs
     {
-        readonly bool[] _needActive = new bool[(byte)DirectTypes.End];
+        readonly DirectTypes _currentDirectTrail;
+        bool _needActive;
+        readonly SpriteRendererVC _trailSRC;
 
-
-        public void Sync(in byte cell_start, in EntitiesViewGame eVGame, in EntitiesModelGame eMGame)
+        internal SyncTrailVS(in DirectTypes currentDirectTrail, in SpriteRendererVC trailSRC, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
         {
-            for (var i = 0; i < _needActive.Length; i++) _needActive[i] = false;
+            _currentDirectTrail = currentDirectTrail;
+            _trailSRC = trailSRC;
+        }
 
-            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+        internal sealed override void Sync()
+        {
+            _needActive = false;
+
+            if (e.TrailVisibleC(_currentCell).IsVisible(e.CurPlayerITC.PlayerT))
             {
-                if (eMGame.TrailVisibleC(cell_start).IsVisible(eMGame.CurPlayerITC.PlayerT))
-                {
-                    _needActive[(byte)dirT] = eMGame.HealthTrail(cell_start).IsAlive(dirT);
-                }
-
-                eVGame.CellEs(cell_start).TrailCellVC(dirT).GO.SetActive(_needActive[(byte)dirT]);
+                _needActive = e.HealthTrail(_currentCell).IsAlive(_currentDirectTrail);
             }
+
+            _trailSRC.SetActive(_needActive);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Chessy.Game.Model.System
         internal readonly StunElfemaleS_M StunElfemaleS_M;
         internal readonly FireArcherS_M FireArcherS_M;
         internal readonly GrowAdultForestS_M GrowAdultForestS_M;
-        internal readonly DestroyBuildingS_M DestroyBuildingS_M;
+        internal readonly TryDestroyBuildingS_M DestroyBuildingS_M;
         internal readonly ChangeDirectionWindMS ChangeDirectionWindS_M;
 
         #endregion
@@ -69,7 +69,7 @@ namespace Chessy.Game.Model.System
             StunElfemaleS_M = new StunElfemaleS_M(sMG, eMG);
             FireArcherS_M = new FireArcherS_M(sMG, eMG);
             GrowAdultForestS_M = new GrowAdultForestS_M(sMG, eMG);
-            DestroyBuildingS_M = new DestroyBuildingS_M(sMG, eMG);
+            DestroyBuildingS_M = new TryDestroyBuildingS_M(sMG, eMG);
             ChangeDirectionWindS_M = new ChangeDirectionWindMS(sMG, eMG);
 
             RainyGiveWaterToUnitsAroundS_M = new RainyGiveWaterToUnitsAroundS_M(sMG, eMG);

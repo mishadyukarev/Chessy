@@ -80,6 +80,9 @@ TagManager:
   - name: NeedFood
     uniqueID: 1049715089
     locked: 0
+  - name: CircularAttackKing
+    uniqueID: 343660469
+    locked: 0
   - name: Unit
     uniqueID: 1121464767
     locked: 0

@@ -1,43 +1,44 @@
 ﻿using Chessy.Game.Extensions;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
-    sealed class SyncBuildingVS
+    sealed class SyncBuildingVS : SystemViewCellGameAbs
     {
-        readonly byte _curCell;
-
         readonly bool[] _needActive = new bool[(byte)BuildingTypes.End];
+        readonly CellBuildingVEs _buildingVEs;
 
-        internal SyncBuildingVS(in byte curCell)
+
+        internal SyncBuildingVS(in CellBuildingVEs buildingVEs, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
         {
-            _curCell = curCell;
+            _buildingVEs = buildingVEs;
         }
 
-        public void Sync(in EntitiesViewGame vEs, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        internal override void Sync()
         {
             var curPlayerI = e.CurPlayerIT;
 
-            var isVisForMe = e.BuildingVisibleC(_curCell).IsVisible(curPlayerI);
-            var isVisForNext = e.BuildingVisibleC(_curCell).IsVisible(curPlayerI.NextPlayer());
+            var isVisForMe = e.BuildingVisibleC(_currentCell).IsVisible(curPlayerI);
+            var isVisForNext = e.BuildingVisibleC(_currentCell).IsVisible(curPlayerI.NextPlayer());
 
             for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
             {
                 _needActive[(byte)build] = false;
             }
 
-            if (e.BuildingTC(_curCell).HaveBuilding)
+            if (e.BuildingTC(_currentCell).HaveBuilding)
             {
                 if (isVisForMe)
                 {
-                    _needActive[(byte)e.BuildingT(_curCell)] = true;
+                    _needActive[(byte)e.BuildingT(_currentCell)] = true;
                 }
             }
 
 
-            for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)
+            for (var buildT = (BuildingTypes)1; buildT < BuildingTypes.End; buildT++)
             {
-                vEs.BuildingE(_curCell, buildT).GO.SetActive(_needActive[(byte)buildT]);
+                _buildingVEs.Main(buildT).GO.SetActive(_needActive[(byte)buildT]);
             }
                 
         }

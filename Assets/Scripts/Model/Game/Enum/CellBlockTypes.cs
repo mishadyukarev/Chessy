@@ -7,6 +7,7 @@
         Condition,
         MaxSteps,
         NeedWater,
+        NeedFood,
 
         End,
     }

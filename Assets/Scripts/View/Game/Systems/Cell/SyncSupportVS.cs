@@ -1,19 +1,25 @@
 ﻿using Chessy.Game.Entity;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
+using Chessy.Game.View.System;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    sealed class SupportVS
+    sealed class SyncSupportVS : SystemViewGameAbs
     {
         readonly static bool[] _needActive = new bool[StartValues.CELLS];
         readonly static Color[] _needColor = new Color[StartValues.CELLS];
 
-        public static void Sync(in Chessy.Game.Model.Entity.EntitiesModelGame e, in EntitiesViewGame eV)
+        readonly EntitiesViewGame _eVG;
+
+        internal SyncSupportVS(in EntitiesViewGame eVG, in EntitiesModelGame eMG) : base(eMG)
         {
+            _eVG = eVG;
+        }
 
-
-
+        internal sealed override void Sync()
+        {
             for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
             {
                 _needActive[cell_start] = false;
@@ -21,41 +27,6 @@ namespace Chessy.Game
 
                 switch (e.CellClickTC.CellClickT)
                 {
-                    case CellClickTypes.SimpleClick:
-                        {
-
-                        }
-                        break;
-
-                    case CellClickTypes.SetUnit:
-                        {
-                            //if (e.CellEs(idx_0).CellE.IsStartedCell(e.CurPlayerITC.Player))
-                            //{
-                            //    if (!e.UnitTC(idx_0).HaveUnit)
-                            //    {
-                            //        isActive = true;
-                            //        color = ColorsValues.Color(SupportCellVisionTypes.Shift);
-                            //    }
-                            //}
-                        }
-                        break;
-
-                    case CellClickTypes.GiveTakeTW:
-                        {
-                            //if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
-                            //{
-                            //    if (e.UnitEs(idx_0).ForPlayer(e.CurPlayerITC.Player).IsVisible)
-                            //    {
-                            //        if (e.UnitPlayerTC(idx_0).Is(e.CurPlayerITC.Player))
-                            //        {
-                            //            isActive = true;
-                            //            color = ColorsValues.Color(SupportCellVisionTypes.GiveTakeToolWeapon);
-                            //        }
-                            //    }
-                            //}
-                        }
-                        break;
-
                     case CellClickTypes.UniqueAbility:
 
                         switch (e.SelectedE.AbilityTC.Ability)
@@ -66,14 +37,6 @@ namespace Chessy.Game
                                     _needActive[cell_start] = true;
                                     _needColor[cell_start] = ColorsValues.Color(e.SelectedE.AbilityTC.Ability);
                                 }
-                                break;
-
-                            case AbilityTypes.StunElfemale:
-                                //if (e.AdultForestC(idx_0).HaveAnyResources)
-                                //{
-                                //    isActive = true;
-                                //    color = ColorsValues.Color(e.SelectedE.AbilityTC.Ability);
-                                //}
                                 break;
                         }
                         break;
@@ -149,8 +112,8 @@ namespace Chessy.Game
 
             for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
             {
-                eV.CellEs(cell_start).SupportCellEs.Support.GO.SetActive(_needActive[cell_start]);
-                eV.CellEs(cell_start).SupportCellEs.Support.SR.color = _needColor[cell_start];
+                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetActive(_needActive[cell_start]);
+                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SR.color = _needColor[cell_start];
             }
         } }
 }

@@ -2,13 +2,19 @@
 
 namespace Chessy.Game
 {
-    public struct SyncFireVS
+    sealed class SyncFireVS : SystemViewCellGameAbs
     {
         bool _needActive;
+        readonly SpriteRendererVC _fireSRC;
 
-        public void Sync(in byte idx_0, in EntitiesViewGame eV, in EntitiesModelGame e)
+        internal SyncFireVS(SpriteRendererVC fireSRC, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
         {
-            if (e.HaveFire(idx_0))
+            _fireSRC = fireSRC;
+        }
+
+        internal sealed override void Sync()
+        {
+            if (e.HaveFire(_currentCell))
             {
                 _needActive = true;
             }
@@ -18,7 +24,7 @@ namespace Chessy.Game
                 _needActive = false;
             }
 
-            eV.CellEs(idx_0).FireVE.SRC.GO.SetActive(_needActive);
+            _fireSRC.SetActive(_needActive);
         }
     }
 }

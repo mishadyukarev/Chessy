@@ -7,9 +7,9 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class DestroyBuildingS_M : SystemModel
+    sealed class TryDestroyBuildingS_M : SystemModel
     {
-        public DestroyBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        public TryDestroyBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 

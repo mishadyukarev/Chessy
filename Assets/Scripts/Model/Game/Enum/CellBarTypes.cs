@@ -7,7 +7,6 @@
         Food,
         Wood,
         Ore,
-        Hp,
 
         End,
     }

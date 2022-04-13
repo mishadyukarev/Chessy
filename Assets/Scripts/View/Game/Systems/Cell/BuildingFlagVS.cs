@@ -1,22 +1,29 @@
-﻿using UnityEngine;
+﻿using Chessy.Game.Model.Entity;
+using UnityEngine;
 
-namespace Chessy.Game.System.View
+namespace Chessy.Game
 {
-    public struct BuildingFlagVS
+    sealed class BuildingFlagVS : SystemViewCellGameAbs
     {
         bool _needActive;
+        readonly SpriteRendererVC _flagSRC;
 
-        public void Sync(in SpriteRendererVC srC, in byte idx_0, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        internal BuildingFlagVS(in SpriteRendererVC flagSRC, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
+        {
+            _flagSRC = flagSRC;
+        }
+
+        internal sealed override void Sync()
         {
             _needActive = false;
 
-            if (e.BuildingTC(idx_0).HaveBuilding)
+            if (e.BuildingTC(_currentCell).HaveBuilding)
             {
                 _needActive = true;
-                srC.SR.color = e.BuildingPlayerTC(idx_0).Is(PlayerTypes.First) ? Color.blue : Color.red;
+                _flagSRC.SR.color = e.BuildingPlayerTC(_currentCell).Is(PlayerTypes.First) ? Color.blue : Color.red;
             }
 
-            srC.SetEnabled(_needActive);
+            _flagSRC.SetActive(_needActive);
         }
     }
 }

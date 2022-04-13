@@ -68,7 +68,7 @@ namespace Chessy
 
             var sModelGame = new SystemsModelGame(sMCommon, _eMC, eModelGame);
             var sUIGame = new SystemsViewUIGame(_eMC, eUIGame, eModelGame);
-            var sViewGame = new SystemsViewGame(eViewGame, eModelGame, eVCommon, _eMC);
+            var sViewGame = new SystemsViewGame(eViewGame, eModelGame, eVCommon);
 
             new EventsUIGame(eUICommon, _eMC, sModelGame, eUIGame, eModelGame);
 

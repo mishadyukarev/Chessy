@@ -2,9 +2,9 @@
 
 namespace Chessy.Game
 {
-    public struct SpriteRendererVC
+    public readonly struct SpriteRendererVC
     {
-        public SpriteRenderer SR;
+        public readonly SpriteRenderer SR;
 
         public GameObject GO => SR.gameObject;
         public Transform Transform => SR.transform;

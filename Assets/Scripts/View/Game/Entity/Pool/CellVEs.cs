@@ -9,7 +9,7 @@ namespace Chessy.Game
     public struct CellVEs
     {
         readonly Dictionary<CellBarTypes, SpriteRendererVC> _bars;
-        readonly Dictionary<CellBlockTypes, SpriteRendererVC> _blocks;
+
         readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
         public readonly GameObjectVC CellParent;
@@ -18,14 +18,14 @@ namespace Chessy.Game
 
         public readonly FireVE FireVE;
         public readonly EnvironmentVEs EnvironmentVEs;
-        public readonly UnitVEs UnitVEs;
+        public readonly UnitVEs UnitEs;
         public readonly CellBuildingVEs BuildingEs;
-        public readonly SpriteRendererVC CloudCellVC;
+        public readonly SpriteRendererVC CloudCellSRC;
         public readonly SupportCellVE SupportCellEs;
         public readonly RiverVE RiverE;
 
         public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
-        public SpriteRendererVC Block(in CellBlockTypes block) => _blocks[block];
+
 
         public SpriteRendererVC TrailCellVC(in DirectTypes dir) => _trails[dir];
 
@@ -47,10 +47,10 @@ namespace Chessy.Game
 
             BuildingEs = new CellBuildingVEs(cell);
             EnvironmentVEs = new EnvironmentVEs(cell);
-            UnitVEs = new UnitVEs(cell.transform);
+            UnitEs = new UnitVEs(cell.transform);
 
 
-            CloudCellVC = new SpriteRendererVC(cell.transform.Find("Weather").Find("Cloud").GetComponent<SpriteRenderer>());
+            CloudCellSRC = new SpriteRendererVC(cell.transform.Find("Weather").Find("Cloud").GetComponent<SpriteRenderer>());
 
 
             _bars = new Dictionary<CellBarTypes, SpriteRendererVC>();
@@ -65,16 +65,7 @@ namespace Chessy.Game
             }
 
 
-            _blocks = new Dictionary<CellBlockTypes, SpriteRendererVC>();
 
-            for (var block = CellBlockTypes.Condition; block < CellBlockTypes.End; block++)
-            {
-                var blocks = cell.transform.Find("Blocks");
-                var name = block.ToString();
-                var sr = blocks.Find(name).GetComponent<SpriteRenderer>();
-
-                _blocks.Add(block, new SpriteRendererVC(sr));
-            }
 
 
             _trails = new Dictionary<DirectTypes, SpriteRendererVC>();

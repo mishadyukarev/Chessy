@@ -1,7 +1,5 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Game.Extensions;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Extensions;
 using System;
 
 namespace Chessy.Game.Model.System
@@ -23,11 +21,6 @@ namespace Chessy.Game.Model.System
                     if (eMG.BuildingTC(cell_0).Is(BuildingTypes.City))
                     {
                         eMG.WinnerPlayerTC.PlayerT = whoKiller.NextPlayer();
-                    }
-
-                    else if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Farm))
-                    {
-                        eMG.FertilizeC(cell_0).Resources = 0;
                     }
 
                     //else if (E.BuildingTC(Idx).Is(BuildingTypes.House))

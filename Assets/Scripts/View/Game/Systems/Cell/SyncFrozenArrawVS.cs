@@ -1,39 +1,40 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Entity.View.Cell.Unit.Effect;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
-    sealed class SyncFrozenArrawVS
+    sealed class SyncFrozenArrawVS : SystemViewCellGameAbs
     {
-        readonly EntitiesModelGame _eMG;
-        readonly EntitiesViewGame _eVG;
+        readonly EffectVE _effectE;
 
-        internal SyncFrozenArrawVS(in EntitiesModelGame eMG, in EntitiesViewGame eVG)
+        readonly bool[] _needActive = new bool[2];
+
+        internal SyncFrozenArrawVS(in EffectVE effectVE, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
         {
-            _eMG = eMG;
-            _eVG = eVG;
+            _effectE = effectVE;
         }
 
-        internal void SyncVision(in byte cell)
+        internal sealed override void Sync()
         {
-            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(true, true).Disable();
-            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(false, true).Disable();
+            _needActive[0] = false;
+            _needActive[1] = false;
 
-            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(true, false).Disable();
-            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(false, false).Disable();
-
-            if (_eMG.UnitTC(cell).HaveUnit)
+            if (e.UnitTC(_currentCell).HaveUnit)
             {
-                if (_eMG.UnitVisibleC(cell).IsVisible(_eMG.CurPlayerITC.PlayerT))
+                if (e.UnitVisibleC(_currentCell).IsVisible(e.CurPlayerITC.PlayerT))
                 {
-                    if (_eMG.MainToolWeaponTC(cell).Is(ToolWeaponTypes.BowCrossbow))
+                    if (e.MainToolWeaponTC(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
                     {
-                        if (_eMG.FrozenArrawEffectC(cell).HaveShoots)
+                        if (e.FrozenArrawEffectC(_currentCell).HaveShoots)
                         {
-                            _eVG.CellEs(cell).UnitVEs.EffectVEs.FrozenArraw(_eMG.SelectedCell == cell, _eMG.UnitIsRightArcherC(cell).IsRight).Enable();
+                            _needActive[e.UnitIsRightArcherC(_currentCell).IsRight ? 0 : 1] = true;
                         }
                     }
                 }
             }
+
+            _effectE.FrozenArraw(true).SetActive(_needActive[0]);
+            _effectE.FrozenArraw(false).SetActive(_needActive[1]);
         }
     }
 }

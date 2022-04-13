@@ -8,7 +8,11 @@ namespace Chessy.Game
     {
         static readonly Dictionary<AbilityTypes, Color> _uniques;
 
-        public static Color Color(SupportCellVisionTypes supVisType)
+
+        public static readonly Color ColorStandart = new Color(1, 1, 1, 1f);
+        public static readonly Color ColorTransparent = new Color(1, 1, 1, 0.6f);
+
+        public static Color Color(in SupportCellVisionTypes supVisType)
         {
             switch (supVisType)
             {

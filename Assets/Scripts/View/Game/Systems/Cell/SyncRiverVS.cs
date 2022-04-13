@@ -4,32 +4,39 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public struct SyncRiverVS
+    sealed class SyncRiverVS : SystemViewCellGameAbs
     {
-        public void Sync(in byte idx_0, in EntitiesViewGame eV, in EntitiesModelGame e)
+        readonly RiverVE _riverVE;
+
+        internal SyncRiverVS(in RiverVE riverVE, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
+        {
+            _riverVE = riverVE;
+        }
+
+        internal sealed override void Sync()
         {
             switch (e.CurPlayerIT)
             {
                 case PlayerTypes.None: throw new Exception();
                 case PlayerTypes.First:
-                    eV.CellEs(idx_0).RiverE.Parents.LocalEulerAngles = new Vector3(0, 0, 0);
+                    _riverVE.Parents.LocalEulerAngles = new Vector3(0, 0, 0);
                     break;
 
                 case PlayerTypes.Second:
-                    eV.CellEs(idx_0).RiverE.Parents.LocalEulerAngles = new Vector3(0, 0, 180);
+                    _riverVE.Parents.LocalEulerAngles = new Vector3(0, 0, 180);
                     break;
 
                 default: throw new Exception();
             }
 
 
-            if (e.RiverT(idx_0) == RiverTypes.Start)
+            if (e.RiverT(_currentCell) == RiverTypes.Start)
             {
                 for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                 {
                     if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                     {
-                        eV.CellEs(idx_0).RiverE.River(dir_1).SetEnabled(e.HaveRiverC(idx_0).HaveRive(dir_1));
+                        _riverVE.River(dir_1).SetEnabled(e.HaveRiverC(_currentCell).HaveRive(dir_1));
                     }
                 }
             }

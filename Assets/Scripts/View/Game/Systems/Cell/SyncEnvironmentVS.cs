@@ -1,36 +1,43 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Entity.View.Cell;
+using Chessy.Game.Model.Entity;
 using UnityEngine;
 
 namespace Chessy.Game
 {
-    public struct SyncEnvironmentVS
+    sealed class SyncEnvironmentVS : SystemViewCellGameAbs
     {
-        public void Run(in byte cell_start, in EntitiesViewGame vEs, in EntitiesModelGame e)
+        readonly EnvironmentVEs _environmentVEs;
+
+        internal SyncEnvironmentVS(in EnvironmentVEs environmentVEs, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
         {
-            if (e.SelectedCell == cell_start)
+            _environmentVEs = environmentVEs;
+        }
+
+        internal sealed override void Sync()
+        {
+            if (e.SelectedCell == _currentCell)
             {
-                vEs.EnvironmentVEs(cell_start).AnimationC.Play();
+                _environmentVEs.AnimationC.Play();
             }
 
-
-            if (e.AdultForestC(cell_start).HaveAnyResources)
+            if (e.AdultForestC(_currentCell).HaveAnyResources)
             {
-                vEs.EnvironmentVE(cell_start, EnvironmentTypes.AdultForest).GO.SetActive(true);
+                _environmentVEs.EnvironmentE(EnvironmentTypes.AdultForest).GO.SetActive(true);
 
-                vEs.EnvironmentVEs(cell_start).HillUnderC.GO.SetActive(e.HillC(cell_start).HaveAnyResources);
+                _environmentVEs.HillUnderC.GO.SetActive(e.HillC(_currentCell).HaveAnyResources);
 
-                vEs.EnvironmentVE(cell_start, EnvironmentTypes.Hill).GO.SetActive(false);
+                _environmentVEs.EnvironmentE(EnvironmentTypes.Hill).GO.SetActive(false);
             }
             else
             {
-                vEs.EnvironmentVE(cell_start, EnvironmentTypes.AdultForest).GO.SetActive(false);
-                vEs.EnvironmentVEs(cell_start).HillUnderC.GO.SetActive(false);
-                vEs.EnvironmentVE(cell_start, EnvironmentTypes.Hill).GO.SetActive(e.HillC(cell_start).HaveAnyResources);
+                _environmentVEs.EnvironmentE(EnvironmentTypes.AdultForest).GO.SetActive(false);
+                _environmentVEs.HillUnderC.GO.SetActive(false);
+                _environmentVEs.EnvironmentE(EnvironmentTypes.Hill).GO.SetActive(e.HillC(_currentCell).HaveAnyResources);
             }
 
-            vEs.EnvironmentVE(cell_start, EnvironmentTypes.Fertilizer).GO.SetActive(e.FertilizeC(cell_start).HaveAnyResources);
-            vEs.EnvironmentVE(cell_start, EnvironmentTypes.YoungForest).GO.SetActive(e.YoungForestC(cell_start).HaveAnyResources);
-            vEs.EnvironmentVE(cell_start, EnvironmentTypes.Mountain).GO.SetActive(e.MountainC(cell_start).HaveAnyResources);
+            _environmentVEs.EnvironmentE(EnvironmentTypes.Fertilizer).GO.SetActive(e.FertilizeC(_currentCell).HaveAnyResources);
+            _environmentVEs.EnvironmentE(EnvironmentTypes.YoungForest).GO.SetActive(e.YoungForestC(_currentCell).HaveAnyResources);
+            _environmentVEs.EnvironmentE(EnvironmentTypes.Mountain).GO.SetActive(e.MountainC(_currentCell).HaveAnyResources);
         }
     }
 }

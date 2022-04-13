@@ -1,13 +1,21 @@
-﻿using System;
+﻿using Chessy.Game.Model.Entity;
+using System;
 using System.Linq;
 
 namespace Chessy.Game.System.View
 {
-    public struct SyncNoneVisionS
+    sealed class SyncNoneVisionVS : SystemViewCellGameAbs
     {
         bool _isActive;
 
-        public void Sync(in byte idx_0, in SpriteRendererVC srC, in Chessy.Game.Model.Entity.EntitiesModelGame e)
+        readonly SpriteRendererVC _noneVisionSRC;
+
+        internal SyncNoneVisionVS(in SpriteRendererVC noneVisionSRC, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
+        {
+            _noneVisionSRC = noneVisionSRC;
+        }
+
+        internal sealed override void Sync()
         {
             _isActive = false;
 
@@ -17,17 +25,17 @@ namespace Chessy.Game.System.View
                 switch (e.SelectedE.AbilityTC.Ability)
                 {
                     case AbilityTypes.FireArcher:
-                        if (!e.AdultForestC(idx_0).HaveAnyResources) _isActive = true;
+                        if (!e.AdultForestC(_currentCell).HaveAnyResources) _isActive = true;
                         break;
 
                     case AbilityTypes.StunElfemale:
-                        if (!e.AdultForestC(idx_0).HaveAnyResources) _isActive = true;
+                        if (!e.AdultForestC(_currentCell).HaveAnyResources) _isActive = true;
                         break;
 
                     case AbilityTypes.ChangeDirectionWind:
-                        if (e.IsActiveParentSelf(idx_0))
+                        if (e.IsActiveParentSelf(_currentCell))
                         {
-                            if (!e.AroundCellsE(idx_0).CellsAround.Contains(e.WeatherE.CloudC.Center))
+                            if (!e.AroundCellsE(_currentCell).CellsAround.Contains(e.WeatherE.CloudC.Center))
                             {
                                 _isActive = true;
                             }
@@ -43,7 +51,7 @@ namespace Chessy.Game.System.View
 
             else if (e.CellClickTC.CellClickT == CellClickTypes.GiveTakeTW)
             {
-                if (e.UnitTC(idx_0).UnitT == UnitTypes.Pawn && e.UnitPlayerTC(idx_0).Is(e.CurPlayerITC.PlayerT))
+                if (e.UnitTC(_currentCell).UnitT == UnitTypes.Pawn && e.UnitPlayerTC(_currentCell).Is(e.CurPlayerITC.PlayerT))
                 {
                     
                 }
@@ -55,7 +63,7 @@ namespace Chessy.Game.System.View
 
             else if (e.CellClickTC.CellClickT == CellClickTypes.SetUnit)
             {
-                if (!e.IsStartedCellC(idx_0).IsStartedCell(e.CurPlayerITC.PlayerT))
+                if (!e.IsStartedCellC(_currentCell).IsStartedCell(e.CurPlayerITC.PlayerT))
                 {
                     _isActive = true;
                 }
@@ -63,8 +71,8 @@ namespace Chessy.Game.System.View
 
             if (e.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
             {
-                if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
-                    || e.BuildingTC(idx_0).HaveBuilding)
+                if (e.AdultForestC(_currentCell).HaveAnyResources || e.MountainC(_currentCell).HaveAnyResources || e.HillC(_currentCell).HaveAnyResources
+                    || e.BuildingTC(_currentCell).HaveBuilding)
                 {
                     _isActive = true;
                 }
@@ -72,8 +80,8 @@ namespace Chessy.Game.System.View
 
             else if (e.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
             {
-                if (e.AdultForestC(idx_0).HaveAnyResources || e.MountainC(idx_0).HaveAnyResources || e.HillC(idx_0).HaveAnyResources
-                    || e.YoungForestC(idx_0).HaveAnyResources || e.BuildingTC(idx_0).HaveBuilding)
+                if (e.AdultForestC(_currentCell).HaveAnyResources || e.MountainC(_currentCell).HaveAnyResources || e.HillC(_currentCell).HaveAnyResources
+                    || e.YoungForestC(_currentCell).HaveAnyResources || e.BuildingTC(_currentCell).HaveBuilding)
                 {
                     _isActive = true;
                 }
@@ -82,14 +90,14 @@ namespace Chessy.Game.System.View
 
             else if (e.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
             {
-                if (!e.YoungForestC(idx_0).HaveAnyResources)
+                if (!e.YoungForestC(_currentCell).HaveAnyResources)
                 {
                     _isActive = true;
                 }
             }
 
 
-            srC.GO.SetActive(_isActive);
+            _noneVisionSRC.GO.SetActive(_isActive);
         }
     }
 }
