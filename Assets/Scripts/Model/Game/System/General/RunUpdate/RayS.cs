@@ -1,6 +1,4 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,8 +17,8 @@ namespace Chessy.Game.Model.System
             _ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             var raycast = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
-//#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
-//#endif
+            //#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+            //#endif
 
 
             eMG.RaycastTC.RaycastT = RaycastTypes.None;

@@ -1,6 +1,4 @@
 ﻿using Chessy.Common;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 using Chessy.Game.Model.Entity;
 using System;
 
@@ -135,7 +133,7 @@ namespace Chessy.Game.Model.System
                 else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
             }
 
-            else sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+            else sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
 
 
             eMG.NeedUpdateView = true;

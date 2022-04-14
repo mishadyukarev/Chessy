@@ -3,25 +3,17 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.Entity.Cell.Unit
 {
-    public struct UnitEs
+    public sealed class UnitEs
     {
-        public UnitMainE MainE;
-        public StatsE StatsE;
-        public EffectsE EffectsE;
-        public UnitAttackE AttackE;
-        public MainToolWeaponE MainToolWeaponE;
-        public ExtraToolWeaponE ExtraToolWeaponE;
-        public WhoLastDiedHereE WhoLastDiedHereE;
-        public CellUnitExtractE ExtractE;
-        public ShiftUnitE ShiftE;
-        public AbilityUnitE AbilityE;
-
-        internal UnitEs(in bool b) : this()
-        {
-            MainE = new UnitMainE(default);
-            AttackE = new UnitAttackE(new HashSet<byte>(), new HashSet<byte>());
-            ShiftE = new ShiftUnitE(new float[StartValues.CELLS], new HashSet<byte>());
-            AbilityE = new AbilityUnitE(new float[(byte)AbilityTypes.End - 1]);
-        }
+        public UnitMainE MainE = new UnitMainE();
+        public StatsE StatsE = new StatsE();
+        public UnitEffectsE EffectsE = new UnitEffectsE();
+        public UnitAttackE AttackE = new UnitAttackE(new HashSet<byte>(), new HashSet<byte>());
+        public MainToolWeaponE MainToolWeaponE = new MainToolWeaponE();
+        public ExtraToolWeaponE ExtraToolWeaponE = new ExtraToolWeaponE();
+        public WhoLastDiedHereE WhoLastDiedHereE = new WhoLastDiedHereE();
+        public CellUnitExtractE ExtractE = new CellUnitExtractE();
+        public ShiftUnitE ShiftE = new ShiftUnitE(new float[StartValues.CELLS], new HashSet<byte>());
+        public AbilityUnitE AbilityE = new AbilityUnitE(new float[(byte)AbilityTypes.End - 1]);
     }
 }

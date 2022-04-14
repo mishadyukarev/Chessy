@@ -1,10 +1,7 @@
 ﻿using Chessy.Common;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Chessy.Game.Values;
-using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -36,7 +33,7 @@ namespace Chessy.Game
 
                 sMG.DestroyAllTrailS.Destroy(cell_0);
 
-                
+
 
 
                 if (eMG.UnitTC(cell_0).HaveUnit)
@@ -50,7 +47,7 @@ namespace Chessy.Game
                                 eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                             }
 
-                            sMG.UnitSs.ClearUnitS.Clear(cell_0);
+                            sMG.UnitSs.Clear(cell_0);
                         }
                     }
                     else
@@ -61,7 +58,7 @@ namespace Chessy.Game
                             eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                         }
 
-                        sMG.UnitSs.ClearUnitS.Clear(cell_0);
+                        sMG.UnitSs.Clear(cell_0);
                     }
                 }
 

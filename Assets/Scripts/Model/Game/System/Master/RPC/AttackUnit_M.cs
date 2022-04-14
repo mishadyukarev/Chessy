@@ -1,13 +1,11 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Game.Extensions;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Extensions;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
+using Chessy.Game.Values.Cell.Unit.Effect;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
-using Chessy.Game.Values.Cell.Unit.Effect;
 
 namespace Chessy.Game.Model.System.Master
 {
@@ -139,7 +137,7 @@ namespace Chessy.Game.Model.System.Master
 
                         eMG.StunUnitC(idx_to).Stun = StunValues.AFTER_FROZEN_ARRAW_PAWN;
                     }
-                    else if(eMG.UnitT(idx_from) == UnitTypes.Snowy)
+                    else if (eMG.UnitT(idx_from) == UnitTypes.Snowy)
                     {
                         if (_snowyArrow <= 0)
                         {

@@ -1,6 +1,4 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using UnityEngine;
 
@@ -27,7 +25,7 @@ namespace Chessy.Game
                 }
             }
 
-            if(eMG.MotionTimer > 0)
+            if (eMG.MotionTimer > 0)
             {
                 eMG.MotionTimer -= Time.deltaTime;
 

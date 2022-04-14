@@ -1,16 +1,19 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ClearUnitS : SystemModel
+    struct ClearUnitS
     {
-        internal ClearUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        readonly UnitEs _unitEs;
 
-        internal void Clear(in byte cell_0)
+        internal ClearUnitS(in UnitEs unitEs)
         {
-            eMG.UnitTC(cell_0).UnitT = UnitTypes.None;
+            _unitEs = unitEs;
+        }
+
+        internal void Clear()
+        {
+            _unitEs.MainE.UnitTC.UnitT = UnitTypes.None;
         }
     }
 }

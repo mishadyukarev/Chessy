@@ -1,6 +1,4 @@
 ﻿using Chessy.Common;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
 using Chessy.Game.Model.Entity;
 using System;
 
@@ -56,7 +54,7 @@ namespace Chessy.Game.Model.System
 
                             if (eMG.HaveFire(cell_0)) eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
                             else eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
- 
+
 
 
 

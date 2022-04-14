@@ -90,8 +90,6 @@ namespace Chessy
                 rpc,
             };
 
-
-
             gameObject.AddComponent<PhotonSceneManager>().StartMy(rpc, togglerScenes);
 
             #endregion
@@ -116,6 +114,7 @@ namespace Chessy
                 sViewGame,
                 sUIGame,
             };
+
 
             #region ComeToTraining
 

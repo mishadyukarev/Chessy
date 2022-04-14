@@ -1,6 +1,4 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -21,7 +19,7 @@ namespace Chessy.Game.Model.System
                     eMG.RpcPoolEs.ConditionUnitToMaster(eMG.CellsC.Selected, conditionT);
                 }
             }
-            else sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+            else sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
 
             eMG.NeedUpdateView = true;
         }

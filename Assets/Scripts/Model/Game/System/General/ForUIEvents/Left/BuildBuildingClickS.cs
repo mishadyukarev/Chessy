@@ -1,6 +1,4 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Enum;
-using Chessy.Common.Model.System;
+﻿using Chessy.Common.Enum;
 using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using System;
@@ -16,7 +14,7 @@ namespace Chessy.Game.Model.System
 
 
 
-            if(eMG.CurPlayerIT == eMG.WhoseMovePlayerT)
+            if (eMG.CurPlayerIT == eMG.WhoseMovePlayerT)
             {
                 if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
                 {
@@ -57,11 +55,11 @@ namespace Chessy.Game.Model.System
                     default: throw new Exception();
                 }
 
-                
+
             }
             else
             {
-                sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+                sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
             }
 
             eMG.NeedUpdateView = true;

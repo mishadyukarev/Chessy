@@ -28,7 +28,7 @@ namespace Chessy.Game
         internal PlayerInfoEs(in bool def) : this()
         {
             _levelInfoEs = new PlayerLevelInfoE[(byte)LevelTypes.End];
-            _resourceCs = new ResourcesC[(byte)ResourceTypes.End ];
+            _resourceCs = new ResourcesC[(byte)ResourceTypes.End];
             _unitEs = new PlayerUnitInfoE[(byte)UnitTypes.End];
             WhereKingEffects = new IdxsCellsC(new HashSet<byte>());
 

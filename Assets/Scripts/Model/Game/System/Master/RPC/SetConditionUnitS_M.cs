@@ -1,7 +1,5 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
@@ -67,7 +65,7 @@ namespace Chessy.Game.Model.System.Master
                                         {
                                             if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
                                             {
-                                                sMG.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMG.UnitPlayerTC(cell_0).PlayerT, BuildingValues.MAX_HP, cell_0);
+                                                sMG.BuildingSs.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMG.UnitPlayerTC(cell_0).PlayerT, BuildingValues.MAX_HP, cell_0);
                                             }
                                         }
                                     }

@@ -1,7 +1,5 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Enum;
+﻿using Chessy.Common.Enum;
 using Chessy.Common.Interface;
-using Chessy.Common.Model.System;
 using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
@@ -26,7 +24,7 @@ namespace Chessy.Game.Model.System
                     eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
                 }
             }
-            else sMG.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+            else sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
 
             eMG.NeedUpdateView = true;
         }

@@ -1,9 +1,7 @@
 ﻿using Chessy.Common;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using Chessy.Game.Extensions;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Effect;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -123,9 +121,9 @@ namespace Chessy.Game.Model.System.Master
                         if (eMG.IsActiveParentSelf(idx_1) && !eMG.MountainC(idx_1).HaveAnyResources
                             && !eMG.UnitTC(idx_1).HaveUnit)
                         {
-                            sMG.UnitSs.SetUnitS.Set(cell_0, idx_1);
+                            sMG.UnitSs.CopyUnitFromToS.Copy(cell_0, idx_1);
 
-                            sMG.UnitSs.ClearUnitS.Clear(cell_0);
+                            sMG.UnitSs.Clear(cell_0);
                         }
                     }
 
@@ -325,7 +323,7 @@ namespace Chessy.Game.Model.System.Master
                     {
                         if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Camp) || !eMG.BuildingTC(cell_0).HaveBuilding)
                         {
-                            sMG.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMG.UnitPlayerTC(cell_0).PlayerT, 1, cell_0);
+                            sMG.BuildingSs.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMG.UnitPlayerTC(cell_0).PlayerT, 1, cell_0);
                         }
 
                         else if (!eMG.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter))
@@ -335,7 +333,7 @@ namespace Chessy.Game.Model.System.Master
                     }
                     else
                     {
-                        sMG.ClearBuildingS.Clear(cell_0);
+                        sMG.BuildingSs.ClearS.Clear(cell_0);
                     }
                 }
 
@@ -426,7 +424,7 @@ namespace Chessy.Game.Model.System.Master
                         {
                             sMG.UnitSs.KillUnitS.Kill(eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
 
-                            sMG.UnitSs.ClearUnitS.Clear(cell_0);
+                            sMG.UnitSs.Clear(cell_0);
                             break;
                         }
                     }

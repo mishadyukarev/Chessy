@@ -1,24 +1,18 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
-
+﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetMainToolWeaponUnitS : SystemModel
+    struct SetMainToolWeaponUnitS
     {
-        internal SetMainToolWeaponUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        readonly MainToolWeaponE _mainTWUnitE;
 
-        internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT, in byte cell_0)
-        {
-            eMG.MainToolWeaponTC(cell_0).ToolWeaponT = twT;
-            eMG.MainTWLevelTC(cell_0).LevelT = levelT;
-        }
+        internal SetMainToolWeaponUnitS(in MainToolWeaponE mainToolWeaponE) => _mainTWUnitE = mainToolWeaponE;
 
-        internal void Set(in byte cell_from, in byte cell_to)
+        internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT)
         {
-            eMG.MainToolWeaponTC(cell_to) = eMG.MainToolWeaponTC(cell_from);
-            eMG.MainTWLevelTC(cell_to) = eMG.MainTWLevelTC(cell_from);
+            _mainTWUnitE.ToolWeaponTC.ToolWeaponT = twT;
+            _mainTWUnitE.LevelTC.LevelT = levelT;
         }
     }
 }

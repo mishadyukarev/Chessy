@@ -1,14 +1,12 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Enum;
 using Chessy.Game.Model.System;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using Photon.Pun;
 
 namespace Chessy.Game
 {
@@ -47,7 +45,7 @@ namespace Chessy.Game
                                     {
                                         eMG.ToolWeaponsC(whoseMove, levTW, twT)--;
 
-                                        sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
+                                        sMG.UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
                                         eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -73,7 +71,7 @@ namespace Chessy.Game
 
                                             eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                            sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
+                                            sMG.UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
                                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                         }
@@ -87,7 +85,7 @@ namespace Chessy.Game
                                 else
                                 {
                                     eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
-                                    sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
+                                    sMG.UnitSs.SetMainToolWeapon(cell_0, ToolWeaponTypes.Axe, LevelTypes.First);
 
                                     eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                                 }
@@ -96,7 +94,7 @@ namespace Chessy.Game
                             else
                             {
                                 eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
-                                sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
+                                sMG.UnitSs.SetMainToolWeapon(cell_0, ToolWeaponTypes.Axe, LevelTypes.First);
 
                                 eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
@@ -112,7 +110,7 @@ namespace Chessy.Game
                                 if (eMG.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
                                 {
                                     eMG.ToolWeaponsC(whoseMove, levTW, twT)--;
-                                    sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
+                                    sMG.UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
                                     eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -138,7 +136,7 @@ namespace Chessy.Game
 
                                         eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                        sMG.UnitSs.SetMainTWS.Set(twT, levTW, cell_0);
+                                        sMG.UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
                                         eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
                                     }
@@ -152,7 +150,7 @@ namespace Chessy.Game
                             else
                             {
                                 eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
-                                sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
+                                sMG.UnitSs.SetMainToolWeapon(cell_0, ToolWeaponTypes.Axe, LevelTypes.First);
 
                                 eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
@@ -161,7 +159,7 @@ namespace Chessy.Game
                         else
                         {
                             eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
-                            sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
+                            sMG.UnitSs.SetMainToolWeapon(cell_0, ToolWeaponTypes.Axe, LevelTypes.First);
 
                             eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -176,7 +174,7 @@ namespace Chessy.Game
                         if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                         {
                             eMG.ToolWeaponsC(eMG.UnitPlayerTC(cell_0).PlayerT, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
-                            sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell_0);
+                            sMG.UnitSs.SetMainToolWeapon(cell_0, ToolWeaponTypes.Axe, LevelTypes.First);
 
                             eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
@@ -201,7 +199,7 @@ namespace Chessy.Game
 
 
 
-                                    sMG.UnitSs.SetExtraTWS.Set(twT, levTW, eMG.ExtraTWProtectionC(cell_0).Protection, cell_0);
+                                    sMG.UnitSs.SetExtraToolWeapon(cell_0, twT, levTW, eMG.ExtraTWProtectionC(cell_0).Protection);
 
                                     eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -234,7 +232,7 @@ namespace Chessy.Game
                                                 : ToolWeaponValues.SHIELD_PROTECTION_LEVEL_SECOND;
                                         }
 
-                                        sMG.UnitSs.SetExtraTWS.Set(twT, levTW, protection, cell_0);
+                                        sMG.UnitSs.SetExtraToolWeapon(cell_0, twT, levTW, protection);
 
                                         eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 

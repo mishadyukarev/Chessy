@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.Entity.Cell.Unit
 {
-    public struct UnitMainE
+    public sealed class UnitMainE
     {
         public UnitTC UnitTC;
         public LevelTC LevelTC;
@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.Entity.Cell.Unit
         public readonly IdxsCellsC ForArson;
         public NeedUpdateViewC NeedUpdateViewC;
 
-        internal UnitMainE(in bool def) : this()
+        internal UnitMainE()
         {
             VisibleC = new VisibleC(default);
             CanSetUnitHereC = new CanSetUnitHereC(new bool[(byte)PlayerTypes.End]);

@@ -2,8 +2,8 @@
 using Chessy.Common.Entity;
 using Chessy.Common.Interface;
 using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Photon.Pun;
@@ -20,50 +20,23 @@ namespace Chessy.Game.Model.System
 
         readonly List<Action> _runs;
 
-        internal readonly SystemsModelCommon SCommon;
-
-
-        #region Environment
-
-internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
+        internal readonly SystemsModelCommon CommonSystems;
+        internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
         internal readonly DestroyAdultForestS DestroyAdultForestS;
         internal readonly ClearAllEnvironmentS ClearAllEnvironmentS;
-
-        #endregion
-
-
-        #region Mistake
-
-        internal readonly MistakeS MistakeS;
-        internal readonly SetMistakeS SetMistakeS;
-
-        #endregion
-
-
-        #region Building
-
-        internal readonly BuildS BuildS;
-        internal readonly AttackBuildingS DestroyBuildingS;
-        internal readonly ClearBuildingS ClearBuildingS;
-
-        #endregion
-
-
-        #region Else
-
-        internal DestroyAllTrailS DestroyAllTrailS;
-
-        #endregion
-
-
-        internal readonly UnitSystems UnitSs;
+        internal readonly ClearAllTrailS DestroyAllTrailS;
+        internal readonly MistakeSs MistakeSs;
         internal readonly MasterSystems MasterSs;
-
         public readonly SystemsModelGameForUI ForUISystems;
+
+        internal UnitSystems UnitSs => MasterSs.UnitSs;
+        internal BuildingSystems BuildingSs => MasterSs.BuildingSs;
+
+
 
         public SystemsModelGame(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in EntitiesModelGame eMG)
         {
-            SCommon = sMC;
+            CommonSystems = sMC;
 
             _eMC = eMC;
             _eMG = eMG;
@@ -78,22 +51,14 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
                 new Chessy.Game.MistakeS(this, eMG).Update,
             };
 
-            MistakeS = new MistakeS(this, eMG);
-            SetMistakeS = new SetMistakeS(this, eMG);
 
             TakeAdultForestResourcesS = new TakeAdultForestResourcesS(this, eMG);
             ClearAllEnvironmentS = new ClearAllEnvironmentS(this, eMG);
             DestroyAdultForestS = new DestroyAdultForestS(this, eMG);
+            DestroyAllTrailS = new ClearAllTrailS(this, eMG);
 
-            BuildS = new BuildS(this, eMG);
-            ClearBuildingS = new ClearBuildingS(this, eMG);
-            DestroyBuildingS = new AttackBuildingS(this, eMG);
-
-            DestroyAllTrailS = new DestroyAllTrailS(this, eMG);
-
-            UnitSs = new UnitSystems(this, eMG);
+            MistakeSs = new MistakeSs(this, eMG);
             MasterSs = new MasterSystems(this, eMG);
-
             ForUISystems = new SystemsModelGameForUI(this, eMG);
         }
 
@@ -111,8 +76,8 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
             _eMG.CellClickTC.CellClickT = StartValues.CELL_CLICK;
             _eMG.IsSelectedCity = false;
             _eMG.HaveTreeUnit = false;
-            _eMG.MistakeTC.MistakeT = MistakeTypes.None;
-            _eMG.WinnerPlayerTC.PlayerT = PlayerTypes.None;
+            _eMG.MistakeT = MistakeTypes.None;
+            _eMG.WinnerPlayerT = PlayerTypes.None;
             _eMG.ZoneInfoC = default;
             _eMG.CellsC = default;
 
@@ -135,7 +100,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
                 ClearAllEnvironmentS.Clear(cell_0);
-                UnitSs.ClearUnitS.Clear(cell_0);
+                UnitSs.Clear(cell_0);
 
                 _eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
 
@@ -294,7 +259,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
                         }
 
 
-                        if(cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_1_PLAYER || cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_2_PLAYER)
+                        if (cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_1_PLAYER || cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_2_PLAYER)
                         {
                             ClearAllEnvironmentS.Clear(cell_0);
                         }
@@ -359,17 +324,17 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
 
                         UnitSs.SetNewUnitS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
 
-                        UnitSs.SetExtraTWS.Set(ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second), cell_0);
+                        UnitSs.SetExtraToolWeapon(cell_0, ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second));
 
                         var needShield = UnityEngine.Random.Range(0f, 1f) >= StartValues.PERCENT_SHIELD_LEVEL_FIRST_OR_SECOND_FOR_BOT;
 
                         if (needShield)
                         {
-                            UnitSs.SetExtraTWS.Set(ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second), cell_0);
+                            UnitSs.SetExtraToolWeapon(cell_0, ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second));
                         }
                         else
                         {
-                            UnitSs.SetExtraTWS.Set(ToolWeaponTypes.Shield, LevelTypes.First, ToolWeaponValues.ShieldProtection(LevelTypes.First), cell_0);
+                            UnitSs.SetExtraToolWeapon(cell_0, ToolWeaponTypes.Shield, LevelTypes.First, ToolWeaponValues.ShieldProtection(LevelTypes.First));
                         }
                     }
 
@@ -400,7 +365,7 @@ internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
 
 
 
-            MasterSs.GetDataCellsS_M.Run();
+            MasterSs.GetDataCellsS.Run();
         }
 
         public void Update()

@@ -1,9 +1,7 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Enum;
-using Photon.Realtime;
 using Photon.Pun;
+using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
 {

@@ -1,10 +1,8 @@
 ﻿using Chessy.Common;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
-using UnityEngine;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
+using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
@@ -50,7 +48,7 @@ namespace Chessy.Game.Model.System
                         {
                             sMG.DestroyAdultForestS.Destroy(cell_0);
                         }
-                        
+
                     }
                 }
 

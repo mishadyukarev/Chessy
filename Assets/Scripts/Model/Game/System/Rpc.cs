@@ -4,8 +4,6 @@ using Chessy.Common.Interface;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Chessy.Game.Values;
-using Chessy.Game.Values.Cell.Unit;
-using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -91,7 +89,7 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.Melt:
-                    _sMGame.MasterSs.MeltS_M.Melt(sender);
+                    _sMGame.MasterSs.MeltS.Melt(sender);
                     break;
 
                 case RpcMasterTypes.GiveTakeToolWeapon:
@@ -104,7 +102,7 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.MarketBuy:
-                    _sMGame.MasterSs.BuyS_M.Buy((MarketBuyTypes)objects[_idx_cur++], sender);
+                    _sMGame.MasterSs.BuyFromMarketS.Buy((MarketBuyTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.UniqueAbility:
@@ -112,15 +110,15 @@ namespace Chessy.Game
                     switch (abilityT)
                     {
                         case AbilityTypes.CircularAttack:
-                            _sMGame.MasterSs.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.FirePawn:
-                            _sMGame.MasterSs.FirePawnS_M.Fire((byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.FirePawnS_M.Fire((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.PutOutFirePawn:
-                            _sMGame.MasterSs.PutOutFirePawnS_M.PutOut((byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.PutOutFirePawnS_M.PutOut((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.Seed:
@@ -132,36 +130,36 @@ namespace Chessy.Game
                             break;
 
                         case AbilityTypes.DestroyBuilding:
-                            _sMGame.MasterSs.DestroyBuildingS_M.Destroy((byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.DestroyBuildingS_M.Destroy((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.FireArcher:
-                            _sMGame.MasterSs.FireArcherS_M.Fire((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.FireArcherS_M.Fire((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.GrowAdultForest:
-                            _sMGame.MasterSs.GrowAdultForestS_M.Grow((byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.GrowAdultForestS_M.Grow((byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.StunElfemale:
-                            _sMGame.MasterSs.StunElfemaleS_M.Stun((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.StunElfemaleS_M.Stun((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.ChangeCornerArcher:
-                            _sMGame.MasterSs.ChangeCornerArcherS_M.Change((byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.ChangeCornerArcherS_M.Change((byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         //Snowy
                         case AbilityTypes.ChangeDirectionWind:
-                            _sMGame.MasterSs.ChangeDirectionWindS_M.Change((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.ChangeDirectionWindS_M.Change((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.IncreaseWindSnowy:
-                            _sMGame.MasterSs.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.DecreaseWindSnowy:
-                            _sMGame.MasterSs.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
 
@@ -312,7 +310,7 @@ namespace Chessy.Game
                 default: throw new Exception();
             }
 
-            _sMGame.MasterSs.GetDataCellsS_M.Run();
+            _sMGame.MasterSs.GetDataCellsS.Run();
             _eMG.NeedUpdateView = true;
 
             SyncAllMaster();
@@ -344,7 +342,7 @@ namespace Chessy.Game
 
                     var mistakeT = (MistakeTypes)objects[_idx_cur++];
 
-                    _sMGame.MistakeS.Mistake(mistakeT);
+                    _sMGame.MistakeSs.MistakeS.Mistake(mistakeT);
 
                     _eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
 
@@ -399,7 +397,7 @@ namespace Chessy.Game
                 objs.Add(_eMG.UnitPlayerT(cell_0));
                 objs.Add(_eMG.UnitConditionT(cell_0));
                 objs.Add(_eMG.IsRightArcherUnit(cell_0));
-                for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++) 
+                for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
                     objs.Add(_eMG.UnitVisibleC(cell_0).IsVisible(playerT));
 
                 objs.Add(_eMG.HpUnit(cell_0));

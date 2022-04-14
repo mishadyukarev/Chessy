@@ -2,7 +2,7 @@
 
 namespace Chessy.Game.Model.Entity.Cell.Unit
 {
-    public struct StatsE
+    public sealed class StatsE
     {
         public HealthC HealthC;
         public StepsC StepC;

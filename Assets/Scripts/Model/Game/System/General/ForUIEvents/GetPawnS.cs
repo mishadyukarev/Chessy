@@ -1,9 +1,7 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Enum;
+﻿using Chessy.Common.Enum;
 using Chessy.Common.Interface;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
@@ -47,7 +45,7 @@ namespace Chessy.Game.Model.System
                             else
                             {
 
-                                sMG.SetMistakeS.Set(MistakeTypes.NeedBuildingHouses, 0);
+                                sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedBuildingHouses, 0);
                                 eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
                                 eMG.IsSelectedCity = true;
                             }
@@ -58,7 +56,7 @@ namespace Chessy.Game.Model.System
                     {
                         eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
 
-                        sMG.SetMistakeS.Set(MistakeTypes.NeedMorePeopleInCity, 0);
+                        sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedMorePeopleInCity, 0);
                         //..E.Sound(ClipTypes.Mistake).Action.Invoke();
                     }
 

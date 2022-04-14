@@ -1,9 +1,7 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Enum;
+﻿using Chessy.Common.Enum;
 using Chessy.Common.Interface;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {

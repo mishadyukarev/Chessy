@@ -1,8 +1,6 @@
 ﻿using Chessy.Common;
-using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Extensions;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
@@ -21,7 +19,7 @@ namespace Chessy.Game.Model.System
             {
                 if (eMG.PlayerInfoE(senderPlayerT).GodInfoE.UnitTC.HaveUnit)
                 {
-                    if(eMG.WhoseMovePlayerT == senderPlayerT)
+                    if (eMG.WhoseMovePlayerT == senderPlayerT)
                     {
                         if (PhotonNetwork.OfflineMode)
                         {
@@ -32,7 +30,7 @@ namespace Chessy.Game.Model.System
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
-                                sMG.MasterSs.UpdateS_M.Run(gameModeTC);
+                                sMG.MasterSs.UpdateS.Run(gameModeTC);
                             }
 
                             else if (gameModeTC.Is(GameModeTypes.WithFriendOff))
@@ -43,7 +41,7 @@ namespace Chessy.Game.Model.System
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
-                                    sMG.MasterSs.UpdateS_M.Run(gameModeTC);
+                                    sMG.MasterSs.UpdateS.Run(gameModeTC);
                                 }
 
                                 eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
@@ -58,9 +56,9 @@ namespace Chessy.Game.Model.System
 
                             eMG.WhoseMovePlayerTC.PlayerT = senderPlayerT.NextPlayer();
 
-                            if(senderPlayerT == PlayerTypes.Second)
+                            if (senderPlayerT == PlayerTypes.Second)
                             {
-                                sMG.MasterSs.UpdateS_M.Run(gameModeTC);
+                                sMG.MasterSs.UpdateS.Run(gameModeTC);
 
                                 eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
                                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);

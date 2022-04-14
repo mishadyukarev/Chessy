@@ -40,7 +40,7 @@ namespace Chessy.Game.Model.Entity
         public ZonesInfoC ZoneInfoC;
         public WhereTeleportC WhereTeleportC;
         public CellClickTC CellClickTC;
- 
+
 
 
         public TimerC MotionTimerC;
@@ -70,8 +70,11 @@ namespace Chessy.Game.Model.Entity
         }
 
         public PlayerTC WinnerPlayerTC;
-        public PlayerTypes WinnerPlayerT => WinnerPlayerTC.PlayerT;
-
+        public PlayerTypes WinnerPlayerT
+        {
+            get => WinnerPlayerTC.PlayerT;
+            internal set => WinnerPlayerTC.PlayerT = value;
+        }
 
         public CellsC CellsC;
         public byte SelectedCell
@@ -136,14 +139,14 @@ namespace Chessy.Game.Model.Entity
         public int InstanceID(in byte cell) => CellE(cell).InstanceID;
 
 
-        public AroundCellsE AroundCellsE(in byte cell) => CellEs(cell).AroundCellsEs; 
+        public AroundCellsE AroundCellsE(in byte cell) => CellEs(cell).AroundCellsEs;
 
 
         #region Unit
 
-        ref UnitEs UnitEs(in byte idx) => ref CellEs(idx).UnitEs;
+        public UnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
 
-        ref UnitMainE UnitMainE(in byte idx) => ref UnitEs(idx).MainE;
+        public UnitMainE UnitMainE(in byte idx) => UnitEs(idx).MainE;
         public ref UnitTC UnitTC(in byte idx) => ref UnitMainE(idx).UnitTC;
         public UnitTypes UnitT(in byte cell) => UnitTC(cell).UnitT;
         public ref PlayerTC UnitPlayerTC(in byte idx) => ref UnitMainE(idx).PlayerTC;
@@ -159,7 +162,7 @@ namespace Chessy.Game.Model.Entity
         public IdxsCellsC UnitForArsonC(in byte cell) => UnitMainE(cell).ForArson;
         public ref NeedUpdateViewC UnitNeedUpdateViewC(in byte cell) => ref UnitMainE(cell).NeedUpdateViewC;
 
-        ref StatsE StatsUnitE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
+        public StatsE StatsUnitE(in byte idx_cell) => UnitEs(idx_cell).StatsE;
         public ref HealthC HpUnitC(in byte idx) => ref StatsUnitE(idx).HealthC;
         public double HpUnit(in byte cell) => HpUnitC(cell).Health;
         public ref StepsC StepUnitC(in byte idx) => ref StatsUnitE(idx).StepC;
@@ -171,13 +174,13 @@ namespace Chessy.Game.Model.Entity
         public ref DamageC DamageOnCellC(in byte idx) => ref StatsUnitE(idx).DamageOnCellC;
         public double DamageOnCell(in byte cell) => DamageOnCellC(cell).Damage;
 
-        ref MainToolWeaponE MainToolWeaponE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
+        public MainToolWeaponE MainToolWeaponE(in byte idx) => UnitEs(idx).MainToolWeaponE;
         public ref ToolWeaponTC MainToolWeaponTC(in byte idx) => ref MainToolWeaponE(idx).ToolWeaponTC;
         public ToolWeaponTypes MainToolWeaponT(in byte cell) => MainToolWeaponTC(cell).ToolWeaponT;
         public ref LevelTC MainTWLevelTC(in byte idx) => ref MainToolWeaponE(idx).LevelTC;
         public LevelTypes MainTWLevelT(in byte idx) => MainTWLevelTC(idx).LevelT;
 
-        public ref ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
+        public ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => UnitEs(idx_cell).ExtraToolWeaponE;
         public ref ToolWeaponTC ExtraToolWeaponTC(in byte idx) => ref UnitExtraTWE(idx).ToolWeaponTC;
         public ToolWeaponTypes ExtraToolWeaponT(in byte idx) => ExtraToolWeaponTC(idx).ToolWeaponT;
         public ref LevelTC ExtraTWLevelTC(in byte idx) => ref UnitExtraTWE(idx).LevelTC;
@@ -211,7 +214,7 @@ namespace Chessy.Game.Model.Entity
 
         #region Effects
 
-        ref EffectsE UnitEffectsE(in byte idx_cell) => ref UnitEs(idx_cell).EffectsE;
+        public UnitEffectsE UnitEffectsE(in byte idx_cell) => UnitEs(idx_cell).EffectsE;
         public ref StunC StunUnitC(in byte idx) => ref UnitEffectsE(idx).StunC;
         public float StunUnit(in byte idx) => StunUnitC(idx).Stun;
         public ref ProtectionC ShieldUnitEffectC(in byte idx) => ref UnitEffectsE(idx).ShieldEffectC;

@@ -18,8 +18,8 @@ namespace Chessy.Game
         internal CellEs(in bool[] isActiveParents, in int idCell, in byte idx, in EntitiesModelGame eMGame, params byte[] xy) : this()
         {
             CellE = new CellE(isActiveParents[idx], idx, idCell, xy);
-            AroundCellsEs = new AroundCellsE(idx, isActiveParents,  eMGame, xy);
-            UnitEs = new UnitEs(default);
+            AroundCellsEs = new AroundCellsE(idx, isActiveParents, eMGame, xy);
+            UnitEs = new UnitEs();
             BuildEs = new BuildingE(default);
             RiverEs = new RiverE(new bool[(byte)DirectTypes.End]);
             TrailE = new TrailE(default);

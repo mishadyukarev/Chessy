@@ -1,7 +1,5 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
@@ -51,7 +49,7 @@ namespace Chessy.Game.Model.System
 
                             eMG.YoungForestC(cell_0).Resources = 0;
 
-                            sMG.BuildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
+                            sMG.BuildingSs.BuildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
 
                             eMG.StepUnitC(cell_0).Steps -= StepValues.SET_FARM;
 

@@ -1,6 +1,7 @@
 ﻿using Chessy.Common.Component;
 using Chessy.Common.Enum;
 using Chessy.Game;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,16 +42,14 @@ namespace Chessy.Common.Entity.View.UI
                 var page = zone.Find(pageT + "+");
                 _pages[(byte)pageT] = new GameObjectVC(page.gameObject);
 
-                if (pageT == PageBookTypes.Main ||
-                   pageT == PageBookTypes.God ||
-                   pageT == PageBookTypes.Pawn ||
-                   pageT == PageBookTypes.ExtractPawn ||
-                   pageT == PageBookTypes.UsingAbilities ||
-                   pageT == PageBookTypes.Town ||
-                   pageT == PageBookTypes.Doner ||
-                   pageT == PageBookTypes.ToolWeapons)
+
+                foreach (var neededPageT in new[] { PageBookTypes.Main, PageBookTypes.God, PageBookTypes.Pawn, 
+                    PageBookTypes.ExtractPawn, PageBookTypes.UsingAbilities, PageBookTypes.Town, PageBookTypes.Doner, PageBookTypes.ToolWeapons })
                 {
-                    page.Find("VideoPlayer+").GetComponent<VideoPlayer>().url = Application.streamingAssetsPath + "/" + pageT + ".mp4";
+                    if(neededPageT == pageT)
+                    {
+                        page.Find("VideoPlayer+").Find("VideoPlayer+").GetComponent<VideoPlayer>().url = Application.streamingAssetsPath + "/" + pageT + ".mp4";
+                    }
                 }
             }
 

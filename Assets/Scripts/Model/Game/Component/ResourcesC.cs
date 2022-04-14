@@ -4,7 +4,7 @@
     {
         public float Resources
         {
-            get; 
+            get;
             internal set;
         }
 

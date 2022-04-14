@@ -1,6 +1,4 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Extension;
-using Chessy.Common.Model.System;
+﻿using Chessy.Common.Extension;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
@@ -12,10 +10,10 @@ namespace Chessy.Game.Model.System
 
         internal void Set(in UnitTypes unitT, in PlayerTypes playerT, in byte cell)
         {
-            sMG.UnitSs.SetMainS.Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false, cell);
-            sMG.UnitSs.SetStatsS.Set(HpValues.MAX, StepValues.MAX, WaterValues.MAX, cell);
-            sMG.UnitSs.SetExtraTWS.Set(ToolWeaponTypes.None, LevelTypes.None, 0, cell);
-            sMG.UnitSs.SetEffectsS.Set(0, 0, 0, false, cell);
+            sMG.UnitSs.SetMain(cell, unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
+            sMG.UnitSs.SetStats(cell, HpValues.MAX, StepValues.MAX, WaterValues.MAX);
+            sMG.UnitSs.SetExtraToolWeapon(cell, ToolWeaponTypes.None, LevelTypes.None, 0);
+            sMG.UnitSs.SetEffects(cell, 0, 0, 0, false);
 
 
 
@@ -23,14 +21,14 @@ namespace Chessy.Game.Model.System
             {
                 eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame++;
             }
-           
+
 
 
             if (unitT == UnitTypes.Pawn)
             {
                 eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People--;
 
-                sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.Axe, LevelTypes.First, cell);
+                sMG.UnitSs.SetMainToolWeapon(cell, ToolWeaponTypes.Axe, LevelTypes.First);
             }
 
             else
@@ -48,7 +46,7 @@ namespace Chessy.Game.Model.System
                     eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = false;
                 }
 
-                sMG.UnitSs.SetMainTWS.Set(ToolWeaponTypes.None, LevelTypes.None, cell);
+                sMG.UnitSs.SetMainToolWeapon(cell, ToolWeaponTypes.None, LevelTypes.None);
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game.Model.Entity.Cell.Unit
 {
-    public struct MainToolWeaponE
+    public sealed class MainToolWeaponE
     {
         public ToolWeaponTC ToolWeaponTC;
         public LevelTC LevelTC;

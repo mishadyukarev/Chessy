@@ -1,6 +1,4 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
-using Chessy.Game.Extensions;
+﻿using Chessy.Game.Extensions;
 using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System

@@ -1,7 +1,5 @@
-﻿using Chessy.Common.Entity;
-using Chessy.Common.Model.System;
+﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Enum;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Unit.Stats;
@@ -15,10 +13,10 @@ namespace Chessy.Game.Model.System
 
         internal void Shift(in byte cell_from, in byte cell_to)
         {
-            sMG.UnitSs.SetUnitS.Set(cell_from, cell_to);
+            sMG.UnitSs.CopyUnitFromToS.Copy(cell_from, cell_to);
             eMG.UnitConditionTC(cell_to).Condition = ConditionUnitTypes.None;
 
-            sMG.UnitSs.ClearUnitS.Clear(cell_from);
+            sMG.UnitSs.Clear(cell_from);
 
 
             var direct = eMG.AroundCellsE(cell_from).Direct(cell_to);
@@ -105,7 +103,7 @@ namespace Chessy.Game.Model.System
             }
 
 
-            if(eMG.UnitT(cell_to) == UnitTypes.Snowy)
+            if (eMG.UnitT(cell_to) == UnitTypes.Snowy)
             {
                 sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.Give(cell_to);
             }
