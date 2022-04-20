@@ -4,10 +4,10 @@
     {
         None,
 
-        TrainingOff,
-        WithFriendOff,
-        PublicOn,
-        WithFriendOn,
+        TrainingOffline,
+        WithFriendOffline,
+        PublicOnline,
+        WithFriendOnline,
 
         End,
     }

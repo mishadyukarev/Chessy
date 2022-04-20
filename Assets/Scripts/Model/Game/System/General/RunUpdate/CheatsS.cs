@@ -46,7 +46,7 @@ namespace Chessy.Game.Model.System
                     {
                         if (eMG.AdultForestC(cell_0).HaveAnyResources)
                         {
-                            sMG.DestroyAdultForestS.Destroy(cell_0);
+                            sMG.MasterSs.TryDestroyAdultForestS.TryDestroy(cell_0);
                         }
 
                     }

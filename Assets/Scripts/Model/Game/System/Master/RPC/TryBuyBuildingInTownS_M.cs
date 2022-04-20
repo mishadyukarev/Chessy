@@ -8,11 +8,11 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class BuyBuildingS_M : SystemModel
+    sealed class TryBuyBuildingInTownS_M : SystemModel
     {
-        internal BuyBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TryBuyBuildingInTownS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Buy(in BuildingTypes buildT, in Player sender)
+        internal void TryBuy(in BuildingTypes buildT, in Player sender)
         {
             var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 

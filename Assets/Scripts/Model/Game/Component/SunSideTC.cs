@@ -5,14 +5,14 @@ namespace Chessy.Common
 {
     public struct SunSideTC
     {
-        public SunSideTypes SunSide { get; internal set; }
+        public SunSideTypes SunSideT { get; internal set; }
 
         public DirectTypes[] RaysSun
         {
             get
             {
                 var directs = new DirectTypes[3];
-                switch (SunSide)
+                switch (SunSideT)
                 {
                     case SunSideTypes.Dawn:
                         {
@@ -38,7 +38,7 @@ namespace Chessy.Common
         {
             get
             {
-                switch (SunSide)
+                switch (SunSideT)
                 {
                     case SunSideTypes.Dawn: return true;
                     case SunSideTypes.Center: return false;
@@ -49,8 +49,8 @@ namespace Chessy.Common
             }
         }
 
-        public SunSideTC(in SunSideTypes sunSide) => SunSide = sunSide;
+        public SunSideTC(in SunSideTypes sunSide) => SunSideT = sunSide;
 
-        public void ToggleNext() => SunSide = SunSide == SunSideTypes.Night ? SunSideTypes.Dawn : ++SunSide;
+        public void ToggleNext() => SunSideT = SunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++SunSideT;
     }
 }

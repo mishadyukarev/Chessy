@@ -12,5 +12,7 @@
                 if (gameMode == GameModeT) return true;
             return false;
         }
+        public bool IsOffline => Is(GameModeTypes.TrainingOffline, GameModeTypes.WithFriendOffline);
+        public bool IsOnline => !IsOffline;
     }
 }

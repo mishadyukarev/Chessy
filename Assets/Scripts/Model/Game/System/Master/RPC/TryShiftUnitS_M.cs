@@ -15,7 +15,7 @@ namespace Chessy.Game
                 eMG.StepUnitC(cell_from).Steps -= eMG.UnitNeedStepsForShiftC(cell_from).NeedSteps(cell_to);
 
 
-                sMG.UnitSs.ShiftUnitS.Shift(cell_from, cell_to);
+                sMG.UnitSs.ShiftOnOtherCellS.Shift(cell_from, cell_to);
 
                 eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }

@@ -7,18 +7,20 @@ namespace Chessy.Game.Model.System
     {
         internal KillUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Kill(in PlayerTypes whoKiller, in byte cell_0)
+        internal void Kill(in PlayerTypes whoKiller, in byte cellIdx)
         {
+            if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
+
             if (whoKiller != PlayerTypes.None)
             {
-                if (eMG.UnitTC(cell_0).Is(UnitTypes.King)) eMG.WinnerPlayerTC.PlayerT = whoKiller;
+                if (eMG.UnitTC(cellIdx).Is(UnitTypes.King)) eMG.WinnerPlayerT = whoKiller;
             }
 
-            if (eMG.UnitTC(cell_0).IsGod)
+            if (eMG.UnitTC(cellIdx).IsGod)
             {
                 var cooldown = 0f;
 
-                switch (eMG.UnitTC(cell_0).UnitT)
+                switch (eMG.UnitT(cellIdx))
                 {
                     case UnitTypes.Elfemale:
                         cooldown = HeroCooldownValues.Elfemale;
@@ -39,24 +41,24 @@ namespace Chessy.Game.Model.System
                     default: throw new Exception();
                 }
 
-                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.Cooldown = cooldown;
-                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.HaveHeroInInventor = true;
+                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).GodInfoE.Cooldown = cooldown;
+                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).GodInfoE.HaveHeroInInventor = true;
             }
 
-            if (eMG.UnitTC(cell_0).Is(UnitTypes.Tree)) eMG.HaveTreeUnit = false;
+            if (eMG.UnitTC(cellIdx).Is(UnitTypes.Tree)) eMG.HaveTreeUnit = false;
 
 
-            sMG.UnitSs.SetLastDiedUnitOnCellS.Set(cell_0);
+            sMG.UnitSs.SetLastDiedUnitOnCellS.Set(cellIdx);
 
-            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
+            if (eMG.UnitTC(cellIdx).Is(UnitTypes.Pawn))
             {
-                eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).PawnInfoE.PawnsInGame--;
+                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).PawnInfoE.PawnsInGame--;
             }
 
 
 
 
-            sMG.UnitSs.Clear(cell_0);
+            sMG.UnitSs.ClearUnit(cellIdx);
         }
     }
 }

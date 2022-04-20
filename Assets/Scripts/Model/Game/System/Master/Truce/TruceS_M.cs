@@ -5,11 +5,11 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
-    sealed class TruceMS : SystemModel
+    sealed class TruceS_M : SystemModel
     {
         const float PEOPLE_AFTER_TRUCE = 15;
 
-        internal TruceMS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal TruceS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
@@ -31,14 +31,14 @@ namespace Chessy.Game
             {
                 eMG.HaveFire(cell_0) = false;
 
-                sMG.DestroyAllTrailS.Destroy(cell_0);
+                sMG.MasterSs.TryClearAllTrailsOnCellS.TryDestroy(cell_0);
 
 
 
 
                 if (eMG.UnitTC(cell_0).HaveUnit)
                 {
-                    if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOff))
+                    if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                         {
@@ -47,7 +47,7 @@ namespace Chessy.Game
                                 eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                             }
 
-                            sMG.UnitSs.Clear(cell_0);
+                            sMG.UnitSs.ClearUnit(cell_0);
                         }
                     }
                     else
@@ -58,7 +58,7 @@ namespace Chessy.Game
                             eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                         }
 
-                        sMG.UnitSs.Clear(cell_0);
+                        sMG.UnitSs.ClearUnit(cell_0);
                     }
                 }
 

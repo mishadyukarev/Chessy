@@ -26,14 +26,14 @@ namespace Chessy.Game.Model.System
                             eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
 
-                            if (gameModeTC.Is(GameModeTypes.TrainingOff))
+                            if (gameModeTC.Is(GameModeTypes.TrainingOffline))
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
-                                sMG.MasterSs.UpdateS.Run(gameModeTC);
+                                sMG.MasterSs.ExecuteUpdateEverythingS.Run(gameModeTC);
                             }
 
-                            else if (gameModeTC.Is(GameModeTypes.WithFriendOff))
+                            else if (gameModeTC.Is(GameModeTypes.WithFriendOffline))
                             {
                                 UpdateCooldonsStunsAndOther(0.5f);
 
@@ -41,7 +41,7 @@ namespace Chessy.Game.Model.System
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
-                                    sMG.MasterSs.UpdateS.Run(gameModeTC);
+                                    sMG.MasterSs.ExecuteUpdateEverythingS.Run(gameModeTC);
                                 }
 
                                 eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
@@ -58,7 +58,7 @@ namespace Chessy.Game.Model.System
 
                             if (senderPlayerT == PlayerTypes.Second)
                             {
-                                sMG.MasterSs.UpdateS.Run(gameModeTC);
+                                sMG.MasterSs.ExecuteUpdateEverythingS.Run(gameModeTC);
 
                                 eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
                                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);

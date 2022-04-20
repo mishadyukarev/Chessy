@@ -2,30 +2,24 @@
 {
     public static class EnvironmentValues
     {
-        #region Common
+        #region NOT_CHANGE!!!!!!!!!!!!!!!!!!!!!!!
 
         public const float MAX_RESOURCES = 1;
         public const float MIN_RESOURCES_FOR_SPAWN = 0.1f;
 
-        #endregion
+
+        #endregion NOT_CHANGE!!!!!!!!!!!!!!!!!!!!!!!
 
 
         #region Fertilize
 
-        public const float DRY_FERTILIZE = MAX_RESOURCES * 0.05f;
+        public const float DRY_FERTILIZE_DURING_UPDATE_TAKING = MAX_RESOURCES * 0.05f;
         public const float RIVER_FERTILIZE_AROUND = MAX_RESOURCES * 0.1f;
 
         public const float FARM_EXTRACT = MAX_RESOURCES * 0.1f;
         public const float FARM_CENTER_UPGRADE = FARM_EXTRACT * 0.5f;
 
         public const float ADDING_FROM_ICE_WALL = MAX_RESOURCES;
-
-        #endregion
-
-
-        #region Hill
-
-        public const float CITY_EXTRACT_HILL = MAX_RESOURCES * 0.1f;
 
         #endregion
 

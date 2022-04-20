@@ -1,10 +1,8 @@
 ﻿using Chessy.Common.Entity;
-using Chessy.Common.Interface;
-using System;
 
 namespace Chessy.Common.View.UI.System
 {
-    public sealed class SystemsViewUICommon : IUpdate, IToggleScene
+    public sealed class SystemsViewUICommon : IUpdate
     {
         readonly EntitiesViewUICommon _eUIC;
         readonly EntitiesModelCommon _eMC;

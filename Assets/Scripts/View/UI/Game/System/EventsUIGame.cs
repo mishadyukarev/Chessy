@@ -163,11 +163,7 @@ namespace Chessy.Game.EventsUI
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToWood); });
 
 
-            centerEs.SkipLessonE.ButtonUIC.AddListener(delegate
-            {
-                eMGame.LessonTC.EndLesson();
-                eMGame.NeedUpdateView = true;
-            });
+            centerEs.SkipLessonE.ButtonUIC.AddListener(sMGame.ForUISystems.ClickSkipLessonCenterS.Click);
 
 
             #endregion

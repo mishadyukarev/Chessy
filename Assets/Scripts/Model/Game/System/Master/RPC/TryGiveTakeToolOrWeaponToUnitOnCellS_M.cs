@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    sealed class GiveTakeToolWeaponS_M : SystemModel
+    sealed class TryGiveTakeToolOrWeaponToUnitOnCellS_M : SystemModel
     {
-        internal GiveTakeToolWeaponS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TryGiveTakeToolOrWeaponToUnitOnCellS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void GiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte cell_0, in Player sender)
+        internal void TryGiveTake(in ToolWeaponTypes twT, in LevelTypes levTW, in byte cell_0, in Player sender)
         {
             var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 

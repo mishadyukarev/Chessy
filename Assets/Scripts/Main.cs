@@ -66,7 +66,7 @@ namespace Chessy
             var eModelGame = new EntitiesModelGame(_eMC, forData, Rpc.NamesMethods_S, actions);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
-            var sModelGame = new SystemsModelGame(sMCommon, _eMC, eModelGame);
+            var sModelGame = new SystemsModelGame(sMCommon, eModelGame);
             var sUIGame = new SystemsViewUIGame(_eMC, eUIGame, eModelGame);
             var sViewGame = new SystemsViewGame(eViewGame, eModelGame, eVCommon);
 
@@ -82,15 +82,7 @@ namespace Chessy
 
             var rpc = eVCommon.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
 
-            var togglerScenes = new List<IToggleScene>()
-            {
-                sMCommon,
-                sUICommon,
-                sModelGame,
-                rpc,
-            };
-
-            gameObject.AddComponent<PhotonSceneManager>().StartMy(rpc, togglerScenes);
+            gameObject.AddComponent<PhotonSceneManager>().StartMy(rpc, eModelGame, sUICommon, sModelGame, sMMenu);
 
             #endregion
 
@@ -119,7 +111,7 @@ namespace Chessy
             #region ComeToTraining
 
             PhotonNetwork.OfflineMode = true;
-            _eMC.GameModeT = GameModeTypes.TrainingOff;
+            _eMC.GameModeT = GameModeTypes.TrainingOffline;
             PhotonNetwork.CreateRoom(default);
 
             #endregion

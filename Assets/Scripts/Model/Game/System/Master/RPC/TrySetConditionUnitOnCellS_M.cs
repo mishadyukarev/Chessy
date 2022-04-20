@@ -7,11 +7,11 @@ using System;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class SetConditionUnitS_M : SystemModel
+    sealed class TrySetConditionUnitOnCellS_M : SystemModel
     {
-        internal SetConditionUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TrySetConditionUnitOnCellS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Set(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
+        internal void TrySet(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
         {
             if (!eMG.StunUnitC(cell_0).IsStunned)
             {

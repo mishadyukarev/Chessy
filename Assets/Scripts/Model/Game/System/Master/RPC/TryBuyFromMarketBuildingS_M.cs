@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class BuyFromMarketS_M : SystemModel
+    sealed class TryBuyFromMarketBuildingS_M : SystemModel
     {
-        internal BuyFromMarketS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TryBuyFromMarketBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Buy(in MarketBuyTypes marketBuyT, in Player sender)
+        internal void TryBuy(in MarketBuyTypes marketBuyT, in Player sender)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 

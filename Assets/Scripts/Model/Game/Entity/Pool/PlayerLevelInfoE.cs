@@ -2,15 +2,15 @@
 {
     public struct PlayerLevelInfoE
     {
-        readonly int[] _twTC;
+        readonly int[] _toolWeapons;
         readonly PlayerLevelBuildingInfoE[] _buildingInfoEs;
 
-        public ref int ToolWeapons(in ToolWeaponTypes tw) => ref _twTC[(byte)tw];
+        public ref int ToolWeapons(in ToolWeaponTypes tw) => ref _toolWeapons[(byte)tw];
         public ref PlayerLevelBuildingInfoE BuildingInfoE(in BuildingTypes buildT) => ref _buildingInfoEs[(byte)buildT];
 
         public PlayerLevelInfoE(in LevelTypes levT) : this()
         {
-            _twTC = new int[(byte)ToolWeaponTypes.End];
+            _toolWeapons = new int[(byte)ToolWeaponTypes.End];
             _buildingInfoEs = new PlayerLevelBuildingInfoE[(byte)BuildingTypes.End];
 
             for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)
@@ -22,9 +22,9 @@
 
         public void StartGame()
         {
-            for (var i = 0; i < _twTC.Length; i++)
+            for (var i = 0; i < _toolWeapons.Length; i++)
             {
-                _twTC[i] = 0;
+                _toolWeapons[i] = 0;
             }
 
             for (var buildT = BuildingTypes.None + 1; buildT < BuildingTypes.End; buildT++)

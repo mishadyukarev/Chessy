@@ -15,8 +15,8 @@ namespace Chessy.Game.Model.System
         readonly SetEffectsUnitS[] _setEffectsSs = new SetEffectsUnitS[StartValues.CELLS];
         readonly SetStatsUnitS[] _setStatsSs = new SetStatsUnitS[StartValues.CELLS];
 
-        internal readonly SetNewUnitOnCellS SetNewUnitS;
-        internal readonly ShiftUnitS ShiftUnitS;
+        internal readonly SetNewUnitOnCellS SetNewOnCellS;
+        internal readonly ShiftUnitOnOtherCellS_M ShiftOnOtherCellS;
         internal readonly SetLastDiedUnitOnCellS SetLastDiedUnitOnCellS;
         internal readonly AttackShieldUnitOnCellS AttackShieldS;
         internal readonly CopyUnitFromToS_M CopyUnitFromToS;
@@ -34,8 +34,8 @@ namespace Chessy.Game.Model.System
         internal readonly StunElfemaleS_M StunElfemaleS_M;
         internal readonly FireArcherS_M FireArcherS_M;
         internal readonly GrowAdultForestS_M GrowAdultForestS_M;
-        internal readonly TryDestroyBuildingS_M DestroyBuildingS_M;
-        internal readonly ChangeDirectionWindMS ChangeDirectionWindS_M;
+        internal readonly TryDestroyBuildingS_M TryDestroyBuildingS_M;
+        internal readonly TryChangeDirectionWindWithSnowyS_M ChangeDirectionWindS_M;
 
         #endregion
 
@@ -45,20 +45,23 @@ namespace Chessy.Game.Model.System
         internal void SetExtraToolWeapon(in byte cell, in ToolWeaponTypes twT, in LevelTypes levelT, in float protection) => _setExtraTWSs[cell].Set(twT, levelT, protection);
         internal void SetEffects(in byte cell, in float stun, in float protection, in int shoots, in bool haveKingEffect) => _setEffectsSs[cell].Set(stun, protection, shoots, haveKingEffect);
         internal void SetStats(in byte cell, in double hp, in double steps, in double water) => _setStatsSs[cell].Set(hp, steps, water);
-        internal void Clear(in byte cell) => _clearUnitSs[cell].Clear();
+        internal void ClearUnit(in byte cell) => _clearUnitSs[cell].Clear();
 
 
         internal UnitSystems(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
             _eMG = eMG;
 
-            SetNewUnitS = new SetNewUnitOnCellS(sMG, eMG);
-            ShiftUnitS = new ShiftUnitS(sMG, eMG);
+            SetNewOnCellS = new SetNewUnitOnCellS(sMG, eMG);
+            ShiftOnOtherCellS = new ShiftUnitOnOtherCellS_M(sMG, eMG);
             SetLastDiedUnitOnCellS = new SetLastDiedUnitOnCellS(sMG, eMG);
             CopyUnitFromToS = new CopyUnitFromToS_M(sMG, eMG);
             AttackShieldS = new AttackShieldUnitOnCellS(sMG, eMG);
             KillUnitS = new KillUnitS_M(sMG, eMG);
             AttackUnitS = new AttackUnitS(sMG, eMG);
+
+
+            #region Abilities
 
             IncreaseWindSnowyS_M = new IncreaseWindSnowyS_M(sMG, eMG);
             CurcularAttackKingS_M = new CurcularAttackKingS_M(sMG, eMG);
@@ -68,8 +71,10 @@ namespace Chessy.Game.Model.System
             StunElfemaleS_M = new StunElfemaleS_M(sMG, eMG);
             FireArcherS_M = new FireArcherS_M(sMG, eMG);
             GrowAdultForestS_M = new GrowAdultForestS_M(sMG, eMG);
-            DestroyBuildingS_M = new TryDestroyBuildingS_M(sMG, eMG);
-            ChangeDirectionWindS_M = new ChangeDirectionWindMS(sMG, eMG);
+            TryDestroyBuildingS_M = new TryDestroyBuildingS_M(sMG, eMG);
+            ChangeDirectionWindS_M = new TryChangeDirectionWindWithSnowyS_M(sMG, eMG);
+
+            #endregion
 
             for (byte startCell = 0; startCell < StartValues.CELLS; startCell++)
             {

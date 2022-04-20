@@ -10,14 +10,14 @@ using System.Linq;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class UpdateS_M : SystemModel
+    sealed class ExecuteUpdateEverythingS_M : SystemModel
     {
-        readonly TruceMS _truceS_M;
+        readonly TruceS_M _truceS_M;
         readonly FireUpdateMS _fireUpdateS_M;
 
-        internal UpdateS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal ExecuteUpdateEverythingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
-            _truceS_M = new TruceMS(sMG, eMG);
+            _truceS_M = new TruceS_M(sMG, eMG);
             _fireUpdateS_M = new FireUpdateMS(sMG, eMG);
         }
 
@@ -97,18 +97,15 @@ namespace Chessy.Game.Model.System.Master
             }
 
 
+
+
+
             for (cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
                 if (eMG.UnitTC(cell_0).HaveUnit)
                 {
-                    if (eMG.UnitTC(cell_0).Is(UnitTypes.Snowy))
+                    if (eMG.UnitT(cell_0) == UnitTypes.Snowy)
                     {
-                        //if (eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround.Any(cell => cell == cell_0))
-                        //{
-                        //    eMG.WaterUnitC(cell_0).Water = WaterValues.MAX;
-                        //}
-
-
                         sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.Give(cell_0);
                     }
 
@@ -123,14 +120,14 @@ namespace Chessy.Game.Model.System.Master
                         {
                             sMG.UnitSs.CopyUnitFromToS.Copy(cell_0, idx_1);
 
-                            sMG.UnitSs.Clear(cell_0);
+                            sMG.UnitSs.ClearUnit(cell_0);
                         }
                     }
 
                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn)) eMG.ResourcesC(eMG.UnitPlayerTC(cell_0).PlayerT, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 
 
-                    if (gameModeTC.Is(GameModeTypes.TrainingOff))
+                    if (gameModeTC.Is(GameModeTypes.TrainingOffline))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.Second))
                         {
@@ -163,7 +160,7 @@ namespace Chessy.Game.Model.System.Master
                                 {
                                     if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter) || !eMG.BuildingTC(cell_0).HaveBuilding)
                                     {
-                                        if (gameModeTC.Is(GameModeTypes.TrainingOff))
+                                        if (gameModeTC.Is(GameModeTypes.TrainingOffline))
                                         {
                                             if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                                             {
@@ -211,25 +208,6 @@ namespace Chessy.Game.Model.System.Master
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 if (eMG.RiverTC(cell_0).HaveRiverNear)
                 {
                     if (!eMG.MountainC(cell_0).HaveAnyResources)
@@ -240,7 +218,7 @@ namespace Chessy.Game.Model.System.Master
 
                 if (eMG.FertilizeC(cell_0).HaveAnyResources)
                 {
-                    eMG.FertilizeC(cell_0).Resources -= EnvironmentValues.DRY_FERTILIZE;
+                    eMG.FertilizeC(cell_0).Resources -= EnvironmentValues.DRY_FERTILIZE_DURING_UPDATE_TAKING;
                 }
 
                 if (eMG.FarmExtractFertilizeC(cell_0).HaveAnyResources)
@@ -261,7 +239,7 @@ namespace Chessy.Game.Model.System.Master
                     var extract = eMG.WoodcutterExtractC(cell_0).Resources;
 
                     eMG.ResourcesC(eMG.BuildingPlayerTC(cell_0).PlayerT, ResourceTypes.Wood).Resources += extract;
-                    sMG.TakeAdultForestResourcesS.Take(extract, cell_0);
+                    sMG.MasterSs.TryTakeAdultForestResourcesS.TryTake(extract, cell_0);
 
                     if (!eMG.AdultForestC(cell_0).HaveAnyResources)
                     {
@@ -275,7 +253,7 @@ namespace Chessy.Game.Model.System.Master
                 if (eMG.UnitTC(cell_0).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
                 {
                     var canExecute = false;
-                    if (gameModeTC.Is(GameModeTypes.TrainingOff))
+                    if (gameModeTC.Is(GameModeTypes.TrainingOffline))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First)) canExecute = true;
                     }
@@ -317,7 +295,7 @@ namespace Chessy.Game.Model.System.Master
                     var extract = eMG.PawnExtractAdultForestC(cell_0).Resources;
 
                     eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).ResourcesC(ResourceTypes.Wood).Resources += extract;
-                    sMG.TakeAdultForestResourcesS.Take(extract, cell_0);
+                    sMG.MasterSs.TryTakeAdultForestResourcesS.TryTake(extract, cell_0);
 
                     if (eMG.AdultForestC(cell_0).HaveAnyResources)
                     {
@@ -424,7 +402,7 @@ namespace Chessy.Game.Model.System.Master
                         {
                             sMG.UnitSs.KillUnitS.Kill(eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
 
-                            sMG.UnitSs.Clear(cell_0);
+                            sMG.UnitSs.ClearUnit(cell_0);
                             break;
                         }
                     }
@@ -464,7 +442,7 @@ namespace Chessy.Game.Model.System.Master
 
                         if (!haveNearUnit)
                         {
-                            sMG.UnitSs.SetNewUnitS.Set(UnitTypes.Wolf, PlayerTypes.None, cell_0);
+                            sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.Wolf, PlayerTypes.None, cell_0);
 
                             //Es.UnitE(cell_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
@@ -518,7 +496,7 @@ namespace Chessy.Game.Model.System.Master
                                     {
                                         if (eMG.PlayerInfoE(playerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
                                         {
-                                            sMG.UnitSs.SetNewUnitS.Set(UnitTypes.Tree, playerT, cell_0);
+                                            sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.Tree, playerT, cell_0);
 
                                             break;
                                         }

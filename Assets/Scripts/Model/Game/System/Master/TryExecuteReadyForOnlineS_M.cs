@@ -3,13 +3,13 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ReadyS_M : SystemModel
+    sealed class TryExecuteReadyForOnlineS_M : SystemModel
     {
-        public ReadyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal TryExecuteReadyForOnlineS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
-        internal void Ready(in Player sender)
+        internal void TryReady(in Player sender)
         {
             var playerSend = sender.GetPlayer();
 

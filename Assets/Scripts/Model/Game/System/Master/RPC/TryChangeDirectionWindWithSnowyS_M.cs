@@ -6,11 +6,11 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ChangeDirectionWindMS : SystemModel
+    sealed class TryChangeDirectionWindWithSnowyS_M : SystemModel
     {
-        internal ChangeDirectionWindMS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TryChangeDirectionWindWithSnowyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Change(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
+        internal void TryChange(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
             if (eMG.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))
             {

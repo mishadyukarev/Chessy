@@ -19,6 +19,7 @@ namespace Chessy.Game.Model.System
 
         //Center
         public readonly GetHeroClickCenterS GetHeroClickCenterS;
+        public readonly ClickSkipLessonCenterS ClickSkipLessonCenterS;
 
         //Right
         public readonly AbilityClickS AbilityClickS;
@@ -39,6 +40,7 @@ namespace Chessy.Game.Model.System
             BuildBuildingClickS = new BuildBuildingClickS(sMG, eMG);
 
             GetHeroClickCenterS = new GetHeroClickCenterS(sMG, eMG);
+            ClickSkipLessonCenterS = new ClickSkipLessonCenterS(sMG, eMG);
 
             AbilityClickS = new AbilityClickS(sMG, eMG);
             ConditionClickS = new ConditionClickS(sMG, eMG);

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Chessy.Common.Model.System
 {
-    public sealed class SystemsModelCommon : IUpdate, IToggleScene
+    public sealed class SystemsModelCommon : IUpdate
     {
         readonly EntitiesModelCommon _eMC;
 

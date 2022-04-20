@@ -7,11 +7,11 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class BuildFarmS_M : SystemModel
+    sealed class TryBuildFarmOnCellWithUnitS_M : SystemModel
     {
-        internal BuildFarmS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TryBuildFarmOnCellWithUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Build(in byte cell_0, in Player sender)
+        internal void TryBuild(in byte cell_0, in Player sender)
         {
             var whoseMove = eMG.WhoseMovePlayerTC.PlayerT;
 

@@ -6,15 +6,15 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class SetUnitS_M : SystemModel
+    sealed class TrySetUnitOnCellS_M : SystemModel
     {
-        internal SetUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TrySetUnitOnCellS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Set(in UnitTypes unitT, in Player sender, in byte cell)
+        internal void TrySet(in UnitTypes unitT, in Player sender, in byte cellIdx)
         {
             var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 
-            if (eMG.IsStartedCellC(cell).IsStartedCell(whoseMove) && !eMG.UnitTC(cell).HaveUnit)
+            if (eMG.IsStartedCellC(cellIdx).IsStartedCell(whoseMove) && !eMG.UnitTC(cellIdx).HaveUnit)
             {
                 if (unitT == UnitTypes.King)
                 {
@@ -40,7 +40,7 @@ namespace Chessy.Game.Model.System.Master
                 }
 
 
-                sMG.UnitSs.SetNewUnitS.Set(unitT, whoseMove, cell);
+                sMG.UnitSs.SetNewOnCellS.Set(unitT, whoseMove, cellIdx);
 
 
                 eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);

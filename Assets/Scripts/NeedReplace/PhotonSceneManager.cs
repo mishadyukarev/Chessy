@@ -1,27 +1,42 @@
-﻿using Chessy.Common.Interface;
+﻿using Chessy.Common.View.UI.System;
 using Chessy.Game;
+using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
+using Chessy.Game.Model.System;
+using Chessy.Menu;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
-using System.Collections.Generic;
 
 namespace Chessy.Common
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
         Rpc _rpc;
-        List<IToggleScene> _toggleScene;
 
-        public void StartMy(in Rpc rpc, in List<IToggleScene> toggleScene)
+        EntitiesModelGame _eMG;
+
+        SystemsModelGame _sMG;
+        SystemsModelMenu _sMM;
+        SystemsViewUICommon _sUIC;
+
+
+
+        public void StartMy(in Rpc rpc, in EntitiesModelGame eMG, in SystemsViewUICommon sUIC, in SystemsModelGame sMG, in SystemsModelMenu sMM)
         {
             _rpc = rpc;
-            _toggleScene = toggleScene;
+
+            _eMG = eMG;
+
+            _sMG = sMG;
+            _sMM = sMM;
+            _sUIC = sUIC;
         }
 
 
         public override sealed void OnLeftRoom()
         {
-            _toggleScene.ForEach((IToggleScene i) => i.ToggleScene(SceneTypes.Menu));
+            _sMG.CommonSs.ToggleScene(SceneTypes.Menu);
+            _sUIC.ToggleScene(SceneTypes.Menu);
         }
 
         //public override sealed void OnPhotonPlayerDisconnected(Player otherPlayer)
@@ -33,7 +48,7 @@ namespace Chessy.Common
         //}
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            if(PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
+            if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         }
 
         public override sealed void OnMasterClientSwitched(Player newMasterClient)
@@ -49,7 +64,11 @@ namespace Chessy.Common
 
         public override sealed void OnJoinedRoom()
         {
-            _toggleScene.ForEach((IToggleScene i) => i.ToggleScene(SceneTypes.Game));
+            _sMG.CommonSs.ToggleScene(SceneTypes.Game);
+            _sUIC.ToggleScene(SceneTypes.Game);
+
+            _sMG.StartGame(_eMG.Common.GameModeT == GameModeTypes.TrainingOffline);
+            _rpc.SyncAllMaster();
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)

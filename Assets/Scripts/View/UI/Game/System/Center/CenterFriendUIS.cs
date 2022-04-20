@@ -19,7 +19,7 @@ namespace Chessy.Game
         {
             _eUI.CenterEs.FriendE.ButtonC.SetActiveParent(false);
 
-            if (_eMC.GameModeTC.Is(GameModeTypes.WithFriendOff))
+            if (_eMC.GameModeTC.Is(GameModeTypes.WithFriendOffline))
             {
                 if (e.ZoneInfoC.IsActiveFriend)
                 {

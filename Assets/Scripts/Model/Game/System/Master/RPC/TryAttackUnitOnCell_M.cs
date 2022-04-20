@@ -9,15 +9,15 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System.Master
 {
-    sealed class AttackUnit_M : SystemModel
+    sealed class TryAttackUnitOnCell_M : SystemModel
     {
         int _snowyArrow;
 
-        internal AttackUnit_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal TryAttackUnitOnCell_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
-        internal void Attack(in byte idx_from, in byte idx_to, in Player sender)
+        internal void TryAttack(in byte idx_from, in byte idx_to, in Player sender)
         {
             var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 
@@ -188,7 +188,7 @@ namespace Chessy.Game.Model.System.Master
                         {
                             if (eMG.UnitTC(idx_from).IsMelee(eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
                             {
-                                sMG.UnitSs.ShiftUnitS.Shift(idx_from, idx_to);
+                                sMG.UnitSs.ShiftOnOtherCellS.Shift(idx_from, idx_to);
                             }
                         }
 

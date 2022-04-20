@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class MeltS_M : SystemModel
+    sealed class TryMeltInMelterBuildingS_M : SystemModel
     {
-        internal MeltS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal TryMeltInMelterBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
-        internal void Melt(in Player sender)
+        internal void TryMelt(in Player sender)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 

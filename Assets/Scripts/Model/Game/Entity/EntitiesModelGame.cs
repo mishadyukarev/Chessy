@@ -42,6 +42,14 @@ namespace Chessy.Game.Model.Entity
         public CellClickTC CellClickTC;
 
 
+        public GameModeTC GameModeTC;
+        public GameModeTypes GameModeT
+        {
+            get => GameModeTC.GameModeT;
+            internal set => GameModeTC.GameModeT = value;
+        }
+
+
 
         public TimerC MotionTimerC;
         public float MotionTimer
@@ -85,8 +93,11 @@ namespace Chessy.Game.Model.Entity
 
 
         public PlayerTC CurPlayerITC;
-        public PlayerTypes CurPlayerIT => CurPlayerITC.PlayerT;
-
+        public PlayerTypes CurPlayerIT
+        {
+            get => CurPlayerITC.PlayerT;
+            internal set => CurPlayerITC.PlayerT = value;
+        }
 
         public PlayerTC WhoseMovePlayerTC;
         public PlayerTypes WhoseMovePlayerT => WhoseMovePlayerTC.PlayerT;
@@ -253,7 +264,7 @@ namespace Chessy.Game.Model.Entity
         public ref ResourcesC HillC(in byte idx) => ref EnvironmentEs(idx).HillC;
         public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentEs(idx).FertilizeC;
 
-        ref RiverE RiverE(in byte idx) => ref CellEs(idx).RiverEs;
+        public RiverE RiverE(in byte idx) => CellEs(idx).RiverEs;
         public ref RiverTC RiverTC(in byte cell) => ref RiverE(cell).RiverTC;
         public RiverTypes RiverT(in byte cell) => RiverTC(cell).RiverT;
         public ref HaveRiverC HaveRiverC(in byte cell) => ref RiverE(cell).HaveRiverC;

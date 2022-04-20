@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public sealed class Rpc : MonoBehaviour, IToggleScene
+    public sealed class Rpc : MonoBehaviour
     {
         EntitiesModelGame _eMG;
         SystemsModelGame _sMGame;
@@ -41,12 +41,6 @@ namespace Chessy.Game
             return this;
         }
 
-        public void ToggleScene(in SceneTypes newSceneT)
-        {
-            if (newSceneT != SceneTypes.Game) return;
-            SyncAllMaster();
-        }
-
 
         [PunRPC]
         void MasterRPC(object[] objects, PhotonMessageInfo infoFrom)
@@ -58,51 +52,51 @@ namespace Chessy.Game
             switch ((RpcMasterTypes)objects[_idx_cur++])
             {
                 case RpcMasterTypes.Ready:
-                    _sMGame.MasterSs.ReadyS_M.Ready(sender);
+                    _sMGame.MasterSs.TryExecuteReadyForOnlineS.TryReady(sender);
                     break;
 
                 case RpcMasterTypes.Done:
-                    _sMGame.MasterSs.DonerS_M.TryDone(_eMCommon.GameModeTC, sender);
+                    _sMGame.MasterSs.TryExecuteDoneS_M.TryDone(_eMCommon.GameModeTC, sender);
                     break;
 
                 case RpcMasterTypes.Shift:
-                    _sMGame.MasterSs.ShiftUnitS_M.TryShift((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                    _sMGame.MasterSs.TryShiftUnitS_M.TryShift((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.Attack:
                     var cell_from = (byte)objects[_idx_cur++];
                     var cell_to = (byte)objects[_idx_cur++];
-                    _sMGame.MasterSs.AttackUnit_M.Attack(cell_from, cell_to, sender);
+                    _sMGame.MasterSs.TryAttackUnit_M.TryAttack(cell_from, cell_to, sender);
                     break;
 
                 case RpcMasterTypes.ConditionUnit:
-                    _sMGame.MasterSs.SetConditionUnitS_M.Set((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                    _sMGame.MasterSs.TrySetConditionUnitS.TrySet((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.SetUnit:
                     var cell = (byte)objects[_idx_cur++];
-                    _sMGame.MasterSs.SetUnitS_M.Set((UnitTypes)objects[_idx_cur++], sender, cell);
+                    _sMGame.MasterSs.TrySetUnitS_M.TrySet((UnitTypes)objects[_idx_cur++], sender, cell);
                     break;
 
                 case RpcMasterTypes.GetHero:
-                    _sMGame.MasterSs.GetHeroS_M.Get((UnitTypes)objects[_idx_cur++], sender);
+                    _sMGame.MasterSs.GetHeroInCenterS.Get((UnitTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.Melt:
-                    _sMGame.MasterSs.MeltS.Melt(sender);
+                    _sMGame.MasterSs.TryMeltInMelterBuildingS.TryMelt(sender);
                     break;
 
                 case RpcMasterTypes.GiveTakeToolWeapon:
                     var idx = (byte)objects[_idx_cur++];
-                    _sMGame.MasterSs.GiveTakeToolWeaponS_M.GiveTake((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], idx, sender);
+                    _sMGame.MasterSs.TryGiveTakeToolWeaponUnitS.TryGiveTake((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], idx, sender);
                     break;
 
                 case RpcMasterTypes.BuyBuilding:
-                    _sMGame.MasterSs.BuyBuildingS_M.Buy((BuildingTypes)objects[_idx_cur++], sender);
+                    _sMGame.MasterSs.TryBuyBuildingInTownS_M.TryBuy((BuildingTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.MarketBuy:
-                    _sMGame.MasterSs.BuyFromMarketS.Buy((MarketBuyTypes)objects[_idx_cur++], sender);
+                    _sMGame.MasterSs.TryBuyFromMarketBuildingS.TryBuy((MarketBuyTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.UniqueAbility:
@@ -122,15 +116,15 @@ namespace Chessy.Game
                             break;
 
                         case AbilityTypes.Seed:
-                            _sMGame.MasterSs.SeedPawnS_M.Seed(abilityT, sender, (byte)objects[_idx_cur++]);
+                            _sMGame.MasterSs.TrySeedYoungForestOnCellWithPawnUnitS.TrySeed(abilityT, sender, (byte)objects[_idx_cur++]);
                             break;
 
                         case AbilityTypes.SetFarm:
-                            _sMGame.MasterSs.BuildFarmS_M.Build((byte)objects[_idx_cur++], sender);
+                            _sMGame.MasterSs.TryBuildFarmOnCellWithUnitS.TryBuild((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.DestroyBuilding:
-                            _sMGame.UnitSs.DestroyBuildingS_M.Destroy((byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.TryDestroyBuildingS_M.Destroy((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.FireArcher:
@@ -151,7 +145,7 @@ namespace Chessy.Game
 
                         //Snowy
                         case AbilityTypes.ChangeDirectionWind:
-                            _sMGame.UnitSs.ChangeDirectionWindS_M.Change((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.ChangeDirectionWindS_M.TryChange((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.IncreaseWindSnowy:
@@ -478,7 +472,7 @@ namespace Chessy.Game
             objs.Add(_eMG.WeatherE.WindC.MaxSpeed);
             objs.Add(_eMG.WeatherE.WindC.MinSpeed);
             objs.Add(_eMG.WeatherE.CloudC.Center);
-            objs.Add(_eMG.WeatherE.SunSideTC.SunSide);
+            objs.Add(_eMG.WeatherE.SunSideTC.SunSideT);
 
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
@@ -623,7 +617,7 @@ namespace Chessy.Game
             _eMG.WeatherE.WindC.MaxSpeed = (float)objects[_idx_cur++];
             _eMG.WeatherE.WindC.MinSpeed = (float)objects[_idx_cur++];
             _eMG.WeatherE.CloudC.Center = (byte)objects[_idx_cur++];
-            _eMG.WeatherE.SunSideTC.SunSide = (SunSideTypes)objects[_idx_cur++];
+            _eMG.WeatherE.SunSideTC.SunSideT = (SunSideTypes)objects[_idx_cur++];
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {

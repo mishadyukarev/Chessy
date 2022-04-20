@@ -6,11 +6,11 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SeedPawnS_M : SystemModel
+    sealed class TrySeedYoungForestOnCellWithPawnUnitS_M : SystemModel
     {
-        internal SeedPawnS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal TrySeedYoungForestOnCellWithPawnUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Seed(in AbilityTypes abilityT, in Player sender, in byte cell_0)
+        internal void TrySeed(in AbilityTypes abilityT, in Player sender, in byte cell_0)
         {
             if (eMG.StepUnitC(cell_0).Steps >= StepValues.SEED_PAWN)
             {

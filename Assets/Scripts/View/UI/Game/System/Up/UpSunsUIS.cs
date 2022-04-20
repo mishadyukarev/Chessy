@@ -16,7 +16,7 @@ namespace Chessy.Game
         {
             var isFirstPlayer = e.CurPlayerITC.Is(PlayerTypes.First);
 
-            switch (e.WeatherE.SunSideTC.SunSide)
+            switch (e.WeatherE.SunSideTC.SunSideT)
             {
                 case SunSideTypes.Dawn:
                     eUI.UpEs.SunsE.RightSun.SetActive(isFirstPlayer ? false : true);

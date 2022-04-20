@@ -13,18 +13,13 @@ using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class SystemsModelGame : IToggleScene, IUpdate
+    public sealed class SystemsModelGame : IUpdate
     {
-        readonly EntitiesModelCommon _eMC;
         readonly EntitiesModelGame _eMG;
 
         readonly List<Action> _runs;
 
-        internal readonly SystemsModelCommon CommonSystems;
-        internal readonly TakeAdultForestResourcesS TakeAdultForestResourcesS;
-        internal readonly DestroyAdultForestS DestroyAdultForestS;
-        internal readonly ClearAllEnvironmentS ClearAllEnvironmentS;
-        internal readonly ClearAllTrailS DestroyAllTrailS;
+        public readonly SystemsModelCommon CommonSs;
         internal readonly MistakeSs MistakeSs;
         internal readonly MasterSystems MasterSs;
         public readonly SystemsModelGameForUI ForUISystems;
@@ -34,11 +29,10 @@ namespace Chessy.Game.Model.System
 
 
 
-        public SystemsModelGame(in SystemsModelCommon sMC, in EntitiesModelCommon eMC, in EntitiesModelGame eMG)
+        public SystemsModelGame(in SystemsModelCommon sMC, in EntitiesModelGame eMG)
         {
-            CommonSystems = sMC;
+            CommonSs = sMC;
 
-            _eMC = eMC;
             _eMG = eMG;
 
             _runs = new List<Action>()
@@ -51,100 +45,119 @@ namespace Chessy.Game.Model.System
                 new Chessy.Game.MistakeS(this, eMG).Update,
             };
 
-
-            TakeAdultForestResourcesS = new TakeAdultForestResourcesS(this, eMG);
-            ClearAllEnvironmentS = new ClearAllEnvironmentS(this, eMG);
-            DestroyAdultForestS = new DestroyAdultForestS(this, eMG);
-            DestroyAllTrailS = new ClearAllTrailS(this, eMG);
-
             MistakeSs = new MistakeSs(this, eMG);
             MasterSs = new MasterSystems(this, eMG);
             ForUISystems = new SystemsModelGameForUI(this, eMG);
         }
 
-        public void ToggleScene(in SceneTypes newSceneT)
+        void ResetAll()
         {
-            if (newSceneT != SceneTypes.Game) return;
-
-
-            _eMG.NeedUpdateView = true;
-
-            _eMG.IsStartedGame = false;
-            _eMG.MotionsC.Motions = 0;
-            _eMG.ZoneInfoC.IsActiveFriend = _eMC.GameModeTC.Is(GameModeTypes.WithFriendOff);
-            _eMG.WhoseMovePlayerTC.PlayerT = StartValues.WHOSE_MOVE;
-            _eMG.CellClickTC.CellClickT = StartValues.CELL_CLICK;
-            _eMG.IsSelectedCity = false;
-            _eMG.HaveTreeUnit = false;
-            _eMG.MistakeT = MistakeTypes.None;
-            _eMG.WinnerPlayerT = PlayerTypes.None;
+            _eMG.IsStartedGame = default;
+            _eMG.MotionsC.Motions = default;
+            _eMG.ZoneInfoC.IsActiveFriend = default;
             _eMG.ZoneInfoC = default;
+            _eMG.WhoseMovePlayerTC.PlayerT = default;
+            _eMG.CellClickTC.CellClickT = default;
+            _eMG.IsSelectedCity = default;
+            _eMG.HaveTreeUnit = default;
+            _eMG.MistakeT = default;
+            _eMG.WinnerPlayerT = default;
             _eMG.CellsC = default;
+            _eMG.CurPlayerIT = default;
 
+            _eMG.WeatherE.WindC = new WindC(default, default, default, default);
+            _eMG.WeatherE.SunSideTC.SunSideT = default;
+            _eMG.WeatherE.CloudC.Center = default;
 
-            _eMG.LessonTC.LessonT = _eMC.GameModeTC.Is(GameModeTypes.TrainingOff) ? (LessonTypes)1 : LessonTypes.None;
+            _eMG.SelectedE.ToolWeaponC = new SelectedToolWeaponC(default, default);
 
+            _eMG.LessonT = default;
 
-            _eMG.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND, StartValues.MAX_SPEED_WIND, StartValues.MIN_SPEED_WIND);
-            _eMG.WeatherE.SunSideTC = new SunSideTC(StartValues.SUN_SIDE);
-            _eMG.WeatherE.CloudC.Center = StartValues.START_CLOUD;
-
-
-            _eMG.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
-
-
-
-
-
-
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cellIdx = 0; cellIdx < StartValues.CELLS; cellIdx++)
             {
-                ClearAllEnvironmentS.Clear(cell_0);
-                UnitSs.Clear(cell_0);
+                MasterSs.ClearAllEnvironmentS.Clear(cellIdx);
 
-                _eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
+                for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++) 
+                    _eMG.HealthTrail(cellIdx).Health(dirT) = 0;
 
-                for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                {
-                    _eMG.HealthTrail(cell_0).Health(dirT) = 0;
-                }
+                UnitSs.ClearUnit(cellIdx);
+                _eMG.BuildingTC(cellIdx).BuildingT = default;
             }
 
-
-            for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
+            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                _eMG.PlayerInfoE(playerT).IsReady = false;
+                _eMG.PlayerInfoE(playerT).IsReady = default;
 
-                _eMG.PlayerInfoE(playerT).BuildingsInfoC.Destroy(BuildingTypes.Market);
-                _eMG.PlayerInfoE(playerT).BuildingsInfoC.Destroy(BuildingTypes.Smelter);
+                _eMG.PlayerInfoE(playerT).BuildingsInfoC.Clear();
 
 
-                _eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People = StartValues.PEOPLE_IN_CITY;
-                _eMG.PlayerInfoE(playerT).PawnInfoE.MaxAvailable = StartValues.MAX_AVAILABLE_PAWN;
-                _eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame = 0;
+                _eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People = default;
+                _eMG.PlayerInfoE(playerT).PawnInfoE.MaxAvailable = default;
+                _eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame = default;
 
-                _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
-                _eMG.PlayerInfoE(playerT).WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
-                _eMG.PlayerInfoE(playerT).IsReady = false;
+                _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = default;
+                _eMG.PlayerInfoE(playerT).WoodForBuyHouse = default;
+                _eMG.PlayerInfoE(playerT).IsReady = default;
 
                 _eMG.PlayerInfoE(playerT).GodInfoE = default;
-                _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
+                _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = default;
                 _eMG.PlayerInfoE(playerT).WhereKingEffects.Clear();
 
                 for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
                 {
-                    _eMG.PlayerInfoE(playerT).LevelE(levT).StartGame();
+                    for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
+                    {
+                        _eMG.PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT) = default;
+                    }
+
+                    for (var buildT = (BuildingTypes)1; buildT < BuildingTypes.End; buildT++)
+                    {
+                        _eMG.PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT).IdxC.Clear();
+                    }
                 }
-
-
-
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _eMG.PlayerInfoE(playerT).ResourcesC(resT) = new ResourcesC(StartValues.Resources(resT));
+                    _eMG.PlayerInfoE(playerT).ResourcesC(resT).Resources = default;
+                }
+            }
+        }
+
+
+
+        public void StartGame(in bool withTraining)
+        {
+            ResetAll();
+
+            _eMG.ZoneInfoC.IsActiveFriend = _eMG.Common.GameModeTC.Is(GameModeTypes.WithFriendOffline);
+            _eMG.WhoseMovePlayerTC.PlayerT = StartValues.WHOSE_MOVE;
+            _eMG.CellClickTC.CellClickT = StartValues.CELL_CLICK;
+
+            _eMG.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND, StartValues.MAX_SPEED_WIND, StartValues.MIN_SPEED_WIND);
+            _eMG.WeatherE.SunSideTC.SunSideT = StartValues.SUN_SIDE;
+            _eMG.WeatherE.CloudC.Center = StartValues.START_CLOUD;
+
+            _eMG.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
+
+            _eMG.LessonT = withTraining ? (LessonTypes)1 : 0;
+
+
+            for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
+            {
+                _eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People = StartValues.PEOPLE_IN_CITY;
+                _eMG.PlayerInfoE(playerT).PawnInfoE.MaxAvailable = StartValues.MAX_AVAILABLE_PAWN;
+
+                _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
+                _eMG.PlayerInfoE(playerT).WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
+
+                _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
+
+                for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
+                {
+                    _eMG.PlayerInfoE(playerT).ResourcesC(resT).Resources = StartValues.Resources(resT);
                 }
 
-                if (_eMC.GameModeTC.Is(GameModeTypes.TrainingOff))
+                if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                 {
                     if (playerT == PlayerTypes.First)
                     {
@@ -155,25 +168,14 @@ namespace Chessy.Game.Model.System
             }
 
 
-            switch (_eMC.GameModeTC.GameModeT)
+
+            if (_eMG.Common.GameModeTC.IsOffline)
             {
-                case GameModeTypes.TrainingOff:
-                    _eMG.CurPlayerITC.PlayerT = PlayerTypes.First;
-                    break;
-
-                case GameModeTypes.WithFriendOff:
-                    _eMG.CurPlayerITC.PlayerT = _eMG.WhoseMovePlayerTC.PlayerT;
-                    break;
-
-                case GameModeTypes.PublicOn:
-                    _eMG.CurPlayerITC.PlayerT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
-                    break;
-
-                case GameModeTypes.WithFriendOn:
-                    _eMG.CurPlayerITC.PlayerT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
-                    break;
-
-                default: throw new Exception();
+                _eMG.CurPlayerITC.PlayerT = PlayerTypes.First;
+            }
+            else
+            {
+                _eMG.CurPlayerITC.PlayerT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
             }
 
             if (PhotonNetwork.IsMasterClient)
@@ -261,7 +263,7 @@ namespace Chessy.Game.Model.System
 
                         if (cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_1_PLAYER || cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_2_PLAYER)
                         {
-                            ClearAllEnvironmentS.Clear(cell_0);
+                            MasterSs.ClearAllEnvironmentS.Clear(cell_0);
                         }
                     }
                 }
@@ -292,7 +294,7 @@ namespace Chessy.Game.Model.System
             }
 
 
-            if (_eMC.GameModeTC.Is(GameModeTypes.TrainingOff))
+            if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
             {
                 _eMG.PlayerInfoE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
 
@@ -307,9 +309,9 @@ namespace Chessy.Game.Model.System
                     {
                         _eMG.MountainC(cell_0).Resources = 0;
 
-                        DestroyAdultForestS.Destroy(cell_0);
+                        MasterSs.TryDestroyAdultForestS.TryDestroy(cell_0);
 
-                        UnitSs.SetNewUnitS.Set(UnitTypes.King, PlayerTypes.Second, cell_0);
+                        UnitSs.SetNewOnCellS.Set(UnitTypes.King, PlayerTypes.Second, cell_0);
                     }
 
 
@@ -322,7 +324,7 @@ namespace Chessy.Game.Model.System
                     {
                         _eMG.MountainC(cell_0).Resources = 0;
 
-                        UnitSs.SetNewUnitS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
+                        UnitSs.SetNewOnCellS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
 
                         UnitSs.SetExtraToolWeapon(cell_0, ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second));
 
@@ -344,28 +346,32 @@ namespace Chessy.Game.Model.System
                     }
                     else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
                     {
-                        ClearAllEnvironmentS.Clear(cell_0);
+                        MasterSs.ClearAllEnvironmentS.Clear(cell_0);
                     }
                     else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
                     {
-                        ClearAllEnvironmentS.Clear(cell_0);
+                        MasterSs.ClearAllEnvironmentS.Clear(cell_0);
                     }
                     else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
                     {
-                        ClearAllEnvironmentS.Clear(cell_0);
+                        MasterSs.ClearAllEnvironmentS.Clear(cell_0);
                         _eMG.HillC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES / 5;
                     }
                     else if (cell_0 == StartValues.CELL_MOUNTAIN_LESSON)
                     {
-                        ClearAllEnvironmentS.Clear(cell_0);
+                        MasterSs.ClearAllEnvironmentS.Clear(cell_0);
                         _eMG.MountainC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
             }
 
 
-
+            _eMG.NeedUpdateView = true;
             MasterSs.GetDataCellsS.Run();
+        }
+        public void TurnOffTraining()
+        {
+            StartGame(false);
         }
 
         public void Update()
