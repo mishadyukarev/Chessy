@@ -71,14 +71,14 @@ namespace Chessy.Game.Model.System
                 {
                     eMG.MistakeTC.MistakeT = MistakeTypes.NeedPawnsInGame;
                     eMG.MistakeTimerC.Timer = 0;
-                    eMG.SoundActionC(ClipTypes.WritePensil).Invoke();
+                    eMG.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
                 eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
                 eMG.MistakeTimerC.Timer = 0;
-                eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
+                eMG.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
 

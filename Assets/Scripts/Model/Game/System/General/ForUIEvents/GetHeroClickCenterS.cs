@@ -16,7 +16,7 @@ namespace Chessy.Game.Model.System
 
                 eMG.RpcPoolEs.GetHeroToMaster(unitT);
             }
-            else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
+            else eMG.SoundAction(ClipTypes.Mistake).Invoke();
 
             eMG.NeedUpdateView = true;
         }

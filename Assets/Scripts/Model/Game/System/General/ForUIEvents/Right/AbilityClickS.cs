@@ -127,10 +127,10 @@ namespace Chessy.Game.Model.System
                         }
                     }
 
-                    else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
+                    else eMG.SoundAction(ClipTypes.Mistake).Invoke();
                 }
 
-                else eMG.SoundActionC(ClipTypes.Mistake).Action.Invoke();
+                else eMG.SoundAction(ClipTypes.Mistake).Invoke();
             }
 
             else sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);

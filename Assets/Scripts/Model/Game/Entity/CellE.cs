@@ -11,9 +11,9 @@ namespace Chessy.Game.Entity
         public readonly int InstanceID;
         public readonly IsStartedCellC IsStartedCellC;
 
-        internal CellE(in bool isActiveParent, in byte idx, in int instanceID, params byte[] xy)
+        internal CellE(in DataFromViewC dataFromViewC, in byte idxCell, in int instanceID, params byte[] xy)
         {
-            IsActiveParentSelf = isActiveParent;
+            IsActiveParentSelf = dataFromViewC.IsActiveParent(idxCell);
 
             var x = xy[0];
             var y = xy[1];
@@ -40,7 +40,7 @@ namespace Chessy.Game.Entity
                 }
             }
 
-            IdxC = new IdxCellC(idx);
+            IdxC = new IdxCellC(idxCell);
             XyC = new XyCellC(xy);
             InstanceID = instanceID;
             IsStartedCellC = new IsStartedCellC(isStartedCell);

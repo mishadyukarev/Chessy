@@ -46,7 +46,7 @@ namespace Chessy.Game.Model.System
                             {
 
                                 sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedBuildingHouses, 0);
-                                eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
+                                eMG.SoundAction(ClipTypes.WritePensil).Invoke();
                                 eMG.IsSelectedCity = true;
                             }
 
@@ -54,7 +54,7 @@ namespace Chessy.Game.Model.System
                     }
                     else
                     {
-                        eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
+                        eMG.SoundAction(ClipTypes.WritePensil).Invoke();
 
                         sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedMorePeopleInCity, 0);
                         //..E.Sound(ClipTypes.Mistake).Action.Invoke();
@@ -66,7 +66,7 @@ namespace Chessy.Game.Model.System
                 {
                     eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
                     eMG.MistakeTimerC.Timer = 0;
-                    eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
+                    eMG.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
 

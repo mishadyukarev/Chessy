@@ -36,7 +36,7 @@ namespace Chessy.Game.Model.System
             else
             {
                 sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedWaitQueue, 0);
-                eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
+                eMG.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
             eMG.NeedUpdateView = true;

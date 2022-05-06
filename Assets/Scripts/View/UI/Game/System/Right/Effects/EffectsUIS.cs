@@ -5,12 +5,12 @@ namespace Chessy.Game
 {
     sealed class EffectsUIS : SystemUIAbstract
     {
-        readonly ResourcesE _resourcesE;
+        readonly Resources _resourcesE;
         readonly EntitiesViewUIGame _eUI;
 
         readonly Dictionary<EffectTypes, bool> _isFilled = new Dictionary<EffectTypes, bool>();
 
-        internal EffectsUIS(in ResourcesE resources, in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
+        internal EffectsUIS(in Resources resources, in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
         {
             _resourcesE = resources;
             _eUI = eUI;

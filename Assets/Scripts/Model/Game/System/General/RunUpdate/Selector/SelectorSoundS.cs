@@ -18,41 +18,41 @@ namespace Chessy.Game.Model.System
             {
                 if (eMG.UnitTC(cell_0).Is(UnitTypes.Tree))
                 {
-                    eMG.SoundActionC(ClipTypes.Leaf).Invoke();
+                    eMG.SoundAction(ClipTypes.Leaf).Invoke();
                 }
 
                 else if (eMG.UnitTC(cell_0).IsMelee(eMG.MainToolWeaponTC(cell_0).ToolWeaponT))
                 {
-                    eMG.SoundActionC(ClipTypes.PickMelee).Invoke();
+                    eMG.SoundAction(ClipTypes.PickMelee).Invoke();
                 }
                 else
                 {
-                    eMG.SoundActionC(ClipTypes.PickArcher).Invoke();
+                    eMG.SoundAction(ClipTypes.PickArcher).Invoke();
                 }
             }
             else
             {
                 if (eMG.AdultForestC(cell_0).HaveAnyResources)
                 {
-                    eMG.SoundActionC(ClipTypes.Leaf).Invoke();
+                    eMG.SoundAction(ClipTypes.Leaf).Invoke();
                 }
                 else if (eMG.HillC(cell_0).HaveAnyResources)
                 {
-                    eMG.SoundActionC(ClipTypes.Rock).Invoke();
+                    eMG.SoundAction(ClipTypes.Rock).Invoke();
                 }
                 else if (eMG.MountainC(cell_0).HaveAnyResources)
                 {
-                    eMG.SoundActionC(ClipTypes.ShortWind).Invoke();
+                    eMG.SoundAction(ClipTypes.ShortWind).Invoke();
                 }
                 else
                 {
-                    eMG.SoundActionC(ClipTypes.KickGround).Invoke();
+                    eMG.SoundAction(ClipTypes.KickGround).Invoke();
                 }
 
 
                 if (eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround.Contains(cell_0) || eMG.WeatherE.CloudC.Center == cell_0)
                 {
-                    eMG.SoundActionC(ClipTypes.ShortRain).Invoke();
+                    eMG.SoundAction(ClipTypes.ShortRain).Invoke();
                 }
             }
         }

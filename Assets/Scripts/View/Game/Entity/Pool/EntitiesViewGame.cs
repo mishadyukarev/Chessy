@@ -3,7 +3,6 @@ using Chessy.Common.Component;
 using Chessy.Common.Entity.View;
 using Chessy.Game.Values;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game
@@ -20,7 +19,7 @@ namespace Chessy.Game
         public AudioSourceVC SoundASC(in AbilityTypes clip) => _sounds1[(byte)clip];
 
 
-        public EntitiesViewGame(out List<object> forData, in EntitiesViewCommon eVCommon)
+        public EntitiesViewGame(out DataFromViewC dataFromViewC, in EntitiesViewCommon eVCommon)
         {
             eVCommon.ToggleZoneGOC.GameObject = new GameObject(NameConst.GAME);
 
@@ -53,7 +52,7 @@ namespace Chessy.Game
                     //: ResourceSpriteEs.Sprite(false).SpriteC.Sprite;
 
 
-                    var cell = GameObject.Instantiate(Resources.Load<GameObject>("CellPrefab"), eVCommon.MainGOC.Transform.position + new Vector3(x, y, eVCommon.MainGOC.Transform.position.z), eVCommon.MainGOC.Transform.rotation);
+                    var cell = GameObject.Instantiate(UnityEngine.Resources.Load<GameObject>("CellPrefab"), eVCommon.MainGOC.Transform.position + new Vector3(x, y, eVCommon.MainGOC.Transform.position.z), eVCommon.MainGOC.Transform.rotation);
                     cell.name = "CellMain";
                     //cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
 
@@ -101,7 +100,7 @@ namespace Chessy.Game
 
 
             AudioSource aS = default;
-            var sounds0 = new Dictionary<ClipTypes, Action>();
+            var sounds0 = new Action[(byte)ClipTypes.End];
 
             for (var clipT = ClipTypes.None + 1; clipT < ClipTypes.End; clipT++)
             {
@@ -117,28 +116,24 @@ namespace Chessy.Game
 
 
                 _sounds0[(byte)clipT] = new AudioSourceVC(aS);
-                sounds0.Add(clipT, aS.Play);
+                sounds0[(byte)clipT] = aS.Play;
             }
 
-            var sounds1 = new Dictionary<AbilityTypes, Action>();
+            var sounds1 = new Action[(byte)AbilityTypes.End];
 
             for (var unique = AbilityTypes.None + 1; unique < AbilityTypes.End; unique++)
             {
                 aS = aSParent.AddComponent<AudioSource>();
-                aS.clip = Resources.Load<AudioClip>("Unique/" + unique.ToString());
+                aS.clip = UnityEngine.Resources.Load<AudioClip>("Unique/" + unique.ToString());
 
                 _sounds1[(byte)unique] = new AudioSourceVC(aS);
-                sounds1.Add(unique, aS.Play);
+                sounds1[(byte)unique] = aS.Play;
 
                 aS.volume = StartValues.Volume(unique);
             }
 
 
-            forData = new List<object>();
-            forData.Add(sounds0);
-            forData.Add(sounds1);
-            forData.Add(isActiveParenCells);
-            forData.Add(idCells);
+            dataFromViewC = new DataFromViewC((sounds0, sounds1, isActiveParenCells, idCells));
         }
     }
 }

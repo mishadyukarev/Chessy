@@ -15,10 +15,10 @@ namespace Chessy.Game
         internal RiverE RiverEs;
         internal TrailE TrailE;
 
-        internal CellEs(in bool[] isActiveParents, in int idCell, in byte idx, in EntitiesModelGame eMGame, params byte[] xy) : this()
+        internal CellEs(in DataFromViewC dataFromViewC, in int idCell, in byte idx, in EntitiesModelGame eMGame, params byte[] xy) : this()
         {
-            CellE = new CellE(isActiveParents[idx], idx, idCell, xy);
-            AroundCellsEs = new AroundCellsE(idx, isActiveParents, eMGame, xy);
+            CellE = new CellE(dataFromViewC, idx, idCell, xy);
+            AroundCellsEs = new AroundCellsE(idx, dataFromViewC, eMGame, xy);
             UnitEs = new UnitEs();
             BuildEs = new BuildingE(default);
             RiverEs = new RiverE(new bool[(byte)DirectTypes.End]);

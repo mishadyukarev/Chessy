@@ -321,11 +321,11 @@ namespace Chessy.Game
                     throw new Exception();
 
                 case RpcGeneralTypes.SoundEffect:
-                    _eMG.SoundActionC((ClipTypes)objects[_idx_cur++]).Invoke();
+                    _eMG.SoundAction((ClipTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.SoundUniqueAbility:
-                    _eMG.SoundActionC((AbilityTypes)objects[_idx_cur++]).Invoke();
+                    _eMG.SoundAction((AbilityTypes)objects[_idx_cur++]).Invoke();
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -338,7 +338,7 @@ namespace Chessy.Game
 
                     _sMGame.MistakeSs.MistakeS.Mistake(mistakeT);
 
-                    _eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
+                    _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
 
                     //if (mistakeT == MistakeTypes.NeedMoreSteps || mistakeT == MistakeTypes.MinSpeedWind 
                     //    || mistakeT == MistakeTypes.MaxSpeedWind || mistakeT == MistakeTypes.NeedBuildingHouses

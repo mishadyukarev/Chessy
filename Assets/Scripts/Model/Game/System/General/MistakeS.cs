@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
         {
             eMG.MistakeTC.MistakeT = mistakeT;
             eMG.MistakeTimerC.Timer = 0;
-            eMG.SoundActionC(ClipTypes.WritePensil).Action.Invoke();
+            eMG.SoundAction(ClipTypes.WritePensil).Invoke();
         }
     }
 }

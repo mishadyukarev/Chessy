@@ -13,104 +13,91 @@ namespace Chessy.Game.Model.Entity
 {
     public sealed class EntitiesModelGame
     {
-        readonly ActionC[] _sounds0 = new ActionC[(byte)ClipTypes.End];
-        readonly ActionC[] _sounds1 = new ActionC[(byte)AbilityTypes.End];
         readonly ResourcesC[] _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
         readonly PlayerInfoEs[] _forPlayerEs = new PlayerInfoEs[(byte)PlayerTypes.End];
+        readonly CellEs[] _cellEs;
 
         public readonly EntitiesModelCommon Common;
 
 
+        internal float ForUpdateViewTimer;
+
+        public readonly DataFromViewC DataFromViewC;
         public NeedUpdateViewC NeedUpdateViewC;
+        public ZonesInfoC ZoneInfoC;
+        public WhereTeleportC WhereTeleportC;
+        public CellClickTC CellClickTC;
+        public GameModeTC GameModeTC;
+        public TimerC MotionTimerC;
+        public RaycastTC RaycastTC;
+        public LessonTC LessonTC;
+        public MotionsC MotionsC;
+        public PlayerTC WinnerPlayerTC;
+        public CellsC CellsC;
+        public PlayerTC WhoseMovePlayerTC;
+        public PlayerTC CurPlayerITC;
+
+        public readonly Resources Resources;
+        public MistakeE MistakeE;
+        public RpcPoolEs RpcPoolEs;
+        public WeatherE WeatherE;
+        public SelectedE SelectedE;
+        public SelectedUnitE SelectedUnitE;
+
         public bool NeedUpdateView
         {
             get => NeedUpdateViewC.NeedUpdateView;
             set => NeedUpdateViewC.NeedUpdateView = value;
         }
-
         public bool IsStartedGame { get; internal set; }
         public bool IsSelectedCity { get; internal set; }
         public bool HaveTreeUnit { get; internal set; }
         public bool IsClicked { get; internal set; }
-
         public bool NeedAnimationCircularAttack { get; set; }
-
-
-        internal float ForUpdateViewTimer;
-        public ZonesInfoC ZoneInfoC;
-        public WhereTeleportC WhereTeleportC;
-        public CellClickTC CellClickTC;
-
-
-        public GameModeTC GameModeTC;
         public GameModeTypes GameModeT
         {
             get => GameModeTC.GameModeT;
             internal set => GameModeTC.GameModeT = value;
         }
-
-
-
-        public TimerC MotionTimerC;
         public float MotionTimer
         {
             get => MotionTimerC.Timer;
             internal set => MotionTimerC.Timer = value;
         }
-
-
-        public RaycastTC RaycastTC;
-
-
-        public LessonTC LessonTC;
         public LessonTypes LessonT
         {
             get => LessonTC.LessonT;
             internal set => LessonTC.LessonT = value;
         }
-
-
-        public MotionsC MotionsC;
         public int Motions
         {
             get => MotionsC.Motions;
             internal set => MotionsC.Motions = value;
         }
-
-        public PlayerTC WinnerPlayerTC;
         public PlayerTypes WinnerPlayerT
         {
             get => WinnerPlayerTC.PlayerT;
             internal set => WinnerPlayerTC.PlayerT = value;
         }
-
-        public CellsC CellsC;
         public byte SelectedCell
         {
             get => CellsC.Selected;
             internal set => CellsC.Selected = value;
         }
-
-
-        public PlayerTC CurPlayerITC;
         public PlayerTypes CurPlayerIT
         {
             get => CurPlayerITC.PlayerT;
             internal set => CurPlayerITC.PlayerT = value;
         }
-
-        public PlayerTC WhoseMovePlayerTC;
         public PlayerTypes WhoseMovePlayerT => WhoseMovePlayerTC.PlayerT;
 
-
-        MistakeE _mistakeE;
-        public ref MistakeTC MistakeTC => ref _mistakeE.MistakeTC;
+        public ref MistakeTC MistakeTC => ref MistakeE.MistakeTC;
         public MistakeTypes MistakeT
         {
             get => MistakeTC.MistakeT;
             internal set => MistakeTC.MistakeT = value;
         }
-        public ref TimerC MistakeTimerC => ref _mistakeE.TimerC;
+        public ref TimerC MistakeTimerC => ref MistakeE.TimerC;
         public float MistakeTimer
         {
             get => MistakeTimerC.Timer;
@@ -118,27 +105,17 @@ namespace Chessy.Game.Model.Entity
         }
 
 
-        public readonly ResourcesE Resources;
-
-        public RpcPoolEs RpcPoolEs;
-        public WeatherE WeatherE;
-        public SelectedE SelectedE;
-        public SelectedUnitE SelectedUnitE;
-
         public ref PlayerInfoEs PlayerInfoE(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
         public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);
         public ref int ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT);
         public ref PlayerLevelInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT) => ref PlayerInfoE(playerT).LevelE(levT);
         public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT);
-        public ActionC SoundActionC(in ClipTypes clip) => _sounds0[(byte)clip];
-        public ActionC SoundActionC(in AbilityTypes unique) => _sounds1[(byte)unique];
+        public Action SoundAction(in ClipTypes clipT) => DataFromViewC.SoundAction(clipT);
+        public Action SoundAction(in AbilityTypes abilityT) => DataFromViewC.SoundAction(abilityT);
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
 
 
         #region Cells
-
-        readonly CellEs[] _cellEs;
-
 
         ref CellEs CellEs(in byte idx) => ref _cellEs[idx];
 
@@ -290,27 +267,19 @@ namespace Chessy.Game.Model.Entity
         #endregion
 
 
-
-
         #endregion
 
 
-        public EntitiesModelGame(in EntitiesModelCommon eMC, in List<object> forData, in List<string> namesMethods, in List<object> actions)
+        public EntitiesModelGame(in EntitiesModelCommon eMC, in DataFromViewC dataFromViewC, in List<string> namesMethods, in List<object> actions)
         {
             Common = eMC;
 
 
-            Resources = new ResourcesE(default);
+            Resources = new Resources(default);
 
-            var i = 0;
+            DataFromViewC = dataFromViewC;
 
-            var sounds0 = (Dictionary<ClipTypes, Action>)forData[i++];
-            var sounds1 = (Dictionary<AbilityTypes, Action>)forData[i++];
-            var isActiveParenCells = (bool[])forData[i++];
-            var idCells = (int[])forData[i++];
-
-
-            for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
+            for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
             {
                 _forPlayerEs[(byte)playerT] = new PlayerInfoEs(true);
             }
@@ -319,11 +288,6 @@ namespace Chessy.Game.Model.Entity
             for (var buildingT = BuildingTypes.None + 1; buildingT < BuildingTypes.End; buildingT++) selectedBuildings.Add(buildingT, false);
             SelectedE.BuildingsC = new SelectedBuildingsC(selectedBuildings);
 
-
-
-            foreach (var item in sounds0) _sounds0[(byte)item.Key] = new ActionC(item.Value);
-            foreach (var item in sounds1) _sounds1[(byte)item.Key] = new ActionC(item.Value);
-
             RpcPoolEs = new RpcPoolEs(actions, namesMethods);
 
 
@@ -331,18 +295,18 @@ namespace Chessy.Game.Model.Entity
             _idxs = new Dictionary<string, byte>();
             var xys = new List<byte[]>();
 
-            byte idx = 0;
+            byte idxCell = 0;
             for (byte x = 0; x < StartValues.X_AMOUNT; x++)
                 for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
                 {
-                    _idxs.Add(x.ToString() + "_" + y, idx);
+                    _idxs.Add(x.ToString() + "_" + y, idxCell);
                     xys.Add(new byte[] { x, y });
-                    idx++;
+                    idxCell++;
                 }
 
-            for (idx = 0; idx < StartValues.CELLS; idx++)
+            for (idxCell = 0; idxCell < StartValues.CELLS; idxCell++)
             {
-                _cellEs[idx] = new CellEs(isActiveParenCells, idCells[idx], idx, this, xys[idx]);
+                _cellEs[idxCell] = new CellEs(dataFromViewC, dataFromViewC.IdCell(idxCell), idxCell, this, xys[idxCell]);
             }
         }
     }
