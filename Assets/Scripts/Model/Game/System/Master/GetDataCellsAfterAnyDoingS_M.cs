@@ -3,7 +3,7 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetDataCellsS_M : SystemModel
+    sealed class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
         readonly GetVisibleUnitS _getVisibleS;
         readonly GetCellForArsonArcherS _getCellForArsonArcherS;
@@ -20,7 +20,7 @@ namespace Chessy.Game.Model.System
         readonly GetWoodcutterExtractCellsS _getWoodcutterExtractCellsS;
         readonly GetFarmExtractCellsS _getFarmExtractCellsS;
 
-        internal GetDataCellsS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal GetDataCellsAfterAnyDoingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
             _getBuildingVisibleS = new GetBuildingVisibleS(sMG, eMG);
             _getTrailsVisibleS = new GetTrailsVisibleS(sMG, eMG);

@@ -25,6 +25,7 @@ namespace Chessy.Game.System.View
         readonly SyncShieldVS[] _syncShieldSs = new SyncShieldVS[StartValues.CELLS];
         readonly SyncCloudVS[] _syncCloudSs = new SyncCloudVS[StartValues.CELLS];
         readonly SyncRotationVS[] _syncRotationSs = new SyncRotationVS[StartValues.CELLS];
+        readonly SyncIdxAndXyInfoVS[] _syncIdxAndXyInfoSs = new SyncIdxAndXyInfoVS[StartValues.CELLS];
 
         readonly SyncSupportVS _syncSupportS;
         readonly SyncSoundVS _syncSoundS;
@@ -66,7 +67,10 @@ namespace Chessy.Game.System.View
                 
                 _syncCloudSs[startCell] = new SyncCloudVS(_eVGame.CellEs(startCell).CloudCellSRC, startCell, _eMGame);
                 _syncRotationSs[startCell] = new SyncRotationVS(_eVGame.CellEs(startCell), startCell, _eMGame);
-                
+
+                _syncIdxAndXyInfoSs[startCell] = new SyncIdxAndXyInfoVS(_eVGame.CellEs(startCell).IdxAndXyInfoTMPC, startCell, _eMGame);
+
+
 
                 for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
                 {
@@ -113,6 +117,7 @@ namespace Chessy.Game.System.View
                         _syncShieldSs[startCell].Sync();
                         _syncCloudSs[startCell].Sync();
                         _syncRotationSs[startCell].Sync();
+                        _syncIdxAndXyInfoSs[startCell].Sync();
 
                         if (_eMGame.NeedAnimationCircularAttack)
                         {

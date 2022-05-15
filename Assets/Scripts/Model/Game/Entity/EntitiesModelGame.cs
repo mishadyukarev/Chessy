@@ -53,6 +53,7 @@ namespace Chessy.Game.Model.Entity
         public bool IsSelectedCity { get; internal set; }
         public bool HaveTreeUnit { get; internal set; }
         public bool IsClicked { get; internal set; }
+        public bool IsActivatedIdxAndXyInfoCells { get; internal set; }
         public bool NeedAnimationCircularAttack { get; set; }
         public GameModeTypes GameModeT
         {
@@ -120,7 +121,7 @@ namespace Chessy.Game.Model.Entity
         ref CellEs CellEs(in byte idx) => ref _cellEs[idx];
 
 
-        CellE CellE(in byte cell) => CellEs(cell).CellE;
+        public ref CellE CellE(in byte cell) => ref CellEs(cell).CellE;
         public IsStartedCellC IsStartedCellC(in byte cell) => CellE(cell).IsStartedCellC;
         public bool IsActiveParentSelf(in byte cell) => CellE(cell).IsActiveParentSelf;
         public XyCellC XyCellC(in byte cell) => CellE(cell).XyC;

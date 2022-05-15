@@ -105,7 +105,7 @@ namespace Chessy.Game.Model.System
 
             if (eMG.UnitT(toCellIdx) == UnitTypes.Snowy)
             {
-                sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.Give(toCellIdx);
+                sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.TryGive(toCellIdx);
             }
 
 

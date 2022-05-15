@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
     {
         internal TryExecuteDoneS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void TryDone(in GameModeTC gameModeTC, in Player sender)
+        internal void TryDone(in Player sender)
         {
             var senderPlayerT = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
 
@@ -26,14 +26,14 @@ namespace Chessy.Game.Model.System
                             eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
 
-                            if (gameModeTC.Is(GameModeTypes.TrainingOffline))
+                            if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
-                                sMG.MasterSs.ExecuteUpdateEverythingS.Run(gameModeTC);
+                                sMG.MasterSs.ExecuteUpdateEverythingS.Run();
                             }
 
-                            else if (gameModeTC.Is(GameModeTypes.WithFriendOffline))
+                            else if (eMG.Common.GameModeTC.Is(GameModeTypes.WithFriendOffline))
                             {
                                 UpdateCooldonsStunsAndOther(0.5f);
 
@@ -41,7 +41,7 @@ namespace Chessy.Game.Model.System
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
-                                    sMG.MasterSs.ExecuteUpdateEverythingS.Run(gameModeTC);
+                                    sMG.MasterSs.ExecuteUpdateEverythingS.Run();
                                 }
 
                                 eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
@@ -58,7 +58,7 @@ namespace Chessy.Game.Model.System
 
                             if (senderPlayerT == PlayerTypes.Second)
                             {
-                                sMG.MasterSs.ExecuteUpdateEverythingS.Run(gameModeTC);
+                                sMG.MasterSs.ExecuteUpdateEverythingS.Run();
 
                                 eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
                                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);

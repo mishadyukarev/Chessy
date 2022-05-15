@@ -2,7 +2,7 @@
 
 namespace Chessy.Game.Model.Component
 {
-    public struct IsStartedCellC
+    public readonly struct IsStartedCellC
     {
         readonly Dictionary<PlayerTypes, bool> _isStartedCell;
         public bool IsStartedCell(in PlayerTypes playerT) => _isStartedCell[playerT];

@@ -56,7 +56,7 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.Done:
-                    _sMGame.MasterSs.TryExecuteDoneS_M.TryDone(_eMCommon.GameModeTC, sender);
+                    _sMGame.MasterSs.TryExecuteDoneS_M.TryDone(sender);
                     break;
 
                 case RpcMasterTypes.Shift:
@@ -477,7 +477,7 @@ namespace Chessy.Game
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                objs.Add(_eMG.PlayerInfoE(playerT).IsReady);
+                objs.Add(_eMG.PlayerInfoE(playerT).IsReadyForStartOnlineGame);
                 objs.Add(_eMG.PlayerInfoE(playerT).WoodForBuyHouse);
                 objs.Add(_eMG.PlayerInfoE(playerT).BuildingsInfoC.HavBuildingsClone);
                 objs.Add(_eMG.PlayerInfoE(playerT).WhereKingEffects.IdxsByteClone);
@@ -621,7 +621,7 @@ namespace Chessy.Game
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                _eMG.PlayerInfoE(playerT).IsReady = (bool)objects[_idx_cur++];
+                _eMG.PlayerInfoE(playerT).IsReadyForStartOnlineGame = (bool)objects[_idx_cur++];
                 _eMG.PlayerInfoE(playerT).WoodForBuyHouse = (float)objects[_idx_cur++];
                 _eMG.PlayerInfoE(playerT).BuildingsInfoC.Sync((bool[])objects[_idx_cur++]);
                 _eMG.PlayerInfoE(playerT).WhereKingEffects.Sync((byte[])objects[_idx_cur++]);

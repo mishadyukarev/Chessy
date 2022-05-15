@@ -12,19 +12,23 @@ namespace Chessy.Game.Model.System.Master
 {
     sealed class ExecuteUpdateEverythingS_M : SystemModel
     {
-        readonly TruceS_M _truceS_M;
-        readonly FireUpdateMS _fireUpdateS_M;
+        readonly TruceS_M _truceS;
+        readonly FireUpdateS_M _fireUpdateS;
+        readonly ExecuteAIBotLogicAfterUpdateS_M _aIBotS;
 
         internal ExecuteUpdateEverythingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
-            _truceS_M = new TruceS_M(sMG, eMG);
-            _fireUpdateS_M = new FireUpdateMS(sMG, eMG);
+            _truceS = new TruceS_M(sMG, eMG);
+            _fireUpdateS = new FireUpdateS_M(sMG, eMG);
+            _aIBotS = new ExecuteAIBotLogicAfterUpdateS_M(sMG, eMG);
         }
 
-        internal void Run(in GameModeTC gameModeTC)
+        internal void Run()
         {
-            _fireUpdateS_M.Run();
+            _fireUpdateS.Run();
 
+
+            
 
             eMG.MotionsC.Motions++;
             eMG.WeatherE.SunSideTC.ToggleNext();
@@ -106,7 +110,7 @@ namespace Chessy.Game.Model.System.Master
                 {
                     if (eMG.UnitT(cell_0) == UnitTypes.Snowy)
                     {
-                        sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.Give(cell_0);
+                        sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.TryGive(cell_0);
                     }
 
                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Wolf))
@@ -127,7 +131,7 @@ namespace Chessy.Game.Model.System.Master
                     if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn)) eMG.ResourcesC(eMG.UnitPlayerTC(cell_0).PlayerT, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 
 
-                    if (gameModeTC.Is(GameModeTypes.TrainingOffline))
+                    if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.Second))
                         {
@@ -160,7 +164,7 @@ namespace Chessy.Game.Model.System.Master
                                 {
                                     if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter) || !eMG.BuildingTC(cell_0).HaveBuilding)
                                     {
-                                        if (gameModeTC.Is(GameModeTypes.TrainingOffline))
+                                        if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                                         {
                                             if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
                                             {
@@ -253,7 +257,7 @@ namespace Chessy.Game.Model.System.Master
                 if (eMG.UnitTC(cell_0).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
                 {
                     var canExecute = false;
-                    if (gameModeTC.Is(GameModeTypes.TrainingOffline))
+                    if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                     {
                         if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First)) canExecute = true;
                     }
@@ -528,7 +532,11 @@ namespace Chessy.Game.Model.System.Master
             {
                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
 
-                _truceS_M.Truce();
+                _truceS.Truce();
+            }
+            else
+            {
+                _aIBotS.Execute();
             }
         }
     }

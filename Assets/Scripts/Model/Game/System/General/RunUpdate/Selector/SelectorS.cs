@@ -1,6 +1,7 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using System;
+using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
@@ -18,10 +19,18 @@ namespace Chessy.Game.Model.System
             var idx_cur = eMG.CellsC.Current;
 
 
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                eMG.IsActivatedIdxAndXyInfoCells = !eMG.IsActivatedIdxAndXyInfoCells;
+                eMG.NeedUpdateView = true;
+            }
+
+
             if (eMG.IsClicked)
             {
                 eMG.NeedUpdateView = true;
                 eMG.MistakeTC.MistakeT = MistakeTypes.None;
+
 
 
                 if (eMG.LessonTC.Is(LessonTypes.LookInfoAboutSun))

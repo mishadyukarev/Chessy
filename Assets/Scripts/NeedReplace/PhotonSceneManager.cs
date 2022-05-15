@@ -67,7 +67,7 @@ namespace Chessy.Common
             _sMG.CommonSs.ToggleScene(SceneTypes.Game);
             _sUIC.ToggleScene(SceneTypes.Game);
 
-            _sMG.StartGame(_eMG.Common.GameModeT == GameModeTypes.TrainingOffline);
+            _sMG.StartGameS.Start(_eMG.Common.GameModeT == GameModeTypes.TrainingOffline);
             _rpc.SyncAllMaster();
         }
 

@@ -2,6 +2,7 @@
 using Chessy.Game.Entity.View.Cell;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Chessy.Game
@@ -15,6 +16,7 @@ namespace Chessy.Game
         public readonly GameObjectVC CellParent;
         public readonly GameObjectVC CellGO;
         public readonly SpriteRendererVC CellSR;
+        public readonly TMPC IdxAndXyInfoTMPC;
 
         public readonly FireVE FireVE;
         public readonly EnvironmentVEs EnvironmentVEs;
@@ -25,8 +27,6 @@ namespace Chessy.Game
         public readonly RiverVE RiverE;
 
         public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
-
-
         public SpriteRendererVC TrailCellVC(in DirectTypes dir) => _trails[dir];
 
 
@@ -39,6 +39,7 @@ namespace Chessy.Game
 
             CellGO = new GameObjectVC(cellUnder.gameObject);
             CellSR = new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>());
+            IdxAndXyInfoTMPC = new TMPC(cell.transform.Find("IdxAndXyInfo_TMP+").GetComponent<TextMeshPro>());
 
 
             FireVE = new FireVE(cell);

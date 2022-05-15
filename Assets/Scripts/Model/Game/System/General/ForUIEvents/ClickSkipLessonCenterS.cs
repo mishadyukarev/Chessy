@@ -12,7 +12,7 @@ namespace Chessy.Game
 
         public void Click()
         {
-            sMG.TurnOffTraining();
+            sMG.StartGameS.Start(false);
         }
     }
 }

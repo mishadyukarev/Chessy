@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class FireUpdateMS : SystemModel
+    sealed class FireUpdateS_M : SystemModel
     {
-        internal FireUpdateMS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        internal FireUpdateS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void Run()
         {

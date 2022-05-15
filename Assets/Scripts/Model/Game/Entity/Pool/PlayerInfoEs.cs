@@ -10,7 +10,7 @@ namespace Chessy.Game
         readonly ResourcesC[] _resourceCs;
         readonly PlayerUnitInfoE[] _unitEs;
 
-        public bool IsReady;
+        public bool IsReadyForStartOnlineGame;
         public float WoodForBuyHouse;
 
         public BuildingsInfoC BuildingsInfoC;

@@ -110,3 +110,6 @@ TagManager:
   - name: NoneSupportVision
     uniqueID: 4260119031
     locked: 0
+  - name: IdxAndXyInfo
+    uniqueID: 185014489
+    locked: 0

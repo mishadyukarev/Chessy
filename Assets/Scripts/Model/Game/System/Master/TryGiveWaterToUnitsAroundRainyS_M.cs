@@ -4,13 +4,13 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class RainyGiveWaterToUnitsAroundS_M : SystemModel
+    sealed class TryGiveWaterToUnitsAroundRainyS_M : SystemModel
     {
-        internal RainyGiveWaterToUnitsAroundS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal TryGiveWaterToUnitsAroundRainyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
-        internal void Give(in byte cell_0)
+        internal void TryGive(in byte cell_0)
         {
             if (!eMG.UnitTC(cell_0).Is(UnitTypes.Snowy)) throw new Exception();
 

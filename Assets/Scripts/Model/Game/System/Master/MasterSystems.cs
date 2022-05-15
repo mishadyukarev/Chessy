@@ -18,7 +18,7 @@ namespace Chessy.Game.Model.System
         internal readonly TryBuildFarmOnCellWithUnitS_M TryBuildFarmOnCellWithUnitS;
         internal readonly TrySetConditionUnitOnCellS_M TrySetConditionUnitS;
         internal readonly TryGiveTakeToolOrWeaponToUnitOnCellS_M TryGiveTakeToolWeaponUnitS;
-        internal readonly RainyGiveWaterToUnitsAroundS_M RainyGiveWaterToUnitsAroundS_M;
+        internal readonly TryGiveWaterToUnitsAroundRainyS_M RainyGiveWaterToUnitsAroundS_M;
 
         internal readonly TryTakeAdultForestResourcesS_M TryTakeAdultForestResourcesS;
         internal readonly TryDestroyAdultForestS_M TryDestroyAdultForestS;
@@ -26,11 +26,13 @@ namespace Chessy.Game.Model.System
         internal readonly TryDestroyAllTrailsOnCellS_M TryClearAllTrailsOnCellS;
         internal readonly TrySeedNewYoungForestS_M TrySeedNewYoungForestS;
 
-        internal readonly GetDataCellsS_M GetDataCellsS;
+        internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
         internal readonly ExecuteUpdateEverythingS_M ExecuteUpdateEverythingS;
 
         internal readonly UnitSystems UnitSs;
         internal readonly BuildingSystems BuildingSs;
+
+        internal readonly ResetAllS_M ResetAllS;
 
         internal MasterSystems(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
@@ -49,7 +51,7 @@ namespace Chessy.Game.Model.System
             TrySetConditionUnitS = new TrySetConditionUnitOnCellS_M(sMG, eMG);
             TryGiveTakeToolWeaponUnitS = new TryGiveTakeToolOrWeaponToUnitOnCellS_M(sMG, eMG);
 
-            GetDataCellsS = new GetDataCellsS_M(sMG, eMG);
+            GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(sMG, eMG);
 
             TryTakeAdultForestResourcesS = new TryTakeAdultForestResourcesS_M(sMG, eMG);
             ClearAllEnvironmentS = new ClearAllEnvironmentS_M(sMG, eMG);
@@ -57,7 +59,8 @@ namespace Chessy.Game.Model.System
             TryClearAllTrailsOnCellS = new TryDestroyAllTrailsOnCellS_M(sMG, eMG);
             TrySeedNewYoungForestS = new TrySeedNewYoungForestS_M(sMG, eMG);
 
-            RainyGiveWaterToUnitsAroundS_M = new RainyGiveWaterToUnitsAroundS_M(sMG, eMG);
+            RainyGiveWaterToUnitsAroundS_M = new TryGiveWaterToUnitsAroundRainyS_M(sMG, eMG);
+            ResetAllS = new ResetAllS_M(sMG, eMG);
 
             UnitSs = new UnitSystems(sMG, eMG);
             BuildingSs = new BuildingSystems(sMG, eMG);

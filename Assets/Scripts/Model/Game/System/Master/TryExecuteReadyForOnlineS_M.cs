@@ -13,10 +13,10 @@ namespace Chessy.Game.Model.System
         {
             var playerSend = sender.GetPlayer();
 
-            eMG.PlayerInfoE(playerSend).IsReady = !eMG.PlayerInfoE(playerSend).IsReady;
+            eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame = !eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame;
 
-            if (eMG.PlayerInfoE(PlayerTypes.First).IsReady
-                && eMG.PlayerInfoE(PlayerTypes.Second).IsReady)
+            if (eMG.PlayerInfoE(PlayerTypes.First).IsReadyForStartOnlineGame
+                && eMG.PlayerInfoE(PlayerTypes.Second).IsReadyForStartOnlineGame)
             {
                 eMG.IsStartedGame = true;
             }
