@@ -1,9 +1,9 @@
-﻿namespace Chessy.Game.Model.Component
-{
-    public struct PeopleInCityC
-    {
-        public float People;
+﻿//namespace Chessy.Game.Model.Component
+//{
+//    public struct PeopleInCityC
+//    {
+//        public float People;
 
-        public bool HaveAny => People >= 1;
-    }
-}
+//        public bool HaveAny => People >= 1;
+//    }
+//}

@@ -10,7 +10,7 @@ namespace Chessy.Game
 
         internal void TryShift(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (eMG.CellsForShift(cell_from).Contains(cell_to) && eMG.UnitPlayerTC(cell_from).Is(eMG.WhoseMovePlayerTC.PlayerT))
+            if (eMG.CellsForShift(cell_from).Contains(cell_to) && eMG.UnitPlayerTC(cell_from).Is(eMG.WhoseMovePlayerT))
             {
                 eMG.StepUnitC(cell_from).Steps -= eMG.UnitNeedStepsForShiftC(cell_from).NeedSteps(cell_to);
 

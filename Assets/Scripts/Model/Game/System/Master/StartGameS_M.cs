@@ -9,13 +9,13 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public sealed class StartGameS : SystemModel
+    sealed class StartGameS_M : SystemModel
     {
-        internal StartGameS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal StartGameS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
         }
 
-        public void Start(in bool withTraining)
+        internal void Start(in bool withTraining)
         {
             sMG.MasterSs.ResetAllS.ResetAll();
 
@@ -34,8 +34,16 @@ namespace Chessy.Game
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People = StartValues.PEOPLE_IN_CITY;
-                eMG.PlayerInfoE(playerT).PawnInfoE.MaxAvailable = StartValues.MAX_AVAILABLE_PAWN;
+                eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = StartValues.PEOPLE_IN_CITY;
+                eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = StartValues.MAX_AVAILABLE_PAWN;
+
+                if(playerT == PlayerTypes.Second)
+                {
+                    if (eMG.Common.GameModeT == GameModeTypes.TrainingOffline)
+                        eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable += 5;
+                }
+
+
 
                 eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
                 eMG.PlayerInfoE(playerT).WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
@@ -47,7 +55,7 @@ namespace Chessy.Game
                     eMG.PlayerInfoE(playerT).ResourcesC(resT).Resources = StartValues.Resources(resT);
                 }
 
-                if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
+                if (withTraining)
                 {
                     if (playerT == PlayerTypes.First)
                     {
@@ -61,11 +69,11 @@ namespace Chessy.Game
 
             if (eMG.Common.GameModeTC.IsOffline)
             {
-                eMG.CurPlayerITC.PlayerT = PlayerTypes.First;
+                eMG.CurPlayerIT = PlayerTypes.First;
             }
             else
             {
-                eMG.CurPlayerITC.PlayerT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                eMG.CurPlayerIT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
             }
 
             if (PhotonNetwork.IsMasterClient)
@@ -197,14 +205,14 @@ namespace Chessy.Game
 
                     if (x == 7 && y == 8)
                     {
-                        if (withTraining)
-                        {
+                        //if (withTraining)
+                        //{
                             eMG.MountainC(cell_0).Resources = 0;
 
                             sMG.MasterSs.TryDestroyAdultForestS.TryDestroy(cell_0);
 
                             sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.King, PlayerTypes.Second, cell_0);
-                        }
+                        //}
                     }
 
                     if (x == 8 && y == 3)
@@ -214,8 +222,8 @@ namespace Chessy.Game
 
                     else if (x == 6 && y == 8 || x == 8 && y == 8 || x <= 8 && x >= 6 && y == 7 || x <= 8 && x >= 6 && y == 9)
                     {
-                        if (withTraining)
-                        {
+                        //if (withTraining)
+                        //{
                             eMG.MountainC(cell_0).Resources = 0;
 
                             sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
@@ -232,7 +240,7 @@ namespace Chessy.Game
                             {
                                 sMG.UnitSs.SetExtraToolWeapon(cell_0, ToolWeaponTypes.Shield, LevelTypes.First, ToolWeaponValues.ShieldProtection(LevelTypes.First));
                             }
-                        }
+                        //}
                     }
 
                     if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)

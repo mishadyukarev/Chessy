@@ -328,6 +328,10 @@ namespace Chessy.Game
                     _eMG.SoundAction((AbilityTypes)objects[_idx_cur++]).Invoke();
                     break;
 
+                case RpcGeneralTypes.AnimationCell:
+                    _eMG.DataFromViewC.AnimationCell((byte)objects[_idx_cur++], (AnimationCellTypes)objects[_idx_cur++]).Invoke();
+                    break;
+
                 case RpcGeneralTypes.ActiveMotion:
                     _eMG.MotionTimer = 4;
                     break;
@@ -485,9 +489,9 @@ namespace Chessy.Game
                 objs.Add(_eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor);
                 objs.Add(_eMG.PlayerInfoE(playerT).KingInfoE.CellKing);
 
-                objs.Add(_eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People);
-                objs.Add(_eMG.PlayerInfoE(playerT).PawnInfoE.MaxAvailable);
-                objs.Add(_eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame);
+                objs.Add(_eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity);
+                objs.Add(_eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable);
+                objs.Add(_eMG.PlayerInfoE(playerT).PawnInfoC.AmountInGame);
 
                 objs.Add(_eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor);
                 objs.Add(_eMG.PlayerInfoE(playerT).GodInfoE.UnitT);
@@ -629,9 +633,9 @@ namespace Chessy.Game
                 _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = (bool)objects[_idx_cur++];
                 _eMG.PlayerInfoE(playerT).KingInfoE.CellKing = (byte)objects[_idx_cur++];
 
-                _eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People = (float)objects[_idx_cur++];
-                _eMG.PlayerInfoE(playerT).PawnInfoE.MaxAvailable = (int)objects[_idx_cur++];
-                _eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame = (int)objects[_idx_cur++];
+                _eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = (int)objects[_idx_cur++];
+                _eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = (int)objects[_idx_cur++];
+                _eMG.PlayerInfoE(playerT).PawnInfoC.AmountInGame = (int)objects[_idx_cur++];
 
                 _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = (bool)objects[_idx_cur++];
                 _eMG.PlayerInfoE(playerT).GodInfoE.UnitT = (UnitTypes)objects[_idx_cur++];

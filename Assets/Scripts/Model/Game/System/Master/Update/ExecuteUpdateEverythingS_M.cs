@@ -38,7 +38,7 @@ namespace Chessy.Game.Model.System.Master
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {
-                    eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People++;
+                    eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity++;
                 }
             }
 
@@ -523,8 +523,8 @@ namespace Chessy.Game.Model.System.Master
                     amountAdultForest++;
             }
 
-            var can = !eMG.PlayerInfoE(PlayerTypes.First).PawnInfoE.PeopleInCityC.HaveAny
-                && !eMG.PlayerInfoE(PlayerTypes.Second).PawnInfoE.PeopleInCityC.HaveAny;
+            var can = !eMG.PlayerInfoE(PlayerTypes.First).PawnInfoC.HaveAnyPeopleInCity
+                && !eMG.PlayerInfoE(PlayerTypes.Second).PawnInfoC.HaveAnyPeopleInCity;
 
 
 
@@ -534,10 +534,13 @@ namespace Chessy.Game.Model.System.Master
 
                 _truceS.Truce();
             }
-            else
-            {
-                _aIBotS.Execute();
-            }
+
+            //if (!eMG.LessonTC.HaveLesson)
+            //{
+            //    _aIBotS.Execute();
+            //}
+
+            
         }
     }
 }

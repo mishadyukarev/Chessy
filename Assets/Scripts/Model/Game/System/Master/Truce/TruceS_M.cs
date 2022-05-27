@@ -7,7 +7,7 @@ namespace Chessy.Game
 {
     sealed class TruceS_M : SystemModel
     {
-        const float PEOPLE_AFTER_TRUCE = 15;
+        const int PEOPLE_AFTER_TRUCE = 15;
 
         internal TruceS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
@@ -22,8 +22,8 @@ namespace Chessy.Game
 
                 eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
 
-                eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People = PEOPLE_AFTER_TRUCE;
-                eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame = 0;
+                eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = PEOPLE_AFTER_TRUCE;
+                eMG.PlayerInfoE(playerT).PawnInfoC.AmountInGame = 0;
             }
 
 

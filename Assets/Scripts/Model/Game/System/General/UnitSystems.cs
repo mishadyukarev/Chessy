@@ -22,6 +22,7 @@ namespace Chessy.Game.Model.System
         internal readonly CopyUnitFromToS_M CopyUnitFromToS;
         internal readonly AttackUnitS AttackUnitS;
         internal readonly KillUnitS_M KillUnitS;
+        internal readonly AttackUnitFromToS_M AttackUnitFromToS_M;
 
 
         #region Abilities
@@ -59,6 +60,7 @@ namespace Chessy.Game.Model.System
             AttackShieldS = new AttackShieldUnitOnCellS(sMG, eMG);
             KillUnitS = new KillUnitS_M(sMG, eMG);
             AttackUnitS = new AttackUnitS(sMG, eMG);
+            AttackUnitFromToS_M = new AttackUnitFromToS_M(sMG, eMG);
 
 
             #region Abilities

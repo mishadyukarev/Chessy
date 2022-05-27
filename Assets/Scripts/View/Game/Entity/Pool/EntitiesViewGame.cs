@@ -3,6 +3,7 @@ using Chessy.Common.Component;
 using Chessy.Common.Entity.View;
 using Chessy.Game.Values;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game
@@ -75,19 +76,27 @@ namespace Chessy.Game
 
 
             _cellVEs = new CellVEs[cells.Length];
-            for (byte idx_0 = 0; idx_0 < _cellVEs.Length; idx_0++)
-            {
-                _cellVEs[idx_0] = new CellVEs(cells[idx_0]);
-            }
-
 
             var isActiveParenCells = new bool[StartValues.CELLS];
             var idCells = new int[StartValues.CELLS];
 
-            for (byte idx = 0; idx < StartValues.CELLS; idx++)
+            var animationsCells = new Dictionary<byte, Action[]>();
+
+            for (byte cellIdxStart = 0; cellIdxStart < _cellVEs.Length; cellIdxStart++)
             {
-                isActiveParenCells[idx] = CellEs(idx).CellParent.IsActiveSelf;
-                idCells[idx] = CellEs(idx).CellGO.InstanceID;
+                _cellVEs[cellIdxStart] = new CellVEs(cells[cellIdxStart]);
+
+                isActiveParenCells[cellIdxStart] = CellEs(cellIdxStart).CellParent.IsActiveSelf;
+                idCells[cellIdxStart] = CellEs(cellIdxStart).CellGO.InstanceID;
+
+
+                var animations = new Action[(byte)AnimationCellTypes.End];
+
+                animations[(byte)AnimationCellTypes.AdultForest] = CellEs(cellIdxStart).EnvironmentVEs.AnimationC.Play;
+                animations[(byte)AnimationCellTypes.JumpAppearanceUnit] = CellEs(cellIdxStart).UnitEs.AnimationUnitC.Play;
+                animations[(byte)AnimationCellTypes.CircularAttackKing] = CellEs(cellIdxStart).UnitEs.CircularAttackAnimC.Play;
+
+                animationsCells.Add(cellIdxStart, animations);
             }
 
 
@@ -133,7 +142,7 @@ namespace Chessy.Game
             }
 
 
-            dataFromViewC = new DataFromViewC((sounds0, sounds1, isActiveParenCells, idCells));
+            dataFromViewC = new DataFromViewC((sounds0, sounds1, isActiveParenCells, idCells, animationsCells));
         }
     }
 }

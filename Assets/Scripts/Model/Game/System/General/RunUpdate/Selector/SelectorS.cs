@@ -25,6 +25,12 @@ namespace Chessy.Game.Model.System
                 eMG.NeedUpdateView = true;
             }
 
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                sMG.MasterSs.ClearAllEnvironmentS.Clear(idx_cur);
+                eMG.NeedUpdateView = true;
+            }
+
 
             if (eMG.IsClicked)
             {

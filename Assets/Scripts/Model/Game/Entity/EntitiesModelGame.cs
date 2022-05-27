@@ -54,7 +54,6 @@ namespace Chessy.Game.Model.Entity
         public bool HaveTreeUnit { get; internal set; }
         public bool IsClicked { get; internal set; }
         public bool IsActivatedIdxAndXyInfoCells { get; internal set; }
-        public bool NeedAnimationCircularAttack { get; set; }
         public GameModeTypes GameModeT
         {
             get => GameModeTC.GameModeT;
@@ -84,6 +83,11 @@ namespace Chessy.Game.Model.Entity
         {
             get => CellsC.Selected;
             internal set => CellsC.Selected = value;
+        }
+        public byte CurrentCell
+        {
+            get => CellsC.Current;
+            internal set => CellsC.Current = value;
         }
         public PlayerTypes CurPlayerIT
         {

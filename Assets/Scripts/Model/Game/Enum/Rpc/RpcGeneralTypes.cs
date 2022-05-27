@@ -6,6 +6,7 @@
 
         SoundEffect,
         SoundUniqueAbility,
+        AnimationCell,
 
         ActiveMotion,
         Mistake,

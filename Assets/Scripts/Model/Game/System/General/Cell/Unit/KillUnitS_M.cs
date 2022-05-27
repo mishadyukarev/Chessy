@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 
         internal void Kill(in PlayerTypes whoKiller, in byte cellIdx)
         {
-            if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
+            //if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
 
             if (whoKiller != PlayerTypes.None)
             {
@@ -52,7 +52,7 @@ namespace Chessy.Game.Model.System
 
             if (eMG.UnitTC(cellIdx).Is(UnitTypes.Pawn))
             {
-                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).PawnInfoE.PawnsInGame--;
+                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).PawnInfoC.RemovePawn();
             }
 
 

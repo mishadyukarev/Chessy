@@ -10,7 +10,6 @@ namespace Chessy.Game
     public struct CellVEs
     {
         readonly Dictionary<CellBarTypes, SpriteRendererVC> _bars;
-
         readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
         public readonly GameObjectVC CellParent;

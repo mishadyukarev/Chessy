@@ -60,7 +60,7 @@ namespace Chessy.Game.System.View
                 _syncRiverSs[startCell] = new SyncRiverVS(eVG.CellEs(startCell).RiverE, startCell, eMG);
                 _syncBarsEnvironmentSs[startCell] = new SyncBarsEnvironmentVS(eVG, startCell, eMG);
                 _syncNoneVisionSs[startCell] = new SyncNoneVisionVS(eVG.CellEs(startCell).SupportCellEs.NoneSRC, startCell, eMG);
-                _syncNeedFoodSs[startCell] = new NeedFoodVS(_eVGame.CellEs(startCell).UnitEs.Block(CellBlockTypes.NeedWater), startCell, _eMGame);
+                _syncNeedFoodSs[startCell] = new NeedFoodVS(_eVGame.CellEs(startCell).UnitEs.Block(CellBlockTypes.NeedFood), startCell, _eMGame);
                 _syncBuildingFlagSs[startCell] = new BuildingFlagVS(_eVGame.CellEs(startCell).BuildingEs.FlagSRC, startCell, _eMGame);
                 _syncStunSs[startCell] = new SyncStunVS(_eVGame.CellEs(startCell).UnitEs.EffectE.StunSRC, startCell, _eMGame);
                 _syncShieldSs[startCell] = new SyncShieldVS(_eVGame.CellEs(startCell).UnitEs.EffectE.ShieldSRC, startCell, _eMGame);
@@ -118,15 +118,6 @@ namespace Chessy.Game.System.View
                         _syncCloudSs[startCell].Sync();
                         _syncRotationSs[startCell].Sync();
                         _syncIdxAndXyInfoSs[startCell].Sync();
-
-                        if (_eMGame.NeedAnimationCircularAttack)
-                        {
-                            if (_eMGame.UnitT(startCell) == UnitTypes.King)
-                            {
-                                _eVGame.CellEs(startCell).UnitEs.CircularAttackAnimC.Play();
-                                _eMGame.NeedAnimationCircularAttack = false;
-                            }
-                        }
 
                         for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++) _syncTrailSs[dirT][startCell].Sync();
                     }

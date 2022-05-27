@@ -13,7 +13,7 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            var curPlayerI = e.CurPlayerITC.PlayerT;
+            var curPlayerI = e.CurPlayerIT;
 
             var myHeroT = e.PlayerInfoE(curPlayerI).GodInfoE.UnitT;
 

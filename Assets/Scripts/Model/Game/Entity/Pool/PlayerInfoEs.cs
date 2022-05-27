@@ -15,9 +15,9 @@ namespace Chessy.Game
 
         public BuildingsInfoC BuildingsInfoC;
         public IdxsCellsC WhereKingEffects;
+        public PawnPeopleInfoC PawnInfoC;
 
         public KingInfoE KingInfoE;
-        public PawnInfoE PawnInfoE;
         public GodInfoE GodInfoE;
 
 

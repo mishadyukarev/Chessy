@@ -45,9 +45,7 @@ namespace Chessy.Game.Model.System.Master
                         }
                     }
 
-
-                    eMG.NeedAnimationCircularAttack = true;
-
+                    eMG.RpcPoolEs.AnimationCell_ToGeneral(cell_0, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
 
                     eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
 

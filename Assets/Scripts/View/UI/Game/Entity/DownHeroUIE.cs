@@ -1,35 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Common.Component;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct DownHeroUIE
+    readonly struct DownHeroUIE
     {
-        readonly Dictionary<UnitTypes, ImageUIC> _units;
+        readonly ImageUIC[] _units;
 
-        public readonly Chessy.Common.Component.GameObjectVC Parent;
-        public readonly ButtonUIC ButtonC;
-        public readonly TextUIC Cooldown;
+        internal readonly GameObjectVC Parent;
+        internal readonly ButtonUIC ButtonC;
+        internal readonly TextUIC Cooldown;
 
-        public ImageUIC Image(in UnitTypes unit) => _units[unit];
+        internal ImageUIC Image(in UnitTypes unit) => _units[(byte)unit];
 
 
-        public DownHeroUIE(in Transform down)
+        internal DownHeroUIE(in Transform downZoneT)
         {
-            var hero = down.Find("Hero");
+            var hero = downZoneT.Find("Hero");
 
-            Parent = new Chessy.Common.Component.GameObjectVC(hero.gameObject);
+            Parent = new GameObjectVC(hero.gameObject);
             ButtonC = new ButtonUIC(hero.Find("Button").GetComponent<Button>());
             Cooldown = new TextUIC(hero.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
 
 
-            _units = new Dictionary<UnitTypes, ImageUIC>();
+            _units = new ImageUIC[(byte)UnitTypes.End];
             for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
             {
-                _units.Add(unit, new ImageUIC(hero.Find(unit.ToString()).GetComponent<Image>()));
+                _units[(byte)unit] = new ImageUIC(hero.Find(unit.ToString()).GetComponent<Image>());
             }
         }
     }

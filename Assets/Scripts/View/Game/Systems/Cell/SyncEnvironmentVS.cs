@@ -15,11 +15,6 @@ namespace Chessy.Game
 
         internal sealed override void Sync()
         {
-            if (e.SelectedCell == _currentCell)
-            {
-                _environmentVEs.AnimationC.Play();
-            }
-
             if (e.AdultForestC(_currentCell).HaveAnyResources)
             {
                 _environmentVEs.EnvironmentE(EnvironmentTypes.AdultForest).GO.SetActive(true);

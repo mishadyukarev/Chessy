@@ -16,7 +16,8 @@ namespace Chessy.Game.Model.System
 
         public readonly SystemsModelCommon CommonSs;
         public readonly SystemsModelGameForUI ForUISystems;
-        public readonly StartGameS StartGameS;
+        public readonly OnJoinedRoomS OnJoinedRoomS;
+
 
         internal UnitSystems UnitSs => MasterSs.UnitSs;
         internal BuildingSystems BuildingSs => MasterSs.BuildingSs;
@@ -41,8 +42,8 @@ namespace Chessy.Game.Model.System
 
             MistakeSs = new MistakeSs(this, eMG);
             MasterSs = new MasterSystems(this, eMG);
-            StartGameS = new StartGameS(this, eMG);
             ForUISystems = new SystemsModelGameForUI(this, eMG);
+            OnJoinedRoomS = new OnJoinedRoomS(this, eMG);
         }
 
         public void Update()

@@ -19,14 +19,14 @@ namespace Chessy.Game.Model.System
 
             if (eMG.UnitTC(cell).Is(UnitTypes.Pawn))
             {
-                eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame++;
+                eMG.PlayerInfoE(playerT).PawnInfoC.SetPawn();
             }
 
 
 
             if (unitT == UnitTypes.Pawn)
             {
-                eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People--;
+                eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity--;
 
                 sMG.UnitSs.SetMainToolWeapon(cell, ToolWeaponTypes.Axe, LevelTypes.First);
             }

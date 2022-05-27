@@ -27,7 +27,7 @@ namespace Chessy.Game.Model.System
                     }
                 }
 
-                if (eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).PawnInfoE.PawnsInGame > 0)
+                if (eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{

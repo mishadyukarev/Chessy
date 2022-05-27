@@ -146,13 +146,13 @@ namespace Chessy.Game
                         _unitVEs.AnimationUnitC.Play();
                     }
 
-                    if (e.IsClicked)
-                    {
-                        if (e.SelectedCell == _currentCell)
-                        {
-                            _unitVEs.AnimationUnitC.Play();
-                        }
-                    }
+                    //if (e.IsClicked)
+                    //{
+                    //    if (e.SelectedCell == _currentCell)
+                    //    {
+                    //        _unitVEs.AnimationUnitC.Play();
+                    //    }
+                    //}
 
                     _unitVEs.UnitSRC(unitT).GO.SetActive(_needActiveUnit[(byte)unitT]);
                 }

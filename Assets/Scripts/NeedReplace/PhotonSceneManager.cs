@@ -64,11 +64,8 @@ namespace Chessy.Common
 
         public override sealed void OnJoinedRoom()
         {
-            _sMG.CommonSs.ToggleScene(SceneTypes.Game);
+            _sMG.OnJoinedRoomS.OnJoinedRoom(_rpc);
             _sUIC.ToggleScene(SceneTypes.Game);
-
-            _sMG.StartGameS.Start(_eMG.Common.GameModeT == GameModeTypes.TrainingOffline);
-            _rpc.SyncAllMaster();
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)

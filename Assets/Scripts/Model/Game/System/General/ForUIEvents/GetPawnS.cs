@@ -20,9 +20,9 @@ namespace Chessy.Game.Model.System
             {
                 if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
                 {
-                    if (eMG.PlayerInfoE(curPlayerI).PawnInfoE.PeopleInCityC.HaveAny)
+                    if (eMG.PlayerInfoE(curPlayerI).PawnInfoC.HaveAnyPeopleInCity)
                     {
-                        if (eMG.PlayerInfoE(curPlayerI).PawnInfoE.PawnsInGame < eMG.PlayerInfoE(curPlayerI).PawnInfoE.MaxAvailable)
+                        if (eMG.PlayerInfoE(curPlayerI).PawnInfoC.AmountInGame < eMG.PlayerInfoE(curPlayerI).PawnInfoC.MaxAvailable)
                         {
                             eMG.SelectedCell = 0;
 

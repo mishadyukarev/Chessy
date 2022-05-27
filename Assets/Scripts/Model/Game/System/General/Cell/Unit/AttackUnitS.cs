@@ -8,14 +8,15 @@ namespace Chessy.Game.Model.System
     {
         internal AttackUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        internal void Attack(in double damage, in PlayerTypes whoKiller, in byte cell_0)
+        internal void Attack(in double damage, in PlayerTypes whoKiller, in byte cellIdx)
         {
+            //if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
             if (damage <= 0) throw new Exception();
-            if (!eMG.IsActiveParentSelf(cell_0)) throw new Exception();
+            if (!eMG.IsActiveParentSelf(cellIdx)) throw new Exception();
 
-            eMG.HpUnitC(cell_0).Health -= damage;
-            if (eMG.HpUnitC(cell_0).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
-                sMG.UnitSs.KillUnitS.Kill(whoKiller, cell_0);
+            eMG.HpUnitC(cellIdx).Health -= damage;
+            if (eMG.HpUnitC(cellIdx).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
+                sMG.UnitSs.KillUnitS.Kill(whoKiller, cellIdx);
         }
     }
 }

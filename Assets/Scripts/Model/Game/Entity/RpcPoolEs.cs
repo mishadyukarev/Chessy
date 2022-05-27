@@ -159,6 +159,9 @@ namespace Chessy.Game
         public void SoundToGeneral(in RpcMasterTypes rpc, Player playerTo) => _action1(_generalRPCName, playerTo, new object[] { RpcGeneralTypes.SoundEffect, rpc });
         public void SoundToGeneral(Player playerTo, AbilityTypes uniq) => _action1(_generalRPCName, playerTo, new object[] { RpcGeneralTypes.SoundUniqueAbility, uniq });
 
+
+        public void AnimationCell_ToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _action0(_generalRPCName, rpcTarget, new object[] { RpcGeneralTypes.AnimationCell, cellIdx, animationCellT });
+
         #endregion
     }
 }

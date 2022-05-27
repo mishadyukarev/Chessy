@@ -17,9 +17,15 @@ namespace Chessy.Game.Model.System
         {
             eMG.MistakeTC.MistakeT = MistakeTypes.None;
 
+
+            eMG.DataFromViewC.AnimationCell(eMG.CurrentCell, AnimationCellTypes.AdultForest).Invoke();
+            eMG.DataFromViewC.AnimationCell(eMG.CurrentCell, AnimationCellTypes.JumpAppearanceUnit).Invoke();
+
             if (eMG.CellsC.IsSelectedCell)
             {
                 eMG.IsSelectedCity = false;
+
+                
 
                 if (eMG.LessonTC.HaveLesson)
                 {

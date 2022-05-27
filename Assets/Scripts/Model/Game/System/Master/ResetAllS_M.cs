@@ -52,9 +52,9 @@ namespace Chessy.Game
                 eMG.PlayerInfoE(playerT).BuildingsInfoC.Clear();
 
 
-                eMG.PlayerInfoE(playerT).PawnInfoE.PeopleInCityC.People = default;
-                eMG.PlayerInfoE(playerT).PawnInfoE.MaxAvailable = default;
-                eMG.PlayerInfoE(playerT).PawnInfoE.PawnsInGame = default;
+                eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = default;
+                eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = default;
+                eMG.PlayerInfoE(playerT).PawnInfoC.AmountInGame = default;
 
                 eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = default;
                 eMG.PlayerInfoE(playerT).WoodForBuyHouse = default;

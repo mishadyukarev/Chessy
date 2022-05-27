@@ -34,6 +34,8 @@ namespace Chessy.Game.Model.System
 
         internal readonly ResetAllS_M ResetAllS;
 
+        internal readonly StartGameS_M StartGameS;
+
         internal MasterSystems(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
             TryBuyFromMarketBuildingS = new TryBuyFromMarketBuildingS_M(sMG, eMG);
@@ -64,6 +66,8 @@ namespace Chessy.Game.Model.System
 
             UnitSs = new UnitSystems(sMG, eMG);
             BuildingSs = new BuildingSystems(sMG, eMG);
+
+            StartGameS = new StartGameS_M(sMG, eMG);
         }
     }
 }

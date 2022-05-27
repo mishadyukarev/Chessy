@@ -143,7 +143,7 @@ namespace Chessy.Game.Model.System
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        eMG.PlayerInfoE(whoseMove).PawnInfoE.MaxAvailable++;
+                        eMG.PlayerInfoE(whoseMove).PawnInfoC.MaxAvailable++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
                         eMG.PlayerInfoE(whoseMove).WoodForBuyHouse += eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
                         break;

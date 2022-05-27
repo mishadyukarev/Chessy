@@ -24,7 +24,7 @@ namespace Chessy.Game.System.View
                 }
             }
 
-            _needFoodSRC.SetEnabled(_needActive);
+            _needFoodSRC.SetActive(_needActive);
         }
     }
 }
