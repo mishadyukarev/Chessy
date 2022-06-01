@@ -22,16 +22,16 @@ namespace Chessy.Game
             _needSetColorToBar = Color.white;
 
 
-            if (e.UnitVisibleC(_currentCell).IsVisible(e.CurPlayerIT))
+            if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
             {
-                if (e.UnitTC(_currentCell).HaveUnit && !e.UnitTC(_currentCell).IsAnimal)
+                if (_e.UnitTC(_currentCell).HaveUnit && !_e.UnitTC(_currentCell).IsAnimal)
                 {
                     _needActiveBar = true;
 
-                    var xCordinate = (float)(e.HpUnit(_currentCell) / HpValues.MAX);
+                    var xCordinate = (float)(_e.HpUnit(_currentCell) / HpValues.MAX);
                     _hpBarSRC.Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                    _needSetColorToBar = e.UnitPlayerT(_currentCell) == PlayerTypes.First ? Color.blue : _needSetColorToBar = Color.red;
+                    _needSetColorToBar = _e.UnitPlayerT(_currentCell) == PlayerTypes.First ? Color.blue : _needSetColorToBar = Color.red;
                 }
             }
 

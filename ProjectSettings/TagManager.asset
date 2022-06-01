@@ -107,7 +107,10 @@ TagManager:
   - name: Cloud
     uniqueID: 1231844777
     locked: 0
-  - name: NoneSupportVision
+  - name: SunSide
+    uniqueID: 1213293303
+    locked: 0
+  - name: BlackSupportVision
     uniqueID: 4260119031
     locked: 0
   - name: IdxAndXyInfo

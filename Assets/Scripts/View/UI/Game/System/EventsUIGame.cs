@@ -59,7 +59,8 @@ namespace Chessy.Game.EventsUI
             {
                 if (eMGame.LessonTC.Is(LessonTypes.ClickWindInfo))
                 {
-                    eMGame.LessonTC.SetNextLesson();
+                    eMGame.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
+                    eMGame.LessonTC.SetNextLesson();    
                 }
                 else
                 {
@@ -131,10 +132,7 @@ namespace Chessy.Game.EventsUI
             });
             centerEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate
             {
-                if (!eMGame.LessonTC.HaveLesson)
-                {
-                    sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Snowy);
-                }
+                sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Snowy);
             });
             centerEs.OpenShopButtonC.AddListener(delegate
             {

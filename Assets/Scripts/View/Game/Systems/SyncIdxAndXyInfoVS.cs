@@ -13,11 +13,11 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            _tMPC.TextMeshPro.gameObject.SetActive(e.IsActivatedIdxAndXyInfoCells);
+            _tMPC.TextMeshPro.gameObject.SetActive(_e.IsActivatedIdxAndXyInfoCells);
 
-            if (e.IsActivatedIdxAndXyInfoCells)
+            if (_e.IsActivatedIdxAndXyInfoCells)
             {
-                _tMPC.TextMeshPro.text = _currentCell + "\n " + e.XyCellC(_currentCell).X + "|" + e.XyCellC(_currentCell).Y + "  ";
+                _tMPC.TextMeshPro.text = _currentCell + "\n " + _e.XyCellC(_currentCell).X + "|" + _e.XyCellC(_currentCell).Y + "  ";
             }
         }
     }

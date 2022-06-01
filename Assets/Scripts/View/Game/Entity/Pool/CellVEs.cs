@@ -7,23 +7,29 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public struct CellVEs
+    public readonly struct CellVEs
     {
         readonly Dictionary<CellBarTypes, SpriteRendererVC> _bars;
         readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
-        public readonly GameObjectVC CellParent;
-        public readonly GameObjectVC CellGO;
-        public readonly SpriteRendererVC CellSR;
-        public readonly TMPC IdxAndXyInfoTMPC;
+        internal readonly GameObjectVC CellParent;
+        internal readonly GameObjectVC StandartCellGO;
+        internal readonly GameObjectVC DesertCell1GOC;
+        internal readonly GameObjectVC DesertCell2GOC;
+        internal readonly BoxCollider2D BoxCollider2D;
+        internal readonly SpriteRendererVC StandartCellSRC;
+        internal readonly TMPC IdxAndXyInfoTMPC;
 
-        public readonly FireVE FireVE;
-        public readonly EnvironmentVEs EnvironmentVEs;
-        public readonly UnitVEs UnitEs;
-        public readonly CellBuildingVEs BuildingEs;
-        public readonly SpriteRendererVC CloudCellSRC;
-        public readonly SupportCellVE SupportCellEs;
-        public readonly RiverVE RiverE;
+        internal readonly FireVE FireVE;
+        internal readonly EnvironmentVEs EnvironmentVEs;
+        internal readonly UnitVEs UnitEs;
+        internal readonly CellBuildingVEs BuildingEs;
+
+        internal readonly SpriteRendererVC CloudSRC;
+        internal readonly SpriteRendererVC SunSideSRC;
+
+        internal readonly SupportCellVE SupportCellEs;
+        internal readonly RiverVE RiverE;
 
         public SpriteRendererVC Bar(in CellBarTypes bar) => _bars[bar];
         public SpriteRendererVC TrailCellVC(in DirectTypes dir) => _trails[dir];
@@ -31,13 +37,20 @@ namespace Chessy.Game
 
         public CellVEs(in GameObject cell)
         {
+            var cellT = cell.transform;
+
             CellParent = new GameObjectVC(cell);
 
-            var cellUnder = cell.transform.Find("Cell");
+            var cellUnder = cellT.Find("StandartCell_SR+");
 
 
-            CellGO = new GameObjectVC(cellUnder.gameObject);
-            CellSR = new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>());
+            StandartCellGO = new GameObjectVC(cellUnder.gameObject);
+            DesertCell1GOC = new GameObjectVC(cellT.Find("DesertCell1_SR+").gameObject);
+            DesertCell2GOC = new GameObjectVC(cellT.Find("DesertCell2_SR+").gameObject);
+
+            BoxCollider2D = cellT.Find("Cell_BoxCollider2D+").GetComponent<BoxCollider2D>();
+
+            StandartCellSRC = new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>());
             IdxAndXyInfoTMPC = new TMPC(cell.transform.Find("IdxAndXyInfo_TMP+").GetComponent<TextMeshPro>());
 
 
@@ -49,8 +62,9 @@ namespace Chessy.Game
             EnvironmentVEs = new EnvironmentVEs(cell);
             UnitEs = new UnitVEs(cell.transform);
 
-
-            CloudCellSRC = new SpriteRendererVC(cell.transform.Find("Weather").Find("Cloud").GetComponent<SpriteRenderer>());
+            var weatherT = cellT.Find("Weather+");
+            CloudSRC = new SpriteRendererVC(weatherT.Find("Cloud_SR+").GetComponent<SpriteRenderer>());
+            SunSideSRC = new SpriteRendererVC(weatherT.Find("SunSide_SR+").GetComponent<SpriteRenderer>());
 
 
             _bars = new Dictionary<CellBarTypes, SpriteRendererVC>();

@@ -15,7 +15,7 @@ namespace Chessy.Game
 
         internal sealed override void Sync()
         {
-            switch (e.CurPlayerIT)
+            switch (_e.CurPlayerIT)
             {
                 case PlayerTypes.None: throw new Exception();
                 case PlayerTypes.First:
@@ -30,13 +30,13 @@ namespace Chessy.Game
             }
 
 
-            if (e.RiverT(_currentCell) == RiverTypes.Start)
+            if (_e.RiverT(_currentCell) == RiverTypes.Start)
             {
                 for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                 {
                     if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
                     {
-                        _riverVE.River(dir_1).SetEnabled(e.HaveRiverC(_currentCell).HaveRive(dir_1));
+                        _riverVE.River(dir_1).SetEnabled(_e.HaveRiverC(_currentCell).HaveRive(dir_1));
                     }
                 }
             }

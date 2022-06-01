@@ -18,9 +18,9 @@ namespace Chessy.Game
         {
             _needActive = false;
 
-            if (e.TrailVisibleC(_currentCell).IsVisible(e.CurPlayerITC.PlayerT))
+            if (_e.TrailVisibleC(_currentCell).IsVisible(_e.CurPlayerITC.PlayerT))
             {
-                _needActive = e.HealthTrail(_currentCell).IsAlive(_currentDirectTrail);
+                _needActive = _e.HealthTrail(_currentCell).IsAlive(_currentDirectTrail);
             }
 
             _trailSRC.SetActive(_needActive);

@@ -127,7 +127,7 @@ namespace Chessy.Game.Model.Entity
 
         public ref CellE CellE(in byte cell) => ref CellEs(cell).CellE;
         public IsStartedCellC IsStartedCellC(in byte cell) => CellE(cell).IsStartedCellC;
-        public bool IsActiveParentSelf(in byte cell) => CellE(cell).IsActiveParentSelf;
+        public bool IsBorder(in byte cell) => CellE(cell).IsBorder;
         public XyCellC XyCellC(in byte cell) => CellE(cell).XyC;
         public int InstanceID(in byte cell) => CellE(cell).InstanceID;
 

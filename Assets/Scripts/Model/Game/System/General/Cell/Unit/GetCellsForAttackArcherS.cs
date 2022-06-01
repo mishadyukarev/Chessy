@@ -22,7 +22,7 @@ namespace Chessy.Game.Model.System
 
                                 var isRight_0 = eMG.UnitIsRightArcherC(cell_0).IsRight;
 
-                                if (eMG.IsActiveParentSelf(idx_1) && !eMG.MountainC(idx_1).HaveAnyResources)
+                                if (!eMG.IsBorder(idx_1) && !eMG.MountainC(idx_1).HaveAnyResources)
                                 {
                                     if (eMG.UnitTC(idx_1).HaveUnit)
                                     {

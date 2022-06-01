@@ -16,11 +16,11 @@ namespace Chessy.Game.System.View
         {
             _needActive = false;
 
-            if (e.UnitTC(_currentCell).Is(UnitTypes.Pawn))
+            if (_e.UnitTC(_currentCell).Is(UnitTypes.Pawn))
             {
-                if (e.UnitPlayerTC(_currentCell).Is(e.CurPlayerITC.PlayerT))
+                if (_e.UnitPlayerTC(_currentCell).Is(_e.CurPlayerITC.PlayerT))
                 {
-                    _needActive = e.PlayerInfoE(e.CurPlayerITC.PlayerT).ResourcesC(ResourceTypes.Food).Resources < 1;
+                    _needActive = _e.PlayerInfoE(_e.CurPlayerITC.PlayerT).ResourcesC(ResourceTypes.Food).Resources < 1;
                 }
             }
 

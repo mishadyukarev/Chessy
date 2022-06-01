@@ -17,10 +17,10 @@ namespace Chessy.Game
         {
             _needActive = false;
 
-            if (e.BuildingTC(_currentCell).HaveBuilding)
+            if (_e.BuildingTC(_currentCell).HaveBuilding)
             {
                 _needActive = true;
-                _flagSRC.SR.color = e.BuildingPlayerTC(_currentCell).Is(PlayerTypes.First) ? Color.blue : Color.red;
+                _flagSRC.SR.color = _e.BuildingPlayerTC(_currentCell).Is(PlayerTypes.First) ? Color.blue : Color.red;
             }
 
             _flagSRC.SetActive(_needActive);

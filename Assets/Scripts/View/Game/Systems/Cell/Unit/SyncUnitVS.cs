@@ -66,13 +66,13 @@ namespace Chessy.Game
 
 
 
-            if (e.CellsC.Current == _currentCell)
+            if (_e.CellsC.Current == _currentCell)
             {
-                if (e.CellClickTC.Is(CellClickTypes.SetUnit))
+                if (_e.CellClickTC.Is(CellClickTypes.SetUnit))
                 {
-                    var idx_cur = e.CellsC.Current;
-                    var selUnitT = e.SelectedUnitE.UnitTC.UnitT;
-                    var levT = e.SelectedUnitE.LevelTC.LevelT;
+                    var idx_cur = _e.CellsC.Current;
+                    var selUnitT = _e.SelectedUnitE.UnitTC.UnitT;
+                    var levT = _e.SelectedUnitE.LevelTC.LevelT;
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
@@ -86,18 +86,18 @@ namespace Chessy.Game
             }
 
 
-            if (e.UnitTC(_currentCell).HaveUnit)
+            if (_e.UnitTC(_currentCell).HaveUnit)
             {
-                if (e.UnitVisibleC(_currentCell).IsVisible(e.CurPlayerITC.PlayerT))
+                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerITC.PlayerT))
                 {
-                    var isSelectedCell = _currentCell == e.SelectedCell;
+                    var isSelectedCell = _currentCell == _e.SelectedCell;
 
-                    var nextPlayer = e.UnitPlayerTC(_currentCell).PlayerT.NextPlayer();
-                    var isVisibleForNextPlayer = e.UnitVisibleC(_currentCell).IsVisible(nextPlayer);
+                    var nextPlayer = _e.UnitPlayerTC(_currentCell).PlayerT.NextPlayer();
+                    var isVisibleForNextPlayer = _e.UnitVisibleC(_currentCell).IsVisible(nextPlayer);
 
 
 
-                    var unitT = e.UnitT(_currentCell);
+                    var unitT = _e.UnitT(_currentCell);
 
                     _needColorUnit[(byte)unitT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
 
@@ -105,21 +105,21 @@ namespace Chessy.Game
 
                     if (unitT == UnitTypes.Pawn)
                     {
-                        if (e.MainToolWeaponTC(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
+                        if (_e.MainToolWeaponTC(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            _needActiveBowCrossbow[e.MainTWLevelT(_currentCell)][e.UnitIsRightArcherC(_currentCell).IsRight ? 0 : 1] = true;
-                            _needColorBowCrossbow[e.MainTWLevelT(_currentCell)][e.UnitIsRightArcherC(_currentCell).IsRight ? 0 : 1] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            _needActiveBowCrossbow[_e.MainTWLevelT(_currentCell)][_e.UnitIsRightArcherC(_currentCell).IsRight ? 0 : 1] = true;
+                            _needColorBowCrossbow[_e.MainTWLevelT(_currentCell)][_e.UnitIsRightArcherC(_currentCell).IsRight ? 0 : 1] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                         }
                         else
                         {
-                            _needActiveMainTW[e.MainTWLevelT(_currentCell)][(byte)e.MainToolWeaponT(_currentCell)] = true;
-                            _needColorMainTW[e.MainTWLevelT(_currentCell)][(byte)e.MainToolWeaponT(_currentCell)] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            _needActiveMainTW[_e.MainTWLevelT(_currentCell)][(byte)_e.MainToolWeaponT(_currentCell)] = true;
+                            _needColorMainTW[_e.MainTWLevelT(_currentCell)][(byte)_e.MainToolWeaponT(_currentCell)] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                         }
 
-                        if (e.ExtraToolWeaponTC(_currentCell).HaveToolWeapon)
+                        if (_e.ExtraToolWeaponTC(_currentCell).HaveToolWeapon)
                         {
-                            var twT = e.ExtraToolWeaponTC(_currentCell).ToolWeaponT;
-                            var levT = e.ExtraTWLevelTC(_currentCell).LevelT;
+                            var twT = _e.ExtraToolWeaponTC(_currentCell).ToolWeaponT;
+                            var levT = _e.ExtraTWLevelTC(_currentCell).LevelT;
 
                             _needActiveExtraTW[levT][(byte)twT] = true;
                             _needColorExtraTW[levT][(byte)twT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;

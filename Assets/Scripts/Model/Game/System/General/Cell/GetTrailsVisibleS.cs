@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 
         internal void Get(in byte cell_0)
         {
-            if (eMG.IsActiveParentSelf(cell_0))
+            if (!eMG.IsBorder(cell_0))
             {
                 for (var dir_0 = DirectTypes.None + 1; dir_0 < DirectTypes.End; dir_0++)
                 {

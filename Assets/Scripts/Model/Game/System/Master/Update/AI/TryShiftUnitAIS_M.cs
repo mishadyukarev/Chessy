@@ -27,7 +27,7 @@ namespace Chessy.Game
 
             for (byte idxCellStart = 0; idxCellStart < StartValues.CELLS; idxCellStart++)
             {
-                if (!eMG.CellE(idxCellStart).IsActiveParentSelf) continue;
+                if (eMG.CellE(idxCellStart).IsBorder) continue;
 
                 for (byte idxCellElse = 0; idxCellElse < StartValues.CELLS; idxCellElse++)
                 {
@@ -40,7 +40,7 @@ namespace Chessy.Game
                 {
                     foreach (var idxCellDirect in eMG.AroundCellsE(idxCellStart).CellsAround)
                     {
-                        if (eMG.CellE(idxCellDirect).IsActiveParentSelf)
+                        if (!eMG.CellE(idxCellDirect).IsBorder)
                         {
                             if (!eMG.UnitTC(idxCellDirect).HaveUnit && !eMG.MountainC(idxCellDirect).HaveAnyResources)
                             {

@@ -4,11 +4,11 @@ namespace Chessy.Game.View.System
 {
     abstract class SystemViewGameAbs
     {
-        protected readonly EntitiesModelGame e;
+        protected readonly EntitiesModelGame _e;
 
         protected SystemViewGameAbs(in EntitiesModelGame eMG)
         {
-            e = eMG;
+            _e = eMG;
         }
         internal abstract void Sync();
     }

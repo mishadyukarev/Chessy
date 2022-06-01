@@ -131,7 +131,7 @@ namespace Chessy.Game.Model.System
 
                         else
                         {
-                            if (!eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.King, UnitTypes.Elfemale))
+                            if (!eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.King, UnitTypes.Snowy))
                             {
                                 eMG.IsSelectedCity = false;
 

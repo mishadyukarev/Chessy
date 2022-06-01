@@ -14,7 +14,7 @@ namespace Chessy.Game
 
         internal sealed override void Sync()
         {
-            if (e.HaveFire(_currentCell))
+            if (_e.HaveFire(_currentCell))
             {
                 _needActive = true;
             }

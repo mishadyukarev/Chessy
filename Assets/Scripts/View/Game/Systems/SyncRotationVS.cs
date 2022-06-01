@@ -19,10 +19,10 @@ namespace Chessy.Game
 
         internal sealed override void Sync()
         {
-            var curPlayer = e.CurPlayerIT;
+            var curPlayer = _e.CurPlayerIT;
 
             if (curPlayer == PlayerTypes.None) throw new Exception();
-            _cellVEs.CellSR.ParentTransform.rotation = curPlayer == PlayerTypes.First
+            _cellVEs.StandartCellSRC.ParentTransform.rotation = curPlayer == PlayerTypes.First
                 ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
             switch (curPlayer)

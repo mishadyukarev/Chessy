@@ -17,11 +17,11 @@ namespace Chessy.Game
         {
             _needActive = false;
 
-            if (e.ShieldUnitEffectC(_currentCell).HaveAnyProtection)
+            if (_e.ShieldUnitEffectC(_currentCell).HaveAnyProtection)
             {
-                if (e.UnitTC(_currentCell).HaveUnit)
+                if (_e.UnitTC(_currentCell).HaveUnit)
                 {
-                    if (e.UnitVisibleC(_currentCell).IsVisible(e.CurPlayerITC.PlayerT))
+                    if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerITC.PlayerT))
                     {
                         _needActive = true;
                     }

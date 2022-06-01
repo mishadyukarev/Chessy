@@ -63,7 +63,7 @@ namespace Chessy.Game.Model.System
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (eMG.IsActiveParentSelf(cell_0))
+                if (!eMG.IsBorder(cell_0))
                 {
                     if (eMG.AdultForestC(cell_0).HaveAnyResources)
                     {

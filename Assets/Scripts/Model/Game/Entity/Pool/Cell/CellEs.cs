@@ -4,7 +4,7 @@ using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game
 {
-    internal struct CellEs
+    struct CellEs
     {
         internal CellE CellE;
         internal AroundCellsE AroundCellsEs;

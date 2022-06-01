@@ -6,6 +6,8 @@ namespace Chessy.Game
     sealed class UpSunsUIS : SystemUIAbstract
     {
         readonly EntitiesViewUIGame eUI;
+        bool _needActiveLeft;
+        bool _needActiveRight;
 
         internal UpSunsUIS( in EntitiesViewUIGame entsUI, in EntitiesModelGame ents) : base(ents)
         {
@@ -14,32 +16,40 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            var isFirstPlayer = e.CurPlayerITC.Is(PlayerTypes.First);
+            _needActiveLeft = false;
+            _needActiveRight = false;
 
-            switch (e.WeatherE.SunSideTC.SunSideT)
+
+            if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.LookInfoAboutSun)
             {
-                case SunSideTypes.Dawn:
-                    eUI.UpEs.SunsE.RightSun.SetActive(isFirstPlayer ? false : true);
-                    eUI.UpEs.SunsE.LeftSun.SetActive(isFirstPlayer ? true : false);
-                    break;
+                var isFirstPlayer = e.CurPlayerIT == PlayerTypes.First;
 
-                case SunSideTypes.Center:
-                    eUI.UpEs.SunsE.RightSun.SetActive(false);
-                    eUI.UpEs.SunsE.LeftSun.SetActive(false);
-                    break;
+                switch (e.WeatherE.SunSideTC.SunSideT)
+                {
+                    case SunSideTypes.Dawn:
+                        _needActiveLeft = isFirstPlayer;
+                        _needActiveRight = !isFirstPlayer;
+                        break;
 
-                case SunSideTypes.Sunset:
-                    eUI.UpEs.SunsE.RightSun.SetActive(isFirstPlayer ? true : false);
-                    eUI.UpEs.SunsE.LeftSun.SetActive(isFirstPlayer ? false : true);
-                    break;
+                    case SunSideTypes.Center:
+                        break;
 
-                case SunSideTypes.Night:
-                    eUI.UpEs.SunsE.RightSun.SetActive(false);
-                    eUI.UpEs.SunsE.LeftSun.SetActive(false);
-                    break;
+                    case SunSideTypes.Sunset:
+                        _needActiveLeft = !isFirstPlayer;
+                        _needActiveRight = isFirstPlayer;
+                        //eUI.UpEs.SunsE.RightSun.SetActive(isFirstPlayer ? true : false);
+                        //eUI.UpEs.SunsE.LeftSun.SetActive(isFirstPlayer ? false : true);
+                        break;
 
-                default: throw new Exception();
+                    case SunSideTypes.Night:
+                        break;
+
+                    default: throw new Exception();
+                }
             }
+
+            eUI.UpEs.SunsE.LeftSun.SetActive(_needActiveLeft);
+            eUI.UpEs.SunsE.RightSun.SetActive(_needActiveRight);
         }
     }
 }

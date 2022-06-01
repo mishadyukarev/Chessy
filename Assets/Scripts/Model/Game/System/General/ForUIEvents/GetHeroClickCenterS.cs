@@ -10,7 +10,9 @@ namespace Chessy.Game.Model.System
 
         public void Get(in UnitTypes unitT)
         {
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
+            if (unitT == UnitTypes.Elfemale && eMG.LessonTC.HaveLesson) return;
+
+            if (eMG.CurPlayerIT == eMG.WhoseMovePlayerT)
             {
                 eMG.Common.SoundActionC(Common.Enum.ClipCommonTypes.Click).Invoke();
 

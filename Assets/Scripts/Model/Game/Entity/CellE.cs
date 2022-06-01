@@ -5,7 +5,7 @@ namespace Chessy.Game.Entity
 {
     public readonly struct CellE
     {
-        public readonly bool IsActiveParentSelf;
+        public readonly bool IsBorder;
         public readonly IdxCellC IdxC;
         public readonly XyCellC XyC;
         public readonly int InstanceID;
@@ -13,7 +13,7 @@ namespace Chessy.Game.Entity
 
         internal CellE(in DataFromViewC dataFromViewC, in byte idxCell, in int instanceID, params byte[] xy)
         {
-            IsActiveParentSelf = dataFromViewC.IsActiveParent(idxCell);
+            IsBorder = dataFromViewC.IsBorder(idxCell);
 
             var x = xy[0];
             var y = xy[1];

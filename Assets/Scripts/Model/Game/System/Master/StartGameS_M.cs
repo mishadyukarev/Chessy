@@ -89,7 +89,7 @@ namespace Chessy.Game
                     eMG.HaveFire(cell_0) = false;
 
 
-                    if (eMG.IsActiveParentSelf(cell_0))
+                    if (!eMG.IsBorder(cell_0))
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
@@ -169,7 +169,7 @@ namespace Chessy.Game
 
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    if (eMG.IsActiveParentSelf(cell_0))
+                    if (!eMG.IsBorder(cell_0))
                     {
                         if (eMG.MountainC(cell_0).HaveAnyResources)
                         {

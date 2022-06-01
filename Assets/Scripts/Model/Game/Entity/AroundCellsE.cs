@@ -41,7 +41,7 @@ namespace Chessy.Game.Model.Entity
 
             _aroundEs = new CellAroundE[(byte)DirectTypes.End];
 
-            if (dataFromViewC.IsActiveParent(idxCell))
+            if (!dataFromViewC.IsBorder(idxCell))
             {
                 for (var dir = (DirectTypes)0; dir < DirectTypes.End; dir++)
                 {
@@ -110,7 +110,7 @@ namespace Chessy.Game.Model.Entity
                     _aroundEs[(byte)dir] = new CellAroundE(idxCellStart, xy_0);
 
 
-                    if (dataFromViewC.IsActiveParent(idxCellStart))
+                    if (!dataFromViewC.IsBorder(idxCellStart))
                     {
                         x = (byte)(xy_0[EntitiesModelGame.X] + xyDirect[EntitiesModelGame.X]);
                         y = (byte)(xy_0[EntitiesModelGame.Y] + xyDirect[EntitiesModelGame.Y]);

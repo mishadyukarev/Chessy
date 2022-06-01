@@ -35,6 +35,11 @@ namespace Chessy.Game.Entity.View.Cell
             var nameSpriteRenderEnd = "_SR+";
 
             CircularAttackAnimC = new AnimationVC(unitZ.Find("CircularAttackKing+").GetComponent<Animation>());
+
+
+            CircularAttackAnimC.Animation["CircularAttackKing"].time = 0;
+
+
             EffectE = new EffectVE(unitZ);
             AnimationUnitC = new AnimationVC(unitZ.GetComponent<Animation>());
             UnitHpBarSRC = new SpriteRendererVC(unitZ.Find("HpBar_SR+").GetComponent<SpriteRenderer>());

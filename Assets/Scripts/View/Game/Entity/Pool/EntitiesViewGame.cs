@@ -31,63 +31,49 @@ namespace Chessy.Game
             var parCells = new GameObject("Cells");
             parCells.transform.SetParent(genZone.transform);
 
-            byte idx_cur = 0;
+            byte currentCellIdx = 0;
 
             var cells = new GameObject[StartValues.CELLS];
-
+            var isBorder = new bool[StartValues.CELLS];
 
             for (byte x = 0; x < StartValues.X_AMOUNT; x++)
                 for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
                 {
-
-                    //    if(y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0)
-                    //{
-                    //    cells[idx_cur].transform.Find("Black").gameObject.SetActive(false);
-                    //}
-                    //else
-                    //{
-                    //    cells[idx_cur].transform.Find("White").gameObject.SetActive(false);
-                    //}
-
-                    //? 
-                    //: ResourceSpriteEs.Sprite(false).SpriteC.Sprite;
-
-
                     var cell = GameObject.Instantiate(UnityEngine.Resources.Load<GameObject>("CellPrefab"), eVCommon.MainGOC.Transform.position + new Vector3(x, y, eVCommon.MainGOC.Transform.position.z), eVCommon.MainGOC.Transform.rotation);
                     cell.name = "CellMain";
-                    //cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
 
                     if (y == 0 || y == 10 && x >= 0 && x < 15 ||
-                            y >= 1 && y < 10 && x >= 0 && x <= 2 || x >= 13 && x < 15 ||
+                        y >= 1 && y < 10 && x >= 0 && x <= 2 || x >= 13 && x < 15 ||
 
-                            y == 1 && x == 3 || y == 1 && x == 12 ||
-                            y == 9 && x == 3 || y == 9 && x == 12)
+                        y == 1 && x == 3 || y == 1 && x == 12 ||
+                        y == 9 && x == 3 || y == 9 && x == 12)
                     {
+                        isBorder[currentCellIdx] = true;
+
                         cell.SetActive(false);
                     }
 
                     cell.transform.SetParent(parCells.transform);
 
-                    cells[idx_cur] = cell;
+                    cells[currentCellIdx] = cell;
 
-                    ++idx_cur;
+                    ++currentCellIdx;
                 }
 
 
 
             _cellVEs = new CellVEs[cells.Length];
 
-            var isActiveParenCells = new bool[StartValues.CELLS];
+            
             var idCells = new int[StartValues.CELLS];
 
             var animationsCells = new Dictionary<byte, Action[]>();
 
-            for (byte cellIdxStart = 0; cellIdxStart < _cellVEs.Length; cellIdxStart++)
+            for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
             {
                 _cellVEs[cellIdxStart] = new CellVEs(cells[cellIdxStart]);
 
-                isActiveParenCells[cellIdxStart] = CellEs(cellIdxStart).CellParent.IsActiveSelf;
-                idCells[cellIdxStart] = CellEs(cellIdxStart).CellGO.InstanceID;
+                idCells[cellIdxStart] = CellEs(cellIdxStart).BoxCollider2D.gameObject.GetInstanceID();
 
 
                 var animations = new Action[(byte)AnimationCellTypes.End];
@@ -97,13 +83,28 @@ namespace Chessy.Game
                 animations[(byte)AnimationCellTypes.CircularAttackKing] = CellEs(cellIdxStart).UnitEs.CircularAttackAnimC.Play;
 
                 animationsCells.Add(cellIdxStart, animations);
+
+                //if (isBorder[cellIdxStart])
+                //{
+                //    CellEs(cellIdxStart).StandartCellGO.SetActive(false);
+
+                //    if(UnityEngine.Random.Range(0f, 1f) <= 0.5f)
+                //    {
+                //        CellEs(cellIdxStart).DesertCell1GOC.SetActive(true);
+                //    }
+                //    else
+                //    {
+                //        CellEs(cellIdxStart).DesertCell2GOC.SetActive(true);
+                //    }
+
+                //    CellEs(cellIdxStart).BoxCollider2D.gameObject.SetActive(false);
+                //}
+
             }
 
 
 
-
-
-            var aSParent = new GameObject("AudioSource");
+                    var aSParent = new GameObject("AudioSource");
 
             aSParent.transform.SetParent(genZone.transform);
 
@@ -142,7 +143,7 @@ namespace Chessy.Game
             }
 
 
-            dataFromViewC = new DataFromViewC((sounds0, sounds1, isActiveParenCells, idCells, animationsCells));
+            dataFromViewC = new DataFromViewC((sounds0, sounds1, isBorder, idCells, animationsCells));
         }
     }
 }

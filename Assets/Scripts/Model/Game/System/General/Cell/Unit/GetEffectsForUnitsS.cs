@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
         {
             eMG.HaveKingEffect(cell_0) = false;
 
-            if (eMG.IsActiveParentSelf(cell_0))
+            if (!eMG.IsBorder(cell_0))
             {
                 foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
                 {

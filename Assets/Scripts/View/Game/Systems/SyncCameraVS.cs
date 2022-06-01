@@ -18,7 +18,7 @@ namespace Chessy.Game
 
         internal sealed override void Sync()
         {
-            var curPlayer = e.CurPlayerIT;
+            var curPlayer = _e.CurPlayerIT;
 
             if (curPlayer == PlayerTypes.None) throw new Exception();
 

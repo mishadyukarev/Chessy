@@ -8,7 +8,9 @@ namespace Chessy.Game.System.View
 {
     public sealed class SystemsViewGame : IUpdate
     {
-        readonly SyncNoneVisionVS[] _syncNoneVisionSs = new SyncNoneVisionVS[StartValues.CELLS];
+        readonly List<Action> _updates;
+
+        readonly SyncBlackVisionVS[] _syncNoneVisionSs = new SyncBlackVisionVS[StartValues.CELLS];
         readonly NeedFoodVS[] _syncNeedFoodSs = new NeedFoodVS[StartValues.CELLS];
         readonly BuildingFlagVS[] _syncBuildingFlagSs = new BuildingFlagVS[StartValues.CELLS];
         readonly Dictionary<DirectTypes, SyncTrailVS[]> _syncTrailSs = new Dictionary<DirectTypes, SyncTrailVS[]>();
@@ -43,6 +45,8 @@ namespace Chessy.Game.System.View
             _eVCommon = eVC;
 
 
+            _updates = new List<Action>();
+
             for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
             {
                 _syncTrailSs.Add(dirT, new SyncTrailVS[StartValues.CELLS]);
@@ -50,6 +54,9 @@ namespace Chessy.Game.System.View
 
             for (byte startCell = 0; startCell < StartValues.CELLS; startCell++)
             {
+               
+
+
                 _syncUnitSs[startCell] = new SyncUnitVS(eVG.CellEs(startCell).UnitEs, startCell, eMG);
                 _syncBuildingSs[startCell] = new SyncBuildingVS(eVG.CellEs(startCell).BuildingEs, startCell, eMG);
                 _syncStatsSs[startCell] = new SyncBlocksVS(eVG, startCell, eMG);
@@ -59,13 +66,13 @@ namespace Chessy.Game.System.View
                 _syncFireSs[startCell] = new SyncFireVS(eVG.CellEs(startCell).FireVE.SRC, startCell, eMG);
                 _syncRiverSs[startCell] = new SyncRiverVS(eVG.CellEs(startCell).RiverE, startCell, eMG);
                 _syncBarsEnvironmentSs[startCell] = new SyncBarsEnvironmentVS(eVG, startCell, eMG);
-                _syncNoneVisionSs[startCell] = new SyncNoneVisionVS(eVG.CellEs(startCell).SupportCellEs.NoneSRC, startCell, eMG);
+                _syncNoneVisionSs[startCell] = new SyncBlackVisionVS(eVG.CellEs(startCell).SupportCellEs.NoneSRC, startCell, eMG);
                 _syncNeedFoodSs[startCell] = new NeedFoodVS(_eVGame.CellEs(startCell).UnitEs.Block(CellBlockTypes.NeedFood), startCell, _eMGame);
                 _syncBuildingFlagSs[startCell] = new BuildingFlagVS(_eVGame.CellEs(startCell).BuildingEs.FlagSRC, startCell, _eMGame);
                 _syncStunSs[startCell] = new SyncStunVS(_eVGame.CellEs(startCell).UnitEs.EffectE.StunSRC, startCell, _eMGame);
                 _syncShieldSs[startCell] = new SyncShieldVS(_eVGame.CellEs(startCell).UnitEs.EffectE.ShieldSRC, startCell, _eMGame);
                 
-                _syncCloudSs[startCell] = new SyncCloudVS(_eVGame.CellEs(startCell).CloudCellSRC, startCell, _eMGame);
+                _syncCloudSs[startCell] = new SyncCloudVS(_eVGame.CellEs(startCell).CloudSRC, startCell, _eMGame);
                 _syncRotationSs[startCell] = new SyncRotationVS(_eVGame.CellEs(startCell), startCell, _eMGame);
 
                 _syncIdxAndXyInfoSs[startCell] = new SyncIdxAndXyInfoVS(_eVGame.CellEs(startCell).IdxAndXyInfoTMPC, startCell, _eMGame);
@@ -77,6 +84,8 @@ namespace Chessy.Game.System.View
                     _syncTrailSs[dirT][startCell] = new SyncTrailVS(dirT, eVG.CellEs(startCell).TrailCellVC(dirT), startCell, eMG);
                 }
             }
+
+            _updates.Add(new SyncSunSideVS(_eVGame, _eMGame).Sync);
 
             _syncSupportS = new SyncSupportVS(_eVGame, _eMGame);
             _syncSoundS = new SyncSoundVS(_eVGame);
@@ -96,30 +105,32 @@ namespace Chessy.Game.System.View
 
             if (_eMGame.NeedUpdateView)
             {
-                for (byte startCell = 0; startCell < StartValues.CELLS; startCell++)
-                {
-                    if (_eMGame.IsActiveParentSelf(startCell))
-                    {
-                        _syncUnitSs[startCell].Sync();
-                        _syncBuildingSs[startCell].Sync();
-                        _syncStatsSs[startCell].Sync();
-                        _syncUnitBarHpSs[startCell].Sync();
-                        _syncFrozenArrawSs[startCell].Sync();
-                        _syncEnvironmentSs[startCell].Sync();
-                        _syncFireSs[startCell].Sync();
-                        _syncRiverSs[startCell].Sync();
-                        _syncBarsEnvironmentSs[startCell].Sync();
-                        _syncNoneVisionSs[startCell].Sync();
-                        _syncNeedFoodSs[startCell].Sync();
-                        _syncBuildingFlagSs[startCell].Sync();
-                        _syncStunSs[startCell].Sync();
-                        _syncStunSs[startCell].Sync();
-                        _syncShieldSs[startCell].Sync();
-                        _syncCloudSs[startCell].Sync();
-                        _syncRotationSs[startCell].Sync();
-                        _syncIdxAndXyInfoSs[startCell].Sync();
+                _updates.ForEach((Action action) => action.Invoke());
 
-                        for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++) _syncTrailSs[dirT][startCell].Sync();
+                for (byte currentCellIdx = 0; currentCellIdx < StartValues.CELLS; currentCellIdx++)
+                {
+                    if (!_eMGame.IsBorder(currentCellIdx))
+                    {
+                        _syncUnitSs[currentCellIdx].Sync();
+                        _syncBuildingSs[currentCellIdx].Sync();
+                        _syncStatsSs[currentCellIdx].Sync();
+                        _syncUnitBarHpSs[currentCellIdx].Sync();
+                        _syncFrozenArrawSs[currentCellIdx].Sync();
+                        _syncEnvironmentSs[currentCellIdx].Sync();
+                        _syncFireSs[currentCellIdx].Sync();
+                        _syncRiverSs[currentCellIdx].Sync();
+                        _syncBarsEnvironmentSs[currentCellIdx].Sync();
+                        _syncNoneVisionSs[currentCellIdx].Sync();
+                        _syncNeedFoodSs[currentCellIdx].Sync();
+                        _syncBuildingFlagSs[currentCellIdx].Sync();
+                        _syncStunSs[currentCellIdx].Sync();
+                        _syncStunSs[currentCellIdx].Sync();
+                        _syncShieldSs[currentCellIdx].Sync();
+                        _syncCloudSs[currentCellIdx].Sync();
+                        _syncRotationSs[currentCellIdx].Sync();
+                        _syncIdxAndXyInfoSs[currentCellIdx].Sync();
+
+                        for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++) _syncTrailSs[dirT][currentCellIdx].Sync();
                     }
                 }
 

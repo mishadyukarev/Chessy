@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
                 eMG.UnitNeedStepsForShiftC(cell_0).Set(idx, 0);
 
-            if (eMG.IsActiveParentSelf(cell_0))
+            if (!eMG.IsBorder(cell_0))
             {
                 if (!eMG.StunUnitC(cell_0).IsStunned && eMG.UnitTC(cell_0).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
                 {

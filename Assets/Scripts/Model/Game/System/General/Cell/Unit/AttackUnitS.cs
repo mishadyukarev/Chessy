@@ -12,7 +12,7 @@ namespace Chessy.Game.Model.System
         {
             //if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
             if (damage <= 0) throw new Exception();
-            if (!eMG.IsActiveParentSelf(cellIdx)) throw new Exception();
+            if (eMG.IsBorder(cellIdx)) throw new Exception();
 
             eMG.HpUnitC(cellIdx).Health -= damage;
             if (eMG.HpUnitC(cellIdx).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)

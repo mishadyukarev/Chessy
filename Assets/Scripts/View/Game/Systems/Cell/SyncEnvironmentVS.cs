@@ -15,11 +15,11 @@ namespace Chessy.Game
 
         internal sealed override void Sync()
         {
-            if (e.AdultForestC(_currentCell).HaveAnyResources)
+            if (_e.AdultForestC(_currentCell).HaveAnyResources)
             {
                 _environmentVEs.EnvironmentE(EnvironmentTypes.AdultForest).GO.SetActive(true);
 
-                _environmentVEs.HillUnderC.GO.SetActive(e.HillC(_currentCell).HaveAnyResources);
+                _environmentVEs.HillUnderC.GO.SetActive(_e.HillC(_currentCell).HaveAnyResources);
 
                 _environmentVEs.EnvironmentE(EnvironmentTypes.Hill).GO.SetActive(false);
             }
@@ -27,12 +27,12 @@ namespace Chessy.Game
             {
                 _environmentVEs.EnvironmentE(EnvironmentTypes.AdultForest).GO.SetActive(false);
                 _environmentVEs.HillUnderC.GO.SetActive(false);
-                _environmentVEs.EnvironmentE(EnvironmentTypes.Hill).GO.SetActive(e.HillC(_currentCell).HaveAnyResources);
+                _environmentVEs.EnvironmentE(EnvironmentTypes.Hill).GO.SetActive(_e.HillC(_currentCell).HaveAnyResources);
             }
 
-            _environmentVEs.EnvironmentE(EnvironmentTypes.Fertilizer).GO.SetActive(e.FertilizeC(_currentCell).HaveAnyResources);
-            _environmentVEs.EnvironmentE(EnvironmentTypes.YoungForest).GO.SetActive(e.YoungForestC(_currentCell).HaveAnyResources);
-            _environmentVEs.EnvironmentE(EnvironmentTypes.Mountain).GO.SetActive(e.MountainC(_currentCell).HaveAnyResources);
+            _environmentVEs.EnvironmentE(EnvironmentTypes.Fertilizer).GO.SetActive(_e.FertilizeC(_currentCell).HaveAnyResources);
+            _environmentVEs.EnvironmentE(EnvironmentTypes.YoungForest).GO.SetActive(_e.YoungForestC(_currentCell).HaveAnyResources);
+            _environmentVEs.EnvironmentE(EnvironmentTypes.Mountain).GO.SetActive(_e.MountainC(_currentCell).HaveAnyResources);
         }
     }
 }
