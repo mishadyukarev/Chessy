@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Component;
 using Chessy.Game.Entity.View.Cell.Unit.Effect;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Chessy.Game.Entity.View.Cell
         internal readonly AnimationVC AnimationUnitC;
         internal readonly AnimationVC CircularAttackAnimC;
         internal readonly SpriteRendererVC UnitHpBarSRC;
+
 
         public SpriteRendererVC UnitSRC(in UnitTypes unitT) => _units[(byte)unitT];
         public SpriteRendererVC MainToolWeaponSRC(in LevelTypes level, in ToolWeaponTypes tw) => _mainToolWeapons[level.ToString() + tw];
@@ -43,7 +45,6 @@ namespace Chessy.Game.Entity.View.Cell
             EffectE = new EffectVE(unitZ);
             AnimationUnitC = new AnimationVC(unitZ.GetComponent<Animation>());
             UnitHpBarSRC = new SpriteRendererVC(unitZ.Find("HpBar_SR+").GetComponent<SpriteRenderer>());
-
 
             _blocks = new SpriteRendererVC[(byte)CellBlockTypes.End];
 

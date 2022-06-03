@@ -13,8 +13,8 @@ namespace Chessy.Game.Values
 
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;
 
-        public const byte START_CLOUD = 60;
-        public const float SPEED_WIND = 1;
+        public const byte CELL_IDX_START_GAME_CLOUD = 60;
+        public const float SPEED_WIND_IN_START_GAME = 1;
         public const float MAX_SPEED_WIND = 3;
         public const float MIN_SPEED_WIND = 0;
 
@@ -36,6 +36,7 @@ namespace Chessy.Game.Values
         public const byte CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON = 59;
         public const byte CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON = 70;
         public const byte CELL_MOUNTAIN_LESSON = 81;
+        public const byte CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST = 71;
 
         #endregion
 

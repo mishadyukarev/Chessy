@@ -71,6 +71,9 @@ TagManager:
   - name: SupportEnvironmentStatic
     uniqueID: 4170661099
     locked: 0
+  - name: KingPassive
+    uniqueID: 2799389289
+    locked: 0
   - name: ShieldEffect
     uniqueID: 1898758555
     locked: 0
@@ -109,6 +112,9 @@ TagManager:
     locked: 0
   - name: SunSide
     uniqueID: 1213293303
+    locked: 0
+  - name: RedCircular
+    uniqueID: 3610903931
     locked: 0
   - name: BlackSupportVision
     uniqueID: 4260119031

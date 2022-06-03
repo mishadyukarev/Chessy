@@ -39,7 +39,7 @@ namespace Chessy.Game.Model.System
 
 
 
-                if (eMG.LessonTC.Is(LessonTypes.LookInfoAboutSun))
+                if (eMG.LessonT >= LessonTypes.LookInfoAboutSun)
                 {
                     eMG.LessonTC.SetNextLesson();
                 }

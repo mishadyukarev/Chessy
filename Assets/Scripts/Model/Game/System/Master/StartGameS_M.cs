@@ -23,9 +23,9 @@ namespace Chessy.Game
             eMG.WhoseMovePlayerTC.PlayerT = StartValues.WHOSE_MOVE;
             eMG.CellClickTC.CellClickT = StartValues.CELL_CLICK;
 
-            eMG.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND, StartValues.MAX_SPEED_WIND, StartValues.MIN_SPEED_WIND);
+            eMG.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND_IN_START_GAME, StartValues.MAX_SPEED_WIND, StartValues.MIN_SPEED_WIND);
             eMG.WeatherE.SunSideTC.SunSideT = StartValues.SUN_SIDE;
-            eMG.WeatherE.CloudC.Center = StartValues.START_CLOUD;
+            eMG.WeatherE.CloudC.Center = StartValues.CELL_IDX_START_GAME_CLOUD;
 
             eMG.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
 

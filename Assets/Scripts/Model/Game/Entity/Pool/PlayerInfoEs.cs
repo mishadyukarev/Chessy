@@ -12,6 +12,7 @@ namespace Chessy.Game
 
         public bool IsReadyForStartOnlineGame;
         public float WoodForBuyHouse;
+        public int AmountFarmsInGame;
 
         public BuildingsInfoC BuildingsInfoC;
         public IdxsCellsC WhereKingEffects;

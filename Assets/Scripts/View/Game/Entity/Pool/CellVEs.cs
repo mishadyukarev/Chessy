@@ -19,6 +19,7 @@ namespace Chessy.Game
         internal readonly BoxCollider2D BoxCollider2D;
         internal readonly SpriteRendererVC StandartCellSRC;
         internal readonly TMPC IdxAndXyInfoTMPC;
+        internal readonly SpriteRendererVC RedCircularSRC;
 
         internal readonly FireVE FireVE;
         internal readonly EnvironmentVEs EnvironmentVEs;
@@ -53,6 +54,8 @@ namespace Chessy.Game
             StandartCellSRC = new SpriteRendererVC(cellUnder.GetComponent<SpriteRenderer>());
             IdxAndXyInfoTMPC = new TMPC(cell.transform.Find("IdxAndXyInfo_TMP+").GetComponent<TextMeshPro>());
 
+
+            RedCircularSRC = new SpriteRendererVC(cellT.Find("RedCircular_SR+").GetComponent<SpriteRenderer>());
 
             FireVE = new FireVE(cell);
             SupportCellEs = new SupportCellVE(cell.transform);

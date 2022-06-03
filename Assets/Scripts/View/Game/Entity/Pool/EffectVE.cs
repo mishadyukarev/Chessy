@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Common.Component;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game.Entity.View.Cell.Unit.Effect
@@ -9,6 +10,7 @@ namespace Chessy.Game.Entity.View.Cell.Unit.Effect
 
         public readonly SpriteRendererVC ShieldSRC;
         public readonly SpriteRendererVC StunSRC;
+        internal readonly GameObjectVC KingPassiveGOC;
 
         public SpriteRendererVC FrozenArraw(in bool isRight) => _frozenArrawSRs[isRight];
 
@@ -20,6 +22,9 @@ namespace Chessy.Game.Entity.View.Cell.Unit.Effect
             StunSRC = new SpriteRendererVC(unitEffectT.Find("Stun_SR").GetComponent<SpriteRenderer>());
 
             var parent = unitEffectT.Find("FrozenArrow+");
+
+
+            KingPassiveGOC = new GameObjectVC(unitEffectT.Find("KingPassive+").gameObject);
 
 
             _frozenArrawSRs = new Dictionary<bool, SpriteRendererVC>();

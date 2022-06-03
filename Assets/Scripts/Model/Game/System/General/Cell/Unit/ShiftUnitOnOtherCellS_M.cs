@@ -49,6 +49,14 @@ namespace Chessy.Game.Model.System
                         }
                     }
 
+                    else if (toCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
+                    {
+                        if (eMG.LessonTC.Is(LessonTypes.ShiftPawnForFireForestHere))
+                        {
+                            eMG.LessonTC.SetNextLesson();
+                        }
+                    }
+
 
 
                     if (eMG.ExtraToolWeaponTC(toCellIdx).Is(ToolWeaponTypes.Pick))

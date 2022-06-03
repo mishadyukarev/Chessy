@@ -16,7 +16,7 @@ namespace Chessy.Game
 
         public DownPawnUIE(in Transform downZone)
         {
-            var pawnT = downZone.Find(UnitTypes.Pawn.ToString());
+            var pawnT = downZone.Find(UnitTypes.Pawn.ToString() + "+");
 
             ParenGOC = new GameObjectVC(pawnT.gameObject);
             AnimationC = new AnimationVC(pawnT.Find("Image+").GetComponent<Animation>());

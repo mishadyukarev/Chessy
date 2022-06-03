@@ -1,8 +1,9 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    internal sealed class BuildS_M : SystemModel
+    sealed class BuildS_M : SystemModel
     {
         internal BuildS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
@@ -15,7 +16,10 @@ namespace Chessy.Game.Model.System
             eMG.BuildingPlayerTC(cell_0).PlayerT = playerT;
             eMG.BuildingHpC(cell_0).Health = hp;
 
-            //eMGame.BuildingsInfo(playerT, levelT, buildingT).IdxC.Add(cell_0);
+            if(buildingT == BuildingTypes.Farm)
+            {
+                eMG.PlayerInfoE(playerT).AmountFarmsInGame++;
+            }
         }
     }
 }

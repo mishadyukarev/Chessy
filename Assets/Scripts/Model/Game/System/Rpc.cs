@@ -92,7 +92,7 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.BuyBuilding:
-                    _sMGame.MasterSs.TryBuyBuildingInTownS_M.TryBuy((BuildingTypes)objects[_idx_cur++], sender);
+                    _sMGame.ForUISystems.BuildBuildingClickS.TryBuy((BuildingTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.MarketBuy:

@@ -17,6 +17,7 @@
         SeedingPawn,
         DrinkWaterHere,
         BuildingFarmHere,
+        Build2Farms,
         ClickPick,
         GiveTakePickPawn,
         ShiftHereWithPick,
@@ -24,8 +25,13 @@
         ClickOpenTown2,
         ClickBuyMelterInTown,
         ClickBuyMarketInTown,
+        ShiftPawnForFireForestHere,
+        PawnFireAdultForest,
         ClickWindInfo,
         LookInfoAboutSun,
+        UniqueAttackInfo,
+        ShieldAndToolWeaponsInfo,
+        MenuInfo,
 
         End,
     }

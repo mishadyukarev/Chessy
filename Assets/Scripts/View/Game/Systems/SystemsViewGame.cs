@@ -54,7 +54,8 @@ namespace Chessy.Game.System.View
 
             for (byte startCell = 0; startCell < StartValues.CELLS; startCell++)
             {
-               
+                _updates.Add(new SyncRedCircularVS(_eVGame.CellEs(startCell).RedCircularSRC, startCell, _eMGame).Sync);
+                _updates.Add(new KingPassiveVS(_eVGame.CellEs(startCell).UnitEs.EffectE.KingPassiveGOC, startCell, _eMGame).Sync);
 
 
                 _syncUnitSs[startCell] = new SyncUnitVS(eVG.CellEs(startCell).UnitEs, startCell, eMG);
@@ -86,6 +87,7 @@ namespace Chessy.Game.System.View
             }
 
             _updates.Add(new SyncSunSideVS(_eVGame, _eMGame).Sync);
+
 
             _syncSupportS = new SyncSupportVS(_eVGame, _eMGame);
             _syncSoundS = new SyncSoundVS(_eVGame);

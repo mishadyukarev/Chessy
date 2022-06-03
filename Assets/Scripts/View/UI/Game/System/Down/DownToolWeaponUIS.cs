@@ -40,6 +40,14 @@ namespace Chessy.Game
                 if (e.LessonTC.HaveLesson)
                 {
                     needPick = true;
+                    if (e.LessonT >= Enum.LessonTypes.ShieldAndToolWeaponsInfo)
+                    {
+                        needStaff = true;
+                        needBowCrossbow = true;
+                        needAxe = true;
+                        needShield = true;
+                        needSword = true;
+                    }
                 }
                 else
                 {

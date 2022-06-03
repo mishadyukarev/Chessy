@@ -57,8 +57,8 @@ namespace Chessy.Common.Model.System
 
                 case SceneTypes.Game:
                     {
-                        _eMC.IsOpenedBook = true;
-                        _eMC.PageBookTC.PageBookT = PageBookTypes.Main;
+                        //_eMC.IsOpenedBook = true;
+                        //_eMC.PageBookTC.PageBookT = PageBookTypes.Main;
                         break;
                     }
                 default: throw new Exception();

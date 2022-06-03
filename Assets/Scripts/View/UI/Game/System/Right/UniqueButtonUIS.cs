@@ -42,7 +42,7 @@ namespace Chessy.Game.View.UI.System
                 }
                 else if (_buttonT == ButtonTypes.Third)
                 {
-                    if (!e.LessonTC.HaveLesson)
+                    if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.PawnFireAdultForest)
                     {
                         needActive = true;
                     }

@@ -18,8 +18,8 @@ namespace Chessy.Game.Model.System
             eMG.MistakeTC.MistakeT = MistakeTypes.None;
 
 
-            eMG.DataFromViewC.AnimationCell(eMG.CurrentCell, AnimationCellTypes.AdultForest).Invoke();
-            eMG.DataFromViewC.AnimationCell(eMG.CurrentCell, AnimationCellTypes.JumpAppearanceUnit).Invoke();
+            eMG.DataFromViewC.AnimationCell(eMG.CurrentCellIdx, AnimationCellTypes.AdultForest).Invoke();
+            eMG.DataFromViewC.AnimationCell(eMG.CurrentCellIdx, AnimationCellTypes.JumpAppearanceUnit).Invoke();
 
             if (eMG.CellsC.IsSelectedCell)
             {
@@ -29,7 +29,24 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.LessonTC.HaveLesson)
                 {
-                    if (eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown)) eMG.LessonTC.SetPreviousLesson();
+                    if (eMG.LessonT == LessonTypes.ClickBuyMelterInTown) eMG.LessonTC.SetPreviousLesson();
+
+                    if (eMG.CurrentCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
+                    {
+                        if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
+                        {
+                            if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn)
+                            {
+                                eMG.LessonTC.SetNextLesson();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (eMG.LessonTC.Is(LessonTypes.PawnFireAdultForest)) eMG.LessonTC.SetPreviousLesson();
+                    }
+
+
 
                     if (eMG.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
                     {

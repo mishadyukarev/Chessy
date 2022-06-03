@@ -7,7 +7,6 @@ namespace Chessy.Game.Model.System
     {
         internal readonly TryBuyFromMarketBuildingS_M TryBuyFromMarketBuildingS;
         internal readonly TryMeltInMelterBuildingS_M TryMeltInMelterBuildingS;
-        internal readonly TryBuyBuildingInTownS_M TryBuyBuildingInTownS_M;
         internal readonly GetHeroInCenterS_M GetHeroInCenterS;
         internal readonly TryExecuteReadyForOnlineS_M TryExecuteReadyForOnlineS;
         internal readonly TryExecuteDoneS_M TryExecuteDoneS_M;
@@ -40,7 +39,6 @@ namespace Chessy.Game.Model.System
         {
             TryBuyFromMarketBuildingS = new TryBuyFromMarketBuildingS_M(sMG, eMG);
             TryMeltInMelterBuildingS = new TryMeltInMelterBuildingS_M(sMG, eMG);
-            TryBuyBuildingInTownS_M = new TryBuyBuildingInTownS_M(sMG, eMG);
             GetHeroInCenterS = new GetHeroInCenterS_M(sMG, eMG);
             TryExecuteReadyForOnlineS = new TryExecuteReadyForOnlineS_M(sMG, eMG);
             ExecuteUpdateEverythingS = new ExecuteUpdateEverythingS_M(sMG, eMG);

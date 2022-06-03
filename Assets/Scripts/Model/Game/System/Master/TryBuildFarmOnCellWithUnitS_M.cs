@@ -9,6 +9,8 @@ namespace Chessy.Game.Model.System
 {
     sealed class TryBuildFarmOnCellWithUnitS_M : SystemModel
     {
+        const int FARMS_FOR_SKIP_LESSON = 3;
+
         internal TryBuildFarmOnCellWithUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void TryBuild(in byte cell_0, in Player sender)
@@ -46,22 +48,25 @@ namespace Chessy.Game.Model.System
                             }
 
                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
-
                             eMG.YoungForestC(cell_0).Resources = 0;
-
                             sMG.BuildingSs.BuildS.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
-
                             eMG.StepUnitC(cell_0).Steps -= StepValues.SET_FARM;
 
 
-                            if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere))
+                            if (eMG.LessonT == LessonTypes.BuildingFarmHere)
                             {
                                 if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
                                 {
                                     eMG.LessonTC.SetNextLesson();
                                 }
                             }
-
+                            else if (eMG.LessonT == LessonTypes.Build2Farms)
+                            {
+                                if (eMG.PlayerInfoE(whoseMove).AmountFarmsInGame >= FARMS_FOR_SKIP_LESSON)
+                                {
+                                    eMG.LessonTC.SetNextLesson();
+                                }
+                            }
                         }
 
                         else

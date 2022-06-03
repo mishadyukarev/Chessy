@@ -1,7 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Entity.View;
-using Chessy.Common.Interface;
 using Chessy.Common.Model.System;
 using Chessy.Common.View.UI;
 using Chessy.Common.View.UI.System;
@@ -136,6 +135,6 @@ namespace Chessy
         }
 
 
-        
+
     }
 }

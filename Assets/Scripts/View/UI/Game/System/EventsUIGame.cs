@@ -87,7 +87,8 @@ namespace Chessy.Game.EventsUI
             #endregion
 
 
-            //Left
+            #region Left
+
             var leftEs = eUIGame.LeftEs;
             eUIGame.LeftEs.EnvironmentEs.InfoButtonC.AddListener(delegate { sMGame.ForUISystems.EnvironmentInfoClickS.Click(); });
             //City
@@ -110,6 +111,8 @@ namespace Chessy.Game.EventsUI
 
             eUIGame.RightEs.ProtectE.ButtonC.AddListener(delegate { sMGame.ForUISystems.ConditionClickS.Click(ConditionUnitTypes.Protected); });
             eUIGame.RightEs.RelaxE.ButtonC.AddListener(delegate { sMGame.ForUISystems.ConditionClickS.Click(ConditionUnitTypes.Relaxed); });
+
+            #endregion
 
 
             #region Center

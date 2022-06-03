@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 using System;
 using System.Linq;
 
@@ -21,12 +22,23 @@ namespace Chessy.Game.System.View
 
             if (_e.LessonTC.HaveLesson)
             {
-                //if (_e.CurPlayerIT == _e.UnitPlayerT(_currentCell))
-                //{
-                if (_e.UnitTC(_currentCell).Is(UnitTypes.King, UnitTypes.Snowy))
+                if (_e.LessonT == LessonTypes.ClickWindInfo)
                 {
-                    _isActive = true;
+                    if(_e.UnitT(_currentCell) != UnitTypes.Snowy)
+                    {
+                        _isActive = true;
+                    }
                 }
+                else
+                {
+                    if (_e.UnitTC(_currentCell).Is(UnitTypes.King, UnitTypes.Snowy))
+                    {
+                        _isActive = true;
+                    }
+                }
+
+
+
 
                 if (_e.UnitT(_currentCell) == UnitTypes.Pawn)
                 {
@@ -39,13 +51,20 @@ namespace Chessy.Game.System.View
                         _isActive = true;
                     }
                 }
-                //}
 
                 if (_e.LessonT < Enum.LessonTypes.ShiftPawnHere)
                 {
-                    if (!_e.IsStartedCellC(_currentCell).IsStartedCell(_e.CurPlayerITC.PlayerT))
+                    if (!_e.IsStartedCellC(_currentCell).IsStartedCell(_e.CurPlayerIT))
                     {
                         _isActive = true;
+                    }
+                }
+
+                if (_e.LessonT == LessonTypes.SettingKing)
+                {
+                    if (_e.UnitT(_currentCell) == UnitTypes.King)
+                    {
+                        _isActive = false;
                     }
                 }
             }

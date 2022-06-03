@@ -84,7 +84,7 @@ namespace Chessy.Game.Model.Entity
             get => CellsC.Selected;
             internal set => CellsC.Selected = value;
         }
-        public byte CurrentCell
+        public byte CurrentCellIdx
         {
             get => CellsC.Current;
             internal set => CellsC.Current = value;

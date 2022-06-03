@@ -51,6 +51,7 @@ namespace Chessy.Game
 
                 eMG.PlayerInfoE(playerT).BuildingsInfoC.Clear();
 
+                eMG.PlayerInfoE(playerT).AmountFarmsInGame = default;
 
                 eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = default;
                 eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = default;
