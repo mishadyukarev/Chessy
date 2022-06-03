@@ -53804,7 +53804,7 @@ PrefabInstance:
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_text
-      value: Destoy king for a win!
+      value: Destoy king for a win! That's your a last goal!
       objectReference: {fileID: 0}
     - target: {fileID: 5830635995600166393, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
