@@ -11,6 +11,8 @@ namespace Chessy.Game.Model.System
 {
     public sealed class BuildBuildingClickS : SystemModel
     {
+        int _buildingsForSkipLesson = 6;
+
         internal BuildBuildingClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void Click(in BuildingTypes buildT)
@@ -44,12 +46,12 @@ namespace Chessy.Game.Model.System
                         break;
 
                     case BuildingTypes.Market:
-                        if (eMG.LessonT == LessonTypes.ClickBuyMarketInTown)
-                        {
-                            eMG.LessonTC.SetNextLesson();
-                            eMG.AdultForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = EnvironmentValues.MAX_RESOURCES;
-                            eMG.BuildingTC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).BuildingT = BuildingTypes.None;
-                        }
+                        //if (eMG.LessonT == LessonTypes.ClickBuyMarketInTown)
+                        //{
+                        //    eMG.LessonTC.SetNextLesson();
+                        //    eMG.AdultForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = EnvironmentValues.MAX_RESOURCES;
+                        //    eMG.BuildingTC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).BuildingT = BuildingTypes.None;
+                        //}
                         break;
 
                     case BuildingTypes.Smelter:
@@ -215,12 +217,22 @@ namespace Chessy.Game.Model.System
                     default: throw new Exception();
                 }
 
+
+                if (eMG.LessonT == LessonTypes.BuildHouses)
+                {
+                    if(eMG.PlayerInfoE(PlayerTypes.First).PawnInfoC.MaxAvailable >= _buildingsForSkipLesson)
+                    {
+                        eMG.LessonTC.SetNextLesson();
+                    }
+                }
+
+
                 eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
             }
 
             else
             {
-                if (eMG.LessonTC.Is(Enum.LessonTypes.BuyingHouse))
+                if (eMG.LessonTC.Is(Enum.LessonTypes.TryBuyingHouse))
                 {
                     eMG.LessonTC.SetNextLesson();
                 }
@@ -228,10 +240,10 @@ namespace Chessy.Game.Model.System
                 eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
 
-            if (eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
-            {
-                eMG.LessonTC.SetNextLesson();
-            }
+            //if (eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
+            //{
+            //    eMG.LessonTC.SetNextLesson();
+            //}
 
         }
     }

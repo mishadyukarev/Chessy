@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 using UnityEngine;
 
 namespace Chessy.Game
@@ -40,14 +41,35 @@ namespace Chessy.Game
                 if (e.LessonTC.HaveLesson)
                 {
                     needPick = true;
-                    if (e.LessonT >= Enum.LessonTypes.ShieldAndToolWeaponsInfo)
+
+                    if (e.LessonT >= LessonTypes.GiveIronAxe)
                     {
-                        needStaff = true;
-                        needBowCrossbow = true;
                         needAxe = true;
-                        needShield = true;
-                        needSword = true;
+
+                        if (e.LessonT >= LessonTypes.GiveStaff)
+                        {
+                            needStaff = true;
+
+                            if (e.LessonT >= LessonTypes.GiveBowCrossbow)
+                            {
+                                needBowCrossbow = true;
+
+                                if (e.LessonT >= LessonTypes.GiveShield)
+                                {
+                                    needShield = true;
+
+                                    if (e.LessonT >= LessonTypes.GiveSword)
+                                    {
+                                        needSword = true;
+
+
+                                    }
+                                }
+                            }
+                        }
                     }
+
+
                 }
                 else
                 {

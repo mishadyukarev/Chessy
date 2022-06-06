@@ -74,6 +74,11 @@ namespace Chessy.Game
                                             sMG.UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
                                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+
+                                            if (eMG.LessonTC.Is(LessonTypes.GiveStaff, LessonTypes.GiveBowCrossbow))
+                                            {
+                                                eMG.LessonTC.SetNextLesson();
+                                            }
                                         }
                                         else
                                         {
@@ -139,6 +144,12 @@ namespace Chessy.Game
                                         sMG.UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
                                         eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+
+                                        if (eMG.LessonT == LessonTypes.GiveIronAxe)
+                                        {
+                                            eMG.LessonTC.SetNextLesson();
+                                        }
+
                                     }
                                     else
                                     {
@@ -147,6 +158,7 @@ namespace Chessy.Game
 
                                 }
                             }
+
                             else
                             {
                                 eMG.ToolWeaponsC(whoseMove, eMG.MainTWLevelTC(cell_0).LevelT, eMG.MainToolWeaponTC(cell_0).ToolWeaponT)++;
@@ -239,11 +251,18 @@ namespace Chessy.Game
                                         eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
 
 
-                                        if (eMG.LessonTC.Is(LessonTypes.GiveTakePickPawn))
+                                        if (eMG.LessonTC.Is(LessonTypes.GiveTakePickPawn, LessonTypes.GiveShield, LessonTypes.GiveSword))
                                         {
+                                            if (eMG.LessonT == LessonTypes.GiveSword)
+                                            {
+                                                eMG.YoungForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = 0;
+
+                                                eMG.AdultForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = EnvironmentValues.MAX_RESOURCES;
+                                                eMG.BuildingTC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).BuildingT = BuildingTypes.None;
+                                            }
+
                                             eMG.LessonTC.SetNextLesson();
                                         }
-
                                     }
                                     else
                                     {

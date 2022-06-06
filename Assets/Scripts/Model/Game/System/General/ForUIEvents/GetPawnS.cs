@@ -16,7 +16,7 @@ namespace Chessy.Game.Model.System
             var curPlayerI = eMG.CurPlayerITC.PlayerT;
 
 
-            if (!eMG.LessonTC.Is(LessonTypes.BuyingHouse, LessonTypes.ClickOpenTown2))
+            if (!eMG.LessonTC.Is(LessonTypes.TryBuyingHouse, LessonTypes.ClickOpenTown2))
             {
                 if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
                 {
@@ -37,7 +37,7 @@ namespace Chessy.Game.Model.System
                             {
                                 eMG.LessonTC.SetNextLesson();
                             }
-                            else if (eMG.LessonTC.Is(LessonTypes.OpeningTown, LessonTypes.BuyingHouse))
+                            else if (eMG.LessonTC.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
                             {
 
                             }

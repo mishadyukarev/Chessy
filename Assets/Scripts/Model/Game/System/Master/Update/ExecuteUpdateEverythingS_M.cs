@@ -131,7 +131,13 @@ namespace Chessy.Game.Model.System.Master
                         }
                     }
 
-                    if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn)) eMG.ResourcesC(eMG.UnitPlayerTC(cell_0).PlayerT, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+                    if (!eMG.LessonTC.HaveLesson || eMG.LessonT >= LessonTypes.Build3Farms)
+                    {
+                        if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn)) 
+                            eMG.ResourcesC(eMG.UnitPlayerTC(cell_0).PlayerT, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+                    }
+
+                   
 
 
                     if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
@@ -147,8 +153,15 @@ namespace Chessy.Game.Model.System.Master
                             {
                                 eMG.WaterUnitC(cell_0).Water = WaterValues.MAX;
                             }
-                        }
 
+                            if (eMG.LessonT < LessonTypes.DrinkWaterHere)
+                            {
+                                if (eMG.UnitT(cell_0) == UnitTypes.Pawn)
+                                {
+                                    eMG.WaterUnitC(cell_0).Water = WaterValues.MAX;
+                                }
+                           }
+                        }
                     }
 
 
@@ -251,6 +264,14 @@ namespace Chessy.Game.Model.System.Master
                     if (!eMG.AdultForestC(cell_0).HaveAnyResources)
                     {
                         eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
+
+                        if (eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
+                        {
+                            if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            {
+                                eMG.LessonT = LessonTypes.RelaxExtractPawn + 1;
+                            }
+                        }
                     }
                 }
 
@@ -319,6 +340,14 @@ namespace Chessy.Game.Model.System.Master
                     else
                     {
                         sMG.BuildingSs.ClearS.Clear(cell_0);
+
+                        if (eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
+                        {
+                            if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            {
+                                eMG.LessonT = LessonTypes.RelaxExtractPawn + 1;
+                            }
+                        }
                     }
                 }
 
@@ -391,30 +420,34 @@ namespace Chessy.Game.Model.System.Master
             }
 
 
-
-            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            if (!eMG.LessonTC.HaveLesson || eMG.LessonT >= LessonTypes.Build3Farms)
             {
-                var res = ResourceTypes.Food;
-
-                eMG.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
-
-                if (eMG.PlayerInfoE(player).ResourcesC(res).Resources < 0)
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    eMG.PlayerInfoE(player).ResourcesC(res).Resources = 0;
+                    var res = ResourceTypes.Food;
 
+                    eMG.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
 
-                    for (cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                    if (eMG.PlayerInfoE(player).ResourcesC(res).Resources < 0)
                     {
-                        if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitPlayerTC(cell_0).Is(player))
-                        {
-                            sMG.UnitSs.KillUnitS.Kill(eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
+                        eMG.PlayerInfoE(player).ResourcesC(res).Resources = 0;
 
-                            sMG.UnitSs.ClearUnit(cell_0);
-                            break;
+
+                        for (cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                        {
+                            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitPlayerTC(cell_0).Is(player))
+                            {
+                                sMG.UnitSs.KillUnitS.Kill(eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
+
+                                sMG.UnitSs.ClearUnit(cell_0);
+                                break;
+                            }
                         }
                     }
                 }
             }
+
+            
 
 
             var haveCamel = false;

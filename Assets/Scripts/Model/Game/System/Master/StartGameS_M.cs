@@ -59,8 +59,8 @@ namespace Chessy.Game
                 {
                     if (playerT == PlayerTypes.First)
                     {
-                        eMG.ResourcesC(playerT, ResourceTypes.Food).Resources = 3;
-                        eMG.ResourcesC(playerT, ResourceTypes.Wood).Resources = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
+                        eMG.ResourcesC(playerT, ResourceTypes.Food).Resources = 3f;
+                        //eMG.ResourcesC(playerT, ResourceTypes.Wood).Resources = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
                     }
                 }
             }

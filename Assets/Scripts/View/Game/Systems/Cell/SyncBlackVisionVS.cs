@@ -22,22 +22,35 @@ namespace Chessy.Game.System.View
 
             if (_e.LessonTC.HaveLesson)
             {
+                if (_e.UnitT(_currentCell) == UnitTypes.Snowy)
+                {
+                    if (_e.LessonT >= LessonTypes.ChangeDirectionWind)
+                    {
+                        _isActive = false;
+                    }
+                    else
+                    {
+                        _isActive = true;
+                    }
+                }
+
+
+
+
                 if (_e.LessonT == LessonTypes.ClickWindInfo)
                 {
-                    if(_e.UnitT(_currentCell) != UnitTypes.Snowy)
+                    if (_e.UnitT(_currentCell) != UnitTypes.Snowy && _e.WeatherE.CloudC.Center != _currentCell && !_e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround.Contains(_currentCell))
                     {
                         _isActive = true;
                     }
                 }
                 else
                 {
-                    if (_e.UnitTC(_currentCell).Is(UnitTypes.King, UnitTypes.Snowy))
+                    if (_e.UnitTC(_currentCell).Is(UnitTypes.King))
                     {
                         _isActive = true;
                     }
                 }
-
-
 
 
                 if (_e.UnitT(_currentCell) == UnitTypes.Pawn)

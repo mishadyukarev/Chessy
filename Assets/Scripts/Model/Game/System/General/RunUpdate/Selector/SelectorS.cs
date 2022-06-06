@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 using System;
 using UnityEngine;
 
@@ -41,6 +42,17 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.LessonT >= LessonTypes.LookInfoAboutSun)
                 {
+                    eMG.LessonTC.SetNextLesson();
+                }
+
+                if (eMG.LessonT == LessonTypes.ClickBuyMarketInTown)
+                {
+                    eMG.LessonTC.SetNextLesson();
+                }
+
+                if (eMG.LessonT == LessonTypes.UniqueAttackInfo)
+                {
+                    eMG.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
                     eMG.LessonTC.SetNextLesson();
                 }
 

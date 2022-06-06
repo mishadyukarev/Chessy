@@ -31,14 +31,6 @@ namespace Chessy.Game.Model.System.Master
                     }
                 }
 
-                if (eMG.LessonTC.Is(LessonTypes.SettingPawn2))
-                {
-                    if (unitT.Is(UnitTypes.Pawn))
-                    {
-                        eMG.LessonTC.SetNextLesson();
-                    }
-                }
-
 
                 sMG.UnitSs.SetNewOnCellS.Set(unitT, whoseMove, cellIdx);
 

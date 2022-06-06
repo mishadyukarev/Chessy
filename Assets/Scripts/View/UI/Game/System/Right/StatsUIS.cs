@@ -29,9 +29,14 @@ namespace Chessy.Game
                 var needActiveHp = false;
                 var needActiveDamage = false;
 
-                if (!e.LessonTC.HaveLesson)
+
+                if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.DrinkWaterHere)
                 {
                     needActiveHp = true;
+                }
+
+                if (!e.LessonTC.HaveLesson)
+                {
                     needActiveDamage = true;
                 }
 

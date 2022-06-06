@@ -101,8 +101,11 @@ namespace Chessy.Game.EventsUI
                 OpenShop(eMGame, eMCommon);
             });
 
+            #endregion
 
-            //Right
+
+            #region Right
+
             eUIGame.RightEs.Unique(ButtonTypes.First).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.First); });
             eUIGame.RightEs.Unique(ButtonTypes.Second).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.Second); });
             eUIGame.RightEs.Unique(ButtonTypes.Third).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.Third); });

@@ -33,13 +33,13 @@ namespace Chessy.Game
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++) _needActive[resT] = true;
 
             }
-            else if (e.LessonT >= LessonTypes.BuyingHouse)
+            else if (e.LessonT >= LessonTypes.TryBuyingHouse)
             {
                 activeResZone = true;
 
                 _needActive[ResourceTypes.Wood] = true;
 
-                if (e.LessonT >= LessonTypes.BuildingFarmHere)
+                if (e.LessonT >= LessonTypes.Build3Farms)
                 {
                     _needActive[ResourceTypes.Food] = true;
 
@@ -47,7 +47,7 @@ namespace Chessy.Game
                     {
                         _needActive[ResourceTypes.Ore] = true;
 
-                        if (e.LessonT >= LessonTypes.ClickBuyMelterInTown)
+                        if (e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre)
                         {
                             _needActive[ResourceTypes.Iron] = true;
                             _needActive[ResourceTypes.Gold] = true;

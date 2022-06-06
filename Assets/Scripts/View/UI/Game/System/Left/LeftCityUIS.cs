@@ -27,7 +27,7 @@ namespace Chessy.Game
 
             if (e.LessonTC.HaveLesson)
             {
-                if (e.LessonT >= LessonTypes.ClickBuyMelterInTown)
+                if (e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
                     isActiveSmelter = true;
                 }

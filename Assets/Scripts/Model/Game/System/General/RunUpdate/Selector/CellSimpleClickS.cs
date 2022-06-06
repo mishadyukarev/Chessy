@@ -29,7 +29,7 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.LessonTC.HaveLesson)
                 {
-                    if (eMG.LessonT == LessonTypes.ClickBuyMelterInTown) eMG.LessonTC.SetPreviousLesson();
+                    //if (eMG.LessonT == LessonTypes.ClickBuyMelterInTown) eMG.LessonTC.SetPreviousLesson();
 
                     if (eMG.CurrentCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
                     {
@@ -107,7 +107,7 @@ namespace Chessy.Game.Model.System
                         }
                         else
                         {
-                            if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere)) eMG.LessonTC.SetPreviousLesson();
+                            //if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere)) eMG.LessonTC.SetPreviousLesson();
                         }
 
 
@@ -126,6 +126,24 @@ namespace Chessy.Game.Model.System
                                 else if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) && eMG.UnitPlayerTC(eMG.CellsC.Current).Is(eMG.WhoseMovePlayerTC.PlayerT)
                                     || !eMG.UnitPlayerTC(eMG.CellsC.Current).Is(eMG.WhoseMovePlayerTC.PlayerT))
                                 {
+                                    SetNewSelectedCell();
+                                    _selectorSoundS.Sound();
+                                }
+
+                                if (eMG.UnitT(eMG.CellsC.Current) == UnitTypes.Snowy)
+                                {
+                                    if (eMG.LessonT >= LessonTypes.ChangeDirectionWind)
+                                    {
+                                        eMG.IsSelectedCity = false;
+
+                                        SetNewSelectedCell();
+                                        _selectorSoundS.Sound();
+                                    }
+                                }
+                                else if (!eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.King))
+                                {
+                                    eMG.IsSelectedCity = false;
+
                                     SetNewSelectedCell();
                                     _selectorSoundS.Sound();
                                 }
@@ -148,7 +166,17 @@ namespace Chessy.Game.Model.System
 
                         else
                         {
-                            if (!eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.King, UnitTypes.Snowy))
+                            if (eMG.UnitT(eMG.CellsC.Current) == UnitTypes.Snowy)
+                            {
+                                if (eMG.LessonT >= LessonTypes.ChangeDirectionWind)
+                                {
+                                    eMG.IsSelectedCity = false;
+
+                                    SetNewSelectedCell();
+                                    _selectorSoundS.Sound();
+                                }
+                            }
+                            else if (!eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.King))
                             {
                                 eMG.IsSelectedCity = false;
 
@@ -201,16 +229,16 @@ namespace Chessy.Game.Model.System
 
                 if (eMG.LessonTC.HaveLesson)
                 {
-                    if (eMG.LessonTC.Is(LessonTypes.BuyingHouse))
+                    if (eMG.LessonTC.Is(LessonTypes.TryBuyingHouse))
                     {
 
                     }
 
-                    else if (eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
-                    {
-                        eMG.LessonTC.SetPreviousLesson();
+                    //else if (eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
+                    //{
+                    //    eMG.LessonTC.SetPreviousLesson();
 
-                    }
+                    //}
                     else
                     {
                         eMG.IsSelectedCity = false;
@@ -234,6 +262,15 @@ namespace Chessy.Game.Model.System
                             SetNewSelectedCell();
                             _selectorSoundS.Sound();
                         }
+
+                        //if (eMG.UnitT(eMG.CellsC.Current) == UnitTypes.Snowy)
+                        //{
+                        //    if (eMG.LessonT >= LessonTypes.ChangeDirectionWind)
+                        //    {
+                        //        SetNewSelectedCell();
+                        //        _selectorSoundS.Sound();
+                        //    }
+                        //}
                     }
                 }
 

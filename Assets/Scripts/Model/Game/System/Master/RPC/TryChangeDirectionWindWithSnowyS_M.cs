@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
@@ -19,6 +20,12 @@ namespace Chessy.Game.Model.System
                 eMG.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                 eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
+
+                if(eMG.LessonT == LessonTypes.ChangeDirectionWind)
+                {
+                    eMG.LessonTC.SetNextLesson();
+                }
+
             }
 
             else eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);

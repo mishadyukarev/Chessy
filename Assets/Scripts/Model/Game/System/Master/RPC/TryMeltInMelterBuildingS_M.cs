@@ -1,4 +1,5 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -37,6 +38,12 @@ namespace Chessy.Game.Model.System
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
                     eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources -= needRes[resT];
+                }
+
+                if (eMG.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
+                {
+                    eMG.LessonTC.SetNextLesson();
+                    eMG.IsSelectedCity = true;
                 }
 
                 eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;

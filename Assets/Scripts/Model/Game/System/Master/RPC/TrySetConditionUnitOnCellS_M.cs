@@ -70,25 +70,6 @@ namespace Chessy.Game.Model.System.Master
                                         }
                                     }
                                 }
-
-                                if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
-                                {
-                                    if (eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn))
-                                    {
-                                        eMG.LessonTC.SetNextLesson();
-                                    }
-                                }
-                                //else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                                //{
-                                //    if (e.UnitExtraTWTC(cell_0).Is(ToolWeaponTypes.Pick))
-                                //    {
-                                //        if (e.LessonTC.Is(LessonTypes.ShiftHereWithPick))
-                                //        {
-                                //            e.LessonTC.SetNextLesson();
-                                //            e.IsSelectedCity = true;
-                                //        }
-                                //    }
-                                //}
                             }
                         }
 

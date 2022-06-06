@@ -21,7 +21,7 @@ namespace Chessy.Game.Model.System
                 eMG.LessonTC.SetNextLesson();
 
             }
-            if (eMG.LessonTC.Is(LessonTypes.BuyingHouse, LessonTypes.ClickBuyMelterInTown))
+            if (eMG.LessonTC.Is(LessonTypes.TryBuyingHouse))
             {
                 if (!eMG.IsSelectedCity) eMG.LessonTC.SetPreviousLesson();
             }

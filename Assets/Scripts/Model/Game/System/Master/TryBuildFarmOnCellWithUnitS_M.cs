@@ -53,14 +53,14 @@ namespace Chessy.Game.Model.System
                             eMG.StepUnitC(cell_0).Steps -= StepValues.SET_FARM;
 
 
-                            if (eMG.LessonT == LessonTypes.BuildingFarmHere)
-                            {
-                                if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
-                                {
-                                    eMG.LessonTC.SetNextLesson();
-                                }
-                            }
-                            else if (eMG.LessonT == LessonTypes.Build2Farms)
+                            //if (eMG.LessonT == LessonTypes.BuildingFarmHere)
+                            //{
+                            //    if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
+                            //    {
+                            //        eMG.LessonTC.SetNextLesson();
+                            //    }
+                            //}
+                            if (eMG.LessonT == LessonTypes.Build3Farms)
                             {
                                 if (eMG.PlayerInfoE(whoseMove).AmountFarmsInGame >= FARMS_FOR_SKIP_LESSON)
                                 {

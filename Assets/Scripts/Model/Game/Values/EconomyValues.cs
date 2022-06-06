@@ -43,13 +43,13 @@ namespace Chessy.Game.Values
         public const float NEED_GOLD_FOR_BUILDING_HOUSE = 0;
 
         public const float NEED_FOOD_FOR_BUILDING_MARKET = 0;
-        public const float NEED_WOOD_FOR_BUILDING_MARKET = 10f;
+        public const float NEED_WOOD_FOR_BUILDING_MARKET = 5f;
         public const float NEED_ORE_FOR_BUILDING_MARKET = 0;
         public const float NEED_IRON_FOR_BUILDING_MARKET = 0;
         public const float NEED_GOLD_FOR_BUILDING_MARKET = 0;
 
         public const float NEED_FOOD_FOR_BUILDING_SMELTER = 0;
-        public const float NEED_WOOD_FOR_BUILDING_SMELTER = 5f;
+        public const float NEED_WOOD_FOR_BUILDING_SMELTER = 3f;
         public const float NEED_ORE_FOR_BUILDING_SMELTER = 0;
         public const float NEED_IRON_FOR_BUILDING_SMELTER = 0;
         public const float NEED_GOLD_FOR_BUILDING_SMELTER = 0;
