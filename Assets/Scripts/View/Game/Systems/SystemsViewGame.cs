@@ -10,7 +10,6 @@ namespace Chessy.Game.System.View
     {
         readonly List<Action> _updates;
 
-        readonly SyncBlackVisionVS[] _syncNoneVisionSs = new SyncBlackVisionVS[StartValues.CELLS];
         readonly NeedFoodVS[] _syncNeedFoodSs = new NeedFoodVS[StartValues.CELLS];
         readonly BuildingFlagVS[] _syncBuildingFlagSs = new BuildingFlagVS[StartValues.CELLS];
         readonly Dictionary<DirectTypes, SyncTrailVS[]> _syncTrailSs = new Dictionary<DirectTypes, SyncTrailVS[]>();
@@ -52,9 +51,19 @@ namespace Chessy.Game.System.View
                 _syncTrailSs.Add(dirT, new SyncTrailVS[StartValues.CELLS]);
             }
 
+            var blackVisisionSrCs = new SpriteRendererVC[StartValues.CELLS];
+            var redCircularSRCs = new SpriteRendererVC[StartValues.CELLS];
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                blackVisisionSrCs[cellIdxCurrent] = eVG.CellEs(cellIdxCurrent).SupportCellEs.NoneSRC;
+                redCircularSRCs[cellIdxCurrent] = _eVGame.CellEs(cellIdxCurrent).RedCircularSRC;
+            }
+
+            _updates.Add(new SyncBlackVisionVS(blackVisisionSrCs, eMG).Sync);
+            _updates.Add(new SyncRedCircularVS(redCircularSRCs, eMG).Sync);
+
             for (byte startCell = 0; startCell < StartValues.CELLS; startCell++)
             {
-                _updates.Add(new SyncRedCircularVS(_eVGame.CellEs(startCell).RedCircularSRC, startCell, _eMGame).Sync);
                 _updates.Add(new KingPassiveVS(_eVGame.CellEs(startCell).UnitEs.EffectE.KingPassiveGOC, startCell, _eMGame).Sync);
 
 
@@ -67,7 +76,7 @@ namespace Chessy.Game.System.View
                 _syncFireSs[startCell] = new SyncFireVS(eVG.CellEs(startCell).FireVE.SRC, startCell, eMG);
                 _syncRiverSs[startCell] = new SyncRiverVS(eVG.CellEs(startCell).RiverE, startCell, eMG);
                 _syncBarsEnvironmentSs[startCell] = new SyncBarsEnvironmentVS(eVG, startCell, eMG);
-                _syncNoneVisionSs[startCell] = new SyncBlackVisionVS(eVG.CellEs(startCell).SupportCellEs.NoneSRC, startCell, eMG);
+                
                 _syncNeedFoodSs[startCell] = new NeedFoodVS(_eVGame.CellEs(startCell).UnitEs.Block(CellBlockTypes.NeedFood), startCell, _eMGame);
                 _syncBuildingFlagSs[startCell] = new BuildingFlagVS(_eVGame.CellEs(startCell).BuildingEs.FlagSRC, startCell, _eMGame);
                 _syncStunSs[startCell] = new SyncStunVS(_eVGame.CellEs(startCell).UnitEs.EffectE.StunSRC, startCell, _eMGame);
@@ -122,7 +131,6 @@ namespace Chessy.Game.System.View
                         _syncFireSs[currentCellIdx].Sync();
                         _syncRiverSs[currentCellIdx].Sync();
                         _syncBarsEnvironmentSs[currentCellIdx].Sync();
-                        _syncNoneVisionSs[currentCellIdx].Sync();
                         _syncNeedFoodSs[currentCellIdx].Sync();
                         _syncBuildingFlagSs[currentCellIdx].Sync();
                         _syncStunSs[currentCellIdx].Sync();

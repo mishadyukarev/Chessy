@@ -330,6 +330,8 @@ namespace Chessy.Game.Model.System.Master
                         if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Camp) || !eMG.BuildingTC(cell_0).HaveBuilding)
                         {
                             sMG.BuildingSs.BuildS.Build(BuildingTypes.Woodcutter, LevelTypes.First, eMG.UnitPlayerTC(cell_0).PlayerT, 1, cell_0);
+
+                            if (eMG.LessonT == LessonTypes.RelaxExtractPawn) eMG.LessonTC.SetNextLesson();
                         }
 
                         else if (!eMG.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter))
@@ -551,7 +553,6 @@ namespace Chessy.Game.Model.System.Master
             }
 
 
-
             var amountAdultForest = 0;
 
             for (cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
@@ -576,6 +577,26 @@ namespace Chessy.Game.Model.System.Master
             //{
             //    _aIBotS.Execute();
             //}
+
+
+            if (eMG.LessonT == LessonTypes.Install3WarriorsNextToTheRiver)
+            {
+                var amountUnitsNearRiverForLesson = 0;
+
+                for (byte cellIdx0 = 0; cellIdx0 < StartValues.CELLS; cellIdx0++)
+                {
+                    if (eMG.UnitT(cellIdx0) == UnitTypes.Pawn && eMG.UnitPlayerT(cellIdx0) == PlayerTypes.First && eMG.RiverTC(cellIdx0).HaveRiverNear)
+                    {
+                        amountUnitsNearRiverForLesson++;
+                    }
+                }
+
+                if (amountUnitsNearRiverForLesson >= 3)
+                {
+                    eMG.LessonTC.SetNextLesson();
+                }
+            }
+
 
             
         }

@@ -13,7 +13,7 @@ namespace Chessy.Game.Model.System
         internal readonly TryAttackUnitOnCell_M TryAttackUnit_M;
         internal readonly TrySetUnitOnCellS_M TrySetUnitS_M;
         internal readonly TryShiftUnitS_M TryShiftUnitS_M;
-        internal readonly TrySeedYoungForestOnCellWithPawnUnitS_M TrySeedYoungForestOnCellWithPawnUnitS;
+        internal readonly TrySeedYoungForestOnCellWithPawnS_M TrySeedYoungForestOnCellWithPawnUnitS;
         internal readonly TryBuildFarmOnCellWithUnitS_M TryBuildFarmOnCellWithUnitS;
         internal readonly TrySetConditionUnitOnCellS_M TrySetConditionUnitS;
         internal readonly TryGiveTakeToolOrWeaponToUnitOnCellS_M TryGiveTakeToolWeaponUnitS;
@@ -46,7 +46,7 @@ namespace Chessy.Game.Model.System
             TryAttackUnit_M = new TryAttackUnitOnCell_M(sMG, eMG);
             TrySetUnitS_M = new TrySetUnitOnCellS_M(sMG, eMG);
             TryShiftUnitS_M = new TryShiftUnitS_M(sMG, eMG);
-            TrySeedYoungForestOnCellWithPawnUnitS = new TrySeedYoungForestOnCellWithPawnUnitS_M(sMG, eMG);
+            TrySeedYoungForestOnCellWithPawnUnitS = new TrySeedYoungForestOnCellWithPawnS_M(sMG, eMG);
             TryBuildFarmOnCellWithUnitS = new TryBuildFarmOnCellWithUnitS_M(sMG, eMG);
             TrySetConditionUnitS = new TrySetConditionUnitOnCellS_M(sMG, eMG);
             TryGiveTakeToolWeaponUnitS = new TryGiveTakeToolOrWeaponToUnitOnCellS_M(sMG, eMG);

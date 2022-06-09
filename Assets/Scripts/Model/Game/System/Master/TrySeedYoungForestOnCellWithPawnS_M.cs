@@ -6,9 +6,11 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class TrySeedYoungForestOnCellWithPawnUnitS_M : SystemModel
+    sealed class TrySeedYoungForestOnCellWithPawnS_M : SystemModel
     {
-        internal TrySeedYoungForestOnCellWithPawnUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
+        const int NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON = 5;
+
+        internal TrySeedYoungForestOnCellWithPawnS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         internal void TrySeed(in AbilityTypes abilityT, in Player sender, in byte cell_0)
         {
@@ -39,6 +41,15 @@ namespace Chessy.Game.Model.System
                                 }
                             }
 
+                            eMG.AmountPlantedYoungForests++;
+
+                            if (eMG.LessonT == LessonTypes.Seed4Forests)
+                            {
+                                if(eMG.AmountPlantedYoungForests >= NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON)
+                                {
+                                    eMG.LessonTC.SetNextLesson();
+                                }
+                            }
                         }
 
                         else

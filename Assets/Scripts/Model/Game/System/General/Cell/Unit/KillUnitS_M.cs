@@ -11,6 +11,13 @@ namespace Chessy.Game.Model.System
         {
             //if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
 
+
+            if (eMG.UnitPlayerT(cellIdx) == PlayerTypes.Second)
+            {
+                if (eMG.LessonT == Enum.LessonTypes.Kill1Enemy) eMG.LessonTC.SetNextLesson();
+            }
+
+
             if (whoKiller != PlayerTypes.None)
             {
                 if (eMG.UnitTC(cellIdx).Is(UnitTypes.King)) eMG.WinnerPlayerT = whoKiller;
@@ -54,6 +61,8 @@ namespace Chessy.Game.Model.System
             {
                 eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).PawnInfoC.RemovePawn();
             }
+
+
 
 
 

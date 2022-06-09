@@ -35,7 +35,7 @@ namespace Chessy.Game
                     needActiveHp = true;
                 }
 
-                if (!e.LessonTC.HaveLesson)
+                if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ThatsYourDamage)
                 {
                     needActiveDamage = true;
                 }

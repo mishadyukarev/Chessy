@@ -15,11 +15,22 @@ namespace Chessy.Game.Model.System
 
         internal void Execute()
         {
+            if (eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn, LessonTypes.SeedingPawn, LessonTypes.ExtractHillPawnHere, 
+                LessonTypes.PawnFireAdultForest, LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
+            {
+                return;
+            }
+
+
             eMG.MistakeTC.MistakeT = MistakeTypes.None;
 
 
             eMG.DataFromViewC.AnimationCell(eMG.CurrentCellIdx, AnimationCellTypes.AdultForest).Invoke();
             eMG.DataFromViewC.AnimationCell(eMG.CurrentCellIdx, AnimationCellTypes.JumpAppearanceUnit).Invoke();
+
+
+
+
 
             if (eMG.CellsC.IsSelectedCell)
             {
@@ -31,28 +42,27 @@ namespace Chessy.Game.Model.System
                 {
                     //if (eMG.LessonT == LessonTypes.ClickBuyMelterInTown) eMG.LessonTC.SetPreviousLesson();
 
-                    if (eMG.CurrentCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
+
+                    //else
+                    //{
+                    //    if (eMG.LessonTC.Is(LessonTypes.PawnFireAdultForest)) eMG.LessonTC.SetPreviousLesson();
+                    //}
+
+
+
+                    if (eMG.LessonT >= LessonTypes.ClickAtYourPawn)
                     {
-                        if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
+                        if (eMG.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn)
+                            if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn && eMG.UnitPlayerT(eMG.CurrentCellIdx) == eMG.CurPlayerIT)
                             {
                                 eMG.LessonTC.SetNextLesson();
                             }
                         }
-                    }
-                    else
-                    {
-                        if (eMG.LessonTC.Is(LessonTypes.PawnFireAdultForest)) eMG.LessonTC.SetPreviousLesson();
-                    }
 
-
-
-                    if (eMG.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
-                    {
-                        if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                        else if (eMG.LessonT == LessonTypes.ShiftPawnHere)
                         {
-                            if (eMG.LessonTC.Is(LessonTypes.ShiftPawnHere))
+                            if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
                                 if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn))
                                 {
@@ -60,14 +70,9 @@ namespace Chessy.Game.Model.System
                                 }
                             }
                         }
-                        else
+                        else if (eMG.LessonT == LessonTypes.ShiftPawnForSeedingHere)
                         {
-                            if (eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn)) eMG.LessonTC.SetPreviousLesson();
-                        }
-
-                        if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
-                        {
-                            if (eMG.LessonTC.Is(LessonTypes.ShiftPawnForSeedingHere))
+                            if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
                             {
                                 if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn))
                                 {
@@ -75,40 +80,49 @@ namespace Chessy.Game.Model.System
                                 }
                             }
                         }
-                        else
+                        else if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
                         {
-                            if (eMG.LessonTC.Is(LessonTypes.SeedingPawn)) eMG.LessonTC.SetPreviousLesson();
-                        }
-
-                        if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                        {
-                            if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
+                            if (eMG.CurrentCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
                             {
-                                if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(eMG.CellsC.Current).Is(ToolWeaponTypes.Pick))
+                                if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn && eMG.MainToolWeaponTC(eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
                                 {
                                     eMG.LessonTC.SetNextLesson();
                                 }
                             }
                         }
-                        else
-                        {
-                            if (eMG.LessonTC.Is(LessonTypes.ExtractHillPawnHere)) eMG.LessonTC.SetPreviousLesson();
-                        }
+                        
 
-                        if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
-                        {
-                            if (eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
-                            {
-                                if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn))
-                                {
-                                    eMG.LessonTC.SetNextLesson();
-                                }
-                            }
-                        }
-                        else
-                        {
-                            //if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere)) eMG.LessonTC.SetPreviousLesson();
-                        }
+
+
+                        //if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                        //{
+                        //    if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
+                        //    {
+                        //        if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(eMG.CellsC.Current).Is(ToolWeaponTypes.Pick))
+                        //        {
+                        //            eMG.LessonTC.SetNextLesson();
+                        //        }
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    if (eMG.LessonTC.Is(LessonTypes.ExtractHillPawnHere)) eMG.LessonTC.SetPreviousLesson();
+                        //}
+
+                        //if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
+                        //{
+                        //    if (eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
+                        //    {
+                        //        if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn))
+                        //        {
+                        //            eMG.LessonTC.SetNextLesson();
+                        //        }
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    //if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere)) eMG.LessonTC.SetPreviousLesson();
+                        //}
 
 
 
@@ -244,11 +258,19 @@ namespace Chessy.Game.Model.System
                         eMG.IsSelectedCity = false;
                     }
 
-                    if (eMG.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
+                    if (eMG.LessonTC.LessonT >= LessonTypes.ClickAtYourPawn)
                     {
-                        if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                        if (eMG.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (eMG.LessonTC.Is(LessonTypes.ShiftPawnHere))
+                            if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn && eMG.UnitPlayerT(eMG.CurrentCellIdx) == eMG.CurPlayerIT)
+                            {
+                                eMG.LessonTC.SetNextLesson();
+                            }
+                        }
+
+                        else if (eMG.LessonT == LessonTypes.ShiftPawnHere)
+                        {
+                            if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
                                 if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn))
                                 {
@@ -256,6 +278,38 @@ namespace Chessy.Game.Model.System
                                 }
                             }
                         }
+                        else if (eMG.LessonT == LessonTypes.ShiftPawnForSeedingHere)
+                        {
+                            if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
+                            {
+                                if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn))
+                                {
+                                    eMG.LessonTC.SetNextLesson();
+                                }
+                            }
+                        }
+                        else if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
+                        {
+                            if (eMG.CurrentCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
+                            {
+                                if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn)
+                                {
+                                    eMG.LessonTC.SetNextLesson();
+                                }
+                            }
+                        }
+
+
+                        //if (eMG.CellsC.Current == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                        //{
+                        //    if (eMG.LessonTC.Is(LessonTypes.ShiftPawnHere))
+                        //    {
+                        //        if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn))
+                        //        {
+                        //            eMG.LessonTC.SetNextLesson();
+                        //        }
+                        //    }
+                        //}
 
                         if (eMG.UnitTC(eMG.CellsC.Current).Is(UnitTypes.Pawn) || !eMG.UnitTC(eMG.CellsC.Current).HaveUnit)
                         {

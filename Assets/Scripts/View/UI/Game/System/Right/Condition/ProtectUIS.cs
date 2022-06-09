@@ -16,7 +16,7 @@ namespace Chessy.Game
         {
             var isEnableButt = false;
 
-            if (!e.LessonTC.HaveLesson)
+            if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ClickDefend)
             {
                 if (e.UnitTC(e.SelectedCell).HaveUnit)
                 {

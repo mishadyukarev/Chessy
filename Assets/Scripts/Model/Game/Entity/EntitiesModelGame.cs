@@ -54,6 +54,7 @@ namespace Chessy.Game.Model.Entity
         public bool HaveTreeUnit { get; internal set; }
         public bool IsClicked { get; internal set; }
         public bool IsActivatedIdxAndXyInfoCells { get; internal set; }
+        public int AmountPlantedYoungForests { get; internal set; }
         public GameModeTypes GameModeT
         {
             get => GameModeTC.GameModeT;

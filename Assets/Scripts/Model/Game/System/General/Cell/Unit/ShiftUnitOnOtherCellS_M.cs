@@ -3,6 +3,7 @@ using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Unit.Stats;
+using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Game.Model.System
@@ -43,17 +44,32 @@ namespace Chessy.Game.Model.System
 
                     if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
                     {
-                        if (eMG.LessonTC.Is(LessonTypes.ShiftPawnForSeedingHere))
+                        if (eMG.LessonTC.Is(LessonTypes.StepAwayFromWoodcutter, LessonTypes.ShiftPawnForSeedingHere))
                         {
                             eMG.LessonTC.SetNextLesson();
                         }
                     }
 
-                    else if (toCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
+                    if (toCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
                     {
-                        if (eMG.LessonTC.Is(LessonTypes.ShiftPawnForFireForestHere))
+                        if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
                         {
-                            eMG.LessonTC.SetNextLesson();
+                            if(eMG.MainToolWeaponTC(eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
+                            {
+                                eMG.LessonTC.SetNextLesson();
+                            }
+                        }
+                    }
+
+                    if (eMG.LessonT == LessonTypes.ComeToYourKing)
+                    {
+                        foreach (var cellIdx in eMG.AroundCellsE(toCellIdx).CellsAround)
+                        {
+                            if(eMG.UnitT(cellIdx) == UnitTypes.King && eMG.UnitPlayerT(cellIdx) == eMG.UnitPlayerT(toCellIdx))
+                            {
+                                eMG.LessonTC.SetNextLesson();
+                                break;
+                            }
                         }
                     }
 

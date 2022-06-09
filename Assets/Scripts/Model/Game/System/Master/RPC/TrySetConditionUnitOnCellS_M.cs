@@ -33,6 +33,8 @@ namespace Chessy.Game.Model.System.Master
                             eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
                             eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                             eMG.UnitConditionTC(cell_0).Condition = condT;
+
+                            if (eMG.LessonT == LessonTypes.ClickDefend) eMG.LessonTC.SetNextLesson();
                         }
 
                         else

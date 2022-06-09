@@ -12,10 +12,11 @@ namespace Chessy.Game.Model.System
 
         public void Click(in ToolWeaponTypes twT)
         {
-            eMG.CellsC.Selected = 0;
-
             eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
+            if (eMG.LessonTC.Is(LessonTypes.ExtractHillPawnHere, LessonTypes.PawnFireAdultForest, LessonTypes.ClickDefend)) return;
+
+            eMG.CellsC.Selected = 0;
 
             if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
             {

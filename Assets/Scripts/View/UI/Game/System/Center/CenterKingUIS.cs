@@ -1,9 +1,11 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Enum;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
     sealed class CenterKingUIS : SystemUIAbstract
     {
+        bool _needActive;
         readonly EntitiesViewUIGame _eUI;
 
         internal CenterKingUIS(in EntitiesViewUIGame eUI, in EntitiesModelGame ents) : base(ents)
@@ -13,14 +15,17 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (e.PlayerInfoE(e.CurPlayerITC.PlayerT).KingInfoE.HaveInInventor)
+            _needActive = false;
+
+            if (e.PlayerInfoE(e.CurPlayerIT).KingInfoE.HaveInInventor && e.CellClickTC.CellClickT != CellClickTypes.SetUnit)
             {
-                _eUI.CenterEs.KingE.Paren.SetActive(true);
+                if (!e.LessonTC.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
+                {
+                    _needActive = true;
+                }
             }
-            else
-            {
-                _eUI.CenterEs.KingE.Paren.SetActive(false);
-            }
+
+            _eUI.CenterEs.KingE.Paren.SetActive(_needActive);
         }
     }
 }

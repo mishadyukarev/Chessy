@@ -35,7 +35,7 @@ namespace Chessy.Game
                     {
                         _eUI.RightEs.Effect(idx_eff).GO.SetActive(false);
 
-                        if (!e.LessonTC.HaveLesson)
+                        if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ThatsYourEffects)
                         {
 
 

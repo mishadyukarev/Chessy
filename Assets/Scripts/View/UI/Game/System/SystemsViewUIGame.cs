@@ -85,6 +85,12 @@ namespace Chessy.Game.System.View.UI
                         eUIGame.DownEs.PawnE.AnimationC.Play();
                     }
 
+
+                    eUIGame.UpEs.SettingsButtonC.SetActiveParent(!eMGame.LessonTC.HaveLesson);
+                    eUIGame.UpEs.DiscordButtonC.SetActive(!eMGame.LessonTC.HaveLesson);
+                    eUIGame.UpEs.LeaveC.SetActiveParent(!eMGame.LessonTC.HaveLesson || eMGame.LessonT >= LessonTypes.MenuInfo);
+                    eUIGame.DownEs.BookLittleE.ButtonC.SetActiveParent(!eMGame.LessonTC.HaveLesson);
+
                 },
             };
 

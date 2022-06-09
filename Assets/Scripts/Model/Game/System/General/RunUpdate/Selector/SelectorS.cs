@@ -40,19 +40,15 @@ namespace Chessy.Game.Model.System
 
 
 
-                if (eMG.LessonT >= LessonTypes.LookInfoAboutSun)
-                {
-                    eMG.LessonTC.SetNextLesson();
-                }
-
-                if (eMG.LessonT == LessonTypes.ClickBuyMarketInTown)
-                {
-                    eMG.LessonTC.SetNextLesson();
-                }
 
                 if (eMG.LessonT == LessonTypes.UniqueAttackInfo)
                 {
                     eMG.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
+                    eMG.LessonTC.SetNextLesson();
+                }
+                else if (eMG.LessonTC.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun, 
+                    LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.MenuInfo))
+                {
                     eMG.LessonTC.SetNextLesson();
                 }
 

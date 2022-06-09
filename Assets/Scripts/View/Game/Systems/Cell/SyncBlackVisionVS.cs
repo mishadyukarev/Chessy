@@ -1,167 +1,189 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
+using Chessy.Game.View.System;
 using System;
 using System.Linq;
 
 namespace Chessy.Game.System.View
 {
-    sealed class SyncBlackVisionVS : SystemViewCellGameAbs
+    sealed class SyncBlackVisionVS : SystemViewGameAbs
     {
-        bool _isActive;
+        bool[] _isActive = new bool[StartValues.CELLS];
+        readonly SpriteRendererVC[] _noneVisionSRC;
 
-        readonly SpriteRendererVC _noneVisionSRC;
-
-        internal SyncBlackVisionVS(in SpriteRendererVC noneVisionSRC, in byte currentCell, in EntitiesModelGame eMG) : base(currentCell, eMG)
+        internal SyncBlackVisionVS(in SpriteRendererVC[] noneVisionsSRC, in EntitiesModelGame eMG) : base(eMG)
         {
-            _noneVisionSRC = noneVisionSRC;
+            _noneVisionSRC = noneVisionsSRC;
         }
 
         internal sealed override void Sync()
         {
-            _isActive = false;
-
-            if (_e.LessonTC.HaveLesson)
+            for (byte currentCellIdx = 0; currentCellIdx < StartValues.CELLS; currentCellIdx++)
             {
-                if (_e.UnitT(_currentCell) == UnitTypes.Snowy)
+                if (!_e.IsBorder(currentCellIdx))
                 {
-                    if (_e.LessonT >= LessonTypes.ChangeDirectionWind)
-                    {
-                        _isActive = false;
-                    }
-                    else
-                    {
-                        _isActive = true;
-                    }
-                }
-
-
-
-
-                if (_e.LessonT == LessonTypes.ClickWindInfo)
-                {
-                    if (_e.UnitT(_currentCell) != UnitTypes.Snowy && _e.WeatherE.CloudC.Center != _currentCell && !_e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround.Contains(_currentCell))
-                    {
-                        _isActive = true;
-                    }
-                }
-                else
-                {
-                    if (_e.UnitTC(_currentCell).Is(UnitTypes.King))
-                    {
-                        _isActive = true;
-                    }
-                }
-
-
-                if (_e.UnitT(_currentCell) == UnitTypes.Pawn)
-                {
-                    if (_e.CurPlayerIT != _e.UnitPlayerT(_currentCell))
-                    {
-                        _isActive = true;
-                    }
-                    if (_e.LessonT < Enum.LessonTypes.ShiftPawnHere)
-                    {
-                        _isActive = true;
-                    }
-                }
-
-                if (_e.LessonT < Enum.LessonTypes.ShiftPawnHere)
-                {
-                    if (!_e.IsStartedCellC(_currentCell).IsStartedCell(_e.CurPlayerIT))
-                    {
-                        _isActive = true;
-                    }
-                }
-
-                if (_e.LessonT == LessonTypes.SettingKing)
-                {
-                    if (_e.UnitT(_currentCell) == UnitTypes.King)
-                    {
-                        _isActive = false;
-                    }
+                    _isActive[currentCellIdx] = false;
                 }
             }
 
 
-
-            if (_e.CellClickTC.CellClickT == CellClickTypes.UniqueAbility)
+            for (byte currentCellIdx = 0; currentCellIdx < StartValues.CELLS; currentCellIdx++)
             {
-                switch (_e.SelectedE.AbilityTC.Ability)
+                if (!_e.IsBorder(currentCellIdx))
                 {
-                    case AbilityTypes.FireArcher:
-                        if (!_e.AdultForestC(_currentCell).HaveAnyResources) _isActive = true;
-                        break;
-
-                    case AbilityTypes.StunElfemale:
-                        if (!_e.AdultForestC(_currentCell).HaveAnyResources) _isActive = true;
-                        break;
-
-                    case AbilityTypes.ChangeDirectionWind:
-                        if (!_e.IsBorder(_currentCell))
+                    if (_e.LessonTC.HaveLesson)
+                    {
+                        switch (_e.LessonT)
                         {
-                            if (!_e.AroundCellsE(_currentCell).CellsAround.Contains(_e.WeatherE.CloudC.Center))
+                            case LessonTypes.ClickWindInfo:
+                                {
+                                    if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.WeatherE.CloudC.Center != currentCellIdx && !_e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround.Contains(currentCellIdx))
+                                    {
+                                        _isActive[currentCellIdx] = true;
+                                    }
+                                }
+                                break;
+
+                            case LessonTypes.YouNeedDestroyKing:
+                                {
+                                    if (_e.UnitT(currentCellIdx) != UnitTypes.King)
+                                    {
+                                        _isActive[currentCellIdx] = true;
+                                    }
+                                }
+                                break;
+
+                            default:
+
+                                break;
+                        }
+
+                        if (_e.LessonT >= LessonTypes.SettingKing)
+                        {
+                            if (_e.UnitT(currentCellIdx) == UnitTypes.King)
                             {
-                                _isActive = true;
+                                _isActive[currentCellIdx] = true;
                             }
                         }
 
 
 
-                        
-                        //if (!e.AdultForestC(idx_0).HaveAnyResources) _isActive = true;
-                        break;
+                        if (_e.LessonT < LessonTypes.ChangeDirectionWind)
+                        {
+                            if (_e.UnitT(currentCellIdx) == UnitTypes.Snowy)
+                            {
+                                _isActive[currentCellIdx] = true;
+                            }
+
+                            if (_e.LessonT < LessonTypes.ClickAtYourPawn)
+                            {
+                                if (_e.UnitT(currentCellIdx) == UnitTypes.Pawn)
+                                {
+                                    if (_e.CurPlayerIT == _e.UnitPlayerT(currentCellIdx))
+                                    {
+                                        _isActive[currentCellIdx] = true;
+                                    }
+                                }
+
+                                if (_e.LessonT > LessonTypes.YouNeedDestroyKing)
+                                {
+                                    if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurPlayerIT))
+                                    {
+                                        _isActive[currentCellIdx] = true;
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+
+
+
+                    if (_e.CellClickTC.CellClickT == CellClickTypes.UniqueAbility)
+                    {
+                        switch (_e.SelectedE.AbilityTC.Ability)
+                        {
+                            case AbilityTypes.FireArcher:
+                                if (!_e.AdultForestC(currentCellIdx).HaveAnyResources) _isActive[currentCellIdx] = true;
+                                break;
+
+                            case AbilityTypes.StunElfemale:
+                                if (!_e.AdultForestC(currentCellIdx).HaveAnyResources) _isActive[currentCellIdx] = true;
+                                break;
+
+                            case AbilityTypes.ChangeDirectionWind:
+                                if (!_e.IsBorder(currentCellIdx))
+                                {
+                                    if (!_e.AroundCellsE(currentCellIdx).CellsAround.Contains(_e.WeatherE.CloudC.Center))
+                                    {
+                                        _isActive[currentCellIdx] = true;
+                                    }
+                                }
+
+
+
+
+                                //if (!e.AdultForestC(idx_0).HaveAnyResources) _isActive = true;
+                                break;
+                        }
+                    }
+
+                    else if (_e.CellClickTC.CellClickT == CellClickTypes.GiveTakeTW)
+                    {
+                        if (_e.UnitTC(currentCellIdx).UnitT == UnitTypes.Pawn && _e.UnitPlayerTC(currentCellIdx).Is(_e.CurPlayerITC.PlayerT))
+                        {
+
+                        }
+                        else
+                        {
+                            _isActive[currentCellIdx] = true;
+                        }
+                    }
+
+                    else if (_e.CellClickTC.CellClickT == CellClickTypes.SetUnit)
+                    {
+                        if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurPlayerITC.PlayerT))
+                        {
+                            _isActive[currentCellIdx] = true;
+                        }
+                    }
+
+                    if (_e.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
+                    {
+                        if (_e.AdultForestC(currentCellIdx).HaveAnyResources || _e.MountainC(currentCellIdx).HaveAnyResources || _e.HillC(currentCellIdx).HaveAnyResources
+                            || _e.BuildingTC(currentCellIdx).HaveBuilding)
+                        {
+                            _isActive[currentCellIdx] = true;
+                        }
+                    }
+
+                    else if (_e.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
+                    {
+                        if (_e.AdultForestC(currentCellIdx).HaveAnyResources || _e.MountainC(currentCellIdx).HaveAnyResources || _e.HillC(currentCellIdx).HaveAnyResources
+                            || _e.YoungForestC(currentCellIdx).HaveAnyResources || _e.BuildingTC(currentCellIdx).HaveBuilding)
+                        {
+                            _isActive[currentCellIdx] = true;
+                        }
+                    }
+
+
+                    else if (_e.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
+                    {
+                        if (!_e.YoungForestC(currentCellIdx).HaveAnyResources)
+                        {
+                            _isActive[currentCellIdx] = true;
+                        }
+                    }
+
+
+                    _noneVisionSRC[currentCellIdx].GO.SetActive(_isActive[currentCellIdx]);
                 }
             }
 
-            else if (_e.CellClickTC.CellClickT == CellClickTypes.GiveTakeTW)
-            {
-                if (_e.UnitTC(_currentCell).UnitT == UnitTypes.Pawn && _e.UnitPlayerTC(_currentCell).Is(_e.CurPlayerITC.PlayerT))
-                {
-                    
-                }
-                else
-                {
-                    _isActive = true;
-                }
-            }
-
-            else if (_e.CellClickTC.CellClickT == CellClickTypes.SetUnit)
-            {
-                if (!_e.IsStartedCellC(_currentCell).IsStartedCell(_e.CurPlayerITC.PlayerT))
-                {
-                    _isActive = true;
-                }
-            }
-
-            if (_e.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
-            {
-                if (_e.AdultForestC(_currentCell).HaveAnyResources || _e.MountainC(_currentCell).HaveAnyResources || _e.HillC(_currentCell).HaveAnyResources
-                    || _e.BuildingTC(_currentCell).HaveBuilding)
-                {
-                    _isActive = true;
-                }
-            }
-
-            else if (_e.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
-            {
-                if (_e.AdultForestC(_currentCell).HaveAnyResources || _e.MountainC(_currentCell).HaveAnyResources || _e.HillC(_currentCell).HaveAnyResources
-                    || _e.YoungForestC(_currentCell).HaveAnyResources || _e.BuildingTC(_currentCell).HaveBuilding)
-                {
-                    _isActive = true;
-                }
-            }
 
 
-            else if (_e.MistakeT == MistakeTypes.NeedOtherPlaceGrowAdultForest)
-            {
-                if (!_e.YoungForestC(_currentCell).HaveAnyResources)
-                {
-                    _isActive = true;
-                }
-            }
-
-
-            _noneVisionSRC.GO.SetActive(_isActive);
         }
     }
 }

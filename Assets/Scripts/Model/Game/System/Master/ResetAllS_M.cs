@@ -25,6 +25,7 @@ namespace Chessy.Game
             eMG.WinnerPlayerT = default;
             eMG.CellsC = default;
             eMG.CurPlayerIT = default;
+            eMG.AmountPlantedYoungForests = default;
 
             eMG.WeatherE.WindC = new WindC(default, default, default, default);
             eMG.WeatherE.SunSideTC.SunSideT = default;
