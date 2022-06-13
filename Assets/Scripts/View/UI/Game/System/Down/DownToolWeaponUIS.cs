@@ -18,7 +18,7 @@ namespace Chessy.Game
             var needActiveZone = false;
 
 
-            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.ClickPick)
+            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.GiveTakePickPawn)
             {
                 needActiveZone = true;
 

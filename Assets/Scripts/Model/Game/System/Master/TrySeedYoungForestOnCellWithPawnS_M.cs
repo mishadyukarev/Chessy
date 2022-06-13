@@ -33,17 +33,17 @@ namespace Chessy.Game.Model.System
 
                             eMG.StepUnitC(cell_0).Steps -= StepValues.SEED_PAWN;
 
-                            if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
-                            {
-                                if (eMG.LessonTC.Is(LessonTypes.SeedingPawn))
-                                {
-                                    eMG.LessonTC.SetNextLesson();
-                                }
-                            }
+                            //if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
+                            //{
+                            //    if (eMG.LessonTC.Is(LessonTypes.SeedingPawn))
+                            //    {
+                            //        eMG.LessonTC.SetNextLesson();
+                            //    }
+                            //}
 
                             eMG.AmountPlantedYoungForests++;
 
-                            if (eMG.LessonT == LessonTypes.Seed4Forests)
+                            if (eMG.LessonT == LessonTypes.SeedingPawn)
                             {
                                 if(eMG.AmountPlantedYoungForests >= NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON)
                                 {

@@ -21,11 +21,10 @@ namespace Chessy.Game.Model.System
                     eMG.HaveFire(cellIdxForFire) = true;
                     eMG.StepUnitC(cellIdxForFire).Steps -= StepValues.FIRE_PAWN;
 
-                    if (StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST == cellIdxForFire)
+                    if(eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     {
                         eMG.LessonTC.SetNextLesson();
                     }
-
                 }
                 else
                 {

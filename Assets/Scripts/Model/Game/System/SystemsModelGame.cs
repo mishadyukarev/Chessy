@@ -19,6 +19,7 @@ namespace Chessy.Game.Model.System
         public readonly OnJoinedRoomS OnJoinedRoomS;
 
 
+
         internal UnitSystems UnitSs => MasterSs.UnitSs;
         internal BuildingSystems BuildingSs => MasterSs.BuildingSs;
 

@@ -29,7 +29,7 @@ namespace Chessy.Common.Entity
         public PageBookTypes PageBookT
         {
             get => PageBookTC.PageBookT;
-            internal set => PageBookTC.PageBookT = value;
+            set => PageBookTC.PageBookT = value;
         }
         public ref bool IsOpenedBook => ref BookE.IsOpenedBook;
 

@@ -30,7 +30,7 @@ namespace Chessy.Game
                 var needActiveDamage = false;
 
 
-                if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.DrinkWaterHere)
+                if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
                 {
                     needActiveHp = true;
                 }
@@ -40,7 +40,7 @@ namespace Chessy.Game
                     needActiveDamage = true;
                 }
 
-                if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.DrinkWaterHere)
+                if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
                 {
                     if (!e.UnitTC(idx_sel).Is(UnitTypes.Elfemale))
                     {

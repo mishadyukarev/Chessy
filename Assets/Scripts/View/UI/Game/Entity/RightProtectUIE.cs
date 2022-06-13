@@ -17,15 +17,17 @@ namespace Chessy.Game
         {
             _zones = new Dictionary<UnitTypes, Chessy.Common.Component.GameObjectVC>();
 
-            var button = condZone.Find("StandartAbilityButton1").GetComponent<Button>();
+            var defendZone = condZone.Find("Defend+");
+
+            var button = defendZone.Find("Button+").GetComponent<Button>();
 
             ButtonC = new ButtonUIC(button);
-            ImageUIC = new ImageUIC(button.transform.Find("Image").GetComponent<Image>());
+            ImageUIC = new ImageUIC(defendZone.Find("Image+").GetComponent<Image>());
 
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
             {
-                _zones.Add(unit, new Chessy.Common.Component.GameObjectVC(button.transform.Find(unit.ToString()).gameObject));
+                _zones.Add(unit, new Chessy.Common.Component.GameObjectVC(defendZone.Find(unit.ToString()).gameObject));
             }
         }
     }

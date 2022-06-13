@@ -154,7 +154,7 @@ namespace Chessy.Game.Model.System.Master
                                 eMG.WaterUnitC(cell_0).Water = WaterValues.MAX;
                             }
 
-                            if (eMG.LessonT < LessonTypes.DrinkWaterHere)
+                            if (eMG.LessonT < LessonTypes.Install3WarriorsNextToTheRiver)
                             {
                                 if (eMG.UnitT(cell_0) == UnitTypes.Pawn)
                                 {
@@ -303,9 +303,6 @@ namespace Chessy.Game.Model.System.Master
                                 var percent = HpValues.ThirstyPercent(eMG.UnitTC(cell_0).UnitT);
 
                                 sMG.UnitSs.AttackUnitS.Attack(HpValues.MAX * percent, eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
-
-
-                                //E.ActionEs.AttackUnit(CellUnitStatHp_Values.MAX_HP * percent, E.NextPlayer(E.UnitPlayerTC(cell_0)).Player, cell_0);
                             }
                         }
                     }
@@ -360,22 +357,24 @@ namespace Chessy.Game.Model.System.Master
                     eMG.HillC(cell_0).Resources -= extract;
                     eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).ResourcesC(ResourceTypes.Ore).Resources += extract;
 
+                    if (eMG.LessonTC.Is(LessonTypes.ExtractHill))
+                    {
+                        eMG.LessonTC.SetNextLesson();
+
+                        if (eMG.IsSelectedCity)
+                        {
+                            eMG.LessonTC.SetNextLesson();
+                        }
+                    }
+
                     if (!eMG.HillC(cell_0).HaveAnyResources)
                     {
-                        if (eMG.LessonTC.Is(LessonTypes.ExtractHillPawnHere))
-                        {
-                            eMG.LessonTC.SetNextLesson();
 
-                            if (eMG.IsSelectedCity)
-                            {
-                                eMG.LessonTC.SetNextLesson();
-                            }
-                        }
-                        else if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
-                        {
-                            eMG.LessonTC.SetNextLesson();
-                            eMG.LessonTC.SetNextLesson();
-                        }
+                        //else if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
+                        //{
+                        //    eMG.LessonTC.SetNextLesson();
+                        //    eMG.LessonTC.SetNextLesson();
+                        //}
                     }
                 }
 
@@ -440,8 +439,8 @@ namespace Chessy.Game.Model.System.Master
                             if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.UnitPlayerTC(cell_0).Is(player))
                             {
                                 sMG.UnitSs.KillUnitS.Kill(eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
-
                                 sMG.UnitSs.ClearUnit(cell_0);
+
                                 break;
                             }
                         }

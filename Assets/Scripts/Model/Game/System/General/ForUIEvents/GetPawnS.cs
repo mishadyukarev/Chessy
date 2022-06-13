@@ -16,7 +16,7 @@ namespace Chessy.Game.Model.System
             var curPlayerI = eMG.CurPlayerITC.PlayerT;
 
 
-            if (!eMG.LessonTC.Is(LessonTypes.TryBuyingHouse, LessonTypes.ClickOpenTown2, LessonTypes.SeedingPawn, LessonTypes.ExtractHillPawnHere, LessonTypes.PawnFireAdultForest, LessonTypes.ClickDefend))
+            if (!eMG.LessonTC.Is(LessonTypes.TryBuyingHouse, LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
             {
                 if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
                 {

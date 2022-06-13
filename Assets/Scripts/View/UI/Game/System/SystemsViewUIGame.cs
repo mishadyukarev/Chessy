@@ -14,12 +14,14 @@ namespace Chessy.Game.System.View.UI
     public sealed class SystemsViewUIGame : IUpdate
     {
         readonly EntitiesModelGame _e;
+        readonly EntitiesViewUIGame _eUI;
 
         readonly List<Action> _syncUpdates;
 
         public SystemsViewUIGame(EntitiesModelCommon eMCommon, EntitiesViewUIGame eUIGame, EntitiesModelGame eMGame)
         {
             _e = eMGame;
+            _eUI = eUIGame;
 
             _syncUpdates = new List<Action>()
             {
@@ -89,7 +91,7 @@ namespace Chessy.Game.System.View.UI
                     eUIGame.UpEs.SettingsButtonC.SetActiveParent(!eMGame.LessonTC.HaveLesson);
                     eUIGame.UpEs.DiscordButtonC.SetActive(!eMGame.LessonTC.HaveLesson);
                     eUIGame.UpEs.LeaveC.SetActiveParent(!eMGame.LessonTC.HaveLesson || eMGame.LessonT >= LessonTypes.MenuInfo);
-                    eUIGame.DownEs.BookLittleE.ButtonC.SetActiveParent(!eMGame.LessonTC.HaveLesson);
+                    //eUIGame.DownEs.BookLittleE.ButtonC.SetActiveParent(!eMGame.LessonTC.HaveLesson || eMGame.LessonT >= LessonTypes.BuildHouses);
 
                 },
             };
@@ -100,6 +102,21 @@ namespace Chessy.Game.System.View.UI
             {
                 _syncUpdates.Add(new UniqueButtonUIS(buttonT, eUIGame.RightEs.Unique(buttonT), eMGame.Resources, eMGame).Sync);
             }
+
+            //var pressedS = _eUI.RightEs.RelaxE.ButtonC.GameObject.AddComponent<PressedButtonUIS>();
+            //pressedS.SetAction((bool b) =>
+            //{
+                
+            //    if (_e.Common.IsOpenedBook != b)
+            //    {
+            //        _e.Common.SoundActionC(Common.Enum.ClipCommonTypes.OpenBook).Invoke();
+
+            //        _e.Common.IsOpenedBook = b;
+            //        _e.Common.PageBookT = Common.Enum.PageBookTypes.ExtractPawn;
+
+            //        _e.NeedUpdateView = true;
+            //    }
+            //});
         }
 
         public void Update()
@@ -107,10 +124,6 @@ namespace Chessy.Game.System.View.UI
             if (_e.NeedUpdateView)
             {
                 _syncUpdates.ForEach((Action action) => action());
-
-
-
-
 
                 _e.NeedUpdateView = false;
             }

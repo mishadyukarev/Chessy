@@ -7,14 +7,24 @@ using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
 using Photon.Pun;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Game.EventsUI
 {
-    public sealed class EventsUIGame
+    public sealed class EventsUIGame : IUpdate
     {
+        readonly Dictionary<PageBookTypes, PressHintS> _pressHintSs = new Dictionary<PageBookTypes, PressHintS>();
+
         public EventsUIGame(EntitiesViewUICommon eUICommon, EntitiesModelCommon eMCommon, SystemsModelGame sMGame, EntitiesViewUIGame eUIGame, EntitiesModelGame eMGame)
         {
+            for (var pageBookT = (PageBookTypes)0; pageBookT < PageBookTypes.End; pageBookT++)
+            {
+                _pressHintSs.Add(pageBookT, new PressHintS(pageBookT, sMGame, eMGame));
+            }
+
+
             eUICommon.BookE.ExitButtonC.AddListener(delegate
             {
                 eMGame.NeedUpdateView = true;
@@ -26,8 +36,12 @@ namespace Chessy.Game.EventsUI
             #region Down
 
             eUIGame.DownEs.DonerE.ButtonC.AddListener(sMGame.ForUISystems.DoneClickS.Click);
+            eUIGame.DownEs.DonerE.ButtonC.GameObject.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.DonerReady].Press(b));
+
             eUIGame.DownEs.HeroE.ButtonC.AddListener(delegate { sMGame.ForUISystems.GetHeroClickDownS.Click(); });
-            eUIGame.DownEs.PawnE.ButtonUIC.AddListener(delegate { sMGame.ForUISystems.GetPawnClickS.Click(); });
+            eUIGame.DownEs.PawnE.ButtonC.AddListener(delegate { sMGame.ForUISystems.GetPawnClickS.Click(); });
+            eUIGame.DownEs.PawnE.ButtonC.GameObject.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Pawn].Press(b));
+
             eUIGame.DownEs.CityButtonUIE.ButtonC.AddListener(sMGame.ForUISystems.OpenCityClickS.Click);
             eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Pick).AddListener(delegate { sMGame.ForUISystems.ToggleToolWeaponClickS.Click(ToolWeaponTypes.Pick); });
             eUIGame.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Sword).AddListener(delegate { sMGame.ForUISystems.ToggleToolWeaponClickS.Click(ToolWeaponTypes.Sword); });
@@ -50,7 +64,7 @@ namespace Chessy.Game.EventsUI
             #region Up
 
 
-            eUIGame.UpEs.SettingsButtonC.AddListener(delegate
+           eUIGame.UpEs.SettingsButtonC.AddListener(delegate
             {
                 eMCommon.IsOpenSettings = !eMCommon.IsOpenSettings;
                 eMCommon.SoundActionC(ClipCommonTypes.Click);
@@ -113,7 +127,10 @@ namespace Chessy.Game.EventsUI
             eUIGame.RightEs.Unique(ButtonTypes.Fifth).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.Fifth); });
 
             eUIGame.RightEs.ProtectE.ButtonC.AddListener(delegate { sMGame.ForUISystems.ConditionClickS.Click(ConditionUnitTypes.Protected); });
+            eUIGame.RightEs.ProtectE.ButtonC.GameObject.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Defend].Press(b));
+
             eUIGame.RightEs.RelaxE.ButtonC.AddListener(delegate { sMGame.ForUISystems.ConditionClickS.Click(ConditionUnitTypes.Relaxed); });
+            eUIGame.RightEs.RelaxE.ButtonC.GameObject.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.ExtractPawn].Press(b));
 
             #endregion
 
@@ -196,6 +213,16 @@ namespace Chessy.Game.EventsUI
             eMC.ShopC.IsOpenedShopZone = true;
 
             e.NeedUpdateView = true;
+        }
+
+
+        public void Update()
+        {
+            for (var pageBookT = (PageBookTypes)0; pageBookT < PageBookTypes.End; pageBookT++)
+            {
+                _pressHintSs[pageBookT].Update();
+            }
+            
         }
     }
 }

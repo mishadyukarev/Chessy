@@ -44,7 +44,7 @@ namespace Chessy.Common.Entity.View.UI
 
 
                 foreach (var neededPageT in new[] { PageBookTypes.Main, PageBookTypes.God, PageBookTypes.Pawn, 
-                    PageBookTypes.ExtractPawn, PageBookTypes.UsingAbilities, PageBookTypes.Town, PageBookTypes.Doner, PageBookTypes.ToolWeapons })
+                    PageBookTypes.ExtractPawn, PageBookTypes.UsingAbilities, PageBookTypes.Town, PageBookTypes.DonerReady, PageBookTypes.ToolWeapons })
                 {
                     if(neededPageT == pageT)
                     {

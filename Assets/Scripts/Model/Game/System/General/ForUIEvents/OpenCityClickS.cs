@@ -16,7 +16,7 @@ namespace Chessy.Game.Model.System
 
             eMG.IsSelectedCity = !eMG.IsSelectedCity;
 
-            if (eMG.LessonTC.Is(LessonTypes.OpeningTown, LessonTypes.ClickOpenTown2))
+            if (eMG.LessonTC.Is(LessonTypes.OpeningTown))
             {
                 eMG.LessonTC.SetNextLesson();
 

@@ -43,7 +43,7 @@ namespace Chessy.Game
                 {
                     _needActive[ResourceTypes.Food] = true;
 
-                    if (e.LessonT >= LessonTypes.ExtractHillPawnHere)
+                    if (e.LessonT >= LessonTypes.ExtractHill)
                     {
                         _needActive[ResourceTypes.Ore] = true;
 

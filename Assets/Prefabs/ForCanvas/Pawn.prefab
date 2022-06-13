@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 5175464426060396451}
   - component: {fileID: 1674487126851931968}
   m_Layer: 5
-  m_Name: Image+
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,7 +1017,7 @@ GameObject:
   - component: {fileID: 4762557772371076413}
   - component: {fileID: 2428428808575186830}
   m_Layer: 0
-  m_Name: MaxPeople_TextMP+
+  m_Name: MaxPeople_TextMP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

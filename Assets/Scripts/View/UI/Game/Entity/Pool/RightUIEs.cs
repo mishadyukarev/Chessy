@@ -29,7 +29,7 @@ namespace Chessy.Game
             new UIEntExtraTW(rightZone);
             new RightEffectsUIE(rightZone);
 
-            var conditionZone = rightZone.Find("ConditionZone");
+            var conditionZone = rightZone.Find("Condition+");
             ProtectE = new RightProtectUIE(conditionZone);
             RelaxE = new RelaxUIE(conditionZone);
 

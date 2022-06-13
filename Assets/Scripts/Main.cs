@@ -69,7 +69,7 @@ namespace Chessy
             var sUIGame = new SystemsViewUIGame(_eMC, eUIGame, eModelGame);
             var sViewGame = new SystemsViewGame(eViewGame, eModelGame, eVCommon);
 
-            new EventsUIGame(eUICommon, _eMC, sModelGame, eUIGame, eModelGame);
+            var eventsGame = new EventsUIGame(eUICommon, _eMC, sModelGame, eUIGame, eModelGame);
 
             #endregion
 
@@ -104,6 +104,8 @@ namespace Chessy
                 sModelGame,
                 sViewGame,
                 sUIGame,
+
+                eventsGame,
             };
 
 

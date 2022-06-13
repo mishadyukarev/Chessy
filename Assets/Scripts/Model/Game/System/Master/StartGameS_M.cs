@@ -247,19 +247,19 @@ namespace Chessy.Game
                     {
                         eMG.AdultForestC(cell_0).Resources = 0.4f;
                     }
-                    else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
+                    else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
                         sMG.MasterSs.ClearAllEnvironmentS.Clear(cell_0);
                     }
-                    else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
-                    {
-                        sMG.MasterSs.ClearAllEnvironmentS.Clear(cell_0);
-                    }
-                    else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                    {
-                        sMG.MasterSs.ClearAllEnvironmentS.Clear(cell_0);
-                        eMG.HillC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES / 5;
-                    }
+                    //else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_BUILDING_FARM_LESSON)
+                    //{
+                    //    sMG.MasterSs.ClearAllEnvironmentS.Clear(cell_0);
+                    //}
+                    //else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                    //{
+                    //    sMG.MasterSs.ClearAllEnvironmentS.Clear(cell_0);
+                    //    eMG.HillC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES / 5;
+                    //}
                     else if (cell_0 == StartValues.CELL_MOUNTAIN_LESSON)
                     {
                         sMG.MasterSs.ClearAllEnvironmentS.Clear(cell_0);

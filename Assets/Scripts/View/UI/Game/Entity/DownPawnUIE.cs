@@ -10,7 +10,7 @@ namespace Chessy.Game
     {
         public readonly GameObjectVC ParenGOC;
         public readonly AnimationVC AnimationC;
-        public readonly ButtonUIC ButtonUIC;
+        public readonly ButtonUIC ButtonC;
         public readonly TextUIC AmountTextC;
         public readonly TextUIC MaxPawnsTextC;
 
@@ -21,10 +21,10 @@ namespace Chessy.Game
             ParenGOC = new GameObjectVC(pawnT.gameObject);
             AnimationC = new AnimationVC(pawnT.Find("Image+").GetComponent<Animation>());
 
-            var button = pawnT.Find("Button").GetComponent<Button>();
+            var button = pawnT.Find("Button+").GetComponent<Button>();
 
-            ButtonUIC = new ButtonUIC(button);
-            AmountTextC = new TextUIC(pawnT.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            ButtonC = new ButtonUIC(button);
+            AmountTextC = new TextUIC(pawnT.Find("Text (TMP)+").GetComponent<TextMeshProUGUI>());
 
             MaxPawnsTextC = new TextUIC(pawnT.Find("MaxPeople_TextMP+").GetComponent<TextMeshProUGUI>());
         }

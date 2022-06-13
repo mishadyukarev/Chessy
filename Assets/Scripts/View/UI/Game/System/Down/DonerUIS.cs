@@ -18,23 +18,23 @@ namespace Chessy.Game
         {
             if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
             {
-                _donerE.ButtonC.SetActive(true);
+                _donerE.ButtonC.SetActiveParent(true);
                 _donerE.WaitGoC.SetActive(true);
 
                 if (e.CurPlayerITC.Is(e.WhoseMovePlayerTC.PlayerT))
                 {
                     _donerE.WaitGoC.SetActive(false);
-                    _donerE.ButtonC.Image.color = Color.white;
+                    _donerE.ImageC.Image.color = Color.white;
                 }
                 else
                 {
                     _donerE.WaitGoC.SetActive(true);
-                    _donerE.ButtonC.Image.color = Color.red;
+                    _donerE.ImageC.Image.color = Color.red;
                 }
             }
             else
             {
-                _donerE.ButtonC.SetActive(false);
+                _donerE.ButtonC.SetActiveParent(false);
                 _donerE.WaitGoC.SetActive(false);
             }
         }

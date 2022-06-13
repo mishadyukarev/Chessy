@@ -34,32 +34,32 @@ namespace Chessy.Game.Model.System
                         }
                     }
 
-                    if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
+                    //if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
+                    //{
+                    //    if (eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
+                    //    {
+                    //        eMG.LessonTC.SetNextLesson();
+                    //    }
+                    //}
+
+                    if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
-                        if (eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
+                        if (eMG.LessonT == LessonTypes.StepAwayFromWoodcutter)
                         {
                             eMG.LessonTC.SetNextLesson();
                         }
                     }
 
-                    if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
-                    {
-                        if (eMG.LessonTC.Is(LessonTypes.StepAwayFromWoodcutter, LessonTypes.ShiftPawnForSeedingHere))
-                        {
-                            eMG.LessonTC.SetNextLesson();
-                        }
-                    }
-
-                    if (toCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
-                    {
-                        if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
-                        {
-                            if(eMG.MainToolWeaponTC(eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
-                            {
-                                eMG.LessonTC.SetNextLesson();
-                            }
-                        }
-                    }
+                    //if (toCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
+                    //{
+                    //    if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
+                    //    {
+                    //        if(eMG.MainToolWeaponTC(eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
+                    //        {
+                    //            eMG.LessonTC.SetNextLesson();
+                    //        }
+                    //    }
+                    //}
 
                     if (eMG.LessonT == LessonTypes.ComeToYourKing)
                     {
@@ -75,17 +75,16 @@ namespace Chessy.Game.Model.System
 
 
 
-                    if (eMG.ExtraToolWeaponTC(toCellIdx).Is(ToolWeaponTypes.Pick))
-                    {
-                        if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
-                        {
-                            if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                            {
-                                eMG.LessonTC.SetNextLesson();
-                            }
-                        }
-                    }
-
+                    //if (eMG.ExtraToolWeaponTC(toCellIdx).Is(ToolWeaponTypes.Pick))
+                    //{
+                    //    if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
+                    //    {
+                    //        if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
+                    //        {
+                    //            eMG.LessonTC.SetNextLesson();
+                    //        }
+                    //    }
+                    //}
                 }
 
 

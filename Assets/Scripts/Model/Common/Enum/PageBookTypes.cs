@@ -7,12 +7,13 @@
         Main,
         God,
         Pawn,
+        Defend,
         ExtractPawn,
         UsingAbilities,
         ToolWeapons,
         AttackUnits,
         Damage,
-        Doner,
+        DonerReady,
 
         Truce,
 
