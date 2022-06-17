@@ -3,11 +3,9 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetFarmExtractCellsS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetFarmExtractCellsS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetFarmExtractCells(in byte cell_0)
         {
             eMG.FarmExtractFertilizeC(cell_0).Resources = 0;
 

@@ -1,13 +1,12 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.Entity.Cell.Unit;
+﻿using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    struct SetEffectsUnitS
+    struct EffectsUnitS
     {
         readonly UnitEffectsE _effectsE;
 
-        internal SetEffectsUnitS(in UnitEffectsE effectsE)
+        internal EffectsUnitS(in UnitEffectsE effectsE)
         {
             _effectsE = effectsE;
         }

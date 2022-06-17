@@ -2,11 +2,9 @@
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetEffectsForUnitsS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetEffectsForUnitsS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetEffectsForUnits(in byte cell_0)
         {
             eMG.HaveKingEffect(cell_0) = false;
 

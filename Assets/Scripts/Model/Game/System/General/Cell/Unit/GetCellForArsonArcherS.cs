@@ -2,11 +2,9 @@
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetCellForArsonArcherS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetCellForArsonArcherS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetCellForArsonArcher(in byte cell_0)
         {
             eMG.UnitForArsonC(cell_0).Clear();
 

@@ -4,11 +4,9 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetCellsForShiftUnitS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetCellsForShiftUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetCellsForShiftUnit(in byte cell_0)
         {
             eMG.CellsForShift(cell_0).Clear();
 

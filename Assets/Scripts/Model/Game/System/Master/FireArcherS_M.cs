@@ -5,13 +5,10 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class FireArcherS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        public FireArcherS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
-        {
-        }
 
-        internal void Fire(in byte cell_from, in byte cell_to, in Player sender)
+        internal void FirePawn(in byte cell_from, in byte cell_to, in Player sender)
         {
             if (eMG.UnitForArsonC(cell_from).Contains(cell_to))
             {

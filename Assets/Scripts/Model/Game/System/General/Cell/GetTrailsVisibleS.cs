@@ -2,11 +2,9 @@
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetTrailsVisibleS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetTrailsVisibleS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetTrailsVisible(in byte cell_0)
         {
             if (!eMG.IsBorder(cell_0))
             {

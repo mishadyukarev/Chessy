@@ -6,11 +6,9 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class FirePawnS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal FirePawnS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Fire(in byte cellIdxForFire, in Player sender)
+        internal void FirePawn(in byte cellIdxForFire, in Player sender)
         {
             if (eMG.StepUnitC(cellIdxForFire).Steps >= StepValues.FIRE_PAWN)
             {

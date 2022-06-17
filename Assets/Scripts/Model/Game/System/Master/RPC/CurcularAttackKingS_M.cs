@@ -4,13 +4,11 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Game.Model.System.Master
+namespace Chessy.Game.Model.System
 {
-    sealed class CurcularAttackKingS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal CurcularAttackKingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Attack(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void CurcularAttackKingM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
@@ -30,7 +28,7 @@ namespace Chessy.Game.Model.System.Master
                             {
                                 if (eMG.ExtraToolWeaponTC(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
-                                    sMG.UnitSs.AttackShieldS.Attack(1f, idx_1);
+                                    sMG.UnitSs.AttackShield(1f, idx_1);
                                 }
                                 else if (eMG.ShieldUnitEffectC(idx_1).HaveAnyProtection)
                                 {
@@ -39,7 +37,7 @@ namespace Chessy.Game.Model.System.Master
 
                                 else
                                 {
-                                    sMG.UnitSs.AttackUnitS.Attack(HpValues.MAX / 4, eMG.UnitPlayerTC(cell_0).PlayerT, idx_1);
+                                    sMG.UnitSs.Attack(HpValues.MAX / 4, eMG.UnitPlayerTC(cell_0).PlayerT, idx_1);
                                 }
                             }
                         }

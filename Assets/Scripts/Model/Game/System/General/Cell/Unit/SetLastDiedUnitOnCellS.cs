@@ -1,29 +1,25 @@
-﻿using Chessy.Game.Model.Entity;
-
-namespace Chessy.Game.Model.System
+﻿namespace Chessy.Game.Model.System
 {
-    sealed class SetLastDiedUnitOnCellS : SystemModel
+    sealed partial class UnitSystems
     {
-        internal SetLastDiedUnitOnCellS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Set(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in byte cell_0)
+        internal void SetLastDiedUnitOnCell(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in byte cell_0)
         {
-            eMG.LastDiedUnitTC(cell_0).UnitT = unitT;
-            eMG.LastDiedLevelTC(cell_0).LevelT = levelT;
-            eMG.LastDiedPlayerTC(cell_0).PlayerT = playerT;
+            _eMG.LastDiedUnitTC(cell_0).UnitT = unitT;
+            _eMG.LastDiedLevelTC(cell_0).LevelT = levelT;
+            _eMG.LastDiedPlayerTC(cell_0).PlayerT = playerT;
         }
 
-        internal void Set(in byte cell_from, in byte cell_to)
+        internal void SetLastDiedUnitOnCell(in byte cell_from, in byte cell_to)
         {
-            eMG.LastDiedUnitTC(cell_to) = eMG.LastDiedUnitTC(cell_from);
-            eMG.LastDiedPlayerTC(cell_to) = eMG.LastDiedPlayerTC(cell_from);
-            eMG.LastDiedLevelTC(cell_to) = eMG.LastDiedLevelTC(cell_from);
+            _eMG.LastDiedUnitTC(cell_to) = _eMG.LastDiedUnitTC(cell_from);
+            _eMG.LastDiedPlayerTC(cell_to) = _eMG.LastDiedPlayerTC(cell_from);
+            _eMG.LastDiedLevelTC(cell_to) = _eMG.LastDiedLevelTC(cell_from);
         }
-        internal void Set(in byte cell_0)
+        internal void SetLastDiedUnitOnCell(in byte cell_0)
         {
-            eMG.LastDiedUnitTC(cell_0) = eMG.UnitTC(cell_0);
-            eMG.LastDiedPlayerTC(cell_0) = eMG.UnitPlayerTC(cell_0);
-            eMG.LastDiedLevelTC(cell_0) = eMG.UnitLevelTC(cell_0);
+            _eMG.LastDiedUnitTC(cell_0) = _eMG.UnitTC(cell_0);
+            _eMG.LastDiedPlayerTC(cell_0) = _eMG.UnitPlayerTC(cell_0);
+            _eMG.LastDiedLevelTC(cell_0) = _eMG.UnitLevelTC(cell_0);
         }
     }
 }

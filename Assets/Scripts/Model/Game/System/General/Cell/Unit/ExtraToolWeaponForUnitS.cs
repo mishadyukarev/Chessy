@@ -1,13 +1,12 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.Entity.Cell.Unit;
+﻿using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    struct SetExtraToolWeaponForUnitS_M
+    struct ExtraToolWeaponForUnitS
     {
         readonly ExtraToolWeaponE _extraTWE;
 
-        internal SetExtraToolWeaponForUnitS_M(in ExtraToolWeaponE extraTWE)
+        internal ExtraToolWeaponForUnitS(in ExtraToolWeaponE extraTWE)
         {
             _extraTWE = extraTWE;
         }

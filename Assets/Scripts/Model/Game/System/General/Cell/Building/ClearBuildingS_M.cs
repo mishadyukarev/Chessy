@@ -1,16 +1,12 @@
 ﻿using Chessy.Game.Model.Entity;
 
-namespace Chessy.Game.Model.System
+namespace Chessy.Game
 {
-    sealed class ClearBuildingS_M : SystemModel
+    sealed partial class BuildingSystems
     {
-        public ClearBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
-        {
-        }
-
         internal void Clear(in byte cell_0)
         {
-            eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
+            _eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
         }
     }
 }

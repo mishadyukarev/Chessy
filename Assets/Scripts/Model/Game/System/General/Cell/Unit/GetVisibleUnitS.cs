@@ -3,11 +3,9 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetVisibleUnitS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetVisibleUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetVisibleUnits(in byte cell_0)
         {
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {

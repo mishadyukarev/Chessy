@@ -114,12 +114,12 @@ namespace Chessy.Game.Model.System
 
                 else if (_eMG.ExtraToolWeaponTC(idx_from).Is(ToolWeaponTypes.Shield))
                 {
-                    UnitSs.AttackShieldS.Attack(1f, idx_from);
+                    UnitSs.AttackShield(1f, idx_from);
                 }
 
                 else if (minus_from > 0)
                 {
-                    UnitSs.AttackUnitS.Attack(minus_from, _eMG.UnitPlayerTC(idx_from).PlayerT.NextPlayer(), idx_from);
+                    UnitSs.Attack(minus_from, _eMG.UnitPlayerTC(idx_from).PlayerT.NextPlayer(), idx_from);
                 }
             }
             else
@@ -154,7 +154,7 @@ namespace Chessy.Game.Model.System
 
             else if (_eMG.ExtraToolWeaponTC(idx_to).Is(ToolWeaponTypes.Shield))
             {
-                UnitSs.AttackShieldS.Attack(1f, idx_to);
+                UnitSs.AttackShield(1f, idx_to);
             }
 
             else if (minus_to > 0)
@@ -173,7 +173,7 @@ namespace Chessy.Game.Model.System
 
                 var wasUnitT_to = _eMG.UnitTC(idx_to).UnitT;
 
-                UnitSs.AttackUnitS.Attack(minus_to, killer, idx_to);
+                UnitSs.Attack(minus_to, killer, idx_to);
 
                 if (!_eMG.UnitTC(idx_to).HaveUnit)
                 {

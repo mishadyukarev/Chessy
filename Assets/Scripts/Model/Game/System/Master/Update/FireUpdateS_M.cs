@@ -6,15 +6,13 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class FireUpdateS_M : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal FireUpdateS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Run()
+        internal void FireUpdate()
         {
-            foreach (var cellE in eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround)
+            foreach (var cellE in _eMG.AroundCellsE(_eMG.WeatherE.CloudC.Center).CellsAround)
             {
-                eMG.HaveFire(cellE) = false;
+                _eMG.HaveFire(cellE) = false;
             }
 
 
@@ -22,38 +20,38 @@ namespace Chessy.Game.Model.System
 
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (eMG.HaveFire(cell_0))
+                if (_eMG.HaveFire(cell_0))
                 {
-                    sMG.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
+                    TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
 
-                    if (eMG.UnitTC(cell_0).HaveUnit)
+                    if (_eMG.UnitTC(cell_0).HaveUnit)
                     {
-                        if (eMG.UnitTC(cell_0).Is(UnitTypes.Hell))
+                        if (_eMG.UnitTC(cell_0).Is(UnitTypes.Hell))
                         {
-                            eMG.HpUnitC(cell_0).Health = HpValues.MAX;
+                            _eMG.HpUnitC(cell_0).Health = HpValues.MAX;
                         }
                         else
                         {
-                            if (eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
+                            if (_eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
                             {
-                                sMG.UnitSs.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                                UnitSs.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                sMG.UnitSs.AttackUnitS.Attack(HpValues.FIRE_DAMAGE, eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
+                                UnitSs.Attack(HpValues.FIRE_DAMAGE, _eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
                             }
                         }
                     }
 
-                    if (!eMG.AdultForestC(cell_0).HaveAnyResources)
+                    if (!_eMG.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
+                        _eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
 
 
-                        eMG.HaveFire(cell_0) = false;
+                        _eMG.HaveFire(cell_0) = false;
 
 
-                        foreach (var cellE in eMG.AroundCellsE(cell_0).CellsAround)
+                        foreach (var cellE in _eMG.AroundCellsE(cell_0).CellsAround)
                         {
                             needForFireNext.Add(cellE);
                         }
@@ -63,11 +61,11 @@ namespace Chessy.Game.Model.System
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (!eMG.IsBorder(cell_0))
+                if (!_eMG.IsBorder(cell_0))
                 {
-                    if (eMG.AdultForestC(cell_0).HaveAnyResources)
+                    if (_eMG.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        eMG.HaveFire(cell_0) = true;
+                        _eMG.HaveFire(cell_0) = true;
                     }
                 }
             }

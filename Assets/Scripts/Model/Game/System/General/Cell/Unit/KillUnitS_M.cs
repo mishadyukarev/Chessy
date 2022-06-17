@@ -1,33 +1,30 @@
-﻿using Chessy.Game.Model.Entity;
-using System;
+﻿using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class KillUnitS_M : SystemModel
+    sealed partial class UnitSystems
     {
-        internal KillUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Kill(in PlayerTypes whoKiller, in byte cellIdx)
+        internal void KillUnit(in PlayerTypes whoKiller, in byte cellIdx)
         {
-            //if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
+            //if (!_eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
 
 
-            if (eMG.UnitPlayerT(cellIdx) == PlayerTypes.Second)
+            if (_eMG.UnitPlayerT(cellIdx) == PlayerTypes.Second)
             {
-                if (eMG.LessonT == Enum.LessonTypes.Kill1Enemy) eMG.LessonTC.SetNextLesson();
+                if (_eMG.LessonT == Enum.LessonTypes.Kill1Enemy) _eMG.LessonTC.SetNextLesson();
             }
 
 
             if (whoKiller != PlayerTypes.None)
             {
-                if (eMG.UnitTC(cellIdx).Is(UnitTypes.King)) eMG.WinnerPlayerT = whoKiller;
+                if (_eMG.UnitTC(cellIdx).Is(UnitTypes.King)) _eMG.WinnerPlayerT = whoKiller;
             }
 
-            if (eMG.UnitTC(cellIdx).IsGod)
+            if (_eMG.UnitTC(cellIdx).IsGod)
             {
                 var cooldown = 0f;
 
-                switch (eMG.UnitT(cellIdx))
+                switch (_eMG.UnitT(cellIdx))
                 {
                     case UnitTypes.Elfemale:
                         cooldown = HeroCooldownValues.Elfemale;
@@ -48,18 +45,18 @@ namespace Chessy.Game.Model.System
                     default: throw new Exception();
                 }
 
-                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).GodInfoE.Cooldown = cooldown;
-                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).GodInfoE.HaveHeroInInventor = true;
+                _eMG.PlayerInfoE(_eMG.UnitPlayerT(cellIdx)).GodInfoE.Cooldown = cooldown;
+                _eMG.PlayerInfoE(_eMG.UnitPlayerT(cellIdx)).GodInfoE.HaveHeroInInventor = true;
             }
 
-            if (eMG.UnitTC(cellIdx).Is(UnitTypes.Tree)) eMG.HaveTreeUnit = false;
+            if (_eMG.UnitTC(cellIdx).Is(UnitTypes.Tree)) _eMG.HaveTreeUnit = false;
 
 
-            sMG.UnitSs.SetLastDiedUnitOnCellS.Set(cellIdx);
+            SetLastDiedUnitOnCell(cellIdx);
 
-            if (eMG.UnitTC(cellIdx).Is(UnitTypes.Pawn))
+            if (_eMG.UnitTC(cellIdx).Is(UnitTypes.Pawn))
             {
-                eMG.PlayerInfoE(eMG.UnitPlayerT(cellIdx)).PawnInfoC.RemovePawn();
+                _eMG.PlayerInfoE(_eMG.UnitPlayerT(cellIdx)).PawnInfoC.RemovePawn();
             }
 
 
@@ -67,7 +64,7 @@ namespace Chessy.Game.Model.System
 
 
 
-            sMG.UnitSs.ClearUnit(cellIdx);
+            ClearUnit(cellIdx);
         }
     }
 }

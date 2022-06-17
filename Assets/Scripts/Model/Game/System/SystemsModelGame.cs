@@ -1,6 +1,5 @@
 ﻿using Chessy.Common.Model.System;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.System.Master;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace Chessy.Game.Model.System
         internal readonly BuildingSystems BuildingSs;
         internal readonly UnitSystems UnitSs;
         internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
-        internal readonly ExecuteUpdateEverythingS_M ExecuteUpdateEverythingS;
+        internal readonly ExecuteAIBotLogicAfterUpdateS_M AIBotS;
 
         public readonly SystemsModelCommon CommonSs;
         public readonly SystemsModelGameForUI ForUISystems;
@@ -39,8 +38,8 @@ namespace Chessy.Game.Model.System
             ForUISystems = new SystemsModelGameForUI(this, eMG);
             BuildingSs = new BuildingSystems(this, eMG);
             UnitSs = new UnitSystems(this, eMG);
-            ExecuteUpdateEverythingS = new ExecuteUpdateEverythingS_M(this, eMG);
             GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eMG);
+            AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eMG);
         }
 
         public void Update()

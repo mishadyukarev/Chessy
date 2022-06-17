@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 
         internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte cell)
         {
-            UnitSs.SetMain(cell, unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
+            UnitSs.UnitSimpleS(cell).SetMainS.Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
             UnitSs.SetStats(cell, HpValues.MAX, StepValues.MAX, WaterValues.MAX);
             UnitSs.SetExtraToolWeapon(cell, ToolWeaponTypes.None, LevelTypes.None, 0);
             UnitSs.SetEffects(cell, 0, 0, 0, false);

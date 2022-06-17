@@ -7,10 +7,8 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class TryChangeDirectionWindWithSnowyS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal TryChangeDirectionWindWithSnowyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         internal void TryChange(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
             if (eMG.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))

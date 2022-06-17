@@ -4,11 +4,9 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetAbilityUnitS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetAbilityUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetAbilityUnit(in byte cell_0)
         {
             eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.None);
             eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.None);

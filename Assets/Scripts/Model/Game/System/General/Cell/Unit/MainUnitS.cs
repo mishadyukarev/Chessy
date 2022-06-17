@@ -3,11 +3,11 @@ using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    struct SetMainUnitS
+    struct MainUnitS
     {
         readonly UnitMainE _mainUnitE;
 
-        internal SetMainUnitS(in UnitMainE mainUnitE)
+        internal MainUnitS(in UnitMainE mainUnitE)
         {
             _mainUnitE = mainUnitE;
         }
@@ -19,6 +19,14 @@ namespace Chessy.Game.Model.System
             _mainUnitE.PlayerTC.PlayerT = playerT;
             _mainUnitE.ConditionTC.Condition = conditionT;
             _mainUnitE.IsRightArcherC.IsRight = isRight;
+        }
+        internal void CopyFrom(in UnitMainE unitMainE)
+        {
+            _mainUnitE.UnitTC = unitMainE.UnitTC;
+            _mainUnitE.LevelTC = unitMainE.LevelTC;
+            _mainUnitE.PlayerTC = unitMainE.PlayerTC;
+            _mainUnitE.ConditionTC = unitMainE.ConditionTC;
+            _mainUnitE.IsRightArcherC = unitMainE.IsRightArcherC;
         }
     }
 }

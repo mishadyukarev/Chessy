@@ -3,11 +3,9 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class PawnExtractHillS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal PawnExtractHillS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetPawnExtractHill(in byte cell_0)
         {
             eMG.PawnExtractHillC(cell_0).Resources = 0;
 

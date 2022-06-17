@@ -3,13 +3,11 @@ using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 
-namespace Chessy.Game.Model.System.Master
+namespace Chessy.Game.Model.System
 {
-    sealed class IncreaseWindSnowyS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal IncreaseWindSnowyS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Execute(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void IncreaseWindSnowyM(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {

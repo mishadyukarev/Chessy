@@ -104,15 +104,15 @@ namespace Chessy.Game
                     switch (abilityT)
                     {
                         case AbilityTypes.CircularAttack:
-                            _sMGame.UnitSs.CurcularAttackKingS_M.Attack((byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.CurcularAttackKingM((byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.FirePawn:
-                            _sMGame.UnitSs.FirePawnS_M.Fire((byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.FirePawn((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.PutOutFirePawn:
-                            _sMGame.UnitSs.PutOutFirePawnS_M.PutOut((byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.PutOut((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.Seed:
@@ -128,32 +128,32 @@ namespace Chessy.Game
                             break;
 
                         case AbilityTypes.FireArcher:
-                            _sMGame.UnitSs.FireArcherS_M.Fire((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.FirePawn((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.GrowAdultForest:
-                            _sMGame.UnitSs.GrowAdultForestS_M.Grow((byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.Grow((byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.StunElfemale:
-                            _sMGame.UnitSs.StunElfemaleS_M.Stun((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.Stun((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.ChangeCornerArcher:
-                            _sMGame.UnitSs.ChangeCornerArcherS_M.Change((byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.Change((byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         //Snowy
                         case AbilityTypes.ChangeDirectionWind:
-                            _sMGame.UnitSs.ChangeDirectionWindS_M.TryChange((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.TryChange((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.IncreaseWindSnowy:
-                            _sMGame.UnitSs.IncreaseWindSnowyS_M.Execute(true, (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(true, (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
                         case AbilityTypes.DecreaseWindSnowy:
-                            _sMGame.UnitSs.IncreaseWindSnowyS_M.Execute(false, (byte)objects[_idx_cur++], abilityT, sender);
+                            _sMGame.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(false, (byte)objects[_idx_cur++], abilityT, sender);
                             break;
 
 

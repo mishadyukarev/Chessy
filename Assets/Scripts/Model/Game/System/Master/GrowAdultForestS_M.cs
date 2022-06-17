@@ -6,10 +6,8 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GrowAdultForestS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal GrowAdultForestS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         internal void Grow(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))

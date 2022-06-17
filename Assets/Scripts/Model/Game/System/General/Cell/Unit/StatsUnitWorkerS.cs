@@ -1,13 +1,12 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.Entity.Cell.Unit;
+﻿using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    struct SetStatsUnitS
+    struct StatsUnitWorkerS
     {
         readonly StatsE _statsE;
 
-        internal SetStatsUnitS(in StatsE statsE)
+        internal StatsUnitWorkerS(in StatsE statsE)
         {
             _statsE = statsE;
         }
@@ -17,6 +16,12 @@ namespace Chessy.Game.Model.System
             _statsE.HealthC.Health = hp;
             _statsE.StepC.Steps = steps;
             _statsE.WaterC.Water = water;
+        }
+        internal void Clear()
+        {
+            _statsE.HealthC.Health = default;
+            _statsE.StepC.Steps = default;
+            _statsE.WaterC.Water = default;
         }
     }
 }

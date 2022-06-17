@@ -1,13 +1,10 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ChangeCornerArcherS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal ChangeCornerArcherS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         internal void Change(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))

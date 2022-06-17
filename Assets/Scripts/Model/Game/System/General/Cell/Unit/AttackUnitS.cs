@@ -4,19 +4,17 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class AttackUnitS : SystemModel
+    sealed partial class UnitSystems
     {
-        internal AttackUnitS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         internal void Attack(in double damage, in PlayerTypes whoKiller, in byte cellIdx)
         {
             //if (!eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
             if (damage <= 0) throw new Exception();
-            if (eMG.IsBorder(cellIdx)) throw new Exception();
+            if (_eMG.IsBorder(cellIdx)) throw new Exception();
 
-            eMG.HpUnitC(cellIdx).Health -= damage;
-            if (eMG.HpUnitC(cellIdx).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
-                sMG.UnitSs.KillUnitS.Kill(whoKiller, cellIdx);
+            _eMG.HpUnitC(cellIdx).Health -= damage;
+            if (_eMG.HpUnitC(cellIdx).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
+                KillUnit(whoKiller, cellIdx);
         }
     }
 }

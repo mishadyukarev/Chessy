@@ -3,11 +3,9 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetAttackMeleeCellsS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetAttackMeleeCellsS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetAttackMeleeCells(in byte cell_0)
         {
             eMG.AttackSimpleCellsC(cell_0).Clear();
             eMG.AttackUniqueCellsC(cell_0).Clear();

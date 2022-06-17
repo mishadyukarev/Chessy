@@ -28,7 +28,7 @@ namespace Chessy.Game.Model.System
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
-                                ExecuteUpdateEverythingS.Run();
+                                ExecuteUpdateEverythingM();
                             }
 
                             else if (_eMG.Common.GameModeTC.Is(GameModeTypes.WithFriendOffline))
@@ -39,7 +39,7 @@ namespace Chessy.Game.Model.System
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
-                                    ExecuteUpdateEverythingS.Run();
+                                    ExecuteUpdateEverythingM();
                                 }
 
                                 _eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
@@ -56,7 +56,7 @@ namespace Chessy.Game.Model.System
 
                             if (senderPlayerT == PlayerTypes.Second)
                             {
-                                ExecuteUpdateEverythingS.Run();
+                                ExecuteUpdateEverythingM();
 
                                 _eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
                                 _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);

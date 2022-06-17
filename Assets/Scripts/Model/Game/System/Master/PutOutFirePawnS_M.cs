@@ -4,10 +4,8 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class PutOutFirePawnS_M : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal PutOutFirePawnS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         public void PutOut(in byte cell_0, in Player sender)
         {
             if (eMG.StepUnitC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)

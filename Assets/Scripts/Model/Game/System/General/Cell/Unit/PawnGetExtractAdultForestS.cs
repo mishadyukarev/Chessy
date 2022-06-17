@@ -3,11 +3,9 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class PawnGetExtractAdultForestS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal PawnGetExtractAdultForestS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void PawnGetExtractAdultForest(in byte cell_0)
         {
             eMG.PawnExtractAdultForestC(cell_0).Resources = 0;
 

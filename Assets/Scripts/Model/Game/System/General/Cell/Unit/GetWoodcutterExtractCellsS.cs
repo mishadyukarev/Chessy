@@ -3,11 +3,9 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetWoodcutterExtractCellsS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetWoodcutterExtractCellsS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        public void Get(in byte cell_0)
+        public void GetWoodcutterExtractCells(in byte cell_0)
         {
             eMG.WoodcutterExtractC(cell_0).Resources = 0;
 

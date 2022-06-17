@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
     {
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
-            UnitSs.CopyUnitFromToS.Copy(fromCellIdx, toCellIdx);
+            UnitSs.CopyUnitFromTo(fromCellIdx, toCellIdx);
             _eMG.UnitConditionTC(toCellIdx).Condition = ConditionUnitTypes.None;
 
             UnitSs.ClearUnit(fromCellIdx);

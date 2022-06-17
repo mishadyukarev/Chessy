@@ -3,11 +3,9 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class GetBuildingVisibleS : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal GetBuildingVisibleS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in byte cell_0)
+        internal void GetBuildingVisible(in byte cell_0)
         {
             if (eMG.BuildingTC(cell_0).HaveBuilding)
             {
