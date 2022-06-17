@@ -4,31 +4,27 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class ToggleToolWeaponS : SystemModel
+    public sealed partial class SystemsModelGameForUI
     {
-        public ToggleToolWeaponS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        public void ToggleToolWeapon(in ToolWeaponTypes twT)
         {
-        }
+            _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-        public void Click(in ToolWeaponTypes twT)
-        {
-            eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            if (_eMG.LessonTC.Is(LessonTypes.ThatsYourDamage, LessonTypes.ThatsYourEffects, LessonTypes.ClickDefend)) return;
 
-            if (eMG.LessonTC.Is(LessonTypes.ThatsYourDamage, LessonTypes.ThatsYourEffects, LessonTypes.ClickDefend)) return;
+            _eMG.CellsC.Selected = 0;
 
-            eMG.CellsC.Selected = 0;
-
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
+            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
             {
-                //if (eMG.LessonTC.Is(LessonTypes.ClickPick))
+                //if (_eMG.LessonTC.Is(LessonTypes.ClickPick))
                 //{
                 //    if (twT == ToolWeaponTypes.Pick)
                 //    {
-                //        eMG.LessonTC.SetNextLesson();
+                //        _eMG.LessonTC.SetNextLesson();
                 //    }
                 //}
 
-                if (eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).PawnInfoC.AmountInGame > 0)
+                if (_eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -44,17 +40,17 @@ namespace Chessy.Game.Model.System
 
                     if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
                     {
-                        if (eMG.CellClickTC.Is(CellClickTypes.GiveTakeTW))
+                        if (_eMG.CellClickTC.Is(CellClickTypes.GiveTakeTW))
                         {
                             if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
                             {
-                                if (eMG.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                                if (_eMG.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
                             }
                             else if (twT != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
                         }
                         else
                         {
-                            levT = eMG.SelectedE.ToolWeaponC.LevelT;
+                            levT = _eMG.SelectedE.ToolWeaponC.LevelT;
                         }
                     }
                     else if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.Sword)
@@ -62,28 +58,28 @@ namespace Chessy.Game.Model.System
                         levT = LevelTypes.Second;
                     }
 
-                    eMG.SelectedE.ToolWeaponC.ToolWeaponT = twT;
-                    eMG.SelectedE.ToolWeaponC.LevelT = levT;
+                    _eMG.SelectedE.ToolWeaponC.ToolWeaponT = twT;
+                    _eMG.SelectedE.ToolWeaponC.LevelT = levT;
 
 
-                    eMG.CellClickTC.CellClickT = CellClickTypes.GiveTakeTW;
+                    _eMG.CellClickTC.CellClickT = CellClickTypes.GiveTakeTW;
                 }
                 else
                 {
-                    eMG.MistakeTC.MistakeT = MistakeTypes.NeedPawnsInGame;
-                    eMG.MistakeTimerC.Timer = 0;
-                    eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                    _eMG.MistakeTC.MistakeT = MistakeTypes.NeedPawnsInGame;
+                    _eMG.MistakeTimerC.Timer = 0;
+                    _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
-                eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
-                eMG.MistakeTimerC.Timer = 0;
-                eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                _eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
+                _eMG.MistakeTimerC.Timer = 0;
+                _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
     }
 }

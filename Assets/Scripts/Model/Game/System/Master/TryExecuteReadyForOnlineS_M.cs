@@ -3,27 +3,23 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class TryExecuteReadyForOnlineS_M : SystemModel
+    public sealed partial class SystemsModelGame
     {
-        internal TryExecuteReadyForOnlineS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
-        {
-        }
-
-        internal void TryReady(in Player sender)
+        internal void TryExecuteReadyForOnlineM(in Player sender)
         {
             var playerSend = sender.GetPlayer();
 
-            eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame = !eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame;
+            _eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame = !_eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame;
 
-            if (eMG.PlayerInfoE(PlayerTypes.First).IsReadyForStartOnlineGame
-                && eMG.PlayerInfoE(PlayerTypes.Second).IsReadyForStartOnlineGame)
+            if (_eMG.PlayerInfoE(PlayerTypes.First).IsReadyForStartOnlineGame
+                && _eMG.PlayerInfoE(PlayerTypes.Second).IsReadyForStartOnlineGame)
             {
-                eMG.IsStartedGame = true;
+                _eMG.IsStartedGame = true;
             }
 
             else
             {
-                eMG.IsStartedGame = false;
+                _eMG.IsStartedGame = false;
             }
         }
     }

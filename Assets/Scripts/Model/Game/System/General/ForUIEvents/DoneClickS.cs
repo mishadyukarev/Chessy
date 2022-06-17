@@ -1,14 +1,10 @@
-﻿using Chessy.Game.Model.Entity;
-
-namespace Chessy.Game.Model.System
+﻿namespace Chessy.Game.Model.System
 {
-    public sealed class DoneClickS : SystemModel
+    public sealed partial class SystemsModelGameForUI
     {
-        internal DoneClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        public void Click()
+        public void DoneReadyClick()
         {
-            eMG.RpcPoolEs.DoneToMaster();
+            _eMG.RpcPoolEs.DoneToMaster();
         }
     }
 }

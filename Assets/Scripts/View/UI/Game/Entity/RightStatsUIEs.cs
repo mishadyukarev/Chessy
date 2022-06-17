@@ -11,8 +11,10 @@ namespace Chessy.Game
 
 
         public readonly EnergyUIE EnergyE;
+        internal readonly DamageUIE DamageE;
+        internal readonly DamageUIE WaterE;
 
-        public RightUnitStatUIE Stat(in UnitStatTypes stat) => _stats[stat];
+        internal RightUnitStatUIE Stat(in UnitStatTypes stat) => _stats[stat];
 
         public RightStatsUIEs(in GameObject rightZone)
         {
@@ -30,19 +32,24 @@ namespace Chessy.Game
                 zone.Find("HpCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>()));
 
 
-            zone = statZone.transform.Find("Damage");
-            _stats.Add(UnitStatTypes.Damage, new RightUnitStatUIE(zone.transform.Find("PowerDamage_Image").GetComponent<Image>(),
-                zone.transform.Find("DamageCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>()));
+
+            zone = statZone.transform.Find("Damage+");
+            DamageE = new DamageUIE(new ImageUIC(zone.Find("PowerDamage_Image+").GetComponent<Image>()), 
+                new TextUIC(zone.Find("DamageCurrentUnit_TextMP+").GetComponent<TextMeshProUGUI>()), 
+                new ButtonUIC(zone.Find("Button+").GetComponent<Button>()));
 
 
-            zone = statZone.transform.Find("Steps");
-            EnergyE = new EnergyUIE(new Common.AnimationVC(zone.GetComponent<Animation>()), new ImageUIC(zone.transform.Find("Steps_Image").GetComponent<Image>()),
-                new TextUIC(zone.transform.Find("StepsCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>()));
+            zone = statZone.transform.Find("Steps+");
+            EnergyE = new EnergyUIE(new Common.AnimationVC(zone.GetComponent<Animation>()), 
+                new ImageUIC(zone.Find("Steps_Image+").GetComponent<Image>()),
+                new TextUIC(zone.Find("StepsCurrentUnit_TextMP+").GetComponent<TextMeshProUGUI>()),
+                new ButtonUIC(zone.Find("Button+").GetComponent<Button>()));
 
 
-            zone = statZone.transform.Find("Water");
-            _stats.Add(UnitStatTypes.Water, new RightUnitStatUIE(zone.transform.Find("Water_Image").GetComponent<Image>(),
-                zone.transform.Find("Water_TMP").GetComponent<TextMeshProUGUI>()));
+            zone = statZone.transform.Find("Water+");
+            WaterE = new DamageUIE(new ImageUIC(zone.Find("Water_Image+").GetComponent<Image>()),
+                new TextUIC(zone.Find("Water_TMP+").GetComponent<TextMeshProUGUI>()),
+                new ButtonUIC(zone.Find("Button+").GetComponent<Button>()));
         }
     }
 }

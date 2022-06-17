@@ -9,7 +9,7 @@ namespace Chessy.Game
     {
         public readonly DownPawnUIE PawnE;
         public readonly DonerUIE DonerE;
-        internal readonly DownHeroUIE HeroE;
+        internal readonly DownGodUIE HeroE;
         public readonly DownToolWeaponUIE ToolWeaponE;
         public readonly CityButtonUIE CityButtonUIE;
         public readonly BookLittleUIE BookLittleE;
@@ -20,7 +20,7 @@ namespace Chessy.Game
 
             ToolWeaponE = new DownToolWeaponUIE(downZone);
             DonerE = new DonerUIE(downZone);
-            HeroE = new DownHeroUIE(downZone);
+            HeroE = new DownGodUIE(downZone);
             CityButtonUIE = new CityButtonUIE(downZone);
 
 

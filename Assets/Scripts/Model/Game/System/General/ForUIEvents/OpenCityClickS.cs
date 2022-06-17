@@ -1,34 +1,30 @@
 ﻿using Chessy.Common.Enum;
-using Chessy.Common.Interface;
 using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class OpenCityClickS : SystemModel, IClickUI
+    public sealed partial class SystemsModelGameForUI
     {
-        internal OpenCityClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        public void Click()
+        public void OpenCityClick()
         {
-            eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
 
-            eMG.IsSelectedCity = !eMG.IsSelectedCity;
+            _eMG.IsSelectedCity = !_eMG.IsSelectedCity;
 
-            if (eMG.LessonTC.Is(LessonTypes.OpeningTown))
+            if (_eMG.LessonTC.Is(LessonTypes.OpeningTown))
             {
-                eMG.LessonTC.SetNextLesson();
+                _eMG.LessonTC.SetNextLesson();
 
             }
-            if (eMG.LessonTC.Is(LessonTypes.TryBuyingHouse))
+            if (_eMG.LessonTC.Is(LessonTypes.TryBuyingHouse))
             {
-                if (!eMG.IsSelectedCity) eMG.LessonTC.SetPreviousLesson();
+                if (!_eMG.IsSelectedCity) _eMG.LessonTC.SetPreviousLesson();
             }
 
 
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
     }
 }

@@ -1,25 +1,22 @@
 ﻿using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Game.Model.System.Master
+namespace Chessy.Game.Model.System
 {
-    sealed class GetHeroInCenterS_M : SystemModel
+    public sealed partial class SystemsModelGame
     {
-        internal GetHeroInCenterS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Get(in UnitTypes unitT, in Player sender)
+        internal void GetHeroInCenterM(in UnitTypes unitT, in Player sender)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
 
-            if (eMG.LessonT == LessonTypes.PickingGod)
+            if (_eMG.LessonT == LessonTypes.PickingGod)
             {
-                eMG.LessonTC.SetNextLesson();
+                _eMG.LessonTC.SetNextLesson();
             }
 
-            eMG.PlayerInfoE(whoseMove).GodInfoE.UnitT = unitT;
-            eMG.PlayerInfoE(whoseMove).GodInfoE.HaveHeroInInventor = true;
+            _eMG.PlayerInfoE(whoseMove).GodInfoE.UnitT = unitT;
+            _eMG.PlayerInfoE(whoseMove).GodInfoE.HaveHeroInInventor = true;
         }
     }
 }

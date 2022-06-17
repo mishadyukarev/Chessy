@@ -1,45 +1,41 @@
 ﻿using Chessy.Common.Enum;
-using Chessy.Common.Interface;
-using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class GetHeroDownS : SystemModel, IClickUI
+    public sealed partial class SystemsModelGameForUI
     {
-        internal GetHeroDownS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        public void Click()
+        public void OpenHeroClick()
         {
-            eMG.CellsC.Selected = 0;
+            _eMG.CellsC.Selected = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
+            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerT))
             {
-                eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-                var curPlayer = eMG.CurPlayerITC.PlayerT;
+                var curPlayer = _eMG.CurPlayerIT;
 
-                var myHeroT = eMG.PlayerInfoE(curPlayer).GodInfoE.UnitT;
+                var myHeroT = _eMG.PlayerInfoE(curPlayer).GodInfoE.UnitT;
 
-                if (eMG.PlayerInfoE(curPlayer).GodInfoE.HaveHeroInInventor)
+                if (_eMG.PlayerInfoE(curPlayer).GodInfoE.HaveHeroInInventor)
                 {
-                    if (!eMG.PlayerInfoE(eMG.CurPlayerITC.PlayerT).GodInfoE.CooldownC.HaveCooldown)
+                    if (!_eMG.PlayerInfoE(_eMG.CurPlayerITC.PlayerT).GodInfoE.CooldownC.HaveCooldown)
                     {
-                        eMG.SelectedUnitE.UnitTC.UnitT = myHeroT;
-                        eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
+                        _eMG.SelectedUnitE.UnitTC.UnitT = myHeroT;
+                        _eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
 
 
-                        eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
+                        _eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
                     }
                 }
             }
             else
             {
-                sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedWaitQueue, 0);
-                eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                _sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedWaitQueue, 0);
+                _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
     }
 }

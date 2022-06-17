@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class SystemsModelGame : IUpdate
+    public sealed partial class SystemsModelGame : IUpdate
     {
         readonly EntitiesModelGame _eMG;
         readonly List<Action> _runs;

@@ -1,15 +1,12 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 using Photon.Realtime;
 using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class TryBuyFromMarketBuildingS_M : SystemModel
+    public sealed partial class SystemsModelGame
     {
-        internal TryBuyFromMarketBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void TryBuy(in MarketBuyTypes marketBuyT, in Player sender)
+        internal void TryBuyFromMarketBuildingM(in MarketBuyTypes marketBuyT, in Player sender)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 
@@ -42,7 +39,7 @@ namespace Chessy.Game.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources)
+                if (needRes[resT] > _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -53,36 +50,36 @@ namespace Chessy.Game.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources -= needRes[resT];
+                    _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources -= needRes[resT];
                 }
                 switch (marketBuyT)
                 {
                     case MarketBuyTypes.FoodToWood:
-                        eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Wood).Resources
+                        _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Wood).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD;
                         break;
 
                     case MarketBuyTypes.WoodToFood:
-                        eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Food).Resources
+                        _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Food).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToFood:
-                        eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Food).Resources
+                        _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Food).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD;
                         break;
 
                     case MarketBuyTypes.GoldToWood:
-                        eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Wood).Resources
+                        _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Wood).Resources
                             += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD;
                         break;
                 }
 
-                eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                _eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

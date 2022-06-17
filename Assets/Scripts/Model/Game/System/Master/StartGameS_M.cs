@@ -211,7 +211,7 @@ namespace Chessy.Game
 
                             sMG.MasterSs.TryDestroyAdultForestS.TryDestroy(cell_0);
 
-                            sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.King, PlayerTypes.Second, cell_0);
+                            sMG.SetNewUnitOnCellS(UnitTypes.King, PlayerTypes.Second, cell_0);
                         //}
                     }
 
@@ -226,7 +226,7 @@ namespace Chessy.Game
                         //{
                             eMG.MountainC(cell_0).Resources = 0;
 
-                            sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
+                            sMG.SetNewUnitOnCellS(UnitTypes.Pawn, PlayerTypes.Second, cell_0);
 
                             sMG.UnitSs.SetExtraToolWeapon(cell_0, ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second));
 

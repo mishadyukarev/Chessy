@@ -4,7 +4,7 @@ using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class UnitSystems
+    sealed partial class UnitSystems
     {
         readonly EntitiesModelGame _eMG;
 
@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
         readonly SetEffectsUnitS[] _setEffectsSs = new SetEffectsUnitS[StartValues.CELLS];
         readonly SetStatsUnitS[] _setStatsSs = new SetStatsUnitS[StartValues.CELLS];
 
-        internal readonly SetNewUnitOnCellS SetNewOnCellS;
+        //internal readonly SetNewUnitOnCellS SetNewOnCellS;
         internal readonly ShiftUnitOnOtherCellS_M ShiftOnOtherCellS;
         internal readonly SetLastDiedUnitOnCellS SetLastDiedUnitOnCellS;
         internal readonly AttackShieldUnitOnCellS AttackShieldS;
@@ -53,7 +53,7 @@ namespace Chessy.Game.Model.System
         {
             _eMG = eMG;
 
-            SetNewOnCellS = new SetNewUnitOnCellS(sMG, eMG);
+            //SetNewOnCellS = new SetNewUnitOnCellS(sMG, eMG);
             ShiftOnOtherCellS = new ShiftUnitOnOtherCellS_M(sMG, eMG);
             SetLastDiedUnitOnCellS = new SetLastDiedUnitOnCellS(sMG, eMG);
             CopyUnitFromToS = new CopyUnitFromToS_M(sMG, eMG);

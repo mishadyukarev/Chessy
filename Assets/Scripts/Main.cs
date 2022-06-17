@@ -19,7 +19,7 @@ using UnityEngine;
 
 namespace Chessy
 {
-    sealed class Main : MonoBehaviour
+    sealed partial class Main : MonoBehaviour
     {
         [SerializeField] TestModes TestModeT = default;
 

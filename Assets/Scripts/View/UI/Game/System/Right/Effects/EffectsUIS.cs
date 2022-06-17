@@ -1,5 +1,5 @@
-﻿using Chessy.Game.Model.Entity;
-using System.Collections.Generic;
+﻿using Chessy.Common;
+using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game
 {
@@ -8,73 +8,44 @@ namespace Chessy.Game
         readonly Resources _resourcesE;
         readonly EntitiesViewUIGame _eUI;
 
-        readonly Dictionary<EffectTypes, bool> _isFilled = new Dictionary<EffectTypes, bool>();
+        readonly bool[] _needActiveButton = new bool[(byte)ButtonTypes.End];
 
         internal EffectsUIS(in Resources resources, in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
         {
             _resourcesE = resources;
             _eUI = eUI;
-
-            for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled.Add(effectT, false);
         }
 
         internal override void Sync()
         {
             var needActiveZone = false;
 
-
-            if (e.CellsC.IsSelectedCell)
+            if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ThatsYourEffects)
             {
-                var idx_sel = e.CellsC.Selected;
-
-                if (e.UnitTC(e.CellsC.Selected).HaveUnit)
+                if (e.CellsC.IsSelectedCell)
                 {
-                    for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled[effectT] = false;
+                    var idx_sel = e.CellsC.Selected;
 
-                    for (byte idx_eff = 0; idx_eff < 5; idx_eff++)
+                    if (e.UnitTC(e.CellsC.Selected).HaveUnit)
                     {
-                        _eUI.RightEs.Effect(idx_eff).GO.SetActive(false);
+                        needActiveZone = true;
 
-                        if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ThatsYourEffects)
+                        for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                         {
+                            _needActiveButton[(byte)buttonT] = e.UnitEs(idx_sel).Effect(buttonT) != EffectTypes.None;
 
+                            if (_needActiveButton[(byte)buttonT])
+                            {
+                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _resourcesE.Sprite(e.UnitEs(idx_sel).Effect(buttonT));
+                            }
 
-                            if (!_isFilled[EffectTypes.Shield] && e.ShieldUnitEffectC(idx_sel).HaveAnyProtection)
-                            {
-                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Shield);
-                                _isFilled[EffectTypes.Shield] = true;
-
-                                needActiveZone = true;
-                            }
-                            else if (!_isFilled[EffectTypes.Arraw] && e.FrozenArrawEffectC(idx_sel).HaveShoots)
-                            {
-                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Arraw);
-                                _isFilled[EffectTypes.Arraw] = true;
-                                needActiveZone = true;
-                            }
-                            else if (!_isFilled[EffectTypes.Stun] && e.StunUnitC(idx_sel).IsStunned)
-                            {
-                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.Stun);
-                                _isFilled[EffectTypes.Stun] = true;
-                                needActiveZone = true;
-                            }
-                            else if (!_isFilled[EffectTypes.DamageAdd] && e.HaveKingEffect(idx_sel))
-                            {
-                                _eUI.RightEs.Effect(idx_eff).GO.SetActive(true);
-                                _eUI.RightEs.Effect(idx_eff).ImageUIC.Image.sprite = _resourcesE.Sprite(EffectTypes.DamageAdd);
-                                _isFilled[EffectTypes.DamageAdd] = true;
-                                needActiveZone = true;
-                            }
+                            _eUI.RightEs.Effect(buttonT).GO.SetActive(_needActiveButton[(byte)buttonT]);
                         }
                     }
                 }
             }
 
-            _eUI.RightEs.Effect(0).GO.Transform.parent.gameObject.SetActive(needActiveZone);
-
+            _eUI.RightEs.Effect(ButtonTypes.First).GO.Transform.parent.gameObject.SetActive(needActiveZone);
         }
     }
 }

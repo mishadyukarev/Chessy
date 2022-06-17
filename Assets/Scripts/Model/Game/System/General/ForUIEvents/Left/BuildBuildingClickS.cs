@@ -15,7 +15,7 @@ namespace Chessy.Game.Model.System
 
         internal BuildBuildingClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
-        public void Click(in BuildingTypes buildT)
+        public void BuildBuildingClick(in BuildingTypes buildT)
         {
             if (eMG.CurPlayerIT == eMG.WhoseMovePlayerT)
             {

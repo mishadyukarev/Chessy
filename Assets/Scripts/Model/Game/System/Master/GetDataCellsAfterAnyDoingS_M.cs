@@ -1,5 +1,7 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Common;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
+using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
@@ -20,6 +22,8 @@ namespace Chessy.Game.Model.System
         readonly GetWoodcutterExtractCellsS _getWoodcutterExtractCellsS;
         readonly GetFarmExtractCellsS _getFarmExtractCellsS;
 
+        readonly Dictionary<EffectTypes, bool> _isFilled = new Dictionary<EffectTypes, bool>();
+
         internal GetDataCellsAfterAnyDoingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
         {
             _getBuildingVisibleS = new GetBuildingVisibleS(sMG, eMG);
@@ -36,6 +40,8 @@ namespace Chessy.Game.Model.System
             _getCellsForShiftUnitS = new GetCellsForShiftUnitS(sMG, eMG);
             _getEffectsForUnitsS = new GetEffectsForUnitsS(sMG, eMG);
             _getDamageUnitsS = new GetDamageUnitsS(sMG, eMG);
+
+            for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled.Add(effectT, false);
         }
 
         internal void Run()
@@ -71,6 +77,41 @@ namespace Chessy.Game.Model.System
                 _getAttackMeleeCellsS.Get(cell_0);
                 _getCellsForAttackArcherS.Get(cell_0);
                 _getCellForArsonArcherS.Get(cell_0);
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled[effectT] = false;
+
+
+                if (eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                {
+                    for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
+                    {
+                        eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.None);
+
+                        if (!_isFilled[EffectTypes.Shield] && eMG.ShieldUnitEffectC(cellIdxCurrent).HaveAnyProtection)
+                        {
+                            eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Shield);
+                            _isFilled[EffectTypes.Shield] = true;
+                        }
+                        else if (!_isFilled[EffectTypes.Arraw] && eMG.FrozenArrawEffectC(cellIdxCurrent).HaveShoots)
+                        {
+                            eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Arraw);
+                            _isFilled[EffectTypes.Arraw] = true;
+                        }
+                        else if (!_isFilled[EffectTypes.Stun] && eMG.StunUnitC(cellIdxCurrent).IsStunned)
+                        {
+                            eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Stun);
+                            _isFilled[EffectTypes.Stun] = true;
+                        }
+                        else if (!_isFilled[EffectTypes.DamageAdd] && eMG.HaveKingEffect(cellIdxCurrent))
+                        {
+                            eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.DamageAdd);
+                            _isFilled[EffectTypes.DamageAdd] = true;
+                        }
+                    }
+                }
             }
         }
     }

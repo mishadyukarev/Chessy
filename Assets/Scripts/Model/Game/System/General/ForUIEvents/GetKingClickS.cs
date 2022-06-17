@@ -1,32 +1,28 @@
 ﻿using Chessy.Common.Enum;
-using Chessy.Common.Interface;
-using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class GetKingClickS : SystemModel, IClickUI
+    public sealed partial class SystemsModelGameForUI
     {
-        internal GetKingClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        public void Click()
+        public void GetClickEffect()
         {
-            eMG.CellsC.Selected = 0;
+            _eMG.CellsC.Selected = 0;
 
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
+            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
             {
-                eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-                if (eMG.PlayerInfoE(eMG.CurPlayerITC.PlayerT).KingInfoE.HaveInInventor)
+                if (_eMG.PlayerInfoE(_eMG.CurPlayerITC.PlayerT).KingInfoE.HaveInInventor)
                 {
-                    eMG.SelectedUnitE.UnitTC.UnitT = UnitTypes.King;
-                    eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
+                    _eMG.SelectedUnitE.UnitTC.UnitT = UnitTypes.King;
+                    _eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
 
-                    eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
+                    _eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
                 }
             }
-            else sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+            else _sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
     }
 }

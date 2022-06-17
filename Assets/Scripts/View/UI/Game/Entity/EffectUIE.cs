@@ -1,19 +1,22 @@
-﻿using UnityEngine;
+﻿using Chessy.Common.Component;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Chessy.Game.Entity.View.UI.Right
 {
-    public struct EffectUIE
+    readonly struct EffectUIE
     {
-        public Chessy.Common.Component.GameObjectVC GO;
-        public ImageUIC ImageUIC;
+        internal readonly GameObjectVC GO;
+        internal readonly ImageUIC ImageC;
+        internal readonly ButtonUIC ButtonC;
 
         internal EffectUIE(in Transform rightEffectT, in byte number)
         {
             var trans = rightEffectT.Find("Effect_" + number.ToString());
 
-            GO = new Chessy.Common.Component.GameObjectVC(trans.gameObject);
-            ImageUIC = new ImageUIC(trans.Find("Image").GetComponent<Image>());
+            GO = new GameObjectVC(trans.gameObject);
+            ImageC = new ImageUIC(trans.Find("Image").GetComponent<Image>());
+            ButtonC = new ButtonUIC(trans.Find("Button+").GetComponent<Button>());
         }
     }
 }

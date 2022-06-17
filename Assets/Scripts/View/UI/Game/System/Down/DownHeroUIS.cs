@@ -4,9 +4,9 @@ namespace Chessy.Game
 {
     sealed class DownHeroUIS : SystemUIAbstract
     {
-        readonly DownHeroUIE _downHeroUIE;
+        readonly DownGodUIE _downHeroUIE;
 
-        internal DownHeroUIS(in DownHeroUIE downHeroUIE, in EntitiesModelGame ents) : base(ents)
+        internal DownHeroUIS(in DownGodUIE downHeroUIE, in EntitiesModelGame ents) : base(ents)
         {
             _downHeroUIE = downHeroUIE;
         }

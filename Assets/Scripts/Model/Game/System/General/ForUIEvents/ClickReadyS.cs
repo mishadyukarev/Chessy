@@ -3,15 +3,13 @@ using Chessy.Game.Model.Entity;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class ClickReadyS : SystemModel, IClickUI
+    public sealed partial class SystemsModelGameForUI
     {
-        internal ClickReadyS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        public void Click()
+        public void ClickReady()
         {
-            eMG.RpcPoolEs.ReadyToMaster();
+            _eMG.RpcPoolEs.ReadyToMaster();
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
     }
 }

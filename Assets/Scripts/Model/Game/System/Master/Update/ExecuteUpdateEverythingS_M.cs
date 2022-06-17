@@ -483,7 +483,7 @@ namespace Chessy.Game.Model.System.Master
 
                         if (!haveNearUnit)
                         {
-                            sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.Wolf, PlayerTypes.None, cell_0);
+                            sMG.SetNewUnitOnCellS(UnitTypes.Wolf, PlayerTypes.None, cell_0);
 
                             //Es.UnitE(cell_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
@@ -538,7 +538,7 @@ namespace Chessy.Game.Model.System.Master
                                         {
                                             if (eMG.PlayerInfoE(playerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
                                             {
-                                                sMG.UnitSs.SetNewOnCellS.Set(UnitTypes.Tree, playerT, cell_0);
+                                                sMG.SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
 
                                                 break;
                                             }

@@ -3,15 +3,15 @@ using TMPro;
 
 namespace Chessy.Game
 {
-    public struct RightUnitStatUIE
+    readonly struct RightUnitStatUIE
     {
-        public ImageUIC ImageUIC;
-        public TextUIC TextUIC;
+        internal readonly ImageUIC ImageC;
+        internal readonly TextUIC TextC;
 
-        public RightUnitStatUIE(in Image image, in TextMeshProUGUI textMP)
+        internal RightUnitStatUIE(in Image image, in TextMeshProUGUI textMP)
         {
-            ImageUIC = new ImageUIC(image);
-            TextUIC = new TextUIC(textMP);
+            ImageC = new ImageUIC(image);
+            TextC = new TextUIC(textMP);
         }
     }
 }

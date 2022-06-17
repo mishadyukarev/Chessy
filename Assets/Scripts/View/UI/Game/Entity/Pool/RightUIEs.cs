@@ -10,9 +10,9 @@ namespace Chessy.Game
     public struct RightUIEs
     {
         readonly Dictionary<ButtonTypes, UniqueButtonUIE> _uniques;
-        readonly Dictionary<byte, EffectUIE> _effects;
+        readonly EffectUIE[] _effects;
         public UniqueButtonUIE Unique(in ButtonTypes but) => _uniques[but];
-        public EffectUIE Effect(in byte numberEffect) => _effects[numberEffect];
+        internal EffectUIE Effect(in ButtonTypes buttonT) => _effects[(byte)buttonT];
 
 
         public readonly GameObjectVC Zone;
@@ -48,13 +48,13 @@ namespace Chessy.Game
             }
 
 
-            _effects = new Dictionary<byte, EffectUIE>();
+            _effects = new EffectUIE[(byte)ButtonTypes.End];
 
             var effectZone = rightZone.Find("Effects");
 
-            for (byte idx_effect = 0; idx_effect < 5; idx_effect++)
+            for (var buttonT = (ButtonTypes)1; buttonT <= ButtonTypes.Fifth; buttonT++)
             {
-                _effects.Add(idx_effect, new EffectUIE(effectZone, idx_effect));
+                _effects[(byte)buttonT] = new EffectUIE(effectZone, (byte)buttonT);
             }
         }
     }

@@ -6,13 +6,9 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class TryMeltInMelterBuildingS_M : SystemModel
+    public sealed partial class SystemsModelGame
     {
-        internal TryMeltInMelterBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
-        {
-        }
-
-        internal void TryMelt(in Player sender)
+        internal void TryMeltInMelterBuildingM(in Player sender)
         {
             var needRes = new Dictionary<ResourceTypes, float>();
 
@@ -26,7 +22,7 @@ namespace Chessy.Game.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources)
+                if (needRes[resT] > _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -37,23 +33,23 @@ namespace Chessy.Game.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources -= needRes[resT];
+                    _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
-                if (eMG.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
+                if (_eMG.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
-                    eMG.LessonTC.SetNextLesson();
-                    eMG.IsSelectedCity = true;
+                    _eMG.LessonTC.SetNextLesson();
+                    _eMG.IsSelectedCity = true;
                 }
 
-                eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
-                eMG.PlayerInfoE(eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
+                _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
+                _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
 
-                eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
+                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                _eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

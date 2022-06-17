@@ -52,7 +52,7 @@ namespace Chessy.Game
             switch ((RpcMasterTypes)objects[_idx_cur++])
             {
                 case RpcMasterTypes.Ready:
-                    _sMGame.MasterSs.TryExecuteReadyForOnlineS.TryReady(sender);
+                    _sMGame.TryExecuteReadyForOnlineM(sender);
                     break;
 
                 case RpcMasterTypes.Done:
@@ -75,15 +75,15 @@ namespace Chessy.Game
 
                 case RpcMasterTypes.SetUnit:
                     var cell = (byte)objects[_idx_cur++];
-                    _sMGame.MasterSs.TrySetUnitS_M.TrySet((UnitTypes)objects[_idx_cur++], sender, cell);
+                    _sMGame.TrySetUnitOnCellM((UnitTypes)objects[_idx_cur++], sender, cell);
                     break;
 
                 case RpcMasterTypes.GetHero:
-                    _sMGame.MasterSs.GetHeroInCenterS.Get((UnitTypes)objects[_idx_cur++], sender);
+                    _sMGame.GetHeroInCenterM((UnitTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.Melt:
-                    _sMGame.MasterSs.TryMeltInMelterBuildingS.TryMelt(sender);
+                    _sMGame.TryMeltInMelterBuildingM(sender);
                     break;
 
                 case RpcMasterTypes.GiveTakeToolWeapon:
@@ -96,7 +96,7 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.MarketBuy:
-                    _sMGame.MasterSs.TryBuyFromMarketBuildingS.TryBuy((MarketBuyTypes)objects[_idx_cur++], sender);
+                    _sMGame.TryBuyFromMarketBuildingM((MarketBuyTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.UniqueAbility:

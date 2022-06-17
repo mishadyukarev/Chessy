@@ -10,7 +10,7 @@ namespace Chessy.Game
         {
         }
 
-        public void Click()
+        public void GetClickEffect()
         {
             sMG.MasterSs.StartGameS.Start(false);
         }

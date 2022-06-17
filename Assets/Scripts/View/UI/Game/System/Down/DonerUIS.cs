@@ -16,7 +16,7 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.ShiftPawnHere)
+            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.HoldPressReady)
             {
                 _donerE.ButtonC.SetActiveParent(true);
                 _donerE.WaitGoC.SetActive(true);

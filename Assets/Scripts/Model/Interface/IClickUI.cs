@@ -2,6 +2,6 @@
 {
     public interface IClickUI
     {
-        void Click();
+        void GetClickEffect();
     }
 }

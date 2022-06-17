@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    readonly struct DownHeroUIE
+    readonly struct DownGodUIE
     {
         readonly ImageUIC[] _units;
 
@@ -16,7 +16,7 @@ namespace Chessy.Game
         internal ImageUIC Image(in UnitTypes unit) => _units[(byte)unit];
 
 
-        internal DownHeroUIE(in Transform downZoneT)
+        internal DownGodUIE(in Transform downZoneT)
         {
             var hero = downZoneT.Find("Hero");
 
