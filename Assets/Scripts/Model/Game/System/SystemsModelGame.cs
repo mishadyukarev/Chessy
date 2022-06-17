@@ -1,5 +1,6 @@
 ﻿using Chessy.Common.Model.System;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.Model.System.Master;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,19 +12,13 @@ namespace Chessy.Game.Model.System
         readonly EntitiesModelGame _eMG;
         readonly List<Action> _runs;
 
-        internal readonly MistakeSs MistakeSs;
-        internal readonly MasterSystems MasterSs;
+        internal readonly BuildingSystems BuildingSs;
+        internal readonly UnitSystems UnitSs;
+        internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
+        internal readonly ExecuteUpdateEverythingS_M ExecuteUpdateEverythingS;
 
         public readonly SystemsModelCommon CommonSs;
         public readonly SystemsModelGameForUI ForUISystems;
-        public readonly OnJoinedRoomS OnJoinedRoomS;
-
-
-
-        internal UnitSystems UnitSs => MasterSs.UnitSs;
-        internal BuildingSystems BuildingSs => MasterSs.BuildingSs;
-
-
 
         public SystemsModelGame(in SystemsModelCommon sMC, in EntitiesModelGame eMG)
         {
@@ -41,10 +36,11 @@ namespace Chessy.Game.Model.System
                 new Chessy.Game.MistakeS(this, eMG).Update,
             };
 
-            MistakeSs = new MistakeSs(this, eMG);
-            MasterSs = new MasterSystems(this, eMG);
             ForUISystems = new SystemsModelGameForUI(this, eMG);
-            OnJoinedRoomS = new OnJoinedRoomS(this, eMG);
+            BuildingSs = new BuildingSystems(this, eMG);
+            UnitSs = new UnitSystems(this, eMG);
+            ExecuteUpdateEverythingS = new ExecuteUpdateEverythingS_M(this, eMG);
+            GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eMG);
         }
 
         public void Update()

@@ -1,22 +1,18 @@
-﻿using Chessy.Game.Model.Entity;
-
-namespace Chessy.Game.Model.System
+﻿namespace Chessy.Game.Model.System
 {
-    sealed class TryTakeAdultForestResourcesS_M : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal TryTakeAdultForestResourcesS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void TryTake(in float taking, in byte cellIdx)
+        internal void TryTakeAdultForestResourcesM(in float taking, in byte cellIdx)
         {
-            if (eMG.AdultForestC(cellIdx).HaveAnyResources)
+            if (_eMG.AdultForestC(cellIdx).HaveAnyResources)
             {
-                eMG.AdultForestC(cellIdx).Resources -= taking;
+                _eMG.AdultForestC(cellIdx).Resources -= taking;
 
-                if (!eMG.AdultForestC(cellIdx).HaveAnyResources)
+                if (!_eMG.AdultForestC(cellIdx).HaveAnyResources)
                 {
-                    eMG.AdultForestC(cellIdx).Resources = 0;
-                    sMG.MasterSs.TrySeedNewYoungForestS.TrySeed(cellIdx);
-                    sMG.MasterSs.TryClearAllTrailsOnCellS.TryDestroy(cellIdx);
+                    _eMG.AdultForestC(cellIdx).Resources = 0;
+                    TrySeedNewYoungForestOnCell(cellIdx);
+                    TryDestroyAllTrailsOnCell(cellIdx);
                 }
             }
         }

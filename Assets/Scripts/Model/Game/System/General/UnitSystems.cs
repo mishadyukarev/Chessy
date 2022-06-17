@@ -15,14 +15,11 @@ namespace Chessy.Game.Model.System
         readonly SetEffectsUnitS[] _setEffectsSs = new SetEffectsUnitS[StartValues.CELLS];
         readonly SetStatsUnitS[] _setStatsSs = new SetStatsUnitS[StartValues.CELLS];
 
-        //internal readonly SetNewUnitOnCellS SetNewOnCellS;
-        internal readonly ShiftUnitOnOtherCellS_M ShiftOnOtherCellS;
         internal readonly SetLastDiedUnitOnCellS SetLastDiedUnitOnCellS;
         internal readonly AttackShieldUnitOnCellS AttackShieldS;
         internal readonly CopyUnitFromToS_M CopyUnitFromToS;
         internal readonly AttackUnitS AttackUnitS;
         internal readonly KillUnitS_M KillUnitS;
-        internal readonly AttackUnitFromToS_M AttackUnitFromToS_M;
 
 
         #region Abilities
@@ -35,7 +32,6 @@ namespace Chessy.Game.Model.System
         internal readonly StunElfemaleS_M StunElfemaleS_M;
         internal readonly FireArcherS_M FireArcherS_M;
         internal readonly GrowAdultForestS_M GrowAdultForestS_M;
-        internal readonly TryDestroyBuildingS_M TryDestroyBuildingS_M;
         internal readonly TryChangeDirectionWindWithSnowyS_M ChangeDirectionWindS_M;
 
         #endregion
@@ -53,14 +49,11 @@ namespace Chessy.Game.Model.System
         {
             _eMG = eMG;
 
-            //SetNewOnCellS = new SetNewUnitOnCellS(sMG, eMG);
-            ShiftOnOtherCellS = new ShiftUnitOnOtherCellS_M(sMG, eMG);
             SetLastDiedUnitOnCellS = new SetLastDiedUnitOnCellS(sMG, eMG);
             CopyUnitFromToS = new CopyUnitFromToS_M(sMG, eMG);
             AttackShieldS = new AttackShieldUnitOnCellS(sMG, eMG);
             KillUnitS = new KillUnitS_M(sMG, eMG);
             AttackUnitS = new AttackUnitS(sMG, eMG);
-            AttackUnitFromToS_M = new AttackUnitFromToS_M(sMG, eMG);
 
 
             #region Abilities
@@ -73,7 +66,6 @@ namespace Chessy.Game.Model.System
             StunElfemaleS_M = new StunElfemaleS_M(sMG, eMG);
             FireArcherS_M = new FireArcherS_M(sMG, eMG);
             GrowAdultForestS_M = new GrowAdultForestS_M(sMG, eMG);
-            TryDestroyBuildingS_M = new TryDestroyBuildingS_M(sMG, eMG);
             ChangeDirectionWindS_M = new TryChangeDirectionWindWithSnowyS_M(sMG, eMG);
 
             #endregion

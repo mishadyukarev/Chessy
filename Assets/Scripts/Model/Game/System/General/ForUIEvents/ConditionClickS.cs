@@ -1,27 +1,23 @@
-﻿using Chessy.Game.Model.Entity;
-
-namespace Chessy.Game.Model.System
+﻿namespace Chessy.Game.Model.System
 {
-    public sealed class ConditionClickS : SystemModel
+    public sealed partial class SystemsModelGameForUI
     {
-        internal ConditionClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         public void Click(in ConditionUnitTypes conditionT)
         {
-            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
+            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
             {
-                if (eMG.UnitConditionTC(eMG.CellsC.Selected).Is(conditionT))
+                if (_eMG.UnitConditionTC(_eMG.CellsC.Selected).Is(conditionT))
                 {
-                    eMG.RpcPoolEs.ConditionUnitToMaster(eMG.CellsC.Selected, ConditionUnitTypes.None);
+                    _eMG.RpcPoolEs.ConditionUnitToMaster(_eMG.CellsC.Selected, ConditionUnitTypes.None);
                 }
                 else
                 {
-                    eMG.RpcPoolEs.ConditionUnitToMaster(eMG.CellsC.Selected, conditionT);
+                    _eMG.RpcPoolEs.ConditionUnitToMaster(_eMG.CellsC.Selected, conditionT);
                 }
             }
-            else sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+            else _sMG.Mistake(MistakeTypes.NeedWaitQueue);
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
     }
 }

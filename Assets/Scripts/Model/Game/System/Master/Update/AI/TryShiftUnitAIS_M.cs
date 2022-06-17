@@ -74,7 +74,7 @@ namespace Chessy.Game
                                     {
                                         if(eMG.UnitNeedStepsForShiftC(idxCellStart).NeedSteps(idxCell) <= eMG.StepUnit(idxCellStart))
                                         {
-                                            sMG.UnitSs.ShiftOnOtherCellS.Shift(idxCellStart, idxCell);
+                                            sMG.ShiftUnitOnOtherCellM(idxCellStart, idxCell);
                                             isShifted = true;
                                             break;
                                         }

@@ -130,9 +130,9 @@ namespace Chessy.Game.EventsUI
             var leftEs = eUIGame.LeftEs;
             eUIGame.LeftEs.EnvironmentEs.InfoButtonC.AddListener(delegate { sMGame.ForUISystems.EnvironmentClick(); });
             //City
-            leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { sMGame.ForUISystems.BuildBuildingClickS.BuildBuildingClick(BuildingTypes.House); });
-            leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { sMGame.ForUISystems.BuildBuildingClickS.BuildBuildingClick(BuildingTypes.Market); });
-            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(delegate { sMGame.ForUISystems.BuildBuildingClickS.BuildBuildingClick(BuildingTypes.Smelter); });
+            leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { sMGame.ForUISystems.BuildBuildingClick(BuildingTypes.House); });
+            leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { sMGame.ForUISystems.BuildBuildingClick(BuildingTypes.Market); });
+            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(delegate { sMGame.ForUISystems.BuildBuildingClick(BuildingTypes.Smelter); });
 
             leftEs.PremiumButtonC.AddListener(delegate
             {
@@ -144,20 +144,20 @@ namespace Chessy.Game.EventsUI
 
             #region Right
 
-            eUIGame.RightEs.Unique(ButtonTypes.First).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.First); });
+            eUIGame.RightEs.Unique(ButtonTypes.First).ButtonC.AddListener(delegate { sMGame.ForUISystems.Click(ButtonTypes.First); });
             eUIGame.RightEs.Unique(ButtonTypes.First).ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _abilities[ButtonTypes.First].Press(b));
 
-            eUIGame.RightEs.Unique(ButtonTypes.Second).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.Second); });
+            eUIGame.RightEs.Unique(ButtonTypes.Second).ButtonC.AddListener(delegate { sMGame.ForUISystems.Click(ButtonTypes.Second); });
             eUIGame.RightEs.Unique(ButtonTypes.Second).ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _abilities[ButtonTypes.Second].Press(b));
 
-            eUIGame.RightEs.Unique(ButtonTypes.Third).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.Third); });
+            eUIGame.RightEs.Unique(ButtonTypes.Third).ButtonC.AddListener(delegate { sMGame.ForUISystems.Click(ButtonTypes.Third); });
             eUIGame.RightEs.Unique(ButtonTypes.Third).ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _abilities[ButtonTypes.Third].Press(b));
 
 
-            eUIGame.RightEs.Unique(ButtonTypes.Fourth).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.Fourth); });
+            eUIGame.RightEs.Unique(ButtonTypes.Fourth).ButtonC.AddListener(delegate { sMGame.ForUISystems.Click(ButtonTypes.Fourth); });
             eUIGame.RightEs.Unique(ButtonTypes.Fourth).ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _abilities[ButtonTypes.Fourth].Press(b));
 
-            eUIGame.RightEs.Unique(ButtonTypes.Fifth).ButtonC.AddListener(delegate { sMGame.ForUISystems.AbilityClickS.Click(ButtonTypes.Fifth); });
+            eUIGame.RightEs.Unique(ButtonTypes.Fifth).ButtonC.AddListener(delegate { sMGame.ForUISystems.Click(ButtonTypes.Fifth); });
                 
 
             eUIGame.RightEs.Effect(ButtonTypes.First).ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _effects[ButtonTypes.First].Press(b));
@@ -166,10 +166,10 @@ namespace Chessy.Game.EventsUI
 
 
 
-            eUIGame.RightEs.ProtectE.ButtonC.AddListener(delegate { sMGame.ForUISystems.ConditionClickS.Click(ConditionUnitTypes.Protected); });
+            eUIGame.RightEs.ProtectE.ButtonC.AddListener(() => sMGame.ForUISystems.Click(ConditionUnitTypes.Protected));
             eUIGame.RightEs.ProtectE.ButtonC.GameObject.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Defend].Press(b));
 
-            eUIGame.RightEs.RelaxE.ButtonC.AddListener(delegate { sMGame.ForUISystems.ConditionClickS.Click(ConditionUnitTypes.Relaxed); });
+            eUIGame.RightEs.RelaxE.ButtonC.AddListener(delegate { sMGame.ForUISystems.Click(ConditionUnitTypes.Relaxed); });
             eUIGame.RightEs.RelaxE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.ExtractPawn].Press(b));
 
             eUIGame.RightEs.StatsEs.EnergyE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Steps].Press(b));
@@ -195,12 +195,9 @@ namespace Chessy.Game.EventsUI
             });
             centerEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate
             {
-                sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Elfemale);
+                sMGame.ForUISystems.GetHeroClickCenter(UnitTypes.Elfemale);
             });
-            centerEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(delegate
-            {
-                sMGame.ForUISystems.GetHeroClickCenterS.Get(UnitTypes.Snowy);
-            });
+            centerEs.HeroE(UnitTypes.Snowy).ButtonC.AddListener(()=> sMGame.ForUISystems.GetHeroClickCenter(UnitTypes.Snowy));
             centerEs.OpenShopButtonC.AddListener(delegate
             {
                 OpenShop(eMGame, eMCommon);
@@ -228,7 +225,7 @@ namespace Chessy.Game.EventsUI
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToWood); });
 
 
-            centerEs.SkipLessonE.ButtonUIC.AddListener(sMGame.ForUISystems.ClickSkipLessonCenterS.GetClickEffect);
+            centerEs.SkipLessonE.ButtonUIC.AddListener(sMGame.ForUISystems.GetClickEffects);
 
 
             #endregion

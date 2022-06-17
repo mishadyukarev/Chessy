@@ -20,7 +20,7 @@ namespace Chessy.Game.Model.System
                     _eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
                 }
             }
-            else _sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+            else _sMG.Mistake(MistakeTypes.NeedWaitQueue);
 
             _eMG.NeedUpdateView = true;
         }

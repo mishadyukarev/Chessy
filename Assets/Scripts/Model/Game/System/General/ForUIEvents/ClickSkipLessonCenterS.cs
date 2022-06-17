@@ -1,18 +1,10 @@
-﻿using Chessy.Common.Interface;
-using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.System;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game.Model.System
 {
-    public sealed class ClickSkipLessonCenterS : SystemModel, IClickUI
+    public sealed partial class SystemsModelGameForUI
     {
-        internal ClickSkipLessonCenterS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        public void GetClickEffects()
         {
-        }
-
-        public void GetClickEffect()
-        {
-            sMG.MasterSs.StartGameS.Start(false);
+            _sMG.StartGame(false);
         }
     }
 }

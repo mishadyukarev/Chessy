@@ -78,7 +78,7 @@ namespace Chessy.Game
             {
                 byte cellIdx = 85;
 
-                sMG.MasterSs.ClearAllEnvironmentS.Clear(cellIdx);
+                sMG.ClearAllEnvironment(cellIdx);
                 sMG.SetNewUnitOnCellS(UnitTypes.King, playerBotT, cellIdx);
 
                 //TrySetUnit(ref _theMostBigPointForSettingKing, _pointsCellsForSettingKing, UnitTypes.King, playerBotT);
@@ -113,7 +113,7 @@ namespace Chessy.Game
 
                                 if(unitT == UnitTypes.King)
                                 {
-                                    sMG.MasterSs.ClearAllEnvironmentS.Clear(idxCell);
+                                    sMG.ClearAllEnvironment(idxCell);
                                 }
 
                                 break;

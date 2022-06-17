@@ -9,31 +9,29 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class BuildBuildingClickS : SystemModel
+    public sealed partial class SystemsModelGameForUI
     {
         int _buildingsForSkipLesson = 6;
 
-        internal BuildBuildingClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         public void BuildBuildingClick(in BuildingTypes buildT)
         {
-            if (eMG.CurPlayerIT == eMG.WhoseMovePlayerT)
+            if (_eMG.CurPlayerIT == _eMG.WhoseMovePlayerT)
             {
                 if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
                 {
-                    if (eMG.SelectedE.BuildingsC.Is(buildT))
+                    if (_eMG.SelectedE.BuildingsC.Is(buildT))
                     {
-                        eMG.SelectedE.BuildingsC.Set(buildT, false);
-                        eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        _eMG.SelectedE.BuildingsC.Set(buildT, false);
+                        _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
-                    else if (eMG.PlayerInfoE(eMG.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
+                    else if (_eMG.PlayerInfoE(_eMG.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
                     {
-                        eMG.SelectedE.BuildingsC.Set(buildT, true);
-                        eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        _eMG.SelectedE.BuildingsC.Set(buildT, true);
+                        _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
                     else
                     {
-                        eMG.RpcPoolEs.Action0(eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyBuilding, buildT });
+                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyBuilding, buildT });
                     }
                 }
 
@@ -42,15 +40,15 @@ namespace Chessy.Game.Model.System
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        eMG.RpcPoolEs.Action0(eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyBuilding, buildT });
+                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyBuilding, buildT });
                         break;
 
                     case BuildingTypes.Market:
-                        //if (eMG.LessonT == LessonTypes.ClickBuyMarketInTown)
+                        //if (_eMG.LessonT == LessonTypes.ClickBuyMarketInTown)
                         //{
-                        //    eMG.LessonTC.SetNextLesson();
-                        //    eMG.AdultForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = EnvironmentValues.MAX_RESOURCES;
-                        //    eMG.BuildingTC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).BuildingT = BuildingTypes.None;
+                        //    _eMG.LessonTC.SetNextLesson();
+                        //    _eMG.AdultForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = EnvironmentValues.MAX_RESOURCES;
+                        //    _eMG.BuildingTC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).BuildingT = BuildingTypes.None;
                         //}
                         break;
 
@@ -64,15 +62,15 @@ namespace Chessy.Game.Model.System
             }
             else
             {
-                sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+                _sMG.Mistake(MistakeTypes.NeedWaitQueue);
             }
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
 
         internal void TryBuy(in BuildingTypes buildT, in Player sender)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
 
             var needRes = new Dictionary<ResourceTypes, float>();
             var canBuild = true;
@@ -108,7 +106,7 @@ namespace Chessy.Game.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                                need = _eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
@@ -188,61 +186,61 @@ namespace Chessy.Game.Model.System
                 }
 
                 needRes.Add(resT, need);
-                if (need > eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                if (need > _eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
             }
 
             if (canBuild)
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                    _eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        eMG.PlayerInfoE(whoseMove).PawnInfoC.MaxAvailable++;
+                        _eMG.PlayerInfoE(whoseMove).PawnInfoC.MaxAvailable++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
-                        eMG.PlayerInfoE(whoseMove).WoodForBuyHouse += eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                        _eMG.PlayerInfoE(whoseMove).WoodForBuyHouse += _eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
                         break;
 
                     case BuildingTypes.Market:
-                        eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Market);
+                        _eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Market);
                         break;
 
                     case BuildingTypes.Smelter:
-                        eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Smelter);
+                        _eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Smelter);
                         break;
 
                     default: throw new Exception();
                 }
 
 
-                if (eMG.LessonT == LessonTypes.BuildHouses)
+                if (_eMG.LessonT == LessonTypes.BuildHouses)
                 {
-                    if(eMG.PlayerInfoE(PlayerTypes.First).PawnInfoC.MaxAvailable >= _buildingsForSkipLesson)
+                    if(_eMG.PlayerInfoE(PlayerTypes.First).PawnInfoC.MaxAvailable >= _buildingsForSkipLesson)
                     {
-                        eMG.LessonTC.SetNextLesson();
+                        _eMG.LessonTC.SetNextLesson();
                     }
                 }
 
 
-                eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
+                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
             }
 
             else
             {
-                if (eMG.LessonTC.Is(Enum.LessonTypes.TryBuyingHouse))
+                if (_eMG.LessonTC.Is(Enum.LessonTypes.TryBuyingHouse))
                 {
-                    eMG.LessonTC.SetNextLesson();
+                    _eMG.LessonTC.SetNextLesson();
                 }
 
-                eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                _eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
             }
 
-            //if (eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
+            //if (_eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
             //{
-            //    eMG.LessonTC.SetNextLesson();
+            //    _eMG.LessonTC.SetNextLesson();
             //}
 
         }

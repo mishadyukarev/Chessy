@@ -1,25 +1,20 @@
-﻿using Chessy.Game.Model.Entity;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Game.Model.System.Master
+namespace Chessy.Game.Model.System
 {
-    sealed class TryAttackUnitOnCell_M : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal TryAttackUnitOnCell_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        internal void TryAttackUnitOnCell(in byte idxCellFrom, in byte idxCellTo, in Player sender)
         {
-        }
+            var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
 
-        internal void TryAttack(in byte idx_from, in byte idx_to, in Player sender)
-        {
-            var whoseMove = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var canAttack = _eMG.AttackUniqueCellsC(idxCellFrom).Contains(idxCellTo)
+                || _eMG.AttackSimpleCellsC(idxCellFrom).Contains(idxCellTo);
 
-            var canAttack = eMG.AttackUniqueCellsC(idx_from).Contains(idx_to)
-                || eMG.AttackSimpleCellsC(idx_from).Contains(idx_to);
-
-            if (canAttack && eMG.UnitPlayerTC(idx_from).Is(whoseMove))
+            if (canAttack && _eMG.UnitPlayerTC(idxCellFrom).Is(whoseMove))
             {
-                sMG.UnitSs.AttackUnitFromToS_M.Attack(idx_from, idx_to);
+                AttackUnitFromTo(idxCellFrom, idxCellTo);
             }
         }
     }

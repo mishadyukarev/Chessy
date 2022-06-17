@@ -41,7 +41,7 @@ namespace Chessy.Game.Model.System
                             else
                             {
 
-                                _sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedBuildingHouses, 0);
+                                _sMG.SetMistake(MistakeTypes.NeedBuildingHouses, 0);
                                 _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
                                 _eMG.IsSelectedCity = true;
                             }
@@ -52,7 +52,7 @@ namespace Chessy.Game.Model.System
                     {
                         _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
 
-                        _sMG.MistakeSs.SetMistakeS.Set(MistakeTypes.NeedMorePeopleInCity, 0);
+                        _sMG.SetMistake(MistakeTypes.NeedMorePeopleInCity, 0);
                         //..E.Sound(ClipTypes.Mistake).Action.Invoke();
                     }
 

@@ -56,21 +56,21 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.Done:
-                    _sMGame.MasterSs.TryExecuteDoneS_M.TryDone(sender);
+                    _sMGame.TryDone(sender);
                     break;
 
                 case RpcMasterTypes.Shift:
-                    _sMGame.MasterSs.TryShiftUnitS_M.TryShift((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                    _sMGame.TryShiftUnitM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.Attack:
                     var cell_from = (byte)objects[_idx_cur++];
                     var cell_to = (byte)objects[_idx_cur++];
-                    _sMGame.MasterSs.TryAttackUnit_M.TryAttack(cell_from, cell_to, sender);
+                    _sMGame.TryAttackUnitOnCell(cell_from, cell_to, sender);
                     break;
 
                 case RpcMasterTypes.ConditionUnit:
-                    _sMGame.MasterSs.TrySetConditionUnitS.TrySet((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                    _sMGame.TrySetConditionUnitOnCellM((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.SetUnit:
@@ -88,11 +88,11 @@ namespace Chessy.Game
 
                 case RpcMasterTypes.GiveTakeToolWeapon:
                     var idx = (byte)objects[_idx_cur++];
-                    _sMGame.MasterSs.TryGiveTakeToolWeaponUnitS.TryGiveTake((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], idx, sender);
+                    _sMGame.TryGiveTakeToolOrWeaponToUnitOnCellM((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], idx, sender);
                     break;
 
                 case RpcMasterTypes.BuyBuilding:
-                    _sMGame.ForUISystems.BuildBuildingClickS.TryBuy((BuildingTypes)objects[_idx_cur++], sender);
+                    _sMGame.ForUISystems.TryBuy((BuildingTypes)objects[_idx_cur++], sender);
                     break;
 
                 case RpcMasterTypes.MarketBuy:
@@ -116,15 +116,15 @@ namespace Chessy.Game
                             break;
 
                         case AbilityTypes.Seed:
-                            _sMGame.MasterSs.TrySeedYoungForestOnCellWithPawnUnitS.TrySeed(abilityT, sender, (byte)objects[_idx_cur++]);
+                            _sMGame.TrySeedYoungForestOnCellWithPawnM(abilityT, sender, (byte)objects[_idx_cur++]);
                             break;
 
                         case AbilityTypes.SetFarm:
-                            _sMGame.MasterSs.TryBuildFarmOnCellWithUnitS.TryBuild((byte)objects[_idx_cur++], sender);
+                            _sMGame.TryBuildFarmOnCellWithUnitM((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.DestroyBuilding:
-                            _sMGame.UnitSs.TryDestroyBuildingS_M.Destroy((byte)objects[_idx_cur++], sender);
+                            _sMGame.BuildingSs.Destroy((byte)objects[_idx_cur++], sender);
                             break;
 
                         case AbilityTypes.FireArcher:
@@ -304,7 +304,7 @@ namespace Chessy.Game
                 default: throw new Exception();
             }
 
-            _sMGame.MasterSs.GetDataCellsS.Run();
+            _sMGame.GetDataCellsS.Run();
             _eMG.NeedUpdateView = true;
 
             SyncAllMaster();
@@ -340,7 +340,7 @@ namespace Chessy.Game
 
                     var mistakeT = (MistakeTypes)objects[_idx_cur++];
 
-                    _sMGame.MistakeSs.MistakeS.Mistake(mistakeT);
+                    _sMGame.Mistake(mistakeT);
 
                     _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
 

@@ -4,49 +4,47 @@ using System;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed class AbilityClickS : SystemModel
+    public sealed partial class SystemsModelGameForUI
     {
-        internal AbilityClickS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         public void Click(in ButtonTypes uniqueButton)
         {
-            if (eMG.CurPlayerIT == eMG.WhoseMovePlayerT)
+            if (_eMG.CurPlayerIT == _eMG.WhoseMovePlayerT)
             {
-                var cell_sel = eMG.SelectedCell;
+                var cell_sel = _eMG.SelectedCell;
 
-                var abil = eMG.UnitButtonAbilitiesC(cell_sel).Ability(uniqueButton);
+                var abil = _eMG.UnitButtonAbilitiesC(cell_sel).Ability(uniqueButton);
 
-                if (!eMG.StunUnitC(cell_sel).IsStunned)
+                if (!_eMG.StunUnitC(cell_sel).IsStunned)
                 {
-                    if (!eMG.UnitCooldownAbilitiesC(cell_sel).HaveCooldown(abil))
+                    if (!_eMG.UnitCooldownAbilitiesC(cell_sel).HaveCooldown(abil))
                     {
                         switch (abil)
                         {
                             case AbilityTypes.FirePawn:
-                                eMG.RpcPoolEs.FirePawnToMas(cell_sel);
+                                _eMG.RpcPoolEs.FirePawnToMas(cell_sel);
                                 break;
 
                             case AbilityTypes.PutOutFirePawn:
-                                eMG.RpcPoolEs.PutOutFirePawnToMas(cell_sel);
+                                _eMG.RpcPoolEs.PutOutFirePawnToMas(cell_sel);
                                 break;
 
                             case AbilityTypes.Seed:
-                                eMG.RpcPoolEs.SeedEnvToMaster(cell_sel, EnvironmentTypes.YoungForest);
+                                _eMG.RpcPoolEs.SeedEnvToMaster(cell_sel, EnvironmentTypes.YoungForest);
                                 break;
 
                             case AbilityTypes.FireArcher:
-                                eMG.SelectedE.AbilityTC.Ability = AbilityTypes.FireArcher;
-                                eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
+                                _eMG.SelectedE.AbilityTC.Ability = AbilityTypes.FireArcher;
+                                _eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
                                 break;
 
                             case AbilityTypes.CircularAttack:
-                                eMG.RpcPoolEs.CircularAttackKingToMaster(cell_sel);
+                                _eMG.RpcPoolEs.CircularAttackKingToMaster(cell_sel);
                                 break;
 
                             case AbilityTypes.StunElfemale:
                                 {
-                                    eMG.SelectedE.AbilityTC.Ability = AbilityTypes.StunElfemale;
-                                    eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
+                                    _eMG.SelectedE.AbilityTC.Ability = AbilityTypes.StunElfemale;
+                                    _eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
                                 }
                                 break;
 
@@ -59,36 +57,36 @@ namespace Chessy.Game.Model.System
                             //Snowy
 
                             case AbilityTypes.IncreaseWindSnowy:
-                                eMG.RpcPoolEs.IncreaseWindSnowy_ToMaster(cell_sel);
+                                _eMG.RpcPoolEs.IncreaseWindSnowy_ToMaster(cell_sel);
                                 break;
 
                             case AbilityTypes.DecreaseWindSnowy:
-                                eMG.RpcPoolEs.DecreaseWindSnowy_ToMaster(cell_sel);
+                                _eMG.RpcPoolEs.DecreaseWindSnowy_ToMaster(cell_sel);
                                 break;
 
                             case AbilityTypes.ChangeCornerArcher:
-                                eMG.RpcPoolEs.ChangeCornerArchToMas(cell_sel);
+                                _eMG.RpcPoolEs.ChangeCornerArchToMas(cell_sel);
                                 break;
 
                             case AbilityTypes.GrowAdultForest:
-                                eMG.RpcPoolEs.GrowAdultForest(cell_sel);
+                                _eMG.RpcPoolEs.GrowAdultForest(cell_sel);
                                 break;
 
                             case AbilityTypes.ChangeDirectionWind:
                                 {
-                                    eMG.SelectedE.AbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
-                                    eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
+                                    _eMG.SelectedE.AbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
+                                    _eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
                                 }
                                 break;
 
                             case AbilityTypes.SetFarm:
                                 {
-                                    eMG.RpcPoolEs.BuildFarmToMaster(cell_sel);
+                                    _eMG.RpcPoolEs.BuildFarmToMaster(cell_sel);
                                 }
                                 break;
 
                             case AbilityTypes.DestroyBuilding:
-                                eMG.RpcPoolEs.DestroyBuildingToMaster(cell_sel);
+                                _eMG.RpcPoolEs.DestroyBuildingToMaster(cell_sel);
                                 break;
 
 
@@ -107,36 +105,36 @@ namespace Chessy.Game.Model.System
 
 
                             case AbilityTypes.Resurrect:
-                                eMG.SelectedE.AbilityTC.Ability = AbilityTypes.Resurrect;
-                                eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
+                                _eMG.SelectedE.AbilityTC.Ability = AbilityTypes.Resurrect;
+                                _eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
                                 break;
 
                             case AbilityTypes.SetTeleport:
-                                eMG.RpcPoolEs.SetTeleportToMaster(cell_sel);
+                                _eMG.RpcPoolEs.SetTeleportToMaster(cell_sel);
                                 break;
 
                             case AbilityTypes.Teleport:
-                                eMG.RpcPoolEs.TeleportToMaster(cell_sel);
+                                _eMG.RpcPoolEs.TeleportToMaster(cell_sel);
                                 break;
 
                             case AbilityTypes.InvokeSkeletons:
-                                eMG.RpcPoolEs.InvokeSkeletonsToMaster(cell_sel);
+                                _eMG.RpcPoolEs.InvokeSkeletonsToMaster(cell_sel);
                                 break;
 
                             default: throw new Exception();
                         }
                     }
 
-                    else eMG.SoundAction(ClipTypes.Mistake).Invoke();
+                    else _eMG.SoundAction(ClipTypes.Mistake).Invoke();
                 }
 
-                else eMG.SoundAction(ClipTypes.Mistake).Invoke();
+                else _eMG.SoundAction(ClipTypes.Mistake).Invoke();
             }
 
-            else sMG.MistakeSs.MistakeS.Mistake(MistakeTypes.NeedWaitQueue);
+            else _sMG.Mistake(MistakeTypes.NeedWaitQueue);
 
 
-            eMG.NeedUpdateView = true;
+            _eMG.NeedUpdateView = true;
         }
     }
 }

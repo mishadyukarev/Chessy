@@ -28,7 +28,7 @@ namespace Chessy.Game.Model.System
 
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                sMG.MasterSs.ClearAllEnvironmentS.Clear(idx_cur);
+                sMG.ClearAllEnvironment(idx_cur);
                 eMG.NeedUpdateView = true;
             }
 

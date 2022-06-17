@@ -1,19 +1,13 @@
 ﻿using Chessy.Common;
-using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.System;
 
-namespace Chessy.Game
+namespace Chessy.Game.Model.System
 {
-    public sealed class OnJoinedRoomS : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal OnJoinedRoomS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
-        {
-        }
-
         public void OnJoinedRoom(in Rpc rpc)
         {
-            sMG.CommonSs.ToggleScene(SceneTypes.Game);
-            sMG.MasterSs.StartGameS.Start(eMG.Common.GameModeT == GameModeTypes.TrainingOffline);
+            CommonSs.ToggleScene(SceneTypes.Game);
+            StartGame(_eMG.Common.GameModeT == GameModeTypes.TrainingOffline);
             rpc.SyncAllMaster();
         }
     }

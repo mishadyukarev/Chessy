@@ -7,73 +7,71 @@ using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class TryExecuteDoneS_M : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal TryExecuteDoneS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         internal void TryDone(in Player sender)
         {
-            var senderPlayerT = PhotonNetwork.OfflineMode ? eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var senderPlayerT = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
 
-            if (!eMG.PlayerInfoE(senderPlayerT).KingInfoE.HaveInInventor)
+            if (!_eMG.PlayerInfoE(senderPlayerT).KingInfoE.HaveInInventor)
             {
-                if (eMG.PlayerInfoE(senderPlayerT).GodInfoE.UnitTC.HaveUnit)
+                if (_eMG.PlayerInfoE(senderPlayerT).GodInfoE.UnitTC.HaveUnit)
                 {
-                    if (eMG.WhoseMovePlayerT == senderPlayerT)
+                    if (_eMG.WhoseMovePlayerT == senderPlayerT)
                     {
                         if (PhotonNetwork.OfflineMode)
                         {
-                            eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
-                            eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
+                            _eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
+                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
 
-                            if (eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
+                            if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
-                                sMG.MasterSs.ExecuteUpdateEverythingS.Run();
+                                ExecuteUpdateEverythingS.Run();
                             }
 
-                            else if (eMG.Common.GameModeTC.Is(GameModeTypes.WithFriendOffline))
+                            else if (_eMG.Common.GameModeTC.Is(GameModeTypes.WithFriendOffline))
                             {
                                 UpdateCooldonsStunsAndOther(0.5f);
 
-                                var nextPlayer = eMG.CurPlayerITC.PlayerT.NextPlayer();
+                                var nextPlayer = _eMG.CurPlayerITC.PlayerT.NextPlayer();
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
-                                    sMG.MasterSs.ExecuteUpdateEverythingS.Run();
+                                    ExecuteUpdateEverythingS.Run();
                                 }
 
-                                eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
-                                eMG.CurPlayerITC.PlayerT = nextPlayer;
+                                _eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
+                                _eMG.CurPlayerITC.PlayerT = nextPlayer;
 
-                                eMG.ZoneInfoC.IsActiveFriend = true;
+                                _eMG.ZoneInfoC.IsActiveFriend = true;
                             }
                         }
                         else
                         {
                             UpdateCooldonsStunsAndOther(0.5f);
 
-                            eMG.WhoseMovePlayerTC.PlayerT = senderPlayerT.NextPlayer();
+                            _eMG.WhoseMovePlayerTC.PlayerT = senderPlayerT.NextPlayer();
 
                             if (senderPlayerT == PlayerTypes.Second)
                             {
-                                sMG.MasterSs.ExecuteUpdateEverythingS.Run();
+                                ExecuteUpdateEverythingS.Run();
 
-                                eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
-                                eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
+                                _eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
+                                _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
                             }
                         }
                     }
                 }
                 else
                 {
-                    eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedGetHero, sender);
+                    _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedGetHero, sender);
                 }
             }
             else
             {
-                eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedSetKing, sender);
+                _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedSetKing, sender);
             }
         }
 
@@ -82,16 +80,16 @@ namespace Chessy.Game.Model.System
         {
             for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
             {
-                eMG.PlayerInfoE(playerT).GodInfoE.CooldownC.Cooldown -= taking;
+                _eMG.PlayerInfoE(playerT).GodInfoE.CooldownC.Cooldown -= taking;
             }
 
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
             {
-                eMG.StunUnitC(idx).Stun -= taking;
+                _eMG.StunUnitC(idx).Stun -= taking;
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
-                    eMG.UnitCooldownAbilitiesC(idx).Take(abilityT, taking);
+                    _eMG.UnitCooldownAbilitiesC(idx).Take(abilityT, taking);
                 }
             }
         }

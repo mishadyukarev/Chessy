@@ -2,86 +2,82 @@
 using Chessy.Game.Model.System;
 using Chessy.Game.Values;
 
-namespace Chessy.Game
+namespace Chessy.Game.Model.System
 {
-    internal sealed class ResetAllS_M : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal ResetAllS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
-        {
-
-        }
 
         public void ResetAll()
         {
-            eMG.IsStartedGame = default;
-            eMG.MotionsC.Motions = default;
-            eMG.ZoneInfoC.IsActiveFriend = default;
-            eMG.ZoneInfoC = default;
-            eMG.WhoseMovePlayerTC.PlayerT = default;
-            eMG.CellClickTC.CellClickT = default;
-            eMG.IsSelectedCity = default;
-            eMG.HaveTreeUnit = default;
-            eMG.MistakeT = default;
-            eMG.WinnerPlayerT = default;
-            eMG.CellsC = default;
-            eMG.CurPlayerIT = default;
-            eMG.AmountPlantedYoungForests = default;
+            _eMG.IsStartedGame = default;
+            _eMG.MotionsC.Motions = default;
+            _eMG.ZoneInfoC.IsActiveFriend = default;
+            _eMG.ZoneInfoC = default;
+            _eMG.WhoseMovePlayerTC.PlayerT = default;
+            _eMG.CellClickTC.CellClickT = default;
+            _eMG.IsSelectedCity = default;
+            _eMG.HaveTreeUnit = default;
+            _eMG.MistakeT = default;
+            _eMG.WinnerPlayerT = default;
+            _eMG.CellsC = default;
+            _eMG.CurPlayerIT = default;
+            _eMG.AmountPlantedYoungForests = default;
 
-            eMG.WeatherE.WindC = new WindC(default, default, default, default);
-            eMG.WeatherE.SunSideTC.SunSideT = default;
-            eMG.WeatherE.CloudC.Center = default;
+            _eMG.WeatherE.WindC = new WindC(default, default, default, default);
+            _eMG.WeatherE.SunSideTC.SunSideT = default;
+            _eMG.WeatherE.CloudC.Center = default;
 
-            eMG.SelectedE.ToolWeaponC = new SelectedToolWeaponC(default, default);
+            _eMG.SelectedE.ToolWeaponC = new SelectedToolWeaponC(default, default);
 
-            eMG.LessonT = default;
+            _eMG.LessonT = default;
 
             for (byte cellIdx = 0; cellIdx < StartValues.CELLS; cellIdx++)
             {
-                sMG.MasterSs.ClearAllEnvironmentS.Clear(cellIdx);
+                ClearAllEnvironment(cellIdx);
 
                 for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
-                    eMG.HealthTrail(cellIdx).Health(dirT) = 0;
+                    _eMG.HealthTrail(cellIdx).Health(dirT) = 0;
 
-                sMG.UnitSs.ClearUnit(cellIdx);
-                eMG.BuildingTC(cellIdx).BuildingT = default;
+                UnitSs.ClearUnit(cellIdx);
+                _eMG.BuildingTC(cellIdx).BuildingT = default;
             }
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                eMG.PlayerInfoE(playerT).IsReadyForStartOnlineGame = default;
+                _eMG.PlayerInfoE(playerT).IsReadyForStartOnlineGame = default;
 
-                eMG.PlayerInfoE(playerT).BuildingsInfoC.Clear();
+                _eMG.PlayerInfoE(playerT).BuildingsInfoC.Clear();
 
-                eMG.PlayerInfoE(playerT).AmountFarmsInGame = default;
+                _eMG.PlayerInfoE(playerT).AmountFarmsInGame = default;
 
-                eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = default;
-                eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = default;
-                eMG.PlayerInfoE(playerT).PawnInfoC.AmountInGame = default;
+                _eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = default;
+                _eMG.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = default;
+                _eMG.PlayerInfoE(playerT).PawnInfoC.AmountInGame = default;
 
-                eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = default;
-                eMG.PlayerInfoE(playerT).WoodForBuyHouse = default;
-                eMG.PlayerInfoE(playerT).IsReadyForStartOnlineGame = default;
+                _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = default;
+                _eMG.PlayerInfoE(playerT).WoodForBuyHouse = default;
+                _eMG.PlayerInfoE(playerT).IsReadyForStartOnlineGame = default;
 
-                eMG.PlayerInfoE(playerT).GodInfoE = default;
-                eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = default;
-                eMG.PlayerInfoE(playerT).WhereKingEffects.Clear();
+                _eMG.PlayerInfoE(playerT).GodInfoE = default;
+                _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = default;
+                _eMG.PlayerInfoE(playerT).WhereKingEffects.Clear();
 
                 for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
                 {
                     for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
                     {
-                        eMG.PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT) = default;
+                        _eMG.PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT) = default;
                     }
 
                     for (var buildT = (BuildingTypes)1; buildT < BuildingTypes.End; buildT++)
                     {
-                        eMG.PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT).IdxC.Clear();
+                        _eMG.PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT).IdxC.Clear();
                     }
                 }
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    eMG.PlayerInfoE(playerT).ResourcesC(resT).Resources = default;
+                    _eMG.PlayerInfoE(playerT).ResourcesC(resT).Resources = default;
                 }
             }
         }

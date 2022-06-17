@@ -1,73 +1,69 @@
 ﻿using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell;
 using Chessy.Game.Values.Cell.Unit.Stats;
-using System.Linq;
 using UnityEngine;
 
 namespace Chessy.Game.Model.System
 {
-    sealed class ShiftUnitOnOtherCellS_M : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal ShiftUnitOnOtherCellS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void Shift(in byte fromCellIdx, in byte toCellIdx)
+        internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
-            sMG.UnitSs.CopyUnitFromToS.Copy(fromCellIdx, toCellIdx);
-            eMG.UnitConditionTC(toCellIdx).Condition = ConditionUnitTypes.None;
+            UnitSs.CopyUnitFromToS.Copy(fromCellIdx, toCellIdx);
+            _eMG.UnitConditionTC(toCellIdx).Condition = ConditionUnitTypes.None;
 
-            sMG.UnitSs.ClearUnit(fromCellIdx);
+            UnitSs.ClearUnit(fromCellIdx);
 
 
-            var direct = eMG.AroundCellsE(fromCellIdx).Direct(toCellIdx);
+            var direct = _eMG.AroundCellsE(fromCellIdx).Direct(toCellIdx);
 
-            if (!eMG.UnitTC(toCellIdx).Is(UnitTypes.Undead))
+            if (!_eMG.UnitTC(toCellIdx).Is(UnitTypes.Undead))
             {
-                if (eMG.UnitTC(toCellIdx).Is(UnitTypes.Pawn))
+                if (_eMG.UnitTC(toCellIdx).Is(UnitTypes.Pawn))
                 {
                     if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                     {
-                        if (eMG.LessonTC.Is(LessonTypes.ShiftPawnHere))
+                        if (_eMG.LessonTC.Is(LessonTypes.ShiftPawnHere))
                         {
-                            eMG.LessonTC.SetNextLesson();
+                            _eMG.LessonTC.SetNextLesson();
                         }
                     }
 
                     //if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
                     //{
-                    //    if (eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
+                    //    if (_eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
                     //    {
-                    //        eMG.LessonTC.SetNextLesson();
+                    //        _eMG.LessonTC.SetNextLesson();
                     //    }
                     //}
 
                     if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
-                        if (eMG.LessonT == LessonTypes.StepAwayFromWoodcutter)
+                        if (_eMG.LessonT == LessonTypes.StepAwayFromWoodcutter)
                         {
-                            eMG.LessonTC.SetNextLesson();
+                            _eMG.LessonTC.SetNextLesson();
                         }
                     }
 
                     //if (toCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
                     //{
-                    //    if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
+                    //    if (_eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
                     //    {
-                    //        if(eMG.MainToolWeaponTC(eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
+                    //        if(_eMG.MainToolWeaponTC(_eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
                     //        {
-                    //            eMG.LessonTC.SetNextLesson();
+                    //            _eMG.LessonTC.SetNextLesson();
                     //        }
                     //    }
                     //}
 
-                    if (eMG.LessonT == LessonTypes.ComeToYourKing)
+                    if (_eMG.LessonT == LessonTypes.ComeToYourKing)
                     {
-                        foreach (var cellIdx in eMG.AroundCellsE(toCellIdx).CellsAround)
+                        foreach (var cellIdx in _eMG.AroundCellsE(toCellIdx).CellsAround)
                         {
-                            if(eMG.UnitT(cellIdx) == UnitTypes.King && eMG.UnitPlayerT(cellIdx) == eMG.UnitPlayerT(toCellIdx))
+                            if (_eMG.UnitT(cellIdx) == UnitTypes.King && _eMG.UnitPlayerT(cellIdx) == _eMG.UnitPlayerT(toCellIdx))
                             {
-                                eMG.LessonTC.SetNextLesson();
+                                _eMG.LessonTC.SetNextLesson();
                                 break;
                             }
                         }
@@ -75,13 +71,13 @@ namespace Chessy.Game.Model.System
 
 
 
-                    //if (eMG.ExtraToolWeaponTC(toCellIdx).Is(ToolWeaponTypes.Pick))
+                    //if (_eMG.ExtraToolWeaponTC(toCellIdx).Is(ToolWeaponTypes.Pick))
                     //{
-                    //    if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
+                    //    if (_eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
                     //    {
                     //        if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
                     //        {
-                    //            eMG.LessonTC.SetNextLesson();
+                    //            _eMG.LessonTC.SetNextLesson();
                     //        }
                     //    }
                     //}
@@ -91,72 +87,72 @@ namespace Chessy.Game.Model.System
 
 
 
-                if (eMG.UnitTC(toCellIdx).Is(UnitTypes.Snowy))
+                if (_eMG.UnitTC(toCellIdx).Is(UnitTypes.Snowy))
                 {
-                    if (eMG.WaterUnitC(toCellIdx).HaveAnyWater)
+                    if (_eMG.WaterUnitC(toCellIdx).HaveAnyWater)
                     {
-                        eMG.FertilizeC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
-                        eMG.HaveFire(toCellIdx) = false;
-                        eMG.WaterUnitC(toCellIdx).Water -= WaterValues.AFTER_SHIFT_SNOWY;
+                        _eMG.FertilizeC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _eMG.HaveFire(toCellIdx) = false;
+                        _eMG.WaterUnitC(toCellIdx).Water -= WaterValues.AFTER_SHIFT_SNOWY;
                     }
                 }
 
-                if (eMG.AdultForestC(fromCellIdx).HaveAnyResources)
+                if (_eMG.AdultForestC(fromCellIdx).HaveAnyResources)
                 {
-                    eMG.HealthTrail(fromCellIdx).Health(direct) = TrailValues.HEALTH_TRAIL;
+                    _eMG.HealthTrail(fromCellIdx).Health(direct) = TrailValues.HEALTH_TRAIL;
                 }
-                if (eMG.AdultForestC(toCellIdx).HaveAnyResources)
+                if (_eMG.AdultForestC(toCellIdx).HaveAnyResources)
                 {
                     var dirTrail = direct.Invert();
 
-                    eMG.HealthTrail(toCellIdx).Health(dirTrail) = TrailValues.HEALTH_TRAIL;
+                    _eMG.HealthTrail(toCellIdx).Health(dirTrail) = TrailValues.HEALTH_TRAIL;
                 }
 
-                if (eMG.RiverTC(toCellIdx).HaveRiverNear)
+                if (_eMG.RiverTC(toCellIdx).HaveRiverNear)
                 {
-                    eMG.WaterUnitC(toCellIdx).Water = WaterValues.MAX;
+                    _eMG.WaterUnitC(toCellIdx).Water = WaterValues.MAX;
                 }
 
 
-                if (eMG.UnitTC(toCellIdx).Is(UnitTypes.King))
+                if (_eMG.UnitTC(toCellIdx).Is(UnitTypes.King))
                 {
-                    eMG.PlayerInfoE(eMG.UnitPlayerTC(toCellIdx).PlayerT).KingInfoE.CellKing = toCellIdx;
+                    _eMG.PlayerInfoE(_eMG.UnitPlayerTC(toCellIdx).PlayerT).KingInfoE.CellKing = toCellIdx;
                 }
 
             }
 
 
-            if (eMG.UnitT(toCellIdx) == UnitTypes.Snowy)
+            if (_eMG.UnitT(toCellIdx) == UnitTypes.Snowy)
             {
-                sMG.MasterSs.RainyGiveWaterToUnitsAroundS_M.TryGive(toCellIdx);
+                TryGiveWaterToUnitsAroundRainyM(toCellIdx);
             }
 
 
-            switch (eMG.UnitT(toCellIdx))
+            switch (_eMG.UnitT(toCellIdx))
             {
                 case UnitTypes.Elfemale:
-                    if (!eMG.AdultForestC(toCellIdx).HaveAnyResources && !eMG.HillC(toCellIdx).HaveAnyResources)
+                    if (!_eMG.AdultForestC(toCellIdx).HaveAnyResources && !_eMG.HillC(toCellIdx).HaveAnyResources)
                     {
                         if (Random.Range(0, 1f) <= Values.Values.PERCENT_FOR_SEEDING_YOUNG_FOREST_AFTER_SHIFT_ELFEMALE)
                         {
-                            eMG.YoungForestC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
+                            _eMG.YoungForestC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
                         }
                     }
                     break;
 
                 case UnitTypes.Hell:
-                    if (eMG.AdultForestC(toCellIdx).HaveAnyResources)
+                    if (_eMG.AdultForestC(toCellIdx).HaveAnyResources)
                     {
-                        eMG.HaveFire(toCellIdx) = true;
+                        _eMG.HaveFire(toCellIdx) = true;
                     }
                     break;
             }
 
-            if (eMG.BuildingTC(toCellIdx).HaveBuilding && !eMG.BuildingTC(toCellIdx).Is(BuildingTypes.City))
+            if (_eMG.BuildingTC(toCellIdx).HaveBuilding && !_eMG.BuildingTC(toCellIdx).Is(BuildingTypes.City))
             {
-                if (!eMG.BuildingPlayerTC(toCellIdx).Is(eMG.UnitPlayerTC(toCellIdx).PlayerT))
+                if (!_eMG.BuildingPlayerTC(toCellIdx).Is(_eMG.UnitPlayerTC(toCellIdx).PlayerT))
                 {
-                    eMG.BuildingTC(toCellIdx).BuildingT = BuildingTypes.None;
+                    _eMG.BuildingTC(toCellIdx).BuildingT = BuildingTypes.None;
                 }
             }
         }

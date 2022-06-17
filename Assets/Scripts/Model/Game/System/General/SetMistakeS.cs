@@ -2,16 +2,12 @@
 
 namespace Chessy.Game.Model.System
 {
-    sealed class SetMistakeS : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal SetMistakeS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        public void SetMistake(in MistakeTypes mistakeT, in float timer)
         {
-        }
-
-        public void Set(in MistakeTypes mistakeT, in float timer)
-        {
-            eMG.MistakeTC.MistakeT = mistakeT;
-            eMG.MistakeTimerC.Timer = timer;
+            _eMG.MistakeTC.MistakeT = mistakeT;
+            _eMG.MistakeTimerC.Timer = timer;
         }
     }
 }

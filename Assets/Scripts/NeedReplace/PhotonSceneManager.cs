@@ -64,7 +64,7 @@ namespace Chessy.Common
 
         public override sealed void OnJoinedRoom()
         {
-            _sMG.OnJoinedRoomS.OnJoinedRoom(_rpc);
+            _sMG.OnJoinedRoom(_rpc);
             _sUIC.ToggleScene(SceneTypes.Game);
         }
 

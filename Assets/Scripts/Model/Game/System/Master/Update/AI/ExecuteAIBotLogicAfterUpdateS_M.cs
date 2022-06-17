@@ -37,7 +37,7 @@ namespace Chessy.Game
                                 if (eMG.AttackSimpleCellsC(cellIdxStart).Contains(cellIdxDirect)
                                     || eMG.AttackUniqueCellsC(cellIdxStart).Contains(cellIdxDirect))
                                 {
-                                    sMG.UnitSs.AttackUnitFromToS_M.Attack(cellIdxStart, cellIdxDirect);
+                                    sMG.AttackUnitFromTo(cellIdxStart, cellIdxDirect);
                                 }
                             }
                         }

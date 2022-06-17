@@ -1,23 +1,19 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.System;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 
-namespace Chessy.Game
+namespace Chessy.Game.Model.System
 {
-    sealed class TryShiftUnitS_M : SystemModel
+    public sealed partial class SystemsModelGame : IUpdate
     {
-        internal TryShiftUnitS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
-        internal void TryShift(in byte cell_from, in byte cell_to, in Player sender)
+        internal void TryShiftUnitM(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (eMG.CellsForShift(cell_from).Contains(cell_to) && eMG.UnitPlayerTC(cell_from).Is(eMG.WhoseMovePlayerT))
+            if (_eMG.CellsForShift(cell_from).Contains(cell_to) && _eMG.UnitPlayerTC(cell_from).Is(_eMG.WhoseMovePlayerT))
             {
-                eMG.StepUnitC(cell_from).Steps -= eMG.UnitNeedStepsForShiftC(cell_from).NeedSteps(cell_to);
+                _eMG.StepUnitC(cell_from).Steps -= _eMG.UnitNeedStepsForShiftC(cell_from).NeedSteps(cell_to);
 
 
-                sMG.UnitSs.ShiftOnOtherCellS.Shift(cell_from, cell_to);
+                ShiftUnitOnOtherCellM(cell_from, cell_to);
 
-                eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

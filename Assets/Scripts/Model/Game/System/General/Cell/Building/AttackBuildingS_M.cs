@@ -2,25 +2,23 @@
 using Chessy.Game.Model.Entity;
 using System;
 
-namespace Chessy.Game.Model.System
+namespace Chessy.Game
 {
-    sealed class AttackBuildingS_M : SystemModel
+    sealed partial class BuildingSystems
     {
-        internal AttackBuildingS_M(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         internal void Attack(in byte cell, in float damage, in PlayerTypes whoKiller)
         {
             if (damage <= 0) throw new Exception();
 
-            if (eMG.BuildingTC(cell).HaveBuilding)
+            if (_eMG.BuildingTC(cell).HaveBuilding)
             {
-                eMG.BuildingHpC(cell).Health -= damage;
+                _eMG.BuildingHpC(cell).Health -= damage;
 
-                if (!eMG.BuildingHpC(cell).IsAlive)
+                if (!_eMG.BuildingHpC(cell).IsAlive)
                 {
-                    if (eMG.BuildingTC(cell).Is(BuildingTypes.City))
+                    if (_eMG.BuildingTC(cell).Is(BuildingTypes.City))
                     {
-                        eMG.WinnerPlayerT = whoKiller.NextPlayer();
+                        _eMG.WinnerPlayerT = whoKiller.NextPlayer();
                     }
 
                     //else if (E.BuildingTC(Idx).Is(BuildingTypes.House))
@@ -29,7 +27,7 @@ namespace Chessy.Game.Model.System
                     //}
 
 
-                    eMG.BuildingTC(cell).BuildingT = BuildingTypes.None;
+                    _eMG.BuildingTC(cell).BuildingT = BuildingTypes.None;
                 }
             }
             else

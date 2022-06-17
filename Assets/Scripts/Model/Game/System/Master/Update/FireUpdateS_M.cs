@@ -24,7 +24,7 @@ namespace Chessy.Game.Model.System
             {
                 if (eMG.HaveFire(cell_0))
                 {
-                    sMG.MasterSs.TryTakeAdultForestResourcesS.TryTake(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
+                    sMG.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
 
                     if (eMG.UnitTC(cell_0).HaveUnit)
                     {

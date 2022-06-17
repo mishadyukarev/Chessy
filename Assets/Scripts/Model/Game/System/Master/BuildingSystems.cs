@@ -3,17 +3,19 @@ using Chessy.Game.Model.System;
 
 namespace Chessy.Game
 {
-    sealed class BuildingSystems
+    sealed partial class BuildingSystems
     {
-        internal readonly BuildS_M BuildS;
-        internal readonly AttackBuildingS_M DestroyS;
+        readonly EntitiesModelGame _eMG;
+        readonly SystemsModelGame _sMG;
+
         internal readonly ClearBuildingS_M ClearS;
 
         internal BuildingSystems(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
-            BuildS = new BuildS_M(sMG, eMG);
+            _eMG = eMG;
+            _sMG = sMG;
+
             ClearS = new ClearBuildingS_M(sMG, eMG);
-            DestroyS = new AttackBuildingS_M(sMG, eMG);
         }
     }
 }
