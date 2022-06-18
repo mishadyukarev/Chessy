@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed partial class SystemsModelGame : IUpdate
+    sealed partial class ExecuteUpdateEverythingMS : SystemModel
     {
-        internal void FireUpdate()
+        void FireUpdate()
         {
             foreach (var cellE in _eMG.AroundCellsE(_eMG.WeatherE.CloudC.Center).CellsAround)
             {
@@ -22,7 +22,7 @@ namespace Chessy.Game.Model.System
             {
                 if (_eMG.HaveFire(cell_0))
                 {
-                    TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
+                    _sMG.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
 
                     if (_eMG.UnitTC(cell_0).HaveUnit)
                     {
@@ -34,11 +34,11 @@ namespace Chessy.Game.Model.System
                         {
                             if (_eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
                             {
-                                UnitSs.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                                _sMG.UnitSs.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                UnitSs.Attack(HpValues.FIRE_DAMAGE, _eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
+                                _sMG.UnitSs.Attack(HpValues.FIRE_DAMAGE, _eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
                             }
                         }
                     }

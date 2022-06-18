@@ -33,74 +33,74 @@ namespace Chessy.Game
 
         public void Update()
         {
-            if (_isPressed && !eMG.Common.IsOpenedBook)
+            if (_isPressed && !_eMG.Common.IsOpenedBook)
             {
                 _timer += Time.deltaTime;
 
                 if (_timer >= TIMER)
                 {
-                    eMG.Common.SoundActionC(ClipCommonTypes.OpenBook).Invoke();
+                    _eMG.Common.SoundActionC(ClipCommonTypes.OpenBook).Invoke();
 
 
-                    eMG.Common.IsOpenedBook = true;
+                    _eMG.Common.IsOpenedBook = true;
 
                     if(_buttonT != ButtonTypes.None)
                     {
-                        switch (eMG.UnitButtonAbilitiesC(eMG.SelectedCell).Ability(_buttonT))
+                        switch (_eMG.UnitButtonAbilitiesC(_eMG.SelectedCell).Ability(_buttonT))
                         {
                             case AbilityTypes.CircularAttack: 
-                                eMG.Common.PageBookT = PageBookTypes.CircularAttackKing;
+                                _eMG.Common.PageBookT = PageBookTypes.CircularAttackKing;
                                 break;
 
                             case AbilityTypes.KingPassiveNearBonus:
-                                eMG.Common.PageBookT = PageBookTypes.PassiveKing;
+                                _eMG.Common.PageBookT = PageBookTypes.PassiveKing;
                                 break;
 
                             case AbilityTypes.FirePawn:
-                                eMG.Common.PageBookT = PageBookTypes.Fire;
+                                _eMG.Common.PageBookT = PageBookTypes.Fire;
                                 break;
 
                             case AbilityTypes.PutOutFirePawn:
-                                eMG.Common.PageBookT = PageBookTypes.Fire;
+                                _eMG.Common.PageBookT = PageBookTypes.Fire;
                                 break;
 
                             case AbilityTypes.Seed:
-                                eMG.Common.PageBookT = PageBookTypes.SeedForest;
+                                _eMG.Common.PageBookT = PageBookTypes.SeedForest;
                                 break;
 
                             case AbilityTypes.SetFarm:
-                                eMG.Common.PageBookT = PageBookTypes.BuildFarm;
+                                _eMG.Common.PageBookT = PageBookTypes.BuildFarm;
                                 break;
 
                             case AbilityTypes.DestroyBuilding:
                                 break;
 
                             case AbilityTypes.FireArcher:
-                                eMG.Common.PageBookT = PageBookTypes.Fire;
+                                _eMG.Common.PageBookT = PageBookTypes.Fire;
                                 break;
 
                             case AbilityTypes.ChangeCornerArcher:
-                                eMG.Common.PageBookT = PageBookTypes.ToggleUniqueAttackArcher;
+                                _eMG.Common.PageBookT = PageBookTypes.ToggleUniqueAttackArcher;
                                 break;
 
                             case AbilityTypes.GrowAdultForest:
-                                eMG.Common.PageBookT = PageBookTypes.GrowAdultForest;
+                                _eMG.Common.PageBookT = PageBookTypes.GrowAdultForest;
                                 break;
 
                             case AbilityTypes.StunElfemale:
-                                eMG.Common.PageBookT = PageBookTypes.StunElfemale;
+                                _eMG.Common.PageBookT = PageBookTypes.StunElfemale;
                                 break;
 
                             case AbilityTypes.IncreaseWindSnowy:
-                                eMG.Common.PageBookT = PageBookTypes.Wind;
+                                _eMG.Common.PageBookT = PageBookTypes.Wind;
                                 break;
 
                             case AbilityTypes.DecreaseWindSnowy:
-                                eMG.Common.PageBookT = PageBookTypes.Wind;
+                                _eMG.Common.PageBookT = PageBookTypes.Wind;
                                 break;
 
                             case AbilityTypes.ChangeDirectionWind:
-                                eMG.Common.PageBookT = PageBookTypes.Wind;
+                                _eMG.Common.PageBookT = PageBookTypes.Wind;
                                 break;
 
                             case AbilityTypes.Resurrect:
@@ -118,22 +118,22 @@ namespace Chessy.Game
 
                     else if (_effectButtonT != 0)
                     {
-                        switch (eMG.UnitEs(eMG.SelectedCell).Effect((ButtonTypes)_effectButtonT))
+                        switch (_eMG.UnitEs(_eMG.SelectedCell).Effect((ButtonTypes)_effectButtonT))
                         {
                             case EffectTypes.Shield:
-                                eMG.Common.PageBookT = PageBookTypes.FrozenShield;
+                                _eMG.Common.PageBookT = PageBookTypes.FrozenShield;
                                 break;
 
                             case EffectTypes.Stun:
-                                eMG.Common.PageBookT = PageBookTypes.Stun;
+                                _eMG.Common.PageBookT = PageBookTypes.Stun;
                                 break;
 
                             case EffectTypes.Arraw:
-                                eMG.Common.PageBookT = PageBookTypes.FrozenArraw;
+                                _eMG.Common.PageBookT = PageBookTypes.FrozenArraw;
                                 break;
 
                             case EffectTypes.DamageAdd:
-                                eMG.Common.PageBookT = PageBookTypes.PassiveKing;
+                                _eMG.Common.PageBookT = PageBookTypes.PassiveKing;
                                 break;
 
                             default:
@@ -145,17 +145,17 @@ namespace Chessy.Game
 
                     else
                     {
-                        if(eMG.LessonT == Enum.LessonTypes.HoldPressReady)
+                        if(_eMG.LessonT == Enum.LessonTypes.HoldPressReady)
                         {
-                            if (_neededPageBookT == PageBookTypes.DonerReady) eMG.LessonTC.SetNextLesson();
+                            if (_neededPageBookT == PageBookTypes.DonerReady) _eMG.LessonTC.SetNextLesson();
                         }
 
-                        eMG.Common.PageBookT = _neededPageBookT;
+                        _eMG.Common.PageBookT = _neededPageBookT;
                     }
 
   
 
-                    eMG.NeedUpdateView = true;
+                    _eMG.NeedUpdateView = true;
                 }
             }
             else _timer = 0;

@@ -1,11 +1,16 @@
 ﻿using Chessy.Common;
+using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed partial class SystemsModelGame : IUpdate
+    sealed partial class TruceS : SystemModel
     {
         const int PEOPLE_AFTER_TRUCE = 15;
+
+        internal TruceS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG)
+        {
+        }
 
         internal void ExecuteTruce()
         {
@@ -25,7 +30,7 @@ namespace Chessy.Game.Model.System
             {
                 _eMG.HaveFire(cell_0) = false;
 
-                TryDestroyAllTrailsOnCell(cell_0);
+                _sMG.TryDestroyAllTrailsOnCell(cell_0);
 
 
 
@@ -41,7 +46,7 @@ namespace Chessy.Game.Model.System
                                 _eMG.PlayerInfoE(_eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(_eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(_eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                             }
 
-                            UnitSs.ClearUnit(cell_0);
+                            _sMG.UnitSs.ClearUnit(cell_0);
                         }
                     }
                     else
@@ -52,7 +57,7 @@ namespace Chessy.Game.Model.System
                             _eMG.PlayerInfoE(_eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(_eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(_eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
                         }
 
-                        UnitSs.ClearUnit(cell_0);
+                        _sMG.UnitSs.ClearUnit(cell_0);
                     }
                 }
 

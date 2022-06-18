@@ -10,29 +10,29 @@ namespace Chessy.Game.Model.System
     {
         internal void FirePawn(in byte cellIdxForFire, in Player sender)
         {
-            if (eMG.StepUnitC(cellIdxForFire).Steps >= StepValues.FIRE_PAWN)
+            if (_eMG.StepUnitC(cellIdxForFire).Steps >= StepValues.FIRE_PAWN)
             {
-                if (eMG.AdultForestC(cellIdxForFire).HaveAnyResources)
+                if (_eMG.AdultForestC(cellIdxForFire).HaveAnyResources)
                 {
-                    eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
+                    _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FirePawn);
 
-                    eMG.HaveFire(cellIdxForFire) = true;
-                    eMG.StepUnitC(cellIdxForFire).Steps -= StepValues.FIRE_PAWN;
+                    _eMG.HaveFire(cellIdxForFire) = true;
+                    _eMG.StepUnitC(cellIdxForFire).Steps -= StepValues.FIRE_PAWN;
 
-                    if(eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
+                    if(_eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     {
-                        eMG.LessonTC.SetNextLesson();
+                        _eMG.LessonTC.SetNextLesson();
                     }
                 }
                 else
                 {
-                    eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                    _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
                 }
             }
 
             else
             {
-                eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

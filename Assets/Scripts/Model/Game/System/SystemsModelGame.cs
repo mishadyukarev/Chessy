@@ -15,7 +15,8 @@ namespace Chessy.Game.Model.System
         internal readonly UnitSystems UnitSs;
         internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
         internal readonly ExecuteAIBotLogicAfterUpdateS_M AIBotS;
-
+        internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
+        internal readonly TruceS TruceS;
         public readonly SystemsModelCommon CommonSs;
         public readonly SystemsModelGameForUI ForUISystems;
 
@@ -32,7 +33,7 @@ namespace Chessy.Game.Model.System
                 new RayS(this, eMG).Update,
                 new SelectorS(this, eMG).Update,
 
-                new Chessy.Game.MistakeS(this, eMG).Update,
+                new MistakeS(this, eMG).Update,
             };
 
             ForUISystems = new SystemsModelGameForUI(this, eMG);
@@ -40,6 +41,8 @@ namespace Chessy.Game.Model.System
             UnitSs = new UnitSystems(this, eMG);
             GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eMG);
             AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eMG);
+            ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eMG);
+            TruceS = new TruceS(this, eMG);
         }
 
         public void Update()

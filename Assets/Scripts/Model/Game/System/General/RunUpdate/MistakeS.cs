@@ -14,22 +14,22 @@ namespace Chessy.Game
 
         internal void Update()
         {
-            if (eMG.MistakeT != MistakeTypes.None)
+            if (_eMG.MistakeT != MistakeTypes.None)
             {
-                eMG.MistakeTimerC.Timer += Time.deltaTime;
+                _eMG.MistakeTimerC.Timer += Time.deltaTime;
 
-                if (eMG.MistakeTimer >= NEED_TIME_FOR_FADING)
+                if (_eMG.MistakeTimer >= NEED_TIME_FOR_FADING)
                 {
-                    eMG.MistakeTC.MistakeT = MistakeTypes.None;
-                    eMG.NeedUpdateView = true;
+                    _eMG.MistakeTC.MistakeT = MistakeTypes.None;
+                    _eMG.NeedUpdateView = true;
                 }
             }
 
-            if (eMG.MotionTimer > 0)
+            if (_eMG.MotionTimer > 0)
             {
-                eMG.MotionTimer -= Time.deltaTime;
+                _eMG.MotionTimer -= Time.deltaTime;
 
-                if (eMG.MotionTimer <= 0) eMG.NeedUpdateView = true;
+                if (_eMG.MotionTimer <= 0) _eMG.NeedUpdateView = true;
             }
         }
     }

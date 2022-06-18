@@ -21,38 +21,38 @@ namespace Chessy.Game.Model.System
             //#endif
 
 
-            eMG.RaycastTC.RaycastT = RaycastTypes.None;
+            _eMG.RaycastTC.RaycastT = RaycastTypes.None;
 
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                eMG.RaycastTC.RaycastT = RaycastTypes.UI;
+                _eMG.RaycastTC.RaycastT = RaycastTypes.UI;
             }
             else if (raycast)
             {
                 for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                 {
-                    int one = eMG.InstanceID(cell_0);
+                    int one = _eMG.InstanceID(cell_0);
                     int two = raycast.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        if (eMG.CellsC.Current != eMG.CellsC.PreviousVision)
+                        if (_eMG.CellsC.Current != _eMG.CellsC.PreviousVision)
                         {
-                            if (eMG.CellClickTC.Is(CellClickTypes.SetUnit))
+                            if (_eMG.CellClickTC.Is(CellClickTypes.SetUnit))
                             {
-                                eMG.UnitNeedUpdateViewC(eMG.CellsC.Current).NeedUpdateView = true;
-                                eMG.UnitNeedUpdateViewC(eMG.CellsC.PreviousVision).NeedUpdateView = true;
+                                _eMG.UnitNeedUpdateViewC(_eMG.CellsC.Current).NeedUpdateView = true;
+                                _eMG.UnitNeedUpdateViewC(_eMG.CellsC.PreviousVision).NeedUpdateView = true;
                             }
 
-                            eMG.CellsC.PreviousVision = eMG.CellsC.Current;
+                            _eMG.CellsC.PreviousVision = _eMG.CellsC.Current;
                         }
 
-                        eMG.CellsC.Current = cell_0;
-                        eMG.RaycastTC.RaycastT = RaycastTypes.Cell;
+                        _eMG.CellsC.Current = cell_0;
+                        _eMG.RaycastTC.RaycastT = RaycastTypes.Cell;
                     }
                 }
 
-                if (eMG.RaycastTC.RaycastT == RaycastTypes.None) eMG.RaycastTC.RaycastT = RaycastTypes.Background;
+                if (_eMG.RaycastTC.RaycastT == RaycastTypes.None) _eMG.RaycastTC.RaycastT = RaycastTypes.Background;
             }
 
 
@@ -65,7 +65,7 @@ namespace Chessy.Game.Model.System
             {
                 if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
                 {
-                    eMG.RaycastTC.RaycastT = RaycastTypes.UI;
+                    _eMG.RaycastTC.RaycastT = RaycastTypes.UI;
                 }
             }
 #endif

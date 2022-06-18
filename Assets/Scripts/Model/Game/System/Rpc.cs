@@ -304,7 +304,7 @@ namespace Chessy.Game
                 default: throw new Exception();
             }
 
-            _sMGame.GetDataCellsS.Run();
+            _sMGame.GetDataCellsS.GetDataCells();
             _eMG.NeedUpdateView = true;
 
             SyncAllMaster();

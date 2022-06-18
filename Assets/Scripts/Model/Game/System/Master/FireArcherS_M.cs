@@ -10,24 +10,24 @@ namespace Chessy.Game.Model.System
 
         internal void FirePawn(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (eMG.UnitForArsonC(cell_from).Contains(cell_to))
+            if (_eMG.UnitForArsonC(cell_from).Contains(cell_to))
             {
-                if (eMG.StepUnitC(cell_from).Steps >= StepValues.ARCHER_FIRE)
+                if (_eMG.StepUnitC(cell_from).Steps >= StepValues.ARCHER_FIRE)
                 {
-                    eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
+                    _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    eMG.StepUnitC(cell_from).Steps -= StepValues.ARCHER_FIRE;
-                    eMG.HaveFire(cell_to) = true;
+                    _eMG.StepUnitC(cell_from).Steps -= StepValues.ARCHER_FIRE;
+                    _eMG.HaveFire(cell_to) = true;
 
-                    if (eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
+                    if (_eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     {
-                        eMG.LessonTC.SetNextLesson();
+                        _eMG.LessonTC.SetNextLesson();
                     }
                 }
 
                 else
                 {
-                    eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

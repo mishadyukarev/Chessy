@@ -10,53 +10,53 @@ namespace Chessy.Game.Model.System
     {
         internal void CurcularAttackKingM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
+            if (!_eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
+                if (_eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
                 {
-                    eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
-                    eMG.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
+                    _eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
+                    _eMG.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
 
 
-                    foreach (byte idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
+                    foreach (byte idx_1 in _eMG.AroundCellsE(cell_0).CellsAround)
                     {
-                        if (eMG.UnitTC(idx_1).HaveUnit)
+                        if (_eMG.UnitTC(idx_1).HaveUnit)
                         {
-                            if (!eMG.UnitPlayerTC(idx_1).Is(eMG.UnitPlayerTC(cell_0).PlayerT))
+                            if (!_eMG.UnitPlayerTC(idx_1).Is(_eMG.UnitPlayerTC(cell_0).PlayerT))
                             {
-                                if (eMG.ExtraToolWeaponTC(idx_1).Is(ToolWeaponTypes.Shield))
+                                if (_eMG.ExtraToolWeaponTC(idx_1).Is(ToolWeaponTypes.Shield))
                                 {
-                                    sMG.UnitSs.AttackShield(1f, idx_1);
+                                    _sMG.UnitSs.AttackShield(1f, idx_1);
                                 }
-                                else if (eMG.ShieldUnitEffectC(idx_1).HaveAnyProtection)
+                                else if (_eMG.ShieldUnitEffectC(idx_1).HaveAnyProtection)
                                 {
-                                    eMG.ShieldUnitEffectC(idx_1).Protection--;
+                                    _eMG.ShieldUnitEffectC(idx_1).Protection--;
                                 }
 
                                 else
                                 {
-                                    sMG.UnitSs.Attack(HpValues.MAX / 4, eMG.UnitPlayerTC(cell_0).PlayerT, idx_1);
+                                    _sMG.UnitSs.Attack(HpValues.MAX / 4, _eMG.UnitPlayerTC(cell_0).PlayerT, idx_1);
                                 }
                             }
                         }
                     }
 
-                    eMG.RpcPoolEs.AnimationCell_ToGeneral(cell_0, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
+                    _eMG.RpcPoolEs.AnimationCell_ToGeneral(cell_0, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
 
-                    eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                    _eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
 
-                    eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
                 }
 
                 else
                 {
-                    eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 
-            else eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+            else _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

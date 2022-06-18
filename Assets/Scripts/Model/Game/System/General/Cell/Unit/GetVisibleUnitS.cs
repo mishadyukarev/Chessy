@@ -1,67 +1,71 @@
 ﻿using Chessy.Game.Extensions;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal void GetVisibleUnits(in byte cell_0)
+        void GetVisibleUnits()
         {
-            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                eMG.UnitVisibleC(cell_0).Set(playerT, true);
-            }
-
-            if (eMG.UnitTC(cell_0).HaveUnit)
-            {
-
-                if (eMG.UnitTC(cell_0).IsAnimal)
+                for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {
-                    var isVisForFirst = true;
-                    var isVisForSecond = true;
-
-                    if (eMG.AdultForestC(cell_0).HaveAnyResources)
-                    {
-                        isVisForFirst = false;
-                        isVisForSecond = false;
-
-                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                        {
-                            var cell_1 = eMG.AroundCellsE(cell_0).IdxCell(dirT);
-
-                            if (eMG.UnitTC(cell_1).HaveUnit)
-                            {
-                                if (eMG.UnitPlayerTC(cell_1).Is(PlayerTypes.First)) isVisForFirst = true;
-                                if (eMG.UnitPlayerTC(cell_1).Is(PlayerTypes.Second)) isVisForSecond = true;
-                            }
-                        }
-                    }
-
-                    eMG.UnitVisibleC(cell_0).Set(PlayerTypes.First, isVisForFirst);
-                    eMG.UnitVisibleC(cell_0).Set(PlayerTypes.Second, isVisForSecond);
+                    _eMG.UnitVisibleC(cellIdxCurrent).Set(playerT, true);
                 }
 
-                else
+                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
                 {
-                    if (eMG.AdultForestC(cell_0).HaveAnyResources)
-                    {
-                        var isVisibledNextPlayer = false;
 
-                        foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
+                    if (_eMG.UnitTC(cellIdxCurrent).IsAnimal)
+                    {
+                        var isVisForFirst = true;
+                        var isVisForSecond = true;
+
+                        if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
                         {
-                            if (eMG.UnitTC(idx_1).HaveUnit)
+                            isVisForFirst = false;
+                            isVisForSecond = false;
+
+                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                if (!eMG.UnitTC(idx_1).IsAnimal)
+                                var cell_1 = _eMG.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+
+                                if (_eMG.UnitTC(cell_1).HaveUnit)
                                 {
-                                    if (!eMG.UnitPlayerTC(idx_1).Is(eMG.UnitPlayerT(cell_0)))
-                                    {
-                                        isVisibledNextPlayer = true;
-                                    }
+                                    if (_eMG.UnitPlayerTC(cell_1).Is(PlayerTypes.First)) isVisForFirst = true;
+                                    if (_eMG.UnitPlayerTC(cell_1).Is(PlayerTypes.Second)) isVisForSecond = true;
                                 }
                             }
                         }
 
-                        eMG.UnitVisibleC(cell_0).Set(eMG.UnitPlayerT(cell_0).NextPlayer(), isVisibledNextPlayer);
+                        _eMG.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.First, isVisForFirst);
+                        _eMG.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, isVisForSecond);
+                    }
+
+                    else
+                    {
+                        if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                        {
+                            var isVisibledNextPlayer = false;
+
+                            foreach (var idx_1 in _eMG.AroundCellsE(cellIdxCurrent).CellsAround)
+                            {
+                                if (_eMG.UnitTC(idx_1).HaveUnit)
+                                {
+                                    if (!_eMG.UnitTC(idx_1).IsAnimal)
+                                    {
+                                        if (!_eMG.UnitPlayerTC(idx_1).Is(_eMG.UnitPlayerT(cellIdxCurrent)))
+                                        {
+                                            isVisibledNextPlayer = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            _eMG.UnitVisibleC(cellIdxCurrent).Set(_eMG.UnitPlayerT(cellIdxCurrent).NextPlayer(), isVisibledNextPlayer);
+                        }
                     }
                 }
             }

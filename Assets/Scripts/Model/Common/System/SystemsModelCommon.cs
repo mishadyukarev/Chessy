@@ -6,19 +6,13 @@ using UnityEngine;
 
 namespace Chessy.Common.Model.System
 {
-    public sealed class SystemsModelCommon : IUpdate
+    public sealed partial class SystemsModelCommon : IUpdate
     {
         readonly EntitiesModelCommon _eMC;
-
-        public BuyPremiumProductS BuyProductS;
 
         public SystemsModelCommon(in TestModes testModeT, in EntitiesModelCommon eMC)
         {
             _eMC = eMC;
-
-
-
-            BuyProductS = new BuyPremiumProductS(eMC);
 
             Application.runInBackground = true;
 

@@ -47,7 +47,7 @@ namespace Chessy.Common
             });
 
 
-            eUICommon.ShopE.BuyButtonC.AddListener(sMC.BuyProductS.Buy);
+            eUICommon.ShopE.BuyButtonC.AddListener(sMC.BuyPremiumProduct);
 
         }
     }

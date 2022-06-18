@@ -5,24 +5,27 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        public void GetWoodcutterExtractCells(in byte cell_0)
+        public void GetWoodcutterExtractCells()
         {
-            eMG.WoodcutterExtractC(cell_0).Resources = 0;
-
-            if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Woodcutter))
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                var extract = EnvironmentValues.WOODCUTTER_EXTRACT;
+                _eMG.WoodcutterExtractC(cellIdxCurrent).Resources = 0;
 
-                //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
-                //{
-                //    extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
-                //}
+                if (_eMG.BuildingTC(cellIdxCurrent).Is(BuildingTypes.Woodcutter))
+                {
+                    var extract = EnvironmentValues.WOODCUTTER_EXTRACT;
+
+                    //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
+                    //{
+                    //    extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
+                    //}
 
 
-                if (eMG.AdultForestC(cell_0).Resources < extract) extract = eMG.AdultForestC(cell_0).Resources;
+                    if (_eMG.AdultForestC(cellIdxCurrent).Resources < extract) extract = _eMG.AdultForestC(cellIdxCurrent).Resources;
 
 
-                eMG.WoodcutterExtractC(cell_0).Resources = extract;
+                    _eMG.WoodcutterExtractC(cellIdxCurrent).Resources = extract;
+                }
             }
         }
     }

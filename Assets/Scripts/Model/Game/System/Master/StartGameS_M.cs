@@ -266,7 +266,7 @@ namespace Chessy.Game.Model.System
 
 
             _eMG.NeedUpdateView = true;
-            GetDataCellsS.Run();
+            GetDataCellsS.GetDataCells();
         }
     }
 }

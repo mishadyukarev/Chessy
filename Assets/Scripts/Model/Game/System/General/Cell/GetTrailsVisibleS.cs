@@ -1,28 +1,32 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal void GetTrailsVisible(in byte cell_0)
+        internal void GetTrailsVisible()
         {
-            if (!eMG.IsBorder(cell_0))
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                for (var dir_0 = DirectTypes.None + 1; dir_0 < DirectTypes.End; dir_0++)
+                if (!_eMG.IsBorder(cellIdxCurrent))
                 {
-                    eMG.TrailVisibleC(cell_0).Set(PlayerTypes.First, false);
-                    eMG.TrailVisibleC(cell_0).Set(PlayerTypes.Second, false);
-
-                    if (eMG.UnitTC(cell_0).HaveUnit) eMG.TrailVisibleC(cell_0).Set(eMG.UnitPlayerTC(cell_0).PlayerT, true);
-
-
-                    for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
+                    for (var dir_0 = DirectTypes.None + 1; dir_0 < DirectTypes.End; dir_0++)
                     {
-                        var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dir);
+                        _eMG.TrailVisibleC(cellIdxCurrent).Set(PlayerTypes.First, false);
+                        _eMG.TrailVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, false);
 
-                        if (eMG.UnitTC(idx_1).HaveUnit && !eMG.UnitTC(cell_0).IsAnimal)
+                        if (_eMG.UnitTC(cellIdxCurrent).HaveUnit) _eMG.TrailVisibleC(cellIdxCurrent).Set(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT, true);
+
+
+                        for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
                         {
-                            eMG.TrailVisibleC(cell_0).Set(eMG.UnitPlayerTC(idx_1).PlayerT, true);
+                            var idx_1 = _eMG.AroundCellsE(cellIdxCurrent).IdxCell(dir);
+
+                            if (_eMG.UnitTC(idx_1).HaveUnit && !_eMG.UnitTC(cellIdxCurrent).IsAnimal)
+                            {
+                                _eMG.TrailVisibleC(cellIdxCurrent).Set(_eMG.UnitPlayerTC(idx_1).PlayerT, true);
+                            }
                         }
                     }
                 }

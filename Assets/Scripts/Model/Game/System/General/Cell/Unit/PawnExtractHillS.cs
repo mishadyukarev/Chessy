@@ -5,22 +5,25 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal void GetPawnExtractHill(in byte cell_0)
+        void GetPawnExtractHill()
         {
-            eMG.PawnExtractHillC(cell_0).Resources = 0;
-
-            if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(cell_0).Is(ToolWeaponTypes.Pick) && eMG.UnitConditionT(cell_0) == ConditionUnitTypes.Relaxed)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (eMG.HillC(cell_0).HaveAnyResources)
+                _eMG.PawnExtractHillC(cellIdxCurrent).Resources = 0;
+
+                if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn) && _eMG.ExtraToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Pick) && _eMG.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Relaxed)
                 {
-                    var extract = ExtractPawnValues.PAWN_PICK_EXTRACT_HILL;
+                    if (_eMG.HillC(cellIdxCurrent).HaveAnyResources)
+                    {
+                        var extract = ExtractPawnValues.PAWN_PICK_EXTRACT_HILL;
 
 
-                    if (eMG.HillC(cell_0).Resources < extract) extract = eMG.HillC(cell_0).Resources;
+                        if (_eMG.HillC(cellIdxCurrent).Resources < extract) extract = _eMG.HillC(cellIdxCurrent).Resources;
 
 
-                    eMG.PawnExtractHillC(cell_0).Resources = extract;
+                        _eMG.PawnExtractHillC(cellIdxCurrent).Resources = extract;
 
+                    }
                 }
             }
         }

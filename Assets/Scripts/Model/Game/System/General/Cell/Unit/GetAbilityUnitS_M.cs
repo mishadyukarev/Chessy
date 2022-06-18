@@ -1,116 +1,120 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 using System;
 
 namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal void GetAbilityUnit(in byte cell_0)
+        internal void GetAbilityUnit()
         {
-            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.None);
-            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.None);
-            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.None);
-            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fourth, AbilityTypes.None);
-            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fifth, AbilityTypes.None);
-
-
-            if (eMG.UnitTC(cell_0).HaveUnit)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                switch (eMG.UnitTC(cell_0).UnitT)
+                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.None);
+                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.None);
+                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.None);
+                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fourth, AbilityTypes.None);
+                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fifth, AbilityTypes.None);
+
+
+                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
                 {
-                    case UnitTypes.None: throw new Exception();
+                    switch (_eMG.UnitTC(cellIdxCurrent).UnitT)
+                    {
+                        case UnitTypes.None: throw new Exception();
 
-                    case UnitTypes.King:
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.CircularAttack);
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fourth, AbilityTypes.KingPassiveNearBonus);
-                        break;
+                        case UnitTypes.King:
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.CircularAttack);
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fourth, AbilityTypes.KingPassiveNearBonus);
+                            break;
 
-                    case UnitTypes.Pawn:
+                        case UnitTypes.Pawn:
 
-                        if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
-                        {
-                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
-                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
-                        }
-                        else if (eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.Staff))
-                        {
-
-                        }
-                        else
-                        {
-                            eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.Seed);
-
-                            if (eMG.BuildingTC(cell_0).HaveBuilding)
+                            if (_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
                             {
-                                eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.DestroyBuilding);
+                                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
+                                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
+                            }
+                            else if (_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                            {
+
                             }
                             else
                             {
-                                eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
+                                _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.Seed);
+
+                                if (_eMG.BuildingTC(cellIdxCurrent).HaveBuilding)
+                                {
+                                    _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.DestroyBuilding);
+                                }
+                                else
+                                {
+                                    _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
+                                }
+
+                                if (_eMG.HaveFire(cellIdxCurrent)) _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
+                                else _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
+
+
+
+
+
+
+                                //else
+                                //{
+                                //    if (E.BuildingsInfo(E.UnitPlayerTC(Idx).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
+                                //    {
+                                //        E.UnitEs(Idx).Ability(ButtonTypes.Fourth).Reset();
+                                //    }
+                                //    else
+                                //    {
+                                //        E.UnitEs(Idx).Ability(ButtonTypes.Fourth, AbilityTypes.SetCity;
+                                //    }
+                                //}
                             }
 
-                            if (eMG.HaveFire(cell_0)) eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
-                            else eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
+                            break;
 
+                        case UnitTypes.Elfemale:
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.StunElfemale);
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.GrowAdultForest);
 
+                            break;
 
+                        case UnitTypes.Snowy:
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.IncreaseWindSnowy);
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.DecreaseWindSnowy);
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.ChangeDirectionWind);
+                            //E.UnitEs(Idx).Ability(ButtonTypes.Third, AbilityTypes.IceWall;
+                            break;
 
+                        case UnitTypes.Undead:
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.Resurrect);
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.SetTeleport);
+                            _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.InvokeSkeletons);
+                            if (_eMG.BuildingTC(cellIdxCurrent).HaveBuilding) _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
+                            break;
 
+                        case UnitTypes.Hell:
+                            break;
 
-                            //else
-                            //{
-                            //    if (E.BuildingsInfo(E.UnitPlayerTC(Idx).Player, LevelTypes.First, BuildingTypes.City).IdxC.HaveAny)
-                            //    {
-                            //        E.UnitEs(Idx).Ability(ButtonTypes.Fourth).Reset();
-                            //    }
-                            //    else
-                            //    {
-                            //        E.UnitEs(Idx).Ability(ButtonTypes.Fourth, AbilityTypes.SetCity;
-                            //    }
-                            //}
-                        }
+                        case UnitTypes.Wolf:
+                            break;
 
-                        break;
+                        case UnitTypes.Skeleton:
+                            break;
 
-                    case UnitTypes.Elfemale:
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.StunElfemale);
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.GrowAdultForest);
+                        case UnitTypes.Tree:
+                            break;
 
-                        break;
+                        default: throw new Exception();
+                    }
 
-                    case UnitTypes.Snowy:
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.IncreaseWindSnowy);
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.DecreaseWindSnowy);
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.ChangeDirectionWind);
-                        //E.UnitEs(Idx).Ability(ButtonTypes.Third, AbilityTypes.IceWall;
-                        break;
-
-                    case UnitTypes.Undead:
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.First, AbilityTypes.Resurrect);
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Second, AbilityTypes.SetTeleport);
-                        eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Third, AbilityTypes.InvokeSkeletons);
-                        if (eMG.BuildingTC(cell_0).HaveBuilding) eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
-                        break;
-
-                    case UnitTypes.Hell:
-                        break;
-
-                    case UnitTypes.Wolf:
-                        break;
-
-                    case UnitTypes.Skeleton:
-                        break;
-
-                    case UnitTypes.Tree:
-                        break;
-
-                    default: throw new Exception();
-                }
-
-                if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Teleport))
-                {
-                    eMG.UnitButtonAbilitiesC(cell_0).SetAbility(ButtonTypes.Fifth, AbilityTypes.Teleport);
+                    if (_eMG.BuildingTC(cellIdxCurrent).Is(BuildingTypes.Teleport))
+                    {
+                        _eMG.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fifth, AbilityTypes.Teleport);
+                    }
                 }
             }
         }

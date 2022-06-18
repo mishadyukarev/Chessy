@@ -1,26 +1,30 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal void GetCellForArsonArcher(in byte cell_0)
+        internal void GetCellForArsonArcher()
         {
-            eMG.UnitForArsonC(cell_0).Clear();
-
-            if (!eMG.StunUnitC(cell_0).IsStunned)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn) && eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
-                {
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                    {
-                        var idx_1 = eMG.AroundCellsE(cell_0).IdxCell(dirT);
+                _eMG.UnitForArsonC(cellIdxCurrent).Clear();
 
-                        if (!eMG.HaveFire(idx_1))
+                if (!_eMG.StunUnitC(cellIdxCurrent).IsStunned)
+                {
+                    if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn) && _eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
+                    {
+                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            if (eMG.AdultForestC(idx_1).HaveAnyResources)
+                            var idx_1 = _eMG.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+
+                            if (!_eMG.HaveFire(idx_1))
                             {
-                                eMG.UnitForArsonC(cell_0).Add(idx_1);
+                                if (_eMG.AdultForestC(idx_1).HaveAnyResources)
+                                {
+                                    _eMG.UnitForArsonC(cellIdxCurrent).Add(idx_1);
+                                }
                             }
                         }
                     }

@@ -5,13 +5,13 @@ namespace Chessy.Game
 {
     public abstract class SystemModel
     {
-        protected readonly EntitiesModelGame eMG;
-        protected readonly SystemsModelGame sMG;
+        protected readonly EntitiesModelGame _eMG;
+        protected readonly SystemsModelGame _sMG;
 
         protected SystemModel(in SystemsModelGame sMG, in EntitiesModelGame eMG)
         {
-            this.eMG = eMG;
-            this.sMG = sMG;
+            this._eMG = eMG;
+            this._sMG = sMG;
         }
     }
 }

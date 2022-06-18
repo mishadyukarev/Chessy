@@ -17,48 +17,48 @@ namespace Chessy.Game.Model.System
 
         public void Update()
         {
-            var idx_cur = eMG.CellsC.Current;
+            var idx_cur = _eMG.CellsC.Current;
 
 
             if (Input.GetKeyDown(KeyCode.F1))
             {
-                eMG.IsActivatedIdxAndXyInfoCells = !eMG.IsActivatedIdxAndXyInfoCells;
-                eMG.NeedUpdateView = true;
+                _eMG.IsActivatedIdxAndXyInfoCells = !_eMG.IsActivatedIdxAndXyInfoCells;
+                _eMG.NeedUpdateView = true;
             }
 
             if (Input.GetKeyDown(KeyCode.F2))
             {
-                sMG.ClearAllEnvironment(idx_cur);
-                eMG.NeedUpdateView = true;
+                _sMG.ClearAllEnvironment(idx_cur);
+                _eMG.NeedUpdateView = true;
             }
 
 
-            if (eMG.IsClicked)
+            if (_eMG.IsClicked)
             {
-                eMG.NeedUpdateView = true;
-                eMG.MistakeTC.MistakeT = MistakeTypes.None;
+                _eMG.NeedUpdateView = true;
+                _eMG.MistakeTC.MistakeT = MistakeTypes.None;
 
 
 
 
-                if (eMG.LessonT == LessonTypes.UniqueAttackInfo)
+                if (_eMG.LessonT == LessonTypes.UniqueAttackInfo)
                 {
-                    eMG.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
-                    eMG.LessonTC.SetNextLesson();
+                    _eMG.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
+                    _eMG.LessonTC.SetNextLesson();
                 }
-                else if (eMG.LessonTC.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun, 
+                else if (_eMG.LessonTC.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun, 
                     LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.MenuInfo))
                 {
-                    eMG.LessonTC.SetNextLesson();
+                    _eMG.LessonTC.SetNextLesson();
                 }
 
-                switch (eMG.RaycastTC.RaycastT)
+                switch (_eMG.RaycastTC.RaycastT)
                 {
                     case RaycastTypes.Cell:
                         {
-                            if (eMG.CurPlayerITC.Is(eMG.WhoseMovePlayerTC.PlayerT))
+                            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
                             {
-                                switch (eMG.CellClickTC.CellClickT)
+                                switch (_eMG.CellClickTC.CellClickT)
                                 {
                                     case CellClickTypes.SimpleClick:
                                         _cellSimpleClickS.Execute();
@@ -66,47 +66,47 @@ namespace Chessy.Game.Model.System
 
                                     case CellClickTypes.SetUnit:
                                         {
-                                            eMG.RpcPoolEs.TrySetUnit_ToMaster(eMG.CellsC.Current, eMG.SelectedUnitE.UnitTC.UnitT);
-                                            eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
+                                            _eMG.RpcPoolEs.TrySetUnit_ToMaster(_eMG.CellsC.Current, _eMG.SelectedUnitE.UnitTC.UnitT);
+                                            _eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
                                         }
                                         break;
 
                                     case CellClickTypes.GiveTakeTW:
                                         {
-                                            eMG.CellsC.Selected = eMG.CellsC.Current;
+                                            _eMG.CellsC.Selected = _eMG.CellsC.Current;
 
-                                            if (eMG.UnitTC(idx_cur).Is(UnitTypes.Pawn) && eMG.UnitPlayerTC(idx_cur).Is(eMG.CurPlayerITC.PlayerT))
+                                            if (_eMG.UnitTC(idx_cur).Is(UnitTypes.Pawn) && _eMG.UnitPlayerTC(idx_cur).Is(_eMG.CurPlayerITC.PlayerT))
                                             {
-                                                eMG.RpcPoolEs.GiveTakeToolWeaponToMaster(eMG.CellsC.Current, eMG.SelectedE.ToolWeaponC.ToolWeaponT, eMG.SelectedE.ToolWeaponC.LevelT);
+                                                _eMG.RpcPoolEs.GiveTakeToolWeaponToMaster(_eMG.CellsC.Current, _eMG.SelectedE.ToolWeaponC.ToolWeaponT, _eMG.SelectedE.ToolWeaponC.LevelT);
                                             }
                                             else
                                             {
-                                                eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
-                                                eMG.CellsC.PreviousSelected = eMG.CellsC.Selected;
-                                                eMG.CellsC.Selected = eMG.CellsC.Current;
+                                                _eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
+                                                _eMG.CellsC.PreviousSelected = _eMG.CellsC.Selected;
+                                                _eMG.CellsC.Selected = _eMG.CellsC.Current;
                                             }
                                         }
                                         break;
 
                                     case CellClickTypes.UniqueAbility:
                                         {
-                                            switch (eMG.SelectedE.AbilityTC.Ability)
+                                            switch (_eMG.SelectedE.AbilityTC.Ability)
                                             {
                                                 case AbilityTypes.FireArcher:
-                                                    eMG.RpcPoolEs.FireArcherToMas(eMG.CellsC.Selected, eMG.CellsC.Current);
+                                                    _eMG.RpcPoolEs.FireArcherToMas(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                                                     break;
 
                                                 case AbilityTypes.StunElfemale:
-                                                    eMG.RpcPoolEs.StunElfemaleToMas(eMG.CellsC.Selected, eMG.CellsC.Current);
+                                                    _eMG.RpcPoolEs.StunElfemaleToMas(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                                                     break;
 
                                                 case AbilityTypes.ChangeDirectionWind:
                                                     {
-                                                        foreach (var cellE in eMG.AroundCellsE(eMG.WeatherE.CloudC.Center).CellsAround)
+                                                        foreach (var cellE in _eMG.AroundCellsE(_eMG.WeatherE.CloudC.Center).CellsAround)
                                                         {
-                                                            if (cellE == eMG.CellsC.Current)
+                                                            if (cellE == _eMG.CellsC.Current)
                                                             {
-                                                                eMG.RpcPoolEs.PutOutFireElffToMas(eMG.CellsC.Selected, eMG.CellsC.Current);
+                                                                _eMG.RpcPoolEs.PutOutFireElffToMas(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                                                             }
                                                         }
                                                     }
@@ -117,13 +117,13 @@ namespace Chessy.Game.Model.System
                                                 //    break;
 
                                                 case AbilityTypes.Resurrect:
-                                                    eMG.RpcPoolEs.ResurrectToMaster(eMG.CellsC.Selected, eMG.CellsC.Current);
+                                                    _eMG.RpcPoolEs.ResurrectToMaster(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                                                     break;
 
                                                 default: throw new Exception();
                                             }
 
-                                            eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
+                                            _eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
                                         }
                                         break;
 
@@ -133,7 +133,7 @@ namespace Chessy.Game.Model.System
 
                             else
                             {
-                                eMG.CellsC.Selected = eMG.CellsC.Current;
+                                _eMG.CellsC.Selected = _eMG.CellsC.Current;
                             }
                         }
                         break;
@@ -143,14 +143,14 @@ namespace Chessy.Game.Model.System
 
                     case RaycastTypes.Background:
                         {
-                            if (!eMG.LessonTC.HaveLesson/* Is(LessonTypes.RelaxExtractPawn, LessonTypes.SeedingPawn)*/)
+                            if (!_eMG.LessonTC.HaveLesson/* Is(LessonTypes.RelaxExtractPawn, LessonTypes.SeedingPawn)*/)
                             {
-                                eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
+                                _eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
 
-                                eMG.CellsC.PreviousSelected = eMG.CellsC.Selected;
-                                eMG.SelectedCell = 0;
+                                _eMG.CellsC.PreviousSelected = _eMG.CellsC.Selected;
+                                _eMG.SelectedCell = 0;
 
-                                eMG.IsSelectedCity = false;
+                                _eMG.IsSelectedCity = false;
 
                                 //eMG.LessonTC.SetPreviousLesson();
                             }
@@ -163,7 +163,7 @@ namespace Chessy.Game.Model.System
 
             else
             {
-                if (eMG.RaycastTC.Is(RaycastTypes.Cell))
+                if (_eMG.RaycastTC.Is(RaycastTypes.Cell))
                 {
 
                 }

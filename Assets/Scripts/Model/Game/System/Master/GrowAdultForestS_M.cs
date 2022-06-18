@@ -10,37 +10,37 @@ namespace Chessy.Game.Model.System
     {
         internal void Grow(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
-            if (!eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
+            if (!_eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (eMG.StepUnitC(cell_0).Steps >= StepValues.GROW_ADULT_FOREST)
+                if (_eMG.StepUnitC(cell_0).Steps >= StepValues.GROW_ADULT_FOREST)
                 {
-                    if (eMG.YoungForestC(cell_0).HaveAnyResources)
+                    if (_eMG.YoungForestC(cell_0).HaveAnyResources)
                     {
-                        eMG.YoungForestC(cell_0).Resources = 0;
-                        eMG.AdultForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _eMG.YoungForestC(cell_0).Resources = 0;
+                        _eMG.AdultForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-                        eMG.StepUnitC(cell_0).Steps -= StepValues.GROW_ADULT_FOREST;
-                        eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
+                        _eMG.StepUnitC(cell_0).Steps -= StepValues.GROW_ADULT_FOREST;
+                        _eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
-                        foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
+                        foreach (var idx_1 in _eMG.AroundCellsE(cell_0).CellsAround)
                         {
-                            if (eMG.YoungForestC(idx_1).HaveAnyResources)
+                            if (_eMG.YoungForestC(idx_1).HaveAnyResources)
                             {
-                                eMG.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+                                _eMG.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                             }
                         }
-                        eMG.RpcPoolEs.SoundToGeneral(sender, abilityT);
+                        _eMG.RpcPoolEs.SoundToGeneral(sender, abilityT);
                     }
 
-                    else eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
+                    else _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
                 }
 
-                else eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
 
             else
             {
-                eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

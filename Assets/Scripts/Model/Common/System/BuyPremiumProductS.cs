@@ -1,20 +1,11 @@
-﻿using Chessy.Common.Entity;
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace Chessy.Common
+namespace Chessy.Common.Model.System
 {
-    public sealed class BuyPremiumProductS
+    public sealed partial class SystemsModelCommon : IUpdate
     {
-        readonly EntitiesModelCommon _eMC;
-
-        internal BuyPremiumProductS(in EntitiesModelCommon eMC)
-        {
-            _eMC = eMC;
-        }
-
-
-        public void Buy()
+        public void BuyPremiumProduct()
         {
             if (_eMC.ShopC.IsInitialized) //если покупка инициализирована 
             {

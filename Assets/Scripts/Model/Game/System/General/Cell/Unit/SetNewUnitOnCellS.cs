@@ -3,10 +3,8 @@ using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
 {
-    sealed partial class SystemsModelGame //: SystemModel
+    sealed partial class SystemsModelGame
     {
-        //internal SetNewUnitOnCellS(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
-
         internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte cell)
         {
             UnitSs.UnitSimpleS(cell).SetMainS.Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);

@@ -5,24 +5,27 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal void GetFarmExtractCells(in byte cell_0)
+        internal void GetFarmExtractCells()
         {
-            eMG.FarmExtractFertilizeC(cell_0).Resources = 0;
-
-            if (eMG.BuildingTC(cell_0).Is(BuildingTypes.Farm))
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (eMG.FertilizeC(cell_0).HaveAnyResources)
+                _eMG.FarmExtractFertilizeC(cellIdxCurrent).Resources = 0;
+
+                if (_eMG.BuildingTC(cellIdxCurrent).Is(BuildingTypes.Farm))
                 {
-                    var extract = EnvironmentValues.FARM_EXTRACT;
+                    if (_eMG.FertilizeC(cellIdxCurrent).HaveAnyResources)
+                    {
+                        var extract = EnvironmentValues.FARM_EXTRACT;
 
-                    //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
-                    //{
-                    //    extract += Environment_Values.FARM_CENTER_UPGRADE;
-                    //}
+                        //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
+                        //{
+                        //    extract += Environment_Values.FARM_CENTER_UPGRADE;
+                        //}
 
-                    if (eMG.FertilizeC(cell_0).Resources < extract) extract = eMG.FertilizeC(cell_0).Resources;
+                        if (_eMG.FertilizeC(cellIdxCurrent).Resources < extract) extract = _eMG.FertilizeC(cellIdxCurrent).Resources;
 
-                    eMG.FarmExtractFertilizeC(cell_0).Resources = extract;
+                        _eMG.FarmExtractFertilizeC(cellIdxCurrent).Resources = extract;
+                    }
                 }
             }
         }

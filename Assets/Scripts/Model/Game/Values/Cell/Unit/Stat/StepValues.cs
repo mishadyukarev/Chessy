@@ -4,12 +4,16 @@ namespace Chessy.Game.Values.Cell.Unit.Stats
 {
     public static class StepValues
     {
-        public const float MAX = 1; //NOT_CHANGE_CONS!!!
+        #region NON_CHANGE!!!!!!!
 
-        public const float FOR_SHIFT_ATTACK_EMPTY_CELL = 0.5f; //NOT_CHANGE_CONS!!!
-        public const float BONUS_TRAIL = 0.5f; //NOT_CHANGE_CONS!!!
-        public const float FOR_GIVE_TAKE_TOOLWEAPON = 0.25f; //NOT_CHANGE_CONS!!!
-        public const float FOR_TOGGLE_CONDITION_UNIT = 0.5f; //NOT_CHANGE_CONS!!!
+        public const float MAX = 1;
+
+        public const float FOR_SHIFT_ATTACK_EMPTY_CELL = 0.5f;
+        public const float BONUS_TRAIL = 0.5f;
+        public const float FOR_GIVE_TAKE_TOOLWEAPON = 0.25f;
+        public const float FOR_TOGGLE_CONDITION_UNIT = 0.5f;
+
+        #endregion !!!!!!!!!!
 
 
         #region CenterUpgrade

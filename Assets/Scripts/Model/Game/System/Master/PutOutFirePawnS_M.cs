@@ -8,16 +8,16 @@ namespace Chessy.Game.Model.System
     {
         public void PutOut(in byte cell_0, in Player sender)
         {
-            if (eMG.StepUnitC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
+            if (_eMG.StepUnitC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
             {
-                eMG.HaveFire(cell_0) = false;
+                _eMG.HaveFire(cell_0) = false;
 
-                eMG.StepUnitC(cell_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
+                _eMG.StepUnitC(cell_0).Steps -= StepValues.PUT_OUT_FIRE_PAWN;
             }
 
             else
             {
-                eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

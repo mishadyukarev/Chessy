@@ -1,23 +1,31 @@
-﻿using Chessy.Game.Model.Entity;
+﻿using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        internal void GetEffectsForUnits(in byte cell_0)
+        void GetEffectsForUnits()
         {
-            eMG.HaveKingEffect(cell_0) = false;
-
-            if (!eMG.IsBorder(cell_0))
+            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                foreach (var idx_1 in eMG.AroundCellsE(cell_0).CellsAround)
+                _eMG.PlayerInfoE(playerT).WhereKingEffects.Clear();
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _eMG.HaveKingEffect(cellIdxCurrent) = false;
+
+                if (!_eMG.IsBorder(cellIdxCurrent))
                 {
-                    if (eMG.UnitTC(idx_1).Is(UnitTypes.King))
+                    foreach (var idx_1 in _eMG.AroundCellsE(cellIdxCurrent).CellsAround)
                     {
-                        if (eMG.UnitPlayerTC(idx_1).Is(eMG.UnitPlayerTC(cell_0).PlayerT))
+                        if (_eMG.UnitTC(idx_1).Is(UnitTypes.King))
                         {
-                            eMG.PlayerInfoE(eMG.UnitPlayerTC(idx_1).PlayerT).WhereKingEffects.Add(cell_0);
-                            eMG.HaveKingEffect(cell_0) = true;
+                            if (_eMG.UnitPlayerTC(idx_1).Is(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT))
+                            {
+                                _eMG.PlayerInfoE(_eMG.UnitPlayerTC(idx_1).PlayerT).WhereKingEffects.Add(cellIdxCurrent);
+                                _eMG.HaveKingEffect(cellIdxCurrent) = true;
+                            }
                         }
                     }
                 }

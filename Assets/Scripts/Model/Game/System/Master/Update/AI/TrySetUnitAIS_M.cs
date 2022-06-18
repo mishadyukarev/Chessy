@@ -34,29 +34,29 @@ namespace Chessy.Game
                 _pointsCellsForSettingKing[cellIdxStart] = 0;
                 _pointsCellsForSettingPawn[cellIdxStart] = 0;
 
-                if (!eMG.IsStartedCellC(cellIdxStart).IsStartedCell(playerBotT) || eMG.UnitTC(cellIdxStart).HaveUnit) continue;
+                if (!_eMG.IsStartedCellC(cellIdxStart).IsStartedCell(playerBotT) || _eMG.UnitTC(cellIdxStart).HaveUnit) continue;
 
                 _pointsCellsForSettingKing[cellIdxStart]++;
                 _pointsCellsForSettingPawn[cellIdxStart]++;
 
 
-                if (eMG.AdultForestC(cellIdxStart).HaveAnyResources)
+                if (_eMG.AdultForestC(cellIdxStart).HaveAnyResources)
                 {
                     _pointsCellsForSettingKing[cellIdxStart]++;
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
-                if (eMG.HillC(cellIdxStart).HaveAnyResources)
+                if (_eMG.HillC(cellIdxStart).HaveAnyResources)
                 {
                     _pointsCellsForSettingKing[cellIdxStart]++;
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
 
-                if (eMG.XyCellC(cellIdxStart).Y == 8)
+                if (_eMG.XyCellC(cellIdxStart).Y == 8)
                 {
                     _pointsCellsForSettingKing[cellIdxStart] += 3;
                     _pointsCellsForSettingPawn[cellIdxStart] += 3;
 
-                    if (eMG.XyCellC(cellIdxStart).X >= 4 && eMG.XyCellC(cellIdxStart).X <= 7)
+                    if (_eMG.XyCellC(cellIdxStart).X >= 4 && _eMG.XyCellC(cellIdxStart).X <= 7)
                     {
                         _pointsCellsForSettingKing[cellIdxStart]++;
                         _pointsCellsForSettingPawn[cellIdxStart]++;
@@ -74,17 +74,17 @@ namespace Chessy.Game
                 }
             }
 
-            if (eMG.PlayerInfoE(playerBotT).KingInfoE.HaveInInventor)
+            if (_eMG.PlayerInfoE(playerBotT).KingInfoE.HaveInInventor)
             {
                 byte cellIdx = 85;
 
-                sMG.ClearAllEnvironment(cellIdx);
-                sMG.SetNewUnitOnCellS(UnitTypes.King, playerBotT, cellIdx);
+                _sMG.ClearAllEnvironment(cellIdx);
+                _sMG.SetNewUnitOnCellS(UnitTypes.King, playerBotT, cellIdx);
 
                 //TrySetUnit(ref _theMostBigPointForSettingKing, _pointsCellsForSettingKing, UnitTypes.King, playerBotT);
             }
 
-            if (eMG.PlayerInfoE(playerBotT).PawnInfoC.CanGetPawn)
+            if (_eMG.PlayerInfoE(playerBotT).PawnInfoC.CanGetPawn)
             {
                 TrySetUnit(ref _theMostBigPointForSettingPawn, _pointsCellsForSettingPawn, UnitTypes.Pawn, playerBotT);
             }
@@ -105,15 +105,15 @@ namespace Chessy.Game
 
                     if (theMostBigPoint == currentPoint)
                     {
-                        if (!eMG.UnitTC(idxCell).HaveUnit)
+                        if (!_eMG.UnitTC(idxCell).HaveUnit)
                         {
                             if (Random.Range(0, 1f) < 0.75f)
                             {
-                                sMG.SetNewUnitOnCellS(unitT, playerBotT, idxCell);
+                                _sMG.SetNewUnitOnCellS(unitT, playerBotT, idxCell);
 
                                 if(unitT == UnitTypes.King)
                                 {
-                                    sMG.ClearAllEnvironment(idxCell);
+                                    _sMG.ClearAllEnvironment(idxCell);
                                 }
 
                                 break;
@@ -135,10 +135,10 @@ namespace Chessy.Game
 
                 if (unitT == UnitTypes.King)
                 {
-                    if (!eMG.PlayerInfoE(playerBotT).KingInfoE.HaveInInventor) break;
+                    if (!_eMG.PlayerInfoE(playerBotT).KingInfoE.HaveInInventor) break;
                 }
 
-                if (!eMG.PlayerInfoE(playerBotT).PawnInfoC.CanGetPawn)
+                if (!_eMG.PlayerInfoE(playerBotT).PawnInfoC.CanGetPawn)
                 {
                     break;
                 }

@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
     {
         internal void CopyUnitFromTo(in byte cell_from, in byte cell_to)
         {
-            _unitSimpleSs[cell_to].SetMainS.CopyFrom(_eMG.UnitMainE(cell_to));
+            _unitSimpleSs[cell_to].SetMainS.CopyFrom(_eMG.UnitMainE(cell_from));
             CopyEffects(cell_from, cell_to);
             Set(cell_from, cell_to);
             CopyMainTW(cell_from, cell_to);
