@@ -1,6 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
-using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -8,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void FirePawn(in byte cellIdxForFire, in Player sender)
+        internal void TryFireWithSimplePawnM(in byte cellIdxForFire, in Player sender)
         {
             if (_eMG.StepUnitC(cellIdxForFire).Steps >= StepValues.FIRE_PAWN)
             {
@@ -19,14 +17,14 @@ namespace Chessy.Game.Model.System
                     _eMG.HaveFire(cellIdxForFire) = true;
                     _eMG.StepUnitC(cellIdxForFire).Steps -= StepValues.FIRE_PAWN;
 
-                    if(_eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
+                    if (_eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     {
                         _eMG.LessonTC.SetNextLesson();
                     }
                 }
                 else
                 {
-                    _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                    _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
                 }
             }
 

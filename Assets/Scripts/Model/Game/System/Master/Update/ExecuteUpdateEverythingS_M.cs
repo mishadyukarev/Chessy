@@ -184,7 +184,7 @@ namespace Chessy.Game.Model.System
 
             if (amountAdultForest <= UpdateValues.NEED_ADULT_FORESTS_FOR_TRUCE || can)
             {
-                _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                _sMG.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Truce);
 
                 _sMG.TruceS.ExecuteTruce();
             }

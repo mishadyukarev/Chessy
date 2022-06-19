@@ -75,7 +75,7 @@ namespace Chessy.Game.Model.System
                         break;
                 }
 
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
+                ExecuteSoundActionToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {

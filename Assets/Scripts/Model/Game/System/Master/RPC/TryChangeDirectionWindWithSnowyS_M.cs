@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void TryChange(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
+        internal void TryChangeDirectWindWithSnowyM(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
             if (_eMG.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))
             {

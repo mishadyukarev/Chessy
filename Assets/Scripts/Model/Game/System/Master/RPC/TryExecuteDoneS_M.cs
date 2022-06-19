@@ -21,8 +21,8 @@ namespace Chessy.Game.Model.System
                     {
                         if (PhotonNetwork.OfflineMode)
                         {
-                            _eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(sender);
-                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AfterUpdate);
+                            ActiveMotionZone_ToGeneneral(sender);
+                            ExecuteSoundActionToGeneral(sender, ClipTypes.AfterUpdate);
 
                             if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
                             {
@@ -58,20 +58,20 @@ namespace Chessy.Game.Model.System
                             {
                                 ExecuteUpdateEverythingMS.ExecuteUpdateEverythingM();
 
-                                _eMG.RpcPoolEs.ActiveMotionZone_ToGeneneral(RpcTarget.All);
-                                _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
+                                ActiveMotionZone_ToGeneneral(RpcTarget.All);
+                                ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
                             }
                         }
                     }
                 }
                 else
                 {
-                    _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedGetHero, sender);
+                    SimpleMistake_ToGeneral(MistakeTypes.NeedGetHero, sender);
                 }
             }
             else
             {
-                _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedSetKing, sender);
+                SimpleMistake_ToGeneral(MistakeTypes.NeedSetKing, sender);
             }
         }
 

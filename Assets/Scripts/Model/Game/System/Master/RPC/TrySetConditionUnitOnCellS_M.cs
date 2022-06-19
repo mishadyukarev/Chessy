@@ -22,13 +22,13 @@ namespace Chessy.Game.Model.System
                     case ConditionUnitTypes.Protected:
                         if (_eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Protected))
                         {
-                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
                         }
 
                         else if (_eMG.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
-                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                             _eMG.UnitConditionTC(cell_0).Condition = condT;
 
@@ -45,13 +45,13 @@ namespace Chessy.Game.Model.System
                     case ConditionUnitTypes.Relaxed:
                         if (_eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
                         {
-                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
                         }
 
                         else if (_eMG.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
-                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _eMG.UnitConditionTC(cell_0).Condition = condT;
                             _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
@@ -86,7 +86,7 @@ namespace Chessy.Game.Model.System
 
             else
             {
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

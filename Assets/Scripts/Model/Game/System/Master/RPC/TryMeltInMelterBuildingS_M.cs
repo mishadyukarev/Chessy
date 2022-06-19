@@ -45,7 +45,7 @@ namespace Chessy.Game.Model.System
                 _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
                 _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
 
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Melting);
+                ExecuteSoundActionToGeneral(sender, ClipTypes.Melting);
             }
             else
             {

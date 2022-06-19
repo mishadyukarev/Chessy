@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        public void PutOut(in byte cell_0, in Player sender)
+        public void TryPutOutFireWithSimplePawnM(in byte cell_0, in Player sender)
         {
             if (_eMG.StepUnitC(cell_0).Steps >= StepValues.PUT_OUT_FIRE_PAWN)
             {

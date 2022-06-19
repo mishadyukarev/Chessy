@@ -19,8 +19,8 @@ namespace Chessy.Game.Model.System
             _eMG.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
 
             if (_eMG.UnitTC(idx_from).IsMelee(_eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
-                _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-            else _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+                ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+            else ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
             _eMG.RpcPoolEs.AnimationCell_ToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);

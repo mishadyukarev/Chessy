@@ -45,7 +45,7 @@ namespace Chessy.Game.Model.System
                                 _eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                             }
 
-                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
+                            ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
                             _eMG.YoungForestC(cell_0).Resources = 0;
                             BuildingSs.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
                             _eMG.StepUnitC(cell_0).Steps -= StepValues.SET_FARM;

@@ -32,7 +32,7 @@ namespace Chessy.Game.Model.System
                 SetNewUnitOnCellS(unitT, whoseMove, cellIdx);
 
 
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

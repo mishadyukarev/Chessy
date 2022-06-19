@@ -13,7 +13,7 @@ namespace Chessy.Game.Model.System
 
                 _eMG.StepUnitC(cell_0).Steps -= StepValues.CHANGE_CORNER_ARCHER;
 
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickArcher);
+                _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.PickArcher);
             }
 
             else

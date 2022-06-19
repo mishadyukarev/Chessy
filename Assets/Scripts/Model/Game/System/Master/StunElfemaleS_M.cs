@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void TryStunWithElfemaleM(in byte cell_from, in byte cell_to, in AbilityTypes abilityT, in Player sender)
+        internal void TryStunEnemyWithElfemaleM(in byte cell_from, in byte cell_to, in AbilityTypes abilityT, in Player sender)
         {
             if (!_eMG.UnitCooldownAbilitiesC(cell_from).HaveCooldown(abilityT))
             {
@@ -44,7 +44,7 @@ namespace Chessy.Game.Model.System
                 }
             }
 
-            else _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+            else _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

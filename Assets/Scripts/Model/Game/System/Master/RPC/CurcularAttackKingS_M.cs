@@ -14,7 +14,7 @@ namespace Chessy.Game.Model.System
             {
                 if (_eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
                 {
-                    _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                    _sMG.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     _eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
                     _eMG.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
@@ -47,7 +47,7 @@ namespace Chessy.Game.Model.System
 
                     _eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
 
-                    _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.AttackMelee);
+                    _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.AttackMelee);
                 }
 
                 else
@@ -56,7 +56,7 @@ namespace Chessy.Game.Model.System
                 }
             }
 
-            else _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+            else _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

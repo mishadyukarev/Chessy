@@ -94,11 +94,11 @@ namespace Chessy.Game.Model.System
                                             switch (_eMG.SelectedE.AbilityTC.Ability)
                                             {
                                                 case AbilityTypes.FireArcher:
-                                                    _eMG.RpcPoolEs.FireArcherToMas(_eMG.CellsC.Selected, _eMG.CellsC.Current);
+                                                    _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM), _eMG.CellsC.Selected, _eMG.CellsC.Current });
                                                     break;
 
                                                 case AbilityTypes.StunElfemale:
-                                                    _eMG.RpcPoolEs.StunElfemaleToMas(_eMG.CellsC.Selected, _eMG.CellsC.Current);
+                                                    _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM), _eMG.CellsC.Selected, _eMG.CellsC.Current });
                                                     break;
 
                                                 case AbilityTypes.ChangeDirectionWind:
@@ -107,18 +107,10 @@ namespace Chessy.Game.Model.System
                                                         {
                                                             if (cellE == _eMG.CellsC.Current)
                                                             {
-                                                                _eMG.RpcPoolEs.PutOutFireElffToMas(_eMG.CellsC.Selected, _eMG.CellsC.Current);
+                                                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.TryPutOutFireWithSimplePawnM), _eMG.CellsC.Selected, _eMG.CellsC.Current });
                                                             }
                                                         }
                                                     }
-                                                    break;
-
-                                                //case AbilityTypes.DirectWave:
-                                                //    e.RpcPoolEs.DirectWaveToMaster(e.CellsC.SelectedIdxC, e.CellsC.CurrentIdxC);
-                                                //    break;
-
-                                                case AbilityTypes.Resurrect:
-                                                    _eMG.RpcPoolEs.ResurrectToMaster(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                                                     break;
 
                                                 default: throw new Exception();

@@ -1,16 +1,16 @@
-﻿namespace Chessy.Game
-{
-    public enum RpcGeneralTypes
-    {
-        None,
+﻿//namespace Chessy.Game
+//{
+//    public enum RpcGeneralTypes
+//    {
+//        None,
 
-        SoundEffect,
-        SoundUniqueAbility,
-        AnimationCell,
+//        //SoundEffect,
+//        SoundUniqueAbility,
+//        AnimationCell,
 
-        ActiveMotion,
-        Mistake,
+//        ActiveMotion,
+//        Mistake,
 
-        End,
-    }
-}
+//        End,
+//    }
+//}

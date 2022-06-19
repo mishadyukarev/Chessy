@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void TryGrowAdultForestM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void TryGrowAdultForestWithElfemaleM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (!_eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
@@ -40,7 +40,7 @@ namespace Chessy.Game.Model.System
 
             else
             {
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+                _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Chessy.Game.Model.System
 
                 ShiftUnitOnOtherCellM(cell_from, cell_to);
 
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.ClickToTable);
+                ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

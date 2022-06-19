@@ -26,8 +26,6 @@ namespace Chessy.Game
             {
                 var list = new List<string>();
                 list.Add(nameof(MasterRPC));
-                list.Add(nameof(GeneralRpc));
-                list.Add(nameof(OtherRpc));
                 return list;
             }
         }
@@ -115,14 +113,14 @@ namespace Chessy.Game
                     _s.UnitSs.UnitAbilitiesSs.CurcularAttackKingM((byte)objects[_idx_cur++], AbilityTypes.CircularAttack, sender);
                 }
 
-                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.FirePawn))
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryFireWithSimplePawnM))
                 {
-                    _s.UnitSs.UnitAbilitiesSs.FirePawn((byte)objects[_idx_cur++], sender);
+                    _s.UnitSs.UnitAbilitiesSs.TryFireWithSimplePawnM((byte)objects[_idx_cur++], sender);
                 }
 
-                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.PutOut))
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryPutOutFireWithSimplePawnM))
                 {
-                    _s.UnitSs.UnitAbilitiesSs.PutOut((byte)objects[_idx_cur++], sender);
+                    _s.UnitSs.UnitAbilitiesSs.TryPutOutFireWithSimplePawnM((byte)objects[_idx_cur++], sender);
                 }
 
                 else if (nameMethod == nameof(_s.TrySeedYoungForestOnCellWithPawnM))
@@ -135,24 +133,24 @@ namespace Chessy.Game
                     _s.TryBuildFarmOnCellWithUnitM((byte)objects[_idx_cur++], sender);
                 }
 
-                else if (nameMethod == nameof(_s.BuildingSs.TryDestroyM))
+                else if (nameMethod == nameof(_s.BuildingSs.TryDestroyBuildingWithSimplePawnM))
                 {
-                    _s.BuildingSs.TryDestroyM((byte)objects[_idx_cur++], sender);
+                    _s.BuildingSs.TryDestroyBuildingWithSimplePawnM((byte)objects[_idx_cur++], sender);
                 }
 
-                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.FirePawn))
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM))
                 {
-                    _s.UnitSs.UnitAbilitiesSs.TryFireForestWithPawnM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                    _s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
                 }
 
-                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestM))
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM))
                 {
-                    _s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestM((byte)objects[_idx_cur++], AbilityTypes.GrowAdultForest, sender);
+                    _s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM((byte)objects[_idx_cur++], AbilityTypes.GrowAdultForest, sender);
                 }
 
-                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryStunWithElfemaleM))
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM))
                 {
-                    _s.UnitSs.UnitAbilitiesSs.TryStunWithElfemaleM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], AbilityTypes.StunElfemale, sender);
+                    _s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], AbilityTypes.StunElfemale, sender);
                 }
 
                 else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher))
@@ -160,134 +158,54 @@ namespace Chessy.Game
                     _s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher((byte)objects[_idx_cur++], AbilityTypes.ChangeCornerArcher, sender);
                 }
 
-                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher))
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM))
                 {
-                    _s.UnitSs.UnitAbilitiesSs.TryChange((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], AbilityTypes.ChangeDirectionWind, sender);
+                    _s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], AbilityTypes.ChangeDirectionWind, sender);
+                }
+
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM((byte)objects[_idx_cur++], AbilityTypes.IncreaseWindSnowy, sender);
+                }
+
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM((byte)objects[_idx_cur++], AbilityTypes.DecreaseWindSnowy, sender);
+                }
+
+                else if (nameMethod == nameof(_s.ExecuteSoundAction))
+                {
+                    if (objects[_idx_cur++] is ClipTypes clipT)
+                    {
+                        _s.ExecuteSoundAction(clipT);
+                    }
+                    else
+                    {
+                        _s.ExecuteSoundAction((AbilityTypes)objects[_idx_cur++]);
+                    }
+                }
+
+                else if (nameMethod == nameof(_s.ExecuteAnimationClip))
+                {
+                    _s.ExecuteAnimationClip((byte)objects[_idx_cur++], (AnimationCellTypes)objects[_idx_cur++]);
+                }
+
+                else if (nameMethod == nameof(_s.ActiveMotion))
+                {
+                    _s.ActiveMotion();
+                }
+
+                else if (nameMethod == nameof(_s.ExecuteMistake))
+                {
+                    _s.ExecuteMistake((MistakeTypes)objects[_idx_cur++], (float[])objects[_idx_cur++]);
                 }
             }
-
-            else if (obj is RpcMasterTypes rpcT)
-            {
-                switch (rpcT)
-                {
-                    case RpcMasterTypes.UniqueAbility:
-                        var abilityT = (AbilityTypes)objects[_idx_cur++];
-                        switch (abilityT)
-                        {
-                            case AbilityTypes.IncreaseWindSnowy:
-                                _s.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(true, (byte)objects[_idx_cur++], abilityT, sender);
-                                break;
-
-                            case AbilityTypes.DecreaseWindSnowy:
-                                _s.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(false, (byte)objects[_idx_cur++], abilityT, sender);
-                                break;
-
-                            case AbilityTypes.Resurrect:
-                                {
-                                }
-                                break;
-
-                            case AbilityTypes.SetTeleport:
-                                {
-                                }
-                                break;
-
-                            case AbilityTypes.Teleport:
-                                {
-                                }
-                                break;
-
-                            case AbilityTypes.InvokeSkeletons:
-                                {
-                                }
-                                break;
-
-                            default: throw new Exception();
-                        }
-                        break;
-
-                    default: throw new Exception();
-                }
-            }
-
-            
 
             _s.GetDataCellsS.GetDataCells();
             _eMG.NeedUpdateView = true;
 
             SyncAllMaster();
         }
-
-        [PunRPC]
-        void GeneralRpc(object[] objects, PhotonMessageInfo infoFrom)
-        {
-            _idx_cur = 0;
-
-            switch ((RpcGeneralTypes)objects[_idx_cur++])
-            {
-                case RpcGeneralTypes.None:
-                    throw new Exception();
-
-                case RpcGeneralTypes.SoundEffect:
-                    _eMG.SoundAction((ClipTypes)objects[_idx_cur++]).Invoke();
-                    break;
-
-                case RpcGeneralTypes.SoundUniqueAbility:
-                    _eMG.SoundAction((AbilityTypes)objects[_idx_cur++]).Invoke();
-                    break;
-
-                case RpcGeneralTypes.AnimationCell:
-                    _eMG.DataFromViewC.AnimationCell((byte)objects[_idx_cur++], (AnimationCellTypes)objects[_idx_cur++]).Invoke();
-                    break;
-
-                case RpcGeneralTypes.ActiveMotion:
-                    _eMG.MotionTimer = 4;
-                    break;
-
-                case RpcGeneralTypes.Mistake:
-
-                    var mistakeT = (MistakeTypes)objects[_idx_cur++];
-
-                    _s.Mistake(mistakeT);
-
-                    _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
-
-                    //if (mistakeT == MistakeTypes.NeedMoreSteps || mistakeT == MistakeTypes.MinSpeedWind 
-                    //    || mistakeT == MistakeTypes.MaxSpeedWind || mistakeT == MistakeTypes.NeedBuildingHouses
-                    //    || mistakeT == MistakeTypes.NeedMoreHp || mistakeT == MistakeTypes.NeedMorePeopleInCity)
-                    //{
-
-                    //}
-                    //else
-                    //{
-                    //    _e.Sound(ClipTypes.Mistake).Action.Invoke();
-                    //}
-
-                    if (mistakeT == MistakeTypes.Economy)
-                    {
-                        _eMG.MistakeEconomy(ResourceTypes.Food).Resources = 0;
-                        _eMG.MistakeEconomy(ResourceTypes.Wood).Resources = 0;
-                        _eMG.MistakeEconomy(ResourceTypes.Ore).Resources = 0;
-                        _eMG.MistakeEconomy(ResourceTypes.Iron).Resources = 0;
-                        _eMG.MistakeEconomy(ResourceTypes.Gold).Resources = 0;
-
-                        var needRes = (float[])objects[_idx_cur++];
-
-                        _eMG.MistakeEconomy(ResourceTypes.Food).Resources = needRes[0];
-                        _eMG.MistakeEconomy(ResourceTypes.Wood).Resources = needRes[1];
-                        _eMG.MistakeEconomy(ResourceTypes.Ore).Resources = needRes[2];
-                        _eMG.MistakeEconomy(ResourceTypes.Iron).Resources = needRes[3];
-                        _eMG.MistakeEconomy(ResourceTypes.Gold).Resources = needRes[4];
-                    }
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
-        [PunRPC]
-        void OtherRpc(object[] objects, PhotonMessageInfo infoFrom) => _eMG.RpcPoolEs.OtherRpc(objects, infoFrom);
 
 
         #region SyncData
@@ -430,7 +348,7 @@ namespace Chessy.Game
             for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
 
-            _eMG.RpcPoolEs.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            _eMG.RpcPoolEs.Action0(nameof(SyncAllOther), RpcTarget.Others, objects);
         }
 
         [PunRPC]

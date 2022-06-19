@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void IncreaseWindSnowyM(in bool needIncrese, in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void IncreaseWindWithRainyM(in byte cell_0, in AbilityTypes abilityT, in Player sender, in bool needIncrese = true)
         {
             if (!_eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
@@ -53,6 +53,11 @@ namespace Chessy.Game.Model.System
                     _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
+        }
+
+        internal void DecreaseWindWithRainyM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        {
+            IncreaseWindWithRainyM(cell_0, abilityT, sender);
         }
     }
 }

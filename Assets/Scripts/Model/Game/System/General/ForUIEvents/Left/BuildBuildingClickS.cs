@@ -225,7 +225,7 @@ namespace Chessy.Game.Model.System
                 }
 
 
-                _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Building);
+                _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
             }
 
             else

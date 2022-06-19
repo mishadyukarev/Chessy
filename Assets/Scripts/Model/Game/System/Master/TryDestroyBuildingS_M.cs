@@ -7,11 +7,11 @@ namespace Chessy.Game
 {
     sealed partial class BuildingSystems
     {
-        internal void TryDestroyM(in byte cell_0, in Player sender)
+        internal void TryDestroyBuildingWithSimplePawnM(in byte cell_0, in Player sender)
         {
             if (_eMG.StepUnitC(cell_0).HaveAnySteps)
             {
-                _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
+                _sMG.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 _sMG.BuildingSs.Attack(cell_0, 1f, _eMG.UnitPlayerTC(cell_0).PlayerT);
 

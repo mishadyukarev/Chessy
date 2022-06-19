@@ -47,7 +47,7 @@ namespace Chessy.Game.Model.System
 
                                         _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                        _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                        ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                     }
                                     else
                                     {
@@ -71,7 +71,7 @@ namespace Chessy.Game.Model.System
 
                                             UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
-                                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                            ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
                                             if (_eMG.LessonTC.Is(LessonTypes.GiveStaff, LessonTypes.GiveBowCrossbow))
                                             {
@@ -117,7 +117,7 @@ namespace Chessy.Game.Model.System
 
                                     _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                    _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                    ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
                                 else
                                 {
@@ -141,7 +141,7 @@ namespace Chessy.Game.Model.System
 
                                         UnitSs.SetMainToolWeapon(cell_0, twT, levTW);
 
-                                        _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                        ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
                                         if (_eMG.LessonT == LessonTypes.GiveIronAxe)
                                         {
@@ -173,7 +173,7 @@ namespace Chessy.Game.Model.System
 
                             _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                            _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                            ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                         }
                     }
 
@@ -200,7 +200,7 @@ namespace Chessy.Game.Model.System
 
                                     _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                    _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                    ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
 
                                 else if (_eMG.ToolWeaponsC(ownUnit_0, levTW, twT) > 0)
@@ -213,7 +213,7 @@ namespace Chessy.Game.Model.System
 
                                     _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                    _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                    ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
 
                                 else
@@ -246,7 +246,7 @@ namespace Chessy.Game.Model.System
 
                                         _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
-                                        _eMG.RpcPoolEs.SoundToGeneral(sender, ClipTypes.PickMelee);
+                                        ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
 
                                         if (_eMG.LessonTC.Is(LessonTypes.GiveTakePickPawn, LessonTypes.GiveShield, LessonTypes.GiveSword))
