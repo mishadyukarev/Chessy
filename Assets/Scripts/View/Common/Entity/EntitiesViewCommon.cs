@@ -29,7 +29,7 @@ namespace Chessy.Common.Entity.View
         {
             MainGOC = new GameObjectVC(main.gameObject);
 
-            var camera = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<Camera>("Camera"), main.position, main.rotation);
+            var camera = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<Camera>("Camera+"), main.position, main.rotation);
             camera.name = "Camera";
             camera.orthographicSize = 5.7f;
 
@@ -103,7 +103,7 @@ namespace Chessy.Common.Entity.View
             parent.transform.SetParent(commonZone);
 
 
-            var backGroundGO = GameObject.Instantiate(UnityEngine.Resources.Load<GameObject>("Background"), main.position + new Vector3(7, 5.5f, 2), main.rotation);
+            var backGroundGO = GameObject.Instantiate(UnityEngine.Resources.Load<GameObject>("Background+"), main.position + new Vector3(7, 5.5f, 2), main.rotation);
             backGroundGO.transform.SetParent(commonZone);
             backGroundGO.transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
             Background = new GameObjectVC(backGroundGO);

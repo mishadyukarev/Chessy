@@ -39,7 +39,7 @@ namespace Chessy.Game
             for (byte x = 0; x < StartValues.X_AMOUNT; x++)
                 for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
                 {
-                    var cell = GameObject.Instantiate(UnityEngine.Resources.Load<GameObject>("CellPrefab"), eVCommon.MainGOC.Transform.position + new Vector3(x, y, eVCommon.MainGOC.Transform.position.z), eVCommon.MainGOC.Transform.rotation);
+                    var cell = GameObject.Instantiate(UnityEngine.Resources.Load<GameObject>("CellPrefab+"), eVCommon.MainGOC.Transform.position + new Vector3(x, y, eVCommon.MainGOC.Transform.position.z), eVCommon.MainGOC.Transform.rotation);
                     cell.name = "CellMain";
 
                     if (y == 0 || y == 10 && x >= 0 && x < 15 ||
