@@ -215,14 +215,11 @@ namespace Chessy.Game.EventsUI
                 Exit(BuildingTypes.Smelter, eMGame, eMCommon);
                 eMGame.NeedUpdateView = true;
             });
-            centerEs.SmelterE.ButtonC.AddListener(delegate
-            {
-                eMGame.RpcPoolEs.Melt_ToMaster();
-            });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.FoodToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.FoodToWood); });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.WoodToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.WoodToFood); });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToFood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToFood); });
-            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(delegate { eMGame.RpcPoolEs.BuyResource_ToMaster(MarketBuyTypes.GoldToWood); });
+            centerEs.SmelterE.ButtonC.AddListener(() => sMGame.ForUISystems.Melt());
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.FoodToWood).AddListener(() => sMGame.ForUISystems.TryBuyFromMarketBuilding(MarketBuyTypes.FoodToWood));
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.WoodToFood).AddListener(() => sMGame.ForUISystems.TryBuyFromMarketBuilding(MarketBuyTypes.WoodToFood));
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToFood).AddListener(() => sMGame.ForUISystems.TryBuyFromMarketBuilding(MarketBuyTypes.GoldToFood));
+            centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(() => sMGame.ForUISystems.TryBuyFromMarketBuilding(MarketBuyTypes.GoldToWood));
 
 
             centerEs.SkipLessonE.ButtonUIC.AddListener(sMGame.ForUISystems.GetClickEffects);

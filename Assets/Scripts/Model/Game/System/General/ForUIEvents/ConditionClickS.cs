@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game.Model.System
+﻿using Photon.Pun;
+
+namespace Chessy.Game.Model.System
 {
     public sealed partial class SystemsModelGameForUI
     {
@@ -8,11 +10,11 @@
             {
                 if (_eMG.UnitConditionTC(_eMG.CellsC.Selected).Is(conditionT))
                 {
-                    _eMG.RpcPoolEs.ConditionUnitToMaster(_eMG.CellsC.Selected, ConditionUnitTypes.None);
+                    _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TrySetConditionUnitOnCellM), ConditionUnitTypes.None, _eMG.CellsC.Selected });
                 }
                 else
                 {
-                    _eMG.RpcPoolEs.ConditionUnitToMaster(_eMG.CellsC.Selected, conditionT);
+                    _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TrySetConditionUnitOnCellM), conditionT, _eMG.CellsC.Selected });
                 }
             }
             else _sMG.Mistake(MistakeTypes.NeedWaitQueue);

@@ -106,22 +106,20 @@ namespace Chessy.Game
 
 
 
-        public void Melt_ToMaster() => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Melt });
-        public void BuyResource_ToMaster(in MarketBuyTypes marketBuy) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.MarketBuy, marketBuy });
+        //public void Melt_ToMaster() => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Melt });
+        //public void BuyResource_ToMaster(in MarketBuyTypes marketBuy) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.MarketBuy, marketBuy });
 
-        public void ReadyToMaster() => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Ready });
+        //public void DoneToMaster() => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Done, });
 
-        public void DoneToMaster() => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Done, });
+        //public void GetHeroToMaster(UnitTypes unit) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GetHero, unit });
 
-        public void GetHeroToMaster(UnitTypes unit) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GetHero, unit });
+        //public void TryShiftUnit_ToMaster(byte idx_from, byte idx_to) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
+        //public void TryAttackUnit_ToMaster(byte idx_from, byte idx_to) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
+        //public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, cond, idx });
 
-        public void TryShiftUnit_ToMaster(byte idx_from, byte idx_to) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Shift, idx_from, idx_to });
-        public void TryAttackUnit_ToMaster(byte idx_from, byte idx_to) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.Attack, idx_from, idx_to });
-        public void ConditionUnitToMaster(in byte idx, ConditionUnitTypes cond) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.ConditionUnit, cond, idx });
+        //public void GiveTakeToolWeaponToMaster(in byte idx, in ToolWeaponTypes tw, in LevelTypes level) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, idx, tw, level });
 
-        public void GiveTakeToolWeaponToMaster(in byte idx, in ToolWeaponTypes tw, in LevelTypes level) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.GiveTakeToolWeapon, idx, tw, level });
-
-        public void TrySetUnit_ToMaster(byte idxCell, UnitTypes unitType) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.SetUnit, idxCell, unitType });
+        //public void TrySetUnit_ToMaster(byte idxCell, UnitTypes unitType) => Action0(MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.SetUnit, idxCell, unitType });
 
         #endregion
 

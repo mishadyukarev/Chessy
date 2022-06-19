@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
 
-        internal void FirePawn(in byte cell_from, in byte cell_to, in Player sender)
+        internal void TryFireForestWithPawnM(in byte cell_from, in byte cell_to, in Player sender)
         {
             if (_eMG.UnitForArsonC(cell_from).Contains(cell_to))
             {

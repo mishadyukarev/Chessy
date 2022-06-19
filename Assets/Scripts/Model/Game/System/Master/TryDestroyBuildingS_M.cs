@@ -7,7 +7,7 @@ namespace Chessy.Game
 {
     sealed partial class BuildingSystems
     {
-        internal void Destroy(in byte cell_0, in Player sender)
+        internal void TryDestroyM(in byte cell_0, in Player sender)
         {
             if (_eMG.StepUnitC(cell_0).HaveAnySteps)
             {

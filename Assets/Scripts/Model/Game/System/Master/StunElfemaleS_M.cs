@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void Stun(in byte cell_from, in byte cell_to, in AbilityTypes abilityT, in Player sender)
+        internal void TryStunWithElfemaleM(in byte cell_from, in byte cell_to, in AbilityTypes abilityT, in Player sender)
         {
             if (!_eMG.UnitCooldownAbilitiesC(cell_from).HaveCooldown(abilityT))
             {

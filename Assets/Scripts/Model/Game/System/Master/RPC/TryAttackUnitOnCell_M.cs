@@ -5,7 +5,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed partial class SystemsModelGame : IUpdate
     {
-        internal void TryAttackUnitOnCell(in byte idxCellFrom, in byte idxCellTo, in Player sender)
+        internal void TryAttackUnitOnCellM(in byte idxCellFrom, in byte idxCellTo, in Player sender)
         {
             var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
 

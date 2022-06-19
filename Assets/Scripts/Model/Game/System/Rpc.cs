@@ -14,7 +14,7 @@ namespace Chessy.Game
     public sealed class Rpc : MonoBehaviour
     {
         EntitiesModelGame _eMG;
-        SystemsModelGame _sMGame;
+        SystemsModelGame _s;
         EntitiesModelCommon _eMCommon;
 
         int _idx_cur;
@@ -34,7 +34,7 @@ namespace Chessy.Game
 
         public Rpc GiveData(in SystemsModelGame sMGame, in EntitiesModelGame eMGame, in EntitiesModelCommon eMCommon)
         {
-            _sMGame = sMGame;
+            _s = sMGame;
             _eMG = eMGame;
             _eMCommon = eMCommon;
 
@@ -49,262 +49,170 @@ namespace Chessy.Game
 
             var sender = infoFrom.Sender;
 
-            switch ((RpcMasterTypes)objects[_idx_cur++])
+            var obj = objects[_idx_cur++];
+
+            if (obj is string nameMethod)
             {
-                case RpcMasterTypes.Ready:
-                    _sMGame.TryExecuteReadyForOnlineM(sender);
-                    break;
+                if (nameMethod == nameof(_s.TryExecuteReadyForOnlineM))
+                {
+                    _s.TryExecuteReadyForOnlineM(sender);
+                }
 
-                case RpcMasterTypes.Done:
-                    _sMGame.TryDone(sender);
-                    break;
+                else if (nameMethod == nameof(_s.TryDoneM))
+                {
+                    _s.TryDoneM(sender);
+                }
 
-                case RpcMasterTypes.Shift:
-                    _sMGame.TryShiftUnitM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
-                    break;
+                else if (nameMethod == nameof(_s.TryShiftUnitM))
+                {
+                    _s.TryShiftUnitM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                }
 
-                case RpcMasterTypes.Attack:
-                    var cell_from = (byte)objects[_idx_cur++];
-                    var cell_to = (byte)objects[_idx_cur++];
-                    _sMGame.TryAttackUnitOnCell(cell_from, cell_to, sender);
-                    break;
+                else if (nameMethod == nameof(_s.TryAttackUnitOnCellM))
+                {
+                    _s.TryAttackUnitOnCellM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                }
 
-                case RpcMasterTypes.ConditionUnit:
-                    _sMGame.TrySetConditionUnitOnCellM((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
-                    break;
+                else if (nameMethod == nameof(_s.TrySetConditionUnitOnCellM))
+                {
+                    _s.TrySetConditionUnitOnCellM((ConditionUnitTypes)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                }
 
-                case RpcMasterTypes.SetUnit:
+                else if (nameMethod == nameof(_s.TrySetUnitOnCellM))
+                {
                     var cell = (byte)objects[_idx_cur++];
-                    _sMGame.TrySetUnitOnCellM((UnitTypes)objects[_idx_cur++], sender, cell);
-                    break;
+                    _s.TrySetUnitOnCellM((UnitTypes)objects[_idx_cur++], sender, cell);
+                }
 
-                case RpcMasterTypes.GetHero:
-                    _sMGame.GetHeroInCenterM((UnitTypes)objects[_idx_cur++], sender);
-                    break;
+                else if (nameMethod == nameof(_s.GetHeroInCenterM))
+                {
+                    _s.GetHeroInCenterM((UnitTypes)objects[_idx_cur++], sender);
+                }
 
-                case RpcMasterTypes.Melt:
-                    _sMGame.TryMeltInMelterBuildingM(sender);
-                    break;
+                else if (nameMethod == nameof(_s.TryMeltInMelterBuildingM))
+                {
+                    _s.TryMeltInMelterBuildingM(sender);
+                }
 
-                case RpcMasterTypes.GiveTakeToolWeapon:
+                else if (nameMethod == nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM))
+                {
                     var idx = (byte)objects[_idx_cur++];
-                    _sMGame.TryGiveTakeToolOrWeaponToUnitOnCellM((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], idx, sender);
-                    break;
+                    _s.TryGiveTakeToolOrWeaponToUnitOnCellM((ToolWeaponTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++], idx, sender);
+                }
 
-                case RpcMasterTypes.BuyBuilding:
-                    _sMGame.ForUISystems.TryBuy((BuildingTypes)objects[_idx_cur++], sender);
-                    break;
+                else if (nameMethod == nameof(_s.ForUISystems.TryBuyBuildingM))
+                {
+                    _s.ForUISystems.TryBuyBuildingM((BuildingTypes)objects[_idx_cur++], sender);
+                }
 
-                case RpcMasterTypes.MarketBuy:
-                    _sMGame.TryBuyFromMarketBuildingM((MarketBuyTypes)objects[_idx_cur++], sender);
-                    break;
+                else if (nameMethod == nameof(_s.TryBuyFromMarketBuildingM))
+                {
+                    _s.TryBuyFromMarketBuildingM((MarketBuyTypes)objects[_idx_cur++], sender);
+                }
 
-                case RpcMasterTypes.UniqueAbility:
-                    var abilityT = (AbilityTypes)objects[_idx_cur++];
-                    switch (abilityT)
-                    {
-                        case AbilityTypes.CircularAttack:
-                            _sMGame.UnitSs.UnitAbilitiesSs.CurcularAttackKingM((byte)objects[_idx_cur++], abilityT, sender);
-                            break;
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.CurcularAttackKingM))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.CurcularAttackKingM((byte)objects[_idx_cur++], AbilityTypes.CircularAttack, sender);
+                }
 
-                        case AbilityTypes.FirePawn:
-                            _sMGame.UnitSs.UnitAbilitiesSs.FirePawn((byte)objects[_idx_cur++], sender);
-                            break;
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.FirePawn))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.FirePawn((byte)objects[_idx_cur++], sender);
+                }
 
-                        case AbilityTypes.PutOutFirePawn:
-                            _sMGame.UnitSs.UnitAbilitiesSs.PutOut((byte)objects[_idx_cur++], sender);
-                            break;
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.PutOut))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.PutOut((byte)objects[_idx_cur++], sender);
+                }
 
-                        case AbilityTypes.Seed:
-                            _sMGame.TrySeedYoungForestOnCellWithPawnM(abilityT, sender, (byte)objects[_idx_cur++]);
-                            break;
+                else if (nameMethod == nameof(_s.TrySeedYoungForestOnCellWithPawnM))
+                {
+                    _s.TrySeedYoungForestOnCellWithPawnM(AbilityTypes.Seed, sender, (byte)objects[_idx_cur++]);
+                }
 
-                        case AbilityTypes.SetFarm:
-                            _sMGame.TryBuildFarmOnCellWithUnitM((byte)objects[_idx_cur++], sender);
-                            break;
+                else if (nameMethod == nameof(_s.TryBuildFarmOnCellWithUnitM))
+                {
+                    _s.TryBuildFarmOnCellWithUnitM((byte)objects[_idx_cur++], sender);
+                }
 
-                        case AbilityTypes.DestroyBuilding:
-                            _sMGame.BuildingSs.Destroy((byte)objects[_idx_cur++], sender);
-                            break;
+                else if (nameMethod == nameof(_s.BuildingSs.TryDestroyM))
+                {
+                    _s.BuildingSs.TryDestroyM((byte)objects[_idx_cur++], sender);
+                }
 
-                        case AbilityTypes.FireArcher:
-                            _sMGame.UnitSs.UnitAbilitiesSs.FirePawn((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
-                            break;
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.FirePawn))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.TryFireForestWithPawnM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], sender);
+                }
 
-                        case AbilityTypes.GrowAdultForest:
-                            _sMGame.UnitSs.UnitAbilitiesSs.Grow((byte)objects[_idx_cur++], abilityT, sender);
-                            break;
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestM))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestM((byte)objects[_idx_cur++], AbilityTypes.GrowAdultForest, sender);
+                }
 
-                        case AbilityTypes.StunElfemale:
-                            _sMGame.UnitSs.UnitAbilitiesSs.Stun((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
-                            break;
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryStunWithElfemaleM))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.TryStunWithElfemaleM((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], AbilityTypes.StunElfemale, sender);
+                }
 
-                        case AbilityTypes.ChangeCornerArcher:
-                            _sMGame.UnitSs.UnitAbilitiesSs.Change((byte)objects[_idx_cur++], abilityT, sender);
-                            break;
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher((byte)objects[_idx_cur++], AbilityTypes.ChangeCornerArcher, sender);
+                }
 
-                        //Snowy
-                        case AbilityTypes.ChangeDirectionWind:
-                            _sMGame.UnitSs.UnitAbilitiesSs.TryChange((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], abilityT, sender);
-                            break;
-
-                        case AbilityTypes.IncreaseWindSnowy:
-                            _sMGame.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(true, (byte)objects[_idx_cur++], abilityT, sender);
-                            break;
-
-                        case AbilityTypes.DecreaseWindSnowy:
-                            _sMGame.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(false, (byte)objects[_idx_cur++], abilityT, sender);
-                            break;
-
-
-                        case AbilityTypes.Resurrect:
-                            {
-                                //var idx_from = (byte)objects[_idx_cur++];
-                                //var idx_to = (byte)objects[_idx_cur++];
-
-                                //if (!_eMG.UnitTC(idx_to).HaveUnit)
-                                //{
-                                //    if (!_eMG.UnitCooldownAbilitiesC(idx_from).HaveCooldown(abilityT))
-                                //    {
-                                //        if (_eMG.StepUnitC(idx_from).Steps >= StepValues.RESURRECT)
-                                //        {
-                                //            _eMG.UnitCooldownAbilitiesC(idx_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
-                                //            _eMG.StepUnitC(idx_from).Steps -= StepValues.RESURRECT;
-
-                                //            if (_eMG.LastDiedUnitTC(idx_to).HaveUnit)
-                                //            {
-                                //                //e.UnitE(idx_to).SetNew((e.LastDiedUnitTC(idx_to).Unit, e.LastDiedLevelTC(idx_to).Level, e.LastDiedPlayerTC(idx_to).Player, ConditionUnitTypes.None, false), e);
-                                //                _eMG.LastDiedUnitTC(idx_to).UnitT = UnitTypes.None;
-                                //            }
-                                //        }
-
-                                //        else
-                                //        {
-                                //            _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                //        }
-                                //    }
-                                //}
-                            }
-                            break;
-
-                        case AbilityTypes.SetTeleport:
-                            {
-                                //var cell_0 = (byte)objects[_idx_cur++];
-
-                                //if (!_eMG.BuildingTC(cell_0).HaveBuilding)
-                                //{
-                                //    if (!_eMG.AdultForestC(cell_0).HaveAnyResources)
-                                //    {
-                                //        _eMG.YoungForestC(cell_0).Resources = 0;
-                                //        _eMG.FertilizeC(cell_0).Resources = 0;
-
-                                //        if (_eMG.StepUnitC(cell_0).Steps >= StepValues.SET_TELEPORT)
-                                //        {
-                                //            _eMG.StepUnitC(cell_0).Steps -= StepValues.SET_TELEPORT;
-
-                                //            if (_eMG.WhereTeleportC.Start > 0)
-                                //            {
-                                //                if (_eMG.WhereTeleportC.End > 0)
-                                //                {
-                                //                    _eMG.BuildingTC(_eMG.WhereTeleportC.Start).BuildingT = BuildingTypes.None;
-
-                                //                    _eMG.WhereTeleportC.Start = _eMG.WhereTeleportC.End;
-
-                                //                    _eMG.WhereTeleportC.End = cell_0;
-                                //                    _eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
-                                //                }
-                                //                else
-                                //                {
-                                //                    _eMG.WhereTeleportC.End = cell_0;
-                                //                    _eMG.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
-                                //                }
-                                //            }
-                                //            else
-                                //            {
-                                //                _eMG.WhereTeleportC.Start = cell_0;
-                                //            }
-
-                                //            _eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.Teleport;
-                                //            _eMG.BuildingLevelTC(cell_0).LevelT = LevelTypes.First;
-                                //            _eMG.BuildingPlayerTC(cell_0).PlayerT = whoseMove;
-                                //            _eMG.BuildingHpC(cell_0).Health = BuildingValues.MAX_HP;
-                                //        }
-                                //    }
-                                //}
-                            }
-                            break;
-
-                        case AbilityTypes.Teleport:
-                            {
-                                //var cell_0 = (byte)objects[_idx_cur++];
-
-                                //if (_eMG.StepUnitC(cell_0).Steps >= StepValues.TELEPORT)
-                                //{
-                                //    if (_eMG.BuildingTC(cell_0).Is(BuildingTypes.Teleport))
-                                //    {
-                                //        var idx_start = _eMG.WhereTeleportC.Start;
-                                //        var idx_end = _eMG.WhereTeleportC.End;
-
-                                //        if (_eMG.WhereTeleportC.End > 0 && idx_start == cell_0)
-                                //        {
-                                //            if (!_eMG.UnitTC(idx_end).HaveUnit)
-                                //            {
-                                //                _eMG.StepUnitC(cell_0).Steps -= StepValues.TELEPORT;
-
-                                //                //Teleport(idx_end, ents);
-                                //            }
-                                //        }
-                                //        else if (_eMG.WhereTeleportC.Start > 0 && idx_end == cell_0)
-                                //        {
-                                //            if (!_eMG.UnitTC(idx_start).HaveUnit)
-                                //            {
-                                //                _eMG.StepUnitC(cell_0).Steps -= StepValues.TELEPORT;
-
-                                //                //Teleport(idx_start, _e);
-                                //            }
-                                //        }
-                                //    }
-                                //}
-                                //else
-                                //{
-                                //    _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                //}
-                            }
-                            break;
-
-                        case AbilityTypes.InvokeSkeletons:
-                            {
-                                //    var cell_0 = CellEs.Idx;
-
-                                //    if (ents.UnitStepC(cell_0).Have(CellUnitStatStepValues.NeedForAbility(ability)))
-                                //    {
-                                //        ents.UnitStepC(cell_0).Take(CellUnitStatStepValues.NeedForAbility(ability));
-
-                                //        foreach (var idx_1 in ents.CellSpaceWorker.GetIdxsAround(cell_0))
-                                //        {
-                                //            if (!ents.UnitTC(cell_0).HaveUnit && !ents.MountainC(idx_1).HaveAny)
-                                //            {
-                                //                ents.UnitE(idx_1).SetNew((UnitTypes.Skeleton, LevelTypes.First, PlayerTC.Player, ConditionUnitTypes.None, false), ents);
-                                //            }
-
-                                //        }
-                                //    }
-                                //    else
-                                //    {
-                                //        ents.RpcE.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                                //    }
-                                //_e.UnitE((byte)objects[_idx_cur++]).InvokeSkeletons_Master(ability, sender, _e);
-                            }
-                            break;
-
-                        default: throw new Exception();
-                    }
-                    break;
-
-                default: throw new Exception();
+                else if (nameMethod == nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher))
+                {
+                    _s.UnitSs.UnitAbilitiesSs.TryChange((byte)objects[_idx_cur++], (byte)objects[_idx_cur++], AbilityTypes.ChangeDirectionWind, sender);
+                }
             }
 
-            _sMGame.GetDataCellsS.GetDataCells();
+            else if (obj is RpcMasterTypes rpcT)
+            {
+                switch (rpcT)
+                {
+                    case RpcMasterTypes.UniqueAbility:
+                        var abilityT = (AbilityTypes)objects[_idx_cur++];
+                        switch (abilityT)
+                        {
+                            case AbilityTypes.IncreaseWindSnowy:
+                                _s.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(true, (byte)objects[_idx_cur++], abilityT, sender);
+                                break;
+
+                            case AbilityTypes.DecreaseWindSnowy:
+                                _s.UnitSs.UnitAbilitiesSs.IncreaseWindSnowyM(false, (byte)objects[_idx_cur++], abilityT, sender);
+                                break;
+
+                            case AbilityTypes.Resurrect:
+                                {
+                                }
+                                break;
+
+                            case AbilityTypes.SetTeleport:
+                                {
+                                }
+                                break;
+
+                            case AbilityTypes.Teleport:
+                                {
+                                }
+                                break;
+
+                            case AbilityTypes.InvokeSkeletons:
+                                {
+                                }
+                                break;
+
+                            default: throw new Exception();
+                        }
+                        break;
+
+                    default: throw new Exception();
+                }
+            }
+
+            
+
+            _s.GetDataCellsS.GetDataCells();
             _eMG.NeedUpdateView = true;
 
             SyncAllMaster();
@@ -340,7 +248,7 @@ namespace Chessy.Game
 
                     var mistakeT = (MistakeTypes)objects[_idx_cur++];
 
-                    _sMGame.Mistake(mistakeT);
+                    _s.Mistake(mistakeT);
 
                     _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
 

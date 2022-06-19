@@ -31,7 +31,7 @@ namespace Chessy.Game.Model.System
                     }
                     else
                     {
-                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyBuilding, buildT });
+                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.ForUISystems.TryBuyBuildingM), buildT });
                     }
                 }
 
@@ -40,7 +40,7 @@ namespace Chessy.Game.Model.System
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { RpcMasterTypes.BuyBuilding, buildT });
+                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.ForUISystems.TryBuyBuildingM), buildT });
                         break;
 
                     case BuildingTypes.Market:
@@ -68,7 +68,7 @@ namespace Chessy.Game.Model.System
             _eMG.NeedUpdateView = true;
         }
 
-        internal void TryBuy(in BuildingTypes buildT, in Player sender)
+        internal void TryBuyBuildingM(in BuildingTypes buildT, in Player sender)
         {
             var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
 

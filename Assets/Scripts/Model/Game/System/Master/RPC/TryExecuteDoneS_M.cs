@@ -9,7 +9,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed partial class SystemsModelGame : IUpdate
     {
-        internal void TryDone(in Player sender)
+        internal void TryDoneM(in Player sender)
         {
             var senderPlayerT = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
 

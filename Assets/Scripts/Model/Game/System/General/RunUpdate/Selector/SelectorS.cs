@@ -1,6 +1,7 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -66,7 +67,7 @@ namespace Chessy.Game.Model.System
 
                                     case CellClickTypes.SetUnit:
                                         {
-                                            _eMG.RpcPoolEs.TrySetUnit_ToMaster(_eMG.CellsC.Current, _eMG.SelectedUnitE.UnitTC.UnitT);
+                                            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TrySetUnitOnCellM), _eMG.CellsC.Current, _eMG.SelectedUnitE.UnitTC.UnitT });
                                             _eMG.CellClickTC.CellClickT = CellClickTypes.SimpleClick;
                                         }
                                         break;
@@ -77,7 +78,7 @@ namespace Chessy.Game.Model.System
 
                                             if (_eMG.UnitTC(idx_cur).Is(UnitTypes.Pawn) && _eMG.UnitPlayerTC(idx_cur).Is(_eMG.CurPlayerITC.PlayerT))
                                             {
-                                                _eMG.RpcPoolEs.GiveTakeToolWeaponToMaster(_eMG.CellsC.Current, _eMG.SelectedE.ToolWeaponC.ToolWeaponT, _eMG.SelectedE.ToolWeaponC.LevelT);
+                                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryGiveTakeToolOrWeaponToUnitOnCellM), _eMG.CurrentCellIdx, _eMG.SelectedE.ToolWeaponC.ToolWeaponT, _eMG.SelectedE.ToolWeaponC.LevelT });
                                             }
                                             else
                                             {

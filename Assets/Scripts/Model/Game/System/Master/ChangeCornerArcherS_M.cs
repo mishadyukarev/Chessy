@@ -5,7 +5,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void Change(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void TryChangeCornerArcher(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (_eMG.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
             {

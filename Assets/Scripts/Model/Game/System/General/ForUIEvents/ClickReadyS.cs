@@ -1,5 +1,4 @@
-﻿using Chessy.Common.Interface;
-using Chessy.Game.Model.Entity;
+﻿using Photon.Pun;
 
 namespace Chessy.Game.Model.System
 {
@@ -7,7 +6,7 @@ namespace Chessy.Game.Model.System
     {
         public void ClickReady()
         {
-            _eMG.RpcPoolEs.ReadyToMaster();
+            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryExecuteReadyForOnlineM) });
 
             _eMG.NeedUpdateView = true;
         }

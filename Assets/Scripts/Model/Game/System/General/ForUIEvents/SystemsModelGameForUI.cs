@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Photon.Pun;
 
 namespace Chessy.Game.Model.System
 {
@@ -11,6 +12,11 @@ namespace Chessy.Game.Model.System
         {
             _eMG = eMG;
             _sMG = sMG;
+        }
+
+        public void TryBuyFromMarketBuilding(in MarketBuyTypes marketBuyT)
+        {
+            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryBuyFromMarketBuildingM), marketBuyT });
         }
     }
 }

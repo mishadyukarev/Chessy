@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
-        internal void Grow(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void TryGrowAdultForestM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (!_eMG.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {

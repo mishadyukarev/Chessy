@@ -1,6 +1,7 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
+using Photon.Pun;
 
 namespace Chessy.Game.Model.System
 {
@@ -122,7 +123,7 @@ namespace Chessy.Game.Model.System
 
                                 if (_eMG.AttackSimpleCellsC(_eMG.CellsC.Selected).Contains(_eMG.CellsC.Current) || _eMG.AttackUniqueCellsC(_eMG.CellsC.Selected).Contains(_eMG.CellsC.Current))
                                 {
-                                    _eMG.RpcPoolEs.TryAttackUnit_ToMaster(_eMG.CellsC.Selected, _eMG.CellsC.Current);
+                                    TryAttack(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                                     SetNewSelectedCell();
                                     _selectorSoundS.Sound();
                                 }
@@ -156,7 +157,7 @@ namespace Chessy.Game.Model.System
                             {
                                 if (_eMG.UnitPlayerTC(_eMG.CellsC.Selected).Is(_eMG.CurPlayerITC.PlayerT) && _eMG.CellsForShift(_eMG.CellsC.Selected).Contains(_eMG.CellsC.Current))
                                 {
-                                    _eMG.RpcPoolEs.TryShiftUnit_ToMaster(_eMG.CellsC.Selected, _eMG.CellsC.Current);
+                                    TryShift(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                                 }
                                 else
                                 {
@@ -202,13 +203,13 @@ namespace Chessy.Game.Model.System
                         if (_eMG.AttackSimpleCellsC(_eMG.CellsC.Selected).Contains(_eMG.CellsC.Current)
                         || _eMG.AttackUniqueCellsC(_eMG.CellsC.Selected).Contains(_eMG.CellsC.Current))
                         {
-                            _eMG.RpcPoolEs.TryAttackUnit_ToMaster(_eMG.CellsC.Selected, _eMG.CellsC.Current);
+                            TryAttack(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                         }
 
                         else if (_eMG.UnitPlayerTC(_eMG.CellsC.Selected).Is(_eMG.CurPlayerITC.PlayerT)
                             && _eMG.CellsForShift(_eMG.CellsC.Selected).Contains(_eMG.CellsC.Current))
                         {
-                            _eMG.RpcPoolEs.TryShiftUnit_ToMaster(_eMG.CellsC.Selected, _eMG.CellsC.Current);
+                            TryShift(_eMG.CellsC.Selected, _eMG.CellsC.Current);
                         }
 
                         else
@@ -331,6 +332,16 @@ namespace Chessy.Game.Model.System
         {
             _eMG.CellsC.PreviousSelected = _eMG.CellsC.Selected;
             _eMG.CellsC.Selected = _eMG.CellsC.Current;
+        }
+
+        void TryShift(in byte idxCellFrom, in byte idxCellTo)
+        {
+            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryShiftUnitM), idxCellFrom, idxCellTo });
+        }
+
+        void TryAttack(in byte idxCellFrom, in byte idxCellTo)
+        {
+            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryAttackUnitOnCellM), idxCellFrom, idxCellTo });
         }
     }
 }
