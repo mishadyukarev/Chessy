@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 
 namespace Chessy.Game.Model.System
 {
@@ -9,17 +8,17 @@ namespace Chessy.Game.Model.System
         {
             var playerSend = sender.GetPlayer();
 
-            _eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame = !_eMG.PlayerInfoE(playerSend).IsReadyForStartOnlineGame;
+            _e.PlayerInfoE(playerSend).IsReadyForStartOnlineGame = !_e.PlayerInfoE(playerSend).IsReadyForStartOnlineGame;
 
-            if (_eMG.PlayerInfoE(PlayerTypes.First).IsReadyForStartOnlineGame
-                && _eMG.PlayerInfoE(PlayerTypes.Second).IsReadyForStartOnlineGame)
+            if (_e.PlayerInfoE(PlayerTypes.First).IsReadyForStartOnlineGame
+                && _e.PlayerInfoE(PlayerTypes.Second).IsReadyForStartOnlineGame)
             {
-                _eMG.IsStartedGame = true;
+                _e.IsStartedGame = true;
             }
 
             else
             {
-                _eMG.IsStartedGame = false;
+                _e.IsStartedGame = false;
             }
         }
     }

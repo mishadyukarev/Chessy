@@ -1,6 +1,7 @@
 ﻿using Chessy.Common.Entity;
 using Chessy.Common.Enum;
-using Chessy.Common.Interface;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Chessy.Common.Model.System
     {
         readonly EntitiesModelCommon _eMC;
 
-        public SystemsModelCommon(in TestModes testModeT, in EntitiesModelCommon eMC)
+        public SystemsModelCommon(in EntitiesModelCommon eMC)
         {
             _eMC = eMC;
 
@@ -18,15 +19,10 @@ namespace Chessy.Common.Model.System
 
             var nowTime = DateTime.Now;
             _eMC.AdC = new AdC(nowTime);
-            _eMC.TimeStartGameC = new TimeStartGameC(nowTime);
-            _eMC.TestModeC = new TestModeC(testModeT);
 
+            _eMC.PageBookT = PageBookTypes.None;
 
-
-            _eMC.IsOpenedBook = false;
-            _eMC.PageBookT = PageBookTypes.Main;
-
-            _eMC.SceneTC.SceneT = SceneTypes.Menu;
+            _eMC.SceneT = SceneTypes.Menu;
         }
 
         public void Update()
@@ -37,7 +33,7 @@ namespace Chessy.Common.Model.System
 
         public void ToggleScene(in SceneTypes newSceneT)
         {
-            _eMC.SceneTC.SceneT = newSceneT;
+            _eMC.SceneT = newSceneT;
 
             switch (newSceneT)
             {
@@ -57,6 +53,17 @@ namespace Chessy.Common.Model.System
                     }
                 default: throw new Exception();
             }
+        }
+
+        public void OnLeftRoom()
+        {
+            _eMC.SceneT = SceneTypes.Menu;
+            _eMC.NeedUpdateView = true;
+        }
+
+        public void OnPlayerLeftRoom(in Player otherPlayer)
+        {
+            if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         }
     }
 }

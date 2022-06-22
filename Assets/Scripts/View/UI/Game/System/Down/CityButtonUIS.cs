@@ -1,8 +1,7 @@
 ﻿using Chessy.Game.Entity.View.UI.Down;
 using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
-using UnityEditor;
-using UnityEngine;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -17,7 +16,7 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (!e.LessonTC.HaveLesson || e.LessonT >= LessonTypes.OpeningTown)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.OpeningTown)
             {
                 _cityButtonUIE.ParentGOC.SetActive(true);
             }

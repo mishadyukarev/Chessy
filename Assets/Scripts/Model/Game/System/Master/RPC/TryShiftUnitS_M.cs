@@ -4,11 +4,11 @@ namespace Chessy.Game.Model.System
 {
     public sealed partial class SystemsModelGame : IUpdate
     {
-        internal void TryShiftUnitM(in byte cell_from, in byte cell_to, in Player sender)
+        internal void TryShiftUnitOntoOtherCellM(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (_eMG.CellsForShift(cell_from).Contains(cell_to) && _eMG.UnitPlayerTC(cell_from).Is(_eMG.WhoseMovePlayerT))
+            if (_e.CellsForShift(cell_from).Contains(cell_to) && _e.UnitPlayerT(cell_from).Is(_e.WhoseMovePlayerT))
             {
-                _eMG.StepUnitC(cell_from).Steps -= _eMG.UnitNeedStepsForShiftC(cell_from).NeedSteps(cell_to);
+                _e.StepUnitC(cell_from).Steps -= _e.UnitNeedStepsForShiftC(cell_from).NeedSteps(cell_to);
 
 
                 ShiftUnitOnOtherCellM(cell_from, cell_to);

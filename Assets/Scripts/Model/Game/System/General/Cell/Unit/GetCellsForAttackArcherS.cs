@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
@@ -9,83 +8,83 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCell = 0; cellIdxCell < StartValues.CELLS; cellIdxCell++)
             {
-                if (_eMG.UnitTC(cellIdxCell).HaveUnit)
+                if (_e.UnitT(cellIdxCell).HaveUnit())
                 {
-                    if (!_eMG.StunUnitC(cellIdxCell).IsStunned)
+                    if (!_e.StunUnitC(cellIdxCell).IsStunned)
                     {
-                        if (_eMG.StepUnitC(cellIdxCell).HaveAnySteps)
+                        if (_e.StepUnitC(cellIdxCell).HaveAnySteps)
                         {
-                            if (!_eMG.UnitTC(cellIdxCell).IsMelee(_eMG.MainToolWeaponTC(cellIdxCell).ToolWeaponT))
+                            if (!_e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)))
                             {
                                 for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                                 {
-                                    var idx_1 = _eMG.AroundCellsE(cellIdxCell).IdxCell(dir_1);
+                                    var idx_1 = _e.AroundCellsE(cellIdxCell).IdxCell(dir_1);
 
-                                    var isRight_0 = _eMG.UnitIsRightArcherC(cellIdxCell).IsRight;
+                                    var isRight_0 = _e.UnitIsRightArcherC(cellIdxCell).IsRight;
 
-                                    if (!_eMG.IsBorder(idx_1) && !_eMG.MountainC(idx_1).HaveAnyResources)
+                                    if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources)
                                     {
-                                        if (_eMG.UnitTC(idx_1).HaveUnit)
+                                        if (_e.UnitT(idx_1).HaveUnit())
                                         {
-                                            if (!_eMG.UnitPlayerTC(idx_1).Is(_eMG.UnitPlayerTC(cellIdxCell).PlayerT))
+                                            if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
                                             {
-                                                if (_eMG.UnitTC(cellIdxCell).Is(UnitTypes.Pawn) && _eMG.MainToolWeaponTC(cellIdxCell).Is(ToolWeaponTypes.BowCrossbow))
+                                                if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolWeaponTypes.BowCrossbow))
                                                 {
                                                     if (isRight_0)
                                                     {
                                                         if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                         {
-                                                            _eMG.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
+                                                            _e.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
                                                         }
-                                                        else _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                        else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
                                                     }
                                                     else
                                                     {
                                                         if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
                                                         {
-                                                            _eMG.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
+                                                            _e.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
                                                         }
-                                                        else _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                        else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                    _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
                                                 }
                                             }
                                         }
 
-                                        var idx_2 = _eMG.AroundCellsE(idx_1).IdxCell(dir_1);
+                                        var idx_2 = _e.AroundCellsE(idx_1).IdxCell(dir_1);
 
 
-                                        if (_eMG.UnitTC(idx_2).HaveUnit && !_eMG.UnitTC(idx_2).IsAnimal
-                                            && _eMG.UnitVisibleC(idx_2).IsVisible(_eMG.UnitPlayerTC(cellIdxCell).PlayerT)
-                                            && !_eMG.UnitPlayerTC(idx_2).Is(_eMG.UnitPlayerTC(cellIdxCell).PlayerT))
+                                        if (_e.UnitT(idx_2).HaveUnit() && !_e.UnitT(idx_2).IsAnimal()
+                                            && _e.UnitVisibleC(idx_2).IsVisible(_e.UnitPlayerT(cellIdxCell))
+                                            && !_e.UnitPlayerT(idx_2).Is(_e.UnitPlayerT(cellIdxCell)))
                                         {
-                                            if (_eMG.UnitTC(cellIdxCell).Is(UnitTypes.Pawn) && _eMG.MainToolWeaponTC(cellIdxCell).Is(ToolWeaponTypes.BowCrossbow))
+                                            if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolWeaponTypes.BowCrossbow))
                                             {
                                                 if (!isRight_0)
                                                 {
                                                     if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
                                                     {
-                                                        _eMG.AttackUniqueCellsC(cellIdxCell).Add(idx_2);
+                                                        _e.AttackUniqueCellsC(cellIdxCell).Add(idx_2);
                                                     }
 
-                                                    else _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
+                                                    else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
                                                 }
                                                 else
                                                 {
                                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
                                                     {
-                                                        _eMG.AttackUniqueCellsC(cellIdxCell).Add(idx_2);
+                                                        _e.AttackUniqueCellsC(cellIdxCell).Add(idx_2);
                                                     }
 
-                                                    else _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
+                                                    else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
                                                 }
                                             }
                                             else
                                             {
-                                                _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
+                                                _e.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
                                             }
                                         }
                                     }

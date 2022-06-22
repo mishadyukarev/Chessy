@@ -25,7 +25,7 @@ namespace Chessy.Game
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.SelectedCell == cellIdxCurrent && _e.WeatherE.SunSideTC.IsAcitveSun)
+                if (_e.SelectedCellIdx == cellIdxCurrent && _e.WeatherE.SunSideTC.IsAcitveSun)
                 {
                     var simpleUnqiueCells = new HashSet<byte>();
                     foreach (var item in _e.AttackSimpleCellsC(cellIdxCurrent).Idxs)

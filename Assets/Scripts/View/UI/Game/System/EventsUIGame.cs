@@ -6,6 +6,7 @@ using Chessy.Common.View.UI;
 using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
 using Chessy.Game.Model.System;
+using Chessy.Game.System;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -75,7 +76,6 @@ namespace Chessy.Game.EventsUI
 
             eUIGame.DownEs.BookLittleE.ButtonC.AddListener(delegate
             {
-                eMCommon.IsOpenedBook = !eMCommon.IsOpenedBook;
                 eMCommon.SoundActionC(eMCommon.IsOpenedBook ? Common.Enum.ClipCommonTypes.OpenBook : Common.Enum.ClipCommonTypes.CloseBook).Invoke();
                 eMGame.NeedUpdateView = true;
 
@@ -95,22 +95,21 @@ namespace Chessy.Game.EventsUI
             });
             eUIGame.UpEs.WindButtonC.AddListener(delegate
             {
-                if (eMGame.LessonTC.Is(LessonTypes.ClickWindInfo))
+                if (SystemStatic.Is(eMGame.LessonT, LessonTypes.ClickWindInfo))
                 {
                     eMGame.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
-                    eMGame.LessonTC.SetNextLesson();    
+                    SystemStatic.SetNextLesson(eMGame.LessonT);    
                 }
                 else
                 {
                     if (eMCommon.IsOpenedBook)
                     {
-                        eMCommon.IsOpenedBook = false;
+                        eMCommon.PageBookT = PageBookTypes.None;
                         eMCommon.SoundActionC(ClipCommonTypes.CloseBook).Invoke();
                     }
                     else
                     {
-                        eMCommon.IsOpenedBook = true;
-                        eMCommon.PageBookTC.PageBookT = PageBookTypes.Wind;
+                        eMCommon.PageBookT = PageBookTypes.Wind;
                         eMCommon.SoundActionC(ClipCommonTypes.OpenBook).Invoke();
                     }
                 }
@@ -188,11 +187,7 @@ namespace Chessy.Game.EventsUI
                 Application.OpenURL(URLC.URL_DISCORD);
             });
             centerEs.KingE.Button.AddListener(sMGame.ForUISystems.GetClickEffect);
-            centerEs.FriendE.ButtonC.AddListener(delegate
-            {
-                eMGame.ZoneInfoC.IsActiveFriend = false;
-                eMGame.NeedUpdateView = true;
-            });
+            centerEs.FriendE.ButtonC.AddListener(() => sMGame.ForUISystems.ClickFriendReady());
             centerEs.HeroE(UnitTypes.Elfemale).ButtonC.AddListener(delegate
             {
                 sMGame.ForUISystems.GetHeroClickCenter(UnitTypes.Elfemale);
@@ -222,7 +217,7 @@ namespace Chessy.Game.EventsUI
             centerEs.MarketE.ButtonUIC(MarketBuyTypes.GoldToWood).AddListener(() => sMGame.ForUISystems.TryBuyFromMarketBuilding(MarketBuyTypes.GoldToWood));
 
 
-            centerEs.SkipLessonE.ButtonUIC.AddListener(sMGame.ForUISystems.GetClickEffects);
+            centerEs.SkipLessonE.ButtonUIC.AddListener(sMGame.ForUISystems.ClickSkipLesson);
 
 
             #endregion

@@ -28,7 +28,7 @@
 
 //            //    if (Es.SelectedIdxC.IdxC.Is(idx_0))
 //            //    {
-//            //        if (UnitEs(idx_0).TypeE.HaveUnit)
+//            //        if (UnitEs(idx_0).TypeE.HaveUnit())
 //            //        {
 //            //            if (ownUnit_0.Is(Es.CurPlayerI.Player))
 //            //            {

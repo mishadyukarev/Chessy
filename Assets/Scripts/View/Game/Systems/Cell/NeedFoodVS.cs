@@ -16,13 +16,13 @@ namespace Chessy.Game.System.View
         {
             _needActive = false;
 
-            if(!_e.LessonTC.HaveLesson || _e.LessonT >= Enum.LessonTypes.Build3Farms)
+            if(!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Build3Farms)
             {
-                if (_e.UnitTC(_currentCell).Is(UnitTypes.Pawn))
+                if (_e.UnitT(_currentCell).Is(UnitTypes.Pawn))
                 {
-                    if (_e.UnitPlayerTC(_currentCell).Is(_e.CurPlayerITC.PlayerT))
+                    if (_e.UnitPlayerT(_currentCell).Is(_e.CurPlayerIT))
                     {
-                        _needActive = _e.PlayerInfoE(_e.CurPlayerITC.PlayerT).ResourcesC(ResourceTypes.Food).Resources < 1;
+                        _needActive = _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(ResourceTypes.Food).Resources < 1;
                     }
                 }
             }

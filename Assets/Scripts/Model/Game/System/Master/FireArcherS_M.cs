@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -10,24 +9,24 @@ namespace Chessy.Game.Model.System
 
         internal void TryFireForestWithArcherM(in byte cell_from, in byte cell_to, in Player sender)
         {
-            if (_eMG.UnitForArsonC(cell_from).Contains(cell_to))
+            if (_e.UnitForArsonC(cell_from).Contains(cell_to))
             {
-                if (_eMG.StepUnitC(cell_from).Steps >= StepValues.ARCHER_FIRE)
+                if (_e.StepUnitC(cell_from).Steps >= StepValues.ARCHER_FIRE)
                 {
-                    _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
+                    _s.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    _eMG.StepUnitC(cell_from).Steps -= StepValues.ARCHER_FIRE;
-                    _eMG.HaveFire(cell_to) = true;
+                    _e.StepUnitC(cell_from).Steps -= StepValues.ARCHER_FIRE;
+                    _e.HaveFire(cell_to) = true;
 
-                    if (_eMG.LessonT == Enum.LessonTypes.PawnFireAdultForest)
+                    if (_e.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     {
-                        _eMG.LessonTC.SetNextLesson();
+                        _e.LessonT.SetNextLesson();
                     }
                 }
 
                 else
                 {
-                    _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    _s.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

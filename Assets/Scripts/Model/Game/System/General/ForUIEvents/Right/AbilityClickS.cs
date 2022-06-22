@@ -1,5 +1,4 @@
 ﻿using Chessy.Common;
-using Chessy.Game.Model.Entity;
 using Photon.Pun;
 using System;
 
@@ -9,44 +8,44 @@ namespace Chessy.Game.Model.System
     {
         public void Click(in ButtonTypes uniqueButton)
         {
-            if (_eMG.CurPlayerIT == _eMG.WhoseMovePlayerT)
+            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
             {
-                var cellIdxSelected = _eMG.SelectedCell;
+                var cellIdxSelected = _e.SelectedCellIdx;
 
-                var abil = _eMG.UnitButtonAbilitiesC(cellIdxSelected).Ability(uniqueButton);
+                var abil = _e.UnitButtonAbilitiesC(cellIdxSelected).Ability(uniqueButton);
 
-                if (!_eMG.StunUnitC(cellIdxSelected).IsStunned)
+                if (!_e.StunUnitC(cellIdxSelected).IsStunned)
                 {
-                    if (!_eMG.UnitCooldownAbilitiesC(cellIdxSelected).HaveCooldown(abil))
+                    if (!_e.UnitCooldownAbilitiesC(cellIdxSelected).HaveCooldown(abil))
                     {
                         switch (abil)
                         {
                             case AbilityTypes.FirePawn:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.TryFireWithSimplePawnM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithSimplePawnM), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.PutOutFirePawn:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.TryPutOutFireWithSimplePawnM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryPutOutFireForestWithSimplePawnM), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.Seed:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TrySeedYoungForestOnCellWithPawnM), cellIdxSelected });
-  
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySeedYoungForestOnCellWithPawnM), cellIdxSelected });
+
                                 break;
 
                             case AbilityTypes.FireArcher:
-                                _eMG.SelectedE.AbilityTC.Ability = AbilityTypes.FireArcher;
-                                _eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
+                                _e.SelectedE.AbilityT = AbilityTypes.FireArcher;
+                                _e.CellClickT = CellClickTypes.UniqueAbility;
                                 break;
 
                             case AbilityTypes.CircularAttack:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.CurcularAttackKingM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.CurcularAttackKingM), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.StunElfemale:
                                 {
-                                    _eMG.SelectedE.AbilityTC.Ability = AbilityTypes.StunElfemale;
-                                    _eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
+                                    _e.SelectedE.AbilityT = AbilityTypes.StunElfemale;
+                                    _e.CellClickT = CellClickTypes.UniqueAbility;
                                 }
                                 break;
 
@@ -59,34 +58,34 @@ namespace Chessy.Game.Model.System
                             //Snowy
 
                             case AbilityTypes.IncreaseWindSnowy:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.IncreaseWindWithRainyM), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.DecreaseWindSnowy:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.ChangeCornerArcher:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeCornerArcher), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.GrowAdultForest:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryGrowAdultForestWithElfemaleM), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.ChangeDirectionWind:
                                 {
-                                    _eMG.SelectedE.AbilityTC.Ability = AbilityTypes.ChangeDirectionWind;
-                                    _eMG.CellClickTC.CellClickT = CellClickTypes.UniqueAbility;
+                                    _e.SelectedE.AbilityT = AbilityTypes.ChangeDirectionWind;
+                                    _e.CellClickT = CellClickTypes.UniqueAbility;
                                 }
                                 break;
 
                             case AbilityTypes.SetFarm:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryBuildFarmOnCellWithUnitM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuildFarmOnCellWithSimplePawnM), cellIdxSelected });
                                 break;
 
                             case AbilityTypes.DestroyBuilding:
-                                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.BuildingSs.TryDestroyBuildingWithSimplePawnM), cellIdxSelected });
+                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.TryDestroyBuildingWithSimplePawnM), cellIdxSelected });
                                 break;
 
 
@@ -100,23 +99,23 @@ namespace Chessy.Game.Model.System
                                 break;
 
                             case AbilityTypes.InvokeSkeletons:
- 
+
                                 break;
 
                             default: throw new Exception();
                         }
                     }
 
-                    else _eMG.SoundAction(ClipTypes.Mistake).Invoke();
+                    else _e.SoundAction(ClipTypes.Mistake).Invoke();
                 }
 
-                else _eMG.SoundAction(ClipTypes.Mistake).Invoke();
+                else _e.SoundAction(ClipTypes.Mistake).Invoke();
             }
 
-            else _sMG.Mistake(MistakeTypes.NeedWaitQueue);
+            else _s.Mistake(MistakeTypes.NeedWaitQueue);
 
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

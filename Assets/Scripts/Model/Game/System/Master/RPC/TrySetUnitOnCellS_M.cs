@@ -1,5 +1,4 @@
-﻿using Chessy.Common.Extension;
-using Chessy.Game.Enum;
+﻿using Chessy.Game.Enum;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -9,22 +8,22 @@ namespace Chessy.Game.Model.System
     {
         internal void TrySetUnitOnCellM(in UnitTypes unitT, in Player sender, in byte cellIdx)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
 
-            if (_eMG.IsStartedCellC(cellIdx).IsStartedCell(whoseMove) && !_eMG.UnitTC(cellIdx).HaveUnit)
+            if (_e.IsStartedCellC(cellIdx).IsStartedCell(whoseMove) && !_e.UnitT(cellIdx).HaveUnit())
             {
                 if (unitT == UnitTypes.King)
                 {
-                    if (_eMG.LessonTC.LessonT == LessonTypes.SettingKing)
+                    if (_e.LessonT == LessonTypes.SettingKing)
                     {
-                        _eMG.LessonTC.SetNextLesson();
+                        _e.LessonT.SetNextLesson();
                     }
                 }
                 else if (unitT.IsGod())
                 {
-                    if (_eMG.LessonTC.LessonT == LessonTypes.SettingGod)
+                    if (_e.LessonT == LessonTypes.SettingGod)
                     {
-                        _eMG.LessonTC.SetNextLesson();
+                        _e.LessonT.SetNextLesson();
                     }
                 }
 

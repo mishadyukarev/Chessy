@@ -88,44 +88,27 @@ namespace Chessy.Game.System.View.UI
                     }
 
 
-                    eUIGame.UpEs.SettingsButtonC.SetActiveParent(!eMGame.LessonTC.HaveLesson);
-                    eUIGame.UpEs.DiscordButtonC.SetActive(!eMGame.LessonTC.HaveLesson);
-                    eUIGame.UpEs.LeaveC.SetActiveParent(!eMGame.LessonTC.HaveLesson || eMGame.LessonT >= LessonTypes.MenuInfo);
-                    eUIGame.DownEs.BookLittleE.ButtonC.SetActiveParent(!eMGame.LessonTC.HaveLesson || eMGame.LessonT > LessonTypes.HoldPressReady);
+                    eUIGame.UpEs.SettingsButtonC.SetActiveParent(!eMGame.LessonT.HaveLesson());
+                    eUIGame.UpEs.DiscordButtonC.SetActive(!eMGame.LessonT.HaveLesson());
+                    eUIGame.UpEs.LeaveC.SetActiveParent(!eMGame.LessonT.HaveLesson() || eMGame.LessonT >= LessonTypes.MenuInfo);
+                    eUIGame.DownEs.BookLittleE.ButtonC.SetActiveParent(!eMGame.LessonT.HaveLesson() || eMGame.LessonT > LessonTypes.HoldPressReady);
 
                 },
             };
-
-
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
                 _syncUpdates.Add(new UniqueButtonUIS(buttonT, eUIGame.RightEs.Unique(buttonT), eMGame.Resources, eMGame).Sync);
             }
-
-            //var pressedS = _eUI.RightEs.RelaxE.ButtonC.GameObject.AddComponent<PressedButtonUIS>();
-            //pressedS.SetAction((bool b) =>
-            //{
-                
-            //    if (_e.Common.IsOpenedBook != b)
-            //    {
-            //        _e.Common.SoundActionC(Common.Enum.ClipCommonTypes.OpenBook).Invoke();
-
-            //        _e.Common.IsOpenedBook = b;
-            //        _e.Common.PageBookT = Common.Enum.PageBookTypes.ExtractPawn;
-
-            //        _e.NeedUpdateView = true;
-            //    }
-            //});
         }
 
         public void Update()
         {
             if (_e.NeedUpdateView)
             {
-                _syncUpdates.ForEach((Action action) => action());
+                _eUI.ParentGOC.SetActive(_e.Common.SceneT == SceneTypes.Game);
 
-                _e.NeedUpdateView = false;
+                _syncUpdates.ForEach((Action action) => action());
             }
         }
     }

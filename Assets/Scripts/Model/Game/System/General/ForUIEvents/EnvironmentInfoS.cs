@@ -6,10 +6,10 @@ namespace Chessy.Game.Model.System
     {
         public void EnvironmentClick()
         {
-            _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
-            _eMG.ZoneInfoC.IsActiveEnvironment = !_eMG.ZoneInfoC.IsActiveEnvironment;
+            _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _e.ZoneInfoC.IsActiveEnvironment = !_e.ZoneInfoC.IsActiveEnvironment;
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

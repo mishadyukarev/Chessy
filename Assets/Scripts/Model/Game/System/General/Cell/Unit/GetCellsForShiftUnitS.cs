@@ -9,54 +9,54 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eMG.CellsForShift(cellIdxCurrent).Clear();
+                _e.CellsForShift(cellIdxCurrent).Clear();
 
                 for (byte idx = 0; idx < StartValues.CELLS; idx++)
-                    _eMG.UnitNeedStepsForShiftC(cellIdxCurrent).Set(idx, 0);
+                    _e.UnitNeedStepsForShiftC(cellIdxCurrent).Set(idx, 0);
 
-                if (!_eMG.IsBorder(cellIdxCurrent))
+                if (!_e.IsBorder(cellIdxCurrent))
                 {
-                    if (!_eMG.StunUnitC(cellIdxCurrent).IsStunned && _eMG.UnitTC(cellIdxCurrent).HaveUnit && !_eMG.UnitTC(cellIdxCurrent).IsAnimal)
+                    if (!_e.StunUnitC(cellIdxCurrent).IsStunned && _e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                     {
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_to = _eMG.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+                            var idx_to = _e.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
 
                             float needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
 
-                            if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Tree))
+                            if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Tree))
                             {
                                 needSteps = 1;
                             }
                             else
                             {
-                                if (!_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Undead))
+                                if (!_e.UnitT(cellIdxCurrent).Is(UnitTypes.Undead))
                                 {
-                                    if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn) && _eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
                                     {
                                         needSteps /= 2;
                                     }
-                                    else if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Snowy))
+                                    else if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Snowy))
                                     {
-                                        if (_eMG.FertilizeC(idx_to).HaveAnyResources)
+                                        if (_e.FertilizeC(idx_to).HaveAnyResources)
                                         {
                                             needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                         }
                                     }
 
 
-                                    if (_eMG.AdultForestC(idx_to).HaveAnyResources)
+                                    if (_e.AdultForestC(idx_to).HaveAnyResources)
                                     {
-                                        if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn))
+                                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
                                         {
-                                            if (!_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                                            if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
                                             {
                                                 needSteps += StepValues.ADULT_FOREST;
 
-                                                if (_eMG.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
+                                                if (_e.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
                                             }
                                         }
-                                        else if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Elfemale))
+                                        else if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Elfemale))
                                         {
                                             needSteps /= 2;
                                         }
@@ -64,20 +64,20 @@ namespace Chessy.Game.Model.System
                                         {
                                             needSteps += StepValues.ADULT_FOREST;
 
-                                            if (_eMG.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
+                                            if (_e.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
                                         }
                                     }
                                     else
                                     {
-                                        if (!_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Elfemale))
+                                        if (!_e.UnitT(cellIdxCurrent).Is(UnitTypes.Elfemale))
                                         {
 
                                         }
                                     }
 
-                                    if (_eMG.HillC(idx_to).HaveAnyResources)
+                                    if (_e.HillC(idx_to).HaveAnyResources)
                                     {
-                                        if (!_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                                        if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
                                         {
                                             needSteps += StepValues.HILL;
                                         }
@@ -87,13 +87,13 @@ namespace Chessy.Game.Model.System
 
 
 
-                            _eMG.UnitNeedStepsForShiftC(cellIdxCurrent).Set(idx_to, needSteps);
+                            _e.UnitNeedStepsForShiftC(cellIdxCurrent).Set(idx_to, needSteps);
 
-                            if (!_eMG.MountainC(idx_to).HaveAnyResources && !_eMG.UnitTC(idx_to).HaveUnit)
+                            if (!_e.MountainC(idx_to).HaveAnyResources && !_e.UnitT(idx_to).HaveUnit())
                             {
-                                if (needSteps <= _eMG.StepUnitC(cellIdxCurrent).Steps || _eMG.StepUnitC(cellIdxCurrent).Steps >= StepValues.MAX)
+                                if (needSteps <= _e.StepUnitC(cellIdxCurrent).Steps || _e.StepUnitC(cellIdxCurrent).Steps >= StepValues.MAX)
                                 {
-                                    _eMG.CellsForShift(cellIdxCurrent).Add(idx_to);
+                                    _e.CellsForShift(cellIdxCurrent).Add(idx_to);
 
                                 }
                             }

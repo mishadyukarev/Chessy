@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using System;
 
@@ -13,15 +12,12 @@ namespace Chessy.Game.Model.System
             {
                 var powerDamage = 0f;
 
-
-                ref var unitTC = ref _eMG.UnitTC(cellIdxCurrent);
-
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    switch (_eMG.UnitLevelTC(cellIdxCurrent).LevelT)
+                    switch (_e.UnitLevelT(cellIdxCurrent))
                     {
                         case LevelTypes.First:
-                            switch (unitTC.UnitT)
+                            switch (_e.UnitT(cellIdxCurrent))
                             {
                                 case UnitTypes.King:
                                     powerDamage = DamageUnitValues.KING_DAMAGE;
@@ -64,46 +60,46 @@ namespace Chessy.Game.Model.System
                             break;
                     }
 
-                    if (_eMG.PlayerInfoE(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT).WhereKingEffects.Contains(cellIdxCurrent))
+                    if (_e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).WhereKingEffects.Contains(cellIdxCurrent))
                     {
                         powerDamage *= DamageUnitValues.KING_EFFECT_ON_NEAR_UNITS;
                     }
 
 
-                    if (_eMG.MainToolWeaponTC(cellIdxCurrent).HaveToolWeapon)
+                    if (_e.MainToolWeaponT(cellIdxCurrent).HaveToolWeapon())
                     {
-                        if (_eMG.MainTWLevelTC(cellIdxCurrent).Is(LevelTypes.Second))
+                        if (_e.MainTWLevelT(cellIdxCurrent).Is(LevelTypes.Second))
                         {
-                            if (_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
+                            if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
                             {
                                 powerDamage += DamageUnitValues.BOW_CROSSBOW_SECOND_ADDING;
                             }
                         }
                     }
-                    if (_eMG.ExtraToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Sword)) powerDamage += DamageUnitValues.SWORD_ADDING;
+                    if (_e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Sword)) powerDamage += DamageUnitValues.SWORD_ADDING;
 
-                    if (_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Staff)) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
-
-
-                    _eMG.DamageAttackC(cellIdxCurrent).Damage = powerDamage;
+                    if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff)) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
 
 
+                    _e.DamageAttackC(cellIdxCurrent).Damage = powerDamage;
 
 
-                    if (_eMG.UnitConditionTC(cellIdxCurrent).Is(ConditionUnitTypes.Protected))
+
+
+                    if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Protected))
                     {
                         powerDamage += powerDamage * DamageUnitValues.PROTECTED;
                     }
-                    else if (_eMG.UnitConditionTC(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
+                    else if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
                     {
                         powerDamage += powerDamage * DamageUnitValues.RELAXED;
                     }
 
-                    if (_eMG.BuildingTC(cellIdxCurrent).HaveBuilding)
+                    if (_e.HaveBuildingOnCell(cellIdxCurrent))
                     {
                         var p = 0f;
 
-                        switch (_eMG.BuildingTC(cellIdxCurrent).BuildingT)
+                        switch (_e.BuildingOnCellT(cellIdxCurrent))
                         {
                             case BuildingTypes.Farm:
                                 p = DamageUnitValues.FARM;
@@ -124,12 +120,12 @@ namespace Chessy.Game.Model.System
                     float protectionPercent = 0;
 
                     //if (e.FertilizeC(cell_0).HaveAnyResources) protectionPercent += DamageValues.FERTILIZER;
-                    if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources) protectionPercent += DamageUnitValues.ADULT_FOREST;
-                    if (_eMG.HillC(cellIdxCurrent).HaveAnyResources) protectionPercent += DamageUnitValues.HILL;
+                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources) protectionPercent += DamageUnitValues.ADULT_FOREST;
+                    if (_e.HillC(cellIdxCurrent).HaveAnyResources) protectionPercent += DamageUnitValues.HILL;
 
                     powerDamage += powerDamage * protectionPercent;
 
-                    _eMG.DamageOnCellC(cellIdxCurrent).Damage = powerDamage;
+                    _e.DamageOnCellC(cellIdxCurrent).Damage = powerDamage;
                 }
             }
         }

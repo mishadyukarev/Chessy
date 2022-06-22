@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Entity;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using Chessy.Game.Values;
 using Chessy.Game.View.System;
 using UnityEngine;
@@ -25,17 +26,17 @@ namespace Chessy.Game
                 _needActive[cell_start] = false;
 
 
-                switch (_e.CellClickTC.CellClickT)
+                switch (_e.CellClickT)
                 {
                     case CellClickTypes.UniqueAbility:
 
-                        switch (_e.SelectedE.AbilityTC.Ability)
+                        switch (_e.SelectedE.AbilityT)
                         {
                             case AbilityTypes.ChangeDirectionWind:
                                 if (_e.HaveFire(cell_start))
                                 {
                                     _needActive[cell_start] = true;
-                                    _needColor[cell_start] = ColorsValues.Color(_e.SelectedE.AbilityTC.Ability);
+                                    _needColor[cell_start] = ColorsValues.Color(_e.SelectedE.AbilityT);
                                 }
                                 break;
                         }
@@ -49,13 +50,13 @@ namespace Chessy.Game
 
             }
 
-            _needActive[_e.SelectedCell] = true;
-            _needColor[_e.SelectedCell] = ColorsValues.Color(SupportCellVisionTypes.Selector);
+            _needActive[_e.SelectedCellIdx] = true;
+            _needColor[_e.SelectedCellIdx] = ColorsValues.Color(SupportCellVisionTypes.Selector);
 
 
-            if (_e.CellClickTC.Is(CellClickTypes.UniqueAbility))
+            if (_e.CellClickT.Is(CellClickTypes.UniqueAbility))
             {
-                if (_e.SelectedE.AbilityTC.Is(AbilityTypes.ChangeDirectionWind))
+                if (_e.SelectedE.AbilityT.Is(AbilityTypes.ChangeDirectionWind))
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
@@ -66,7 +67,7 @@ namespace Chessy.Game
                     }
                 }
 
-                else if (_e.SelectedE.AbilityTC.Is(AbilityTypes.FireArcher))
+                else if (_e.SelectedE.AbilityT.Is(AbilityTypes.FireArcher))
                 {
                     foreach (var idx in _e.UnitForArsonC(_e.CellsC.Selected).Idxs)
                     {
@@ -79,13 +80,13 @@ namespace Chessy.Game
 
             else
             {
-                if (_e.UnitTC(_e.CellsC.Selected).HaveUnit)
+                if (_e.UnitT(_e.CellsC.Selected).HaveUnit())
                 {
-                    if (_e.UnitPlayerTC(_e.CellsC.Selected).Is(_e.CurPlayerITC.PlayerT))
+                    if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurPlayerIT))
                     {
                         var idxs = _e.CellsForShift(_e.CellsC.Selected).Idxs;
 
-                        if (!_e.CellClickTC.Is(CellClickTypes.GiveTakeTW))
+                        if (!_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
                             foreach (var idx_0 in idxs)
                             {

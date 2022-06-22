@@ -18,8 +18,8 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCell = 0; cellIdxCell < StartValues.CELLS; cellIdxCell++)
             {
-                _eMG.AttackSimpleCellsC(cellIdxCell).Clear();
-                _eMG.AttackUniqueCellsC(cellIdxCell).Clear();
+                _e.AttackSimpleCellsC(cellIdxCell).Clear();
+                _e.AttackUniqueCellsC(cellIdxCell).Clear();
             }
 
             PawnGetExtractAdultForest();
@@ -37,6 +37,8 @@ namespace Chessy.Game.Model.System
             GetCellsForAttackArcher();
             GetCellForArsonArcher();
             FillEffectsForVision();
+
+            _e.NeedUpdateView = true;
         }
 
         void FillEffectsForVision()
@@ -46,30 +48,30 @@ namespace Chessy.Game.Model.System
                 for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled[effectT] = false;
 
 
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
                     for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                     {
-                        _eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.None);
+                        _e.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.None);
 
-                        if (!_isFilled[EffectTypes.Shield] && _eMG.ShieldUnitEffectC(cellIdxCurrent).HaveAnyProtection)
+                        if (!_isFilled[EffectTypes.Shield] && _e.ShieldUnitEffectC(cellIdxCurrent).HaveAnyProtection())
                         {
-                            _eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Shield);
+                            _e.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Shield);
                             _isFilled[EffectTypes.Shield] = true;
                         }
-                        else if (!_isFilled[EffectTypes.Arraw] && _eMG.FrozenArrawEffectC(cellIdxCurrent).HaveShoots)
+                        else if (!_isFilled[EffectTypes.Arraw] && _e.FrozenArrawEffectC(cellIdxCurrent).HaveShoots)
                         {
-                            _eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Arraw);
+                            _e.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Arraw);
                             _isFilled[EffectTypes.Arraw] = true;
                         }
-                        else if (!_isFilled[EffectTypes.Stun] && _eMG.StunUnitC(cellIdxCurrent).IsStunned)
+                        else if (!_isFilled[EffectTypes.Stun] && _e.StunUnitC(cellIdxCurrent).IsStunned)
                         {
-                            _eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Stun);
+                            _e.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.Stun);
                             _isFilled[EffectTypes.Stun] = true;
                         }
-                        else if (!_isFilled[EffectTypes.DamageAdd] && _eMG.HaveKingEffect(cellIdxCurrent))
+                        else if (!_isFilled[EffectTypes.DamageAdd] && _e.HaveKingEffect(cellIdxCurrent))
                         {
-                            _eMG.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.DamageAdd);
+                            _e.UnitEs(cellIdxCurrent).SetEffect(buttonT, EffectTypes.DamageAdd);
                             _isFilled[EffectTypes.DamageAdd] = true;
                         }
                     }

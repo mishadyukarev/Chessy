@@ -15,10 +15,10 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (e.MotionTimer > 0)
+            if (_e.MotionTimer > 0)
             {
                 _needActive = true;
-                _eUI.CenterEs.MotionTextC.TextUI.text = e.MotionsC.Motions.ToString();
+                _eUI.CenterEs.MotionTextC.TextUI.text = _e.MotionsC.Motions.ToString();
             }
             else
             {

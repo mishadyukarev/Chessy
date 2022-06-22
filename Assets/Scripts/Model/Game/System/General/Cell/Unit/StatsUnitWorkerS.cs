@@ -2,26 +2,26 @@
 
 namespace Chessy.Game.Model.System
 {
-    struct StatsUnitWorkerS
+    static class StatsUnitWorkerS
     {
-        readonly StatsE _statsE;
-
-        internal StatsUnitWorkerS(in StatsE statsE)
+        internal static void Set(this UnitStatsE statsE, in double hp, in double steps, in double water)
         {
-            _statsE = statsE;
+            statsE.HealthC.Health = hp;
+            statsE.StepC.Steps = steps;
+            statsE.WaterC.Water = water;
+        }
+        internal static void Clear(this UnitStatsE statsE)
+        {
+            statsE.HealthC.Health = default;
+            statsE.StepC.Steps = default;
+            statsE.WaterC.Water = default;
         }
 
-        internal void Set(in double hp, in double steps, in double water)
+        internal static void Set(this UnitStatsE unitStatsToE, in UnitStatsE unitStatsFromE)
         {
-            _statsE.HealthC.Health = hp;
-            _statsE.StepC.Steps = steps;
-            _statsE.WaterC.Water = water;
-        }
-        internal void Clear()
-        {
-            _statsE.HealthC.Health = default;
-            _statsE.StepC.Steps = default;
-            _statsE.WaterC.Water = default;
+            unitStatsToE.HealthC = unitStatsFromE.HealthC;
+            unitStatsToE.StepC = unitStatsFromE.StepC;
+            unitStatsToE.WaterC = unitStatsFromE.WaterC;
         }
     }
 }

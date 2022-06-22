@@ -2,20 +2,13 @@
 
 namespace Chessy.Game.Model.System
 {
-    struct ExtraToolWeaponForUnitS
+    static class ExtraToolWeaponForUnitS
     {
-        readonly ExtraToolWeaponE _extraTWE;
-
-        internal ExtraToolWeaponForUnitS(in ExtraToolWeaponE extraTWE)
+        internal static void Set(this ExtraToolWeaponE extraTWE, in ToolWeaponTypes twT, in LevelTypes levelT, in float protection)
         {
-            _extraTWE = extraTWE;
-        }
-
-        internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT, in float protection)
-        {
-            _extraTWE.ToolWeaponTC.ToolWeaponT = twT;
-            _extraTWE.LevelTC.LevelT = levelT;
-            _extraTWE.ProtectionC.Protection = protection;
+            extraTWE.ToolWeaponT = twT;
+            extraTWE.LevelT = levelT;
+            extraTWE.ProtectionC.Protection = protection;
         }
     }
 }

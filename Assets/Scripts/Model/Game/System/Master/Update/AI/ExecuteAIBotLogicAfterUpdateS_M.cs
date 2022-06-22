@@ -26,24 +26,24 @@ namespace Chessy.Game
 
             for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
             {
-                if (_eMG.UnitT(cellIdxStart) == UnitTypes.Pawn && _eMG.UnitPlayerT(cellIdxStart) == playerBotT)
+                if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdxStart) == playerBotT)
                 {
-                    foreach (var cellIdxDirect in _eMG.AroundCellsE(cellIdxStart).CellsAround)
+                    foreach (var cellIdxDirect in _e.AroundCellsE(cellIdxStart).CellsAround)
                     {
-                        if (_eMG.UnitTC(cellIdxDirect).HaveUnit)
+                        if (_e.UnitT(cellIdxDirect).HaveUnit())
                         {
-                            if (!_eMG.UnitTC(cellIdxDirect).IsAnimal)
+                            if (!_e.UnitT(cellIdxDirect).IsAnimal())
                             {
-                                if (_eMG.AttackSimpleCellsC(cellIdxStart).Contains(cellIdxDirect)
-                                    || _eMG.AttackUniqueCellsC(cellIdxStart).Contains(cellIdxDirect))
+                                if (_e.AttackSimpleCellsC(cellIdxStart).Contains(cellIdxDirect)
+                                    || _e.AttackUniqueCellsC(cellIdxStart).Contains(cellIdxDirect))
                                 {
-                                    _sMG.AttackUnitFromTo(cellIdxStart, cellIdxDirect);
+                                    _s.AttackUnitFromTo(cellIdxStart, cellIdxDirect);
                                 }
                             }
                         }
                     }
 
-                    
+
 
                     //eMG.Unit
                 }

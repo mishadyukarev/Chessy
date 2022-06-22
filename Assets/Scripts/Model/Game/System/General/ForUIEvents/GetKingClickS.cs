@@ -6,23 +6,23 @@ namespace Chessy.Game.Model.System
     {
         public void GetClickEffect()
         {
-            _eMG.CellsC.Selected = 0;
+            _e.CellsC.Selected = 0;
 
-            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
+            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
             {
-                _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-                if (_eMG.PlayerInfoE(_eMG.CurPlayerITC.PlayerT).KingInfoE.HaveInInventor)
+                if (_e.PlayerInfoE(_e.CurPlayerIT).KingInfoE.HaveInInventor)
                 {
-                    _eMG.SelectedUnitE.UnitTC.UnitT = UnitTypes.King;
-                    _eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
+                    _e.SelectedUnitE.UnitT = UnitTypes.King;
+                    _e.SelectedUnitE.LevelT = LevelTypes.First;
 
-                    _eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
+                    _e.CellClickT = CellClickTypes.SetUnit;
                 }
             }
-            else _sMG.Mistake(MistakeTypes.NeedWaitQueue);
+            else _s.Mistake(MistakeTypes.NeedWaitQueue);
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

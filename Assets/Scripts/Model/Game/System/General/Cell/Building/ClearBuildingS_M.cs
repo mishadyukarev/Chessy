@@ -1,12 +1,10 @@
-﻿using Chessy.Game.Model.Entity;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game
 {
     sealed partial class BuildingSystems
     {
         internal void Clear(in byte cell_0)
         {
-            _eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
+            _e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Chessy.Game.Model.System
         {
             if (damage <= 0) throw new Exception();
 
-            _eMG.ExtraTWProtectionC(cell_0).Protection -= damage;
-            if (!_eMG.ExtraTWProtectionC(cell_0).HaveAnyProtection)
-                _eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT = ToolWeaponTypes.None;
+            _e.ExtraTWProtectionC(cell_0).Protection -= damage;
+            if (!_e.ExtraTWProtectionC(cell_0).HaveAnyProtection())
+                _e.SetExtraToolWeaponT(cell_0, ToolWeaponTypes.None);
         }
     }
 }

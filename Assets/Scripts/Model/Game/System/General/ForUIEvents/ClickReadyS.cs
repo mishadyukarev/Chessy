@@ -6,9 +6,9 @@ namespace Chessy.Game.Model.System
     {
         public void ClickReady()
         {
-            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryExecuteReadyForOnlineM) });
+            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryExecuteReadyForOnlineM) });
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Chessy.Common.Enum;
+using Photon.Pun;
 
 namespace Chessy.Game.Model.System
 {
@@ -6,17 +7,17 @@ namespace Chessy.Game.Model.System
     {
         public void GetHeroClickCenter(in UnitTypes unitT)
         {
-            if (unitT == UnitTypes.Elfemale && _eMG.LessonTC.HaveLesson) return;
+            if (unitT == UnitTypes.Elfemale && _e.LessonT.HaveLesson()) return;
 
-            if (_eMG.CurPlayerIT == _eMG.WhoseMovePlayerT)
+            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
             {
-                _eMG.Common.SoundActionC(Common.Enum.ClipCommonTypes.Click).Invoke();
+                _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-                _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.GetHeroInCenterM), unitT });
+                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.GetHeroInCenterM), unitT });
             }
-            else _eMG.SoundAction(ClipTypes.Mistake).Invoke();
+            else _e.SoundAction(ClipTypes.Mistake).Invoke();
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

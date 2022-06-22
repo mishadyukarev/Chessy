@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -16,15 +17,15 @@ namespace Chessy.Game
             var needActiveCity = false;
             var needActiveEnvironment = false;
 
-            if (e.IsSelectedCity)
+            if (_e.IsSelectedCity)
             {
                 needActiveCity = true;
             }
             else
             {
-                if (e.CellsC.IsSelectedCell)
+                if (_e.CellsC.IsSelectedCell)
                 {
-                    if (!e.LessonTC.HaveLesson)
+                    if (!_e.LessonT.HaveLesson())
                     {
                         needActiveEnvironment = true;
                     }

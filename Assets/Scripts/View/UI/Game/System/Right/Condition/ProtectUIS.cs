@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using UnityEngine;
 
 namespace Chessy.Game
@@ -16,11 +17,11 @@ namespace Chessy.Game
         {
             var isEnableButt = false;
 
-            if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ClickDefend)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ClickDefend)
             {
-                if (e.UnitTC(e.SelectedCell).HaveUnit)
+                if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
                 {
-                    if (e.UnitPlayerTC(e.SelectedCell).Is(e.CurPlayerIT))
+                    if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurPlayerIT))
                     {
                         isEnableButt = true;
 
@@ -28,9 +29,9 @@ namespace Chessy.Game
                         _protectUIE.Button(UnitTypes.Pawn).SetActive(false);
                         _protectUIE.Button(UnitTypes.Elfemale).SetActive(false);
 
-                        _protectUIE.Button(e.UnitT(e.SelectedCell)).SetActive(true);
+                        _protectUIE.Button(_e.UnitT(_e.SelectedCellIdx)).SetActive(true);
 
-                        if (e.UnitConditionTC(e.SelectedCell).Is(ConditionUnitTypes.Protected))
+                        if (_e.UnitConditionT(_e.SelectedCellIdx).Is(ConditionUnitTypes.Protected))
                         {
                             _protectUIE.ImageUIC.Image.color = Color.yellow;
                         }

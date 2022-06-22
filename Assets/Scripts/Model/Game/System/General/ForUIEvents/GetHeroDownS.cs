@@ -6,36 +6,36 @@ namespace Chessy.Game.Model.System
     {
         public void OpenHeroClick()
         {
-            _eMG.CellsC.Selected = 0;
+            _e.CellsC.Selected = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerT))
+            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
             {
-                _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-                var curPlayer = _eMG.CurPlayerIT;
+                var curPlayer = _e.CurPlayerIT;
 
-                var myHeroT = _eMG.PlayerInfoE(curPlayer).GodInfoE.UnitT;
+                var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoE.UnitT;
 
-                if (_eMG.PlayerInfoE(curPlayer).GodInfoE.HaveHeroInInventor)
+                if (_e.PlayerInfoE(curPlayer).GodInfoE.HaveHeroInInventor)
                 {
-                    if (!_eMG.PlayerInfoE(_eMG.CurPlayerITC.PlayerT).GodInfoE.CooldownC.HaveCooldown)
+                    if (!_e.PlayerInfoE(_e.CurPlayerIT).GodInfoE.CooldownC.HaveCooldown())
                     {
-                        _eMG.SelectedUnitE.UnitTC.UnitT = myHeroT;
-                        _eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
+                        _e.SelectedUnitE.UnitT = myHeroT;
+                        _e.SelectedUnitE.LevelT = LevelTypes.First;
 
 
-                        _eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
+                        _e.CellClickT = CellClickTypes.SetUnit;
                     }
                 }
             }
             else
             {
-                _sMG.SetMistake(MistakeTypes.NeedWaitQueue, 0);
-                _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                _s.SetMistake(MistakeTypes.NeedWaitQueue, 0);
+                _e.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

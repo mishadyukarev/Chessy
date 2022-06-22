@@ -1,30 +1,31 @@
-﻿using System;
+﻿using Chessy.Game.Enum;
+using System;
 
 namespace Chessy.Game.Model.System
 {
     sealed partial class UnitSystems
     {
-        internal void KillUnit(in PlayerTypes whoKiller, in byte cellIdx)
+        internal void KillUnit(in PlayerTypes whoKiller, in byte cellIdxForKilling)
         {
-            //if (!_eMG.UnitTC(cellIdx).HaveUnit) throw new Exception();
+            if (!_e.UnitT(cellIdxForKilling).HaveUnit()) throw new Exception();
 
 
-            if (_eMG.UnitPlayerT(cellIdx) == PlayerTypes.Second)
+            if (_e.UnitPlayerT(cellIdxForKilling) == PlayerTypes.Second)
             {
-                if (_eMG.LessonT == Enum.LessonTypes.Kill1Enemy) _eMG.LessonTC.SetNextLesson();
+                if (_e.LessonT == LessonTypes.Kill1Enemy) _e.LessonT.SetNextLesson();
             }
 
 
             if (whoKiller != PlayerTypes.None)
             {
-                if (_eMG.UnitTC(cellIdx).Is(UnitTypes.King)) _eMG.WinnerPlayerT = whoKiller;
+                if (_e.UnitT(cellIdxForKilling) == UnitTypes.King) _e.WinnerPlayerT = whoKiller;
             }
 
-            if (_eMG.UnitTC(cellIdx).IsGod)
+            if (_e.UnitT(cellIdxForKilling).IsGod())
             {
                 var cooldown = 0f;
 
-                switch (_eMG.UnitT(cellIdx))
+                switch (_e.UnitT(cellIdxForKilling))
                 {
                     case UnitTypes.Elfemale:
                         cooldown = HeroCooldownValues.Elfemale;
@@ -45,26 +46,22 @@ namespace Chessy.Game.Model.System
                     default: throw new Exception();
                 }
 
-                _eMG.PlayerInfoE(_eMG.UnitPlayerT(cellIdx)).GodInfoE.Cooldown = cooldown;
-                _eMG.PlayerInfoE(_eMG.UnitPlayerT(cellIdx)).GodInfoE.HaveHeroInInventor = true;
+                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoE.Cooldown = cooldown;
+                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoE.HaveHeroInInventor = true;
             }
 
-            if (_eMG.UnitTC(cellIdx).Is(UnitTypes.Tree)) _eMG.HaveTreeUnit = false;
+            if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Tree)) _e.HaveTreeUnit = false;
 
 
-            SetLastDiedUnitOnCell(cellIdx);
+            SetLastDiedUnitOnCell(cellIdxForKilling);
 
-            if (_eMG.UnitTC(cellIdx).Is(UnitTypes.Pawn))
+            if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Pawn))
             {
-                _eMG.PlayerInfoE(_eMG.UnitPlayerT(cellIdx)).PawnInfoC.RemovePawn();
+                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).PawnInfoC.RemovePawn();
             }
 
 
-
-
-
-
-            ClearUnit(cellIdx);
+            _e.UnitEs(cellIdxForKilling).ClearEverything();
         }
     }
 }

@@ -7,24 +7,24 @@ namespace Chessy.Game.Model.System
     {
         public void OpenCityClick()
         {
-            _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
 
-            _eMG.IsSelectedCity = !_eMG.IsSelectedCity;
+            _e.IsSelectedCity = !_e.IsSelectedCity;
 
-            if (_eMG.LessonTC.Is(LessonTypes.OpeningTown))
+            if (_e.LessonT.Is(LessonTypes.OpeningTown))
             {
-                _eMG.LessonTC.SetNextLesson();
+                _e.LessonT.SetNextLesson();
 
             }
-            if (_eMG.LessonTC.Is(LessonTypes.TryBuyingHouse))
+            if (_e.LessonT.Is(LessonTypes.TryBuyingHouse))
             {
-                if (!_eMG.IsSelectedCity) _eMG.LessonTC.SetPreviousLesson();
+                if (!_e.IsSelectedCity) _e.LessonT.SetPreviousLesson();
             }
 
 
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

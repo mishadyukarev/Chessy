@@ -27,7 +27,7 @@ namespace Chessy.Game
 
             for (byte idxCellStart = 0; idxCellStart < StartValues.CELLS; idxCellStart++)
             {
-                if (_eMG.CellE(idxCellStart).IsBorder) continue;
+                if (_e.CellE(idxCellStart).IsBorder) continue;
 
                 for (byte idxCellElse = 0; idxCellElse < StartValues.CELLS; idxCellElse++)
                 {
@@ -36,18 +36,18 @@ namespace Chessy.Game
 
                 _theMostBigPointForShiftUnit = 0;
 
-                if (_eMG.UnitT(idxCellStart) == UnitTypes.Pawn && _eMG.UnitPlayerT(idxCellStart) == playerBotT)
+                if (_e.UnitT(idxCellStart) == UnitTypes.Pawn && _e.UnitPlayerT(idxCellStart) == playerBotT)
                 {
-                    foreach (var idxCellDirect in _eMG.AroundCellsE(idxCellStart).CellsAround)
+                    foreach (var idxCellDirect in _e.AroundCellsE(idxCellStart).CellsAround)
                     {
-                        if (!_eMG.CellE(idxCellDirect).IsBorder)
+                        if (!_e.CellE(idxCellDirect).IsBorder)
                         {
-                            if (!_eMG.UnitTC(idxCellDirect).HaveUnit && !_eMG.MountainC(idxCellDirect).HaveAnyResources)
+                            if (!_e.UnitT(idxCellDirect).HaveUnit() && !_e.MountainC(idxCellDirect).HaveAnyResources)
                             {
                                 _pointsCellsForShiftUnit[idxCellDirect]++;
                                 _theMostBigPointForShiftUnit++;
 
-                                if (_eMG.AdultForestC(idxCellDirect).HaveAnyResources)
+                                if (_e.AdultForestC(idxCellDirect).HaveAnyResources)
                                 {
                                     _pointsCellsForShiftUnit[idxCellDirect]++;
                                     _theMostBigPointForShiftUnit++;
@@ -70,11 +70,11 @@ namespace Chessy.Game
                             {
                                 if (Random.Range(0f, 1f) < 0.25f)
                                 {
-                                    if (_eMG.CellsForShift(idxCellStart).Contains(idxCell))
+                                    if (_e.CellsForShift(idxCellStart).Contains(idxCell))
                                     {
-                                        if(_eMG.UnitNeedStepsForShiftC(idxCellStart).NeedSteps(idxCell) <= _eMG.StepUnit(idxCellStart))
+                                        if (_e.UnitNeedStepsForShiftC(idxCellStart).NeedSteps(idxCell) <= _e.StepUnit(idxCellStart))
                                         {
-                                            _sMG.ShiftUnitOnOtherCellM(idxCellStart, idxCell);
+                                            _s.ShiftUnitOnOtherCellM(idxCellStart, idxCell);
                                             isShifted = true;
                                             break;
                                         }

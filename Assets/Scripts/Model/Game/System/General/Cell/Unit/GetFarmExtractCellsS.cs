@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
@@ -9,11 +8,11 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eMG.FarmExtractFertilizeC(cellIdxCurrent).Resources = 0;
+                _e.FarmExtractFertilizeC(cellIdxCurrent).Resources = 0;
 
-                if (_eMG.BuildingTC(cellIdxCurrent).Is(BuildingTypes.Farm))
+                if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Farm))
                 {
-                    if (_eMG.FertilizeC(cellIdxCurrent).HaveAnyResources)
+                    if (_e.FertilizeC(cellIdxCurrent).HaveAnyResources)
                     {
                         var extract = EnvironmentValues.FARM_EXTRACT;
 
@@ -22,9 +21,9 @@ namespace Chessy.Game.Model.System
                         //    extract += Environment_Values.FARM_CENTER_UPGRADE;
                         //}
 
-                        if (_eMG.FertilizeC(cellIdxCurrent).Resources < extract) extract = _eMG.FertilizeC(cellIdxCurrent).Resources;
+                        if (_e.FertilizeC(cellIdxCurrent).Resources < extract) extract = _e.FertilizeC(cellIdxCurrent).Resources;
 
-                        _eMG.FarmExtractFertilizeC(cellIdxCurrent).Resources = extract;
+                        _e.FarmExtractFertilizeC(cellIdxCurrent).Resources = extract;
                     }
                 }
             }

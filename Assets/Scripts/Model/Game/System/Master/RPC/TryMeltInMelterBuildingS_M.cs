@@ -1,5 +1,4 @@
 ﻿using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -22,7 +21,7 @@ namespace Chessy.Game.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources)
+                if (needRes[resT] > _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(resT).Resources)
                 {
                     canBuy = false;
                     break;
@@ -33,23 +32,23 @@ namespace Chessy.Game.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(resT).Resources -= needRes[resT];
+                    _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
-                if (_eMG.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
+                if (_e.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
-                    _eMG.LessonTC.SetNextLesson();
-                    _eMG.IsSelectedCity = true;
+                    _e.LessonT.SetNextLesson();
+                    _e.IsSelectedCity = true;
                 }
 
-                _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
-                _eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
+                _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
+                _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
 
                 ExecuteSoundActionToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                _eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                MistakeEconomyToGeneral(sender, needRes);
             }
         }
     }

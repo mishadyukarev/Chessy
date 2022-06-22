@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -20,23 +21,23 @@ namespace Chessy.Game
         {
             var needActiveZone = false;
 
-            if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ThatsYourEffects)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ThatsYourEffects)
             {
-                if (e.CellsC.IsSelectedCell)
+                if (_e.CellsC.IsSelectedCell)
                 {
-                    var idx_sel = e.CellsC.Selected;
+                    var idx_sel = _e.CellsC.Selected;
 
-                    if (e.UnitTC(e.CellsC.Selected).HaveUnit)
+                    if (_e.UnitT(_e.CellsC.Selected).HaveUnit())
                     {
                         needActiveZone = true;
 
                         for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                         {
-                            _needActiveButton[(byte)buttonT] = e.UnitEs(idx_sel).Effect(buttonT) != EffectTypes.None;
+                            _needActiveButton[(byte)buttonT] = _e.UnitEs(idx_sel).Effect(buttonT) != EffectTypes.None;
 
                             if (_needActiveButton[(byte)buttonT])
                             {
-                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _resourcesE.Sprite(e.UnitEs(idx_sel).Effect(buttonT));
+                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _resourcesE.Sprite(_e.UnitEs(idx_sel).Effect(buttonT));
                             }
 
                             _eUI.RightEs.Effect(buttonT).GO.SetActive(_needActiveButton[(byte)buttonT]);

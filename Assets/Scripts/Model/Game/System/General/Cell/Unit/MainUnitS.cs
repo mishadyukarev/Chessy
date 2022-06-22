@@ -1,32 +1,25 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.Entity.Cell.Unit;
+﻿using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    struct MainUnitS
+    static class MainUnitS
     {
-        readonly UnitMainE _mainUnitE;
-
-        internal MainUnitS(in UnitMainE mainUnitE)
+        internal static void Set(this UnitMainE mainUnitE, in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in ConditionUnitTypes conditionT, in bool isRight)
         {
-            _mainUnitE = mainUnitE;
+            mainUnitE.UnitT = unitT;
+            mainUnitE.LevelT = levelT;
+            mainUnitE.PlayerT = playerT;
+            mainUnitE.ConditionT = conditionT;
+            mainUnitE.IsRightArcherC.IsRight = isRight;
+        }
+        internal static void CopyFrom(this UnitMainE mainUnitToE, in UnitMainE unitMainFromE)
+        {
+            mainUnitToE.UnitT = unitMainFromE.UnitT;
+            mainUnitToE.LevelT = unitMainFromE.LevelT;
+            mainUnitToE.PlayerT = unitMainFromE.PlayerT;
+            mainUnitToE.ConditionT = unitMainFromE.ConditionT;
+            mainUnitToE.IsRightArcherC = unitMainFromE.IsRightArcherC;
         }
 
-        internal void Set(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in ConditionUnitTypes conditionT, in bool isRight)
-        {
-            _mainUnitE.UnitTC.UnitT = unitT;
-            _mainUnitE.LevelTC.LevelT = levelT;
-            _mainUnitE.PlayerTC.PlayerT = playerT;
-            _mainUnitE.ConditionTC.Condition = conditionT;
-            _mainUnitE.IsRightArcherC.IsRight = isRight;
-        }
-        internal void CopyFrom(in UnitMainE unitMainE)
-        {
-            _mainUnitE.UnitTC = unitMainE.UnitTC;
-            _mainUnitE.LevelTC = unitMainE.LevelTC;
-            _mainUnitE.PlayerTC = unitMainE.PlayerTC;
-            _mainUnitE.ConditionTC = unitMainE.ConditionTC;
-            _mainUnitE.IsRightArcherC = unitMainE.IsRightArcherC;
-        }
     }
 }

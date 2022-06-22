@@ -23,9 +23,7 @@ namespace Chessy
     {
         [SerializeField] TestModes TestModeT = default;
 
-        List<IUpdate> _commonRuns;
-        List<IUpdate> _gameRuns;
-        List<IUpdate> _menuRuns;
+        List<IUpdate> _runs;
 
         EntitiesModelCommon _eMC;
 
@@ -35,9 +33,9 @@ namespace Chessy
 
             var eVCommon = new EntitiesViewCommon(transform, TestModeT, out var sound, out var commonZone, out var actions);
             var eUICommon = new EntitiesViewUICommon(commonZone);
-            _eMC = new EntitiesModelCommon(sound);
+            _eMC = new EntitiesModelCommon(TestModeT, sound);
 
-            var sMCommon = new SystemsModelCommon(TestModeT, _eMC);
+            var sMCommon = new SystemsModelCommon(_eMC);
             var sUICommon = new SystemsViewUICommon(_eMC, eUICommon);
 
             new EventsCommon(sMCommon, eUICommon, eVCommon, _eMC);
@@ -49,10 +47,10 @@ namespace Chessy
 
             var eVMenu = new EntitiesViewMenu();
             var eUIMenu = new EntitiesViewUIMenu(eUICommon);
-            var eMMenu = new EntitiesModelMenu();
+            var eMMenu = new EntitiesModelMenu(_eMC);
 
             var sMMenu = new SystemsModelMenu(_eMC);
-            var sUIMenu = new SystemsViewUIMenu(eUIMenu, _eMC);
+            var sUIMenu = new SystemsViewUIMenu(eUIMenu, eMMenu);
 
             new EventsMenu(_eMC, eUIMenu);
 
@@ -62,7 +60,7 @@ namespace Chessy
             #region Game
 
             var eViewGame = new EntitiesViewGame(out var forData, eVCommon);
-            var eModelGame = new EntitiesModelGame(_eMC, forData, Rpc.NamesMethods_S, actions);
+            var eModelGame = new EntitiesModelGame(_eMC, forData, Rpc.NameRpcMethod, actions);
             var eUIGame = new EntitiesViewUIGame(eUICommon);
 
             var sModelGame = new SystemsModelGame(sMCommon, eModelGame);
@@ -79,33 +77,24 @@ namespace Chessy
             var adLaunchS = new TryLaunchAdS(_eMC);
             new ShopS(_eMC);
 
-            var rpc = eVCommon.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame, eModelGame, _eMC);
-
-            gameObject.AddComponent<PhotonSceneManager>().StartMy(rpc, eModelGame, sUICommon, sModelGame, sMMenu);
+            var rpc = eVCommon.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sModelGame);
+            gameObject.AddComponent<PhotonSceneManager>().StartMy(sUICommon, sModelGame);
 
             #endregion
 
 
-            _commonRuns = new List<IUpdate>()
+            _runs = new List<IUpdate>()
             {
                 sMCommon,
-                sUICommon,
                 adLaunchS,
-            };
-
-            _menuRuns = new List<IUpdate>()
-            {
                 sMMenu,
-                sUIMenu,
-            };
-
-            _gameRuns = new List<IUpdate>()
-            {
                 sModelGame,
-                sViewGame,
-                sUIGame,
-
                 eventsGame,
+
+                sUICommon,
+                sUIMenu,
+                sUIGame,
+                sViewGame,
             };
 
 
@@ -120,23 +109,9 @@ namespace Chessy
 
         void Update()
         {
-            _commonRuns.ForEach((IUpdate iRun) => iRun.Update());
+            _runs.ForEach((IUpdate iRun) => iRun.Update());
 
-            switch (_eMC.SceneTC.SceneT)
-            {
-                case SceneTypes.Menu:
-                    _menuRuns.ForEach((IUpdate iRun) => iRun.Update());
-                    break;
-
-                case SceneTypes.Game:
-                    _gameRuns.ForEach((IUpdate iRun) => iRun.Update());
-                    break;
-
-                default: throw new Exception();
-            }
+            _eMC.NeedUpdateView = false;
         }
-
-
-
     }
 }

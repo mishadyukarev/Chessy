@@ -19,19 +19,19 @@ namespace Chessy.Game
 
             for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
             {
-                if (_eMG.UnitT(cellIdxStart) == UnitTypes.Pawn && _eMG.UnitPlayerT(cellIdxStart) == playerBotT)
+                if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdxStart) == playerBotT)
                 {
-                    if (!_eMG.ExtraToolWeaponTC(cellIdxStart).HaveToolWeapon)
+                    if (!_e.ExtraToolWeaponT(cellIdxStart).HaveToolWeapon())
                     {
                         if (Random.Range(0f, 1f) <= 0.50f)
                         {
                             var levetTW = Random.Range(0f, 1f) <= 0.70f ? LevelTypes.First : LevelTypes.Second;
 
-                            _sMG.UnitSs.SetExtraToolWeapon(cellIdxStart, ToolWeaponTypes.Shield, levetTW, ToolWeaponValues.ShieldProtection(levetTW));
+                            _e.UnitExtraTWE(cellIdxStart).Set(ToolWeaponTypes.Shield, levetTW, ToolWeaponValues.ShieldProtection(levetTW));
                         }
                         else
                         {
-                            _sMG.UnitSs.SetExtraToolWeapon(cellIdxStart, ToolWeaponTypes.Sword, LevelTypes.Second, 0);
+                            _e.UnitExtraTWE(cellIdxStart).Set(ToolWeaponTypes.Sword, LevelTypes.Second, 0);
                         }
                     }
                 }

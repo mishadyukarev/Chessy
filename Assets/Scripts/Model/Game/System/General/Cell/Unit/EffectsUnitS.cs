@@ -2,20 +2,21 @@
 
 namespace Chessy.Game.Model.System
 {
-    struct EffectsUnitS
+    static class EffectsUnitS
     {
-        readonly UnitEffectsE _effectsE;
-
-        internal EffectsUnitS(in UnitEffectsE effectsE)
+        internal static void Set(this UnitEffectsE unitEffectsE, in float stun, in float protection, in int shoots, in bool haveKingEffect)
         {
-            _effectsE = effectsE;
+            unitEffectsE.StunC.Stun = stun;
+            unitEffectsE.ShieldEffectC.Protection = protection;
+            unitEffectsE.FrozenArrawC.Shoots = shoots;
+            unitEffectsE.HaveKingEffect = haveKingEffect;
         }
-        internal void Set(in float stun, in float protection, in int shoots, in bool haveKingEffect)
+        internal static void CopyEffects(this UnitEffectsE unitEffectsToE, in UnitEffectsE unitEffectsFromE)
         {
-            _effectsE.StunC.Stun = stun;
-            _effectsE.ShieldEffectC.Protection = protection;
-            _effectsE.FrozenArrawC.Shoots = shoots;
-            _effectsE.HaveKingEffect = haveKingEffect;
+            unitEffectsToE.StunC = unitEffectsFromE.StunC;
+            unitEffectsToE.ShieldEffectC = unitEffectsFromE.ShieldEffectC;
+            unitEffectsToE.FrozenArrawC = unitEffectsFromE.FrozenArrawC;
+            unitEffectsToE.HaveKingEffect = unitEffectsFromE.HaveKingEffect;
         }
     }
 }

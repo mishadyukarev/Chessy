@@ -17,9 +17,9 @@ namespace Chessy.Game
         {
             _needActive = false;
 
-            if (_e.UnitTC(_currentCell).HaveUnit)
+            if (_e.UnitT(_currentCell).HaveUnit())
             {
-                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerITC.PlayerT))
+                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
                 {
                     _needActive = _e.StunUnitC(_currentCell).IsStunned;
                 }

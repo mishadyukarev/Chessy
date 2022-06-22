@@ -1,5 +1,4 @@
 ﻿using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Pun;
@@ -11,22 +10,22 @@ namespace Chessy.Game.Model.System
     {
         internal void TryChangeDirectWindWithSnowyM(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (_eMG.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))
+            if (_e.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))
             {
-                _eMG.WeatherE.WindC.DirectT = _eMG.AroundCellsE(_eMG.WeatherE.CloudC.Center).Direct(idx_to);
-                _eMG.StepUnitC(cell_from).Steps -= StepValues.Need(abilityT);
-                _eMG.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
+                _e.WeatherE.WindC.DirectT = _e.AroundCellsE(_e.WeatherE.CloudC.Center).Direct(idx_to);
+                _e.StepUnitC(cell_from).Steps -= StepValues.Need(abilityT);
+                _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
-                _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, abilityT);
+                _s.SoundToGeneral(RpcTarget.All, abilityT);
 
-                if(_eMG.LessonT == LessonTypes.ChangeDirectionWind)
+                if (_e.LessonT == LessonTypes.ChangeDirectionWind)
                 {
-                    _eMG.LessonTC.SetNextLesson();
+                    _e.LessonT.SetNextLesson();
                 }
 
             }
 
-            else _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            else _s.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
         }
     }
 }

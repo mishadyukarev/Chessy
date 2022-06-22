@@ -2,8 +2,8 @@
 {
     public struct WhoLastDiedHereE
     {
-        public UnitTC UnitTC;
-        public LevelTC LevelTC;
-        public PlayerTC PlayerTC;
+        public UnitTypes UnitT { get; internal set; }
+        public LevelTypes LevelT { get; internal set; }
+        public PlayerTypes PlayerT { get; internal set; }
     }
 }

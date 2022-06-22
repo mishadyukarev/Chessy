@@ -3,20 +3,19 @@ using Photon.Pun;
 
 namespace Chessy.Game.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class SystemsModelGameForUI : SystemModel
     {
-        readonly EntitiesModelGame _eMG;
-        readonly SystemsModelGame _sMG;
-
-        internal SystemsModelGameForUI(in SystemsModelGame sMG, in EntitiesModelGame eMG)
-        {
-            _eMG = eMG;
-            _sMG = sMG;
-        }
+        internal SystemsModelGameForUI(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
 
         public void TryBuyFromMarketBuilding(in MarketBuyTypes marketBuyT)
         {
-            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryBuyFromMarketBuildingM), marketBuyT });
+            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryBuyFromMarketBuildingM), marketBuyT });
+        }
+
+        public void ClickFriendReady()
+        {
+            _e.ZoneInfoC.IsActiveFriend = false;
+            _e.NeedUpdateView = true;
         }
     }
 }

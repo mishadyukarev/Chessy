@@ -1,6 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -8,6 +9,8 @@ namespace Chessy.Game
     {
         readonly EntitiesModelCommon _eMC;
         readonly EntitiesViewUIGame _eUI;
+
+        bool _needActive;
 
         internal CenterFriendUIS(in EntitiesModelCommon eMC, in EntitiesViewUIGame eUI, in EntitiesModelGame eMG) : base(eMG)
         {
@@ -17,15 +20,15 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            _eUI.CenterEs.FriendE.ButtonC.SetActiveParent(false);
+            _needActive = false;
 
-            if (_eMC.GameModeTC.Is(GameModeTypes.WithFriendOffline))
+            if (_eMC.GameModeT.Is(GameModeTypes.WithFriendOffline))
             {
-                if (e.ZoneInfoC.IsActiveFriend)
+                if (_e.ZoneInfoC.IsActiveFriend)
                 {
-                    _eUI.CenterEs.FriendE.TextC.SetActiveParent(true);
+                    _needActive = true;
 
-                    if (e.CurPlayerITC.PlayerT == PlayerTypes.First)
+                    if (_e.CurPlayerIT == PlayerTypes.First)
                     {
                         _eUI.CenterEs.FriendE.TextC.TextUI.text = "1";
                     }
@@ -35,6 +38,8 @@ namespace Chessy.Game
                     }
                 }
             }
+
+            _eUI.CenterEs.FriendE.ButtonC.SetActiveParent(_needActive);
         }
     }
 }

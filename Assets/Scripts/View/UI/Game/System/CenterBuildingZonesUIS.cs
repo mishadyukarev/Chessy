@@ -15,8 +15,8 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            eUI.CenterEs.MarketE.Zone.SetActive(e.SelectedE.BuildingsC.Is(BuildingTypes.Market));
-            eUI.CenterEs.SmelterE.Zone.SetActive(e.SelectedE.BuildingsC.Is(BuildingTypes.Smelter));
+            eUI.CenterEs.MarketE.Zone.SetActive(_e.SelectedE.BuildingsC.Is(BuildingTypes.Market));
+            eUI.CenterEs.SmelterE.Zone.SetActive(_e.SelectedE.BuildingsC.Is(BuildingTypes.Smelter));
 
 
             eUI.CenterEs.MarketE.Text1C(MarketBuyTypes.FoodToWood).TextUI.text = (EconomyValues.FOR_BUY_FROM_MARKET_FOOD_TO_WOOD * Valuess.FOR_ROUND_UP_RESOURCES).ToString();

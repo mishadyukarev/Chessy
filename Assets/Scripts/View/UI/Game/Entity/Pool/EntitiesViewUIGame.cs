@@ -1,4 +1,5 @@
-﻿using Chessy.Common.View.UI;
+﻿using Chessy.Common.Component;
+using Chessy.Common.View.UI;
 using Chessy.Game.View.UI.Entity;
 using UnityEngine.UI;
 
@@ -6,6 +7,8 @@ namespace Chessy.Game
 {
     public sealed class EntitiesViewUIGame
     {
+        internal readonly GameObjectVC ParentGOC;
+
         public readonly LeftUIEs LeftEs;
         public readonly RightUIEs RightEs;
         public readonly CenterUIEs CenterEs;
@@ -17,6 +20,8 @@ namespace Chessy.Game
         public EntitiesViewUIGame(in EntitiesViewUICommon eUIC)
         {
             var gameZone = eUIC.CanvasE.GameCanvasGOC.Transform;
+
+            ParentGOC = new GameObjectVC(gameZone.gameObject);
 
             LeftEs = new LeftUIEs(gameZone.Find("Left+"));
             RightEs = new RightUIEs(gameZone.Find("Right+"));

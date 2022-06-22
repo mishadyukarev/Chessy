@@ -2,7 +2,7 @@
 {
     public struct ZonesInfoC
     {
-        public bool IsActiveFriend;
-        public bool IsActiveEnvironment { get; set; }
+        public bool IsActiveFriend { get; internal set; }
+        public bool IsActiveEnvironment { get; internal set; }
     }
 }

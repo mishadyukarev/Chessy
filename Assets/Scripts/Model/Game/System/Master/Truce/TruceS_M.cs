@@ -16,55 +16,55 @@ namespace Chessy.Game.Model.System
         {
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                _eMG.PlayerInfoE(playerT).KingInfoE.CellKing = 0;
-                _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
+                _e.PlayerInfoE(playerT).KingInfoE.CellKing = 0;
+                _e.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
 
-                _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
+                _e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
 
-                _eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = PEOPLE_AFTER_TRUCE;
-                _eMG.PlayerInfoE(playerT).PawnInfoC.AmountInGame = 0;
+                _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = PEOPLE_AFTER_TRUCE;
+                _e.PlayerInfoE(playerT).PawnInfoC.AmountInGame = 0;
             }
 
 
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eMG.HaveFire(cell_0) = false;
+                _e.HaveFire(cellIdxCurrent) = false;
 
-                _sMG.TryDestroyAllTrailsOnCell(cell_0);
-
-
+                _s.TryDestroyAllTrailsOnCell(cellIdxCurrent);
 
 
-                if (_eMG.UnitTC(cell_0).HaveUnit)
+
+
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
+                    if (_e.Common.GameModeT.Is(GameModeTypes.TrainingOffline))
                     {
-                        if (_eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.First))
+                        if (_e.UnitPlayerT(cellIdxCurrent).Is(PlayerTypes.First))
                         {
-                            if (_eMG.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
+                            if (_e.ExtraToolWeaponT(cellIdxCurrent).HaveToolWeapon())
                             {
-                                _eMG.PlayerInfoE(_eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(_eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(_eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
+                                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).LevelE(_e.ExtraTWLevelT(cellIdxCurrent)).ToolWeapons(_e.ExtraToolWeaponT(cellIdxCurrent))++;
                             }
 
-                            _sMG.UnitSs.ClearUnit(cell_0);
+                            _e.UnitEs(cellIdxCurrent).ClearEverything();
                         }
                     }
                     else
                     {
 
-                        if (_eMG.ExtraToolWeaponTC(cell_0).HaveToolWeapon)
+                        if (_e.ExtraToolWeaponT(cellIdxCurrent).HaveToolWeapon())
                         {
-                            _eMG.PlayerInfoE(_eMG.UnitPlayerTC(cell_0).PlayerT).LevelE(_eMG.ExtraTWLevelTC(cell_0).LevelT).ToolWeapons(_eMG.ExtraToolWeaponTC(cell_0).ToolWeaponT)++;
+                            _e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).LevelE(_e.ExtraTWLevelT(cellIdxCurrent)).ToolWeapons(_e.ExtraToolWeaponT(cellIdxCurrent))++;
                         }
 
-                        _sMG.UnitSs.ClearUnit(cell_0);
+                        _e.UnitEs(cellIdxCurrent).ClearEverything();
                     }
                 }
 
 
-                if (_eMG.BuildingTC(cell_0).HaveBuilding)
+                if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {
-                    if (_eMG.BuildingTC(cell_0).Is(BuildingTypes.Camp))
+                    if (_e.BuildingOnCellT(cellIdxCurrent).Is(BuildingTypes.Camp))
                     {
                         //Es.WhereBuildingEs.HaveBuild(BuildEs(cell_0).BuildingE, cell_0).HaveBuilding.Have = false;
                         //Es.BuildE(cell_0).BuildingE.Destroy(Es);
@@ -73,11 +73,11 @@ namespace Chessy.Game.Model.System
 
                 else
                 {
-                    if (_eMG.YoungForestC(cell_0).HaveAnyResources)
+                    if (_e.YoungForestC(cellIdxCurrent).HaveAnyResources)
                     {
-                        _eMG.YoungForestC(cell_0).Resources = 0;
+                        _e.YoungForestC(cellIdxCurrent).Resources = 0;
 
-                        _eMG.AdultForestC(cell_0).SetRandom(EnvironmentValues.MIN_RESOURCES_FOR_SPAWN, EnvironmentValues.MAX_RESOURCES);
+                        _e.AdultForestC(cellIdxCurrent).SetRandom(EnvironmentValues.MIN_RESOURCES_FOR_SPAWN, EnvironmentValues.MAX_RESOURCES);
                     }
                 }
             }

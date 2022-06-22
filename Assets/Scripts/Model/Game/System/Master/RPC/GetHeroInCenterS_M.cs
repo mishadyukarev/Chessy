@@ -8,15 +8,15 @@ namespace Chessy.Game.Model.System
     {
         internal void GetHeroInCenterM(in UnitTypes unitT, in Player sender)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
 
-            if (_eMG.LessonT == LessonTypes.PickingGod)
+            if (_e.LessonT == LessonTypes.PickingGod)
             {
-                _eMG.LessonTC.SetNextLesson();
+                _e.LessonT.SetNextLesson();
             }
 
-            _eMG.PlayerInfoE(whoseMove).GodInfoE.UnitT = unitT;
-            _eMG.PlayerInfoE(whoseMove).GodInfoE.HaveHeroInInventor = true;
+            _e.PlayerInfoE(whoseMove).GodInfoE.UnitT = unitT;
+            _e.PlayerInfoE(whoseMove).GodInfoE.HaveHeroInInventor = true;
         }
     }
 }

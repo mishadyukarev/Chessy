@@ -11,48 +11,48 @@ namespace Chessy.Game.Model.System
 
         internal void Sound()
         {
-            var cell_0 = _eMG.CellsC.Current;
+            var cell_0 = _e.CellsC.Current;
 
-            if (_eMG.UnitTC(cell_0).HaveUnit
-                && _eMG.UnitVisibleC(cell_0).IsVisible(_eMG.CurPlayerITC.PlayerT) && !_eMG.UnitTC(cell_0).Is(UnitTypes.Wolf))
+            if (_e.UnitT(cell_0).HaveUnit()
+                && _e.UnitVisibleC(cell_0).IsVisible(_e.CurPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
             {
-                if (_eMG.UnitTC(cell_0).Is(UnitTypes.Tree))
+                if (_e.UnitT(cell_0).Is(UnitTypes.Tree))
                 {
-                    _eMG.SoundAction(ClipTypes.Leaf).Invoke();
+                    _e.SoundAction(ClipTypes.Leaf).Invoke();
                 }
 
-                else if (_eMG.UnitTC(cell_0).IsMelee(_eMG.MainToolWeaponTC(cell_0).ToolWeaponT))
+                else if (_e.UnitT(cell_0).IsMelee(_e.MainToolWeaponT(cell_0)))
                 {
-                    _eMG.SoundAction(ClipTypes.PickMelee).Invoke();
+                    _e.SoundAction(ClipTypes.PickMelee).Invoke();
                 }
                 else
                 {
-                    _eMG.SoundAction(ClipTypes.PickArcher).Invoke();
+                    _e.SoundAction(ClipTypes.PickArcher).Invoke();
                 }
             }
             else
             {
-                if (_eMG.AdultForestC(cell_0).HaveAnyResources)
+                if (_e.AdultForestC(cell_0).HaveAnyResources)
                 {
-                    _eMG.SoundAction(ClipTypes.Leaf).Invoke();
+                    _e.SoundAction(ClipTypes.Leaf).Invoke();
                 }
-                else if (_eMG.HillC(cell_0).HaveAnyResources)
+                else if (_e.HillC(cell_0).HaveAnyResources)
                 {
-                    _eMG.SoundAction(ClipTypes.Rock).Invoke();
+                    _e.SoundAction(ClipTypes.Rock).Invoke();
                 }
-                else if (_eMG.MountainC(cell_0).HaveAnyResources)
+                else if (_e.MountainC(cell_0).HaveAnyResources)
                 {
-                    _eMG.SoundAction(ClipTypes.ShortWind).Invoke();
+                    _e.SoundAction(ClipTypes.ShortWind).Invoke();
                 }
                 else
                 {
-                    _eMG.SoundAction(ClipTypes.KickGround).Invoke();
+                    _e.SoundAction(ClipTypes.KickGround).Invoke();
                 }
 
 
-                if (_eMG.AroundCellsE(_eMG.WeatherE.CloudC.Center).CellsAround.Contains(cell_0) || _eMG.WeatherE.CloudC.Center == cell_0)
+                if (_e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround.Contains(cell_0) || _e.WeatherE.CloudC.Center == cell_0)
                 {
-                    _eMG.SoundAction(ClipTypes.ShortRain).Invoke();
+                    _e.SoundAction(ClipTypes.ShortRain).Invoke();
                 }
             }
         }

@@ -32,7 +32,7 @@ namespace Chessy.Game.System.View
             {
                 if (!_e.IsBorder(currentCellIdx))
                 {
-                    if (_e.LessonTC.HaveLesson)
+                    if (_e.LessonT.HaveLesson())
                     {
                         switch (_e.LessonT)
                         {
@@ -101,9 +101,9 @@ namespace Chessy.Game.System.View
 
 
 
-                    if (_e.CellClickTC.CellClickT == CellClickTypes.UniqueAbility)
+                    if (_e.CellClickT == CellClickTypes.UniqueAbility)
                     {
-                        switch (_e.SelectedE.AbilityTC.Ability)
+                        switch (_e.SelectedE.AbilityT)
                         {
                             case AbilityTypes.FireArcher:
                                 if (!_e.AdultForestC(currentCellIdx).HaveAnyResources) _isActive[currentCellIdx] = true;
@@ -130,9 +130,9 @@ namespace Chessy.Game.System.View
                         }
                     }
 
-                    else if (_e.CellClickTC.CellClickT == CellClickTypes.GiveTakeTW)
+                    else if (_e.CellClickT == CellClickTypes.GiveTakeTW)
                     {
-                        if (_e.UnitTC(currentCellIdx).UnitT == UnitTypes.Pawn && _e.UnitPlayerTC(currentCellIdx).Is(_e.CurPlayerITC.PlayerT))
+                        if (_e.UnitT(currentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(currentCellIdx).Is(_e.CurPlayerIT))
                         {
 
                         }
@@ -142,9 +142,9 @@ namespace Chessy.Game.System.View
                         }
                     }
 
-                    else if (_e.CellClickTC.CellClickT == CellClickTypes.SetUnit)
+                    else if (_e.CellClickT == CellClickTypes.SetUnit)
                     {
-                        if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurPlayerITC.PlayerT))
+                        if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurPlayerIT))
                         {
                             _isActive[currentCellIdx] = true;
                         }
@@ -153,7 +153,7 @@ namespace Chessy.Game.System.View
                     if (_e.MistakeT == MistakeTypes.NeedOtherPlaceFarm)
                     {
                         if (_e.AdultForestC(currentCellIdx).HaveAnyResources || _e.MountainC(currentCellIdx).HaveAnyResources || _e.HillC(currentCellIdx).HaveAnyResources
-                            || _e.BuildingTC(currentCellIdx).HaveBuilding)
+                            || _e.HaveBuildingOnCell(currentCellIdx))
                         {
                             _isActive[currentCellIdx] = true;
                         }
@@ -162,7 +162,7 @@ namespace Chessy.Game.System.View
                     else if (_e.MistakeT == MistakeTypes.NeedOtherPlaceSeed)
                     {
                         if (_e.AdultForestC(currentCellIdx).HaveAnyResources || _e.MountainC(currentCellIdx).HaveAnyResources || _e.HillC(currentCellIdx).HaveAnyResources
-                            || _e.YoungForestC(currentCellIdx).HaveAnyResources || _e.BuildingTC(currentCellIdx).HaveBuilding)
+                            || _e.YoungForestC(currentCellIdx).HaveAnyResources || _e.HaveBuildingOnCell(currentCellIdx))
                         {
                             _isActive[currentCellIdx] = true;
                         }

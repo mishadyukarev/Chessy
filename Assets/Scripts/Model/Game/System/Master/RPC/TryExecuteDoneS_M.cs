@@ -1,6 +1,5 @@
 ﻿using Chessy.Common;
 using Chessy.Game.Extensions;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
@@ -9,56 +8,56 @@ namespace Chessy.Game.Model.System
 {
     public sealed partial class SystemsModelGame : IUpdate
     {
-        internal void TryDoneM(in Player sender)
+        internal void TryExecuteDoneReadyM(in Player sender)
         {
-            var senderPlayerT = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var senderPlayerT = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
 
-            if (!_eMG.PlayerInfoE(senderPlayerT).KingInfoE.HaveInInventor)
+            if (!_e.PlayerInfoE(senderPlayerT).KingInfoE.HaveInInventor)
             {
-                if (_eMG.PlayerInfoE(senderPlayerT).GodInfoE.UnitTC.HaveUnit)
+                if (_e.PlayerInfoE(senderPlayerT).GodInfoE.UnitT.HaveUnit())
                 {
-                    if (_eMG.WhoseMovePlayerT == senderPlayerT)
+                    if (_e.WhoseMovePlayerT == senderPlayerT)
                     {
                         if (PhotonNetwork.OfflineMode)
                         {
-                            ActiveMotionZone_ToGeneneral(sender);
+                            ActiveMotionZoneToGeneneral(sender);
                             ExecuteSoundActionToGeneral(sender, ClipTypes.AfterUpdate);
 
-                            if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
+                            if (_e.Common.GameModeT.Is(GameModeTypes.TrainingOffline))
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
                                 ExecuteUpdateEverythingMS.ExecuteUpdateEverythingM();
                             }
 
-                            else if (_eMG.Common.GameModeTC.Is(GameModeTypes.WithFriendOffline))
+                            else if (_e.Common.GameModeT.Is(GameModeTypes.WithFriendOffline))
                             {
                                 UpdateCooldonsStunsAndOther(0.5f);
 
-                                var nextPlayer = _eMG.CurPlayerITC.PlayerT.NextPlayer();
+                                var nextPlayer = _e.CurPlayerIT.NextPlayer();
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
                                     ExecuteUpdateEverythingMS.ExecuteUpdateEverythingM();
                                 }
 
-                                _eMG.WhoseMovePlayerTC.PlayerT = nextPlayer;
-                                _eMG.CurPlayerITC.PlayerT = nextPlayer;
+                                _e.WhoseMovePlayerT = nextPlayer;
+                                _e.CurPlayerIT = nextPlayer;
 
-                                _eMG.ZoneInfoC.IsActiveFriend = true;
+                                _e.ZoneInfoC.IsActiveFriend = true;
                             }
                         }
                         else
                         {
                             UpdateCooldonsStunsAndOther(0.5f);
 
-                            _eMG.WhoseMovePlayerTC.PlayerT = senderPlayerT.NextPlayer();
+                            _e.WhoseMovePlayerT = senderPlayerT.NextPlayer();
 
                             if (senderPlayerT == PlayerTypes.Second)
                             {
                                 ExecuteUpdateEverythingMS.ExecuteUpdateEverythingM();
 
-                                ActiveMotionZone_ToGeneneral(RpcTarget.All);
+                                ActiveMotionZoneToGeneneral(RpcTarget.All);
                                 ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
                             }
                         }
@@ -66,12 +65,12 @@ namespace Chessy.Game.Model.System
                 }
                 else
                 {
-                    SimpleMistake_ToGeneral(MistakeTypes.NeedGetHero, sender);
+                    SimpleMistakeToGeneral(MistakeTypes.NeedGetHero, sender);
                 }
             }
             else
             {
-                SimpleMistake_ToGeneral(MistakeTypes.NeedSetKing, sender);
+                SimpleMistakeToGeneral(MistakeTypes.NeedSetKing, sender);
             }
         }
 
@@ -80,16 +79,16 @@ namespace Chessy.Game.Model.System
         {
             for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
             {
-                _eMG.PlayerInfoE(playerT).GodInfoE.CooldownC.Cooldown -= taking;
+                _e.PlayerInfoE(playerT).GodInfoE.CooldownC.Cooldown -= taking;
             }
 
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
             {
-                _eMG.StunUnitC(idx).Stun -= taking;
+                _e.StunUnitC(idx).Stun -= taking;
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
-                    _eMG.UnitCooldownAbilitiesC(idx).Take(abilityT, taking);
+                    _e.UnitCooldownAbilitiesC(idx).Take(abilityT, taking);
                 }
             }
         }

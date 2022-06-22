@@ -6,14 +6,6 @@ namespace Chessy.Menu
 {
     sealed class ConnectorMenuUIS
     {
-        //readonly EntitiesViewUIMenu _eUIM;
-
-        //internal ConnectorMenuUIS(in EntitiesViewUIMenu eUIM)
-        //{
-        //    _eUIM = eUIM;
-        //}
-
-
         public void Run(in EntitiesViewUIMenu eUIM)
         {
             if (PhotonNetwork.IsConnected)

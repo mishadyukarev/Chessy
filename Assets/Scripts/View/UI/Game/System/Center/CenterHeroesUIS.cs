@@ -1,6 +1,7 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Extensions;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -19,11 +20,10 @@ namespace Chessy.Game
             _needActiveZone = false;
 
             var isActiveKingZone = _eUI.CenterEs.KingE.Paren.IsActiveSelf;
-            var curPlayerI = e.CurPlayerITC.PlayerT;
 
-            if (!isActiveKingZone && e.PlayerInfoE(curPlayerI).GodInfoE.UnitTC.Is(UnitTypes.None) && e.CellClickTC.CellClickT != CellClickTypes.SetUnit)
+            if (!isActiveKingZone && _e.PlayerInfoE(_e.CurPlayerIT).GodInfoE.UnitT.Is(UnitTypes.None) && _e.CellClickT != CellClickTypes.SetUnit)
             {
-                if (!e.LessonTC.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
+                if (!_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
                 {
                     _needActiveZone = true;
                 }
@@ -35,9 +35,9 @@ namespace Chessy.Game
 
             if (_needActiveZone)
             {
-                var nextPlayerT = e.CurPlayerIT.NextPlayer();
-                var haveElfemaleEnemy = e.PlayerInfoE(nextPlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale);
-                var haveSnowyEnemy = e.PlayerInfoE(nextPlayerT).GodInfoE.UnitTC.Is(UnitTypes.Snowy);
+                var nextPlayerT = _e.CurPlayerIT.NextPlayer();
+                var haveElfemaleEnemy = _e.PlayerInfoE(nextPlayerT).GodInfoE.UnitT.Is(UnitTypes.Elfemale);
+                var haveSnowyEnemy = _e.PlayerInfoE(nextPlayerT).GodInfoE.UnitT.Is(UnitTypes.Snowy);
                 _eUI.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.SetActiveParent(!haveElfemaleEnemy);
                 _eUI.CenterEs.HeroE(UnitTypes.Snowy).ButtonC.SetActiveParent(!haveSnowyEnemy);
             }

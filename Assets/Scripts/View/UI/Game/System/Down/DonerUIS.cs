@@ -2,6 +2,7 @@
 using Chessy.Game.Entity.View.UI.Down;
 using Chessy.Game.Enum;
 using UnityEngine;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -16,12 +17,12 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.HoldPressReady)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.HoldPressReady)
             {
                 _donerE.ButtonC.SetActiveParent(true);
                 _donerE.WaitGoC.SetActive(true);
 
-                if (e.CurPlayerITC.Is(e.WhoseMovePlayerTC.PlayerT))
+                if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
                 {
                     _donerE.WaitGoC.SetActive(false);
                     _donerE.ImageC.Image.color = Color.white;

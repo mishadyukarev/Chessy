@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
     {
         public void DoneReadyClick()
         {
-            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryDoneM), });
+            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryExecuteDoneReadyM), });
         }
     }
 }

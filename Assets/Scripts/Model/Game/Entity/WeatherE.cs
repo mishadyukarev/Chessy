@@ -6,6 +6,6 @@ namespace Chessy.Game.Model.Entity
     {
         public WindC WindC;
         public SunSideTC SunSideTC;
-        public CloudC CloudC;
+        public CloudCenterIdxC CloudC;
     }
 }

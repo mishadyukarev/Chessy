@@ -2,18 +2,11 @@
 
 namespace Chessy.Game.Model.System
 {
-    struct ClearUnitS
+    static class ClearUnitS
     {
-        readonly UnitEs _unitEs;
-
-        internal ClearUnitS(in UnitEs unitEs)
+        internal static void ClearEverything(this UnitEs unitEs)
         {
-            _unitEs = unitEs;
-        }
-
-        internal void Clear()
-        {
-            _unitEs.MainE.UnitTC.UnitT = UnitTypes.None;
+            unitEs.MainE.UnitT = UnitTypes.None;
         }
     }
 }

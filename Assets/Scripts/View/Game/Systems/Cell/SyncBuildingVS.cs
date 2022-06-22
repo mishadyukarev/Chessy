@@ -1,6 +1,5 @@
 ﻿using Chessy.Game.Extensions;
 using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
 
 namespace Chessy.Game
 {
@@ -27,11 +26,11 @@ namespace Chessy.Game
                 _needActive[(byte)build] = false;
             }
 
-            if (_e.BuildingTC(_currentCell).HaveBuilding)
+            if (_e.BuildingOnCellT(_currentCell).HaveBuilding())
             {
                 if (isVisForMe)
                 {
-                    _needActive[(byte)_e.BuildingT(_currentCell)] = true;
+                    _needActive[(byte)_e.BuildingOnCellT(_currentCell)] = true;
                 }
             }
 
@@ -40,7 +39,7 @@ namespace Chessy.Game
             {
                 _buildingVEs.Main(buildT).GO.SetActive(_needActive[(byte)buildT]);
             }
-                
+
         }
     }
 

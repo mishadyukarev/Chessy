@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
@@ -9,19 +8,19 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eMG.PawnExtractHillC(cellIdxCurrent).Resources = 0;
+                _e.PawnExtractHillC(cellIdxCurrent).Resources = 0;
 
-                if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn) && _eMG.ExtraToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Pick) && _eMG.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Relaxed)
+                if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Pick) && _e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Relaxed)
                 {
-                    if (_eMG.HillC(cellIdxCurrent).HaveAnyResources)
+                    if (_e.HillC(cellIdxCurrent).HaveAnyResources)
                     {
                         var extract = ExtractPawnValues.PAWN_PICK_EXTRACT_HILL;
 
 
-                        if (_eMG.HillC(cellIdxCurrent).Resources < extract) extract = _eMG.HillC(cellIdxCurrent).Resources;
+                        if (_e.HillC(cellIdxCurrent).Resources < extract) extract = _e.HillC(cellIdxCurrent).Resources;
 
 
-                        _eMG.PawnExtractHillC(cellIdxCurrent).Resources = extract;
+                        _e.PawnExtractHillC(cellIdxCurrent).Resources = extract;
 
                     }
                 }

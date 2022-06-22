@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using Chessy.Game.View.UI.Entity;
 
 namespace Chessy.Game
@@ -14,7 +15,7 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            _skipLessonUIE.ButtonUIC.SetActiveParent(e.LessonTC.HaveLesson);
+            _skipLessonUIE.ButtonUIC.SetActiveParent(_e.LessonT.HaveLesson());
         }
     }
 }

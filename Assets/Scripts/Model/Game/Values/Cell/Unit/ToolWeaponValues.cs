@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game.Values.Cell.Unit
+﻿using System;
+
+namespace Chessy.Game.Values.Cell.Unit
 {
     static class ToolWeaponValues
     {
@@ -11,7 +13,7 @@
             {
                 case LevelTypes.First: return SHIELD_PROTECTION_LEVEL_FIRST;
                 case LevelTypes.Second: return SHIELD_PROTECTION_LEVEL_SECOND;
-                default: throw new System.Exception();
+                default: throw new Exception();
             }
         }
     }

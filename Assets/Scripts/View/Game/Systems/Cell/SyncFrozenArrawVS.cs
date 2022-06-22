@@ -19,11 +19,11 @@ namespace Chessy.Game
             _needActive[0] = false;
             _needActive[1] = false;
 
-            if (_e.UnitTC(_currentCell).HaveUnit)
+            if (_e.UnitT(_currentCell).HaveUnit())
             {
-                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerITC.PlayerT))
+                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
                 {
-                    if (_e.MainToolWeaponTC(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
+                    if (_e.MainToolWeaponT(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
                     {
                         if (_e.FrozenArrawEffectC(_currentCell).HaveShoots)
                         {

@@ -1,6 +1,5 @@
 ﻿using Chessy.Common.Enum;
 using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
 using Photon.Pun;
 
 namespace Chessy.Game.Model.System
@@ -9,13 +8,13 @@ namespace Chessy.Game.Model.System
     {
         public void ToggleToolWeapon(in ToolWeaponTypes twT)
         {
-            _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-            if (_eMG.LessonTC.Is(LessonTypes.ThatsYourDamage, LessonTypes.ThatsYourEffects, LessonTypes.ClickDefend)) return;
+            if (_e.LessonT.Is(LessonTypes.ThatsYourDamage, LessonTypes.ThatsYourEffects, LessonTypes.ClickDefend)) return;
 
-            _eMG.CellsC.Selected = 0;
+            _e.CellsC.Selected = 0;
 
-            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
+            if (_e.CurPlayerIT.Is(_e.WhoseMovePlayerT))
             {
                 //if (_eMG.LessonTC.Is(LessonTypes.ClickPick))
                 //{
@@ -25,7 +24,7 @@ namespace Chessy.Game.Model.System
                 //    }
                 //}
 
-                if (_eMG.PlayerInfoE(_eMG.WhoseMovePlayerTC.PlayerT).PawnInfoC.AmountInGame > 0)
+                if (_e.PlayerInfoE(_e.WhoseMovePlayerT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -41,17 +40,17 @@ namespace Chessy.Game.Model.System
 
                     if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
                     {
-                        if (_eMG.CellClickTC.Is(CellClickTypes.GiveTakeTW))
+                        if (_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
                             if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
                             {
-                                if (_eMG.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                                if (_e.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
                             }
                             else if (twT != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
                         }
                         else
                         {
-                            levT = _eMG.SelectedE.ToolWeaponC.LevelT;
+                            levT = _e.SelectedE.ToolWeaponC.LevelT;
                         }
                     }
                     else if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.Sword)
@@ -59,33 +58,33 @@ namespace Chessy.Game.Model.System
                         levT = LevelTypes.Second;
                     }
 
-                    _eMG.SelectedE.ToolWeaponC.ToolWeaponT = twT;
-                    _eMG.SelectedE.ToolWeaponC.LevelT = levT;
+                    _e.SelectedE.ToolWeaponC.ToolWeaponT = twT;
+                    _e.SelectedE.ToolWeaponC.LevelT = levT;
 
 
-                    _eMG.CellClickTC.CellClickT = CellClickTypes.GiveTakeTW;
+                    _e.CellClickT = CellClickTypes.GiveTakeTW;
                 }
                 else
                 {
-                    _eMG.MistakeTC.MistakeT = MistakeTypes.NeedPawnsInGame;
-                    _eMG.MistakeTimerC.Timer = 0;
-                    _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                    _e.MistakeT = MistakeTypes.NeedPawnsInGame;
+                    _e.MistakeTimer = 0;
+                    _e.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
             else
             {
-                _eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
-                _eMG.MistakeTimerC.Timer = 0;
-                _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                _e.MistakeT = MistakeTypes.NeedWaitQueue;
+                _e.MistakeTimer = 0;
+                _e.SoundAction(ClipTypes.WritePensil).Invoke();
             }
 
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
 
         public void Melt()
         {
-            _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TryMeltInMelterBuildingM) });
+            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryMeltInMelterBuildingM) });
         }
     }
 }

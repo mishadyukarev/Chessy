@@ -1,6 +1,5 @@
 ﻿using Chessy.Common.Enum;
 using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Photon.Pun;
 using Photon.Realtime;
@@ -15,23 +14,23 @@ namespace Chessy.Game.Model.System
 
         public void BuildBuildingClick(in BuildingTypes buildT)
         {
-            if (_eMG.CurPlayerIT == _eMG.WhoseMovePlayerT)
+            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
             {
                 if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
                 {
-                    if (_eMG.SelectedE.BuildingsC.Is(buildT))
+                    if (_e.SelectedE.BuildingsC.Is(buildT))
                     {
-                        _eMG.SelectedE.BuildingsC.Set(buildT, false);
-                        _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        _e.SelectedE.BuildingsC.Set(buildT, false);
+                        _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
-                    else if (_eMG.PlayerInfoE(_eMG.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
+                    else if (_e.PlayerInfoE(_e.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
                     {
-                        _eMG.SelectedE.BuildingsC.Set(buildT, true);
-                        _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        _e.SelectedE.BuildingsC.Set(buildT, true);
+                        _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
                     else
                     {
-                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.ForUISystems.TryBuyBuildingM), buildT });
+                        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.ForUISystems.TryBuyBuildingInTownM), buildT });
                     }
                 }
 
@@ -40,7 +39,7 @@ namespace Chessy.Game.Model.System
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.ForUISystems.TryBuyBuildingM), buildT });
+                        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.ForUISystems.TryBuyBuildingInTownM), buildT });
                         break;
 
                     case BuildingTypes.Market:
@@ -62,15 +61,15 @@ namespace Chessy.Game.Model.System
             }
             else
             {
-                _sMG.Mistake(MistakeTypes.NeedWaitQueue);
+                _s.Mistake(MistakeTypes.NeedWaitQueue);
             }
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
 
-        internal void TryBuyBuildingM(in BuildingTypes buildT, in Player sender)
+        internal void TryBuyBuildingInTownM(in BuildingTypes buildT, in Player sender)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
 
             var needRes = new Dictionary<ResourceTypes, float>();
             var canBuild = true;
@@ -106,7 +105,7 @@ namespace Chessy.Game.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = _eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                                need = _e.PlayerInfoE(whoseMove).WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
@@ -186,56 +185,56 @@ namespace Chessy.Game.Model.System
                 }
 
                 needRes.Add(resT, need);
-                if (need > _eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                if (need > _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
             }
 
             if (canBuild)
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _eMG.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                    _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
                 }
 
                 switch (buildT)
                 {
                     case BuildingTypes.House:
-                        _eMG.PlayerInfoE(whoseMove).PawnInfoC.MaxAvailable++;
+                        _e.PlayerInfoE(whoseMove).PawnInfoC.MaxAvailable++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
-                        _eMG.PlayerInfoE(whoseMove).WoodForBuyHouse += _eMG.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                        _e.PlayerInfoE(whoseMove).WoodForBuyHouse += _e.PlayerInfoE(whoseMove).WoodForBuyHouse;
                         break;
 
                     case BuildingTypes.Market:
-                        _eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Market);
+                        _e.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Market);
                         break;
 
                     case BuildingTypes.Smelter:
-                        _eMG.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Smelter);
+                        _e.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Smelter);
                         break;
 
                     default: throw new Exception();
                 }
 
 
-                if (_eMG.LessonT == LessonTypes.BuildHouses)
+                if (_e.LessonT == LessonTypes.BuildHouses)
                 {
-                    if(_eMG.PlayerInfoE(PlayerTypes.First).PawnInfoC.MaxAvailable >= _buildingsForSkipLesson)
+                    if (_e.PlayerInfoE(PlayerTypes.First).PawnInfoC.MaxAvailable >= _buildingsForSkipLesson)
                     {
-                        _eMG.LessonTC.SetNextLesson();
+                        _e.LessonT.SetNextLesson();
                     }
                 }
 
 
-                _sMG.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
+                _s.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
             }
 
             else
             {
-                if (_eMG.LessonTC.Is(Enum.LessonTypes.TryBuyingHouse))
+                if (_e.LessonT.Is(Enum.LessonTypes.TryBuyingHouse))
                 {
-                    _eMG.LessonTC.SetNextLesson();
+                    _e.LessonT.SetNextLesson();
                 }
 
-                _eMG.RpcPoolEs.MistakeEconomyToGeneral(sender, needRes);
+                _s.MistakeEconomyToGeneral(sender, needRes);
             }
 
             //if (_eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))

@@ -1,6 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Entity;
 using Chessy.Common.Enum;
+using Chessy.Game.System;
 using Chessy.Menu.View.UI;
 using Photon.Pun;
 using Photon.Realtime;
@@ -20,15 +21,15 @@ namespace Chessy.Menu
 
 
             eUIM.OnlineZoneE.JoinButtonC.AddListener(ConnectOnline);
-            eUIM.OnlineZoneE.CreatePublicRoomButtonC.AddListener(() => CreateRoom(ref eMC.GameModeTC));
-            eUIM.OnlineZoneE.JoinRandomPublicRoomButtonC.AddListener(() => JoinRandomRoom(ref eMC.GameModeTC));
-            eUIM.OnlineZoneE.CreateFriendRoomButtonC.AddListener(() => CreateFriendRoom(eUIM, ref eMC.GameModeTC));
-            eUIM.OnlineZoneE.JoinFriendRoomButtonC.AddListener(() => JoinFriendRoom(eUIM, ref eMC.GameModeTC));
+            eUIM.OnlineZoneE.CreatePublicRoomButtonC.AddListener(() => CreateRoom(eMC));
+            eUIM.OnlineZoneE.JoinRandomPublicRoomButtonC.AddListener(() => JoinRandomRoom(eMC));
+            eUIM.OnlineZoneE.CreateFriendRoomButtonC.AddListener(() => CreateFriendRoom(eUIM, eMC));
+            eUIM.OnlineZoneE.JoinFriendRoomButtonC.AddListener(() => JoinFriendRoom(eUIM, eMC));
 
 
             eUIM.OfflineZoneE.JoinButtonC.AddListener(ConnectOffline);
-            eUIM.OfflineZoneE.TrainingButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModeTypes.TrainingOffline));
-            eUIM.OfflineZoneE.WithFriendButtonC.AddListener(() => CreateOffGame(ref eMC.GameModeTC, GameModeTypes.WithFriendOffline));
+            eUIM.OfflineZoneE.TrainingButtonC.AddListener(() => CreateOffGame(eMC, GameModeTypes.TrainingOffline));
+            eUIM.OfflineZoneE.WithFriendButtonC.AddListener(() => CreateOffGame(eMC, GameModeTypes.WithFriendOffline));
 
 
 
@@ -39,14 +40,15 @@ namespace Chessy.Menu
 
             eUIM.CenterE.BookButtonC.AddListener(delegate
             {
-                eMC.IsOpenedBook = !eMC.IsOpenedBook;
                 eMC.SoundActionC(eMC.IsOpenedBook ? ClipCommonTypes.OpenBook : ClipCommonTypes.CloseBook).Invoke();
+
+                eMC.NeedUpdateView = true;
             });
 
             eUIM.CenterE.SettingsButtonC.AddListener(delegate
             {
                 eMC.IsOpenSettings = !eMC.IsOpenSettings;
-
+                eMC.NeedUpdateView = true;
             });
 
         }
@@ -68,11 +70,11 @@ namespace Chessy.Menu
             else PhotonNetwork.OfflineMode = true;
         }
 
-        private void CreateRoom(ref GameModeTC gameModeC)
+        private void CreateRoom(in EntitiesModelCommon e)
         {
             RoomOptions roomOptions = new RoomOptions();
 
-            gameModeC.GameModeT = GameModeTypes.PublicOnline;
+            e.GameModeT = GameModeTypes.PublicOnline;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
@@ -86,11 +88,11 @@ namespace Chessy.Menu
             PhotonNetwork.CreateRoom(roomName, roomOptions, default, default);// CreateRoom(roomName, roomOptions);
         }
 
-        private void CreateFriendRoom(in EntitiesViewUIMenu eUIM, ref GameModeTC gameModeC)
+        private void CreateFriendRoom(in EntitiesViewUIMenu eUIM, in EntitiesModelCommon e)
         {
             var roomName = eUIM.OnlineZoneE.CreateFriendRoomInputFieldC.InputField.text;
 
-            gameModeC.GameModeT = GameModeTypes.WithFriendOnline;
+            e.GameModeT = GameModeTypes.WithFriendOnline;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -100,22 +102,22 @@ namespace Chessy.Menu
             PhotonNetwork.CreateRoom(roomName, roomOptions, default);
         }
 
-        private void JoinRandomRoom(ref GameModeTC gameModeC)
+        private void JoinRandomRoom(in EntitiesModelCommon e)
         {
-            gameModeC.GameModeT = GameModeTypes.PublicOnline;
+            e.GameModeT = GameModeTypes.PublicOnline;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
 
-        private void JoinFriendRoom(in EntitiesViewUIMenu eUIM, ref GameModeTC gameModeC)
+        private void JoinFriendRoom(in EntitiesViewUIMenu eUIM, in EntitiesModelCommon e)
         {
-            gameModeC.GameModeT = GameModeTypes.WithFriendOnline;
+            e.GameModeT = GameModeTypes.WithFriendOnline;
             PhotonNetwork.JoinRoom(eUIM.OnlineZoneE.JoinFriendRoomInputFieldC.InputField.text);
         }
 
-        private void CreateOffGame(ref GameModeTC gameModeC, in GameModeTypes offGameMode)
+        private void CreateOffGame(in EntitiesModelCommon e, in GameModeTypes offGameMode)
         {
-            gameModeC.GameModeT = offGameMode;
+            e.GameModeT = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
     }

@@ -18,25 +18,32 @@ namespace Chessy.Game.Model.System
 
         internal void ExecuteUpdateEverythingM()
         {
-            _eMG.MotionsC.Motions++;
-            _eMG.WeatherE.SunSideTC.ToggleNext();
+            _e.MotionsC.Motions++;
+            _e.WeatherE.SunSideTC.ToggleNext();
 
+            TryPutOutFireWithClouds();
+            BurnAdultForest();
             FireUpdate();
+
             TryGivePeople();
             TryShiftCloundsOrChangeDirection();
             TryChangeDirectionOfWindRandomly();
-            TryPoorWaterWithClounds();
-            TryGiveWaterToUnitsAroundRainy();
+            TryPoorWaterToCellsWithClounds();
             TryShiftWolf();
             FeedUnits();
             TryGiveHealthToBots();
-
             TryGiveWaterAroundRiverToCells();
             DryWaterOnCells();
             TryExtractFoodWithFarm();
             TryExtractWoodWithWoodcutter();
             GiveHealthToUnitsWithRelaxCondition();
+
+            TryGiveWaterToUnitsAroundRainy();
+            TryGiveWaterToUnitsDuringLessons();
+            TryGiveWaterToBotUnits();
+            GiveWaterToUnitsNearWithRiver();
             TakeWaterUnits();
+
             TryTakeHealthToUnitWithThirsty();
             TryFireAroundHellGod();
             ToggleConditionUnitsIfTheresFire();
@@ -57,51 +64,48 @@ namespace Chessy.Game.Model.System
 
         void TryActiveGodsUniqueAbilityEveryUpdate()
         {
-            if (!_eMG.LessonTC.HaveLesson)
+            if (!_e.LessonT.HaveLesson())
             {
-                if (_eMG.MotionsC.Motions % UpdateValues.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0)
+                if (_e.MotionsC.Motions % UpdateValues.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0)
                 {
+                    _s.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
+
                     for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                     {
-                        //e.RpcPoolEs.SoundToGeneral(RpcTarget.All, ClipTypes.AfterBuildTown);
-
-                        _eMG.RpcPoolEs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
-
-
-                        if (!_eMG.IsBorder(cell_0))
+                        if (!_e.IsBorder(cell_0))
                         {
-                            if (_eMG.UnitTC(cell_0).HaveUnit)
+                            if (_e.UnitT(cell_0).HaveUnit())
                             {
-                                if (_eMG.PlayerInfoE(_eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Snowy))
+                                if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoE.UnitT.Is(UnitTypes.Snowy))
                                 {
-                                    if (_eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
+                                    if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
                                     {
-                                        if (_eMG.MainToolWeaponTC(cell_0).Is(ToolWeaponTypes.BowCrossbow))
+                                        if (_e.MainToolWeaponT(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                                         {
-                                            _eMG.FrozenArrawEffectC(cell_0).Shoots++;
+                                            _e.FrozenArrawEffectC(cell_0).Shoots++;
                                         }
                                         else
                                         {
-                                            _eMG.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_5_MOTIONS_RAINY;
+                                            _e.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_5_MOTIONS_RAINY;
                                         }
                                     }
                                     else
                                     {
-                                        _eMG.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_5_MOTIONS_RAINY;
+                                        _e.ShieldUnitEffectC(cell_0).Protection = ShieldValues.AFTER_5_MOTIONS_RAINY;
                                     }
                                 }
                             }
                             else
                             {
-                                if (_eMG.AdultForestC(cell_0).HaveAnyResources)
+                                if (_e.AdultForestC(cell_0).HaveAnyResources)
                                 {
-                                    if (!_eMG.HaveTreeUnit)
+                                    if (!_e.HaveTreeUnit)
                                     {
                                         for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                                         {
-                                            if (_eMG.PlayerInfoE(playerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(playerT).GodInfoE.UnitT.Is(UnitTypes.Elfemale))
                                             {
-                                                _sMG.SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
+                                                _s.SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
 
                                                 break;
                                             }
@@ -116,11 +120,11 @@ namespace Chessy.Game.Model.System
         }
         void TryShiftCloundsOrChangeDirection()
         {
-            for (var i = 0; i < _eMG.WeatherE.WindC.Speed; i++)
+            for (var i = 0; i < _e.WeatherE.WindC.Speed; i++)
             {
-                var cell = _eMG.WeatherE.CloudC.Center;
-                var xy_next = _eMG.AroundCellsE(cell).AroundCellE(_eMG.WeatherE.WindC.DirectT).XyC.Xy;
-                var idx_next = _eMG.AroundCellsE(cell).IdxCell(_eMG.WeatherE.WindC.DirectT);
+                var cell = _e.WeatherE.CloudC.Center;
+                var xy_next = _e.AroundCellsE(cell).AroundCellE(_e.WeatherE.WindC.DirectT).XyC.Xy();
+                var idx_next = _e.AroundCellsE(cell).IdxCell(_e.WeatherE.WindC.DirectT);
 
                 bool isBorder = false;
 
@@ -128,11 +132,11 @@ namespace Chessy.Game.Model.System
                 {
                     if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
                     {
-                        _eMG.WeatherE.CloudC.Center = _eMG.GetIdxCellByXy(xy_next);
+                        _e.WeatherE.CloudC.Center = _e.GetIdxCellByXy(xy_next);
                     }
                     else
                     {
-                        var newDir = _eMG.WeatherE.WindC.DirectT;
+                        var newDir = _e.WeatherE.WindC.DirectT;
 
                         newDir = newDir.Invert();
                         var newDirInt = (int)newDir;
@@ -140,7 +144,7 @@ namespace Chessy.Game.Model.System
 
                         if (newDirInt <= 0) newDirInt = 1;
                         else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                        _eMG.WeatherE.WindC.DirectT = (DirectTypes)newDirInt;
+                        _e.WeatherE.WindC.DirectT = (DirectTypes)newDirInt;
 
                         isBorder = true;
 
@@ -153,17 +157,17 @@ namespace Chessy.Game.Model.System
 
                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                 {
-                    _eMG.HealthTrail(idx_next).Health(dirT) = 0;
+                    _e.HealthTrail(idx_next).Health(dirT) = 0;
                 }
             }
         }
         void TryGivePeople()
         {
-            if (_eMG.MotionsC.Motions % 5 == 0)
+            if (_e.MotionsC.Motions % 5 == 0)
             {
                 for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                 {
-                    _eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity++;
+                    _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity++;
                 }
             }
         }
@@ -173,32 +177,32 @@ namespace Chessy.Game.Model.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                     amountAdultForest++;
             }
 
-            var can = !_eMG.PlayerInfoE(PlayerTypes.First).PawnInfoC.HaveAnyPeopleInCity
-                && !_eMG.PlayerInfoE(PlayerTypes.Second).PawnInfoC.HaveAnyPeopleInCity;
+            var can = !_e.PlayerInfoE(PlayerTypes.First).PawnInfoC.HaveAnyPeopleInCity
+                && !_e.PlayerInfoE(PlayerTypes.Second).PawnInfoC.HaveAnyPeopleInCity;
 
 
 
             if (amountAdultForest <= UpdateValues.NEED_ADULT_FORESTS_FOR_TRUCE || can)
             {
-                _sMG.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Truce);
+                _s.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Truce);
 
-                _sMG.TruceS.ExecuteTruce();
+                _s.TruceS.ExecuteTruce();
             }
         }
         void TrySkipLessonWithRiver()
         {
 
-            if (_eMG.LessonT == LessonTypes.Install3WarriorsNextToTheRiver)
+            if (_e.LessonT == LessonTypes.Install3WarriorsNextToTheRiver)
             {
                 var amountUnitsNearRiverForLesson = 0;
 
                 for (byte cellIdx0 = 0; cellIdx0 < StartValues.CELLS; cellIdx0++)
                 {
-                    if (_eMG.UnitT(cellIdx0) == UnitTypes.Pawn && _eMG.UnitPlayerT(cellIdx0) == PlayerTypes.First && _eMG.RiverTC(cellIdx0).HaveRiverNear)
+                    if (_e.UnitT(cellIdx0) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdx0) == PlayerTypes.First && _e.RiverT(cellIdx0).HaveRiverNear())
                     {
                         amountUnitsNearRiverForLesson++;
                     }
@@ -206,25 +210,25 @@ namespace Chessy.Game.Model.System
 
                 if (amountUnitsNearRiverForLesson >= 3)
                 {
-                    _eMG.LessonTC.SetNextLesson();
+                    _e.LessonT.SetNextLesson();
                 }
             }
         }
         void TryChangeDirectionOfWindRandomly()
         {
-            if (UnityEngine.Random.Range(0f, 1f) > UpdateValues.PERCENT_FOR_CHANGING_WIND) _eMG.WeatherE.WindC.Speed = UnityEngine.Random.Range(1, 4);
+            if (UnityEngine.Random.Range(0f, 1f) > UpdateValues.PERCENT_FOR_CHANGING_WIND) _e.WeatherE.WindC.Speed = UnityEngine.Random.Range(1, 4);
         }
-        void TryPoorWaterWithClounds()
+        void TryPoorWaterToCellsWithClounds()
         {
-            var cell_0 = _eMG.WeatherE.CloudC.Center;
+            var cell_0 = _e.WeatherE.CloudC.Center;
 
             for (var dirT = DirectTypes.None; dirT < DirectTypes.End; dirT++)
             {
-                var idx_1 = _eMG.AroundCellsE(cell_0).IdxCell(dirT);
+                var idx_1 = _e.AroundCellsE(cell_0).IdxCell(dirT);
 
-                if (!_eMG.MountainC(idx_1).HaveAnyResources)
+                if (!_e.MountainC(idx_1).HaveAnyResources)
                 {
-                    _eMG.FertilizeC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+                    _e.FertilizeC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                 }
             }
         }
@@ -234,7 +238,7 @@ namespace Chessy.Game.Model.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Wolf))
+                if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf))
                 {
                     haveCamel = true;
                     break;
@@ -245,15 +249,15 @@ namespace Chessy.Game.Model.System
             {
                 var cell_0 = (byte)UnityEngine.Random.Range(0, StartValues.CELLS);
 
-                if (!_eMG.IsBorder(cell_0))
+                if (!_e.IsBorder(cell_0))
                 {
-                    if (!_eMG.UnitTC(cell_0).HaveUnit && !_eMG.MountainC(cell_0).HaveAnyResources)
+                    if (!_e.UnitT(cell_0).HaveUnit() && !_e.MountainC(cell_0).HaveAnyResources)
                     {
                         bool haveNearUnit = false;
 
-                        foreach (var cell_1 in _eMG.AroundCellsE(cell_0).CellsAround)
+                        foreach (var cell_1 in _e.AroundCellsE(cell_0).CellsAround)
                         {
-                            if (_eMG.UnitTC(cell_1).HaveUnit)
+                            if (_e.UnitT(cell_1).HaveUnit())
                             {
                                 haveNearUnit = true;
                                 break;
@@ -262,7 +266,7 @@ namespace Chessy.Game.Model.System
 
                         if (!haveNearUnit)
                         {
-                            _sMG.SetNewUnitOnCellS(UnitTypes.Wolf, PlayerTypes.None, cell_0);
+                            _s.SetNewUnitOnCellS(UnitTypes.Wolf, PlayerTypes.None, cell_0);
 
                             //Es.UnitE(cell_0).SetNew((UnitTypes.Camel, LevelTypes.First, PlayerTypes.None, ConditionUnitTypes.None, false), Es);
                             return;
@@ -275,20 +279,20 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Wolf))
+                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf))
                     {
                         var randDir = UnityEngine.Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 
-                        var idx_1 = _eMG.AroundCellsE(cellIdxCurrent).IdxCell((DirectTypes)randDir);
+                        var idx_1 = _e.AroundCellsE(cellIdxCurrent).IdxCell((DirectTypes)randDir);
 
-                        if (!_eMG.IsBorder(idx_1) && !_eMG.MountainC(idx_1).HaveAnyResources
-                            && !_eMG.UnitTC(idx_1).HaveUnit)
+                        if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources
+                            && !_e.UnitT(idx_1).HaveUnit())
                         {
-                            _sMG.UnitSs.CopyUnitFromTo(cellIdxCurrent, idx_1);
+                            _s.UnitSs.CopyUnitFromTo(cellIdxCurrent, idx_1);
 
-                            _sMG.UnitSs.ClearUnit(cellIdxCurrent);
+                            _e.UnitEs(cellIdxCurrent).ClearEverything();
                         }
                     }
                 }
@@ -298,12 +302,12 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (!_eMG.LessonTC.HaveLesson || _eMG.LessonT >= LessonTypes.Build3Farms)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
                     {
-                        if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn))
-                            _eMG.ResourcesC(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT, ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
+                            _e.ResourcesC(_e.UnitPlayerT(cellIdxCurrent), ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
                     }
                 }
             }
@@ -312,13 +316,13 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline))
+                    if (_e.Common.GameModeT.Is(GameModeTypes.TrainingOffline))
                     {
-                        if (_eMG.UnitPlayerTC(cellIdxCurrent).Is(PlayerTypes.Second))
+                        if (_e.UnitPlayerT(cellIdxCurrent).Is(PlayerTypes.Second))
                         {
-                            _eMG.HpUnitC(cellIdxCurrent).Health = HpValues.MAX;
+                            _e.HpUnitC(cellIdxCurrent).Health = HpValues.MAX;
                         }
                     }
                 }
@@ -328,18 +332,18 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eMG.StepUnitC(cellIdxCurrent).Steps = StepValues.MAX;
+                _e.StepUnitC(cellIdxCurrent).Steps = StepValues.MAX;
             }
         }
         void TryGiveWaterAroundRiverToCells()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.RiverTC(cellIdxCurrent).HaveRiverNear)
+                if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
                 {
-                    if (!_eMG.MountainC(cellIdxCurrent).HaveAnyResources)
+                    if (!_e.MountainC(cellIdxCurrent).HaveAnyResources)
                     {
-                        _eMG.FertilizeC(cellIdxCurrent).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _e.FertilizeC(cellIdxCurrent).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
             }
@@ -348,9 +352,9 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.FertilizeC(cellIdxCurrent).HaveAnyResources)
+                if (_e.FertilizeC(cellIdxCurrent).HaveAnyResources)
                 {
-                    _eMG.FertilizeC(cellIdxCurrent).Resources -= EnvironmentValues.DRY_FERTILIZE_DURING_UPDATE_TAKING;
+                    _e.FertilizeC(cellIdxCurrent).Resources -= EnvironmentValues.DRY_FERTILIZE_DURING_UPDATE_TAKING;
                 }
             }
         }
@@ -358,12 +362,12 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.FarmExtractFertilizeC(cellIdxCurrent).HaveAnyResources)
+                if (_e.FarmExtractFertilizeC(cellIdxCurrent).HaveAnyResources)
                 {
-                    var extract = _eMG.FarmExtractFertilizeC(cellIdxCurrent).Resources;
+                    var extract = _e.FarmExtractFertilizeC(cellIdxCurrent).Resources;
 
-                    _eMG.ResourcesC(_eMG.BuildingPlayerTC(cellIdxCurrent).PlayerT, ResourceTypes.Food).Resources += extract;
-                    _eMG.FertilizeC(cellIdxCurrent).Resources -= extract;
+                    _e.ResourcesC(_e.BuildingPlayerT(cellIdxCurrent), ResourceTypes.Food).Resources += extract;
+                    _e.FertilizeC(cellIdxCurrent).Resources -= extract;
 
                     //if (!E.FertilizeC(cell_0).HaveAnyResources)
                     //{
@@ -376,22 +380,22 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.WoodcutterExtractC(cellIdxCurrent).HaveAnyResources)
+                if (_e.WoodcutterExtractC(cellIdxCurrent).HaveAnyResources)
                 {
-                    var extract = _eMG.WoodcutterExtractC(cellIdxCurrent).Resources;
+                    var extract = _e.WoodcutterExtractC(cellIdxCurrent).Resources;
 
-                    _eMG.ResourcesC(_eMG.BuildingPlayerTC(cellIdxCurrent).PlayerT, ResourceTypes.Wood).Resources += extract;
-                    _sMG.TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
+                    _e.ResourcesC(_e.BuildingPlayerT(cellIdxCurrent), ResourceTypes.Wood).Resources += extract;
+                    _s.TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
 
-                    if (!_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    if (!_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                     {
-                        _eMG.BuildingTC(cellIdxCurrent).BuildingT = BuildingTypes.None;
+                        _e.SetBuildingOnCellT(cellIdxCurrent, BuildingTypes.None);
 
-                        if (_eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
+                        if (_e.LessonT.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
                         {
                             if (cellIdxCurrent == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
-                                _eMG.LessonT = LessonTypes.RelaxExtractPawn + 1;
+                                _e.LessonT = LessonTypes.RelaxExtractPawn + 1;
                             }
                         }
                     }
@@ -402,45 +406,85 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitConditionTC(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
+                if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
                 {
-                    _eMG.HpUnitC(cellIdxCurrent).Health = HpValues.MAX;
+                    _e.HpUnitC(cellIdxCurrent).Health = HpValues.MAX;
                 }
             }
         }
+
+
+        #region WaterUnits
+
         void TakeWaterUnits()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit && !_eMG.UnitTC(cellIdxCurrent).IsAnimal)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (!_eMG.RiverTC(cellIdxCurrent).HaveRiverNear)
+                    _e.WaterUnitC(cellIdxCurrent).Water -= WaterValues.NeedWaterForThirsty(_e.UnitT(cellIdxCurrent));
+                }
+            }
+        }
+        void TryGiveWaterToUnitsDuringLessons()
+        {
+            if (_e.LessonT! >= LessonTypes.Install3WarriorsNextToTheRiver)
+            {
+                for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+                {
+                    if (_e.UnitT(cellIdxCurrent).HaveUnit())
                     {
-                        if (!_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline) || 
-                            _eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline) && 
-                            _eMG.UnitPlayerT(cellIdxCurrent) == PlayerTypes.First && 
-                            !_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.King, UnitTypes.Snowy) &&
-                            _eMG.LessonT >= LessonTypes.Install3WarriorsNextToTheRiver)
+                        _e.WaterUnitC(cellIdxCurrent).Water = WaterValues.MAX;
+                    }
+                }
+            }
+        }
+        void TryGiveWaterToBotUnits()
+        {
+            if (_e.Common.GameModeT == GameModeTypes.TrainingOffline)
+            {
+                for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+                {
+                    if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                    {
+                        if (_e.UnitPlayerT(cellIdxCurrent) == PlayerTypes.Second)
                         {
-                            _eMG.WaterUnitC(cellIdxCurrent).Water -= WaterValues.NeedWaterForThirsty(_eMG.UnitT(cellIdxCurrent));
+                            _e.WaterUnitC(cellIdxCurrent).Water = WaterValues.MAX;
                         }
                     }
                 }
             }
         }
+        void GiveWaterToUnitsNearWithRiver()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                {
+                    if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
+                    {
+                        _e.WaterUnitC(cellIdxCurrent).Water = WaterValues.MAX;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+
         void TryTakeHealthToUnitWithThirsty()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit && !_eMG.UnitTC(cellIdxCurrent).IsAnimal)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                 {
-                    if (_eMG.Common.GameModeTC.Is(GameModeTypes.TrainingOffline) && _eMG.UnitPlayerT(cellIdxCurrent) == PlayerTypes.First)
+                    if (_e.Common.GameModeT.Is(GameModeTypes.TrainingOffline) && _e.UnitPlayerT(cellIdxCurrent) == PlayerTypes.First)
                     {
-                        if (_eMG.WaterUnitC(cellIdxCurrent).Water <= 0)
+                        if (_e.WaterUnitC(cellIdxCurrent).Water <= 0)
                         {
-                            var percent = HpValues.ThirstyPercent(_eMG.UnitTC(cellIdxCurrent).UnitT);
+                            var percent = HpValues.ThirstyPercent(_e.UnitT(cellIdxCurrent));
 
-                            _sMG.UnitSs.Attack(HpValues.MAX * percent, _eMG.UnitPlayerTC(cellIdxCurrent).PlayerT.NextPlayer(), cellIdxCurrent);
+                            _s.UnitSs.Attack(HpValues.MAX * percent, _e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
                         }
                     }
                 }
@@ -450,33 +494,33 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Hell))
+                if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Hell))
                 {
-                    foreach (var cellE in _eMG.AroundCellsE(cellIdxCurrent).CellsAround)
+                    foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
                     {
-                        if (_eMG.AdultForestC(cellE).HaveAnyResources)
+                        if (_e.AdultForestC(cellE).HaveAnyResources)
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
                             {
-                                _eMG.HaveFire(cellE) = true;
+                                _e.HaveFire(cellE) = true;
                             }
                         }
                     }
 
-                    if (_eMG.RiverTC(cellIdxCurrent).HaveRiverNear)
+                    if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
                     {
                         //Es.UnitE(cell_0).Take(Es, 0.15f);
                     }
 
-                    if (_eMG.AroundCellsE(_eMG.WeatherE.CloudC.Center).CellsAround.Any(cell => cell == cellIdxCurrent))
+                    if (_e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround.Any(cell => cell == cellIdxCurrent))
                     {
                         //Es.UnitE(cell_0).Take(Es, 0.15f);
                         break;
                     }
 
-                    foreach (var cellE in _eMG.AroundCellsE(cellIdxCurrent).CellsAround)
+                    foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
                     {
-                        if (_eMG.BuildingTC(cellE).Is(BuildingTypes.IceWall))
+                        if (_e.BuildingOnCellT(cellE).Is(BuildingTypes.IceWall))
                         {
                             //Es.UnitE(cell_0).Take(Es, 0.15f);
                             break;
@@ -489,11 +533,11 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (_eMG.HaveFire(cellIdxCurrent))
+                    if (_e.HaveFire(cellIdxCurrent))
                     {
-                        _eMG.UnitConditionTC(cellIdxCurrent).Condition = ConditionUnitTypes.None;
+                        _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.None);
                     }
                 }
             }
@@ -502,14 +546,14 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (!_eMG.UnitConditionTC(cellIdxCurrent).HaveCondition)
+                    if (!_e.UnitConditionT(cellIdxCurrent).HaveCondition())
                     {
-                        if (_eMG.StepUnit(cellIdxCurrent) >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        if (_e.StepUnit(cellIdxCurrent) >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
-                            _eMG.UnitConditionTC(cellIdxCurrent).Condition = ConditionUnitTypes.Protected;
-                            _eMG.StepUnitC(cellIdxCurrent).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                            _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.Protected);
+                            _e.StepUnitC(cellIdxCurrent).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                         }
                     }
                 }
@@ -519,36 +563,36 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.PawnExtractAdultForestC(cellIdxCurrent).HaveAnyResources)
+                if (_e.PawnExtractAdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
-                    var extract = _eMG.PawnExtractAdultForestC(cellIdxCurrent).Resources;
+                    var extract = _e.PawnExtractAdultForestC(cellIdxCurrent).Resources;
 
-                    _eMG.PlayerInfoE(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT).ResourcesC(ResourceTypes.Wood).Resources += extract;
-                    _sMG.TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
+                    _e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).ResourcesC(ResourceTypes.Wood).Resources += extract;
+                    _s.TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
 
-                    if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                     {
-                        if (_eMG.BuildingTC(cellIdxCurrent).Is(BuildingTypes.Camp) || !_eMG.BuildingTC(cellIdxCurrent).HaveBuilding)
+                        if (_e.BuildingOnCellT(cellIdxCurrent).Is(BuildingTypes.Camp) || !_e.HaveBuildingOnCell(cellIdxCurrent))
                         {
-                            _sMG.BuildingSs.Build(BuildingTypes.Woodcutter, LevelTypes.First, _eMG.UnitPlayerTC(cellIdxCurrent).PlayerT, 1, cellIdxCurrent);
+                            _s.BuildingSs.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cellIdxCurrent), 1, cellIdxCurrent);
 
-                            if (_eMG.LessonT == LessonTypes.RelaxExtractPawn) _eMG.LessonTC.SetNextLesson();
+                            if (_e.LessonT == LessonTypes.RelaxExtractPawn) _e.LessonT.SetNextLesson();
                         }
 
-                        else if (!_eMG.BuildingTC(cellIdxCurrent).Is(BuildingTypes.Woodcutter))
+                        else if (!_e.BuildingOnCellT(cellIdxCurrent).Is(BuildingTypes.Woodcutter))
                         {
-                            _eMG.UnitConditionTC(cellIdxCurrent).Condition = ConditionUnitTypes.Protected;
+                            _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.Protected);
                         }
                     }
                     else
                     {
-                        _sMG.BuildingSs.Clear(cellIdxCurrent);
+                        _s.BuildingSs.Clear(cellIdxCurrent);
 
-                        if (_eMG.LessonTC.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
+                        if (_e.LessonT.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
                         {
                             if (cellIdxCurrent == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
-                                _eMG.LessonT = LessonTypes.RelaxExtractPawn + 1;
+                                _e.LessonT = LessonTypes.RelaxExtractPawn + 1;
                             }
                         }
                     }
@@ -559,20 +603,20 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.PawnExtractHillC(cellIdxCurrent).HaveAnyResources && !_eMG.PawnExtractAdultForestC(cellIdxCurrent).HaveAnyResources)
+                if (_e.PawnExtractHillC(cellIdxCurrent).HaveAnyResources && !_e.PawnExtractAdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
-                    var extract = _eMG.PawnExtractHillC(cellIdxCurrent).Resources;
+                    var extract = _e.PawnExtractHillC(cellIdxCurrent).Resources;
 
-                    _eMG.HillC(cellIdxCurrent).Resources -= extract;
-                    _eMG.PlayerInfoE(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT).ResourcesC(ResourceTypes.Ore).Resources += extract;
+                    _e.HillC(cellIdxCurrent).Resources -= extract;
+                    _e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).ResourcesC(ResourceTypes.Ore).Resources += extract;
 
-                    if (_eMG.LessonTC.Is(LessonTypes.ExtractHill))
+                    if (_e.LessonT.Is(LessonTypes.ExtractHill))
                     {
-                        _eMG.LessonTC.SetNextLesson();
+                        _e.LessonT.SetNextLesson();
 
-                        if (_eMG.IsSelectedCity)
+                        if (_e.IsSelectedCity)
                         {
-                            _eMG.LessonTC.SetNextLesson();
+                            _e.LessonT.SetNextLesson();
                         }
                     }
                 }
@@ -582,44 +626,44 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (!_eMG.PawnExtractHillC(cellIdxCurrent).HaveAnyResources && !_eMG.PawnExtractAdultForestC(cellIdxCurrent).HaveAnyResources)
+                if (!_e.PawnExtractHillC(cellIdxCurrent).HaveAnyResources && !_e.PawnExtractAdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
-                    if (_eMG.UnitConditionTC(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
-                        && _eMG.HpUnitC(cellIdxCurrent).Health >= HpValues.MAX)
+                    if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
+                        && _e.HpUnitC(cellIdxCurrent).Health >= HpValues.MAX)
                     {
-                        _eMG.UnitConditionTC(cellIdxCurrent).Condition = ConditionUnitTypes.Protected;
+                        _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.Protected);
                     }
                 }
             }
         }
         void GiveFoodAfterUpdate()
         {
-            if (!_eMG.LessonTC.HaveLesson || _eMG.LessonT >= LessonTypes.Build3Farms)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
             {
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _eMG.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
+                    _e.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
                 }
             }
         }
         void TryExecuteHungry()
         {
-            if (!_eMG.LessonTC.HaveLesson || _eMG.LessonT >= LessonTypes.Build3Farms)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
             {
                 for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                 {
                     var res = ResourceTypes.Food;
 
-                    if (_eMG.PlayerInfoE(playerT).ResourcesC(res).Resources < 0)
+                    if (_e.PlayerInfoE(playerT).ResourcesC(res).Resources < 0)
                     {
-                        _eMG.PlayerInfoE(playerT).ResourcesC(res).Resources = 0;
+                        _e.PlayerInfoE(playerT).ResourcesC(res).Resources = 0;
 
                         for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
                         {
-                            if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn) && _eMG.UnitPlayerTC(cellIdxCurrent).Is(playerT))
+                            if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.UnitPlayerT(cellIdxCurrent).Is(playerT))
                             {
-                                _sMG.UnitSs.KillUnit(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT.NextPlayer(), cellIdxCurrent);
-                                _sMG.UnitSs.ClearUnit(cellIdxCurrent);
+                                _s.UnitSs.KillUnit(_e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
+                                _e.UnitEs(cellIdxCurrent).ClearEverything();
 
                                 break;
                             }

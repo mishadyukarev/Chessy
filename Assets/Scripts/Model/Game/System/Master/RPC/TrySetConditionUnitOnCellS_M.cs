@@ -1,6 +1,4 @@
 ﻿using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System;
@@ -11,61 +9,61 @@ namespace Chessy.Game.Model.System
     {
         internal void TrySetConditionUnitOnCellM(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
         {
-            if (!_eMG.StunUnitC(cell_0).IsStunned)
+            if (!_e.StunUnitC(cell_0).IsStunned)
             {
                 switch (condT)
                 {
                     case ConditionUnitTypes.None:
-                        _eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                        _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
                         break;
 
                     case ConditionUnitTypes.Protected:
-                        if (_eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Protected))
+                        if (_e.UnitConditionT(cell_0).Is(ConditionUnitTypes.Protected))
                         {
                             ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                            _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
                         }
 
-                        else if (_eMG.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        else if (_e.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
                             ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
-                            _eMG.UnitConditionTC(cell_0).Condition = condT;
+                            _e.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                            _e.SetUnitConditionT(cell_0, condT);
 
-                            if (_eMG.LessonT == LessonTypes.ClickDefend) _eMG.LessonTC.SetNextLesson();
+                            if (_e.LessonT == LessonTypes.ClickDefend) _e.LessonT.SetNextLesson();
                         }
 
                         else
                         {
-                            _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                         break;
 
 
                     case ConditionUnitTypes.Relaxed:
-                        if (_eMG.UnitConditionTC(cell_0).Is(ConditionUnitTypes.Relaxed))
+                        if (_e.UnitConditionT(cell_0).Is(ConditionUnitTypes.Relaxed))
                         {
                             ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _eMG.UnitConditionTC(cell_0).Condition = ConditionUnitTypes.None;
+                            _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
                         }
 
-                        else if (_eMG.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        else if (_e.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
                             ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _eMG.UnitConditionTC(cell_0).Condition = condT;
-                            _eMG.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                            _e.SetUnitConditionT(cell_0, condT);
+                            _e.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
-                            if (_eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
+                            if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
                             {
-                                if (!_eMG.BuildingTC(cell_0).HaveBuilding)
+                                if (!_e.HaveBuildingOnCell(cell_0))
                                 {
-                                    if (_eMG.AdultForestC(cell_0).HaveAnyResources)
+                                    if (_e.AdultForestC(cell_0).HaveAnyResources)
                                     {
-                                        if (_eMG.HpUnitC(cell_0).Health >= HpValues.MAX)
+                                        if (_e.HpUnitC(cell_0).Health >= HpValues.MAX)
                                         {
-                                            if (_eMG.PlayerInfoE(_eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoE.UnitT.Is(UnitTypes.Elfemale))
                                             {
-                                                BuildingSs.Build(BuildingTypes.Woodcutter, LevelTypes.First, _eMG.UnitPlayerTC(cell_0).PlayerT, BuildingValues.MAX_HP, cell_0);
+                                                BuildingSs.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cell_0), BuildingValues.MAX_HP, cell_0);
                                             }
                                         }
                                     }
@@ -75,7 +73,7 @@ namespace Chessy.Game.Model.System
 
                         else
                         {
-                            _eMG.RpcPoolEs.SimpleMistake_ToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                         break;
 

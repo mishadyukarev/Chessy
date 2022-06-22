@@ -8,23 +8,23 @@ namespace Chessy.Game.Model.System
         {
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                _eMG.PlayerInfoE(playerT).WhereKingEffects.Clear();
+                _e.PlayerInfoE(playerT).WhereKingEffects.Clear();
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eMG.HaveKingEffect(cellIdxCurrent) = false;
+                _e.HaveKingEffect(cellIdxCurrent) = false;
 
-                if (!_eMG.IsBorder(cellIdxCurrent))
+                if (!_e.IsBorder(cellIdxCurrent))
                 {
-                    foreach (var idx_1 in _eMG.AroundCellsE(cellIdxCurrent).CellsAround)
+                    foreach (var idx_1 in _e.AroundCellsE(cellIdxCurrent).CellsAround)
                     {
-                        if (_eMG.UnitTC(idx_1).Is(UnitTypes.King))
+                        if (_e.UnitT(idx_1).Is(UnitTypes.King))
                         {
-                            if (_eMG.UnitPlayerTC(idx_1).Is(_eMG.UnitPlayerTC(cellIdxCurrent).PlayerT))
+                            if (_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCurrent)))
                             {
-                                _eMG.PlayerInfoE(_eMG.UnitPlayerTC(idx_1).PlayerT).WhereKingEffects.Add(cellIdxCurrent);
-                                _eMG.HaveKingEffect(cellIdxCurrent) = true;
+                                _e.PlayerInfoE(_e.UnitPlayerT(idx_1)).WhereKingEffects.Add(cellIdxCurrent);
+                                _e.HaveKingEffect(cellIdxCurrent) = true;
                             }
                         }
                     }

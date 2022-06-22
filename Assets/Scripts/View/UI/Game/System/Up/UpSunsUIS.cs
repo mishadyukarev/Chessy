@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using System;
 
 namespace Chessy.Game
@@ -20,11 +21,11 @@ namespace Chessy.Game
             _needActiveRight = false;
 
 
-            if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.LookInfoAboutSun)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.LookInfoAboutSun)
             {
-                var isFirstPlayer = e.CurPlayerIT == PlayerTypes.First;
+                var isFirstPlayer = _e.CurPlayerIT == PlayerTypes.First;
 
-                switch (e.WeatherE.SunSideTC.SunSideT)
+                switch (_e.WeatherE.SunSideTC.SunSideT)
                 {
                     case SunSideTypes.Dawn:
                         _needActiveLeft = isFirstPlayer;

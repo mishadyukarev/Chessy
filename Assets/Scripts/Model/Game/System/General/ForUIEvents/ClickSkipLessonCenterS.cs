@@ -2,9 +2,9 @@
 {
     public sealed partial class SystemsModelGameForUI
     {
-        public void GetClickEffects()
+        public void ClickSkipLesson()
         {
-            _sMG.StartGame(false);
+            _s.StartGame(false);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Chessy.Menu
 {
     public struct LaunchLikeGameAndShopS
     {
-        public void Run(ref bool wasLikeGameZone, ref TimeStartGameC startC, in ShopUIE shopUIE)
+        public void Run(ref bool wasLikeGameZone, ref DateTime start, in ShopUIE shopUIE)
         {
             //if (!wasLikeGameZone)
             //{

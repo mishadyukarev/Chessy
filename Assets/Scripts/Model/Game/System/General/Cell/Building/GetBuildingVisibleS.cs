@@ -1,5 +1,4 @@
 ﻿using Chessy.Game.Extensions;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
@@ -10,34 +9,34 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_eMG.BuildingTC(cellIdxCurrent).HaveBuilding)
+                if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {
-                    _eMG.BuildingVisibleC(cellIdxCurrent).Set(_eMG.BuildingPlayerTC(cellIdxCurrent).PlayerT, true);
+                    _e.BuildingVisibleC(cellIdxCurrent).Set(_e.BuildingPlayerT(cellIdxCurrent), true);
 
-                    if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                     {
                         var isVisibledNextPlayer = false;
 
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = _eMG.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+                            var idx_1 = _e.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
 
-                            if (_eMG.UnitTC(idx_1).HaveUnit)
+                            if (_e.UnitT(idx_1).HaveUnit())
                             {
-                                if (!_eMG.UnitPlayerTC(idx_1).Is(_eMG.BuildingPlayerTC(cellIdxCurrent).PlayerT))
+                                if (!_e.UnitPlayerT(idx_1).Is(_e.BuildingPlayerT(cellIdxCurrent)))
                                 {
                                     isVisibledNextPlayer = true;
                                     break;
                                 }
                             }
                         }
-                        _eMG.BuildingVisibleC(cellIdxCurrent).Set(_eMG.BuildingPlayerTC(cellIdxCurrent).PlayerT.NextPlayer(), isVisibledNextPlayer);
+                        _e.BuildingVisibleC(cellIdxCurrent).Set(_e.BuildingPlayerT(cellIdxCurrent).NextPlayer(), isVisibledNextPlayer);
                     }
-                    else _eMG.BuildingVisibleC(cellIdxCurrent).Set(_eMG.BuildingPlayerTC(cellIdxCurrent).PlayerT.NextPlayer(), true);
+                    else _e.BuildingVisibleC(cellIdxCurrent).Set(_e.BuildingPlayerT(cellIdxCurrent).NextPlayer(), true);
 
 
-                    _eMG.BuildingVisibleC(cellIdxCurrent).Set(PlayerTypes.First, true);
-                    _eMG.BuildingVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, true);
+                    _e.BuildingVisibleC(cellIdxCurrent).Set(PlayerTypes.First, true);
+                    _e.BuildingVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, true);
                 }
             }
         }

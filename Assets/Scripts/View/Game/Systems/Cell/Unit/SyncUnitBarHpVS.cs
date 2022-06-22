@@ -24,7 +24,7 @@ namespace Chessy.Game
 
             if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
             {
-                if (_e.UnitTC(_currentCell).HaveUnit && !_e.UnitTC(_currentCell).IsAnimal)
+                if (_e.UnitT(_currentCell).HaveUnit() && !_e.UnitT(_currentCell).IsAnimal())
                 {
                     _needActiveBar = true;
 

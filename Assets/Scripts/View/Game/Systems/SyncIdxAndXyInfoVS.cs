@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -17,7 +18,7 @@ namespace Chessy.Game
 
             if (_e.IsActivatedIdxAndXyInfoCells)
             {
-                _tMPC.TextMeshPro.text = _currentCell + "\n " + _e.XyCellC(_currentCell).X + "|" + _e.XyCellC(_currentCell).Y + "  ";
+                _tMPC.TextMeshPro.text = _currentCell + "\n " + _e.XyCellC(_currentCell).X() + "|" + _e.XyCellC(_currentCell).Y() + "  ";
             }
         }
     }

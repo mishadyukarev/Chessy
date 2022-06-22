@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using UnityEngine;
 
 namespace Chessy.Game.View.UI
@@ -14,7 +15,7 @@ namespace Chessy.Game.View.UI
 
         internal override void Sync()
         {
-            if (e.LessonTC.HaveLesson)
+            if (_e.LessonT.HaveLesson())
             {
                 _motionTextC.GameObject.SetActive(false);
             }
@@ -22,9 +23,9 @@ namespace Chessy.Game.View.UI
             {
                 _motionTextC.GameObject.SetActive(true);
 
-                _motionTextC.TextUI.text = "Motions: " + e.Motions.ToString();
+                _motionTextC.TextUI.text = "Motions: " + _e.Motions.ToString();
 
-                _motionTextC.TextUI.color = e.Motions % UpdateValues.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0 && e.Motions != 0 ? Color.red : Color.white;
+                _motionTextC.TextUI.color = _e.Motions % UpdateValues.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0 && _e.Motions != 0 ? Color.red : Color.white;
             }
         }
     }

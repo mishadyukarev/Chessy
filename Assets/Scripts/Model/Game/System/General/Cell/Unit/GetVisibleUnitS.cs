@@ -1,5 +1,4 @@
 ﻿using Chessy.Game.Extensions;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
@@ -12,51 +11,51 @@ namespace Chessy.Game.Model.System
             {
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {
-                    _eMG.UnitVisibleC(cellIdxCurrent).Set(playerT, true);
+                    _e.UnitVisibleC(cellIdxCurrent).Set(playerT, true);
                 }
 
-                if (_eMG.UnitTC(cellIdxCurrent).HaveUnit)
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
 
-                    if (_eMG.UnitTC(cellIdxCurrent).IsAnimal)
+                    if (_e.UnitT(cellIdxCurrent).IsAnimal())
                     {
                         var isVisForFirst = true;
                         var isVisForSecond = true;
 
-                        if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                        if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                         {
                             isVisForFirst = false;
                             isVisForSecond = false;
 
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var cell_1 = _eMG.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+                                var cell_1 = _e.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
 
-                                if (_eMG.UnitTC(cell_1).HaveUnit)
+                                if (_e.UnitT(cell_1).HaveUnit())
                                 {
-                                    if (_eMG.UnitPlayerTC(cell_1).Is(PlayerTypes.First)) isVisForFirst = true;
-                                    if (_eMG.UnitPlayerTC(cell_1).Is(PlayerTypes.Second)) isVisForSecond = true;
+                                    if (_e.UnitPlayerT(cell_1).Is(PlayerTypes.First)) isVisForFirst = true;
+                                    if (_e.UnitPlayerT(cell_1).Is(PlayerTypes.Second)) isVisForSecond = true;
                                 }
                             }
                         }
 
-                        _eMG.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.First, isVisForFirst);
-                        _eMG.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, isVisForSecond);
+                        _e.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.First, isVisForFirst);
+                        _e.UnitVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, isVisForSecond);
                     }
 
                     else
                     {
-                        if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                        if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in _eMG.AroundCellsE(cellIdxCurrent).CellsAround)
+                            foreach (var idx_1 in _e.AroundCellsE(cellIdxCurrent).CellsAround)
                             {
-                                if (_eMG.UnitTC(idx_1).HaveUnit)
+                                if (_e.UnitT(idx_1).HaveUnit())
                                 {
-                                    if (!_eMG.UnitTC(idx_1).IsAnimal)
+                                    if (!_e.UnitT(idx_1).IsAnimal())
                                     {
-                                        if (!_eMG.UnitPlayerTC(idx_1).Is(_eMG.UnitPlayerT(cellIdxCurrent)))
+                                        if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCurrent)))
                                         {
                                             isVisibledNextPlayer = true;
                                         }
@@ -64,7 +63,7 @@ namespace Chessy.Game.Model.System
                                 }
                             }
 
-                            _eMG.UnitVisibleC(cellIdxCurrent).Set(_eMG.UnitPlayerT(cellIdxCurrent).NextPlayer(), isVisibledNextPlayer);
+                            _e.UnitVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdxCurrent).NextPlayer(), isVisibledNextPlayer);
                         }
                     }
                 }

@@ -14,12 +14,12 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (e.WinnerPlayerTC.PlayerT == default)
+            if (_e.WinnerPlayerT == default)
             {
                 eUI.CenterEs.EndGame.SetActiveParent(false);
             }
 
-            else if (e.WinnerPlayerTC.PlayerT != e.CurPlayerITC.PlayerT)
+            else if (_e.WinnerPlayerT != _e.CurPlayerIT)
             {
                 eUI.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
                 eUI.CenterEs.EndGame.SetActiveParent(true);

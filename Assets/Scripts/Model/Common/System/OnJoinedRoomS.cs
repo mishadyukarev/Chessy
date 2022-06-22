@@ -4,11 +4,11 @@ namespace Chessy.Game.Model.System
 {
     public sealed partial class SystemsModelGame : IUpdate
     {
-        public void OnJoinedRoom(in Rpc rpc)
+        public void OnJoinedRoom()
         {
             CommonSs.ToggleScene(SceneTypes.Game);
-            StartGame(_eMG.Common.GameModeT == GameModeTypes.TrainingOffline);
-            rpc.SyncAllMaster();
+            StartGame(_e.Common.GameModeT == GameModeTypes.TrainingOffline);
+            SyncDataM();
         }
     }
 }

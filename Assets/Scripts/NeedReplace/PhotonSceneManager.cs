@@ -11,33 +11,19 @@ namespace Chessy.Common
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
-        Rpc _rpc;
-
-        EntitiesModelGame _eMG;
-
         SystemsModelGame _sMG;
-        SystemsModelMenu _sMM;
         SystemsViewUICommon _sUIC;
 
 
 
-        public void StartMy(in Rpc rpc, in EntitiesModelGame eMG, in SystemsViewUICommon sUIC, in SystemsModelGame sMG, in SystemsModelMenu sMM)
+        public void StartMy(in SystemsViewUICommon sUIC, in SystemsModelGame sMG)
         {
-            _rpc = rpc;
-
-            _eMG = eMG;
-
             _sMG = sMG;
-            _sMM = sMM;
             _sUIC = sUIC;
         }
 
 
-        public override sealed void OnLeftRoom()
-        {
-            _sMG.CommonSs.ToggleScene(SceneTypes.Menu);
-            _sUIC.ToggleScene(SceneTypes.Menu);
-        }
+        public override sealed void OnLeftRoom() => _sMG.CommonSs.OnLeftRoom();
 
         //public override sealed void OnPhotonPlayerDisconnected(Player otherPlayer)
         //{
@@ -46,10 +32,7 @@ namespace Chessy.Common
         //    PhotonNetwork.LeaveRoom();
         //    SpawnInitComSys.ToggleScene(SceneTypes.Menu);
         //}
-        public override void OnPlayerLeftRoom(Player otherPlayer)
-        {
-            if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
-        }
+        public override void OnPlayerLeftRoom(Player otherPlayer) => _sMG.CommonSs.OnPlayerLeftRoom(otherPlayer);
 
         public override sealed void OnMasterClientSwitched(Player newMasterClient)
         {
@@ -62,12 +45,7 @@ namespace Chessy.Common
 
 
 
-        public override sealed void OnJoinedRoom()
-        {
-            _sMG.OnJoinedRoom(_rpc);
-            _sUIC.ToggleScene(SceneTypes.Game);
-        }
-
+        public override sealed void OnJoinedRoom() => _sMG.OnJoinedRoom();
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             base.OnPlayerEnteredRoom(newPlayer);
@@ -75,7 +53,7 @@ namespace Chessy.Common
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
 
-            _rpc.SyncAllMaster();
+            _sMG.SyncDataM();
         }
 
         //public override sealed void OnDisconnectedFromPhoton()

@@ -28,27 +28,27 @@ namespace Chessy.Game
             }
 
 
-            if (e.MistakeT != MistakeTypes.None)
+            if (_e.MistakeT != MistakeTypes.None)
             {
-                if (e.MistakeT == MistakeTypes.Economy)
+                if (_e.MistakeT == MistakeTypes.Economy)
                 {
-                    _needActiveMistakeZone[(byte)e.MistakeT] = true;
+                    _needActiveMistakeZone[(byte)_e.MistakeT] = true;
 
                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                     {
-                        if (e.MistakeEconomy(res).Resources > 0)
+                        if (_e.MistakeEconomy(res).Resources > 0)
                         {
                             _mistakeUIE.NeedAmountResources(res).SetActive(true);
 
                             _mistakeUIE.NeedAmountResources(res).TextUI.text
-                                = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + e.MistakeEconomy(res).Resources : ">= " + ((int)(100 * e.MistakeEconomy(res).Resources));
+                                = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + _e.MistakeEconomy(res).Resources : ">= " + ((int)(100 * _e.MistakeEconomy(res).Resources));
                         }
                     }
                 }
 
                 else
                 {
-                    _needActiveMistakeZone[(byte)e.MistakeT] = true;
+                    _needActiveMistakeZone[(byte)_e.MistakeT] = true;
                 }
             }
 

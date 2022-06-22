@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Chessy.Game.System;
+using Chessy.Game.Values;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,13 +37,13 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.ClickWindInfo)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ClickWindInfo)
             {
                 _eUI.UpEs.ParentWindGOC.SetActive(true);
 
-                _eUI.UpEs.WindTrC.EulerAngles = _directs[e.WeatherE.WindC.DirectT];
-                if (e.CurPlayerITC.PlayerT == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-                _eUI.UpEs.WindTextC.TextUI.text = e.WeatherE.WindC.Speed.ToString() + "/" + e.WeatherE.WindC.MaxSpeed;
+                _eUI.UpEs.WindTrC.EulerAngles = _directs[_e.WeatherE.WindC.DirectT];
+                if (_e.CurPlayerIT == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
+                _eUI.UpEs.WindTextC.TextUI.text = _e.WeatherE.WindC.Speed.ToString() + "/" + StartValues.MAX_SPEED_WIND;
 
 
             }

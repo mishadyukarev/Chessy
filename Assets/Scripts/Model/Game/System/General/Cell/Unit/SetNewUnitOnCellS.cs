@@ -1,49 +1,46 @@
-﻿using Chessy.Common.Extension;
-using Chessy.Game.Values.Cell.Unit.Stats;
+﻿using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
 {
     sealed partial class SystemsModelGame
     {
-        internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte cell)
+        internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte cellIdxForSetting)
         {
-            UnitSs.UnitSimpleS(cell).SetMainS.Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
-            UnitSs.SetStats(cell, HpValues.MAX, StepValues.MAX, WaterValues.MAX);
-            UnitSs.SetExtraToolWeapon(cell, ToolWeaponTypes.None, LevelTypes.None, 0);
-            UnitSs.SetEffects(cell, 0, 0, 0, false);
+            _e.UnitMainE(cellIdxForSetting).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
+            _e.StatsUnitE(cellIdxForSetting).Set(HpValues.MAX, StepValues.MAX, WaterValues.MAX);
+            _e.UnitExtraTWE(cellIdxForSetting).Set(ToolWeaponTypes.None, LevelTypes.None, 0);
+            _e.UnitEffectsE(cellIdxForSetting).Set(0, 0, 0, false);
 
-
-
-            if (_eMG.UnitTC(cell).Is(UnitTypes.Pawn))
+            if (_e.UnitT(cellIdxForSetting).Is(UnitTypes.Pawn))
             {
-                _eMG.PlayerInfoE(playerT).PawnInfoC.SetPawn();
+                _e.PlayerInfoE(playerT).PawnInfoC.SetPawn();
             }
 
 
 
             if (unitT == UnitTypes.Pawn)
             {
-                _eMG.PlayerInfoE(playerT).PawnInfoC.PeopleInCity--;
+                _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity--;
 
-                UnitSs.SetMainToolWeapon(cell, ToolWeaponTypes.Axe, LevelTypes.First);
+                _e.MainToolWeaponE(cellIdxForSetting).Set(ToolWeaponTypes.Axe, LevelTypes.First);
             }
 
             else
             {
-                if (unitT.Is(UnitTypes.Tree)) _eMG.HaveTreeUnit = true;
+                if (unitT.Is(UnitTypes.Tree)) _e.HaveTreeUnit = true;
 
 
                 if (unitT.IsGod())
                 {
-                    _eMG.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = false;
+                    _e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = false;
                 }
                 else if (unitT == UnitTypes.King)
                 {
-                    _eMG.PlayerInfoE(playerT).KingInfoE.CellKing = cell;
-                    _eMG.PlayerInfoE(playerT).KingInfoE.HaveInInventor = false;
+                    _e.PlayerInfoE(playerT).KingInfoE.CellKing = cellIdxForSetting;
+                    _e.PlayerInfoE(playerT).KingInfoE.HaveInInventor = false;
                 }
 
-                UnitSs.SetMainToolWeapon(cell, ToolWeaponTypes.None, LevelTypes.None);
+                _e.MainToolWeaponE(cellIdxForSetting).Set(ToolWeaponTypes.None, LevelTypes.None);
             }
         }
     }

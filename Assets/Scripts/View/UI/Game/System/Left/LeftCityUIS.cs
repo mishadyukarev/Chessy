@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using Chessy.Game.Values;
 
 namespace Chessy.Game
@@ -15,7 +16,7 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            var whoseMove = e.WhoseMovePlayerTC.PlayerT;
+            var whoseMove = _e.WhoseMovePlayerT;
 
 
             //UIE.LeftEs.CityE(BuildingTypes.Camp).Parent.SetActive(E.IsSelectedCity);
@@ -25,13 +26,13 @@ namespace Chessy.Game
             var needActiveFuture = false;
             var needActivePremum = false;
 
-            if (e.LessonTC.HaveLesson)
+            if (_e.LessonT.HaveLesson())
             {
-                if (e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre)
+                if (_e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
                     isActiveSmelter = true;
                 }
-                if (e.LessonT >= LessonTypes.ClickBuyMarketInTown)
+                if (_e.LessonT >= LessonTypes.ClickBuyMarketInTown)
                 {
                     needActiveMarket = true;
                 }
@@ -54,11 +55,11 @@ namespace Chessy.Game
             {
                 if (buildingT == BuildingTypes.Market || buildingT == BuildingTypes.Smelter)
                 {
-                    eUI.LeftEs.CityE(buildingT).CostGOC.SetActive(!e.PlayerInfoE(whoseMove).BuildingsInfoC.HaveBuilding(buildingT));
+                    eUI.LeftEs.CityE(buildingT).CostGOC.SetActive(!_e.PlayerInfoE(whoseMove).BuildingsInfoC.HaveBuilding(buildingT));
                 }
             }
 
-            eUI.LeftEs.CityE(BuildingTypes.House).CostTextC.TextUI.text = ((int)(100 * e.PlayerInfoE(whoseMove).WoodForBuyHouse)).ToString();
+            eUI.LeftEs.CityE(BuildingTypes.House).CostTextC.TextUI.text = ((int)(100 * _e.PlayerInfoE(whoseMove).WoodForBuyHouse)).ToString();
             eUI.LeftEs.CityE(BuildingTypes.Market).CostTextC.TextUI.text = ((int)(100 * EconomyValues.NEED_WOOD_FOR_BUILDING_MARKET)).ToString();
             eUI.LeftEs.CityE(BuildingTypes.Smelter).CostTextC.TextUI.text = ((int)(100 * EconomyValues.NEED_WOOD_FOR_BUILDING_SMELTER)).ToString();
         }

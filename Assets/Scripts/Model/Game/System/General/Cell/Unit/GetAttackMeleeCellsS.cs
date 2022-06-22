@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
@@ -10,40 +9,40 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCell = 0; cellIdxCell < StartValues.CELLS; cellIdxCell++)
             {
-                if (!_eMG.StunUnitC(cellIdxCell).IsStunned)
+                if (!_e.StunUnitC(cellIdxCell).IsStunned)
                 {
-                    if (_eMG.UnitTC(cellIdxCell).HaveUnit && _eMG.UnitTC(cellIdxCell).IsMelee(_eMG.MainToolWeaponTC(cellIdxCell).ToolWeaponT) && !_eMG.UnitTC(cellIdxCell).IsAnimal)
+                    if (_e.UnitT(cellIdxCell).HaveUnit() && _e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)) && !_e.UnitT(cellIdxCell).IsAnimal())
                     {
                         DirectTypes dir_cur = default;
 
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = _eMG.AroundCellsE(cellIdxCell).AroundCellE(dirT).IdxC.Idx;
+                            var idx_1 = _e.AroundCellsE(cellIdxCell).AroundCellE(dirT).IdxC.Idx;
 
                             dir_cur += 1;
 
-                            if (!_eMG.MountainC(idx_1).HaveAnyResources)
+                            if (!_e.MountainC(idx_1).HaveAnyResources)
                             {
-                                var haveMaxSteps = _eMG.StepUnitC(cellIdxCell).Steps >= StepValues.MAX;
+                                var haveMaxSteps = _e.StepUnitC(cellIdxCell).Steps >= StepValues.MAX;
 
-                                if (_eMG.StepUnitC(cellIdxCell).Steps >= _eMG.UnitNeedStepsForShiftC(cellIdxCell).NeedSteps(idx_1) || haveMaxSteps)
+                                if (_e.StepUnitC(cellIdxCell).Steps >= _e.UnitNeedStepsForShiftC(cellIdxCell).NeedSteps(idx_1) || haveMaxSteps)
                                 {
-                                    if (_eMG.UnitTC(idx_1).HaveUnit)
+                                    if (_e.UnitT(idx_1).HaveUnit())
                                     {
-                                        if (!_eMG.UnitPlayerTC(idx_1).Is(_eMG.UnitPlayerTC(cellIdxCell).PlayerT))
+                                        if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
                                         {
-                                            if (_eMG.UnitTC(cellIdxCell).Is(UnitTypes.Pawn))
+                                            if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn))
                                             {
                                                 if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                                 {
-                                                    _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                    _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
                                                 }
-                                                else _eMG.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
+                                                else _e.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
                                             }
                                             else
                                             {
-                                                _eMG.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
                                             }
                                         }
                                     }

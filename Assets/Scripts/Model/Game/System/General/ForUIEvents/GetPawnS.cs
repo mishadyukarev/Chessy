@@ -7,33 +7,30 @@ namespace Chessy.Game.Model.System
     {
         public void GetPawn()
         {
-            _eMG.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
 
-            var curPlayerI = _eMG.CurPlayerITC.PlayerT;
-
-
-            if (!_eMG.LessonTC.Is(LessonTypes.TryBuyingHouse, LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
+            if (!_e.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
             {
-                if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
+                if (_e.CurPlayerIT.Is(_e.WhoseMovePlayerT))
                 {
-                    if (_eMG.PlayerInfoE(curPlayerI).PawnInfoC.HaveAnyPeopleInCity)
+                    if (_e.PlayerInfoE(_e.CurPlayerIT).PawnInfoC.HaveAnyPeopleInCity)
                     {
-                        if (_eMG.PlayerInfoE(curPlayerI).PawnInfoC.AmountInGame < _eMG.PlayerInfoE(curPlayerI).PawnInfoC.MaxAvailable)
+                        if (_e.PlayerInfoE(_e.CurPlayerIT).PawnInfoC.AmountInGame < _e.PlayerInfoE(_e.CurPlayerIT).PawnInfoC.MaxAvailable)
                         {
-                            _eMG.SelectedCell = 0;
+                            _e.SelectedCellIdx = 0;
 
-                            _eMG.SelectedUnitE.UnitTC.UnitT = UnitTypes.Pawn;
-                            _eMG.SelectedUnitE.LevelTC.LevelT = LevelTypes.First;
+                            _e.SelectedUnitE.UnitT = UnitTypes.Pawn;
+                            _e.SelectedUnitE.LevelT = LevelTypes.First;
 
-                            _eMG.CellClickTC.CellClickT = CellClickTypes.SetUnit;
+                            _e.CellClickT = CellClickTypes.SetUnit;
                         }
                         else
                         {
-                            if (_eMG.LessonTC.Is(LessonTypes.SettingPawn))
+                            if (_e.LessonT.Is(LessonTypes.SettingPawn))
                             {
-                                _eMG.LessonTC.SetNextLesson();
+                                _e.LessonT.SetNextLesson();
                             }
-                            else if (_eMG.LessonTC.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
+                            else if (_e.LessonT.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
                             {
 
                             }
@@ -41,18 +38,18 @@ namespace Chessy.Game.Model.System
                             else
                             {
 
-                                _sMG.SetMistake(MistakeTypes.NeedBuildingHouses, 0);
-                                _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
-                                _eMG.IsSelectedCity = true;
+                                _s.SetMistake(MistakeTypes.NeedBuildingHouses, 0);
+                                _e.SoundAction(ClipTypes.WritePensil).Invoke();
+                                _e.IsSelectedCity = true;
                             }
 
                         }
                     }
                     else
                     {
-                        _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                        _e.SoundAction(ClipTypes.WritePensil).Invoke();
 
-                        _sMG.SetMistake(MistakeTypes.NeedMorePeopleInCity, 0);
+                        _s.SetMistake(MistakeTypes.NeedMorePeopleInCity, 0);
                         //..E.Sound(ClipTypes.Mistake).Action.Invoke();
                     }
 
@@ -60,13 +57,13 @@ namespace Chessy.Game.Model.System
                 }
                 else
                 {
-                    _eMG.MistakeTC.MistakeT = MistakeTypes.NeedWaitQueue;
-                    _eMG.MistakeTimerC.Timer = 0;
-                    _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+                    _e.MistakeT = MistakeTypes.NeedWaitQueue;
+                    _e.MistakeTimer = 0;
+                    _e.SoundAction(ClipTypes.WritePensil).Invoke();
                 }
             }
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

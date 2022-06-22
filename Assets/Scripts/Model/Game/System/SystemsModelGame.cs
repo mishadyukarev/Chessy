@@ -10,7 +10,7 @@ namespace Chessy.Game.Model.System
 {
     public sealed partial class SystemsModelGame : IUpdate
     {
-        readonly EntitiesModelGame _eMG;
+        readonly EntitiesModelGame _e;
         readonly List<Action> _runs;
 
         internal readonly BuildingSystems BuildingSs;
@@ -19,6 +19,7 @@ namespace Chessy.Game.Model.System
         internal readonly ExecuteAIBotLogicAfterUpdateS_M AIBotS;
         internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
         internal readonly TruceS TruceS;
+
         public readonly SystemsModelCommon CommonSs;
         public readonly SystemsModelGameForUI ForUISystems;
 
@@ -26,7 +27,7 @@ namespace Chessy.Game.Model.System
         {
             CommonSs = sMC;
 
-            _eMG = eMG;
+            _e = eMG;
 
             _runs = new List<Action>()
             {
@@ -51,60 +52,57 @@ namespace Chessy.Game.Model.System
         {
             _runs.ForEach((Action action) => action());
 
-            _eMG.ForUpdateViewTimer += Time.deltaTime;
+            _e.ForUpdateViewTimer += Time.deltaTime;
 
-            if (_eMG.ForUpdateViewTimer >= 0.5f)
+            if (_e.ForUpdateViewTimer >= 0.5f)
             {
-                _eMG.NeedUpdateView = true;
-                _eMG.ForUpdateViewTimer = 0;
+                _e.NeedUpdateView = true;
+                _e.ForUpdateViewTimer = 0;
             }
         }
 
-        internal void ExecuteSoundAction(in ClipTypes clipT) => _eMG.SoundAction(clipT).Invoke();
-        internal void ExecuteSoundAction(in AbilityTypes abilityT) => _eMG.SoundAction(abilityT).Invoke();
+        internal void ExecuteSoundAction(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();
+        internal void ExecuteSoundAction(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();
 
-        internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _eMG.DataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
+        internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _e.DataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
 
-        internal void ActiveMotion() => _eMG.MotionTimer = 4;
+        internal void ActiveMotion() => _e.MotionTimer = 4;
 
         internal void ExecuteMistake(in MistakeTypes mistakeT, in float[] needRes)
         {
             Mistake(mistakeT);
-            _eMG.SoundAction(ClipTypes.WritePensil).Invoke();
+            _e.SoundAction(ClipTypes.WritePensil).Invoke();
 
             if (mistakeT == MistakeTypes.Economy)
             {
-                _eMG.MistakeEconomy(ResourceTypes.Food).Resources = 0;
-                _eMG.MistakeEconomy(ResourceTypes.Wood).Resources = 0;
-                _eMG.MistakeEconomy(ResourceTypes.Ore).Resources = 0;
-                _eMG.MistakeEconomy(ResourceTypes.Iron).Resources = 0;
-                _eMG.MistakeEconomy(ResourceTypes.Gold).Resources = 0;
+                _e.MistakeEconomy(ResourceTypes.Food).Resources = 0;
+                _e.MistakeEconomy(ResourceTypes.Wood).Resources = 0;
+                _e.MistakeEconomy(ResourceTypes.Ore).Resources = 0;
+                _e.MistakeEconomy(ResourceTypes.Iron).Resources = 0;
+                _e.MistakeEconomy(ResourceTypes.Gold).Resources = 0;
 
-                _eMG.MistakeEconomy(ResourceTypes.Food).Resources = needRes[0];
-                _eMG.MistakeEconomy(ResourceTypes.Wood).Resources = needRes[1];
-                _eMG.MistakeEconomy(ResourceTypes.Ore).Resources = needRes[2];
-                _eMG.MistakeEconomy(ResourceTypes.Iron).Resources = needRes[3];
-                _eMG.MistakeEconomy(ResourceTypes.Gold).Resources = needRes[4];
+                _e.MistakeEconomy(ResourceTypes.Food).Resources = needRes[0];
+                _e.MistakeEconomy(ResourceTypes.Wood).Resources = needRes[1];
+                _e.MistakeEconomy(ResourceTypes.Ore).Resources = needRes[2];
+                _e.MistakeEconomy(ResourceTypes.Iron).Resources = needRes[3];
+                _e.MistakeEconomy(ResourceTypes.Gold).Resources = needRes[4];
             }
         }
 
 
 
 
-        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, rpcTargetT, new object[] { nameof(ExecuteSoundAction), clipT });
-        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _eMG.RpcPoolEs.Action1(_eMG.RpcPoolEs.MasterRPCName, playerTo, new object[] { nameof(ExecuteSoundAction), clipT });
+        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTargetT, new object[] { nameof(ExecuteSoundAction), clipT });
+        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(ExecuteSoundAction), clipT });
+        public void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes uniq) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(ExecuteSoundAction), uniq });
+        public void SoundToGeneral(Player playerTo, AbilityTypes uniq) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(ExecuteSoundAction), uniq });
 
-        public void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes uniq) => _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, rpcTarget, new object[] { RpcGeneralTypes.SoundUniqueAbility, uniq });
-        public void SoundToGeneral(Player playerTo, AbilityTypes uniq) => _eMG.RpcPoolEs.Action1(_eMG.RpcPoolEs.MasterRPCName, playerTo, new object[] { RpcGeneralTypes.SoundUniqueAbility, uniq });
+        public void ActiveMotionZoneToGeneneral(in Player player) => _e.RpcC.Action1(_e.RpcC.PunRPCName, player, new object[] { nameof(ActiveMotion) });
+        public void ActiveMotionZoneToGeneneral(in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(ActiveMotion) });
 
-        public void SimpleMistake_ToGeneral(MistakeTypes mistakeType, Player playerTo) => _eMG.RpcPoolEs.Action1(_eMG.RpcPoolEs.MasterRPCName, playerTo, new object[] { RpcGeneralTypes.Mistake, mistakeType });
+        public void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(ExecuteAnimationClip), cellIdx, animationCellT });
 
-        public void ActiveMotionZone_ToGeneneral(Player player) => _eMG.RpcPoolEs.Action1(_eMG.RpcPoolEs.MasterRPCName, player, new object[] { nameof(ActiveMotion) });
-        public void ActiveMotionZone_ToGeneneral(in RpcTarget rpcTarget) => _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, rpcTarget, new object[] { RpcGeneralTypes.ActiveMotion });
-
-        public void AnimationCell_ToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, rpcTarget, new object[] { RpcGeneralTypes.AnimationCell, cellIdx, animationCellT });
-
-
+        public void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(ExecuteMistake), mistakeType });
         internal void MistakeEconomyToGeneral(Player playerTo, Dictionary<ResourceTypes, float> needRes)
         {
             var needRes2 = new float[(int)ResourceTypes.End];
@@ -114,7 +112,7 @@ namespace Chessy.Game.Model.System
             needRes2[3] = needRes[ResourceTypes.Iron];
             needRes2[4] = needRes[ResourceTypes.Gold];
 
-            _eMG.RpcPoolEs.Action1(_eMG.RpcPoolEs.MasterRPCName, playerTo, new object[] { RpcGeneralTypes.Mistake, MistakeTypes.Economy, needRes2 });
+            _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(ExecuteMistake), MistakeTypes.Economy, needRes2 });
         }
     }
 }

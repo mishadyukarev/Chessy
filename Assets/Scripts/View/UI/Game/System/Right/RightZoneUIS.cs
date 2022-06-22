@@ -13,16 +13,16 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            var idx_sel = e.CellsC.Selected;
+            var idx_sel = _e.CellsC.Selected;
 
             var activeParent = false;
 
 
-            if (e.CellsC.Selected > 0)
+            if (_e.CellsC.Selected > 0)
             {
-                if (e.UnitTC(idx_sel).HaveUnit)
+                if (_e.UnitT(idx_sel).HaveUnit())
                 {
-                    if (e.UnitVisibleC(idx_sel).IsVisible(e.CurPlayerITC.PlayerT))
+                    if (_e.UnitVisibleC(idx_sel).IsVisible(_e.CurPlayerIT))
                     {
                         activeParent = true;
                     }

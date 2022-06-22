@@ -1,7 +1,5 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
-using System;
 
 namespace Chessy.Game.Model.System
 {
@@ -11,11 +9,11 @@ namespace Chessy.Game.Model.System
         {
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (_eMG.UnitTC(cell_0).HaveUnit)
+                if (_e.UnitT(cell_0).HaveUnit())
                 {
-                    if (_eMG.UnitT(cell_0) == UnitTypes.Snowy)
+                    if (_e.UnitT(cell_0) == UnitTypes.Snowy)
                     {
-                        if (!_eMG.LessonTC.HaveLesson)
+                        if (!_e.LessonT.HaveLesson())
                         {
                             GiveWaterToUnitsAroundRainy(cell_0);
                         }
@@ -26,13 +24,13 @@ namespace Chessy.Game.Model.System
 
         internal void GiveWaterToUnitsAroundRainy(in byte cellIdx)
         {
-            foreach (var cell_1 in _eMG.AroundCellsE(cellIdx).CellsAround)
+            foreach (var cellIdxDirect in _e.AroundCellsE(cellIdx).CellsAround)
             {
-                if (_eMG.UnitTC(cell_1).HaveUnit)
+                if (_e.UnitT(cellIdxDirect).HaveUnit())
                 {
-                    if (_eMG.UnitPlayerT(cellIdx) == _eMG.UnitPlayerT(cell_1))
+                    if (_e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(cellIdxDirect))
                     {
-                        _eMG.WaterUnitC(cell_1).Water = WaterValues.MAX;
+                        _e.WaterUnitC(cellIdxDirect).Water = WaterValues.MAX;
                     }
                 }
             }

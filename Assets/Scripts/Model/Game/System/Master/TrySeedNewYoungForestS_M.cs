@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
@@ -8,7 +7,7 @@ namespace Chessy.Game.Model.System
         internal void TrySeedNewYoungForestOnCell(in byte cellIdx)
         {
             if (UnityEngine.Random.Range(0f, 1f) < EnvironmentValues.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
-                _eMG.YoungForestC(cellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
+                _e.YoungForestC(cellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
         }
     }
 }

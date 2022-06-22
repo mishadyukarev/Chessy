@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using Chessy.Game.Values;
 using System.Collections.Generic;
 
@@ -27,27 +28,27 @@ namespace Chessy.Game
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++) _needActive[resT] = false;
 
 
-            if (!e.LessonTC.HaveLesson)
+            if (!_e.LessonT.HaveLesson())
             {
                 activeResZone = true;
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++) _needActive[resT] = true;
 
             }
-            else if (e.LessonT >= LessonTypes.TryBuyingHouse)
+            else if (_e.LessonT >= LessonTypes.TryBuyingHouse)
             {
                 activeResZone = true;
 
                 _needActive[ResourceTypes.Wood] = true;
 
-                if (e.LessonT >= LessonTypes.Build3Farms)
+                if (_e.LessonT >= LessonTypes.Build3Farms)
                 {
                     _needActive[ResourceTypes.Food] = true;
 
-                    if (e.LessonT >= LessonTypes.ExtractHill)
+                    if (_e.LessonT >= LessonTypes.ExtractHill)
                     {
                         _needActive[ResourceTypes.Ore] = true;
 
-                        if (e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre)
+                        if (_e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre)
                         {
                             _needActive[ResourceTypes.Iron] = true;
                             _needActive[ResourceTypes.Gold] = true;
@@ -81,21 +82,21 @@ namespace Chessy.Game
                 {
 
 
-                    if (e.UnitPlayerTC(idx_0).Is(e.CurPlayerIT))
+                    if (_e.UnitPlayerT(idx_0).Is(_e.CurPlayerIT))
                     {
-                        if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                        if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
                         {
                             _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
 
-                            _extracts[ResourceTypes.Ore] += e.PawnExtractHillC(idx_0).Resources;
-                            _extracts[ResourceTypes.Wood] += e.PawnExtractAdultForestC(idx_0).Resources;
+                            _extracts[ResourceTypes.Ore] += _e.PawnExtractHillC(idx_0).Resources;
+                            _extracts[ResourceTypes.Wood] += _e.PawnExtractAdultForestC(idx_0).Resources;
                         }
                     }
 
-                    if (e.BuildingPlayerTC(idx_0).Is(e.CurPlayerIT))
+                    if (_e.BuildingPlayerT(idx_0).Is(_e.CurPlayerIT))
                     {
-                        _extracts[ResourceTypes.Wood] += e.WoodcutterExtractC(idx_0).Resources;
-                        _extracts[ResourceTypes.Food] += e.FarmExtractFertilizeC(idx_0).Resources;
+                        _extracts[ResourceTypes.Wood] += _e.WoodcutterExtractC(idx_0).Resources;
+                        _extracts[ResourceTypes.Food] += _e.FarmExtractFertilizeC(idx_0).Resources;
                     }
                 }
 
@@ -112,11 +113,11 @@ namespace Chessy.Game
                     string name = default;
                     if (res == ResourceTypes.Iron || res == ResourceTypes.Gold)
                     {
-                        name = e.PlayerInfoE(e.CurPlayerIT).ResourcesC(res).Resources.ToString();
+                        name = _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(res).Resources.ToString();
                     }
                     else
                     {
-                        name = ((int)(100 * e.PlayerInfoE(e.CurPlayerIT).ResourcesC(res).Resources)).ToString();
+                        name = ((int)(100 * _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(res).Resources)).ToString();
                     }
 
                     _economyUIE.Economy(res).TextUI.text = name;

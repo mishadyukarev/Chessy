@@ -26,25 +26,25 @@ namespace Chessy.Game
 
             if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
             {
-                if (_e.UnitTC(_currentCell).HaveUnit && !_e.UnitTC(_currentCell).IsAnimal)
+                if (_e.UnitT(_currentCell).HaveUnit() && !_e.UnitT(_currentCell).IsAnimal())
                 {
                     _needActive[(byte)CellBlockTypes.NeedWater] = _e.WaterUnitC(_currentCell).Water <= WaterValues.MAX * 0.4f;
                     _needActive[(byte)CellBlockTypes.MaxSteps] = _e.StepUnitC(_currentCell).Steps >= StepValues.MAX;
 
 
-                    if (_e.UnitConditionTC(_currentCell).Is(ConditionUnitTypes.Protected))
+                    if (_e.UnitConditionT(_currentCell).Is(ConditionUnitTypes.Protected))
                     {
                         _needActive[(byte)CellBlockTypes.Condition] = true;
                         _needColor[(byte)CellBlockTypes.Condition] = Color.yellow;
                     }
 
-                    else if (_e.UnitConditionTC(_currentCell).Is(ConditionUnitTypes.Relaxed))
+                    else if (_e.UnitConditionT(_currentCell).Is(ConditionUnitTypes.Relaxed))
                     {
                         _needActive[(byte)CellBlockTypes.Condition] = true;
                         _needColor[(byte)CellBlockTypes.Condition] = Color.green;
                     }
 
-                    if (_e.UnitPlayerTC(_currentCell).Is(PlayerTypes.First))
+                    if (_e.UnitPlayerT(_currentCell).Is(PlayerTypes.First))
                     {
                         _needColor[(byte)CellBlockTypes.MaxSteps] = Color.blue;
                     }

@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using UnityEngine;
 
 namespace Chessy.Game
@@ -18,7 +19,7 @@ namespace Chessy.Game
             var needActiveZone = false;
 
 
-            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.GiveTakePickPawn)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.GiveTakePickPawn)
             {
                 needActiveZone = true;
 
@@ -38,27 +39,27 @@ namespace Chessy.Game
                 var needSword = false;
 
 
-                if (e.LessonTC.HaveLesson)
+                if (_e.LessonT.HaveLesson())
                 {
                     needPick = true;
 
-                    if (e.LessonT >= LessonTypes.GiveIronAxe)
+                    if (_e.LessonT >= LessonTypes.GiveIronAxe)
                     {
                         needAxe = true;
 
-                        if (e.LessonT >= LessonTypes.GiveStaff)
+                        if (_e.LessonT >= LessonTypes.GiveStaff)
                         {
                             needStaff = true;
 
-                            if (e.LessonT >= LessonTypes.GiveBowCrossbow)
+                            if (_e.LessonT >= LessonTypes.GiveBowCrossbow)
                             {
                                 needBowCrossbow = true;
 
-                                if (e.LessonT >= LessonTypes.GiveShield)
+                                if (_e.LessonT >= LessonTypes.GiveShield)
                                 {
                                     needShield = true;
 
-                                    if (e.LessonT >= LessonTypes.GiveSword)
+                                    if (_e.LessonT >= LessonTypes.GiveSword)
                                     {
                                         needSword = true;
 
@@ -105,8 +106,8 @@ namespace Chessy.Game
                 }
 
 
-                var tw_sel = e.SelectedE.ToolWeaponC.ToolWeaponT;
-                var levTw_sel = e.SelectedE.ToolWeaponC.LevelT;
+                var tw_sel = _e.SelectedE.ToolWeaponC.ToolWeaponT;
+                var levTw_sel = _e.SelectedE.ToolWeaponC.LevelT;
 
                 color = _twE.ImageC(tw_sel).Image.color;
                 color.a = 1;
@@ -121,14 +122,14 @@ namespace Chessy.Game
                     _twE.LevelImageC(twT, levTw_sel).SetActive(true);
                 }
 
-                var curPlayerI = e.CurPlayerITC.PlayerT;
+                var curPlayerI = _e.CurPlayerIT;
 
-                _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).ToString();
-                _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).ToString();
-                _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).ToString();
-                _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.Shield).ToString();
-                _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.BowCrossbow).ToString();
-                _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).ToString();
+                _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).ToString();
+                _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).ToString();
+                _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).ToString();
+                _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(_e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.Shield).ToString();
+                _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(_e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.BowCrossbow).ToString();
+                _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).ToString();
             }
         }
     }

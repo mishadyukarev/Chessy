@@ -1,5 +1,4 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Values;
+﻿using Chessy.Game.Values;
 
 namespace Chessy.Game.Model.System
 {
@@ -9,16 +8,16 @@ namespace Chessy.Game.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eMG.PawnExtractAdultForestC(cellIdxCurrent).Resources = 0;
+                _e.PawnExtractAdultForestC(cellIdxCurrent).Resources = 0;
 
-                if (_eMG.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
-                    if (_eMG.UnitTC(cellIdxCurrent).Is(UnitTypes.Pawn) && _eMG.UnitConditionTC(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
-                        && !_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
+                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
+                        && !_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                     {
                         var extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
 
-                        //if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitTC.Is(UnitTypes.Elfemale))
+                        //if (eMG.PlayerInfoE(eMG.UnitPlayerTC(cell_0).PlayerT).GodInfoE.UnitT.Is(UnitTypes.Elfemale))
                         //{
                         //    if (eMG.UnitTC(cell_0).Is(UnitTypes.Pawn))
                         //    {
@@ -28,17 +27,17 @@ namespace Chessy.Game.Model.System
 
 
 
-                        if (_eMG.MainToolWeaponTC(cellIdxCurrent).Is(ToolWeaponTypes.Axe))
+                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Axe))
                         {
-                            if (_eMG.MainTWLevelTC(cellIdxCurrent).Is(LevelTypes.Second))
+                            if (_e.MainTWLevelT(cellIdxCurrent).Is(LevelTypes.Second))
                             {
                                 extract *= ExtractPawnValues.PAWN_TOOL_WEAPON_AXE_LEVEL_SECOND_FOR_EXTACT;
                             }
                         }
 
-                        if (_eMG.AdultForestC(cellIdxCurrent).Resources < extract) extract = _eMG.AdultForestC(cellIdxCurrent).Resources;
+                        if (_e.AdultForestC(cellIdxCurrent).Resources < extract) extract = _e.AdultForestC(cellIdxCurrent).Resources;
 
-                        _eMG.PawnExtractAdultForestC(cellIdxCurrent).Resources = extract;
+                        _e.PawnExtractAdultForestC(cellIdxCurrent).Resources = extract;
                     }
                 }
             }

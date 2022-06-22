@@ -2,7 +2,7 @@
 {
     public struct SelectedUnitE
     {
-        public UnitTC UnitTC;
-        public LevelTC LevelTC;
+        public UnitTypes UnitT;
+        public LevelTypes LevelT { get; internal set; }
     }
 }

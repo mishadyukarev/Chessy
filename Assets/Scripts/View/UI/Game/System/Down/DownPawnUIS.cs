@@ -1,6 +1,7 @@
 ﻿using Chessy.Game.Model.Entity;
 using Chessy.Game.Enum;
 using System;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -15,14 +16,14 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= LessonTypes.SettingPawn)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.SettingPawn)
             {
                 _pawnE.ParenGOC.SetActive(true);
 
-                var curPlayerI = e.CurPlayerITC.PlayerT;
+                var curPlayerI = _e.CurPlayerIT;
 
-                _pawnE.AmountTextC.TextUI.text = e.PlayerInfoE(curPlayerI).PawnInfoC.AmountInGame.ToString() + "/" + e.PlayerInfoE(curPlayerI).PawnInfoC.MaxAvailable;
-                _pawnE.MaxPawnsTextC.TextUI.text = e.PlayerInfoE(curPlayerI).PawnInfoC.PeopleInCity.ToString();
+                _pawnE.AmountTextC.TextUI.text = _e.PlayerInfoE(curPlayerI).PawnInfoC.AmountInGame.ToString() + "/" + _e.PlayerInfoE(curPlayerI).PawnInfoC.MaxAvailable;
+                _pawnE.MaxPawnsTextC.TextUI.text = _e.PlayerInfoE(curPlayerI).PawnInfoC.PeopleInCity.ToString();
             }
             else
             {

@@ -4,9 +4,10 @@ namespace Chessy.Game
 {
     public struct BuildingE
     {
-        public BuildingTC BuildingTC;
-        public PlayerTC PlayerTC;
-        public LevelTC LevelTC;
+        public BuildingTypes BuildingT { get; internal set; }
+        public PlayerTypes PlayerT { get; internal set; }
+        public LevelTypes LevelT { get; internal set; }
+
         public HealthC HealthC;
         public readonly VisibleC VisibleC;
 

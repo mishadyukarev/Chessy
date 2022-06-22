@@ -1,6 +1,7 @@
 ﻿using Chessy.Game.Model.Entity;
 using Chessy.Game.Entity.View.UI.Right;
 using UnityEngine;
+using Chessy.Game.System;
 
 namespace Chessy.Game
 {
@@ -17,7 +18,7 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            var idx_0 = e.CellsC.Selected;
+            var idx_0 = _e.CellsC.Selected;
 
             var activeButt = false;
 
@@ -28,26 +29,26 @@ namespace Chessy.Game
             }
 
 
-            if (e.UnitTC(idx_0).HaveUnit)
+            if (_e.UnitT(idx_0).HaveUnit())
             {
-                if (e.UnitPlayerTC(idx_0).Is(e.CurPlayerITC.PlayerT))
+                if (_e.UnitPlayerT(idx_0).Is(_e.CurPlayerIT))
                 {
-                    if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.RelaxExtractPawn)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.RelaxExtractPawn)
                     {
                         activeButt = true;
 
-                        _relaxUIE.ImageC.Image.color = e.UnitConditionTC(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
+                        _relaxUIE.ImageC.Image.color = _e.UnitConditionT(idx_0).Is(ConditionUnitTypes.Relaxed) ? Color.green : Color.white;
 
-                        if (e.UnitTC(idx_0).Is(UnitTypes.Pawn))
+                        if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
                         {
-                            if (e.MainToolWeaponTC(idx_0).Is(ToolWeaponTypes.Axe))
+                            if (_e.MainToolWeaponT(idx_0).Is(ToolWeaponTypes.Axe))
                             {
-                                _needActiveZone[(byte)e.UnitTC(idx_0).UnitT] = true;
+                                _needActiveZone[(byte)_e.UnitT(idx_0)] = true;
                             }
                         }
                         else
                         {
-                            _needActiveZone[(byte)e.UnitTC(idx_0).UnitT] = true;
+                            _needActiveZone[(byte)_e.UnitT(idx_0)] = true;
                         }
                     }
                 }

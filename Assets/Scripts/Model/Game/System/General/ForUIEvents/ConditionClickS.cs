@@ -6,20 +6,20 @@ namespace Chessy.Game.Model.System
     {
         public void Click(in ConditionUnitTypes conditionT)
         {
-            if (_eMG.CurPlayerITC.Is(_eMG.WhoseMovePlayerTC.PlayerT))
+            if (_e.CurPlayerIT.Is(_e.WhoseMovePlayerT))
             {
-                if (_eMG.UnitConditionTC(_eMG.CellsC.Selected).Is(conditionT))
+                if (_e.UnitConditionT(_e.CellsC.Selected).Is(conditionT))
                 {
-                    _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TrySetConditionUnitOnCellM), ConditionUnitTypes.None, _eMG.CellsC.Selected });
+                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetConditionUnitOnCellM), ConditionUnitTypes.None, _e.CellsC.Selected });
                 }
                 else
                 {
-                    _eMG.RpcPoolEs.Action0(_eMG.RpcPoolEs.MasterRPCName, RpcTarget.MasterClient, new object[] { nameof(_sMG.TrySetConditionUnitOnCellM), conditionT, _eMG.CellsC.Selected });
+                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetConditionUnitOnCellM), conditionT, _e.CellsC.Selected });
                 }
             }
-            else _sMG.Mistake(MistakeTypes.NeedWaitQueue);
+            else _s.Mistake(MistakeTypes.NeedWaitQueue);
 
-            _eMG.NeedUpdateView = true;
+            _e.NeedUpdateView = true;
         }
     }
 }

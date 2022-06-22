@@ -1,6 +1,4 @@
-﻿using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
-//using Chessy.Game.Values;
+﻿//using Chessy.Game.Values;
 //using Photon.Pun;
 //using Photon.Realtime;
 //using System;

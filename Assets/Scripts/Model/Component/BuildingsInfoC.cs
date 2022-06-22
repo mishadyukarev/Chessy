@@ -4,7 +4,7 @@
     {
         readonly bool[] _haveBuilding;
 
-        internal bool[] HavBuildingsClone => (bool[])_haveBuilding.Clone();
+        internal bool[] HaveBuildingsClone => (bool[])_haveBuilding.Clone();
 
         public bool HaveBuilding(in BuildingTypes buildingT) => _haveBuilding[(byte)buildingT];
 

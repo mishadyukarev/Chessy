@@ -36,7 +36,7 @@
 
 //                        e.FertilizeC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
 
-//                        if (e.UnitTC(cell_0).HaveUnit)
+//                        if (e.UnitTC(cell_0).HaveUnit())
 //                        {
 //                            if (e.UnitPlayerTC(cell_0).Is(whoseMove))
 //                            {

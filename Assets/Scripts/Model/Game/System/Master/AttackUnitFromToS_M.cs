@@ -1,6 +1,4 @@
 ﻿using Chessy.Game.Extensions;
-using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.System;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit;
 using Chessy.Game.Values.Cell.Unit.Effect;
@@ -15,34 +13,34 @@ namespace Chessy.Game.Model.System
 
         internal void AttackUnitFromTo(in byte idx_from, in byte idx_to)
         {
-            _eMG.StepUnitC(idx_from).Steps = 0;
-            _eMG.UnitConditionTC(idx_from).Condition = ConditionUnitTypes.None;
+            _e.StepUnitC(idx_from).Steps = 0;
+            _e.SetUnitConditionT(idx_from, ConditionUnitTypes.None);
 
-            if (_eMG.UnitTC(idx_from).IsMelee(_eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
+            if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
                 ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
             else ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
-            _eMG.RpcPoolEs.AnimationCell_ToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
-            _eMG.RpcPoolEs.AnimationCell_ToGeneral(idx_to, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
+            AnimationCellToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
+            AnimationCellToGeneral(idx_to, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
 
 
-            var powerDam_from = _eMG.DamageAttackC(idx_from).Damage;
-            if (_eMG.AttackUniqueCellsC(idx_from).Contains(idx_to))
+            var powerDam_from = _e.DamageAttackC(idx_from).Damage;
+            if (_e.AttackUniqueCellsC(idx_from).Contains(idx_to))
             {
                 powerDam_from *= DamageUnitValues.UNIQUE_ATTACK_PERCENT_DAMAGE;
             }
 
-            var powerDam_to = _eMG.DamageOnCellC(idx_to).Damage;
+            var powerDam_to = _e.DamageOnCellC(idx_to).Damage;
 
 
-            var dirAttack = _eMG.AroundCellsE(idx_from).Direct(idx_to);
+            var dirAttack = _e.AroundCellsE(idx_from).Direct(idx_to);
 
-            if (_eMG.WeatherE.SunSideTC.IsAcitveSun)
+            if (_e.WeatherE.SunSideTC.IsAcitveSun)
             {
                 var isSunnedUnit = true;
 
-                foreach (var dir in _eMG.WeatherE.SunSideTC.RaysSun)
+                foreach (var dir in _e.WeatherE.SunSideTC.RaysSun)
                 {
                     if (dirAttack == dir) isSunnedUnit = false;
                 }
@@ -105,38 +103,38 @@ namespace Chessy.Game.Model.System
                 }
             }
 
-            if (_eMG.UnitTC(idx_from).IsMelee(_eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
+            if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
             {
-                if (_eMG.ShieldUnitEffectC(idx_from).HaveAnyProtection)
+                if (_e.ShieldUnitEffectC(idx_from).HaveAnyProtection())
                 {
-                    _eMG.ShieldUnitEffectC(idx_from).Protection--;
+                    _e.ShieldUnitEffectC(idx_from).Protection--;
                 }
 
-                else if (_eMG.ExtraToolWeaponTC(idx_from).Is(ToolWeaponTypes.Shield))
+                else if (_e.ExtraToolWeaponT(idx_from).Is(ToolWeaponTypes.Shield))
                 {
                     UnitSs.AttackShield(1f, idx_from);
                 }
 
                 else if (minus_from > 0)
                 {
-                    UnitSs.Attack(minus_from, _eMG.UnitPlayerTC(idx_from).PlayerT.NextPlayer(), idx_from);
+                    UnitSs.Attack(minus_from, _e.UnitPlayerT(idx_from).NextPlayer(), idx_from);
                 }
             }
             else
             {
-                if (_eMG.FrozenArrawEffectC(idx_from).HaveShoots)
+                if (_e.FrozenArrawEffectC(idx_from).HaveShoots)
                 {
-                    _eMG.FrozenArrawEffectC(idx_from).Shoots--;
+                    _e.FrozenArrawEffectC(idx_from).Shoots--;
 
-                    _eMG.StunUnitC(idx_to).Stun = StunValues.AFTER_FROZEN_ARRAW_PAWN;
+                    _e.StunUnitC(idx_to).Stun = StunValues.AFTER_FROZEN_ARRAW_PAWN;
                 }
-                else if (_eMG.UnitT(idx_from) == UnitTypes.Snowy)
+                else if (_e.UnitT(idx_from) == UnitTypes.Snowy)
                 {
                     if (_snowyArrow <= 0)
                     {
-                        _eMG.FrozenArrawEffectC(idx_from).Shoots--;
+                        _e.FrozenArrawEffectC(idx_from).Shoots--;
 
-                        _eMG.StunUnitC(idx_to).Stun = 1;
+                        _e.StunUnitC(idx_to).Stun = 1;
 
                         _snowyArrow = Values.Values.RAINY_COOLDOWN_FROZEN_ARRAW;
                     }
@@ -147,12 +145,12 @@ namespace Chessy.Game.Model.System
                 }
             }
 
-            if (_eMG.ShieldUnitEffectC(idx_to).HaveAnyProtection)
+            if (_e.ShieldUnitEffectC(idx_to).HaveAnyProtection())
             {
-                _eMG.ShieldUnitEffectC(idx_to).Protection--;
+                _e.ShieldUnitEffectC(idx_to).Protection--;
             }
 
-            else if (_eMG.ExtraToolWeaponTC(idx_to).Is(ToolWeaponTypes.Shield))
+            else if (_e.ExtraToolWeaponT(idx_to).Is(ToolWeaponTypes.Shield))
             {
                 UnitSs.AttackShield(1f, idx_to);
             }
@@ -161,25 +159,25 @@ namespace Chessy.Game.Model.System
             {
                 var killer = PlayerTypes.None;
 
-                if (_eMG.UnitTC(idx_to).IsAnimal)
+                if (_e.UnitT(idx_to).IsAnimal())
                 {
-                    killer = _eMG.UnitPlayerTC(idx_from).PlayerT;
+                    killer = _e.UnitPlayerT(idx_from);
                 }
                 else
                 {
-                    killer = _eMG.UnitPlayerTC(idx_to).PlayerT.NextPlayer();
+                    killer = _e.UnitPlayerT(idx_to).NextPlayer();
                 }
 
 
-                var wasUnitT_to = _eMG.UnitTC(idx_to).UnitT;
+                var wasUnitT_to = _e.UnitT(idx_to);
 
                 UnitSs.Attack(minus_to, killer, idx_to);
 
-                if (!_eMG.UnitTC(idx_to).HaveUnit)
+                if (!_e.UnitT(idx_to).HaveUnit())
                 {
-                    if (_eMG.UnitTC(idx_from).HaveUnit)
+                    if (_e.UnitT(idx_from).HaveUnit())
                     {
-                        if (_eMG.UnitTC(idx_from).IsMelee(_eMG.MainToolWeaponTC(idx_from).ToolWeaponT))
+                        if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
                         {
                             ShiftUnitOnOtherCellM(idx_from, idx_to);
                         }
@@ -187,7 +185,7 @@ namespace Chessy.Game.Model.System
 
                     if (wasUnitT_to == UnitTypes.Wolf)
                     {
-                        _eMG.ResourcesC(_eMG.UnitPlayerTC(idx_from).PlayerT, ResourceTypes.Food).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                        _e.ResourcesC(_e.UnitPlayerT(idx_from), ResourceTypes.Food).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
                     }
                 }
             }

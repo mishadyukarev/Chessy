@@ -50,6 +50,8 @@ MonoBehaviour:
   - GeneralRpc
   - OtherRpc
   - Melt_Master
+  - RPC
+  - PunRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

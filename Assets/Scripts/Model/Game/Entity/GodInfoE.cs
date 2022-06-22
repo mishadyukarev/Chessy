@@ -3,14 +3,9 @@
     public struct GodInfoE
     {
         public bool HaveHeroInInventor;
-        public UnitTC UnitTC;
+        public UnitTypes UnitT { get; internal set; }
         public CooldownC CooldownC;
 
-        public UnitTypes UnitT
-        {
-            get => UnitTC.UnitT;
-            set => UnitTC.UnitT = value;
-        }
         public float Cooldown
         {
             get => CooldownC.Cooldown;

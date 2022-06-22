@@ -19,7 +19,7 @@ namespace Chessy.Game.View.UI.System
         {
             for (var lessonT = (LessonTypes)1; lessonT < LessonTypes.End; lessonT++)
             {
-                _centerUIEs.LessonGOC(lessonT).SetActive(lessonT == e.LessonT);
+                _centerUIEs.LessonGOC(lessonT).SetActive(lessonT == _e.LessonT);
             }
         }
     }

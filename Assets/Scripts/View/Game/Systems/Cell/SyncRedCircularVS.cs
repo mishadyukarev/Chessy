@@ -1,5 +1,6 @@
 ﻿using Chessy.Game.Enum;
 using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using Chessy.Game.Values;
 using Chessy.Game.View.System;
 
@@ -55,7 +56,7 @@ namespace Chessy.Game
 
 
 
-                if (!_e.LessonTC.HaveLesson)
+                if (!_e.LessonT.HaveLesson())
                 {
                     if (_e.Common.GameModeT == Common.GameModeTypes.TrainingOffline)
                     {

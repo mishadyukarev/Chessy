@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Common
 {
-    public struct CloudC
+    public struct CloudCenterIdxC
     {
         public byte Center { get; internal set; }
     }

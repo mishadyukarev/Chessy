@@ -1,4 +1,5 @@
 ﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.System;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using System;
 
@@ -15,13 +16,13 @@ namespace Chessy.Game
 
         internal override void Sync()
         {
-            var idx_sel = e.CellsC.Selected;
+            var idx_sel = _e.CellsC.Selected;
 
 
-            if (e.UnitTC(idx_sel).HaveUnit && !e.UnitTC(idx_sel).IsAnimal)
+            if (_e.UnitT(idx_sel).HaveUnit() && !_e.UnitT(idx_sel).IsAnimal())
             {
-                var damageOnCell = e.DamageOnCellC(idx_sel).Damage;
-                var damageAttack = e.DamageAttackC(idx_sel).Damage;
+                var damageOnCell = _e.DamageOnCellC(idx_sel).Damage;
+                var damageAttack = _e.DamageAttackC(idx_sel).Damage;
 
 
 
@@ -30,19 +31,19 @@ namespace Chessy.Game
                 var needActiveDamage = false;
 
 
-                if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
+                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
                 {
                     needActiveHp = true;
                 }
 
-                if (!e.LessonTC.HaveLesson || e.LessonT >= Enum.LessonTypes.ThatsYourDamage)
+                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ThatsYourDamage)
                 {
                     needActiveDamage = true;
                 }
 
-                if (!e.LessonTC.HaveLesson || e.LessonTC.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
+                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
                 {
-                    if (!e.UnitTC(idx_sel).Is(UnitTypes.Elfemale))
+                    if (!_e.UnitT(idx_sel).Is(UnitTypes.Elfemale))
                     {
                         needActiveWater = true;
                     }
@@ -57,19 +58,19 @@ namespace Chessy.Game
 
 
 
-                _statsUIE.Stat(UnitStatTypes.Hp).TextC.TextUI.text = Math.Truncate(100 * e.HpUnitC(idx_sel).Health).ToString();
+                _statsUIE.Stat(UnitStatTypes.Hp).TextC.TextUI.text = Math.Truncate(100 * _e.HpUnitC(idx_sel).Health).ToString();
                 _statsUIE.DamageE.TextC.TextUI.text = (Math.Truncate(10 * damageAttack) / 10) + "/" + (Math.Truncate(10 * damageOnCell) / 10).ToString();
-                _statsUIE.EnergyE.TextUIC.TextUI.text = (Math.Truncate(100 * e.StepUnitC(idx_sel).Steps) / 100).ToString();
-                _statsUIE.WaterE.TextC.TextUI.text = (Math.Truncate(100 * e.WaterUnitC(idx_sel).Water) / 100).ToString();
+                _statsUIE.EnergyE.TextUIC.TextUI.text = (Math.Truncate(100 * _e.StepUnitC(idx_sel).Steps) / 100).ToString();
+                _statsUIE.WaterE.TextC.TextUI.text = (Math.Truncate(100 * _e.WaterUnitC(idx_sel).Water) / 100).ToString();
 
-                _statsUIE.Stat(UnitStatTypes.Hp).ImageC.Image.fillAmount = (float)(e.HpUnitC(idx_sel).Health / HpValues.MAX);
+                _statsUIE.Stat(UnitStatTypes.Hp).ImageC.Image.fillAmount = (float)(_e.HpUnitC(idx_sel).Health / HpValues.MAX);
 
 
 
                 _statsUIE.DamageE.ImageC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                _statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)e.StepUnitC(idx_sel).Steps / StepValues.MAX;
-                _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(e.WaterUnitC(idx_sel).Water / WaterValues.MAX);
+                _statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)_e.StepUnitC(idx_sel).Steps / StepValues.MAX;
+                _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(_e.WaterUnitC(idx_sel).Water / WaterValues.MAX);
             }
 
             else

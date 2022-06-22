@@ -1,23 +1,24 @@
-﻿using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.Entity.Cell.Unit;
+﻿using Chessy.Game.Model.Entity.Cell.Unit;
 
 namespace Chessy.Game.Model.System
 {
-    struct MainToolWeaponUnitWorkS
+    static class MainToolWeaponUnitWorkS
     {
-        readonly MainToolWeaponE _mainTWUnitE;
-
-        internal MainToolWeaponUnitWorkS(in MainToolWeaponE mainToolWeaponE) => _mainTWUnitE = mainToolWeaponE;
-
-        internal void Set(in ToolWeaponTypes twT, in LevelTypes levelT)
+        internal static void Set(this ToolWeaponMainUnitC mainToolWeaponE, in ToolWeaponTypes twT, in LevelTypes levelT)
         {
-            _mainTWUnitE.ToolWeaponTC.ToolWeaponT = twT;
-            _mainTWUnitE.LevelTC.LevelT = levelT;
+            mainToolWeaponE.ToolWeaponT = twT;
+            mainToolWeaponE.LevelT = levelT;
         }
-        internal void Clear()
+        internal static void Clear(this ToolWeaponMainUnitC mainToolWeaponE)
         {
-            _mainTWUnitE.ToolWeaponTC.ToolWeaponT = default;
-            _mainTWUnitE.LevelTC.LevelT = default;
+            mainToolWeaponE.ToolWeaponT = default;
+            mainToolWeaponE.LevelT = default;
         }
+        internal static void CopyMainTW(this ToolWeaponMainUnitC mainToolWeaponToE, in ToolWeaponMainUnitC mainToolWeaponFromE)
+        {
+            mainToolWeaponToE.ToolWeaponT = mainToolWeaponFromE.ToolWeaponT;
+            mainToolWeaponToE.LevelT = mainToolWeaponFromE.LevelT;
+        }
+
     }
 }

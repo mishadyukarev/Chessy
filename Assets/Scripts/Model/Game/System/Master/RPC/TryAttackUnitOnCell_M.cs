@@ -7,12 +7,12 @@ namespace Chessy.Game.Model.System
     {
         internal void TryAttackUnitOnCellM(in byte idxCellFrom, in byte idxCellTo, in Player sender)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? _eMG.WhoseMovePlayerT : sender.GetPlayer();
+            var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
 
-            var canAttack = _eMG.AttackUniqueCellsC(idxCellFrom).Contains(idxCellTo)
-                || _eMG.AttackSimpleCellsC(idxCellFrom).Contains(idxCellTo);
+            var canAttack = _e.AttackUniqueCellsC(idxCellFrom).Contains(idxCellTo)
+                || _e.AttackSimpleCellsC(idxCellFrom).Contains(idxCellTo);
 
-            if (canAttack && _eMG.UnitPlayerTC(idxCellFrom).Is(whoseMove))
+            if (canAttack && _e.UnitPlayerT(idxCellFrom).Is(whoseMove))
             {
                 AttackUnitFromTo(idxCellFrom, idxCellTo);
             }

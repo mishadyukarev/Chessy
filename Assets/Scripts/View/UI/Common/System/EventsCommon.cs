@@ -17,16 +17,19 @@ namespace Chessy.Common
             var bookE = eUICommon.BookE;
             bookE.ExitButtonC.AddListener(() =>
             {
-                eMCommon.IsOpenedBook = false;
                 eVCommon.Sound(ClipCommonTypes.CloseBook).Play();
+
+                eMCommon.NeedUpdateView = true;
             });
 
             bookE.NextButtonC.AddListener(() =>
             {
                 if (eMCommon.PageBookT < PageBookTypes.End - 1)
                 {
-                    eMCommon.PageBookTC.PageBookT++;
+                    eMCommon.PageBookT++;
                     eVCommon.Sound(ClipCommonTypes.ShiftBookSheet).Play();
+
+                    eMCommon.NeedUpdateView = true;
                 }
             });
 
@@ -34,8 +37,10 @@ namespace Chessy.Common
             {
                 if (eMCommon.PageBookT > 0)
                 {
-                    eMCommon.PageBookTC.PageBookT--;
+                    eMCommon.PageBookT--;
                     eVCommon.Sound(ClipCommonTypes.ShiftBookSheet).Play();
+
+                    eMCommon.NeedUpdateView = true;
                 }
             });
 
@@ -44,6 +49,8 @@ namespace Chessy.Common
             {
                 eMCommon.IsOpenSettings = false;
                 //eVCommon.Sound(ClipTypes.Click).Play();
+
+                eMCommon.NeedUpdateView = true;
             });
 
 

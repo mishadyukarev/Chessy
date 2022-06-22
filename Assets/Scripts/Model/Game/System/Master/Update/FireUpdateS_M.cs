@@ -1,5 +1,4 @@
 ﻿using Chessy.Game.Extensions;
-using Chessy.Game.Model.Entity;
 using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 using System.Collections.Generic;
@@ -10,48 +9,40 @@ namespace Chessy.Game.Model.System
     {
         void FireUpdate()
         {
-            foreach (var cellE in _eMG.AroundCellsE(_eMG.WeatherE.CloudC.Center).CellsAround)
-            {
-                _eMG.HaveFire(cellE) = false;
-            }
-
-
             var needForFireNext = new List<byte>();
 
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (_eMG.HaveFire(cell_0))
+                if (_e.HaveFire(cell_0))
                 {
-                    _sMG.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
-
-                    if (_eMG.UnitTC(cell_0).HaveUnit)
+                    if (_e.UnitT(cell_0).HaveUnit())
                     {
-                        if (_eMG.UnitTC(cell_0).Is(UnitTypes.Hell))
+                        if (_e.UnitT(cell_0).Is(UnitTypes.Hell))
                         {
-                            _eMG.HpUnitC(cell_0).Health = HpValues.MAX;
+                            _e.HpUnitC(cell_0).Health = HpValues.MAX;
                         }
                         else
                         {
-                            if (_eMG.UnitPlayerTC(cell_0).Is(PlayerTypes.None))
+                            if (_e.UnitPlayerT(cell_0).Is(PlayerTypes.None))
                             {
-                                _sMG.UnitSs.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                                _s.UnitSs.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                _sMG.UnitSs.Attack(HpValues.FIRE_DAMAGE, _eMG.UnitPlayerTC(cell_0).PlayerT.NextPlayer(), cell_0);
+                                _s.UnitSs.Attack(HpValues.FIRE_DAMAGE, _e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
                             }
                         }
                     }
 
-                    if (!_eMG.AdultForestC(cell_0).HaveAnyResources)
+                    if (!_e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        _eMG.BuildingTC(cell_0).BuildingT = BuildingTypes.None;
+                        _e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
 
 
-                        _eMG.HaveFire(cell_0) = false;
+                        _e.HaveFire(cell_0) = false;
 
 
-                        foreach (var cellE in _eMG.AroundCellsE(cell_0).CellsAround)
+                        foreach (var cellE in _e.AroundCellsE(cell_0).CellsAround)
                         {
                             needForFireNext.Add(cellE);
                         }
@@ -61,12 +52,31 @@ namespace Chessy.Game.Model.System
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (!_eMG.IsBorder(cell_0))
+                if (!_e.IsBorder(cell_0))
                 {
-                    if (_eMG.AdultForestC(cell_0).HaveAnyResources)
+                    if (_e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        _eMG.HaveFire(cell_0) = true;
+                        _e.HaveFire(cell_0) = true;
                     }
+                }
+            }
+        }
+
+        void TryPutOutFireWithClouds()
+        {
+            foreach (var cellE in _e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround)
+            {
+                _e.HaveFire(cellE) = false;
+            }
+        }
+
+        void BurnAdultForest()
+        {
+            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            {
+                if (_e.HaveFire(cell_0))
+                {
+                    _s.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
                 }
             }
         }

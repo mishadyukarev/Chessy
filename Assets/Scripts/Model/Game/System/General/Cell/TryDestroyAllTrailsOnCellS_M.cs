@@ -6,9 +6,9 @@
         {
             for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
             {
-                if (_eMG.HealthTrail(cell).IsAlive(dirT))
+                if (_e.HealthTrail(cell).IsAlive(dirT))
                 {
-                    _eMG.HealthTrail(cell).Health(dirT) = 0;
+                    _e.HealthTrail(cell).Health(dirT) = 0;
                 }
             }
         }

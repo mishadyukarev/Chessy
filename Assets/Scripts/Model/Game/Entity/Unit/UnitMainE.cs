@@ -5,10 +5,11 @@ namespace Chessy.Game.Model.Entity.Cell.Unit
 {
     public sealed class UnitMainE
     {
-        public UnitTC UnitTC;
-        public LevelTC LevelTC;
-        public PlayerTC PlayerTC;
-        public ConditionUnitTC ConditionTC;
+        public UnitTypes UnitT { get; internal set; }
+        public LevelTypes LevelT { get; internal set; }
+        public PlayerTypes PlayerT { get; internal set; }
+        public ConditionUnitTypes ConditionT { get; internal set; }
+
         public IsRightArcherC IsRightArcherC;
         public readonly VisibleC VisibleC;
         public readonly CanSetUnitHereC CanSetUnitHereC;

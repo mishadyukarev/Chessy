@@ -4,13 +4,13 @@
     {
         internal void TryTakeAdultForestResourcesM(in float taking, in byte cellIdx)
         {
-            if (_eMG.AdultForestC(cellIdx).HaveAnyResources)
+            if (_e.AdultForestC(cellIdx).HaveAnyResources)
             {
-                _eMG.AdultForestC(cellIdx).Resources -= taking;
+                _e.AdultForestC(cellIdx).Resources -= taking;
 
-                if (!_eMG.AdultForestC(cellIdx).HaveAnyResources)
+                if (!_e.AdultForestC(cellIdx).HaveAnyResources)
                 {
-                    _eMG.AdultForestC(cellIdx).Resources = 0;
+                    _e.AdultForestC(cellIdx).Resources = 0;
                     TrySeedNewYoungForestOnCell(cellIdx);
                     TryDestroyAllTrailsOnCell(cellIdx);
                 }
