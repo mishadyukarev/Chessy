@@ -13,7 +13,7 @@ namespace Chessy.Common.View.UI.System
 
         internal override void Sync()
         {
-            _settingsUIE.ParentGOC.SetActive(e.IsOpenSettings);
+            _settingsUIE.ParentGOC.SetActive(e.SettingsC.IsOpenedBarWithSettings);
         }
     }
 }

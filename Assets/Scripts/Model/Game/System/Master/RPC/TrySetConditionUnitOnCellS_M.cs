@@ -63,7 +63,7 @@ namespace Chessy.Game.Model.System
                                         {
                                             if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoE.UnitT.Is(UnitTypes.Elfemale))
                                             {
-                                                BuildingSs.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cell_0), BuildingValues.MAX_HP, cell_0);
+                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cell_0), BuildingValues.MAX_HP, cell_0);
                                             }
                                         }
                                     }

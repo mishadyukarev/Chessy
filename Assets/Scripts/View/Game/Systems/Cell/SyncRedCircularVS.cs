@@ -58,7 +58,7 @@ namespace Chessy.Game
 
                 if (!_e.LessonT.HaveLesson())
                 {
-                    if (_e.Common.GameModeT == Common.GameModeTypes.TrainingOffline)
+                    if (_e.Com.GameModeT == Common.GameModeTypes.TrainingOffline)
                     {
                         if (_e.UnitT(currentIdxCell) == UnitTypes.King)
                         {

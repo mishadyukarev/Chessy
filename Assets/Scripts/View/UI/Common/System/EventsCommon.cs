@@ -24,9 +24,9 @@ namespace Chessy.Common
 
             bookE.NextButtonC.AddListener(() =>
             {
-                if (eMCommon.PageBookT < PageBookTypes.End - 1)
+                if (eMCommon.OpenedNowPageBookT < PageBookTypes.End - 1)
                 {
-                    eMCommon.PageBookT++;
+                    eMCommon.OpenedNowPageBookT++;
                     eVCommon.Sound(ClipCommonTypes.ShiftBookSheet).Play();
 
                     eMCommon.NeedUpdateView = true;
@@ -35,9 +35,9 @@ namespace Chessy.Common
 
             bookE.BackButtonC.AddListener(() =>
             {
-                if (eMCommon.PageBookT > 0)
+                if (eMCommon.OpenedNowPageBookT > 0)
                 {
-                    eMCommon.PageBookT--;
+                    eMCommon.OpenedNowPageBookT--;
                     eVCommon.Sound(ClipCommonTypes.ShiftBookSheet).Play();
 
                     eMCommon.NeedUpdateView = true;
@@ -47,7 +47,7 @@ namespace Chessy.Common
 
             eUICommon.SettingsE.ExitButtonC.AddListener(() =>
             {
-                eMCommon.IsOpenSettings = false;
+                eMCommon.SettingsC.IsOpenedBarWithSettings = false;
                 //eVCommon.Sound(ClipTypes.Click).Play();
 
                 eMCommon.NeedUpdateView = true;

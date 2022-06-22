@@ -7,16 +7,16 @@ namespace Chessy.Common.Model.System
     {
         public void BuyPremiumProduct()
         {
-            if (_eMC.ShopC.IsInitialized) //если покупка инициализирована 
+            if (_e.ShopC.IsInitialized) //если покупка инициализирована 
             {
-                var product = _eMC.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME); //находим продукт покупки 
+                var product = _e.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME); //находим продукт покупки 
 
                 if (product == default) throw new Exception();
 
                 if (product.availableToPurchase) //если продукт найдет и готов для продажи
                 {
                     Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
-                    _eMC.ShopC.StoreController.InitiatePurchase(product); //покупаем
+                    _e.ShopC.StoreController.InitiatePurchase(product); //покупаем
                 }
                 else
                 {

@@ -1,10 +1,12 @@
-﻿namespace Chessy.Game
+﻿using Chessy.Game.Model.Entity;
+
+namespace Chessy.Game
 {
-    sealed partial class BuildingSystems
+    static partial class BuildingSystems
     {
-        internal void Clear(in byte cell_0)
+        internal static void Clear(this EntitiesModelGame e, in byte cell_0)
         {
-            _e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
+            e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
         }
     }
 }

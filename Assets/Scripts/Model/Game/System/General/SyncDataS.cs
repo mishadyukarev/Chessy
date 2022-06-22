@@ -88,15 +88,15 @@ namespace Chessy.Game.Model.System
 
             objs.Add(_e.IsStartedGame);
             objs.Add(_e.Motions);
-            objs.Add(_e.WhereTeleportC.Start);
-            objs.Add(_e.WhereTeleportC.End);
+            objs.Add(_e.WhereTeleportC.StartIdxCell);
+            objs.Add(_e.WhereTeleportC.EndIdxCell);
             objs.Add(_e.WinnerPlayerT);
             objs.Add(_e.WhoseMovePlayerT);
 
             objs.Add(_e.WeatherE.WindC.DirectT);
             objs.Add(_e.WeatherE.WindC.Speed);
-            objs.Add(_e.WeatherE.CloudC.Center);
-            objs.Add(_e.WeatherE.SunSideTC.SunSideT);
+            objs.Add(_e.WeatherE.CellIdxCenterCloud);
+            objs.Add(_e.WeatherE.SunSideT);
 
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
@@ -228,16 +228,16 @@ namespace Chessy.Game.Model.System
             }
 
             _e.IsStartedGame = (bool)objects[idxCurrent++];
-            _e.MotionsC.Motions = (int)objects[idxCurrent++];
-            _e.WhereTeleportC.Start = (byte)objects[idxCurrent++];
-            _e.WhereTeleportC.End = (byte)objects[idxCurrent++];
+            _e.Motions = (int)objects[idxCurrent++];
+            _e.WhereTeleportC.StartIdxCell = (byte)objects[idxCurrent++];
+            _e.WhereTeleportC.EndIdxCell = (byte)objects[idxCurrent++];
             _e.WinnerPlayerT = (PlayerTypes)objects[idxCurrent++];
             _e.WhoseMovePlayerT = (PlayerTypes)objects[idxCurrent++];
 
             _e.WeatherE.WindC.DirectT = (DirectTypes)objects[idxCurrent++];
             _e.WeatherE.WindC.Speed = (float)objects[idxCurrent++];
-            _e.WeatherE.CloudC.Center = (byte)objects[idxCurrent++];
-            _e.WeatherE.SunSideTC.SunSideT = (SunSideTypes)objects[idxCurrent++];
+            _e.WeatherE.CellIdxCenterCloud = (byte)objects[idxCurrent++];
+            _e.WeatherE.SunSideT = (SunSideTypes)objects[idxCurrent++];
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {

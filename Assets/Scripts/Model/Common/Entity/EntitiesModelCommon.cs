@@ -6,34 +6,46 @@ namespace Chessy.Common.Entity
 {
     public sealed class EntitiesModelCommon
     {
-        readonly Dictionary<Enum.ClipCommonTypes, Action> _sound = new Dictionary<Enum.ClipCommonTypes, Action>();
-
         public ShopC ShopC;
+        public AdC AdC;  
+        public UpdateAllViewC UpdateAllViewC;
+        public SettingsC SettingsC;
+        public BookC BookC;
+        public CommonInfoAboutGameC CommonInfoAboutGameC;
+        public SoundMusicActionsC SoundMusicActionsC;
 
-        public readonly TestModes TestModeT;
-        public AdC AdC;
-        public readonly DateTime TimeStartGameC;
-
-        public GameModeTypes GameModeT { get; set; }
-
-        public PageBookTypes PageBookT { get; set; }
-        public bool IsOpenedBook => PageBookT > PageBookTypes.None;
-
-        public SceneTypes SceneT { get; internal set; }
-
-        public bool WasLikeGameZone { get; internal set; }
-        public bool IsOpenSettings;
-
-        public bool NeedUpdateView;
-
-        public Action SoundActionC(in Enum.ClipCommonTypes clipT) => _sound[clipT];
-
-        public EntitiesModelCommon(in TestModes testModeT, in Dictionary<Enum.ClipCommonTypes, Action> sound)
+        public bool NeedUpdateView
         {
-            foreach (var item in sound) _sound.Add(item.Key, new Action(item.Value));
+            get => UpdateAllViewC.NeedUpdateView;
+            set => UpdateAllViewC.NeedUpdateView = value;
+        }
+        internal ref float ForUpdateViewTimer => ref UpdateAllViewC.ForUpdateViewTimer;
+        public PageBookTypes OpenedNowPageBookT
+        {
+            get => BookC.OpenedNowPageBookT;
+            set => BookC.OpenedNowPageBookT = value;
+        }
+        public TestModes TestModeT => CommonInfoAboutGameC.TestModeT;
+        public DateTime StartGameTime => CommonInfoAboutGameC.StartGameTime;
+        public GameModeTypes GameModeT
+        {
+            get => CommonInfoAboutGameC.GameModeT;
+            set => CommonInfoAboutGameC.GameModeT = value;
+        }
+        public SceneTypes SceneT
+        {
+            get => CommonInfoAboutGameC.SceneT;
+            internal set => CommonInfoAboutGameC.SceneT = value;
+        }
+        public Action SoundActionC(in ClipCommonTypes clipT) => SoundMusicActionsC.SoundActionC(clipT);
 
-            TimeStartGameC = DateTime.Now;
-            TestModeT = testModeT;
+        public EntitiesModelCommon(in TestModes testModeT, in Dictionary<ClipCommonTypes, Action> sound)
+        {
+            var sound2 = new Dictionary<ClipCommonTypes, Action>();
+            foreach (var item in sound) sound2.Add(item.Key, new Action(item.Value));
+            SoundMusicActionsC = new SoundMusicActionsC(sound2);
+
+            CommonInfoAboutGameC = new CommonInfoAboutGameC(testModeT, DateTime.Now);    
         }
     }
 }

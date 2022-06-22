@@ -14,7 +14,7 @@ namespace Chessy.Game.Model.System
 
         public void Update()
         {
-            if (_e.Common.TestModeT.Is(TestModes.Standart))
+            if (_e.Com.TestModeT.Is(TestModes.Standart))
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
                 {
@@ -54,7 +54,7 @@ namespace Chessy.Game.Model.System
 
                 if (Input.GetKeyDown(KeyCode.T))
                 {
-                    _e.UnitMainE(_e.CurrentCellIdx).UnitT = UnitTypes.None;
+                    _e.SetUnitOnCellT(_e.CurrentCellIdx, UnitTypes.None);
                 }
             }
         }

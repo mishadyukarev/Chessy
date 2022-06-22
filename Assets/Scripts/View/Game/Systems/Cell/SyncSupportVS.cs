@@ -60,7 +60,7 @@ namespace Chessy.Game
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var cell_target = _e.AroundCellsE(_e.WeatherE.CloudC.Center).IdxCell(dirT);
+                        var cell_target = _e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).IdxCell(dirT);
 
                         _needActive[cell_target] = true;
                         _needColor[cell_target] = ColorsValues.Color(SupportCellVisionTypes.Shift);

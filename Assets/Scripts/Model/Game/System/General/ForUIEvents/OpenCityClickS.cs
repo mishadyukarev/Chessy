@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
     {
         public void OpenCityClick()
         {
-            _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _e.Com.SoundActionC(ClipCommonTypes.Click).Invoke();
 
 
             _e.IsSelectedCity = !_e.IsSelectedCity;

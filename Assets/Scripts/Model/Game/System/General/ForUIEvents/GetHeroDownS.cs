@@ -11,7 +11,7 @@ namespace Chessy.Game.Model.System
 
             if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
             {
-                _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                _e.Com.SoundActionC(ClipCommonTypes.Click).Invoke();
 
                 var curPlayer = _e.CurPlayerIT;
 

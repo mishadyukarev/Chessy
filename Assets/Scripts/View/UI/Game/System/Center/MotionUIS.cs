@@ -18,7 +18,7 @@ namespace Chessy.Game
             if (_e.MotionTimer > 0)
             {
                 _needActive = true;
-                _eUI.CenterEs.MotionTextC.TextUI.text = _e.MotionsC.Motions.ToString();
+                _eUI.CenterEs.MotionTextC.TextUI.text = _e.Motions.ToString();
             }
             else
             {

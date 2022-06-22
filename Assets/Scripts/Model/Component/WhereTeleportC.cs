@@ -2,7 +2,7 @@
 {
     public struct WhereTeleportC
     {
-        public byte Start { get; internal set; }
-        public byte End { get; internal set; }
+        public byte StartIdxCell { get; internal set; }
+        public byte EndIdxCell { get; internal set; }
     }
 }

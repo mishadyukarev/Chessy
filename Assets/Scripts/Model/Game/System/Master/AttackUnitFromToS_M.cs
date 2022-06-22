@@ -36,11 +36,11 @@ namespace Chessy.Game.Model.System
 
             var dirAttack = _e.AroundCellsE(idx_from).Direct(idx_to);
 
-            if (_e.WeatherE.SunSideTC.IsAcitveSun)
+            if (_e.WeatherE.SunSideT.IsAcitveSun())
             {
                 var isSunnedUnit = true;
 
-                foreach (var dir in _e.WeatherE.SunSideTC.RaysSun)
+                foreach (var dir in _e.WeatherE.SunSideT.RaysSun())
                 {
                     if (dirAttack == dir) isSunnedUnit = false;
                 }

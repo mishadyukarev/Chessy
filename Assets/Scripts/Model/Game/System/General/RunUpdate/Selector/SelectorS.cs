@@ -43,7 +43,7 @@ namespace Chessy.Game.Model.System
 
                 if (_e.LessonT == LessonTypes.UniqueAttackInfo)
                 {
-                    _e.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
+                    _e.WeatherE.SunSideT = SunSideTypes.Dawn;
                     _e.LessonT.SetNextLesson();
                 }
                 else if (_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
@@ -102,7 +102,7 @@ namespace Chessy.Game.Model.System
 
                                                 case AbilityTypes.ChangeDirectionWind:
                                                     {
-                                                        foreach (var cellE in _e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround)
+                                                        foreach (var cellE in _e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).CellsAround)
                                                         {
                                                             if (cellE == _e.CellsC.Current)
                                                             {

@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
         public void OnJoinedRoom()
         {
             CommonSs.ToggleScene(SceneTypes.Game);
-            StartGame(_e.Common.GameModeT == GameModeTypes.TrainingOffline);
+            StartGame(_e.Com.GameModeT == GameModeTypes.TrainingOffline);
             SyncDataM();
         }
     }

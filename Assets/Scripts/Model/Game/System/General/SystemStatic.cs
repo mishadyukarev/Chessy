@@ -1,4 +1,5 @@
 ﻿using Chessy.Common;
+using Chessy.Common.Enum;
 using Chessy.Game;
 using Chessy.Game.Enum;
 using Chessy.Game.Values;
@@ -245,6 +246,55 @@ namespace Chessy
             }
             return false;
         }
+
+
+        #region SunSideT
+
+        public static DirectTypes[] RaysSun(this SunSideTypes sunSideT)
+        {
+            var directs = new DirectTypes[3];
+            switch (sunSideT)
+            {
+                case SunSideTypes.Dawn:
+                    {
+                        directs[0] = DirectTypes.UpRight;
+                        directs[1] = DirectTypes.Right;
+                        directs[2] = DirectTypes.RightDown;
+                    }
+                    break;
+                case SunSideTypes.Sunset:
+                    {
+                        directs[0] = DirectTypes.LeftUp;
+                        directs[1] = DirectTypes.Left;
+                        directs[2] = DirectTypes.DownLeft;
+                    }
+                    break;
+                default: throw new Exception();
+            }
+
+            return directs;
+        }
+        public static bool IsAcitveSun(this SunSideTypes sunSideT)
+        {
+            switch (sunSideT)
+            {
+                case SunSideTypes.Dawn: return true;
+                case SunSideTypes.Center: return false;
+                case SunSideTypes.Sunset: return true;
+                case SunSideTypes.Night: return false;
+                default: throw new Exception();
+            }
+        }
+        public static void ToggleNext(this SunSideTypes sunSideT) => sunSideT = sunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++sunSideT;
+
+        #endregion
+
+
+        #region Book
+
+        public static bool IsOpenedBook(this BookC bookC) => bookC.OpenedNowPageBookT > PageBookTypes.None;
+
+        #endregion
 
     }
 }

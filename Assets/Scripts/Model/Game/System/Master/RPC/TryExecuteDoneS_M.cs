@@ -23,14 +23,14 @@ namespace Chessy.Game.Model.System
                             ActiveMotionZoneToGeneneral(sender);
                             ExecuteSoundActionToGeneral(sender, ClipTypes.AfterUpdate);
 
-                            if (_e.Common.GameModeT.Is(GameModeTypes.TrainingOffline))
+                            if (_e.Com.GameModeT.Is(GameModeTypes.TrainingOffline))
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
-                                ExecuteUpdateEverythingMS.ExecuteUpdateEverythingM();
+                                _e.ExecuteUpdateEverythingM(this);
                             }
 
-                            else if (_e.Common.GameModeT.Is(GameModeTypes.WithFriendOffline))
+                            else if (_e.Com.GameModeT.Is(GameModeTypes.WithFriendOffline))
                             {
                                 UpdateCooldonsStunsAndOther(0.5f);
 
@@ -38,7 +38,7 @@ namespace Chessy.Game.Model.System
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
-                                    ExecuteUpdateEverythingMS.ExecuteUpdateEverythingM();
+                                    _e.ExecuteUpdateEverythingM(this);
                                 }
 
                                 _e.WhoseMovePlayerT = nextPlayer;
@@ -55,7 +55,7 @@ namespace Chessy.Game.Model.System
 
                             if (senderPlayerT == PlayerTypes.Second)
                             {
-                                ExecuteUpdateEverythingMS.ExecuteUpdateEverythingM();
+                                _e.ExecuteUpdateEverythingM(this);
 
                                 ActiveMotionZoneToGeneneral(RpcTarget.All);
                                 ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);

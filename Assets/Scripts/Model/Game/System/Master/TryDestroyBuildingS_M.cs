@@ -12,7 +12,7 @@ namespace Chessy.Game.Model.System
             {
                 _s.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
-                _s.BuildingSs.Attack(cell_0, 1f, _e.UnitPlayerT(cell_0));
+                _e.Attack(cell_0, 1f, _e.UnitPlayerT(cell_0));
 
                 _e.StepUnitC(cell_0).Steps -= StepValues.DESTROY_BUILDING;
             }

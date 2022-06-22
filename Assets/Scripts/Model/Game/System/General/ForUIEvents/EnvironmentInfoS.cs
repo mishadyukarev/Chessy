@@ -6,7 +6,7 @@ namespace Chessy.Game.Model.System
     {
         public void EnvironmentClick()
         {
-            _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _e.Com.SoundActionC(ClipCommonTypes.Click).Invoke();
             _e.ZoneInfoC.IsActiveEnvironment = !_e.ZoneInfoC.IsActiveEnvironment;
 
             _e.NeedUpdateView = true;

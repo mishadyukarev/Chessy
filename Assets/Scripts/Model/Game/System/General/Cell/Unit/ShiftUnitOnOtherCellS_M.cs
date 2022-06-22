@@ -124,7 +124,7 @@ namespace Chessy.Game.Model.System
 
             if (_e.UnitT(toCellIdx) == UnitTypes.Snowy)
             {
-                ExecuteUpdateEverythingMS.GiveWaterToUnitsAroundRainy(toCellIdx);
+                _e.GiveWaterToUnitsAroundRainy(toCellIdx);
             }
 
 

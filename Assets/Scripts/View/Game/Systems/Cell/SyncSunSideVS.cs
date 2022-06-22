@@ -25,7 +25,7 @@ namespace Chessy.Game
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.SelectedCellIdx == cellIdxCurrent && _e.WeatherE.SunSideTC.IsAcitveSun)
+                if (_e.SelectedCellIdx == cellIdxCurrent && _e.WeatherE.SunSideT.IsAcitveSun())
                 {
                     var simpleUnqiueCells = new HashSet<byte>();
                     foreach (var item in _e.AttackSimpleCellsC(cellIdxCurrent).Idxs)
@@ -41,7 +41,7 @@ namespace Chessy.Game
 
                     foreach (var cellIdxAttack in simpleUnqiueCells)
                     {
-                        foreach (var sunDirectT in _e.WeatherE.SunSideTC.RaysSun)
+                        foreach (var sunDirectT in _e.WeatherE.SunSideT.RaysSun())
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 

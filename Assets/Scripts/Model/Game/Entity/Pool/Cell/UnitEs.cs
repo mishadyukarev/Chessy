@@ -9,13 +9,13 @@ namespace Chessy.Game.Model.Entity.Cell.Unit
         readonly Dictionary<ButtonTypes, EffectTypes> _effectBars = new Dictionary<ButtonTypes, EffectTypes>();
 
         public UnitMainE MainE = new UnitMainE();
-        public UnitStatsE StatsE = new UnitStatsE();
-        public UnitEffectsE EffectsE = new UnitEffectsE();
+        public UnitStatsE StatsE;
+        public UnitEffectsE EffectsE;
         public UnitAttackE AttackE = new UnitAttackE(new HashSet<byte>(), new HashSet<byte>());
-        public ToolWeaponMainUnitC MainToolWeaponE = new ToolWeaponMainUnitC();
-        public ExtraToolWeaponE ExtraToolWeaponE = new ExtraToolWeaponE();
-        public WhoLastDiedHereE WhoLastDiedHereE = new WhoLastDiedHereE();
-        public CellUnitExtractE ExtractE = new CellUnitExtractE();
+        public ToolWeaponMainUnitC MainToolWeaponE;
+        public ExtraToolWeaponE ExtraToolWeaponE;
+        public WhoLastDiedHereE WhoLastDiedHereE;
+        public CellUnitExtractE ExtractE;
         public ShiftUnitE ShiftE = new ShiftUnitE(new float[StartValues.CELLS], new HashSet<byte>());
         public AbilityUnitE AbilityE = new AbilityUnitE(new float[(byte)AbilityTypes.End - 1]);
 

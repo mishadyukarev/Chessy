@@ -76,7 +76,7 @@ namespace Chessy.Game.EventsUI
 
             eUIGame.DownEs.BookLittleE.ButtonC.AddListener(delegate
             {
-                eMCommon.SoundActionC(eMCommon.IsOpenedBook ? Common.Enum.ClipCommonTypes.OpenBook : Common.Enum.ClipCommonTypes.CloseBook).Invoke();
+                eMCommon.SoundActionC(eMCommon.BookC.IsOpenedBook() ? Common.Enum.ClipCommonTypes.OpenBook : Common.Enum.ClipCommonTypes.CloseBook).Invoke();
                 eMGame.NeedUpdateView = true;
 
                 eUIGame.DownEs.BookLittleE.AnimationVC.Play();
@@ -90,26 +90,26 @@ namespace Chessy.Game.EventsUI
 
            eUIGame.UpEs.SettingsButtonC.AddListener(delegate
             {
-                eMCommon.IsOpenSettings = !eMCommon.IsOpenSettings;
+                eMCommon.SettingsC.IsOpenedBarWithSettings = !eMCommon.SettingsC.IsOpenedBarWithSettings;
                 eMCommon.SoundActionC(ClipCommonTypes.Click);
             });
             eUIGame.UpEs.WindButtonC.AddListener(delegate
             {
                 if (SystemStatic.Is(eMGame.LessonT, LessonTypes.ClickWindInfo))
                 {
-                    eMGame.WeatherE.SunSideTC.SunSideT = SunSideTypes.Dawn;
+                    eMGame.WeatherE.SunSideT = SunSideTypes.Dawn;
                     SystemStatic.SetNextLesson(eMGame.LessonT);    
                 }
                 else
                 {
-                    if (eMCommon.IsOpenedBook)
+                    if (eMCommon.BookC.IsOpenedBook())
                     {
-                        eMCommon.PageBookT = PageBookTypes.None;
+                        eMCommon.OpenedNowPageBookT = PageBookTypes.None;
                         eMCommon.SoundActionC(ClipCommonTypes.CloseBook).Invoke();
                     }
                     else
                     {
-                        eMCommon.PageBookT = PageBookTypes.Wind;
+                        eMCommon.OpenedNowPageBookT = PageBookTypes.Wind;
                         eMCommon.SoundActionC(ClipCommonTypes.OpenBook).Invoke();
                     }
                 }

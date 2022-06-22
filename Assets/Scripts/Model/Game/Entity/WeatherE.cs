@@ -5,7 +5,7 @@ namespace Chessy.Game.Model.Entity
     public struct WeatherE
     {
         public WindC WindC;
-        public SunSideTC SunSideTC;
-        public CloudCenterIdxC CloudC;
+        public SunSideTypes SunSideT { get; set; }
+        public byte CellIdxCenterCloud { get; internal set; }
     }
 }

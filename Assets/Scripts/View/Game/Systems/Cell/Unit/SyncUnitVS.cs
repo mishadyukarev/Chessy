@@ -112,6 +112,9 @@ namespace Chessy.Game
                         }
                         else
                         {
+                            var v = _e.MainTWLevelT(_currentCell);
+                            var vv = _e.MainToolWeaponT(_currentCell);
+
                             _needActiveMainTW[_e.MainTWLevelT(_currentCell)][(byte)_e.MainToolWeaponT(_currentCell)] = true;
                             _needColorMainTW[_e.MainTWLevelT(_currentCell)][(byte)_e.MainToolWeaponT(_currentCell)] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                         }

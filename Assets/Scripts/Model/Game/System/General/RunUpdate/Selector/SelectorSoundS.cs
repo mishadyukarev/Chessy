@@ -50,7 +50,7 @@ namespace Chessy.Game.Model.System
                 }
 
 
-                if (_e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround.Contains(cell_0) || _e.WeatherE.CloudC.Center == cell_0)
+                if (_e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).CellsAround.Contains(cell_0) || _e.WeatherE.CellIdxCenterCloud == cell_0)
                 {
                     _e.SoundAction(ClipTypes.ShortRain).Invoke();
                 }

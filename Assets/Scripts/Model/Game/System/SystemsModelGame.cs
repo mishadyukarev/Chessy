@@ -13,12 +13,12 @@ namespace Chessy.Game.Model.System
         readonly EntitiesModelGame _e;
         readonly List<Action> _runs;
 
-        internal readonly BuildingSystems BuildingSs;
+        //internal readonly BuildingSystems BuildingSs;
         internal readonly UnitSystems UnitSs;
         internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
         internal readonly ExecuteAIBotLogicAfterUpdateS_M AIBotS;
-        internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
-        internal readonly TruceS TruceS;
+        //internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
+        //internal readonly TruceS TruceS;
 
         public readonly SystemsModelCommon CommonSs;
         public readonly SystemsModelGameForUI ForUISystems;
@@ -40,25 +40,17 @@ namespace Chessy.Game.Model.System
             };
 
             ForUISystems = new SystemsModelGameForUI(this, eMG);
-            BuildingSs = new BuildingSystems(this, eMG);
+            //BuildingSs = new BuildingSystems(this, eMG);
             UnitSs = new UnitSystems(this, eMG);
             GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eMG);
             AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eMG);
-            ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eMG);
-            TruceS = new TruceS(this, eMG);
+            //ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eMG);
+            //TruceS = new TruceS(this, eMG);
         }
 
         public void Update()
         {
             _runs.ForEach((Action action) => action());
-
-            _e.ForUpdateViewTimer += Time.deltaTime;
-
-            if (_e.ForUpdateViewTimer >= 0.5f)
-            {
-                _e.NeedUpdateView = true;
-                _e.ForUpdateViewTimer = 0;
-            }
         }
 
         internal void ExecuteSoundAction(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();

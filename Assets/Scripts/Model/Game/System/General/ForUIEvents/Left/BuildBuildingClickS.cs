@@ -21,12 +21,12 @@ namespace Chessy.Game.Model.System
                     if (_e.SelectedE.BuildingsC.Is(buildT))
                     {
                         _e.SelectedE.BuildingsC.Set(buildT, false);
-                        _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        _e.Com.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
                     else if (_e.PlayerInfoE(_e.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
                     {
                         _e.SelectedE.BuildingsC.Set(buildT, true);
-                        _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+                        _e.Com.SoundActionC(ClipCommonTypes.Click).Invoke();
                     }
                     else
                     {

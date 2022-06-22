@@ -1,36 +1,37 @@
-﻿using Chessy.Game.Values;
+﻿using Chessy.Game.Model.Entity;
+using Chessy.Game.Values;
 using Chessy.Game.Values.Cell.Unit.Stats;
 
 namespace Chessy.Game.Model.System
 {
-    sealed partial class ExecuteUpdateEverythingMS : SystemModel
+    static partial class ExecuteUpdateEverythingMS
     {
-        void TryGiveWaterToUnitsAroundRainy()
+        static void TryGiveWaterToUnitsAroundRainy(this EntitiesModelGame e)
         {
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (_e.UnitT(cell_0).HaveUnit())
+                if (e.UnitT(cell_0).HaveUnit())
                 {
-                    if (_e.UnitT(cell_0) == UnitTypes.Snowy)
+                    if (e.UnitT(cell_0) == UnitTypes.Snowy)
                     {
-                        if (!_e.LessonT.HaveLesson())
+                        if (!e.LessonT.HaveLesson())
                         {
-                            GiveWaterToUnitsAroundRainy(cell_0);
+                            e.GiveWaterToUnitsAroundRainy(cell_0);
                         }
                     }
                 }
             }
         }
 
-        internal void GiveWaterToUnitsAroundRainy(in byte cellIdx)
+        internal static void GiveWaterToUnitsAroundRainy(this EntitiesModelGame e, in byte cellIdx)
         {
-            foreach (var cellIdxDirect in _e.AroundCellsE(cellIdx).CellsAround)
+            foreach (var cellIdxDirect in e.AroundCellsE(cellIdx).CellsAround)
             {
-                if (_e.UnitT(cellIdxDirect).HaveUnit())
+                if (e.UnitT(cellIdxDirect).HaveUnit())
                 {
-                    if (_e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(cellIdxDirect))
+                    if (e.UnitPlayerT(cellIdx) == e.UnitPlayerT(cellIdxDirect))
                     {
-                        _e.WaterUnitC(cellIdxDirect).Water = WaterValues.MAX;
+                        e.WaterUnitC(cellIdxDirect).Water = WaterValues.MAX;
                     }
                 }
             }

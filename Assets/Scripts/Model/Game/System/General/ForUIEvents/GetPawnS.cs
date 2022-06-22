@@ -7,7 +7,7 @@ namespace Chessy.Game.Model.System
     {
         public void GetPawn()
         {
-            _e.Common.SoundActionC(ClipCommonTypes.Click).Invoke();
+            _e.Com.SoundActionC(ClipCommonTypes.Click).Invoke();
 
             if (!_e.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
             {

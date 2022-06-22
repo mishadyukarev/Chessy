@@ -3,8 +3,7 @@ using Chessy.Game.Model.System;
 
 namespace Chessy.Game
 {
-    sealed partial class BuildingSystems : SystemModel
+    static partial class BuildingSystems
     {
-        internal BuildingSystems(in SystemsModelGame sMG, in EntitiesModelGame eMG) : base(sMG, eMG) { }
     }
 }

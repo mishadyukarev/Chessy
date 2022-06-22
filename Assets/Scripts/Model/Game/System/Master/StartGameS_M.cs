@@ -13,13 +13,13 @@ namespace Chessy.Game.Model.System
         {
             ResetAll();
 
-            _e.ZoneInfoC.IsActiveFriend = _e.Common.GameModeT.Is(GameModeTypes.WithFriendOffline);
+            _e.ZoneInfoC.IsActiveFriend = _e.Com.GameModeT.Is(GameModeTypes.WithFriendOffline);
             _e.WhoseMovePlayerT = StartValues.WHOSE_MOVE;
             _e.CellClickT = StartValues.CELL_CLICK;
 
             _e.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND_IN_START_GAME);
-            _e.WeatherE.SunSideTC.SunSideT = StartValues.SUN_SIDE;
-            _e.WeatherE.CloudC.Center = StartValues.CELL_IDX_START_GAME_CLOUD;
+            _e.WeatherE.SunSideT = StartValues.SUN_SIDE;
+            _e.WeatherE.CellIdxCenterCloud = StartValues.CELL_IDX_START_GAME_CLOUD;
 
             _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
 
@@ -33,7 +33,7 @@ namespace Chessy.Game.Model.System
 
                 if (playerT == PlayerTypes.Second)
                 {
-                    if (_e.Common.GameModeT == GameModeTypes.TrainingOffline)
+                    if (_e.Com.GameModeT == GameModeTypes.TrainingOffline)
                         _e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable += 5;
                 }
 
@@ -61,7 +61,7 @@ namespace Chessy.Game.Model.System
 
 
 
-            if (_e.Common.GameModeT.IsOffline())
+            if (_e.Com.GameModeT.IsOffline())
             {
                 _e.CurPlayerIT = PlayerTypes.First;
             }
@@ -186,7 +186,7 @@ namespace Chessy.Game.Model.System
             }
 
 
-            if (_e.Common.GameModeT.Is(GameModeTypes.TrainingOffline))
+            if (_e.Com.GameModeT.Is(GameModeTypes.TrainingOffline))
             {
                 _e.PlayerInfoE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
 

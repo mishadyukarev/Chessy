@@ -66,7 +66,7 @@ namespace Chessy.Game.System.View.UI
 
                 () => 
                 {
-                    if (eMCommon.IsOpenedBook)
+                    if (eMCommon.BookC.IsOpenedBook())
                     {
                         eUIGame.DownEs.BookLittleE.AnimationVC.Play();
                     }
@@ -106,7 +106,7 @@ namespace Chessy.Game.System.View.UI
         {
             if (_e.NeedUpdateView)
             {
-                _eUI.ParentGOC.SetActive(_e.Common.SceneT == SceneTypes.Game);
+                _eUI.ParentGOC.SetActive(_e.Com.SceneT == SceneTypes.Game);
 
                 _syncUpdates.ForEach((Action action) => action());
             }

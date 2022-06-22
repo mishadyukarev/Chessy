@@ -12,7 +12,7 @@ namespace Chessy.Game.Model.System
         {
             if (_e.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))
             {
-                _e.WeatherE.WindC.DirectT = _e.AroundCellsE(_e.WeatherE.CloudC.Center).Direct(idx_to);
+                _e.WeatherE.WindC.DirectT = _e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).Direct(idx_to);
                 _e.StepUnitC(cell_from).Steps -= StepValues.Need(abilityT);
                 _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 

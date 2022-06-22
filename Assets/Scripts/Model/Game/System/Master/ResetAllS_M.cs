@@ -8,7 +8,7 @@ namespace Chessy.Game.Model.System
         public void ResetAll()
         {
             _e.IsStartedGame = default;
-            _e.MotionsC.Motions = default;
+            _e.Motions = default;
             _e.ZoneInfoC.IsActiveFriend = default;
             _e.ZoneInfoC = default;
             _e.WhoseMovePlayerT = default;
@@ -22,8 +22,8 @@ namespace Chessy.Game.Model.System
             _e.AmountPlantedYoungForests = default;
 
             _e.WeatherE.WindC = new WindC(default, default);
-            _e.WeatherE.SunSideTC.SunSideT = default;
-            _e.WeatherE.CloudC.Center = default;
+            _e.WeatherE.SunSideT = default;
+            _e.WeatherE.CellIdxCenterCloud = default;
 
             _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(default, default);
 

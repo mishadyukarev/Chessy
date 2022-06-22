@@ -38,7 +38,7 @@ namespace Chessy.Game.System.View
                         {
                             case LessonTypes.ClickWindInfo:
                                 {
-                                    if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.WeatherE.CloudC.Center != currentCellIdx && !_e.AroundCellsE(_e.WeatherE.CloudC.Center).CellsAround.Contains(currentCellIdx))
+                                    if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.WeatherE.CellIdxCenterCloud != currentCellIdx && !_e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).CellsAround.Contains(currentCellIdx))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }
@@ -116,7 +116,7 @@ namespace Chessy.Game.System.View
                             case AbilityTypes.ChangeDirectionWind:
                                 if (!_e.IsBorder(currentCellIdx))
                                 {
-                                    if (!_e.AroundCellsE(currentCellIdx).CellsAround.Contains(_e.WeatherE.CloudC.Center))
+                                    if (!_e.AroundCellsE(currentCellIdx).CellsAround.Contains(_e.WeatherE.CellIdxCenterCloud))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }

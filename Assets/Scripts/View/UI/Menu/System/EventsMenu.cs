@@ -40,14 +40,14 @@ namespace Chessy.Menu
 
             eUIM.CenterE.BookButtonC.AddListener(delegate
             {
-                eMC.SoundActionC(eMC.IsOpenedBook ? ClipCommonTypes.OpenBook : ClipCommonTypes.CloseBook).Invoke();
+                eMC.SoundActionC(eMC.BookC.IsOpenedBook() ? ClipCommonTypes.OpenBook : ClipCommonTypes.CloseBook).Invoke();
 
                 eMC.NeedUpdateView = true;
             });
 
             eUIM.CenterE.SettingsButtonC.AddListener(delegate
             {
-                eMC.IsOpenSettings = !eMC.IsOpenSettings;
+                eMC.SettingsC.IsOpenedBarWithSettings = !eMC.SettingsC.IsOpenedBarWithSettings;
                 eMC.NeedUpdateView = true;
             });
 

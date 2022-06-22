@@ -17,19 +17,15 @@ namespace Chessy.Game.Model.Entity
         readonly CellEs[] _cellEs;
 
 
-        public readonly EntitiesModelCommon Common;
-
-
-        internal float ForUpdateViewTimer;
+        public readonly EntitiesModelCommon Com;
 
         public readonly DataFromViewC DataFromViewC;
         public ZonesInfoC ZoneInfoC;
         public WhereTeleportC WhereTeleportC;
-
-        public TimerC MotionTimerC;
-        public MotionsC MotionsC;
-        public PlayerTypes WinnerPlayerTC;
+        public MotionC MotionC;
         public CellsC CellsC;
+
+        public PlayerTypes WinnerPlayerT;
         public PlayerTypes WhoseMovePlayerT;
         public PlayerTypes CurPlayerIT;
 
@@ -47,8 +43,8 @@ namespace Chessy.Game.Model.Entity
         public LessonTypes LessonT { get; internal set; }
         public bool NeedUpdateView
         {
-            get => Common.NeedUpdateView;
-            set => Common.NeedUpdateView = value;
+            get => Com.NeedUpdateView;
+            set => Com.NeedUpdateView = value;
         }
         public bool IsStartedGame { get; internal set; }
         public bool IsSelectedCity { get; internal set; }
@@ -58,18 +54,13 @@ namespace Chessy.Game.Model.Entity
         public int AmountPlantedYoungForests { get; internal set; }
         public float MotionTimer
         {
-            get => MotionTimerC.Timer;
-            internal set => MotionTimerC.Timer = value;
+            get => MotionC.Timer;
+            internal set => MotionC.Timer = value;
         }
         public int Motions
         {
-            get => MotionsC.Motions;
-            internal set => MotionsC.Motions = value;
-        }
-        public PlayerTypes WinnerPlayerT
-        {
-            get => WinnerPlayerTC;
-            internal set => WinnerPlayerTC = value;
+            get => MotionC.Motions;
+            internal set => MotionC.Motions = value;
         }
         public byte SelectedCellIdx
         {
@@ -94,8 +85,8 @@ namespace Chessy.Game.Model.Entity
         }
         public GameModeTypes GameModeT
         {
-            get => Common.GameModeT;
-            internal set => Common.GameModeT = value;
+            get => Com.GameModeT;
+            internal set => Com.GameModeT = value;
         }
 
 
@@ -144,7 +135,7 @@ namespace Chessy.Game.Model.Entity
         public IdxsCellsC UnitForArsonC(in byte cell) => UnitMainE(cell).ForArson;
         public ref NeedUpdateViewC UnitNeedUpdateViewC(in byte cell) => ref UnitMainE(cell).NeedUpdateViewC;
 
-        public UnitStatsE StatsUnitE(in byte idx_cell) => UnitEs(idx_cell).StatsE;
+        public ref UnitStatsE StatsUnitE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
         public ref HealthC HpUnitC(in byte idx) => ref StatsUnitE(idx).HealthC;
         public double HpUnit(in byte cell) => HpUnitC(cell).Health;
         public ref StepsC StepUnitC(in byte idx) => ref StatsUnitE(idx).StepC;
@@ -199,7 +190,7 @@ namespace Chessy.Game.Model.Entity
 
         #region Effects
 
-        public UnitEffectsE UnitEffectsE(in byte idx_cell) => UnitEs(idx_cell).EffectsE;
+        public ref UnitEffectsE UnitEffectsE(in byte idx_cell) => ref UnitEs(idx_cell).EffectsE;
         public ref StunC StunUnitC(in byte idx) => ref UnitEffectsE(idx).StunC;
         public float StunUnit(in byte idx) => StunUnitC(idx).Stun;
         public ref ProtectionC ShieldUnitEffectC(in byte idx) => ref UnitEffectsE(idx).ShieldEffectC;
@@ -271,7 +262,7 @@ namespace Chessy.Game.Model.Entity
 
         public EntitiesModelGame(in EntitiesModelCommon eMC, in DataFromViewC dataFromViewC, in string nameRpcMethod, in List<object> actions)
         {
-            Common = eMC;
+            Com = eMC;
 
 
             Resources = new Resources(default);

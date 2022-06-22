@@ -46,7 +46,7 @@ namespace Chessy.Game.Model.System
 
                             ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
                             _e.YoungForestC(cell_0).Resources = 0;
-                            BuildingSs.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
+                            _e.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
                             _e.StepUnitC(cell_0).Steps -= StepValues.SET_FARM;
 
 
