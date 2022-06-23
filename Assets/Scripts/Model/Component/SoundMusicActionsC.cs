@@ -1,18 +1,18 @@
-﻿using Chessy.Common.Enum;
-using System;
-using System.Collections.Generic;
+﻿//using Chessy.Common.Enum;
+//using System;
+//using System.Collections.Generic;
 
-namespace Chessy
-{
-    public struct SoundMusicActionsC
-    {
-        readonly Dictionary<ClipCommonTypes, Action> _sound;
+//namespace Chessy
+//{
+//    public struct SoundMusicActionsC
+//    {
+//        readonly Dictionary<ClipTypes, Action> _sound;
 
-        public Action SoundActionC(in ClipCommonTypes clipT) => _sound[clipT];
+//        public Action SoundAction(in ClipTypes clipT) => _sound[clipT];
 
-        internal SoundMusicActionsC(Dictionary<ClipCommonTypes, Action> sound)
-        {
-            _sound = sound;
-        }
-    }
-}
+//        internal SoundMusicActionsC(Dictionary<ClipTypes, Action> sound)
+//        {
+//            _sound = sound;
+//        }
+//    }
+//}

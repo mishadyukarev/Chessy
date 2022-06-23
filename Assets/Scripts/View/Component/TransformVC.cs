@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chessy.Game
+namespace Chessy.Model
 {
     public readonly struct TransformVC
     {

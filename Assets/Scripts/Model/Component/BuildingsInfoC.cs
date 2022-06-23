@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game.Model.Component
+﻿namespace Chessy.Model.Model.Component
 {
     public struct BuildingsInfoC
     {

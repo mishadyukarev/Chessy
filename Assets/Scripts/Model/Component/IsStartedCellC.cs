@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Chessy.Game.Model.Component
+namespace Chessy.Model.Model.Component
 {
     public readonly struct IsStartedCellC
     {

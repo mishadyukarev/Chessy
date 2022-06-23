@@ -1,7 +1,7 @@
 ﻿//using ECS;
 //using UnityEngine;
 
-//namespace Chessy.Game
+//namespace Chessy.Model
 //{
 //    public sealed class CellUnitEffectStunVE : EntityAbstract
 //    {

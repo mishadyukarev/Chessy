@@ -1,24 +1,25 @@
 ﻿using Chessy.Common.Entity;
+using Chessy.Model.Model.Entity;
 using System;
 
 namespace Chessy.Common
 {
     public class TryLaunchAdS : IUpdate
     {
-        readonly EntitiesModelCommon _eMC;
+        readonly EntitiesModel _eM;
 
-        public TryLaunchAdS(in EntitiesModelCommon eMCommon)
+        public TryLaunchAdS(in EntitiesModel eM)
         {
-            _eMC = eMCommon;
+            _eM = eM;
 
             //Yodo1U3dMas.InitializeSdk();
         }
 
         public void Update()
         {
-            var difTime = DateTime.Now - _eMC.AdC.LastTimeAd;
+            var difTime = DateTime.Now - _eM.AdC.LastTimeAd;
 
-            if (!_eMC.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME).hasReceipt)
+            if (!_eM.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME).hasReceipt)
             {
                 if (difTime.Minutes >= AdC.MINUTES_TIME_ADD)
                 {

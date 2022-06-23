@@ -1,9 +1,5 @@
-﻿using Chessy.Common.View.UI.System;
-using Chessy.Game;
-using Chessy.Game.Enum;
-using Chessy.Game.Model.Entity;
-using Chessy.Game.Model.System;
-using Chessy.Menu;
+﻿using Chessy.Model.Model.System;
+using Chessy.Model.System.View.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -11,19 +7,19 @@ namespace Chessy.Common
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
-        SystemsModelGame _sMG;
-        SystemsViewUICommon _sUIC;
+        SystemsModel _sMG;
+        SystemsViewUI _sUI;
 
 
 
-        public void StartMy(in SystemsViewUICommon sUIC, in SystemsModelGame sMG)
+        public void StartMy(in SystemsViewUI sUIC, in SystemsModel sMG)
         {
             _sMG = sMG;
-            _sUIC = sUIC;
+            _sUI = sUIC;
         }
 
 
-        public override sealed void OnLeftRoom() => _sMG.CommonSs.OnLeftRoom();
+        public override sealed void OnLeftRoom() => _sMG.OnLeftRoom();
 
         //public override sealed void OnPhotonPlayerDisconnected(Player otherPlayer)
         //{
@@ -32,7 +28,7 @@ namespace Chessy.Common
         //    PhotonNetwork.LeaveRoom();
         //    SpawnInitComSys.ToggleScene(SceneTypes.Menu);
         //}
-        public override void OnPlayerLeftRoom(Player otherPlayer) => _sMG.CommonSs.OnPlayerLeftRoom(otherPlayer);
+        public override void OnPlayerLeftRoom(Player otherPlayer) => _sMG.OnPlayerLeftRoom(otherPlayer);
 
         public override sealed void OnMasterClientSwitched(Player newMasterClient)
         {

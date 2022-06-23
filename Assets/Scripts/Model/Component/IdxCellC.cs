@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game
+﻿namespace Chessy.Model
 {
     public struct IdxCellC
     {

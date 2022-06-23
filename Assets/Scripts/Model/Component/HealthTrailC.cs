@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game.Model.Entity
+﻿namespace Chessy.Model.Model.Entity
 {
     public struct HealthTrailC
     {

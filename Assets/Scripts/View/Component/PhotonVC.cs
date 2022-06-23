@@ -1,9 +1,8 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Chessy.Game
+namespace Chessy.Model
 {
     public struct PhotonVC
     {

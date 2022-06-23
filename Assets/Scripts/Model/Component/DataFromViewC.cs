@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Chessy.Model
 {
     public readonly struct DataFromViewC
     {

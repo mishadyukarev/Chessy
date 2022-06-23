@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chessy.Game
+namespace Chessy.Model
 {
     public readonly struct SpriteRendererVC
     {
@@ -41,7 +41,7 @@ namespace Chessy.Game
 
         public void SetActive(in bool needActive)
         {
-            if(GO.activeSelf != needActive) GO.SetActive(needActive);
+            if (GO.activeSelf != needActive) GO.SetActive(needActive);
         }
     }
 }
