@@ -23,7 +23,7 @@ namespace Chessy.Model
         internal readonly FireVE FireVE;
         internal readonly EnvironmentVEs EnvironmentVEs;
         internal readonly UnitVEs UnitEs;
-        internal readonly CellBuildingVEs BuildingEs;
+        internal readonly CellBuildingVE BuildingEs;
 
         internal readonly SpriteRendererVC CloudSRC;
         internal readonly SpriteRendererVC SunSideSRC;
@@ -60,7 +60,7 @@ namespace Chessy.Model
             SupportCellEs = new SupportCellVE(cell.transform);
 
 
-            BuildingEs = new CellBuildingVEs(cell);
+            BuildingEs = new CellBuildingVE(cell);
             EnvironmentVEs = new EnvironmentVEs(cell);
             UnitEs = new UnitVEs(cell.transform);
 

@@ -6,10 +6,10 @@ namespace Chessy.Model
     sealed class SyncBuildingVS : SystemViewCellGameAbs
     {
         readonly bool[] _needActive = new bool[(byte)BuildingTypes.End];
-        readonly CellBuildingVEs _buildingVEs;
+        readonly CellBuildingVE _buildingVEs;
 
 
-        internal SyncBuildingVS(in CellBuildingVEs buildingVEs, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncBuildingVS(in CellBuildingVE buildingVEs, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
         {
             _buildingVEs = buildingVEs;
         }

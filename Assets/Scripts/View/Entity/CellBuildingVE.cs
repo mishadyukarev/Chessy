@@ -3,15 +3,13 @@ using UnityEngine;
 
 namespace Chessy.Model
 {
-    public readonly struct CellBuildingVEs
+    public readonly struct CellBuildingVE
     {
         readonly Dictionary<BuildingTypes, SpriteRendererVC> _ents;
-
         public readonly SpriteRendererVC FlagSRC;
-
         public SpriteRendererVC Main(in BuildingTypes buildT) => _ents[buildT];
 
-        public CellBuildingVEs(in GameObject cell)
+        public CellBuildingVE(in GameObject cell)
         {
             _ents = new Dictionary<BuildingTypes, SpriteRendererVC>();
 
