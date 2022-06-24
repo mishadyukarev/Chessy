@@ -8,7 +8,7 @@ namespace Chessy.Model.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.WoodcutterExtractC(cellIdxCurrent).Resources = 0;
+                _e.BuildingExtractionC(cellIdxCurrent).HowManyWoodcutterCanExtractWood = 0;
 
                 if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Woodcutter))
                 {
@@ -23,7 +23,7 @@ namespace Chessy.Model.Model.System
                     if (_e.AdultForestC(cellIdxCurrent).Resources < extract) extract = _e.AdultForestC(cellIdxCurrent).Resources;
 
 
-                    _e.WoodcutterExtractC(cellIdxCurrent).Resources = extract;
+                    _e.BuildingExtractionC(cellIdxCurrent).HowManyWoodcutterCanExtractWood = extract;
                 }
             }
         }

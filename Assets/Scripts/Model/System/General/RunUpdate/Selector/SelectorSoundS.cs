@@ -11,7 +11,7 @@ namespace Chessy.Model.Model.System
 
         internal void Sound()
         {
-            var cell_0 = _e.CellsC.Current;
+            var cell_0 = _e.CurrentCellIdx;
 
             if (_e.UnitT(cell_0).HaveUnit()
                 && _e.UnitVisibleC(cell_0).IsVisible(_e.CurPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
@@ -50,7 +50,7 @@ namespace Chessy.Model.Model.System
                 }
 
 
-                if (_e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).CellsAround.Contains(cell_0) || _e.WeatherE.CellIdxCenterCloud == cell_0)
+                if (_e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround.Contains(cell_0) || _e.WeatherE.CloudC.CellIdxCenterCloud == cell_0)
                 {
                     _e.SoundAction(ClipTypes.ShortRain).Invoke();
                 }

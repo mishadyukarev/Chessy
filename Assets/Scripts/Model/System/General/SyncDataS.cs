@@ -21,7 +21,7 @@ namespace Chessy.Model.Model.System
                     objs.Add(_e.UnitVisibleC(cell_0).IsVisible(playerT));
 
                 objs.Add(_e.HpUnit(cell_0));
-                objs.Add(_e.StepUnit(cell_0));
+                objs.Add(_e.EnergyUnit(cell_0));
                 objs.Add(_e.WaterUnit(cell_0));
 
                 objs.Add(_e.DamageAttack(cell_0));
@@ -41,11 +41,11 @@ namespace Chessy.Model.Model.System
                 objs.Add(_e.LastDiedLevelT(cell_0));
                 objs.Add(_e.LastDiedPlayerT(cell_0));
 
-                objs.Add(_e.AttackSimpleCellsC(cell_0).IdxsByteClone);
-                objs.Add(_e.AttackUniqueCellsC(cell_0).IdxsByteClone);
+                //objs.Add(_e.AttackSimpleCellsC(cell_0).IdxsByteClone);
+                //objs.Add(_e.AttackUniqueCellsC(cell_0).IdxsByteClone);
 
-                objs.Add(_e.CellsForShift(cell_0).IdxsByteClone);
-                objs.Add(_e.UnitNeedStepsForShiftC(cell_0).NeedStepsCopy);
+                //objs.Add(_e.CellsForShift(cell_0).IdxsByteClone);
+                //objs.Add(_e.UnitNeedStepsForShiftC(cell_0).NeedStepsCopy);
 
                 objs.Add(_e.UnitButtonAbilitiesC(cell_0).AbilityTypesClone);
                 objs.Add(_e.UnitCooldownAbilitiesC(cell_0).CooldonwsFloat);
@@ -55,7 +55,7 @@ namespace Chessy.Model.Model.System
                 objs.Add(_e.FrozenArrawEffect(cell_0));
                 objs.Add(_e.HaveKingEffect(cell_0));
 
-                objs.Add(_e.UnitForArsonC(cell_0).IdxsByteClone);
+                //objs.Add(_e.WhereUnitCanFireAdultForestC(cell_0).IdxsByteClone);
 
 
                 #region Building
@@ -65,8 +65,8 @@ namespace Chessy.Model.Model.System
                 objs.Add(_e.BuildingPlayerT(cell_0));
                 objs.Add(_e.BuildingHp(cell_0));
                 objs.Add(_e.BuildingVisibleC(cell_0).IsVisibleClone);
-                objs.Add(_e.WoodcutterExtractC(cell_0).Resources);
-                objs.Add(_e.FarmExtractFertilizeC(cell_0).Resources);
+                //objs.Add(_e.WoodcutterExtract(cell_0).Resources);
+                //objs.Add(_e.FarmExtract(cell_0).Resources);
 
                 #endregion
 
@@ -95,8 +95,8 @@ namespace Chessy.Model.Model.System
 
             objs.Add(_e.WeatherE.WindC.DirectT);
             objs.Add(_e.WeatherE.WindC.Speed);
-            objs.Add(_e.WeatherE.CellIdxCenterCloud);
-            objs.Add(_e.WeatherE.SunSideT);
+            objs.Add(_e.WeatherE.CloudC.CellIdxCenterCloud);
+            objs.Add(_e.WeatherE.SunC.SunSideT);
 
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
@@ -157,46 +157,46 @@ namespace Chessy.Model.Model.System
                 _e.SetUnitLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
                 _e.SetUnitPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
                 _e.SetUnitConditionT(cell_0, (ConditionUnitTypes)objects[idxCurrent++]);
-                _e.UnitIsRightArcherC(cell_0).IsRight = (bool)objects[idxCurrent++];
+                _e.UnitMainC(cell_0).IsRightArcher = (bool)objects[idxCurrent++];
                 for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
                     _e.UnitVisibleC(cell_0).Set(playerT, (bool)objects[idxCurrent++]);
 
                 _e.HpUnitC(cell_0).Health = (double)objects[idxCurrent++];
-                _e.StepUnitC(cell_0).Steps = (double)objects[idxCurrent++];
+                _e.EnergyUnitC(cell_0).Energy = (double)objects[idxCurrent++];
                 _e.WaterUnitC(cell_0).Water = (double)objects[idxCurrent++];
 
-                _e.DamageAttackC(cell_0).Damage = (double)objects[idxCurrent++];
-                _e.DamageOnCellC(cell_0).Damage = (double)objects[idxCurrent++];
+                _e.UnitMainC(cell_0).DamageSimpleAttack = (double)objects[idxCurrent++];
+                _e.UnitMainC(cell_0).DamageOnCell = (double)objects[idxCurrent++];
 
                 _e.SetMainToolWeaponT(cell_0, (ToolWeaponTypes)objects[idxCurrent++]);
                 _e.SetMainTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
 
                 _e.SetExtraToolWeaponT(cell_0, (ToolWeaponTypes)objects[idxCurrent++]);
                 _e.SetExtraTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
-                _e.ExtraTWProtectionC(cell_0).Protection = (float)objects[idxCurrent++];
+                _e.UnitExtraTWE(cell_0).ProtectionShield = (float)objects[idxCurrent++];
 
-                _e.PawnExtractAdultForestC(cell_0).Resources = (float)objects[idxCurrent++];
-                _e.PawnExtractHillC(cell_0).Resources = (float)objects[idxCurrent++];
+                _e.ExtactionResourcesWithWarriorC(cell_0).HowManyWarriourCanExtractAdultForest = (float)objects[idxCurrent++];
+                _e.ExtactionResourcesWithWarriorC(cell_0).HowManyWarriourCanExtractHill = (float)objects[idxCurrent++];
 
                 _e.SetLastDiedUnitT(cell_0, (UnitTypes)objects[idxCurrent++]);
                 _e.SetLastDiedLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
                 _e.SetLastDiedPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
 
-                _e.AttackSimpleCellsC(cell_0).Sync((byte[])objects[idxCurrent++]);
-                _e.AttackUniqueCellsC(cell_0).Sync((byte[])objects[idxCurrent++]);
+                //_e.AttackSimpleCellsC(cell_0).Sync((byte[])objects[idxCurrent++]);
+                //_e.AttackUniqueCellsC(cell_0).Sync((byte[])objects[idxCurrent++]);
 
-                _e.CellsForShift(cell_0).Sync((byte[])objects[idxCurrent++]);
-                _e.UnitNeedStepsForShiftC(cell_0).Sync((float[])objects[idxCurrent++]);
+                //_e.CellsForShift(cell_0).Sync((byte[])objects[idxCurrent++]);
+                //_e.UnitNeedStepsForShiftC(cell_0).Sync((float[])objects[idxCurrent++]);
 
                 _e.UnitButtonAbilitiesC(cell_0).Sync((byte[])objects[idxCurrent++]);
                 _e.UnitCooldownAbilitiesC(cell_0).Sync((float[])objects[idxCurrent++]);
 
-                _e.StunUnitC(cell_0).Stun = (float)objects[idxCurrent++];
-                _e.ShieldUnitEffectC(cell_0).Protection = (float)objects[idxCurrent++];
-                _e.FrozenArrawEffectC(cell_0).Shoots = (int)objects[idxCurrent++];
-                _e.HaveKingEffect(cell_0) = (bool)objects[idxCurrent++];
+                _e.UnitEffectsC(cell_0).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
+                _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
+                _e.UnitEffectsC(cell_0).ShootsFrozenArrawArcher = (int)objects[idxCurrent++];
+                _e.UnitEffectsC(cell_0).HaveKingEffect = (bool)objects[idxCurrent++];
 
-                _e.UnitForArsonC(cell_0).Sync((byte[])objects[idxCurrent++]);
+                //_e.WhereUnitCanFireAdultForestC(cell_0).Sync((byte[])objects[idxCurrent++]);
 
 
                 #region Building
@@ -206,8 +206,8 @@ namespace Chessy.Model.Model.System
                 _e.SetBuildingPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
                 _e.BuildingHpC(cell_0).Health = (double)objects[idxCurrent++];
                 _e.BuildingVisibleC(cell_0).Sync((bool[])objects[idxCurrent++]);
-                _e.WoodcutterExtractC(cell_0).Resources = (float)objects[idxCurrent++];
-                _e.FarmExtractFertilizeC(cell_0).Resources = (float)objects[idxCurrent++];
+                //_e.WoodcutterExtract(cell_0).Resources = (float)objects[idxCurrent++];
+                //_e.FarmExtract(cell_0).Resources = (float)objects[idxCurrent++];
 
                 #endregion
 
@@ -236,8 +236,8 @@ namespace Chessy.Model.Model.System
 
             _e.WeatherE.WindC.DirectT = (DirectTypes)objects[idxCurrent++];
             _e.WeatherE.WindC.Speed = (float)objects[idxCurrent++];
-            _e.WeatherE.CellIdxCenterCloud = (byte)objects[idxCurrent++];
-            _e.WeatherE.SunSideT = (SunSideTypes)objects[idxCurrent++];
+            _e.WeatherE.CloudC.CellIdxCenterCloud = (byte)objects[idxCurrent++];
+            _e.WeatherE.SunC.SunSideT = (SunSideTypes)objects[idxCurrent++];
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {

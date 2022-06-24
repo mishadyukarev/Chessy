@@ -4,7 +4,7 @@
     {
         public void OpenHeroClick()
         {
-            _e.CellsC.Selected = 0;
+            _e.SelectedCellIdx = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
             if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
@@ -19,8 +19,8 @@
                 {
                     if (!_e.PlayerInfoE(_e.CurPlayerIT).GodInfoE.CooldownC.HaveCooldown())
                     {
-                        _e.SelectedUnitE.UnitT = myHeroT;
-                        _e.SelectedUnitE.LevelT = LevelTypes.First;
+                        _e.SelectedUnitC.UnitT = myHeroT;
+                        _e.SelectedUnitC.LevelT = LevelTypes.First;
 
 
                         _e.CellClickT = CellClickTypes.SetUnit;

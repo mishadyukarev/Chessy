@@ -76,13 +76,13 @@ namespace Chessy.Model
 
 
 
-            if (_e.CellsC.Current == cellIdx)
+            if (_e.CurrentCellIdx == cellIdx)
             {
                 if (_e.CellClickT.Is(CellClickTypes.SetUnit))
                 {
-                    var idx_cur = _e.CellsC.Current;
-                    var selUnitT = _e.SelectedUnitE.UnitT;
-                    var levT = _e.SelectedUnitE.LevelT;
+                    var idx_cur = _e.CurrentCellIdx;
+                    var selUnitT = _e.SelectedUnitC.UnitT;
+                    var levT = _e.SelectedUnitC.LevelT;
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
@@ -117,8 +117,8 @@ namespace Chessy.Model
                     {
                         if (_e.MainToolWeaponT(cellIdx).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            _needActiveBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.UnitIsRightArcherC(cellIdx).IsRight ? 0 : 1] = true;
-                            _needColorBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.UnitIsRightArcherC(cellIdx).IsRight ? 0 : 1] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            _needActiveBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.IsRightArcherUnit(cellIdx) ? 0 : 1] = true;
+                            _needColorBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.IsRightArcherUnit(cellIdx) ? 0 : 1] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
                         }
                         else
                         {

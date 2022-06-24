@@ -2,13 +2,14 @@
 
 namespace Chessy.Model
 {
-    public sealed class RiverE
+    public struct RiverE
     {
-        public RiverTypes RiverT { get; internal set; }
+        public RiverC RiverC;
         public HaveRiverAroundCellC HaveRiverC;
 
         internal RiverE(in bool[] haveRive)
         {
+            RiverC = default;
             HaveRiverC = new HaveRiverAroundCellC(haveRive);
         }
     }

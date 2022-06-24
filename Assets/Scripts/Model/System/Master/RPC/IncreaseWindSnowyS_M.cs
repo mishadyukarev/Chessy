@@ -10,13 +10,13 @@ namespace Chessy.Model.Model.System
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (_e.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
+                if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
                 {
                     if (needIncrese)
                     {
                         if (!_e.WeatherE.WindC.IsMaxSpeed())
                         {
-                            _e.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
+                            _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
                             _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                             _e.WeatherE.WindC.Speed++;
@@ -33,7 +33,7 @@ namespace Chessy.Model.Model.System
                     {
                         if (!_e.WeatherE.WindC.IsMinSpeed())
                         {
-                            _e.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
+                            _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
                             _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                             _e.WeatherE.WindC.Speed--;

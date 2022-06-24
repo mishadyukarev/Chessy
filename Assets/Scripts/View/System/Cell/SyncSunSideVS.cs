@@ -25,23 +25,27 @@ namespace Chessy.Model
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.SelectedCellIdx == cellIdxCurrent && _e.WeatherE.SunSideT.IsAcitveSun())
+                if (_e.SelectedCellIdx == cellIdxCurrent && _e.WeatherE.SunC.SunSideT.IsAcitveSun())
                 {
                     var simpleUnqiueCells = new HashSet<byte>();
-                    foreach (var item in _e.AttackSimpleCellsC(cellIdxCurrent).Idxs)
+
+                    for (byte cellIdx = 0; cellIdx < StartValues.CELLS; cellIdx++)
                     {
-                        simpleUnqiueCells.Add(item);
-                    }
-                    foreach (var item in _e.AttackUniqueCellsC(cellIdxCurrent).Idxs)
-                    {
-                        simpleUnqiueCells.Add(item);
+                        if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCurrent).Can(cellIdx))
+                        {
+                            simpleUnqiueCells.Add(cellIdx);
+                        }
+                        if (_e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCurrent).Can(cellIdx))
+                        {
+                            simpleUnqiueCells.Add(cellIdx);
+                        }
                     }
 
 
 
                     foreach (var cellIdxAttack in simpleUnqiueCells)
                     {
-                        foreach (var sunDirectT in _e.WeatherE.SunSideT.RaysSun())
+                        foreach (var sunDirectT in _e.WeatherE.SunC.SunSideT.RaysSun())
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 

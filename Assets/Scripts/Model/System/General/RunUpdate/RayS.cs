@@ -36,18 +36,18 @@ namespace Chessy.Model.Model.System
 
                     if (one == two)
                     {
-                        if (_e.CellsC.Current != _e.CellsC.PreviousVision)
+                        if (_e.CurrentCellIdx != _e.CellsC.PreviousVision)
                         {
                             if (_e.CellClickT.Is(CellClickTypes.SetUnit))
                             {
-                                _e.UnitNeedUpdateViewC(_e.CellsC.Current).NeedUpdateView = true;
+                                _e.UnitNeedUpdateViewC(_e.CurrentCellIdx).NeedUpdateView = true;
                                 _e.UnitNeedUpdateViewC(_e.CellsC.PreviousVision).NeedUpdateView = true;
                             }
 
-                            _e.CellsC.PreviousVision = _e.CellsC.Current;
+                            _e.CellsC.PreviousVision = _e.CurrentCellIdx;
                         }
 
-                        _e.CellsC.Current = cell_0;
+                        _e.CurrentCellIdx = cell_0;
                         _e.RaycastT = RaycastTypes.Cell;
                     }
                 }

@@ -24,7 +24,7 @@ namespace Chessy.Model.Model.Entity
             }
         }
         public byte IdxCell(in DirectTypes dirT) => AroundCellE(dirT).IdxC.Idx;
-        public byte[] XyCell(in DirectTypes dirT) => AroundCellE(dirT).XyC.Xy();
+        public byte[] XyCell(in DirectTypes dirT) => AroundCellE(dirT).XyC.Xy;
 
         public DirectTypes Direct(in byte cell_0)
         {

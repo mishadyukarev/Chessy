@@ -17,7 +17,7 @@ namespace Chessy.Model.Model.System
 
         public void Update()
         {
-            var idx_cur = _e.CellsC.Current;
+            var idx_cur = _e.CurrentCellIdx;
 
 
             if (Input.GetKeyDown(KeyCode.F1))
@@ -43,13 +43,13 @@ namespace Chessy.Model.Model.System
 
                 if (_e.LessonT == LessonTypes.UniqueAttackInfo)
                 {
-                    _e.WeatherE.SunSideT = SunSideTypes.Dawn;
-                    _e.LessonT.SetNextLesson();
+                    _e.WeatherE.SunC.SunSideT = SunSideTypes.Dawn;
+                    _e.CommonInfoAboutGameC.SetNextLesson();
                 }
                 else if (_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
                     LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.MenuInfo))
                 {
-                    _e.LessonT.SetNextLesson();
+                    _e.CommonInfoAboutGameC.SetNextLesson();
                 }
 
                 switch (_e.RaycastT)
@@ -66,14 +66,14 @@ namespace Chessy.Model.Model.System
 
                                     case CellClickTypes.SetUnit:
                                         {
-                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetUnitOnCellM), _e.CellsC.Current, _e.SelectedUnitE.UnitT });
+                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetUnitOnCellM), _e.CurrentCellIdx, _e.SelectedUnitC.UnitT });
                                             _e.CellClickT = CellClickTypes.SimpleClick;
                                         }
                                         break;
 
                                     case CellClickTypes.GiveTakeTW:
                                         {
-                                            _e.CellsC.Selected = _e.CellsC.Current;
+                                            _e.SelectedCellIdx = _e.CurrentCellIdx;
 
                                             if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _e.UnitPlayerT(idx_cur).Is(_e.CurPlayerIT))
                                             {
@@ -82,8 +82,8 @@ namespace Chessy.Model.Model.System
                                             else
                                             {
                                                 _e.CellClickT = CellClickTypes.SimpleClick;
-                                                _e.CellsC.PreviousSelected = _e.CellsC.Selected;
-                                                _e.CellsC.Selected = _e.CellsC.Current;
+                                                _e.CellsC.PreviousSelected = _e.SelectedCellIdx;
+                                                _e.SelectedCellIdx = _e.CurrentCellIdx;
                                             }
                                         }
                                         break;
@@ -93,18 +93,18 @@ namespace Chessy.Model.Model.System
                                             switch (_e.SelectedE.AbilityT)
                                             {
                                                 case AbilityTypes.FireArcher:
-                                                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM), _e.CellsC.Selected, _e.CellsC.Current });
+                                                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM), _e.SelectedCellIdx, _e.CurrentCellIdx });
                                                     break;
 
                                                 case AbilityTypes.StunElfemale:
-                                                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM), _e.CellsC.Selected, _e.CellsC.Current });
+                                                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM), _e.SelectedCellIdx, _e.CurrentCellIdx });
                                                     break;
 
                                                 case AbilityTypes.ChangeDirectionWind:
                                                     {
-                                                        foreach (var cellE in _e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).CellsAround)
+                                                        foreach (var cellE in _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround)
                                                         {
-                                                            if (cellE == _e.CellsC.Current)
+                                                            if (cellE == _e.CurrentCellIdx)
                                                             {
                                                                 _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM), _e.SelectedCellIdx, _e.CurrentCellIdx });
                                                             }
@@ -125,7 +125,7 @@ namespace Chessy.Model.Model.System
 
                             else
                             {
-                                _e.CellsC.Selected = _e.CellsC.Current;
+                                _e.SelectedCellIdx = _e.CurrentCellIdx;
                             }
                         }
                         break;
@@ -139,7 +139,7 @@ namespace Chessy.Model.Model.System
                             {
                                 _e.CellClickT = CellClickTypes.SimpleClick;
 
-                                _e.CellsC.PreviousSelected = _e.CellsC.Selected;
+                                _e.CellsC.PreviousSelected = _e.SelectedCellIdx;
                                 _e.SelectedCellIdx = 0;
 
                                 _e.IsSelectedCity = false;

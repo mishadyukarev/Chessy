@@ -5,15 +5,16 @@ namespace Chessy.Model.Entity
 {
     public readonly struct CellE
     {
-        public readonly bool IsBorder;
-        public readonly IdxCellC IdxC;
-        public readonly XyCellC XyC;
-        public readonly int InstanceID;
+        public readonly CellC CellC;
+        public readonly XyCellC XyCellC;
+        public readonly IdxCellC IdxCellC;
         public readonly IsStartedCellC IsStartedCellC;
 
         internal CellE(in DataFromViewC dataFromViewC, in byte idxCell, in int instanceID, params byte[] xy)
         {
-            IsBorder = dataFromViewC.IsBorder(idxCell);
+            CellC = new CellC(dataFromViewC.IsBorder(idxCell), instanceID);
+            XyCellC = new XyCellC(xy);
+            IdxCellC = new IdxCellC(idxCell);
 
             var x = xy[0];
             var y = xy[1];
@@ -40,9 +41,6 @@ namespace Chessy.Model.Entity
                 }
             }
 
-            IdxC = new IdxCellC(idxCell);
-            XyC = new XyCellC(xy);
-            InstanceID = instanceID;
             IsStartedCellC = new IsStartedCellC(isStartedCell);
         }
     }

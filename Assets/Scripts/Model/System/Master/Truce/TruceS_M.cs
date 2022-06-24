@@ -8,7 +8,7 @@ namespace Chessy.Model.Model.System
     {
         const int PEOPLE_AFTER_TRUCE = 15;
 
-        internal static void ExecuteTruce(this EntitiesModel e, in SystemsModel s)
+        internal static void ExecuteTruce(this EntitiesModel e)
         {
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
@@ -26,7 +26,7 @@ namespace Chessy.Model.Model.System
             {
                 e.HaveFire(cellIdxCurrent) = false;
 
-                s.TryDestroyAllTrailsOnCell(cellIdxCurrent);
+                e.TryDestroyAllTrailsOnCell(cellIdxCurrent);
 
 
 
@@ -42,7 +42,7 @@ namespace Chessy.Model.Model.System
                                 e.PlayerInfoE(e.UnitPlayerT(cellIdxCurrent)).LevelE(e.ExtraTWLevelT(cellIdxCurrent)).ToolWeapons(e.ExtraToolWeaponT(cellIdxCurrent))++;
                             }
 
-                            e.UnitEs(cellIdxCurrent).ClearEverything();
+                            e.UnitE(cellIdxCurrent).ClearEverything();
                         }
                     }
                     else
@@ -53,7 +53,7 @@ namespace Chessy.Model.Model.System
                             e.PlayerInfoE(e.UnitPlayerT(cellIdxCurrent)).LevelE(e.ExtraTWLevelT(cellIdxCurrent)).ToolWeapons(e.ExtraToolWeaponT(cellIdxCurrent))++;
                         }
 
-                        e.UnitEs(cellIdxCurrent).ClearEverything();
+                        e.UnitE(cellIdxCurrent).ClearEverything();
                     }
                 }
 

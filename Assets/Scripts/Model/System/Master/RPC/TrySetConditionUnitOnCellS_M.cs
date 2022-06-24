@@ -9,7 +9,7 @@ namespace Chessy.Model.Model.System
     {
         internal void TrySetConditionUnitOnCellM(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
         {
-            if (!_e.StunUnitC(cell_0).IsStunned)
+            if (!_e.UnitEffectsC(cell_0).IsStunned)
             {
                 switch (condT)
                 {
@@ -24,13 +24,13 @@ namespace Chessy.Model.Model.System
                             _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
                         }
 
-                        else if (_e.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        else if (_e.EnergyUnitC(cell_0).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
                             ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                            _e.EnergyUnitC(cell_0).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                             _e.SetUnitConditionT(cell_0, condT);
 
-                            if (_e.LessonT == LessonTypes.ClickDefend) _e.LessonT.SetNextLesson();
+                            if (_e.LessonT == LessonTypes.ClickDefend) _e.CommonInfoAboutGameC.SetNextLesson();
                         }
 
                         else
@@ -47,11 +47,11 @@ namespace Chessy.Model.Model.System
                             _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
                         }
 
-                        else if (_e.StepUnitC(cell_0).Steps >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        else if (_e.EnergyUnitC(cell_0).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
                             ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.SetUnitConditionT(cell_0, condT);
-                            _e.StepUnitC(cell_0).Steps -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                            _e.EnergyUnitC(cell_0).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
                             if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
                             {

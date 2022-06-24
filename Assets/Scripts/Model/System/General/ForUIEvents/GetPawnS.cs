@@ -18,8 +18,8 @@ namespace Chessy.Model.Model.System
                         {
                             _e.SelectedCellIdx = 0;
 
-                            _e.SelectedUnitE.UnitT = UnitTypes.Pawn;
-                            _e.SelectedUnitE.LevelT = LevelTypes.First;
+                            _e.SelectedUnitC.UnitT = UnitTypes.Pawn;
+                            _e.SelectedUnitC.LevelT = LevelTypes.First;
 
                             _e.CellClickT = CellClickTypes.SetUnit;
                         }
@@ -27,7 +27,7 @@ namespace Chessy.Model.Model.System
                         {
                             if (_e.LessonT.Is(LessonTypes.SettingPawn))
                             {
-                                _e.LessonT.SetNextLesson();
+                                _e.CommonInfoAboutGameC.SetNextLesson();
                             }
                             else if (_e.LessonT.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
                             {

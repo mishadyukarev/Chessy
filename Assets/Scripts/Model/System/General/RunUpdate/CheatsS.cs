@@ -27,12 +27,12 @@ namespace Chessy.Model.Model.System
 
                 if (Input.GetKeyDown(KeyCode.Mouse4))
                 {
-                    _e.LessonT.SetNextLesson();
+                    _e.CommonInfoAboutGameC.SetNextLesson();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse3))
                 {
-                    _e.LessonT.SetPreviousLesson();
+                    _e.CommonInfoAboutGameC.SetPreviousLesson();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse2))

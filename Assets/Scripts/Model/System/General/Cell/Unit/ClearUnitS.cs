@@ -4,9 +4,9 @@ namespace Chessy.Model.Model.System
 {
     static class ClearUnitS
     {
-        internal static void ClearEverything(this UnitEs unitEs)
+        internal static void ClearEverything(this UnitE unitEs)
         {
-            unitEs.MainE.UnitT = UnitTypes.None;
+            unitEs.MainC.UnitT = UnitTypes.None;
         }
     }
 }

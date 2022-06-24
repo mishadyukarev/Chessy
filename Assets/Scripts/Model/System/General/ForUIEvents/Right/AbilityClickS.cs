@@ -14,7 +14,7 @@ namespace Chessy.Model.Model.System
 
                 var abil = _e.UnitButtonAbilitiesC(cellIdxSelected).Ability(uniqueButton);
 
-                if (!_e.StunUnitC(cellIdxSelected).IsStunned)
+                if (!_e.UnitEffectsC(cellIdxSelected).IsStunned)
                 {
                     if (!_e.UnitCooldownAbilitiesC(cellIdxSelected).HaveCooldown(abil))
                     {

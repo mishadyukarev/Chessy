@@ -4,19 +4,19 @@ namespace Chessy.Model
 {
     public struct BuildingE
     {
-        public BuildingTypes BuildingT { get; internal set; }
-        public PlayerTypes PlayerT { get; internal set; }
-        public LevelTypes LevelT { get; internal set; }
-
+        public BuildingC BuildingMainC;
         public HealthC HealthC;
-        public readonly VisibleC VisibleC;
+        public BuildingExtractionC ExtractionC;
 
-        public ResourcesC WoodcutterExtractC;
-        public ResourcesC FarmExtractC;
+        public readonly VisibleToOtherPlayerOrNotC VisibleToOtherPlayerC;
 
-        internal BuildingE(in bool b) : this()
+        internal BuildingE(in bool def)
         {
-            VisibleC = new VisibleC(default);
+            BuildingMainC = default;
+            HealthC = default;
+            ExtractionC = default;
+
+            VisibleToOtherPlayerC = new VisibleToOtherPlayerOrNotC(default);
         }
     }
 }

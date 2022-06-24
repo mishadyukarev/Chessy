@@ -27,7 +27,7 @@ namespace Chessy.Model
 
             for (byte idxCellStart = 0; idxCellStart < StartValues.CELLS; idxCellStart++)
             {
-                if (_e.CellE(idxCellStart).IsBorder) continue;
+                if (_e.CellC(idxCellStart).IsBorder) continue;
 
                 for (byte idxCellElse = 0; idxCellElse < StartValues.CELLS; idxCellElse++)
                 {
@@ -40,7 +40,7 @@ namespace Chessy.Model
                 {
                     foreach (var idxCellDirect in _e.AroundCellsE(idxCellStart).CellsAround)
                     {
-                        if (!_e.CellE(idxCellDirect).IsBorder)
+                        if (!_e.CellC(idxCellDirect).IsBorder)
                         {
                             if (!_e.UnitT(idxCellDirect).HaveUnit() && !_e.MountainC(idxCellDirect).HaveAnyResources)
                             {
@@ -70,9 +70,9 @@ namespace Chessy.Model
                             {
                                 if (Random.Range(0f, 1f) < 0.25f)
                                 {
-                                    if (_e.CellsForShift(idxCellStart).Contains(idxCell))
+                                    if (_e.WhereUnitCanShiftC(idxCellStart).CanShiftHere(idxCell))
                                     {
-                                        if (_e.UnitNeedStepsForShiftC(idxCellStart).NeedSteps(idxCell) <= _e.StepUnit(idxCellStart))
+                                        if (_e.HowManyEnergyNeedForShiftingUnitC(idxCellStart).HowManyEnergyNeedForShiftingToHere(idxCell) <= _e.EnergyUnit(idxCellStart))
                                         {
                                             _s.ShiftUnitOnOtherCellM(idxCellStart, idxCell);
                                             isShifted = true;

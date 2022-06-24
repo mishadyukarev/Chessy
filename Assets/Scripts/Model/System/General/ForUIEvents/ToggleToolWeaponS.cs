@@ -11,7 +11,7 @@ namespace Chessy.Model.Model.System
 
             if (_e.LessonT.Is(LessonTypes.ThatsYourDamage, LessonTypes.ThatsYourEffects, LessonTypes.ClickDefend)) return;
 
-            _e.CellsC.Selected = 0;
+            _e.SelectedCellIdx = 0;
 
             if (_e.CurPlayerIT.Is(_e.WhoseMovePlayerT))
             {

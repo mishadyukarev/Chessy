@@ -9,7 +9,7 @@
                 _e.AdultForestC(cellIdx).Resources = 0;
 
                 TrySeedNewYoungForestOnCell(cellIdx);
-                TryDestroyAllTrailsOnCell(cellIdx);
+                _e.TryDestroyAllTrailsOnCell(cellIdx);
             }
         }
     }

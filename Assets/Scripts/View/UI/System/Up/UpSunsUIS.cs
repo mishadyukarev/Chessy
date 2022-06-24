@@ -24,7 +24,7 @@ namespace Chessy.Model
             {
                 var isFirstPlayer = _e.CurPlayerIT == PlayerTypes.First;
 
-                switch (_e.WeatherE.SunSideT)
+                switch (_e.WeatherE.SunC.SunSideT)
                 {
                     case SunSideTypes.Dawn:
                         _needActiveLeft = isFirstPlayer;

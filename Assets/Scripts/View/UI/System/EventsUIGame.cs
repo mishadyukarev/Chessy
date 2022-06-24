@@ -186,10 +186,10 @@ namespace Chessy.Model.EventsUI
              });
             eUI.UpEs.WindButtonC.AddListener(delegate
             {
-                if (SystemStatic.Is(eM.LessonT, LessonTypes.ClickWindInfo))
+                if (eM.LessonT.Is(LessonTypes.ClickWindInfo))
                 {
-                    eM.WeatherE.SunSideT = SunSideTypes.Dawn;
-                    SystemStatic.SetNextLesson(eM.LessonT);
+                    eM.WeatherE.SunC.SunSideT = SunSideTypes.Dawn;
+                    eM.CommonInfoAboutGameC.SetNextLesson();
                 }
                 else
                 {

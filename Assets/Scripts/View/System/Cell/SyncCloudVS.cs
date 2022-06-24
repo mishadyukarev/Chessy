@@ -16,13 +16,13 @@ namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_e.WeatherE.CellIdxCenterCloud == _currentCell)
+            if (_e.WeatherE.CloudC.CellIdxCenterCloud == _currentCell)
             {
                 _needActive = true;
             }
             else
             {
-                foreach (var startCell in _e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).CellsAround)
+                foreach (var startCell in _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround)
                 {
                     if (startCell == _currentCell)
                     {

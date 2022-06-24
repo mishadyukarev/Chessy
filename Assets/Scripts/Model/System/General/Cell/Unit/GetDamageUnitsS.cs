@@ -60,8 +60,10 @@ namespace Chessy.Model.Model.System
                             break;
                     }
 
-                    if (_e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).WhereKingEffects.Contains(cellIdxCurrent))
-                    {
+
+
+                    if (_e.HaveKingEffect(cellIdxCurrent))//Separate player effect
+                    {s
                         powerDamage *= DamageUnitValues.KING_EFFECT_ON_NEAR_UNITS;
                     }
 
@@ -81,7 +83,7 @@ namespace Chessy.Model.Model.System
                     if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff)) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
 
 
-                    _e.DamageAttackC(cellIdxCurrent).Damage = powerDamage;
+                    _e.UnitMainC(cellIdxCurrent).DamageSimpleAttack = powerDamage;
 
 
 
@@ -125,7 +127,7 @@ namespace Chessy.Model.Model.System
 
                     powerDamage += powerDamage * protectionPercent;
 
-                    _e.DamageOnCellC(cellIdxCurrent).Damage = powerDamage;
+                    _e.UnitMainC(cellIdxCurrent).DamageSimpleAttack = powerDamage;
                 }
             }
         }

@@ -4,23 +4,23 @@ namespace Chessy.Model.Model.System
 {
     static class StatsUnitWorkerS
     {
-        internal static void Set(this UnitStatsE statsE, in double hp, in double steps, in double water)
+        internal static void SetStats(this UnitE statsE, in double hp, in double steps, in double water)
         {
             statsE.HealthC.Health = hp;
-            statsE.StepC.Steps = steps;
+            statsE.EnergyC.Energy = steps;
             statsE.WaterC.Water = water;
         }
-        internal static void Clear(this UnitStatsE statsE)
+        internal static void Clear(this UnitE statsE)
         {
-            statsE.HealthC.Health = default;
-            statsE.StepC.Steps = default;
-            statsE.WaterC.Water = default;
+            statsE.HealthC = default;
+            statsE.EnergyC = default;
+            statsE.WaterC = default;
         }
 
-        internal static void Set(this UnitStatsE unitStatsToE, in UnitStatsE unitStatsFromE)
+        internal static void Set(this UnitE unitStatsToE, in UnitE unitStatsFromE)
         {
             unitStatsToE.HealthC = unitStatsFromE.HealthC;
-            unitStatsToE.StepC = unitStatsFromE.StepC;
+            unitStatsToE.EnergyC = unitStatsFromE.EnergyC;
             unitStatsToE.WaterC = unitStatsFromE.WaterC;
         }
     }

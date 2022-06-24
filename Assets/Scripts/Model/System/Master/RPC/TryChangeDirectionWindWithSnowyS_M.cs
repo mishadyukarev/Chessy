@@ -10,17 +10,17 @@ namespace Chessy.Model.Model.System
     {
         internal void TryChangeDirectWindWithSnowyM(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (_e.StepUnitC(cell_from).Steps >= StepValues.Need(abilityT))
+            if (_e.EnergyUnitC(cell_from).Energy >= StepValues.Need(abilityT))
             {
-                _e.WeatherE.WindC.DirectT = _e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).Direct(idx_to);
-                _e.StepUnitC(cell_from).Steps -= StepValues.Need(abilityT);
+                _e.WeatherE.WindC.DirectT = _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).Direct(idx_to);
+                _e.EnergyUnitC(cell_from).Energy -= StepValues.Need(abilityT);
                 _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
                 _s.SoundToGeneral(RpcTarget.All, abilityT);
 
                 if (_e.LessonT == LessonTypes.ChangeDirectionWind)
                 {
-                    _e.LessonT.SetNextLesson();
+                    _e.CommonInfoAboutGameC.SetNextLesson();
                 }
 
             }

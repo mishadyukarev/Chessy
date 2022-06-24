@@ -13,7 +13,7 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = _e.CellsC.Selected;
+            var idx_sel = _e.SelectedCellIdx;
 
             eUI.LeftEnvEs.Envs[ResourceTypes.Food].TextUI.text = ((int)(100 * _e.FertilizeC(idx_sel).Resources)).ToString();
             eUI.LeftEnvEs.Envs[ResourceTypes.Wood].TextUI.text = ((int)(100 * _e.AdultForestC(idx_sel).Resources)).ToString();

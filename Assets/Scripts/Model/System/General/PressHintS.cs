@@ -115,7 +115,7 @@ namespace Chessy.Model
 
                     else if (_effectButtonT != 0)
                     {
-                        switch (_e.UnitEs(_e.SelectedCellIdx).Effect((ButtonTypes)_effectButtonT))
+                        switch (_e.EffectsUnitsRightBarsC(_e.SelectedCellIdx).Effect((ButtonTypes)_effectButtonT))
                         {
                             case EffectTypes.Shield:
                                 _e.OpenedNowPageBookT = PageBookTypes.FrozenShield;
@@ -144,7 +144,7 @@ namespace Chessy.Model
                     {
                         if (_e.LessonT == Enum.LessonTypes.HoldPressReady)
                         {
-                            if (_neededPageBookT == PageBookTypes.DonerReady) _e.LessonT.SetNextLesson();
+                            if (_neededPageBookT == PageBookTypes.DonerReady) _e.CommonInfoAboutGameC.SetNextLesson();
                         }
 
                         _e.OpenedNowPageBookT = _neededPageBookT;

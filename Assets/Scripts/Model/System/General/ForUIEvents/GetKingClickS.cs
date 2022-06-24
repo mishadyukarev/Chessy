@@ -4,7 +4,7 @@
     {
         public void GetClickEffect()
         {
-            _e.CellsC.Selected = 0;
+            _e.SelectedCellIdx = 0;
 
             if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
             {
@@ -12,8 +12,8 @@
 
                 if (_e.PlayerInfoE(_e.CurPlayerIT).KingInfoE.HaveInInventor)
                 {
-                    _e.SelectedUnitE.UnitT = UnitTypes.King;
-                    _e.SelectedUnitE.LevelT = LevelTypes.First;
+                    _e.SelectedUnitC.UnitT = UnitTypes.King;
+                    _e.SelectedUnitC.LevelT = LevelTypes.First;
 
                     _e.CellClickT = CellClickTypes.SetUnit;
                 }

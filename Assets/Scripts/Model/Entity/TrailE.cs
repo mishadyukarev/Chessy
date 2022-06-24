@@ -5,14 +5,14 @@ namespace Chessy.Model.Model.Entity
 {
     public readonly struct TrailE
     {
-        public readonly VisibleC VisibleC;
+        public readonly VisibleToOtherPlayerOrNotC VisibleC;
         public readonly HealthTrailC HealthC;
 
         internal TrailE(in bool b)
         {
             var vis = new Dictionary<PlayerTypes, bool>();
 
-            VisibleC = new VisibleC(default);
+            VisibleC = new VisibleToOtherPlayerOrNotC(default);
             HealthC = new HealthTrailC(new float[(byte)DirectTypes.End - 1]);
         }
     }

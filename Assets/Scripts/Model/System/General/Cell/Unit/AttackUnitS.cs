@@ -1,19 +1,21 @@
-﻿using Chessy.Model.Values.Cell.Unit.Stats;
+﻿using Chessy.Model;
+using Chessy.Model.Model.Entity;
+using Chessy.Model.Values.Cell.Unit.Stats;
 using System;
 
-namespace Chessy.Model.Model.System
+namespace Chessy
 {
-    sealed partial class UnitSystems
+    static partial class SystemStatic
     {
-        internal void Attack(in double damage, in PlayerTypes whoKiller, in byte cellIdx)
+        internal static void Attack(this EntitiesModel e, in double damage, in PlayerTypes whoKiller, in byte cellIdx)
         {
             //if (!eMG.UnitTC(cellIdx).HaveUnit()) throw new Exception();
             if (damage <= 0) throw new Exception();
-            if (_e.IsBorder(cellIdx)) throw new Exception();
+            if (e.IsBorder(cellIdx)) throw new Exception();
 
-            _e.HpUnitC(cellIdx).Health -= damage;
-            if (_e.HpUnitC(cellIdx).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
-                KillUnit(whoKiller, cellIdx);
+            e.HpUnitC(cellIdx).Health -= damage;
+            if (e.HpUnitC(cellIdx).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
+                e.KillUnit(whoKiller, cellIdx);
         }
     }
 }

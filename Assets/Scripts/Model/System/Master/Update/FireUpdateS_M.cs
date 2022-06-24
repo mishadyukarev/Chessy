@@ -8,7 +8,7 @@ namespace Chessy.Model.Model.System
 {
     static partial class ExecuteUpdateEverythingMS
     {
-        static void FireUpdate(this EntitiesModel e, SystemsModel s)
+        static EntitiesModel FireUpdate(this EntitiesModel e)
         {
             var needForFireNext = new List<byte>();
 
@@ -26,11 +26,11 @@ namespace Chessy.Model.Model.System
                         {
                             if (e.UnitPlayerT(cell_0).Is(PlayerTypes.None))
                             {
-                                s.UnitSs.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                                e.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                s.UnitSs.Attack(HpValues.FIRE_DAMAGE, e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
+                                e.Attack(HpValues.FIRE_DAMAGE, e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
                             }
                         }
                     }
@@ -61,17 +61,20 @@ namespace Chessy.Model.Model.System
                     }
                 }
             }
+
+            return e;
         }
 
-        static void TryPutOutFireWithClouds(this EntitiesModel e)
+        static EntitiesModel TryPutOutFireWithClouds(this EntitiesModel e)
         {
-            foreach (var cellE in e.AroundCellsE(e.WeatherE.CellIdxCenterCloud).CellsAround)
+            foreach (var cellE in e.AroundCellsE(e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround)
             {
                 e.HaveFire(cellE) = false;
             }
+            return e;
         }
 
-        static void BurnAdultForest(this EntitiesModel e, in SystemsModel s)
+        static EntitiesModel BurnAdultForest(this EntitiesModel e, in SystemsModel s)
         {
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
@@ -80,6 +83,7 @@ namespace Chessy.Model.Model.System
                     s.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
                 }
             }
+            return e;
         }
     }
 }

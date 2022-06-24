@@ -4,18 +4,18 @@ namespace Chessy.Model.Model.System
 {
     static class EffectsUnitS
     {
-        internal static void Set(this UnitEffectsE unitEffectsE, in float stun, in float protection, in int shoots, in bool haveKingEffect)
+        internal static void Set(this ref EffectsUnitC unitEffectsE, in float stun, in float protection, in int shoots, in bool haveKingEffect)
         {
-            unitEffectsE.StunC.Stun = stun;
-            unitEffectsE.ShieldEffectC.Protection = protection;
-            unitEffectsE.FrozenArrawC.Shoots = shoots;
+            unitEffectsE.StunHowManyUpdatesNeedStay = stun;
+            unitEffectsE.ProtectionRainyMagicShield = protection;
+            unitEffectsE.ShootsFrozenArrawArcher = shoots;
             unitEffectsE.HaveKingEffect = haveKingEffect;
         }
-        internal static void CopyEffects(this UnitEffectsE unitEffectsToE, in UnitEffectsE unitEffectsFromE)
+        internal static void CopyEffects(this ref EffectsUnitC unitEffectsToE, in EffectsUnitC unitEffectsFromE)
         {
-            unitEffectsToE.StunC = unitEffectsFromE.StunC;
-            unitEffectsToE.ShieldEffectC = unitEffectsFromE.ShieldEffectC;
-            unitEffectsToE.FrozenArrawC = unitEffectsFromE.FrozenArrawC;
+            unitEffectsToE.StunHowManyUpdatesNeedStay = unitEffectsFromE.StunHowManyUpdatesNeedStay;
+            unitEffectsToE.ProtectionRainyMagicShield = unitEffectsFromE.ProtectionRainyMagicShield;
+            unitEffectsToE.ShootsFrozenArrawArcher = unitEffectsFromE.ShootsFrozenArrawArcher;
             unitEffectsToE.HaveKingEffect = unitEffectsFromE.HaveKingEffect;
         }
     }

@@ -37,7 +37,7 @@ namespace Chessy.Model.Model.System
 
                 if (_e.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
-                    _e.LessonT.SetNextLesson();
+                    _e.CommonInfoAboutGameC.SetNextLesson();
                     _e.IsSelectedCity = true;
                 }
 

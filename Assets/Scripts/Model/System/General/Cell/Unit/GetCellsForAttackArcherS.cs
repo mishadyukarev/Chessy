@@ -10,9 +10,9 @@ namespace Chessy.Model.Model.System
             {
                 if (_e.UnitT(cellIdxCell).HaveUnit())
                 {
-                    if (!_e.StunUnitC(cellIdxCell).IsStunned)
+                    if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
                     {
-                        if (_e.StepUnitC(cellIdxCell).HaveAnySteps)
+                        if (_e.EnergyUnitC(cellIdxCell).HaveAnyEnergy)
                         {
                             if (!_e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)))
                             {
@@ -20,7 +20,7 @@ namespace Chessy.Model.Model.System
                                 {
                                     var idx_1 = _e.AroundCellsE(cellIdxCell).IdxCell(dir_1);
 
-                                    var isRight_0 = _e.UnitIsRightArcherC(cellIdxCell).IsRight;
+                                    var isRight_0 = _e.IsRightArcherUnit(cellIdxCell);
 
                                     if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources)
                                     {
@@ -34,22 +34,22 @@ namespace Chessy.Model.Model.System
                                                     {
                                                         if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                                         {
-                                                            _e.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
+                                                            _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                                         }
-                                                        else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                        else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                                     }
                                                     else
                                                     {
                                                         if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
                                                         {
-                                                            _e.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
+                                                            _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                                         }
-                                                        else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                        else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                    _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                                 }
                                             }
                                         }
@@ -67,24 +67,24 @@ namespace Chessy.Model.Model.System
                                                 {
                                                     if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
                                                     {
-                                                        _e.AttackUniqueCellsC(cellIdxCell).Add(idx_2);
+                                                        _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_2, true);
                                                     }
 
-                                                    else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
+                                                    else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
                                                 }
                                                 else
                                                 {
                                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
                                                     {
-                                                        _e.AttackUniqueCellsC(cellIdxCell).Add(idx_2);
+                                                        _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_2, true);
                                                     }
 
-                                                    else _e.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
+                                                    else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
                                                 }
                                             }
                                             else
                                             {
-                                                _e.AttackSimpleCellsC(cellIdxCell).Add(idx_2);
+                                                _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
                                             }
                                         }
                                     }

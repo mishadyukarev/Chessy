@@ -2,8 +2,11 @@
 {
     public struct XyCellC
     {
-        public readonly byte[] Xy;
+        readonly byte[] _xy;
+        public byte X => _xy[0];
+        public byte Y => _xy[1];
+        public byte[] Xy => (byte[])_xy.Clone();
 
-        internal XyCellC(in byte[] xy) => Xy = xy;
+        internal XyCellC(in byte[] xy) => _xy = xy;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Enum;
+using Chessy.Model.Component;
 using Chessy.Model.Entity;
 using Chessy.Model.Enum;
 using Chessy.Model.Model.Component;
@@ -16,44 +17,50 @@ namespace Chessy.Model.Model.Entity
         readonly PlayerInfoEs[] _forPlayerEs = new PlayerInfoEs[(byte)PlayerTypes.End];
         readonly CellEs[] _cellEs;
 
-
+        public readonly DataFromViewC DataFromViewC;
+        public readonly Resources Resources;
         public ShopC ShopC;
         public AdC AdC;
         public UpdateAllViewC UpdateAllViewC;
         public SettingsC SettingsC;
         public BookC BookC;
         public CommonInfoAboutGameC CommonInfoAboutGameC;
-
-
-
-        public readonly DataFromViewC DataFromViewC;
+        public MistakeC MistakeC;
         public ZonesInfoC ZoneInfoC;
         public WhereTeleportC WhereTeleportC;
         public MotionC MotionC;
         public CellsC CellsC;
+        public SelectedUnitC SelectedUnitC;
+        public InputC InputC;
+        internal RpcPoolC RpcC;
+
 
         public PlayerTypes WinnerPlayerT;
         public PlayerTypes WhoseMovePlayerT;
         public PlayerTypes CurPlayerIT;
 
-        public readonly Resources Resources;
-        public MistakeC MistakeC;
-        internal RpcPoolC RpcC;
+
+
+
         public WeatherE WeatherE;
         public SelectedE SelectedE;
-        public SelectedUnitE SelectedUnitE;
+
 
 
 
         public RaycastTypes RaycastT { get; internal set; }
         public CellClickTypes CellClickT { get; internal set; }
-        public LessonTypes LessonT { get; internal set; }
         public bool IsStartedGame { get; internal set; }
         public bool IsSelectedCity { get; internal set; }
         public bool HaveTreeUnit { get; internal set; }
-        public bool IsClicked { get; internal set; }
         public bool IsActivatedIdxAndXyInfoCells { get; internal set; }
         public int AmountPlantedYoungForests { get; internal set; }
+
+        public bool IsClicked
+        {
+            get => InputC.IsClicked;
+            internal set => InputC.IsClicked = value;
+        }
         public float MotionTimer
         {
             get => MotionC.Timer;
@@ -78,6 +85,11 @@ namespace Chessy.Model.Model.Entity
         {
             get => UpdateAllViewC.NeedUpdateView;
             set => UpdateAllViewC.NeedUpdateView = value;
+        }
+        public LessonTypes LessonT
+        {
+            get => CommonInfoAboutGameC.LessonT;
+            internal set => CommonInfoAboutGameC.LessonT = value;
         }
         internal ref float ForUpdateViewTimer => ref UpdateAllViewC.ForUpdateViewTimer;
         public PageBookTypes OpenedNowPageBookT
@@ -127,10 +139,15 @@ namespace Chessy.Model.Model.Entity
 
 
         public ref CellE CellE(in byte cell) => ref CellEs(cell).CellE;
+        public CellC CellC(in byte cellIdx) => CellE(cellIdx).CellC;
         public IsStartedCellC IsStartedCellC(in byte cell) => CellE(cell).IsStartedCellC;
-        public bool IsBorder(in byte cell) => CellE(cell).IsBorder;
-        public XyCellC XyCellC(in byte cell) => CellE(cell).XyC;
-        public int InstanceID(in byte cell) => CellE(cell).InstanceID;
+        public IdxCellC IdxCellC(in byte cellIdx) => CellE(cellIdx).IdxCellC;
+        public byte IdxCell(in byte cellIdx) => IdxCellC(cellIdx).Idx;
+        public XyCellC XyCellC(in byte cellIdx) => CellE(cellIdx).XyCellC;
+        public byte XCell(in byte cellIdx) => XyCellC(cellIdx).X;
+        public byte YCell(in byte cellIdx) => XyCellC(cellIdx).Y;
+        public bool IsBorder(in byte cell) => CellC(cell).IsBorder;
+        public int InstanceID(in byte cell) => CellC(cell).InstanceID;
 
 
         public AroundCellsE AroundCellsE(in byte cell) => CellEs(cell).AroundCellsEs;
@@ -138,57 +155,52 @@ namespace Chessy.Model.Model.Entity
 
         #region Unit
 
-        public UnitEs UnitEs(in byte idx) => CellEs(idx).UnitEs;
+        public ref UnitE UnitE(in byte idx) => ref CellEs(idx).UnitE;
 
-        public UnitMainE UnitMainE(in byte idx) => UnitEs(idx).MainE;
-        public UnitTypes UnitT(in byte idx) => UnitMainE(idx).UnitT;
-        internal void SetUnitOnCellT(in byte idx, in UnitTypes unitT) => UnitMainE(idx).UnitT = unitT;
-        public PlayerTypes UnitPlayerT(in byte idx) => UnitMainE(idx).PlayerT;
-        internal void SetUnitPlayerT(in byte cellIdx, in PlayerTypes playerT) => UnitMainE(cellIdx).PlayerT = playerT;
-        public LevelTypes UnitLevelT(in byte idx) => UnitMainE(idx).LevelT;
-        public void SetUnitLevelT(in byte idx, in LevelTypes levelT) => UnitMainE(idx).LevelT = levelT;
-        public ConditionUnitTypes UnitConditionT(in byte idx) => UnitMainE(idx).ConditionT;
-        internal void SetUnitConditionT(in byte cellIdx, in ConditionUnitTypes conditionUnitT) => UnitMainE(cellIdx).ConditionT = conditionUnitT;
-        public ref IsRightArcherC UnitIsRightArcherC(in byte idx) => ref UnitMainE(idx).IsRightArcherC;
-        public bool IsRightArcherUnit(in byte idx) => UnitIsRightArcherC(idx).IsRight;
-        public VisibleC UnitVisibleC(in byte cell) => UnitMainE(cell).VisibleC;
-        public CanSetUnitHereC CanSetUnitHereC(in byte cell) => UnitMainE(cell).CanSetUnitHereC;
-        public IdxsCellsC UnitForArsonC(in byte cell) => UnitMainE(cell).ForArson;
-        public ref NeedUpdateViewC UnitNeedUpdateViewC(in byte cell) => ref UnitMainE(cell).NeedUpdateViewC;
+        public ref UnitMainC UnitMainC(in byte idx) => ref UnitE(idx).MainC;
+        public UnitTypes UnitT(in byte idx) => UnitMainC(idx).UnitT;
+        internal void SetUnitOnCellT(in byte idx, in UnitTypes unitT) => UnitMainC(idx).UnitT = unitT;
+        public PlayerTypes UnitPlayerT(in byte idx) => UnitMainC(idx).PlayerT;
+        internal void SetUnitPlayerT(in byte cellIdx, in PlayerTypes playerT) => UnitMainC(cellIdx).PlayerT = playerT;
+        public LevelTypes UnitLevelT(in byte idx) => UnitMainC(idx).LevelT;
+        public void SetUnitLevelT(in byte idx, in LevelTypes levelT) => UnitMainC(idx).LevelT = levelT;
+        public ConditionUnitTypes UnitConditionT(in byte idx) => UnitMainC(idx).ConditionT;
+        internal void SetUnitConditionT(in byte cellIdx, in ConditionUnitTypes conditionUnitT) => UnitMainC(cellIdx).ConditionT = conditionUnitT;
+        public bool IsRightArcherUnit(in byte idx) => UnitMainC(idx).IsRightArcher;
+        public double DamageAttack(in byte cell) => UnitMainC(cell).DamageSimpleAttack;
+        public double DamageOnCell(in byte cell) => UnitMainC(cell).DamageOnCell;
 
-        public ref UnitStatsE StatsUnitE(in byte idx_cell) => ref UnitEs(idx_cell).StatsE;
-        public ref HealthC HpUnitC(in byte idx) => ref StatsUnitE(idx).HealthC;
+        public VisibleToOtherPlayerOrNotC UnitVisibleC(in byte cell) => UnitE(cell).VisibleToOtherPlayerOrNotC;
+        public CanSetUnitHereC CanSetUnitHereC(in byte cell) => UnitE(cell).CanSetUnitHereC;
+        public WhereUnitCanFireAdultForestC WhereUnitCanFireAdultForestC(in byte cell) => UnitE(cell).WhereUnitCanFireAdultForestC;
+        public ref NeedUpdateViewC UnitNeedUpdateViewC(in byte cell) => ref UnitE(cell).NeedUpdateViewC;
+        public EffectsUnitsRightBarsC EffectsUnitsRightBarsC(in byte cellIdx) => UnitE(cellIdx).EffectsUnitsRightBarsC;
+
+        public ref HealthC HpUnitC(in byte idx) => ref UnitE(idx).HealthC;
         public double HpUnit(in byte cell) => HpUnitC(cell).Health;
-        public ref StepsC StepUnitC(in byte idx) => ref StatsUnitE(idx).StepC;
-        public double StepUnit(in byte idx) => StepUnitC(idx).Steps;
-        public ref WaterC WaterUnitC(in byte idx) => ref StatsUnitE(idx).WaterC;
+        public ref EnergyC EnergyUnitC(in byte idx) => ref UnitE(idx).EnergyC;
+        public double EnergyUnit(in byte idx) => EnergyUnitC(idx).Energy;
+        public ref WaterC WaterUnitC(in byte idx) => ref UnitE(idx).WaterC;
         public double WaterUnit(in byte idx) => WaterUnitC(idx).Water;
-        public ref DamageC DamageAttackC(in byte idx) => ref StatsUnitE(idx).DamageSimpleAttackC;
-        public double DamageAttack(in byte cell) => DamageAttackC(cell).Damage;
-        public ref DamageC DamageOnCellC(in byte idx) => ref StatsUnitE(idx).DamageOnCellC;
-        public double DamageOnCell(in byte cell) => DamageOnCellC(cell).Damage;
 
-        public ref ToolWeaponMainUnitC MainToolWeaponE(in byte idx) => ref UnitEs(idx).MainToolWeaponE;
+        public ref MainToolWeaponUnitC MainToolWeaponE(in byte idx) => ref UnitE(idx).MainToolWeaponC;
         public ToolWeaponTypes MainToolWeaponT(in byte cell) => MainToolWeaponE(cell).ToolWeaponT;
         public void SetMainToolWeaponT(in byte cell, in ToolWeaponTypes toolWeaponT) => MainToolWeaponE(cell).ToolWeaponT = toolWeaponT;
         public LevelTypes MainTWLevelT(in byte idx) => MainToolWeaponE(idx).LevelT;
         internal void SetMainTWLevelT(in byte cellIdx, in LevelTypes levelT) => MainToolWeaponE(cellIdx).LevelT = levelT;
 
-        public ref ExtraToolWeaponE UnitExtraTWE(in byte idx_cell) => ref UnitEs(idx_cell).ExtraToolWeaponE;
+        public ref ExtraToolWeaponUnitC UnitExtraTWE(in byte idx_cell) => ref UnitE(idx_cell).ExtraToolWeaponC;
         public ToolWeaponTypes ExtraToolWeaponT(in byte idx) => UnitExtraTWE(idx).ToolWeaponT;
         internal void SetExtraToolWeaponT(in byte idx, in ToolWeaponTypes toolWeaponT) => UnitExtraTWE(idx).ToolWeaponT = toolWeaponT;
         public LevelTypes ExtraTWLevelT(in byte idx) => UnitExtraTWE(idx).LevelT;
         public LevelTypes SetExtraTWLevelT(in byte idx, in LevelTypes levelT) => UnitExtraTWE(idx).LevelT = levelT;
-        public ref ProtectionC ExtraTWProtectionC(in byte idx) => ref UnitExtraTWE(idx).ProtectionC;
-        public float ExtraTWProtection(in byte idx) => ExtraTWProtectionC(idx).Protection;
+        public float ExtraTWProtection(in byte idx) => UnitExtraTWE(idx).ProtectionShield;
 
-        ref CellUnitExtractE UnitExtactE(in byte idx_cell) => ref UnitEs(idx_cell).ExtractE;
-        public ref ResourcesC PawnExtractAdultForestC(in byte idx) => ref UnitExtactE(idx).PawnExtractAdultForestE;
-        public float PawnExtractAdultForest(in byte idx) => PawnExtractAdultForestC(idx).Resources;
-        public ref ResourcesC PawnExtractHillC(in byte idx) => ref UnitExtactE(idx).PawnExtractHillE;
-        public float PawnExtractHill(in byte idx) => PawnExtractHillC(idx).Resources;
+        public ref ExtractionResourcesWithUnitC ExtactionResourcesWithWarriorC(in byte idx_cell) => ref UnitE(idx_cell).ExtractionResourcesC;
+        public float PawnExtractAdultForest(in byte idx) => ExtactionResourcesWithWarriorC(idx).HowManyWarriourCanExtractAdultForest;
+        public float PawnExtractHill(in byte idx) => ExtactionResourcesWithWarriorC(idx).HowManyWarriourCanExtractHill;
 
-        ref WhoLastDiedHereE LastDiedE(in byte idx) => ref UnitEs(idx).WhoLastDiedHereE;
+        ref WhoLastDiedHereC LastDiedE(in byte idx) => ref UnitE(idx).WhoLastDiedHereC;
         public UnitTypes LastDiedUnitT(in byte idx) => LastDiedE(idx).UnitT;
         internal void SetLastDiedUnitT(in byte idx, in UnitTypes unitT) => LastDiedE(idx).UnitT = unitT;
         public LevelTypes LastDiedLevelT(in byte idx) => LastDiedE(idx).LevelT;
@@ -196,29 +208,21 @@ namespace Chessy.Model.Model.Entity
         public PlayerTypes LastDiedPlayerT(in byte idx) => LastDiedE(idx).PlayerT;
         internal void SetLastDiedPlayerT(in byte cellIdx, in PlayerTypes playerT) => LastDiedE(cellIdx).PlayerT = playerT;
 
-        ref UnitAttackE UnitAttackE(in byte cell) => ref UnitEs(cell).AttackE;
-        public IdxsCellsC AttackSimpleCellsC(in byte cell) => UnitAttackE(cell).Simple;
-        public IdxsCellsC AttackUniqueCellsC(in byte cell) => UnitAttackE(cell).Unique;
-
-        ref ShiftUnitE UnitShiftE(in byte cell) => ref UnitEs(cell).ShiftE;
-        public IdxsCellsC CellsForShift(in byte cell) => UnitShiftE(cell).ForShift;
-        public NeedStepsC UnitNeedStepsForShiftC(in byte cell) => UnitShiftE(cell).NeedStepsC;
-
-        ref AbilityUnitE UnitAbilityE(in byte cell) => ref UnitEs(cell).AbilityE;
-        public UniqueButtonsC UnitButtonAbilitiesC(in byte cell) => UnitAbilityE(cell).UniqueButtonsC;
-        public CooldownAbilitiesC UnitCooldownAbilitiesC(in byte cell) => UnitAbilityE(cell).CooldownsC;
+        public WhereUnitCanAttackToEnemyC WhereUnitCanAttackSimpleAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackSimpleAttackToEnemyC;
+        public WhereUnitCanAttackToEnemyC WhereUnitCanAttackUniqueAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackUniqueAttackToEnemyC;
+        public UniqueButtonsC UnitButtonAbilitiesC(in byte cell) => UnitE(cell).UniqueButtonsC;
+        public HowManyEnergyNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC(in byte cell) => UnitE(cell).HowManyEnergyNeedForShiftingUnitC;
+        public WhereUnitCanShiftC WhereUnitCanShiftC(in byte cellIdx) => UnitE(cellIdx).WhereCanShiftC;
+        public CooldownAbilitiesC UnitCooldownAbilitiesC(in byte cell) => UnitE(cell).CooldownsC;
 
 
         #region Effects
 
-        public ref UnitEffectsE UnitEffectsE(in byte idx_cell) => ref UnitEs(idx_cell).EffectsE;
-        public ref StunC StunUnitC(in byte idx) => ref UnitEffectsE(idx).StunC;
-        public float StunUnit(in byte idx) => StunUnitC(idx).Stun;
-        public ref ProtectionC ShieldUnitEffectC(in byte idx) => ref UnitEffectsE(idx).ShieldEffectC;
-        public float ShieldEffect(in byte idx) => ShieldUnitEffectC(idx).Protection;
-        public ref ShootsC FrozenArrawEffectC(in byte idx) => ref UnitEffectsE(idx).FrozenArrawC;
-        public int FrozenArrawEffect(in byte cell) => FrozenArrawEffectC(cell).Shoots;
-        public ref bool HaveKingEffect(in byte idx) => ref UnitEffectsE(idx).HaveKingEffect;
+        public ref EffectsUnitC UnitEffectsC(in byte idx_cell) => ref UnitE(idx_cell).EffectsC;
+        public float StunUnit(in byte idx) => UnitEffectsC(idx).StunHowManyUpdatesNeedStay;
+        public float ShieldEffect(in byte idx) => UnitEffectsC(idx).ProtectionRainyMagicShield;
+        public int FrozenArrawEffect(in byte cell) => UnitEffectsC(cell).ShootsFrozenArrawArcher;
+        public bool HaveKingEffect(in byte idx) => UnitEffectsC(idx).HaveKingEffect;
 
         #endregion
 
@@ -227,20 +231,22 @@ namespace Chessy.Model.Model.Entity
 
         #region Building
 
-        ref BuildingE BuildingEs(in byte idx) => ref CellEs(idx).BuildEs;
-        public BuildingTypes BuildingOnCellT(in byte idx) => BuildingEs(idx).BuildingT;
-        internal void SetBuildingOnCellT(in byte cellIdx, in BuildingTypes buildingT) => BuildingEs(cellIdx).BuildingT = buildingT;
+        public ref BuildingE BuildingE(in byte idx) => ref CellEs(idx).BuildingE;
+        public ref BuildingC BuildingC(in byte cellIdx) => ref BuildingE(cellIdx).BuildingMainC;
+        public BuildingTypes BuildingOnCellT(in byte idx) => BuildingC(idx).BuildingT;
+        internal void SetBuildingOnCellT(in byte cellIdx, in BuildingTypes buildingT) => BuildingC(cellIdx).BuildingT = buildingT;
         public bool HaveBuildingOnCell(in byte idxCell) => BuildingOnCellT(idxCell).HaveBuilding();
         public bool IsBuildingOnCell(in byte cellIdx, params BuildingTypes[] buildingTs) => BuildingOnCellT(cellIdx).Is(buildingTs);
-        public LevelTypes BuildingLevelT(in byte idx) => BuildingEs(idx).LevelT;
-        public void SetBuildingLevelT(in byte idx, in LevelTypes levelT) => BuildingEs(idx).LevelT = levelT;
-        public PlayerTypes BuildingPlayerT(in byte idx) => BuildingEs(idx).PlayerT;
-        internal void SetBuildingPlayerT(in byte cellIdx, in PlayerTypes playerT) => BuildingEs(cellIdx).PlayerT = playerT;
-        public ref HealthC BuildingHpC(in byte idx) => ref BuildingEs(idx).HealthC;
+        public LevelTypes BuildingLevelT(in byte idx) => BuildingC(idx).LevelT;
+        public void SetBuildingLevelT(in byte idx, in LevelTypes levelT) => BuildingC(idx).LevelT = levelT;
+        public PlayerTypes BuildingPlayerT(in byte idx) => BuildingC(idx).PlayerT;
+        internal void SetBuildingPlayerT(in byte cellIdx, in PlayerTypes playerT) => BuildingC(cellIdx).PlayerT = playerT;
+        public ref HealthC BuildingHpC(in byte idx) => ref BuildingE(idx).HealthC;
         public double BuildingHp(in byte idx) => BuildingHpC(idx).Health;
-        public VisibleC BuildingVisibleC(in byte cell) => BuildingEs(cell).VisibleC;
-        public ref ResourcesC WoodcutterExtractC(in byte idx) => ref BuildingEs(idx).WoodcutterExtractC;
-        public ref ResourcesC FarmExtractFertilizeC(in byte idx) => ref BuildingEs(idx).FarmExtractC;
+        public VisibleToOtherPlayerOrNotC BuildingVisibleC(in byte cell) => BuildingE(cell).VisibleToOtherPlayerC;
+        public ref BuildingExtractionC BuildingExtractionC(in byte cellIdx) => ref BuildingE(cellIdx).ExtractionC;
+        public float WoodcutterExtract(in byte idx) => BuildingExtractionC(idx).HowManyWoodcutterCanExtractWood;
+        public float FarmExtract(in byte idx) => BuildingExtractionC(idx).HowManyFarmCanExtractFood;
 
         #endregion
 
@@ -252,16 +258,17 @@ namespace Chessy.Model.Model.Entity
         public ref ResourcesC HillC(in byte idx) => ref EnvironmentEs(idx).HillC;
         public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentEs(idx).FertilizeC;
 
-        public RiverE RiverE(in byte idx) => CellEs(idx).RiverEs;
-        public RiverTypes RiverT(in byte cell) => RiverE(cell).RiverT;
-        public void SetRiverT(in byte cell, in RiverTypes riverT) => RiverE(cell).RiverT = riverT;
+        public ref RiverE RiverE(in byte idx) => ref CellEs(idx).RiverE;
+        public ref RiverC RiverC(in byte cellIdx) => ref RiverE(cellIdx).RiverC;
+        public RiverTypes RiverT(in byte cell) => RiverC(cell).RiverT;
+        public void SetRiverT(in byte cell, in RiverTypes riverT) => RiverC(cell).RiverT = riverT;
         public ref HaveRiverAroundCellC HaveRiverC(in byte cell) => ref RiverE(cell).HaveRiverC;
 
         ref EffectE EffectEs(in byte idx) => ref CellEs(idx).EffectEs;
         public ref bool HaveFire(in byte idx) => ref EffectEs(idx).HaveFire;
 
         ref TrailE TrailE(in byte cell) => ref CellEs(cell).TrailE;
-        public VisibleC TrailVisibleC(in byte cell) => TrailE(cell).VisibleC;
+        public VisibleToOtherPlayerOrNotC TrailVisibleC(in byte cell) => TrailE(cell).VisibleC;
         public HealthTrailC HealthTrail(in byte cell) => TrailE(cell).HealthC;
 
 
@@ -297,7 +304,7 @@ namespace Chessy.Model.Model.Entity
 
             var selectedBuildings = new Dictionary<BuildingTypes, bool>();
             for (var buildingT = BuildingTypes.None + 1; buildingT < BuildingTypes.End; buildingT++) selectedBuildings.Add(buildingT, false);
-            SelectedE.BuildingsC = new SelectedBuildingsC(selectedBuildings);
+            SelectedE.BuildingsC = new SelectedBuildingsInTownC(selectedBuildings);
 
             RpcC = new RpcPoolC(actions, nameRpcMethod);
 

@@ -29,7 +29,7 @@ namespace Chessy.Model
                 if (_e.UnitT(_currentCell).HaveUnit() && !_e.UnitT(_currentCell).IsAnimal())
                 {
                     _needActive[(byte)CellBlockTypes.NeedWater] = _e.WaterUnitC(_currentCell).Water <= WaterValues.MAX * 0.4f;
-                    _needActive[(byte)CellBlockTypes.MaxSteps] = _e.StepUnitC(_currentCell).Steps >= StepValues.MAX;
+                    _needActive[(byte)CellBlockTypes.MaxSteps] = _e.EnergyUnitC(_currentCell).Energy >= StepValues.MAX;
 
 
                     if (_e.UnitConditionT(_currentCell).Is(ConditionUnitTypes.Protected))

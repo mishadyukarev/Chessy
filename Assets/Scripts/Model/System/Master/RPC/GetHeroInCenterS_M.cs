@@ -12,7 +12,7 @@ namespace Chessy.Model.Model.System
 
             if (_e.LessonT == LessonTypes.PickingGod)
             {
-                _e.LessonT.SetNextLesson();
+                _e.CommonInfoAboutGameC.SetNextLesson();
             }
 
             _e.PlayerInfoE(whoseMove).GodInfoE.UnitT = unitT;

@@ -1,9 +1,9 @@
 ﻿namespace Chessy.Model
 {
-    public struct StepsC
+    public struct EnergyC
     {
-        public double Steps { get; internal set; }
+        public double Energy { get; internal set; }
 
-        public bool HaveAnySteps => Steps > 0;
+        public bool HaveAnyEnergy => Energy > 0;
     }
 }

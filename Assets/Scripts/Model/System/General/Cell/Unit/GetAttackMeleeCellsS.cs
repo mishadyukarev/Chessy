@@ -9,7 +9,7 @@ namespace Chessy.Model.Model.System
         {
             for (byte cellIdxCell = 0; cellIdxCell < StartValues.CELLS; cellIdxCell++)
             {
-                if (!_e.StunUnitC(cellIdxCell).IsStunned)
+                if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
                 {
                     if (_e.UnitT(cellIdxCell).HaveUnit() && _e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)) && !_e.UnitT(cellIdxCell).IsAnimal())
                     {
@@ -23,9 +23,9 @@ namespace Chessy.Model.Model.System
 
                             if (!_e.MountainC(idx_1).HaveAnyResources)
                             {
-                                var haveMaxSteps = _e.StepUnitC(cellIdxCell).Steps >= StepValues.MAX;
+                                var haveMaxSteps = _e.EnergyUnitC(cellIdxCell).Energy >= StepValues.MAX;
 
-                                if (_e.StepUnitC(cellIdxCell).Steps >= _e.UnitNeedStepsForShiftC(cellIdxCell).NeedSteps(idx_1) || haveMaxSteps)
+                                if (_e.EnergyUnitC(cellIdxCell).Energy >= _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCell).HowManyEnergyNeedForShiftingToHere(idx_1) || haveMaxSteps)
                                 {
                                     if (_e.UnitT(idx_1).HaveUnit())
                                     {
@@ -36,13 +36,13 @@ namespace Chessy.Model.Model.System
                                                 if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                                 {
-                                                    _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                    _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                                 }
-                                                else _e.AttackUniqueCellsC(cellIdxCell).Add(idx_1);
+                                                else _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                             }
                                             else
                                             {
-                                                _e.AttackSimpleCellsC(cellIdxCell).Add(idx_1);
+                                                _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                             }
                                         }
                                     }

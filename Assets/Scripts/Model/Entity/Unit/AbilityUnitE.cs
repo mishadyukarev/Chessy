@@ -1,17 +1,15 @@
-﻿using Chessy.Common;
-using Chessy.Model.Model.Component;
+﻿//using Chessy.Common;
+//using Chessy.Model.Model.Component;
 
-namespace Chessy.Model.Model.Entity
-{
-    public struct AbilityUnitE
-    {
-        public readonly UniqueButtonsC UniqueButtonsC;
-        public readonly CooldownAbilitiesC CooldownsC;
+//namespace Chessy.Model.Model.Entity
+//{
+//    public struct AbilityUnitE
+//    {
 
-        internal AbilityUnitE(in float[] cooldowns)
-        {
-            UniqueButtonsC = new UniqueButtonsC(new AbilityTypes[(byte)ButtonTypes.End]);
-            CooldownsC = new CooldownAbilitiesC(default);
-        }
-    }
-}
+
+//        internal AbilityUnitE(in float[] cooldowns)
+//        {
+
+//        }
+//    }
+//}

@@ -8,7 +8,7 @@ namespace Chessy.Model.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.PawnExtractAdultForestC(cellIdxCurrent).Resources = 0;
+                _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest = 0;
 
                 if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
@@ -37,7 +37,7 @@ namespace Chessy.Model.Model.System
 
                         if (_e.AdultForestC(cellIdxCurrent).Resources < extract) extract = _e.AdultForestC(cellIdxCurrent).Resources;
 
-                        _e.PawnExtractAdultForestC(cellIdxCurrent).Resources = extract;
+                        _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest = extract;
                     }
                 }
             }

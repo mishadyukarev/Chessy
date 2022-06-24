@@ -8,9 +8,9 @@ namespace Chessy.Model.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.UnitForArsonC(cellIdxCurrent).Clear();
+                _e.WhereUnitCanFireAdultForestC(cellIdxCurrent).Set(cellIdxCurrent, false);
 
-                if (!_e.StunUnitC(cellIdxCurrent).IsStunned)
+                if (!_e.UnitEffectsC(cellIdxCurrent).IsStunned)
                 {
                     if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
                     {
@@ -22,7 +22,7 @@ namespace Chessy.Model.Model.System
                             {
                                 if (_e.AdultForestC(idx_1).HaveAnyResources)
                                 {
-                                    _e.UnitForArsonC(cellIdxCurrent).Add(idx_1);
+                                    _e.WhereUnitCanFireAdultForestC(cellIdxCurrent).Set(idx_1, true);
                                 }
                             }
                         }

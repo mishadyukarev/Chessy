@@ -17,7 +17,7 @@ namespace Chessy.Model
 
             if (_e.IsActivatedIdxAndXyInfoCells)
             {
-                _tMPC.TextMeshPro.text = _currentCell + "\n " + _e.XyCellC(_currentCell).X() + "|" + _e.XyCellC(_currentCell).Y() + "  ";
+                _tMPC.TextMeshPro.text = _currentCell + "\n " + _e.XCell(_currentCell) + "|" + _e.YCell(_currentCell) + "  ";
             }
         }
     }

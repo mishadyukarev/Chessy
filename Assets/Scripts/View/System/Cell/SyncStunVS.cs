@@ -20,7 +20,7 @@ namespace Chessy.Model
             {
                 if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
                 {
-                    _needActive = _e.StunUnitC(_currentCell).IsStunned;
+                    _needActive = _e.UnitEffectsC(_currentCell).IsStunned;
                 }
             }
 

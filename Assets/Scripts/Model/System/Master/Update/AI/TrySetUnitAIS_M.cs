@@ -51,12 +51,12 @@ namespace Chessy.Model
                     _pointsCellsForSettingPawn[cellIdxStart]++;
                 }
 
-                if (_e.XyCellC(cellIdxStart).Y() == 8)
+                if (_e.YCell(cellIdxStart) == 8)
                 {
                     _pointsCellsForSettingKing[cellIdxStart] += 3;
                     _pointsCellsForSettingPawn[cellIdxStart] += 3;
 
-                    if (_e.XyCellC(cellIdxStart).X() >= 4 && _e.XyCellC(cellIdxStart).X() <= 7)
+                    if (_e.XCell(cellIdxStart) >= 4 && _e.XCell(cellIdxStart) <= 7)
                     {
                         _pointsCellsForSettingKing[cellIdxStart]++;
                         _pointsCellsForSettingPawn[cellIdxStart]++;

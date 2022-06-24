@@ -218,7 +218,7 @@ namespace Chessy.Model.Model.System
                 {
                     if (_e.PlayerInfoE(PlayerTypes.First).PawnInfoC.MaxAvailable >= _buildingsForSkipLesson)
                     {
-                        _e.LessonT.SetNextLesson();
+                        _e.CommonInfoAboutGameC.SetNextLesson();
                     }
                 }
 
@@ -230,7 +230,7 @@ namespace Chessy.Model.Model.System
             {
                 if (_e.LessonT.Is(Enum.LessonTypes.TryBuyingHouse))
                 {
-                    _e.LessonT.SetNextLesson();
+                    _e.CommonInfoAboutGameC.SetNextLesson();
                 }
 
                 _s.MistakeEconomyToGeneral(sender, needRes);

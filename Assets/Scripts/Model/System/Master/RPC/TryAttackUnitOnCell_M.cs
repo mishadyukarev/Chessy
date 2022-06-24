@@ -9,8 +9,8 @@ namespace Chessy.Model.Model.System
         {
             var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
 
-            var canAttack = _e.AttackUniqueCellsC(idxCellFrom).Contains(idxCellTo)
-                || _e.AttackSimpleCellsC(idxCellFrom).Contains(idxCellTo);
+            var canAttack = _e.WhereUnitCanAttackUniqueAttackToEnemyC(idxCellFrom).Can(idxCellTo)
+                || _e.WhereUnitCanAttackSimpleAttackToEnemyC(idxCellFrom).Can(idxCellTo);
 
             if (canAttack && _e.UnitPlayerT(idxCellFrom).Is(whoseMove))
             {

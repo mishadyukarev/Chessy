@@ -17,7 +17,7 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_0 = _e.CellsC.Selected;
+            var idx_0 = _e.SelectedCellIdx;
 
             var activeButt = false;
 

@@ -24,19 +24,19 @@ namespace Chessy.Model
             {
                 if (_e.CellsC.IsSelectedCell)
                 {
-                    var idx_sel = _e.CellsC.Selected;
+                    var idx_sel = _e.SelectedCellIdx;
 
-                    if (_e.UnitT(_e.CellsC.Selected).HaveUnit())
+                    if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
                     {
                         needActiveZone = true;
 
                         for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                         {
-                            _needActiveButton[(byte)buttonT] = _e.UnitEs(idx_sel).Effect(buttonT) != EffectTypes.None;
+                            _needActiveButton[(byte)buttonT] = _e.EffectsUnitsRightBarsC(idx_sel).Effect(buttonT) != EffectTypes.None;
 
                             if (_needActiveButton[(byte)buttonT])
                             {
-                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _resourcesE.Sprite(_e.UnitEs(idx_sel).Effect(buttonT));
+                                _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _resourcesE.Sprite(_e.EffectsUnitsRightBarsC(idx_sel).Effect(buttonT));
                             }
 
                             _eUI.RightEs.Effect(buttonT).GO.SetActive(_needActiveButton[(byte)buttonT]);

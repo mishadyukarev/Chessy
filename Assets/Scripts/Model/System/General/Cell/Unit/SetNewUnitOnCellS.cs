@@ -6,10 +6,10 @@ namespace Chessy.Model.Model.System
     {
         internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte cellIdxForSetting)
         {
-            _e.UnitMainE(cellIdxForSetting).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
-            _e.StatsUnitE(cellIdxForSetting).Set(HpValues.MAX, StepValues.MAX, WaterValues.MAX);
+            _e.UnitMainC(cellIdxForSetting).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
+            _e.UnitE(cellIdxForSetting).SetStats(HpValues.MAX, StepValues.MAX, WaterValues.MAX);
             _e.UnitExtraTWE(cellIdxForSetting).Set(ToolWeaponTypes.None, LevelTypes.None, 0);
-            _e.UnitEffectsE(cellIdxForSetting).Set(0, 0, 0, false);
+            _e.UnitEffectsC(cellIdxForSetting).Set(0, 0, 0, false);
 
             if (_e.UnitT(cellIdxForSetting).Is(UnitTypes.Pawn))
             {

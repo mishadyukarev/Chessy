@@ -8,7 +8,7 @@ namespace Chessy.Model.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.FarmExtractFertilizeC(cellIdxCurrent).Resources = 0;
+                _e.BuildingExtractionC(cellIdxCurrent).HowManyFarmCanExtractFood = 0;
 
                 if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Farm))
                 {
@@ -23,7 +23,7 @@ namespace Chessy.Model.Model.System
 
                         if (_e.FertilizeC(cellIdxCurrent).Resources < extract) extract = _e.FertilizeC(cellIdxCurrent).Resources;
 
-                        _e.FarmExtractFertilizeC(cellIdxCurrent).Resources = extract;
+                        _e.BuildingExtractionC(cellIdxCurrent).HowManyFarmCanExtractFood = extract;
                     }
                 }
             }

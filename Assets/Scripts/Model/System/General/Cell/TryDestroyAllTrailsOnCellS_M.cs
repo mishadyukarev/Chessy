@@ -1,14 +1,17 @@
-﻿namespace Chessy.Model.Model.System
+﻿using Chessy.Model;
+using Chessy.Model.Model.Entity;
+
+namespace Chessy
 {
-    public sealed partial class SystemsModel : IUpdate
+    public static partial class SystemStatic
     {
-        internal void TryDestroyAllTrailsOnCell(in byte cell)
+        internal static void TryDestroyAllTrailsOnCell(this EntitiesModel e, in byte cell)
         {
             for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
             {
-                if (_e.HealthTrail(cell).IsAlive(dirT))
+                if (e.HealthTrail(cell).IsAlive(dirT))
                 {
-                    _e.HealthTrail(cell).Health(dirT) = 0;
+                    e.HealthTrail(cell).Health(dirT) = 0;
                 }
             }
         }

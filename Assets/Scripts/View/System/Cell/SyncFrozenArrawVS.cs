@@ -25,9 +25,9 @@ namespace Chessy.Model
                 {
                     if (_e.MainToolWeaponT(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
                     {
-                        if (_e.FrozenArrawEffectC(_currentCell).HaveShoots)
+                        if (_e.UnitEffectsC(_currentCell).HaveShoots)
                         {
-                            _needActive[_e.UnitIsRightArcherC(_currentCell).IsRight ? 0 : 1] = true;
+                            _needActive[_e.IsRightArcherUnit(_currentCell) ? 0 : 1] = true;
                         }
                     }
                 }

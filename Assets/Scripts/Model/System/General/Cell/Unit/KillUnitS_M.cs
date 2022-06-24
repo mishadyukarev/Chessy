@@ -1,31 +1,34 @@
-﻿using Chessy.Model.Enum;
+﻿using Chessy.Model;
+using Chessy.Model.Enum;
+using Chessy.Model.Model.Entity;
+using Chessy.Model.Model.System;
 using System;
 
-namespace Chessy.Model.Model.System
+namespace Chessy
 {
-    sealed partial class UnitSystems
+    static partial class SystemStatic
     {
-        internal void KillUnit(in PlayerTypes whoKiller, in byte cellIdxForKilling)
+        internal static void KillUnit(this EntitiesModel e, in PlayerTypes whoKiller, in byte cellIdxForKilling)
         {
-            if (!_e.UnitT(cellIdxForKilling).HaveUnit()) throw new Exception();
+            if (!e.UnitT(cellIdxForKilling).HaveUnit()) throw new Exception();
 
 
-            if (_e.UnitPlayerT(cellIdxForKilling) == PlayerTypes.Second)
+            if (e.UnitPlayerT(cellIdxForKilling) == PlayerTypes.Second)
             {
-                if (_e.LessonT == LessonTypes.Kill1Enemy) _e.LessonT.SetNextLesson();
+                if (e.LessonT == LessonTypes.Kill1Enemy) e.CommonInfoAboutGameC.SetNextLesson();
             }
 
 
             if (whoKiller != PlayerTypes.None)
             {
-                if (_e.UnitT(cellIdxForKilling) == UnitTypes.King) _e.WinnerPlayerT = whoKiller;
+                if (e.UnitT(cellIdxForKilling) == UnitTypes.King) e.WinnerPlayerT = whoKiller;
             }
 
-            if (_e.UnitT(cellIdxForKilling).IsGod())
+            if (e.UnitT(cellIdxForKilling).IsGod())
             {
                 var cooldown = 0f;
 
-                switch (_e.UnitT(cellIdxForKilling))
+                switch (e.UnitT(cellIdxForKilling))
                 {
                     case UnitTypes.Elfemale:
                         cooldown = HeroCooldownValues.Elfemale;
@@ -46,22 +49,22 @@ namespace Chessy.Model.Model.System
                     default: throw new Exception();
                 }
 
-                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoE.Cooldown = cooldown;
-                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoE.HaveHeroInInventor = true;
+                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).GodInfoE.Cooldown = cooldown;
+                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).GodInfoE.HaveHeroInInventor = true;
             }
 
-            if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Tree)) _e.HaveTreeUnit = false;
+            if (e.UnitT(cellIdxForKilling).Is(UnitTypes.Tree)) e.HaveTreeUnit = false;
 
 
-            SetLastDiedUnitOnCell(cellIdxForKilling);
+            e.SetLastDiedUnitOnCell(cellIdxForKilling);
 
-            if (_e.UnitT(cellIdxForKilling).Is(UnitTypes.Pawn))
+            if (e.UnitT(cellIdxForKilling).Is(UnitTypes.Pawn))
             {
-                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).PawnInfoC.RemovePawn();
+                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).PawnInfoC.RemovePawn();
             }
 
 
-            _e.UnitEs(cellIdxForKilling).ClearEverything();
+            e.UnitE(cellIdxForKilling).ClearEverything();
         }
     }
 }

@@ -9,24 +9,24 @@ namespace Chessy.Model.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.CellsForShift(cellIdxCurrent).Clear();
+                _e.WhereUnitCanShiftC(cellIdxCurrent).SetWhereUnitCanShift(cellIdxCurrent, false);
 
-                for (byte idx = 0; idx < StartValues.CELLS; idx++)
-                    _e.UnitNeedStepsForShiftC(cellIdxCurrent).Set(idx, 0);
+                for (byte idxCell = 0; idxCell < StartValues.CELLS; idxCell++)
+                    _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCurrent).SetHowManyEnergyNeedForShiftingToHere(idxCell, 0);
 
                 if (!_e.IsBorder(cellIdxCurrent))
                 {
-                    if (!_e.StunUnitC(cellIdxCurrent).IsStunned && _e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
+                    if (!_e.UnitEffectsC(cellIdxCurrent).IsStunned && _e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                     {
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
                             var idx_to = _e.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
 
-                            float needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
+                            float needEnergy = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
 
                             if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Tree))
                             {
-                                needSteps = 1;
+                                needEnergy = 1;
                             }
                             else
                             {
@@ -34,13 +34,13 @@ namespace Chessy.Model.Model.System
                                 {
                                     if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
                                     {
-                                        needSteps /= 2;
+                                        needEnergy /= 2;
                                     }
                                     else if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Snowy))
                                     {
                                         if (_e.FertilizeC(idx_to).HaveAnyResources)
                                         {
-                                            needSteps = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
+                                            needEnergy = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                         }
                                     }
 
@@ -51,20 +51,20 @@ namespace Chessy.Model.Model.System
                                         {
                                             if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
                                             {
-                                                needSteps += StepValues.ADULT_FOREST;
+                                                needEnergy += StepValues.ADULT_FOREST;
 
-                                                if (_e.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
+                                                if (_e.HealthTrail(idx_to).IsAlive(dirT.Invert())) needEnergy -= StepValues.BONUS_TRAIL;
                                             }
                                         }
                                         else if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Elfemale))
                                         {
-                                            needSteps /= 2;
+                                            needEnergy /= 2;
                                         }
                                         else
                                         {
-                                            needSteps += StepValues.ADULT_FOREST;
+                                            needEnergy += StepValues.ADULT_FOREST;
 
-                                            if (_e.HealthTrail(idx_to).IsAlive(dirT.Invert())) needSteps -= StepValues.BONUS_TRAIL;
+                                            if (_e.HealthTrail(idx_to).IsAlive(dirT.Invert())) needEnergy -= StepValues.BONUS_TRAIL;
                                         }
                                     }
                                     else
@@ -79,7 +79,7 @@ namespace Chessy.Model.Model.System
                                     {
                                         if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
                                         {
-                                            needSteps += StepValues.HILL;
+                                            needEnergy += StepValues.HILL;
                                         }
                                     }
                                 }
@@ -87,13 +87,13 @@ namespace Chessy.Model.Model.System
 
 
 
-                            _e.UnitNeedStepsForShiftC(cellIdxCurrent).Set(idx_to, needSteps);
+                            _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCurrent).SetHowManyEnergyNeedForShiftingToHere(idx_to, needEnergy);
 
                             if (!_e.MountainC(idx_to).HaveAnyResources && !_e.UnitT(idx_to).HaveUnit())
                             {
-                                if (needSteps <= _e.StepUnitC(cellIdxCurrent).Steps || _e.StepUnitC(cellIdxCurrent).Steps >= StepValues.MAX)
+                                if (needEnergy <= _e.EnergyUnitC(cellIdxCurrent).Energy || _e.EnergyUnitC(cellIdxCurrent).Energy >= StepValues.MAX)
                                 {
-                                    _e.CellsForShift(cellIdxCurrent).Add(idx_to);
+                                    _e.WhereUnitCanShiftC(cellIdxCurrent).SetWhereUnitCanShift(idx_to, true);
 
                                 }
                             }

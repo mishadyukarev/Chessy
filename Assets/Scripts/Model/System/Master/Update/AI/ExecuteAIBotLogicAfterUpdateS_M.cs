@@ -34,8 +34,8 @@ namespace Chessy.Model
                         {
                             if (!_e.UnitT(cellIdxDirect).IsAnimal())
                             {
-                                if (_e.AttackSimpleCellsC(cellIdxStart).Contains(cellIdxDirect)
-                                    || _e.AttackUniqueCellsC(cellIdxStart).Contains(cellIdxDirect))
+                                if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxStart).Can(cellIdxDirect)
+                                    || _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxStart).Can(cellIdxDirect))
                                 {
                                     _s.AttackUnitFromTo(cellIdxStart, cellIdxDirect);
                                 }

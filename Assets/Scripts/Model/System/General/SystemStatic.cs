@@ -1,13 +1,15 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Enum;
 using Chessy.Model;
+using Chessy.Model.Component;
 using Chessy.Model.Enum;
+using Chessy.Model.Model.Entity;
 using Chessy.Model.Values;
 using System;
 
 namespace Chessy
 {
-    public static class SystemStatic
+    public static partial class SystemStatic
     {
 
         #region Lesson
@@ -21,19 +23,19 @@ namespace Chessy
             }
             return false;
         }
-        public static void SetNextLesson(this LessonTypes lessonT)
+        public static void SetNextLesson(this ref CommonInfoAboutGameC commonInfoAboutGameC)
         {
-            if (lessonT == LessonTypes.End - 1)
+            if (commonInfoAboutGameC.LessonT == LessonTypes.End - 1)
             {
-                lessonT = LessonTypes.None;
+                commonInfoAboutGameC.LessonT = LessonTypes.None;
             }
-            else lessonT++;
+            else commonInfoAboutGameC.LessonT++;
         }
-        internal static void SetPreviousLesson(this LessonTypes lessonT)
+        internal static void SetPreviousLesson(this ref CommonInfoAboutGameC commonInfoAboutGameC)
         {
-            lessonT--;
+            commonInfoAboutGameC.LessonT--;
         }
-        public static void SetEndLesson(this LessonTypes lessonT)
+        public static void SetEndLesson(this ref LessonTypes lessonT)
         {
             lessonT = LessonTypes.None;
         }
@@ -49,7 +51,7 @@ namespace Chessy
             return false;
         }
 
-        internal static void Reset(this AbilityTypes abilityT) => abilityT = default;
+        internal static void Reset(this ref AbilityTypes abilityT) => abilityT = default;
 
         #endregion
 
@@ -121,15 +123,6 @@ namespace Chessy
         #endregion
 
 
-        #region XyC
-
-        public static byte[] Xy(this XyCellC xyCellC) => (byte[])xyCellC.Xy.Clone();
-        public static byte X(this XyCellC xyCellC) => xyCellC.Xy[0];
-        public static byte Y(this XyCellC xyCellC) => xyCellC.Xy[1];
-
-        #endregion
-
-
         #region WindC
 
         public static bool IsMaxSpeed(this WindC windC) => windC.Speed >= StartValues.MAX_SPEED_WIND;
@@ -174,7 +167,7 @@ namespace Chessy
 
         #region ArcherSide
 
-        internal static void ToggleSide(this IsRightArcherC isRightArcherC) => isRightArcherC.IsRight = !isRightArcherC.IsRight;
+        internal static void ToggleSide(this ref UnitMainC unitMainC) => unitMainC.IsRightArcher = !unitMainC.IsRightArcher;
 
         #endregion
 
@@ -189,7 +182,7 @@ namespace Chessy
             return false;
         }
 
-        internal static bool TryUpgrade(this LevelTypes levelT)
+        internal static bool TryUpgrade(this ref LevelTypes levelT)
         {
             if (levelT.Is(LevelTypes.Second, LevelTypes.End, LevelTypes.None)) return false;
 
@@ -285,7 +278,7 @@ namespace Chessy
                 default: throw new Exception();
             }
         }
-        public static void ToggleNext(this SunSideTypes sunSideT) => sunSideT = sunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++sunSideT;
+        public static void ToggleNextSunSideT(this ref WeatherE weatherE) => weatherE.SunC.SunSideT = weatherE.SunC.SunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++weatherE.SunC.SunSideT;
 
         #endregion
 

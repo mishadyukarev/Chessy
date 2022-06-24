@@ -58,7 +58,7 @@ namespace Chessy.Model
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var cell_target = _e.AroundCellsE(_e.WeatherE.CellIdxCenterCloud).IdxCell(dirT);
+                        var cell_target = _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).IdxCell(dirT);
 
                         _needActive[cell_target] = true;
                         _needColor[cell_target] = ColorsValues.Color(SupportCellVisionTypes.Shift);
@@ -67,10 +67,13 @@ namespace Chessy.Model
 
                 else if (_e.SelectedE.AbilityT.Is(AbilityTypes.FireArcher))
                 {
-                    foreach (var idx in _e.UnitForArsonC(_e.CellsC.Selected).Idxs)
+                    for (byte idxCell = 0; idxCell < StartValues.CELLS; idxCell++)
                     {
-                        _needActive[idx] = true;
-                        _needColor[idx] = ColorsValues.Color(AbilityTypes.FireArcher);
+                        if (_e.WhereUnitCanFireAdultForestC(_e.SelectedCellIdx).Can(idxCell))
+                        {
+                            _needActive[idxCell] = true;
+                            _needColor[idxCell] = ColorsValues.Color(AbilityTypes.FireArcher);
+                        }
                     }
                 }
             }
@@ -78,29 +81,31 @@ namespace Chessy.Model
 
             else
             {
-                if (_e.UnitT(_e.CellsC.Selected).HaveUnit())
+                if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
                 {
                     if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurPlayerIT))
                     {
-                        var idxs = _e.CellsForShift(_e.CellsC.Selected).Idxs;
-
                         if (!_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
-                            foreach (var idx_0 in idxs)
+                            for (byte idxCell = 0; idxCell < StartValues.CELLS; idxCell++)
                             {
-                                _needActive[idx_0] = true;
-                                _needColor[idx_0] = ColorsValues.Color(SupportCellVisionTypes.Shift);
-                            }
+                                if (_e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(idxCell))
+                                {
+                                    _needActive[idxCell] = true;
+                                    _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                                }
 
-                            foreach (var idx_0 in _e.AttackSimpleCellsC(_e.CellsC.Selected).Idxs)
-                            {
-                                _needActive[idx_0] = true;
-                                _needColor[idx_0] = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
-                            }
-                            foreach (var idx_0 in _e.AttackUniqueCellsC(_e.CellsC.Selected).Idxs)
-                            {
-                                _needActive[idx_0] = true;
-                                _needColor[idx_0] = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                                if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(_e.SelectedCellIdx).Can(idxCell))
+                                {
+                                    _needActive[idxCell] = true;
+                                    _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.SimpleAttack);
+                                }
+
+                                if (_e.WhereUnitCanAttackUniqueAttackToEnemyC(_e.SelectedCellIdx).Can(idxCell))
+                                {
+                                    _needActive[idxCell] = true;
+                                    _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.UniqueAttack);
+                                }
                             }
                         }
                     }

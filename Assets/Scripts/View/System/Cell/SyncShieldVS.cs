@@ -16,7 +16,7 @@ namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_e.ShieldUnitEffectC(_currentCell).HaveAnyProtection())
+            if (_e.UnitEffectsC(_currentCell).HaveAnyProtectionRainyMagicShield)
             {
                 if (_e.UnitT(_currentCell).HaveUnit())
                 {

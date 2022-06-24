@@ -2,7 +2,7 @@
 {
     public struct IdxCellC
     {
-        public byte Idx { get; internal set; }
+        public readonly byte Idx;
 
         internal IdxCellC(in byte idx) => Idx = idx;
     }

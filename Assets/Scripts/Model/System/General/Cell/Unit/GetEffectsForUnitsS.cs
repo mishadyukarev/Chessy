@@ -13,7 +13,7 @@ namespace Chessy.Model.Model.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.HaveKingEffect(cellIdxCurrent) = false;
+                _e.UnitEffectsC(cellIdxCurrent).HaveKingEffect = false;
 
                 if (!_e.IsBorder(cellIdxCurrent))
                 {
@@ -24,7 +24,7 @@ namespace Chessy.Model.Model.System
                             if (_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCurrent)))
                             {
                                 _e.PlayerInfoE(_e.UnitPlayerT(idx_1)).WhereKingEffects.Add(cellIdxCurrent);
-                                _e.HaveKingEffect(cellIdxCurrent) = true;
+                                _e.UnitEffectsC(cellIdxCurrent).HaveKingEffect = true;
                             }
                         }
                     }

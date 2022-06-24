@@ -6,9 +6,9 @@ namespace Chessy.Model.Model.System
     {
         internal void CopyUnitFromTo(in byte cellIdxFrom, in byte cellIdxTo)
         {
-            _e.UnitMainE(cellIdxTo).CopyFrom(_e.UnitMainE(cellIdxFrom));
-            _e.UnitEffectsE(cellIdxTo).CopyEffects(_e.UnitEffectsE(cellIdxFrom));
-            _e.StatsUnitE(cellIdxTo).Set(_e.StatsUnitE(cellIdxFrom));
+            _e.UnitMainC(cellIdxTo).CopyFrom(_e.UnitMainC(cellIdxFrom));
+            _e.UnitEffectsC(cellIdxTo).CopyEffects(_e.UnitEffectsC(cellIdxFrom));
+            _e.UnitE(cellIdxTo).Set(_e.UnitE(cellIdxFrom));
             _e.MainToolWeaponE(cellIdxTo).CopyMainTW(_e.MainToolWeaponE(cellIdxFrom));
             CopyExtraTW(cellIdxFrom, cellIdxTo);
 

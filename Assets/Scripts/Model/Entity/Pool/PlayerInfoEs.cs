@@ -14,8 +14,7 @@ namespace Chessy.Model
         public float WoodForBuyHouse;
         public int AmountFarmsInGame;
 
-        public BuildingsInfoC BuildingsInfoC;
-        public IdxsCellsC WhereKingEffects;
+        public BuildingsInTownInfoC BuildingsInfoC;
         public PawnPeopleInfoC PawnInfoC;
 
         public KingInfoE KingInfoE;
@@ -31,10 +30,9 @@ namespace Chessy.Model
             _levelInfoEs = new PlayerLevelInfoE[(byte)LevelTypes.End];
             _resourceCs = new ResourcesC[(byte)ResourceTypes.End];
             _unitEs = new PlayerUnitInfoE[(byte)UnitTypes.End];
-            WhereKingEffects = new IdxsCellsC(new HashSet<byte>());
 
             var haveBuilding = new bool[(byte)BuildingTypes.End];
-            BuildingsInfoC = new BuildingsInfoC(haveBuilding);
+            BuildingsInfoC = new BuildingsInTownInfoC(haveBuilding);
 
 
             for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)

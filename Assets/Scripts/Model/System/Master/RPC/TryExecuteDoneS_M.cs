@@ -84,7 +84,7 @@ namespace Chessy.Model.Model.System
 
             for (byte idx = 0; idx < StartValues.CELLS; idx++)
             {
-                _e.StunUnitC(idx).Stun -= taking;
+                _e.UnitEffectsC(idx).StunHowManyUpdatesNeedStay -= taking;
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {

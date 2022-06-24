@@ -1,25 +1,28 @@
-﻿namespace Chessy.Model.Model.System
+﻿using Chessy.Model;
+using Chessy.Model.Model.Entity;
+
+namespace Chessy
 {
-    sealed partial class UnitSystems
+    static partial class SystemStatic
     {
-        internal void SetLastDiedUnitOnCell(in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in byte cell_0)
+        internal static void SetLastDiedUnitOnCell(this EntitiesModel e, in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in byte cell_0)
         {
-            _e.SetLastDiedUnitT(cell_0, unitT);
-            _e.SetLastDiedLevelT(cell_0, levelT);
-            _e.SetLastDiedPlayerT(cell_0, playerT);
+            e.SetLastDiedUnitT(cell_0, unitT);
+            e.SetLastDiedLevelT(cell_0, levelT);
+            e.SetLastDiedPlayerT(cell_0, playerT);
         }
 
-        internal void SetLastDiedUnitOnCell(in byte cell_from, in byte cell_to)
+        internal static void SetLastDiedUnitOnCell(this EntitiesModel e, in byte cell_from, in byte cell_to)
         {
-            _e.SetLastDiedUnitT(cell_to, _e.LastDiedUnitT(cell_from));
-            _e.SetLastDiedPlayerT(cell_to, _e.LastDiedPlayerT(cell_from));
-            _e.SetLastDiedLevelT(cell_to, _e.LastDiedLevelT(cell_from));
+            e.SetLastDiedUnitT(cell_to, e.LastDiedUnitT(cell_from));
+            e.SetLastDiedPlayerT(cell_to, e.LastDiedPlayerT(cell_from));
+            e.SetLastDiedLevelT(cell_to, e.LastDiedLevelT(cell_from));
         }
-        internal void SetLastDiedUnitOnCell(in byte cell_0)
+        internal static void SetLastDiedUnitOnCell(this EntitiesModel e, in byte cell_0)
         {
-            _e.SetLastDiedUnitT(cell_0, _e.UnitT(cell_0));
-            _e.SetLastDiedPlayerT(cell_0, _e.UnitPlayerT(cell_0));
-            _e.SetLastDiedLevelT(cell_0, _e.UnitLevelT(cell_0));
+            e.SetLastDiedUnitT(cell_0, e.UnitT(cell_0));
+            e.SetLastDiedPlayerT(cell_0, e.UnitPlayerT(cell_0));
+            e.SetLastDiedLevelT(cell_0, e.UnitLevelT(cell_0));
         }
     }
 }

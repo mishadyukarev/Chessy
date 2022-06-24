@@ -11,12 +11,12 @@ namespace Chessy.Model.Model.System
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (_e.StepUnitC(cell_0).Steps >= StepValues.Need(abilityT))
+                if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
                 {
                     _s.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
-                    _e.StepUnitC(cell_0).Steps -= StepValues.Need(abilityT);
+                    _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
 
 
                     foreach (byte idx_1 in _e.AroundCellsE(cell_0).CellsAround)
@@ -29,14 +29,14 @@ namespace Chessy.Model.Model.System
                                 {
                                     _s.UnitSs.AttackShield(1f, idx_1);
                                 }
-                                else if (_e.ShieldUnitEffectC(idx_1).HaveAnyProtection())
+                                else if (_e.UnitEffectsC(idx_1).HaveAnyProtectionRainyMagicShield)
                                 {
-                                    _e.ShieldUnitEffectC(idx_1).Protection--;
+                                    _e.UnitEffectsC(idx_1).ProtectionRainyMagicShield--;
                                 }
 
                                 else
                                 {
-                                    _s.UnitSs.Attack(HpValues.MAX / 4, _e.UnitPlayerT(cell_0), idx_1);
+                                    _e.Attack(HpValues.MAX / 4, _e.UnitPlayerT(cell_0), idx_1);
                                 }
                             }
                         }

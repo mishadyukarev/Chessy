@@ -15,13 +15,13 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var idx_sel = _e.CellsC.Selected;
+            var idx_sel = _e.SelectedCellIdx;
 
 
             if (_e.UnitT(idx_sel).HaveUnit() && !_e.UnitT(idx_sel).IsAnimal())
             {
-                var damageOnCell = _e.DamageOnCellC(idx_sel).Damage;
-                var damageAttack = _e.DamageAttackC(idx_sel).Damage;
+                var damageOnCell = _e.DamageOnCell(idx_sel);
+                var damageAttack = _e.DamageAttack(idx_sel);
 
 
 
@@ -59,7 +59,7 @@ namespace Chessy.Model
 
                 _statsUIE.Stat(UnitStatTypes.Hp).TextC.TextUI.text = Math.Truncate(100 * _e.HpUnitC(idx_sel).Health).ToString();
                 _statsUIE.DamageE.TextC.TextUI.text = (Math.Truncate(10 * damageAttack) / 10) + "/" + (Math.Truncate(10 * damageOnCell) / 10).ToString();
-                _statsUIE.EnergyE.TextUIC.TextUI.text = (Math.Truncate(100 * _e.StepUnitC(idx_sel).Steps) / 100).ToString();
+                _statsUIE.EnergyE.TextUIC.TextUI.text = (Math.Truncate(100 * _e.EnergyUnitC(idx_sel).Energy) / 100).ToString();
                 _statsUIE.WaterE.TextC.TextUI.text = (Math.Truncate(100 * _e.WaterUnitC(idx_sel).Water) / 100).ToString();
 
                 _statsUIE.Stat(UnitStatTypes.Hp).ImageC.Image.fillAmount = (float)(_e.HpUnitC(idx_sel).Health / HpValues.MAX);
@@ -68,7 +68,7 @@ namespace Chessy.Model
 
                 _statsUIE.DamageE.ImageC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                _statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)_e.StepUnitC(idx_sel).Steps / StepValues.MAX;
+                _statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)_e.EnergyUnitC(idx_sel).Energy / StepValues.MAX;
                 _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(_e.WaterUnitC(idx_sel).Water / WaterValues.MAX);
             }
 

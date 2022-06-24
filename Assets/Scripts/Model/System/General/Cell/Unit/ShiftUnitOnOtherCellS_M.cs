@@ -13,7 +13,7 @@ namespace Chessy.Model.Model.System
             UnitSs.CopyUnitFromTo(fromCellIdx, toCellIdx);
             _e.SetUnitConditionT(toCellIdx, ConditionUnitTypes.None);
 
-            _e.UnitEs(fromCellIdx).ClearEverything();
+            _e.UnitE(fromCellIdx).ClearEverything();
 
 
             var direct = _e.AroundCellsE(fromCellIdx).Direct(toCellIdx);
@@ -26,7 +26,7 @@ namespace Chessy.Model.Model.System
                     {
                         if (_e.LessonT.Is(LessonTypes.ShiftPawnHere))
                         {
-                            _e.LessonT.SetNextLesson();
+                            _e.CommonInfoAboutGameC.SetNextLesson();
                         }
                     }
 
@@ -42,7 +42,7 @@ namespace Chessy.Model.Model.System
                     {
                         if (_e.LessonT == LessonTypes.StepAwayFromWoodcutter)
                         {
-                            _e.LessonT.SetNextLesson();
+                            _e.CommonInfoAboutGameC.SetNextLesson();
                         }
                     }
 
@@ -63,7 +63,7 @@ namespace Chessy.Model.Model.System
                         {
                             if (_e.UnitT(cellIdx) == UnitTypes.King && _e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(toCellIdx))
                             {
-                                _e.LessonT.SetNextLesson();
+                                _e.CommonInfoAboutGameC.SetNextLesson();
                                 break;
                             }
                         }

@@ -8,7 +8,7 @@ namespace Chessy.Model.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.PawnExtractHillC(cellIdxCurrent).Resources = 0;
+                _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractHill = 0;
 
                 if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Pick) && _e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Relaxed)
                 {
@@ -20,7 +20,7 @@ namespace Chessy.Model.Model.System
                         if (_e.HillC(cellIdxCurrent).Resources < extract) extract = _e.HillC(cellIdxCurrent).Resources;
 
 
-                        _e.PawnExtractHillC(cellIdxCurrent).Resources = extract;
+                        _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractHill = extract;
 
                     }
                 }

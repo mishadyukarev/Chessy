@@ -69,8 +69,8 @@ namespace Chessy.Model.View.UI.System
 
             if (needActive)
             {
-                _buttonE.CooldonwTextC.SetActiveParent(_e.UnitCooldownAbilitiesC(_e.CellsC.Selected).HaveCooldown(ability_cur));
-                _buttonE.CooldonwTextC.TextUI.text = _e.UnitCooldownAbilitiesC(_e.CellsC.Selected).Cooldown(ability_cur).ToString();
+                _buttonE.CooldonwTextC.SetActiveParent(_e.UnitCooldownAbilitiesC(_e.SelectedCellIdx).HaveCooldown(ability_cur));
+                _buttonE.CooldonwTextC.TextUI.text = _e.UnitCooldownAbilitiesC(_e.SelectedCellIdx).Cooldown(ability_cur).ToString();
 
 
 

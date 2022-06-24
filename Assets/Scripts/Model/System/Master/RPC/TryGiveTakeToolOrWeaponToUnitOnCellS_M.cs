@@ -16,7 +16,7 @@ namespace Chessy.Model.Model.System
 
             if (_e.UnitT(cellIdxForDoing).Is(UnitTypes.Pawn))
             {
-                if (_e.StepUnitC(cellIdxForDoing).Steps >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
+                if (_e.EnergyUnitC(cellIdxForDoing).Energy >= StepValues.FOR_GIVE_TAKE_TOOLWEAPON)
                 {
                     if (twT == ToolWeaponTypes.BowCrossbow || twT == ToolWeaponTypes.Staff)
                     {
@@ -25,7 +25,7 @@ namespace Chessy.Model.Model.System
                             _e.ToolWeaponsC(_e.UnitPlayerT(cellIdxForDoing), _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing))++;
                             _e.SetExtraToolWeaponT(cellIdxForDoing, ToolWeaponTypes.None);
 
-                            _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
                         else
                         {
@@ -43,7 +43,7 @@ namespace Chessy.Model.Model.System
 
                                         _e.MainToolWeaponE(cellIdxForDoing).Set(twT, levTW);
 
-                                        _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                     }
@@ -65,7 +65,7 @@ namespace Chessy.Model.Model.System
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                                 _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
-                                            _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                            _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                             _e.MainToolWeaponE(cellIdxForDoing).Set(twT, levTW);
 
@@ -73,7 +73,7 @@ namespace Chessy.Model.Model.System
 
                                             if (_e.LessonT.Is(LessonTypes.GiveStaff, LessonTypes.GiveBowCrossbow))
                                             {
-                                                _e.LessonT.SetNextLesson();
+                                                _e.CommonInfoAboutGameC.SetNextLesson();
                                             }
                                         }
                                         else
@@ -88,7 +88,7 @@ namespace Chessy.Model.Model.System
                                     _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
                                     _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
-                                    _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                                 }
                             }
 
@@ -97,7 +97,7 @@ namespace Chessy.Model.Model.System
                                 _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
                                 _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
-                                _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
                     }
@@ -113,7 +113,7 @@ namespace Chessy.Model.Model.System
                                     _e.ToolWeaponsC(whoseMove, levTW, twT)--;
                                     _e.MainToolWeaponE(cellIdxForDoing).Set(twT, levTW);
 
-                                    _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -135,7 +135,7 @@ namespace Chessy.Model.Model.System
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
 
-                                        _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         _e.MainToolWeaponE(cellIdxForDoing).Set(twT, levTW);
 
@@ -143,7 +143,7 @@ namespace Chessy.Model.Model.System
 
                                         if (_e.LessonT == LessonTypes.GiveIronAxe)
                                         {
-                                            _e.LessonT.SetNextLesson();
+                                            _e.CommonInfoAboutGameC.SetNextLesson();
                                         }
 
                                     }
@@ -160,7 +160,7 @@ namespace Chessy.Model.Model.System
                                 _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
                                 _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
-                                _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
 
@@ -169,7 +169,7 @@ namespace Chessy.Model.Model.System
                             _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
                             _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
-                            _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                             ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -184,7 +184,7 @@ namespace Chessy.Model.Model.System
                             _e.ToolWeaponsC(_e.UnitPlayerT(cellIdxForDoing), _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
                             _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
-                            _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                            _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
 
                         else
@@ -196,7 +196,7 @@ namespace Chessy.Model.Model.System
                                     _e.PlayerInfoE(ownUnit_0).LevelE(_e.ExtraTWLevelT(cellIdxForDoing)).ToolWeapons(_e.ExtraToolWeaponT(cellIdxForDoing))++;
                                     _e.SetExtraToolWeaponT(cellIdxForDoing, ToolWeaponTypes.None);
 
-                                    _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -208,7 +208,7 @@ namespace Chessy.Model.Model.System
 
                                     _e.UnitExtraTWE(cellIdxForDoing).Set(twT, levTW, _e.ExtraTWProtection(cellIdxForDoing));
 
-                                    _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -241,7 +241,7 @@ namespace Chessy.Model.Model.System
 
                                         _e.UnitExtraTWE(cellIdxForDoing).Set(twT, levTW, protection);
 
-                                        _e.StepUnitC(cellIdxForDoing).Steps -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                        _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
 
@@ -256,7 +256,7 @@ namespace Chessy.Model.Model.System
                                             //    _eMG.BuildingTC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).BuildingT = BuildingTypes.None;
                                             //}
 
-                                            _e.LessonT.SetNextLesson();
+                                            _e.CommonInfoAboutGameC.SetNextLesson();
                                         }
                                     }
                                     else
