@@ -1,5 +1,5 @@
 ﻿//using Chessy.Common;
-//using Chessy.Model.Model.Entity;
+//using Chessy.Model;
 //using Photon.Pun;
 
 //namespace Chessy.Model

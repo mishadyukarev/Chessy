@@ -3,7 +3,7 @@ using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel
     {
@@ -61,7 +61,7 @@ namespace Chessy.Model.Model.System
                                     {
                                         if (_e.HpUnitC(cell_0).Health >= HpValues.MAX)
                                         {
-                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoE.UnitT.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
                                             {
                                                 _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cell_0), BuildingValues.MAX_HP, cell_0);
                                             }

@@ -15,7 +15,7 @@ namespace Chessy.Model.Values
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;
 
         public const byte CELL_IDX_START_GAME_CLOUD = 60;
-        public const float SPEED_WIND_IN_START_GAME = 1;
+        public const byte SPEED_WIND_IN_START_GAME = 1;
         public const float MAX_SPEED_WIND = 3;
         public const float MIN_SPEED_WIND = 0;
 

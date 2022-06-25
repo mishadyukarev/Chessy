@@ -3,7 +3,7 @@ using Chessy.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Common.Entity.View.UI
+namespace Chessy.View.UI
 {
     public struct ShopUIE
     {

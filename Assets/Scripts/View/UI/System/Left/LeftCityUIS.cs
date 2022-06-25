@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 
 namespace Chessy.Model
@@ -54,11 +54,11 @@ namespace Chessy.Model
             {
                 if (buildingT == BuildingTypes.Market || buildingT == BuildingTypes.Smelter)
                 {
-                    eUI.LeftEs.CityE(buildingT).CostGOC.SetActive(!_e.PlayerInfoE(whoseMove).BuildingsInfoC.HaveBuilding(buildingT));
+                    eUI.LeftEs.CityE(buildingT).CostGOC.SetActive(!_e.PlayerInfoE(whoseMove).BuildingsInTownInfoC.HaveBuilding(buildingT));
                 }
             }
 
-            eUI.LeftEs.CityE(BuildingTypes.House).CostTextC.TextUI.text = ((int)(100 * _e.PlayerInfoE(whoseMove).WoodForBuyHouse)).ToString();
+            eUI.LeftEs.CityE(BuildingTypes.House).CostTextC.TextUI.text = ((int)(100 * _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse)).ToString();
             eUI.LeftEs.CityE(BuildingTypes.Market).CostTextC.TextUI.text = ((int)(100 * EconomyValues.NEED_WOOD_FOR_BUILDING_MARKET)).ToString();
             eUI.LeftEs.CityE(BuildingTypes.Smelter).CostTextC.TextUI.text = ((int)(100 * EconomyValues.NEED_WOOD_FOR_BUILDING_SMELTER)).ToString();
         }

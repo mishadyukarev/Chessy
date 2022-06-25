@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 
 namespace Chessy.Model
 {
@@ -15,13 +15,13 @@ namespace Chessy.Model
         {
             var curPlayerI = _e.CurPlayerIT;
 
-            var myHeroT = _e.PlayerInfoE(curPlayerI).GodInfoE.UnitT;
+            var myHeroT = _e.PlayerInfoE(curPlayerI).GodInfoC.UnitT;
 
-            if (myHeroT != UnitTypes.None && _e.PlayerInfoE(curPlayerI).GodInfoE.HaveHeroInInventor)
+            if (myHeroT != UnitTypes.None && _e.PlayerInfoE(curPlayerI).GodInfoC.HaveGodInInventor)
             {
                 _downHeroUIE.Parent.SetActive(true);
 
-                var cooldown = _e.PlayerInfoE(curPlayerI).GodInfoE.CooldownC.Cooldown;
+                var cooldown = _e.PlayerInfoE(curPlayerI).GodInfoC.Cooldown;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

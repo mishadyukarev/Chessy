@@ -1,7 +1,7 @@
-﻿//using Chessy.Model.Model.Entity;
-//using Chessy.Model.Model.System;
+﻿//using Chessy.Model;
+//using Chessy.Model;
 
-//namespace Chessy.Model.Model.System
+//namespace Chessy.Model
 //{
 //    internal sealed class BuildingSystems
 //    {

@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Model.System
+﻿namespace Chessy.Model
 {
     public sealed partial class SystemsModelGameForUI
     {
@@ -13,11 +13,11 @@
 
                 var curPlayer = _e.CurPlayerIT;
 
-                var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoE.UnitT;
+                var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoC.UnitT;
 
-                if (_e.PlayerInfoE(curPlayer).GodInfoE.HaveHeroInInventor)
+                if (_e.PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
                 {
-                    if (!_e.PlayerInfoE(_e.CurPlayerIT).GodInfoE.CooldownC.HaveCooldown())
+                    if (!_e.PlayerInfoE(_e.CurPlayerIT).GodInfoC.HaveCooldown)
                     {
                         _e.SelectedUnitC.UnitT = myHeroT;
                         _e.SelectedUnitC.LevelT = LevelTypes.First;

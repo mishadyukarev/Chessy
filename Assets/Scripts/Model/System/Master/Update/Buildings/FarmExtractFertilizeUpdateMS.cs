@@ -4,7 +4,7 @@
 //{
 //    sealed class FarmExtractFertilizeUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal FarmExtractFertilizeUpdateMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal FarmExtractFertilizeUpdateMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

@@ -1,8 +1,8 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.Values.Cell.Unit.Stats;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     static partial class ExecuteUpdateEverythingMS
     {

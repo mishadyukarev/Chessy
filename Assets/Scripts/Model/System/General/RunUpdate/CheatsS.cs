@@ -1,10 +1,10 @@
 ﻿using Chessy.Common;
 using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using UnityEngine;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed class CheatsS : SystemModel, IUpdate
     {
@@ -18,11 +18,11 @@ namespace Chessy.Model.Model.System
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (Input.GetKey(KeyCode.Alpha1)) _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(ResourceTypes.Food).Resources += 0.5f;
-                    if (Input.GetKey(KeyCode.Alpha2)) _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(ResourceTypes.Wood).Resources += 0.5f;
-                    if (Input.GetKey(KeyCode.Alpha3)) _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(ResourceTypes.Ore).Resources += 0.5f;
-                    if (Input.GetKey(KeyCode.Alpha4)) _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(ResourceTypes.Iron).Resources += 1;
-                    if (Input.GetKey(KeyCode.Alpha5)) _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(ResourceTypes.Gold).Resources += 1;
+                    if (Input.GetKey(KeyCode.Alpha1)) _e.ResourcesInInventoryC(_e.CurPlayerIT).Add(ResourceTypes.Food, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha2)) _e.ResourcesInInventoryC(_e.CurPlayerIT).Add(ResourceTypes.Wood, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha3)) _e.ResourcesInInventoryC(_e.CurPlayerIT).Add(ResourceTypes.Ore, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha4)) _e.ResourcesInInventoryC(_e.CurPlayerIT).Add(ResourceTypes.Iron, 1);
+                    if (Input.GetKey(KeyCode.Alpha5)) _e.ResourcesInInventoryC(_e.CurPlayerIT).Add(ResourceTypes.Gold, 1);
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse4))

@@ -2,7 +2,7 @@
 //{
 //    internal class UnitShiftMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal UnitShiftMS(in Chessy.Model.Model.Entity.EntitiesModel ents) : base(ents)
+//        internal UnitShiftMS(in Chessy.Model.EntitiesModel ents) : base(ents)
 //        {
 //        }
 

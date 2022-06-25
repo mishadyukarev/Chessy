@@ -1,7 +1,7 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
-using Chessy.Model.Model.System;
+using Chessy.Model;
+using Chessy.Model;
 using System;
 
 namespace Chessy
@@ -49,8 +49,8 @@ namespace Chessy
                     default: throw new Exception();
                 }
 
-                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).GodInfoE.Cooldown = cooldown;
-                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).GodInfoE.HaveHeroInInventor = true;
+                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).GodInfoC.Cooldown = cooldown;
+                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).GodInfoC.HaveGodInInventor = true;
             }
 
             if (e.UnitT(cellIdxForKilling).Is(UnitTypes.Tree)) e.HaveTreeUnit = false;

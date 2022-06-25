@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using System;
 using UnityEngine;
 

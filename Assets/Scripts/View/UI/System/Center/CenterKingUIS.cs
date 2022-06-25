@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 
 namespace Chessy.Model
 {
@@ -17,7 +17,7 @@ namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_e.PlayerInfoE(_e.CurPlayerIT).KingInfoE.HaveInInventor && _e.CellClickT != CellClickTypes.SetUnit)
+            if (_e.PlayerInfoE(_e.CurPlayerIT).PlayerInfoC.HaveKingInInventor && _e.CellClickT != CellClickTypes.SetUnit)
             {
                 if (!_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
                 {

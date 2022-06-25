@@ -2,7 +2,7 @@
 using Chessy.Model.Values.Cell.Unit;
 using System;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
@@ -62,8 +62,8 @@ namespace Chessy.Model.Model.System
 
 
 
-                    if (_e.HaveKingEffect(cellIdxCurrent))//Separate player effect
-                    {s
+                    if (_e.HasKingEffectHereC(cellIdxCurrent).Has(_e.UnitPlayerT(cellIdxCurrent)))//Separate player effect
+                    {
                         powerDamage *= DamageUnitValues.KING_EFFECT_ON_NEAR_UNITS;
                     }
 

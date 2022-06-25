@@ -3,7 +3,7 @@ using Chessy.Model.Values;
 using Photon.Realtime;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel
     {
@@ -21,7 +21,7 @@ namespace Chessy.Model.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(resT).Resources)
+                if (needRes[resT] > _e.ResourcesInInventory(_e.WhoseMovePlayerT, resT))
                 {
                     canBuy = false;
                     break;
@@ -32,7 +32,7 @@ namespace Chessy.Model.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(resT).Resources -= needRes[resT];
+                    _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Subtract(resT, needRes[resT]);
                 }
 
                 if (_e.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
@@ -41,8 +41,8 @@ namespace Chessy.Model.Model.System
                     _e.IsSelectedCity = true;
                 }
 
-                _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Iron).Resources += EconomyValues.IRON_AFTER_MELTING;
-                _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Gold).Resources += EconomyValues.GOLD_AFTER_MELTING;
+                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Iron, EconomyValues.IRON_AFTER_MELTING);
+                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Gold, EconomyValues.GOLD_AFTER_MELTING);
 
                 ExecuteSoundActionToGeneral(sender, ClipTypes.Melting);
             }

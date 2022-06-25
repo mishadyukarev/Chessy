@@ -1,10 +1,10 @@
 ﻿using Chessy.Model.Extensions;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.Values.Cell.Unit.Stats;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     static partial class ExecuteUpdateEverythingMS
     {
@@ -67,7 +67,7 @@ namespace Chessy.Model.Model.System
 
         static EntitiesModel TryPutOutFireWithClouds(this EntitiesModel e)
         {
-            foreach (var cellE in e.AroundCellsE(e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround)
+            foreach (var cellE in e.AroundCellsE(e.CenterCloudCellIdx).CellsAround)
             {
                 e.HaveFire(cellE) = false;
             }

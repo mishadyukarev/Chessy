@@ -2,7 +2,7 @@
 using Chessy.Common.View.UI;
 using Chessy.Common.View.UI.System;
 using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.System.View.UI.Down;
 using Chessy.Model.View.UI;
 using Chessy.Model.View.UI.System;

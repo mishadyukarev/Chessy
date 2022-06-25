@@ -1,21 +1,21 @@
 ﻿using Chessy.Common;
 using Chessy.Model.Enum;
 using Chessy.Model.Extensions;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.Values.Cell.Unit.Effect;
 using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using System.Linq;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     static partial class ExecuteUpdateEverythingMS
     {
         internal static void ExecuteUpdateEverythingM(this EntitiesModel e, in SystemsModel s)
         {
             e.Motions++;
-            e.WeatherE.ToggleNextSunSideT();
+            e.SunC.ToggleNextSunSideT();
 
             e.TryPutOutFireWithClouds()
                 .BurnAdultForest(s)
@@ -72,7 +72,7 @@ namespace Chessy.Model.Model.System
                         {
                             if (e.UnitT(cell_0).HaveUnit())
                             {
-                                if (e.PlayerInfoE(e.UnitPlayerT(cell_0)).GodInfoE.UnitT.Is(UnitTypes.Snowy))
+                                if (e.PlayerInfoE(e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
                                 {
                                     if (e.UnitT(cell_0).Is(UnitTypes.Pawn))
                                     {
@@ -99,7 +99,7 @@ namespace Chessy.Model.Model.System
                                     {
                                         for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                                         {
-                                            if (e.PlayerInfoE(playerT).GodInfoE.UnitT.Is(UnitTypes.Elfemale))
+                                            if (e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
                                             {
                                                 _s.SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
 
@@ -116,11 +116,11 @@ namespace Chessy.Model.Model.System
         }
         static void TryShiftCloundsOrChangeDirection(this EntitiesModel _e, in SystemsModel _s)
         {
-            for (var i = 0; i < _e.WeatherE.WindC.Speed; i++)
+            for (var i = 0; i < _e.SpeedWind; i++)
             {
-                var cell = _e.WeatherE.CloudC.CellIdxCenterCloud;
-                var xy_next = _e.AroundCellsE(cell).AroundCellE(_e.WeatherE.WindC.DirectT).XyC.Xy;
-                var idx_next = _e.AroundCellsE(cell).IdxCell(_e.WeatherE.WindC.DirectT);
+                var cell = _e.CenterCloudCellIdx;
+                var xy_next = _e.AroundCellsE(cell).AroundCellE(_e.DirectWindT).XyC.Xy;
+                var idx_next = _e.AroundCellsE(cell).IdxCell(_e.DirectWindT);
 
                 bool isBorder = false;
 
@@ -128,11 +128,11 @@ namespace Chessy.Model.Model.System
                 {
                     if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
                     {
-                        _e.WeatherE.CloudC.CellIdxCenterCloud = _e.GetIdxCellByXy(xy_next);
+                        _e.CenterCloudCellIdx = _e.GetIdxCellByXy(xy_next);
                     }
                     else
                     {
-                        var newDir = _e.WeatherE.WindC.DirectT;
+                        var newDir = _e.DirectWindT;
 
                         newDir = newDir.Invert();
                         var newDirInt = (int)newDir;
@@ -140,7 +140,7 @@ namespace Chessy.Model.Model.System
 
                         if (newDirInt <= 0) newDirInt = 1;
                         else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                        _e.WeatherE.WindC.DirectT = (DirectTypes)newDirInt;
+                        _e.DirectWindT = (DirectTypes)newDirInt;
 
                         isBorder = true;
 
@@ -212,11 +212,11 @@ namespace Chessy.Model.Model.System
         }
         static void TryChangeDirectionOfWindRandomly(this EntitiesModel _e)
         {
-            if (UnityEngine.Random.Range(0f, 1f) > UpdateValues.PERCENT_FOR_CHANGING_WIND) _e.WeatherE.WindC.Speed = UnityEngine.Random.Range(1, 4);
+            if (UnityEngine.Random.Range(0f, 1f) > UpdateValues.PERCENT_FOR_CHANGING_WIND) _e.WindC.Speed = (byte)UnityEngine.Random.Range(1, 4);
         }
         static void TryPoorWaterToCellsWithClounds(this EntitiesModel _e)
         {
-            var cell_0 = _e.WeatherE.CloudC.CellIdxCenterCloud;
+            var cell_0 = _e.CenterCloudCellIdx;
 
             for (var dirT = DirectTypes.None; dirT < DirectTypes.End; dirT++)
             {
@@ -303,7 +303,7 @@ namespace Chessy.Model.Model.System
                     if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
                     {
                         if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
-                            _e.ResourcesC(_e.UnitPlayerT(cellIdxCurrent), ResourceTypes.Food).Resources -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+                            _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Subtract(ResourceTypes.Food, EconomyValues.FOOD_FOR_FEEDING_UNITS);
                     }
                 }
             }
@@ -362,7 +362,7 @@ namespace Chessy.Model.Model.System
                 {
                     var extract = e.FarmExtract(cellIdxCurrent);
 
-                    e.ResourcesC(e.BuildingPlayerT(cellIdxCurrent), ResourceTypes.Food).Resources += extract;
+                    e.ResourcesInInventoryC(e.BuildingPlayerT(cellIdxCurrent)).Add(ResourceTypes.Food, extract);
                     e.FertilizeC(cellIdxCurrent).Resources -= extract;
 
                     //if (!E.FertilizeC(cell_0).HaveAnyResources)
@@ -380,7 +380,7 @@ namespace Chessy.Model.Model.System
                 {
                     var extract = _e.WoodcutterExtract(cellIdxCurrent);
 
-                    _e.ResourcesC(_e.BuildingPlayerT(cellIdxCurrent), ResourceTypes.Wood).Resources += extract;
+                    _e.ResourcesInInventoryC(_e.BuildingPlayerT(cellIdxCurrent)).Add(ResourceTypes.Wood, extract);
                     _s.TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
 
                     if (!_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
@@ -508,7 +508,7 @@ namespace Chessy.Model.Model.System
                         //Es.UnitE(cell_0).Take(Es, 0.15f);
                     }
 
-                    if (_e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround.Any(cell => cell == cellIdxCurrent))
+                    if (_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Any(cell => cell == cellIdxCurrent))
                     {
                         //Es.UnitE(cell_0).Take(Es, 0.15f);
                         break;
@@ -563,7 +563,7 @@ namespace Chessy.Model.Model.System
                 {
                     var extract = _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest;
 
-                    _e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).ResourcesC(ResourceTypes.Wood).Resources += extract;
+                    _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Add(ResourceTypes.Wood, extract);
                     _s.TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
 
                     if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
@@ -604,7 +604,7 @@ namespace Chessy.Model.Model.System
                     var extract = _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractHill;
 
                     _e.HillC(cellIdxCurrent).Resources -= extract;
-                    _e.PlayerInfoE(_e.UnitPlayerT(cellIdxCurrent)).ResourcesC(ResourceTypes.Ore).Resources += extract;
+                    _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Add(ResourceTypes.Ore, extract);
 
                     if (_e.LessonT.Is(LessonTypes.ExtractHill))
                     {
@@ -638,7 +638,7 @@ namespace Chessy.Model.Model.System
             {
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _e.ResourcesC(player, ResourceTypes.Food).Resources += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
+                    _e.ResourcesInInventoryC(player).Add(ResourceTypes.Food, EconomyValues.ADDING_FOOD_AFTER_UPDATE);
                 }
             }
         }
@@ -650,9 +650,9 @@ namespace Chessy.Model.Model.System
                 {
                     var res = ResourceTypes.Food;
 
-                    if (e.PlayerInfoE(playerT).ResourcesC(res).Resources < 0)
+                    if (e.ResourcesInInventory(playerT, res) < 0)
                     {
-                        e.PlayerInfoE(playerT).ResourcesC(res).Resources = 0;
+                        e.SetResourcesInInventory(playerT, res, 0);
 
                         for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
                         {

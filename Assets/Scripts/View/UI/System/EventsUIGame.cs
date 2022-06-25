@@ -1,8 +1,5 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Enum;
-using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
-using Chessy.Model.Model.System;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -16,8 +13,6 @@ namespace Chessy.Model.EventsUI
         readonly Dictionary<ButtonTypes, PressHintS> _abilities = new Dictionary<ButtonTypes, PressHintS>();
         readonly Dictionary<ButtonTypes, PressHintS> _effects = new Dictionary<ButtonTypes, PressHintS>();
 
-        private const byte MAX_PLAYERS = 2;
-
         public EventsUIGame(SystemsModel sM, EntitiesViewUI eUI, EntitiesView eV, EntitiesModel eM)
         {
             #region Menu
@@ -27,16 +22,16 @@ namespace Chessy.Model.EventsUI
             eUI.CenterE.ExitButtonC.AddListener(() => Application.Quit());
 
 
-            eUI.OnlineZoneE.JoinButtonC.AddListener(ConnectOnline);
-            eUI.OnlineZoneE.CreatePublicRoomButtonC.AddListener(() => CreateRoom(eM));
-            eUI.OnlineZoneE.JoinRandomPublicRoomButtonC.AddListener(() => JoinRandomRoom(eM));
-            eUI.OnlineZoneE.CreateFriendRoomButtonC.AddListener(() => CreateFriendRoom(eUI, eM));
-            eUI.OnlineZoneE.JoinFriendRoomButtonC.AddListener(() => JoinFriendRoom(eUI, eM));
+            eUI.OnlineZoneE.JoinButtonC.AddListener(sM.ForUISystems.ConnectOnlineMenu);
+            eUI.OnlineZoneE.CreatePublicRoomButtonC.AddListener(sM.CreateRoom);
+            eUI.OnlineZoneE.JoinRandomPublicRoomButtonC.AddListener(sM.JoinRandomRoom);
+            eUI.OnlineZoneE.CreateFriendRoomButtonC.AddListener(() => sM.CreateFriendRoom(eUI.OnlineZoneE.CreateFriendRoomInputFieldC.InputField.text));
+            eUI.OnlineZoneE.JoinFriendRoomButtonC.AddListener(() => sM.JoinFriendRoom(eUI.OnlineZoneE.JoinFriendRoomInputFieldC.InputField.text));
 
 
-            eUI.OfflineZoneE.JoinButtonC.AddListener(ConnectOffline);
-            eUI.OfflineZoneE.TrainingButtonC.AddListener(() => CreateOffGame(eM, GameModeTypes.TrainingOffline));
-            eUI.OfflineZoneE.WithFriendButtonC.AddListener(() => CreateOffGame(eM, GameModeTypes.WithFriendOffline));
+            eUI.OfflineZoneE.JoinButtonC.AddListener(sM.ForUISystems.ConnectOffline);
+            eUI.OfflineZoneE.TrainingButtonC.AddListener(() => sM.CreateOffGame(GameModeTypes.TrainingOffline));
+            eUI.OfflineZoneE.WithFriendButtonC.AddListener(() => sM.CreateOffGame(GameModeTypes.WithFriendOffline));
 
 
 
@@ -50,11 +45,7 @@ namespace Chessy.Model.EventsUI
                  eM.NeedUpdateView = true;
              });
 
-            eUI.CenterE.SettingsButtonC.AddListener(delegate
-            {
-                eM.SettingsC.IsOpenedBarWithSettings = !eM.SettingsC.IsOpenedBarWithSettings;
-                eM.NeedUpdateView = true;
-            });
+            eUI.CenterE.SettingsButtonC.AddListener(sM.ForUISystems.ClickSettingsCenterMenu);
 
             #endregion
 
@@ -72,38 +63,11 @@ namespace Chessy.Model.EventsUI
                 eM.NeedUpdateView = true;
             });
 
-            bookE.NextButtonC.AddListener(() =>
-            {
-                if (eM.OpenedNowPageBookT < PageBookTypes.End - 1)
-                {
-                    eM.OpenedNowPageBookT++;
-                    eV.SoundASC(ClipTypes.ShiftBookSheet).Play();
-
-                    eM.NeedUpdateView = true;
-                }
-            });
-
-            bookE.BackButtonC.AddListener(() =>
-            {
-                if (eM.OpenedNowPageBookT > 0)
-                {
-                    eM.OpenedNowPageBookT--;
-                    eV.SoundASC(ClipTypes.ShiftBookSheet).Play();
-
-                    eM.NeedUpdateView = true;
-                }
-            });
+            bookE.NextButtonC.AddListener(sM.ForUISystems.ClickNextButtonInBookZone);
+            bookE.BackButtonC.AddListener(sM.ForUISystems.ClickBackButtonInBookZone);
 
 
-            eUI.SettingsE.ExitButtonC.AddListener(() =>
-            {
-                eM.SettingsC.IsOpenedBarWithSettings = false;
-                //eVCommon.Sound(ClipTypes.Click).Play();
-
-                eM.NeedUpdateView = true;
-            });
-
-
+            eUI.SettingsE.ExitButtonC.AddListener(sM.ForUISystems.ClickExitInOpenedSettingZone);
             eUI.ShopE.BuyButtonC.AddListener(sM.BuyPremiumProduct);
 
 
@@ -179,38 +143,9 @@ namespace Chessy.Model.EventsUI
             #region Up
 
 
-            eUI.UpEs.SettingsButtonC.AddListener(delegate
-             {
-                 eM.SettingsC.IsOpenedBarWithSettings = !eM.SettingsC.IsOpenedBarWithSettings;
-                 eM.SoundAction(ClipTypes.Click);
-             });
-            eUI.UpEs.WindButtonC.AddListener(delegate
-            {
-                if (eM.LessonT.Is(LessonTypes.ClickWindInfo))
-                {
-                    eM.WeatherE.SunC.SunSideT = SunSideTypes.Dawn;
-                    eM.CommonInfoAboutGameC.SetNextLesson();
-                }
-                else
-                {
-                    if (eM.BookC.IsOpenedBook())
-                    {
-                        eM.OpenedNowPageBookT = PageBookTypes.None;
-                        eM.SoundAction(ClipTypes.CloseBook).Invoke();
-                    }
-                    else
-                    {
-                        eM.OpenedNowPageBookT = PageBookTypes.Wind;
-                        eM.SoundAction(ClipTypes.OpenBook).Invoke();
-                    }
-                }
-
-                eM.NeedUpdateView = true;
-            });
-            eUI.UpEs.DiscordButtonC.AddListener(() =>
-            {
-                Application.OpenURL(URLC.URL_DISCORD);
-            });
+            eUI.UpEs.SettingsButtonC.AddListener(sM.ForUISystems.ClickSettingUpGame);
+            eUI.UpEs.WindButtonC.AddListener(sM.ForUISystems.ClickWindButtonUp);
+            eUI.UpEs.DiscordButtonC.AddListener(sM.ForUISystems.ClickDiscordUp);
 
             #endregion
 
@@ -218,16 +153,13 @@ namespace Chessy.Model.EventsUI
             #region Left
 
             var leftEs = eUI.LeftEs;
-            eUI.LeftEs.EnvironmentEs.InfoButtonC.AddListener(delegate { sM.ForUISystems.EnvironmentClick(); });
+            eUI.LeftEs.EnvironmentEs.InfoButtonC.AddListener(() => sM.ForUISystems.EnvironmentClick());
             //City
-            leftEs.CityE(BuildingTypes.House).Button.AddListener(delegate { sM.ForUISystems.BuildBuildingClick(BuildingTypes.House); });
-            leftEs.CityE(BuildingTypes.Market).Button.AddListener(delegate { sM.ForUISystems.BuildBuildingClick(BuildingTypes.Market); });
-            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(delegate { sM.ForUISystems.BuildBuildingClick(BuildingTypes.Smelter); });
+            leftEs.CityE(BuildingTypes.House).Button.AddListener(() => sM.ForUISystems.BuildBuildingClick(BuildingTypes.House));
+            leftEs.CityE(BuildingTypes.Market).Button.AddListener(() => sM.ForUISystems.BuildBuildingClick(BuildingTypes.Market));
+            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(() => sM.ForUISystems.BuildBuildingClick(BuildingTypes.Smelter));
 
-            leftEs.PremiumButtonC.AddListener(delegate
-            {
-                OpenShop(eM, eM);
-            });
+            leftEs.PremiumButtonC.AddListener(() => OpenShop(eM, eM));
 
             #endregion
 
@@ -315,81 +247,15 @@ namespace Chessy.Model.EventsUI
 
 
             //Up
-            eUI.UpEs.AlphaC.AddListener(delegate
-            {
-                OpenShop(eM, eM);
-            });
-            eUI.UpEs.LeaveC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
+            eUI.UpEs.AlphaC.AddListener(() => OpenShop(eM, eM));
+            eUI.UpEs.LeaveC.AddListener(() => PhotonNetwork.LeaveRoom());
         }
 
         #region Menu
 
-        private void ConnectOnline()
-        {
-            PhotonNetwork.PhotonServerSettings.DevRegion = "ru";
-            PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "ru";
-            PhotonNetwork.PhotonServerSettings.AppSettings.BestRegionSummaryFromStorage = "ru";
-            PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = Application.version;
 
-            PhotonNetwork.ConnectUsingSettings();
-        }
 
-        private void ConnectOffline()
-        {
-            if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
-            else PhotonNetwork.OfflineMode = true;
-        }
 
-        private void CreateRoom(in EntitiesModel e)
-        {
-            RoomOptions roomOptions = new RoomOptions();
-
-            e.GameModeT = GameModeTypes.PublicOnline;
-
-            //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
-            //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
-
-            roomOptions.MaxPlayers = MAX_PLAYERS;
-            roomOptions.IsVisible = true;
-            roomOptions.IsOpen = true;
-            roomOptions.EmptyRoomTtl = 3000;
-            var roomName = UnityEngine.Random.Range(1, 9999999).ToString();
-
-            PhotonNetwork.CreateRoom(roomName, roomOptions, default, default);// CreateRoom(roomName, roomOptions);
-        }
-
-        private void CreateFriendRoom(in EntitiesViewUI eUI, in EntitiesModel eM)
-        {
-            var roomName = eUI.OnlineZoneE.CreateFriendRoomInputFieldC.InputField.text;
-
-            eM.GameModeT = GameModeTypes.WithFriendOnline;
-
-            RoomOptions roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = MAX_PLAYERS;
-            roomOptions.IsVisible = false;
-            roomOptions.IsOpen = true;
-
-            PhotonNetwork.CreateRoom(roomName, roomOptions, default);
-        }
-
-        private void JoinRandomRoom(in EntitiesModel eM)
-        {
-            eM.GameModeT = GameModeTypes.PublicOnline;
-            //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
-            PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
-        }
-
-        private void JoinFriendRoom(in EntitiesViewUI eUI, in EntitiesModel eM)
-        {
-            eM.GameModeT = GameModeTypes.WithFriendOnline;
-            PhotonNetwork.JoinRoom(eUI.OnlineZoneE.JoinFriendRoomInputFieldC.InputField.text);
-        }
-
-        private void CreateOffGame(in EntitiesModel eM, in GameModeTypes offGameMode)
-        {
-            eM.GameModeT = offGameMode;
-            PhotonNetwork.CreateRoom(default);
-        }
 
         #endregion
 

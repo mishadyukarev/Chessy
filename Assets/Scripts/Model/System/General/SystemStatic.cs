@@ -3,7 +3,7 @@ using Chessy.Common.Enum;
 using Chessy.Model;
 using Chessy.Model.Component;
 using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using System;
 
@@ -167,7 +167,7 @@ namespace Chessy
 
         #region ArcherSide
 
-        internal static void ToggleSide(this ref UnitMainC unitMainC) => unitMainC.IsRightArcher = !unitMainC.IsRightArcher;
+        internal static void ToggleSide(this ref UnitOnCellC unitMainC) => unitMainC.IsArcherDirectedToRight = !unitMainC.IsArcherDirectedToRight;
 
         #endregion
 
@@ -278,7 +278,7 @@ namespace Chessy
                 default: throw new Exception();
             }
         }
-        public static void ToggleNextSunSideT(this ref WeatherE weatherE) => weatherE.SunC.SunSideT = weatherE.SunC.SunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++weatherE.SunC.SunSideT;
+        public static void ToggleNextSunSideT(this ref SunC sunC) => sunC.SunSideT = sunC.SunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++sunC.SunSideT;
 
         #endregion
 

@@ -12,7 +12,7 @@ namespace Chessy.Model
 
         readonly EntitiesViewUI _eUI;
 
-        internal UpWindUIS(in EntitiesViewUI entsUI, in Chessy.Model.Model.Entity.EntitiesModel ents) : base(ents)
+        internal UpWindUIS(in EntitiesViewUI entsUI, in Chessy.Model.EntitiesModel ents) : base(ents)
         {
             _directs = new Dictionary<DirectTypes, Vector3>();
             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
@@ -40,9 +40,9 @@ namespace Chessy.Model
             {
                 _eUI.UpEs.ParentWindGOC.SetActive(true);
 
-                _eUI.UpEs.WindTrC.EulerAngles = _directs[_e.WeatherE.WindC.DirectT];
+                _eUI.UpEs.WindTrC.EulerAngles = _directs[_e.DirectWindT];
                 if (_e.CurPlayerIT == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-                _eUI.UpEs.WindTextC.TextUI.text = _e.WeatherE.WindC.Speed.ToString() + "/" + StartValues.MAX_SPEED_WIND;
+                _eUI.UpEs.WindTextC.TextUI.text = _e.SpeedWind.ToString() + "/" + StartValues.MAX_SPEED_WIND;
 
 
             }

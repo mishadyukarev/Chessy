@@ -1,6 +1,6 @@
 ﻿using Chessy.Model.Values.Cell.Unit.Stats;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed partial class SystemsModel
     {
@@ -9,7 +9,7 @@ namespace Chessy.Model.Model.System
             _e.UnitMainC(cellIdxForSetting).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
             _e.UnitE(cellIdxForSetting).SetStats(HpValues.MAX, StepValues.MAX, WaterValues.MAX);
             _e.UnitExtraTWE(cellIdxForSetting).Set(ToolWeaponTypes.None, LevelTypes.None, 0);
-            _e.UnitEffectsC(cellIdxForSetting).Set(0, 0, 0, false);
+            _e.UnitEffectsC(cellIdxForSetting).Set(0, 0, 0);
 
             if (_e.UnitT(cellIdxForSetting).Is(UnitTypes.Pawn))
             {
@@ -32,12 +32,11 @@ namespace Chessy.Model.Model.System
 
                 if (unitT.IsGod())
                 {
-                    _e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = false;
+                    _e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = false;
                 }
                 else if (unitT == UnitTypes.King)
                 {
-                    _e.PlayerInfoE(playerT).KingInfoE.CellKing = cellIdxForSetting;
-                    _e.PlayerInfoE(playerT).KingInfoE.HaveInInventor = false;
+                    _e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = false;
                 }
 
                 _e.MainToolWeaponE(cellIdxForSetting).Set(ToolWeaponTypes.None, LevelTypes.None);

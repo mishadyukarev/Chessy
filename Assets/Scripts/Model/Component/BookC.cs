@@ -4,7 +4,7 @@ namespace Chessy
 {
     public struct BookC
     {
-        public PageBookTypes OpenedNowPageBookT { get; set; }
-        public PageBookTypes WasOpenedLastPageBookT { get; set; }
+        public PageBookTypes OpenedNowPageBookT { get; internal set; }
+        public PageBookTypes WasOpenedLastPageBookT { get; internal set; }
     }
 }

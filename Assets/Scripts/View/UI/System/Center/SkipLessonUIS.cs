@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using Chessy.Model.View.UI.Entity;
 
 namespace Chessy.Model

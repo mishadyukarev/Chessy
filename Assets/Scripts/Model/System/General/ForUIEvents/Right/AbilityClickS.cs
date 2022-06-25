@@ -2,7 +2,7 @@
 using Photon.Pun;
 using System;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModelGameForUI
     {

@@ -4,7 +4,7 @@
 //{
 //    sealed class PawnExtractHillUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal PawnExtractHillUpdateMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal PawnExtractHillUpdateMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

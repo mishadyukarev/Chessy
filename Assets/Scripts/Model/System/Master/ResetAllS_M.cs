@@ -1,6 +1,6 @@
 ﻿using Chessy.Model.Values;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -21,9 +21,9 @@ namespace Chessy.Model.Model.System
             _e.CurPlayerIT = default;
             _e.AmountPlantedYoungForests = default;
 
-            _e.WeatherE.WindC = new WindC(default, default);
-            _e.WeatherE.SunC.SunSideT = default;
-            _e.WeatherE.CloudC.CellIdxCenterCloud = default;
+            _e.WindC = new WindC(default, default);
+            _e.SunC.SunSideT = default;
+            _e.CloudC.CellIdxCenterCloud = default;
 
             _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(default, default);
 
@@ -42,40 +42,35 @@ namespace Chessy.Model.Model.System
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                _e.PlayerInfoE(playerT).IsReadyForStartOnlineGame = default;
+                _e.PlayerInfoC(playerT).IsReadyForStartOnlineGame = default;
 
-                _e.PlayerInfoE(playerT).BuildingsInfoC.Clear();
+                _e.BuildingsInTownInfoC(playerT).Clear();
 
-                _e.PlayerInfoE(playerT).AmountFarmsInGame = default;
+                _e.PlayerInfoC(playerT).AmountFarmsInGame = default;
 
-                _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = default;
-                _e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = default;
-                _e.PlayerInfoE(playerT).PawnInfoC.AmountInGame = default;
+                _e.PawnPeopleInfoC(playerT).PeopleInCity = default;
+                _e.PawnPeopleInfoC(playerT).MaxAvailable = default;
+                _e.PawnPeopleInfoC(playerT).AmountInGame = default;
 
-                _e.PlayerInfoE(playerT).KingInfoE.HaveInInventor = default;
-                _e.PlayerInfoE(playerT).WoodForBuyHouse = default;
-                _e.PlayerInfoE(playerT).IsReadyForStartOnlineGame = default;
+                _e.PlayerInfoC(playerT).HaveKingInInventor = default;
+                _e.PlayerInfoC(playerT).WoodForBuyHouse = default;
+                _e.PlayerInfoC(playerT).IsReadyForStartOnlineGame = default;
 
-                _e.PlayerInfoE(playerT).GodInfoE = default;
-                _e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = default;
-                _e.PlayerInfoE(playerT).WhereKingEffects.Clear();
+                _e.GodInfoC(playerT) = default;
+                _e.GodInfoC(playerT).HaveGodInInventor = default;
+                //_e.PlayerInfoE(playerT).WhereKingEffects.Clear();
 
                 for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
                 {
                     for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
                     {
-                        _e.PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT) = default;
-                    }
-
-                    for (var buildT = (BuildingTypes)1; buildT < BuildingTypes.End; buildT++)
-                    {
-                        _e.PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT).IdxC.Clear();
+                        _e.SetToolWeaponsInInventor(playerT, levT, twT, default);
                     }
                 }
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.PlayerInfoE(playerT).ResourcesC(resT).Resources = default;
+                    _e.SetResourcesInInventory(playerT, resT, default);
                 }
             }
         }

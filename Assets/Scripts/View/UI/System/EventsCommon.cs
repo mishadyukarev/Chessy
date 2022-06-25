@@ -1,4 +1,4 @@
-﻿//using Chessy.Common.Entity.View.UI;
+﻿//using Chessy.View.UI;
 //using Chessy.Common.Enum;
 //using Chessy.Common.Model.System;
 //using Chessy.Common.View.UI;

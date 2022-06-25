@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Model.Entity
+﻿namespace Chessy.Model
 {
     public struct CellAroundE
     {

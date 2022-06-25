@@ -1,9 +1,9 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using Photon.Pun;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed class CellSimpleClickS : SystemModel
     {

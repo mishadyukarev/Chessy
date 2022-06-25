@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Model.System
+﻿namespace Chessy.Model
 {
     public sealed partial class SystemsModelGameForUI
     {
@@ -10,7 +10,7 @@
             {
                 _e.SoundAction(ClipTypes.Click).Invoke();
 
-                if (_e.PlayerInfoE(_e.CurPlayerIT).KingInfoE.HaveInInventor)
+                if (_e.PlayerInfoE(_e.CurPlayerIT).PlayerInfoC.HaveKingInInventor)
                 {
                     _e.SelectedUnitC.UnitT = UnitTypes.King;
                     _e.SelectedUnitC.LevelT = LevelTypes.First;

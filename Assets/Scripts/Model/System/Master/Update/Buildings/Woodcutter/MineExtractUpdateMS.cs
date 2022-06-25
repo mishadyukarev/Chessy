@@ -2,7 +2,7 @@
 //{
 //    sealed class MineExtractUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal MineExtractUpdateMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal MineExtractUpdateMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

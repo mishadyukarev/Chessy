@@ -1,9 +1,9 @@
 ﻿using Chessy.Common;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
@@ -25,7 +25,7 @@ namespace Chessy.Model.Model.System
             PawnGetExtractAdultForest();
             GetPawnExtractHill();
             GetVisibleUnits();
-            GetEffectsForUnits();
+            GetKingEffectsForUnits();
             GetDamageUnits();
             GetAbilityUnit();
             GetTrailsVisible();
@@ -69,7 +69,7 @@ namespace Chessy.Model.Model.System
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Stun);
                             _isFilled[EffectTypes.Stun] = true;
                         }
-                        else if (!_isFilled[EffectTypes.DamageAdd] && _e.HaveKingEffect(cellIdxCurrent))
+                        else if (!_isFilled[EffectTypes.DamageAdd] && _e.HasKingEffectHereC(cellIdxCurrent).Has(_e.UnitPlayerT(cellIdxCurrent)))
                         {
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.DamageAdd);
                             _isFilled[EffectTypes.DamageAdd] = true;

@@ -5,7 +5,7 @@
 //{
 //    sealed class UpdateHealingUnitMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal UpdateHealingUnitMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal UpdateHealingUnitMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

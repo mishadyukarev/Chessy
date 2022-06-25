@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.System;
+﻿using Chessy.Model;
 using Photon.Pun;
 using System;
 using UnityEngine;

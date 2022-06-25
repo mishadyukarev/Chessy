@@ -2,7 +2,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel
     {
@@ -15,8 +15,8 @@ namespace Chessy.Model.Model.System
                 _e.CommonInfoAboutGameC.SetNextLesson();
             }
 
-            _e.PlayerInfoE(whoseMove).GodInfoE.UnitT = unitT;
-            _e.PlayerInfoE(whoseMove).GodInfoE.HaveHeroInInventor = true;
+            _e.PlayerInfoE(whoseMove).GodInfoC.UnitT = unitT;
+            _e.PlayerInfoE(whoseMove).GodInfoC.HaveGodInInventor = true;
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -19,6 +19,8 @@ namespace Chessy.Model.Model.System
         internal readonly ExecuteAIBotLogicAfterUpdateS_M AIBotS;
 
         public readonly SystemsModelGameForUI ForUISystems;
+
+        const byte MAX_PLAYERS = 2;
 
         public SystemsModel(in EntitiesModel eMG)
         {
@@ -86,6 +88,13 @@ namespace Chessy.Model.Model.System
             }
         }
 
+        public void ComeToTrainingAfterDownloadingGame()
+        {
+            PhotonNetwork.OfflineMode = true;
+            _e.GameModeT = GameModeTypes.TrainingOffline;
+            PhotonNetwork.CreateRoom(default);
+        }
+
         public void OnLeftRoom()
         {
             _e.SceneT = SceneTypes.Menu;
@@ -120,6 +129,55 @@ namespace Chessy.Model.Model.System
                 Debug.Log("BuyProductID FAIL. Not initialized.");
             }
         }
+
+        public void CreateRoom()
+        {
+            RoomOptions roomOptions = new RoomOptions();
+
+            _e.GameModeT = GameModeTypes.PublicOnline;
+
+            //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
+            //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
+
+            roomOptions.MaxPlayers = MAX_PLAYERS;
+            roomOptions.IsVisible = true;
+            roomOptions.IsOpen = true;
+            roomOptions.EmptyRoomTtl = 3000;
+            var roomName = UnityEngine.Random.Range(1, 9999999).ToString();
+
+            PhotonNetwork.CreateRoom(roomName, roomOptions, default, default);// CreateRoom(roomName, roomOptions);
+        }
+        public void CreateFriendRoom(in string roomNameFromViewBar)
+        {
+            _e.GameModeT = GameModeTypes.WithFriendOnline;
+
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = MAX_PLAYERS;
+            roomOptions.IsVisible = false;
+            roomOptions.IsOpen = true;
+
+            PhotonNetwork.CreateRoom(roomNameFromViewBar, roomOptions, default);
+        }
+        public void JoinRandomRoom()
+        {
+            _e.GameModeT = GameModeTypes.PublicOnline;
+            //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
+            PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
+        }
+        public void JoinFriendRoom(in string nameRoomFromViewBar)
+        {
+            _e.GameModeT = GameModeTypes.WithFriendOnline;
+            PhotonNetwork.JoinRoom(nameRoomFromViewBar);
+        }
+
+        public void CreateOffGame(in GameModeTypes offGameMode)
+        {
+            _e.GameModeT = offGameMode;
+            PhotonNetwork.CreateRoom(default);
+        }
+
+
+
 
         internal void ExecuteSoundAction(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();
         internal void ExecuteSoundAction(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();

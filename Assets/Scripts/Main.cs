@@ -1,8 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Model;
 using Chessy.Model.EventsUI;
-using Chessy.Model.Model.Entity;
-using Chessy.Model.Model.System;
+using Chessy.Model;
 using Chessy.Model.System.View;
 using Chessy.Model.System.View.UI;
 using Photon.Pun;
@@ -51,14 +50,7 @@ namespace Chessy
                 sV,
             };
 
-
-            #region ComeToTraining
-
-            PhotonNetwork.OfflineMode = true;
-            eM.GameModeT = GameModeTypes.TrainingOffline;
-            PhotonNetwork.CreateRoom(default);
-
-            #endregion
+            sM.ComeToTrainingAfterDownloadingGame();
         }
 
         void Update()

@@ -1,8 +1,8 @@
-﻿namespace Chessy.Model.Model.System.Master.Methods
+﻿namespace Chessy.Model.Master.Methods
 {
     public struct IceWallSnowyMS
     {
-        public IceWallSnowyMS(in byte cell_0, in Chessy.Model.Model.Entity.EntitiesModel _e)
+        public IceWallSnowyMS(in byte cell_0, in Chessy.Model.EntitiesModel _e)
         {
             //var ability = AbilityTypes.IceWall;
 

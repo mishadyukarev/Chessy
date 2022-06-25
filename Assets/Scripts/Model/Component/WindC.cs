@@ -3,9 +3,9 @@
     public struct WindC
     {
         public DirectTypes DirectT { get; internal set; }
-        public float Speed { get; internal set; }
+        public byte Speed { get; internal set; }
 
-        internal WindC(in DirectTypes directT, in float speed)
+        internal WindC(in DirectTypes directT, in byte speed)
         {
             DirectT = directT;
             Speed = speed;

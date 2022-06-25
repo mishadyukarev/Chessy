@@ -4,11 +4,11 @@
 //using Chessy.Model.Values.Cell.Unit.Stats;
 //using Photon.Realtime;
 
-//namespace Chessy.Model.Model.System.Master.Methods
+//namespace Chessy.Model.Master.Methods
 //{
 //    public struct DirectWaveSnowyMS
 //    {
-//        public DirectWaveSnowyMS(in byte idx_from, in byte idx_to, in Player sender, in Chessy.Model.Model.Entity.EntitiesModel e)
+//        public DirectWaveSnowyMS(in byte idx_from, in byte idx_to, in Player sender, in Chessy.Model.EntitiesModel e)
 //        {
 //            var whoseMove = e.WhoseMove.Player;
 

@@ -2,7 +2,7 @@
 //{
 //    sealed class GetPawnUnitUpdMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal GetPawnUnitUpdMS(in Chessy.Model.Model.Entity.EntitiesModel ents) : base(ents)
+//        internal GetPawnUnitUpdMS(in Chessy.Model.EntitiesModel ents) : base(ents)
 //        {
 //        }
 

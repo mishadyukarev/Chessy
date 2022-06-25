@@ -5,7 +5,7 @@
 //{
 //    sealed class UpdGiveWaterCloudScowyMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal UpdGiveWaterCloudScowyMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal UpdGiveWaterCloudScowyMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

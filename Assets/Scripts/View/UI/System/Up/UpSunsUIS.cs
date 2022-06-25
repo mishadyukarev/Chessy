@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using System;
 
 namespace Chessy.Model
@@ -24,7 +24,7 @@ namespace Chessy.Model
             {
                 var isFirstPlayer = _e.CurPlayerIT == PlayerTypes.First;
 
-                switch (_e.WeatherE.SunC.SunSideT)
+                switch (_e.SunSideT)
                 {
                     case SunSideTypes.Dawn:
                         _needActiveLeft = isFirstPlayer;

@@ -1,4 +1,4 @@
-﻿//namespace Chessy.Model.Model.Entity.Cell
+﻿//namespace Chessy.Model.Cell
 //{
 //    public struct BuildingE
 //    {

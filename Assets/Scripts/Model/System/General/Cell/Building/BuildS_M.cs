@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 
 namespace Chessy.Model
 {
@@ -13,7 +13,7 @@ namespace Chessy.Model
 
             if (buildingT == BuildingTypes.Farm)
             {
-                e.PlayerInfoE(playerT).AmountFarmsInGame++;
+                e.PlayerInfoE(playerT).PlayerInfoC.AmountFarmsInGame++;
             }
         }
     }

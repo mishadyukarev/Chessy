@@ -1,10 +1,10 @@
 ﻿//using Chessy.Model.Values.Cell.Environment;
 
-//namespace Chessy.Model.Model.System.Master
+//namespace Chessy.Model.Master
 //{
 //    public static class ElfemaleSeedS_M
 //    {
-//        public static void TrySeed(in byte cell_0, in Chessy.Model.Model.Entity.EntitiesModel e)
+//        public static void TrySeed(in byte cell_0, in Chessy.Model.EntitiesModel e)
 //        {
 //            if (e.UnitTC(cell_0).Is(UnitTypes.Elfemale))
 //            {

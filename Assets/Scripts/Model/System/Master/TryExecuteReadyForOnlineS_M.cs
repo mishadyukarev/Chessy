@@ -1,6 +1,6 @@
 ﻿using Photon.Realtime;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel
     {
@@ -8,10 +8,10 @@ namespace Chessy.Model.Model.System
         {
             var playerSend = sender.GetPlayer();
 
-            _e.PlayerInfoE(playerSend).IsReadyForStartOnlineGame = !_e.PlayerInfoE(playerSend).IsReadyForStartOnlineGame;
+            _e.PlayerInfoE(playerSend).PlayerInfoC.IsReadyForStartOnlineGame = !_e.PlayerInfoE(playerSend).PlayerInfoC.IsReadyForStartOnlineGame;
 
-            if (_e.PlayerInfoE(PlayerTypes.First).IsReadyForStartOnlineGame
-                && _e.PlayerInfoE(PlayerTypes.Second).IsReadyForStartOnlineGame)
+            if (_e.PlayerInfoE(PlayerTypes.First).PlayerInfoC.IsReadyForStartOnlineGame
+                && _e.PlayerInfoE(PlayerTypes.Second).PlayerInfoC.IsReadyForStartOnlineGame)
             {
                 _e.IsStartedGame = true;
             }

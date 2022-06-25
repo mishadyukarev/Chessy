@@ -5,7 +5,7 @@ using Chessy.Model.Values.Cell.Unit;
 using Photon.Pun;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -18,8 +18,8 @@ namespace Chessy.Model.Model.System
             _e.CellClickT = StartValues.CELL_CLICK;
 
             _e.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND_IN_START_GAME);
-            _e.WeatherE.SunC.SunSideT = StartValues.SUN_SIDE;
-            _e.WeatherE.CloudC.CellIdxCenterCloud = StartValues.CELL_IDX_START_GAME_CLOUD;
+            _e.SunSideT = StartValues.SUN_SIDE;
+            _e.CenterCloudCellIdx = StartValues.CELL_IDX_START_GAME_CLOUD;
 
             _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
 
@@ -39,14 +39,14 @@ namespace Chessy.Model.Model.System
 
 
 
-                _e.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
-                _e.PlayerInfoE(playerT).WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
+                _e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = true;
+                _e.PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
 
-                _e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
+                _e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = true;
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.PlayerInfoE(playerT).ResourcesC(resT).Resources = StartValues.Resources(resT);
+                    _e.SetResourcesInInventory(playerT, resT, StartValues.Resources(resT));
                 }
 
                 if (withTraining)
@@ -187,7 +187,7 @@ namespace Chessy.Model.Model.System
 
             if (_e.GameModeT.Is(GameModeTypes.TrainingOffline))
             {
-                _e.PlayerInfoE(PlayerTypes.Second).ResourcesC(ResourceTypes.Food).Resources = 999999;
+                _e.SetResourcesInInventory(PlayerTypes.Second, ResourceTypes.Food, 999999);
 
 
                 for (byte cellUdxCurrent = 0; cellUdxCurrent < StartValues.CELLS; cellUdxCurrent++)

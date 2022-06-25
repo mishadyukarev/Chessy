@@ -5,7 +5,7 @@
 //{
 //    sealed class UpdTryFireAroundHellMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal UpdTryFireAroundHellMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal UpdTryFireAroundHellMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

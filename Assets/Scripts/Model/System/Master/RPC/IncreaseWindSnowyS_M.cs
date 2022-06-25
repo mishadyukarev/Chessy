@@ -2,7 +2,7 @@
 using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
@@ -19,7 +19,7 @@ namespace Chessy.Model.Model.System
                             _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
                             _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
-                            _e.WeatherE.WindC.Speed++;
+                            _e.SpeedWind++;
 
                             _s.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                         }
@@ -36,7 +36,7 @@ namespace Chessy.Model.Model.System
                             _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
                             _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 
-                            _e.WeatherE.WindC.Speed--;
+                            _e.SpeedWind--;
 
                             _s.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                         }

@@ -1,8 +1,8 @@
 ﻿using Chessy.Common;
 using Chessy.Model.Component;
 using Chessy.Model.Model.Component;
-using Chessy.Model.Model.Entity;
-using Chessy.Model.Model.Entity.Cell.Unit;
+using Chessy.Model;
+using Chessy.Model.Cell.Unit;
 using Chessy.Model.Values;
 using System.Collections.Generic;
 
@@ -10,11 +10,12 @@ namespace Chessy.Model
 {
     public struct UnitE
     {
-        public UnitMainC MainC;
+        public UnitOnCellC MainC;
         public HealthC HealthC;
         public EnergyC EnergyC;
         public WaterC WaterC;
         public EffectsUnitC EffectsC;
+
         public MainToolWeaponUnitC MainToolWeaponC;
         public ExtraToolWeaponUnitC ExtraToolWeaponC;
         public WhoLastDiedHereC WhoLastDiedHereC;
@@ -31,6 +32,7 @@ namespace Chessy.Model
         public readonly CanSetUnitHereC CanSetUnitHereC;
         public readonly WhereUnitCanFireAdultForestC WhereUnitCanFireAdultForestC;
         public readonly EffectsUnitsRightBarsC EffectsUnitsRightBarsC;
+        public readonly HasUnitKingEffectHereC HasKingEffectHereC;
 
         internal UnitE(in bool def)
         {
@@ -54,6 +56,7 @@ namespace Chessy.Model
             UniqueButtonsC = new UniqueButtonsC(new AbilityTypes[(byte)ButtonTypes.End]);
             CooldownsC = new CooldownAbilitiesC(default);
             WhereUnitCanFireAdultForestC = new WhereUnitCanFireAdultForestC(new bool[StartValues.CELLS]);
+            HasKingEffectHereC = new HasUnitKingEffectHereC(new bool[(byte)PlayerTypes.End]);
 
             var dict = new Dictionary<ButtonTypes, EffectTypes>();
             for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++) dict.Add(buttonT, default);

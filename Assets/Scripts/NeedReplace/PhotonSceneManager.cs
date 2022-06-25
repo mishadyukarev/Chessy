@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.System;
+﻿using Chessy.Model;
 using Chessy.Model.System.View.UI;
 using Photon.Pun;
 using Photon.Realtime;

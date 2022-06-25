@@ -1,5 +1,5 @@
-﻿using Chessy.Model.Model.Entity;
-using Chessy.Model.Model.System;
+﻿using Chessy.Model;
+using Chessy.Model;
 using Chessy.Model.Values;
 using System.Collections.Generic;
 using UnityEngine;
@@ -74,7 +74,7 @@ namespace Chessy.Model
                 }
             }
 
-            if (_e.PlayerInfoE(playerBotT).KingInfoE.HaveInInventor)
+            if (_e.PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor)
             {
                 byte cellIdx = 85;
 
@@ -135,7 +135,7 @@ namespace Chessy.Model
 
                 if (unitT == UnitTypes.King)
                 {
-                    if (!_e.PlayerInfoE(playerBotT).KingInfoE.HaveInInventor) break;
+                    if (!_e.PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor) break;
                 }
 
                 if (!_e.PlayerInfoE(playerBotT).PawnInfoC.CanGetPawn)

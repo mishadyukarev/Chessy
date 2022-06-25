@@ -6,7 +6,7 @@
 //{
 //    sealed class RiverFertilizeAroundUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal RiverFertilizeAroundUpdateMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal RiverFertilizeAroundUpdateMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 
 //        }

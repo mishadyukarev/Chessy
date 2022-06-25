@@ -5,7 +5,7 @@
 //{
 //    sealed class UpdAttackFromWaterHellMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal UpdAttackFromWaterHellMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal UpdAttackFromWaterHellMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

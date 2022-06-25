@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model.Model.Component
 {
-    public struct BuildingsInTownInfoC
+    public readonly struct BuildingsInTownInfoC
     {
         readonly bool[] _haveBuilding;
 

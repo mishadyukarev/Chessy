@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using Chessy.Model.Values;
 using System;
 using System.Collections.Generic;

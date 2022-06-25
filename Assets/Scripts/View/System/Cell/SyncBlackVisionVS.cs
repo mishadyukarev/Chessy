@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.View.System;
 using System;
@@ -38,7 +38,7 @@ namespace Chessy.Model.System.View
                         {
                             case LessonTypes.ClickWindInfo:
                                 {
-                                    if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.WeatherE.CloudC.CellIdxCenterCloud != currentCellIdx && !_e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround.Contains(currentCellIdx))
+                                    if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.CenterCloudCellIdx != currentCellIdx && !_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Contains(currentCellIdx))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }
@@ -116,7 +116,7 @@ namespace Chessy.Model.System.View
                             case AbilityTypes.ChangeDirectionWind:
                                 if (!_e.IsBorder(currentCellIdx))
                                 {
-                                    if (!_e.AroundCellsE(currentCellIdx).CellsAround.Contains(_e.WeatherE.CloudC.CellIdxCenterCloud))
+                                    if (!_e.AroundCellsE(currentCellIdx).CellsAround.Contains(_e.CenterCloudCellIdx))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }

@@ -8,7 +8,7 @@ namespace Chessy
     {
         public readonly TestModeTypes TestModeT;
         public readonly DateTime StartGameTime;
-        public GameModeTypes GameModeT { get; set; }
+        public GameModeTypes GameModeT { get; internal set; }
         public SceneTypes SceneT { get; internal set; }
         public LessonTypes LessonT { get; internal set; }
 

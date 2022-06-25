@@ -5,7 +5,7 @@ using Chessy.Model.Values.Cell.Unit.Effect;
 using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Pun;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -36,11 +36,11 @@ namespace Chessy.Model.Model.System
 
             var dirAttack = _e.AroundCellsE(idx_from).Direct(idx_to);
 
-            if (_e.WeatherE.SunC.SunSideT.IsAcitveSun())
+            if (_e.SunSideT.IsAcitveSun())
             {
                 var isSunnedUnit = true;
 
-                foreach (var dir in _e.WeatherE.SunC.SunSideT.RaysSun())
+                foreach (var dir in _e.SunSideT.RaysSun())
                 {
                     if (dirAttack == dir) isSunnedUnit = false;
                 }
@@ -185,7 +185,7 @@ namespace Chessy.Model.Model.System
 
                     if (wasUnitT_to == UnitTypes.Wolf)
                     {
-                        _e.ResourcesC(_e.UnitPlayerT(idx_from), ResourceTypes.Food).Resources += EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL;
+                        _e.ResourcesInInventoryC(_e.UnitPlayerT(idx_from)).Add(ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_AFTER_KILL_CAMEL);
                     }
                 }
             }

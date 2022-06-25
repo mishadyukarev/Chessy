@@ -5,7 +5,7 @@ using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModelGameForUI
     {
@@ -22,7 +22,7 @@ namespace Chessy.Model.Model.System
                         _e.SelectedE.BuildingsC.Set(buildT, false);
                         _e.SoundAction(ClipTypes.Click).Invoke();
                     }
-                    else if (_e.PlayerInfoE(_e.CurPlayerIT).BuildingsInfoC.HaveBuilding(buildT))
+                    else if (_e.PlayerInfoE(_e.CurPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
                     {
                         _e.SelectedE.BuildingsC.Set(buildT, true);
                         _e.SoundAction(ClipTypes.Click).Invoke();
@@ -104,7 +104,7 @@ namespace Chessy.Model.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = _e.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                                need = _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
                                 break;
 
                             case BuildingTypes.Market:
@@ -184,14 +184,14 @@ namespace Chessy.Model.Model.System
                 }
 
                 needRes.Add(resT, need);
-                if (need > _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                if (need > _e.ResourcesInInventory(whoseMove, resT)) canBuild = false;
             }
 
             if (canBuild)
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                    _e.ResourcesInInventoryC(whoseMove).Subtract(resT, needRes[resT]);
                 }
 
                 switch (buildT)
@@ -199,15 +199,15 @@ namespace Chessy.Model.Model.System
                     case BuildingTypes.House:
                         _e.PlayerInfoE(whoseMove).PawnInfoC.MaxAvailable++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
-                        _e.PlayerInfoE(whoseMove).WoodForBuyHouse += _e.PlayerInfoE(whoseMove).WoodForBuyHouse;
+                        _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse += _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
                         break;
 
                     case BuildingTypes.Market:
-                        _e.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Market);
+                        _e.PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Market);
                         break;
 
                     case BuildingTypes.Smelter:
-                        _e.PlayerInfoE(whoseMove).BuildingsInfoC.Build(BuildingTypes.Smelter);
+                        _e.PlayerInfoE(whoseMove).BuildingsInTownInfoC.Build(BuildingTypes.Smelter);
                         break;
 
                     default: throw new Exception();

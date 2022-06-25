@@ -1,31 +1,29 @@
 ﻿using Chessy.Model.Values;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
     {
-        void GetEffectsForUnits()
+        void GetKingEffectsForUnits()
         {
-            for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.PlayerInfoE(playerT).WhereKingEffects.Clear();
+                for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+                {
+                    _e.HasKingEffectHereC(cellIdxCurrent).Set(playerT, false);
+                }
             }
+
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _e.UnitEffectsC(cellIdxCurrent).HaveKingEffect = false;
-
                 if (!_e.IsBorder(cellIdxCurrent))
                 {
-                    foreach (var idx_1 in _e.AroundCellsE(cellIdxCurrent).CellsAround)
+                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.King))
                     {
-                        if (_e.UnitT(idx_1).Is(UnitTypes.King))
+                        foreach (var cellIdxNext in _e.AroundCellsE(cellIdxCurrent).CellsAround)
                         {
-                            if (_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCurrent)))
-                            {
-                                _e.PlayerInfoE(_e.UnitPlayerT(idx_1)).WhereKingEffects.Add(cellIdxCurrent);
-                                _e.UnitEffectsC(cellIdxCurrent).HaveKingEffect = true;
-                            }
+                            _e.HasKingEffectHereC(cellIdxNext).Set(_e.UnitPlayerT(cellIdxCurrent), true);
                         }
                     }
                 }

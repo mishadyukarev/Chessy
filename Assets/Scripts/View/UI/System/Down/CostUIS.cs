@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Entity.View.UI.Down;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.Values.Cell.Unit.Stats;
 

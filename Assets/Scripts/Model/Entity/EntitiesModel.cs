@@ -4,46 +4,152 @@ using Chessy.Model.Component;
 using Chessy.Model.Entity;
 using Chessy.Model.Enum;
 using Chessy.Model.Model.Component;
-using Chessy.Model.Model.Entity.Cell.Unit;
+using Chessy.Model.Cell.Unit;
 using Chessy.Model.Values;
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.Entity
+namespace Chessy.Model
 {
     public sealed class EntitiesModel
     {
         readonly ResourcesC[] _mistakeEconomyEs = new ResourcesC[(byte)ResourceTypes.End];
-        readonly PlayerInfoEs[] _forPlayerEs = new PlayerInfoEs[(byte)PlayerTypes.End];
+        readonly PlayerInfoE[] _forPlayerEs = new PlayerInfoE[(byte)PlayerTypes.End];
         readonly CellEs[] _cellEs;
-
-        public readonly DataFromViewC DataFromViewC;
-        public readonly Resources Resources;
-        public ShopC ShopC;
-        public AdC AdC;
-        public UpdateAllViewC UpdateAllViewC;
-        public SettingsC SettingsC;
-        public BookC BookC;
-        public CommonInfoAboutGameC CommonInfoAboutGameC;
-        public MistakeC MistakeC;
-        public ZonesInfoC ZoneInfoC;
-        public WhereTeleportC WhereTeleportC;
-        public MotionC MotionC;
-        public CellsC CellsC;
-        public SelectedUnitC SelectedUnitC;
-        public InputC InputC;
-        internal RpcPoolC RpcC;
-
 
         public PlayerTypes WinnerPlayerT;
         public PlayerTypes WhoseMovePlayerT;
         public PlayerTypes CurPlayerIT;
 
 
+        public SelectedE SelectedE;
 
+
+        #region CommonGameE
+
+        public CommonGameE CommonGameE;
+
+        public DataFromViewC DataFromViewC => CommonGameE.DataFromViewC;
+        public Resources Resources => CommonGameE.Resources;
+        public ref ShopC ShopC => ref CommonGameE.ShopC;
+        public ref AdC AdC => ref CommonGameE.AdC;
+
+        public ref UpdateAllViewC UpdateAllViewC => ref CommonGameE.UpdateAllViewC;
+        internal ref float ForUpdateViewTimer => ref UpdateAllViewC.ForUpdateViewTimer;
+        public bool NeedUpdateView
+        {
+            get => UpdateAllViewC.NeedUpdateView;
+            set => UpdateAllViewC.NeedUpdateView = value;
+        }
+
+        public ref SettingsC SettingsC => ref CommonGameE.SettingsC;
+
+        public ref BookC BookC => ref CommonGameE.BookC;
+        public PageBookTypes OpenedNowPageBookT
+        {
+            get => BookC.OpenedNowPageBookT;
+            internal set => BookC.OpenedNowPageBookT = value;
+        }
+
+        public ref CommonInfoAboutGameC CommonInfoAboutGameC => ref CommonGameE.CommonInfoAboutGameC;
+        public TestModeTypes TestModeT => CommonInfoAboutGameC.TestModeT;
+        public DateTime StartGameTime => CommonInfoAboutGameC.StartGameTime;
+        public LessonTypes LessonT
+        {
+            get => CommonInfoAboutGameC.LessonT;
+            internal set => CommonInfoAboutGameC.LessonT = value;
+        }
+        public GameModeTypes GameModeT
+        {
+            get => CommonInfoAboutGameC.GameModeT;
+            internal set => CommonInfoAboutGameC.GameModeT = value;
+        }
+        public SceneTypes SceneT
+        {
+            get => CommonInfoAboutGameC.SceneT;
+            internal set => CommonInfoAboutGameC.SceneT = value;
+        }
+
+        public ref MistakeC MistakeC => ref CommonGameE.MistakeC;
+        public ref ZonesInfoC ZoneInfoC => ref CommonGameE.ZoneInfoC;
+        public ref WhereTeleportC WhereTeleportC => ref CommonGameE.WhereTeleportC;
+
+        public ref MotionC MotionC => ref CommonGameE.MotionC; 
+        public float MotionTimer
+        {
+            get => MotionC.Timer;
+            internal set => MotionC.Timer = value;
+        }
+        public int Motions
+        {
+            get => MotionC.Motions;
+            internal set => MotionC.Motions = value;
+        }
+
+        public ref CellsC CellsC => ref CommonGameE.CellsC;
+        public byte SelectedCellIdx
+        {
+            get => CellsC.Selected;
+            internal set => CellsC.Selected = value;
+        }
+        public byte CurrentCellIdx
+        {
+            get => CellsC.Current;
+            internal set => CellsC.Current = value;
+        }
+
+        public ref SelectedUnitC SelectedUnitC => ref CommonGameE.SelectedUnitC;
+
+        public ref InputC InputC => ref CommonGameE.InputC; 
+        public bool IsClicked
+        {
+            get => InputC.IsClicked;
+            internal set => InputC.IsClicked = value;
+        }
+
+        internal ref RpcPoolC RpcC => ref CommonGameE.RpcC;
+
+
+
+
+
+
+        #endregion
+
+
+        #region WeatherE
 
         public WeatherE WeatherE;
-        public SelectedE SelectedE;
+
+        public ref WindC WindC => ref WeatherE.WindC;
+        public DirectTypes DirectWindT
+        {
+            get => WindC.DirectT;
+            internal set => WindC.DirectT = value;
+        }
+        public byte SpeedWind
+        {
+            get => WindC.Speed;
+            internal set => WindC.Speed = value;
+        }
+
+        public ref SunC SunC => ref WeatherE.SunC;
+        public SunSideTypes SunSideT
+        {
+            get => SunC.SunSideT;
+            internal set => SunC.SunSideT = value;
+        }
+
+        public ref CloudC CloudC => ref WeatherE.CloudC;
+        public byte CenterCloudCellIdx
+        {
+            get => CloudC.CellIdxCenterCloud;
+            internal set => CloudC.CellIdxCenterCloud = value;
+        }
+
+        #endregion
+
+
 
 
 
@@ -55,60 +161,6 @@ namespace Chessy.Model.Model.Entity
         public bool HaveTreeUnit { get; internal set; }
         public bool IsActivatedIdxAndXyInfoCells { get; internal set; }
         public int AmountPlantedYoungForests { get; internal set; }
-
-        public bool IsClicked
-        {
-            get => InputC.IsClicked;
-            internal set => InputC.IsClicked = value;
-        }
-        public float MotionTimer
-        {
-            get => MotionC.Timer;
-            internal set => MotionC.Timer = value;
-        }
-        public int Motions
-        {
-            get => MotionC.Motions;
-            internal set => MotionC.Motions = value;
-        }
-        public byte SelectedCellIdx
-        {
-            get => CellsC.Selected;
-            internal set => CellsC.Selected = value;
-        }
-        public byte CurrentCellIdx
-        {
-            get => CellsC.Current;
-            internal set => CellsC.Current = value;
-        }
-        public bool NeedUpdateView
-        {
-            get => UpdateAllViewC.NeedUpdateView;
-            set => UpdateAllViewC.NeedUpdateView = value;
-        }
-        public LessonTypes LessonT
-        {
-            get => CommonInfoAboutGameC.LessonT;
-            internal set => CommonInfoAboutGameC.LessonT = value;
-        }
-        internal ref float ForUpdateViewTimer => ref UpdateAllViewC.ForUpdateViewTimer;
-        public PageBookTypes OpenedNowPageBookT
-        {
-            get => BookC.OpenedNowPageBookT;
-            set => BookC.OpenedNowPageBookT = value;
-        }
-        public TestModeTypes TestModeT => CommonInfoAboutGameC.TestModeT;
-        public DateTime StartGameTime => CommonInfoAboutGameC.StartGameTime;
-        public GameModeTypes GameModeT
-        {
-            get => CommonInfoAboutGameC.GameModeT;
-            set => CommonInfoAboutGameC.GameModeT = value;
-        }
-        public SceneTypes SceneT
-        {
-            get => CommonInfoAboutGameC.SceneT;
-            internal set => CommonInfoAboutGameC.SceneT = value;
-        }
 
 
         public MistakeTypes MistakeT
@@ -123,11 +175,20 @@ namespace Chessy.Model.Model.Entity
         }
 
 
-        public ref PlayerInfoEs PlayerInfoE(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
-        public ref ResourcesC ResourcesC(in PlayerTypes playerT, in ResourceTypes resT) => ref PlayerInfoE(playerT).ResourcesC(resT);
-        public ref int ToolWeaponsC(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => ref PlayerInfoE(playerT).LevelE(levT).ToolWeapons(twT);
-        public ref PlayerLevelInfoE UnitInfoE(in PlayerTypes playerT, in LevelTypes levT) => ref PlayerInfoE(playerT).LevelE(levT);
-        public ref PlayerLevelBuildingInfoE BuildingsInfo(in PlayerTypes playerT, in LevelTypes levT, in BuildingTypes buildT) => ref PlayerInfoE(playerT).LevelE(levT).BuildingInfoE(buildT);
+        public ref PlayerInfoE PlayerInfoE(in PlayerTypes player) => ref _forPlayerEs[(byte)player];
+        public ResourcesInInventoryC ResourcesInInventoryC(in PlayerTypes playerT) => PlayerInfoE(playerT).ResourcesInInventoryC;
+        public float ResourcesInInventory(in PlayerTypes playerT, in ResourceTypes resT) => ResourcesInInventoryC(playerT).Resources(resT);
+
+        public ref PawnPeopleInfoC PawnPeopleInfoC(in PlayerTypes playerT) => ref PlayerInfoE(playerT).PawnInfoC;
+
+        public ref GodInfoC GodInfoC(in PlayerTypes playerT) => ref PlayerInfoE(playerT).GodInfoC;
+
+        public ref PlayerInfoC PlayerInfoC(in PlayerTypes playerT) => ref PlayerInfoE(playerT).PlayerInfoC;
+
+        public BuildingsInTownInfoC BuildingsInTownInfoC(in PlayerTypes playerT) => PlayerInfoE(playerT).BuildingsInTownInfoC;
+
+        public HowManyToolWeaponsInInventoryC HowManyToolWeaponsInInventoryC(in PlayerTypes playerT) => PlayerInfoE(playerT).HowManyToolWeaponsInInventoryC;
+        public int ToolWeaponsInInventor(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT) => HowManyToolWeaponsInInventoryC(playerT).ToolWeapons(twT, levT);
         public Action SoundAction(in ClipTypes clipT) => DataFromViewC.SoundAction(clipT);
         public Action SoundAction(in AbilityTypes abilityT) => DataFromViewC.SoundAction(abilityT);
         public ref ResourcesC MistakeEconomy(in ResourceTypes resT) => ref _mistakeEconomyEs[(byte)resT - 1];
@@ -157,7 +218,7 @@ namespace Chessy.Model.Model.Entity
 
         public ref UnitE UnitE(in byte idx) => ref CellEs(idx).UnitE;
 
-        public ref UnitMainC UnitMainC(in byte idx) => ref UnitE(idx).MainC;
+        public ref UnitOnCellC UnitMainC(in byte idx) => ref UnitE(idx).MainC;
         public UnitTypes UnitT(in byte idx) => UnitMainC(idx).UnitT;
         internal void SetUnitOnCellT(in byte idx, in UnitTypes unitT) => UnitMainC(idx).UnitT = unitT;
         public PlayerTypes UnitPlayerT(in byte idx) => UnitMainC(idx).PlayerT;
@@ -166,7 +227,7 @@ namespace Chessy.Model.Model.Entity
         public void SetUnitLevelT(in byte idx, in LevelTypes levelT) => UnitMainC(idx).LevelT = levelT;
         public ConditionUnitTypes UnitConditionT(in byte idx) => UnitMainC(idx).ConditionT;
         internal void SetUnitConditionT(in byte cellIdx, in ConditionUnitTypes conditionUnitT) => UnitMainC(cellIdx).ConditionT = conditionUnitT;
-        public bool IsRightArcherUnit(in byte idx) => UnitMainC(idx).IsRightArcher;
+        public bool IsRightArcherUnit(in byte idx) => UnitMainC(idx).IsArcherDirectedToRight;
         public double DamageAttack(in byte cell) => UnitMainC(cell).DamageSimpleAttack;
         public double DamageOnCell(in byte cell) => UnitMainC(cell).DamageOnCell;
 
@@ -214,6 +275,7 @@ namespace Chessy.Model.Model.Entity
         public HowManyEnergyNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC(in byte cell) => UnitE(cell).HowManyEnergyNeedForShiftingUnitC;
         public WhereUnitCanShiftC WhereUnitCanShiftC(in byte cellIdx) => UnitE(cellIdx).WhereCanShiftC;
         public CooldownAbilitiesC UnitCooldownAbilitiesC(in byte cell) => UnitE(cell).CooldownsC;
+        public HasUnitKingEffectHereC HasKingEffectHereC(in byte cellIdx) => UnitE(cellIdx).HasKingEffectHereC;
 
 
         #region Effects
@@ -222,7 +284,6 @@ namespace Chessy.Model.Model.Entity
         public float StunUnit(in byte idx) => UnitEffectsC(idx).StunHowManyUpdatesNeedStay;
         public float ShieldEffect(in byte idx) => UnitEffectsC(idx).ProtectionRainyMagicShield;
         public int FrozenArrawEffect(in byte cell) => UnitEffectsC(cell).ShootsFrozenArrawArcher;
-        public bool HaveKingEffect(in byte idx) => UnitEffectsC(idx).HaveKingEffect;
 
         #endregion
 
@@ -251,12 +312,12 @@ namespace Chessy.Model.Model.Entity
         #endregion
 
 
-        ref EnvironmentE EnvironmentEs(in byte idx) => ref CellEs(idx).EnvironmentEs;
-        public ref ResourcesC YoungForestC(in byte idx) => ref EnvironmentEs(idx).YoungForestC;
-        public ref ResourcesC AdultForestC(in byte idx) => ref EnvironmentEs(idx).AdultForestC;
-        public ref ResourcesC MountainC(in byte idx) => ref EnvironmentEs(idx).MountainC;
-        public ref ResourcesC HillC(in byte idx) => ref EnvironmentEs(idx).HillC;
-        public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentEs(idx).FertilizeC;
+        public ref EnvironmentE EnvironmentE(in byte idx) => ref CellEs(idx).EnvironmentE;
+        public ref ResourcesC YoungForestC(in byte idx) => ref EnvironmentE(idx).YoungForestC;
+        public ref ResourcesC AdultForestC(in byte idx) => ref EnvironmentE(idx).AdultForestC;
+        public ref ResourcesC MountainC(in byte idx) => ref EnvironmentE(idx).MountainC;
+        public ref ResourcesC HillC(in byte idx) => ref EnvironmentE(idx).HillC;
+        public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentE(idx).FertilizeC;
 
         public ref RiverE RiverE(in byte idx) => ref CellEs(idx).RiverE;
         public ref RiverC RiverC(in byte cellIdx) => ref RiverE(cellIdx).RiverC;
@@ -264,10 +325,10 @@ namespace Chessy.Model.Model.Entity
         public void SetRiverT(in byte cell, in RiverTypes riverT) => RiverC(cell).RiverT = riverT;
         public ref HaveRiverAroundCellC HaveRiverC(in byte cell) => ref RiverE(cell).HaveRiverC;
 
-        ref EffectE EffectEs(in byte idx) => ref CellEs(idx).EffectEs;
-        public ref bool HaveFire(in byte idx) => ref EffectEs(idx).HaveFire;
+        public ref EffectE EffectE(in byte idx) => ref CellEs(idx).EffectE;
+        public ref bool HaveFire(in byte idx) => ref EffectE(idx).HaveFire;
 
-        ref TrailE TrailE(in byte cell) => ref CellEs(cell).TrailE;
+        public ref TrailE TrailE(in byte cell) => ref CellEs(cell).TrailE;
         public VisibleToOtherPlayerOrNotC TrailVisibleC(in byte cell) => TrailE(cell).VisibleC;
         public HealthTrailC HealthTrail(in byte cell) => TrailE(cell).HealthC;
 
@@ -292,14 +353,11 @@ namespace Chessy.Model.Model.Entity
         {
             CommonInfoAboutGameC = new CommonInfoAboutGameC(testModeT, DateTime.Now);
 
-
-            Resources = new Resources(default);
-
-            DataFromViewC = dataFromViewC;
+            CommonGameE = new CommonGameE(dataFromViewC);
 
             for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
             {
-                _forPlayerEs[(byte)playerT] = new PlayerInfoEs(true);
+                _forPlayerEs[(byte)playerT] = new PlayerInfoE(true);
             }
 
             var selectedBuildings = new Dictionary<BuildingTypes, bool>();
@@ -327,5 +385,13 @@ namespace Chessy.Model.Model.Entity
                 _cellEs[idxCell] = new CellEs(dataFromViewC, dataFromViewC.IdCell(idxCell), idxCell, this, xys[idxCell]);
             }
         }
+
+
+        internal void SetResourcesInInventory(in PlayerTypes playerT, in ResourceTypes resT, in float resources) => ResourcesInInventoryC(playerT).Set(resT, resources);
+
+        internal void SetToolWeaponsInInventor(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT, in int amountToolWeapons) => HowManyToolWeaponsInInventoryC(playerT).Set(twT, levT, amountToolWeapons);
+        internal void AddToolWeaponsInInventor(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT, in int adding = 1) => HowManyToolWeaponsInInventoryC(playerT).Add(twT, levT, adding);
+        internal void SubtractToolWeaponsInInventor(in PlayerTypes playerT, in LevelTypes levT, in ToolWeaponTypes twT, in int subtraction = 1) => HowManyToolWeaponsInInventoryC(playerT).Subtract(twT, levT, subtraction);
+
     }
 }

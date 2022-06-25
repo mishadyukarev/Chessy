@@ -4,7 +4,7 @@ using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Realtime;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -34,14 +34,14 @@ namespace Chessy.Model.Model.System
                                 needRes.Add(resT, 0);
                             }
 
-                            if (needRes[resT] > _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources) canBuild = false;
+                            if (needRes[resT] > _e.ResourcesInInventory(whoseMove, resT)) canBuild = false;
                         }
 
                         if (canBuild)
                         {
                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                             {
-                                _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= needRes[resT];
+                                _e.ResourcesInInventoryC(whoseMove).Subtract(resT, needRes[resT]);
                             }
 
                             ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
@@ -59,7 +59,7 @@ namespace Chessy.Model.Model.System
                             //}
                             if (_e.LessonT == LessonTypes.Build3Farms)
                             {
-                                if (_e.PlayerInfoE(whoseMove).AmountFarmsInGame >= FARMS_FOR_SKIP_LESSON)
+                                if (_e.PlayerInfoE(whoseMove).PlayerInfoC.AmountFarmsInGame >= FARMS_FOR_SKIP_LESSON)
                                 {
                                     _e.CommonInfoAboutGameC.SetNextLesson();
                                 }

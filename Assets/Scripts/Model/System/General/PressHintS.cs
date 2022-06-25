@@ -1,7 +1,7 @@
 ﻿using Chessy.Common;
 using Chessy.Common.Enum;
-using Chessy.Model.Model.Entity;
-using Chessy.Model.Model.System;
+using Chessy.Model;
+using Chessy.Model;
 using UnityEngine;
 
 namespace Chessy.Model

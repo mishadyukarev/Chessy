@@ -1,7 +1,7 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using System.Linq;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed class SelectorSoundS : SystemModel
     {
@@ -50,7 +50,7 @@ namespace Chessy.Model.Model.System
                 }
 
 
-                if (_e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround.Contains(cell_0) || _e.WeatherE.CloudC.CellIdxCenterCloud == cell_0)
+                if (_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Contains(cell_0) || _e.CenterCloudCellIdx == cell_0)
                 {
                     _e.SoundAction(ClipTypes.ShortRain).Invoke();
                 }

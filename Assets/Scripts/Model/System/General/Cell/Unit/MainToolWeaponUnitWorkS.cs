@@ -1,6 +1,6 @@
-﻿using Chessy.Model.Model.Entity.Cell.Unit;
+﻿using Chessy.Model.Cell.Unit;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     static class MainToolWeaponUnitWorkS
     {

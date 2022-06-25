@@ -4,7 +4,7 @@ using Chessy.Model.Values.Cell;
 using Chessy.Model.Values.Cell.Unit.Stats;
 using UnityEngine;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -114,10 +114,10 @@ namespace Chessy.Model.Model.System
                 }
 
 
-                if (_e.UnitT(toCellIdx).Is(UnitTypes.King))
-                {
-                    _e.PlayerInfoE(_e.UnitPlayerT(toCellIdx)).KingInfoE.CellKing = toCellIdx;
-                }
+                //if (_e.UnitT(toCellIdx).Is(UnitTypes.King))
+                //{
+                //    _e.PlayerInfoE(_e.UnitPlayerT(toCellIdx)).KingInfoE.CellKing = toCellIdx;
+                //}
 
             }
 

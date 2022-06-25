@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using UnityEngine;
 
 namespace Chessy.Model
@@ -18,7 +18,7 @@ namespace Chessy.Model
             var needActiveZone = false;
 
 
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.GiveTakePickPawn)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.GiveTakePickPawn)
             {
                 needActiveZone = true;
 
@@ -123,12 +123,12 @@ namespace Chessy.Model
 
                 var curPlayerI = _e.CurPlayerIT;
 
-                _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Pick).ToString();
-                _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Sword).ToString();
-                _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.Second).ToolWeapons(ToolWeaponTypes.Axe).ToString();
-                _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(_e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.Shield).ToString();
-                _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(_e.SelectedE.ToolWeaponC.LevelT).ToolWeapons(ToolWeaponTypes.BowCrossbow).ToString();
-                _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = _e.PlayerInfoE(curPlayerI).LevelE(LevelTypes.First).ToolWeapons(ToolWeaponTypes.Staff).ToString();
+                _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolWeaponTypes.Pick).ToString();
+                _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolWeaponTypes.Sword).ToString();
+                _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolWeaponTypes.Axe).ToString();
+                _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolWeaponTypes.Shield).ToString();
+                _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolWeaponTypes.BowCrossbow).ToString();
+                _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolWeaponTypes.Staff).ToString();
             }
         }
     }

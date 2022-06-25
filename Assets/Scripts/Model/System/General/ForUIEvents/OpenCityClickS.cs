@@ -1,6 +1,6 @@
 ﻿using Chessy.Model.Enum;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModelGameForUI
     {

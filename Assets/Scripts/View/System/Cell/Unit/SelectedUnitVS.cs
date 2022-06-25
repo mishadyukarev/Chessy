@@ -7,7 +7,7 @@
 //    {
 //        static readonly Color _color = new Color(1, 1, 1, 1f);
 
-//        public static void Run(in EntitiesView vEs, in Chessy.Model.Model.Entity.EntitiesModel e)
+//        public static void Run(in EntitiesView vEs, in Chessy.Model.EntitiesModel e)
 //        {
 
 //        }

@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using System.Collections.Generic;
 
@@ -112,11 +112,11 @@ namespace Chessy.Model
                     string name = default;
                     if (res == ResourceTypes.Iron || res == ResourceTypes.Gold)
                     {
-                        name = _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(res).Resources.ToString();
+                        name = _e.ResourcesInInventory(_e.CurPlayerIT, res).ToString();
                     }
                     else
                     {
-                        name = ((int)(100 * _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(res).Resources)).ToString();
+                        name = ((int)(100 * _e.ResourcesInInventory(_e.CurPlayerIT, res))).ToString();
                     }
 
                     _economyUIE.Economy(res).TextUI.text = name;

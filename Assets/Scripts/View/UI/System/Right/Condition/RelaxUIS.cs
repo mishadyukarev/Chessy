@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Entity.View.UI.Right;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using UnityEngine;
 
 namespace Chessy.Model

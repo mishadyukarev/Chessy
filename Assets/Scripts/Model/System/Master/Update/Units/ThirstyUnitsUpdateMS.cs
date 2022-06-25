@@ -1,6 +1,6 @@
 ﻿//using Chessy.Common;
-//using Chessy.Model.Model.Entity;
-//using Chessy.Model.Model.System;
+//using Chessy.Model;
+//using Chessy.Model;
 //using Chessy.Model.Values.Cell.Unit.Stats;
 
 //namespace Chessy.Model

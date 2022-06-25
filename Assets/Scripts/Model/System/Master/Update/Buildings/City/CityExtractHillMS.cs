@@ -5,7 +5,7 @@
 //{
 //    sealed class CityExtractHillMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal CityExtractHillMS(in Chessy.Model.Model.Entity.EntitiesModel ents) : base(ents)
+//        internal CityExtractHillMS(in Chessy.Model.EntitiesModel ents) : base(ents)
 //        {
 //        }
 

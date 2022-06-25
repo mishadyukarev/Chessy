@@ -2,7 +2,7 @@
 using Photon.Realtime;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel
     {
@@ -39,7 +39,7 @@ namespace Chessy.Model.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(resT).Resources)
+                if (needRes[resT] > _e.ResourcesInInventory(_e.WhoseMovePlayerT, resT))
                 {
                     canBuy = false;
                     break;
@@ -50,28 +50,24 @@ namespace Chessy.Model.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(resT).Resources -= needRes[resT];
+                    _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Subtract(resT, needRes[resT]);
                 }
                 switch (marketBuyT)
                 {
                     case MarketBuyTypes.FoodToWood:
-                        _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Wood).Resources
-                            += EconomyValues.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD;
+                        _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Wood, EconomyValues.AFTER_BUY_FROM_MARKET_FOOD_TO_WOOD);
                         break;
 
                     case MarketBuyTypes.WoodToFood:
-                        _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Food).Resources
-                            += EconomyValues.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD;
+                        _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Food, EconomyValues.AFTER_BUY_FROM_MARKET_WOOD_TO_FOOD);
                         break;
 
                     case MarketBuyTypes.GoldToFood:
-                        _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Food).Resources
-                            += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD;
+                        _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Food, EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_FOOD);
                         break;
 
                     case MarketBuyTypes.GoldToWood:
-                        _e.PlayerInfoE(_e.WhoseMovePlayerT).ResourcesC(ResourceTypes.Wood).Resources
-                            += EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD;
+                        _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Wood, EconomyValues.AFTER_BUY_FROM_MARKET_GOLD_TO_WOOD);
                         break;
                 }
 

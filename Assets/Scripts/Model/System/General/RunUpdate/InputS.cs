@@ -1,7 +1,7 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using UnityEngine;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed class InputS : SystemModel
     {

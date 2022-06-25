@@ -2,7 +2,7 @@
 using Photon.Pun;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -53,7 +53,7 @@ namespace Chessy.Model.Model.System
                 objs.Add(_e.StunUnit(cell_0));
                 objs.Add(_e.ShieldEffect(cell_0));
                 objs.Add(_e.FrozenArrawEffect(cell_0));
-                objs.Add(_e.HaveKingEffect(cell_0));
+                //objs.Add(_e.HaveKingEffect(cell_0));
 
                 //objs.Add(_e.WhereUnitCanFireAdultForestC(cell_0).IdxsByteClone);
 
@@ -93,46 +93,41 @@ namespace Chessy.Model.Model.System
             objs.Add(_e.WinnerPlayerT);
             objs.Add(_e.WhoseMovePlayerT);
 
-            objs.Add(_e.WeatherE.WindC.DirectT);
-            objs.Add(_e.WeatherE.WindC.Speed);
-            objs.Add(_e.WeatherE.CloudC.CellIdxCenterCloud);
-            objs.Add(_e.WeatherE.SunC.SunSideT);
+            objs.Add(_e.DirectWindT);
+            objs.Add(_e.SpeedWind);
+            objs.Add(_e.CenterCloudCellIdx);
+            objs.Add(_e.SunSideT);
 
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                objs.Add(_e.PlayerInfoE(playerT).IsReadyForStartOnlineGame);
-                objs.Add(_e.PlayerInfoE(playerT).WoodForBuyHouse);
-                objs.Add(_e.PlayerInfoE(playerT).BuildingsInfoC.HaveBuildingsClone);
-                objs.Add(_e.PlayerInfoE(playerT).WhereKingEffects.IdxsByteClone);
+                objs.Add(_e.PlayerInfoC(playerT).IsReadyForStartOnlineGame);
+                objs.Add(_e.PlayerInfoC(playerT).WoodForBuyHouse);
+                objs.Add(_e.BuildingsInTownInfoC(playerT).HaveBuildingsClone);
+                //objs.Add(_e.PlayerInfoE(playerT).WhereKingEffects.IdxsByteClone);
 
-                objs.Add(_e.PlayerInfoE(playerT).KingInfoE.HaveInInventor);
-                objs.Add(_e.PlayerInfoE(playerT).KingInfoE.CellKing);
+                objs.Add(_e.PlayerInfoC(playerT).HaveKingInInventor);
+                //objs.Add(_e.PlayerInfoE(playerT).KingInfoE.CellKing);
 
-                objs.Add(_e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity);
-                objs.Add(_e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable);
-                objs.Add(_e.PlayerInfoE(playerT).PawnInfoC.AmountInGame);
+                objs.Add(_e.PawnPeopleInfoC(playerT).PeopleInCity);
+                objs.Add(_e.PawnPeopleInfoC(playerT).MaxAvailable);
+                objs.Add(_e.PawnPeopleInfoC(playerT).AmountInGame);
 
-                objs.Add(_e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor);
-                objs.Add(_e.PlayerInfoE(playerT).GodInfoE.UnitT);
-                objs.Add(_e.PlayerInfoE(playerT).GodInfoE.Cooldown);
+                objs.Add(_e.GodInfoC(playerT).HaveGodInInventor);
+                objs.Add(_e.GodInfoC(playerT).UnitT);
+                objs.Add(_e.GodInfoC(playerT).Cooldown);
 
                 for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
                 {
                     for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
                     {
-                        objs.Add(_e.PlayerInfoE(playerT).LevelE(levelT).ToolWeapons(twT));
-                    }
-
-                    for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
-                    {
-                        objs.Add(_e.PlayerInfoE(playerT).LevelE(levelT).BuildingInfoE(buildingT).IdxC.IdxsByteClone);
+                        objs.Add(_e.ToolWeaponsInInventor(playerT, levelT, twT));
                     }
                 }
 
                 for (var resT = (ResourceTypes)1; resT < ResourceTypes.End; resT++)
                 {
-                    objs.Add(_e.PlayerInfoE(playerT).ResourcesC(resT).Resources);
+                    objs.Add(_e.ResourcesInInventory(playerT, resT));
                 }
             }
 
@@ -157,7 +152,7 @@ namespace Chessy.Model.Model.System
                 _e.SetUnitLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
                 _e.SetUnitPlayerT(cell_0, (PlayerTypes)objects[idxCurrent++]);
                 _e.SetUnitConditionT(cell_0, (ConditionUnitTypes)objects[idxCurrent++]);
-                _e.UnitMainC(cell_0).IsRightArcher = (bool)objects[idxCurrent++];
+                _e.UnitMainC(cell_0).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
                 for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
                     _e.UnitVisibleC(cell_0).Set(playerT, (bool)objects[idxCurrent++]);
 
@@ -194,7 +189,7 @@ namespace Chessy.Model.Model.System
                 _e.UnitEffectsC(cell_0).StunHowManyUpdatesNeedStay = (float)objects[idxCurrent++];
                 _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = (float)objects[idxCurrent++];
                 _e.UnitEffectsC(cell_0).ShootsFrozenArrawArcher = (int)objects[idxCurrent++];
-                _e.UnitEffectsC(cell_0).HaveKingEffect = (bool)objects[idxCurrent++];
+                //_e.UnitEffectsC(cell_0).HaveKingEffect = (bool)objects[idxCurrent++];
 
                 //_e.WhereUnitCanFireAdultForestC(cell_0).Sync((byte[])objects[idxCurrent++]);
 
@@ -234,45 +229,40 @@ namespace Chessy.Model.Model.System
             _e.WinnerPlayerT = (PlayerTypes)objects[idxCurrent++];
             _e.WhoseMovePlayerT = (PlayerTypes)objects[idxCurrent++];
 
-            _e.WeatherE.WindC.DirectT = (DirectTypes)objects[idxCurrent++];
-            _e.WeatherE.WindC.Speed = (float)objects[idxCurrent++];
-            _e.WeatherE.CloudC.CellIdxCenterCloud = (byte)objects[idxCurrent++];
-            _e.WeatherE.SunC.SunSideT = (SunSideTypes)objects[idxCurrent++];
+            _e.DirectWindT = (DirectTypes)objects[idxCurrent++];
+            _e.SpeedWind = (byte)objects[idxCurrent++];
+            _e.CenterCloudCellIdx = (byte)objects[idxCurrent++];
+            _e.SunSideT = (SunSideTypes)objects[idxCurrent++];
 
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                _e.PlayerInfoE(playerT).IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
-                _e.PlayerInfoE(playerT).WoodForBuyHouse = (float)objects[idxCurrent++];
-                _e.PlayerInfoE(playerT).BuildingsInfoC.Sync((bool[])objects[idxCurrent++]);
-                _e.PlayerInfoE(playerT).WhereKingEffects.Sync((byte[])objects[idxCurrent++]);
+                _e.PlayerInfoE(playerT).PlayerInfoC.IsReadyForStartOnlineGame = (bool)objects[idxCurrent++];
+                _e.PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = (float)objects[idxCurrent++];
+                _e.PlayerInfoE(playerT).BuildingsInTownInfoC.Sync((bool[])objects[idxCurrent++]);
+                //_e.PlayerInfoE(playerT).WhereKingEffects.Sync((byte[])objects[idxCurrent++]);
 
-                _e.PlayerInfoE(playerT).KingInfoE.HaveInInventor = (bool)objects[idxCurrent++];
-                _e.PlayerInfoE(playerT).KingInfoE.CellKing = (byte)objects[idxCurrent++];
+                //_e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = (bool)objects[idxCurrent++];
+                //_e.PlayerInfoE(playerT).KingInfoE.CellKing = (byte)objects[idxCurrent++];
 
                 _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = (int)objects[idxCurrent++];
                 _e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = (int)objects[idxCurrent++];
                 _e.PlayerInfoE(playerT).PawnInfoC.AmountInGame = (int)objects[idxCurrent++];
 
-                _e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = (bool)objects[idxCurrent++];
-                _e.PlayerInfoE(playerT).GodInfoE.UnitT = (UnitTypes)objects[idxCurrent++];
-                _e.PlayerInfoE(playerT).GodInfoE.Cooldown = (float)objects[idxCurrent++];
+                _e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = (bool)objects[idxCurrent++];
+                _e.PlayerInfoE(playerT).GodInfoC.UnitT = (UnitTypes)objects[idxCurrent++];
+                _e.PlayerInfoE(playerT).GodInfoC.Cooldown = (float)objects[idxCurrent++];
 
                 for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
                 {
                     for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
                     {
-                        _e.PlayerInfoE(playerT).LevelE(levelT).ToolWeapons(twT) = (int)objects[idxCurrent++];
-                    }
-
-                    for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
-                    {
-                        _e.PlayerInfoE(playerT).LevelE(levelT).BuildingInfoE(buildingT).IdxC.Sync((byte[])objects[idxCurrent++]);
+                        _e.SetToolWeaponsInInventor(playerT, levelT, twT, (int)objects[idxCurrent++]);
                     }
                 }
 
                 for (var resT = (ResourceTypes)1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.PlayerInfoE(playerT).ResourcesC(resT).Resources = (float)objects[idxCurrent++];
+                    _e.SetResourcesInInventory(playerT, resT, (float)objects[idxCurrent++]);
                 }
             }
 

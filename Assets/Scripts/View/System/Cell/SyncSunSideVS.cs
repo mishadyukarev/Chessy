@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.View.System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace Chessy.Model
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.SelectedCellIdx == cellIdxCurrent && _e.WeatherE.SunC.SunSideT.IsAcitveSun())
+                if (_e.SelectedCellIdx == cellIdxCurrent && _e.SunSideT.IsAcitveSun())
                 {
                     var simpleUnqiueCells = new HashSet<byte>();
 
@@ -45,7 +45,7 @@ namespace Chessy.Model
 
                     foreach (var cellIdxAttack in simpleUnqiueCells)
                     {
-                        foreach (var sunDirectT in _e.WeatherE.SunC.SunSideT.RaysSun())
+                        foreach (var sunDirectT in _e.SunSideT.RaysSun())
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 

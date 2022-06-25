@@ -1,10 +1,10 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Photon.Pun;
 using System;
 using UnityEngine;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed class SelectorS : SystemModel, IUpdate
     {
@@ -43,7 +43,7 @@ namespace Chessy.Model.Model.System
 
                 if (_e.LessonT == LessonTypes.UniqueAttackInfo)
                 {
-                    _e.WeatherE.SunC.SunSideT = SunSideTypes.Dawn;
+                    _e.SunSideT = SunSideTypes.Dawn;
                     _e.CommonInfoAboutGameC.SetNextLesson();
                 }
                 else if (_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
@@ -102,7 +102,7 @@ namespace Chessy.Model.Model.System
 
                                                 case AbilityTypes.ChangeDirectionWind:
                                                     {
-                                                        foreach (var cellE in _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround)
+                                                        foreach (var cellE in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
                                                         {
                                                             if (cellE == _e.CurrentCellIdx)
                                                             {

@@ -2,7 +2,7 @@
 //{
 //    sealed class CitiesAddPeopleUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal CitiesAddPeopleUpdateMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal CitiesAddPeopleUpdateMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

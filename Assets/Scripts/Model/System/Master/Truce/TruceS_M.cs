@@ -1,8 +1,8 @@
 ﻿using Chessy.Common;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     static class TruceS
     {
@@ -12,10 +12,10 @@ namespace Chessy.Model.Model.System
         {
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
-                e.PlayerInfoE(playerT).KingInfoE.CellKing = 0;
-                e.PlayerInfoE(playerT).KingInfoE.HaveInInventor = true;
+                //e.PlayerInfoE(playerT).KingInfoE.CellKing = 0;
+                e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = true;
 
-                e.PlayerInfoE(playerT).GodInfoE.HaveHeroInInventor = true;
+                e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = true;
 
                 e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = PEOPLE_AFTER_TRUCE;
                 e.PlayerInfoE(playerT).PawnInfoC.AmountInGame = 0;
@@ -39,7 +39,7 @@ namespace Chessy.Model.Model.System
                         {
                             if (e.ExtraToolWeaponT(cellIdxCurrent).HaveToolWeapon())
                             {
-                                e.PlayerInfoE(e.UnitPlayerT(cellIdxCurrent)).LevelE(e.ExtraTWLevelT(cellIdxCurrent)).ToolWeapons(e.ExtraToolWeaponT(cellIdxCurrent))++;
+                                e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
                             }
 
                             e.UnitE(cellIdxCurrent).ClearEverything();
@@ -50,7 +50,7 @@ namespace Chessy.Model.Model.System
 
                         if (e.ExtraToolWeaponT(cellIdxCurrent).HaveToolWeapon())
                         {
-                            e.PlayerInfoE(e.UnitPlayerT(cellIdxCurrent)).LevelE(e.ExtraTWLevelT(cellIdxCurrent)).ToolWeapons(e.ExtraToolWeaponT(cellIdxCurrent))++;
+                            e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
                         }
 
                         e.UnitE(cellIdxCurrent).ClearEverything();

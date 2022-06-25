@@ -5,7 +5,7 @@ namespace Chessy.Common
     public struct AdC
     {
         public const int MINUTES_TIME_ADD = 5;
-        public DateTime LastTimeAd;
+        public DateTime LastTimeAd { get; internal set; }
 
         internal AdC(DateTime dt) => LastTimeAd = dt;
     }

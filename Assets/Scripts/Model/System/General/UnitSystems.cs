@@ -1,6 +1,6 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed partial class UnitSystems : SystemModel
     {

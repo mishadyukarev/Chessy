@@ -1,4 +1,4 @@
-﻿//namespace Chessy.Model.Model.System
+﻿//namespace Chessy.Model
 //{
 //    internal interface IclickUI
 //    {

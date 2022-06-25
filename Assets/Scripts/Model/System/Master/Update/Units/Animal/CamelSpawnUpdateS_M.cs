@@ -6,7 +6,7 @@
 //{
 //    sealed class CamelSpawnUpdateS_M
 //    {
-//        public void SpawnCamelUpdate(in Chessy.Model.Model.Entity.EntitiesModelGame e)
+//        public void SpawnCamelUpdate(in Chessy.Model.EntitiesModelGame e)
 //        {
 
 //        }

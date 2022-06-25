@@ -6,11 +6,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-namespace Chessy.Common.Entity.View.UI
+namespace Chessy.View.UI
 {
     readonly struct BookUIE
     {
-        readonly GameObjectVC[] _pages;
+        readonly GameObjectVC[] _pagesZones;
 
         internal readonly GameObjectVC ParenGOC;
 
@@ -21,7 +21,7 @@ namespace Chessy.Common.Entity.View.UI
         internal readonly TextUIC LeftPageTextC;
         internal readonly TextUIC RightPageTextC;
 
-        internal GameObjectVC PageGOC(in PageBookTypes pageT) => _pages[(byte)pageT];
+        internal GameObjectVC PageGOC(in PageBookTypes pageT) => _pagesZones[(byte)pageT];
 
         internal BookUIE(in Transform commonZone)
         {
@@ -32,14 +32,14 @@ namespace Chessy.Common.Entity.View.UI
             NextButtonC = new ButtonUIC(parent.Find("Next_Button+").GetComponent<Button>());
             BackButtonC = new ButtonUIC(parent.Find("Back_Button+").GetComponent<Button>());
 
-            _pages = new GameObjectVC[(byte)PageBookTypes.End];
+            _pagesZones = new GameObjectVC[(byte)PageBookTypes.End];
 
             var zone = parent.Find("Zones+");
 
             for (var pageT = PageBookTypes.None + 1; pageT < PageBookTypes.End; pageT++)
             {
                 var page = zone.Find(pageT + "+");
-                _pages[(byte)pageT] = new GameObjectVC(page.gameObject);
+                _pagesZones[(byte)pageT] = new GameObjectVC(page.gameObject);
 
 
                 foreach (var neededPageT in new[] { PageBookTypes.Main, PageBookTypes.God, PageBookTypes.Pawn,

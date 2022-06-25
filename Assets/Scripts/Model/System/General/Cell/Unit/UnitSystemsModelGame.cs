@@ -1,8 +1,8 @@
-﻿//using Chessy.Model.Model.Entity;
-//using Chessy.Model.Model.System;
-//using Chessy.Model.Model.System.Master;
+﻿//using Chessy.Model;
+//using Chessy.Model;
+//using Chessy.Model.Master;
 
-//namespace Chessy.Model.Model.System
+//namespace Chessy.Model
 //{
 //    sealed class UnitSystemsModelGame : SystemModelGameAbs
 //    {

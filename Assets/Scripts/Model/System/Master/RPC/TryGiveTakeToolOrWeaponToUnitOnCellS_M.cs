@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -22,7 +22,7 @@ namespace Chessy.Model.Model.System
                     {
                         if (_e.ExtraToolWeaponT(cellIdxForDoing).HaveToolWeapon())
                         {
-                            _e.ToolWeaponsC(_e.UnitPlayerT(cellIdxForDoing), _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing))++;
+                            _e.AddToolWeaponsInInventor(_e.UnitPlayerT(cellIdxForDoing), _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing));
                             _e.SetExtraToolWeaponT(cellIdxForDoing, ToolWeaponTypes.None);
 
                             _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -37,9 +37,9 @@ namespace Chessy.Model.Model.System
 
                                 if (_e.MainTWLevelT(cellIdxForDoing).Is(LevelTypes.First))
                                 {
-                                    if (_e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
+                                    if (_e.ToolWeaponsInInventor(whoseMove, levTW, twT) > 0)
                                     {
-                                        _e.ToolWeaponsC(whoseMove, levTW, twT)--;
+                                        _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
 
                                         _e.MainToolWeaponE(cellIdxForDoing).Set(twT, levTW);
 
@@ -54,7 +54,7 @@ namespace Chessy.Model.Model.System
 
                                         for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                         {
-                                            var difAmountRes = _e.PlayerInfoE(whoseMove).ResourcesC(res).Resources - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
+                                            var difAmountRes = _e.ResourcesInInventory(whoseMove, res) - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
                                             needRes.Add(res, EconomyValues.ForBuyToolWeapon(twT, levTW, res));
 
                                             if (canBuy) canBuy = difAmountRes >= 0;
@@ -63,7 +63,7 @@ namespace Chessy.Model.Model.System
                                         if (canBuy)
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                                _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
+                                                _e.ResourcesInInventoryC(whoseMove).Subtract(resT, EconomyValues.ForBuyToolWeapon(twT, levTW, resT));
 
                                             _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -85,7 +85,7 @@ namespace Chessy.Model.Model.System
                                 }
                                 else
                                 {
-                                    _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
+                                    _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                                     _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
                                     _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -94,7 +94,7 @@ namespace Chessy.Model.Model.System
 
                             else
                             {
-                                _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
+                                _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                                 _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
                                 _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -108,9 +108,9 @@ namespace Chessy.Model.Model.System
                         {
                             if (_e.MainTWLevelT(cellIdxForDoing).Is(LevelTypes.First))
                             {
-                                if (_e.PlayerInfoE(whoseMove).LevelE(levTW).ToolWeapons(twT) > 0)
+                                if (_e.ToolWeaponsInInventor(whoseMove, levTW, twT) > 0)
                                 {
-                                    _e.ToolWeaponsC(whoseMove, levTW, twT)--;
+                                    _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
                                     _e.MainToolWeaponE(cellIdxForDoing).Set(twT, levTW);
 
                                     _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -124,7 +124,7 @@ namespace Chessy.Model.Model.System
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = _e.PlayerInfoE(whoseMove).ResourcesC(res).Resources - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
+                                        var difAmountRes = _e.ResourcesInInventory(whoseMove, res) - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
                                         needRes.Add(res, EconomyValues.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canBuy) canBuy = difAmountRes >= 0;
@@ -133,7 +133,7 @@ namespace Chessy.Model.Model.System
                                     if (canBuy)
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                            _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
+                                            _e.ResourcesInInventoryC(whoseMove).Subtract(resT, EconomyValues.ForBuyToolWeapon(twT, levTW, resT));
 
                                         _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
@@ -157,7 +157,7 @@ namespace Chessy.Model.Model.System
 
                             else
                             {
-                                _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
+                                _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                                 _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
                                 _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -166,7 +166,7 @@ namespace Chessy.Model.Model.System
 
                         else
                         {
-                            _e.ToolWeaponsC(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
+                            _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                             _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
                             _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -181,7 +181,7 @@ namespace Chessy.Model.Model.System
 
                         if (_e.MainToolWeaponT(cellIdxForDoing).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
                         {
-                            _e.ToolWeaponsC(_e.UnitPlayerT(cellIdxForDoing), _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing))++;
+                            _e.AddToolWeaponsInInventor(_e.UnitPlayerT(cellIdxForDoing), _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                             _e.MainToolWeaponE(cellIdxForDoing).Set(ToolWeaponTypes.Axe, LevelTypes.First);
 
                             _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -193,7 +193,7 @@ namespace Chessy.Model.Model.System
                             {
                                 if (_e.ExtraToolWeaponT(cellIdxForDoing).HaveToolWeapon())
                                 {
-                                    _e.PlayerInfoE(ownUnit_0).LevelE(_e.ExtraTWLevelT(cellIdxForDoing)).ToolWeapons(_e.ExtraToolWeaponT(cellIdxForDoing))++;
+                                    _e.AddToolWeaponsInInventor(ownUnit_0, _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing));
                                     _e.SetExtraToolWeaponT(cellIdxForDoing, ToolWeaponTypes.None);
 
                                     _e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
@@ -201,9 +201,9 @@ namespace Chessy.Model.Model.System
                                     ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
 
-                                else if (_e.ToolWeaponsC(ownUnit_0, levTW, twT) > 0)
+                                else if (_e.ToolWeaponsInInventor(ownUnit_0, levTW, twT) > 0)
                                 {
-                                    _e.PlayerInfoE(ownUnit_0).LevelE(levTW).ToolWeapons(twT)--;
+                                    _e.SubtractToolWeaponsInInventor(ownUnit_0, levTW, twT, 1);
 
 
                                     _e.UnitExtraTWE(cellIdxForDoing).Set(twT, levTW, _e.ExtraTWProtection(cellIdxForDoing));
@@ -220,7 +220,7 @@ namespace Chessy.Model.Model.System
 
                                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                                     {
-                                        var difAmountRes = _e.PlayerInfoE(whoseMove).ResourcesC(res).Resources - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
+                                        var difAmountRes = _e.ResourcesInInventory(whoseMove, res) - EconomyValues.ForBuyToolWeapon(twT, levTW, res);
                                         needRes.Add(res, EconomyValues.ForBuyToolWeapon(twT, levTW, res));
 
                                         if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -229,7 +229,7 @@ namespace Chessy.Model.Model.System
                                     if (canCreatBuild)
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
-                                            _e.PlayerInfoE(whoseMove).ResourcesC(resT).Resources -= EconomyValues.ForBuyToolWeapon(twT, levTW, resT);
+                                            _e.ResourcesInInventoryC(whoseMove).Subtract(resT, EconomyValues.ForBuyToolWeapon(twT, levTW, resT));
 
                                         var protection = 0f;
 

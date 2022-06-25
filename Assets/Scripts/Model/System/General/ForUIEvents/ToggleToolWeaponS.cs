@@ -1,7 +1,7 @@
 ﻿using Chessy.Model.Enum;
 using Photon.Pun;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     public sealed partial class SystemsModelGameForUI
     {

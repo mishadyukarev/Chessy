@@ -6,7 +6,7 @@
 //{
 //    sealed class IceWallFertilizeAroundUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {
-//        internal IceWallFertilizeAroundUpdateMS(in Chessy.Model.Model.Entity.EntitiesModelGame ents) : base(ents)
+//        internal IceWallFertilizeAroundUpdateMS(in Chessy.Model.EntitiesModelGame ents) : base(ents)
 //        {
 //        }
 

@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Entity.View.Cell.Unit.Effect;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 
 namespace Chessy.Model
 {

@@ -1,5 +1,5 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 
 namespace Chessy.Model
 {
@@ -9,8 +9,8 @@ namespace Chessy.Model
         public AroundCellsE AroundCellsEs;
         public UnitE UnitE;
         public BuildingE BuildingE;
-        public EnvironmentE EnvironmentEs;
-        public EffectE EffectEs;
+        public EnvironmentE EnvironmentE;
+        public EffectE EffectE;
         public RiverE RiverE;
         public TrailE TrailE;
 

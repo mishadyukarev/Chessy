@@ -4,7 +4,7 @@ using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Model.Model.System
+namespace Chessy.Model
 {
     sealed partial class UnitAbilitiesSystems : SystemModel
     {
@@ -12,7 +12,7 @@ namespace Chessy.Model.Model.System
         {
             if (_e.EnergyUnitC(cell_from).Energy >= StepValues.Need(abilityT))
             {
-                _e.WeatherE.WindC.DirectT = _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).Direct(idx_to);
+                _e.DirectWindT = _e.AroundCellsE(_e.CenterCloudCellIdx).Direct(idx_to);
                 _e.EnergyUnitC(cell_from).Energy -= StepValues.Need(abilityT);
                 _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
 

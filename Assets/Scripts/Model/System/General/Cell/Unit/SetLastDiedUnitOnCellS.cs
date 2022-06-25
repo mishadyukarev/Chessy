@@ -1,5 +1,5 @@
 ﻿using Chessy.Model;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 
 namespace Chessy
 {

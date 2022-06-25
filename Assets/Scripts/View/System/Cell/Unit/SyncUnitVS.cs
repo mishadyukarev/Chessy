@@ -1,6 +1,6 @@
 ﻿using Chessy.Model.Entity.View.Cell;
 using Chessy.Model.Extensions;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.View.System;
 using System.Collections.Generic;

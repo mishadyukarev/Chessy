@@ -1,6 +1,6 @@
 ﻿using Chessy.Model.Entity.View.UI.Down;
 using Chessy.Model.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 using UnityEngine;
 
 namespace Chessy.Model

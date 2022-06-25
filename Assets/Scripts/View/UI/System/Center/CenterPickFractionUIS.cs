@@ -2,7 +2,7 @@
 //{
 //    sealed class CenterPickFractionUIS : SystemUIAbstract, IEcsRunSystem
 //    {
-//        internal CenterPickFractionUIS(in EntitiesViewUI entsUI, in Chessy.Model.Model.Entity.EntitiesModel ents) : base(entsUI, ents)
+//        internal CenterPickFractionUIS(in EntitiesViewUI entsUI, in Chessy.Model.EntitiesModel ents) : base(entsUI, ents)
 //        {
 //        }
 

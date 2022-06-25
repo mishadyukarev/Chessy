@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 using Chessy.Model.Values;
 using Chessy.Model.View.System;
 using UnityEngine;
@@ -58,7 +58,7 @@ namespace Chessy.Model
                 {
                     for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var cell_target = _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).IdxCell(dirT);
+                        var cell_target = _e.AroundCellsE(_e.CenterCloudCellIdx).IdxCell(dirT);
 
                         _needActive[cell_target] = true;
                         _needColor[cell_target] = ColorsValues.Color(SupportCellVisionTypes.Shift);

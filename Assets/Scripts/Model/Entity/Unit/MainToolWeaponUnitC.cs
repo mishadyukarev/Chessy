@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Model.Entity.Cell.Unit
+﻿namespace Chessy.Model.Cell.Unit
 {
     public struct MainToolWeaponUnitC
     {

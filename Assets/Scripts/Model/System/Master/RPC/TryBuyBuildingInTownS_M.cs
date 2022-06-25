@@ -4,7 +4,7 @@
 //using System;
 //using System.Collections.Generic;
 
-//namespace Chessy.Model.Model.System
+//namespace Chessy.Model
 //{
 //    sealed class TryBuyBuildingInTownS_M : SystemModel
 //    {

@@ -1,4 +1,4 @@
-﻿//using Chessy.Common.Entity.View.UI;
+﻿//using Chessy.View.UI;
 //using Chessy.Common.View.UI.Entity;
 //using UnityEngine;
 

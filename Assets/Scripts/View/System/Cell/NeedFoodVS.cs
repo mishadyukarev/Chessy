@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 
 namespace Chessy.Model.System.View
 {
@@ -22,7 +22,7 @@ namespace Chessy.Model.System.View
                 {
                     if (_e.UnitPlayerT(_currentCell).Is(_e.CurPlayerIT))
                     {
-                        _needActive = _e.PlayerInfoE(_e.CurPlayerIT).ResourcesC(ResourceTypes.Food).Resources < 1;
+                        _needActive = _e.ResourcesInInventory(_e.CurPlayerIT, ResourceTypes.Food) < 1;
                     }
                 }
             }

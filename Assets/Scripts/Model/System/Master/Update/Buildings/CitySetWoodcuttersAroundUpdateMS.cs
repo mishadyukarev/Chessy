@@ -2,7 +2,7 @@
 //{
 //    sealed class CitySetWoodcuttersAroundUpdateMS : SystemAbstract, IEcsRunSystem
 //    {
-//        internal CitySetWoodcuttersAroundUpdateMS(in Chessy.Model.Model.Entity.EntitiesModel ents) : base(ents)
+//        internal CitySetWoodcuttersAroundUpdateMS(in Chessy.Model.EntitiesModel ents) : base(ents)
 //        {
 //        }
 

@@ -2,6 +2,6 @@
 {
     public struct SettingsC
     {
-        public bool IsOpenedBarWithSettings { get; set; }
+        public bool IsOpenedBarWithSettings { get; internal set; }
     }
 }

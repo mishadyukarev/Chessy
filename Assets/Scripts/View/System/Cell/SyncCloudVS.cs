@@ -1,4 +1,4 @@
-﻿using Chessy.Model.Model.Entity;
+﻿using Chessy.Model;
 
 namespace Chessy.Model
 {
@@ -16,13 +16,13 @@ namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_e.WeatherE.CloudC.CellIdxCenterCloud == _currentCell)
+            if (_e.CenterCloudCellIdx == _currentCell)
             {
                 _needActive = true;
             }
             else
             {
-                foreach (var startCell in _e.AroundCellsE(_e.WeatherE.CloudC.CellIdxCenterCloud).CellsAround)
+                foreach (var startCell in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
                 {
                     if (startCell == _currentCell)
                     {

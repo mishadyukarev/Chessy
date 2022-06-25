@@ -1,6 +1,6 @@
-﻿using Chessy.Common.Entity.View.UI;
+﻿using Chessy.View.UI;
 using Chessy.Common.Enum;
-using Chessy.Model.Model.Entity;
+using Chessy.Model;
 
 namespace Chessy.Common.View.UI
 {
