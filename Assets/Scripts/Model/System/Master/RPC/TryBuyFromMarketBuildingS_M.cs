@@ -1,8 +1,7 @@
 ﻿using Chessy.Model.Values;
 using Photon.Realtime;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel
     {

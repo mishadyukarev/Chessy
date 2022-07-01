@@ -1,12 +1,14 @@
-﻿using Chessy.Common.Component;
-using Chessy.Common.Enum;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Component;
+using Chessy.Model.Enum;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-namespace Chessy.View.UI
+namespace Chessy.View.UI.Entity
 {
     readonly struct BookUIE
     {

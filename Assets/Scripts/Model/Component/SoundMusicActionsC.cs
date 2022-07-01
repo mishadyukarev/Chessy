@@ -1,6 +1,6 @@
-﻿//using Chessy.Common.Enum;
+﻿//using Chessy.Model.Enum;
 //using System;
-//using System.Collections.Generic;
+//using System.Collections.Generic; using Chessy.Model.Entity;
 
 //namespace Chessy
 //{

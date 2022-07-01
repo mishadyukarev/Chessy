@@ -2,7 +2,7 @@
 //using Chessy.Model;
 //using Chessy.Model.Values;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class UnitEatFoodUpdateS_M : SystemModelGameAbs, IEcsRunSystem
 //    {

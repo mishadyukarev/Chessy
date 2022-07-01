@@ -1,11 +1,7 @@
-﻿using Chessy.Common;
+﻿using Chessy.Model.Cell.Unit;
 using Chessy.Model.Component;
-using Chessy.Model.Model.Component;
-using Chessy.Model;
-using Chessy.Model.Cell.Unit;
 using Chessy.Model.Values;
 using System.Collections.Generic;
-
 namespace Chessy.Model
 {
     public struct UnitE

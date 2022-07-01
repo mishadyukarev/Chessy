@@ -1,33 +1,22 @@
-﻿using Chessy.Common;
-using Chessy.Common.View.UI;
-using Chessy.Common.View.UI.System;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using Chessy.Model.Enum;
-using Chessy.Model;
-using Chessy.Model.System.View.UI.Down;
-using Chessy.Model.View.UI;
-using Chessy.Model.View.UI.System;
-using Chessy.Menu;
+using Chessy.View.UI.Entity;
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Model.System.View.UI
+namespace Chessy.View.UI.System
 {
     public sealed class SystemsViewUI : IUpdate
     {
         readonly EntitiesModel _e;
-        readonly EntitiesViewUI _eUI;
 
         readonly List<Action> _syncUpdates;
 
 
-        readonly SyncBookUIS _syncBookS;
-        readonly SyncSettingsUIS _syncSettingsS;
-        readonly ConnectorMenuUIS _connectorMenuS;
-
         public SystemsViewUI(EntitiesViewUI eUI, EntitiesModel eM)
         {
             _e = eM;
-            _eUI = eUI;
 
             _syncUpdates = new List<Action>()
             {
@@ -70,6 +59,11 @@ namespace Chessy.Model.System.View.UI
                 new LeftCityUIS(eUI, eM).Sync,
 
 
+                new SyncBookUIS(eUI.BookE, eM).Sync,
+                new SyncSettingsUIS(eUI.SettingsE, eM).Sync,
+                new ConnectorMenuUIS(eUI, eM).Sync,
+
+
                 () =>
                 {
                     if (eM.BookC.IsOpenedBook())
@@ -96,15 +90,16 @@ namespace Chessy.Model.System.View.UI
 
                     eUI.UpEs.SettingsButtonC.SetActiveParent(!eM.LessonT.HaveLesson());
                     eUI.UpEs.DiscordButtonC.SetActive(!eM.LessonT.HaveLesson());
-                    eUI.UpEs.LeaveC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.MenuInfo);
+                    eUI.UpEs.LeaveButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.MenuInfo);
                     eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressReady);
 
+
+                    eUI.GameCanvasGOC.SetActive(_e.SceneT == SceneTypes.Game);
+                    eUI.ShopE.ShopZoneGOC.SetActive(_e.ShopC.IsOpenedShopZone);
+                    eUI.MenuCanvasGOC.SetActive(_e.SceneT == SceneTypes.Menu);
                 },
             };
 
-            _syncBookS = new SyncBookUIS(eUI.BookE, eM);
-            _syncSettingsS = new SyncSettingsUIS(eUI.SettingsE, eM);
-            _connectorMenuS = new ConnectorMenuUIS();
 
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
@@ -115,22 +110,8 @@ namespace Chessy.Model.System.View.UI
         public void Update()
         {
             if (_e.NeedUpdateView)
-            {
-                _eUI.GameCanvasGOC.SetActive(_e.SceneT == SceneTypes.Game);
-
+            {         
                 _syncUpdates.ForEach((Action action) => action());
-
-                _syncBookS.Sync();
-                _syncSettingsS.Sync();
-
-                _eUI.ShopE.ShopZoneGOC.SetActive(_e.ShopC.IsOpenedShopZone);
-
-                _eUI.MenuCanvasGOC.SetActive(_e.SceneT == SceneTypes.Menu);
-
-                if (_e.SceneT == SceneTypes.Menu)
-                {
-                    _connectorMenuS.Run(_eUI);
-                }
             }
         }
     }

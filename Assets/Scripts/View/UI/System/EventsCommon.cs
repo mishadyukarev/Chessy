@@ -1,9 +1,9 @@
 ﻿//using Chessy.View.UI;
-//using Chessy.Common.Enum;
-//using Chessy.Common.Model.System;
-//using Chessy.Common.View.UI;
+//using Chessy.Model.Enum;
+//using Chessy.Model.Model.System;
+//using Chessy.View.UI;
 
-//namespace Chessy.Common
+//using Chessy.Model.Entity; using Chessy.View.UI.Entity; namespace Chessy.Model
 //{
 //    public sealed class EventsCommon
 //    {

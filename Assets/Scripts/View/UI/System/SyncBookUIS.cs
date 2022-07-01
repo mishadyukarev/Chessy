@@ -1,8 +1,8 @@
-﻿using Chessy.View.UI;
-using Chessy.Common.Enum;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.View.UI.Entity;
 
-namespace Chessy.Common.View.UI
+namespace Chessy.View.UI.System
 {
     sealed class SyncBookUIS : SyncUISystem
     {

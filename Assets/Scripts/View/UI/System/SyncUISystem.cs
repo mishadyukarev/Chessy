@@ -1,7 +1,6 @@
 ﻿using Chessy.Model;
-using Chessy.Model;
-
-namespace Chessy.Common.View.UI
+using Chessy.Model.Entity;
+namespace Chessy.View.UI
 {
     abstract class SyncUISystem : SystemAbstract
     {

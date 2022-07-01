@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-
-namespace Chessy.Model
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     public struct UIEntExtraTW
     {

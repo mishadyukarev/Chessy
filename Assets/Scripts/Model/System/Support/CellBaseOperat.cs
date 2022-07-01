@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace Chessy.Model
 {
     public static class CellBaseOperat

@@ -1,7 +1,6 @@
-﻿using Chessy.Model;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.System;
 using UnityEngine;
-
 namespace Chessy.Model
 {
     sealed class MistakeS : SystemModel

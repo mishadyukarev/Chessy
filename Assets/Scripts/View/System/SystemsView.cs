@@ -1,35 +1,19 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.System;
 using Chessy.Model.Values;
+using Chessy.View.Component;
+using Chessy.View.Entity;
+using Chessy.View.UI.Entity;
+using Chessy.View.UI.System;
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Model.System.View
+namespace Chessy.View.System
 {
     public sealed class SystemsView : SystemAbstract, IUpdate
     {
         readonly List<Action> _updates;
-
-        readonly NeedFoodVS[] _syncNeedFoodSs = new NeedFoodVS[StartValues.CELLS];
-        readonly BuildingFlagVS[] _syncBuildingFlagSs = new BuildingFlagVS[StartValues.CELLS];
-        readonly Dictionary<DirectTypes, SyncTrailVS[]> _syncTrailSs = new Dictionary<DirectTypes, SyncTrailVS[]>();
-        readonly SyncBarsEnvironmentVS[] _syncBarsEnvironmentSs = new SyncBarsEnvironmentVS[StartValues.CELLS];
-        readonly SyncRiverVS[] _syncRiverSs = new SyncRiverVS[StartValues.CELLS];
-        readonly SyncFireVS[] _syncFireSs = new SyncFireVS[StartValues.CELLS];
-        readonly SyncEnvironmentVS[] _syncEnvironmentSs = new SyncEnvironmentVS[StartValues.CELLS];
-        readonly SyncBlocksVS[] _syncStatsSs = new SyncBlocksVS[StartValues.CELLS];
-        readonly SyncBuildingVS[] _syncBuildingSs = new SyncBuildingVS[StartValues.CELLS];
-        readonly SyncUnitBarHpVS[] _syncUnitBarHpSs = new SyncUnitBarHpVS[StartValues.CELLS];
-        readonly SyncFrozenArrawVS[] _syncFrozenArrawSs = new SyncFrozenArrawVS[StartValues.CELLS];
-        readonly SyncStunVS[] _syncStunSs = new SyncStunVS[StartValues.CELLS];
-        readonly SyncShieldVS[] _syncShieldSs = new SyncShieldVS[StartValues.CELLS];
-        readonly SyncCloudVS[] _syncCloudSs = new SyncCloudVS[StartValues.CELLS];
-        readonly SyncRotationVS[] _syncRotationSs = new SyncRotationVS[StartValues.CELLS];
-        readonly SyncIdxAndXyInfoVS[] _syncIdxAndXyInfoSs = new SyncIdxAndXyInfoVS[StartValues.CELLS];
-
-        readonly SyncSupportVS _syncSupportS;
-        readonly SyncSoundVS _syncSoundS;
-        readonly SyncCameraVS _syncCameraS;
-
         readonly EntitiesModel _eM;
 
         readonly SyncUnitVS _syncUnitVS;
@@ -39,66 +23,104 @@ namespace Chessy.Model.System.View
         {
             _eM = eM;
 
-            for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
-            {
-                _syncTrailSs.Add(dirT, new SyncTrailVS[StartValues.CELLS]);
-            }
-
+            var cellParentGOCs = new GameObjectVC[StartValues.CELLS];
             var blackVisisionSrCs = new SpriteRendererVC[StartValues.CELLS];
             var redCircularSRCs = new SpriteRendererVC[StartValues.CELLS];
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            var needFoodSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var buildingFlagSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var riverEs = new RiverVE[StartValues.CELLS];
+            var fireSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var adultForestSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var environmentEs = new EnvironmentVE[StartValues.CELLS];
+            var needWaterSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var conditionUnitSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var maxStepsUnitOnCellSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var cloudSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var idxXyInfoCellSRCs = new TMPC[StartValues.CELLS];
+            var hpBarUnitSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var stunUnitSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var shieldSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var frozenArrawRightSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var frozenArrawUpSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var trailsSRCs = new Dictionary<DirectTypes, SpriteRendererVC[]>();
+            var buildingSRCs = new Dictionary<BuildingTypes, SpriteRendererVC[]>();
+
+
+            for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
             {
-                blackVisisionSrCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).SupportCellEs.NoneSRC;
-                redCircularSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).RedCircularSRC;
+                trailsSRCs.Add(directT, new SpriteRendererVC[StartValues.CELLS]);
             }
 
+            for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+            {
+                buildingSRCs.Add(buildingT, new SpriteRendererVC[StartValues.CELLS]);
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                cellParentGOCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).CellParentGOC;
+                blackVisisionSrCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).SupportCellEs.NoneSRC;
+                redCircularSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).RedCircularSRC;
+                needFoodSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.Block(CellBlockTypes.NeedFood);
+                buildingFlagSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).BuildingEs.FlagSRC;
+                riverEs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).RiverE;
+                fireSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).FireVE.SRC;
+                adultForestSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).EnvironmentVEs.EnvironmentE(EnvironmentTypes.AdultForest);
+                environmentEs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).EnvironmentVEs;
+                needWaterSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.Block(CellBlockTypes.NeedWater);
+                conditionUnitSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.Block(CellBlockTypes.Condition);
+                maxStepsUnitOnCellSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.Block(CellBlockTypes.MaxSteps);
+                cloudSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).CloudSRC;
+                idxXyInfoCellSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).IdxAndXyInfoTMPC;
+                hpBarUnitSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.UnitHpBarSRC;
+                stunUnitSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.StunSRC;
+                shieldSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.ShieldSRC;
+                frozenArrawRightSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.FrozenArraw(true);
+                frozenArrawUpSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.FrozenArraw(false);
+
+                for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
+                {
+                    trailsSRCs[directT][cellIdxCurrent] = eV.CellEs(cellIdxCurrent).TrailCellVC(directT);
+                }
+                for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+                {
+                    buildingSRCs[buildingT][cellIdxCurrent] = eV.CellEs(cellIdxCurrent).BuildingEs.Main(buildingT);
+                }
+            }
 
             _syncUnitVS = new SyncUnitVS(eV, eM);
 
             _updates = new List<Action>()
             {
+                new SyncSupportVS(eV, eM).Sync,
+                new SyncSoundVS(eV, eM).Sync,
+                new SyncCameraVS(eV, eM).Sync,
+                new SyncBarsEnvironmentVS(eV, eM).Sync,
+                new SyncSunSideVS(eV, eM).Sync,
+
+                new SyncRotationAllCellsVS(cellParentGOCs, eM).Sync,
                 new SyncBlackVisionVS(blackVisisionSrCs, eM).Sync,
                 new SyncRedCircularVS(redCircularSRCs, eM).Sync,
+                new NeedFoodVS(needFoodSRCs, eM).Sync,
+                new BuildingFlagVS(buildingFlagSRCs, eM).Sync,
+                new SyncRiverVS(riverEs, eM).Sync,
+                new SyncFireVS(fireSRCs, eM).Sync,
+                new SyncAdultForestOnCellsVS(adultForestSRCs, eM).Sync,
+                new SyncElseEnvironmentVS(environmentEs, eM).Sync,
+                new SyncNeedWaterBlockVS(needWaterSRCs, eM).Sync,
+                new SyncConditionOnCellVS(conditionUnitSRCs, eM).Sync,
+                new SyncMaxStepsUnitOnCellVS(maxStepsUnitOnCellSRCs, eM).Sync,
+                new SyncCloudsOnCellsVS(cloudSRCs, eM).Sync,
+                new SyncIdxAndXyInfoVS(idxXyInfoCellSRCs, eM).Sync,
+                new SyncHpBarUnitVS(hpBarUnitSRCs, eM).Sync,
+                new SyncStunVS(stunUnitSRCs, eM).Sync,
+                new SyncShieldVS(shieldSRCs, eM).Sync,
+                new SyncFrozenArrawVS(frozenArrawRightSRCs, frozenArrawUpSRCs, eM).Sync,
+                new SyncBuildingVS(buildingSRCs, eM).Sync,
+                new SyncTrailVS(trailsSRCs, eM).Sync,
+
                 _syncUnitVS.Sync,
             };
-
-            for (byte startCell = 0; startCell < StartValues.CELLS; startCell++)
-            {
-                //_updates.Add(new KingPassiveVS(_eV.CellEs(startCell).UnitEs.EffectE.KingPassiveGOC, startCell, _eM).Sync);
-
-                _syncBuildingSs[startCell] = new SyncBuildingVS(eV.CellEs(startCell).BuildingEs, startCell, eM);
-                _syncStatsSs[startCell] = new SyncBlocksVS(eV, startCell, eM);
-                _syncUnitBarHpSs[startCell] = new SyncUnitBarHpVS(eV.CellEs(startCell).UnitEs.UnitHpBarSRC, startCell, eM);
-                _syncFrozenArrawSs[startCell] = new SyncFrozenArrawVS(eV.CellEs(startCell).UnitEs.EffectE, startCell, eM);
-                _syncEnvironmentSs[startCell] = new SyncEnvironmentVS(eV.CellEs(startCell).EnvironmentVEs, startCell, eM);
-                _syncFireSs[startCell] = new SyncFireVS(eV.CellEs(startCell).FireVE.SRC, startCell, eM);
-                _syncRiverSs[startCell] = new SyncRiverVS(eV.CellEs(startCell).RiverE, startCell, eM);
-                _syncBarsEnvironmentSs[startCell] = new SyncBarsEnvironmentVS(eV, startCell, eM);
-
-                _syncNeedFoodSs[startCell] = new NeedFoodVS(eV.CellEs(startCell).UnitEs.Block(CellBlockTypes.NeedFood), startCell, _eM);
-                _syncBuildingFlagSs[startCell] = new BuildingFlagVS(eV.CellEs(startCell).BuildingEs.FlagSRC, startCell, _eM);
-                _syncStunSs[startCell] = new SyncStunVS(eV.CellEs(startCell).UnitEs.EffectE.StunSRC, startCell, _eM);
-                _syncShieldSs[startCell] = new SyncShieldVS(eV.CellEs(startCell).UnitEs.EffectE.ShieldSRC, startCell, _eM);
-
-                _syncCloudSs[startCell] = new SyncCloudVS(eV.CellEs(startCell).CloudSRC, startCell, _eM);
-                _syncRotationSs[startCell] = new SyncRotationVS(eV.CellEs(startCell), startCell, _eM);
-
-                _syncIdxAndXyInfoSs[startCell] = new SyncIdxAndXyInfoVS(eV.CellEs(startCell).IdxAndXyInfoTMPC, startCell, _eM);
-
-
-
-                for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
-                {
-                    _syncTrailSs[dirT][startCell] = new SyncTrailVS(dirT, eV.CellEs(startCell).TrailCellVC(dirT), startCell, eM);
-                }
-            }
-
-            _updates.Add(new SyncSunSideVS(eV, _eM).Sync);
-
-
-            _syncSupportS = new SyncSupportVS(eV, _eM);
-            _syncSoundS = new SyncSoundVS(eV, _eM);
-            _syncCameraS = new SyncCameraVS(eV, _eM);
         }
 
         public void Update()
@@ -115,36 +137,6 @@ namespace Chessy.Model.System.View
             if (_eM.NeedUpdateView)
             {
                 _updates.ForEach((Action action) => action.Invoke());
-
-                for (byte currentCellIdx = 0; currentCellIdx < StartValues.CELLS; currentCellIdx++)
-                {
-                    if (!_eM.IsBorder(currentCellIdx))
-                    {
-                        _syncBuildingSs[currentCellIdx].Sync();
-                        _syncStatsSs[currentCellIdx].Sync();
-                        _syncUnitBarHpSs[currentCellIdx].Sync();
-                        _syncFrozenArrawSs[currentCellIdx].Sync();
-                        _syncEnvironmentSs[currentCellIdx].Sync();
-                        _syncFireSs[currentCellIdx].Sync();
-                        _syncRiverSs[currentCellIdx].Sync();
-                        _syncBarsEnvironmentSs[currentCellIdx].Sync();
-                        _syncNeedFoodSs[currentCellIdx].Sync();
-                        _syncBuildingFlagSs[currentCellIdx].Sync();
-                        _syncStunSs[currentCellIdx].Sync();
-                        _syncStunSs[currentCellIdx].Sync();
-                        _syncShieldSs[currentCellIdx].Sync();
-                        _syncCloudSs[currentCellIdx].Sync();
-                        _syncRotationSs[currentCellIdx].Sync();
-                        _syncIdxAndXyInfoSs[currentCellIdx].Sync();
-
-                        for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++) _syncTrailSs[dirT][currentCellIdx].Sync();
-                    }
-                }
-
-                _syncSupportS.Sync();
-                _syncSoundS.Sync();
-                _syncCameraS.Sync();
-
 
                 _eM.NeedUpdateView = false;
             }

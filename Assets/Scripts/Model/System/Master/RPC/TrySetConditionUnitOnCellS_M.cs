@@ -1,9 +1,8 @@
 ﻿using Chessy.Model.Enum;
-using Chessy.Model.Values.Cell.Unit.Stats;
+using Chessy.Model.Values;
 using Photon.Realtime;
 using System;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel
     {

@@ -2,7 +2,7 @@
 //using Chessy.Model;
 //using Chessy.Model.Master;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class UnitSystemsModelGame : SystemModelGameAbs
 //    {

@@ -1,8 +1,10 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model.Component;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model.Entity.View.UI.Down
+namespace Chessy.View.UI.Entity
 {
     public struct CityButtonUIE
     {

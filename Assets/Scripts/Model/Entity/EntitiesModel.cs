@@ -1,15 +1,10 @@
-﻿using Chessy.Common;
-using Chessy.Common.Enum;
+﻿using Chessy.Model.Cell.Unit;
 using Chessy.Model.Component;
-using Chessy.Model.Entity;
 using Chessy.Model.Enum;
-using Chessy.Model.Model.Component;
-using Chessy.Model.Cell.Unit;
 using Chessy.Model.Values;
 using System;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.Entity
 {
     public sealed class EntitiesModel
     {
@@ -19,7 +14,7 @@ namespace Chessy.Model
 
         public PlayerTypes WinnerPlayerT;
         public PlayerTypes WhoseMovePlayerT;
-        public PlayerTypes CurPlayerIT;
+        public PlayerTypes CurrentPlayerIT;
 
 
         public SelectedE SelectedE;
@@ -74,7 +69,7 @@ namespace Chessy.Model
         public ref ZonesInfoC ZoneInfoC => ref CommonGameE.ZoneInfoC;
         public ref WhereTeleportC WhereTeleportC => ref CommonGameE.WhereTeleportC;
 
-        public ref MotionC MotionC => ref CommonGameE.MotionC; 
+        public ref MotionC MotionC => ref CommonGameE.MotionC;
         public float MotionTimer
         {
             get => MotionC.Timer;
@@ -100,7 +95,7 @@ namespace Chessy.Model
 
         public ref SelectedUnitC SelectedUnitC => ref CommonGameE.SelectedUnitC;
 
-        public ref InputC InputC => ref CommonGameE.InputC; 
+        public ref InputC InputC => ref CommonGameE.InputC;
         public bool IsClicked
         {
             get => InputC.IsClicked;
@@ -317,7 +312,7 @@ namespace Chessy.Model
         public ref ResourcesC AdultForestC(in byte idx) => ref EnvironmentE(idx).AdultForestC;
         public ref ResourcesC MountainC(in byte idx) => ref EnvironmentE(idx).MountainC;
         public ref ResourcesC HillC(in byte idx) => ref EnvironmentE(idx).HillC;
-        public ref ResourcesC FertilizeC(in byte idx) => ref EnvironmentE(idx).FertilizeC;
+        public ref ResourcesC WaterOnCellC(in byte idx) => ref EnvironmentE(idx).FertilizeC;
 
         public ref RiverE RiverE(in byte idx) => ref CellEs(idx).RiverE;
         public ref RiverC RiverC(in byte cellIdx) => ref RiverE(cellIdx).RiverC;

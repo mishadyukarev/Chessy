@@ -1,7 +1,6 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
 using System;
-
-namespace Chessy.Model
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class UpSunsUIS : SystemUIAbstract
     {
@@ -22,7 +21,7 @@ namespace Chessy.Model
 
             if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.LookInfoAboutSun)
             {
-                var isFirstPlayer = _e.CurPlayerIT == PlayerTypes.First;
+                var isFirstPlayer = _e.CurrentPlayerIT == PlayerTypes.First;
 
                 switch (_e.SunSideT)
                 {

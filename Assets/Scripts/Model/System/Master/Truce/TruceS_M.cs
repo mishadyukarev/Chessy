@@ -1,8 +1,6 @@
-﻿using Chessy.Common;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     static class TruceS
     {

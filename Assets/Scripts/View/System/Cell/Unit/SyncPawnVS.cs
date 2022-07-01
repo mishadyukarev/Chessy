@@ -1,7 +1,7 @@
 ﻿//using Chessy.Model;
 //using Chessy.Model.Values;
 
-//namespace Chessy.Model.View.System
+//using Chessy.Model.Entity; namespace Chessy.View.System
 //{
 //    sealed class SyncPawnVS : SystemViewGameAbs
 //    {

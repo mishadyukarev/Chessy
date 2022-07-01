@@ -1,9 +1,8 @@
-﻿using Chessy.Model;
-using Chessy.Model;
-using Chessy.Model.Values.Cell.Unit.Stats;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Values;
 using System;
 
-namespace Chessy
+namespace Chessy.Model.System
 {
     static partial class SystemStatic
     {

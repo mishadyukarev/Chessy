@@ -1,9 +1,11 @@
-﻿using Chessy.Model.Entity.View.UI.Down;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Entity.View.UI.Down;
 using Chessy.Model.Enum;
-using Chessy.Model;
+using Chessy.View.UI.Entity;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.System
 {
     sealed class DonerUIS : SystemUIAbstract
     {
@@ -21,7 +23,7 @@ namespace Chessy.Model
                 _donerE.ButtonC.SetActiveParent(true);
                 _donerE.WaitGoC.SetActive(true);
 
-                if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
+                if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
                 {
                     _donerE.WaitGoC.SetActive(false);
                     _donerE.ImageC.Image.color = Color.white;

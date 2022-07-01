@@ -1,8 +1,9 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using Chessy.Model.Values;
-using Chessy.Model;
+using Chessy.View.UI.Entity;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
     sealed class SyncSoundVS : SystemAbstract
     {

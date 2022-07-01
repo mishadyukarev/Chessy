@@ -1,9 +1,7 @@
-﻿using Chessy.Model;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.System;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit;
 using UnityEngine;
-
 namespace Chessy.Model
 {
     sealed class TryGiveToolOrWeaponAIS_M : SystemModel

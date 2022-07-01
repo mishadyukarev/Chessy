@@ -1,21 +1,21 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model;
 using Chessy.Model.Enum;
-using Chessy.Model.View.UI.Entity;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
-    public struct CenterUIEs
+    public struct CenterGameUIEs
     {
         readonly Dictionary<UnitTypes, CenterHeroUIE> _ents;
         readonly Dictionary<LessonTypes, GameObjectVC> _lessonGOs;
 
-        public readonly GameObjectVC Zone;
+        public readonly GameObjectVC ParenGOC;
 
-        public readonly ButtonUIC JoinDiscordButtonC;
         public readonly ButtonUIC ReadyButtonC;
 
         public readonly TextUIC EndGame;
@@ -26,7 +26,6 @@ namespace Chessy.Model
 
         public readonly CenterFriendUIE FriendE;
         public readonly CenterKingUIE KingE;
-        //public readonly CenterSelectorUIE SelectorE;
         public readonly MistakeUIE MistakeE;
         public readonly CenterMarketUIE MarketE;
         public readonly CenterSmelterUIE SmelterE;
@@ -38,14 +37,14 @@ namespace Chessy.Model
         public GameObjectVC LessonGOC(in LessonTypes lessonT) => _lessonGOs[lessonT];
 
 
-        internal CenterUIEs(in Transform centerZone)
+        internal CenterGameUIEs(in Transform centerZone)
         {
-            var parent = centerZone.transform.Find("Heroes");
+            var parent = centerZone.Find("Heroes");
 
-
+            ParenGOC = new GameObjectVC(parent.gameObject);
             OpenShopButtonC = new ButtonUIC(parent.Find("OpenShop_Button").GetComponent<Button>());
 
-            Zone = new GameObjectVC(parent.gameObject);
+
 
             _ents = new Dictionary<UnitTypes, CenterHeroUIE>();
             for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
@@ -56,7 +55,6 @@ namespace Chessy.Model
 
             FriendE = new CenterFriendUIE(centerZone);
             KingE = new CenterKingUIE(centerZone);
-            //SelectorE = new CenterSelectorUIE(centerZone);
             MistakeE = new MistakeUIE(centerZone);
 
             var training = centerZone.Find("Lesson+");
@@ -82,8 +80,6 @@ namespace Chessy.Model
 
 
             var readyZone = centerZone.Find("ReadyZone");
-
-            JoinDiscordButtonC = new ButtonUIC(readyZone.Find("JoinDiscord+").Find("Button+").GetComponent<Button>());
             ReadyButtonC = new ButtonUIC(readyZone.Find("ReadyButton").GetComponent<Button>());
         }
     }

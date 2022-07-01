@@ -1,6 +1,6 @@
 ﻿//using System;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class UpdateIceWallMS : SystemAbstract, IEcsRunSystem
 //    {

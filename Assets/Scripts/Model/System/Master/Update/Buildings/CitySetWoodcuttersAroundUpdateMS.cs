@@ -1,4 +1,4 @@
-﻿//namespace Chessy.Model
+﻿//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class CitySetWoodcuttersAroundUpdateMS : SystemAbstract, IEcsRunSystem
 //    {

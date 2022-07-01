@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using System;
-
 namespace Chessy.Model
 {
     public static class Support

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace Chessy.Model
 {
     public struct SelectedBuildingsInTownC

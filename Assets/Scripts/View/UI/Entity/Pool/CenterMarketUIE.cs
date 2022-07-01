@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct CenterMarketUIE
     {
@@ -11,7 +14,7 @@ namespace Chessy.Model
         readonly Dictionary<MarketBuyTypes, TextUIC> _texts1;
         readonly Dictionary<MarketBuyTypes, TextUIC> _texts2;
 
-        public readonly Chessy.Common.Component.GameObjectVC Zone;
+        public readonly GameObjectVC Zone;
         public readonly ButtonUIC ExitButtonC;
         public ButtonUIC ButtonUIC(in MarketBuyTypes marketBuyT) => _buttons[marketBuyT];
         public TextUIC Text1C(in MarketBuyTypes marketBuyT) => _texts1[marketBuyT];
@@ -27,7 +30,7 @@ namespace Chessy.Model
             var marketZone = leftZone.Find("Market+");
 
 
-            Zone = new Chessy.Common.Component.GameObjectVC(marketZone.gameObject);
+            Zone = new GameObjectVC(marketZone.gameObject);
 
             ExitButtonC = new ButtonUIC(marketZone.Find("Exit").Find("Button").GetComponent<Button>());
 

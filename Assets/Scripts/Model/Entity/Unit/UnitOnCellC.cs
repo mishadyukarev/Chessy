@@ -9,5 +9,5 @@
         public bool IsArcherDirectedToRight { get; internal set; }
         public double DamageSimpleAttack { get; internal set; }
         public double DamageOnCell { get; internal set; }
-}
+    }
 }

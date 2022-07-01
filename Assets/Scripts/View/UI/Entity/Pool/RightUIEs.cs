@@ -1,11 +1,9 @@
-﻿using Chessy.Common;
-using Chessy.Common.Component;
-using Chessy.Model.Entity.View.UI.Right;
-using Chessy.Model.View.UI.Entity.Right;
+﻿using Chessy.Model;
+using Chessy.View.Component;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public struct RightUIEs
     {
@@ -22,7 +20,7 @@ namespace Chessy.Model
 
         public RightUIEs(in Transform rightZone)
         {
-            Zone = new Chessy.Common.Component.GameObjectVC(rightZone.gameObject);
+            Zone = new GameObjectVC(rightZone.gameObject);
             StatsEs = new RightStatsUIEs(rightZone.gameObject);
 
 

@@ -1,9 +1,10 @@
-﻿using Chessy.Common;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit.Stats;
-using Chessy.Model.View.UI.Entity.Right;
+using Chessy.View.UI.Entity;
 
-namespace Chessy.Model.View.UI.System
+namespace Chessy.View.UI.System
 {
     sealed class UniqueButtonUIS : SystemUIAbstract
     {
@@ -11,7 +12,7 @@ namespace Chessy.Model.View.UI.System
         readonly UniqueButtonUIE _buttonE;
         readonly Resources _resources;
 
-        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in Resources res, in Chessy.Model.EntitiesModel ents) : base(ents)
+        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in Resources res, in EntitiesModel ents) : base(ents)
         {
             _buttonT = buttonT;
             _buttonE = uniqueButtonUIE;
@@ -24,25 +25,25 @@ namespace Chessy.Model.View.UI.System
 
             var needActive = false;
 
-            if (_e.UnitPlayerT(_e.SelectedCellIdx) == _e.CurPlayerIT && ability_cur != AbilityTypes.None)
+            if (_e.UnitPlayerT(_e.SelectedCellIdx) == _e.CurrentPlayerIT && ability_cur != AbilityTypes.None)
             {
                 if (_buttonT == ButtonTypes.First)
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.SeedingPawn)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.SeedingPawn)
                     {
                         needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Second)
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Build3Farms)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
                     {
                         needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Third)
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.PawnFireAdultForest)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.PawnFireAdultForest)
                     {
                         needActive = true;
                     }

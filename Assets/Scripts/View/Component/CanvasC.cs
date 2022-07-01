@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chessy.Common
+namespace Chessy.View.UI.Component
 {
     public struct CanvasC
     {

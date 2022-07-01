@@ -1,7 +1,5 @@
-﻿using Chessy.Common;
-using Chessy.Model;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class CenterEndGameUIS : SystemUIAbstract
     {
@@ -19,7 +17,7 @@ namespace Chessy.Model
                 eUI.CenterEs.EndGame.SetActiveParent(false);
             }
 
-            else if (_e.WinnerPlayerT != _e.CurPlayerIT)
+            else if (_e.WinnerPlayerT != _e.CurrentPlayerIT)
             {
                 eUI.CenterEs.EndGame.TextUI.text = LanguageC.GetText(GameLanguageTypes.YouAreLoser);
                 eUI.CenterEs.EndGame.SetActiveParent(true);

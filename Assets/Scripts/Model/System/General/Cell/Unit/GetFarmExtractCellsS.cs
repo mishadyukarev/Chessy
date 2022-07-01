@@ -1,5 +1,4 @@
 ﻿using Chessy.Model.Values;
-
 namespace Chessy.Model
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
@@ -12,7 +11,7 @@ namespace Chessy.Model
 
                 if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Farm))
                 {
-                    if (_e.FertilizeC(cellIdxCurrent).HaveAnyResources)
+                    if (_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources)
                     {
                         var extract = EnvironmentValues.FARM_EXTRACT;
 
@@ -21,7 +20,7 @@ namespace Chessy.Model
                         //    extract += Environment_Values.FARM_CENTER_UPGRADE;
                         //}
 
-                        if (_e.FertilizeC(cellIdxCurrent).Resources < extract) extract = _e.FertilizeC(cellIdxCurrent).Resources;
+                        if (_e.WaterOnCellC(cellIdxCurrent).Resources < extract) extract = _e.WaterOnCellC(cellIdxCurrent).Resources;
 
                         _e.BuildingExtractionC(cellIdxCurrent).HowManyFarmCanExtractFood = extract;
                     }

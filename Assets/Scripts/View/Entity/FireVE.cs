@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Chessy.View.Component;
+using UnityEngine;
 
-namespace Chessy.Model.Entity.View.Cell
+namespace Chessy.View.Entity
 {
     public readonly struct FireVE
     {

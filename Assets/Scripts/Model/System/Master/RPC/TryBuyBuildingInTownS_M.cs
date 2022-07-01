@@ -2,9 +2,9 @@
 //using Photon.Pun;
 //using Photon.Realtime;
 //using System;
-//using System.Collections.Generic;
+//using System.Collections.Generic; using Chessy.Model.Entity;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class TryBuyBuildingInTownS_M : SystemModel
 //    {

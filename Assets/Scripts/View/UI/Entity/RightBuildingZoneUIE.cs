@@ -1,16 +1,16 @@
 ﻿//using ECS;
-//using UnityEngine;
+//using UnityEngine; using Chessy.Model.Entity;
 
 //namespace Game.Game
 //{
 //    public sealed class RightBuildingZoneUIE : EntityAbstract
 //    {
-//        public ref Chessy.Common.Component.GameObjectVC Parent => ref Ent.Get<GameObjectVC>();
+//        public ref GameObjectVC Parent => ref Ent.Get<GameObjectVC>();
 
 //        public RightBuildingZoneUIE(in EcsWorld gameW, in Transform buildingZone) : base(gameW)
 //        {
 //            Ent
-//                .Add(new Chessy.Common.Component.GameObjectVC(buildingZone.gameObject));
+//                .Add(new GameObjectVC(buildingZone.gameObject));
 //        }
 //    }
 //}

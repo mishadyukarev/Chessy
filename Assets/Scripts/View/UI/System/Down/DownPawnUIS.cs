@@ -1,7 +1,8 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.View.UI.Entity;
 
-namespace Chessy.Model
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class DownPawnUIS : SystemUIAbstract
     {
@@ -18,10 +19,10 @@ namespace Chessy.Model
             {
                 _pawnE.ParenGOC.SetActive(true);
 
-                var curPlayerI = _e.CurPlayerIT;
+                var curPlayerI = _e.CurrentPlayerIT;
 
-                _pawnE.AmountTextC.TextUI.text = _e.PlayerInfoE(curPlayerI).PawnInfoC.AmountInGame.ToString() + "/" + _e.PlayerInfoE(curPlayerI).PawnInfoC.MaxAvailable;
-                _pawnE.MaxPawnsTextC.TextUI.text = _e.PlayerInfoE(curPlayerI).PawnInfoC.PeopleInCity.ToString();
+                _pawnE.AmountTextC.TextUI.text = _e.PawnPeopleInfoC(curPlayerI).AmountInGame.ToString() + "/" + _e.PawnPeopleInfoC(curPlayerI).MaxAvailablePawns(_e.PlayerInfoC(curPlayerI).AmountBuiltHouses);
+                _pawnE.MaxPawnsTextC.TextUI.text = _e.PawnPeopleInfoC(curPlayerI).PeopleInCity.ToString();
             }
             else
             {

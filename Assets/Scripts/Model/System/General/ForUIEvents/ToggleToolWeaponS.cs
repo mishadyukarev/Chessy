@@ -1,9 +1,8 @@
 ﻿using Chessy.Model.Enum;
 using Photon.Pun;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class ForButtonsSystemsModel
     {
         public void ToggleToolWeapon(in ToolWeaponTypes twT)
         {
@@ -13,7 +12,7 @@ namespace Chessy.Model
 
             _e.SelectedCellIdx = 0;
 
-            if (_e.CurPlayerIT.Is(_e.WhoseMovePlayerT))
+            if (_e.CurrentPlayerIT.Is(_e.WhoseMovePlayerT))
             {
                 //if (_eMG.LessonTC.Is(LessonTypes.ClickPick))
                 //{

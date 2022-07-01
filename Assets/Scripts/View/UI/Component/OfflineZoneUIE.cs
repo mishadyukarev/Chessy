@@ -1,10 +1,10 @@
-﻿using Chessy.Model;
+﻿using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Menu
+namespace Chessy.View.UI.Entity
 {
-    public struct OfflineZoneUIE
+    public readonly struct OfflineZoneUIE
     {
         public readonly ButtonUIC JoinButtonC;
         public readonly ImageUIC FrontImageC;

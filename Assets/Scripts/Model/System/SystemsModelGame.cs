@@ -1,13 +1,12 @@
-﻿using Chessy.Common;
-using Chessy.Common.Enum;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.Model.Values;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -17,10 +16,9 @@ namespace Chessy.Model
         internal readonly UnitSystems UnitSs;
         internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
         internal readonly ExecuteAIBotLogicAfterUpdateS_M AIBotS;
+        internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
 
-        public readonly SystemsModelGameForUI ForUISystems;
-
-        const byte MAX_PLAYERS = 2;
+        public readonly ForButtonsSystemsModel ForUISs;
 
         public SystemsModel(in EntitiesModel eMG)
         {
@@ -36,10 +34,11 @@ namespace Chessy.Model
                 new MistakeS(this, eMG).Update,
             };
 
-            ForUISystems = new SystemsModelGameForUI(this, eMG);
+            ForUISs = new ForButtonsSystemsModel(this, eMG);
             UnitSs = new UnitSystems(this, eMG);
             GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eMG);
             AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eMG);
+            ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eMG);
 
             Application.runInBackground = true;
 
@@ -63,7 +62,6 @@ namespace Chessy.Model
                 _e.ForUpdateViewTimer = 0;
             }
         }
-
         public void ToggleScene(in SceneTypes newSceneT)
         {
             _e.SceneT = newSceneT;
@@ -94,90 +92,28 @@ namespace Chessy.Model
             _e.GameModeT = GameModeTypes.TrainingOffline;
             PhotonNetwork.CreateRoom(default);
         }
-
         public void OnLeftRoom()
         {
             _e.SceneT = SceneTypes.Menu;
             _e.NeedUpdateView = true;
         }
-
         public void OnPlayerLeftRoom(in Player otherPlayer)
         {
             if (PhotonNetwork.InRoom) PhotonNetwork.LeaveRoom();
         }
-
-        public void BuyPremiumProduct()
+        internal void GiveWaterToUnitsAroundRainy(in byte cellIdx)
         {
-            if (_e.ShopC.IsInitialized) //если покупка инициализирована 
+            foreach (var cellIdxDirect in _e.AroundCellsE(cellIdx).CellsAround)
             {
-                var product = _e.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME); //находим продукт покупки 
-
-                if (product == default) throw new Exception();
-
-                if (product.availableToPurchase) //если продукт найдет и готов для продажи
+                if (_e.UnitT(cellIdxDirect).HaveUnit())
                 {
-                    Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
-                    _e.ShopC.StoreController.InitiatePurchase(product); //покупаем
-                }
-                else
-                {
-                    Debug.Log("BuyProductID: FAIL. Not purchasing product, either is not found or is not available for purchase");
+                    if (_e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(cellIdxDirect))
+                    {
+                        _e.WaterUnitC(cellIdxDirect).Water = WaterValues.MAX;
+                    }
                 }
             }
-            else
-            {
-                Debug.Log("BuyProductID FAIL. Not initialized.");
-            }
         }
-
-        public void CreateRoom()
-        {
-            RoomOptions roomOptions = new RoomOptions();
-
-            _e.GameModeT = GameModeTypes.PublicOnline;
-
-            //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
-            //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
-
-            roomOptions.MaxPlayers = MAX_PLAYERS;
-            roomOptions.IsVisible = true;
-            roomOptions.IsOpen = true;
-            roomOptions.EmptyRoomTtl = 3000;
-            var roomName = UnityEngine.Random.Range(1, 9999999).ToString();
-
-            PhotonNetwork.CreateRoom(roomName, roomOptions, default, default);// CreateRoom(roomName, roomOptions);
-        }
-        public void CreateFriendRoom(in string roomNameFromViewBar)
-        {
-            _e.GameModeT = GameModeTypes.WithFriendOnline;
-
-            RoomOptions roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = MAX_PLAYERS;
-            roomOptions.IsVisible = false;
-            roomOptions.IsOpen = true;
-
-            PhotonNetwork.CreateRoom(roomNameFromViewBar, roomOptions, default);
-        }
-        public void JoinRandomRoom()
-        {
-            _e.GameModeT = GameModeTypes.PublicOnline;
-            //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
-            PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
-        }
-        public void JoinFriendRoom(in string nameRoomFromViewBar)
-        {
-            _e.GameModeT = GameModeTypes.WithFriendOnline;
-            PhotonNetwork.JoinRoom(nameRoomFromViewBar);
-        }
-
-        public void CreateOffGame(in GameModeTypes offGameMode)
-        {
-            _e.GameModeT = offGameMode;
-            PhotonNetwork.CreateRoom(default);
-        }
-
-
-
 
         internal void ExecuteSoundAction(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();
         internal void ExecuteSoundAction(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();

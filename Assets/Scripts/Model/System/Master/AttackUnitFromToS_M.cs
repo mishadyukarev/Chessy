@@ -1,11 +1,7 @@
 ﻿using Chessy.Model.Extensions;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit;
-using Chessy.Model.Values.Cell.Unit.Effect;
-using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Pun;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -122,7 +118,7 @@ namespace Chessy.Model
             }
             else
             {
-                if (_e.UnitEffectsC(idx_from).ShootsFrozenArrawArcher >- 1)
+                if (_e.UnitEffectsC(idx_from).ShootsFrozenArrawArcher > -1)
                 {
                     _e.UnitEffectsC(idx_from).ShootsFrozenArrawArcher--;
 

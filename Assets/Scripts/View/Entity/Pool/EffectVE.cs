@@ -1,8 +1,9 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model.Component;
+using Chessy.View.Component;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Model.Entity.View.Cell.Unit.Effect
+namespace Chessy.View.Entity
 {
     public readonly struct EffectVE
     {

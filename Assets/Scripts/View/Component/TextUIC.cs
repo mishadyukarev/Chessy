@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Component
 {
     public struct TextUIC
     {

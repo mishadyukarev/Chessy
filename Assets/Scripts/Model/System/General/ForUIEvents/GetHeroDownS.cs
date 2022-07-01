@@ -1,23 +1,23 @@
-﻿namespace Chessy.Model
+﻿namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class ForButtonsSystemsModel
     {
         public void OpenHeroClick()
         {
             _e.SelectedCellIdx = 0;
             //TryOnHint(VideoClipTypes.CreatingHero);
 
-            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
+            if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
             {
                 _e.SoundAction(ClipTypes.Click).Invoke();
 
-                var curPlayer = _e.CurPlayerIT;
+                var curPlayer = _e.CurrentPlayerIT;
 
                 var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoC.UnitT;
 
                 if (_e.PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
                 {
-                    if (!_e.PlayerInfoE(_e.CurPlayerIT).GodInfoC.HaveCooldown)
+                    if (!_e.PlayerInfoE(_e.CurrentPlayerIT).GodInfoC.HaveCooldown)
                     {
                         _e.SelectedUnitC.UnitT = myHeroT;
                         _e.SelectedUnitC.LevelT = LevelTypes.First;

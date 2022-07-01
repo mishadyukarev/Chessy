@@ -1,4 +1,4 @@
-﻿namespace Chessy.Common.Enum
+﻿namespace Chessy.Model.Enum
 {
     public enum PageBookTypes : byte
     {

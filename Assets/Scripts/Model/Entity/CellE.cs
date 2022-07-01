@@ -1,6 +1,5 @@
-﻿using Chessy.Model.Model.Component;
+﻿using Chessy.Model.Component;
 using System.Collections.Generic;
-
 namespace Chessy.Model.Entity
 {
     public readonly struct CellE

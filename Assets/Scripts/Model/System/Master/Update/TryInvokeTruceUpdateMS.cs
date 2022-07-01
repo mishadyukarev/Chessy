@@ -1,8 +1,8 @@
-﻿//using Chessy.Common;
+﻿//using Chessy.Model;
 //using Chessy.Model;
 //using Photon.Pun;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    public static class TryInvokeTruceUpdateMS
 //    {

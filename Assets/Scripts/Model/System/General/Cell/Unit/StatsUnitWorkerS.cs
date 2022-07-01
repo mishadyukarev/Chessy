@@ -1,6 +1,4 @@
-﻿using Chessy.Model.Cell.Unit;
-
-namespace Chessy.Model
+﻿namespace Chessy.Model
 {
     static class StatsUnitWorkerS
     {

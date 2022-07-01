@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Values.Cell.Unit
+﻿namespace Chessy.Model.Values
 {
     public static class DamageUnitValues
     {

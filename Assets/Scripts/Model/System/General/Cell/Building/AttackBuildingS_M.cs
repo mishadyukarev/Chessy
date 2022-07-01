@@ -1,7 +1,6 @@
-﻿using Chessy.Model.Extensions;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Extensions;
 using System;
-
 namespace Chessy.Model
 {
     static partial class BuildingSystems

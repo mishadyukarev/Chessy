@@ -1,6 +1,6 @@
-﻿//using System;
+﻿//using System; using Chessy.Model.Entity;
 
-//namespace Chessy.Common.View.UI
+//using Chessy.Model.Entity; namespace Chessy.View.UI
 //{
 //    sealed class ToggleSceneUIS
 //    {

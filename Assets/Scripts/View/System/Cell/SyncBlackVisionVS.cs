@@ -1,11 +1,12 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.Model.View.System;
+using Chessy.View.Component;
 using System;
 using System.Linq;
 
-namespace Chessy.Model.System.View
+namespace Chessy.View.System
 {
     sealed class SyncBlackVisionVS : SystemViewAbstract
     {
@@ -80,7 +81,7 @@ namespace Chessy.Model.System.View
                             {
                                 if (_e.UnitT(currentCellIdx) == UnitTypes.Pawn)
                                 {
-                                    if (_e.CurPlayerIT == _e.UnitPlayerT(currentCellIdx))
+                                    if (_e.CurrentPlayerIT == _e.UnitPlayerT(currentCellIdx))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }
@@ -88,7 +89,7 @@ namespace Chessy.Model.System.View
 
                                 if (_e.LessonT > LessonTypes.YouNeedDestroyKing)
                                 {
-                                    if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurPlayerIT))
+                                    if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurrentPlayerIT))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }
@@ -132,7 +133,7 @@ namespace Chessy.Model.System.View
 
                     else if (_e.CellClickT == CellClickTypes.GiveTakeTW)
                     {
-                        if (_e.UnitT(currentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(currentCellIdx).Is(_e.CurPlayerIT))
+                        if (_e.UnitT(currentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(currentCellIdx).Is(_e.CurrentPlayerIT))
                         {
 
                         }
@@ -144,7 +145,7 @@ namespace Chessy.Model.System.View
 
                     else if (_e.CellClickT == CellClickTypes.SetUnit)
                     {
-                        if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurPlayerIT))
+                        if (!_e.IsStartedCellC(currentCellIdx).IsStartedCell(_e.CurrentPlayerIT))
                         {
                             _isActive[currentCellIdx] = true;
                         }

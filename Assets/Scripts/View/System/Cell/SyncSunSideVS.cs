@@ -1,9 +1,11 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using Chessy.Model.Values;
-using Chessy.Model.View.System;
+using Chessy.View.System;
+using Chessy.View.UI.Entity;
 using System.Collections.Generic;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
     sealed class SyncSunSideVS : SystemViewAbstract
     {
@@ -60,7 +62,7 @@ namespace Chessy.Model
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _eVG.CellEs(cellIdxCurrent).SunSideSRC.SetActive(_needActive[cellIdxCurrent]);
+                _eVG.CellEs(cellIdxCurrent).SunSideSRC.SetActiveGO(_needActive[cellIdxCurrent]);
             }
 
         }

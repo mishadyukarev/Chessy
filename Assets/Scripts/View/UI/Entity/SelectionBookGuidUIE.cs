@@ -1,8 +1,8 @@
-﻿//using Chessy.Common.Component;
-//using UnityEngine;
+﻿//using Chessy.Model.Component;
+//using UnityEngine; using Chessy.Model.Entity;
 //using UnityEngine.UI;
 
-//namespace Chessy.Model.View.UI.Entity
+//using Chessy.Model.Entity; namespace Chessy.View.UI.Entity
 //{
 //    public struct SelectionBookGuidUIE
 //    {

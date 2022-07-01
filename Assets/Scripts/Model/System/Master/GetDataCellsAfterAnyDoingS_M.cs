@@ -1,8 +1,7 @@
-﻿using Chessy.Common;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.System;
 using Chessy.Model.Values;
 using System.Collections.Generic;
-
 namespace Chessy.Model
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel

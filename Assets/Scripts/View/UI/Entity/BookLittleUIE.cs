@@ -1,8 +1,9 @@
-﻿using Chessy.Model;
+﻿using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Common
+namespace Chessy.View.UI.Entity
 {
     public readonly struct BookLittleUIE
     {

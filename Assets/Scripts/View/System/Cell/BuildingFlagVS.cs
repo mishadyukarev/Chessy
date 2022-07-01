@@ -1,29 +1,43 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.Component;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    sealed class BuildingFlagVS : SystemViewCellGameAbs
+    sealed class BuildingFlagVS : SystemViewAbstract
     {
-        bool _needActive;
-        readonly SpriteRendererVC _flagSRC;
+        bool[] _needActive = new bool[StartValues.CELLS];
+        readonly SpriteRendererVC[] _flagSRCs;
 
-        internal BuildingFlagVS(in SpriteRendererVC flagSRC, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal BuildingFlagVS(in SpriteRendererVC[] flagSRCs, in EntitiesModel eM) : base(eM)
         {
-            _flagSRC = flagSRC;
+            _flagSRCs = flagSRCs;
         }
 
         internal sealed override void Sync()
         {
-            _needActive = false;
-
-            if (_e.BuildingOnCellT(_currentCell).HaveBuilding())
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _needActive = true;
-                _flagSRC.SR.color = _e.BuildingPlayerT(_currentCell).Is(PlayerTypes.First) ? Color.blue : Color.red;
+                _needActive[cellIdxCurrent] = false;
             }
 
-            _flagSRC.SetActive(_needActive);
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
+                {
+                    _needActive[cellIdxCurrent] = true;
+                    _flagSRCs[cellIdxCurrent].SR.color = _e.BuildingPlayerT(cellIdxCurrent).Is(PlayerTypes.First) ? Color.blue : Color.red;
+                }
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _flagSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+            }
+
+                
         }
     }
 }

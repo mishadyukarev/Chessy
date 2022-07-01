@@ -1,30 +1,39 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.Component;
+using Chessy.View.System;
 
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    sealed class SyncStunVS : SystemViewCellGameAbs
+    sealed class SyncStunVS : SystemViewAbstract
     {
-        bool _needActive;
-        readonly SpriteRendererVC _stunSRC;
+        readonly bool[] _needActive = new bool[StartValues.CELLS];
+        readonly SpriteRendererVC[] _stunSRC;
 
-        internal SyncStunVS(in SpriteRendererVC stunSRC, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncStunVS(in SpriteRendererVC[] stunSRCs, in EntitiesModel eM) : base(eM)
         {
-            _stunSRC = stunSRC;
+            _stunSRC = stunSRCs;
         }
 
         internal sealed override void Sync()
         {
-            _needActive = false;
-
-            if (_e.UnitT(_currentCell).HaveUnit())
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
+                _needActive[cellIdxCurrent] = false;
+
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    _needActive = _e.UnitEffectsC(_currentCell).IsStunned;
+                    if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                    {
+                        _needActive[cellIdxCurrent] = _e.UnitEffectsC(cellIdxCurrent).IsStunned;
+                    }
                 }
             }
 
-            _stunSRC.SetActive(_needActive);
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _stunSRC[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+            }
         }
     }
 }

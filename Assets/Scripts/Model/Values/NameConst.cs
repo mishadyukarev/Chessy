@@ -1,4 +1,4 @@
-﻿namespace Chessy.Common
+﻿namespace Chessy.Model.Values
 {
     public static class NameConst
     {

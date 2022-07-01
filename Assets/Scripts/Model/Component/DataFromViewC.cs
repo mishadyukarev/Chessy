@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.Component
 {
     public readonly struct DataFromViewC
     {

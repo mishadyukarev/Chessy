@@ -1,9 +1,9 @@
-﻿//using Chessy.Common;
+﻿//using Chessy.Model;
 //using Chessy.Model;
 //using Chessy.Model;
-//using Chessy.Model.Values.Cell.Unit.Stats;
+//using Chessy.Model.Values;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    static class ThirstyUnitsUpdateMS
 //    {

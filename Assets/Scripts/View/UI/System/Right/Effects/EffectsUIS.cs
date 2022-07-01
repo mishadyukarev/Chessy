@@ -1,7 +1,5 @@
-﻿using Chessy.Common;
-using Chessy.Model;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class EffectsUIS : SystemUIAbstract
     {

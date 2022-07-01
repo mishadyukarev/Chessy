@@ -1,45 +1,53 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.Entity;
 using System;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    sealed class SyncRiverVS : SystemViewCellGameAbs
+    sealed class SyncRiverVS : SystemViewAbstract
     {
-        readonly RiverVE _riverVE;
+        readonly RiverVE[] _riverVEs;
 
-        internal SyncRiverVS(in RiverVE riverVE, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncRiverVS(in RiverVE[] riverVEs, in EntitiesModel eM) : base(eM)
         {
-            _riverVE = riverVE;
+            _riverVEs = riverVEs;
         }
 
         internal sealed override void Sync()
         {
-            switch (_e.CurPlayerIT)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                case PlayerTypes.None: throw new Exception();
-                case PlayerTypes.First:
-                    _riverVE.Parents.LocalEulerAngles = new Vector3(0, 0, 0);
-                    break;
-
-                case PlayerTypes.Second:
-                    _riverVE.Parents.LocalEulerAngles = new Vector3(0, 0, 180);
-                    break;
-
-                default: throw new Exception();
-            }
-
-
-            if (_e.RiverT(_currentCell) == RiverTypes.Start)
-            {
-                for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
+                switch (_e.CurrentPlayerIT)
                 {
-                    if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
+                    case PlayerTypes.None: throw new Exception();
+                    case PlayerTypes.First:
+                        _riverVEs[cellIdxCurrent].ParentTransformVC.LocalEulerAngles = new Vector3(0, 0, 0);
+                        break;
+
+                    case PlayerTypes.Second:
+                        _riverVEs[cellIdxCurrent].ParentTransformVC.LocalEulerAngles = new Vector3(0, 0, 180);
+                        break;
+
+                    default: throw new Exception();
+                }
+
+
+                if (_e.RiverT(cellIdxCurrent) == RiverTypes.Start)
+                {
+                    for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                     {
-                        _riverVE.River(dir_1).SetEnabled(_e.HaveRiverC(_currentCell).HaveRive(dir_1));
+                        if (dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Left)
+                        {
+                            _riverVEs[cellIdxCurrent].River(dir_1).SetEnabled(_e.HaveRiverC(cellIdxCurrent).HaveRive(dir_1));
+                        }
                     }
                 }
             }
+
+            
         }
     }
 }

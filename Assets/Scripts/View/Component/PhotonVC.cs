@@ -2,7 +2,7 @@
 using Photon.Realtime;
 using System.Collections.Generic;
 
-namespace Chessy.Model
+namespace Chessy.View.Component
 {
     public struct PhotonVC
     {

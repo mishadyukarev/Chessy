@@ -1,11 +1,8 @@
-﻿using Chessy.Common;
-using Chessy.Model.Enum;
+﻿using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit;
 using Photon.Pun;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -28,13 +25,12 @@ namespace Chessy.Model
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = StartValues.PEOPLE_IN_CITY;
-                _e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = StartValues.MAX_AVAILABLE_PAWN;
+                _e.PawnPeopleInfoC(playerT).PeopleInCity = StartValues.PEOPLE_IN_CITY;
 
                 if (playerT == PlayerTypes.Second)
                 {
                     if (_e.GameModeT == GameModeTypes.TrainingOffline)
-                        _e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable += 5;
+                        _e.PlayerInfoC(playerT).AmountBuiltHouses += 5;
                 }
 
 
@@ -63,11 +59,11 @@ namespace Chessy.Model
 
             if (_e.GameModeT.IsOffline())
             {
-                _e.CurPlayerIT = PlayerTypes.First;
+                _e.CurrentPlayerIT = PlayerTypes.First;
             }
             else
             {
-                _e.CurPlayerIT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                _e.CurrentPlayerIT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
             }
 
             if (PhotonNetwork.IsMasterClient)

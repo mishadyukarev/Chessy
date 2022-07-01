@@ -1,17 +1,18 @@
-﻿using Chessy.Common.Component;
-using Chessy.Model.Entity.View.Cell;
+﻿using Chessy.Model;
+using Chessy.Model.Component;
+using Chessy.View.Component;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.Entity
 {
     public readonly struct CellVEs
     {
         readonly Dictionary<CellBarTypes, SpriteRendererVC> _bars;
         readonly Dictionary<DirectTypes, SpriteRendererVC> _trails;
 
-        internal readonly GameObjectVC CellParent;
+        internal readonly GameObjectVC CellParentGOC;
         internal readonly GameObjectVC StandartCellGO;
         internal readonly GameObjectVC DesertCell1GOC;
         internal readonly GameObjectVC DesertCell2GOC;
@@ -21,7 +22,7 @@ namespace Chessy.Model
         internal readonly SpriteRendererVC RedCircularSRC;
 
         internal readonly FireVE FireVE;
-        internal readonly EnvironmentVEs EnvironmentVEs;
+        internal readonly EnvironmentVE EnvironmentVEs;
         internal readonly UnitVEs UnitEs;
         internal readonly CellBuildingVE BuildingEs;
 
@@ -39,7 +40,7 @@ namespace Chessy.Model
         {
             var cellT = cell.transform;
 
-            CellParent = new GameObjectVC(cell);
+            CellParentGOC = new GameObjectVC(cell);
 
             var cellUnder = cellT.Find("StandartCell_SR+");
 
@@ -61,7 +62,7 @@ namespace Chessy.Model
 
 
             BuildingEs = new CellBuildingVE(cell);
-            EnvironmentVEs = new EnvironmentVEs(cell);
+            EnvironmentVEs = new EnvironmentVE(cell);
             UnitEs = new UnitVEs(cell.transform);
 
             var weatherT = cellT.Find("Weather+");

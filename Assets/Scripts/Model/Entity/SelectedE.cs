@@ -1,6 +1,4 @@
-﻿using Chessy.Model;
-
-namespace Chessy.Common
+﻿namespace Chessy.Model
 {
     public struct SelectedE
     {

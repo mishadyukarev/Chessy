@@ -1,7 +1,5 @@
-﻿using Chessy.Model.Model.Component;
-using Chessy.Model;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Component;
+namespace Chessy.Model.Entity
 {
     public struct PlayerInfoE
     {

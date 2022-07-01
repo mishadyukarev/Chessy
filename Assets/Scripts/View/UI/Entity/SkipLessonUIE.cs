@@ -1,6 +1,7 @@
-﻿using UnityEngine.UI;
+﻿using Chessy.View.UI.Component;
+using UnityEngine.UI;
 
-namespace Chessy.Model.View.UI.Entity
+namespace Chessy.View.UI.Entity
 {
     public readonly struct SkipLessonUIE
     {

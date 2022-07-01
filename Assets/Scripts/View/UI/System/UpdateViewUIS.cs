@@ -1,6 +1,6 @@
-﻿//using UnityEngine;
+﻿//using UnityEngine; using Chessy.Model.Entity;
 
-//namespace Chessy.Model.System.View.UI
+//using Chessy.Model.Entity; using Chessy.View.UI.Entity; namespace Chessy.Model.System
 //{
 //    public struct UpdateViewUIS : IEcsRunSystem
 //    {

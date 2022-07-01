@@ -1,15 +1,15 @@
 ﻿//using ECS;
-//using UnityEngine;
+//using UnityEngine; using Chessy.Model.Entity;
 
 //namespace Game.Game
 //{
 //    public struct LeftRightZoneUIE
 //    {
-//        public Chessy.Common.Component.GameObjectVC Parent;
+//        public GameObjectVC Parent;
 
 //        internal LeftRightZoneUIE(in GameObject go)
 //        {
-//            Parent = new Chessy.Common.Component.GameObjectVC(go);
+//            Parent = new GameObjectVC(go);
 //        }
 //    }
 //}

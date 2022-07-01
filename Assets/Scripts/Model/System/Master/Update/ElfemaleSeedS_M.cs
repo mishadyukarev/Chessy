@@ -1,6 +1,6 @@
-﻿//using Chessy.Model.Values.Cell.Environment;
+﻿//using Chessy.Model.Values.Environment;
 
-//namespace Chessy.Model.Master
+//using Chessy.Model.Entity; namespace Chessy.Model.Master
 //{
 //    public static class ElfemaleSeedS_M
 //    {

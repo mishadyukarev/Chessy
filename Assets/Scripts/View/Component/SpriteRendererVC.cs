@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.Component
 {
     public readonly struct SpriteRendererVC
     {
@@ -39,7 +39,7 @@ namespace Chessy.Model
                 SR.enabled = false;
         }
 
-        public void SetActive(in bool needActive)
+        public void SetActiveGO(in bool needActive)
         {
             if (GO.activeSelf != needActive) GO.SetActive(needActive);
         }

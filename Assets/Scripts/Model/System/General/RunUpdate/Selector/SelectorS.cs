@@ -1,9 +1,9 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.Model.System;
 using Photon.Pun;
 using System;
 using UnityEngine;
-
 namespace Chessy.Model
 {
     sealed class SelectorS : SystemModel, IUpdate
@@ -56,7 +56,7 @@ namespace Chessy.Model
                 {
                     case RaycastTypes.Cell:
                         {
-                            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
+                            if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
                             {
                                 switch (_e.CellClickT)
                                 {
@@ -75,7 +75,7 @@ namespace Chessy.Model
                                         {
                                             _e.SelectedCellIdx = _e.CurrentCellIdx;
 
-                                            if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _e.UnitPlayerT(idx_cur).Is(_e.CurPlayerIT))
+                                            if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _e.UnitPlayerT(idx_cur).Is(_e.CurrentPlayerIT))
                                             {
                                                 _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM), _e.CurrentCellIdx, _e.SelectedE.ToolWeaponC.ToolWeaponT, _e.SelectedE.ToolWeaponC.LevelT });
                                             }

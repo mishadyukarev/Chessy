@@ -1,14 +1,13 @@
 ﻿using Photon.Pun;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class ForButtonsSystemsModel
     {
         public void GetHeroClickCenter(in UnitTypes unitT)
         {
             if (unitT == UnitTypes.Elfemale && _e.LessonT.HaveLesson()) return;
 
-            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
+            if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
             {
                 _e.SoundAction(ClipTypes.Click).Invoke();
 

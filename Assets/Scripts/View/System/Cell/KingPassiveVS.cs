@@ -1,8 +1,8 @@
-﻿using Chessy.Common.Component;
-using Chessy.Model;
-using Chessy.Model.View.System;
+﻿using Chessy.Model.Entity;
+using Chessy.View.Component;
+using Chessy.View.System;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.System
 {
     sealed class KingPassiveVS : SystemViewAbstract
     {

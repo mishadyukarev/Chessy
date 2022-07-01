@@ -1,7 +1,7 @@
 ﻿//using Chessy.Model;
-//using UnityEngine;
+//using UnityEngine; using Chessy.Model.Entity; using Chessy.Model.System;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class MountainThrowHillsUpdMS
 //    {

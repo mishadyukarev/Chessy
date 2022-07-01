@@ -1,8 +1,7 @@
 ﻿using Chessy.Model.Enum;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class ForButtonsSystemsModel
     {
         public void GetPawn()
         {
@@ -10,11 +9,11 @@ namespace Chessy.Model
 
             if (!_e.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
             {
-                if (_e.CurPlayerIT.Is(_e.WhoseMovePlayerT))
+                if (_e.CurrentPlayerIT.Is(_e.WhoseMovePlayerT))
                 {
-                    if (_e.PlayerInfoE(_e.CurPlayerIT).PawnInfoC.HaveAnyPeopleInCity)
+                    if (_e.PawnPeopleInfoC(_e.CurrentPlayerIT).HaveAnyPeopleInCity)
                     {
-                        if (_e.PlayerInfoE(_e.CurPlayerIT).PawnInfoC.AmountInGame < _e.PlayerInfoE(_e.CurPlayerIT).PawnInfoC.MaxAvailable)
+                        if (_e.PawnPeopleInfoC(_e.CurrentPlayerIT).AmountInGame < _e.PawnPeopleInfoC(_e.CurrentPlayerIT).MaxAvailablePawns(_e.PlayerInfoC(_e.CurrentPlayerIT).AmountBuiltHouses))
                         {
                             _e.SelectedCellIdx = 0;
 

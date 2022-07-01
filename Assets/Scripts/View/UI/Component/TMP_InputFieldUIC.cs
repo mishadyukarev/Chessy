@@ -1,6 +1,5 @@
 ﻿using TMPro;
-
-namespace Chessy.Model
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     public struct TMP_InputFieldUIC
     {

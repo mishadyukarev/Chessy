@@ -1,10 +1,8 @@
-﻿using Chessy.Common;
-using Chessy.Model.Extensions;
+﻿using Chessy.Model.Extensions;
 using Chessy.Model.Values;
 using Photon.Pun;
 using Photon.Realtime;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -27,22 +25,22 @@ namespace Chessy.Model
                             {
                                 UpdateCooldonsStunsAndOther(1);
 
-                                _e.ExecuteUpdateEverythingM(this);
+                                ExecuteUpdateEverythingMS.Execute();
                             }
 
                             else if (_e.GameModeT.Is(GameModeTypes.WithFriendOffline))
                             {
                                 UpdateCooldonsStunsAndOther(0.5f);
 
-                                var nextPlayer = _e.CurPlayerIT.NextPlayer();
+                                var nextPlayer = _e.CurrentPlayerIT.NextPlayer();
 
                                 if (nextPlayer == PlayerTypes.First)
                                 {
-                                    _e.ExecuteUpdateEverythingM(this);
+                                    ExecuteUpdateEverythingMS.Execute();
                                 }
 
                                 _e.WhoseMovePlayerT = nextPlayer;
-                                _e.CurPlayerIT = nextPlayer;
+                                _e.CurrentPlayerIT = nextPlayer;
 
                                 _e.ZoneInfoC.IsActiveFriend = true;
                             }
@@ -55,7 +53,7 @@ namespace Chessy.Model
 
                             if (senderPlayerT == PlayerTypes.Second)
                             {
-                                _e.ExecuteUpdateEverythingM(this);
+                                ExecuteUpdateEverythingMS.Execute();
 
                                 ActiveMotionZoneToGeneneral(RpcTarget.All);
                                 ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);

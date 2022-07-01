@@ -1,6 +1,8 @@
-﻿using Chessy.Common;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct EnergyUIE
     {

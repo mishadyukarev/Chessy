@@ -1,8 +1,8 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.System;
 using Chessy.Model.Values;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
 namespace Chessy.Model
 {
     sealed class RayS : SystemModel, IUpdate

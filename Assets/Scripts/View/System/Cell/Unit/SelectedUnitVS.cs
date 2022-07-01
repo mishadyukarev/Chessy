@@ -1,7 +1,7 @@
 ﻿//using System;
 //using UnityEngine;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    static class SelectedUnitVS
 //    {

@@ -1,7 +1,7 @@
 ﻿//using Chessy.Model.Values;
-//using Chessy.Model.Values.Cell.Unit.Stats;
+//using Chessy.Model.Values;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class IceWallGiveWaterUnitsUpdMS : SystemModelGameAbs, IEcsRunSystem
 //    {

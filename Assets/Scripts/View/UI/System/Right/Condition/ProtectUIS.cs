@@ -1,7 +1,6 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
 using UnityEngine;
-
-namespace Chessy.Model
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class ProtectUIS : SystemUIAbstract
     {
@@ -20,7 +19,7 @@ namespace Chessy.Model
             {
                 if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
                 {
-                    if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurPlayerIT))
+                    if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT))
                     {
                         isEnableButt = true;
 

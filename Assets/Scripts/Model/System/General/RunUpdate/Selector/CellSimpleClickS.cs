@@ -1,9 +1,8 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Photon.Pun;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     sealed class CellSimpleClickS : SystemModel
     {
@@ -54,7 +53,7 @@ namespace Chessy.Model
                     {
                         if (_e.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurPlayerIT)
+                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurrentPlayerIT)
                             {
                                 _e.CommonInfoAboutGameC.SetNextLesson();
                             }
@@ -155,7 +154,7 @@ namespace Chessy.Model
 
                             else
                             {
-                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
+                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
                                 {
                                     TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
                                 }
@@ -206,7 +205,7 @@ namespace Chessy.Model
                             TryAttack(_e.SelectedCellIdx, _e.CurrentCellIdx);
                         }
 
-                        else if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurPlayerIT)
+                        else if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT)
                             && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
                         {
                             TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
@@ -252,7 +251,7 @@ namespace Chessy.Model
                     {
                         if (_e.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurPlayerIT)
+                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurrentPlayerIT)
                             {
                                 _e.CommonInfoAboutGameC.SetNextLesson();
                             }

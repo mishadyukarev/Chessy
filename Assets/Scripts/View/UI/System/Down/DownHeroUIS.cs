@@ -1,6 +1,8 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.View.UI.Entity;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.System
 {
     sealed class DownHeroUIS : SystemUIAbstract
     {
@@ -13,7 +15,7 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            var curPlayerI = _e.CurPlayerIT;
+            var curPlayerI = _e.CurrentPlayerIT;
 
             var myHeroT = _e.PlayerInfoE(curPlayerI).GodInfoC.UnitT;
 

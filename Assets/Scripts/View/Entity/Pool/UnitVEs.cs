@@ -1,9 +1,9 @@
-﻿using Chessy.Common;
-using Chessy.Model.Entity.View.Cell.Unit.Effect;
+﻿using Chessy.Model;
+using Chessy.View.Component;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Model.Entity.View.Cell
+namespace Chessy.View.Entity
 {
     public readonly struct UnitVEs
     {

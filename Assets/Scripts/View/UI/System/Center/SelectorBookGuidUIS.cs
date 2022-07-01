@@ -1,7 +1,7 @@
-﻿//using Chessy.Common.Entity;
-//using Chessy.Model.View.UI.Entity;
+﻿//using Chessy.Model.Entity;
+//using Chessy.View.UI.Entity;
 
-//namespace Chessy.Model.View.UI.System
+//using Chessy.Model.Entity; namespace Chessy.View.UI
 //{
 //    public struct SelectorBookGuidUIS : IEcsRunSystem
 //    {

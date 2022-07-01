@@ -1,6 +1,6 @@
-﻿//using Chessy.Common;
+﻿//using Chessy.Model;
 
-//namespace Chessy.Model.Cell.Unit
+//using Chessy.Model.Entity; namespace Chessy.Model.Cell.Unit
 //{
 //    public struct UnitStatsE
 //    {

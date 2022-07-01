@@ -1,7 +1,5 @@
-﻿using Chessy.Model.Entity;
-using Chessy.Model;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Component;
+namespace Chessy.Model.Entity
 {
     struct CellEs
     {

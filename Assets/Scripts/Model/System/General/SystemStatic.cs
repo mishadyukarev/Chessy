@@ -1,9 +1,6 @@
-﻿using Chessy.Common;
-using Chessy.Common.Enum;
-using Chessy.Model;
+﻿using Chessy.Model;
 using Chessy.Model.Component;
 using Chessy.Model.Enum;
-using Chessy.Model;
 using Chessy.Model.Values;
 using System;
 

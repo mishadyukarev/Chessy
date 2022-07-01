@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chessy.Common.Component
+namespace Chessy.View.Component
 {
     public struct GameObjectVC
     {

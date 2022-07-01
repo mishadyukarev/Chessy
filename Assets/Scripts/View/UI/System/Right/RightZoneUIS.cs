@@ -1,6 +1,5 @@
-﻿using Chessy.Model;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class RightZoneUIS : SystemUIAbstract
     {
@@ -22,7 +21,7 @@ namespace Chessy.Model
             {
                 if (_e.UnitT(idx_sel).HaveUnit())
                 {
-                    if (_e.UnitVisibleC(idx_sel).IsVisible(_e.CurPlayerIT))
+                    if (_e.UnitVisibleC(idx_sel).IsVisible(_e.CurrentPlayerIT))
                     {
                         activeParent = true;
                     }

@@ -1,6 +1,4 @@
 ﻿using Chessy.Model.Component;
-using Chessy.Model.Cell.Unit;
-
 namespace Chessy.Model
 {
     static class MainUnitS

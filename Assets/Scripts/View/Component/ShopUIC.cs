@@ -2,7 +2,7 @@
 //using UnityEngine.Events;
 //using UnityEngine.UI;
 
-//namespace Chessy.Common
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    public struct ShopUIC
 //    {

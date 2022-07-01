@@ -1,12 +1,12 @@
-﻿//using Chessy.Common;
-//using Chessy.Common.Component;
+﻿//using Chessy.Model;
+//using Chessy.Model.Component;
 //using Chessy.Model.Values;
 //using Photon.Pun;
 //using System;
 //using System.Collections.Generic;
 //using UnityEngine;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    public readonly struct EntityVPool
 //    {

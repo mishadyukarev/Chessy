@@ -1,6 +1,4 @@
-﻿using Chessy.Common;
-using System;
-
+﻿using System;
 namespace Chessy.Model.Values
 {
     public static class StartValues
@@ -10,7 +8,6 @@ namespace Chessy.Model.Values
         public const byte CELLS = X_AMOUNT * Y_AMOUNT;
 
         public const int PEOPLE_IN_CITY = 15;
-        public const int MAX_AVAILABLE_PAWN = 1;
 
         public const float MIN_RESOURCES_ENVIRONMENT = 0.1f;
 
@@ -40,6 +37,9 @@ namespace Chessy.Model.Values
 
         public const byte CELL_FOR_CLEAR_FOREST_FOR_1_PLAYER = 59;
         public const byte CELL_FOR_CLEAR_FOREST_FOR_2_PLAYER = 61;
+
+
+        public const int BUILDINGS_FOR_SKIP_LESSON = 6;
 
 
         #region Bot

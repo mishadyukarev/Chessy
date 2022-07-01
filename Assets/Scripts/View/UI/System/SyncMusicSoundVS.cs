@@ -1,8 +1,8 @@
-﻿//using Chessy.Common.Entity;
-//using Chessy.Common.Entity.View;
-//using Chessy.Common.View.UI;
+﻿//using Chessy.Model.Entity;
+//using Chessy.Model.Entity.View;
+//using Chessy.View.UI;
 
-//namespace Chessy.Common.View.System
+//using Chessy.Model.Entity; using Chessy.View.UI.Entity; namespace Chessy.Model.View.System
 //{
 //    sealed class SyncMusicSoundVS : SystemUI
 //    {

@@ -1,63 +1,68 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using Chessy.View.UI.Entity;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    sealed class SyncBarsEnvironmentVS : SystemViewCellGameAbs
+    sealed class SyncBarsEnvironmentVS : SystemViewAbstract
     {
-        readonly EntitiesView vEs;
+        readonly EntitiesView _eV;
 
-        internal SyncBarsEnvironmentVS(in EntitiesView vEs, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncBarsEnvironmentVS(in EntitiesView eV, in EntitiesModel eM) : base(eM)
         {
-            this.vEs = vEs;
+            _eV = eV;
         }
 
         internal sealed override void Sync()
         {
-            if (_e.ZoneInfoC.IsActiveEnvironment)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.FertilizeC(_currentCell).HaveAnyResources)
+                if (_e.ZoneInfoC.IsActiveEnvironment)
                 {
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Food).Enable();
+                    if (_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources)
+                    {
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Food).Enable();
 
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Food).Transform.localScale
-                        = new Vector3(_e.FertilizeC(_currentCell).Resources / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Food).Transform.localScale
+                            = new Vector3(_e.WaterOnCellC(cellIdxCurrent).Resources / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
+                    }
+                    else
+                    {
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Food).Disable();
+                    }
+
+                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    {
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Wood).Enable();
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Wood).Transform.localScale =
+                            new Vector3(_e.AdultForestC(cellIdxCurrent).Resources
+                            / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
+                    }
+                    else
+                    {
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Wood).Disable();
+                    }
+
+                    if (_e.HillC(cellIdxCurrent).HaveAnyResources)
+                    {
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Ore).Enable();
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Ore).Transform.localScale
+                            = new Vector3(_e.HillC(cellIdxCurrent).Resources
+                            / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
+                    }
+                    else
+                    {
+                        _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Ore).Disable();
+                    }
                 }
                 else
                 {
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Food).Disable();
+                    _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Food).Disable();
+                    _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Wood).Disable();
+                    _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Ore).Disable();
                 }
-
-                if (_e.AdultForestC(_currentCell).HaveAnyResources)
-                {
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Wood).Enable();
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Wood).Transform.localScale =
-                        new Vector3(_e.AdultForestC(_currentCell).Resources
-                        / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
-                }
-                else
-                {
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Wood).Disable();
-                }
-
-                if (_e.HillC(_currentCell).HaveAnyResources)
-                {
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Ore).Enable();
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Ore).Transform.localScale
-                        = new Vector3(_e.HillC(_currentCell).Resources
-                        / (float)EnvironmentValues.MAX_RESOURCES, 0.15f, 1);
-                }
-                else
-                {
-                    vEs.CellEs(_currentCell).Bar(CellBarTypes.Ore).Disable();
-                }
-            }
-            else
-            {
-                vEs.CellEs(_currentCell).Bar(CellBarTypes.Food).Disable();
-                vEs.CellEs(_currentCell).Bar(CellBarTypes.Wood).Disable();
-                vEs.CellEs(_currentCell).Bar(CellBarTypes.Ore).Disable();
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿//using UnityEngine.Video;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    public readonly struct VideoPlayerVC
 //    {

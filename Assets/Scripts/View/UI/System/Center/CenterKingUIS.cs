@@ -1,7 +1,6 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class CenterKingUIS : SystemUIAbstract
     {
@@ -17,7 +16,7 @@ namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_e.PlayerInfoE(_e.CurPlayerIT).PlayerInfoC.HaveKingInInventor && _e.CellClickT != CellClickTypes.SetUnit)
+            if (_e.PlayerInfoE(_e.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor && _e.CellClickT != CellClickTypes.SetUnit)
             {
                 if (!_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
                 {

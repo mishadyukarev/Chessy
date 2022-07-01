@@ -1,6 +1,5 @@
 ﻿using System;
-
-namespace Chessy.Model.Values.Cell.Unit.Stats
+namespace Chessy.Model.Values
 {
     public static class WaterValues
     {

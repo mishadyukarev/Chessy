@@ -1,17 +1,18 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct UpUIEs
     {
         public readonly UpEconomyUIE EconomyE;
         public readonly SunsUIE SunsE;
 
-        public readonly ButtonUIC LeaveC;
-        public readonly ButtonUIC AlphaC;
+        public readonly ButtonUIC LeaveButtonC;
         public readonly ButtonUIC SettingsButtonC;
 
         public readonly GameObjectVC ParentWindGOC;
@@ -29,7 +30,7 @@ namespace Chessy.Model
             SunsE = new SunsUIE(upZone);
 
 
-            LeaveC = new ButtonUIC(leaveButton);
+            LeaveButtonC = new ButtonUIC(leaveButton);
             SettingsButtonC = new ButtonUIC(upZone.Find("Settings+").Find("Button+").GetComponent<Button>());
 
             var windZone = upZone.Find("Wind+");
@@ -45,7 +46,6 @@ namespace Chessy.Model
             WindTextC = new TextUIC(windZone.Find("Text_TMP+").GetComponent<TextMeshProUGUI>());
 
 
-            AlphaC = new ButtonUIC(upZone.Find("Alpha_Button").GetComponent<Button>());
             MotionsTextC = new TextUIC(upZone.Find("Motions_TMP+").GetComponent<TextMeshProUGUI>());
             DiscordButtonC = new ButtonUIC(upZone.Find("Discord_Button+").GetComponent<Button>());
         }

@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Values.Cell.Unit.Effect
+﻿namespace Chessy.Model.Values
 {
     public static class StunValues
     {

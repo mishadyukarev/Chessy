@@ -1,7 +1,5 @@
-﻿using Chessy.Common;
-using Chessy.Model;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class CenterFriendUIS : SystemUIAbstract
     {
@@ -24,7 +22,7 @@ namespace Chessy.Model
                 {
                     _needActive = true;
 
-                    if (_e.CurPlayerIT == PlayerTypes.First)
+                    if (_e.CurrentPlayerIT == PlayerTypes.First)
                     {
                         _eUI.CenterEs.FriendE.TextC.TextUI.text = "1";
                     }

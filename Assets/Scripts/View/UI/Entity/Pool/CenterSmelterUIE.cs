@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct CenterSmelterUIE
     {
         readonly Dictionary<ResourceTypes, TextUIC> _texts;
 
-        public readonly Chessy.Common.Component.GameObjectVC Zone;
+        public readonly GameObjectVC Zone;
         public readonly ButtonUIC ButtonC;
         public readonly ButtonUIC ExitButtonC;
 
@@ -25,7 +28,7 @@ namespace Chessy.Model
 
             var button = toggler.Find("Button+").GetComponent<Button>();
 
-            Zone = new Chessy.Common.Component.GameObjectVC(zone.gameObject);
+            Zone = new GameObjectVC(zone.gameObject);
             ButtonC = new ButtonUIC(button);
             ExitButtonC = new ButtonUIC(zone.Find("Exit").Find("Button").GetComponent<Button>());
 

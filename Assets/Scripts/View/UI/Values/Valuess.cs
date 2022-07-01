@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.View.UI.Values
+﻿namespace Chessy.View.UI.Values
 {
     sealed class Valuess
     {

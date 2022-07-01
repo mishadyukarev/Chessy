@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.UI.Component;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct RightEffectsUIE
     {

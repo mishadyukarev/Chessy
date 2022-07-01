@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Chessy.Model.Values
 {
     public static class EconomyValues

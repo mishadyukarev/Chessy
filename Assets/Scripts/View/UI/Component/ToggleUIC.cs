@@ -1,6 +1,5 @@
 ﻿using UnityEngine.UI;
-
-namespace Chessy.Common.View.UI.Component
+namespace Chessy.View.UI.Component
 {
     public struct ToggleUIC
     {

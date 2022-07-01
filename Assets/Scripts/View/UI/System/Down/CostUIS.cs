@@ -1,9 +1,8 @@
-﻿using Chessy.Model.Entity.View.UI.Down;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Entity.View.UI.Down;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit.Stats;
-
-namespace Chessy.Model.System.View.UI.Down
+namespace Chessy.View.UI.System
 {
     sealed class CostUIS : SystemUIAbstract
     {

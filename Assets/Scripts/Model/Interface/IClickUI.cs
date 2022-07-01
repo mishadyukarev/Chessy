@@ -1,4 +1,4 @@
-﻿namespace Chessy.Common.Interface
+﻿namespace Chessy.Model.Interface
 {
     public interface IClickUI
     {

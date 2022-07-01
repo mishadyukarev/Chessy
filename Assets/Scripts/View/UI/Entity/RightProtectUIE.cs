@@ -1,21 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public struct RightProtectUIE
     {
-        readonly Dictionary<UnitTypes, Chessy.Common.Component.GameObjectVC> _zones;
+        readonly Dictionary<UnitTypes, GameObjectVC> _zones;
 
         public ButtonUIC ButtonC;
         public ImageUIC ImageUIC;
 
-        public Chessy.Common.Component.GameObjectVC Button(in UnitTypes unit) => _zones[unit];
+        public GameObjectVC Button(in UnitTypes unit) => _zones[unit];
 
         public RightProtectUIE(in Transform condZone)
         {
-            _zones = new Dictionary<UnitTypes, Chessy.Common.Component.GameObjectVC>();
+            _zones = new Dictionary<UnitTypes, GameObjectVC>();
 
             var defendZone = condZone.Find("Defend+");
 
@@ -27,7 +30,7 @@ namespace Chessy.Model
 
             for (var unit = UnitTypes.None + 1; unit < UnitTypes.End; unit++)
             {
-                _zones.Add(unit, new Chessy.Common.Component.GameObjectVC(defendZone.Find(unit.ToString()).gameObject));
+                _zones.Add(unit, new GameObjectVC(defendZone.Find(unit.ToString()).gameObject));
             }
         }
     }

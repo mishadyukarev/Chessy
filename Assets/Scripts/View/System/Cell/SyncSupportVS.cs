@@ -1,9 +1,11 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using Chessy.Model.Values;
-using Chessy.Model.View.System;
+using Chessy.View.System;
+using Chessy.View.UI.Entity;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
     sealed class SyncSupportVS : SystemViewAbstract
     {
@@ -83,7 +85,7 @@ namespace Chessy.Model
             {
                 if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
                 {
-                    if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurPlayerIT))
+                    if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT))
                     {
                         if (!_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
@@ -116,7 +118,7 @@ namespace Chessy.Model
 
             for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
             {
-                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetActive(_needActive[cell_start]);
+                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetActiveGO(_needActive[cell_start]);
                 _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SR.color = _needColor[cell_start];
             }
         }

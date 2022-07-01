@@ -1,33 +1,42 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.View.UI.Entity;
 using Photon.Pun;
 
-namespace Chessy.Menu
+namespace Chessy.View.UI.System
 {
-    sealed class ConnectorMenuUIS
+    sealed class ConnectorMenuUIS : SystemUIAbstract
     {
-        public void Run(in EntitiesViewUI eUI)
+        readonly EntitiesViewUI _eUI;
+
+        internal ConnectorMenuUIS(in EntitiesViewUI eV, in EntitiesModel eMG) : base(eMG)
+        {
+            _eUI = eV;
+        }
+
+        internal override void Sync()
         {
             if (PhotonNetwork.IsConnected)
             {
                 if (PhotonNetwork.OfflineMode)
                 {
-                    eUI.OfflineZoneE.JoinButtonC.SetActive(false);
-                    eUI.OfflineZoneE.FrontImageC.SetActive(false);
+                    _eUI.OfflineZoneE.JoinButtonC.SetActive(false);
+                    _eUI.OfflineZoneE.FrontImageC.SetActive(false);
 
-                    eUI.OnlineZoneE.JoinButtonC.SetActive(true);
-                    eUI.OnlineZoneE.FronImageC.SetActive(true);
+                    _eUI.OnlineZoneE.JoinButtonC.SetActive(true);
+                    _eUI.OnlineZoneE.FronImageC.SetActive(true);
 
-                    eUI.CenterE.LogTextC.TextUI.text = "Offline";
+                    _eUI.CenterE.LogTextC.TextUI.text = "Offline";
                 }
                 else if (PhotonNetwork.IsConnectedAndReady)
                 {
-                    eUI.OnlineZoneE.JoinButtonC.SetActive(false);
-                    eUI.OnlineZoneE.FronImageC.SetActive(false);
+                    _eUI.OnlineZoneE.JoinButtonC.SetActive(false);
+                    _eUI.OnlineZoneE.FronImageC.SetActive(false);
 
-                    eUI.OfflineZoneE.JoinButtonC.SetActive(true);
-                    eUI.OfflineZoneE.FrontImageC.SetActive(true);
+                    _eUI.OfflineZoneE.JoinButtonC.SetActive(true);
+                    _eUI.OfflineZoneE.FrontImageC.SetActive(true);
 
-                    eUI.CenterE.LogTextC.TextUI.text = "Online";
+                    _eUI.CenterE.LogTextC.TextUI.text = "Online";
                 }
             }
         }

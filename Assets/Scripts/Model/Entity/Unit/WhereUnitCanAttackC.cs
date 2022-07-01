@@ -1,6 +1,6 @@
-﻿//using System.Collections.Generic;
+﻿//using System.Collections.Generic; using Chessy.Model.Entity;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    public struct WhereUnitCanAttackC
 //    {

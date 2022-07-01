@@ -1,9 +1,8 @@
-﻿using Chessy.Model;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.System;
 using Chessy.Model.Values;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace Chessy.Model
 {
     sealed class TrySetUnitAIS_M : SystemModel
@@ -84,7 +83,7 @@ namespace Chessy.Model
                 //TrySetUnit(ref _theMostBigPointForSettingKing, _pointsCellsForSettingKing, UnitTypes.King, playerBotT);
             }
 
-            if (_e.PlayerInfoE(playerBotT).PawnInfoC.CanGetPawn)
+            if (_e.PawnPeopleInfoC(playerBotT).CanGetPawn(_e.PlayerInfoC(playerBotT).AmountBuiltHouses))
             {
                 TrySetUnit(ref _theMostBigPointForSettingPawn, _pointsCellsForSettingPawn, UnitTypes.Pawn, playerBotT);
             }
@@ -138,7 +137,7 @@ namespace Chessy.Model
                     if (!_e.PlayerInfoE(playerBotT).PlayerInfoC.HaveKingInInventor) break;
                 }
 
-                if (!_e.PlayerInfoE(playerBotT).PawnInfoC.CanGetPawn)
+                if (!_e.PawnPeopleInfoC(playerBotT).CanGetPawn(_e.PlayerInfoC(playerBotT).AmountBuiltHouses))
                 {
                     break;
                 }

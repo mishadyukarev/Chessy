@@ -1,12 +1,9 @@
 ﻿using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit;
-using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {

@@ -1,9 +1,7 @@
-﻿using Chessy.Common;
-using Chessy.Common.Enum;
-using Chessy.Model;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.Model.System;
 using UnityEngine;
-
 namespace Chessy.Model
 {
     public sealed class PressHintS : SystemModel

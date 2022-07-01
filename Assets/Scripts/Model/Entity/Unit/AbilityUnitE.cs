@@ -1,7 +1,7 @@
-﻿//using Chessy.Common;
-//using Chessy.Model.Model.Component;
+﻿//using Chessy.Model;
+//using Chessy.Model.Component;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    public struct AbilityUnitE
 //    {

@@ -1,9 +1,8 @@
-﻿using Chessy.Common;
-using Chessy.Model.Entity.View.UI.Down;
+﻿using Chessy.Model.Entity.View.UI.Down;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct DownUIEs
     {

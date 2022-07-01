@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct MistakeUIE
     {
-        readonly Dictionary<MistakeTypes, Chessy.Common.Component.GameObjectVC> _zones;
+        readonly Dictionary<MistakeTypes, GameObjectVC> _zones;
         readonly Dictionary<ResourceTypes, TextUIC> _needAmountRes;
 
-        public Chessy.Common.Component.GameObjectVC Zones(in MistakeTypes mistake) => _zones[mistake];
+        public GameObjectVC Zones(in MistakeTypes mistake) => _zones[mistake];
         public TextUIC NeedAmountResources(in ResourceTypes res) => _needAmountRes[res];
 
 
@@ -35,7 +37,7 @@ namespace Chessy.Model
 
         public MistakeUIE(in Transform centerZone)
         {
-            _zones = new Dictionary<MistakeTypes, Chessy.Common.Component.GameObjectVC>();
+            _zones = new Dictionary<MistakeTypes, GameObjectVC>();
             _needAmountRes = new Dictionary<ResourceTypes, TextUIC>();
 
 
@@ -45,7 +47,7 @@ namespace Chessy.Model
 
             for (var mistake = MistakeTypes.Economy; mistake < MistakeTypes.End; mistake++)
             {
-                _zones.Add(mistake, new Chessy.Common.Component.GameObjectVC(mistakeZone.Find(mistake.ToString()).gameObject));
+                _zones.Add(mistake, new GameObjectVC(mistakeZone.Find(mistake.ToString()).gameObject));
             }
 
             for (var res = ResourceTypes.Food; res < ResourceTypes.End; res++)

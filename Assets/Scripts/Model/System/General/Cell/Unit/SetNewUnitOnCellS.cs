@@ -1,6 +1,5 @@
-﻿using Chessy.Model.Values.Cell.Unit.Stats;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Values;
+namespace Chessy.Model.System
 {
     sealed partial class SystemsModel
     {
@@ -13,14 +12,14 @@ namespace Chessy.Model
 
             if (_e.UnitT(cellIdxForSetting).Is(UnitTypes.Pawn))
             {
-                _e.PlayerInfoE(playerT).PawnInfoC.SetPawn();
+                _e.PawnPeopleInfoC(playerT).AmountInGame++;
             }
 
 
 
             if (unitT == UnitTypes.Pawn)
             {
-                _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity--;
+                _e.PawnPeopleInfoC(playerT).PeopleInCity--;
 
                 _e.MainToolWeaponE(cellIdxForSetting).Set(ToolWeaponTypes.Axe, LevelTypes.First);
             }
@@ -32,11 +31,11 @@ namespace Chessy.Model
 
                 if (unitT.IsGod())
                 {
-                    _e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = false;
+                    _e.GodInfoC(playerT).HaveGodInInventor = false;
                 }
                 else if (unitT == UnitTypes.King)
                 {
-                    _e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = false;
+                    _e.PlayerInfoC(playerT).HaveKingInInventor = false;
                 }
 
                 _e.MainToolWeaponE(cellIdxForSetting).Set(ToolWeaponTypes.None, LevelTypes.None);

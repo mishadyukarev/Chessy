@@ -1,6 +1,5 @@
 ﻿using Chessy.Model.Extensions;
 using Chessy.Model.Values;
-
 namespace Chessy.Model
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel

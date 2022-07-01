@@ -1,10 +1,11 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
 
-namespace Chessy.Model.View.System
+namespace Chessy.View.System
 {
     abstract class SystemViewAbstract : SystemAbstract
     {
-        protected SystemViewAbstract(in EntitiesModel eMG) : base(eMG) { }
+        protected SystemViewAbstract(in EntitiesModel eM) : base(eM) { }
 
         internal abstract void Sync();
     }

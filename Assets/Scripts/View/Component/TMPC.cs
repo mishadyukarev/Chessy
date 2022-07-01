@@ -1,6 +1,6 @@
 ﻿using TMPro;
 
-namespace Chessy.Model
+namespace Chessy.View.Component
 {
     public readonly struct TMPC
     {

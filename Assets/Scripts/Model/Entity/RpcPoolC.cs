@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
-
 namespace Chessy.Model
 {
     struct RpcPoolC

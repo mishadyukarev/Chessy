@@ -1,7 +1,7 @@
-﻿//using Chessy.Common.Entity;
-//using Chessy.Common.Entity.View;
+﻿//using Chessy.Model.Entity;
+//using Chessy.Model.Entity.View;
 
-//namespace Chessy.Common.View.UI.System
+//using Chessy.Model.Entity; namespace Chessy.View.UI
 //{
 //    public struct UpdateUIS : IEcsRunSystem
 //    {

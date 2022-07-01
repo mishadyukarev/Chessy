@@ -1,18 +1,20 @@
-﻿using UnityEngine;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.Entity
 {
     public struct RiverVE
     {
         readonly SpriteRendererVC[] _rivers;
 
-        public readonly TransformVC Parents;
+        public readonly TransformVC ParentTransformVC;
 
         public SpriteRendererVC River(in DirectTypes dir) => _rivers[(byte)dir];
 
         public RiverVE(in Transform cell)
         {
-            Parents = new TransformVC(cell.Find("River"));
+            ParentTransformVC = new TransformVC(cell.Find("River"));
 
 
             _rivers = new SpriteRendererVC[(byte)DirectTypes.End];

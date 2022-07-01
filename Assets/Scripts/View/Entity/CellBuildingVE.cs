@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.Entity
 {
     public readonly struct CellBuildingVE
     {

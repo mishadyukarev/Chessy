@@ -1,49 +1,46 @@
 ﻿using Chessy.Model.Extensions;
-using Chessy.Model;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit.Stats;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    static partial class ExecuteUpdateEverythingMS
+    sealed partial class ExecuteUpdateEverythingMS
     {
-        static EntitiesModel FireUpdate(this EntitiesModel e)
+        void FireUpdate()
         {
             var needForFireNext = new List<byte>();
 
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (e.HaveFire(cell_0))
+                if (_e.HaveFire(cell_0))
                 {
-                    if (e.UnitT(cell_0).HaveUnit())
+                    if (_e.UnitT(cell_0).HaveUnit())
                     {
-                        if (e.UnitT(cell_0).Is(UnitTypes.Hell))
+                        if (_e.UnitT(cell_0).Is(UnitTypes.Hell))
                         {
-                            e.HpUnitC(cell_0).Health = HpValues.MAX;
+                            _e.HpUnitC(cell_0).Health = HpValues.MAX;
                         }
                         else
                         {
-                            if (e.UnitPlayerT(cell_0).Is(PlayerTypes.None))
+                            if (_e.UnitPlayerT(cell_0).Is(PlayerTypes.None))
                             {
-                                e.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                                _e.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                e.Attack(HpValues.FIRE_DAMAGE, e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
+                                _e.Attack(HpValues.FIRE_DAMAGE, _e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
                             }
                         }
                     }
 
-                    if (!e.AdultForestC(cell_0).HaveAnyResources)
+                    if (!_e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
+                        _e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
 
 
-                        e.HaveFire(cell_0) = false;
+                        _e.HaveFire(cell_0) = false;
 
 
-                        foreach (var cellE in e.AroundCellsE(cell_0).CellsAround)
+                        foreach (var cellE in _e.AroundCellsE(cell_0).CellsAround)
                         {
                             needForFireNext.Add(cellE);
                         }
@@ -53,37 +50,33 @@ namespace Chessy.Model
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (!e.IsBorder(cell_0))
+                if (!_e.IsBorder(cell_0))
                 {
-                    if (e.AdultForestC(cell_0).HaveAnyResources)
+                    if (_e.AdultForestC(cell_0).HaveAnyResources)
                     {
-                        e.HaveFire(cell_0) = true;
+                        _e.HaveFire(cell_0) = true;
                     }
                 }
             }
-
-            return e;
         }
 
-        static EntitiesModel TryPutOutFireWithClouds(this EntitiesModel e)
+        void TryPutOutFireWithClouds()
         {
-            foreach (var cellE in e.AroundCellsE(e.CenterCloudCellIdx).CellsAround)
+            foreach (var cellE in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
             {
-                e.HaveFire(cellE) = false;
+                _e.HaveFire(cellE) = false;
             }
-            return e;
         }
 
-        static EntitiesModel BurnAdultForest(this EntitiesModel e, in SystemsModel s)
+        void BurnAdultForest()
         {
             for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
             {
-                if (e.HaveFire(cell_0))
+                if (_e.HaveFire(cell_0))
                 {
-                    s.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
+                    _s.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
                 }
             }
-            return e;
         }
     }
 }

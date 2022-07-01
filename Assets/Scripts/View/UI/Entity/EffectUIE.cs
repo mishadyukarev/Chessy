@@ -1,8 +1,10 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model.Component;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model.Entity.View.UI.Right
+namespace Chessy.View.UI.Entity
 {
     readonly struct EffectUIE
     {

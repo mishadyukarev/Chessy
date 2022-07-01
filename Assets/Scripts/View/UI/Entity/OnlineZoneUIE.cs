@@ -1,9 +1,10 @@
 ﻿using Chessy.Model;
+using Chessy.View.UI.Component;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Menu
+namespace Chessy.View.UI.Entity
 {
     public struct OnlineZoneUIE
     {

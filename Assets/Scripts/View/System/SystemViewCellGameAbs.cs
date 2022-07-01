@@ -1,6 +1,5 @@
-﻿using Chessy.Model;
-using Chessy.Model.View.System;
-
+﻿using Chessy.Model.Entity;
+using Chessy.View.System;
 namespace Chessy.Model
 {
     internal class SystemViewCellGameAbs : SystemViewAbstract

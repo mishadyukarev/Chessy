@@ -1,42 +1,60 @@
-﻿using Chessy.Model.Extensions;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Extensions;
+using Chessy.Model.Values;
+using Chessy.View.Component;
+using System.Collections.Generic;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    sealed class SyncBuildingVS : SystemViewCellGameAbs
+    sealed class SyncBuildingVS : SystemViewAbstract
     {
-        readonly bool[] _needActive = new bool[(byte)BuildingTypes.End];
-        readonly CellBuildingVE _buildingVEs;
+        readonly Dictionary<BuildingTypes, SpriteRendererVC[]> _buildingSRCs = new Dictionary<BuildingTypes, SpriteRendererVC[]>();
+        readonly Dictionary<BuildingTypes, bool[]> _needActive = new Dictionary<BuildingTypes, bool[]>();
 
-
-        internal SyncBuildingVS(in CellBuildingVE buildingVEs, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncBuildingVS(in Dictionary<BuildingTypes, SpriteRendererVC[]> buildingSRCs, in EntitiesModel eM) : base(eM)
         {
-            _buildingVEs = buildingVEs;
+            _buildingSRCs = buildingSRCs;
+
+            for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+            {
+                _needActive.Add(buildingT, new bool[StartValues.CELLS]);
+            }
         }
 
         internal override void Sync()
         {
-            var isVisForMe = _e.BuildingVisibleC(_currentCell).IsVisible(_e.CurPlayerIT);
-            var isVisForNext = _e.BuildingVisibleC(_currentCell).IsVisible(_e.CurPlayerIT.NextPlayer());
-
-            for (var build = BuildingTypes.None + 1; build < BuildingTypes.End; build++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _needActive[(byte)build] = false;
+                for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+                {
+                    _needActive[buildingT][cellIdxCurrent] = false;
+                }
             }
 
-            if (_e.BuildingOnCellT(_currentCell).HaveBuilding())
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (isVisForMe)
+                var isVisForMe = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT);
+                var isVisForNext = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT.NextPlayer());
+
+                if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {
-                    _needActive[(byte)_e.BuildingOnCellT(_currentCell)] = true;
+                    if (isVisForMe)
+                    {
+                        _needActive[_e.BuildingOnCellT(cellIdxCurrent)][cellIdxCurrent] = true;
+                    }
+                }
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+                {
+                    _buildingSRCs[buildingT][cellIdxCurrent].SetActiveGO(_needActive[buildingT][cellIdxCurrent]);
                 }
             }
 
 
-            for (var buildT = (BuildingTypes)1; buildT < BuildingTypes.End; buildT++)
-            {
-                _buildingVEs.Main(buildT).GO.SetActive(_needActive[(byte)buildT]);
-            }
 
         }
     }

@@ -1,8 +1,10 @@
-﻿using Chessy.Model.Entity.View.UI.Right;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.View.UI.Entity;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.System
 {
     sealed class RelaxUIS : SystemUIAbstract
     {
@@ -30,9 +32,9 @@ namespace Chessy.Model
 
             if (_e.UnitT(idx_0).HaveUnit())
             {
-                if (_e.UnitPlayerT(idx_0).Is(_e.CurPlayerIT))
+                if (_e.UnitPlayerT(idx_0).Is(_e.CurrentPlayerIT))
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.RelaxExtractPawn)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.RelaxExtractPawn)
                     {
                         activeButt = true;
 

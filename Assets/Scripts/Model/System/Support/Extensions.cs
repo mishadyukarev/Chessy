@@ -1,7 +1,6 @@
 ﻿using Chessy.Model.Enum;
 using System;
 using System.Linq;
-
 namespace Chessy.Model.Extensions
 {
     public static class Extensions

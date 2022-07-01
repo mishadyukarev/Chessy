@@ -1,13 +1,15 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.View.UI.Entity;
 
-namespace Chessy.Model.View.UI.System
+namespace Chessy.View.UI.System
 {
     sealed class LessonUIS : SystemUIAbstract
     {
-        readonly CenterUIEs _centerUIEs;
+        readonly CenterGameUIEs _centerUIEs;
 
-        internal LessonUIS(in CenterUIEs centerUIEs, in EntitiesModel eMGame) : base(eMGame)
+        internal LessonUIS(in CenterGameUIEs centerUIEs, in EntitiesModel eMGame) : base(eMGame)
         {
             _centerUIEs = centerUIEs;
         }

@@ -1,10 +1,9 @@
-﻿using Chessy.Common.Component;
-using Chessy.Common.View.UI.Component;
-using Chessy.Model;
+﻿using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Common.View.UI
+namespace Chessy.View.UI.Entity
 {
     public struct SettingsUIE
     {

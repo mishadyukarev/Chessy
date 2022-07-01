@@ -1,6 +1,5 @@
 ﻿using Chessy.Model.Values;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {

@@ -1,8 +1,7 @@
 ﻿using Chessy.Model.Values;
 using Photon.Pun;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -75,7 +74,7 @@ namespace Chessy.Model
                 objs.Add(_e.AdultForestC(cell_0).Resources);
                 objs.Add(_e.MountainC(cell_0).Resources);
                 objs.Add(_e.HillC(cell_0).Resources);
-                objs.Add(_e.FertilizeC(cell_0).Resources);
+                objs.Add(_e.WaterOnCellC(cell_0).Resources);
 
                 objs.Add(_e.RiverT(cell_0));
                 objs.Add(_e.HaveRiverC(cell_0).HaveRives);
@@ -110,7 +109,7 @@ namespace Chessy.Model
                 //objs.Add(_e.PlayerInfoE(playerT).KingInfoE.CellKing);
 
                 objs.Add(_e.PawnPeopleInfoC(playerT).PeopleInCity);
-                objs.Add(_e.PawnPeopleInfoC(playerT).MaxAvailable);
+                //objs.Add(_e.PawnPeopleInfoC(playerT).MaxAvailable);
                 objs.Add(_e.PawnPeopleInfoC(playerT).AmountInGame);
 
                 objs.Add(_e.GodInfoC(playerT).HaveGodInInventor);
@@ -211,7 +210,7 @@ namespace Chessy.Model
                 _e.AdultForestC(cell_0).Resources = (float)objects[idxCurrent++];
                 _e.MountainC(cell_0).Resources = (float)objects[idxCurrent++];
                 _e.HillC(cell_0).Resources = (float)objects[idxCurrent++];
-                _e.FertilizeC(cell_0).Resources = (float)objects[idxCurrent++];
+                _e.WaterOnCellC(cell_0).Resources = (float)objects[idxCurrent++];
 
                 _e.SetRiverT(cell_0, (RiverTypes)objects[idxCurrent++]);
                 _e.HaveRiverC(cell_0).Sync((bool[])objects[idxCurrent++]);
@@ -245,7 +244,7 @@ namespace Chessy.Model
                 //_e.PlayerInfoE(playerT).KingInfoE.CellKing = (byte)objects[idxCurrent++];
 
                 _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity = (int)objects[idxCurrent++];
-                _e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = (int)objects[idxCurrent++];
+                //_e.PlayerInfoE(playerT).PawnInfoC.MaxAvailable = (int)objects[idxCurrent++];
                 _e.PlayerInfoE(playerT).PawnInfoC.AmountInGame = (int)objects[idxCurrent++];
 
                 _e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = (bool)objects[idxCurrent++];

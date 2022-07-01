@@ -1,6 +1,5 @@
 ﻿using UnityEngine.UI;
-
-namespace Chessy.Common.Component
+namespace Chessy.View.UI.Component
 {
     public struct SliderUIC
     {

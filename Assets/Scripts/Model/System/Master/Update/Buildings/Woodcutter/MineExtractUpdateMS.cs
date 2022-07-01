@@ -1,4 +1,4 @@
-﻿//namespace Chessy.Model
+﻿//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class MineExtractUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {

@@ -1,40 +1,58 @@
-﻿using Chessy.Model.Entity.View.Cell.Unit.Effect;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.Component;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    sealed class SyncFrozenArrawVS : SystemViewCellGameAbs
+    sealed class SyncFrozenArrawVS : SystemViewAbstract
     {
-        readonly EffectVE _effectE;
+        readonly SpriteRendererVC[] _rightSRCs;
+        readonly SpriteRendererVC[] _upSRCs;
+        readonly bool[] _needActiveRight = new bool[StartValues.CELLS];
+        readonly bool[] _needActiveUp = new bool[StartValues.CELLS];
 
-        readonly bool[] _needActive = new bool[2];
-
-        internal SyncFrozenArrawVS(in EffectVE effectVE, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncFrozenArrawVS(in SpriteRendererVC[] srRightCs, in SpriteRendererVC[] upSRCs, in EntitiesModel eM) : base(eM)
         {
-            _effectE = effectVE;
+            _rightSRCs = srRightCs;
+            _upSRCs = upSRCs;
         }
 
         internal sealed override void Sync()
         {
-            _needActive[0] = false;
-            _needActive[1] = false;
-
-            if (_e.UnitT(_currentCell).HaveUnit())
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
+                _needActiveUp[cellIdxCurrent] = false;
+                _needActiveRight[cellIdxCurrent] = false;
+
+
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (_e.MainToolWeaponT(_currentCell).Is(ToolWeaponTypes.BowCrossbow))
+                    if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
                     {
-                        if (_e.UnitEffectsC(_currentCell).HaveShoots)
+                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
                         {
-                            _needActive[_e.IsRightArcherUnit(_currentCell) ? 0 : 1] = true;
+                            if (_e.UnitEffectsC(cellIdxCurrent).HaveShoots)
+                            {
+                                if (_e.IsRightArcherUnit(cellIdxCurrent))
+                                {
+                                    _needActiveRight[cellIdxCurrent] = true;
+                                }
+                                else
+                                {
+                                    _needActiveUp[cellIdxCurrent] = true;
+                                }
+                            }
                         }
                     }
                 }
             }
 
-            _effectE.FrozenArraw(true).SetActive(_needActive[0]);
-            _effectE.FrozenArraw(false).SetActive(_needActive[1]);
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _rightSRCs[cellIdxCurrent].SetActiveGO(_needActiveRight[cellIdxCurrent]);
+                _upSRCs[cellIdxCurrent].SetActiveGO(_needActiveUp[cellIdxCurrent]);
+            }
         }
     }
 }

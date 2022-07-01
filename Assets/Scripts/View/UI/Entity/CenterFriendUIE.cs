@@ -1,13 +1,14 @@
-﻿using TMPro;
+﻿using Chessy.View.UI.Component;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
-    public struct CenterFriendUIE
+    public readonly struct CenterFriendUIE
     {
-        public TextUIC TextC;
-        public ButtonUIC ButtonC;
+        public readonly TextUIC TextC;
+        public readonly ButtonUIC ButtonC;
 
         public CenterFriendUIE(in Transform centerZone)
         {

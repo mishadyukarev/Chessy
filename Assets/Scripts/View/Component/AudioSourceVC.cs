@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-
-namespace Chessy.Common.Component
+namespace Chessy.Model.Component
 {
     public struct AudioSourceVC
     {

@@ -1,30 +1,43 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.Component;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    sealed class SyncFireVS : SystemViewCellGameAbs
+    sealed class SyncFireVS : SystemViewAbstract
     {
-        bool _needActive;
-        readonly SpriteRendererVC _fireSRC;
+        bool[] _needActive = new bool[StartValues.CELLS];
+        readonly SpriteRendererVC[] _fireSRCs;
 
-        internal SyncFireVS(SpriteRendererVC fireSRC, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncFireVS(SpriteRendererVC[] fireSRCs,  in EntitiesModel eM) : base(eM)
         {
-            _fireSRC = fireSRC;
+            _fireSRCs = fireSRCs;
         }
 
         internal sealed override void Sync()
         {
-            if (_e.HaveFire(_currentCell))
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _needActive = true;
+                _needActive[cellIdxCurrent] = false;
             }
 
-            else
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _needActive = false;
+                if (_e.HaveFire(cellIdxCurrent))
+                {
+                    _needActive[cellIdxCurrent] = true;
+                }
+
+                else
+                {
+                    _needActive[cellIdxCurrent] = false;
+                }
             }
 
-            _fireSRC.SetActive(_needActive);
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _fireSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+            }
         }
     }
 }

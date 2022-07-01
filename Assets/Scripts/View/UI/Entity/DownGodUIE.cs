@@ -1,9 +1,12 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model;
+using Chessy.Model.Component;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     readonly struct DownGodUIE
     {

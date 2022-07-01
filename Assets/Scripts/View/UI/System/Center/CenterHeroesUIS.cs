@@ -1,8 +1,7 @@
-﻿using Chessy.Model.Enum;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Extensions;
-using Chessy.Model;
-
-namespace Chessy.Model
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class CenterHeroesUIS : SystemUIAbstract
     {
@@ -20,7 +19,7 @@ namespace Chessy.Model
 
             var isActiveKingZone = _eUI.CenterEs.KingE.Paren.IsActiveSelf;
 
-            if (!isActiveKingZone && _e.PlayerInfoE(_e.CurPlayerIT).GodInfoC.UnitT.Is(UnitTypes.None) && _e.CellClickT != CellClickTypes.SetUnit)
+            if (!isActiveKingZone && _e.PlayerInfoE(_e.CurrentPlayerIT).GodInfoC.UnitT.Is(UnitTypes.None) && _e.CellClickT != CellClickTypes.SetUnit)
             {
                 if (!_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
                 {
@@ -34,7 +33,7 @@ namespace Chessy.Model
 
             if (_needActiveZone)
             {
-                var nextPlayerT = _e.CurPlayerIT.NextPlayer();
+                var nextPlayerT = _e.CurrentPlayerIT.NextPlayer();
                 var haveElfemaleEnemy = _e.PlayerInfoE(nextPlayerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale);
                 var haveSnowyEnemy = _e.PlayerInfoE(nextPlayerT).GodInfoC.UnitT.Is(UnitTypes.Snowy);
                 _eUI.CenterEs.HeroE(UnitTypes.Elfemale).ButtonC.SetActiveParent(!haveElfemaleEnemy);

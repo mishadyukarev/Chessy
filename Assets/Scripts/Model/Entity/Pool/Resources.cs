@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 namespace Chessy.Model
 {
     public readonly struct Resources

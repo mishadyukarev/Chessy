@@ -1,4 +1,6 @@
-﻿namespace Chessy.Model
+﻿using Chessy.View.UI.Component;
+
+namespace Chessy.View.UI.Entity
 {
     readonly struct DamageUIE
     {

@@ -1,8 +1,7 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using UnityEngine;
-
-namespace Chessy.Model
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class DownToolWeaponUIS : SystemUIAbstract
     {
@@ -121,7 +120,7 @@ namespace Chessy.Model
                     _twE.LevelImageC(twT, levTw_sel).SetActive(true);
                 }
 
-                var curPlayerI = _e.CurPlayerIT;
+                var curPlayerI = _e.CurrentPlayerIT;
 
                 _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolWeaponTypes.Pick).ToString();
                 _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolWeaponTypes.Sword).ToString();

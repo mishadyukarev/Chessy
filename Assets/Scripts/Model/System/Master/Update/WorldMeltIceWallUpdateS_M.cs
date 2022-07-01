@@ -2,7 +2,7 @@
 //using Chessy.Model;
 //using Chessy.Model.Values;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class WorldMeltIceWallUpdateS_M : SystemModelGameAbs, IEcsRunSystem
 //    {

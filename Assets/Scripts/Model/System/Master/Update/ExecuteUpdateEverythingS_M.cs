@@ -1,105 +1,108 @@
-﻿using Chessy.Common;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Enum;
 using Chessy.Model.Extensions;
-using Chessy.Model;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit.Effect;
-using Chessy.Model.Values.Cell.Unit.Stats;
 using Photon.Pun;
 using System.Linq;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    static partial class ExecuteUpdateEverythingMS
+    sealed partial class ExecuteUpdateEverythingMS : SystemModel
     {
-        internal static void ExecuteUpdateEverythingM(this EntitiesModel e, in SystemsModel s)
+        internal ExecuteUpdateEverythingMS(in SystemsModel sM, in EntitiesModel eM) : base(sM, eM)
         {
-            e.Motions++;
-            e.SunC.ToggleNextSunSideT();
 
-            e.TryPutOutFireWithClouds()
-                .BurnAdultForest(s)
-                .FireUpdate()
-                .TryGivePeople();
-
-            e.TryShiftCloundsOrChangeDirection(s);
-            e.TryChangeDirectionOfWindRandomly();
-            e.TryPoorWaterToCellsWithClounds();
-            e.TryShiftWolf(s);
-            e.FeedUnits();
-            e.TryGiveHealthToBots();
-            e.TryGiveWaterAroundRiverToCells();
-            e.DryWaterOnCells();
-            e.TryExtractFoodWithFarm();
-            e.TryExtractWoodWithWoodcutter(s);
-            e.GiveHealthToUnitsWithRelaxCondition();
-
-            e.TryGiveWaterToUnitsAroundRainy();
-            e.TryGiveWaterToUnitsDuringLessons();
-            e.TryGiveWaterToBotUnits();
-            e.GiveWaterToUnitsNearWithRiver();
-            e.TakeWaterUnits();
-
-            e.TryTakeHealthToUnitWithThirsty();
-            e.TryFireAroundHellGod();
-            e.ToggleConditionUnitsIfTheresFire();
-            e.TrySetDefendConditionUnits();
-            e.TryExtractForestWithPawn(s);
-            e.TryExtractHillsWithPawns();
-            e.TryChangeRelaxConditionPawns();
-            e.GiveFoodAfterUpdate();
-            e.TryExecuteHungry();
-            e.TrySpawnWolf(s);
-            e.TryActiveGodsUniqueAbilityEveryUpdate(s);
-            e.TrySkipLessonWithRiver();
-            e.TryExecuteAI();
-            e.RefreshStepsAll();
-
-            e.TryExecuteTruce(s);
         }
 
-        static void TryActiveGodsUniqueAbilityEveryUpdate(this EntitiesModel e, in SystemsModel _s)
+
+
+        internal void Execute()
         {
-            if (!e.LessonT.HaveLesson())
+            _e.Motions++;
+            _e.SunC.ToggleNextSunSideT();
+
+            TryPutOutFireWithClouds();
+            BurnAdultForest();
+            FireUpdate();
+            TryGivePeople();
+
+            TryShiftCloundsOrChangeDirection();
+            TryChangeDirectionOfWindRandomly();
+            TryPoorWaterToCellsWithClounds();
+            TryShiftWolf();
+            FeedUnits();
+            TryGiveHealthToBots();
+            TryGiveWaterAroundRiverToCells();
+            DryWaterOnCells();
+            TryExtractFoodWithFarm();
+            TryExtractWoodWithWoodcutter();
+            GiveHealthToUnitsWithRelaxCondition();
+
+            TryGiveWaterToUnitsAroundRainy();
+            TryGiveWaterToUnitsDuringLessons();
+            TryGiveWaterToBotUnits();
+            GiveWaterToUnitsNearWithRiver();
+            TakeWaterUnits();
+
+            TryTakeHealthToUnitWithThirsty();
+            TryFireAroundHellGod();
+            ToggleConditionUnitsIfTheresFire();
+            TrySetDefendConditionUnits();
+            TryExtractForestWithPawn();
+            TryExtractHillsWithPawns();
+            TryChangeRelaxConditionPawns();
+            GiveFoodAfterUpdate();
+            TryExecuteHungry();
+            TrySpawnWolf();
+            TryActiveGodsUniqueAbilityEveryUpdate();
+            TrySkipLessonWithRiver();
+            TryExecuteAI();
+            RefreshStepsAll();
+
+            TryExecuteTruce();
+        }
+
+        void TryActiveGodsUniqueAbilityEveryUpdate()
+        {
+            if (!_e.LessonT.HaveLesson())
             {
-                if (e.Motions % UpdateValues.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0)
+                if (_e.Motions % UpdateValues.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0)
                 {
                     _s.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
 
                     for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
                     {
-                        if (!e.IsBorder(cell_0))
+                        if (!_e.IsBorder(cell_0))
                         {
-                            if (e.UnitT(cell_0).HaveUnit())
+                            if (_e.UnitT(cell_0).HaveUnit())
                             {
-                                if (e.PlayerInfoE(e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
+                                if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
                                 {
-                                    if (e.UnitT(cell_0).Is(UnitTypes.Pawn))
+                                    if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
                                     {
-                                        if (e.MainToolWeaponT(cell_0).Is(ToolWeaponTypes.BowCrossbow))
+                                        if (_e.MainToolWeaponT(cell_0).Is(ToolWeaponTypes.BowCrossbow))
                                         {
-                                            e.UnitEffectsC(cell_0).ShootsFrozenArrawArcher++;
+                                            _e.UnitEffectsC(cell_0).ShootsFrozenArrawArcher++;
                                         }
                                         else
                                         {
-                                            e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ShieldValues.AFTER_5_MOTIONS_RAINY;
+                                            _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ShieldValues.AFTER_5_MOTIONS_RAINY;
                                         }
                                     }
                                     else
                                     {
-                                        e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ShieldValues.AFTER_5_MOTIONS_RAINY;
+                                        _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ShieldValues.AFTER_5_MOTIONS_RAINY;
                                     }
                                 }
                             }
                             else
                             {
-                                if (e.AdultForestC(cell_0).HaveAnyResources)
+                                if (_e.AdultForestC(cell_0).HaveAnyResources)
                                 {
-                                    if (!e.HaveTreeUnit)
+                                    if (!_e.HaveTreeUnit)
                                     {
                                         for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                                         {
-                                            if (e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
                                             {
                                                 _s.SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
 
@@ -114,7 +117,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryShiftCloundsOrChangeDirection(this EntitiesModel _e, in SystemsModel _s)
+        void TryShiftCloundsOrChangeDirection()
         {
             for (var i = 0; i < _e.SpeedWind; i++)
             {
@@ -157,7 +160,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryGivePeople(this EntitiesModel _e)
+        void TryGivePeople()
         {
             if (_e.Motions % 5 == 0)
             {
@@ -167,7 +170,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryExecuteTruce(this EntitiesModel _e, in SystemsModel _s)
+        void TryExecuteTruce()
         {
             var amountAdultForest = 0;
 
@@ -189,7 +192,7 @@ namespace Chessy.Model
                 _e.ExecuteTruce();
             }
         }
-        static void TrySkipLessonWithRiver(this EntitiesModel _e)
+        void TrySkipLessonWithRiver()
         {
 
             if (_e.LessonT == LessonTypes.Install3WarriorsNextToTheRiver)
@@ -210,11 +213,11 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryChangeDirectionOfWindRandomly(this EntitiesModel _e)
+        void TryChangeDirectionOfWindRandomly()
         {
             if (UnityEngine.Random.Range(0f, 1f) > UpdateValues.PERCENT_FOR_CHANGING_WIND) _e.WindC.Speed = (byte)UnityEngine.Random.Range(1, 4);
         }
-        static void TryPoorWaterToCellsWithClounds(this EntitiesModel _e)
+        void TryPoorWaterToCellsWithClounds()
         {
             var cell_0 = _e.CenterCloudCellIdx;
 
@@ -224,11 +227,11 @@ namespace Chessy.Model
 
                 if (!_e.MountainC(idx_1).HaveAnyResources)
                 {
-                    _e.FertilizeC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+                    _e.WaterOnCellC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
                 }
             }
         }
-        static void TrySpawnWolf(this EntitiesModel _e, in SystemsModel _s)
+        void TrySpawnWolf()
         {
             var haveCamel = false;
 
@@ -271,7 +274,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryShiftWolf(this EntitiesModel _e, in SystemsModel _s)
+        void TryShiftWolf()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -294,7 +297,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void FeedUnits(this EntitiesModel _e)
+        void FeedUnits()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -308,7 +311,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryGiveHealthToBots(this EntitiesModel _e)
+        void TryGiveHealthToBots()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -324,14 +327,14 @@ namespace Chessy.Model
                 }
             }
         }
-        static void RefreshStepsAll(this EntitiesModel _e)
+        void RefreshStepsAll()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
                 _e.EnergyUnitC(cellIdxCurrent).Energy = StepValues.MAX;
             }
         }
-        static void TryGiveWaterAroundRiverToCells(this EntitiesModel _e)
+        void TryGiveWaterAroundRiverToCells()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -339,31 +342,31 @@ namespace Chessy.Model
                 {
                     if (!_e.MountainC(cellIdxCurrent).HaveAnyResources)
                     {
-                        _e.FertilizeC(cellIdxCurrent).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _e.WaterOnCellC(cellIdxCurrent).Resources = EnvironmentValues.MAX_RESOURCES;
                     }
                 }
             }
         }
-        static void DryWaterOnCells(this EntitiesModel _e)
+        void DryWaterOnCells()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.FertilizeC(cellIdxCurrent).HaveAnyResources)
+                if (_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources)
                 {
-                    _e.FertilizeC(cellIdxCurrent).Resources -= EnvironmentValues.DRY_FERTILIZE_DURING_UPDATE_TAKING;
+                    _e.WaterOnCellC(cellIdxCurrent).Resources -= EnvironmentValues.DRY_FERTILIZE_DURING_UPDATE_TAKING;
                 }
             }
         }
-        static void TryExtractFoodWithFarm(this EntitiesModel e)
+        void TryExtractFoodWithFarm()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (e.BuildingExtractionC(cellIdxCurrent).CanFarmExtact)
+                if (_e.BuildingExtractionC(cellIdxCurrent).CanFarmExtact)
                 {
-                    var extract = e.FarmExtract(cellIdxCurrent);
+                    var extract = _e.FarmExtract(cellIdxCurrent);
 
-                    e.ResourcesInInventoryC(e.BuildingPlayerT(cellIdxCurrent)).Add(ResourceTypes.Food, extract);
-                    e.FertilizeC(cellIdxCurrent).Resources -= extract;
+                    _e.ResourcesInInventoryC(_e.BuildingPlayerT(cellIdxCurrent)).Add(ResourceTypes.Food, extract);
+                    _e.WaterOnCellC(cellIdxCurrent).Resources -= extract;
 
                     //if (!E.FertilizeC(cell_0).HaveAnyResources)
                     //{
@@ -372,7 +375,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryExtractWoodWithWoodcutter(this EntitiesModel _e, in SystemsModel _s)
+        void TryExtractWoodWithWoodcutter()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -398,7 +401,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void GiveHealthToUnitsWithRelaxCondition(this EntitiesModel _e)
+        void GiveHealthToUnitsWithRelaxCondition()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -412,7 +415,7 @@ namespace Chessy.Model
 
         #region WaterUnits
 
-        static void TakeWaterUnits(this EntitiesModel _e)
+        void TakeWaterUnits()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -422,7 +425,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryGiveWaterToUnitsDuringLessons(this EntitiesModel _e)
+        void TryGiveWaterToUnitsDuringLessons()
         {
             if (_e.LessonT! >= LessonTypes.Install3WarriorsNextToTheRiver)
             {
@@ -435,7 +438,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryGiveWaterToBotUnits(this EntitiesModel _e)
+        void TryGiveWaterToBotUnits()
         {
             if (_e.GameModeT == GameModeTypes.TrainingOffline)
             {
@@ -451,7 +454,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void GiveWaterToUnitsNearWithRiver(this EntitiesModel _e)
+        void GiveWaterToUnitsNearWithRiver()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -468,25 +471,25 @@ namespace Chessy.Model
         #endregion
 
 
-        static void TryTakeHealthToUnitWithThirsty(this EntitiesModel e)
+        void TryTakeHealthToUnitWithThirsty()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (e.UnitT(cellIdxCurrent).HaveUnit() && !e.UnitT(cellIdxCurrent).IsAnimal())
+                if (_e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                 {
-                    if (e.GameModeT.Is(GameModeTypes.TrainingOffline) && e.UnitPlayerT(cellIdxCurrent) == PlayerTypes.First)
+                    if (_e.GameModeT.Is(GameModeTypes.TrainingOffline) && _e.UnitPlayerT(cellIdxCurrent) == PlayerTypes.First)
                     {
-                        if (e.WaterUnitC(cellIdxCurrent).Water <= 0)
+                        if (_e.WaterUnitC(cellIdxCurrent).Water <= 0)
                         {
-                            var percent = HpValues.ThirstyPercent(e.UnitT(cellIdxCurrent));
+                            var percent = HpValues.ThirstyPercent(_e.UnitT(cellIdxCurrent));
 
-                            e.Attack(HpValues.MAX * percent, e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
+                            _e.Attack(HpValues.MAX * percent, _e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
                         }
                     }
                 }
             }
         }
-        static void TryFireAroundHellGod(this EntitiesModel _e)
+        void TryFireAroundHellGod()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -525,7 +528,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void ToggleConditionUnitsIfTheresFire(this EntitiesModel _e)
+        void ToggleConditionUnitsIfTheresFire()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -538,7 +541,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TrySetDefendConditionUnits(this EntitiesModel _e)
+        void TrySetDefendConditionUnits()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -555,7 +558,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryExtractForestWithPawn(this EntitiesModel _e, in SystemsModel _s)
+        void TryExtractForestWithPawn()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -595,7 +598,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryExtractHillsWithPawns(this EntitiesModel _e)
+        void TryExtractHillsWithPawns()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -618,7 +621,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryChangeRelaxConditionPawns(this EntitiesModel _e)
+        void TryChangeRelaxConditionPawns()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
@@ -632,7 +635,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void GiveFoodAfterUpdate(this EntitiesModel _e)
+        void GiveFoodAfterUpdate()
         {
             if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
             {
@@ -642,24 +645,24 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryExecuteHungry(this EntitiesModel e)
+        void TryExecuteHungry()
         {
-            if (!e.LessonT.HaveLesson() || e.LessonT >= LessonTypes.Build3Farms)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
             {
                 for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                 {
                     var res = ResourceTypes.Food;
 
-                    if (e.ResourcesInInventory(playerT, res) < 0)
+                    if (_e.ResourcesInInventory(playerT, res) < 0)
                     {
-                        e.SetResourcesInInventory(playerT, res, 0);
+                        _e.SetResourcesInInventory(playerT, res, 0);
 
                         for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
                         {
-                            if (e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && e.UnitPlayerT(cellIdxCurrent).Is(playerT))
+                            if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.UnitPlayerT(cellIdxCurrent).Is(playerT))
                             {
-                                e.KillUnit(e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
-                                e.UnitE(cellIdxCurrent).ClearEverything();
+                                _e.KillUnit(_e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
+                                _e.UnitE(cellIdxCurrent).ClearEverything();
 
                                 break;
                             }
@@ -668,7 +671,7 @@ namespace Chessy.Model
                 }
             }
         }
-        static void TryExecuteAI(this EntitiesModel _e)
+        void TryExecuteAI()
         {
             //if (!_eMG.LessonTC.HaveLesson)
             //{

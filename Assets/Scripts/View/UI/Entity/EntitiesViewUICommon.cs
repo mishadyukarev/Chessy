@@ -1,8 +1,8 @@
 ﻿//using Chessy.View.UI;
-//using Chessy.Common.View.UI.Entity;
-//using UnityEngine;
+//using Chessy.View.UI.Entity;
+//using UnityEngine; using Chessy.Model.Entity;
 
-//namespace Chessy.Common.View.UI
+//using Chessy.Model.Entity; namespace Chessy.View.UI
 //{
 //    public sealed class EntitiesViewUICommon
 //    {

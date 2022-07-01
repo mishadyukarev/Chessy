@@ -1,13 +1,13 @@
-﻿using Chessy.Model.Values;
-using Chessy.Model.View.UI.Values;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.UI.Values;
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class CenterBuildingZonesUIS : SystemUIAbstract
     {
         readonly EntitiesViewUI eUI;
 
-        internal CenterBuildingZonesUIS(in EntitiesViewUI entsUI, in Chessy.Model.EntitiesModel ents) : base(ents)
+        internal CenterBuildingZonesUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(ents)
         {
             eUI = entsUI;
         }

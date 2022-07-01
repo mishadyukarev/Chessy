@@ -1,7 +1,7 @@
 ﻿//using Chessy.Model.Values;
 //using System.Linq;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class UpdGiveWaterCloudScowyMS : SystemModelGameAbs, IEcsRunSystem
 //    {

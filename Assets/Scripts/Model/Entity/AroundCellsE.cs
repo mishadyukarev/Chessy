@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Chessy.Model.Component;
+using System;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.Model.Entity
 {
     public readonly struct AroundCellsE
     {

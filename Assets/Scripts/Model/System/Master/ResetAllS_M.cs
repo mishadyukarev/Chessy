@@ -1,6 +1,5 @@
 ﻿using Chessy.Model.Values;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -18,7 +17,7 @@ namespace Chessy.Model
             _e.MistakeT = default;
             _e.WinnerPlayerT = default;
             _e.CellsC = default;
-            _e.CurPlayerIT = default;
+            _e.CurrentPlayerIT = default;
             _e.AmountPlantedYoungForests = default;
 
             _e.WindC = new WindC(default, default);
@@ -49,7 +48,7 @@ namespace Chessy.Model
                 _e.PlayerInfoC(playerT).AmountFarmsInGame = default;
 
                 _e.PawnPeopleInfoC(playerT).PeopleInCity = default;
-                _e.PawnPeopleInfoC(playerT).MaxAvailable = default;
+                //_e.PawnPeopleInfoC(playerT).MaxAvailable = default;
                 _e.PawnPeopleInfoC(playerT).AmountInGame = default;
 
                 _e.PlayerInfoC(playerT).HaveKingInInventor = default;

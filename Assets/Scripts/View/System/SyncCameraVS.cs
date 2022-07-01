@@ -1,9 +1,10 @@
 ﻿using Chessy.Model;
-using Chessy.Model.View.System;
+using Chessy.Model.Entity;
+using Chessy.View.UI.Entity;
 using System;
 using UnityEngine;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
     sealed class SyncCameraVS : SystemViewAbstract
     {
@@ -17,9 +18,9 @@ namespace Chessy.Model
 
         internal sealed override void Sync()
         {
-            if (_e.CurPlayerIT == PlayerTypes.None) throw new Exception();
+            if (_e.CurrentPlayerIT == PlayerTypes.None) throw new Exception();
 
-            if (_e.CurPlayerIT == PlayerTypes.First)
+            if (_e.CurrentPlayerIT == PlayerTypes.First)
             {
                 _eV.CameraVC.Transform.position = _eV.MainGOC.Transform.position + _gamePosCamera;
                 _eV.CameraVC.Transform.eulerAngles = new Vector3(0, 0, 0);

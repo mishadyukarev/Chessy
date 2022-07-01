@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Values.Cell
+﻿namespace Chessy.Model.Values
 {
     public static class TrailValues
     {

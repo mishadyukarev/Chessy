@@ -1,23 +1,34 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.Component;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    internal sealed class SyncIdxAndXyInfoVS : SystemViewCellGameAbs
+    internal sealed class SyncIdxAndXyInfoVS : SystemViewAbstract
     {
-        readonly TMPC _tMPC;
+        readonly bool[] _needActive = new bool[StartValues.CELLS];
+        readonly TMPC[] _tMPCs;
 
-        internal SyncIdxAndXyInfoVS(in TMPC tMPC, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncIdxAndXyInfoVS(in TMPC[] tMPCs, in EntitiesModel eM) : base(eM)
         {
-            _tMPC = tMPC;
+            _tMPCs = tMPCs;
         }
 
         internal override void Sync()
         {
-            _tMPC.TextMeshPro.gameObject.SetActive(_e.IsActivatedIdxAndXyInfoCells);
-
-            if (_e.IsActivatedIdxAndXyInfoCells)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                _tMPC.TextMeshPro.text = _currentCell + "\n " + _e.XCell(_currentCell) + "|" + _e.YCell(_currentCell) + "  ";
+                _needActive[cellIdxCurrent] = _e.IsActivatedIdxAndXyInfoCells;
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _tMPCs[cellIdxCurrent].TextMeshPro.gameObject.SetActive(_needActive[cellIdxCurrent]);
+
+                if (_needActive[cellIdxCurrent])
+                {
+                    _tMPCs[cellIdxCurrent].TextMeshPro.text = cellIdxCurrent + "\n " + _e.XCell(cellIdxCurrent) + "|" + _e.YCell(cellIdxCurrent) + "  ";
+                }
             }
         }
     }

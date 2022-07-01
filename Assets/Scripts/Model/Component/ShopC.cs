@@ -1,6 +1,5 @@
 ﻿using UnityEngine.Purchasing;
-
-namespace Chessy.Common
+namespace Chessy.Model
 {
     public struct ShopC
     {

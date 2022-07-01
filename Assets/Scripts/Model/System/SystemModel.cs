@@ -1,6 +1,5 @@
-﻿using Chessy.Model;
-using Chessy.Model;
-
+﻿using Chessy.Model.Entity;
+using Chessy.Model.System;
 namespace Chessy.Model
 {
     public abstract class SystemModel
@@ -10,8 +9,8 @@ namespace Chessy.Model
 
         protected SystemModel(in SystemsModel sMG, in EntitiesModel eMG)
         {
-            this._e = eMG;
-            this._s = sMG;
+            _e = eMG;
+            _s = sMG;
         }
     }
 }

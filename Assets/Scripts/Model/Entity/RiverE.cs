@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Model.Component;
-
+﻿using Chessy.Model.Component;
 namespace Chessy.Model
 {
     public struct RiverE

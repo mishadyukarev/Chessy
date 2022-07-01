@@ -1,21 +1,21 @@
 ﻿using Chessy.Model;
-using Chessy.Model.System.View.UI;
+using Chessy.Model.System;
+using Chessy.Model.System;
+using Chessy.View.UI.System;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Chessy.Common
+namespace Chessy.Model
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
         SystemsModel _sMG;
-        SystemsViewUI _sUI;
 
 
 
-        public void StartMy(in SystemsViewUI sUIC, in SystemsModel sMG)
+        public void StartMy(in SystemsModel sMG)
         {
             _sMG = sMG;
-            _sUI = sUIC;
         }
 
 

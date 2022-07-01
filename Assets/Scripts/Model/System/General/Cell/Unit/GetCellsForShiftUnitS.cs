@@ -1,6 +1,4 @@
 ﻿using Chessy.Model.Values;
-using Chessy.Model.Values.Cell.Unit.Stats;
-
 namespace Chessy.Model
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
@@ -38,7 +36,7 @@ namespace Chessy.Model
                                     }
                                     else if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Snowy))
                                     {
-                                        if (_e.FertilizeC(idx_to).HaveAnyResources)
+                                        if (_e.WaterOnCellC(idx_to).HaveAnyResources)
                                         {
                                             needEnergy = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                         }

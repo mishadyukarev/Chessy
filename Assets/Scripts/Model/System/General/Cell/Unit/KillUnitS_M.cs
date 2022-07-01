@@ -1,10 +1,9 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Enum;
-using Chessy.Model;
-using Chessy.Model;
+using Chessy.Model.Values;
 using System;
 
-namespace Chessy
+namespace Chessy.Model.System
 {
     static partial class SystemStatic
     {
@@ -60,7 +59,7 @@ namespace Chessy
 
             if (e.UnitT(cellIdxForKilling).Is(UnitTypes.Pawn))
             {
-                e.PlayerInfoE(e.UnitPlayerT(cellIdxForKilling)).PawnInfoC.RemovePawn();
+                e.PawnPeopleInfoC(e.UnitPlayerT(cellIdxForKilling)).AmountInGame--;
             }
 
 

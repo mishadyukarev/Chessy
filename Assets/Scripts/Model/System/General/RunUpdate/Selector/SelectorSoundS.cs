@@ -1,6 +1,6 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.System;
 using System.Linq;
-
 namespace Chessy.Model
 {
     sealed class SelectorSoundS : SystemModel
@@ -14,7 +14,7 @@ namespace Chessy.Model
             var cell_0 = _e.CurrentCellIdx;
 
             if (_e.UnitT(cell_0).HaveUnit()
-                && _e.UnitVisibleC(cell_0).IsVisible(_e.CurPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
+                && _e.UnitVisibleC(cell_0).IsVisible(_e.CurrentPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
             {
                 if (_e.UnitT(cell_0).Is(UnitTypes.Tree))
                 {

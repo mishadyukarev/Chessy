@@ -1,6 +1,6 @@
 ﻿//using Chessy.Model.Values;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class ResumeUnitUpdMS : SystemModelGameAbs, IEcsRunSystem
 //    {

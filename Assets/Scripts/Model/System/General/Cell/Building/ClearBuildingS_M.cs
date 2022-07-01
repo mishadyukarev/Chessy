@@ -1,5 +1,4 @@
-﻿using Chessy.Model;
-
+﻿using Chessy.Model.Entity;
 namespace Chessy.Model
 {
     static partial class BuildingSystems

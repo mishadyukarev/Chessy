@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public struct RightStatsUIEs
     {
@@ -40,7 +43,7 @@ namespace Chessy.Model
 
 
             zone = statZone.transform.Find("Steps+");
-            EnergyE = new EnergyUIE(new Common.AnimationVC(zone.GetComponent<Animation>()),
+            EnergyE = new EnergyUIE(new AnimationVC(zone.GetComponent<Animation>()),
                 new ImageUIC(zone.Find("Steps_Image+").GetComponent<Image>()),
                 new TextUIC(zone.Find("StepsCurrentUnit_TextMP+").GetComponent<TextMeshProUGUI>()),
                 new ButtonUIC(zone.Find("Button+").GetComponent<Button>()));

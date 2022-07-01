@@ -1,7 +1,8 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using System;
 
-namespace Chessy.Common
+namespace Chessy.Model.System
 {
     public class TryLaunchAdS : IUpdate
     {

@@ -1,4 +1,4 @@
-﻿using Chessy.Common.Enum;
+﻿using Chessy.Model.Enum;
 
 namespace Chessy
 {

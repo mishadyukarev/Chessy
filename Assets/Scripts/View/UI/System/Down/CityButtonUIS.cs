@@ -1,8 +1,9 @@
-﻿using Chessy.Model.Entity.View.UI.Down;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
 using Chessy.Model.Enum;
-using Chessy.Model;
+using Chessy.View.UI.Entity;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.System
 {
     sealed class CityButtonUIS : SystemUIAbstract
     {

@@ -1,33 +1,47 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Enum;
+using Chessy.View.System;
+using Chessy.View.Component;
+using Chessy.Model.Values;
 
-namespace Chessy.Model.System.View
+namespace Chessy.View.UI.System
 {
-    sealed class NeedFoodVS : SystemViewCellGameAbs
+    sealed class NeedFoodVS : SystemViewAbstract
     {
-        bool _needActive;
-        readonly SpriteRendererVC _needFoodSRC;
+        bool[] _needActive = new bool[StartValues.CELLS];
+        readonly SpriteRendererVC[] _needFoodSRCs;
 
-        internal NeedFoodVS(in SpriteRendererVC needFoodSRC, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal NeedFoodVS(in SpriteRendererVC[] needFoodSRCs, in EntitiesModel eMG) : base(eMG)
         {
-            _needFoodSRC = needFoodSRC;
+            _needFoodSRCs = needFoodSRCs;
         }
 
         internal sealed override void Sync()
         {
-            _needActive = false;
-
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Build3Farms)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.UnitT(_currentCell).Is(UnitTypes.Pawn))
+                _needActive[cellIdxCurrent] = false;
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
                 {
-                    if (_e.UnitPlayerT(_currentCell).Is(_e.CurPlayerIT))
+                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
                     {
-                        _needActive = _e.ResourcesInInventory(_e.CurPlayerIT, ResourceTypes.Food) < 1;
+                        if (_e.UnitPlayerT(cellIdxCurrent).Is(_e.CurrentPlayerIT))
+                        {
+                            _needActive[cellIdxCurrent] = _e.ResourcesInInventory(_e.CurrentPlayerIT, ResourceTypes.Food) < 1;
+                        }
                     }
                 }
             }
 
-            _needFoodSRC.SetActive(_needActive);
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _needFoodSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+            }
         }
     }
 }

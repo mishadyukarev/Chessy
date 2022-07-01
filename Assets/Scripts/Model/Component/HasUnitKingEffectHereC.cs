@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Chessy.Model
+﻿namespace Chessy.Model
 {
     public struct HasUnitKingEffectHereC
     {

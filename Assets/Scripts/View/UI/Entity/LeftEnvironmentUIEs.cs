@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public struct LeftEnvironmentUIEs
     {
@@ -11,7 +14,7 @@ namespace Chessy.Model
         public Dictionary<ResourceTypes, TextUIC> Envs;
 
 
-        public readonly Chessy.Common.Component.GameObjectVC Zone;
+        public readonly GameObjectVC Zone;
 
         public LeftEnvironmentUIEs(in Transform leftZone)
         {
@@ -19,7 +22,7 @@ namespace Chessy.Model
 
             var envZone = leftZone.Find("Environment+");
 
-            Zone = new Chessy.Common.Component.GameObjectVC(envZone.gameObject);
+            Zone = new GameObjectVC(envZone.gameObject);
 
             InfoButtonC = new ButtonUIC(envZone.Find("EnvironmentInfoButton").GetComponent<Button>());
 

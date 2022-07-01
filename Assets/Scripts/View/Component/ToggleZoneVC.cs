@@ -1,7 +1,7 @@
 ﻿//using System;
 //using UnityEngine;
 
-//namespace Chessy.Common
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    public readonly struct ToggleZoneVC
 //    {

@@ -1,4 +1,6 @@
 ﻿using TMPro;
+using Chessy.View.UI.Entity;
+using Chessy.View.UI.Component;
 
 namespace Chessy.Model.Entity.View.UI.Down
 {

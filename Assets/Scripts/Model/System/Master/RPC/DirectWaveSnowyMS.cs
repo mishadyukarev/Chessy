@@ -1,10 +1,10 @@
-﻿//using Chessy.Model.Values.Cell.Environment;
-//using Chessy.Model.Values.Cell.Unit;
-//using Chessy.Model.Values.Cell.Unit.Effect;
-//using Chessy.Model.Values.Cell.Unit.Stats;
+﻿//using Chessy.Model.Values.Environment;
+//using Chessy.Model.Values;
+//using Chessy.Model.Values;
+//using Chessy.Model.Values;
 //using Photon.Realtime;
 
-//namespace Chessy.Model.Master.Methods
+//using Chessy.Model.Entity; namespace Chessy.Model.Master.Methods
 //{
 //    public struct DirectWaveSnowyMS
 //    {

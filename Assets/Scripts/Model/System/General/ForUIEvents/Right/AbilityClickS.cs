@@ -1,14 +1,12 @@
-﻿using Chessy.Common;
-using Photon.Pun;
+﻿using Photon.Pun;
 using System;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class ForButtonsSystemsModel
     {
         public void Click(in ButtonTypes uniqueButton)
         {
-            if (_e.CurPlayerIT == _e.WhoseMovePlayerT)
+            if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
             {
                 var cellIdxSelected = _e.SelectedCellIdx;
 

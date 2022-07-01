@@ -1,33 +1,44 @@
-﻿using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Values;
+using Chessy.View.Component;
 
-namespace Chessy.Model
+namespace Chessy.View.System
 {
-    sealed class SyncShieldVS : SystemViewCellGameAbs
+    sealed class SyncShieldVS : SystemViewAbstract
     {
-        bool _needActive;
-        readonly SpriteRendererVC _shieldSRC;
+        readonly bool[] _needActive = new bool[StartValues.CELLS];
+        readonly SpriteRendererVC[] _shieldSRCs;
 
-        internal SyncShieldVS(in SpriteRendererVC shieldSRC, in byte currentCell, in EntitiesModel eMG) : base(currentCell, eMG)
+        internal SyncShieldVS(in SpriteRendererVC[] shieldSRCs, in EntitiesModel eM) : base(eM)
         {
-            _shieldSRC = shieldSRC;
+            _shieldSRCs = shieldSRCs;
         }
 
         internal sealed override void Sync()
         {
-            _needActive = false;
-
-            if (_e.UnitEffectsC(_currentCell).HaveAnyProtectionRainyMagicShield)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.UnitT(_currentCell).HaveUnit())
+                _needActive[cellIdxCurrent] = false;
+
+                if (_e.UnitEffectsC(cellIdxCurrent).HaveAnyProtectionRainyMagicShield)
                 {
-                    if (_e.UnitVisibleC(_currentCell).IsVisible(_e.CurPlayerIT))
+                    if (_e.UnitT(cellIdxCurrent).HaveUnit())
                     {
-                        _needActive = true;
+                        if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                        {
+                            _needActive[cellIdxCurrent] = true;
+                        }
                     }
                 }
             }
 
-            _shieldSRC.SetActive(_needActive);
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            {
+                _shieldSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+            }
+
+
+
         }
     }
 }

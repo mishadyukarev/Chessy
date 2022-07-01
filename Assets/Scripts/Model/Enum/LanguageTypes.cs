@@ -1,4 +1,4 @@
-﻿namespace Chessy.Common
+﻿namespace Chessy.Model
 {
     public enum LanguageTypes
     {

@@ -1,7 +1,7 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model.Component;
+using Chessy.View.Component;
 using UnityEngine;
-
-namespace Chessy.Model.View.UI.Entity
+namespace Chessy.View.UI.Entity
 {
     public readonly struct OpenTownLessonUIE
     {

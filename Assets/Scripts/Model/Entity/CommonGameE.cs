@@ -1,6 +1,5 @@
-﻿using Chessy.Common;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Component;
+namespace Chessy.Model.Entity
 {
     public struct CommonGameE
     {

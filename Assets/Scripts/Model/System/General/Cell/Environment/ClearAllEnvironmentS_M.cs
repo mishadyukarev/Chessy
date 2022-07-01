@@ -1,10 +1,10 @@
-﻿namespace Chessy.Model
+﻿namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
         internal void ClearAllEnvironment(in byte cellIdx)
         {
-            _e.FertilizeC(cellIdx).Resources = 0;
+            _e.WaterOnCellC(cellIdx).Resources = 0;
             _e.YoungForestC(cellIdx).Resources = 0;
             _e.AdultForestC(cellIdx).Resources = 0;
             _e.HillC(cellIdx).Resources = 0;

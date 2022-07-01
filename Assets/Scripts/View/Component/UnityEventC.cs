@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-
-namespace Chessy.Common
+namespace Chessy.View.Component
 {
     public struct UnityEventC
     {

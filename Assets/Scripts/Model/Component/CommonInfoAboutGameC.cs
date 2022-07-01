@@ -1,4 +1,4 @@
-﻿using Chessy.Common;
+﻿using Chessy.Model;
 using Chessy.Model.Enum;
 using System;
 

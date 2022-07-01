@@ -1,9 +1,10 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
+using Chessy.View.UI.Entity;
 using System.Collections.Generic;
-
-namespace Chessy.Model
+namespace Chessy.View.UI.System
 {
     sealed class EconomyUpUIS : SystemUIAbstract
     {
@@ -81,7 +82,7 @@ namespace Chessy.Model
                 {
 
 
-                    if (_e.UnitPlayerT(idx_0).Is(_e.CurPlayerIT))
+                    if (_e.UnitPlayerT(idx_0).Is(_e.CurrentPlayerIT))
                     {
                         if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
                         {
@@ -92,7 +93,7 @@ namespace Chessy.Model
                         }
                     }
 
-                    if (_e.BuildingPlayerT(idx_0).Is(_e.CurPlayerIT))
+                    if (_e.BuildingPlayerT(idx_0).Is(_e.CurrentPlayerIT))
                     {
                         _extracts[ResourceTypes.Wood] += _e.WoodcutterExtract(idx_0);
                         _extracts[ResourceTypes.Food] += _e.FarmExtract(idx_0);
@@ -112,11 +113,11 @@ namespace Chessy.Model
                     string name = default;
                     if (res == ResourceTypes.Iron || res == ResourceTypes.Gold)
                     {
-                        name = _e.ResourcesInInventory(_e.CurPlayerIT, res).ToString();
+                        name = _e.ResourcesInInventory(_e.CurrentPlayerIT, res).ToString();
                     }
                     else
                     {
-                        name = ((int)(100 * _e.ResourcesInInventory(_e.CurPlayerIT, res))).ToString();
+                        name = ((int)(100 * _e.ResourcesInInventory(_e.CurrentPlayerIT, res))).ToString();
                     }
 
                     _economyUIE.Economy(res).TextUI.text = name;

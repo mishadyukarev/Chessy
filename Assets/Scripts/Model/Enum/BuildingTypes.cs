@@ -6,14 +6,15 @@
 
         City,
 
+        //Game
         Farm,
         Woodcutter,
         Camp,
         IceWall,
         Teleport,
 
+        //Town
         House,
-        //HuntingHut,
         Market,
         Smelter,
 

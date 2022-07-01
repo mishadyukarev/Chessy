@@ -1,6 +1,6 @@
-﻿namespace Chessy.Model
+﻿namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class ForButtonsSystemsModel
     {
         public void ClickSkipLesson()
         {

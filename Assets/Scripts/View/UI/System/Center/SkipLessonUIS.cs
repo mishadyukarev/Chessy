@@ -1,7 +1,6 @@
-﻿using Chessy.Model;
-using Chessy.Model.View.UI.Entity;
-
-namespace Chessy.Model
+﻿using Chessy.Model.Entity;
+using Chessy.View.UI.Entity;
+using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class SkipLessonUIS : SystemUIAbstract
     {

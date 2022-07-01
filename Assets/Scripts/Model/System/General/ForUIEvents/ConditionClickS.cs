@@ -1,12 +1,11 @@
 ﻿using Photon.Pun;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModelGameForUI
+    public sealed partial class ForButtonsSystemsModel
     {
         public void Click(in ConditionUnitTypes conditionT)
         {
-            if (_e.CurPlayerIT.Is(_e.WhoseMovePlayerT))
+            if (_e.CurrentPlayerIT.Is(_e.WhoseMovePlayerT))
             {
                 if (_e.UnitConditionT(_e.SelectedCellIdx).Is(conditionT))
                 {

@@ -1,10 +1,10 @@
-﻿using Chessy.Common;
-using Chessy.Model;
-using Chessy.Model.EventsUI;
-using Chessy.Model;
-using Chessy.Model.System.View;
-using Chessy.Model.System.View.UI;
-using Photon.Pun;
+﻿using Chessy.Model;
+using Chessy.Model.Entity;
+using Chessy.Model.System;
+using Chessy.View.System;
+using Chessy.View.UI;
+using Chessy.View.UI.Entity;
+using Chessy.View.UI.System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ namespace Chessy
             var sUI = new SystemsViewUI(eUI, eM);
             var sV = new SystemsView(eV, eM);
 
-            var eventsGame = new EventsUIGame(sM, eUI, eV, eM);
+            var eventsGame = new EventsUIGame(sM, eUI, eM);
 
 
             #region NeedReplace
@@ -34,8 +34,8 @@ namespace Chessy
             var adLaunchS = new TryLaunchAdS(eM);
             new ShopS(eM);
 
-            var rpc = eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveData(sM);
-            gameObject.AddComponent<PhotonSceneManager>().StartMy(sUI, sM);
+            eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveSystems(sM);
+            gameObject.AddComponent<PhotonSceneManager>().StartMy(sM);
 
             #endregion
 

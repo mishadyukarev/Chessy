@@ -1,8 +1,8 @@
-﻿using Chessy.Model.Enum;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.Model.View.System;
-
+using Chessy.View.Component;
+using Chessy.View.System;
 namespace Chessy.Model
 {
     sealed class SyncRedCircularVS : SystemViewAbstract
@@ -57,7 +57,7 @@ namespace Chessy.Model
 
                 if (!_e.LessonT.HaveLesson())
                 {
-                    if (_e.GameModeT == Common.GameModeTypes.TrainingOffline)
+                    if (_e.GameModeT == GameModeTypes.TrainingOffline)
                     {
                         if (_e.UnitT(currentIdxCell) == UnitTypes.King)
                         {
@@ -69,7 +69,7 @@ namespace Chessy.Model
                     }
                 }
 
-                _redCircularSRCs[currentIdxCell].SetActive(_needActive[currentIdxCell]);
+                _redCircularSRCs[currentIdxCell].SetActiveGO(_needActive[currentIdxCell]);
             }
         }
     }

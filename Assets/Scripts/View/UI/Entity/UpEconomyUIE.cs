@@ -1,8 +1,9 @@
-﻿using Chessy.Common.Component;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using TMPro;
 using UnityEngine;
-
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public readonly struct UpEconomyUIE
     {

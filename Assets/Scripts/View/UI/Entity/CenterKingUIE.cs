@@ -1,18 +1,20 @@
-﻿using UnityEngine;
+﻿using Chessy.View.Component;
+using Chessy.View.UI.Component;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public struct CenterKingUIE
     {
-        public Chessy.Common.Component.GameObjectVC Paren;
+        public GameObjectVC Paren;
         public ButtonUIC Button;
 
         public CenterKingUIE(in Transform centerZone)
         {
             var king = centerZone.Find("KingZone");
 
-            Paren = new Chessy.Common.Component.GameObjectVC(king.gameObject);
+            Paren = new GameObjectVC(king.gameObject);
             Button = new ButtonUIC(king.Find("King+").Find("SetKing_Button").GetComponent<Button>());
         }
     }

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
-
-namespace Chessy.Common.View.UI.Component
+namespace Chessy.View.UI.Component
 {
     public struct VideoPlayerVC
     {

@@ -1,6 +1,5 @@
 ﻿using System;
-
-namespace Chessy.Model.Values.Cell.Unit
+namespace Chessy.Model.Values
 {
     static class ToolWeaponValues
     {

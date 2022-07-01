@@ -2,9 +2,9 @@
 //using Chessy.Model;
 //using Chessy.Model.Master;
 //using Chessy.Model.Values;
-//using System.Collections.Generic;
+//using System.Collections.Generic; using Chessy.Model.Entity;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    internal sealed class CellSs
 //    {

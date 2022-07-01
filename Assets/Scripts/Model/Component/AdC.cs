@@ -1,6 +1,5 @@
 ﻿using System;
-
-namespace Chessy.Common
+namespace Chessy.Model
 {
     public struct AdC
     {

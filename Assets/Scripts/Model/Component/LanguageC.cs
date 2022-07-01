@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-
-namespace Chessy.Common
+namespace Chessy.Model
 {
     public struct LanguageC
     {

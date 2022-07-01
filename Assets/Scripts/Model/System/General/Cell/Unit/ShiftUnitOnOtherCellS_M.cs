@@ -1,10 +1,7 @@
 ﻿using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.Model.Values.Cell;
-using Chessy.Model.Values.Cell.Unit.Stats;
 using UnityEngine;
-
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
     public sealed partial class SystemsModel : IUpdate
     {
@@ -91,7 +88,7 @@ namespace Chessy.Model
                 {
                     if (_e.WaterUnitC(toCellIdx).HaveAnyWater())
                     {
-                        _e.FertilizeC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _e.WaterOnCellC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
                         _e.HaveFire(toCellIdx) = false;
                         _e.WaterUnitC(toCellIdx).Water -= WaterValues.AFTER_SHIFT_SNOWY;
                     }
@@ -124,7 +121,7 @@ namespace Chessy.Model
 
             if (_e.UnitT(toCellIdx) == UnitTypes.Snowy)
             {
-                _e.GiveWaterToUnitsAroundRainy(toCellIdx);
+                GiveWaterToUnitsAroundRainy(toCellIdx);
             }
 
 

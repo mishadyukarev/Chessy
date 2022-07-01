@@ -1,12 +1,10 @@
-﻿using Chessy.Common;
-using Chessy.Common.Component;
-using Chessy.View.UI;
-using Chessy.Common.View.UI;
-using Chessy.Menu;
+﻿using Chessy.Model;
+using Chessy.View.Component;
+using Chessy.View.UI.Component;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public sealed class EntitiesViewUI
     {
@@ -19,7 +17,7 @@ namespace Chessy.Model
 
         public readonly LeftUIEs LeftEs;
         public readonly RightUIEs RightEs;
-        public readonly CenterUIEs CenterEs;
+        public readonly CenterGameUIEs CenterEs;
         public readonly DownUIEs DownEs;
         public readonly UpUIEs UpEs;
 
@@ -59,7 +57,7 @@ namespace Chessy.Model
 
             LeftEs = new LeftUIEs(gameZone.Find("Left+"));
             RightEs = new RightUIEs(gameZone.Find("Right+"));
-            CenterEs = new CenterUIEs(gameZone.Find("Center+"));
+            CenterEs = new CenterGameUIEs(gameZone.Find("Center+"));
             DownEs = new DownUIEs(gameZone.Find("Down+"));
             UpEs = new UpUIEs(gameZone.Find("Exit+").Find("Button+").GetComponent<Button>(), gameZone.Find("Up+"));
 

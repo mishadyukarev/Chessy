@@ -1,11 +1,10 @@
-﻿using Chessy.Model.Entity.View.Cell;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Extensions;
-using Chessy.Model;
 using Chessy.Model.Values;
-using Chessy.Model.View.System;
+using Chessy.View.System;
+using Chessy.View.UI.Entity;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace Chessy.Model
 {
     sealed class SyncUnitVS : SystemViewAbstract
@@ -98,7 +97,7 @@ namespace Chessy.Model
 
             if (_e.UnitT(cellIdx).HaveUnit())
             {
-                if (_e.UnitVisibleC(cellIdx).IsVisible(_e.CurPlayerIT))
+                if (_e.UnitVisibleC(cellIdx).IsVisible(_e.CurrentPlayerIT))
                 {
                     var isSelectedCell = cellIdx == _e.SelectedCellIdx;
 
@@ -181,20 +180,20 @@ namespace Chessy.Model
                         _eV.CellEs(cellIdx).UnitEs.AnimationUnitC.Play();
                     }
 
-                    _eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).SetActive(_needActiveMainTW[levelT][(byte)toolWeaponT]);
+                    _eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).SetActiveGO(_needActiveMainTW[levelT][(byte)toolWeaponT]);
                     _eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).SR.color = _needColorMainTW[levelT][(byte)toolWeaponT];
                 }
 
 
                 foreach (var isRight in new[] { true, false })
                 {
-                    _eV.CellEs(cellIdx).UnitEs.MainBowCrossbowSRC(levelT, isRight).SetActive(_needActiveBowCrossbow[levelT][isRight ? 0 : 1]);
+                    _eV.CellEs(cellIdx).UnitEs.MainBowCrossbowSRC(levelT, isRight).SetActiveGO(_needActiveBowCrossbow[levelT][isRight ? 0 : 1]);
                     _eV.CellEs(cellIdx).UnitEs.MainBowCrossbowSRC(levelT, isRight).SR.color = _needColorBowCrossbow[levelT][isRight ? 0 : 1];
                 }
 
                 foreach (var twT in new[] { ToolWeaponTypes.Pick, ToolWeaponTypes.Shield, ToolWeaponTypes.Sword })
                 {
-                    _eV.CellEs(cellIdx).UnitEs.ExtraToolWeaponSRC(levelT, twT).SetActive(_needActiveExtraTW[levelT][(byte)twT]);
+                    _eV.CellEs(cellIdx).UnitEs.ExtraToolWeaponSRC(levelT, twT).SetActiveGO(_needActiveExtraTW[levelT][(byte)twT]);
                     _eV.CellEs(cellIdx).UnitEs.ExtraToolWeaponSRC(levelT, twT).SR.color = _needColorExtraTW[levelT][(byte)twT];
                 }
             }

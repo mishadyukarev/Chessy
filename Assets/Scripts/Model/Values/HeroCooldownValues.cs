@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model
+﻿namespace Chessy.Model.Values
 {
     public static class HeroCooldownValues
     {

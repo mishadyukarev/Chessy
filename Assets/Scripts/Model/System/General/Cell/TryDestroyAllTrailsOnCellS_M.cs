@@ -1,7 +1,6 @@
-﻿using Chessy.Model;
-using Chessy.Model;
+﻿using Chessy.Model.Entity;
 
-namespace Chessy
+namespace Chessy.Model.System
 {
     public static partial class SystemStatic
     {

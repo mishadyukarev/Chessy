@@ -1,4 +1,4 @@
-﻿namespace Chessy.Model.Model.Component
+﻿namespace Chessy.Model.Component
 {
     public struct VisibleToOtherPlayerOrNotC
     {

@@ -1,7 +1,7 @@
-﻿//using Chessy.Common.Component;
-//using UnityEngine;
+﻿//using Chessy.Model.Component;
+//using UnityEngine; using Chessy.Model.Entity;
 
-//namespace Chessy.Common.View.UI.Entity
+//using Chessy.Model.Entity; namespace Chessy.View.UI.Entity
 //{
 //    public readonly struct CanvasUIE
 //    {

@@ -1,6 +1,4 @@
-﻿using Chessy.Common;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 namespace Chessy.Model
 {
     public struct EffectsUnitsRightBarsC

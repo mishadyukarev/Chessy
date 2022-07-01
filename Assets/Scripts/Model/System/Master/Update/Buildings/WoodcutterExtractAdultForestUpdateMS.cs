@@ -1,9 +1,9 @@
 ﻿//using Chessy.Model;
 //using Chessy.Model;
 //using Chessy.Model.Values;
-//using Chessy.Model.Values.Cell.Environment;
+//using Chessy.Model.Values.Environment;
 
-//namespace Chessy.Model
+//using Chessy.Model.Entity; namespace Chessy.Model
 //{
 //    sealed class WoodcutterExtractAdultForestUpdateMS : SystemModelGameAbs, IEcsRunSystem
 //    {

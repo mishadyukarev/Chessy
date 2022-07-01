@@ -1,11 +1,10 @@
-﻿using Chessy.Common.Component;
+﻿//using Chessy.Model.Component;
+//namespace Chessy.Model.View.Entity
+//{
+//    public readonly struct UnitSelectedVE
+//    {
+//        public readonly GameObjectVC GameObjectVC;
 
-namespace Chessy.Model.View.Entity
-{
-    public readonly struct UnitSelectedVE
-    {
-        public readonly GameObjectVC GameObjectVC;
-
-        //public readonly Dictionary<LevelTypes, Dictionary<LevelTypes, Dictionary<UnitTypes, SpriteRendererVC>>> Units;
-    }
-}
+//        //public readonly Dictionary<LevelTypes, Dictionary<LevelTypes, Dictionary<UnitTypes, SpriteRendererVC>>> Units;
+//    }
+//}

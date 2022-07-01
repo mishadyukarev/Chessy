@@ -1,10 +1,11 @@
-﻿using Chessy.Common;
+﻿using Chessy.Model;
+using Chessy.View.Component;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Model.Entity.View.Cell
+namespace Chessy.View.Entity
 {
-    public struct EnvironmentVEs
+    public struct EnvironmentVE
     {
         readonly Dictionary<EnvironmentTypes, SpriteRendererVC> _envs;
 
@@ -13,7 +14,7 @@ namespace Chessy.Model.Entity.View.Cell
 
         public SpriteRendererVC EnvironmentE(in EnvironmentTypes env) => _envs[env];
 
-        public EnvironmentVEs(in GameObject cell)
+        public EnvironmentVE(in GameObject cell)
         {
             _envs = new Dictionary<EnvironmentTypes, SpriteRendererVC>();
 

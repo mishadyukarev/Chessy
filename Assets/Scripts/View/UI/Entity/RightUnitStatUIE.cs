@@ -1,7 +1,8 @@
-﻿using TMPro;
+﻿using Chessy.View.UI.Component;
+using TMPro;
 using UnityEngine.UI;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     readonly struct RightUnitStatUIE
     {

@@ -1,13 +1,15 @@
-﻿using Chessy.Common;
-using Chessy.Common.Component;
+﻿using Chessy.Model;
+using Chessy.Model.Component;
 using Chessy.Model.Values;
+using Chessy.View.Component;
+using Chessy.View.Entity;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Chessy.Model
+namespace Chessy.View.UI.Entity
 {
     public sealed class EntitiesView
     {
