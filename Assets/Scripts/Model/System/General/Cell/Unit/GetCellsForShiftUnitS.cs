@@ -7,19 +7,26 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _e.WhereUnitCanShiftC(cellIdxCurrent).SetWhereUnitCanShift(cellIdxCurrent, false);
+                if (_e.IsBorder(cellIdxCurrent)) continue;
+
+
+                
 
                 for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
-                    _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCurrent).SetHowManyEnergyNeedForShiftingToHere(idxCell, 0);
-
-                if (!_e.IsBorder(cellIdxCurrent))
                 {
-                    if (!_e.UnitEffectsC(cellIdxCurrent).IsStunned && _e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
-                    {
-                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                        {
-                            var idx_to = _e.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+                    _e.WhereUnitCanShiftC(cellIdxCurrent).SetWhereUnitCanShift(idxCell, false);
+                    _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCurrent).SetHowManyEnergyNeedForShiftingToHere(idxCell, 0);
+                }
 
+
+                if (!_e.UnitEffectsC(cellIdxCurrent).IsStunned && _e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
+                {
+                    for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
+                    {
+                        var idx_to = _e.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+
+                        if (!_e.UnitT(idx_to).HaveUnit() && !_e.MountainC(idx_to).HaveAnyResources)
+                        {
                             float needEnergy = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
 
                             if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Tree))
@@ -87,14 +94,12 @@ namespace Chessy.Model.System
 
                             _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCurrent).SetHowManyEnergyNeedForShiftingToHere(idx_to, needEnergy);
 
-                            if (!_e.MountainC(idx_to).HaveAnyResources && !_e.UnitT(idx_to).HaveUnit())
-                            {
-                                if (needEnergy <= _e.EnergyUnitC(cellIdxCurrent).Energy || _e.EnergyUnitC(cellIdxCurrent).Energy >= StepValues.MAX)
-                                {
-                                    _e.WhereUnitCanShiftC(cellIdxCurrent).SetWhereUnitCanShift(idx_to, true);
+                            _e.WhereUnitCanShiftC(cellIdxCurrent).SetWhereUnitCanShift(idx_to, true);
 
-                                }
-                            }
+                            //if (needEnergy <= _e.EnergyUnitC(cellIdxCurrent).Energy || _e.EnergyUnitC(cellIdxCurrent).Energy >= StepValues.MAX)
+                            //{
+                                
+                            //}
                         }
                     }
                 }

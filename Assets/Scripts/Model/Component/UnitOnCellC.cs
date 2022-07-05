@@ -9,5 +9,9 @@
         public bool IsArcherDirectedToRight { get; internal set; }
         public double DamageSimpleAttack { get; internal set; }
         public double DamageOnCell { get; internal set; }
+        public byte IdxWhereNeedShiftUnitOnOtherCell { get; internal set; }
+        public float DistanceForShiftingOnOtherCell { get; internal set; }
+        public float CostForShiftingUnitToHere { get; internal set; }
+        public int HowManySecondUnitWasHereInRelax { get; internal set; }
     }
 }

@@ -7,23 +7,30 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _e.BuildingExtractionC(cellIdxCurrent).HowManyWoodcutterCanExtractWood = 0;
+                if (_e.IsBorder(cellIdxCurrent)) continue;
 
-                if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Woodcutter))
-                {
-                    var extract = ValuesChessy.WOODCUTTER_EXTRACT;
+                GetWoodcutterExtractCells(cellIdxCurrent);
+            }
+        }
 
-                    //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
-                    //{
-                    //    extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
-                    //}
+        public void GetWoodcutterExtractCells(in byte cellIdx)
+        {
+            _e.BuildingExtractionC(cellIdx).HowManyWoodcutterCanExtractWood = 0;
+
+            if (_e.IsBuildingOnCell(cellIdx, BuildingTypes.Woodcutter))
+            {
+                var extract = ValuesChessy.WOODCUTTER_EXTRACT;
+
+                //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
+                //{
+                //    extract += Environment_Values.WOODCUTTER_CENTER_UPGRADE;
+                //}
 
 
-                    if (_e.AdultForestC(cellIdxCurrent).Resources < extract) extract = _e.AdultForestC(cellIdxCurrent).Resources;
+                if (_e.AdultForestC(cellIdx).Resources < extract) extract = _e.AdultForestC(cellIdx).Resources;
 
 
-                    _e.BuildingExtractionC(cellIdxCurrent).HowManyWoodcutterCanExtractWood = extract;
-                }
+                _e.BuildingExtractionC(cellIdx).HowManyWoodcutterCanExtractWood = extract;
             }
         }
     }

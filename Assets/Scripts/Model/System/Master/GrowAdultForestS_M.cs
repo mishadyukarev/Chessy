@@ -13,7 +13,7 @@ namespace Chessy.Model.System
                     if (_e.YoungForestC(cell_0).HaveAnyResources)
                     {
                         _e.YoungForestC(cell_0).Resources = 0;
-                        _e.AdultForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES;
+                        _e.AdultForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
 
                         _e.EnergyUnitC(cell_0).Energy -= StepValues.GROW_ADULT_FOREST;
                         _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
@@ -22,7 +22,7 @@ namespace Chessy.Model.System
                         {
                             if (_e.YoungForestC(idx_1).HaveAnyResources)
                             {
-                                _e.AdultForestC(idx_1).Resources = ValuesChessy.MAX_RESOURCES;
+                                _e.AdultForestC(idx_1).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
                             }
                         }
                         _s.RpcSs.SoundToGeneral(sender, abilityT);

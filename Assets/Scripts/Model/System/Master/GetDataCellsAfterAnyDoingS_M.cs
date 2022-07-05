@@ -15,10 +15,13 @@ namespace Chessy.Model.System
 
         internal void GetDataCells()
         {
-            for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
+            for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
-                _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(cellIdxCell, false);
-                _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(cellIdxCell, false);
+                for (byte cellIdxDirect = 0; cellIdxDirect < IndexCellsValues.CELLS; cellIdxDirect++)
+                {
+                    _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxStart).Set(cellIdxDirect, false);
+                    _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxStart).Set(cellIdxDirect, false);
+                }
             }
 
             PawnGetExtractAdultForest();

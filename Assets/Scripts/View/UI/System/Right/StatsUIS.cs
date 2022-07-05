@@ -51,7 +51,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 _statsUIE.WaterE.ImageC.SetActiveParent(needActiveWater);
                 _statsUIE.Stat(UnitStatsTypes.Hp).ImageC.SetActiveParent(needActiveHp);
                 _statsUIE.DamageE.ImageC.SetActiveParent(needActiveDamage);
-                _statsUIE.EnergyE.ImageUIC.SetActiveParent(true);
+                _statsUIE.EnergyE.ImageUIC.SetActiveParent(false);
 
 
 

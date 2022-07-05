@@ -30,7 +30,7 @@ namespace Chessy.Model.Entity
         public ref AdC AdC => ref CommonGameE.AdC;
 
         public ref UpdateAllViewC UpdateAllViewC => ref CommonGameE.UpdateAllViewC;
-        internal ref float ForUpdateViewTimer => ref UpdateAllViewC.ForUpdateViewTimer;
+        internal ref float TimeForUpdateEverything => ref UpdateAllViewC.TimeForUpdateEverything;
         public bool NeedUpdateView
         {
             get => UpdateAllViewC.NeedUpdateView;

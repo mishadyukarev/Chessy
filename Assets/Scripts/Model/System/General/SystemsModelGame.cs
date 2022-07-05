@@ -52,19 +52,7 @@ namespace Chessy.Model.System
             _e.OpenedNowPageBookT = PageBookTypes.None;
             _e.SceneT = SceneTypes.Menu;
         }
-
-        public void Update()
-        {
-            _runs.ForEach((Action action) => action());
-
-            _e.ForUpdateViewTimer += Time.deltaTime;
-
-            if (_e.ForUpdateViewTimer >= 0.5f)
-            {
-                _e.NeedUpdateView = true;
-                _e.ForUpdateViewTimer = 0;
-            }
-        }
+        
         public void ToggleScene(in SceneTypes newSceneT)
         {
             _e.SceneT = newSceneT;

@@ -19,6 +19,5 @@ namespace Chessy.Model
             mainUnitToE.ConditionT = unitMainFromE.ConditionT;
             mainUnitToE.IsArcherDirectedToRight = unitMainFromE.IsArcherDirectedToRight;
         }
-
     }
 }

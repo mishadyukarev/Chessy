@@ -20,8 +20,8 @@ namespace Chessy.View.UI.System
         {
             if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.HoldPressReady)
             {
-                _donerE.ButtonC.SetActiveParent(true);
-                _donerE.WaitGoC.SetActive(true);
+                _donerE.ButtonC.SetActiveParent(false);
+                _donerE.WaitGoC.SetActive(false);
 
                 if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
                 {

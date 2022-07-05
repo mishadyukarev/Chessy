@@ -84,7 +84,7 @@ namespace Chessy.Model.System
                         {
                             if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.Mountain))
                             {
-                                _e.MountainC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES);
+                                _e.MountainC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                                 amountMountains++;
                             }
 
@@ -94,7 +94,7 @@ namespace Chessy.Model.System
                             {
                                 if (UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.AdultForest))
                                 {
-                                    _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES);
+                                    _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                                 }
                             }
                         }
@@ -103,7 +103,7 @@ namespace Chessy.Model.System
                         {
                             if (UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES);
+                                _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                             }
                         }
 
@@ -252,7 +252,7 @@ namespace Chessy.Model.System
                     else if (cellUdxCurrent == KeyIndexCellsForLesson.CELL_MOUNTAIN_LESSON)
                     {
                         ClearAllEnvironment(cellUdxCurrent);
-                        _e.MountainC(cellUdxCurrent).Resources = ValuesChessy.MAX_RESOURCES;
+                        _e.MountainC(cellUdxCurrent).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
                     }
                 }
             }

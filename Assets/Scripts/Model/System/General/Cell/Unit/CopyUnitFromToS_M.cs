@@ -10,6 +10,9 @@
             _e.MainToolWeaponE(cellIdxTo).CopyMainTW(_e.MainToolWeaponE(cellIdxFrom));
             CopyExtraTW(cellIdxFrom, cellIdxTo);
 
+            _e.UnitMainC(cellIdxFrom).HowManySecondUnitWasHereInRelax = 0;
+            _e.UnitMainC(cellIdxTo).HowManySecondUnitWasHereInRelax = 0;
+
             for (var buttonT = ButtonTypes.None + 1; buttonT < ButtonTypes.End; buttonT++)
             {
                 _e.UnitButtonAbilitiesC(cellIdxTo).SetAbility(buttonT, _e.UnitButtonAbilitiesC(cellIdxFrom).Ability(buttonT));

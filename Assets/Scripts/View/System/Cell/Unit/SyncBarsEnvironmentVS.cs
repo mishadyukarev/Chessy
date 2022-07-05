@@ -26,7 +26,7 @@ namespace Chessy.View.System
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Food).Enable();
 
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Food).Transform.localScale
-                            = new Vector3(_e.WaterOnCellC(cellIdxCurrent).Resources / (float)ValuesChessy.MAX_RESOURCES, 0.15f, 1);
+                            = new Vector3(_e.WaterOnCellC(cellIdxCurrent).Resources / (float)ValuesChessy.MAX_RESOURCES_ENVIRONMENT, 0.15f, 1);
                     }
                     else
                     {
@@ -38,7 +38,7 @@ namespace Chessy.View.System
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Wood).Enable();
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Wood).Transform.localScale =
                             new Vector3(_e.AdultForestC(cellIdxCurrent).Resources
-                            / (float)ValuesChessy.MAX_RESOURCES, 0.15f, 1);
+                            / (float)ValuesChessy.MAX_RESOURCES_ENVIRONMENT, 0.15f, 1);
                     }
                     else
                     {
@@ -50,7 +50,7 @@ namespace Chessy.View.System
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Ore).Enable();
                         _eV.CellEs(cellIdxCurrent).Bar(CellBarTypes.Ore).Transform.localScale
                             = new Vector3(_e.HillC(cellIdxCurrent).Resources
-                            / (float)ValuesChessy.MAX_RESOURCES, 0.15f, 1);
+                            / (float)ValuesChessy.MAX_RESOURCES_ENVIRONMENT, 0.15f, 1);
                     }
                     else
                     {

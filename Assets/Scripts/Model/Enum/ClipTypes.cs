@@ -22,6 +22,7 @@
         Rock,
         ShortWind,
         ShortRain,
+        SoundRunningUnit,
 
         Background1,
         Background2,

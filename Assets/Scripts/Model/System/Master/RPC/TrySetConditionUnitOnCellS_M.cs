@@ -6,73 +6,79 @@ namespace Chessy.Model.System
 {
     public partial class SystemsModel
     {
-        internal void TrySetConditionUnitOnCellM(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
+        internal void TrySetConditionUnitOnCellM(in ConditionUnitTypes condT, in byte cellIdx, in Player sender)
         {
-            if (!_e.UnitEffectsC(cell_0).IsStunned)
+            if (!_e.UnitEffectsC(cellIdx).IsStunned)
             {
                 switch (condT)
                 {
                     case ConditionUnitTypes.None:
-                        _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
+                        _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
                         break;
 
                     case ConditionUnitTypes.Protected:
-                        if (_e.UnitConditionT(cell_0).Is(ConditionUnitTypes.Protected))
+                        if (_e.UnitConditionT(cellIdx).Is(ConditionUnitTypes.Protected))
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
+                            _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
                         }
-
-                        else if (_e.EnergyUnitC(cell_0).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
-                        {
-                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.EnergyUnitC(cell_0).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
-                            _e.SetUnitConditionT(cell_0, condT);
-
-                            if (_e.LessonT == LessonTypes.ClickDefend)  SetNextLesson();
-                        }
-
                         else
                         {
-                            RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                            //_e.EnergyUnitC(cellIdx).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                            _e.SetUnitConditionT(cellIdx, condT);
+
+                            if (_e.LessonT == LessonTypes.ClickDefend) SetNextLesson();
                         }
+
+                        //else if (_e.EnergyUnitC(cellIdx).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        //{
+
+                        //}
+
+                        //else
+                        //{
+                        //    RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        //}
                         break;
 
 
                     case ConditionUnitTypes.Relaxed:
-                        if (_e.UnitConditionT(cell_0).Is(ConditionUnitTypes.Relaxed))
+                        if (_e.UnitConditionT(cellIdx).Is(ConditionUnitTypes.Relaxed))
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
+                            _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
                         }
 
-                        else if (_e.EnergyUnitC(cell_0).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        //else if (_e.EnergyUnitC(cellIdx).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
+                        //{
+
+                        //}
+
+                        else
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            _e.SetUnitConditionT(cell_0, condT);
-                            _e.EnergyUnitC(cell_0).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+                            _e.SetUnitConditionT(cellIdx, condT);
+                            //_e.EnergyUnitC(cellIdx).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
-                            if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
+                            if (_e.UnitT(cellIdx).Is(UnitTypes.Pawn))
                             {
-                                if (!_e.HaveBuildingOnCell(cell_0))
+                                if (!_e.HaveBuildingOnCell(cellIdx))
                                 {
-                                    if (_e.AdultForestC(cell_0).HaveAnyResources)
+                                    if (_e.AdultForestC(cellIdx).HaveAnyResources)
                                     {
-                                        if (_e.HpUnitC(cell_0).Health >= HpValues.MAX)
+                                        if (_e.HpUnitC(cellIdx).Health >= HpValues.MAX)
                                         {
-                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cellIdx)).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
                                             {
-                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cell_0), ValuesChessy.MAX_HP_ANY_BUILDING, cell_0);
+                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cellIdx), ValuesChessy.MAX_HP_ANY_BUILDING, cellIdx);
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        else
-                        {
-                            RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            //RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                         break;
 

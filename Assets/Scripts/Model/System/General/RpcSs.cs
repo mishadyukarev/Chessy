@@ -150,7 +150,6 @@ namespace Chessy.Model.System
             }
 
             _s.GetDataCellsS.GetDataCells();
-
             _s.SyncDataM();
         }
         internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTargetT, new object[] { nameof(_s.ExecuteSoundAction), clipT });

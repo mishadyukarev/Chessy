@@ -2,7 +2,7 @@
 {
     static class ClearUnitS
     {
-        internal static void ClearEverything(this UnitE unitEs)
+        internal static void ClearEverything(this ref UnitE unitEs)
         {
             unitEs.MainC.UnitT = UnitTypes.None;
         }

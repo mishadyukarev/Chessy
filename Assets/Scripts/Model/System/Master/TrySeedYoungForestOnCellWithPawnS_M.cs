@@ -22,7 +22,7 @@ namespace Chessy.Model.System
                         {
                             RpcSs.SoundToGeneral(sender, abilityT);
 
-                            _e.YoungForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES;
+                            _e.YoungForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
 
                             _e.EnergyUnitC(cell_0).Energy -= StepValues.SEED_PAWN;
 

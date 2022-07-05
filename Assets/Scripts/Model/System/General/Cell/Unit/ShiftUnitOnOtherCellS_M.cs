@@ -88,7 +88,7 @@ namespace Chessy.Model.System
                 {
                     if (_e.WaterUnitC(toCellIdx).HaveAnyWater())
                     {
-                        _e.WaterOnCellC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES;
+                        _e.WaterOnCellC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
                         _e.HaveFire(toCellIdx) = false;
                         _e.WaterUnitC(toCellIdx).Water -= ValuesChessy.TAKING_WATER_AFTER_SHIFT_SNOWY;
                     }
@@ -132,7 +132,7 @@ namespace Chessy.Model.System
                     {
                         if (Random.Range(0, 1f) <= ValuesChessy.PERCENT_FOR_SEEDING_YOUNG_FOREST_AFTER_SHIFT_ELFEMALE)
                         {
-                            _e.YoungForestC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES;
+                            _e.YoungForestC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
                         }
                     }
                     break;

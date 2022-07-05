@@ -116,6 +116,9 @@ TagManager:
   - name: RedCircular
     uniqueID: 3610903931
     locked: 0
+  - name: ShiftingBar
+    uniqueID: 47531091
+    locked: 0
   - name: BlackSupportVision
     uniqueID: 4260119031
     locked: 0

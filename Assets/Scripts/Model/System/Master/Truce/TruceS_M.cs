@@ -71,7 +71,7 @@ namespace Chessy.Model.System
                     {
                         e.YoungForestC(cellIdxCurrent).Resources = 0;
 
-                        e.AdultForestC(cellIdxCurrent).SetRandom(ValuesChessy.MIN_RESOURCES_FOR_SPAWN, ValuesChessy.MAX_RESOURCES);
+                        e.AdultForestC(cellIdxCurrent).SetRandom(ValuesChessy.MIN_RESOURCES_FOR_SPAWN, ValuesChessy.MAX_RESOURCES_ENVIRONMENT);
                     }
                 }
             }
