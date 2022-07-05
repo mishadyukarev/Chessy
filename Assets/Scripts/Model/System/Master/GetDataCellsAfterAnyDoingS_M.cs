@@ -1,10 +1,10 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.Model.System;
 using Chessy.Model.Values;
 using System.Collections.Generic;
-namespace Chessy.Model
+
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         readonly Dictionary<EffectTypes, bool> _isFilled = new Dictionary<EffectTypes, bool>();
 
@@ -15,7 +15,7 @@ namespace Chessy.Model
 
         internal void GetDataCells()
         {
-            for (byte cellIdxCell = 0; cellIdxCell < StartValues.CELLS; cellIdxCell++)
+            for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
             {
                 _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(cellIdxCell, false);
                 _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(cellIdxCell, false);
@@ -42,7 +42,7 @@ namespace Chessy.Model
 
         void FillEffectsForVision()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled[effectT] = false;
 

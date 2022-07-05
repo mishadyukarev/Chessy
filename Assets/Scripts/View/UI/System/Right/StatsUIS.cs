@@ -49,31 +49,31 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
 
                 _statsUIE.WaterE.ImageC.SetActiveParent(needActiveWater);
-                _statsUIE.Stat(UnitStatTypes.Hp).ImageC.SetActiveParent(needActiveHp);
+                _statsUIE.Stat(UnitStatsTypes.Hp).ImageC.SetActiveParent(needActiveHp);
                 _statsUIE.DamageE.ImageC.SetActiveParent(needActiveDamage);
                 _statsUIE.EnergyE.ImageUIC.SetActiveParent(true);
 
 
 
 
-                _statsUIE.Stat(UnitStatTypes.Hp).TextC.TextUI.text = Math.Truncate(100 * _e.HpUnitC(idx_sel).Health).ToString();
+                _statsUIE.Stat(UnitStatsTypes.Hp).TextC.TextUI.text = Math.Truncate(100 * _e.HpUnitC(idx_sel).Health).ToString();
                 _statsUIE.DamageE.TextC.TextUI.text = (Math.Truncate(10 * damageAttack) / 10) + "/" + (Math.Truncate(10 * damageOnCell) / 10).ToString();
                 _statsUIE.EnergyE.TextUIC.TextUI.text = (Math.Truncate(100 * _e.EnergyUnitC(idx_sel).Energy) / 100).ToString();
                 _statsUIE.WaterE.TextC.TextUI.text = (Math.Truncate(100 * _e.WaterUnitC(idx_sel).Water) / 100).ToString();
 
-                _statsUIE.Stat(UnitStatTypes.Hp).ImageC.Image.fillAmount = (float)(_e.HpUnitC(idx_sel).Health / HpValues.MAX);
+                _statsUIE.Stat(UnitStatsTypes.Hp).ImageC.Image.fillAmount = (float)(_e.HpUnitC(idx_sel).Health / HpValues.MAX);
 
 
 
                 _statsUIE.DamageE.ImageC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
                 _statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)_e.EnergyUnitC(idx_sel).Energy / StepValues.MAX;
-                _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(_e.WaterUnitC(idx_sel).Water / WaterValues.MAX);
+                _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(_e.WaterUnitC(idx_sel).Water / ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
             }
 
             else
             {
-                _statsUIE.Stat(UnitStatTypes.Hp).ImageC.SetActiveParent(false);
+                _statsUIE.Stat(UnitStatsTypes.Hp).ImageC.SetActiveParent(false);
                 _statsUIE.DamageE.ImageC.SetActiveParent(false);
                 _statsUIE.EnergyE.ImageUIC.SetActiveParent(false);
                 _statsUIE.WaterE.ImageC.SetActiveParent(false);

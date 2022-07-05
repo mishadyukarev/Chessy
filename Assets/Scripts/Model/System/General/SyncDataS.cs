@@ -3,13 +3,13 @@ using Photon.Pun;
 using System.Collections.Generic;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         public void SyncDataM()
         {
             var objs = new List<object>();
 
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
                 objs.Add(_e.UnitT(cell_0));
                 objs.Add(_e.UnitLevelT(cell_0));
@@ -118,7 +118,7 @@ namespace Chessy.Model.System
 
                 for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
                 {
-                    for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
+                    for (var twT = (ToolsWeaponsWarriorTypes)1; twT < ToolsWeaponsWarriorTypes.End; twT++)
                     {
                         objs.Add(_e.ToolWeaponsInInventor(playerT, levelT, twT));
                     }
@@ -145,7 +145,7 @@ namespace Chessy.Model.System
 
             var idxCurrent = 0;
 
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
                 _e.SetUnitOnCellT(cell_0, (UnitTypes)objects[idxCurrent++]);
                 _e.SetUnitLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
@@ -162,10 +162,10 @@ namespace Chessy.Model.System
                 _e.UnitMainC(cell_0).DamageSimpleAttack = (double)objects[idxCurrent++];
                 _e.UnitMainC(cell_0).DamageOnCell = (double)objects[idxCurrent++];
 
-                _e.SetMainToolWeaponT(cell_0, (ToolWeaponTypes)objects[idxCurrent++]);
+                _e.SetMainToolWeaponT(cell_0, (ToolsWeaponsWarriorTypes)objects[idxCurrent++]);
                 _e.SetMainTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
 
-                _e.SetExtraToolWeaponT(cell_0, (ToolWeaponTypes)objects[idxCurrent++]);
+                _e.SetExtraToolWeaponT(cell_0, (ToolsWeaponsWarriorTypes)objects[idxCurrent++]);
                 _e.SetExtraTWLevelT(cell_0, (LevelTypes)objects[idxCurrent++]);
                 _e.UnitExtraTWE(cell_0).ProtectionShield = (float)objects[idxCurrent++];
 
@@ -253,7 +253,7 @@ namespace Chessy.Model.System
 
                 for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
                 {
-                    for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
+                    for (var twT = (ToolsWeaponsWarriorTypes)1; twT < ToolsWeaponsWarriorTypes.End; twT++)
                     {
                         _e.SetToolWeaponsInInventor(playerT, levelT, twT, (int)objects[idxCurrent++]);
                     }

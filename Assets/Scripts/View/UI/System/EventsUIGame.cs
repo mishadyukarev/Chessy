@@ -91,23 +91,23 @@ namespace Chessy.View.UI
             eUI.DownEs.CityButtonUIE.ButtonC.AddListener(sM.ForUISs.OpenCityClick);
             eUI.DownEs.CityButtonUIE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Town].Press(b));
 
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Pick).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolWeaponTypes.Pick); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Pick).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Pick].Press(b));
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Pick).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolsWeaponsWarriorTypes.Pick); });
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Pick).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Pick].Press(b));
 
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Sword).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Sword).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Sword].Press(b));
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Sword).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolsWeaponsWarriorTypes.Sword); });
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Sword).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Sword].Press(b));
 
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Shield).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolWeaponTypes.Shield); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Shield).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Shield].Press(b));
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Shield).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolsWeaponsWarriorTypes.Shield); });
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Shield).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Shield].Press(b));
 
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolWeaponTypes.BowCrossbow); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.BowCrossbow).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.BowCrossbow].Press(b));
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.BowCrossbow).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolsWeaponsWarriorTypes.BowCrossbow); });
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.BowCrossbow).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.BowCrossbow].Press(b));
 
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolWeaponTypes.Axe); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Axe).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Axe].Press(b));
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Axe).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolsWeaponsWarriorTypes.Axe); });
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Axe).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Axe].Press(b));
 
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolWeaponTypes.Staff); });
-            eUI.DownEs.ToolWeaponE.ButtonC(ToolWeaponTypes.Staff).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Staff].Press(b));
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Staff).AddListener(delegate { sM.ForUISs.ToggleToolWeapon(ToolsWeaponsWarriorTypes.Staff); });
+            eUI.DownEs.ToolWeaponE.ButtonC(ToolsWeaponsWarriorTypes.Staff).AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Staff].Press(b));
 
             eUI.DownEs.BookLittleE.ButtonC.AddListener(sM.ForUISs.ClickLittleBookDownInGame);
 
@@ -129,9 +129,9 @@ namespace Chessy.View.UI
             var leftEs = eUI.LeftEs;
             eUI.LeftEs.EnvironmentEs.InfoButtonC.AddListener(sM.ForUISs.EnvironmentClick);
             //City
-            leftEs.CityE(BuildingTypes.House).Button.AddListener(() => sM.ForUISs.BuildBuildingClick(BuildingTypes.House));
-            leftEs.CityE(BuildingTypes.Market).Button.AddListener(() => sM.ForUISs.BuildBuildingClick(BuildingTypes.Market));
-            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(() => sM.ForUISs.BuildBuildingClick(BuildingTypes.Smelter));
+            leftEs.CityE(BuildingTypes.House).Button.AddListener(() => sM.ForUISs.ClickOntoTownBuilding(BuildingTypes.House));
+            leftEs.CityE(BuildingTypes.Market).Button.AddListener(() => sM.ForUISs.ClickOntoTownBuilding(BuildingTypes.Market));
+            leftEs.CityE(BuildingTypes.Smelter).Button.AddListener(() => sM.ForUISs.ClickOntoTownBuilding(BuildingTypes.Smelter));
 
             leftEs.PremiumButtonC.AddListener(sM.ForUISs.ClickPremiumButtonLeftInGame);
 

@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel
+    public partial class SystemsModel
     {
         internal void TrySetUnitOnCellM(in UnitTypes unitT, in Player sender, in byte cellIdx)
         {
@@ -15,14 +15,14 @@ namespace Chessy.Model.System
                 {
                     if (_e.LessonT == LessonTypes.SettingKing)
                     {
-                        _e.CommonInfoAboutGameC.SetNextLesson();
+                         SetNextLesson();
                     }
                 }
                 else if (unitT.IsGod())
                 {
                     if (_e.LessonT == LessonTypes.SettingGod)
                     {
-                        _e.CommonInfoAboutGameC.SetNextLesson();
+                         SetNextLesson();
                     }
                 }
 
@@ -30,7 +30,7 @@ namespace Chessy.Model.System
                 SetNewUnitOnCellS(unitT, whoseMove, cellIdx);
 
 
-                ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

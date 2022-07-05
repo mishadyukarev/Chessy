@@ -12,12 +12,12 @@ namespace Chessy.Model.System
 
             if (_e.LessonT.Is(LessonTypes.OpeningTown))
             {
-                _e.CommonInfoAboutGameC.SetNextLesson();
+                _s.SetNextLesson();
 
             }
             if (_e.LessonT.Is(LessonTypes.TryBuyingHouse))
             {
-                if (!_e.IsSelectedCity) _e.CommonInfoAboutGameC.SetPreviousLesson();
+                if (!_e.IsSelectedCity) _s.SetPreviousLesson();
             }
 
 

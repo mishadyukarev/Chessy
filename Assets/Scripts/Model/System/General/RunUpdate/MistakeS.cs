@@ -3,7 +3,7 @@ using Chessy.Model.System;
 using UnityEngine;
 namespace Chessy.Model
 {
-    sealed class MistakeS : SystemModel
+    sealed class MistakeS : SystemModelAbstract
     {
         const float NEED_TIME_FOR_FADING = 1.3f;
 

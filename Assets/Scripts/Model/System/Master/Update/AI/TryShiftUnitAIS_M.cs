@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Chessy.Model
 {
-    sealed class TryShiftUnitAIS_M : SystemModel
+    sealed class TryShiftUnitAIS_M : SystemModelAbstract
     {
         readonly Dictionary<byte, byte> _pointsCellsForShiftUnit = new Dictionary<byte, byte>();
         byte _theMostBigPointForShiftUnit;
 
         internal TryShiftUnitAIS_M(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
         {
-            for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
+            for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
                 _pointsCellsForShiftUnit.Add(cellIdxStart, default);
             }
@@ -24,11 +24,11 @@ namespace Chessy.Model
 
 
 
-            for (byte idxCellStart = 0; idxCellStart < StartValues.CELLS; idxCellStart++)
+            for (byte idxCellStart = 0; idxCellStart < IndexCellsValues.CELLS; idxCellStart++)
             {
                 if (_e.CellC(idxCellStart).IsBorder) continue;
 
-                for (byte idxCellElse = 0; idxCellElse < StartValues.CELLS; idxCellElse++)
+                for (byte idxCellElse = 0; idxCellElse < IndexCellsValues.CELLS; idxCellElse++)
                 {
                     _pointsCellsForShiftUnit[idxCellElse] = 0;
                 }

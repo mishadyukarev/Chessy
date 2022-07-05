@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model.System
 {
-    sealed partial class UnitSystems
+    sealed partial class UnitSystems : SystemModelAbstract
     {
         internal void CopyUnitFromTo(in byte cellIdxFrom, in byte cellIdxTo)
         {

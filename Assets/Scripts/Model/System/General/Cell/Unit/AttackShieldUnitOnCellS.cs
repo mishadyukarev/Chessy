@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Chessy.Model.System
 {
-    sealed partial class UnitSystems
+    sealed partial class UnitSystems : SystemModelAbstract
     {
         internal void AttackShield(in float damage, in byte cell_0)
         {
@@ -9,7 +9,7 @@ namespace Chessy.Model.System
 
             _e.UnitExtraTWE(cell_0).ProtectionShield -= damage;
             if (!_e.UnitExtraTWE(cell_0).HaveAnyProtectionShield)
-                _e.SetExtraToolWeaponT(cell_0, ToolWeaponTypes.None);
+                _e.SetExtraToolWeaponT(cell_0, ToolsWeaponsWarriorTypes.None);
         }
     }
 }

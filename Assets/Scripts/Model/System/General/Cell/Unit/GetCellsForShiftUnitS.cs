@@ -1,15 +1,15 @@
 ﻿using Chessy.Model.Values;
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         internal void GetCellsForShiftUnit()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _e.WhereUnitCanShiftC(cellIdxCurrent).SetWhereUnitCanShift(cellIdxCurrent, false);
 
-                for (byte idxCell = 0; idxCell < StartValues.CELLS; idxCell++)
+                for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                     _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCurrent).SetHowManyEnergyNeedForShiftingToHere(idxCell, 0);
 
                 if (!_e.IsBorder(cellIdxCurrent))
@@ -30,7 +30,7 @@ namespace Chessy.Model
                             {
                                 if (!_e.UnitT(cellIdxCurrent).Is(UnitTypes.Undead))
                                 {
-                                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff))
                                     {
                                         needEnergy /= 2;
                                     }
@@ -47,7 +47,7 @@ namespace Chessy.Model
                                     {
                                         if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
                                         {
-                                            if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                                            if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff))
                                             {
                                                 needEnergy += StepValues.ADULT_FOREST;
 
@@ -75,7 +75,7 @@ namespace Chessy.Model
 
                                     if (_e.HillC(idx_to).HaveAnyResources)
                                     {
-                                        if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                                        if (!_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff))
                                         {
                                             needEnergy += StepValues.HILL;
                                         }

@@ -7,7 +7,7 @@ using System;
 using UnityEngine;
 namespace Chessy.Model.System
 {
-    public sealed partial class ForButtonsSystemsModel : SystemModel
+    public sealed partial class ForButtonsSystemsModel : SystemModelAbstract
     {
         const byte MAX_PLAYERS = 2;
 
@@ -27,7 +27,7 @@ namespace Chessy.Model.System
             if (_e.LessonT == LessonTypes.ClickWindInfo)
             {
                 _e.SunSideT = SunSideTypes.Dawn;
-                _e.CommonInfoAboutGameC.SetNextLesson();
+                 _s.SetNextLesson();
             }
             else
             {

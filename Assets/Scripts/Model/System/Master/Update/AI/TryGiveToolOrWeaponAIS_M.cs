@@ -4,7 +4,7 @@ using Chessy.Model.Values;
 using UnityEngine;
 namespace Chessy.Model
 {
-    sealed class TryGiveToolOrWeaponAIS_M : SystemModel
+    sealed class TryGiveToolOrWeaponAIS_M : SystemModelAbstract
     {
         internal TryGiveToolOrWeaponAIS_M(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
         {
@@ -15,7 +15,7 @@ namespace Chessy.Model
         {
             var playerBotT = PlayerTypes.Second;
 
-            for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
+            for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
                 if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdxStart) == playerBotT)
                 {
@@ -25,11 +25,11 @@ namespace Chessy.Model
                         {
                             var levetTW = Random.Range(0f, 1f) <= 0.70f ? LevelTypes.First : LevelTypes.Second;
 
-                            _e.UnitExtraTWE(cellIdxStart).Set(ToolWeaponTypes.Shield, levetTW, ToolWeaponValues.ShieldProtection(levetTW));
+                            _e.UnitExtraTWE(cellIdxStart).Set(ToolsWeaponsWarriorTypes.Shield, levetTW, ValuesChessy.MaxShieldProtection(levetTW));
                         }
                         else
                         {
-                            _e.UnitExtraTWE(cellIdxStart).Set(ToolWeaponTypes.Sword, LevelTypes.Second, 0);
+                            _e.UnitExtraTWE(cellIdxStart).Set(ToolsWeaponsWarriorTypes.Sword, LevelTypes.Second, 0);
                         }
                     }
                 }

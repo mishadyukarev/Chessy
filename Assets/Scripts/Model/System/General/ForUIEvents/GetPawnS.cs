@@ -26,7 +26,7 @@ namespace Chessy.Model.System
                         {
                             if (_e.LessonT.Is(LessonTypes.SettingPawn))
                             {
-                                _e.CommonInfoAboutGameC.SetNextLesson();
+                                 _s.SetNextLesson();
                             }
                             else if (_e.LessonT.Is(LessonTypes.OpeningTown, LessonTypes.TryBuyingHouse))
                             {

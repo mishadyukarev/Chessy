@@ -19,7 +19,7 @@ namespace Chessy.View.System
 
             for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
             {
-                _needActive.Add(directT, new bool[StartValues.CELLS]);
+                _needActive.Add(directT, new bool[IndexCellsValues.CELLS]);
             }
         }
 
@@ -27,7 +27,7 @@ namespace Chessy.View.System
         {
             for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
             {
-                for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+                for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
                     _needActive[directT][cellIdxCurrent] = false;
                 }
@@ -36,7 +36,7 @@ namespace Chessy.View.System
 
             for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
             {
-                for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+                for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
                     if (_e.TrailVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
                     {

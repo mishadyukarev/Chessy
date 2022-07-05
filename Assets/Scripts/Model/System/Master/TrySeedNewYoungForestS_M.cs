@@ -1,12 +1,12 @@
 ﻿using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void TrySeedNewYoungForestOnCell(in byte cellIdx)
         {
-            if (UnityEngine.Random.Range(0f, 1f) < EnvironmentValues.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
-                _e.YoungForestC(cellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
+            if (UnityEngine.Random.Range(0f, 1f) < ValuesChessy.PERCENT_SPAWN_FOR_YOUNG_FOREST_AFTER_FIRE)
+                _e.YoungForestC(cellIdx).Resources = ValuesChessy.MAX_RESOURCES;
         }
     }
 }

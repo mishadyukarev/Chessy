@@ -17,7 +17,7 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _cellGOs[cellIdxCurrent].Transform.rotation = _e.CurrentPlayerIT == PlayerTypes.First
                     ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);

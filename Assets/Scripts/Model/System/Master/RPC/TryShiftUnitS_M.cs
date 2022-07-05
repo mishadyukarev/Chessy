@@ -1,7 +1,7 @@
 ﻿using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void TryShiftUnitOntoOtherCellM(in byte cell_from, in byte cell_to, in Player sender)
         {
@@ -12,7 +12,7 @@ namespace Chessy.Model.System
 
                 ShiftUnitOnOtherCellM(cell_from, cell_to);
 
-                ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }

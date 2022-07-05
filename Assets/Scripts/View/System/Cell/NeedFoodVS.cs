@@ -9,7 +9,7 @@ namespace Chessy.View.UI.System
 {
     sealed class NeedFoodVS : SystemViewAbstract
     {
-        bool[] _needActive = new bool[StartValues.CELLS];
+        bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _needFoodSRCs;
 
         internal NeedFoodVS(in SpriteRendererVC[] needFoodSRCs, in EntitiesModel eMG) : base(eMG)
@@ -19,12 +19,12 @@ namespace Chessy.View.UI.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = false;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
                 {
@@ -38,7 +38,7 @@ namespace Chessy.View.UI.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needFoodSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
             }

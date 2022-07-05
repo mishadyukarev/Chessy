@@ -3,7 +3,7 @@ using Chessy.Model.Values;
 using UnityEngine;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
@@ -19,11 +19,11 @@ namespace Chessy.Model.System
             {
                 if (_e.UnitT(toCellIdx).Is(UnitTypes.Pawn))
                 {
-                    if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                    if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                     {
                         if (_e.LessonT.Is(LessonTypes.ShiftPawnHere))
                         {
-                            _e.CommonInfoAboutGameC.SetNextLesson();
+                             SetNextLesson();
                         }
                     }
 
@@ -35,11 +35,11 @@ namespace Chessy.Model.System
                     //    }
                     //}
 
-                    if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
+                    if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
                         if (_e.LessonT == LessonTypes.StepAwayFromWoodcutter)
                         {
-                            _e.CommonInfoAboutGameC.SetNextLesson();
+                             SetNextLesson();
                         }
                     }
 
@@ -60,7 +60,7 @@ namespace Chessy.Model.System
                         {
                             if (_e.UnitT(cellIdx) == UnitTypes.King && _e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(toCellIdx))
                             {
-                                _e.CommonInfoAboutGameC.SetNextLesson();
+                                SetNextLesson();
                                 break;
                             }
                         }
@@ -88,26 +88,26 @@ namespace Chessy.Model.System
                 {
                     if (_e.WaterUnitC(toCellIdx).HaveAnyWater())
                     {
-                        _e.WaterOnCellC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _e.WaterOnCellC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES;
                         _e.HaveFire(toCellIdx) = false;
-                        _e.WaterUnitC(toCellIdx).Water -= WaterValues.AFTER_SHIFT_SNOWY;
+                        _e.WaterUnitC(toCellIdx).Water -= ValuesChessy.TAKING_WATER_AFTER_SHIFT_SNOWY;
                     }
                 }
 
                 if (_e.AdultForestC(fromCellIdx).HaveAnyResources)
                 {
-                    _e.HealthTrail(fromCellIdx).Health(direct) = TrailValues.HEALTH_TRAIL;
+                    _e.HealthTrail(fromCellIdx).Health(direct) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }
                 if (_e.AdultForestC(toCellIdx).HaveAnyResources)
                 {
                     var dirTrail = direct.Invert();
 
-                    _e.HealthTrail(toCellIdx).Health(dirTrail) = TrailValues.HEALTH_TRAIL;
+                    _e.HealthTrail(toCellIdx).Health(dirTrail) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }
 
                 if (_e.RiverT(toCellIdx).HaveRiverNear())
                 {
-                    _e.WaterUnitC(toCellIdx).Water = WaterValues.MAX;
+                    _e.WaterUnitC(toCellIdx).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
                 }
 
 
@@ -121,7 +121,7 @@ namespace Chessy.Model.System
 
             if (_e.UnitT(toCellIdx) == UnitTypes.Snowy)
             {
-                GiveWaterToUnitsAroundRainy(toCellIdx);
+                RainyGiveWaterToUnitsAround(toCellIdx);
             }
 
 
@@ -130,9 +130,9 @@ namespace Chessy.Model.System
                 case UnitTypes.Elfemale:
                     if (!_e.AdultForestC(toCellIdx).HaveAnyResources && !_e.HillC(toCellIdx).HaveAnyResources)
                     {
-                        if (Random.Range(0, 1f) <= Values.Values.PERCENT_FOR_SEEDING_YOUNG_FOREST_AFTER_SHIFT_ELFEMALE)
+                        if (Random.Range(0, 1f) <= ValuesChessy.PERCENT_FOR_SEEDING_YOUNG_FOREST_AFTER_SHIFT_ELFEMALE)
                         {
-                            _e.YoungForestC(toCellIdx).Resources = EnvironmentValues.MAX_RESOURCES;
+                            _e.YoungForestC(toCellIdx).Resources = ValuesChessy.MAX_RESOURCES;
                         }
                     }
                     break;

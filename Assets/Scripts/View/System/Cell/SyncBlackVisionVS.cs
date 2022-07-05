@@ -10,7 +10,7 @@ namespace Chessy.View.System
 {
     sealed class SyncBlackVisionVS : SystemViewAbstract
     {
-        bool[] _isActive = new bool[StartValues.CELLS];
+        bool[] _isActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _noneVisionSRC;
 
         internal SyncBlackVisionVS(in SpriteRendererVC[] noneVisionsSRC, in EntitiesModel eMG) : base(eMG)
@@ -20,7 +20,7 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte currentCellIdx = 0; currentCellIdx < StartValues.CELLS; currentCellIdx++)
+            for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
                 if (!_e.IsBorder(currentCellIdx))
                 {
@@ -29,7 +29,7 @@ namespace Chessy.View.System
             }
 
 
-            for (byte currentCellIdx = 0; currentCellIdx < StartValues.CELLS; currentCellIdx++)
+            for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
                 if (!_e.IsBorder(currentCellIdx))
                 {

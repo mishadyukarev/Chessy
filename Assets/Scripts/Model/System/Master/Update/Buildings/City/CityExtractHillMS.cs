@@ -21,7 +21,7 @@
 
 //                        if (E.HillC(idx_1).HaveAnyResources)
 //                        {
-//                            var extract = EnvironmentValues.CITY_EXTRACT_HILL;
+//                            var extract = ValuesChessy.CITY_EXTRACT_HILL;
 
 //                            if (E.HillC(idx_1).Resources < extract) extract = E.HillC(idx_1).Resources;
 

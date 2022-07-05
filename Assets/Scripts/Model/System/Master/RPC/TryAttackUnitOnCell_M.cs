@@ -2,7 +2,7 @@
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void TryAttackUnitOnCellM(in byte idxCellFrom, in byte idxCellTo, in Player sender)
         {

@@ -21,9 +21,9 @@ namespace Chessy.View.Entity
 
 
         public SpriteRendererVC UnitSRC(in UnitTypes unitT) => _units[(byte)unitT];
-        public SpriteRendererVC MainToolWeaponSRC(in LevelTypes level, in ToolWeaponTypes tw) => _mainToolWeapons[level.ToString() + tw];
+        public SpriteRendererVC MainToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes tw) => _mainToolWeapons[level.ToString() + tw];
         public SpriteRendererVC MainBowCrossbowSRC(in LevelTypes level, in bool isRight) => _bowCrossbows[level.ToString() + isRight];
-        public SpriteRendererVC ExtraToolWeaponSRC(in LevelTypes level, in ToolWeaponTypes twT) => _extraToolWeapons[level.ToString() + twT];
+        public SpriteRendererVC ExtraToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes twT) => _extraToolWeapons[level.ToString() + twT];
 
         public SpriteRendererVC Block(in CellBlockTypes block) => _blocks[(byte)block];
 
@@ -78,7 +78,7 @@ namespace Chessy.View.Entity
             {
                 var levelMainZone = mainToolWeaponZone.Find(levelT.ToString() + "Level+");
 
-                foreach (var twT in new[] { ToolWeaponTypes.Staff, ToolWeaponTypes.Axe })
+                foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Staff, ToolsWeaponsWarriorTypes.Axe })
                 {
                     _mainToolWeapons.Add(levelT.ToString() + twT, new SpriteRendererVC(levelMainZone.Find(twT.ToString() + nameSpriteRenderEnd).GetComponent<SpriteRenderer>()));
                 }
@@ -95,7 +95,7 @@ namespace Chessy.View.Entity
 
 
                 var levelExtraZone = extraToolWeaponZone.Find(levelT.ToString() + "Level+");
-                foreach (var twT in new[] { ToolWeaponTypes.Pick, ToolWeaponTypes.Shield, ToolWeaponTypes.Sword })
+                foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Pick, ToolsWeaponsWarriorTypes.Shield, ToolsWeaponsWarriorTypes.Sword })
                 {
                     _extraToolWeapons.Add(levelT.ToString() + twT, new SpriteRendererVC(levelExtraZone.Find(twT.ToString() + nameSpriteRenderEnd).GetComponent<SpriteRenderer>()));
                 }

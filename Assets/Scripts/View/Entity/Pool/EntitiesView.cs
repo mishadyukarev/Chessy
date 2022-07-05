@@ -21,7 +21,7 @@ namespace Chessy.View.UI.Entity
         public readonly GameObjectVC Background;
         public readonly UnityEventC UnityEventC;
         public readonly CameraVC CameraVC;
-        public readonly GameObjectVC ToggleZoneGOC;
+        public readonly GameObjectVC GameZoneGOC;
         public readonly PhotonVC PhotonC;
 
         public CellVEs CellEs(in byte idx) => _cellVEs[idx];
@@ -77,7 +77,7 @@ namespace Chessy.View.UI.Entity
             UnityEventC = new UnityEventC(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>());
 
 
-            ToggleZoneGOC = new GameObjectVC(new GameObject());
+            GameZoneGOC = new GameObjectVC(new GameObject());
 
 
 
@@ -103,18 +103,18 @@ namespace Chessy.View.UI.Entity
 
 
 
-            ToggleZoneGOC.GameObject = new GameObject(NameConst.GAME);
+            GameZoneGOC.GameObject = new GameObject(Names.GAME);
 
             var parCells = new GameObject("Cells");
-            parCells.transform.SetParent(ToggleZoneGOC.Transform);
+            parCells.transform.SetParent(GameZoneGOC.Transform);
 
             byte currentCellIdx = 0;
 
-            var cells = new GameObject[StartValues.CELLS];
-            var isBorder = new bool[StartValues.CELLS];
+            var cells = new GameObject[IndexCellsValues.CELLS];
+            var isBorder = new bool[IndexCellsValues.CELLS];
 
-            for (byte x = 0; x < StartValues.X_AMOUNT; x++)
-                for (byte y = 0; y < StartValues.Y_AMOUNT; y++)
+            for (byte x = 0; x < IndexCellsValues.X_AMOUNT; x++)
+                for (byte y = 0; y < IndexCellsValues.Y_AMOUNT; y++)
                 {
                     var cell = GameObject.Instantiate(UnityEngine.Resources.Load<GameObject>("CellPrefab+"), MainGOC.Transform.position + new Vector3(x, y, MainGOC.Transform.position.z), MainGOC.Transform.rotation);
                     cell.name = "CellMain";
@@ -142,11 +142,11 @@ namespace Chessy.View.UI.Entity
             _cellVEs = new CellVEs[cells.Length];
 
 
-            var idCells = new int[StartValues.CELLS];
+            var idCells = new int[IndexCellsValues.CELLS];
 
             var animationsCells = new Dictionary<byte, Action[]>();
 
-            for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
+            for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
                 _cellVEs[cellIdxStart] = new CellVEs(cells[cellIdxStart]);
 
@@ -183,7 +183,7 @@ namespace Chessy.View.UI.Entity
 
             var aSParent = new GameObject("AudioSource");
 
-            aSParent.transform.SetParent(ToggleZoneGOC.Transform);
+            aSParent.transform.SetParent(GameZoneGOC.Transform);
 
 
             AudioSource aS2 = default;
@@ -194,7 +194,7 @@ namespace Chessy.View.UI.Entity
                 aS2 = aSParent.AddComponent<AudioSource>();
                 aS2.clip = UnityEngine.Resources.Load<AudioClip>(clipT.ToString());
 
-                aS2.volume = StartValues.Volume(clipT, testModeT);
+                aS2.volume = VolumesSounds.Volume(clipT, testModeT);
                 if (clipT == ClipTypes.Background2)
                 {
                     aS2.Play();
@@ -216,7 +216,7 @@ namespace Chessy.View.UI.Entity
                 _sounds1[(byte)unique] = new AudioSourceVC(aS2);
                 sounds1[(byte)unique] = aS2.Play;
 
-                aS2.volume = StartValues.Volume(unique);
+                aS2.volume = VolumesSounds.Volume(unique);
             }
 
 

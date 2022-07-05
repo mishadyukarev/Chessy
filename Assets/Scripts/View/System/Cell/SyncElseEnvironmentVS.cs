@@ -16,7 +16,7 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                 {

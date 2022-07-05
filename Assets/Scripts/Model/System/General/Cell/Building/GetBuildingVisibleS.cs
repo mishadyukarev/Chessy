@@ -1,12 +1,12 @@
-﻿using Chessy.Model.Extensions;
-using Chessy.Model.Values;
-namespace Chessy.Model
+﻿using Chessy.Model.Values;
+
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         internal void GetBuildingVisible()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {

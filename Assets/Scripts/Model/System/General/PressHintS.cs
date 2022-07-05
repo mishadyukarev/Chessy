@@ -4,7 +4,7 @@ using Chessy.Model.System;
 using UnityEngine;
 namespace Chessy.Model
 {
-    public sealed class PressHintS : SystemModel
+    public sealed class PressHintS : SystemModelAbstract
     {
         readonly PageBookTypes _neededPageBookT;
         readonly ButtonTypes _buttonT;
@@ -142,7 +142,7 @@ namespace Chessy.Model
                     {
                         if (_e.LessonT == Enum.LessonTypes.HoldPressReady)
                         {
-                            if (_neededPageBookT == PageBookTypes.DonerReady) _e.CommonInfoAboutGameC.SetNextLesson();
+                            if (_neededPageBookT == PageBookTypes.DonerReady)  _s.SetNextLesson();
                         }
 
                         _e.OpenedNowPageBookT = _neededPageBookT;

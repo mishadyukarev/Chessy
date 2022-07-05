@@ -1,11 +1,12 @@
 ﻿using Chessy.Model.Values;
-namespace Chessy.Model
+
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         internal void GetAttackMeleeCells()
         {
-            for (byte cellIdxCell = 0; cellIdxCell < StartValues.CELLS; cellIdxCell++)
+            for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
             {
                 if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
                 {

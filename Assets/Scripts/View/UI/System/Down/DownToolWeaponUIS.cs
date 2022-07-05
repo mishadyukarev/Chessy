@@ -80,18 +80,18 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                     needSword = true;
                 }
 
-                _twE.ButtonC(ToolWeaponTypes.Staff).SetActiveParent(needStaff);
-                _twE.ButtonC(ToolWeaponTypes.BowCrossbow).SetActiveParent(needBowCrossbow);
-                _twE.ButtonC(ToolWeaponTypes.Axe).SetActiveParent(needAxe);
-                _twE.ButtonC(ToolWeaponTypes.Pick).SetActiveParent(needPick);
-                _twE.ButtonC(ToolWeaponTypes.Shield).SetActiveParent(needShield);
-                _twE.ButtonC(ToolWeaponTypes.Sword).SetActiveParent(needSword);
+                _twE.ButtonC(ToolsWeaponsWarriorTypes.Staff).SetActiveParent(needStaff);
+                _twE.ButtonC(ToolsWeaponsWarriorTypes.BowCrossbow).SetActiveParent(needBowCrossbow);
+                _twE.ButtonC(ToolsWeaponsWarriorTypes.Axe).SetActiveParent(needAxe);
+                _twE.ButtonC(ToolsWeaponsWarriorTypes.Pick).SetActiveParent(needPick);
+                _twE.ButtonC(ToolsWeaponsWarriorTypes.Shield).SetActiveParent(needShield);
+                _twE.ButtonC(ToolsWeaponsWarriorTypes.Sword).SetActiveParent(needSword);
 
 
 
                 Color color;
 
-                for (var twT = ToolWeaponTypes.None + 1; twT < ToolWeaponTypes.End; twT++)
+                for (var twT = ToolsWeaponsWarriorTypes.None + 1; twT < ToolsWeaponsWarriorTypes.End; twT++)
                 {
                     for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
                     {
@@ -115,19 +115,19 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 _twE.LevelImageC(tw_sel, levTw_sel).SetActive(true);
 
 
-                for (var twT = ToolWeaponTypes.None + 1; twT < ToolWeaponTypes.End; twT++)
+                for (var twT = ToolsWeaponsWarriorTypes.None + 1; twT < ToolsWeaponsWarriorTypes.End; twT++)
                 {
                     _twE.LevelImageC(twT, levTw_sel).SetActive(true);
                 }
 
                 var curPlayerI = _e.CurrentPlayerIT;
 
-                _twE.TextC(ToolWeaponTypes.Pick).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolWeaponTypes.Pick).ToString();
-                _twE.TextC(ToolWeaponTypes.Sword).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolWeaponTypes.Sword).ToString();
-                _twE.TextC(ToolWeaponTypes.Axe).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolWeaponTypes.Axe).ToString();
-                _twE.TextC(ToolWeaponTypes.Shield).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolWeaponTypes.Shield).ToString();
-                _twE.TextC(ToolWeaponTypes.BowCrossbow).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolWeaponTypes.BowCrossbow).ToString();
-                _twE.TextC(ToolWeaponTypes.Staff).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolWeaponTypes.Staff).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Pick).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolsWeaponsWarriorTypes.Pick).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Sword).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolsWeaponsWarriorTypes.Sword).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Axe).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolsWeaponsWarriorTypes.Axe).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Shield).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.Shield).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.BowCrossbow).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.BowCrossbow).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Staff).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolsWeaponsWarriorTypes.Staff).ToString();
             }
         }
     }

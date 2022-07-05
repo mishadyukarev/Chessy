@@ -1,10 +1,9 @@
-﻿using Chessy.Model.Extensions;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
 using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void TryExecuteDoneReadyM(in Player sender)
         {
@@ -18,8 +17,8 @@ namespace Chessy.Model.System
                     {
                         if (PhotonNetwork.OfflineMode)
                         {
-                            ActiveMotionZoneToGeneneral(sender);
-                            ExecuteSoundActionToGeneral(sender, ClipTypes.AfterUpdate);
+                            RpcSs.ActiveMotionZoneToGeneneral(sender);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.AfterUpdate);
 
                             if (_e.GameModeT.Is(GameModeTypes.TrainingOffline))
                             {
@@ -55,20 +54,20 @@ namespace Chessy.Model.System
                             {
                                 ExecuteUpdateEverythingMS.Execute();
 
-                                ActiveMotionZoneToGeneneral(RpcTarget.All);
-                                ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
+                                RpcSs.ActiveMotionZoneToGeneneral(RpcTarget.All);
+                                RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AfterUpdate);
                             }
                         }
                     }
                 }
                 else
                 {
-                    SimpleMistakeToGeneral(MistakeTypes.NeedGetHero, sender);
+                    RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedGetHero, sender);
                 }
             }
             else
             {
-                SimpleMistakeToGeneral(MistakeTypes.NeedSetKing, sender);
+                RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedSetKing, sender);
             }
         }
 
@@ -80,7 +79,7 @@ namespace Chessy.Model.System
                 _e.PlayerInfoE(playerT).GodInfoC.Cooldown -= taking;
             }
 
-            for (byte idx = 0; idx < StartValues.CELLS; idx++)
+            for (byte idx = 0; idx < IndexCellsValues.CELLS; idx++)
             {
                 _e.UnitEffectsC(idx).StunHowManyUpdatesNeedStay -= taking;
 

@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    sealed partial class UnitAbilitiesSystems : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModelAbstract
     {
 
         internal void TryFireForestWithArcherM(in byte cell_from, in byte cell_to, in Player sender)
@@ -12,20 +12,20 @@ namespace Chessy.Model.System
             {
                 if (_e.EnergyUnitC(cell_from).Energy >= StepValues.ARCHER_FIRE)
                 {
-                    _s.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
+                    _s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
                     _e.EnergyUnitC(cell_from).Energy -= StepValues.ARCHER_FIRE;
                     _e.HaveFire(cell_to) = true;
 
                     if (_e.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     {
-                        _e.CommonInfoAboutGameC.SetNextLesson();
+                         _s.SetNextLesson();
                     }
                 }
 
                 else
                 {
-                    _s.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

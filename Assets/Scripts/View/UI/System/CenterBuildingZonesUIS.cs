@@ -32,8 +32,8 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             eUI.CenterEs.SmelterE.TextC(ResourceTypes.Wood).TextUI.text = (EconomyValues.WOOD_NEED_FOR_MELTING * Valuess.FOR_ROUND_UP_RESOURCES).ToString();
             eUI.CenterEs.SmelterE.TextC(ResourceTypes.Ore).TextUI.text = (EconomyValues.ORE_NEED_FOR_MELTING * Valuess.FOR_ROUND_UP_RESOURCES).ToString();
 
-            eUI.CenterEs.SmelterE.TextC(ResourceTypes.Iron).TextUI.text = EconomyValues.IRON_AFTER_MELTING.ToString();
-            eUI.CenterEs.SmelterE.TextC(ResourceTypes.Gold).TextUI.text = EconomyValues.GOLD_AFTER_MELTING.ToString();
+            eUI.CenterEs.SmelterE.TextC(ResourceTypes.Iron).TextUI.text = AmountResourcesAfterMelting.IRON_AFTER_MELTING.ToString();
+            eUI.CenterEs.SmelterE.TextC(ResourceTypes.Gold).TextUI.text = AmountResourcesAfterMelting.GOLD_AFTER_MELTING.ToString();
         }
     }
 }

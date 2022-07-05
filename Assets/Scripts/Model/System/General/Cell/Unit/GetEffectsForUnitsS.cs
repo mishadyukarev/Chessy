@@ -1,11 +1,11 @@
 ﻿using Chessy.Model.Values;
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         void GetKingEffectsForUnits()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {
@@ -14,7 +14,7 @@ namespace Chessy.Model
             }
 
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (!_e.IsBorder(cellIdxCurrent))
                 {

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 namespace Chessy.Model
 {
-    sealed class RayS : SystemModel, IUpdate
+    sealed class RayS : SystemModelAbstract, IUpdate
     {
         Ray _ray;
         const float RAY_DISTANCE = 100;
@@ -29,7 +29,7 @@ namespace Chessy.Model
             }
             else if (raycast)
             {
-                for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
                     int one = _e.InstanceID(cell_0);
                     int two = raycast.transform.gameObject.GetInstanceID();

@@ -10,18 +10,18 @@ namespace Chessy.View.UI.Entity
 {
     public struct RightStatsUIEs
     {
-        readonly Dictionary<UnitStatTypes, RightUnitStatUIE> _stats;
+        readonly Dictionary<UnitStatsTypes, RightUnitStatUIE> _stats;
 
 
         public readonly EnergyUIE EnergyE;
         internal readonly DamageUIE DamageE;
         internal readonly DamageUIE WaterE;
 
-        internal RightUnitStatUIE Stat(in UnitStatTypes stat) => _stats[stat];
+        internal RightUnitStatUIE Stat(in UnitStatsTypes stat) => _stats[stat];
 
         public RightStatsUIEs(in GameObject rightZone)
         {
-            _stats = new Dictionary<UnitStatTypes, RightUnitStatUIE>();
+            _stats = new Dictionary<UnitStatsTypes, RightUnitStatUIE>();
 
             var statZone = rightZone.transform.Find("StatsZone").gameObject;
 
@@ -31,7 +31,7 @@ namespace Chessy.View.UI.Entity
 
 
             var zone = statZone.transform.Find("HpZone");
-            _stats.Add(UnitStatTypes.Hp, new RightUnitStatUIE(zone.Find("Bar_Image").GetComponent<Image>(),
+            _stats.Add(UnitStatsTypes.Hp, new RightUnitStatUIE(zone.Find("Bar_Image").GetComponent<Image>(),
                 zone.Find("HpCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>()));
 
 

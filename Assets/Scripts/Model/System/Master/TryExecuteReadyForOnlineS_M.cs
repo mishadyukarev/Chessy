@@ -1,7 +1,7 @@
 ﻿using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel
+    public partial class SystemsModel
     {
         internal void TryExecuteReadyForOnlineM(in Player sender)
         {

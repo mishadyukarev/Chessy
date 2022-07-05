@@ -1,7 +1,8 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Enum;
-using Chessy.Model.Extensions;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+
+namespace Chessy.Model
 {
     sealed class CenterHeroesUIS : SystemUIAbstract
     {

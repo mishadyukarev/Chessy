@@ -2,7 +2,7 @@
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    sealed partial class UnitAbilitiesSystems : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModelAbstract
     {
         public void TryPutOutFireForestWithSimplePawnM(in byte cell_0, in Player sender)
         {
@@ -15,7 +15,7 @@ namespace Chessy.Model.System
 
             else
             {
-                _s.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

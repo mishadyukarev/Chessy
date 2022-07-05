@@ -4,7 +4,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel
+    public partial class SystemsModel
     {
         internal void TryMeltInMelterBuildingM(in Player sender)
         {
@@ -36,18 +36,18 @@ namespace Chessy.Model.System
 
                 if (_e.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
                 {
-                    _e.CommonInfoAboutGameC.SetNextLesson();
+                    SetNextLesson();
                     _e.IsSelectedCity = true;
                 }
 
-                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Iron, EconomyValues.IRON_AFTER_MELTING);
-                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Gold, EconomyValues.GOLD_AFTER_MELTING);
+                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Iron, AmountResourcesAfterMelting.IRON_AFTER_MELTING);
+                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Gold, AmountResourcesAfterMelting.GOLD_AFTER_MELTING);
 
-                ExecuteSoundActionToGeneral(sender, ClipTypes.Melting);
+                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Melting);
             }
             else
             {
-                MistakeEconomyToGeneral(sender, needRes);
+               RpcSs.SimpleMistakeToGeneral(sender, needRes);
             }
         }
     }

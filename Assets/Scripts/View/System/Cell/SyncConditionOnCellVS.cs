@@ -8,9 +8,9 @@ namespace Chessy.View.System
 {
     sealed class SyncConditionOnCellVS : SystemViewAbstract
     {
-        readonly bool[] _needActive = new bool[StartValues.CELLS];
+        readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _conditionSRCs;
-        readonly Color[] _needColor = new Color[StartValues.CELLS];
+        readonly Color[] _needColor = new Color[IndexCellsValues.CELLS];
 
         internal SyncConditionOnCellVS(in SpriteRendererVC[] conditionSRCs, in EntitiesModel eM) : base(eM)
         {
@@ -19,7 +19,7 @@ namespace Chessy.View.System
 
         internal override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = false;
                 _needColor[cellIdxCurrent] = Color.white;
@@ -43,7 +43,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _conditionSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
                 _conditionSRCs[cellIdxCurrent].Color = _needColor[cellIdxCurrent];

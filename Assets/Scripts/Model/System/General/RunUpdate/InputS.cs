@@ -3,7 +3,7 @@ using Chessy.Model.System;
 using UnityEngine;
 namespace Chessy.Model
 {
-    sealed class InputS : SystemModel
+    sealed class InputS : SystemModelAbstract
     {
         internal InputS(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG) { }
 

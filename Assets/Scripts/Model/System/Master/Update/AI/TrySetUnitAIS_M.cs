@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace Chessy.Model
 {
-    sealed class TrySetUnitAIS_M : SystemModel
+    sealed class TrySetUnitAIS_M : SystemModelAbstract
     {
         readonly Dictionary<byte, byte> _pointsCellsForSettingKing = new Dictionary<byte, byte>();
         readonly Dictionary<byte, byte> _pointsCellsForSettingPawn = new Dictionary<byte, byte>();
@@ -14,7 +14,7 @@ namespace Chessy.Model
 
         internal TrySetUnitAIS_M(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
         {
-            for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
+            for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
                 _pointsCellsForSettingKing.Add(cellIdxStart, default);
                 _pointsCellsForSettingPawn.Add(cellIdxStart, default);
@@ -28,7 +28,7 @@ namespace Chessy.Model
             _theMostBigPointForSettingKing = 0;
             _theMostBigPointForSettingPawn = 0;
 
-            for (byte cellIdxStart = 0; cellIdxStart < StartValues.CELLS; cellIdxStart++)
+            for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
                 _pointsCellsForSettingKing[cellIdxStart] = 0;
                 _pointsCellsForSettingPawn[cellIdxStart] = 0;

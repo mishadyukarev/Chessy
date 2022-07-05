@@ -5,7 +5,7 @@ namespace Chessy.Model.System
     {
         void TryGiveWaterToUnitsAroundRainy()
         {
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
                 if (_e.UnitT(cell_0).HaveUnit())
                 {
@@ -13,7 +13,7 @@ namespace Chessy.Model.System
                     {
                         if (!_e.LessonT.HaveLesson())
                         {
-                            _s.GiveWaterToUnitsAroundRainy(cell_0);
+                            _s.RainyGiveWaterToUnitsAround(cell_0);
                         }
                     }
                 }

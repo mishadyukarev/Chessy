@@ -1,9 +1,8 @@
-﻿using Chessy.Model.Extensions;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
 using Photon.Pun;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         int _snowyArrow;
 
@@ -13,12 +12,12 @@ namespace Chessy.Model.System
             _e.SetUnitConditionT(idx_from, ConditionUnitTypes.None);
 
             if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
-                ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-            else ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+                RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+            else RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
-            AnimationCellToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
-            AnimationCellToGeneral(idx_to, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
+            RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
+            RpcSs.AnimationCellToGeneral(idx_to, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
 
 
             var powerDam_from = _e.DamageAttack(idx_from);
@@ -106,14 +105,14 @@ namespace Chessy.Model.System
                     _e.UnitEffectsC(idx_from).ProtectionRainyMagicShield--;
                 }
 
-                else if (_e.ExtraToolWeaponT(idx_from).Is(ToolWeaponTypes.Shield))
+                else if (_e.ExtraToolWeaponT(idx_from).Is(ToolsWeaponsWarriorTypes.Shield))
                 {
                     UnitSs.AttackShield(1f, idx_from);
                 }
 
                 else if (minus_from > 0)
                 {
-                    _e.Attack(minus_from, _e.UnitPlayerT(idx_from).NextPlayer(), idx_from);
+                    AttackUnitOnCell(minus_from, _e.UnitPlayerT(idx_from).NextPlayer(), idx_from);
                 }
             }
             else
@@ -122,7 +121,7 @@ namespace Chessy.Model.System
                 {
                     _e.UnitEffectsC(idx_from).ShootsFrozenArrawArcher--;
 
-                    _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = StunValues.AFTER_FROZEN_ARRAW_PAWN;
+                    _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_FROZEN_ARRAW_PAWN;
                 }
                 else if (_e.UnitT(idx_from) == UnitTypes.Snowy)
                 {
@@ -132,7 +131,7 @@ namespace Chessy.Model.System
 
                         _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = 1;
 
-                        _snowyArrow = Values.Values.RAINY_COOLDOWN_FROZEN_ARRAW;
+                        _snowyArrow = ValuesChessy.RAINY_COOLDOWN_FROZEN_ARRAW;
                     }
                     else
                     {
@@ -146,7 +145,7 @@ namespace Chessy.Model.System
                 _e.UnitEffectsC(idx_to).ProtectionRainyMagicShield--;
             }
 
-            else if (_e.ExtraToolWeaponT(idx_to).Is(ToolWeaponTypes.Shield))
+            else if (_e.ExtraToolWeaponT(idx_to).Is(ToolsWeaponsWarriorTypes.Shield))
             {
                 UnitSs.AttackShield(1f, idx_to);
             }
@@ -167,7 +166,7 @@ namespace Chessy.Model.System
 
                 var wasUnitT_to = _e.UnitT(idx_to);
 
-                _e.Attack(minus_to, killer, idx_to);
+                AttackUnitOnCell(minus_to, killer, idx_to);
 
                 if (!_e.UnitT(idx_to).HaveUnit())
                 {

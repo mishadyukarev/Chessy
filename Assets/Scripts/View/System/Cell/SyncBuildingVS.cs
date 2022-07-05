@@ -1,6 +1,5 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
-using Chessy.Model.Extensions;
 using Chessy.Model.Values;
 using Chessy.View.Component;
 using System.Collections.Generic;
@@ -18,13 +17,13 @@ namespace Chessy.View.System
 
             for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
             {
-                _needActive.Add(buildingT, new bool[StartValues.CELLS]);
+                _needActive.Add(buildingT, new bool[IndexCellsValues.CELLS]);
             }
         }
 
         internal override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
                 {
@@ -32,7 +31,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 var isVisForMe = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT);
                 var isVisForNext = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT.NextPlayer());
@@ -46,7 +45,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
                 {

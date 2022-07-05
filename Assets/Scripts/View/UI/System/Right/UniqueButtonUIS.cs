@@ -10,9 +10,9 @@ namespace Chessy.View.UI.System
     {
         readonly ButtonTypes _buttonT;
         readonly UniqueButtonUIE _buttonE;
-        readonly Resources _resources;
+        readonly FromResourcesC _resources;
 
-        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in Resources res, in EntitiesModel ents) : base(ents)
+        internal UniqueButtonUIS(in ButtonTypes buttonT, in UniqueButtonUIE uniqueButtonUIE, in FromResourcesC res, in EntitiesModel ents) : base(ents)
         {
             _buttonT = buttonT;
             _buttonE = uniqueButtonUIE;

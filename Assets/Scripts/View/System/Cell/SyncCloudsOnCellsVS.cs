@@ -6,7 +6,7 @@ namespace Chessy.View.System
 {
     sealed class SyncCloudsOnCellsVS : SystemViewAbstract
     {
-        readonly bool[] _needActive = new bool[StartValues.CELLS];
+        readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _cloudSRCs;
 
         internal SyncCloudsOnCellsVS(in SpriteRendererVC[] cloudSRCs, in EntitiesModel eM) : base(eM)
@@ -16,7 +16,7 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = false;
             }
@@ -29,7 +29,7 @@ namespace Chessy.View.System
                 _needActive[startCell] = true;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _cloudSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
             }

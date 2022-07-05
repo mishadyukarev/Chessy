@@ -3,7 +3,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel
+    public partial class SystemsModel
     {
         internal void TryBuyFromMarketBuildingM(in MarketBuyTypes marketBuyT, in Player sender)
         {
@@ -70,11 +70,11 @@ namespace Chessy.Model.System
                         break;
                 }
 
-                ExecuteSoundActionToGeneral(sender, ClipTypes.SoundGoldPack);
+                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {
-                MistakeEconomyToGeneral(sender, needRes);
+               RpcSs.SimpleMistakeToGeneral(sender, needRes);
             }
         }
     }

@@ -26,7 +26,7 @@ namespace Chessy.View.UI.System
 
                 _motionTextC.TextUI.text = "Motions: " + _e.Motions.ToString();
 
-                _motionTextC.TextUI.color = _e.Motions % UpdateValues.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0 && _e.Motions != 0 ? Color.red : Color.white;
+                _motionTextC.TextUI.color = _e.Motions % ValuesChessy.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0 && _e.Motions != 0 ? Color.red : Color.white;
             }
         }
     }

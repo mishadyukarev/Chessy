@@ -25,7 +25,7 @@
 //                        {
 //                            if (!eMGame.HillC(cell_0_1).HaveAnyResources)
 //                            {
-//                                eMGame.FertilizeC(cell_0_1).Resources = EnvironmentValues.ADDING_FROM_ICE_WALL;
+//                                eMGame.FertilizeC(cell_0_1).Resources = ValuesChessy.ADDING_FROM_ICE_WALL;
 //                            }
 //                        }
 //                    }

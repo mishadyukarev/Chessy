@@ -23,40 +23,40 @@ namespace Chessy.View.System
         {
             _eM = eM;
 
-            var cellParentGOCs = new GameObjectVC[StartValues.CELLS];
-            var blackVisisionSrCs = new SpriteRendererVC[StartValues.CELLS];
-            var redCircularSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var needFoodSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var buildingFlagSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var riverEs = new RiverVE[StartValues.CELLS];
-            var fireSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var adultForestSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var environmentEs = new EnvironmentVE[StartValues.CELLS];
-            var needWaterSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var conditionUnitSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var maxStepsUnitOnCellSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var cloudSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var idxXyInfoCellSRCs = new TMPC[StartValues.CELLS];
-            var hpBarUnitSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var stunUnitSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var shieldSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var frozenArrawRightSRCs = new SpriteRendererVC[StartValues.CELLS];
-            var frozenArrawUpSRCs = new SpriteRendererVC[StartValues.CELLS];
+            var cellParentGOCs = new GameObjectVC[IndexCellsValues.CELLS];
+            var blackVisisionSrCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var redCircularSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var needFoodSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var buildingFlagSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var riverEs = new RiverVE[IndexCellsValues.CELLS];
+            var fireSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var adultForestSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var environmentEs = new EnvironmentVE[IndexCellsValues.CELLS];
+            var needWaterSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var conditionUnitSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var maxStepsUnitOnCellSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var cloudSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var idxXyInfoCellSRCs = new TMPC[IndexCellsValues.CELLS];
+            var hpBarUnitSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var stunUnitSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var shieldSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var frozenArrawRightSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var frozenArrawUpSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var trailsSRCs = new Dictionary<DirectTypes, SpriteRendererVC[]>();
             var buildingSRCs = new Dictionary<BuildingTypes, SpriteRendererVC[]>();
 
 
             for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
             {
-                trailsSRCs.Add(directT, new SpriteRendererVC[StartValues.CELLS]);
+                trailsSRCs.Add(directT, new SpriteRendererVC[IndexCellsValues.CELLS]);
             }
 
             for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
             {
-                buildingSRCs.Add(buildingT, new SpriteRendererVC[StartValues.CELLS]);
+                buildingSRCs.Add(buildingT, new SpriteRendererVC[IndexCellsValues.CELLS]);
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 cellParentGOCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).CellParentGOC;
                 blackVisisionSrCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).SupportCellEs.NoneSRC;
@@ -125,7 +125,7 @@ namespace Chessy.View.System
 
         public void Update()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_eM.UnitNeedUpdateViewC(cellIdxCurrent).NeedUpdateView)
                 {

@@ -58,8 +58,8 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             }
 
             eUI.LeftEs.CityE(BuildingTypes.House).CostTextC.TextUI.text = ((int)(100 * _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse)).ToString();
-            eUI.LeftEs.CityE(BuildingTypes.Market).CostTextC.TextUI.text = ((int)(100 * EconomyValues.NEED_WOOD_FOR_BUILDING_MARKET)).ToString();
-            eUI.LeftEs.CityE(BuildingTypes.Smelter).CostTextC.TextUI.text = ((int)(100 * EconomyValues.NEED_WOOD_FOR_BUILDING_SMELTER)).ToString();
+            eUI.LeftEs.CityE(BuildingTypes.Market).CostTextC.TextUI.text = ((int)(100 * CostsForBuyBuildingInTownValues.NEED_WOOD_FOR_BUILDING_MARKET)).ToString();
+            eUI.LeftEs.CityE(BuildingTypes.Smelter).CostTextC.TextUI.text = ((int)(100 * CostsForBuyBuildingInTownValues.NEED_WOOD_FOR_BUILDING_SMELTER)).ToString();
         }
     }
 }

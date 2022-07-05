@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void TryDestroyAdultForest(in byte cellIdx)
         {

@@ -1,7 +1,7 @@
 ﻿using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
 
         public void ResetAll()
@@ -20,7 +20,7 @@ namespace Chessy.Model.System
             _e.CurrentPlayerIT = default;
             _e.AmountPlantedYoungForests = default;
 
-            _e.WindC = new WindC(default, default);
+            _e.WindC = new WindC();
             _e.SunC.SunSideT = default;
             _e.CloudC.CellIdxCenterCloud = default;
 
@@ -28,7 +28,7 @@ namespace Chessy.Model.System
 
             _e.LessonT = default;
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 ClearAllEnvironment(cellIdxCurrent);
 
@@ -61,7 +61,7 @@ namespace Chessy.Model.System
 
                 for (var levT = LevelTypes.None + 1; levT < LevelTypes.End; levT++)
                 {
-                    for (var twT = (ToolWeaponTypes)1; twT < ToolWeaponTypes.End; twT++)
+                    for (var twT = (ToolsWeaponsWarriorTypes)1; twT < ToolsWeaponsWarriorTypes.End; twT++)
                     {
                         _e.SetToolWeaponsInInventor(playerT, levT, twT, default);
                     }

@@ -34,8 +34,8 @@ namespace Chessy
             var adLaunchS = new TryLaunchAdS(eM);
             new ShopS(eM);
 
-            eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().GiveSystems(sM);
-            gameObject.AddComponent<PhotonSceneManager>().StartMy(sM);
+            eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().FillRpcWithSystems(sM);
+            gameObject.AddComponent<PhotonSceneManager>().GiveSystems(sM);
 
             #endregion
 
@@ -50,7 +50,7 @@ namespace Chessy
                 sV,
             };
 
-            sM.ComeToTrainingAfterDownloadingGame();
+            sM.ComeIntoTrainingAfterDownloadingGame();
         }
 
         void Update()

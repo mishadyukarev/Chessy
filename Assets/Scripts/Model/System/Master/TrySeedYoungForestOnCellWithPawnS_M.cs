@@ -3,17 +3,15 @@ using Chessy.Model.Values;
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
-        const int NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON = 5;
-
         internal void TrySeedYoungForestOnCellWithPawnM(in AbilityTypes abilityT, in Player sender, in byte cell_0)
         {
             if (_e.EnergyUnitC(cell_0).Energy >= StepValues.SEED_PAWN)
             {
                 if (_e.HaveBuildingOnCell(cell_0) && !_e.BuildingOnCellT(cell_0).Is(BuildingTypes.Camp))
                 {
-                    SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
+                    RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                 }
 
                 else
@@ -22,9 +20,9 @@ namespace Chessy.Model.System
                     {
                         if (!_e.YoungForestC(cell_0).HaveAnyResources)
                         {
-                            SoundToGeneral(sender, abilityT);
+                            RpcSs.SoundToGeneral(sender, abilityT);
 
-                            _e.YoungForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                            _e.YoungForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES;
 
                             _e.EnergyUnitC(cell_0).Energy -= StepValues.SEED_PAWN;
 
@@ -40,29 +38,29 @@ namespace Chessy.Model.System
 
                             if (_e.LessonT == LessonTypes.SeedingPawn)
                             {
-                                if (_e.AmountPlantedYoungForests >= NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON)
+                                if (_e.AmountPlantedYoungForests >= ValuesChessy.NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON)
                                 {
-                                    _e.CommonInfoAboutGameC.SetNextLesson();
+                                     SetNextLesson();
                                 }
                             }
                         }
 
                         else
                         {
-                            SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
+                            RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                         }
                     }
 
                     else
                     {
-                        SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                        RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                     }
                 }
             }
 
             else
             {
-                SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

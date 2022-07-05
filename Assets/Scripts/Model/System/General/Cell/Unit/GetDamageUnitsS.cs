@@ -1,12 +1,13 @@
 ﻿using Chessy.Model.Values;
 using System;
-namespace Chessy.Model
+
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         internal void GetDamageUnits()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 var powerDamage = 0f;
 
@@ -70,15 +71,15 @@ namespace Chessy.Model
                     {
                         if (_e.MainTWLevelT(cellIdxCurrent).Is(LevelTypes.Second))
                         {
-                            if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
+                            if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                             {
                                 powerDamage += DamageUnitValues.BOW_CROSSBOW_SECOND_ADDING;
                             }
                         }
                     }
-                    if (_e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Sword)) powerDamage += DamageUnitValues.SWORD_ADDING;
+                    if (_e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Sword)) powerDamage += DamageUnitValues.SWORD_ADDING;
 
-                    if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff)) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
+                    if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff)) powerDamage -= DamageUnitValues.STAFF_EFFECT_ON_PAWN_TAKING;
 
 
                     _e.UnitMainC(cellIdxCurrent).DamageSimpleAttack = powerDamage;

@@ -6,7 +6,7 @@ namespace Chessy.View.System
 {
     internal sealed class SyncIdxAndXyInfoVS : SystemViewAbstract
     {
-        readonly bool[] _needActive = new bool[StartValues.CELLS];
+        readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly TMPC[] _tMPCs;
 
         internal SyncIdxAndXyInfoVS(in TMPC[] tMPCs, in EntitiesModel eM) : base(eM)
@@ -16,12 +16,12 @@ namespace Chessy.View.System
 
         internal override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = _e.IsActivatedIdxAndXyInfoCells;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _tMPCs[cellIdxCurrent].TextMeshPro.gameObject.SetActive(_needActive[cellIdxCurrent]);
 

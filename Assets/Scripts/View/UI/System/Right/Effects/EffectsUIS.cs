@@ -3,12 +3,12 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 {
     sealed class EffectsUIS : SystemUIAbstract
     {
-        readonly Resources _resourcesE;
+        readonly FromResourcesC _resourcesE;
         readonly EntitiesViewUI _eUI;
 
         readonly bool[] _needActiveButton = new bool[(byte)ButtonTypes.End];
 
-        internal EffectsUIS(in Resources resources, in EntitiesViewUI eUI, in EntitiesModel eMG) : base(eMG)
+        internal EffectsUIS(in FromResourcesC resources, in EntitiesViewUI eUI, in EntitiesModel eMG) : base(eMG)
         {
             _resourcesE = resources;
             _eUI = eUI;

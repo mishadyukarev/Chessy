@@ -9,8 +9,8 @@ namespace Chessy.View.System
 {
     sealed class SyncSupportVS : SystemViewAbstract
     {
-        readonly static bool[] _needActive = new bool[StartValues.CELLS];
-        readonly static Color[] _needColor = new Color[StartValues.CELLS];
+        readonly static bool[] _needActive = new bool[IndexCellsValues.CELLS];
+        readonly static Color[] _needColor = new Color[IndexCellsValues.CELLS];
 
         readonly EntitiesView _eVG;
 
@@ -21,7 +21,7 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
+            for (byte cell_start = 0; cell_start < IndexCellsValues.CELLS; cell_start++)
             {
                 _needActive[cell_start] = false;
 
@@ -69,7 +69,7 @@ namespace Chessy.View.System
 
                 else if (_e.SelectedE.AbilityT.Is(AbilityTypes.FireArcher))
                 {
-                    for (byte idxCell = 0; idxCell < StartValues.CELLS; idxCell++)
+                    for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                     {
                         if (_e.WhereUnitCanFireAdultForestC(_e.SelectedCellIdx).Can(idxCell))
                         {
@@ -89,7 +89,7 @@ namespace Chessy.View.System
                     {
                         if (!_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
-                            for (byte idxCell = 0; idxCell < StartValues.CELLS; idxCell++)
+                            for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                             {
                                 if (_e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(idxCell))
                                 {
@@ -116,7 +116,7 @@ namespace Chessy.View.System
 
 
 
-            for (byte cell_start = 0; cell_start < StartValues.CELLS; cell_start++)
+            for (byte cell_start = 0; cell_start < IndexCellsValues.CELLS; cell_start++)
             {
                 _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetActiveGO(_needActive[cell_start]);
                 _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SR.color = _needColor[cell_start];

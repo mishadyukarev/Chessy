@@ -3,7 +3,7 @@ using Chessy.Model.System;
 using System.Linq;
 namespace Chessy.Model
 {
-    sealed class SelectorSoundS : SystemModel
+    sealed class SelectorSoundS : SystemModelAbstract
     {
         internal SelectorSoundS(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
         {

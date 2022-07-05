@@ -78,7 +78,7 @@ namespace Chessy.View.UI.System
                 _extracts[ResourceTypes.Food] += EconomyValues.ADDING_FOOD_AFTER_UPDATE;
 
 
-                for (byte idx_0 = 0; idx_0 < StartValues.CELLS; idx_0++)
+                for (byte idx_0 = 0; idx_0 < IndexCellsValues.CELLS; idx_0++)
                 {
 
 
@@ -86,7 +86,7 @@ namespace Chessy.View.UI.System
                     {
                         if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
                         {
-                            _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_UNITS;
+                            _extracts[ResourceTypes.Food] -= EconomyValues.FOOD_FOR_FEEDING_ONE_UNIT_AFTER_EVERY_UPDATE;
 
                             _extracts[ResourceTypes.Ore] += _e.ExtactionResourcesWithWarriorC(idx_0).HowManyWarriourCanExtractHill;
                             _extracts[ResourceTypes.Wood] += _e.ExtactionResourcesWithWarriorC(idx_0).HowManyWarriourCanExtractAdultForest;

@@ -7,7 +7,7 @@ namespace Chessy.Model
 {
     sealed class SyncRedCircularVS : SystemViewAbstract
     {
-        bool[] _needActive = new bool[StartValues.CELLS];
+        bool[] _needActive = new bool[IndexCellsValues.CELLS];
         SpriteRendererVC[] _redCircularSRCs;
 
         internal SyncRedCircularVS(in SpriteRendererVC[] redCircularSRCs, in EntitiesModel eMG) : base(eMG)
@@ -17,12 +17,12 @@ namespace Chessy.Model
 
         internal override void Sync()
         {
-            for (var currentIdxCell = 0; currentIdxCell < StartValues.CELLS; currentIdxCell++)
+            for (var currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
                 _needActive[currentIdxCell] = false;
             }
 
-            for (byte currentIdxCell = 0; currentIdxCell < StartValues.CELLS; currentIdxCell++)
+            for (byte currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
                 //if (_e.LessonT == LessonTypes.ShiftPawnForSeedingHere)
                 //{
@@ -33,14 +33,14 @@ namespace Chessy.Model
                 //}
                 if (_e.LessonT == LessonTypes.StepAwayFromWoodcutter)
                 {
-                    if (StartValues.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter == currentIdxCell)
+                    if (KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter == currentIdxCell)
                     {
                         _needActive[currentIdxCell] = true;
                     }
                 }
                 else if (_e.LessonT == LessonTypes.ShiftPawnHere)
                 {
-                    if (StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON == currentIdxCell)
+                    if (KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON == currentIdxCell)
                     {
                         _needActive[currentIdxCell] = true;
                     }

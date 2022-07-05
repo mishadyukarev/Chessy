@@ -5,7 +5,7 @@ using Chessy.Model.Values;
 using UnityEngine;
 namespace Chessy.Model
 {
-    sealed class CheatsS : SystemModel, IUpdate
+    sealed class CheatsS : SystemModelAbstract, IUpdate
     {
         public CheatsS(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
         {
@@ -26,12 +26,12 @@ namespace Chessy.Model
 
                 if (Input.GetKeyDown(KeyCode.Mouse4))
                 {
-                    _e.CommonInfoAboutGameC.SetNextLesson();
+                    _s.SetNextLesson();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse3))
                 {
-                    _e.CommonInfoAboutGameC.SetPreviousLesson();
+                    _s.SetPreviousLesson();
                 }
 
                 if (Input.GetKeyDown(KeyCode.Mouse2))
@@ -41,7 +41,7 @@ namespace Chessy.Model
 
                 if (Input.GetKeyDown(KeyCode.R))
                 {
-                    for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                    for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                     {
                         if (_e.AdultForestC(cell_0).HaveAnyResources)
                         {

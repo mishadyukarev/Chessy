@@ -25,7 +25,7 @@
 //                    e.UnitStepC(idx_from).Steps -= StepValues.DIRECT_WAVE;
 //                    e.UnitEs(idx_from).CoolDownC(AbilityTypes.DirectWave).Cooldown = AbilityCooldownValues.DIRECT_WAVE;
 
-//                    e.FertilizeC(idx_from).Resources = EnvironmentValues.MAX_RESOURCES;
+//                    e.FertilizeC(idx_from).Resources = ValuesChessy.MAX_RESOURCES;
 
 //                    var cell_0 = idx_to;
 
@@ -34,7 +34,7 @@
 //                        if (!e.IsActiveParentSelf(cell_0)) break;
 
 
-//                        e.FertilizeC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
+//                        e.FertilizeC(cell_0).Resources = ValuesChessy.MAX_RESOURCES;
 
 //                        if (e.UnitTC(cell_0).HaveUnit())
 //                        {
@@ -52,13 +52,13 @@
 
 //                else
 //                {
-//                    e.RpcPoolEs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+//                    e.RpcPoolEs.ExecuteMethodWithRpcS.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
 //                }
 //            }
 
 //            else
 //            {
-//                e.RpcPoolEs.SoundToGeneral(sender, ClipTypes.Mistake);
+//                e.RpcPoolEs.ExecuteMethodWithRpcS.SoundToGeneral(sender, ClipTypes.Mistake);
 //            }
 //        }
 //    }

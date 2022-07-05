@@ -4,7 +4,7 @@ namespace Chessy.Model.System
 {
     public sealed partial class ForButtonsSystemsModel
     {
-        public void BuildBuildingClick(in BuildingTypes buildT)
+        public void ClickOntoTownBuilding(in BuildingTypes buildT)
         {
             if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
             {
@@ -38,7 +38,7 @@ namespace Chessy.Model.System
                         //if (_eMG.LessonT == LessonTypes.ClickBuyMarketInTown)
                         //{
                         //    _eMG.LessonTC.SetNextLesson();
-                        //    _eMG.AdultForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = EnvironmentValues.MAX_RESOURCES;
+                        //    _eMG.AdultForestC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).Resources = ValuesChessy.MAX_RESOURCES;
                         //    _eMG.BuildingTC(StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST).BuildingT = BuildingTypes.None;
                         //}
                         break;

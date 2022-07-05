@@ -1,5 +1,4 @@
-﻿using Chessy.Model.Extensions;
-using Chessy.Model.Values;
+﻿using Chessy.Model.Values;
 using System.Collections.Generic;
 namespace Chessy.Model.System
 {
@@ -9,7 +8,7 @@ namespace Chessy.Model.System
         {
             var needForFireNext = new List<byte>();
 
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
                 if (_e.HaveFire(cell_0))
                 {
@@ -23,11 +22,11 @@ namespace Chessy.Model.System
                         {
                             if (_e.UnitPlayerT(cell_0).Is(PlayerTypes.None))
                             {
-                                _e.Attack(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                                _s.AttackUnitOnCell(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
                             }
                             else
                             {
-                                _e.Attack(HpValues.FIRE_DAMAGE, _e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
+                                _s.AttackUnitOnCell(HpValues.FIRE_DAMAGE, _e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
                             }
                         }
                     }
@@ -70,11 +69,11 @@ namespace Chessy.Model.System
 
         void BurnAdultForest()
         {
-            for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
             {
                 if (_e.HaveFire(cell_0))
                 {
-                    _s.TryTakeAdultForestResourcesM(EnvironmentValues.FIRE_ADULT_FOREST, cell_0);
+                    _s.TryTakeAdultForestResourcesM(ValuesChessy.FIRE_ADULT_FOREST, cell_0);
                 }
             }
         }

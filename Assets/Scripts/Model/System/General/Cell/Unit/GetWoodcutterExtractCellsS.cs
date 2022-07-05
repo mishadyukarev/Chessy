@@ -1,17 +1,17 @@
 ﻿using Chessy.Model.Values;
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         public void GetWoodcutterExtractCells()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _e.BuildingExtractionC(cellIdxCurrent).HowManyWoodcutterCanExtractWood = 0;
 
                 if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Woodcutter))
                 {
-                    var extract = EnvironmentValues.WOODCUTTER_EXTRACT;
+                    var extract = ValuesChessy.WOODCUTTER_EXTRACT;
 
                     //if (E.BuildingsInfo(E.BuildEs(Idx)).HaveCenterUpgrade)
                     //{

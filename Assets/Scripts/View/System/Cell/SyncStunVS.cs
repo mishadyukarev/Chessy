@@ -7,7 +7,7 @@ namespace Chessy.Model.System
 {
     sealed class SyncStunVS : SystemViewAbstract
     {
-        readonly bool[] _needActive = new bool[StartValues.CELLS];
+        readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _stunSRC;
 
         internal SyncStunVS(in SpriteRendererVC[] stunSRCs, in EntitiesModel eM) : base(eM)
@@ -17,7 +17,7 @@ namespace Chessy.Model.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = false;
 
@@ -30,7 +30,7 @@ namespace Chessy.Model.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _stunSRC[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
             }

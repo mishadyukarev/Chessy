@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel
+    public partial class SystemsModel
     {
         internal void GetHeroInCenterM(in UnitTypes unitT, in Player sender)
         {
@@ -11,7 +11,7 @@ namespace Chessy.Model.System
 
             if (_e.LessonT == LessonTypes.PickingGod)
             {
-                _e.CommonInfoAboutGameC.SetNextLesson();
+                 SetNextLesson();
             }
 
             _e.PlayerInfoE(whoseMove).GodInfoC.UnitT = unitT;

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void TryBuyBuildingInTownM(in BuildingTypes buildT, in Player sender)
         {
@@ -25,15 +25,15 @@ namespace Chessy.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = EconomyValues.NEED_FOOD_FOR_BUILDING_HOUSE;
+                                need = CostsForBuyBuildingInTownValues.NEED_FOOD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = EconomyValues.NEED_FOOD_FOR_BUILDING_MARKET;
+                                need = CostsForBuyBuildingInTownValues.NEED_FOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = EconomyValues.NEED_FOOD_FOR_BUILDING_SMELTER;
+                                need = CostsForBuyBuildingInTownValues.NEED_FOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -50,11 +50,11 @@ namespace Chessy.Model.System
                                 break;
 
                             case BuildingTypes.Market:
-                                need = EconomyValues.NEED_WOOD_FOR_BUILDING_MARKET;
+                                need = CostsForBuyBuildingInTownValues.NEED_WOOD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = EconomyValues.NEED_WOOD_FOR_BUILDING_SMELTER;
+                                need = CostsForBuyBuildingInTownValues.NEED_WOOD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -66,15 +66,15 @@ namespace Chessy.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = EconomyValues.NEED_ORE_FOR_BUILDING_HOUSE;
+                                need = CostsForBuyBuildingInTownValues.NEED_ORE_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = EconomyValues.NEED_ORE_FOR_BUILDING_MARKET;
+                                need = CostsForBuyBuildingInTownValues.NEED_ORE_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = EconomyValues.NEED_ORE_FOR_BUILDING_SMELTER;
+                                need = CostsForBuyBuildingInTownValues.NEED_ORE_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -86,15 +86,15 @@ namespace Chessy.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = EconomyValues.NEED_IRON_FOR_BUILDING_HOUSE;
+                                need = CostsForBuyBuildingInTownValues.NEED_IRON_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = EconomyValues.NEED_IRON_FOR_BUILDING_MARKET;
+                                need = CostsForBuyBuildingInTownValues.NEED_IRON_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = EconomyValues.NEED_IRON_FOR_BUILDING_SMELTER;
+                                need = CostsForBuyBuildingInTownValues.NEED_IRON_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -106,15 +106,15 @@ namespace Chessy.Model.System
                         switch (buildT)
                         {
                             case BuildingTypes.House:
-                                need = EconomyValues.NEED_GOLD_FOR_BUILDING_HOUSE;
+                                need = CostsForBuyBuildingInTownValues.NEED_GOLD_FOR_BUILDING_HOUSE;
                                 break;
 
                             case BuildingTypes.Market:
-                                need = EconomyValues.NEED_GOLD_FOR_BUILDING_MARKET;
+                                need = CostsForBuyBuildingInTownValues.NEED_GOLD_FOR_BUILDING_MARKET;
                                 break;
 
                             case BuildingTypes.Smelter:
-                                need = EconomyValues.NEED_GOLD_FOR_BUILDING_SMELTER;
+                                need = CostsForBuyBuildingInTownValues.NEED_GOLD_FOR_BUILDING_SMELTER;
                                 break;
 
                             default:
@@ -158,24 +158,24 @@ namespace Chessy.Model.System
 
                 if (_e.LessonT == LessonTypes.BuildHouses)
                 {
-                    if (_e.PlayerInfoC(PlayerTypes.First).AmountBuiltHouses >= StartValues.BUILDINGS_FOR_SKIP_LESSON)
+                    if (_e.PlayerInfoC(PlayerTypes.First).AmountBuiltHouses >= ValuesChessy.BUILDINGS_FOR_SKIP_LESSON)
                     {
-                        _e.CommonInfoAboutGameC.SetNextLesson();
+                         SetNextLesson();
                     }
                 }
 
 
-                ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
+                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
             }
 
             else
             {
                 if (_e.LessonT.Is(Enum.LessonTypes.TryBuyingHouse))
                 {
-                    _e.CommonInfoAboutGameC.SetNextLesson();
+                     SetNextLesson();
                 }
 
-                MistakeEconomyToGeneral(sender, needRes);
+               RpcSs.SimpleMistakeToGeneral(sender, needRes);
             }
 
             //if (_eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))

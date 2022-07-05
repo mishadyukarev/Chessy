@@ -1,10 +1,11 @@
 ﻿using Chessy.Model.Enum;
 using Photon.Pun;
+
 namespace Chessy.Model.System
 {
     public sealed partial class ForButtonsSystemsModel
     {
-        public void ToggleToolWeapon(in ToolWeaponTypes twT)
+        public void ToggleToolWeapon(in ToolsWeaponsWarriorTypes twT)
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
 
@@ -36,22 +37,22 @@ namespace Chessy.Model.System
 
                     var levT = LevelTypes.First;
 
-                    if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
+                    if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                     {
                         if (_e.CellClickT.Is(CellClickTypes.GiveTakeTW))
                         {
-                            if (twT == ToolWeaponTypes.Shield || twT == ToolWeaponTypes.BowCrossbow)
+                            if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
                                 if (_e.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
                             }
-                            else if (twT != ToolWeaponTypes.BowCrossbow) levT = LevelTypes.Second;
+                            else if (twT != ToolsWeaponsWarriorTypes.BowCrossbow) levT = LevelTypes.Second;
                         }
                         else
                         {
                             levT = _e.SelectedE.ToolWeaponC.LevelT;
                         }
                     }
-                    else if (twT == ToolWeaponTypes.Axe || twT == ToolWeaponTypes.Sword)
+                    else if (twT == ToolsWeaponsWarriorTypes.Axe || twT == ToolsWeaponsWarriorTypes.Sword)
                     {
                         levT = LevelTypes.Second;
                     }

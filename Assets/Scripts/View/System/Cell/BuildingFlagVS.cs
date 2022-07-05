@@ -8,7 +8,7 @@ namespace Chessy.View.System
 {
     sealed class BuildingFlagVS : SystemViewAbstract
     {
-        bool[] _needActive = new bool[StartValues.CELLS];
+        bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _flagSRCs;
 
         internal BuildingFlagVS(in SpriteRendererVC[] flagSRCs, in EntitiesModel eM) : base(eM)
@@ -18,12 +18,12 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = false;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {
@@ -32,7 +32,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _flagSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
             }

@@ -4,28 +4,28 @@ using Photon.Pun;
 using System.Collections.Generic;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         internal void StartGame(in bool withTraining)
         {
             ResetAll();
 
             _e.ZoneInfoC.IsActiveFriend = _e.GameModeT.Is(GameModeTypes.WithFriendOffline);
-            _e.WhoseMovePlayerT = StartValues.WHOSE_MOVE;
-            _e.CellClickT = StartValues.CELL_CLICK;
+            _e.WhoseMovePlayerT = StartGameValues.WHOSE_MOVE;
+            _e.CellClickT = StartGameValues.CELL_CLICK;
 
-            _e.WeatherE.WindC = new WindC(StartValues.DIRECT_WIND, StartValues.SPEED_WIND_IN_START_GAME);
-            _e.SunSideT = StartValues.SUN_SIDE;
-            _e.CenterCloudCellIdx = StartValues.CELL_IDX_START_GAME_CLOUD;
+            _e.WeatherE.WindC = new WindC() { DirectT = StartGameValues.DIRECT_WIND, Speed = StartGameValues.SPEED_WIND };
+            _e.SunSideT = StartGameValues.SUN_SIDE;
+            _e.CenterCloudCellIdx = StartGameValues.CLOUD_CELL_INDEX;
 
-            _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartValues.SELECTED_TOOL_WEAPON, StartValues.SELECTED_LEVEL_TOOL_WEAPON);
+            _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartGameValues.SELECTED_TOOL_WEAPON, StartGameValues.SELECTED_LEVEL_TOOL_WEAPON);
 
             _e.LessonT = withTraining ? (LessonTypes)1 : 0;
 
 
             for (var playerT = PlayerTypes.None; playerT < PlayerTypes.End; playerT++)
             {
-                _e.PawnPeopleInfoC(playerT).PeopleInCity = StartValues.PEOPLE_IN_CITY;
+                _e.PawnPeopleInfoC(playerT).PeopleInCity = StartGameValues.PEOPLE_IN_CITY;
 
                 if (playerT == PlayerTypes.Second)
                 {
@@ -36,13 +36,13 @@ namespace Chessy.Model.System
 
 
                 _e.PlayerInfoE(playerT).PlayerInfoC.HaveKingInInventor = true;
-                _e.PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = StartValues.NEED_WOOD_FOR_BUILDING_HOUSE;
+                _e.PlayerInfoE(playerT).PlayerInfoC.WoodForBuyHouse = StartGameValues.NEED_WOOD_FOR_BUILDING_HOUSE;
 
                 _e.PlayerInfoE(playerT).GodInfoC.HaveGodInInventor = true;
 
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.SetResourcesInInventory(playerT, resT, StartValues.Resources(resT));
+                    _e.SetResourcesInInventory(playerT, resT, StartGameValues.AmountResourceEveryone(resT));
                 }
 
                 if (withTraining)
@@ -70,7 +70,7 @@ namespace Chessy.Model.System
             {
                 var amountMountains = 0;
 
-                for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
                     var x = _e.XCell(cell_0);
                     var y = _e.YCell(cell_0);
@@ -82,9 +82,9 @@ namespace Chessy.Model.System
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
-                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.Mountain))
+                            if (amountMountains < 3 && UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.Mountain))
                             {
-                                _e.MountainC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                _e.MountainC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES);
                                 amountMountains++;
                             }
 
@@ -92,18 +92,18 @@ namespace Chessy.Model.System
 
                             else
                             {
-                                if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
+                                if (UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.AdultForest))
                                 {
-                                    _e.AdultForestC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                    _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES);
                                 }
                             }
                         }
 
                         else
                         {
-                            if (UnityEngine.Random.Range(0f, 1f) <= StartValues.SpawnPercent(EnvironmentTypes.AdultForest))
+                            if (UnityEngine.Random.Range(0f, 1f) <= StartGameValues.SpawnPercentEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _e.AdultForestC(cell_0).SetRandom(StartValues.MIN_RESOURCES_ENVIRONMENT, EnvironmentValues.MAX_RESOURCES);
+                                _e.AdultForestC(cell_0).SetRandom(ValuesChessy.MININMUM_AMOUNT_RESOURCES_ENVIRONMENT, ValuesChessy.MAX_RESOURCES);
                             }
                         }
 
@@ -148,7 +148,7 @@ namespace Chessy.Model.System
                         }
 
 
-                        if (cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_1_PLAYER || cell_0 == StartValues.CELL_FOR_CLEAR_FOREST_FOR_2_PLAYER)
+                        if (cell_0 == StartGameValues.CELL_IDX_FOR_CLEARING_FOREST_FOR_1_PLAYER || cell_0 == StartGameValues.CELL_IDX_FOR_CLEARING_FOREST_FOR_2_PLAYER)
                         {
                             ClearAllEnvironment(cell_0);
                         }
@@ -156,7 +156,7 @@ namespace Chessy.Model.System
                 }
 
 
-                for (byte cell_0 = 0; cell_0 < StartValues.CELLS; cell_0++)
+                for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
                     if (!_e.IsBorder(cell_0))
                     {
@@ -186,7 +186,7 @@ namespace Chessy.Model.System
                 _e.SetResourcesInInventory(PlayerTypes.Second, ResourceTypes.Food, 999999);
 
 
-                for (byte cellUdxCurrent = 0; cellUdxCurrent < StartValues.CELLS; cellUdxCurrent++)
+                for (byte cellUdxCurrent = 0; cellUdxCurrent < IndexCellsValues.CELLS; cellUdxCurrent++)
                 {
                     var x = _e.XCell(cellUdxCurrent);
                     var y = _e.YCell(cellUdxCurrent);
@@ -217,26 +217,26 @@ namespace Chessy.Model.System
                         SetNewUnitOnCellS(UnitTypes.Pawn, PlayerTypes.Second, cellUdxCurrent);
 
 
-                        _e.UnitExtraTWE(cellUdxCurrent).Set(ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second));
+                        _e.UnitExtraTWE(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
 
-                        var needShield = UnityEngine.Random.Range(0f, 1f) >= StartValues.PERCENT_SHIELD_LEVEL_FIRST_OR_SECOND_FOR_BOT;
+                        var needShield = UnityEngine.Random.Range(0f, 1f) >= StartGameValues.PERCENT_SHIELD_LEVEL_FIRST_OR_SECOND_FOR_BOT;
 
                         if (needShield)
                         {
-                            _e.UnitExtraTWE(cellUdxCurrent).Set(ToolWeaponTypes.Shield, LevelTypes.Second, ToolWeaponValues.ShieldProtection(LevelTypes.Second));
+                            _e.UnitExtraTWE(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
                         }
                         else
                         {
-                            _e.UnitExtraTWE(cellUdxCurrent).Set(ToolWeaponTypes.Shield, LevelTypes.First, ToolWeaponValues.ShieldProtection(LevelTypes.First));
+                            _e.UnitExtraTWE(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.First, ValuesChessy.MaxShieldProtection(LevelTypes.First));
                         }
                         //}
                     }
 
-                    if (cellUdxCurrent == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                    if (cellUdxCurrent == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                     {
                         _e.AdultForestC(cellUdxCurrent).Resources = 0.4f;
                     }
-                    else if (cellUdxCurrent == StartValues.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
+                    else if (cellUdxCurrent == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
                         ClearAllEnvironment(cellUdxCurrent);
                     }
@@ -247,12 +247,12 @@ namespace Chessy.Model.System
                     //else if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
                     //{
                     //    MasterSs.ClearAllEnvironmentS.Clear(cell_0);
-                    //    _eMG.HillC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES / 5;
+                    //    _eMG.HillC(cell_0).Resources = ValuesChessy.MAX_RESOURCES / 5;
                     //}
-                    else if (cellUdxCurrent == StartValues.CELL_MOUNTAIN_LESSON)
+                    else if (cellUdxCurrent == KeyIndexCellsForLesson.CELL_MOUNTAIN_LESSON)
                     {
                         ClearAllEnvironment(cellUdxCurrent);
-                        _e.MountainC(cellUdxCurrent).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _e.MountainC(cellUdxCurrent).Resources = ValuesChessy.MAX_RESOURCES;
                     }
                 }
             }

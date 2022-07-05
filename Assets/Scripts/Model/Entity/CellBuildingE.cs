@@ -3,9 +3,9 @@ namespace Chessy.Model
 {
     public struct BuildingE
     {
-        public BuildingC BuildingMainC;
+        public BuildingOnCellC BuildingMainC;
         public HealthC HealthC;
-        public BuildingExtractionC ExtractionC;
+        public BuildingExtractionOnCellC ExtractionC;
 
         public readonly VisibleToOtherPlayerOrNotC VisibleToOtherPlayerC;
 

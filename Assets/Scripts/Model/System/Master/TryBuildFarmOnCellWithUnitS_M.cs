@@ -4,7 +4,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel : IUpdate
+    public partial class SystemsModel : IUpdate
     {
         const int FARMS_FOR_SKIP_LESSON = 3;
 
@@ -42,9 +42,9 @@ namespace Chessy.Model.System
                                 _e.ResourcesInInventoryC(whoseMove).Subtract(resT, needRes[resT]);
                             }
 
-                            ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
                             _e.YoungForestC(cell_0).Resources = 0;
-                            _e.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, BuildingValues.MAX_HP, cell_0);
+                            _e.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, ValuesChessy.MAX_HP_ANY_BUILDING, cell_0);
                             _e.EnergyUnitC(cell_0).Energy -= StepValues.SET_FARM;
 
 
@@ -59,32 +59,32 @@ namespace Chessy.Model.System
                             {
                                 if (_e.PlayerInfoE(whoseMove).PlayerInfoC.AmountFarmsInGame >= FARMS_FOR_SKIP_LESSON)
                                 {
-                                    _e.CommonInfoAboutGameC.SetNextLesson();
+                                     SetNextLesson();
                                 }
                             }
                         }
 
                         else
                         {
-                            MistakeEconomyToGeneral(sender, needRes);
+                           RpcSs.SimpleMistakeToGeneral(sender, needRes);
                         }
                     }
 
                     else
                     {
-                        SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                        RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                     }
                 }
 
                 else
                 {
-                    SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                    RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                 }
             }
 
             else
             {
-                SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

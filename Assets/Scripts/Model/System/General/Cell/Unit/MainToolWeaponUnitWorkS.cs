@@ -3,7 +3,7 @@ namespace Chessy.Model
 {
     static class MainToolWeaponUnitWorkS
     {
-        internal static void Set(ref this MainToolWeaponUnitC mainToolWeaponE, in ToolWeaponTypes twT, in LevelTypes levelT)
+        internal static void Set(ref this MainToolWeaponUnitC mainToolWeaponE, in ToolsWeaponsWarriorTypes twT, in LevelTypes levelT)
         {
             mainToolWeaponE.ToolWeaponT = twT;
             mainToolWeaponE.LevelT = levelT;

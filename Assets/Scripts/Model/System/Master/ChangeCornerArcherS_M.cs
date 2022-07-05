@@ -2,7 +2,7 @@
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    sealed partial class UnitAbilitiesSystems : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModelAbstract
     {
         internal void TryChangeCornerArcher(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
@@ -12,12 +12,12 @@ namespace Chessy.Model.System
 
                 _e.EnergyUnitC(cell_0).Energy -= StepValues.CHANGE_CORNER_ARCHER;
 
-                _s.ExecuteSoundActionToGeneral(sender, ClipTypes.PickArcher);
+                _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickArcher);
             }
 
             else
             {
-                _s.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
         }
     }

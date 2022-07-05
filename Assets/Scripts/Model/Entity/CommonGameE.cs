@@ -4,7 +4,7 @@ namespace Chessy.Model.Entity
     public struct CommonGameE
     {
         public readonly DataFromViewC DataFromViewC;
-        public readonly Resources Resources;
+        public readonly FromResourcesC Resources;
         public ShopC ShopC;
         public AdC AdC;
         public UpdateAllViewC UpdateAllViewC;
@@ -23,7 +23,7 @@ namespace Chessy.Model.Entity
         internal CommonGameE(in DataFromViewC dataFromViewC) : this()
         {
             DataFromViewC = dataFromViewC;
-            Resources = new Resources(default);
+            Resources = new FromResourcesC(default);
         }
     }
 }

@@ -6,7 +6,7 @@ using System;
 using UnityEngine;
 namespace Chessy.Model
 {
-    sealed class SelectorS : SystemModel, IUpdate
+    sealed class SelectorS : SystemModelAbstract, IUpdate
     {
         readonly CellSimpleClickS _cellSimpleClickS;
 
@@ -44,12 +44,12 @@ namespace Chessy.Model
                 if (_e.LessonT == LessonTypes.UniqueAttackInfo)
                 {
                     _e.SunSideT = SunSideTypes.Dawn;
-                    _e.CommonInfoAboutGameC.SetNextLesson();
+                     _s.SetNextLesson();
                 }
                 else if (_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
                     LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.MenuInfo))
                 {
-                    _e.CommonInfoAboutGameC.SetNextLesson();
+                     _s.SetNextLesson();
                 }
 
                 switch (_e.RaycastT)

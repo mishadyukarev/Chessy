@@ -12,17 +12,17 @@ namespace Chessy.View.UI.Entity
     public readonly struct DownToolWeaponUIE
     {
         readonly Dictionary<string, ImageUIC> _toolWeapon;
-        readonly Dictionary<ToolWeaponTypes, ButtonUIC> _buttons;
-        readonly Dictionary<ToolWeaponTypes, ImageUIC> _images;
-        readonly Dictionary<ToolWeaponTypes, TextUIC> _texts;
+        readonly Dictionary<ToolsWeaponsWarriorTypes, ButtonUIC> _buttons;
+        readonly Dictionary<ToolsWeaponsWarriorTypes, ImageUIC> _images;
+        readonly Dictionary<ToolsWeaponsWarriorTypes, TextUIC> _texts;
 
         public readonly GameObjectVC ParentGOC;
         public readonly CostUIE CostE;
 
-        public ImageUIC LevelImageC(in ToolWeaponTypes tw, in LevelTypes level) => _toolWeapon[tw.ToString() + level];
-        public ButtonUIC ButtonC(in ToolWeaponTypes tw) => _buttons[tw];
-        public ImageUIC ImageC(in ToolWeaponTypes tw) => _images[tw];
-        public TextUIC TextC(in ToolWeaponTypes tw) => _texts[tw];
+        public ImageUIC LevelImageC(in ToolsWeaponsWarriorTypes tw, in LevelTypes level) => _toolWeapon[tw.ToString() + level];
+        public ButtonUIC ButtonC(in ToolsWeaponsWarriorTypes tw) => _buttons[tw];
+        public ImageUIC ImageC(in ToolsWeaponsWarriorTypes tw) => _images[tw];
+        public TextUIC TextC(in ToolsWeaponsWarriorTypes tw) => _texts[tw];
 
         public DownToolWeaponUIE(in Transform downZone)
         {
@@ -32,9 +32,9 @@ namespace Chessy.View.UI.Entity
 
 
             _toolWeapon = new Dictionary<string, ImageUIC>();
-            _buttons = new Dictionary<ToolWeaponTypes, ButtonUIC>();
-            _images = new Dictionary<ToolWeaponTypes, ImageUIC>();
-            _texts = new Dictionary<ToolWeaponTypes, TextUIC>();
+            _buttons = new Dictionary<ToolsWeaponsWarriorTypes, ButtonUIC>();
+            _images = new Dictionary<ToolsWeaponsWarriorTypes, ImageUIC>();
+            _texts = new Dictionary<ToolsWeaponsWarriorTypes, TextUIC>();
 
 
             var costZone = gTZone.Find("Cost+");
@@ -45,7 +45,7 @@ namespace Chessy.View.UI.Entity
                 costZone.Find("IronCost_TMP").GetComponent<TextMeshProUGUI>());
 
 
-            for (var tw = ToolWeaponTypes.None + 1; tw < ToolWeaponTypes.End; tw++)
+            for (var tw = ToolsWeaponsWarriorTypes.None + 1; tw < ToolsWeaponsWarriorTypes.End; tw++)
             {
                 var zone = gTZone.Find(tw.ToString());
 

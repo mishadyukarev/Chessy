@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    sealed partial class UnitAbilitiesSystems : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModelAbstract
     {
         internal void TryChangeDirectWindWithSnowyM(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
@@ -12,18 +12,18 @@ namespace Chessy.Model.System
             {
                 _e.DirectWindT = _e.AroundCellsE(_e.CenterCloudCellIdx).Direct(idx_to);
                 _e.EnergyUnitC(cell_from).Energy -= StepValues.Need(abilityT);
-                _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
+                _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                _s.SoundToGeneral(RpcTarget.All, abilityT);
+                _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
 
                 if (_e.LessonT == LessonTypes.ChangeDirectionWind)
                 {
-                    _e.CommonInfoAboutGameC.SetNextLesson();
+                     _s.SetNextLesson();
                 }
 
             }
 
-            else _s.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
         }
     }
 }

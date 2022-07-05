@@ -2,7 +2,7 @@
 using Photon.Realtime;
 namespace Chessy.Model.System
 {
-    sealed partial class UnitAbilitiesSystems : SystemModel
+    sealed partial class UnitAbilitiesSystems : SystemModelAbstract
     {
         internal void TryGrowAdultForestWithElfemaleM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
@@ -13,30 +13,30 @@ namespace Chessy.Model.System
                     if (_e.YoungForestC(cell_0).HaveAnyResources)
                     {
                         _e.YoungForestC(cell_0).Resources = 0;
-                        _e.AdultForestC(cell_0).Resources = EnvironmentValues.MAX_RESOURCES;
+                        _e.AdultForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES;
 
                         _e.EnergyUnitC(cell_0).Energy -= StepValues.GROW_ADULT_FOREST;
-                        _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownValues.NeedAfterAbility(abilityT));
+                        _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                         foreach (var idx_1 in _e.AroundCellsE(cell_0).CellsAround)
                         {
                             if (_e.YoungForestC(idx_1).HaveAnyResources)
                             {
-                                _e.AdultForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+                                _e.AdultForestC(idx_1).Resources = ValuesChessy.MAX_RESOURCES;
                             }
                         }
-                        _s.SoundToGeneral(sender, abilityT);
+                        _s.RpcSs.SoundToGeneral(sender, abilityT);
                     }
 
-                    else _s.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
+                    else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
                 }
 
-                else _s.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
 
             else
             {
-                _s.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
+                _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

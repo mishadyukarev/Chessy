@@ -6,7 +6,7 @@ namespace Chessy.View.System
 {
     sealed class SyncFireVS : SystemViewAbstract
     {
-        bool[] _needActive = new bool[StartValues.CELLS];
+        bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _fireSRCs;
 
         internal SyncFireVS(SpriteRendererVC[] fireSRCs,  in EntitiesModel eM) : base(eM)
@@ -16,12 +16,12 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = false;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_e.HaveFire(cellIdxCurrent))
                 {
@@ -34,7 +34,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _fireSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
             }

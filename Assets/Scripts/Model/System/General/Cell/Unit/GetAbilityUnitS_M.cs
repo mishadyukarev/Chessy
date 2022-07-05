@@ -1,12 +1,13 @@
 ﻿using Chessy.Model.Values;
 using System;
-namespace Chessy.Model
+
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         internal void GetAbilityUnit()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.None);
                 _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.None);
@@ -28,12 +29,12 @@ namespace Chessy.Model
 
                         case UnitTypes.Pawn:
 
-                            if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
+                            if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                             {
                                 _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
                                 _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
                             }
-                            else if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Staff))
+                            else if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff))
                             {
 
                             }

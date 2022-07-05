@@ -1,18 +1,18 @@
 ﻿using Chessy.Model.Values;
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         void PawnGetExtractAdultForest()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest = 0;
 
                 if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
                     if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
-                        && !_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow, ToolWeaponTypes.Staff))
+                        && !_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow, ToolsWeaponsWarriorTypes.Staff))
                     {
                         var extract = ExtractPawnValues.EXTRACT_PAWM_ADULT_FOREST;
 
@@ -26,7 +26,7 @@ namespace Chessy.Model
 
 
 
-                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Axe))
+                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Axe))
                         {
                             if (_e.MainTWLevelT(cellIdxCurrent).Is(LevelTypes.Second))
                             {

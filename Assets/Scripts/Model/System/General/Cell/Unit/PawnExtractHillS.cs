@@ -1,15 +1,15 @@
 ﻿using Chessy.Model.Values;
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         void GetPawnExtractHill()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractHill = 0;
 
-                if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.Pick) && _e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Relaxed)
+                if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.ExtraToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Pick) && _e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Relaxed)
                 {
                     if (_e.HillC(cellIdxCurrent).HaveAnyResources)
                     {

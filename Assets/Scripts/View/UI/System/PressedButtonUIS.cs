@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+
+namespace Chessy.Model
 {
     sealed class PressedButtonUIS : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

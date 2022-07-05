@@ -1,5 +1,4 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.Model.Extensions;
 using Chessy.Model.Values;
 using Chessy.View.System;
 using Chessy.View.UI.Entity;
@@ -28,18 +27,18 @@ namespace Chessy.Model
 
             for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
             {
-                _needActiveMainTW.Add(levelT, new bool[(byte)ToolWeaponTypes.End]);
-                _needColorMainTW.Add(levelT, new Color[(byte)ToolWeaponTypes.End]);
+                _needActiveMainTW.Add(levelT, new bool[(byte)ToolsWeaponsWarriorTypes.End]);
+                _needColorMainTW.Add(levelT, new Color[(byte)ToolsWeaponsWarriorTypes.End]);
                 _needActiveBowCrossbow.Add(levelT, new bool[2]);
                 _needColorBowCrossbow.Add(levelT, new Color[2]);
-                _needActiveExtraTW.Add(levelT, new bool[(byte)ToolWeaponTypes.End]);
-                _needColorExtraTW.Add(levelT, new Color[(byte)ToolWeaponTypes.End]);
+                _needActiveExtraTW.Add(levelT, new bool[(byte)ToolsWeaponsWarriorTypes.End]);
+                _needColorExtraTW.Add(levelT, new Color[(byte)ToolsWeaponsWarriorTypes.End]);
             }
         }
 
         internal override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 Sync(cellIdxCurrent);
             }
@@ -54,7 +53,7 @@ namespace Chessy.Model
             }
             for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
             {
-                foreach (var toolWeaponT in new[] { ToolWeaponTypes.Staff, ToolWeaponTypes.Axe })
+                foreach (var toolWeaponT in new[] { ToolsWeaponsWarriorTypes.Staff, ToolsWeaponsWarriorTypes.Axe })
                 {
                     _needActiveMainTW[levelT][(byte)toolWeaponT] = false;
                     _needColorMainTW[levelT][(byte)toolWeaponT] = ColorsValues.ColorStandart;
@@ -66,7 +65,7 @@ namespace Chessy.Model
                     _needColorBowCrossbow[levelT][isRight ? 0 : 1] = ColorsValues.ColorStandart;
                 }
 
-                foreach (var twT in new[] { ToolWeaponTypes.Pick, ToolWeaponTypes.Shield, ToolWeaponTypes.Sword })
+                foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Pick, ToolsWeaponsWarriorTypes.Shield, ToolsWeaponsWarriorTypes.Sword })
                 {
                     _needActiveExtraTW[levelT][(byte)twT] = false;
                     _needColorExtraTW[levelT][(byte)twT] = ColorsValues.ColorStandart;
@@ -85,7 +84,7 @@ namespace Chessy.Model
 
                     if (selUnitT == UnitTypes.Pawn)
                     {
-                        _needActiveMainTW[LevelTypes.First][(byte)ToolWeaponTypes.Axe] = true;
+                        _needActiveMainTW[LevelTypes.First][(byte)ToolsWeaponsWarriorTypes.Axe] = true;
                     }
                     else
                     {
@@ -114,7 +113,7 @@ namespace Chessy.Model
 
                     if (unitT == UnitTypes.Pawn)
                     {
-                        if (_e.MainToolWeaponT(cellIdx).Is(ToolWeaponTypes.BowCrossbow))
+                        if (_e.MainToolWeaponT(cellIdx).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                         {
                             _needActiveBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.IsRightArcherUnit(cellIdx) ? 0 : 1] = true;
                             _needColorBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.IsRightArcherUnit(cellIdx) ? 0 : 1] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
@@ -173,7 +172,7 @@ namespace Chessy.Model
 
             for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
             {
-                foreach (var toolWeaponT in new[] { ToolWeaponTypes.Staff, ToolWeaponTypes.Axe })
+                foreach (var toolWeaponT in new[] { ToolsWeaponsWarriorTypes.Staff, ToolsWeaponsWarriorTypes.Axe })
                 {
                     if (_eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).GO.activeSelf != _needActiveMainTW[levelT][(byte)toolWeaponT])
                     {
@@ -191,7 +190,7 @@ namespace Chessy.Model
                     _eV.CellEs(cellIdx).UnitEs.MainBowCrossbowSRC(levelT, isRight).SR.color = _needColorBowCrossbow[levelT][isRight ? 0 : 1];
                 }
 
-                foreach (var twT in new[] { ToolWeaponTypes.Pick, ToolWeaponTypes.Shield, ToolWeaponTypes.Sword })
+                foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Pick, ToolsWeaponsWarriorTypes.Shield, ToolsWeaponsWarriorTypes.Sword })
                 {
                     _eV.CellEs(cellIdx).UnitEs.ExtraToolWeaponSRC(levelT, twT).SetActiveGO(_needActiveExtraTW[levelT][(byte)twT]);
                     _eV.CellEs(cellIdx).UnitEs.ExtraToolWeaponSRC(levelT, twT).SR.color = _needColorExtraTW[levelT][(byte)twT];

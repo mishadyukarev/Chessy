@@ -1,11 +1,11 @@
 ﻿using Chessy.Model.Values;
-namespace Chessy.Model
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         internal void GetCellsForAttackArcher()
         {
-            for (byte cellIdxCell = 0; cellIdxCell < StartValues.CELLS; cellIdxCell++)
+            for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
             {
                 if (_e.UnitT(cellIdxCell).HaveUnit())
                 {
@@ -27,7 +27,7 @@ namespace Chessy.Model
                                         {
                                             if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
                                             {
-                                                if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolWeaponTypes.BowCrossbow))
+                                                if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                                                 {
                                                     if (isRight_0)
                                                     {
@@ -60,7 +60,7 @@ namespace Chessy.Model
                                             && _e.UnitVisibleC(idx_2).IsVisible(_e.UnitPlayerT(cellIdxCell))
                                             && !_e.UnitPlayerT(idx_2).Is(_e.UnitPlayerT(cellIdxCell)))
                                         {
-                                            if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolWeaponTypes.BowCrossbow))
+                                            if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                                             {
                                                 if (!isRight_0)
                                                 {

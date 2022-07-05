@@ -1,12 +1,11 @@
-﻿using Chessy.Model.Extensions;
-using Chessy.Model.Values;
-namespace Chessy.Model
+﻿using Chessy.Model.Values;
+namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModel
+    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         void GetVisibleUnits()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
                 {

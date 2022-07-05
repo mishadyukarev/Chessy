@@ -12,7 +12,7 @@
 //                {
 //                    if (!e.AdultForestC(idx_1).HaveAnyResources && !e.HillC(idx_1).HaveAnyResources && !e.YoungForestC(idx_1).HaveAnyResources)
 //                    {
-//                        e.YoungForestC(idx_1).Resources = EnvironmentValues.MAX_RESOURCES;
+//                        e.YoungForestC(idx_1).Resources = ValuesChessy.MAX_RESOURCES;
 //                        return;
 //                    }
 //                }

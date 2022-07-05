@@ -9,8 +9,8 @@ namespace Chessy.View.System
     {
         readonly SpriteRendererVC[] _rightSRCs;
         readonly SpriteRendererVC[] _upSRCs;
-        readonly bool[] _needActiveRight = new bool[StartValues.CELLS];
-        readonly bool[] _needActiveUp = new bool[StartValues.CELLS];
+        readonly bool[] _needActiveRight = new bool[IndexCellsValues.CELLS];
+        readonly bool[] _needActiveUp = new bool[IndexCellsValues.CELLS];
 
         internal SyncFrozenArrawVS(in SpriteRendererVC[] srRightCs, in SpriteRendererVC[] upSRCs, in EntitiesModel eM) : base(eM)
         {
@@ -20,7 +20,7 @@ namespace Chessy.View.System
 
         internal sealed override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActiveUp[cellIdxCurrent] = false;
                 _needActiveRight[cellIdxCurrent] = false;
@@ -30,7 +30,7 @@ namespace Chessy.View.System
                 {
                     if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
                     {
-                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolWeaponTypes.BowCrossbow))
+                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                         {
                             if (_e.UnitEffectsC(cellIdxCurrent).HaveShoots)
                             {
@@ -48,7 +48,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _rightSRCs[cellIdxCurrent].SetActiveGO(_needActiveRight[cellIdxCurrent]);
                 _upSRCs[cellIdxCurrent].SetActiveGO(_needActiveUp[cellIdxCurrent]);

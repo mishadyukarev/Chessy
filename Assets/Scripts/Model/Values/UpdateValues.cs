@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model.Values
 {
-    public static class UpdateValues
+    public static partial class ValuesChessy
     {
         public const int FROM_MAX_AVAILABLE_PAWNS = 10;
         public const int NEED_ADULT_FORESTS_FOR_TRUCE = 8;

@@ -4,7 +4,7 @@ using Photon.Realtime;
 using System;
 namespace Chessy.Model.System
 {
-    public sealed partial class SystemsModel
+    public partial class SystemsModel
     {
         internal void TrySetConditionUnitOnCellM(in ConditionUnitTypes condT, in byte cell_0, in Player sender)
         {
@@ -19,22 +19,22 @@ namespace Chessy.Model.System
                     case ConditionUnitTypes.Protected:
                         if (_e.UnitConditionT(cell_0).Is(ConditionUnitTypes.Protected))
                         {
-                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
                         }
 
                         else if (_e.EnergyUnitC(cell_0).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
-                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.EnergyUnitC(cell_0).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                             _e.SetUnitConditionT(cell_0, condT);
 
-                            if (_e.LessonT == LessonTypes.ClickDefend) _e.CommonInfoAboutGameC.SetNextLesson();
+                            if (_e.LessonT == LessonTypes.ClickDefend)  SetNextLesson();
                         }
 
                         else
                         {
-                            SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                         break;
 
@@ -42,13 +42,13 @@ namespace Chessy.Model.System
                     case ConditionUnitTypes.Relaxed:
                         if (_e.UnitConditionT(cell_0).Is(ConditionUnitTypes.Relaxed))
                         {
-                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
                         }
 
                         else if (_e.EnergyUnitC(cell_0).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
                         {
-                            ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.SetUnitConditionT(cell_0, condT);
                             _e.EnergyUnitC(cell_0).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
 
@@ -62,7 +62,7 @@ namespace Chessy.Model.System
                                         {
                                             if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
                                             {
-                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cell_0), BuildingValues.MAX_HP, cell_0);
+                                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cell_0), ValuesChessy.MAX_HP_ANY_BUILDING, cell_0);
                                             }
                                         }
                                     }
@@ -72,7 +72,7 @@ namespace Chessy.Model.System
 
                         else
                         {
-                            SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                         break;
 
@@ -83,7 +83,7 @@ namespace Chessy.Model.System
 
             else
             {
-                ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
+                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

@@ -42,7 +42,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
                 _eUI.UpEs.WindTrC.EulerAngles = _directs[_e.DirectWindT];
                 if (_e.CurrentPlayerIT == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-                _eUI.UpEs.WindTextC.TextUI.text = _e.SpeedWind.ToString() + "/" + StartValues.MAX_SPEED_WIND;
+                _eUI.UpEs.WindTextC.TextUI.text = _e.SpeedWind.ToString() + "/" + ValuesChessy.MAX_SPEED_WIND;
 
 
             }

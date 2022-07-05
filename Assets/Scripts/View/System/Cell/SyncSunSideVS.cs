@@ -14,24 +14,24 @@ namespace Chessy.View.System
 
         internal SyncSunSideVS(in EntitiesView eVG, in EntitiesModel eMG) : base(eMG)
         {
-            _needActive = new bool[StartValues.CELLS];
+            _needActive = new bool[IndexCellsValues.CELLS];
             _eVG = eVG;
         }
 
         internal override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActive[cellIdxCurrent] = false;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_e.SelectedCellIdx == cellIdxCurrent && _e.SunSideT.IsAcitveSun())
                 {
                     var simpleUnqiueCells = new HashSet<byte>();
 
-                    for (byte cellIdx = 0; cellIdx < StartValues.CELLS; cellIdx++)
+                    for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
                     {
                         if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCurrent).Can(cellIdx))
                         {
@@ -60,7 +60,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _eVG.CellEs(cellIdxCurrent).SunSideSRC.SetActiveGO(_needActive[cellIdxCurrent]);
             }

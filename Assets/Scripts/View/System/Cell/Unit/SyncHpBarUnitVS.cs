@@ -8,8 +8,8 @@ namespace Chessy.View.System
 {
     sealed class SyncHpBarUnitVS : SystemViewAbstract
     {
-        readonly bool[] _needActiveBar = new bool[StartValues.CELLS];
-        readonly Color[] _needSetColorToBar = new Color[StartValues.CELLS];
+        readonly bool[] _needActiveBar = new bool[IndexCellsValues.CELLS];
+        readonly Color[] _needSetColorToBar = new Color[IndexCellsValues.CELLS];
 
         readonly SpriteRendererVC[] _hpBarSRC;
 
@@ -20,13 +20,13 @@ namespace Chessy.View.System
 
         internal override void Sync()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _needActiveBar[cellIdxCurrent] = false;
                 _needSetColorToBar[cellIdxCurrent] = Color.white;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
                 {
@@ -42,7 +42,7 @@ namespace Chessy.View.System
                 }
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < StartValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _hpBarSRC[cellIdxCurrent].SetActiveGO(_needActiveBar[cellIdxCurrent]);
                 _hpBarSRC[cellIdxCurrent].SR.color = _needSetColorToBar[cellIdxCurrent];

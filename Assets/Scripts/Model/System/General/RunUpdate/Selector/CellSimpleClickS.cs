@@ -4,7 +4,7 @@ using Chessy.Model.Values;
 using Photon.Pun;
 namespace Chessy.Model.System
 {
-    sealed class CellSimpleClickS : SystemModel
+    sealed class CellSimpleClickS : SystemModelAbstract
     {
         readonly SelectorSoundS _selectorSoundS;
 
@@ -55,17 +55,17 @@ namespace Chessy.Model.System
                         {
                             if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurrentPlayerIT)
                             {
-                                _e.CommonInfoAboutGameC.SetNextLesson();
+                                 _s.SetNextLesson();
                             }
                         }
 
                         else if (_e.LessonT == LessonTypes.ShiftPawnHere)
                         {
-                            if (_e.CurrentCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            if (_e.CurrentCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
                                 if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn))
                                 {
-                                    _e.CommonInfoAboutGameC.SetNextLesson();
+                                     _s.SetNextLesson();
                                 }
                             }
                         }
@@ -253,17 +253,17 @@ namespace Chessy.Model.System
                         {
                             if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurrentPlayerIT)
                             {
-                                _e.CommonInfoAboutGameC.SetNextLesson();
+                                 _s.SetNextLesson();
                             }
                         }
 
                         else if (_e.LessonT == LessonTypes.ShiftPawnHere)
                         {
-                            if (_e.CurrentCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            if (_e.CurrentCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
                             {
                                 if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn))
                                 {
-                                    _e.CommonInfoAboutGameC.SetNextLesson();
+                                     _s.SetNextLesson();
                                 }
                             }
                         }
