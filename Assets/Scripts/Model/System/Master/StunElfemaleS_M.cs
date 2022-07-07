@@ -11,14 +11,14 @@ namespace Chessy.Model.System
             {
                 if (_e.AdultForestC(cell_to).HaveAnyResources)
                 {
-                    if (_e.EnergyUnitC(cell_from).Energy >= StepValues.STUN_ELFEMALE)
-                    {
+                    //if (_e.EnergyUnitC(cell_from).Energy >= StepValues.STUN_ELFEMALE)
+                    //{
                         if (!_e.UnitPlayerT(cell_from).Is(_e.UnitPlayerT(cell_to)))
                         {
                             _e.UnitEffectsC(cell_to).StunHowManyUpdatesNeedStay = StunUnitValues.AMOUNT_STUN_AFTER_ABILITY_ELFEMALE;
                             _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                            _e.EnergyUnitC(cell_from).Energy -= StepValues.STUN_ELFEMALE;
+                            //_e.EnergyUnitC(cell_from).Energy -= StepValues.STUN_ELFEMALE;
 
                             _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
 
@@ -34,9 +34,9 @@ namespace Chessy.Model.System
                                 }
                             }
                         }
-                    }
+                    //}
 
-                    else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    //else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
 

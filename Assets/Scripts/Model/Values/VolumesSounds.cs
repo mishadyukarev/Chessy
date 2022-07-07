@@ -24,11 +24,11 @@
                 case ClipTypes.ShortWind: return 0.2f;
                 case ClipTypes.ShortRain: return 0.2f;
                 case ClipTypes.Music: return testMode == TestModeTypes.Standart ? 0 : 0.2f;
-                case ClipTypes.Click: return 0.25f;
-                case ClipTypes.SoundRunningUnit: return 0.15f;
+                case ClipTypes.Click: return 0.15f;
+                case ClipTypes.SoundRunningUnit: return 0.25f;
 
                 case ClipTypes.Background1: return 1;
-                case ClipTypes.Background2: return 0.2f;
+                case ClipTypes.Background2: return 0.6f;
 
                 default: return 1;
             }

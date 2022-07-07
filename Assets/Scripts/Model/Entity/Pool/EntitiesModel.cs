@@ -13,7 +13,7 @@ namespace Chessy.Model.Entity
         readonly CellEs[] _cellEs;
 
         public PlayerTypes WinnerPlayerT;
-        public PlayerTypes WhoseMovePlayerT;
+        //public PlayerTypes WhoseMovePlayerT;
         public PlayerTypes CurrentPlayerIT;
 
 
@@ -156,6 +156,7 @@ namespace Chessy.Model.Entity
         public bool HaveTreeUnit { get; internal set; }
         public bool IsActivatedIdxAndXyInfoCells { get; internal set; }
         public int AmountPlantedYoungForests { get; internal set; }
+        //public bool NeedFillData { get; internal set; }
 
 
         public MistakeTypes MistakeT
@@ -223,7 +224,7 @@ namespace Chessy.Model.Entity
         public ConditionUnitTypes UnitConditionT(in byte idx) => UnitMainC(idx).ConditionT;
         internal void SetUnitConditionT(in byte cellIdx, in ConditionUnitTypes conditionUnitT) => UnitMainC(cellIdx).ConditionT = conditionUnitT;
         public bool IsRightArcherUnit(in byte idx) => UnitMainC(idx).IsArcherDirectedToRight;
-        public double DamageAttack(in byte cell) => UnitMainC(cell).DamageSimpleAttack;
+        public double DamageSimpleAttack(in byte cell) => UnitMainC(cell).DamageSimpleAttack;
         public double DamageOnCell(in byte cell) => UnitMainC(cell).DamageOnCell;
 
         public VisibleToOtherPlayerOrNotC UnitVisibleC(in byte cell) => UnitE(cell).VisibleToOtherPlayerOrNotC;
@@ -239,21 +240,22 @@ namespace Chessy.Model.Entity
         public ref WaterAmountC WaterUnitC(in byte idx) => ref UnitE(idx).WaterC;
         public double WaterUnit(in byte idx) => WaterUnitC(idx).Water;
 
-        public ref MainToolWeaponUnitC MainToolWeaponE(in byte idx) => ref UnitE(idx).MainToolWeaponC;
-        public ToolsWeaponsWarriorTypes MainToolWeaponT(in byte cell) => MainToolWeaponE(cell).ToolWeaponT;
-        public void SetMainToolWeaponT(in byte cell, in ToolsWeaponsWarriorTypes toolWeaponT) => MainToolWeaponE(cell).ToolWeaponT = toolWeaponT;
-        public LevelTypes MainTWLevelT(in byte idx) => MainToolWeaponE(idx).LevelT;
-        internal void SetMainTWLevelT(in byte cellIdx, in LevelTypes levelT) => MainToolWeaponE(cellIdx).LevelT = levelT;
+        public ref MainToolWeaponUnitC MainToolWeaponC(in byte idx) => ref UnitE(idx).MainToolWeaponC;
+        public ToolsWeaponsWarriorTypes MainToolWeaponT(in byte cell) => MainToolWeaponC(cell).ToolWeaponT;
+        public void SetMainToolWeaponT(in byte cell, in ToolsWeaponsWarriorTypes toolWeaponT) => MainToolWeaponC(cell).ToolWeaponT = toolWeaponT;
+        public LevelTypes MainTWLevelT(in byte idx) => MainToolWeaponC(idx).LevelT;
+        internal void SetMainTWLevelT(in byte cellIdx, in LevelTypes levelT) => MainToolWeaponC(cellIdx).LevelT = levelT;
 
-        public ref ExtraToolWeaponUnitC UnitExtraTWE(in byte idx_cell) => ref UnitE(idx_cell).ExtraToolWeaponC;
-        public ToolsWeaponsWarriorTypes ExtraToolWeaponT(in byte idx) => UnitExtraTWE(idx).ToolWeaponT;
-        internal void SetExtraToolWeaponT(in byte idx, in ToolsWeaponsWarriorTypes toolWeaponT) => UnitExtraTWE(idx).ToolWeaponT = toolWeaponT;
-        public LevelTypes ExtraTWLevelT(in byte idx) => UnitExtraTWE(idx).LevelT;
-        public LevelTypes SetExtraTWLevelT(in byte idx, in LevelTypes levelT) => UnitExtraTWE(idx).LevelT = levelT;
-        public float ExtraTWProtection(in byte idx) => UnitExtraTWE(idx).ProtectionShield;
+        public ref ExtraToolWeaponUnitC UnitExtraTWC(in byte idx_cell) => ref UnitE(idx_cell).ExtraToolWeaponC;
+        public ToolsWeaponsWarriorTypes ExtraToolWeaponT(in byte idx) => UnitExtraTWC(idx).ToolWeaponT;
+        internal void SetExtraToolWeaponT(in byte idx, in ToolsWeaponsWarriorTypes toolWeaponT) => UnitExtraTWC(idx).ToolWeaponT = toolWeaponT;
+        public LevelTypes ExtraTWLevelT(in byte idx) => UnitExtraTWC(idx).LevelT;
+        public LevelTypes SetExtraTWLevelT(in byte idx, in LevelTypes levelT) => UnitExtraTWC(idx).LevelT = levelT;
+        public float ExtraTWProtection(in byte idx) => UnitExtraTWC(idx).ProtectionShield;
+        public void SetExtraTWProtection(in byte idx, in float protection) => UnitExtraTWC(idx).ProtectionShield = protection;
 
         public ref ExtractionResourcesWithUnitC ExtactionResourcesWithWarriorC(in byte idx_cell) => ref UnitE(idx_cell).ExtractionResourcesC;
-        public float PawnExtractAdultForest(in byte idx) => ExtactionResourcesWithWarriorC(idx).HowManyWarriourCanExtractAdultForest;
+        public float HowManyWarriourCanExtractAdultForest(in byte idx) => ExtactionResourcesWithWarriorC(idx).HowManyWarriourCanExtractAdultForest;
         public float PawnExtractHill(in byte idx) => ExtactionResourcesWithWarriorC(idx).HowManyWarriourCanExtractHill;
 
         ref WhoLastDiedOnCellC LastDiedE(in byte idx) => ref UnitE(idx).WhoLastDiedHereC;
@@ -267,9 +269,9 @@ namespace Chessy.Model.Entity
         public WhereUnitCanAttackToEnemyC WhereUnitCanAttackSimpleAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackSimpleAttackToEnemyC;
         public WhereUnitCanAttackToEnemyC WhereUnitCanAttackUniqueAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackUniqueAttackToEnemyC;
         public ButtonsAbilitiesUnitC UnitButtonAbilitiesC(in byte cell) => UnitE(cell).UniqueButtonsC;
-        public HowManyEnergyNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC(in byte cell) => UnitE(cell).HowManyEnergyNeedForShiftingUnitC;
+        public HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC(in byte cell) => UnitE(cell).HowManyEnergyNeedForShiftingUnitC;
         public WhereUnitCanShiftC WhereUnitCanShiftC(in byte cellIdx) => UnitE(cellIdx).WhereCanShiftC;
-        public CooldownAbilitiesC UnitCooldownAbilitiesC(in byte cell) => UnitE(cell).CooldownsC;
+        public CooldownAbilitiesInSecondsC UnitCooldownAbilitiesC(in byte cell) => UnitE(cell).CooldownsC;
         public HasUnitKingEffectHereC HasKingEffectHereC(in byte cellIdx) => UnitE(cellIdx).HasKingEffectHereC;
 
 
@@ -277,8 +279,8 @@ namespace Chessy.Model.Entity
 
         public ref EffectsUnitC UnitEffectsC(in byte idx_cell) => ref UnitE(idx_cell).EffectsC;
         public float StunUnit(in byte idx) => UnitEffectsC(idx).StunHowManyUpdatesNeedStay;
-        public float ShieldEffect(in byte idx) => UnitEffectsC(idx).ProtectionRainyMagicShield;
-        public int FrozenArrawEffect(in byte cell) => UnitEffectsC(cell).ShootsFrozenArrawArcher;
+        public float ProtectionRainyMagicShield(in byte idx) => UnitEffectsC(idx).ProtectionRainyMagicShield;
+        public bool HaveFrozenArrawArcher(in byte cell) => UnitEffectsC(cell).HaveFrozenArrawArcher;
 
         #endregion
 

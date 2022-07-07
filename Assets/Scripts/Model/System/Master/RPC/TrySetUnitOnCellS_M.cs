@@ -7,9 +7,9 @@ namespace Chessy.Model.System
     {
         internal void TrySetUnitOnCellM(in UnitTypes unitT, in Player sender, in byte cellIdx)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
+            var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_e.IsStartedCellC(cellIdx).IsStartedCell(whoseMove) && !_e.UnitT(cellIdx).HaveUnit())
+            if (_e.IsStartedCellC(cellIdx).IsStartedCell(whoDoing) && !_e.UnitT(cellIdx).HaveUnit())
             {
                 if (unitT == UnitTypes.King)
                 {
@@ -27,7 +27,7 @@ namespace Chessy.Model.System
                 }
 
 
-                SetNewUnitOnCellS(unitT, whoseMove, cellIdx);
+                SetNewUnitOnCellS(unitT, whoDoing, cellIdx);
 
 
                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);

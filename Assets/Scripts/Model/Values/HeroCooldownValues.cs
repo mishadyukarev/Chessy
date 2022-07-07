@@ -4,12 +4,12 @@
     {
         #region DONT_CHANGE!!!!!!!!
 
-        public const float Elfemale = 5;
-        public const float Snowy = 5;
+        public const int Elfemale = 30;
+        public const int Snowy = 30;
 
         #endregion !!!!!!!!
 
-        public const float Undead = 1;
-        public const float Hell = 6;
+        public const int Undead = 15;
+        public const int Hell = 60;
     }
 }

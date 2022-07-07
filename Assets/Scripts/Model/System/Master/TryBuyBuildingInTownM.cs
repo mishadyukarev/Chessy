@@ -10,7 +10,7 @@ namespace Chessy.Model.System
     {
         internal void TryBuyBuildingInTownM(in BuildingTypes buildT, in Player sender)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
+            var whoseMove = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
             var needRes = new Dictionary<ResourceTypes, float>();
             var canBuild = true;

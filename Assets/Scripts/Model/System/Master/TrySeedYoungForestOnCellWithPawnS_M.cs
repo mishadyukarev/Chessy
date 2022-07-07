@@ -7,8 +7,8 @@ namespace Chessy.Model.System
     {
         internal void TrySeedYoungForestOnCellWithPawnM(in AbilityTypes abilityT, in Player sender, in byte cell_0)
         {
-            if (_e.EnergyUnitC(cell_0).Energy >= StepValues.SEED_PAWN)
-            {
+            //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.SEED_PAWN)
+            //{
                 if (_e.HaveBuildingOnCell(cell_0) && !_e.BuildingOnCellT(cell_0).Is(BuildingTypes.Camp))
                 {
                     RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
@@ -24,7 +24,7 @@ namespace Chessy.Model.System
 
                             _e.YoungForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
 
-                            _e.EnergyUnitC(cell_0).Energy -= StepValues.SEED_PAWN;
+                            //_e.EnergyUnitC(cell_0).Energy -= StepValues.SEED_PAWN;
 
                             //if (cell_0 == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
                             //{
@@ -56,12 +56,12 @@ namespace Chessy.Model.System
                         RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                     }
                 }
-            }
+            //}
 
-            else
-            {
-                RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-            }
+            //else
+            //{
+            //    RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            //}
         }
     }
 }

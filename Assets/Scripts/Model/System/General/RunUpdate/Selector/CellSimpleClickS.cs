@@ -39,16 +39,6 @@ namespace Chessy.Model.System
 
                 if (_e.LessonT.HaveLesson())
                 {
-                    //if (eMG.LessonT == LessonTypes.ClickBuyMelterInTown) eMG.LessonTC.SetPreviousLesson();
-
-
-                    //else
-                    //{
-                    //    if (eMG.LessonTC.Is(LessonTypes.PawnFireAdultForest)) eMG.LessonTC.SetPreviousLesson();
-                    //}
-
-
-
                     if (_e.LessonT >= LessonTypes.ClickAtYourPawn)
                     {
                         if (_e.LessonT == LessonTypes.ClickAtYourPawn)
@@ -69,65 +59,19 @@ namespace Chessy.Model.System
                                 }
                             }
                         }
-                        //else if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
-                        //{
-                        //    if (eMG.CurrentCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
-                        //    {
-                        //        if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn && eMG.MainToolWeaponTC(eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
-                        //        {
-                        //            eMG.LessonTC.SetNextLesson();
-                        //        }
-                        //    }
-                        //}
-
-
-
-
-                        //if (eMG.CurrentCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                        //{
-                        //    if (eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
-                        //    {
-                        //        if (eMG.UnitTC(eMG.CurrentCellIdx).Is(UnitTypes.Pawn) && eMG.ExtraToolWeaponTC(eMG.CurrentCellIdx).Is(ToolWeaponTypes.Pick))
-                        //        {
-                        //            eMG.LessonTC.SetNextLesson();
-                        //        }
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    if (eMG.LessonTC.Is(LessonTypes.ExtractHillPawnHere)) eMG.LessonTC.SetPreviousLesson();
-                        //}
-
-                        //if (eMG.CurrentCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
-                        //{
-                        //    if (eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
-                        //    {
-                        //        if (eMG.UnitTC(eMG.CurrentCellIdx).Is(UnitTypes.Pawn))
-                        //        {
-                        //            eMG.LessonTC.SetNextLesson();
-                        //        }
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    //if (eMG.LessonTC.Is(LessonTypes.BuildingFarmHere)) eMG.LessonTC.SetPreviousLesson();
-                        //}
-
-
 
                         if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
                         {
                             if (_e.UnitT(_e.CurrentCellIdx).HaveUnit())
                             {
-
                                 if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx) || _e.WhereUnitCanAttackUniqueAttackToEnemyC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx))
                                 {
                                     TryAttack(_e.SelectedCellIdx, _e.CurrentCellIdx);
                                     SetNewSelectedCell();
                                     _selectorSoundS.Sound();
                                 }
-                                else if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn) && _e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.WhoseMovePlayerT)
-                                    || !_e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.WhoseMovePlayerT))
+                                else if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn) && _e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT)
+                                    || !_e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT))
                                 {
                                     SetNewSelectedCell();
                                     _selectorSoundS.Sound();
@@ -154,7 +98,7 @@ namespace Chessy.Model.System
 
                             else
                             {
-                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
+                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx))
                                 {
                                     TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
                                 }
@@ -187,11 +131,6 @@ namespace Chessy.Model.System
                                 _selectorSoundS.Sound();
                             }
                         }
-
-                        //if (e.UnitTC(e.CurrentCellIdx).Is(UnitTypes.Pawn) || !e.UnitTC(e.CurrentCellIdx).HaveUnit())
-                        //{
-
-                        //}
                     }
                 }
 
@@ -206,7 +145,7 @@ namespace Chessy.Model.System
                         }
 
                         else if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT)
-                            && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
+                            && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx))
                         {
                             TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
                         }
@@ -236,12 +175,6 @@ namespace Chessy.Model.System
                     {
 
                     }
-
-                    //else if (eMG.LessonTC.Is(LessonTypes.ClickBuyMelterInTown))
-                    //{
-                    //    eMG.LessonTC.SetPreviousLesson();
-
-                    //}
                     else
                     {
                         _e.IsSelectedCity = false;
@@ -267,53 +200,12 @@ namespace Chessy.Model.System
                                 }
                             }
                         }
-                        //else if (eMG.LessonT == LessonTypes.ShiftPawnForSeedingHere)
-                        //{
-                        //    if (eMG.CurrentCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON)
-                        //    {
-                        //        if (eMG.UnitTC(eMG.CurrentCellIdx).Is(UnitTypes.Pawn))
-                        //        {
-                        //            eMG.LessonTC.SetNextLesson();
-                        //        }
-                        //    }
-                        //}
-                        //else if (eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
-                        //{
-                        //    if (eMG.CurrentCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
-                        //    {
-                        //        if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Pawn)
-                        //        {
-                        //            eMG.LessonTC.SetNextLesson();
-                        //        }
-                        //    }
-                        //}
-
-
-                        //if (eMG.CurrentCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
-                        //{
-                        //    if (eMG.LessonTC.Is(LessonTypes.ShiftPawnHere))
-                        //    {
-                        //        if (eMG.UnitTC(eMG.CurrentCellIdx).Is(UnitTypes.Pawn))
-                        //        {
-                        //            eMG.LessonTC.SetNextLesson();
-                        //        }
-                        //    }
-                        //}
 
                         if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn) || !_e.UnitT(_e.CurrentCellIdx).HaveUnit())
                         {
                             SetNewSelectedCell();
                             _selectorSoundS.Sound();
                         }
-
-                        //if (eMG.UnitT(eMG.CurrentCellIdx) == UnitTypes.Snowy)
-                        //{
-                        //    if (eMG.LessonT >= LessonTypes.ChangeDirectionWind)
-                        //    {
-                        //        SetNewSelectedCell();
-                        //        _selectorSoundS.Sound();
-                        //    }
-                        //}
                     }
                 }
 

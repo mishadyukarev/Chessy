@@ -27,8 +27,6 @@ namespace Chessy.Model.System
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.CurrentRoom.IsVisible = false;
-
-            _s.SyncDataM();
         }
         public void OnDisconnected()
         {

@@ -14,6 +14,7 @@ namespace Chessy.View.Entity
         readonly Dictionary<string, SpriteRendererVC> _extraToolWeapons;
 
 
+        internal readonly TransformVC ParentTC;
         internal readonly EffectVE EffectE;
         internal readonly AnimationVC AnimationUnitC;
         internal readonly AnimationVC CircularAttackAnimC;
@@ -35,6 +36,7 @@ namespace Chessy.View.Entity
 
             var nameSpriteRenderEnd = "_SR+";
 
+            ParentTC = new TransformVC(unitZ);
             CircularAttackAnimC = new AnimationVC(unitZ.Find("CircularAttackKing+").GetComponent<Animation>());
 
 

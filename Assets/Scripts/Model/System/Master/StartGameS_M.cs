@@ -11,7 +11,7 @@ namespace Chessy.Model.System
             ResetAll();
 
             _e.ZoneInfoC.IsActiveFriend = _e.GameModeT.Is(GameModeTypes.WithFriendOffline);
-            _e.WhoseMovePlayerT = StartGameValues.WHOSE_MOVE;
+            //_e.WhoseMovePlayerT = StartGameValues.WHOSE_MOVE;
             _e.CellClickT = StartGameValues.CELL_CLICK;
 
             _e.WeatherE.WindC = new WindC() { DirectT = StartGameValues.DIRECT_WIND, Speed = StartGameValues.SPEED_WIND };
@@ -217,17 +217,17 @@ namespace Chessy.Model.System
                         SetNewUnitOnCellS(UnitTypes.Pawn, PlayerTypes.Second, cellUdxCurrent);
 
 
-                        _e.UnitExtraTWE(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
+                        _e.UnitExtraTWC(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
 
                         var needShield = UnityEngine.Random.Range(0f, 1f) >= StartGameValues.PERCENT_SHIELD_LEVEL_FIRST_OR_SECOND_FOR_BOT;
 
                         if (needShield)
                         {
-                            _e.UnitExtraTWE(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
+                            _e.UnitExtraTWC(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.Second, ValuesChessy.MaxShieldProtection(LevelTypes.Second));
                         }
                         else
                         {
-                            _e.UnitExtraTWE(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.First, ValuesChessy.MaxShieldProtection(LevelTypes.First));
+                            _e.UnitExtraTWC(cellUdxCurrent).Set(ToolsWeaponsWarriorTypes.Shield, LevelTypes.First, ValuesChessy.MaxShieldProtection(LevelTypes.First));
                         }
                         //}
                     }
@@ -257,7 +257,7 @@ namespace Chessy.Model.System
                 }
             }
 
-            GetDataCellsS.GetDataCells();
+            GetDataCellsS.GetDataCellsM();
         }
     }
 }

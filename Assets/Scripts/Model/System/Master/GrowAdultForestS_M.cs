@@ -8,14 +8,14 @@ namespace Chessy.Model.System
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (_e.EnergyUnitC(cell_0).Energy >= StepValues.GROW_ADULT_FOREST)
-                {
+                //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.GROW_ADULT_FOREST)
+                //{
                     if (_e.YoungForestC(cell_0).HaveAnyResources)
                     {
                         _e.YoungForestC(cell_0).Resources = 0;
                         _e.AdultForestC(cell_0).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
 
-                        _e.EnergyUnitC(cell_0).Energy -= StepValues.GROW_ADULT_FOREST;
+                        //_e.EnergyUnitC(cell_0).Energy -= StepValues.GROW_ADULT_FOREST;
                         _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                         foreach (var idx_1 in _e.AroundCellsE(cell_0).CellsAround)
@@ -29,9 +29,9 @@ namespace Chessy.Model.System
                     }
 
                     else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceGrowAdultForest, sender);
-                }
+                //}
 
-                else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                //else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
 
             else

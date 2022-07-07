@@ -6,19 +6,15 @@
         {
             _e.SelectedCellIdx = 0;
 
-            if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
+            _e.SoundAction(ClipTypes.Click).Invoke();
+
+            if (_e.PlayerInfoE(_e.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
             {
-                _e.SoundAction(ClipTypes.Click).Invoke();
+                _e.SelectedUnitC.UnitT = UnitTypes.King;
+                _e.SelectedUnitC.LevelT = LevelTypes.First;
 
-                if (_e.PlayerInfoE(_e.CurrentPlayerIT).PlayerInfoC.HaveKingInInventor)
-                {
-                    _e.SelectedUnitC.UnitT = UnitTypes.King;
-                    _e.SelectedUnitC.LevelT = LevelTypes.First;
-
-                    _e.CellClickT = CellClickTypes.SetUnit;
-                }
+                _e.CellClickT = CellClickTypes.SetUnit;
             }
-            else _s.Mistake(MistakeTypes.NeedWaitQueue);
 
             _e.NeedUpdateView = true;
         }

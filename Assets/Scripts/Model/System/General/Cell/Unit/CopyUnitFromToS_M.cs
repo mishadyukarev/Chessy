@@ -7,7 +7,7 @@
             _e.UnitMainC(cellIdxTo).CopyFrom(_e.UnitMainC(cellIdxFrom));
             _e.UnitEffectsC(cellIdxTo).CopyEffects(_e.UnitEffectsC(cellIdxFrom));
             _e.UnitE(cellIdxTo).Set(_e.UnitE(cellIdxFrom));
-            _e.MainToolWeaponE(cellIdxTo).CopyMainTW(_e.MainToolWeaponE(cellIdxFrom));
+            _e.MainToolWeaponC(cellIdxTo).CopyMainTW(_e.MainToolWeaponC(cellIdxFrom));
             CopyExtraTW(cellIdxFrom, cellIdxTo);
 
             _e.UnitMainC(cellIdxFrom).HowManySecondUnitWasHereInRelax = 0;

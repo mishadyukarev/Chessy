@@ -10,23 +10,23 @@ namespace Chessy.Model.System
         {
             if (_e.WhereUnitCanFireAdultForestC(cell_from).Can(cell_to))
             {
-                if (_e.EnergyUnitC(cell_from).Energy >= StepValues.ARCHER_FIRE)
-                {
+                //if (_e.EnergyUnitC(cell_from).Energy >= StepValues.ARCHER_FIRE)
+                //{
                     _s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.FireArcher);
 
-                    _e.EnergyUnitC(cell_from).Energy -= StepValues.ARCHER_FIRE;
+                    //_e.EnergyUnitC(cell_from).Energy -= StepValues.ARCHER_FIRE;
                     _e.HaveFire(cell_to) = true;
 
                     if (_e.LessonT == Enum.LessonTypes.PawnFireAdultForest)
                     {
                          _s.SetNextLesson();
                     }
-                }
+                //}
 
-                else
-                {
-                    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                }
+                //else
+                //{
+                //    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                //}
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Chessy.Model.System
             for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled.Add(effectT, false);
         }
 
-        internal void GetDataCells()
+        internal void GetDataCellsM()
         {
             for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
@@ -61,7 +61,7 @@ namespace Chessy.Model.System
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Shield);
                             _isFilled[EffectTypes.Shield] = true;
                         }
-                        else if (!_isFilled[EffectTypes.Arraw] && _e.UnitEffectsC(cellIdxCurrent).HaveShoots)
+                        else if (!_isFilled[EffectTypes.Arraw] && _e.UnitEffectsC(cellIdxCurrent).HaveFrozenArrawArcher)
                         {
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Arraw);
                             _isFilled[EffectTypes.Arraw] = true;

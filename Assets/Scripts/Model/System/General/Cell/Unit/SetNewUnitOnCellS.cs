@@ -6,9 +6,9 @@ namespace Chessy.Model.System
         internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte cellIdxForSetting)
         {
             _e.UnitMainC(cellIdxForSetting).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
-            _e.UnitE(cellIdxForSetting).SetStats(HpValues.MAX, StepValues.MAX, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
-            _e.UnitExtraTWE(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
-            _e.UnitEffectsC(cellIdxForSetting).Set(0, 0, 0);
+            _e.UnitE(cellIdxForSetting).SetStats(HpValues.MAX, 1, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
+            _e.UnitExtraTWC(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
+            _e.UnitEffectsC(cellIdxForSetting).Set(0, 0, false);
 
             if (_e.UnitT(cellIdxForSetting).Is(UnitTypes.Pawn))
             {
@@ -21,7 +21,7 @@ namespace Chessy.Model.System
             {
                 _e.PawnPeopleInfoC(playerT).PeopleInCity--;
 
-                _e.MainToolWeaponE(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                _e.MainToolWeaponC(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
             }
 
             else
@@ -38,7 +38,7 @@ namespace Chessy.Model.System
                     _e.PlayerInfoC(playerT).HaveKingInInventor = false;
                 }
 
-                _e.MainToolWeaponE(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
+                _e.MainToolWeaponC(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
             }
         }
     }

@@ -7,19 +7,19 @@ namespace Chessy.Model.System
     {
         internal void TryDestroyBuildingWithSimplePawnM(in byte cell_0, in Player sender)
         {
-            if (_e.EnergyUnitC(cell_0).HaveAnyEnergy)
-            {
+            //if (_e.EnergyUnitC(cell_0).HaveAnyEnergy)
+            //{
                 _s.RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 _e.Attack(cell_0, 1f, _e.UnitPlayerT(cell_0));
 
-                _e.EnergyUnitC(cell_0).Energy -= StepValues.DESTROY_BUILDING;
-            }
+                //_e.EnergyUnitC(cell_0).Energy -= StepValues.DESTROY_BUILDING;
+            //}
 
-            else
-            {
-                _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-            }
+            //else
+            //{
+            //    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            //}
         }
     }
 }

@@ -56,76 +56,68 @@ namespace Chessy.Model
                 {
                     case RaycastTypes.Cell:
                         {
-                            if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
+                            switch (_e.CellClickT)
                             {
-                                switch (_e.CellClickT)
-                                {
-                                    case CellClickTypes.SimpleClick:
-                                        _cellSimpleClickS.Execute();
-                                        break;
+                                case CellClickTypes.SimpleClick:
+                                    _cellSimpleClickS.Execute();
+                                    break;
 
-                                    case CellClickTypes.SetUnit:
+                                case CellClickTypes.SetUnit:
+                                    {
+                                        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetUnitOnCellM), _e.CurrentCellIdx, _e.SelectedUnitC.UnitT });
+                                        _e.CellClickT = CellClickTypes.SimpleClick;
+                                    }
+                                    break;
+
+                                case CellClickTypes.GiveTakeTW:
+                                    {
+                                        _e.SelectedCellIdx = _e.CurrentCellIdx;
+
+                                        if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _e.UnitPlayerT(idx_cur).Is(_e.CurrentPlayerIT))
                                         {
-                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TrySetUnitOnCellM), _e.CurrentCellIdx, _e.SelectedUnitC.UnitT });
+                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM), _e.CurrentCellIdx, _e.SelectedE.ToolWeaponC.ToolWeaponT, _e.SelectedE.ToolWeaponC.LevelT });
+                                        }
+                                        else
+                                        {
                                             _e.CellClickT = CellClickTypes.SimpleClick;
-                                        }
-                                        break;
-
-                                    case CellClickTypes.GiveTakeTW:
-                                        {
+                                            _e.CellsC.PreviousSelected = _e.SelectedCellIdx;
                                             _e.SelectedCellIdx = _e.CurrentCellIdx;
-
-                                            if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _e.UnitPlayerT(idx_cur).Is(_e.CurrentPlayerIT))
-                                            {
-                                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM), _e.CurrentCellIdx, _e.SelectedE.ToolWeaponC.ToolWeaponT, _e.SelectedE.ToolWeaponC.LevelT });
-                                            }
-                                            else
-                                            {
-                                                _e.CellClickT = CellClickTypes.SimpleClick;
-                                                _e.CellsC.PreviousSelected = _e.SelectedCellIdx;
-                                                _e.SelectedCellIdx = _e.CurrentCellIdx;
-                                            }
                                         }
-                                        break;
+                                    }
+                                    break;
 
-                                    case CellClickTypes.UniqueAbility:
+                                case CellClickTypes.UniqueAbility:
+                                    {
+                                        switch (_e.SelectedE.AbilityT)
                                         {
-                                            switch (_e.SelectedE.AbilityT)
-                                            {
-                                                case AbilityTypes.FireArcher:
-                                                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM), _e.SelectedCellIdx, _e.CurrentCellIdx });
-                                                    break;
+                                            case AbilityTypes.FireArcher:
+                                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM), _e.SelectedCellIdx, _e.CurrentCellIdx });
+                                                break;
 
-                                                case AbilityTypes.StunElfemale:
-                                                    _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM), _e.SelectedCellIdx, _e.CurrentCellIdx });
-                                                    break;
+                                            case AbilityTypes.StunElfemale:
+                                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryStunEnemyWithElfemaleM), _e.SelectedCellIdx, _e.CurrentCellIdx });
+                                                break;
 
-                                                case AbilityTypes.ChangeDirectionWind:
+                                            case AbilityTypes.ChangeDirectionWind:
+                                                {
+                                                    foreach (var cellE in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
                                                     {
-                                                        foreach (var cellE in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
+                                                        if (cellE == _e.CurrentCellIdx)
                                                         {
-                                                            if (cellE == _e.CurrentCellIdx)
-                                                            {
-                                                                _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM), _e.SelectedCellIdx, _e.CurrentCellIdx });
-                                                            }
+                                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM), _e.SelectedCellIdx, _e.CurrentCellIdx });
                                                         }
                                                     }
-                                                    break;
+                                                }
+                                                break;
 
-                                                default: throw new Exception();
-                                            }
-
-                                            _e.CellClickT = CellClickTypes.SimpleClick;
+                                            default: throw new Exception();
                                         }
-                                        break;
 
-                                    default: throw new Exception();
-                                }
-                            }
+                                        _e.CellClickT = CellClickTypes.SimpleClick;
+                                    }
+                                    break;
 
-                            else
-                            {
-                                _e.SelectedCellIdx = _e.CurrentCellIdx;
+                                default: throw new Exception();
                             }
                         }
                         break;

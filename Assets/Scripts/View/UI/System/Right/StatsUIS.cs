@@ -20,7 +20,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             if (_e.UnitT(idx_sel).HaveUnit() && !_e.UnitT(idx_sel).IsAnimal())
             {
                 var damageOnCell = _e.DamageOnCell(idx_sel);
-                var damageAttack = _e.DamageAttack(idx_sel);
+                var damageAttack = _e.DamageSimpleAttack(idx_sel);
 
 
 
@@ -41,10 +41,10 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
                 if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
                 {
-                    if (!_e.UnitT(idx_sel).Is(UnitTypes.Elfemale))
-                    {
+                    //if (!_e.UnitT(idx_sel).Is(UnitTypes.Elfemale))
+                    //{
                         needActiveWater = true;
-                    }
+                    //}
                 }
 
 
@@ -67,7 +67,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
                 _statsUIE.DamageE.ImageC.Image.fillAmount = (float)(damageOnCell / (float)damageAttack);
 
-                _statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)_e.EnergyUnitC(idx_sel).Energy / StepValues.MAX;
+                //_statsUIE.EnergyE.ImageUIC.Image.fillAmount = (float)_e.EnergyUnitC(idx_sel).Energy / StepValues.MAX;
                 _statsUIE.WaterE.ImageC.Image.fillAmount = (float)(_e.WaterUnitC(idx_sel).Water / ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
             }
 

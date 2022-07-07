@@ -6,7 +6,6 @@
         {
             _s.ToggleScene(SceneTypes.Game);
             _s.StartGame(_e.GameModeT == GameModeTypes.TrainingOffline);
-            _s.SyncDataM();
         }
     }
 }

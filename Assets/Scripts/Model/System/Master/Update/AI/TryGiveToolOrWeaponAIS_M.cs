@@ -25,11 +25,11 @@ namespace Chessy.Model
                         {
                             var levetTW = Random.Range(0f, 1f) <= 0.70f ? LevelTypes.First : LevelTypes.Second;
 
-                            _e.UnitExtraTWE(cellIdxStart).Set(ToolsWeaponsWarriorTypes.Shield, levetTW, ValuesChessy.MaxShieldProtection(levetTW));
+                            _e.UnitExtraTWC(cellIdxStart).Set(ToolsWeaponsWarriorTypes.Shield, levetTW, ValuesChessy.MaxShieldProtection(levetTW));
                         }
                         else
                         {
-                            _e.UnitExtraTWE(cellIdxStart).Set(ToolsWeaponsWarriorTypes.Sword, LevelTypes.Second, 0);
+                            _e.UnitExtraTWC(cellIdxStart).Set(ToolsWeaponsWarriorTypes.Sword, LevelTypes.Second, 0);
                         }
                     }
                 }

@@ -7,8 +7,8 @@ namespace Chessy.Model.System
         {
             if (damage <= 0) throw new Exception();
 
-            _e.UnitExtraTWE(cell_0).ProtectionShield -= damage;
-            if (!_e.UnitExtraTWE(cell_0).HaveAnyProtectionShield)
+            _e.UnitExtraTWC(cell_0).ProtectionShield -= damage;
+            if (!_e.UnitExtraTWC(cell_0).HaveAnyProtectionShield)
                 _e.SetExtraToolWeaponT(cell_0, ToolsWeaponsWarriorTypes.None);
         }
     }

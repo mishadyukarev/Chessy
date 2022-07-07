@@ -14,7 +14,7 @@ namespace Chessy.Model.System
         {
             _e.SetExtraToolWeaponT(cell_to, _e.ExtraToolWeaponT(cell_from));
             _e.SetExtraTWLevelT(cell_to, _e.ExtraTWLevelT(cell_from));
-            _e.UnitExtraTWE(cell_to) = _e.UnitExtraTWE(cell_from);
+            _e.UnitExtraTWC(cell_to) = _e.UnitExtraTWC(cell_from);
         }
     }
 

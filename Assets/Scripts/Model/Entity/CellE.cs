@@ -1,5 +1,7 @@
 ﻿using Chessy.Model.Component;
 using System.Collections.Generic;
+using UnityEngine;
+
 namespace Chessy.Model.Entity
 {
     public readonly struct CellE
@@ -8,12 +10,14 @@ namespace Chessy.Model.Entity
         public readonly XyCellC XyCellC;
         public readonly IdxCellC IdxCellC;
         public readonly IsStartedCellC IsStartedCellC;
+        public readonly StartPositionCellC StartPositionC;
 
         internal CellE(in DataFromViewC dataFromViewC, in byte idxCell, in int instanceID, params byte[] xy)
         {
             CellC = new CellC(dataFromViewC.IsBorder(idxCell), instanceID);
             XyCellC = new XyCellC(xy);
             IdxCellC = new IdxCellC(idxCell);
+            StartPositionC = new StartPositionCellC(dataFromViewC.PossitionCell(idxCell));
 
             var x = xy[0];
             var y = xy[1];

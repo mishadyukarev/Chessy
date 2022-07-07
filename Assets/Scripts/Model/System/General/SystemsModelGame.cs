@@ -20,6 +20,7 @@ namespace Chessy.Model.System
         internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
         internal readonly RpcSs RpcSs;
         internal readonly ForPhotonSceneS ForPhotonSceneS;
+        internal readonly SyncDataS SyncDataS;
 
         public readonly ForButtonsSystemsModel ForUISs;
 
@@ -42,6 +43,7 @@ namespace Chessy.Model.System
             AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eM);
             ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eM);
             RpcSs = new RpcSs(this, eM);
+            SyncDataS = new SyncDataS(this, eM);
 
             ForPhotonSceneS = new ForPhotonSceneS(this, eM);
             ForUISs = new ForButtonsSystemsModel(this, eM);
@@ -51,6 +53,7 @@ namespace Chessy.Model.System
             _e.AdC = new AdC(nowTime);
             _e.OpenedNowPageBookT = PageBookTypes.None;
             _e.SceneT = SceneTypes.Menu;
+            _dateTimeLastUpdate = DateTime.Now;
         }
         
         public void ToggleScene(in SceneTypes newSceneT)
@@ -99,8 +102,8 @@ namespace Chessy.Model.System
             }
         }
 
-        internal void ExecuteSoundAction(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();
-        internal void ExecuteSoundAction(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();
+        internal void ExecuteSoundActionClip(in ClipTypes clipT) => _e.SoundAction(clipT).Invoke();
+        internal void ExecuteSoundActionAbility(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();
 
         internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _e.DataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
 

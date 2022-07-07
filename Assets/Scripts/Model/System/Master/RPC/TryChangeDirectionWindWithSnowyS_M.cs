@@ -8,10 +8,10 @@ namespace Chessy.Model.System
     {
         internal void TryChangeDirectWindWithSnowyM(in byte cell_from, in byte idx_to, in AbilityTypes abilityT, in Player sender)
         {
-            if (_e.EnergyUnitC(cell_from).Energy >= StepValues.Need(abilityT))
-            {
+            //if (_e.EnergyUnitC(cell_from).Energy >= StepValues.Need(abilityT))
+            //{
                 _e.DirectWindT = _e.AroundCellsE(_e.CenterCloudCellIdx).Direct(idx_to);
-                _e.EnergyUnitC(cell_from).Energy -= StepValues.Need(abilityT);
+                //_e.EnergyUnitC(cell_from).Energy -= StepValues.Need(abilityT);
                 _e.UnitCooldownAbilitiesC(cell_from).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                 _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
@@ -21,9 +21,9 @@ namespace Chessy.Model.System
                      _s.SetNextLesson();
                 }
 
-            }
+            //}
 
-            else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            //else _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
         }
     }
 }

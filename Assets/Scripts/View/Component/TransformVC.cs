@@ -3,24 +3,24 @@ namespace Chessy.Model
 {
     public readonly struct TransformVC
     {
-        readonly Transform _t;
+        public readonly Transform Transform;
 
         public Vector3 EulerAngles
         {
-            get => _t.eulerAngles;
-            set => _t.eulerAngles = value;
+            get => Transform.eulerAngles;
+            set => Transform.eulerAngles = value;
         }
         public Vector3 LocalEulerAngles
         {
-            get => _t.localEulerAngles;
-            set => _t.localEulerAngles = value;
+            get => Transform.localEulerAngles;
+            set => Transform.localEulerAngles = value;
         }
         public Vector3 LocalScale
         {
-            get => _t.localScale;
-            set => _t.localScale = value;
+            get => Transform.localScale;
+            set => Transform.localScale = value;
         }
 
-        public TransformVC(in Transform t) => _t = t;
+        public TransformVC(in Transform t) => Transform = t;
     }
 }

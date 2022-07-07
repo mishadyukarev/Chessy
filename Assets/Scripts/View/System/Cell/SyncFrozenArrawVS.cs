@@ -32,7 +32,7 @@ namespace Chessy.View.System
                     {
                         if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                         {
-                            if (_e.UnitEffectsC(cellIdxCurrent).HaveShoots)
+                            if (_e.UnitEffectsC(cellIdxCurrent).HaveFrozenArrawArcher)
                             {
                                 if (_e.IsRightArcherUnit(cellIdxCurrent))
                                 {

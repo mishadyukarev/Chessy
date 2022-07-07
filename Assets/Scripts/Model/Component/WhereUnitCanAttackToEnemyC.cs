@@ -5,7 +5,6 @@
         readonly bool[] _where;
 
         public bool Can(in byte cellIdx) => _where[cellIdx];
-        public bool[] Where => (bool[])_where.Clone();
 
         internal WhereUnitCanAttackToEnemyC(in bool[] where)
         {

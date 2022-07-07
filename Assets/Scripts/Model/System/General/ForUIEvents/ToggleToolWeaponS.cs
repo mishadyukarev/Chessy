@@ -13,7 +13,7 @@ namespace Chessy.Model.System
 
             _e.SelectedCellIdx = 0;
 
-            if (_e.CurrentPlayerIT.Is(_e.WhoseMovePlayerT))
+            if (_e.CurrentPlayerIT.Is(_e.CurrentPlayerIT))
             {
                 //if (_eMG.LessonTC.Is(LessonTypes.ClickPick))
                 //{
@@ -23,7 +23,7 @@ namespace Chessy.Model.System
                 //    }
                 //}
 
-                if (_e.PlayerInfoE(_e.WhoseMovePlayerT).PawnInfoC.AmountInGame > 0)
+                if (_e.PlayerInfoE(_e.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{

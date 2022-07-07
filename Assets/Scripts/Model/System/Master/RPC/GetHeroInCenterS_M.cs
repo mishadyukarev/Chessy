@@ -7,15 +7,15 @@ namespace Chessy.Model.System
     {
         internal void GetHeroInCenterM(in UnitTypes unitT, in Player sender)
         {
-            var whoseMove = PhotonNetwork.OfflineMode ? _e.WhoseMovePlayerT : sender.GetPlayer();
+            var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
             if (_e.LessonT == LessonTypes.PickingGod)
             {
                  SetNextLesson();
             }
 
-            _e.PlayerInfoE(whoseMove).GodInfoC.UnitT = unitT;
-            _e.PlayerInfoE(whoseMove).GodInfoC.HaveGodInInventor = true;
+            _e.PlayerInfoE(whoDoing).GodInfoC.UnitT = unitT;
+            _e.PlayerInfoE(whoDoing).GodInfoC.HaveGodInInventor = true;
         }
     }
 }

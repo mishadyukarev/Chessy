@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Enum;
 using Chessy.Model.Values;
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 namespace Chessy.Model.System
@@ -10,11 +11,11 @@ namespace Chessy.Model.System
 
         internal void TryBuildFarmOnCellWithSimplePawnM(in byte cell_0, in Player sender)
         {
-            var whoseMove = _e.WhoseMovePlayerT;
+            var whoseMove = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if (_e.EnergyUnitC(cell_0).Energy >= StepValues.SET_FARM)
-            {
-                if (!_e.HaveBuildingOnCell(cell_0) || _e.BuildingOnCellT(cell_0).Is(BuildingTypes.Camp))
+            //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.SET_FARM)
+            //{
+            if (!_e.HaveBuildingOnCell(cell_0) || _e.BuildingOnCellT(cell_0).Is(BuildingTypes.Camp))
                 {
                     if (!_e.AdultForestC(cell_0).HaveAnyResources)
                     {
@@ -45,7 +46,7 @@ namespace Chessy.Model.System
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);
                             _e.YoungForestC(cell_0).Resources = 0;
                             _e.Build(BuildingTypes.Farm, LevelTypes.First, whoseMove, ValuesChessy.MAX_HP_ANY_BUILDING, cell_0);
-                            _e.EnergyUnitC(cell_0).Energy -= StepValues.SET_FARM;
+                            //_e.EnergyUnitC(cell_0).Energy -= StepValues.SET_FARM;
 
 
                             //if (_eMG.LessonT == LessonTypes.BuildingFarmHere)
@@ -80,12 +81,12 @@ namespace Chessy.Model.System
                 {
                     RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
                 }
-            }
+            //}
 
-            else
-            {
-                RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-            }
+            //else
+            //{
+            //    RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            //}
         }
     }
 }

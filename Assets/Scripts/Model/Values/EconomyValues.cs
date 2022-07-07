@@ -2,13 +2,13 @@
 {
     public static class EconomyValues
     {
-        public const float FOOD_FOR_FEEDING_ONE_UNIT_AFTER_EVERY_UPDATE = 0.1f; //NOT_CHANGE!!!
+        public const float FOOD_FOR_FEEDING_ONE_UNIT_AFTER_EVERY_UPDATE = 0.01f; //NOT_CHANGE!!!
         public const float WOOD_FOR_BUILDING_FARM = 0.5f;  //NOT_CHANGE!!!
 
 
 
 
-        public const float ADDING_FOOD_AFTER_UPDATE = 0.2f;
+        public const float ADDING_FOOD_AFTER_UPDATE = 0.02f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;
 
 

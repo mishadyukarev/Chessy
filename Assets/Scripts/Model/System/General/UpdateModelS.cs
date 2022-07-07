@@ -1,13 +1,15 @@
 ﻿using Chessy.Model.Enum;
 using Chessy.Model.Values;
+using Photon.Pun;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Chessy.Model.System
 {
     public partial class SystemsModel : IUpdate
     {
-        float _timeForUpdateWind;
+        DateTime _dateTimeLastUpdate;
 
         public void Update()
         {
@@ -16,151 +18,269 @@ namespace Chessy.Model.System
             _runs.ForEach((Action action) => action());
 
 
-            _e.TimeForUpdateEverything += timeDeltaTime;
+            //if (_e.NeedFillData)
+            //{
+            //    GetDataCellsS.GetDataCellsM();
+            //    _e.NeedFillData = false;
+            //}
 
-            if (_e.TimeForUpdateEverything >= 1)
+            if (PhotonNetwork.IsMasterClient)
             {
-                _e.NeedUpdateView = true;
+                if ((DateTime.Now - _dateTimeLastUpdate).Seconds >= 1)
+                {
+                    _e.SunC.SecondsForChangingSideSun--;
 
+                    if (_e.SunC.SecondsForChangingSideSun <= 0)
+                    {
+                        _e.SunC.ToggleNextSunSideT();
+                        _e.SunC.SecondsForChangingSideSun = 20;
+                    }
+
+                    for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+                    {
+                        if (_e.GodInfoC(playerT).CooldownInSecondsForNextAppearance > 0)
+                        {
+                            _e.GodInfoC(playerT).CooldownInSecondsForNextAppearance--;
+                        }
+                    }
+
+
+                    for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+                    {
+                        if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                        {
+                            for (var abilityT = (AbilityTypes)1; abilityT < AbilityTypes.End; abilityT++)
+                            {
+                                _e.UnitCooldownAbilitiesC(cellIdxCurrent).Take(abilityT, 1);
+                            }
+
+                            _e.UnitEffectsC(cellIdxCurrent).StunHowManyUpdatesNeedStay--;
+
+                            if (_e.UnitT(cellIdxCurrent) == UnitTypes.Snowy)
+                            {
+                                if (!_e.UnitEffectsC(cellIdxCurrent).HaveFrozenArrawArcher)
+                                {
+                                    _e.UnitEffectsC(cellIdxCurrent).SecondForSnowyFrozenArraw--;
+
+                                    if (_e.UnitEffectsC(cellIdxCurrent).SecondForSnowyFrozenArraw <= 0)
+                                    {
+                                        _e.UnitEffectsC(cellIdxCurrent).HaveFrozenArrawArcher = true;
+                                        _e.UnitEffectsC(cellIdxCurrent).SecondForSnowyFrozenArraw = 5;
+                                    }
+                                }
+                            }
+
+
+
+                            if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
+                            {
+                                _e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInRelax++;
+                            }
+                        }
+
+                        _e.UnitMainC(cellIdxCurrent).CooldownForAttackAnyUnitInSeconds--;
+                    }
+
+                    TryPutOutFireWithClouds();
+                    BurnAdultForest();
+                    FireUpdate();
+                    TryGiveWaterToUnitsDuringLessons();
+                    TryExtractForestWithPawn();
+                    TryExtractWoodWithWoodcutter();
+                    TryGiveWaterToBotUnits();
+                    GiveWaterToUnitsNearWithRiver();
+                    TakeWaterUnits();
+                    TryAttackUnitsWithoutWater();
+                    FeedUnits();
+                    TrySpawnWolf();
+                    TryShiftWolf();
+                    TryShiftCloundsOrChangeDirection();
+                    TryPoorWaterToCellsWithClounds();
+                    TryGiveWaterAroundRiverToCells();
+                    DryWaterOnCells();
+                    TryExtractFoodWithFarm();
+                    TryExtractHillsWithPawns();
+                    GiveFoodAfterUpdate();
+                    TryExecuteHungry();
+                    TryChangeDirectionOfWindRandomly();
+                    TryGiveHealthToBots();
+                    TryGiveHealthToUnitsWithRelaxCondition();
+
+                    TryExecuteTruce();
+
+                    GetDataCellsS.GetDataCellsM();
+
+                    _dateTimeLastUpdate = DateTime.Now;
+                }
 
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
-                    if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                    var cell_0 = cellIdxCurrent;
+                    var cell_1 = _e.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell;
+
+                    if (cell_1 != 0)
                     {
-                        if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
+                        if (_e.UnitMainC(cell_0).NeedToBackUnitOnHisCell)
                         {
-                            _e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInRelax++;
+
+                            _e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell -= Time.deltaTime;
+
+                            if (_e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell <= 0)
+                            {
+                                if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 0.3f)
+                                {
+                                    if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 0.5f)
+                                    {
+                                        _e.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell = 0;
+                                        _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell = false;
+                                        _e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell = 0;
+
+                                        GetDataCellsS.GetDataCellsM();
+
+                                        _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
+                                    }
+                                    else
+                                    {
+                                        _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting += Time.deltaTime;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!_e.UnitT(cell_1).HaveUnit())
+                                    {
+                                        _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell = false;
+                                    }
+                                    _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting += Time.deltaTime;
+                                }
+                            }
+
+                            else
+                            {
+                                if (!_e.UnitT(cell_1).HaveUnit())
+                                {
+                                    _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell = false;
+                                }
+                            }
                         }
-                        
+                        else
+                        {
+                            _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell += Time.deltaTime;
+
+                            if (_e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell >= _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell))
+                            {
+                                if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 1f)
+                                {
+                                    ShiftUnitOnOtherCellM(cellIdxCurrent, _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell);
+
+                                    _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = 0;
+                                    _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
+                                    _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
+                                    _e.UnitMainC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
+
+                                    GetDataCellsS.GetDataCellsM();
+                                }
+                                else
+                                {
+                                    if (_e.UnitT(cell_1).HaveUnit())
+                                    {
+                                        if (_e.UnitMainC(cell_1).IdxWhereNeedShiftUnitOnOtherCell == 0)
+                                        {
+                                            _e.UnitMainC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
+                                            _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
+                                        }
+                                        else
+                                        {
+                                            if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 0.6f)
+                                            {
+                                                _e.UnitMainC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
+                                                _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
+                                            }
+                                        }
+                                    }
+
+                                    _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting += Time.deltaTime;
+                                }
+                            }
+                        }
+
+                        var pos_0 = _e.CellE(cell_0).StartPositionC.Pos;
+                        var pos_1 = _e.CellE(cell_1).StartPositionC.Pos;
+
+                        var t = _e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
+
+                        _e.UnitMainC(cell_0).Possition = Vector3.Lerp(pos_0, pos_1, t);
                     }
-                }
 
-                TryExtractForestWithPawn();
-                TryExtractWoodWithWoodcutter();
-
-
-
-
-                _e.TimeForUpdateEverything = 0;
-                GetDataCellsS.GetDataCells();
-                SyncDataM();
-            }
-
-
-            _timeForUpdateWind += timeDeltaTime;
-
-            if (_timeForUpdateWind >= 3)
-            {
-                TryShiftCloundsOrChangeDirection();
-                TryPoorWaterToCellsWithClounds();
-                _timeForUpdateWind = 0;
-            }
-
-            //TryGiveWaterToUnitsDuringLessons();
-            TryGiveWaterToBotUnits();
-            GiveWaterToUnitsNearWithRiver();
-            TakeWaterUnits();
-            TryTakeHealthToUnitWithThirsty();
-            TryTakeHealthToUnitWithThirsty();
-
-
-
-            TrySpawnWolf();
-            TryShiftWolf();
-
-
-
-
-
-
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                var cell0 = cellIdxCurrent;
-                var cell1 = _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell;
-
-                if (_e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell != 0)
-                {
-                    if (_e.UnitMainC(cell1).UnitT.HaveUnit())
-                    {
-                        _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = 0;
-                    }
                     else
                     {
-                        _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell += Time.deltaTime;
-
-                        if (_e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell >= _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCurrent).HowManyEnergyNeedForShiftingToHere(_e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell))
-                        {
-                            ShiftUnitOnOtherCellM(cellIdxCurrent, _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell);
-
-                            _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = 0;
-                            _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
-
-                            //RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.ClickToTable);
-                        }
+                        _e.UnitMainC(cell_0).Possition = _e.CellE(cell_0).StartPositionC.Pos;
                     }
                 }
             }
         }
-
-        void TryTakeHealthToUnitWithThirsty()
+        void TryAttackUnitsWithoutWater()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 if (_e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                 {
-                    if (_e.GameModeT.Is(GameModeTypes.TrainingOffline) && _e.UnitPlayerT(cellIdxCurrent) == PlayerTypes.First)
+                    if (_e.WaterUnitC(cellIdxCurrent).Water <= 0)
                     {
-                        if (_e.WaterUnitC(cellIdxCurrent).Water <= 0)
-                        {
-                            var percent = Time.deltaTime;// HpValues.ThirstyPercent(_e.UnitT(cellIdxCurrent));
+                        //var percent = Time.deltaTime;// HpValues.ThirstyPercent(_e.UnitT(cellIdxCurrent));
 
-                            AttackUnitOnCell(HpValues.MAX * percent, _e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
-                        }
+                        AttackUnitOnCell(HpValues.MAX * 0.05, _e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
                     }
                 }
             }
         }
         void TryShiftCloundsOrChangeDirection()
         {
-            for (var i = 0; i < _e.SpeedWind; i++)
+            _e.CloudC.SecondForChangingShiftingCloud++;
+
+            if(_e.CloudC.SecondForChangingShiftingCloud >= 3)
             {
-                var cell = _e.CenterCloudCellIdx;
-                var xy_next = _e.AroundCellsE(cell).AroundCellE(_e.DirectWindT).XyC.Xy;
-                var idx_next = _e.AroundCellsE(cell).IdxCell(_e.DirectWindT);
-
-                bool isBorder = false;
-
-                for (var ii = 0; ii < 10; ii++)
+                for (var i = 0; i < _e.SpeedWind; i++)
                 {
-                    if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
+                    var cell = _e.CenterCloudCellIdx;
+                    var xy_next = _e.AroundCellsE(cell).AroundCellE(_e.DirectWindT).XyC.Xy;
+                    var idx_next = _e.AroundCellsE(cell).IdxCell(_e.DirectWindT);
+
+                    bool isBorder = false;
+
+                    for (var ii = 0; ii < 10; ii++)
                     {
-                        _e.CenterCloudCellIdx = _e.GetIdxCellByXy(xy_next);
+                        if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
+                        {
+                            _e.CenterCloudCellIdx = _e.GetIdxCellByXy(xy_next);
+                        }
+                        else
+                        {
+                            var newDir = _e.DirectWindT;
+
+                            newDir = newDir.Invert();
+                            var newDirInt = (int)newDir;
+                            newDirInt += UnityEngine.Random.Range(-1, 2);
+
+                            if (newDirInt <= 0) newDirInt = 1;
+                            else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
+                            _e.DirectWindT = (DirectTypes)newDirInt;
+
+                            isBorder = true;
+
+                            break;
+                        }
                     }
-                    else
+
+                    if (isBorder) break;
+
+
+                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                     {
-                        var newDir = _e.DirectWindT;
-
-                        newDir = newDir.Invert();
-                        var newDirInt = (int)newDir;
-                        newDirInt += UnityEngine.Random.Range(-1, 2);
-
-                        if (newDirInt <= 0) newDirInt = 1;
-                        else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                        _e.DirectWindT = (DirectTypes)newDirInt;
-
-                        isBorder = true;
-
-                        break;
+                        _e.HealthTrail(idx_next).Health(dirT) = 0;
                     }
                 }
 
-                if (isBorder) break;
-
-
-                for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
-                {
-                    _e.HealthTrail(idx_next).Health(dirT) = 0;
-                }
+                _e.CloudC.SecondForChangingShiftingCloud = 0;
             }
         }
         void TryPoorWaterToCellsWithClounds()
@@ -177,7 +297,6 @@ namespace Chessy.Model.System
                 }
             }
         }
-
         void TryExtractWoodWithWoodcutter()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
@@ -206,9 +325,310 @@ namespace Chessy.Model.System
                 }
             }
         }
+        void FeedUnits()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                {
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+                    {
+                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
+                            _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Subtract(ResourceTypes.Food, EconomyValues.FOOD_FOR_FEEDING_ONE_UNIT_AFTER_EVERY_UPDATE);
+                    }
+                }
+            }
+        }
+        void TryExtractForestWithPawn()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractAdultForest)
+                {
+                    var extract = _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest;
+
+                    _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Add(ResourceTypes.Wood, extract);
+                    TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
+
+                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    {
+                        if (!_e.BuildingOnCellT(cellIdxCurrent).Is(BuildingTypes.Woodcutter))
+                        {
+                            if (_e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInRelax >= 10)
+                            {
+                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cellIdxCurrent), 1, cellIdxCurrent);
+
+                                if (_e.LessonT == LessonTypes.RelaxExtractPawn) SetNextLesson();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //_e.ClearBuildingOnCell(cellIdxCurrent);
+
+                        if (_e.LessonT.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
+                        {
+                            if (cellIdxCurrent == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
+                            {
+                                _e.LessonT = LessonTypes.RelaxExtractPawn + 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        void TryGiveWaterAroundRiverToCells()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
+                {
+                    if (!_e.MountainC(cellIdxCurrent).HaveAnyResources)
+                    {
+                        _e.WaterOnCellC(cellIdxCurrent).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                    }
+                }
+            }
+        }
+        void DryWaterOnCells()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources)
+                {
+                    _e.WaterOnCellC(cellIdxCurrent).Resources -= ValuesChessy.DRY_FERTILIZE_DURING_UPDATE_TAKING;
+                }
+            }
+        }
+        void TryExtractFoodWithFarm()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.BuildingExtractionC(cellIdxCurrent).CanFarmExtact)
+                {
+                    var extract = _e.FarmExtract(cellIdxCurrent);
+
+                    _e.ResourcesInInventoryC(_e.BuildingPlayerT(cellIdxCurrent)).Add(ResourceTypes.Food, extract);
+                    _e.WaterOnCellC(cellIdxCurrent).Resources -= extract;
+
+                    //if (!E.FertilizeC(cell_0).HaveAnyResources)
+                    //{
+                    //    E.BuildingTC(cell_0).Building = BuildingTypes.None;
+                    //}
+                }
+            }
+        }
+        void TryExecuteTruce()
+        {
+            var amountAdultForest = 0;
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
+                    amountAdultForest++;
+            }
+
+            var can = !_e.PlayerInfoE(PlayerTypes.First).PawnInfoC.HaveAnyPeopleInCity
+                && !_e.PlayerInfoE(PlayerTypes.Second).PawnInfoC.HaveAnyPeopleInCity;
 
 
-        #region Water
+
+            if (amountAdultForest <= ValuesChessy.NEED_ADULT_FORESTS_FOR_TRUCE || can)
+            {
+                RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Truce);
+
+                _e.ExecuteTruce();
+            }
+        }
+        void TryExecuteHungry()
+        {
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+            {
+                for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
+                {
+                    var res = ResourceTypes.Food;
+
+                    if (_e.ResourcesInInventory(playerT, res) < 0)
+                    {
+                        _e.SetResourcesInInventory(playerT, res, 0);
+
+                        for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+                        {
+                            if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn) && _e.UnitPlayerT(cellIdxCurrent).Is(playerT))
+                            {
+                                _e.HpUnitC(cellIdxCurrent).Health -= HpValues.MAX * 0.05f;
+                                if (_e.HpUnitC(cellIdxCurrent).Health <= 0)
+                                {
+                                    KillUnit(_e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
+                                    _e.UnitE(cellIdxCurrent).ClearEverything();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        void TryExtractHillsWithPawns()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractHill && !_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractAdultForest)
+                {
+                    var extract = _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractHill;
+
+                    _e.HillC(cellIdxCurrent).Resources -= extract;
+                    _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Add(ResourceTypes.Ore, extract);
+
+                    if (_e.LessonT.Is(LessonTypes.ExtractHill))
+                    {
+                        SetNextLesson();
+
+                        if (_e.IsSelectedCity)
+                        {
+                            SetNextLesson();
+                        }
+                    }
+                }
+            }
+        }
+        void GiveFoodAfterUpdate()
+        {
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+            {
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                {
+                    _e.ResourcesInInventoryC(player).Add(ResourceTypes.Food, EconomyValues.ADDING_FOOD_AFTER_UPDATE);
+                }
+            }
+        }
+        void TryChangeDirectionOfWindRandomly()
+        {
+            if (UnityEngine.Random.Range(0f, 1f) <= ValuesChessy.PERCENT_FOR_CHANGING_WIND) _e.WindC.Speed = (byte)UnityEngine.Random.Range(1, 4);
+        }
+        void TryGiveHealthToBots()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                {
+                    if (_e.GameModeT.Is(GameModeTypes.TrainingOffline))
+                    {
+                        if (_e.UnitPlayerT(cellIdxCurrent).Is(PlayerTypes.Second))
+                        {
+                            if (_e.HpUnitC(cellIdxCurrent).Health < HpValues.MAX)
+                            {
+                                _e.HpUnitC(cellIdxCurrent).Health += HpValues.MAX * 0.05;
+
+                                if (_e.HpUnitC(cellIdxCurrent).Health > HpValues.MAX)
+                                {
+                                    _e.HpUnitC(cellIdxCurrent).Health = HpValues.MAX;
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+        void TryGiveHealthToUnitsWithRelaxCondition()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
+                {
+                    if (_e.HpUnitC(cellIdxCurrent).Health < HpValues.MAX)
+                    {
+                        if (_e.WaterUnit(cellIdxCurrent) > 0)
+                        {
+                            if (_e.ResourcesInInventory(_e.UnitPlayerT(cellIdxCurrent), ResourceTypes.Food) > 0)
+                            {
+                                _e.HpUnitC(cellIdxCurrent).Health += HpValues.MAX * 0.05f;
+
+                                if (_e.HpUnitC(cellIdxCurrent).Health > HpValues.MAX)
+                                {
+                                    _e.HpUnitC(cellIdxCurrent).Health = HpValues.MAX;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        void FireUpdate()
+        {
+            var needForFireNext = new List<byte>();
+
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
+            {
+                if (_e.HaveFire(cell_0))
+                {
+                    if (_e.UnitT(cell_0).HaveUnit())
+                    {
+                        if (_e.UnitT(cell_0).Is(UnitTypes.Hell))
+                        {
+                            _e.HpUnitC(cell_0).Health = HpValues.MAX;
+                        }
+                        else
+                        {
+                            if (_e.UnitPlayerT(cell_0).Is(PlayerTypes.None))
+                            {
+                                AttackUnitOnCell(HpValues.FIRE_DAMAGE, PlayerTypes.None, cell_0);
+                            }
+                            else
+                            {
+                                AttackUnitOnCell(HpValues.FIRE_DAMAGE, _e.UnitPlayerT(cell_0).NextPlayer(), cell_0);
+                            }
+                        }
+                    }
+
+                    if (!_e.AdultForestC(cell_0).HaveAnyResources)
+                    {
+                        _e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
+
+
+                        _e.HaveFire(cell_0) = false;
+
+
+                        foreach (var cellE in _e.AroundCellsE(cell_0).CellsAround)
+                        {
+                            needForFireNext.Add(cellE);
+                        }
+                    }
+                }
+            }
+
+            foreach (var cell_0 in needForFireNext)
+            {
+                if (!_e.IsBorder(cell_0))
+                {
+                    if (_e.AdultForestC(cell_0).HaveAnyResources)
+                    {
+                        _e.HaveFire(cell_0) = true;
+                    }
+                }
+            }
+        }
+        void TryPutOutFireWithClouds()
+        {
+            foreach (var cellE in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
+            {
+                _e.HaveFire(cellE) = false;
+            }
+        }
+        void BurnAdultForest()
+        {
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
+            {
+                if (_e.HaveFire(cell_0))
+                {
+                    TryTakeAdultForestResourcesM(ValuesChessy.FIRE_ADULT_FOREST, cell_0);
+                }
+            }
+        }
+
+
+        #region WaterUnits
 
         void TakeWaterUnits()
         {
@@ -218,7 +638,7 @@ namespace Chessy.Model.System
                 {
                     var speed = 0.01f;
 
-                    _e.WaterUnitC(cellIdxCurrent).Water -= Time.deltaTime * speed;// ValuesChessy.NeedWaterForThirsty(_e.UnitT(cellIdxCurrent));
+                    _e.WaterUnitC(cellIdxCurrent).Water -= speed;// ValuesChessy.NeedWaterForThirsty(_e.UnitT(cellIdxCurrent));
                 }
             }
         }
@@ -314,18 +734,15 @@ namespace Chessy.Model.System
             }
         }
 
-        float _timeForShiftWolf;
         void TryShiftWolf()
         {
-            _timeForShiftWolf += Time.deltaTime;
-
-            if (_timeForShiftWolf >= 5)
+            if(UnityEngine.Random.Range(0f, 1f) >= 0.9f)
             {
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
                     if (_e.UnitT(cellIdxCurrent).HaveUnit())
                     {
-                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf))
+                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf) && _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell == 0)
                         {
                             var randDir = UnityEngine.Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 
@@ -334,60 +751,21 @@ namespace Chessy.Model.System
                             if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources
                                 && !_e.UnitT(idx_1).HaveUnit())
                             {
-                                UnitSs.CopyUnitFromTo(cellIdxCurrent, idx_1);
+                                _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = idx_1;
+                                _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
 
-                                _e.UnitE(cellIdxCurrent).ClearEverything();
+
+                                break;
+                                //UnitSs.CopyUnitFromTo(cellIdxCurrent, idx_1);
+
+                                //_e.UnitE(cellIdxCurrent).ClearEverything();
                             }
                         }
                     }
                 }
-
-                GetDataCellsS.GetDataCells();
-                SyncDataM();
-
-                _timeForShiftWolf = 0;
             }
         }
 
         #endregion
-
-        void TryExtractForestWithPawn()
-        {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                if (_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractAdultForest)
-                {
-                    var extract = _e.ExtactionResourcesWithWarriorC(cellIdxCurrent).HowManyWarriourCanExtractAdultForest;
-
-                    _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Add(ResourceTypes.Wood, extract);
-                    TryTakeAdultForestResourcesM(extract, cellIdxCurrent);
-
-                    if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
-                    {
-                        if (!_e.BuildingOnCellT(cellIdxCurrent).Is(BuildingTypes.Woodcutter))
-                        {
-                            if (_e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInRelax >= 10)
-                            {
-                                _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cellIdxCurrent), 1, cellIdxCurrent);
-
-                                if (_e.LessonT == LessonTypes.RelaxExtractPawn) SetNextLesson();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //_e.ClearBuildingOnCell(cellIdxCurrent);
-
-                        if (_e.LessonT.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ShiftPawnHere))
-                        {
-                            if (cellIdxCurrent == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON)
-                            {
-                                _e.LessonT = LessonTypes.RelaxExtractPawn + 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }

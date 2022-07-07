@@ -12,7 +12,7 @@ namespace Chessy.Model
             var vis = new Dictionary<PlayerTypes, bool>();
 
             VisibleC = new VisibleToOtherPlayerOrNotC(default);
-            HealthC = new HealthTrailC(new float[(byte)DirectTypes.End - 1]);
+            HealthC = new HealthTrailC(new float[(byte)DirectTypes.End]);
         }
     }
 }

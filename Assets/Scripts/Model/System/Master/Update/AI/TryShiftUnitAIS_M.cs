@@ -69,9 +69,9 @@ namespace Chessy.Model
                             {
                                 if (Random.Range(0f, 1f) < 0.25f)
                                 {
-                                    if (_e.WhereUnitCanShiftC(idxCellStart).CanShiftHere(idxCell))
+                                    if (_e.WhereUnitCanShiftC(idxCellStart).Can(idxCell))
                                     {
-                                        if (_e.HowManyEnergyNeedForShiftingUnitC(idxCellStart).HowManyEnergyNeedForShiftingToHere(idxCell) <= _e.EnergyUnit(idxCellStart))
+                                        if (_e.HowManyDistanceNeedForShiftingUnitC(idxCellStart).HowMany(idxCell) <= _e.EnergyUnit(idxCellStart))
                                         {
                                             _s.ShiftUnitOnOtherCellM(idxCellStart, idxCell);
                                             isShifted = true;

@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Enum;
 using Chessy.Model.Values;
+using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 namespace Chessy.Model.System
@@ -8,6 +9,9 @@ namespace Chessy.Model.System
     {
         internal void TryMeltInMelterBuildingM(in Player sender)
         {
+            var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
+
+
             var needRes = new Dictionary<ResourceTypes, float>();
 
             needRes.Add(ResourceTypes.Food, 0);
@@ -20,7 +24,7 @@ namespace Chessy.Model.System
 
             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
             {
-                if (needRes[resT] > _e.ResourcesInInventory(_e.WhoseMovePlayerT, resT))
+                if (needRes[resT] > _e.ResourcesInInventory(whoDoing, resT))
                 {
                     canBuy = false;
                     break;
@@ -31,7 +35,7 @@ namespace Chessy.Model.System
             {
                 for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                 {
-                    _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Subtract(resT, needRes[resT]);
+                    _e.ResourcesInInventoryC(whoDoing).Subtract(resT, needRes[resT]);
                 }
 
                 if (_e.LessonT == LessonTypes.NeedBuildSmelterAndMeltOre)
@@ -40,8 +44,8 @@ namespace Chessy.Model.System
                     _e.IsSelectedCity = true;
                 }
 
-                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Iron, AmountResourcesAfterMelting.IRON_AFTER_MELTING);
-                _e.ResourcesInInventoryC(_e.WhoseMovePlayerT).Add(ResourceTypes.Gold, AmountResourcesAfterMelting.GOLD_AFTER_MELTING);
+                _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Iron, AmountResourcesAfterMelting.IRON_AFTER_MELTING);
+                _e.ResourcesInInventoryC(whoDoing).Add(ResourceTypes.Gold, AmountResourcesAfterMelting.GOLD_AFTER_MELTING);
 
                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Melting);
             }

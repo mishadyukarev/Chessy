@@ -91,7 +91,7 @@ namespace Chessy.View.System
                         {
                             for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                             {
-                                if (_e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(idxCell))
+                                if (_e.WhereUnitCanShiftC(_e.SelectedCellIdx).Can(idxCell))
                                 {
                                     _needActive[idxCell] = true;
                                     _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.Shift);

@@ -6,8 +6,10 @@ using Chessy.View.Component;
 using Chessy.View.Entity;
 using Chessy.View.UI.Entity;
 using Chessy.View.UI.System;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chessy.View.System
 {
@@ -15,6 +17,7 @@ namespace Chessy.View.System
     {
         readonly List<Action> _updates;
         readonly EntitiesModel _eM;
+        readonly EntitiesView _eV;
 
         readonly SyncUnitVS _syncUnitVS;
 
@@ -22,6 +25,7 @@ namespace Chessy.View.System
         public SystemsView(in EntitiesView eV, in EntitiesModel eM) : base(eM)
         {
             _eM = eM;
+            _eV = eV;
 
             var cellParentGOCs = new GameObjectVC[IndexCellsValues.CELLS];
             var blackVisisionSrCs = new SpriteRendererVC[IndexCellsValues.CELLS];
@@ -109,7 +113,7 @@ namespace Chessy.View.System
                 new SyncElseEnvironmentVS(environmentEs, eM).Sync,
                 new SyncNeedWaterBlockVS(needWaterSRCs, eM).Sync,
                 new SyncConditionOnCellVS(conditionUnitSRCs, eM).Sync,
-                new SyncMaxStepsUnitOnCellVS(maxStepsUnitOnCellSRCs, eM).Sync,
+                new SyncCanAttackUnitOnCellVS(maxStepsUnitOnCellSRCs, eM).Sync,
                 new SyncCloudsOnCellsVS(cloudSRCs, eM).Sync,
                 new SyncIdxAndXyInfoVS(idxXyInfoCellSRCs, eM).Sync,
                 new SyncHpBarUnitVS(hpBarUnitSRCs, eM).Sync,
@@ -131,6 +135,11 @@ namespace Chessy.View.System
                 {
                     _syncUnitVS.Sync(cellIdxCurrent);
                     _eM.UnitNeedUpdateViewC(cellIdxCurrent).NeedUpdateView = false;
+
+
+
+
+
                 }
             }
 
@@ -138,7 +147,35 @@ namespace Chessy.View.System
             {
                 _updates.ForEach((Action action) => action.Invoke());
 
+
+
                 _eM.NeedUpdateView = false;
+            }
+
+            
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if(_e.UnitMainC(cellIdxCurrent).Possition.magnitude > 0)
+                {
+                    Vector3 pos = default;
+
+                    var t = Time.deltaTime * 3f;
+                    if (t > 1) t = 1;
+
+                    pos = Vector3.Lerp(_eV.CellEs(cellIdxCurrent).UnitEs.ParentTC.Transform.position, _e.UnitMainC(cellIdxCurrent).Possition, t);
+
+                    //if (PhotonNetwork.IsMasterClient)
+                    //{
+                    //    pos = _e.UnitMainC(cellIdxCurrent).Possition;
+                    //}
+                    //else
+                    //{
+                        
+                    //}
+
+                    _eV.CellEs(cellIdxCurrent).UnitEs.ParentTC.Transform.position = pos;
+                }
             }
         }
     }

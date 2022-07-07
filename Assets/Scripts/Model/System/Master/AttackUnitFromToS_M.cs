@@ -4,12 +4,11 @@ namespace Chessy.Model.System
 {
     public partial class SystemsModel : IUpdate
     {
-        int _snowyArrow;
-
         internal void AttackUnitFromTo(in byte idx_from, in byte idx_to)
         {
             _e.EnergyUnitC(idx_from).Energy = 0;
             _e.SetUnitConditionT(idx_from, ConditionUnitTypes.None);
+            _e.UnitMainC(idx_from).CooldownForAttackAnyUnitInSeconds = 5;
 
             if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
                 RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
@@ -20,13 +19,13 @@ namespace Chessy.Model.System
             RpcSs.AnimationCellToGeneral(idx_to, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
 
 
-            var powerDam_from = _e.DamageAttack(idx_from);
+            var powerDam_from = _e.DamageSimpleAttack(idx_from);
             if (_e.WhereUnitCanAttackUniqueAttackToEnemyC(idx_from).Can(idx_to))
             {
                 powerDam_from *= DamageUnitValues.UNIQUE_ATTACK_PERCENT_DAMAGE;
             }
 
-            var powerDam_to = _e.DamageAttack(idx_to);
+            var powerDam_to = _e.DamageSimpleAttack(idx_to);
 
 
             var dirAttack = _e.AroundCellsE(idx_from).Direct(idx_to);
@@ -117,27 +116,26 @@ namespace Chessy.Model.System
             }
             else
             {
-                if (_e.UnitEffectsC(idx_from).ShootsFrozenArrawArcher > -1)
+                if (_e.UnitEffectsC(idx_from).HaveFrozenArrawArcher)
                 {
-                    _e.UnitEffectsC(idx_from).ShootsFrozenArrawArcher--;
-
+                    _e.UnitEffectsC(idx_from).HaveFrozenArrawArcher = false;
                     _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_FROZEN_ARRAW_PAWN;
                 }
-                else if (_e.UnitT(idx_from) == UnitTypes.Snowy)
-                {
-                    if (_snowyArrow <= 0)
-                    {
-                        _e.UnitEffectsC(idx_from).ShootsFrozenArrawArcher--;
+                //else if (_e.UnitT(idx_from) == UnitTypes.Snowy)
+                //{
+                //    if (_snowyArrow <= 0)
+                //    {
+                //        _e.UnitEffectsC(idx_from).HaveFrozenArrawArcher;
 
-                        _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = 1;
+                //        _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = 1;
 
-                        _snowyArrow = ValuesChessy.RAINY_COOLDOWN_FROZEN_ARRAW;
-                    }
-                    else
-                    {
-                        _snowyArrow--;
-                    }
-                }
+                //        _snowyArrow = ValuesChessy.RAINY_COOLDOWN_FROZEN_ARRAW;
+                //    }
+                //    else
+                //    {
+                //        _snowyArrow--;
+                //    }
+                //}
             }
 
             if (_e.UnitEffectsC(idx_to).ProtectionRainyMagicShield >= 1)
@@ -174,7 +172,7 @@ namespace Chessy.Model.System
                     {
                         if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
                         {
-                            ShiftUnitOnOtherCellM(idx_from, idx_to);
+                            //ShiftUnitOnOtherCellM(idx_from, idx_to);
                         }
                     }
 

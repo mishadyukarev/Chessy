@@ -8,13 +8,13 @@ namespace Chessy.Model.System
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
-                {
+                //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
+                //{
                     if (needIncrese)
                     {
                         if (!_e.WeatherE.WindC.IsMaxSpeed())
                         {
-                            _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
+                            //_e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
                             _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                             _e.SpeedWind++;
@@ -31,7 +31,7 @@ namespace Chessy.Model.System
                     {
                         if (!_e.WeatherE.WindC.IsMinSpeed())
                         {
-                            _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
+                            //_e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
                             _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
                             _e.SpeedWind--;
@@ -44,11 +44,11 @@ namespace Chessy.Model.System
                         }
                     }
 
-                }
-                else
-                {
-                    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                }
+                //}
+                //else
+                //{
+                //    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                //}
             }
         }
 

@@ -126,7 +126,7 @@ namespace Chessy.Model.System
 
                     powerDamage += powerDamage * protectionPercent;
 
-                    _e.UnitMainC(cellIdxCurrent).DamageSimpleAttack = powerDamage;
+                    _e.UnitMainC(cellIdxCurrent).DamageOnCell = powerDamage;
                 }
             }
         }

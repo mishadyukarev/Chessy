@@ -18,27 +18,27 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.HoldPressReady)
-            {
-                _donerE.ButtonC.SetActiveParent(false);
-                _donerE.WaitGoC.SetActive(false);
+            //if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.HoldPressReady)
+            //{
+            //    _donerE.ButtonC.SetActiveParent(false);
+            //    _donerE.WaitGoC.SetActive(false);
 
-                if (_e.CurrentPlayerIT == _e.WhoseMovePlayerT)
-                {
-                    _donerE.WaitGoC.SetActive(false);
-                    _donerE.ImageC.Image.color = Color.white;
-                }
-                else
-                {
-                    _donerE.WaitGoC.SetActive(true);
-                    _donerE.ImageC.Image.color = Color.red;
-                }
-            }
-            else
-            {
-                _donerE.ButtonC.SetActiveParent(false);
-                _donerE.WaitGoC.SetActive(false);
-            }
+            //    if (_e.CurrentPlayerIT == PlayerTypes.First)
+            //    {
+            //        _donerE.WaitGoC.SetActive(false);
+            //        _donerE.ImageC.Image.color = Color.white;
+            //    }
+            //    else
+            //    {
+            //        _donerE.WaitGoC.SetActive(true);
+            //        _donerE.ImageC.Image.color = Color.red;
+            //    }
+            //}
+            //else
+            //{
+            //    _donerE.ButtonC.SetActiveParent(false);
+            //    _donerE.WaitGoC.SetActive(false);
+            //}
         }
     }
 }

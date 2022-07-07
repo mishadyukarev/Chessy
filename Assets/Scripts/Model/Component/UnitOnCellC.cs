@@ -1,4 +1,6 @@
-﻿namespace Chessy.Model.Component
+﻿using UnityEngine;
+
+namespace Chessy.Model.Component
 {
     public struct UnitOnCellC
     {
@@ -9,9 +11,15 @@
         public bool IsArcherDirectedToRight { get; internal set; }
         public double DamageSimpleAttack { get; internal set; }
         public double DamageOnCell { get; internal set; }
+        public int HowManySecondUnitWasHereInRelax { get; internal set; }
+        public int CooldownForAttackAnyUnitInSeconds { get; internal set; }
+
         public byte IdxWhereNeedShiftUnitOnOtherCell { get; internal set; }
         public float DistanceForShiftingOnOtherCell { get; internal set; }
-        public float CostForShiftingUnitToHere { get; internal set; }
-        public int HowManySecondUnitWasHereInRelax { get; internal set; }
+        public float DelayTimeForShifting { get; internal set; }
+        public bool NeedToBackUnitOnHisCell { get; internal set; }
+        public Vector3 Possition { get; internal set; }
+
+        public bool HaveCoolDownForAttackAnyUnit => CooldownForAttackAnyUnitInSeconds > 0;
     }
 }

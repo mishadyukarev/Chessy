@@ -11,8 +11,8 @@ namespace Chessy.Model.System
                 {
                     if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
                     {
-                        if (_e.EnergyUnitC(cellIdxCell).HaveAnyEnergy)
-                        {
+                        //if (_e.EnergyUnitC(cellIdxCell).HaveAnyEnergy)
+                        //{
                             if (!_e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)))
                             {
                                 for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
@@ -89,7 +89,7 @@ namespace Chessy.Model.System
                                     }
                                 }
                             }
-                        }
+                        //}
                     }
                 }
             }

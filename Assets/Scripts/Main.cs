@@ -1,10 +1,13 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
 using Chessy.Model.System;
+using Chessy.Model.Values;
 using Chessy.View.System;
 using Chessy.View.UI;
 using Chessy.View.UI.Entity;
 using Chessy.View.UI.System;
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,8 +37,44 @@ namespace Chessy
             var adLaunchS = new TryLaunchAdS(eM);
             new ShopS(eM);
 
-            eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().FillRpcWithSystems(sM);
+            var rpc = eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().FillRpcWithSystems(sM);
+
+            eV.PhotonC.PhotonView.ObservedComponents = new List<Component>() { rpc };
+
+            var photonParent = new GameObject("Photons");
+
+            var currentIdPhoton = 1001;
+
+            for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
+            {
+                var forPhoton = new GameObject();
+                forPhoton.transform.SetParent(photonParent.transform);
+
+                for (byte i = 1; i <= 17; i++)
+                {
+                    currentIdPhoton++;
+
+                    var photonV = forPhoton.AddComponent<PhotonView>();
+                    photonV.ViewID = currentIdPhoton;
+
+                    var system = photonV.gameObject.AddComponent<CellOnPhotonSerializeView>();
+                    system.GiveData(cellIdx, i, eM);
+
+                    photonV.ObservedComponents = new List<Component>() { system };
+                }
+            }
+
+            
             gameObject.AddComponent<PhotonSceneManager>().GiveSystems(sM);
+
+
+
+            PhotonNetwork.PhotonServerSettings.AppSettings.Protocol = ConnectionProtocol.Tcp;
+
+            //PhotonNetwork.SendRate = 5;
+            //PhotonNetwork.SerializationRate = 5;
+            //PhotonNetwork.IsMessageQueueRunning = true;
+
 
             #endregion
 

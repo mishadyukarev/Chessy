@@ -18,12 +18,12 @@ namespace Chessy.Model
         public ExtractionResourcesWithUnitC ExtractionResourcesC;
         public NeedUpdateViewC NeedUpdateViewC;
 
-        public readonly HowManyEnergyNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC;
+        public readonly HowManyDistanceNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC;
         public readonly WhereUnitCanShiftC WhereCanShiftC;
         public readonly WhereUnitCanAttackToEnemyC WhereCanAttackSimpleAttackToEnemyC;
         public readonly WhereUnitCanAttackToEnemyC WhereCanAttackUniqueAttackToEnemyC;
         public readonly ButtonsAbilitiesUnitC UniqueButtonsC;
-        public readonly CooldownAbilitiesC CooldownsC;
+        public readonly CooldownAbilitiesInSecondsC CooldownsC;
         public readonly VisibleToOtherPlayerOrNotC VisibleToOtherPlayerOrNotC;
         public readonly CanSetUnitHereC CanSetUnitHereC;
         public readonly WhereUnitCanFireAdultForestC WhereUnitCanFireAdultForestC;
@@ -45,18 +45,18 @@ namespace Chessy.Model
 
             VisibleToOtherPlayerOrNotC = new VisibleToOtherPlayerOrNotC(default);
             CanSetUnitHereC = new CanSetUnitHereC(new bool[(byte)PlayerTypes.End]);
-            HowManyEnergyNeedForShiftingUnitC = new HowManyEnergyNeedForShiftingUnitC(new float[IndexCellsValues.CELLS]);
+            HowManyEnergyNeedForShiftingUnitC = new HowManyDistanceNeedForShiftingUnitC(new float[IndexCellsValues.CELLS]);
             WhereCanShiftC = new WhereUnitCanShiftC(new bool[IndexCellsValues.CELLS]);
             WhereCanAttackSimpleAttackToEnemyC = new WhereUnitCanAttackToEnemyC(new bool[IndexCellsValues.CELLS]);
             WhereCanAttackUniqueAttackToEnemyC = new WhereUnitCanAttackToEnemyC(new bool[IndexCellsValues.CELLS]);
             UniqueButtonsC = new ButtonsAbilitiesUnitC(new AbilityTypes[(byte)ButtonTypes.End]);
-            CooldownsC = new CooldownAbilitiesC(default);
+            CooldownsC = new CooldownAbilitiesInSecondsC(default);
             WhereUnitCanFireAdultForestC = new WhereUnitCanFireAdultForestC(new bool[IndexCellsValues.CELLS]);
             HasKingEffectHereC = new HasUnitKingEffectHereC(new bool[(byte)PlayerTypes.End]);
 
             var dict = new Dictionary<ButtonTypes, EffectTypes>();
             for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++) dict.Add(buttonT, default);
-            EffectsUnitsRightBarsC = new EffectsUnitsRightBarsC(new Dictionary<ButtonTypes, EffectTypes>());
+            EffectsUnitsRightBarsC = new EffectsUnitsRightBarsC(default);
         }
     }
 }

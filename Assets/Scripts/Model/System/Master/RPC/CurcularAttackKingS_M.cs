@@ -9,12 +9,12 @@ namespace Chessy.Model.System
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
-                {
+                //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
+                //{
                     _s.RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
-                    _e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
+                    //_e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
 
 
                     foreach (byte idx_1 in _e.AroundCellsE(cell_0).CellsAround)
@@ -45,12 +45,12 @@ namespace Chessy.Model.System
                     _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
 
                     _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.AttackMelee);
-                }
+                //}
 
-                else
-                {
-                    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                }
+                //else
+                //{
+                //    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                //}
             }
 
             else _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);

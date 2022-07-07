@@ -5,7 +5,7 @@ namespace Chessy.Model.Values
     {
         public const double MAX = 1;
 
-        public const double FIRE_DAMAGE = 0.4f;
+        public const double FIRE_DAMAGE = 0.1f;
         public const double HP_FOR_DEATH_AFTER_ATTACK = 0.15f;
 
         public static double ThirstyPercent(in UnitTypes unit)

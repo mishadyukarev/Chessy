@@ -23,7 +23,7 @@ namespace Chessy.View.UI.System
             {
                 _downHeroUIE.Parent.SetActive(true);
 
-                var cooldown = _e.PlayerInfoE(curPlayerI).GodInfoC.Cooldown;
+                var cooldown = _e.PlayerInfoE(curPlayerI).GodInfoC.CooldownInSecondsForNextAppearance;
 
                 for (var unit = UnitTypes.Elfemale; unit < UnitTypes.Skeleton; unit++)
                 {

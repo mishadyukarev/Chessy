@@ -3,15 +3,15 @@ namespace Chessy.Model
 {
     public struct EffectsUnitsRightBarsC
     {
-        readonly Dictionary<ButtonTypes, EffectTypes> _effectBars;
+        readonly EffectTypes[] _effectBars;
 
-        public EffectTypes Effect(in ButtonTypes buttonT) => _effectBars[buttonT];
+        public EffectTypes Effect(in ButtonTypes buttonT) => _effectBars[(byte)buttonT];
 
-        internal EffectsUnitsRightBarsC(in Dictionary<ButtonTypes, EffectTypes> dict)
+        internal EffectsUnitsRightBarsC(in bool def)
         {
-            _effectBars = dict;
+            _effectBars = new EffectTypes[(byte)ButtonTypes.End];
         }
 
-        internal void Set(in ButtonTypes buttonT, in EffectTypes effectT) => _effectBars[buttonT] = effectT;
+        internal void Set(in ButtonTypes buttonT, in EffectTypes effectT) => _effectBars[(byte)buttonT] = effectT;
     }
 }

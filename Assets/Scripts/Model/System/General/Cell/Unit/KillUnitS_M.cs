@@ -24,7 +24,7 @@ namespace Chessy.Model.System
 
             if (_e.UnitT(cellIdxForKilling).IsGod())
             {
-                var cooldown = 0f;
+                var cooldown = 0;
 
                 switch (_e.UnitT(cellIdxForKilling))
                 {
@@ -47,7 +47,7 @@ namespace Chessy.Model.System
                     default: throw new Exception();
                 }
 
-                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoC.Cooldown = cooldown;
+                _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoC.CooldownInSecondsForNextAppearance = cooldown;
                 _e.PlayerInfoE(_e.UnitPlayerT(cellIdxForKilling)).GodInfoC.HaveGodInInventor = true;
             }
 

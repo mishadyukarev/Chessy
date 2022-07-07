@@ -47,32 +47,6 @@ namespace Chessy.View.UI.Entity
 
             var parent = new GameObject("AudioSources");
 
-            //for (var clipT = ClipTypes.None + 1; clipT < ClipTypes.End; clipT++)
-            //{
-            //    var aS = parent.AddComponent<AudioSource>();
-            //    aS.clip = UnityEngine.Resources.Load<AudioClip>(clipT.ToString());
-
-            //    var volume = 1f;
-
-            //    switch (clipT)
-            //    {
-            //        case ClipTypes.Music: volume = testMode == TestModes.Standart ? 0 : 0.2f; break;
-            //        case ClipTypes.Click: volume = 0.25f; break;
-            //    }
-
-            //    aS.volume = volume;
-
-            //    if (clipT == ClipTypes.Music)
-            //    {
-            //        aS.Play();
-            //        aS.loop = true;
-            //    }
-
-
-            //    _sound.Add(clipT, new AudioSourceVC(aS));
-            //    sound.Add(clipT, aS.Play);
-            //}
-
             var goES = new GameObject("EventSystem");
             UnityEventC = new UnityEventC(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>());
 
@@ -89,8 +63,8 @@ namespace Chessy.View.UI.Entity
 
             var photonV = photonView_Rpc.AddComponent<PhotonView>();
 
-            if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(photonV);
-            else photonV.ViewID = 1001;
+            /*if (PhotonNetwork.IsMasterClient)*/ //PhotonNetwork.AllocateViewID(photonV);
+            photonV.ViewID = 1001;
             PhotonC = new PhotonVC(photonV, out actions);
 
 
@@ -143,6 +117,7 @@ namespace Chessy.View.UI.Entity
 
 
             var idCells = new int[IndexCellsValues.CELLS];
+            var possitionsCells = new Vector3[IndexCellsValues.CELLS];
 
             var animationsCells = new Dictionary<byte, Action[]>();
 
@@ -151,7 +126,7 @@ namespace Chessy.View.UI.Entity
                 _cellVEs[cellIdxStart] = new CellVEs(cells[cellIdxStart]);
 
                 idCells[cellIdxStart] = CellEs(cellIdxStart).BoxCollider2D.gameObject.GetInstanceID();
-
+                possitionsCells[cellIdxStart] = CellEs(cellIdxStart).CellParentGOC.Transform.position;
 
                 var animations = new Action[(byte)AnimationCellTypes.End];
 
@@ -220,7 +195,7 @@ namespace Chessy.View.UI.Entity
             }
 
 
-            dataFromViewC = new DataFromViewC((sounds0, sounds1, isBorder, idCells, animationsCells));
+            dataFromViewC = new DataFromViewC((sounds0, sounds1, isBorder, idCells, possitionsCells, animationsCells));
         }
     }
 }

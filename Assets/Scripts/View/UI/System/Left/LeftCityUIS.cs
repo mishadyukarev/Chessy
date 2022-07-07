@@ -1,7 +1,10 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Enum;
 using Chessy.Model.Values;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+using Photon.Pun;
+
+namespace Chessy.Model
 {
     sealed class LeftCityUIS : SystemUIAbstract
     {
@@ -14,7 +17,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            var whoseMove = _e.WhoseMovePlayerT;
+            var whoseMove = PhotonNetwork.OfflineMode ? PlayerTypes.First : PhotonNetwork.LocalPlayer.GetPlayer();
 
 
             //UIE.LeftEs.CityE(BuildingTypes.Camp).Parent.SetActive(E.IsSelectedCity);

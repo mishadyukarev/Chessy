@@ -4,8 +4,8 @@
     {
         public bool HaveGodInInventor;
         public UnitTypes UnitT { get; internal set; }
-        public float Cooldown { get; set; }
+        public int CooldownInSecondsForNextAppearance { get; set; }
 
-        public bool HaveCooldown => Cooldown >= 1;
+        public bool HaveCooldown => CooldownInSecondsForNextAppearance >= 1;
     }
 }

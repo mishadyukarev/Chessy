@@ -10,7 +10,7 @@ namespace Chessy.Model.System
             _e.Motions = default;
             _e.ZoneInfoC.IsActiveFriend = default;
             _e.ZoneInfoC = default;
-            _e.WhoseMovePlayerT = default;
+            //_e.WhoseMovePlayerT = default;
             _e.CellClickT = default;
             _e.IsSelectedCity = default;
             _e.HaveTreeUnit = default;

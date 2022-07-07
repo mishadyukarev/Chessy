@@ -6,17 +6,17 @@ namespace Chessy.Model.System
     {
         public void TryPutOutFireForestWithSimplePawnM(in byte cell_0, in Player sender)
         {
-            if (_e.EnergyUnitC(cell_0).Energy >= StepValues.PUT_OUT_FIRE_PAWN)
-            {
+            //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.PUT_OUT_FIRE_PAWN)
+            //{
                 _e.HaveFire(cell_0) = false;
 
-                _e.EnergyUnitC(cell_0).Energy -= StepValues.PUT_OUT_FIRE_PAWN;
-            }
+                //_e.EnergyUnitC(cell_0).Energy -= StepValues.PUT_OUT_FIRE_PAWN;
+            //}
 
-            else
-            {
-                _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-            }
+            //else
+            //{
+            //    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            //}
         }
     }
 }

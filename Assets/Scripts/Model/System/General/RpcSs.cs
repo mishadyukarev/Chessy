@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chessy.Model.System
 {
@@ -117,11 +118,12 @@ namespace Chessy.Model.System
                         _s.UnitSs.UnitAbilitiesSs.DecreaseWindWithRainyM((byte)objects[cellIdxCurrent++], AbilityTypes.DecreaseWindSnowy, sender);
                         break;
 
-                    case nameof(_s.ExecuteSoundAction):
-                        var obj1 = objects[cellIdxCurrent++];
+                    case nameof(_s.ExecuteSoundActionClip):
+                        _s.ExecuteSoundActionClip((ClipTypes)objects[cellIdxCurrent++]);
+                        break;
 
-                        if (obj1 is ClipTypes clipT) _s.ExecuteSoundAction(clipT);
-                        else _s.ExecuteSoundAction((AbilityTypes)obj1);
+                    case nameof(_s.ExecuteSoundActionAbility):
+                        _s.ExecuteSoundActionAbility((AbilityTypes)objects[cellIdxCurrent++]);
                         break;
 
                     case nameof(_s.ExecuteAnimationClip):
@@ -137,32 +139,35 @@ namespace Chessy.Model.System
                         _s.ExecuteMistake(mistakeT, mistakeT == MistakeTypes.Economy ? (float[])objects[cellIdxCurrent++] : default);
                         break;
 
-                    case nameof(_s.SyncData):
-                        _s.SyncData(objects);
+                    case nameof(_s.SyncDataS.SyncData):
+                        _s.SyncDataS.SyncData(objects);
                         break;
 
                     case nameof(_s.TryBuyBuildingInTownM):
                         _s.TryBuyBuildingInTownM((BuildingTypes)objects[cellIdxCurrent++], sender);
                         break;
 
-                    default: throw new Exception();
+                    default:
+                        {
+                            Debug.Log(nameMethod);
+                        }
+                        throw new Exception();
                 }
             }
 
-            _s.GetDataCellsS.GetDataCells();
-            _s.SyncDataM();
+            _s.GetDataCellsS.GetDataCellsM();
         }
-        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTargetT, new object[] { nameof(_s.ExecuteSoundAction), clipT });
-        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(_s.ExecuteSoundAction), clipT });
-        public void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes uniq) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ExecuteSoundAction), uniq });
-        public void SoundToGeneral(Player playerTo, AbilityTypes uniq) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(_s.ExecuteSoundAction), uniq });
+        internal void ExecuteSoundActionToGeneral(in RpcTarget rpcTargetT, in ClipTypes clipT) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTargetT, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
+        internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
+        internal void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes abilityT) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
+        internal void SoundToGeneral(Player playerTo, AbilityTypes abilityT) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
 
-        public void ActiveMotionZoneToGeneneral(in Player player) => _e.RpcC.Action1(_e.RpcC.PunRPCName, player, new object[] { nameof(_s.ActiveMotion) });
-        public void ActiveMotionZoneToGeneneral(in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ActiveMotion) });
+        internal void ActiveMotionZoneToGeneneral(in Player player) => _e.RpcC.Action1(_e.RpcC.PunRPCName, player, new object[] { nameof(_s.ActiveMotion) });
+        internal void ActiveMotionZoneToGeneneral(in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ActiveMotion) });
 
-        public void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
 
-        public void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(_s.ExecuteMistake), mistakeType });
+        internal void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(_s.ExecuteMistake), mistakeType });
         internal void SimpleMistakeToGeneral(Player playerTo, Dictionary<ResourceTypes, float> needRes)
         {
             var needRes2 = new float[(int)ResourceTypes.End];

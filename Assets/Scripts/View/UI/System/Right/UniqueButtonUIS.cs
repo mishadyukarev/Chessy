@@ -117,19 +117,19 @@ namespace Chessy.View.UI.System
                         break;
                 }
 
-                if (ability_cur == AbilityTypes.KingPassiveNearBonus)
-                {
-                    _buttonE.StepsTextC.ParentG.SetActive(false);
-                }
-                else
-                {
-                    _buttonE.StepsTextC.ParentG.SetActive(true);
-                }
+                //if (ability_cur == AbilityTypes.KingPassiveNearBonus)
+                //{
+                //    _buttonE.StepsTextC.ParentG.SetActive(false);
+                //}
+                //else
+                //{
+                //    _buttonE.StepsTextC.ParentG.SetActive(true);
+                //}
 
-                if (ability_cur != AbilityTypes.KingPassiveNearBonus)
-                {
-                    _buttonE.StepsTextC.TextUI.text = StepValues.Need(ability_cur).ToString();
-                }
+                //if (ability_cur != AbilityTypes.KingPassiveNearBonus)
+                //{
+                //    _buttonE.StepsTextC.TextUI.text = StepValues.Need(ability_cur).ToString();
+                //}
             }
         }
     }

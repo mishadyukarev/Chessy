@@ -154,7 +154,7 @@ namespace Chessy.Model
 
                     if (_eV.CellEs(cellIdx).UnitEs.UnitSRC(unitT).GO.activeSelf != _needActiveUnit[(byte)unitT])
                     {
-                        _eV.CellEs(cellIdx).UnitEs.AnimationUnitC.Play();
+                        //_eV.CellEs(cellIdx).UnitEs.AnimationUnitC.Play();
                     }
 
                     //if (e.IsClicked)
@@ -176,7 +176,7 @@ namespace Chessy.Model
                 {
                     if (_eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).GO.activeSelf != _needActiveMainTW[levelT][(byte)toolWeaponT])
                     {
-                        _eV.CellEs(cellIdx).UnitEs.AnimationUnitC.Play();
+                        //_eV.CellEs(cellIdx).UnitEs.AnimationUnitC.Play();
                     }
 
                     _eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).SetActiveGO(_needActiveMainTW[levelT][(byte)toolWeaponT]);
