@@ -21,11 +21,17 @@ namespace Chessy.Model.System
             {
                 _needActive[cellIdxCurrent] = false;
 
-                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
                 {
-                    if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                    var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
+
+
+                    if (_e.UnitT(dataIdxCell).HaveUnit())
                     {
-                        _needActive[cellIdxCurrent] = _e.UnitEffectsC(cellIdxCurrent).IsStunned;
+                        if (_e.UnitVisibleC(dataIdxCell).IsVisible(_e.CurrentPlayerIT))
+                        {
+                            _needActive[cellIdxCurrent] = _e.UnitEffectsC(dataIdxCell).IsStunned;
+                        }
                     }
                 }
             }

@@ -25,22 +25,27 @@ namespace Chessy.View.System
                 _needActiveUp[cellIdxCurrent] = false;
                 _needActiveRight[cellIdxCurrent] = false;
 
-
-                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
                 {
-                    if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                    var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
+
+
+                    if (_e.UnitT(dataIdxCell).HaveUnit())
                     {
-                        if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                        if (_e.UnitVisibleC(dataIdxCell).IsVisible(_e.CurrentPlayerIT))
                         {
-                            if (_e.UnitEffectsC(cellIdxCurrent).HaveFrozenArrawArcher)
+                            if (_e.MainToolWeaponT(dataIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                             {
-                                if (_e.IsRightArcherUnit(cellIdxCurrent))
+                                if (_e.UnitEffectsC(dataIdxCell).HaveFrozenArrawArcher)
                                 {
-                                    _needActiveRight[cellIdxCurrent] = true;
-                                }
-                                else
-                                {
-                                    _needActiveUp[cellIdxCurrent] = true;
+                                    if (_e.IsRightArcherUnit(dataIdxCell))
+                                    {
+                                        _needActiveRight[cellIdxCurrent] = true;
+                                    }
+                                    else
+                                    {
+                                        _needActiveUp[cellIdxCurrent] = true;
+                                    }
                                 }
                             }
                         }

@@ -11,13 +11,8 @@ namespace Chessy.Model.Component
         public bool IsArcherDirectedToRight { get; internal set; }
         public double DamageSimpleAttack { get; internal set; }
         public double DamageOnCell { get; internal set; }
-        public int HowManySecondUnitWasHereInRelax { get; internal set; }
+        public int HowManySecondUnitWasHereInThisCondition { get; internal set; }
         public int CooldownForAttackAnyUnitInSeconds { get; internal set; }
-
-        public byte IdxWhereNeedShiftUnitOnOtherCell { get; internal set; }
-        public float DistanceForShiftingOnOtherCell { get; internal set; }
-        public float DelayTimeForShifting { get; internal set; }
-        public bool NeedToBackUnitOnHisCell { get; internal set; }
         public Vector3 Possition { get; internal set; }
 
         public bool HaveCoolDownForAttackAnyUnit => CooldownForAttackAnyUnitInSeconds > 0;

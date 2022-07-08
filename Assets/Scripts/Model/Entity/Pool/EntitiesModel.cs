@@ -192,10 +192,9 @@ namespace Chessy.Model.Entity
 
         #region Cells
 
-        ref CellEs CellEs(in byte idx) => ref _cellEs[idx];
+        public ref CellEs CellEs(in byte idx) => ref _cellEs[idx];
 
-
-        public ref CellE CellE(in byte cell) => ref CellEs(cell).CellE;
+        public CellE CellE(in byte cell) => CellEs(cell).CellE;
         public CellC CellC(in byte cellIdx) => CellE(cellIdx).CellC;
         public IsStartedCellC IsStartedCellC(in byte cell) => CellE(cell).IsStartedCellC;
         public IdxCellC IdxCellC(in byte cellIdx) => CellE(cellIdx).IdxCellC;
@@ -227,6 +226,10 @@ namespace Chessy.Model.Entity
         public double DamageSimpleAttack(in byte cell) => UnitMainC(cell).DamageSimpleAttack;
         public double DamageOnCell(in byte cell) => UnitMainC(cell).DamageOnCell;
 
+        public ref ShiftingInfoForUnitC ShiftingInfoForUnitC(in byte cellIdx) => ref UnitE(cellIdx).ShiftingInfoForUnitC;
+
+        public ref SkinInfoUnitC SkinInfoUnitC(in byte cellIdx) => ref UnitE(cellIdx).SkinInfoUnitC;
+
         public VisibleToOtherPlayerOrNotC UnitVisibleC(in byte cell) => UnitE(cell).VisibleToOtherPlayerOrNotC;
         public CanSetUnitHereC CanSetUnitHereC(in byte cell) => UnitE(cell).CanSetUnitHereC;
         public WhereUnitCanFireAdultForestC WhereUnitCanFireAdultForestC(in byte cell) => UnitE(cell).WhereUnitCanFireAdultForestC;
@@ -235,8 +238,6 @@ namespace Chessy.Model.Entity
 
         public ref HealthC HpUnitC(in byte idx) => ref UnitE(idx).HealthC;
         public double HpUnit(in byte cell) => HpUnitC(cell).Health;
-        public ref EnergyC EnergyUnitC(in byte idx) => ref UnitE(idx).EnergyC;
-        public double EnergyUnit(in byte idx) => EnergyUnitC(idx).Energy;
         public ref WaterAmountC WaterUnitC(in byte idx) => ref UnitE(idx).WaterC;
         public double WaterUnit(in byte idx) => WaterUnitC(idx).Water;
 
@@ -390,5 +391,40 @@ namespace Chessy.Model.Entity
         internal void AddToolWeaponsInInventor(in PlayerTypes playerT, in LevelTypes levT, in ToolsWeaponsWarriorTypes twT, in int adding = 1) => HowManyToolWeaponsInInventoryC(playerT).Add(twT, levT, adding);
         internal void SubtractToolWeaponsInInventor(in PlayerTypes playerT, in LevelTypes levT, in ToolsWeaponsWarriorTypes twT, in int subtraction = 1) => HowManyToolWeaponsInInventoryC(playerT).Subtract(twT, levT, subtraction);
 
+
+        internal void Dispose()
+        {
+            IsStartedGame = default;
+            Motions = default;
+            ZoneInfoC.IsActiveFriend = default;
+            ZoneInfoC = default;
+            //WhoseMovePlayerT = default;
+            CellClickT = default;
+            IsSelectedCity = default;
+            HaveTreeUnit = default;
+            MistakeT = default;
+            WinnerPlayerT = default;
+            CellsC = default;
+            CurrentPlayerIT = default;
+            AmountPlantedYoungForests = default;
+
+            WindC = new WindC();
+            SunC.SunSideT = default;
+            CloudC.CellIdxCenterCloud = default;
+
+            SelectedE.ToolWeaponC = new SelectedToolWeaponC(default, default);
+
+            LessonT = default;
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                CellEs(cellIdxCurrent).Dispose();
+            }
+
+            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+            {
+                PlayerInfoE(playerT).Dispose();
+            }
+        }
     }
 }

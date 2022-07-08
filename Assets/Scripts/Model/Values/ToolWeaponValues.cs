@@ -4,8 +4,8 @@ namespace Chessy.Model.Values
 {
     public static partial class ValuesChessy
     {
-        public const float SHIELD_MAX_PROTECTION_LEVEL_FIRST = 2; //CONST!
-        public const float SHIELD_MAX_PROTECTION_LEVEL_SECOND = 7; //CONST!
+        public const float SHIELD_MAX_PROTECTION_LEVEL_FIRST = 1; //CONST!
+        public const float SHIELD_MAX_PROTECTION_LEVEL_SECOND = 3; //CONST!
 
         public static float MaxShieldProtection(in LevelTypes levelT)
         {

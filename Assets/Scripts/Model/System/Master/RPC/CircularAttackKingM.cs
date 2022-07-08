@@ -5,7 +5,7 @@ namespace Chessy.Model.System
 {
     sealed partial class UnitAbilitiesSystems : SystemModelAbstract
     {
-        internal void CurcularAttackKingM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
+        internal void CircularAttackKingM(in byte cell_0, in AbilityTypes abilityT, in Player sender)
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
@@ -40,7 +40,7 @@ namespace Chessy.Model.System
                         }
                     }
 
-                    _s.RpcSs.AnimationCellToGeneral(cell_0, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
+                    _s.RpcSs.AnimationCellToGeneral(_e.SkinInfoUnitC(cell_0).SkinIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
 
                     _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
 

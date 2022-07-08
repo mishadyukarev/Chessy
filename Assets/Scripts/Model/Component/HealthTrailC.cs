@@ -16,5 +16,11 @@
         {
             for (var i = 0; i < healths.Length; i++) _healths[i] = healths[i];
         }
+
+        internal void Dispose()
+        {
+            for (var i = 0; i < _healths.Length; i++) _healths[i] = 0;
+
+        }
     }
 }

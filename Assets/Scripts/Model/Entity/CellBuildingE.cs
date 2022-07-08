@@ -17,5 +17,10 @@ namespace Chessy.Model
 
             VisibleToOtherPlayerC = new VisibleToOtherPlayerOrNotC(default);
         }
+
+        internal void Dispose()
+        {
+            BuildingMainC = default;
+        }
     }
 }

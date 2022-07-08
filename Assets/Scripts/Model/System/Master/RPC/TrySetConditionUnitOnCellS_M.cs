@@ -85,6 +85,8 @@ namespace Chessy.Model.System
                     default:
                         throw new Exception();
                 }
+
+                _e.UnitMainC(cellIdx).HowManySecondUnitWasHereInThisCondition = 0;
             }
 
             else

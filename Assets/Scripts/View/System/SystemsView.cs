@@ -48,6 +48,7 @@ namespace Chessy.View.System
             var frozenArrawUpSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var trailsSRCs = new Dictionary<DirectTypes, SpriteRendererVC[]>();
             var buildingSRCs = new Dictionary<BuildingTypes, SpriteRendererVC[]>();
+            //var circularAttackKingSRCs = new AnimationVC[IndexCellsValues.CELLS];
 
 
             for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
@@ -81,6 +82,7 @@ namespace Chessy.View.System
                 shieldSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.ShieldSRC;
                 frozenArrawRightSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.FrozenArraw(true);
                 frozenArrawUpSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.FrozenArraw(false);
+                //circularAttackKingSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.CircularAttackAnimC;
 
                 for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                 {
@@ -118,7 +120,7 @@ namespace Chessy.View.System
                 new SyncIdxAndXyInfoVS(idxXyInfoCellSRCs, eM).Sync,
                 new SyncHpBarUnitVS(hpBarUnitSRCs, eM).Sync,
                 new SyncStunVS(stunUnitSRCs, eM).Sync,
-                new SyncShieldVS(shieldSRCs, eM).Sync,
+                new SyncShieldEffectSnowyVS(shieldSRCs, eM).Sync,
                 new SyncFrozenArrawVS(frozenArrawRightSRCs, frozenArrawUpSRCs, eM).Sync,
                 new SyncBuildingVS(buildingSRCs, eM).Sync,
                 new SyncTrailVS(trailsSRCs, eM).Sync,
@@ -156,25 +158,31 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if(_e.UnitMainC(cellIdxCurrent).Possition.magnitude > 0)
-                {
-                    Vector3 pos = default;
+                var whereSkinIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).SkinIdxCell;
 
-                    var t = Time.deltaTime * 3f;
+                if ( _e.UnitMainC(whereSkinIdxCell).Possition.magnitude > 0)
+                {
+                    //Vector3 pos = default;
+
+                    var t = Time.deltaTime * 7f;
                     if (t > 1) t = 1;
 
-                    pos = Vector3.Lerp(_eV.CellEs(cellIdxCurrent).UnitEs.ParentTC.Transform.position, _e.UnitMainC(cellIdxCurrent).Possition, t);
+                    //pos = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitMainC(cellIdxCurrent).Possition, t);
 
-                    //if (PhotonNetwork.IsMasterClient)
-                    //{
-                    //    pos = _e.UnitMainC(cellIdxCurrent).Possition;
-                    //}
-                    //else
-                    //{
-                        
-                    //}
+                    //_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = pos;
 
-                    _eV.CellEs(cellIdxCurrent).UnitEs.ParentTC.Transform.position = pos;
+
+
+                    //var pos_0 = _e.CellE(whereSkinIdxCell).StartPositionC.Possition;
+                    //var pos_1 = _e.CellE(cellIdxCurrent).StartPositionC.Possition;
+
+                    //var t = _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(cell_1);
+
+
+
+                    _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitMainC(whereSkinIdxCell).Possition, t);
+
+                    //_e.UnitMainC(whereSkinIdxCell).Possition = Vector3.Lerp(_e, pos_1, t);
                 }
             }
         }

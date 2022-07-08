@@ -21,8 +21,6 @@ namespace Chessy.Model.System
                         {
                             _e.AddToolWeaponsInInventor(_e.UnitPlayerT(cellIdxForDoing), _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing));
                             _e.SetExtraToolWeaponT(cellIdxForDoing, ToolsWeaponsWarriorTypes.None);
-
-                            //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
                         else
                         {
@@ -39,8 +37,6 @@ namespace Chessy.Model.System
                                         _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
 
                                         _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
-
-                                        //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                     }
@@ -61,8 +57,6 @@ namespace Chessy.Model.System
                                         {
                                             for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                                 _e.ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
-
-                                            //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                             _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
 
@@ -85,7 +79,6 @@ namespace Chessy.Model.System
                                     _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                                     _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
 
-                                    //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                                 }
                             }
 
@@ -93,8 +86,6 @@ namespace Chessy.Model.System
                             {
                                 _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                                 _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
-
-                                //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
                     }
@@ -109,8 +100,6 @@ namespace Chessy.Model.System
                                 {
                                     _e.SubtractToolWeaponsInInventor(whoseMove, levTW, twT);
                                     _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
-
-                                    //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
@@ -131,8 +120,6 @@ namespace Chessy.Model.System
                                     {
                                         for (var resT = ResourceTypes.None + 1; resT < ResourceTypes.End; resT++)
                                             _e.ResourcesInInventoryC(whoseMove).Subtract(resT, CostsForBuyToolsWeaponsForWarrior.ForBuyToolWeapon(twT, levTW, resT));
-
-                                        //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                                         _e.MainToolWeaponC(cellIdxForDoing).Set(twT, levTW);
 
@@ -156,8 +143,6 @@ namespace Chessy.Model.System
                             {
                                 _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                                 _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
-
-                                //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                             }
                         }
 
@@ -165,8 +150,6 @@ namespace Chessy.Model.System
                         {
                             _e.AddToolWeaponsInInventor(whoseMove, _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                             _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
-
-                            //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
 
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                         }
@@ -180,8 +163,6 @@ namespace Chessy.Model.System
                         {
                             _e.AddToolWeaponsInInventor(_e.UnitPlayerT(cellIdxForDoing), _e.MainTWLevelT(cellIdxForDoing), _e.MainToolWeaponT(cellIdxForDoing));
                             _e.MainToolWeaponC(cellIdxForDoing).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
-
-                            //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
                         }
 
                         else
@@ -193,8 +174,6 @@ namespace Chessy.Model.System
                                     _e.AddToolWeaponsInInventor(ownUnit_0, _e.ExtraTWLevelT(cellIdxForDoing), _e.ExtraToolWeaponT(cellIdxForDoing));
                                     _e.SetExtraToolWeaponT(cellIdxForDoing, ToolsWeaponsWarriorTypes.None);
 
-                                    //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
-
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }
 
@@ -203,9 +182,7 @@ namespace Chessy.Model.System
                                     _e.SubtractToolWeaponsInInventor(ownUnit_0, levTW, twT, 1);
 
 
-                                    _e.UnitExtraTWC(cellIdxForDoing).Set(twT, levTW, _e.ExtraTWProtection(cellIdxForDoing));
-
-                                    //_e.EnergyUnitC(cellIdxForDoing).Energy -= StepValues.FOR_GIVE_TAKE_TOOLWEAPON;
+                                    _e.UnitExtraTWC(cellIdxForDoing).Set(twT, levTW, ValuesChessy.MaxShieldProtection(levTW));
 
                                     RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.PickMelee);
                                 }

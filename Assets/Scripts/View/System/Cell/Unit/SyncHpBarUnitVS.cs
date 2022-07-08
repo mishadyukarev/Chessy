@@ -28,18 +28,25 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
                 {
-                    if (_e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
+                    var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
+
+                    if (_e.UnitVisibleC(dataIdxCell).IsVisible(_e.CurrentPlayerIT))
                     {
-                        _needActiveBar[cellIdxCurrent] = true;
+                        if (_e.UnitT(dataIdxCell).HaveUnit() && !_e.UnitT(dataIdxCell).IsAnimal())
+                        {
+                            _needActiveBar[cellIdxCurrent] = true;
 
-                        var xCordinate = (float)(_e.HpUnit(cellIdxCurrent) / HpValues.MAX);
-                        _hpBarSRC[cellIdxCurrent].Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
+                            var xCordinate = (float)(_e.HpUnit(dataIdxCell) / HpValues.MAX);
+                            _hpBarSRC[cellIdxCurrent].Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
-                        _needSetColorToBar[cellIdxCurrent] = _e.UnitPlayerT(cellIdxCurrent) == PlayerTypes.First ? Color.blue : Color.red;
+                            _needSetColorToBar[cellIdxCurrent] = _e.UnitPlayerT(dataIdxCell) == PlayerTypes.First ? Color.blue : Color.red;
+                        }
                     }
                 }
+
+
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)

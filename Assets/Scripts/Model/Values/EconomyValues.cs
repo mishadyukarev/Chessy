@@ -8,7 +8,7 @@
 
 
 
-        public const float ADDING_FOOD_AFTER_UPDATE = 0.02f;
+        public const float ADDING_FOOD_AFTER_UPDATE = 0.01f;
         public const float AMOUNT_FOOD_AFTER_KILL_CAMEL = 1f;
 
 

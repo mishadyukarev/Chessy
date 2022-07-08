@@ -8,7 +8,7 @@ namespace Chessy.Model.System
     {
         internal void StartGame(in bool withTraining)
         {
-            ResetAll();
+            _e.Dispose();
 
             _e.ZoneInfoC.IsActiveFriend = _e.GameModeT.Is(GameModeTypes.WithFriendOffline);
             //_e.WhoseMovePlayerT = StartGameValues.WHOSE_MOVE;

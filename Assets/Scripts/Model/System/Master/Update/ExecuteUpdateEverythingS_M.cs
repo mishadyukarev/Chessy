@@ -30,18 +30,18 @@ namespace Chessy.Model.System
             //TryExtractWoodWithWoodcutter();
             //GiveHealthToUnitsWithRelaxCondition();
 
-            TryGiveWaterToUnitsAroundRainy();
+            //TryGiveWaterToUnitsAroundRainy();
 
             TryFireAroundHellGod();
-            ToggleConditionUnitsIfTheresFire();
+            //ToggleConditionUnitsIfTheresFire();
             //TrySetDefendConditionUnits();
             //TryExtractForestWithPawn();
             //TryExtractHillsWithPawns();
-            TryChangeRelaxConditionPawns();
+            //TryChangeRelaxConditionPawns();
             //GiveFoodAfterUpdate();
             //TryExecuteHungry();
             //TrySpawnWolf();
-            TryActiveGodsUniqueAbilityEveryUpdate();
+            //TryActiveGodsUniqueAbilityEveryUpdate();
             //TrySkipLessonWithRiver();
             //TryExecuteAI();
             //RefreshStepsAll();
@@ -49,62 +49,7 @@ namespace Chessy.Model.System
             //TryExecuteTruce();
         }
 
-        void TryActiveGodsUniqueAbilityEveryUpdate()
-        {
-            if (!_e.LessonT.HaveLesson())
-            {
-                if (_e.Motions % ValuesChessy.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0)
-                {
-                    _s.RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
-
-                    for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
-                    {
-                        if (!_e.IsBorder(cell_0))
-                        {
-                            if (_e.UnitT(cell_0).HaveUnit())
-                            {
-                                if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
-                                {
-                                    if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
-                                    {
-                                        if (_e.MainToolWeaponT(cell_0).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
-                                        {
-                                            _e.UnitEffectsC(cell_0).HaveFrozenArrawArcher = true;
-                                        }
-                                        else
-                                        {
-                                            _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ValuesChessy.PROTECTION_MAGIC_SHIELD_AFTER_5_MOTIONS_RAINY;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ValuesChessy.PROTECTION_MAGIC_SHIELD_AFTER_5_MOTIONS_RAINY;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (_e.AdultForestC(cell_0).HaveAnyResources)
-                                {
-                                    if (!_e.HaveTreeUnit)
-                                    {
-                                        for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-                                        {
-                                            if (_e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
-                                            {
-                                                _s.SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
-
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        
 
         void TryGivePeople()
         {
@@ -175,33 +120,6 @@ namespace Chessy.Model.System
                             //Es.UnitE(cell_0).Take(Es, 0.15f);
                             break;
                         }
-                    }
-                }
-            }
-        }
-        void ToggleConditionUnitsIfTheresFire()
-        {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                if (_e.UnitT(cellIdxCurrent).HaveUnit())
-                {
-                    if (_e.HaveFire(cellIdxCurrent))
-                    {
-                        _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.None);
-                    }
-                }
-            }
-        }
-        void TryChangeRelaxConditionPawns()
-        {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                if (!_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractHill && !_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractAdultForest)
-                {
-                    if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
-                        && _e.HpUnitC(cellIdxCurrent).Health >= HpValues.MAX)
-                    {
-                        _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.Protected);
                     }
                 }
             }

@@ -7,7 +7,7 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
             {
-                if (_e.UnitT(cellIdxCell).HaveUnit())
+                if (_e.UnitT(cellIdxCell).HaveUnit() && !_e.ShiftingInfoForUnitC(cellIdxCell).IsShiftingUnit)
                 {
                     if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
                     {
@@ -23,7 +23,7 @@ namespace Chessy.Model.System
 
                                     if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources)
                                     {
-                                        if (_e.UnitT(idx_1).HaveUnit())
+                                        if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
                                         {
                                             if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
                                             {
@@ -56,7 +56,7 @@ namespace Chessy.Model.System
                                         var idx_2 = _e.AroundCellsE(idx_1).IdxCell(dir_1);
 
 
-                                        if (_e.UnitT(idx_2).HaveUnit() && !_e.UnitT(idx_2).IsAnimal()
+                                        if (_e.UnitT(idx_2).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_2).IsShiftingUnit && !_e.UnitT(idx_2).IsAnimal()
                                             && _e.UnitVisibleC(idx_2).IsVisible(_e.UnitPlayerT(cellIdxCell))
                                             && !_e.UnitPlayerT(idx_2).Is(_e.UnitPlayerT(cellIdxCell)))
                                         {

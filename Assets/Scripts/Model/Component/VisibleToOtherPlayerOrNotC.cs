@@ -5,7 +5,7 @@
         readonly bool[] _isVisible;
 
         internal bool[] IsVisibleClone => (bool[])_isVisible.Clone();
-        public bool IsVisible(in PlayerTypes playerT) => _isVisible[(byte)playerT];
+        public ref bool IsVisible(in PlayerTypes playerT) => ref _isVisible[(byte)playerT];
 
         internal VisibleToOtherPlayerOrNotC(in bool def) => _isVisible = new bool[(byte)PlayerTypes.End];
 
@@ -17,6 +17,10 @@
             {
                 _isVisible[i] = isVisible[i];
             }
+        }
+        internal void Dispose()
+        {
+            for (var i = 0; i < _isVisible.Length; i++) _isVisible[i] = default;
         }
     }
 }

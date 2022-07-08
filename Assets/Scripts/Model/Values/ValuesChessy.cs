@@ -10,6 +10,7 @@ namespace Chessy.Model.Values
         public const int NEED_PLANTED_YOUNG_FOREST_FOR_SKIP_LESSON = 5;
         public const int RAINY_COOLDOWN_FROZEN_ARRAW = 1;
         public const float PERCENT_FOR_SEEDING_YOUNG_FOREST_AFTER_SHIFT_ELFEMALE = 0.25f;
+        public const int COOLDOWN_AFTER_ATTACK = 5;
 
         public const float MAX_SPEED_WIND = 3;
         public const float MIN_SPEED_WIND = 0;

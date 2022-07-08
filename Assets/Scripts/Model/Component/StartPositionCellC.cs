@@ -4,8 +4,8 @@ namespace Chessy.Model.Component
 {
     public readonly struct StartPositionCellC
     {
-        public readonly Vector3 Pos;
+        public readonly Vector3 Possition;
 
-        internal StartPositionCellC(in Vector3 pos) => Pos = pos;
+        internal StartPositionCellC(in Vector3 pos) => Possition = pos;
     }
 }

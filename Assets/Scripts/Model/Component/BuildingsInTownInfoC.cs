@@ -6,14 +6,14 @@
 
         internal bool[] HaveBuildingsClone => (bool[])_haveBuilding.Clone();
 
-        public bool HaveBuilding(in BuildingTypes buildingT) => _haveBuilding[(byte)buildingT];
+        public ref bool HaveBuilding(in BuildingTypes buildingT) => ref _haveBuilding[(byte)buildingT];
 
         internal BuildingsInTownInfoC(in bool[] haves) => _haveBuilding = haves;
 
         internal void Set(in BuildingTypes buildingT, in bool have) => _haveBuilding[(byte)buildingT] = have;
         internal void Destroy(in BuildingTypes buildingT) => _haveBuilding[(byte)buildingT] = false;
         internal bool Build(in BuildingTypes buildingT) => _haveBuilding[(byte)buildingT] = true;
-        internal void Clear()
+        internal void Dispose()
         {
             for (var i = 0; i < _haveBuilding.Length; i++)
             {

@@ -1,6 +1,7 @@
 ﻿using Chessy.Model.Cell.Unit;
 using Chessy.Model.Component;
 using Chessy.Model.Values;
+using System;
 using System.Collections.Generic;
 namespace Chessy.Model
 {
@@ -17,6 +18,8 @@ namespace Chessy.Model
         public WhoLastDiedOnCellC WhoLastDiedHereC;
         public ExtractionResourcesWithUnitC ExtractionResourcesC;
         public NeedUpdateViewC NeedUpdateViewC;
+        public ShiftingInfoForUnitC ShiftingInfoForUnitC;
+        public SkinInfoUnitC SkinInfoUnitC;
 
         public readonly HowManyDistanceNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC;
         public readonly WhereUnitCanShiftC WhereCanShiftC;
@@ -42,6 +45,8 @@ namespace Chessy.Model
             WhoLastDiedHereC = default;
             ExtractionResourcesC = default;
             NeedUpdateViewC = default;
+            ShiftingInfoForUnitC = default;
+            SkinInfoUnitC = default;
 
             VisibleToOtherPlayerOrNotC = new VisibleToOtherPlayerOrNotC(default);
             CanSetUnitHereC = new CanSetUnitHereC(new bool[(byte)PlayerTypes.End]);
@@ -57,6 +62,37 @@ namespace Chessy.Model
             var dict = new Dictionary<ButtonTypes, EffectTypes>();
             for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++) dict.Add(buttonT, default);
             EffectsUnitsRightBarsC = new EffectsUnitsRightBarsC(default);
+        }
+
+        internal void Dispose()
+        {
+            MainC.UnitT = UnitTypes.None;
+
+            SkinInfoUnitC = default;
+        }
+
+        internal UnitE Clone()
+        {
+            var unitE = new UnitE(default);
+
+            unitE.MainC = MainC;
+            unitE.HealthC = HealthC;
+            unitE.WaterC = WaterC;
+            unitE.EffectsC = EffectsC;
+
+            unitE.MainToolWeaponC = MainToolWeaponC;
+            unitE.ExtraToolWeaponC = ExtraToolWeaponC;
+            unitE.WhoLastDiedHereC = WhoLastDiedHereC;
+            unitE.ExtractionResourcesC = ExtractionResourcesC;
+            unitE.NeedUpdateViewC = NeedUpdateViewC;
+
+            unitE.SkinInfoUnitC = SkinInfoUnitC;
+
+
+            unitE.UniqueButtonsC.Sync(UniqueButtonsC.AbilityTypesClone);
+            unitE.CooldownsC.Sync(CooldownsC.CooldonwsCopy);
+
+            return unitE;
         }
     }
 }

@@ -2,7 +2,7 @@
 using Chessy.Model.Enum;
 using Chessy.View.UI.Entity;
 
-using Chessy.View.UI.Entity; namespace Chessy.Model
+namespace Chessy.Model
 {
     sealed class DownPawnUIS : SystemUIAbstract
     {

@@ -50,7 +50,7 @@ namespace Chessy
                 var forPhoton = new GameObject();
                 forPhoton.transform.SetParent(photonParent.transform);
 
-                for (byte i = 1; i <= 17; i++)
+                for (var syncCellT = (SyncCellTypes)1; syncCellT < SyncCellTypes.End; syncCellT++)
                 {
                     currentIdPhoton++;
 
@@ -58,7 +58,7 @@ namespace Chessy
                     photonV.ViewID = currentIdPhoton;
 
                     var system = photonV.gameObject.AddComponent<CellOnPhotonSerializeView>();
-                    system.GiveData(cellIdx, i, eM);
+                    system.GiveData(cellIdx, syncCellT, eM);
 
                     photonV.ObservedComponents = new List<Component>() { system };
                 }
@@ -68,6 +68,7 @@ namespace Chessy
             gameObject.AddComponent<PhotonSceneManager>().GiveSystems(sM);
 
 
+            PhotonNetwork.KeepAliveInBackground = 180;
 
             PhotonNetwork.PhotonServerSettings.AppSettings.Protocol = ConnectionProtocol.Tcp;
 

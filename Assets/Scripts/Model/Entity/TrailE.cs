@@ -14,5 +14,11 @@ namespace Chessy.Model
             VisibleC = new VisibleToOtherPlayerOrNotC(default);
             HealthC = new HealthTrailC(new float[(byte)DirectTypes.End]);
         }
+
+        internal void Dispose()
+        {
+            VisibleC.Dispose();
+            HealthC.Dispose();
+        }
     }
 }

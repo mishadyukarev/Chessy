@@ -8,7 +8,7 @@
         public const float KING_DAMAGE = 5f;
 
         public const float UNIQUE_ATTACK_PERCENT_DAMAGE = 1.5f;
-        public const float SWORD_ADDING = 1;
+        public const float SWORD_ADDING = 3;
         public const float KING_EFFECT_ON_NEAR_UNITS = 1.5f;
         public const float STAFF_EFFECT_ON_PAWN_TAKING = PAWN_DAMAGE / 2;
 

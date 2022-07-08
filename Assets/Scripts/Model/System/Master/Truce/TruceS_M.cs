@@ -6,7 +6,7 @@ namespace Chessy.Model.System
     {
         const int PEOPLE_AFTER_TRUCE = 15;
 
-        internal static void ExecuteTruce(this EntitiesModel e)
+        internal static void ExecuteTruce(this EntitiesModel e, in SystemsModel s)
         {
             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
             {
@@ -40,18 +40,19 @@ namespace Chessy.Model.System
                                 e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
                             }
 
-                            e.UnitE(cellIdxCurrent).ClearEverything();
+                            e.SkinInfoUnitC(e.SkinInfoUnitC(cellIdxCurrent).SkinIdxCell).DataIdxCell = 0;
+                            e.UnitE(cellIdxCurrent).Dispose();
                         }
                     }
                     else
                     {
-
                         if (e.ExtraToolWeaponT(cellIdxCurrent).HaveToolWeapon())
                         {
                             e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
                         }
 
-                        e.UnitE(cellIdxCurrent).ClearEverything();
+                        e.SkinInfoUnitC(e.SkinInfoUnitC(cellIdxCurrent).SkinIdxCell).DataIdxCell = 0;
+                        e.UnitE(cellIdxCurrent).Dispose();
                     }
                 }
 

@@ -66,8 +66,8 @@ namespace Chessy.Model.System
                         _s.TryBuyFromMarketBuildingM((MarketBuyTypes)objects[cellIdxCurrent++], sender);
                         break;
 
-                    case nameof(_s.UnitSs.UnitAbilitiesSs.CurcularAttackKingM):
-                        _s.UnitSs.UnitAbilitiesSs.CurcularAttackKingM((byte)objects[cellIdxCurrent++], AbilityTypes.CircularAttack, sender);
+                    case nameof(_s.UnitSs.UnitAbilitiesSs.CircularAttackKingM):
+                        _s.UnitSs.UnitAbilitiesSs.CircularAttackKingM((byte)objects[cellIdxCurrent++], AbilityTypes.CircularAttack, sender);
                         break;
 
                     case nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithSimplePawnM):

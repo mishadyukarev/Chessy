@@ -12,7 +12,7 @@ namespace Chessy.Model.System
 
                 if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
                 {
-                    if (_e.UnitT(cellIdxCell).HaveUnit() && _e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)) && !_e.UnitT(cellIdxCell).IsAnimal())
+                    if (_e.UnitT(cellIdxCell).HaveUnit() && _e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)) && !_e.UnitT(cellIdxCell).IsAnimal() && !_e.ShiftingInfoForUnitC(cellIdxCell).IsShiftingUnit)
                     {
                         DirectTypes dir_cur = default;
 
@@ -28,7 +28,7 @@ namespace Chessy.Model.System
 
                                 //if (_e.EnergyUnitC(cellIdxCell).Energy >= _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCell).HowManyEnergyNeedForShiftingToHere(idx_1) || haveMaxSteps)
                                 //{
-                                if (_e.UnitT(idx_1).HaveUnit())
+                                if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
                                 {
                                     if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
                                     {

@@ -21,8 +21,15 @@ namespace Chessy.Model.System
                 {
                     stream.SendNext(_e.PlayerInfoC(playerT).IsReadyForStartOnlineGame);
                     stream.SendNext(_e.PlayerInfoC(playerT).WoodForBuyHouse);
-                    stream.SendNext(_e.BuildingsInTownInfoC(playerT).HaveBuildingsClone);
                     stream.SendNext(_e.PlayerInfoC(playerT).HaveKingInInventor);
+                    stream.SendNext(_e.PlayerInfoC(playerT).AmountBuiltHouses);
+
+
+                    for (var buildingT = (BuildingTypes)0; buildingT < BuildingTypes.End; buildingT++)
+                    {
+                        stream.SendNext(_e.BuildingsInTownInfoC(playerT).HaveBuilding(buildingT));
+                    }
+
 
                     stream.SendNext(_e.PawnPeopleInfoC(playerT).PeopleInCity);
                     stream.SendNext(_e.PawnPeopleInfoC(playerT).AmountInGame);
@@ -59,8 +66,14 @@ namespace Chessy.Model.System
                 {
                     _e.PlayerInfoC(playerT).IsReadyForStartOnlineGame = (bool)stream.ReceiveNext();
                     _e.PlayerInfoC(playerT).WoodForBuyHouse = (float)stream.ReceiveNext();
-                    _e.BuildingsInTownInfoC(playerT).Sync((bool[])stream.ReceiveNext());
                     _e.PlayerInfoC(playerT).HaveKingInInventor = (bool)stream.ReceiveNext();
+                    _e.PlayerInfoC(playerT).AmountBuiltHouses = (int)stream.ReceiveNext();
+
+                    for (var buildingT = (BuildingTypes)0; buildingT < BuildingTypes.End; buildingT++)
+                    {
+                        _e.BuildingsInTownInfoC(playerT).HaveBuilding(buildingT) = (bool)stream.ReceiveNext();
+                    }
+
 
                     _e.PawnPeopleInfoC(playerT).PeopleInCity = (int)stream.ReceiveNext();
                     _e.PawnPeopleInfoC(playerT).AmountInGame = (int)stream.ReceiveNext();
@@ -82,9 +95,6 @@ namespace Chessy.Model.System
                         _e.SetResourcesInInventory(playerT, resT, (float)stream.ReceiveNext());
                     }
                 }
-
-
-                //GetDataCellsS.GetDataCellsM();
             }
         }
     }

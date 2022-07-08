@@ -17,13 +17,6 @@ namespace Chessy.Model.System
 
             _runs.ForEach((Action action) => action());
 
-
-            //if (_e.NeedFillData)
-            //{
-            //    GetDataCellsS.GetDataCellsM();
-            //    _e.NeedFillData = false;
-            //}
-
             if (PhotonNetwork.IsMasterClient)
             {
                 if ((DateTime.Now - _dateTimeLastUpdate).Seconds >= 1)
@@ -70,12 +63,12 @@ namespace Chessy.Model.System
                                 }
                             }
 
+                            _e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInThisCondition++;
 
-
-                            if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
-                            {
-                                _e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInRelax++;
-                            }
+                            //if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed))
+                            //{
+                                
+                            //}
                         }
 
                         _e.UnitMainC(cellIdxCurrent).CooldownForAttackAnyUnitInSeconds--;
@@ -104,116 +97,196 @@ namespace Chessy.Model.System
                     TryExecuteHungry();
                     TryChangeDirectionOfWindRandomly();
                     TryGiveHealthToBots();
+                    ToggleConditionUnitsIfTheresFire();
                     TryGiveHealthToUnitsWithRelaxCondition();
-
+                    TryGiveWaterToUnitsAroundRainy();
+                    //TryActiveGodsUniqueAbilityEveryUpdate();
+                    TrySetDefendWithoutConditionUnits();
                     TryExecuteTruce();
+
+                    
 
                     GetDataCellsS.GetDataCellsM();
 
                     _dateTimeLastUpdate = DateTime.Now;
                 }
 
-                for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+                TryExecuteShiftingUnit();
+            }
+        }
+
+        void TryExecuteShiftingUnit()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                var cell_0 = cellIdxCurrent;
+                var cell_1 = _e.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell;
+
+                if (cell_1 != 0)
                 {
-                    var cell_0 = cellIdxCurrent;
-                    var cell_1 = _e.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell;
-
-                    if (cell_1 != 0)
+                    if (_e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell)
                     {
-                        if (_e.UnitMainC(cell_0).NeedToBackUnitOnHisCell)
+                        _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell -= Time.deltaTime;
+
+                        if (_e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell <= 0)
                         {
+                            _e.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell = 0;
+                            _e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell = false;
+                            _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell = 0;
 
-                            _e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell -= Time.deltaTime;
+                            GetDataCellsS.GetDataCellsM();
+                        }
 
-                            if (_e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell <= 0)
-                            {
-                                if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 0.3f)
-                                {
-                                    if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 0.5f)
-                                    {
-                                        _e.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell = 0;
-                                        _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell = false;
-                                        _e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell = 0;
-
-                                        GetDataCellsS.GetDataCellsM();
-
-                                        _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
-                                    }
-                                    else
-                                    {
-                                        _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting += Time.deltaTime;
-                                    }
-                                }
-                                else
-                                {
-                                    if (!_e.UnitT(cell_1).HaveUnit())
-                                    {
-                                        _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell = false;
-                                    }
-                                    _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting += Time.deltaTime;
-                                }
-                            }
-
-                            else
+                        else
+                        {
+                            if (_e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell) >= 0.3)
                             {
                                 if (!_e.UnitT(cell_1).HaveUnit())
                                 {
-                                    _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell = false;
+                                    _e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell = false;
                                 }
                             }
                         }
-                        else
-                        {
-                            _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell += Time.deltaTime;
-
-                            if (_e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell >= _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell))
-                            {
-                                if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 1f)
-                                {
-                                    ShiftUnitOnOtherCellM(cellIdxCurrent, _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell);
-
-                                    _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = 0;
-                                    _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
-                                    _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
-                                    _e.UnitMainC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
-
-                                    GetDataCellsS.GetDataCellsM();
-                                }
-                                else
-                                {
-                                    if (_e.UnitT(cell_1).HaveUnit())
-                                    {
-                                        if (_e.UnitMainC(cell_1).IdxWhereNeedShiftUnitOnOtherCell == 0)
-                                        {
-                                            _e.UnitMainC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
-                                            _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
-                                        }
-                                        else
-                                        {
-                                            if (_e.UnitMainC(cellIdxCurrent).DelayTimeForShifting >= 0.6f)
-                                            {
-                                                _e.UnitMainC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
-                                                _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting = 0;
-                                            }
-                                        }
-                                    }
-
-                                    _e.UnitMainC(cellIdxCurrent).DelayTimeForShifting += Time.deltaTime;
-                                }
-                            }
-                        }
-
-                        var pos_0 = _e.CellE(cell_0).StartPositionC.Pos;
-                        var pos_1 = _e.CellE(cell_1).StartPositionC.Pos;
-
-                        var t = _e.UnitMainC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
-
-                        _e.UnitMainC(cell_0).Possition = Vector3.Lerp(pos_0, pos_1, t);
                     }
 
                     else
                     {
-                        _e.UnitMainC(cell_0).Possition = _e.CellE(cell_0).StartPositionC.Pos;
+                        _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell += Time.deltaTime;
+
+                        if (_e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell >= _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell))
+                        {
+                            if (!_e.UnitT(cell_1).HaveUnit())
+                            {
+                                ShiftUnitOnOtherCellM(cellIdxCurrent, _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell);
+
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = 0;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedToBackUnitOnHisCell = false;
+
+                                GetDataCellsS.GetDataCellsM();
+                            }
+
+                            else
+                            {
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
+                            }
+                        }
+                    }
+
+
+                    var pos_0 = _e.CellE(cell_0).StartPositionC.Possition;
+                    var pos_1 = _e.CellE(cell_1).StartPositionC.Possition;
+
+                    var t = _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
+
+                    _e.UnitMainC(_e.SkinInfoUnitC(cell_0).SkinIdxCell).Possition = Vector3.Lerp(pos_0, pos_1, t);
+                }
+
+                else
+                {
+                    //var cell_2 = _e.SkinInfoUnitC(cell_0).WhereSkinNowIdxCell;
+
+
+
+                    //_e.UnitMainC(cell_2).Possition = _e.CellE(cell_0).StartPositionC.Possition;
+                }
+            }
+        }
+
+        void TrySetDefendWithoutConditionUnits()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                {
+                    if (_e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.None)
+                    {
+                        if (!_e.ShiftingInfoForUnitC(cellIdxCurrent).IsShiftingUnit)
+                        {
+                            if (_e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInThisCondition >= 3)
+                            {
+                                _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.Protected);
+                                _e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInThisCondition = 0;
+                            }
+                        }
+                    }
+                }
+
+                //if (!_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractHill && !_e.ExtactionResourcesWithWarriorC(cellIdxCurrent).CanExtractAdultForest)
+                //{
+                //    if (_e.UnitConditionT(cellIdxCurrent).Is(ConditionUnitTypes.Relaxed)
+                //        && _e.HpUnitC(cellIdxCurrent).Health >= HpValues.MAX)
+                //    {
+                //        _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.Protected);
+                //    }
+                //}
+            }
+        }
+        void TryActiveGodsUniqueAbilityEveryUpdate()
+        {
+            if (!_e.LessonT.HaveLesson())
+            {
+                if (_e.Motions % ValuesChessy.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0)
+                {
+                    RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
+
+                    for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
+                    {
+                        if (!_e.IsBorder(cell_0))
+                        {
+                            if (_e.UnitT(cell_0).HaveUnit())
+                            {
+                                if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
+                                {
+                                    if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
+                                    {
+                                        if (_e.MainToolWeaponT(cell_0).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                                        {
+                                            _e.UnitEffectsC(cell_0).HaveFrozenArrawArcher = true;
+                                        }
+                                        else
+                                        {
+                                            _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ValuesChessy.PROTECTION_MAGIC_SHIELD_AFTER_5_MOTIONS_RAINY;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ValuesChessy.PROTECTION_MAGIC_SHIELD_AFTER_5_MOTIONS_RAINY;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (_e.AdultForestC(cell_0).HaveAnyResources)
+                                {
+                                    if (!_e.HaveTreeUnit)
+                                    {
+                                        for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+                                        {
+                                            if (_e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
+                                            {
+                                                SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
+
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        void ToggleConditionUnitsIfTheresFire()
+        {
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                {
+                    if (_e.HaveFire(cellIdxCurrent))
+                    {
+                        _e.SetUnitConditionT(cellIdxCurrent, ConditionUnitTypes.None);
                     }
                 }
             }
@@ -354,7 +427,7 @@ namespace Chessy.Model.System
                     {
                         if (!_e.BuildingOnCellT(cellIdxCurrent).Is(BuildingTypes.Woodcutter))
                         {
-                            if (_e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInRelax >= 10)
+                            if (_e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInThisCondition >= 10)
                             {
                                 _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cellIdxCurrent), 1, cellIdxCurrent);
 
@@ -437,7 +510,7 @@ namespace Chessy.Model.System
             {
                 RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.Truce);
 
-                _e.ExecuteTruce();
+                _e.ExecuteTruce(this);
             }
         }
         void TryExecuteHungry()
@@ -460,7 +533,7 @@ namespace Chessy.Model.System
                                 if (_e.HpUnitC(cellIdxCurrent).Health <= 0)
                                 {
                                     KillUnit(_e.UnitPlayerT(cellIdxCurrent).NextPlayer(), cellIdxCurrent);
-                                    _e.UnitE(cellIdxCurrent).ClearEverything();
+                                    _e.UnitE(cellIdxCurrent).Dispose();
                                 }
                             }
                         }
@@ -549,6 +622,22 @@ namespace Chessy.Model.System
                                     _e.HpUnitC(cellIdxCurrent).Health = HpValues.MAX;
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        }
+        void TryGiveWaterToUnitsAroundRainy()
+        {
+            for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
+            {
+                if (_e.UnitT(cell_0).HaveUnit())
+                {
+                    if (_e.UnitT(cell_0) == UnitTypes.Snowy)
+                    {
+                        if (!_e.LessonT.HaveLesson())
+                        {
+                            RainyGiveWaterToUnitsAround(cell_0);
                         }
                     }
                 }
@@ -742,7 +831,7 @@ namespace Chessy.Model.System
                 {
                     if (_e.UnitT(cellIdxCurrent).HaveUnit())
                     {
-                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf) && _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell == 0)
+                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf) && _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell == 0)
                         {
                             var randDir = UnityEngine.Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 
@@ -751,8 +840,8 @@ namespace Chessy.Model.System
                             if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources
                                 && !_e.UnitT(idx_1).HaveUnit())
                             {
-                                _e.UnitMainC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = idx_1;
-                                _e.UnitMainC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = idx_1;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
 
 
                                 break;

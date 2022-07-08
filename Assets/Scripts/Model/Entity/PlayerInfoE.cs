@@ -1,4 +1,5 @@
 ﻿using Chessy.Model.Component;
+
 namespace Chessy.Model.Entity
 {
     public struct PlayerInfoE
@@ -18,6 +19,16 @@ namespace Chessy.Model.Entity
             BuildingsInTownInfoC = new BuildingsInTownInfoC(new bool[(byte)BuildingTypes.End]);
             ResourcesInInventoryC = new ResourcesInInventoryC(new float[(byte)ResourceTypes.End]);
             HowManyToolWeaponsInInventoryC = new HowManyToolWeaponsInInventoryC(def);
+        }
+
+        internal void Dispose()
+        {
+            PlayerInfoC = default;
+            GodInfoC = default;
+            PawnInfoC = default;
+            BuildingsInTownInfoC.Dispose();
+            ResourcesInInventoryC.Dispose();
+            HowManyToolWeaponsInInventoryC.Dispose();
         }
     }
 }

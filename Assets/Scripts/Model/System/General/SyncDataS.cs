@@ -203,14 +203,14 @@ namespace Chessy.Model.System
                     _eCopy.UnitMainC(cell_0).IsArcherDirectedToRight = _e.UnitMainC(cell_0).IsArcherDirectedToRight;
                     needUpdateCellElse = true;
                 }
-                if (_eCopy.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell != _e.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell)
+                if (_eCopy.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell != _e.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell)
                 {
-                    _eCopy.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell = _e.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell;
+                    _eCopy.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell = _e.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell;
                     needUpdateCellElse = true;
                 }
-                if (_eCopy.UnitMainC(cell_0).NeedToBackUnitOnHisCell != _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell)
+                if (_eCopy.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell != _e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell)
                 {
-                    _eCopy.UnitMainC(cell_0).NeedToBackUnitOnHisCell = _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell;
+                    _eCopy.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell = _e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell;
                     needUpdateCellElse = true;
                 }
                 if (_eCopy.HpUnit(cell_0) != _e.HpUnit(cell_0))
@@ -345,8 +345,8 @@ namespace Chessy.Model.System
                         _e.UnitPlayerT(cell_0),
                         _e.UnitConditionT(cell_0),
                         _e.IsRightArcherUnit(cell_0),
-                        _e.UnitMainC(cell_0).IdxWhereNeedShiftUnitOnOtherCell,
-                        _e.UnitMainC(cell_0).NeedToBackUnitOnHisCell,
+                        _e.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell,
+                        _e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell,
                         _e.HpUnit(cell_0),
                         _e.WaterUnit(cell_0),
                         _e.DamageSimpleAttack(cell_0),
@@ -480,8 +480,8 @@ namespace Chessy.Model.System
                     _e.UnitMainC(idxCell).PlayerT = (PlayerTypes)objects[idxCurrent++];
                     _e.UnitMainC(idxCell).ConditionT = (ConditionUnitTypes)objects[idxCurrent++];
                     _e.UnitMainC(idxCell).IsArcherDirectedToRight = (bool)objects[idxCurrent++];
-                    _e.UnitMainC(idxCell).IdxWhereNeedShiftUnitOnOtherCell = (byte)objects[idxCurrent++];
-                    _e.UnitMainC(idxCell).NeedToBackUnitOnHisCell = (bool)objects[idxCurrent++];
+                    _e.ShiftingInfoForUnitC(idxCell).IdxWhereNeedShiftUnitOnOtherCell = (byte)objects[idxCurrent++];
+                    _e.ShiftingInfoForUnitC(idxCell).NeedToBackUnitOnHisCell = (bool)objects[idxCurrent++];
                     _e.HpUnitC(idxCell).Health = (double)objects[idxCurrent++];
                     _e.WaterUnitC(idxCell).Water = (double)objects[idxCurrent++];
                     _e.UnitMainC(idxCell).DamageSimpleAttack = (double)objects[idxCurrent++];

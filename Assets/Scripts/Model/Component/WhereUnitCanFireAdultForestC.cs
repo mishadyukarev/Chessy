@@ -4,7 +4,7 @@
     {
         readonly bool[] _where;
 
-        public bool Can(in byte cellIdx) => _where[cellIdx];
+        public ref bool Can(in byte cellIdx) => ref _where[cellIdx];
         public bool[] Where => (bool[])_where.Clone();
 
         internal WhereUnitCanFireAdultForestC(in bool[] where)

@@ -4,12 +4,12 @@ using Chessy.View.Component;
 
 namespace Chessy.View.System
 {
-    sealed class SyncShieldVS : SystemViewAbstract
+    sealed class SyncShieldEffectSnowyVS : SystemViewAbstract
     {
         readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
         readonly SpriteRendererVC[] _shieldSRCs;
 
-        internal SyncShieldVS(in SpriteRendererVC[] shieldSRCs, in EntitiesModel eM) : base(eM)
+        internal SyncShieldEffectSnowyVS(in SpriteRendererVC[] shieldSRCs, in EntitiesModel eM) : base(eM)
         {
             _shieldSRCs = shieldSRCs;
         }
@@ -20,13 +20,19 @@ namespace Chessy.View.System
             {
                 _needActive[cellIdxCurrent] = false;
 
-                if (_e.UnitEffectsC(cellIdxCurrent).HaveAnyProtectionRainyMagicShield)
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
                 {
-                    if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                    var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
+
+
+                    if (_e.UnitEffectsC(dataIdxCell).HaveAnyProtectionRainyMagicShield)
                     {
-                        if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                        if (_e.UnitT(dataIdxCell).HaveUnit())
                         {
-                            _needActive[cellIdxCurrent] = true;
+                            if (_e.UnitVisibleC(dataIdxCell).IsVisible(_e.CurrentPlayerIT))
+                            {
+                                _needActive[cellIdxCurrent] = true;
+                            }
                         }
                     }
                 }

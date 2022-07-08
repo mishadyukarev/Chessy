@@ -1,9 +1,9 @@
 ﻿using Chessy.Model.Component;
 namespace Chessy.Model.Entity
 {
-    struct CellEs
+    public struct CellEs
     {
-        public CellE CellE;
+        public readonly CellE CellE;
         public AroundCellsE AroundCellsEs;
         public UnitE UnitE;
         public BuildingE BuildingE;
@@ -20,6 +20,14 @@ namespace Chessy.Model.Entity
             BuildingE = new BuildingE(default);
             RiverE = new RiverE(new bool[(byte)DirectTypes.End]);
             TrailE = new TrailE(default);
+        }
+
+        internal void Dispose()
+        {
+            EnvironmentE.Dispose();
+            TrailE.Dispose();
+            UnitE.Dispose();
+            BuildingE.Dispose();
         }
     }
 }

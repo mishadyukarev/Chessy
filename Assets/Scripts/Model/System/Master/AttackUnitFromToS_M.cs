@@ -6,9 +6,12 @@ namespace Chessy.Model.System
     {
         internal void AttackUnitFromTo(in byte idx_from, in byte idx_to)
         {
-            _e.EnergyUnitC(idx_from).Energy = 0;
             _e.SetUnitConditionT(idx_from, ConditionUnitTypes.None);
-            _e.UnitMainC(idx_from).CooldownForAttackAnyUnitInSeconds = 5;
+            _e.UnitMainC(idx_from).CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
+
+            _e.UnitMainC(idx_from).HowManySecondUnitWasHereInThisCondition = 0;
+
+
 
             if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
                 RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);

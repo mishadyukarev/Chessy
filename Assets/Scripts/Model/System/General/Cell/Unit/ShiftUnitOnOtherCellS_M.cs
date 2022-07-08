@@ -7,11 +7,41 @@ namespace Chessy.Model.System
     {
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
-            UnitSs.CopyUnitFromTo(fromCellIdx, toCellIdx);
+            var dataFromIdxCell = _e.SkinInfoUnitC(fromCellIdx).DataIdxCell;
+            var possitionFrom = _e.UnitMainC(fromCellIdx).Possition;
+
+            var dataToIdxCell = _e.SkinInfoUnitC(toCellIdx).DataIdxCell;
+            var possitionTo = _e.UnitMainC(toCellIdx).Possition;
+
+
+
+            _e.UnitE(toCellIdx) = _e.UnitE(fromCellIdx).Clone();
+            _e.UnitE(fromCellIdx).Dispose();
+
+
+
+            _e.SkinInfoUnitC(fromCellIdx).DataIdxCell = dataFromIdxCell;
+            _e.SkinInfoUnitC(toCellIdx).DataIdxCell = dataToIdxCell;  
+
+            _e.UnitMainC(fromCellIdx).Possition = possitionFrom;
+            _e.UnitMainC(toCellIdx).Possition = possitionTo;
+
+
+
+            
+
+            if(!_e.SkinInfoUnitC(toCellIdx).HaveData)
+            {
+                _e.UnitMainC(_e.SkinInfoUnitC(toCellIdx).SkinIdxCell).Possition = _e.CellE(toCellIdx).StartPositionC.Possition;
+            }
+            
+
+
             _e.SetUnitConditionT(toCellIdx, ConditionUnitTypes.None);
 
-            _e.UnitE(fromCellIdx).ClearEverything();
+            _e.UnitMainC(toCellIdx).HowManySecondUnitWasHereInThisCondition = 0;
 
+            _e.SkinInfoUnitC(_e.SkinInfoUnitC(toCellIdx).SkinIdxCell).DataIdxCell = toCellIdx;
 
             var direct = _e.AroundCellsE(fromCellIdx).Direct(toCellIdx);
 
@@ -27,14 +57,6 @@ namespace Chessy.Model.System
                         }
                     }
 
-                    //if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_DRINKING_LESSON)
-                    //{
-                    //    if (_eMG.LessonTC.Is(LessonTypes.DrinkWaterHere))
-                    //    {
-                    //        _eMG.LessonTC.SetNextLesson();
-                    //    }
-                    //}
-
                     if (toCellIdx == KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter)
                     {
                         if (_e.LessonT == LessonTypes.StepAwayFromWoodcutter)
@@ -42,17 +64,6 @@ namespace Chessy.Model.System
                              SetNextLesson();
                         }
                     }
-
-                    //if (toCellIdx == StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST)
-                    //{
-                    //    if (_eMG.LessonT == LessonTypes.ShiftPawnForFireForestHere)
-                    //    {
-                    //        if(_eMG.MainToolWeaponTC(_eMG.CurrentCellIdx).Is(ToolWeaponTypes.Axe))
-                    //        {
-                    //            _eMG.LessonTC.SetNextLesson();
-                    //        }
-                    //    }
-                    //}
 
                     if (_e.LessonT == LessonTypes.ComeToYourKing)
                     {
@@ -65,19 +76,6 @@ namespace Chessy.Model.System
                             }
                         }
                     }
-
-
-
-                    //if (_eMG.ExtraToolWeaponTC(toCellIdx).Is(ToolWeaponTypes.Pick))
-                    //{
-                    //    if (_eMG.LessonTC.Is(LessonTypes.ShiftHereWithPick))
-                    //    {
-                    //        if (toCellIdx == StartValues.CELL_FOR_SHIFT_PAWN_FOR_EXTRACING_HILL_LESSON)
-                    //        {
-                    //            _eMG.LessonTC.SetNextLesson();
-                    //        }
-                    //    }
-                    //}
                 }
 
 
@@ -109,13 +107,6 @@ namespace Chessy.Model.System
                 {
                     _e.WaterUnitC(toCellIdx).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
                 }
-
-
-                //if (_e.UnitT(toCellIdx).Is(UnitTypes.King))
-                //{
-                //    _e.PlayerInfoE(_e.UnitPlayerT(toCellIdx)).KingInfoE.CellKing = toCellIdx;
-                //}
-
             }
 
 

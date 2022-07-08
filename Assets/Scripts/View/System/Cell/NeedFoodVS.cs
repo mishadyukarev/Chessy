@@ -26,13 +26,18 @@ namespace Chessy.View.UI.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
                 {
-                    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
+                    var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
+
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
                     {
-                        if (_e.UnitPlayerT(cellIdxCurrent).Is(_e.CurrentPlayerIT))
+                        if (_e.UnitT(dataIdxCell).Is(UnitTypes.Pawn))
                         {
-                            _needActive[cellIdxCurrent] = _e.ResourcesInInventory(_e.CurrentPlayerIT, ResourceTypes.Food) < 1;
+                            if (_e.UnitPlayerT(dataIdxCell).Is(_e.CurrentPlayerIT))
+                            {
+                                _needActive[cellIdxCurrent] = _e.ResourcesInInventory(_e.CurrentPlayerIT, ResourceTypes.Food) < 1;
+                            }
                         }
                     }
                 }

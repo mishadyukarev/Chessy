@@ -93,56 +93,59 @@ namespace Chessy.Model
                 }
             }
 
-
-            if (_e.UnitT(cellIdx).HaveUnit())
+            if (_e.SkinInfoUnitC(cellIdx).HaveData)
             {
-                if (_e.UnitVisibleC(cellIdx).IsVisible(_e.CurrentPlayerIT))
+                var givenIdxCell = _e.SkinInfoUnitC(cellIdx).DataIdxCell;
+
+                if (_e.UnitT(givenIdxCell).HaveUnit())
                 {
-                    var isSelectedCell = cellIdx == _e.SelectedCellIdx;
-
-                    var nextPlayer = _e.UnitPlayerT(cellIdx).NextPlayer();
-                    var isVisibleForNextPlayer = _e.UnitVisibleC(cellIdx).IsVisible(nextPlayer);
-
-
-
-                    var unitT = _e.UnitT(cellIdx);
-
-                    _needColorUnit[(byte)unitT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
-
-
-
-                    if (unitT == UnitTypes.Pawn)
+                    if (_e.UnitVisibleC(givenIdxCell).IsVisible(_e.CurrentPlayerIT))
                     {
-                        if (_e.MainToolWeaponT(cellIdx).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                        var isSelectedCell = givenIdxCell == _e.SelectedCellIdx;
+
+                        var nextPlayer = _e.UnitPlayerT(givenIdxCell).NextPlayer();
+                        var isVisibleForNextPlayer = _e.UnitVisibleC(givenIdxCell).IsVisible(nextPlayer);
+
+
+
+                        var unitT = _e.UnitT(givenIdxCell);
+
+                        _needColorUnit[(byte)unitT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+
+
+
+                        if (unitT == UnitTypes.Pawn)
                         {
-                            _needActiveBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.IsRightArcherUnit(cellIdx) ? 0 : 1] = true;
-                            _needColorBowCrossbow[_e.MainTWLevelT(cellIdx)][_e.IsRightArcherUnit(cellIdx) ? 0 : 1] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            if (_e.MainToolWeaponT(givenIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                            {
+                                _needActiveBowCrossbow[_e.MainTWLevelT(givenIdxCell)][_e.IsRightArcherUnit(givenIdxCell) ? 0 : 1] = true;
+                                _needColorBowCrossbow[_e.MainTWLevelT(givenIdxCell)][_e.IsRightArcherUnit(givenIdxCell) ? 0 : 1] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            }
+                            else
+                            {
+                                var v = _e.MainTWLevelT(givenIdxCell);
+                                var vv = _e.MainToolWeaponT(givenIdxCell);
+
+                                _needActiveMainTW[_e.MainTWLevelT(givenIdxCell)][(byte)_e.MainToolWeaponT(givenIdxCell)] = true;
+                                _needColorMainTW[_e.MainTWLevelT(givenIdxCell)][(byte)_e.MainToolWeaponT(givenIdxCell)] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            }
+
+                            if (_e.ExtraToolWeaponT(givenIdxCell).HaveToolWeapon())
+                            {
+                                var twT = _e.ExtraToolWeaponT(givenIdxCell);
+                                var levT = _e.ExtraTWLevelT(givenIdxCell);
+
+                                _needActiveExtraTW[levT][(byte)twT] = true;
+                                _needColorExtraTW[levT][(byte)twT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            }
                         }
                         else
                         {
-                            var v = _e.MainTWLevelT(cellIdx);
-                            var vv = _e.MainToolWeaponT(cellIdx);
-
-                            _needActiveMainTW[_e.MainTWLevelT(cellIdx)][(byte)_e.MainToolWeaponT(cellIdx)] = true;
-                            _needColorMainTW[_e.MainTWLevelT(cellIdx)][(byte)_e.MainToolWeaponT(cellIdx)] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
+                            _needActiveUnit[(byte)unitT] = true;
                         }
-
-                        if (_e.ExtraToolWeaponT(cellIdx).HaveToolWeapon())
-                        {
-                            var twT = _e.ExtraToolWeaponT(cellIdx);
-                            var levT = _e.ExtraTWLevelT(cellIdx);
-
-                            _needActiveExtraTW[levT][(byte)twT] = true;
-                            _needColorExtraTW[levT][(byte)twT] = isVisibleForNextPlayer ? ColorsValues.ColorStandart : ColorsValues.ColorTransparent;
-                        }
-                    }
-                    else
-                    {
-                        _needActiveUnit[(byte)unitT] = true;
                     }
                 }
             }
-
 
 
 

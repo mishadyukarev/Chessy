@@ -1,16 +1,18 @@
 ﻿using Chessy.Model.Values;
+using UnityEngine;
+
 namespace Chessy.Model.System
 {
     public partial class SystemsModel
     {
-        internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte cellIdxForSetting)
+        internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte forSettingCellIdx)
         {
-            _e.UnitMainC(cellIdxForSetting).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
-            _e.UnitE(cellIdxForSetting).SetStats(HpValues.MAX, 1, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
-            _e.UnitExtraTWC(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
-            _e.UnitEffectsC(cellIdxForSetting).Set(0, 0, false);
+            _e.UnitMainC(forSettingCellIdx).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
+            _e.UnitE(forSettingCellIdx).SetStats(HpValues.MAX, 1, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
+            _e.UnitExtraTWC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
+            _e.UnitEffectsC(forSettingCellIdx).Set(0, 0, false);
 
-            if (_e.UnitT(cellIdxForSetting).Is(UnitTypes.Pawn))
+            if (_e.UnitT(forSettingCellIdx).Is(UnitTypes.Pawn))
             {
                 _e.PawnPeopleInfoC(playerT).AmountInGame++;
             }
@@ -21,7 +23,7 @@ namespace Chessy.Model.System
             {
                 _e.PawnPeopleInfoC(playerT).PeopleInCity--;
 
-                _e.MainToolWeaponC(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
+                _e.MainToolWeaponC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.Axe, LevelTypes.First);
             }
 
             else
@@ -38,7 +40,31 @@ namespace Chessy.Model.System
                     _e.PlayerInfoC(playerT).HaveKingInInventor = false;
                 }
 
-                _e.MainToolWeaponC(cellIdxForSetting).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
+                _e.MainToolWeaponC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None);
+            }
+
+            for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
+            {
+                if (_e.IsBorder(currentCellIdx)) continue;
+
+                if (!_e.SkinInfoUnitC(currentCellIdx).HaveData)
+                {
+                    _e.SkinInfoUnitC(currentCellIdx).DataIdxCell = forSettingCellIdx;
+                    _e.SkinInfoUnitC(forSettingCellIdx).SkinIdxCell = currentCellIdx;
+
+
+                    //var pos_0 = _e.CellE(currentCellIdx).StartPositionC.Possition;
+                    //var pos_1 = _e.CellE(forSettingCellIdx).StartPositionC.Possition;
+
+                    //var t = _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
+
+                    //_e.UnitMainC(currentCellIdx).Possition = Vector3.Lerp(pos_0, pos_1, 1);
+
+
+                    _e.UnitMainC(currentCellIdx).Possition = _e.CellE(forSettingCellIdx).StartPositionC.Possition;
+
+                    break;
+                }
             }
         }
     }

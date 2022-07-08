@@ -25,7 +25,7 @@ namespace Chessy.Model.System
 
 
             _e.DataFromViewC.AnimationCell(_e.CurrentCellIdx, AnimationCellTypes.AdultForest).Invoke();
-            _e.DataFromViewC.AnimationCell(_e.CurrentCellIdx, AnimationCellTypes.JumpAppearanceUnit).Invoke();
+            _e.DataFromViewC.AnimationCell(_e.SkinInfoUnitC(_e.CurrentCellIdx).SkinIdxCell, AnimationCellTypes.JumpAppearanceUnit).Invoke();
 
 
 

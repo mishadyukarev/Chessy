@@ -24,20 +24,25 @@ namespace Chessy.View.System
                 _needActive[cellIdxCurrent] = false;
                 _needColor[cellIdxCurrent] = Color.white;
 
-                if (_e.UnitVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
                 {
-                    if (_e.UnitT(cellIdxCurrent).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
-                    {
-                        if (_e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Protected)
-                        {
-                            _needActive[cellIdxCurrent] = true;
-                            _needColor[cellIdxCurrent] = Color.yellow;
-                        }
+                    var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
 
-                        else if (_e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.Relaxed)
+                    if (_e.UnitVisibleC(dataIdxCell).IsVisible(_e.CurrentPlayerIT))
+                    {
+                        if (_e.UnitT(dataIdxCell).HaveUnit() && !_e.UnitT(dataIdxCell).IsAnimal())
                         {
-                            _needActive[cellIdxCurrent] = true;
-                            _needColor[cellIdxCurrent] = Color.green;
+                            if (_e.UnitConditionT(dataIdxCell) == ConditionUnitTypes.Protected)
+                            {
+                                _needActive[cellIdxCurrent] = true;
+                                _needColor[cellIdxCurrent] = Color.yellow;
+                            }
+
+                            else if (_e.UnitConditionT(dataIdxCell) == ConditionUnitTypes.Relaxed)
+                            {
+                                _needActive[cellIdxCurrent] = true;
+                                _needColor[cellIdxCurrent] = Color.green;
+                            }
                         }
                     }
                 }

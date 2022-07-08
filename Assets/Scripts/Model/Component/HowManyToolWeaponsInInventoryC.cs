@@ -19,5 +19,16 @@ namespace Chessy.Model
         internal void Set(in ToolsWeaponsWarriorTypes twT, LevelTypes levelT, in int amount) => _toolWeapons[twT][(byte)levelT] = amount;
         internal void Subtract(in ToolsWeaponsWarriorTypes twT, LevelTypes levelT, in int subtraction = 1) => _toolWeapons[twT][(byte)levelT] -= subtraction;
         internal void Add(in ToolsWeaponsWarriorTypes twT, LevelTypes levelT, in int adding = 1) => _toolWeapons[twT][(byte)levelT] += adding;
+
+        internal void Dispose()
+        {
+            for (var toolWeaponT = (ToolsWeaponsWarriorTypes)1; toolWeaponT < ToolsWeaponsWarriorTypes.End; toolWeaponT++)
+            {
+                for (int i = 0; i < _toolWeapons[toolWeaponT].Length; i++)
+                {
+                    _toolWeapons[toolWeaponT][i] = 0;
+                }
+            }
+        }
     }
 }

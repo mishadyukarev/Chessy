@@ -36,7 +36,7 @@ namespace Chessy.Model.System
                             break;
 
                         case AbilityTypes.CircularAttack:
-                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.CurcularAttackKingM), cellIdxSelected });
+                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.CircularAttackKingM), cellIdxSelected });
                             break;
 
                         case AbilityTypes.StunElfemale:
