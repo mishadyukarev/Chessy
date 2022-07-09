@@ -1,4 +1,5 @@
 ﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
@@ -26,7 +27,7 @@ namespace Chessy.Model.System
             {
                 if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdxStart) == playerBotT)
                 {
-                    foreach (var cellIdxDirect in _e.AroundCellsE(cellIdxStart).CellsAround)
+                    foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdxStart, DistanceFromCellTypes.First))
                     {
                         if (_e.UnitT(cellIdxDirect).HaveUnit())
                         {

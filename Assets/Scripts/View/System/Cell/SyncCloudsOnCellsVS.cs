@@ -25,7 +25,7 @@ namespace Chessy.View.System
             {
                 if (_e.HaveCloud(cellIdxCurrent))
                 {
-                    _needActive[/*_e.CloudWhereSkinDataOnCell(*/cellIdxCurrent/*).SkinIdxCell*/] = true;
+                    _needActive[_e.CloudWhereSkinDataOnCell(cellIdxCurrent).SkinIdxCell] = true;
                 }
             }
 

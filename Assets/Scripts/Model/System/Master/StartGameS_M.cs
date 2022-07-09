@@ -16,11 +16,8 @@ namespace Chessy.Model.System
             _e.WeatherE.WindC = new WindC() { DirectT = StartGameValues.DIRECT_WIND, Speed = StartGameValues.SPEED_WIND };
             _e.SunSideT = StartGameValues.SUN_SIDE;
 
-            _e.CloudC(StartGameValues.CLOUD_CELL_INDEX).SetCloud(true);
-            foreach (var cellIdxNext in _e.CellsAround(StartGameValues.CLOUD_CELL_INDEX))
-            {
-                _e.CloudC(cellIdxNext).SetCloud(false);
-            }
+
+            SetClouds(StartGameValues.CLOUD_CELL_INDEX);
 
 
             _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartGameValues.SELECTED_TOOL_WEAPON, StartGameValues.SELECTED_LEVEL_TOOL_WEAPON);
@@ -139,7 +136,7 @@ namespace Chessy.Model.System
                         {
                             if (_e.HaveRiverC(cell_0).HaveRive(dir))
                             {
-                                var idx_next = _e.GetIdxCellByDirect(cell_0, dir);
+                                var idx_next = _e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dir);
 
                                 _e.SetRiverT(idx_next, RiverTypes.EndRiver);
                             }
@@ -147,7 +144,7 @@ namespace Chessy.Model.System
 
                         foreach (var dir in corners)
                         {
-                            var idx_next = _e.GetIdxCellByDirect(cell_0, dir);
+                            var idx_next = _e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dir);
 
                             _e.SetRiverT(idx_next, RiverTypes.Corner);
                         }
@@ -169,11 +166,11 @@ namespace Chessy.Model.System
                         {
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var idx_1 = _e.GetIdxCellByDirect(cell_0, dirT);
+                                var idx_1 = _e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dirT);
 
                                 if (UnityEngine.Random.Range(0f, 1f) <= 0.7)
                                 {
-                                    if (!_e.MountainC(_e.GetIdxCellByDirect(cell_0, dirT)).HaveAnyResources && !_e.HaveBuildingOnCell(idx_1))
+                                    if (!_e.MountainC(_e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dirT)).HaveAnyResources && !_e.HaveBuildingOnCell(idx_1))
                                     {
                                         _e.HillC(idx_1).Resources = UnityEngine.Random.Range(0.5f, 1f);
                                     }
@@ -263,6 +260,33 @@ namespace Chessy.Model.System
             }
 
             GetDataCellsS.GetDataCellsM();
+        }
+
+        internal void SetClouds(in byte centerCellIdx)
+        {
+            _e.CloudC(centerCellIdx).SetCloud(true);
+            SetDataAndSkinCloud(centerCellIdx);
+
+            foreach (var cellIdxNext in _e.IdxsCellsAround(centerCellIdx, DistanceFromCellTypes.First))
+            {
+                _e.CloudC(cellIdxNext).SetCloud(false);
+
+                SetDataAndSkinCloud(cellIdxNext);
+            }
+
+            void SetDataAndSkinCloud(in byte cellIdx)
+            {
+                for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
+                {
+                    if (_e.IsBorder(currentCellIdx)) continue;
+                    if (_e.CloudWhereSkinDataOnCell(currentCellIdx).HaveData) continue;
+
+                    _e.CloudWhereSkinDataOnCell(currentCellIdx).DataIdxCell = cellIdx;
+                    _e.CloudWhereSkinDataOnCell(cellIdx).SkinIdxCell = currentCellIdx;
+
+                    break;
+                }
+            }
         }
     }
 }

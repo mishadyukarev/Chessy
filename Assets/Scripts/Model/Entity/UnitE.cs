@@ -8,6 +8,7 @@ namespace Chessy.Model
     public struct UnitE
     {
         public UnitOnCellC MainC;
+        public PositionC PositionC;
         public HealthC HealthC;
         public EnergyC EnergyC;
         public WaterAmountC WaterC;
@@ -36,6 +37,7 @@ namespace Chessy.Model
         internal UnitE(in bool def)
         {
             MainC = default;
+            PositionC = default;
             HealthC = default;
             EnergyC = default;
             WaterC = default;

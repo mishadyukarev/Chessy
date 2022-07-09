@@ -90,12 +90,12 @@ namespace Chessy.Model.System
                     {
                         if (stream.IsWriting)
                         {
-                            stream.SendNext(_e.UnitMainC(_cellIdx).Possition);
+                            stream.SendNext(_e.UnitPossitionOnCell(_cellIdx));
                         }
 
                         else
                         {
-                            _e.UnitMainC(_cellIdx).Possition = (Vector3)stream.ReceiveNext();
+                            _e.UnitPossitionOnCellC(_cellIdx).Position = (Vector3)stream.ReceiveNext();
                         }
                     }
                     break;

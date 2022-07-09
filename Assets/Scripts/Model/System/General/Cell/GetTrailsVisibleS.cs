@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 
 namespace Chessy.Model.System
 {
@@ -20,7 +21,7 @@ namespace Chessy.Model.System
 
                         for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
                         {
-                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, dir);
+                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, DistanceFromCellTypes.First, dir);
 
                             if (_e.UnitT(idx_1).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                             {

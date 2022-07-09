@@ -61,7 +61,7 @@ namespace Chessy.Model.System
                     //_e.UnitMainC(currentCellIdx).Possition = Vector3.Lerp(pos_0, pos_1, 1);
 
 
-                    _e.UnitMainC(currentCellIdx).Possition = _e.CellE(forSettingCellIdx).StartPositionC.Possition;
+                    _e.UnitPossitionOnCellC(currentCellIdx).Position = _e.CellE(forSettingCellIdx).PositionC.Position;
 
                     break;
                 }

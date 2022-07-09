@@ -3,16 +3,16 @@
     public struct ShiftingObjectC
     {
         public bool NeedReturnBack { get; internal set; }
-        public byte WhereIdxCell { get; internal set; }
+        public byte WhereNeedShiftIdxCell { get; internal set; }
         public float Distance { get; internal set; }
 
-        public bool IsShiftingUnit => WhereIdxCell != 0;
+        public bool IsShiftingUnit => WhereNeedShiftIdxCell != 0;
         public bool IsIdle => !IsShiftingUnit;
 
         internal void Dispose()
         {
             NeedReturnBack = default;
-            WhereIdxCell = default;
+            WhereNeedShiftIdxCell = default;
             Distance = default;
         }
     }

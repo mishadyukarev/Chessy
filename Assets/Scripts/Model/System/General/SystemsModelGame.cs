@@ -90,7 +90,7 @@ namespace Chessy.Model.System
 
         internal void RainyGiveWaterToUnitsAround(in byte cellIdx)
         {
-            foreach (var cellIdxDirect in _e.AroundCellsE(cellIdx).CellsAround)
+            foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdx, DistanceFromCellTypes.First))
             {
                 if (_e.UnitT(cellIdxDirect).HaveUnit())
                 {

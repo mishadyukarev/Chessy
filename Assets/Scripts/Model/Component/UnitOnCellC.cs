@@ -13,7 +13,6 @@ namespace Chessy.Model.Component
         public double DamageOnCell { get; internal set; }
         public int HowManySecondUnitWasHereInThisCondition { get; internal set; }
         public int CooldownForAttackAnyUnitInSeconds { get; internal set; }
-        public Vector3 Possition { get; internal set; }
 
         public bool HaveCoolDownForAttackAnyUnit => CooldownForAttackAnyUnitInSeconds > 0;
     }

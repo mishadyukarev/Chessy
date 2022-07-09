@@ -4,6 +4,8 @@ using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+
 namespace Chessy.Model.Entity
 {
     public sealed class EntitiesModel
@@ -194,6 +196,7 @@ namespace Chessy.Model.Entity
 
         public CellE CellE(in byte cell) => CellEs(cell).CellE;
         public CellC CellC(in byte cellIdx) => CellE(cellIdx).CellC;
+        public PositionC CellPossitionC(in byte cellIdx) => CellE(cellIdx).PositionC;
         public IsStartedCellC IsStartedCellC(in byte cell) => CellE(cell).IsStartedCellC;
         public IdxCellC IdxCellC(in byte cellIdx) => CellE(cellIdx).IdxCellC;
         public byte IdxCell(in byte cellIdx) => IdxCellC(cellIdx).Idx;
@@ -205,21 +208,65 @@ namespace Chessy.Model.Entity
         public int InstanceID(in byte cell) => CellC(cell).InstanceID;
 
 
-        public AroundCellsE AroundCellsE(in byte cell) => CellEs(cell).AroundCellsE;
-        public byte[] CellsAround(in byte cellIdx) => AroundCellsE(cellIdx).CellsAround;
-        public CellAroundE CellAroundE(in byte cellIdx, in DirectTypes dirT) => AroundCellsE(cellIdx).AroundCellE(dirT);
-        public XyCellC XyCellAroundC(in byte cellIdx, in DirectTypes dirT) => CellAroundE(cellIdx, dirT).XyC;
-        public byte[] XyCellByDirection(in byte cellIdx, in DirectTypes dirT) => XyCellAroundC(cellIdx, dirT).Xy;
-        public IdxCellC IdxCellAroundC(in byte cellIdx, in DirectTypes dirT) => CellAroundE(cellIdx, dirT).IdxC;
-        public byte GetIdxCellByDirect(in byte cellIdx, in DirectTypes dirT) => IdxCellAroundC(cellIdx, dirT).Idx;
+        #region Around
+
+        public ref CellAroundE AroundCellE(in byte cell, in byte cellIdx) => ref CellEs(cell).AroundCellE(cellIdx);
+
+        public ref CellAroundC CellAroundC(in byte cellIdx, in byte nextCellIdx) => ref AroundCellE(cellIdx, nextCellIdx).CellAroundC;
+        public DirectTypes DirectionAround(in byte cellIdx, in byte nextCellIdx) => CellAroundC(cellIdx, nextCellIdx).DirectT;
+        public DistanceFromCellTypes DistanceAround(in byte cellIdx, in byte nextCellIdx) => CellAroundC(cellIdx, nextCellIdx).LevelFromCellT;
+        public XyCellC XyCellAroundC(in byte cellIdx, in byte nextCellIdx) => AroundCellE(cellIdx, nextCellIdx).XyC;
+        public byte[] XyCellByDirection(in byte cellIdx, in byte nextCellIdx) => XyCellAroundC(cellIdx, nextCellIdx).Xy;
+        public IdxCellC IdxCellAroundC(in byte cellIdx, in byte nextCellIdx) => AroundCellE(cellIdx, nextCellIdx).IdxC;
+        public byte IdxCellAround(in byte cellIdx, in byte nextCellIdx) => IdxCellAroundC(cellIdx, nextCellIdx).Idx;
+
+
+
+        public byte[] IdxsCellsAround(in byte startCellIdx, in DistanceFromCellTypes levelT)
+        {
+            var cells = new byte[IndexCellsValues.CELLS];
+            for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
+            {
+                if (CellAroundC(startCellIdx, currentCellIdx).LevelFromCellT == levelT)
+                {
+                    for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
+                    {
+                        if (CellAroundC(startCellIdx, currentCellIdx).DirectT == directT)
+                        {
+                            cells[currentCellIdx] = IdxCellAroundC(startCellIdx, currentCellIdx).Idx;
+                        }
+                    }
+                }
+            }
+
+            return cells;
+        }
+        public byte GetIdxCellByDirect(in byte startCellIdx, in DistanceFromCellTypes distanceT, in DirectTypes dirT)
+        {
+            for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
+            {
+                if (DistanceAround(startCellIdx, currentCellIdx) == distanceT)
+                {
+                    if (DirectionAround(startCellIdx, currentCellIdx) == dirT)
+                    {
+                        return currentCellIdx;
+                    }
+                }
+            }
+
+            throw new Exception();
+        }
+
+        #endregion
 
 
         public ref CloudOnCellE CloudOnCellE(in byte cellIdx) => ref CellEs(cellIdx).CloudE;
-        public ref WherSkinAndWhereDataInfoC CloudWhereSkinDataOnCell(in byte cellIdx) => ref CloudOnCellE(cellIdx).WherSkinAndWhereDataInfoC;
+        public ref WherSkinAndWhereDataInfoC CloudWhereSkinDataOnCell(in byte cellIdx) => ref CloudOnCellE(cellIdx).WhereSkinAndWhereDataInfoC;
         public ref CloudC CloudC(in byte cell) => ref CloudOnCellE(cell).CloudC;
         public bool HaveCloud(in byte cellIdx) => CloudC(cellIdx).HaveCloud;
         public bool IsCenterCloud(in byte cellIdx) => CloudC(cellIdx).IsCenter;
         public ref ShiftingObjectC CloudShiftingC(in byte cellIdx) => ref CloudOnCellE(cellIdx).ShiftingC;
+        public ref PositionC CloudPossitionC(in byte cellIdx) => ref CloudOnCellE(cellIdx).PositionC;
 
 
         #region Unit
@@ -242,6 +289,9 @@ namespace Chessy.Model.Entity
         public ref ShiftingObjectC ShiftingInfoForUnitC(in byte cellIdx) => ref UnitE(cellIdx).ShiftingInfoForUnitC;
 
         public ref WherSkinAndWhereDataInfoC SkinInfoUnitC(in byte cellIdx) => ref UnitE(cellIdx).SkinInfoUnitC;
+
+        public ref PositionC UnitPossitionOnCellC(in byte cellIdx) => ref UnitE(cellIdx).PositionC;
+        public Vector3 UnitPossitionOnCell(in byte cellIdx) => UnitPossitionOnCellC(cellIdx).Position;
 
         public VisibleToOtherPlayerOrNotC UnitVisibleC(in byte cell) => UnitE(cell).VisibleToOtherPlayerOrNotC;
         public CanSetUnitHereC CanSetUnitHereC(in byte cell) => UnitE(cell).CanSetUnitHereC;

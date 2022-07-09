@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
@@ -20,7 +21,7 @@ namespace Chessy.Model.System
                 {
                     if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.King))
                     {
-                        foreach (var cellIdxNext in _e.AroundCellsE(cellIdxCurrent).CellsAround)
+                        foreach (var cellIdxNext in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
                         {
                             _e.HasKingEffectHereC(cellIdxNext).Set(_e.UnitPlayerT(cellIdxCurrent), true);
                         }

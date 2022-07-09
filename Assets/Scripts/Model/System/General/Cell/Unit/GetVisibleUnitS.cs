@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
@@ -27,7 +28,7 @@ namespace Chessy.Model.System
 
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var cell_1 = _e.GetIdxCellByDirect(cellIdxCurrent, dirT);
+                                var cell_1 = _e.GetIdxCellByDirect(cellIdxCurrent, DistanceFromCellTypes.First, dirT);
 
                                 if (_e.UnitT(cell_1).HaveUnit())
                                 {
@@ -47,7 +48,7 @@ namespace Chessy.Model.System
                         {
                             var isVisibledNextPlayer = false;
 
-                            foreach (var idx_1 in _e.AroundCellsE(cellIdxCurrent).CellsAround)
+                            foreach (var idx_1 in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
                             {
                                 if (_e.UnitT(idx_1).HaveUnit())
                                 {

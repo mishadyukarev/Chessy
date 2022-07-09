@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
@@ -23,7 +24,7 @@ namespace Chessy.Model.System
                             _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
 
 
-                            foreach (var idx_1 in _e.AroundCellsE(cell_to).CellsAround)
+                            foreach (var idx_1 in _e.IdxsCellsAround(cell_to, DistanceFromCellTypes.First))
                             {
                                 if (_e.AdultForestC(idx_1).HaveAnyResources)
                                 {

@@ -8,10 +8,10 @@ namespace Chessy.Model.System
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
             var dataFromIdxCell = _e.SkinInfoUnitC(fromCellIdx).DataIdxCell;
-            var possitionFrom = _e.UnitMainC(fromCellIdx).Possition;
+            var possitionFrom = _e.UnitPossitionOnCellC(fromCellIdx).Position;
 
             var dataToIdxCell = _e.SkinInfoUnitC(toCellIdx).DataIdxCell;
-            var possitionTo = _e.UnitMainC(toCellIdx).Possition;
+            var possitionTo = _e.UnitPossitionOnCellC(toCellIdx).Position;
 
 
 
@@ -23,8 +23,8 @@ namespace Chessy.Model.System
             _e.SkinInfoUnitC(fromCellIdx).DataIdxCell = dataFromIdxCell;
             _e.SkinInfoUnitC(toCellIdx).DataIdxCell = dataToIdxCell;  
 
-            _e.UnitMainC(fromCellIdx).Possition = possitionFrom;
-            _e.UnitMainC(toCellIdx).Possition = possitionTo;
+            _e.UnitPossitionOnCellC(fromCellIdx).Position = possitionFrom;
+            _e.UnitPossitionOnCellC(toCellIdx).Position = possitionTo;
 
 
 
@@ -32,7 +32,7 @@ namespace Chessy.Model.System
 
             if(!_e.SkinInfoUnitC(toCellIdx).HaveData)
             {
-                _e.UnitMainC(_e.SkinInfoUnitC(toCellIdx).SkinIdxCell).Possition = _e.CellE(toCellIdx).StartPositionC.Possition;
+                _e.UnitPossitionOnCellC(_e.SkinInfoUnitC(toCellIdx).SkinIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
             }
             
 
@@ -43,7 +43,7 @@ namespace Chessy.Model.System
 
             _e.SkinInfoUnitC(_e.SkinInfoUnitC(toCellIdx).SkinIdxCell).DataIdxCell = toCellIdx;
 
-            var direct = _e.AroundCellsE(fromCellIdx).Direct(toCellIdx);
+            var directT = _e.DirectionAround(fromCellIdx, toCellIdx);
 
             if (!_e.UnitT(toCellIdx).Is(UnitTypes.Undead))
             {
@@ -67,7 +67,7 @@ namespace Chessy.Model.System
 
                     if (_e.LessonT == LessonTypes.ComeToYourKing)
                     {
-                        foreach (var cellIdx in _e.AroundCellsE(toCellIdx).CellsAround)
+                        foreach (var cellIdx in _e.IdxsCellsAround(toCellIdx, DistanceFromCellTypes.First))
                         {
                             if (_e.UnitT(cellIdx) == UnitTypes.King && _e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(toCellIdx))
                             {
@@ -94,11 +94,11 @@ namespace Chessy.Model.System
 
                 if (_e.AdultForestC(fromCellIdx).HaveAnyResources)
                 {
-                    _e.HealthTrail(fromCellIdx).Health(direct) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
+                    _e.HealthTrail(fromCellIdx).Health(directT) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }
                 if (_e.AdultForestC(toCellIdx).HaveAnyResources)
                 {
-                    var dirTrail = direct.Invert();
+                    var dirTrail = directT.Invert();
 
                     _e.HealthTrail(toCellIdx).Health(dirTrail) = ValuesChessy.HEALTH_TRAIL_ANY_TRAIL;
                 }

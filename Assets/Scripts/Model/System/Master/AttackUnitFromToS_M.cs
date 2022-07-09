@@ -31,7 +31,7 @@ namespace Chessy.Model.System
             var powerDam_to = _e.DamageSimpleAttack(idx_to);
 
 
-            var dirAttack = _e.AroundCellsE(idx_from).Direct(idx_to);
+            var dirAttack = _e.DirectionAround(idx_from, idx_to);
 
             if (_e.SunSideT.IsAcitveSun())
             {
@@ -124,21 +124,6 @@ namespace Chessy.Model.System
                     _e.UnitEffectsC(idx_from).HaveFrozenArrawArcher = false;
                     _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_FROZEN_ARRAW_PAWN;
                 }
-                //else if (_e.UnitT(idx_from) == UnitTypes.Snowy)
-                //{
-                //    if (_snowyArrow <= 0)
-                //    {
-                //        _e.UnitEffectsC(idx_from).HaveFrozenArrawArcher;
-
-                //        _e.UnitEffectsC(idx_to).StunHowManyUpdatesNeedStay = 1;
-
-                //        _snowyArrow = ValuesChessy.RAINY_COOLDOWN_FROZEN_ARRAW;
-                //    }
-                //    else
-                //    {
-                //        _snowyArrow--;
-                //    }
-                //}
             }
 
             if (_e.UnitEffectsC(idx_to).ProtectionRainyMagicShield >= 1)

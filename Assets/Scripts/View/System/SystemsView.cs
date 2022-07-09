@@ -1,5 +1,6 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.System;
 using Chessy.Model.Values;
 using Chessy.View.Component;
@@ -156,52 +157,36 @@ namespace Chessy.View.System
             {
                 var whereSkinIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).SkinIdxCell;
 
-                if ( _e.UnitMainC(whereSkinIdxCell).Possition.magnitude > 0)
+                if ( _e.UnitPossitionOnCellC(whereSkinIdxCell).Position.magnitude > 0)
                 {
-                    _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitMainC(whereSkinIdxCell).Possition, t);
+                    _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitPossitionOnCellC(whereSkinIdxCell).Position, t);
+                }
+
+
+
+                if (_e.HaveCloud(cellIdxCurrent))
+                {
+                    whereSkinIdxCell = _e.CloudWhereSkinDataOnCell(cellIdxCurrent).SkinIdxCell;
+
+                    var nextPos = _e.CloudPossitionC(whereSkinIdxCell).Position;
+
+                    _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position, nextPos, t);
+
+                    //foreach (var nextCellIdx in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
+                    //{
+                    //    whereSkinIdxCell = _e.CloudWhereSkinDataOnCell(nextCellIdx).SkinIdxCell;
+
+                    //    nextPos = _e.CellE(_e.GetIdxCellByDirect(nextCellIdx, DistanceFromCellTypes.First, _e.DirectWindT)).StartPositionC.Possition;
+
+                    //    //if (nextPos.magnitude > 0)
+                    //    //{
+                    //    _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position, nextPos, t);
+                    //    //}
+                    //}
+
+
                 }
             }
-
-
-
-            //var centerCloudIdxCell = _e.CenterCloudCellIdx;
-
-            //var whereSkinsIdxCells = new List<byte>();
-            //var whereDataIdxCells = new List<byte>();
-            //var whereNeedShiftIdxCells = new List<byte>();
-
-
-            //whereSkinsIdxCells.Add(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell);
-            //whereDataIdxCells.Add(centerCloudIdxCell);
-            //whereNeedShiftIdxCells.Add(_e.CloudC.WhereNeedShiftCloudIdxCell);
-
-            //foreach (var currentCellIdx in _e.AroundCellsE(centerCloudIdxCell).CellsAround)
-            //{
-            //    whereSkinsIdxCells.Add(_e.CloudWhereSkinDataOnCell(currentCellIdx).SkinIdxCell);
-            //    whereDataIdxCells.Add(currentCellIdx);
-            //}
-
-            //foreach (var currentCellIdx in _e.AroundCellsE(_e.CloudC.WhereNeedShiftCloudIdxCell).CellsAround)
-            //{
-            //    whereNeedShiftIdxCells.Add(currentCellIdx);
-            //}
-
-            //for (var i = 0; i < whereSkinsIdxCells.Count; i++)
-            //{
-
-            //}
-
-            //var pos_0 = _e.CellE(centerCloudIdxCell).StartPositionC.Possition;
-            //var pos_1 = _e.CellE(_e.CloudC.WhereNeedShiftCloudIdxCell).StartPositionC.Possition;
-
-            //var nextPos = _e.CellE(_e.CloudC.WhereNeedShiftCloudIdxCell).StartPositionC.Possition;
-
-            //_eV.CellEs(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell).CloudSRC.Transform.position = nextPos;
-
-            //if (nextPos.magnitude > 0)
-            //{
-            //    _eV.CellEs(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell).CloudSRC.Transform.position = _e.CellE(_e.CloudC.WhereNeedShiftCloudIdxCell).StartPositionC.Possition;//Vector3.Lerp(_eV.CellEs(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell).CloudSRC.Transform.position, nextPos, t);
-            //}
         }
     }
 }

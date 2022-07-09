@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
@@ -7,89 +8,84 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
             {
-                if (_e.UnitT(cellIdxCell).HaveUnit() && !_e.ShiftingInfoForUnitC(cellIdxCell).IsShiftingUnit)
+                if (_e.UnitEffectsC(cellIdxCell).IsStunned) continue;
+                if (!_e.UnitT(cellIdxCell).HaveUnit() && _e.ShiftingInfoForUnitC(cellIdxCell).IsShiftingUnit) continue;
+
+
+                if (!_e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)))
                 {
-                    if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
+                    foreach (var idx_1 in _e.IdxsCellsAround(cellIdxCell, DistanceFromCellTypes.First))
                     {
-                        //if (_e.EnergyUnitC(cellIdxCell).HaveAnyEnergy)
-                        //{
-                            if (!_e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)))
+                        var directShotingT = _e.DirectionAround(cellIdxCell, idx_1);
+
+                        var isRight_0 = _e.IsRightArcherUnit(cellIdxCell);
+
+                        if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources)
+                        {
+                            if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
                             {
-                                for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
+                                if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
                                 {
-                                    var idx_1 = _e.GetIdxCellByDirect(cellIdxCell, dir_1);
-
-                                    var isRight_0 = _e.IsRightArcherUnit(cellIdxCell);
-
-                                    if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources)
+                                    if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                                     {
-                                        if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
+                                        if (isRight_0)
                                         {
-                                            if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
+                                            if (directShotingT == DirectTypes.Left || directShotingT == DirectTypes.Right || directShotingT == DirectTypes.Up || directShotingT == DirectTypes.Down)
                                             {
-                                                if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
-                                                {
-                                                    if (isRight_0)
-                                                    {
-                                                        if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
-                                                        {
-                                                            _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
-                                                        }
-                                                        else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
-                                                    }
-                                                    else
-                                                    {
-                                                        if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
-                                                        {
-                                                            _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
-                                                        }
-                                                        else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
-                                                }
+                                                _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                             }
+                                            else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                         }
-
-                                        var idx_2 = _e.GetIdxCellByDirect(idx_1, dir_1);
-
-
-                                        if (_e.UnitT(idx_2).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_2).IsShiftingUnit && !_e.UnitT(idx_2).IsAnimal()
-                                            && _e.UnitVisibleC(idx_2).IsVisible(_e.UnitPlayerT(cellIdxCell))
-                                            && !_e.UnitPlayerT(idx_2).Is(_e.UnitPlayerT(cellIdxCell)))
+                                        else
                                         {
-                                            if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                                            if (directShotingT == DirectTypes.DownLeft || directShotingT == DirectTypes.LeftUp || directShotingT == DirectTypes.UpRight || directShotingT == DirectTypes.RightDown)
                                             {
-                                                if (!isRight_0)
-                                                {
-                                                    if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.LeftUp || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.RightDown)
-                                                    {
-                                                        _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_2, true);
-                                                    }
-
-                                                    else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
-                                                }
-                                                else
-                                                {
-                                                    if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
-                                                    {
-                                                        _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_2, true);
-                                                    }
-
-                                                    else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
-                                                }
+                                                _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                             }
-                                            else
-                                            {
-                                                _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
-                                            }
+                                            else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                         }
+                                    }
+                                    else
+                                    {
+                                        _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
                                     }
                                 }
                             }
-                        //}
+
+                            var idx_2 = _e.GetIdxCellByDirect(idx_1, DistanceFromCellTypes.First, directShotingT);
+
+
+                            if (_e.UnitT(idx_2).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_2).IsShiftingUnit && !_e.UnitT(idx_2).IsAnimal()
+                                && _e.UnitVisibleC(idx_2).IsVisible(_e.UnitPlayerT(cellIdxCell))
+                                && !_e.UnitPlayerT(idx_2).Is(_e.UnitPlayerT(cellIdxCell)))
+                            {
+                                if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn) && _e.MainToolWeaponT(cellIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
+                                {
+                                    if (!isRight_0)
+                                    {
+                                        if (directShotingT == DirectTypes.DownLeft || directShotingT == DirectTypes.LeftUp || directShotingT == DirectTypes.UpRight || directShotingT == DirectTypes.RightDown)
+                                        {
+                                            _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_2, true);
+                                        }
+
+                                        else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
+                                    }
+                                    else
+                                    {
+                                        if (directShotingT == DirectTypes.Left || directShotingT == DirectTypes.Right || directShotingT == DirectTypes.Down || directShotingT == DirectTypes.Up)
+                                        {
+                                            _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_2, true);
+                                        }
+
+                                        else _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
+                                    }
+                                }
+                                else
+                                {
+                                    _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_2, true);
+                                }
+                            }
+                        }
                     }
                 }
             }

@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 namespace Chessy.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
@@ -15,7 +16,7 @@ namespace Chessy.Model.System
                     {
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, dirT);
+                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, DistanceFromCellTypes.First, dirT);
 
                             if (!_e.HaveFire(idx_1))
                             {

@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 using Photon.Pun;
 using Photon.Realtime;
 namespace Chessy.Model.System
@@ -9,19 +10,18 @@ namespace Chessy.Model.System
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
-                //{
-                    _s.RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                _s.RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
-                    //_e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
+                _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
 
-                    foreach (byte idx_1 in _e.AroundCellsE(cell_0).CellsAround)
+                foreach (byte idx_1 in _e.IdxsCellsAround(cell_0, DistanceFromCellTypes.First))
+                {
+                    if (_e.UnitT(idx_1).HaveUnit())
                     {
-                        if (_e.UnitT(idx_1).HaveUnit())
+                        if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cell_0)))
                         {
-                            if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cell_0)))
+                            if (!_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
                             {
                                 if (_e.ExtraToolWeaponT(idx_1).Is(ToolsWeaponsWarriorTypes.Shield))
                                 {
@@ -39,18 +39,13 @@ namespace Chessy.Model.System
                             }
                         }
                     }
+                }
 
-                    _s.RpcSs.AnimationCellToGeneral(_e.SkinInfoUnitC(cell_0).SkinIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
+                _s.RpcSs.AnimationCellToGeneral(_e.SkinInfoUnitC(cell_0).SkinIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
 
-                    _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
+                _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
 
-                    _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.AttackMelee);
-                //}
-
-                //else
-                //{
-                //    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                //}
+                _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.AttackMelee);
             }
 
             else _s.RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Mistake);

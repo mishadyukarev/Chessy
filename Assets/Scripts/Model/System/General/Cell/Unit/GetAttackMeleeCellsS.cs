@@ -1,4 +1,5 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Enum;
+using Chessy.Model.Values;
 
 namespace Chessy.Model.System
 {
@@ -16,18 +17,12 @@ namespace Chessy.Model.System
                     {
                         DirectTypes dir_cur = default;
 
-                        for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                        foreach (var idx_1 in _e.IdxsCellsAround(cellIdxCell, DistanceFromCellTypes.First))
                         {
-                            var idx_1 = _e.AroundCellsE(cellIdxCell).AroundCellE(dirT).IdxC.Idx;
-
                             dir_cur += 1;
 
                             if (!_e.MountainC(idx_1).HaveAnyResources)
                             {
-                                //var haveMaxSteps = _e.EnergyUnitC(cellIdxCell).Energy >= StepValues.MAX;
-
-                                //if (_e.EnergyUnitC(cellIdxCell).Energy >= _e.HowManyEnergyNeedForShiftingUnitC(cellIdxCell).HowManyEnergyNeedForShiftingToHere(idx_1) || haveMaxSteps)
-                                //{
                                 if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
                                 {
                                     if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
@@ -47,7 +42,6 @@ namespace Chessy.Model.System
                                         }
                                     }
                                 }
-                                //}
                             }
                         }
                     }
