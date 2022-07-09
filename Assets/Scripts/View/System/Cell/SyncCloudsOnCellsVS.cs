@@ -21,12 +21,12 @@ namespace Chessy.View.System
                 _needActive[cellIdxCurrent] = false;
             }
 
-
-            _needActive[_e.CenterCloudCellIdx] = true;
-
-            foreach (var startCell in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _needActive[startCell] = true;
+                if (_e.HaveCloud(cellIdxCurrent))
+                {
+                    _needActive[/*_e.CloudWhereSkinDataOnCell(*/cellIdxCurrent/*).SkinIdxCell*/] = true;
+                }
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)

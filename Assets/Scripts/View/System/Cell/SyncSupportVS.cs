@@ -58,12 +58,16 @@ namespace Chessy.View.System
             {
                 if (_e.SelectedE.AbilityT.Is(AbilityTypes.ChangeDirectionWind))
                 {
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                    for (byte curCellIdx = 0; curCellIdx < IndexCellsValues.CELLS; curCellIdx++)
                     {
-                        var cell_target = _e.AroundCellsE(_e.CenterCloudCellIdx).IdxCell(dirT);
-
-                        _needActive[cell_target] = true;
-                        _needColor[cell_target] = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                        if (_e.HaveCloud(curCellIdx))
+                        {
+                            if (!_e.IsCenterCloud(curCellIdx))
+                            {
+                                _needActive[curCellIdx] = true;
+                                _needColor[curCellIdx] = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                            }
+                        } 
                     }
                 }
 

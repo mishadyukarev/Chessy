@@ -18,8 +18,8 @@ namespace Chessy.Model
         public WhoLastDiedOnCellC WhoLastDiedHereC;
         public ExtractionResourcesWithUnitC ExtractionResourcesC;
         public NeedUpdateViewC NeedUpdateViewC;
-        public ShiftingInfoForUnitC ShiftingInfoForUnitC;
-        public SkinInfoUnitC SkinInfoUnitC;
+        public ShiftingObjectC ShiftingInfoForUnitC;
+        public WherSkinAndWhereDataInfoC SkinInfoUnitC;
 
         public readonly HowManyDistanceNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC;
         public readonly WhereUnitCanShiftC WhereCanShiftC;

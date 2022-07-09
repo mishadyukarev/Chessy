@@ -14,7 +14,6 @@ namespace Chessy.Model.System
                 stream.SendNext(_e.WinnerPlayerT);
                 stream.SendNext(_e.DirectWindT);
                 stream.SendNext(_e.SpeedWind);
-                stream.SendNext(_e.CenterCloudCellIdx);
                 stream.SendNext(_e.SunSideT);
 
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
@@ -59,7 +58,6 @@ namespace Chessy.Model.System
                 _e.WinnerPlayerT = (PlayerTypes)stream.ReceiveNext();
                 _e.DirectWindT = (DirectTypes)stream.ReceiveNext();
                 _e.SpeedWind = (byte)stream.ReceiveNext();
-                _e.CenterCloudCellIdx = (byte)stream.ReceiveNext();
                 _e.SunSideT = (SunSideTypes)stream.ReceiveNext();
 
                 for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)

@@ -45,6 +45,11 @@ namespace Chessy.Model.Entity
             get => BookC.OpenedNowPageBookT;
             internal set => BookC.OpenedNowPageBookT = value;
         }
+        public PageBookTypes WasOpenedLastPageBookT
+        {
+            get => BookC.WasOpenedBookT;
+            internal set => BookC.WasOpenedBookT = value;
+        }
 
         public ref CommonInfoAboutGameC CommonInfoAboutGameC => ref CommonGameE.CommonInfoAboutGameC;
         public TestModeTypes TestModeT => CommonInfoAboutGameC.TestModeT;
@@ -135,13 +140,6 @@ namespace Chessy.Model.Entity
             internal set => SunC.SunSideT = value;
         }
 
-        public ref CloudC CloudC => ref WeatherE.CloudC;
-        public byte CenterCloudCellIdx
-        {
-            get => CloudC.CellIdxCenterCloud;
-            internal set => CloudC.CellIdxCenterCloud = value;
-        }
-
         #endregion
 
 
@@ -200,13 +198,28 @@ namespace Chessy.Model.Entity
         public IdxCellC IdxCellC(in byte cellIdx) => CellE(cellIdx).IdxCellC;
         public byte IdxCell(in byte cellIdx) => IdxCellC(cellIdx).Idx;
         public XyCellC XyCellC(in byte cellIdx) => CellE(cellIdx).XyCellC;
+        public byte[] XyCell(in byte cellIdx) => XyCellC(cellIdx).Xy;
         public byte XCell(in byte cellIdx) => XyCellC(cellIdx).X;
         public byte YCell(in byte cellIdx) => XyCellC(cellIdx).Y;
         public bool IsBorder(in byte cell) => CellC(cell).IsBorder;
         public int InstanceID(in byte cell) => CellC(cell).InstanceID;
 
 
-        public AroundCellsE AroundCellsE(in byte cell) => CellEs(cell).AroundCellsEs;
+        public AroundCellsE AroundCellsE(in byte cell) => CellEs(cell).AroundCellsE;
+        public byte[] CellsAround(in byte cellIdx) => AroundCellsE(cellIdx).CellsAround;
+        public CellAroundE CellAroundE(in byte cellIdx, in DirectTypes dirT) => AroundCellsE(cellIdx).AroundCellE(dirT);
+        public XyCellC XyCellAroundC(in byte cellIdx, in DirectTypes dirT) => CellAroundE(cellIdx, dirT).XyC;
+        public byte[] XyCellByDirection(in byte cellIdx, in DirectTypes dirT) => XyCellAroundC(cellIdx, dirT).Xy;
+        public IdxCellC IdxCellAroundC(in byte cellIdx, in DirectTypes dirT) => CellAroundE(cellIdx, dirT).IdxC;
+        public byte GetIdxCellByDirect(in byte cellIdx, in DirectTypes dirT) => IdxCellAroundC(cellIdx, dirT).Idx;
+
+
+        public ref CloudOnCellE CloudOnCellE(in byte cellIdx) => ref CellEs(cellIdx).CloudE;
+        public ref WherSkinAndWhereDataInfoC CloudWhereSkinDataOnCell(in byte cellIdx) => ref CloudOnCellE(cellIdx).WherSkinAndWhereDataInfoC;
+        public ref CloudC CloudC(in byte cell) => ref CloudOnCellE(cell).CloudC;
+        public bool HaveCloud(in byte cellIdx) => CloudC(cellIdx).HaveCloud;
+        public bool IsCenterCloud(in byte cellIdx) => CloudC(cellIdx).IsCenter;
+        public ref ShiftingObjectC CloudShiftingC(in byte cellIdx) => ref CloudOnCellE(cellIdx).ShiftingC;
 
 
         #region Unit
@@ -226,9 +239,9 @@ namespace Chessy.Model.Entity
         public double DamageSimpleAttack(in byte cell) => UnitMainC(cell).DamageSimpleAttack;
         public double DamageOnCell(in byte cell) => UnitMainC(cell).DamageOnCell;
 
-        public ref ShiftingInfoForUnitC ShiftingInfoForUnitC(in byte cellIdx) => ref UnitE(cellIdx).ShiftingInfoForUnitC;
+        public ref ShiftingObjectC ShiftingInfoForUnitC(in byte cellIdx) => ref UnitE(cellIdx).ShiftingInfoForUnitC;
 
-        public ref SkinInfoUnitC SkinInfoUnitC(in byte cellIdx) => ref UnitE(cellIdx).SkinInfoUnitC;
+        public ref WherSkinAndWhereDataInfoC SkinInfoUnitC(in byte cellIdx) => ref UnitE(cellIdx).SkinInfoUnitC;
 
         public VisibleToOtherPlayerOrNotC UnitVisibleC(in byte cell) => UnitE(cell).VisibleToOtherPlayerOrNotC;
         public CanSetUnitHereC CanSetUnitHereC(in byte cell) => UnitE(cell).CanSetUnitHereC;
@@ -408,9 +421,7 @@ namespace Chessy.Model.Entity
             CurrentPlayerIT = default;
             AmountPlantedYoungForests = default;
 
-            WindC = new WindC();
-            SunC.SunSideT = default;
-            CloudC.CellIdxCenterCloud = default;
+            WeatherE = default;
 
             SelectedE.ToolWeaponC = new SelectedToolWeaponC(default, default);
 

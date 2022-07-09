@@ -137,11 +137,6 @@ namespace Chessy.View.System
                 {
                     _syncUnitVS.Sync(cellIdxCurrent);
                     _eM.UnitNeedUpdateViewC(cellIdxCurrent).NeedUpdateView = false;
-
-
-
-
-
                 }
             }
 
@@ -154,7 +149,8 @@ namespace Chessy.View.System
                 _eM.NeedUpdateView = false;
             }
 
-            
+            var t = Time.deltaTime * 7f;
+            if (t > 1) t = 1;
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
@@ -162,29 +158,50 @@ namespace Chessy.View.System
 
                 if ( _e.UnitMainC(whereSkinIdxCell).Possition.magnitude > 0)
                 {
-                    //Vector3 pos = default;
-
-                    var t = Time.deltaTime * 7f;
-                    if (t > 1) t = 1;
-
-                    //pos = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitMainC(cellIdxCurrent).Possition, t);
-
-                    //_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = pos;
-
-
-
-                    //var pos_0 = _e.CellE(whereSkinIdxCell).StartPositionC.Possition;
-                    //var pos_1 = _e.CellE(cellIdxCurrent).StartPositionC.Possition;
-
-                    //var t = _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(cell_1);
-
-
-
                     _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitMainC(whereSkinIdxCell).Possition, t);
-
-                    //_e.UnitMainC(whereSkinIdxCell).Possition = Vector3.Lerp(_e, pos_1, t);
                 }
             }
+
+
+
+            //var centerCloudIdxCell = _e.CenterCloudCellIdx;
+
+            //var whereSkinsIdxCells = new List<byte>();
+            //var whereDataIdxCells = new List<byte>();
+            //var whereNeedShiftIdxCells = new List<byte>();
+
+
+            //whereSkinsIdxCells.Add(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell);
+            //whereDataIdxCells.Add(centerCloudIdxCell);
+            //whereNeedShiftIdxCells.Add(_e.CloudC.WhereNeedShiftCloudIdxCell);
+
+            //foreach (var currentCellIdx in _e.AroundCellsE(centerCloudIdxCell).CellsAround)
+            //{
+            //    whereSkinsIdxCells.Add(_e.CloudWhereSkinDataOnCell(currentCellIdx).SkinIdxCell);
+            //    whereDataIdxCells.Add(currentCellIdx);
+            //}
+
+            //foreach (var currentCellIdx in _e.AroundCellsE(_e.CloudC.WhereNeedShiftCloudIdxCell).CellsAround)
+            //{
+            //    whereNeedShiftIdxCells.Add(currentCellIdx);
+            //}
+
+            //for (var i = 0; i < whereSkinsIdxCells.Count; i++)
+            //{
+
+            //}
+
+            //var pos_0 = _e.CellE(centerCloudIdxCell).StartPositionC.Possition;
+            //var pos_1 = _e.CellE(_e.CloudC.WhereNeedShiftCloudIdxCell).StartPositionC.Possition;
+
+            //var nextPos = _e.CellE(_e.CloudC.WhereNeedShiftCloudIdxCell).StartPositionC.Possition;
+
+            //_eV.CellEs(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell).CloudSRC.Transform.position = nextPos;
+
+            //if (nextPos.magnitude > 0)
+            //{
+            //    _eV.CellEs(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell).CloudSRC.Transform.position = _e.CellE(_e.CloudC.WhereNeedShiftCloudIdxCell).StartPositionC.Possition;//Vector3.Lerp(_eV.CellEs(_e.CloudWhereSkinDataOnCell(centerCloudIdxCell).SkinIdxCell).CloudSRC.Transform.position, nextPos, t);
+            //}
         }
     }
 }

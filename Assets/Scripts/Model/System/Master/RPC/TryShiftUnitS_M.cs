@@ -17,13 +17,13 @@ namespace Chessy.Model.System
             {
                 _e.SetUnitConditionT(cellIdxFrom, ConditionUnitTypes.None);
 
-                if (_e.ShiftingInfoForUnitC(cellIdxFrom).IdxWhereNeedShiftUnitOnOtherCell != 0)
+                if (_e.ShiftingInfoForUnitC(cellIdxFrom).WhereIdxCell != 0)
                 {
-                    _e.ShiftingInfoForUnitC(cellIdxFrom).NeedToBackUnitOnHisCell = true;
+                    _e.ShiftingInfoForUnitC(cellIdxFrom).NeedReturnBack = true;
                 }
                 else
                 {
-                    _e.ShiftingInfoForUnitC(cellIdxFrom).IdxWhereNeedShiftUnitOnOtherCell = cellIdxTo;
+                    _e.ShiftingInfoForUnitC(cellIdxFrom).WhereIdxCell = cellIdxTo;
                 }
 
                 GetDataCellsS.GetDataCellsM();

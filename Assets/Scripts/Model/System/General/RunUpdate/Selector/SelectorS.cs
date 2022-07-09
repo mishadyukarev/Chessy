@@ -100,12 +100,9 @@ namespace Chessy.Model
 
                                             case AbilityTypes.ChangeDirectionWind:
                                                 {
-                                                    foreach (var cellE in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
+                                                    if (_e.HaveCloud(_e.CurrentCellIdx) && !_e.IsCenterCloud(_e.CurrentCellIdx))
                                                     {
-                                                        if (cellE == _e.CurrentCellIdx)
-                                                        {
-                                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM), _e.SelectedCellIdx, _e.CurrentCellIdx });
-                                                        }
+                                                        _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM), _e.SelectedCellIdx, _e.CurrentCellIdx });
                                                     }
                                                 }
                                                 break;

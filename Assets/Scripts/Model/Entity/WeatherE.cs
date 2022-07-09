@@ -4,6 +4,5 @@
     {
         public WindC WindC;
         public SunC SunC;
-        public CloudC CloudC;
     }
 }

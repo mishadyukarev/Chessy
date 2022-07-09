@@ -39,10 +39,10 @@ namespace Chessy.View.System
                         {
                             case LessonTypes.ClickWindInfo:
                                 {
-                                    if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.CenterCloudCellIdx != currentCellIdx && !_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Contains(currentCellIdx))
-                                    {
-                                        _isActive[currentCellIdx] = true;
-                                    }
+                                    //if (_e.UnitT(currentCellIdx) != UnitTypes.Snowy && _e.CenterCloudCellIdx != currentCellIdx && !_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Contains(currentCellIdx))
+                                    //{
+                                    //    _isActive[currentCellIdx] = true;
+                                    //}
                                 }
                                 break;
 
@@ -117,7 +117,7 @@ namespace Chessy.View.System
                             case AbilityTypes.ChangeDirectionWind:
                                 if (!_e.IsBorder(currentCellIdx))
                                 {
-                                    if (!_e.AroundCellsE(currentCellIdx).CellsAround.Contains(_e.CenterCloudCellIdx))
+                                    if(_e.HaveCloud(currentCellIdx) && !_e.IsCenterCloud(currentCellIdx))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }

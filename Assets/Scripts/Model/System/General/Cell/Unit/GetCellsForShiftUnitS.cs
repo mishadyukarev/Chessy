@@ -24,7 +24,7 @@ namespace Chessy.Model.System
                 {
                     for (var dirT = (DirectTypes)1; dirT < DirectTypes.End; dirT++)
                     {
-                        var idx_to = _e.AroundCellsE(cellIdxCurrent).IdxCell(dirT);
+                        var idx_to = _e.GetIdxCellByDirect(cellIdxCurrent, dirT);
 
 
                         var needDistance = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;

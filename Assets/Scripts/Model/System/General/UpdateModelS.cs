@@ -37,6 +37,17 @@ namespace Chessy.Model.System
                         }
                     }
 
+                    for (byte currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
+                    {
+                        if (_e.HaveCloud(currentIdxCell))
+                        {
+                            for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                            {
+                                _e.HealthTrail(currentIdxCell).Health(dirT) = 0;
+                            }
+                        }
+                    }
+
 
                     for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                     {
@@ -74,7 +85,7 @@ namespace Chessy.Model.System
                         _e.UnitMainC(cellIdxCurrent).CooldownForAttackAnyUnitInSeconds--;
                     }
 
-                    TryPutOutFireWithClouds();
+                    PutOutFireWithClouds();
                     BurnAdultForest();
                     FireUpdate();
                     TryGiveWaterToUnitsDuringLessons();
@@ -87,7 +98,6 @@ namespace Chessy.Model.System
                     FeedUnits();
                     TrySpawnWolf();
                     TryShiftWolf();
-                    TryShiftCloundsOrChangeDirection();
                     TryPoorWaterToCellsWithClounds();
                     TryGiveWaterAroundRiverToCells();
                     DryWaterOnCells();
@@ -112,6 +122,7 @@ namespace Chessy.Model.System
                 }
 
                 TryExecuteShiftingUnit();
+                TryShiftCloundsOrChangeDirection();
             }
         }
 
@@ -120,30 +131,30 @@ namespace Chessy.Model.System
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 var cell_0 = cellIdxCurrent;
-                var cell_1 = _e.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell;
+                var cell_1 = _e.ShiftingInfoForUnitC(cell_0).WhereIdxCell;
 
                 if (cell_1 != 0)
                 {
-                    if (_e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell)
+                    if (_e.ShiftingInfoForUnitC(cell_0).NeedReturnBack)
                     {
-                        _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell -= Time.deltaTime;
+                        _e.ShiftingInfoForUnitC(cell_0).Distance -= Time.deltaTime;
 
-                        if (_e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell <= 0)
+                        if (_e.ShiftingInfoForUnitC(cell_0).Distance <= 0)
                         {
-                            _e.ShiftingInfoForUnitC(cell_0).IdxWhereNeedShiftUnitOnOtherCell = 0;
-                            _e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell = false;
-                            _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell = 0;
+                            _e.ShiftingInfoForUnitC(cell_0).WhereIdxCell = 0;
+                            _e.ShiftingInfoForUnitC(cell_0).NeedReturnBack = false;
+                            _e.ShiftingInfoForUnitC(cell_0).Distance = 0;
 
                             GetDataCellsS.GetDataCellsM();
                         }
 
                         else
                         {
-                            if (_e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell) >= 0.3)
+                            if (_e.ShiftingInfoForUnitC(cell_0).Distance / _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).WhereIdxCell) >= 0.3)
                             {
                                 if (!_e.UnitT(cell_1).HaveUnit())
                                 {
-                                    _e.ShiftingInfoForUnitC(cell_0).NeedToBackUnitOnHisCell = false;
+                                    _e.ShiftingInfoForUnitC(cell_0).NeedReturnBack = false;
                                 }
                             }
                         }
@@ -151,24 +162,24 @@ namespace Chessy.Model.System
 
                     else
                     {
-                        _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell += Time.deltaTime;
+                        _e.ShiftingInfoForUnitC(cellIdxCurrent).Distance += Time.deltaTime;
 
-                        if (_e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell >= _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell))
+                        if (_e.ShiftingInfoForUnitC(cellIdxCurrent).Distance >= _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).WhereIdxCell))
                         {
                             if (!_e.UnitT(cell_1).HaveUnit())
                             {
-                                ShiftUnitOnOtherCellM(cellIdxCurrent, _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell);
+                                ShiftUnitOnOtherCellM(cellIdxCurrent, _e.ShiftingInfoForUnitC(cellIdxCurrent).WhereIdxCell);
 
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = 0;
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedToBackUnitOnHisCell = false;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).WhereIdxCell = 0;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).Distance = 0;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedReturnBack = false;
 
                                 GetDataCellsS.GetDataCellsM();
                             }
 
                             else
                             {
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedToBackUnitOnHisCell = true;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedReturnBack = true;
                             }
                         }
                     }
@@ -177,7 +188,7 @@ namespace Chessy.Model.System
                     var pos_0 = _e.CellE(cell_0).StartPositionC.Possition;
                     var pos_1 = _e.CellE(cell_1).StartPositionC.Possition;
 
-                    var t = _e.ShiftingInfoForUnitC(cell_0).DistanceForShiftingOnOtherCell / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
+                    var t = _e.ShiftingInfoForUnitC(cell_0).Distance / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
 
                     _e.UnitMainC(_e.SkinInfoUnitC(cell_0).SkinIdxCell).Possition = Vector3.Lerp(pos_0, pos_1, t);
                 }
@@ -308,65 +319,84 @@ namespace Chessy.Model.System
         }
         void TryShiftCloundsOrChangeDirection()
         {
-            _e.CloudC.SecondForChangingShiftingCloud++;
+            //var startCloudIdx = _e.CenterCloudCellIdx;
 
-            if(_e.CloudC.SecondForChangingShiftingCloud >= 3)
+            //_e.CloudC.WhereNeedShiftCloudIdxCell = _e.AroundCellsE(startCloudIdx).IdxCell(_e.DirectWindT);
+
+            //var whereShiftIdx = _e.CloudC.WhereNeedShiftCloudIdxCell;
+            //var whereXy = _e.CellE(whereShiftIdx).XyCellC.Xy;
+
+            //_e.CloudC(0).Reset();
+
+            for (byte curCellIdx = 0; curCellIdx < IndexCellsValues.CELLS; curCellIdx++)
             {
-                for (var i = 0; i < _e.SpeedWind; i++)
+                if (_e.HaveCloud(curCellIdx))
                 {
-                    var cell = _e.CenterCloudCellIdx;
-                    var xy_next = _e.AroundCellsE(cell).AroundCellE(_e.DirectWindT).XyC.Xy;
-                    var idx_next = _e.AroundCellsE(cell).IdxCell(_e.DirectWindT);
+                    var directIdxCell = _e.GetIdxCellByDirect(curCellIdx, _e.DirectWindT);
+                    var directXy = _e.XyCell(directIdxCell);
 
-                    bool isBorder = false;
 
-                    for (var ii = 0; ii < 10; ii++)
+                    _e.CloudShiftingC(curCellIdx).WhereIdxCell = directIdxCell;
+
+                    var isInSquareNextCell = directXy[0] >= 4 && directXy[0] <= 11 && directXy[1] >= 1 && directXy[1] <= 9;
+
+                    if (isInSquareNextCell)
                     {
-                        if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
+                        _e.CloudShiftingC(curCellIdx).Distance += Time.deltaTime * _e.WindC.Speed * 0.25f;
+
+                        if (_e.CloudShiftingC(curCellIdx).Distance >= 1)
                         {
-                            _e.CenterCloudCellIdx = _e.GetIdxCellByXy(xy_next);
-                        }
-                        else
-                        {
-                            var newDir = _e.DirectWindT;
+                            _e.CloudC(directIdxCell).HaveCloud = true;
+                            _e.CloudShiftingC(directIdxCell).Dispose();
 
-                            newDir = newDir.Invert();
-                            var newDirInt = (int)newDir;
-                            newDirInt += UnityEngine.Random.Range(-1, 2);
+                            _e.CloudC(curCellIdx).Dispose();
+                            _e.CloudShiftingC(curCellIdx).Dispose();
 
-                            if (newDirInt <= 0) newDirInt = 1;
-                            else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
-                            _e.DirectWindT = (DirectTypes)newDirInt;
 
-                            isBorder = true;
+                            //if (!_e.HaveCloud(directIdxCell))
+                            //{
 
-                            break;
+
+                            //    //GetDataCellsS.GetDataCellsM();
+                            //}
                         }
                     }
-
-                    if (isBorder) break;
-
-
-                    for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
+                    else
                     {
-                        _e.HealthTrail(idx_next).Health(dirT) = 0;
+                        _e.WindC.DirectT = (DirectTypes)UnityEngine.Random.Range(1, (byte)DirectTypes.End);
                     }
                 }
-
-                _e.CloudC.SecondForChangingShiftingCloud = 0;
             }
+
+            //for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
+            //{
+            //    if (_e.IsBorder(currentCellIdx)) continue;
+
+
+            //    _e.CloudWhereSkinDataOnCell(currentCellIdx).DataIdxCell = _e.CenterCloudCellIdx;
+            //    _e.CloudWhereSkinDataOnCell(_e.CenterCloudCellIdx).SkinIdxCell = currentCellIdx;
+
+            //    break;
+            //}
+
+
+
+
+            //var pos_0 = _e.CellE(cell_0).StartPositionC.Possition;
+            //var pos_1 = _e.CellE(cell_1).StartPositionC.Possition;
+
+            //_e.UnitMainC(_e.SkinInfoUnitC(cell_0).SkinIdxCell).Possition = Vector3.Lerp(pos_0, pos_1, _e.CloudC.DistanceShifting);
         }
         void TryPoorWaterToCellsWithClounds()
         {
-            var cell_0 = _e.CenterCloudCellIdx;
-
-            for (var dirT = DirectTypes.None; dirT < DirectTypes.End; dirT++)
+            for (byte currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
-                var idx_1 = _e.AroundCellsE(cell_0).IdxCell(dirT);
-
-                if (!_e.MountainC(idx_1).HaveAnyResources)
+                if (_e.HaveCloud(currentIdxCell))
                 {
-                    _e.WaterOnCellC(idx_1).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                    if (!_e.MountainC(currentIdxCell).HaveAnyResources)
+                    {
+                        _e.WaterOnCellC(currentIdxCell).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
+                    }
                 }
             }
         }
@@ -698,11 +728,14 @@ namespace Chessy.Model.System
                 }
             }
         }
-        void TryPutOutFireWithClouds()
+        void PutOutFireWithClouds()
         {
-            foreach (var cellE in _e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround)
+            for (byte curCellIdx = 0; curCellIdx < IndexCellsValues.CELLS; curCellIdx++)
             {
-                _e.HaveFire(cellE) = false;
+                if (_e.HaveCloud(curCellIdx))
+                {
+                    _e.HaveFire(curCellIdx) = false;
+                }
             }
         }
         void BurnAdultForest()
@@ -831,17 +864,17 @@ namespace Chessy.Model.System
                 {
                     if (_e.UnitT(cellIdxCurrent).HaveUnit())
                     {
-                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf) && _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell == 0)
+                        if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Wolf) && _e.ShiftingInfoForUnitC(cellIdxCurrent).WhereIdxCell == 0)
                         {
                             var randDir = UnityEngine.Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 
-                            var idx_1 = _e.AroundCellsE(cellIdxCurrent).IdxCell((DirectTypes)randDir);
+                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, (DirectTypes)randDir);
 
                             if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources
                                 && !_e.UnitT(idx_1).HaveUnit())
                             {
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).IdxWhereNeedShiftUnitOnOtherCell = idx_1;
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).DistanceForShiftingOnOtherCell = 0;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).WhereIdxCell = idx_1;
+                                _e.ShiftingInfoForUnitC(cellIdxCurrent).Distance = 0;
 
 
                                 break;

@@ -20,7 +20,7 @@ namespace Chessy.Model.System
 
                         for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
                         {
-                            var idx_1 = _e.AroundCellsE(cellIdxCurrent).IdxCell(dir);
+                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, dir);
 
                             if (_e.UnitT(idx_1).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                             {

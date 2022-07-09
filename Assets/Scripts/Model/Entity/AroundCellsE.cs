@@ -1,14 +1,13 @@
 ﻿using Chessy.Model.Component;
+using Chessy.Model.Values;
 using System;
-using System.Collections.Generic;
+
 namespace Chessy.Model.Entity
 {
     public readonly struct AroundCellsE
     {
         readonly CellAroundE[] _aroundEs;
-
-        readonly Dictionary<byte, DirectTypes> _aroundDirs_0;
-        readonly Dictionary<byte, DirectTypes> _aroundDirs_1;
+        readonly DirectTypes[] _aroundDirs;
 
         public CellAroundE AroundCellE(in DirectTypes dirT) => _aroundEs[(byte)dirT];
         public byte[] CellsAround
@@ -23,31 +22,24 @@ namespace Chessy.Model.Entity
                 return cells;
             }
         }
-        public byte IdxCell(in DirectTypes dirT) => AroundCellE(dirT).IdxC.Idx;
-        public byte[] XyCell(in DirectTypes dirT) => AroundCellE(dirT).XyC.Xy;
 
-        public DirectTypes Direct(in byte cell_0)
-        {
-            if (_aroundDirs_0.ContainsKey(cell_0)) return _aroundDirs_0[cell_0];
-            else if (_aroundDirs_1.ContainsKey(cell_0)) return _aroundDirs_1[cell_0];
 
-            return DirectTypes.None;
-        }
+
+        public DirectTypes Direct(in byte cell_0) => _aroundDirs[cell_0];
 
         internal AroundCellsE(in byte idxCell, in DataFromViewC dataFromViewC, in EntitiesModel eMGame, params byte[] xyCell)
         {
-            _aroundDirs_0 = new Dictionary<byte, DirectTypes>();
-            _aroundDirs_1 = new Dictionary<byte, DirectTypes>();
+            _aroundDirs = new DirectTypes[IndexCellsValues.CELLS];
 
             _aroundEs = new CellAroundE[(byte)DirectTypes.End];
 
             if (!dataFromViewC.IsBorder(idxCell))
             {
-                for (var dir = (DirectTypes)0; dir < DirectTypes.End; dir++)
+                for (var dirT = (DirectTypes)0; dirT < DirectTypes.End; dirT++)
                 {
                     var xyDirect = new short[EntitiesModel.XY_FOR_ARRAY];
 
-                    switch (dir)
+                    switch (dirT)
                     {
                         case DirectTypes.None:
                             xyDirect[EntitiesModel.X] = 0;
@@ -106,8 +98,8 @@ namespace Chessy.Model.Entity
 
                     var idxCellStart = eMGame.GetIdxCellByXy(xy_0);
 
-                    _aroundDirs_0.Add(idxCellStart, dir);
-                    _aroundEs[(byte)dir] = new CellAroundE(idxCellStart, xy_0);
+                    _aroundEs[(byte)dirT] = new CellAroundE(idxCellStart, xy_0);
+                    _aroundDirs[idxCellStart] = dirT;
 
 
                     if (!dataFromViewC.IsBorder(idxCellStart))
@@ -117,7 +109,7 @@ namespace Chessy.Model.Entity
 
                         var xy_1 = new[] { x, y };
 
-                        _aroundDirs_1.Add(eMGame.GetIdxCellByXy(xy_1), dir);
+                        _aroundDirs[eMGame.GetIdxCellByXy(xy_1)] = dirT;
                     }
                 }
             }

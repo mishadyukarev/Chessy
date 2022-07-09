@@ -11,12 +11,17 @@ namespace Chessy.Model.System
             _e.Dispose();
 
             _e.ZoneInfoC.IsActiveFriend = _e.GameModeT.Is(GameModeTypes.WithFriendOffline);
-            //_e.WhoseMovePlayerT = StartGameValues.WHOSE_MOVE;
             _e.CellClickT = StartGameValues.CELL_CLICK;
 
             _e.WeatherE.WindC = new WindC() { DirectT = StartGameValues.DIRECT_WIND, Speed = StartGameValues.SPEED_WIND };
             _e.SunSideT = StartGameValues.SUN_SIDE;
-            _e.CenterCloudCellIdx = StartGameValues.CLOUD_CELL_INDEX;
+
+            _e.CloudC(StartGameValues.CLOUD_CELL_INDEX).SetCloud(true);
+            foreach (var cellIdxNext in _e.CellsAround(StartGameValues.CLOUD_CELL_INDEX))
+            {
+                _e.CloudC(cellIdxNext).SetCloud(false);
+            }
+
 
             _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartGameValues.SELECTED_TOOL_WEAPON, StartGameValues.SELECTED_LEVEL_TOOL_WEAPON);
 
@@ -134,7 +139,7 @@ namespace Chessy.Model.System
                         {
                             if (_e.HaveRiverC(cell_0).HaveRive(dir))
                             {
-                                var idx_next = _e.AroundCellsE(cell_0).IdxCell(dir);
+                                var idx_next = _e.GetIdxCellByDirect(cell_0, dir);
 
                                 _e.SetRiverT(idx_next, RiverTypes.EndRiver);
                             }
@@ -142,7 +147,7 @@ namespace Chessy.Model.System
 
                         foreach (var dir in corners)
                         {
-                            var idx_next = _e.AroundCellsE(cell_0).IdxCell(dir);
+                            var idx_next = _e.GetIdxCellByDirect(cell_0, dir);
 
                             _e.SetRiverT(idx_next, RiverTypes.Corner);
                         }
@@ -164,11 +169,11 @@ namespace Chessy.Model.System
                         {
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var idx_1 = _e.AroundCellsE(cell_0).IdxCell(dirT);
+                                var idx_1 = _e.GetIdxCellByDirect(cell_0, dirT);
 
                                 if (UnityEngine.Random.Range(0f, 1f) <= 0.7)
                                 {
-                                    if (!_e.MountainC(_e.AroundCellsE(cell_0).IdxCell(dirT)).HaveAnyResources && !_e.HaveBuildingOnCell(idx_1))
+                                    if (!_e.MountainC(_e.GetIdxCellByDirect(cell_0, dirT)).HaveAnyResources && !_e.HaveBuildingOnCell(idx_1))
                                     {
                                         _e.HillC(idx_1).Resources = UnityEngine.Random.Range(0.5f, 1f);
                                     }

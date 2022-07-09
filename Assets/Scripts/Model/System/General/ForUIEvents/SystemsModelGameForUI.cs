@@ -84,10 +84,17 @@ namespace Chessy.Model.System
         }
         public void ClickLittleBookDownInGame()
         {
+            if (_e.BookC.IsOpenedBook)
+            {
+                _e.BookC.CloseBook();
+            }
+            else
+            {
+                _e.BookC.OpenBook();
+            }
+
             _e.SoundAction(_e.BookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
             _e.NeedUpdateView = true;
-
-            //eUI.DownEs.BookLittleE.AnimationVC.Play();
         }
         public void ClickPremiumButtonInHeroZoneInGame()
         {
@@ -147,6 +154,9 @@ namespace Chessy.Model.System
         }
         public void ClickExitBookInBookZone()
         {
+            _e.WasOpenedLastPageBookT = _e.OpenedNowPageBookT;
+            _e.OpenedNowPageBookT = PageBookTypes.None;
+
             _e.SoundAction(ClipTypes.CloseBook).Invoke();
 
             _e.NeedUpdateView = true;

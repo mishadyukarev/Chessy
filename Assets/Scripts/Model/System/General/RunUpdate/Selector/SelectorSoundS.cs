@@ -50,7 +50,9 @@ namespace Chessy.Model
                 }
 
 
-                if (_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Contains(cell_0) || _e.CenterCloudCellIdx == cell_0)
+                
+
+                if (_e.HaveCloud(cell_0))
                 {
                     _e.SoundAction(ClipTypes.ShortRain).Invoke();
                 }

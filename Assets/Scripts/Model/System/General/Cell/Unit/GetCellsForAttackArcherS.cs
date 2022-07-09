@@ -17,7 +17,7 @@ namespace Chessy.Model.System
                             {
                                 for (var dir_1 = DirectTypes.None + 1; dir_1 < DirectTypes.End; dir_1++)
                                 {
-                                    var idx_1 = _e.AroundCellsE(cellIdxCell).IdxCell(dir_1);
+                                    var idx_1 = _e.GetIdxCellByDirect(cellIdxCell, dir_1);
 
                                     var isRight_0 = _e.IsRightArcherUnit(cellIdxCell);
 
@@ -53,7 +53,7 @@ namespace Chessy.Model.System
                                             }
                                         }
 
-                                        var idx_2 = _e.AroundCellsE(idx_1).IdxCell(dir_1);
+                                        var idx_2 = _e.GetIdxCellByDirect(idx_1, dir_1);
 
 
                                         if (_e.UnitT(idx_2).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_2).IsShiftingUnit && !_e.UnitT(idx_2).IsAnimal()

@@ -87,42 +87,42 @@ namespace Chessy.Model.System
 
         void TryFireAroundHellGod()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Hell))
-                {
-                    foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
-                    {
-                        if (_e.AdultForestC(cellE).HaveAnyResources)
-                        {
-                            if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
-                            {
-                                _e.HaveFire(cellE) = true;
-                            }
-                        }
-                    }
+            //for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            //{
+            //    if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Hell))
+            //    {
+            //        foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
+            //        {
+            //            if (_e.AdultForestC(cellE).HaveAnyResources)
+            //            {
+            //                if (UnityEngine.Random.Range(0f, 1f) <= 0.005f)
+            //                {
+            //                    _e.HaveFire(cellE) = true;
+            //                }
+            //            }
+            //        }
 
-                    if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
-                    {
-                        //Es.UnitE(cell_0).Take(Es, 0.15f);
-                    }
+            //        if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
+            //        {
+            //            //Es.UnitE(cell_0).Take(Es, 0.15f);
+            //        }
 
-                    if (_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Any(cell => cell == cellIdxCurrent))
-                    {
-                        //Es.UnitE(cell_0).Take(Es, 0.15f);
-                        break;
-                    }
+            //        if (_e.AroundCellsE(_e.CenterCloudCellIdx).CellsAround.Any(cell => cell == cellIdxCurrent))
+            //        {
+            //            //Es.UnitE(cell_0).Take(Es, 0.15f);
+            //            break;
+            //        }
 
-                    foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
-                    {
-                        if (_e.BuildingOnCellT(cellE).Is(BuildingTypes.IceWall))
-                        {
-                            //Es.UnitE(cell_0).Take(Es, 0.15f);
-                            break;
-                        }
-                    }
-                }
-            }
+            //        foreach (var cellE in _e.AroundCellsE(cellIdxCurrent).CellsAround)
+            //        {
+            //            if (_e.BuildingOnCellT(cellE).Is(BuildingTypes.IceWall))
+            //            {
+            //                //Es.UnitE(cell_0).Take(Es, 0.15f);
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
         }
         void TryExecuteAI()
         {

@@ -70,7 +70,7 @@ namespace Chessy
 
             PhotonNetwork.KeepAliveInBackground = 180;
 
-            PhotonNetwork.PhotonServerSettings.AppSettings.Protocol = ConnectionProtocol.Tcp;
+            //PhotonNetwork.PhotonServerSettings.AppSettings.Protocol = ConnectionProtocol.Tcp;
 
             //PhotonNetwork.SendRate = 5;
             //PhotonNetwork.SerializationRate = 5;
