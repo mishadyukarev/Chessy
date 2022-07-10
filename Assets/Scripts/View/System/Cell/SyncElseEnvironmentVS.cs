@@ -20,19 +20,19 @@ namespace Chessy.View.System
             {
                 if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
-                    _environmentVEs[cellIdxCurrent].HillUnderC.GO.SetActive(_e.HillC(cellIdxCurrent).HaveAnyResources);
+                    _environmentVEs[cellIdxCurrent].HillUnderC.SetActiveGO(_e.HillC(cellIdxCurrent).HaveAnyResources);
 
-                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).GO.SetActive(false);
+                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).SetActiveGO(false);
                 }
                 else
                 {
-                    _environmentVEs[cellIdxCurrent].HillUnderC.GO.SetActive(false);
-                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).GO.SetActive(_e.HillC(cellIdxCurrent).HaveAnyResources);
+                    _environmentVEs[cellIdxCurrent].HillUnderC.SetActiveGO(false);
+                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).SetActiveGO(_e.HillC(cellIdxCurrent).HaveAnyResources);
                 }
 
-                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Fertilizer).GO.SetActive(_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources);
-                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.YoungForest).GO.SetActive(_e.YoungForestC(cellIdxCurrent).HaveAnyResources);
-                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Mountain).GO.SetActive(_e.MountainC(cellIdxCurrent).HaveAnyResources);
+                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Fertilizer).SetActiveGO(_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources);
+                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.YoungForest).SetActiveGO(_e.YoungForestC(cellIdxCurrent).HaveAnyResources);
+                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Mountain).SetActiveGO(_e.MountainC(cellIdxCurrent).HaveAnyResources);
             }
         }
     }

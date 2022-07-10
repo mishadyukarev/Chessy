@@ -9,9 +9,11 @@ namespace Chessy.View.Entity
     {
         readonly SpriteRendererVC[] _blocks;
         readonly SpriteRendererVC[] _units;
-        readonly Dictionary<string, SpriteRendererVC> _mainToolWeapons;
-        readonly Dictionary<string, SpriteRendererVC> _bowCrossbows;
-        readonly Dictionary<string, SpriteRendererVC> _extraToolWeapons;
+        readonly SpriteRendererVC[,] _mainToolWeapons;
+        readonly SpriteRendererVC[,] _bowCrossbows;
+        readonly SpriteRendererVC[,] _extraToolWeapons;
+
+
 
 
         internal readonly TransformVC ParentTC;
@@ -22,9 +24,9 @@ namespace Chessy.View.Entity
 
 
         public SpriteRendererVC UnitSRC(in UnitTypes unitT) => _units[(byte)unitT];
-        public SpriteRendererVC MainToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes tw) => _mainToolWeapons[level.ToString() + tw];
-        public SpriteRendererVC MainBowCrossbowSRC(in LevelTypes level, in bool isRight) => _bowCrossbows[level.ToString() + isRight];
-        public SpriteRendererVC ExtraToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes twT) => _extraToolWeapons[level.ToString() + twT];
+        public SpriteRendererVC MainToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes tw) => _mainToolWeapons[(byte)level, (byte)tw];
+        public SpriteRendererVC MainBowCrossbowSRC(in LevelTypes level, in bool isRight) => _bowCrossbows[(byte)level, isRight ? 1 : 0];
+        public SpriteRendererVC ExtraToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes twT) => _extraToolWeapons[(byte)level, (byte)twT];
 
         public SpriteRendererVC Block(in CellBlockTypes block) => _blocks[(byte)block];
 
@@ -69,9 +71,9 @@ namespace Chessy.View.Entity
 
 
 
-            _mainToolWeapons = new Dictionary<string, SpriteRendererVC>();
-            _bowCrossbows = new Dictionary<string, SpriteRendererVC>();
-            _extraToolWeapons = new Dictionary<string, SpriteRendererVC>();
+            _mainToolWeapons = new SpriteRendererVC[(byte)LevelTypes.End, (byte)ToolsWeaponsWarriorTypes.End];
+            _bowCrossbows = new SpriteRendererVC[(byte)LevelTypes.End, 2];
+            _extraToolWeapons = new SpriteRendererVC[(byte)LevelTypes.End, (byte)ToolsWeaponsWarriorTypes.End];
 
             var mainToolWeaponZone = unitZ.Find("MainToolWeapon+");
             var extraToolWeaponZone = unitZ.Find("ExtraToolWeapon+");
@@ -82,7 +84,7 @@ namespace Chessy.View.Entity
 
                 foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Staff, ToolsWeaponsWarriorTypes.Axe })
                 {
-                    _mainToolWeapons.Add(levelT.ToString() + twT, new SpriteRendererVC(levelMainZone.Find(twT.ToString() + nameSpriteRenderEnd).GetComponent<SpriteRenderer>()));
+                    _mainToolWeapons[(byte)levelT, (byte)twT] = new SpriteRendererVC(levelMainZone.Find(twT.ToString() + nameSpriteRenderEnd).GetComponent<SpriteRenderer>());
                 }
 
                 var bowCrossbowZone = levelMainZone.Find("BowCrossbow+");
@@ -92,14 +94,14 @@ namespace Chessy.View.Entity
                     var name = isRight ? "Right" : "Cornered";
                     name += nameSpriteRenderEnd;
 
-                    _bowCrossbows.Add(levelT.ToString() + isRight, new SpriteRendererVC(bowCrossbowZone.Find(name).GetComponent<SpriteRenderer>()));
+                    _bowCrossbows[(byte)levelT, isRight ? 1 : 0] = new SpriteRendererVC(bowCrossbowZone.Find(name).GetComponent<SpriteRenderer>());
                 }
 
 
                 var levelExtraZone = extraToolWeaponZone.Find(levelT.ToString() + "Level+");
                 foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Pick, ToolsWeaponsWarriorTypes.Shield, ToolsWeaponsWarriorTypes.Sword })
                 {
-                    _extraToolWeapons.Add(levelT.ToString() + twT, new SpriteRendererVC(levelExtraZone.Find(twT.ToString() + nameSpriteRenderEnd).GetComponent<SpriteRenderer>()));
+                    _extraToolWeapons[(byte)levelT, (byte)twT] = new SpriteRendererVC(levelExtraZone.Find(twT.ToString() + nameSpriteRenderEnd).GetComponent<SpriteRenderer>());
                 }
             }
         }

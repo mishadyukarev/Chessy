@@ -30,18 +30,18 @@ namespace Chessy.Model.System
 
             
 
-            if(!_e.SkinInfoUnitC(toCellIdx).HaveData)
+            if(!_e.SkinInfoUnitC(toCellIdx).HaveDataReference)
             {
-                _e.UnitPossitionOnCellC(_e.SkinInfoUnitC(toCellIdx).SkinIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
+                _e.UnitPossitionOnCellC(_e.SkinInfoUnitC(toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
             }
-            
+            _e.SkinInfoUnitC(_e.SkinInfoUnitC(toCellIdx).ViewIdxCell).DataIdxCell = toCellIdx;
 
 
             _e.SetUnitConditionT(toCellIdx, ConditionUnitTypes.None);
 
             _e.UnitMainC(toCellIdx).HowManySecondUnitWasHereInThisCondition = 0;
 
-            _e.SkinInfoUnitC(_e.SkinInfoUnitC(toCellIdx).SkinIdxCell).DataIdxCell = toCellIdx;
+           
 
             var directT = _e.DirectionAround(fromCellIdx, toCellIdx);
 

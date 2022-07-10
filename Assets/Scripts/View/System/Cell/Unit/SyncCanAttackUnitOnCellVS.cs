@@ -25,7 +25,7 @@ namespace Chessy.View.System
                 _needColor[cellIdxCurrent] = Color.white;
 
 
-                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveDataReference)
                 {
                     var dataCellIdx = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
 
@@ -53,7 +53,7 @@ namespace Chessy.View.System
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 _caAttackSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
-                _caAttackSRCs[cellIdxCurrent].Color = _needColor[cellIdxCurrent];
+                _caAttackSRCs[cellIdxCurrent].SetColor(_needColor[cellIdxCurrent]);
             }
         }
     }

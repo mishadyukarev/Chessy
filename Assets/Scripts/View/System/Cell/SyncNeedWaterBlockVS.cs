@@ -23,7 +23,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveDataReference)
                 {
                     var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
 

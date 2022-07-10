@@ -47,15 +47,9 @@ namespace Chessy.View.System
             var shieldSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var frozenArrawRightSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var frozenArrawUpSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
-            var trailsSRCs = new Dictionary<DirectTypes, SpriteRendererVC[]>();
+            var trailsSRCs = new SpriteRendererVC[IndexCellsValues.CELLS, (byte)DirectTypes.End];
             var buildingSRCs = new Dictionary<BuildingTypes, SpriteRendererVC[]>();
             //var circularAttackKingSRCs = new AnimationVC[IndexCellsValues.CELLS];
-
-
-            for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
-            {
-                trailsSRCs.Add(directT, new SpriteRendererVC[IndexCellsValues.CELLS]);
-            }
 
             for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
             {
@@ -87,7 +81,7 @@ namespace Chessy.View.System
 
                 for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                 {
-                    trailsSRCs[directT][cellIdxCurrent] = eV.CellEs(cellIdxCurrent).TrailCellVC(directT);
+                    trailsSRCs[cellIdxCurrent, (byte)directT] = eV.CellEs(cellIdxCurrent).TrailCellVC(directT);
                 }
                 for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
                 {
@@ -155,10 +149,12 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                var whereSkinIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).SkinIdxCell;
+                var whereSkinIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).ViewIdxCell;
 
                 if ( _e.UnitPossitionOnCellC(whereSkinIdxCell).Position.magnitude > 0)
                 {
+
+
                     _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitPossitionOnCellC(whereSkinIdxCell).Position, t);
                 }
 
@@ -166,11 +162,12 @@ namespace Chessy.View.System
 
                 if (_e.HaveCloud(cellIdxCurrent))
                 {
-                    whereSkinIdxCell = _e.CloudWhereSkinDataOnCell(cellIdxCurrent).SkinIdxCell;
+                    whereSkinIdxCell = _e.CloudWhereViewDataOnCell(cellIdxCurrent).ViewIdxCell;
 
+                    var curPos = _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position;
                     var nextPos = _e.CloudPossitionC(whereSkinIdxCell).Position;
 
-                    _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position, nextPos, t);
+                    _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(curPos, nextPos, t);
 
                     //foreach (var nextCellIdx in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
                     //{

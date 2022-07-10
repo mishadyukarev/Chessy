@@ -224,20 +224,24 @@ namespace Chessy.Model.Entity
 
         public byte[] IdxsCellsAround(in byte startCellIdx, in DistanceFromCellTypes levelT)
         {
-            var cells = new byte[IndexCellsValues.CELLS];
+            var list = new List<byte>();
             for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
+                if (IsBorder(currentCellIdx)) continue;
+
                 if (CellAroundC(startCellIdx, currentCellIdx).LevelFromCellT == levelT)
                 {
                     for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                     {
                         if (CellAroundC(startCellIdx, currentCellIdx).DirectT == directT)
                         {
-                            cells[currentCellIdx] = IdxCellAroundC(startCellIdx, currentCellIdx).Idx;
+                            list.Add(IdxCellAroundC(startCellIdx, currentCellIdx).Idx);
                         }
                     }
                 }
             }
+
+            var cells = list.ToArray();
 
             return cells;
         }
@@ -261,7 +265,7 @@ namespace Chessy.Model.Entity
 
 
         public ref CloudOnCellE CloudOnCellE(in byte cellIdx) => ref CellEs(cellIdx).CloudE;
-        public ref WherSkinAndWhereDataInfoC CloudWhereSkinDataOnCell(in byte cellIdx) => ref CloudOnCellE(cellIdx).WhereSkinAndWhereDataInfoC;
+        public ref WhereViewIdxCellC CloudWhereViewDataOnCell(in byte cellIdx) => ref CloudOnCellE(cellIdx).WhereSkinAndWhereDataInfoC;
         public ref CloudC CloudC(in byte cell) => ref CloudOnCellE(cell).CloudC;
         public bool HaveCloud(in byte cellIdx) => CloudC(cellIdx).HaveCloud;
         public bool IsCenterCloud(in byte cellIdx) => CloudC(cellIdx).IsCenter;
@@ -288,7 +292,7 @@ namespace Chessy.Model.Entity
 
         public ref ShiftingObjectC ShiftingInfoForUnitC(in byte cellIdx) => ref UnitE(cellIdx).ShiftingInfoForUnitC;
 
-        public ref WherSkinAndWhereDataInfoC SkinInfoUnitC(in byte cellIdx) => ref UnitE(cellIdx).SkinInfoUnitC;
+        public ref WhereViewIdxCellC SkinInfoUnitC(in byte cellIdx) => ref UnitE(cellIdx).SkinInfoUnitC;
 
         public ref PositionC UnitPossitionOnCellC(in byte cellIdx) => ref UnitE(cellIdx).PositionC;
         public Vector3 UnitPossitionOnCell(in byte cellIdx) => UnitPossitionOnCellC(cellIdx).Position;
@@ -333,7 +337,7 @@ namespace Chessy.Model.Entity
         public WhereUnitCanAttackToEnemyC WhereUnitCanAttackSimpleAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackSimpleAttackToEnemyC;
         public WhereUnitCanAttackToEnemyC WhereUnitCanAttackUniqueAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackUniqueAttackToEnemyC;
         public ButtonsAbilitiesUnitC UnitButtonAbilitiesC(in byte cell) => UnitE(cell).UniqueButtonsC;
-        public HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC(in byte cell) => UnitE(cell).HowManyEnergyNeedForShiftingUnitC;
+        public HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC(in byte cell) => UnitE(cell).HowManyDistanceNeedForShiftingUnitC;
         public WhereUnitCanShiftC WhereUnitCanShiftC(in byte cellIdx) => UnitE(cellIdx).WhereCanShiftC;
         public CooldownAbilitiesInSecondsC UnitCooldownAbilitiesC(in byte cell) => UnitE(cell).CooldownsC;
         public HasUnitKingEffectHereC HasKingEffectHereC(in byte cellIdx) => UnitE(cellIdx).HasKingEffectHereC;

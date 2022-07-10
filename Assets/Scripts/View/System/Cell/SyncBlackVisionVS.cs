@@ -117,7 +117,7 @@ namespace Chessy.View.System
                             case AbilityTypes.ChangeDirectionWind:
                                 if (!_e.IsBorder(currentCellIdx))
                                 {
-                                    if(_e.HaveCloud(currentCellIdx) && !_e.IsCenterCloud(currentCellIdx))
+                                    if(!_e.HaveCloud(currentCellIdx) && !_e.IsCenterCloud(currentCellIdx))
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }
@@ -179,7 +179,7 @@ namespace Chessy.View.System
                     }
 
 
-                    _noneVisionSRC[currentCellIdx].GO.SetActive(_isActive[currentCellIdx]);
+                    _noneVisionSRC[currentCellIdx].SetActiveGO(_isActive[currentCellIdx]);
                 }
             }
 

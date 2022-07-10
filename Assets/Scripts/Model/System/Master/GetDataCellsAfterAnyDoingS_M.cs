@@ -6,10 +6,12 @@ namespace Chessy.Model.System
 {
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
+        readonly GetCellsForShiftUnitsS _getCellsForShiftUnitsS;
         readonly Dictionary<EffectTypes, bool> _isFilled = new Dictionary<EffectTypes, bool>();
 
-        internal GetDataCellsAfterAnyDoingS_M(in SystemsModel sMG, in EntitiesModel eMG) : base(sMG, eMG)
+        internal GetDataCellsAfterAnyDoingS_M(in SystemsModel s, in EntitiesModel e) : base(s, e)
         {
+            _getCellsForShiftUnitsS = new GetCellsForShiftUnitsS(s, e);
             for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled.Add(effectT, false);
         }
 
@@ -34,7 +36,7 @@ namespace Chessy.Model.System
             GetWoodcutterExtractCells();
             GetFarmExtractCells();
             GetBuildingVisible();
-            GetCellsForShiftUnit();
+            _getCellsForShiftUnitsS.Get();
             GetAttackMeleeCells();
             GetCellsForAttackArcher();
             GetCellForArsonArcher();

@@ -20,9 +20,9 @@ namespace Chessy.Model
         public ExtractionResourcesWithUnitC ExtractionResourcesC;
         public NeedUpdateViewC NeedUpdateViewC;
         public ShiftingObjectC ShiftingInfoForUnitC;
-        public WherSkinAndWhereDataInfoC SkinInfoUnitC;
+        public WhereViewIdxCellC SkinInfoUnitC;
 
-        public readonly HowManyDistanceNeedForShiftingUnitC HowManyEnergyNeedForShiftingUnitC;
+        public readonly HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC;
         public readonly WhereUnitCanShiftC WhereCanShiftC;
         public readonly WhereUnitCanAttackToEnemyC WhereCanAttackSimpleAttackToEnemyC;
         public readonly WhereUnitCanAttackToEnemyC WhereCanAttackUniqueAttackToEnemyC;
@@ -52,7 +52,7 @@ namespace Chessy.Model
 
             VisibleToOtherPlayerOrNotC = new VisibleToOtherPlayerOrNotC(default);
             CanSetUnitHereC = new CanSetUnitHereC(new bool[(byte)PlayerTypes.End]);
-            HowManyEnergyNeedForShiftingUnitC = new HowManyDistanceNeedForShiftingUnitC(new float[IndexCellsValues.CELLS]);
+            HowManyDistanceNeedForShiftingUnitC = new HowManyDistanceNeedForShiftingUnitC(new float[IndexCellsValues.CELLS]);
             WhereCanShiftC = new WhereUnitCanShiftC(new bool[IndexCellsValues.CELLS]);
             WhereCanAttackSimpleAttackToEnemyC = new WhereUnitCanAttackToEnemyC(new bool[IndexCellsValues.CELLS]);
             WhereCanAttackUniqueAttackToEnemyC = new WhereUnitCanAttackToEnemyC(new bool[IndexCellsValues.CELLS]);

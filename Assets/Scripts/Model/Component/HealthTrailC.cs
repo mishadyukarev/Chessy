@@ -7,6 +7,17 @@
         internal float[] Healths => (float[])_healths.Clone();
         public ref float Health(in DirectTypes dir) => ref _healths[(byte)dir];
         public bool IsAlive(in DirectTypes dirT) => Health(dirT) > 0;
+        public bool HaveAnyTrail
+        {
+            get
+            {
+                for (var i = 0; i < _healths.Length; i++)
+                {
+                    if (_healths[i] > 0) return true;
+                }
+                return false;
+            }
+        }
 
         internal HealthTrailC(in float[] health) => _healths = health;
 

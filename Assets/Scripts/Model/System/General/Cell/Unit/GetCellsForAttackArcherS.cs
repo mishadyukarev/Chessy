@@ -9,7 +9,7 @@ namespace Chessy.Model.System
             for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
             {
                 if (_e.UnitEffectsC(cellIdxCell).IsStunned) continue;
-                if (!_e.UnitT(cellIdxCell).HaveUnit() && _e.ShiftingInfoForUnitC(cellIdxCell).IsShiftingUnit) continue;
+                if (!_e.UnitT(cellIdxCell).HaveUnit() && _e.ShiftingInfoForUnitC(cellIdxCell).IsShifting) continue;
 
 
                 if (!_e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)))
@@ -22,7 +22,7 @@ namespace Chessy.Model.System
 
                         if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources)
                         {
-                            if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
+                            if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShifting)
                             {
                                 if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
                                 {
@@ -55,7 +55,7 @@ namespace Chessy.Model.System
                             var idx_2 = _e.GetIdxCellByDirect(idx_1, DistanceFromCellTypes.First, directShotingT);
 
 
-                            if (_e.UnitT(idx_2).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_2).IsShiftingUnit && !_e.UnitT(idx_2).IsAnimal()
+                            if (_e.UnitT(idx_2).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_2).IsShifting && !_e.UnitT(idx_2).IsAnimal()
                                 && _e.UnitVisibleC(idx_2).IsVisible(_e.UnitPlayerT(cellIdxCell))
                                 && !_e.UnitPlayerT(idx_2).Is(_e.UnitPlayerT(cellIdxCell)))
                             {

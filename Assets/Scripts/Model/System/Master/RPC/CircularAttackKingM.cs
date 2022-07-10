@@ -21,7 +21,7 @@ namespace Chessy.Model.System
                     {
                         if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cell_0)))
                         {
-                            if (!_e.ShiftingInfoForUnitC(idx_1).IsShiftingUnit)
+                            if (!_e.ShiftingInfoForUnitC(idx_1).IsShifting)
                             {
                                 if (_e.ExtraToolWeaponT(idx_1).Is(ToolsWeaponsWarriorTypes.Shield))
                                 {
@@ -41,7 +41,7 @@ namespace Chessy.Model.System
                     }
                 }
 
-                _s.RpcSs.AnimationCellToGeneral(_e.SkinInfoUnitC(cell_0).SkinIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
+                _s.RpcSs.AnimationCellToGeneral(_e.SkinInfoUnitC(cell_0).ViewIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
 
                 _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
 

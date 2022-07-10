@@ -47,10 +47,10 @@ namespace Chessy.Model.System
             {
                 if (_e.IsBorder(currentCellIdx)) continue;
 
-                if (!_e.SkinInfoUnitC(currentCellIdx).HaveData)
+                if (!_e.SkinInfoUnitC(currentCellIdx).HaveDataReference)
                 {
                     _e.SkinInfoUnitC(currentCellIdx).DataIdxCell = forSettingCellIdx;
-                    _e.SkinInfoUnitC(forSettingCellIdx).SkinIdxCell = currentCellIdx;
+                    _e.SkinInfoUnitC(forSettingCellIdx).ViewIdxCell = currentCellIdx;
 
 
                     //var pos_0 = _e.CellE(currentCellIdx).StartPositionC.Possition;

@@ -122,7 +122,7 @@ namespace Chessy.Model.System
                 }
 
                 TryExecuteShiftingUnit();
-                TryShiftCloundsOrChangeDirection();
+                TryShiftCloudsMS.TryShift();
             }
         }
 
@@ -190,7 +190,7 @@ namespace Chessy.Model.System
 
                     var t = _e.ShiftingInfoForUnitC(cell_0).Distance / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
 
-                    _e.UnitPossitionOnCellC(_e.SkinInfoUnitC(cell_0).SkinIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
+                    _e.UnitPossitionOnCellC(_e.SkinInfoUnitC(cell_0).ViewIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
                 }
             }
         }
@@ -203,7 +203,7 @@ namespace Chessy.Model.System
                 {
                     if (_e.UnitConditionT(cellIdxCurrent) == ConditionUnitTypes.None)
                     {
-                        if (!_e.ShiftingInfoForUnitC(cellIdxCurrent).IsShiftingUnit)
+                        if (!_e.ShiftingInfoForUnitC(cellIdxCurrent).IsShifting)
                         {
                             if (_e.UnitMainC(cellIdxCurrent).HowManySecondUnitWasHereInThisCondition >= 3)
                             {
@@ -308,74 +308,7 @@ namespace Chessy.Model.System
                 }
             }
         }
-        void TryShiftCloundsOrChangeDirection()
-        {
-            for (byte curCellIdx = 0; curCellIdx < IndexCellsValues.CELLS; curCellIdx++)
-            {
-                if (_e.HaveCloud(curCellIdx))
-                {
-                    if (_e.IsCenterCloud(curCellIdx))
-                    {
-                        var directIdxCell = _e.GetIdxCellByDirect(curCellIdx, DistanceFromCellTypes.First, _e.DirectWindT);
-                        var directXy = _e.XyCell(directIdxCell);
 
-
-                        _e.CloudShiftingC(curCellIdx).WhereNeedShiftIdxCell = directIdxCell;
-
-                        var isInSquareNextCell = directXy[0] >= 4 && directXy[0] <= 11 && directXy[1] >= 2 && directXy[1] <= 9;
-
-                        if (isInSquareNextCell)
-                        {
-                            _e.CloudShiftingC(curCellIdx).Distance += Time.deltaTime * _e.WindC.Speed * 0.25f;
-
-                            if (_e.CloudShiftingC(curCellIdx).Distance >= 1)
-                            {
-                                var list = new List<byte>();
-
-                                list.Add(curCellIdx);
-
-                                foreach (var cellIdxAround in _e.IdxsCellsAround(curCellIdx, DistanceFromCellTypes.First))
-                                {
-                                    list.Add(cellIdxAround);
-                                }
-
-                                foreach (var cellIdx in list)
-                                {
-                                    var cellIdxSkin = _e.CloudWhereSkinDataOnCell(cellIdx).SkinIdxCell;
-                                    _e.CloudWhereSkinDataOnCell(cellIdxSkin).DataIdxCell = 0;
-
-                                    _e.CloudOnCellE(cellIdx).Dispose();
-                                }
-
-
-
-
-
-
-
-                                list.ForEach((byte cellIdx) => _e.CloudOnCellE(cellIdx).Dispose());
-
-                                SetClouds(directIdxCell);
-                            }
-                        }
-                        else
-                        {
-                            _e.WindC.DirectT = (DirectTypes)UnityEngine.Random.Range(1, (byte)DirectTypes.End);
-                        }
-                    }
-
-                                        var pos_0 = _e.CellE(curCellIdx).PositionC.Position;
-                    var pos_1 = _e.CellE(_e.CloudShiftingC(curCellIdx).WhereNeedShiftIdxCell).PositionC.Position;
-
-                    var t = _e.CloudShiftingC(curCellIdx).Distance;
-
-                    _e.CloudPossitionC(_e.CloudWhereSkinDataOnCell(curCellIdx).SkinIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
-
-                }
-
-                
-            }
-        }
         void TryPoorWaterToCellsWithClounds()
         {
             for (byte currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)

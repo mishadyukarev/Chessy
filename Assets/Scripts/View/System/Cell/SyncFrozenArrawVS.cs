@@ -25,7 +25,7 @@ namespace Chessy.View.System
                 _needActiveUp[cellIdxCurrent] = false;
                 _needActiveRight[cellIdxCurrent] = false;
 
-                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveData)
+                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveDataReference)
                 {
                     var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
 

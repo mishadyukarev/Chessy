@@ -25,7 +25,7 @@ namespace Chessy.Model.System
 
 
             _e.DataFromViewC.AnimationCell(_e.CurrentCellIdx, AnimationCellTypes.AdultForest).Invoke();
-            _e.DataFromViewC.AnimationCell(_e.SkinInfoUnitC(_e.CurrentCellIdx).SkinIdxCell, AnimationCellTypes.JumpAppearanceUnit).Invoke();
+            _e.DataFromViewC.AnimationCell(_e.SkinInfoUnitC(_e.CurrentCellIdx).ViewIdxCell, AnimationCellTypes.JumpAppearanceUnit).Invoke();
 
 
 
@@ -98,7 +98,7 @@ namespace Chessy.Model.System
 
                             else
                             {
-                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx))
+                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
                                 {
                                     TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
                                 }
@@ -145,7 +145,7 @@ namespace Chessy.Model.System
                         }
 
                         else if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT)
-                            && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx))
+                            && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
                         {
                             TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
                         }

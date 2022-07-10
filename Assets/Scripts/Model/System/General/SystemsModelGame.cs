@@ -21,6 +21,7 @@ namespace Chessy.Model.System
         internal readonly RpcSs RpcSs;
         internal readonly ForPhotonSceneS ForPhotonSceneS;
         internal readonly SyncDataS SyncDataS;
+        internal readonly TryShiftCloudsMS TryShiftCloudsMS;
 
         public readonly ForButtonsSystemsModel ForUISs;
 
@@ -44,6 +45,7 @@ namespace Chessy.Model.System
             ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eM);
             RpcSs = new RpcSs(this, eM);
             SyncDataS = new SyncDataS(this, eM);
+            TryShiftCloudsMS = new TryShiftCloudsMS(this, eM);
 
             ForPhotonSceneS = new ForPhotonSceneS(this, eM);
             ForUISs = new ForButtonsSystemsModel(this, eM);

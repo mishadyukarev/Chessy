@@ -28,7 +28,7 @@ namespace Chessy.View.System
                 if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {
                     _needActive[cellIdxCurrent] = true;
-                    _flagSRCs[cellIdxCurrent].SR.color = _e.BuildingPlayerT(cellIdxCurrent).Is(PlayerTypes.First) ? Color.blue : Color.red;
+                    _flagSRCs[cellIdxCurrent].SetColor(_e.BuildingPlayerT(cellIdxCurrent).Is(PlayerTypes.First) ? Color.blue : Color.red);
                 }
             }
 

@@ -95,7 +95,7 @@ namespace Chessy.View.System
                         {
                             for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                             {
-                                if (_e.WhereUnitCanShiftC(_e.SelectedCellIdx).Can(idxCell))
+                                if (_e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(idxCell))
                                 {
                                     _needActive[idxCell] = true;
                                     _needColor[idxCell] = ColorsValues.Color(SupportCellVisionTypes.Shift);
@@ -123,7 +123,7 @@ namespace Chessy.View.System
             for (byte cell_start = 0; cell_start < IndexCellsValues.CELLS; cell_start++)
             {
                 _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetActiveGO(_needActive[cell_start]);
-                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SR.color = _needColor[cell_start];
+                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetColor(_needColor[cell_start]);
             }
         }
     }

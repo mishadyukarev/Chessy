@@ -267,11 +267,16 @@ namespace Chessy.Model.System
             _e.CloudC(centerCellIdx).SetCloud(true);
             SetDataAndSkinCloud(centerCellIdx);
 
+            _e.CloudShiftingC(centerCellIdx).WhereNeedShiftIdxCell = _e.GetIdxCellByDirect(centerCellIdx, DistanceFromCellTypes.First, _e.DirectWindT);
+
             foreach (var cellIdxNext in _e.IdxsCellsAround(centerCellIdx, DistanceFromCellTypes.First))
             {
                 _e.CloudC(cellIdxNext).SetCloud(false);
 
                 SetDataAndSkinCloud(cellIdxNext);
+
+                _e.CloudShiftingC(cellIdxNext).WhereNeedShiftIdxCell = _e.GetIdxCellByDirect(cellIdxNext, DistanceFromCellTypes.First, _e.DirectWindT);
+
             }
 
             void SetDataAndSkinCloud(in byte cellIdx)
@@ -279,10 +284,14 @@ namespace Chessy.Model.System
                 for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
                 {
                     if (_e.IsBorder(currentCellIdx)) continue;
-                    if (_e.CloudWhereSkinDataOnCell(currentCellIdx).HaveData) continue;
+                    if (_e.CloudWhereViewDataOnCell(currentCellIdx).HaveDataReference) continue;
 
-                    _e.CloudWhereSkinDataOnCell(currentCellIdx).DataIdxCell = cellIdx;
-                    _e.CloudWhereSkinDataOnCell(cellIdx).SkinIdxCell = currentCellIdx;
+                    _e.CloudWhereViewDataOnCell(currentCellIdx).DataIdxCell = cellIdx;
+                    _e.CloudWhereViewDataOnCell(cellIdx).ViewIdxCell = currentCellIdx;
+
+
+
+
 
                     break;
                 }

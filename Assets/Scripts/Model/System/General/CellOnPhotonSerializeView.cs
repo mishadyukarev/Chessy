@@ -86,20 +86,6 @@ namespace Chessy.Model.System
                     }
                     break;
 
-                case SyncCellTypes.UnitPossition:
-                    {
-                        if (stream.IsWriting)
-                        {
-                            stream.SendNext(_e.UnitPossitionOnCell(_cellIdx));
-                        }
-
-                        else
-                        {
-                            _e.UnitPossitionOnCellC(_cellIdx).Position = (Vector3)stream.ReceiveNext();
-                        }
-                    }
-                    break;
-
                 case SyncCellTypes.EffectsUnit:
                     {
                         if (stream.IsWriting)
@@ -222,7 +208,7 @@ namespace Chessy.Model.System
                         {
                             if (stream.IsWriting)
                             {
-                                stream.SendNext(_e.WhereUnitCanShiftC(_cellIdx).Can(cellIdxCurrent));
+                                stream.SendNext(_e.WhereUnitCanShiftC(_cellIdx).CanShiftHere(cellIdxCurrent));
                             }
                             else
                             {
@@ -384,13 +370,13 @@ namespace Chessy.Model.System
                         {
                             if (stream.IsWriting)
                             {
+                                stream.SendNext(_e.SkinInfoUnitC(_cellIdx).ViewIdxCell);
                                 stream.SendNext(_e.SkinInfoUnitC(_cellIdx).DataIdxCell);
-                                stream.SendNext(_e.SkinInfoUnitC(_cellIdx).SkinIdxCell);
                             }
                             else
                             {
+                                _e.SkinInfoUnitC(_cellIdx).ViewIdxCell = (byte)stream.ReceiveNext();
                                 _e.SkinInfoUnitC(_cellIdx).DataIdxCell = (byte)stream.ReceiveNext();
-                                _e.SkinInfoUnitC(_cellIdx).SkinIdxCell = (byte)stream.ReceiveNext();
 
                                 _e.NeedUpdateView = true;
                             }
@@ -435,6 +421,33 @@ namespace Chessy.Model.System
                     }
                     break;
 
+                case SyncCellTypes.EveryTime:
+                    {
+                        if (stream.IsWriting)
+                        {
+                            stream.SendNext(_e.CloudPossitionC(_cellIdx).Position);
+                            stream.SendNext(_e.CloudC(_cellIdx).HaveCloud);
+                            stream.SendNext(_e.CloudC(_cellIdx).IsCenter);
+                            stream.SendNext(_e.CloudWhereViewDataOnCell(_cellIdx).DataIdxCell);
+                            stream.SendNext(_e.CloudWhereViewDataOnCell(_cellIdx).ViewIdxCell);
+
+                            stream.SendNext(_e.UnitPossitionOnCell(_cellIdx));
+                        }
+                        else
+                        {
+                            _e.CloudPossitionC(_cellIdx).Position = (Vector3)stream.ReceiveNext();
+                            _e.CloudC(_cellIdx).HaveCloud = (bool)stream.ReceiveNext();
+                            _e.CloudC(_cellIdx).IsCenter = (bool)stream.ReceiveNext();
+                            _e.CloudWhereViewDataOnCell(_cellIdx).DataIdxCell = (byte)stream.ReceiveNext();
+                            _e.CloudWhereViewDataOnCell(_cellIdx).ViewIdxCell = (byte)stream.ReceiveNext();
+
+                            _e.UnitPossitionOnCellC(_cellIdx).Position = (Vector3)stream.ReceiveNext();
+
+                            _e.NeedUpdateView = true;
+                        }
+                    }
+                    break;
+
                 default: throw new Exception();
             }
         }
@@ -446,7 +459,6 @@ namespace Chessy.Model.System
         None,
 
         Main,
-        UnitPossition,
         EffectsUnit,
         CooldownsUnit,
         Building,
@@ -465,6 +477,7 @@ namespace Chessy.Model.System
         SkinUnit,
         DamageUnit,
         WhereArcherCanBurnForest,
+        EveryTime,
 
         End,
     }

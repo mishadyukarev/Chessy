@@ -9,23 +9,27 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
+                for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+                {
+                    _e.TrailVisibleC(cellIdxCurrent).Set(playerT, false);
+                }
+            }
+
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
                 if (!_e.IsBorder(cellIdxCurrent))
                 {
-                    for (var dir_0 = DirectTypes.None + 1; dir_0 < DirectTypes.End; dir_0++)
+                    if (_e.HealthTrail(cellIdxCurrent).HaveAnyTrail)
                     {
-                        _e.TrailVisibleC(cellIdxCurrent).Set(PlayerTypes.First, false);
-                        _e.TrailVisibleC(cellIdxCurrent).Set(PlayerTypes.Second, false);
-
-                        if (_e.UnitT(cellIdxCurrent).HaveUnit()) _e.TrailVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdxCurrent), true);
+                        if (_e.UnitT(cellIdxCurrent).HaveUnit())
+                            _e.TrailVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdxCurrent), true);
 
 
-                        for (var dir = DirectTypes.None + 1; dir < DirectTypes.End; dir++)
+                        foreach (var cellIdx1 in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
                         {
-                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, DistanceFromCellTypes.First, dir);
-
-                            if (_e.UnitT(idx_1).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
+                            if (_e.UnitT(cellIdx1).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                             {
-                                _e.TrailVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(idx_1), true);
+                                _e.TrailVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdx1), true);
                             }
                         }
                     }

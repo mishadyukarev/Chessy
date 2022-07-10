@@ -12,16 +12,7 @@ namespace Chessy.Model.System
             {
                 if (_e.HaveCloud(curCellIdx) && _e.IsCenterCloud(curCellIdx))
                 {
-                    //for (var nextCellIdx = 0; nextCellIdx < IndexCellsValues.CELLS; nextCellIdx++)
-                    //{
-                    //    _e.DirectWindT = _e.AroundCellE(curCellIdx).Direct(idx_to);
-
-                    //    break;
-                    //}
-
-                    
-
-                   
+                    _e.DirectWindT = _e.DirectionAround(curCellIdx, idx_to);
                 }
             }
 

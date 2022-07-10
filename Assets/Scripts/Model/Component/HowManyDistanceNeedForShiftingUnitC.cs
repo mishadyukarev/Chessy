@@ -1,17 +1,17 @@
 ﻿namespace Chessy.Model
 {
-    public struct HowManyDistanceNeedForShiftingUnitC
+    public readonly struct HowManyDistanceNeedForShiftingUnitC
     {
-        readonly float[] _howManyEnergyNeedForShiftingUnit;
+        readonly float[] _howMany;
 
-        public float HowMany(in byte cellIdx) => _howManyEnergyNeedForShiftingUnit[cellIdx];
-        public bool[] HowManyClone => (bool[])_howManyEnergyNeedForShiftingUnit.Clone();
+        public float HowMany(in byte cellIdx) => _howMany[cellIdx];
+        public bool[] HowManyClone => (bool[])_howMany.Clone();
 
         internal HowManyDistanceNeedForShiftingUnitC(in float[] howManyEnergyNeedForShiftingUnit)
         {
-            _howManyEnergyNeedForShiftingUnit = howManyEnergyNeedForShiftingUnit;
+            _howMany = howManyEnergyNeedForShiftingUnit;
         }
 
-        internal void Set(in byte idxCell, in float distance) => _howManyEnergyNeedForShiftingUnit[idxCell] = distance;
+        internal void Set(in byte cellIdx, in float distance) => _howMany[cellIdx] = distance;
     }
 }

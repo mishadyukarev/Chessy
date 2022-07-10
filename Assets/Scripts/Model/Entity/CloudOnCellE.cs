@@ -5,7 +5,7 @@ namespace Chessy.Model.Entity
     public struct CloudOnCellE
     {
         public CloudC CloudC;
-        public WherSkinAndWhereDataInfoC WhereSkinAndWhereDataInfoC;
+        public WhereViewIdxCellC WhereSkinAndWhereDataInfoC;
         public ShiftingObjectC ShiftingC;
         public PositionC PositionC;
 

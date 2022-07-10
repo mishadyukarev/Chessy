@@ -10,38 +10,43 @@ namespace Chessy.View.Component
         public Transform Transform => SR.transform;
         public Transform ParentTransform => Transform.parent;
 
-        public Sprite Sprite
+        internal Sprite Sprite
         {
             get => SR.sprite;
             set => SR.sprite = value;
         }
-        public Color Color
+        internal Color Color
         {
             get => SR.color;
             set => SR.color = value;
         }
 
-        public SpriteRendererVC(in SpriteRenderer sr) => SR = sr;
+        internal SpriteRendererVC(in SpriteRenderer sr) => SR = sr;
 
-        public void SetEnabled(in bool needActive)
+        internal void SetEnabled(in bool needActive)
         {
             if (SR.enabled != needActive)
                 SR.enabled = needActive;
         }
-        public void Enable()
+        internal void Enable()
         {
             if (SR.enabled == false)
                 SR.enabled = true;
         }
-        public void Disable()
+        internal void Disable()
         {
             if (SR.enabled == true)
                 SR.enabled = false;
         }
 
-        public void SetActiveGO(in bool needActive)
+        internal void SetActiveGO(in bool needActive)
         {
             if (GO.activeSelf != needActive) GO.SetActive(needActive);
+        }
+
+        internal void SetColor(in Color color)
+        {
+            /*if (color != Color)*/ Color = color;
         }
     }
 }

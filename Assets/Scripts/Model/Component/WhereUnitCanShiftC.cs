@@ -1,17 +1,14 @@
 ﻿namespace Chessy.Model
 {
-    public struct WhereUnitCanShiftC
+    public readonly struct WhereUnitCanShiftC
     {
-        readonly bool[] _whereUnitCanShift;
+        readonly bool[] _where;
 
-        public bool Can(in byte cellIdx) => _whereUnitCanShift[cellIdx];
-        public bool[] WhereUnitCanShift => (bool[])_whereUnitCanShift.Clone();
+        public bool CanShiftHere(in byte cellIdx) => _where[cellIdx];
+        public bool[] Where => (bool[])_where.Clone();
 
-        internal WhereUnitCanShiftC(in bool[] cells)
-        {
-            _whereUnitCanShift = cells;
-        }
+        internal WhereUnitCanShiftC(in bool[] cells) => _where = cells;
 
-        internal void Set(in byte idxCell, in bool canShift) => _whereUnitCanShift[idxCell] = canShift;
+        internal void Set(in byte cellIdx, in bool canShift) => _where[cellIdx] = canShift;
     }
 }

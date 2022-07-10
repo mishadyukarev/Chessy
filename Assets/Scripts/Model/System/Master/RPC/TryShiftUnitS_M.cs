@@ -13,7 +13,7 @@ namespace Chessy.Model.System
 
             }
 
-            if (_e.WhereUnitCanShiftC(cellIdxFrom).Can(cellIdxTo) && _e.UnitPlayerT(cellIdxFrom).Is(whoDoing))
+            if (_e.WhereUnitCanShiftC(cellIdxFrom).CanShiftHere(cellIdxTo) && _e.UnitPlayerT(cellIdxFrom).Is(whoDoing))
             {
                 _e.SetUnitConditionT(cellIdxFrom, ConditionUnitTypes.None);
 
