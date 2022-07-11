@@ -23,6 +23,10 @@
         ShortWind,
         ShortRain,
         SoundRunningUnit,
+        ExtractAdultForestWithWarrior,
+        SighUnit,
+        BuildingWoodcutterWithWarrior,
+        AttackAnimal,
 
         Background1,
         Background2,

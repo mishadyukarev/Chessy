@@ -115,13 +115,25 @@ namespace Chessy.View.System
                                 break;
 
                             case AbilityTypes.ChangeDirectionWind:
-                                if (!_e.IsBorder(currentCellIdx))
-                                {
-                                    if(!_e.HaveCloud(currentCellIdx) && !_e.IsCenterCloud(currentCellIdx))
-                                    {
-                                        _isActive[currentCellIdx] = true;
-                                    }
-                                }
+
+                                //if()
+
+                                //foreach (var item in _e.)
+                                //{
+
+                                //}
+
+                                //if(_e.)
+
+                                //if (!_e.IsBorder(currentCellIdx))
+                                //{
+
+
+                                //    //if(!_e.HaveCloud(currentCellIdx) && !_e.IsCenterCloud(currentCellIdx))
+                                //    //{
+                                //    //    _isActive[currentCellIdx] = true;
+                                //    //}
+                                //}
 
 
 

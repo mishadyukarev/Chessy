@@ -12,7 +12,7 @@ namespace Chessy.Model.System
             if (_e.IsBorder(cellIdx)) throw new Exception();
 
             _e.HpUnitC(cellIdx).Health -= damage;
-            if (_e.HpUnitC(cellIdx).Health <= HpValues.HP_FOR_DEATH_AFTER_ATTACK)
+            if (_e.HpUnitC(cellIdx).Health <= HpUnitValues.HP_FOR_DEATH_AFTER_ATTACK)
                 KillUnit(whoKiller, cellIdx);
         }
     }

@@ -12,10 +12,21 @@ namespace Chessy.Model.System
             _e.UnitMainC(idx_from).HowManySecondUnitWasHereInThisCondition = 0;
 
 
-
-            if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
-                RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
-            else RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+            if (_e.UnitT(idx_to).IsAnimal())
+            {
+                RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackAnimal);
+            }
+            else
+            {
+                if (_e.UnitT(idx_from).IsMelee(_e.MainToolWeaponT(idx_from)))
+                {
+                    RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                }
+                else
+                {
+                    RpcSs.ExecuteSoundActionToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
+                }
+            }
 
 
             RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
@@ -58,7 +69,7 @@ namespace Chessy.Model.System
             double minus_to = 0;
             double minus_from = 0;
 
-            var maxDamage = HpValues.MAX;
+            var maxDamage = HpUnitValues.MAX;
             var minDamage = 0;
 
             //if (!e.UnitE(idx_to).IsMelee) powerDam_to /= 2;

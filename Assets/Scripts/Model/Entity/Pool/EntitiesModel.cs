@@ -220,8 +220,6 @@ namespace Chessy.Model.Entity
         public IdxCellC IdxCellAroundC(in byte cellIdx, in byte nextCellIdx) => AroundCellE(cellIdx, nextCellIdx).IdxC;
         public byte IdxCellAround(in byte cellIdx, in byte nextCellIdx) => IdxCellAroundC(cellIdx, nextCellIdx).Idx;
 
-
-
         public byte[] IdxsCellsAround(in byte startCellIdx, in DistanceFromCellTypes levelT)
         {
             var list = new List<byte>();
@@ -265,9 +263,8 @@ namespace Chessy.Model.Entity
 
 
         public ref CloudOnCellE CloudOnCellE(in byte cellIdx) => ref CellEs(cellIdx).CloudE;
-        public ref WhereViewIdxCellC CloudWhereViewDataOnCell(in byte cellIdx) => ref CloudOnCellE(cellIdx).WhereSkinAndWhereDataInfoC;
+        public ref WhereViewIdxCellC CloudWhereViewDataOnCellC(in byte cellIdx) => ref CloudOnCellE(cellIdx).WhereSkinAndWhereDataInfoC;
         public ref CloudC CloudC(in byte cell) => ref CloudOnCellE(cell).CloudC;
-        public bool HaveCloud(in byte cellIdx) => CloudC(cellIdx).HaveCloud;
         public bool IsCenterCloud(in byte cellIdx) => CloudC(cellIdx).IsCenter;
         public ref ShiftingObjectC CloudShiftingC(in byte cellIdx) => ref CloudOnCellE(cellIdx).ShiftingC;
         public ref PositionC CloudPossitionC(in byte cellIdx) => ref CloudOnCellE(cellIdx).PositionC;

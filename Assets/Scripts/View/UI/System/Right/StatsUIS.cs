@@ -61,7 +61,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 //_statsUIE.EnergyE.TextUIC.TextUI.text = (Math.Truncate(100 * _e.EnergyUnitC(idx_sel).Energy) / 100).ToString();
                 _statsUIE.WaterE.TextC.TextUI.text = (Math.Truncate(100 * _e.WaterUnitC(idx_sel).Water) / 100).ToString();
 
-                _statsUIE.Stat(UnitStatsTypes.Hp).ImageC.Image.fillAmount = (float)(_e.HpUnitC(idx_sel).Health / HpValues.MAX);
+                _statsUIE.Stat(UnitStatsTypes.Hp).ImageC.Image.fillAmount = (float)(_e.HpUnitC(idx_sel).Health / HpUnitValues.MAX);
 
 
 

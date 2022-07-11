@@ -38,7 +38,7 @@ namespace Chessy.View.System
                         {
                             _needActiveBar[cellIdxCurrent] = true;
 
-                            var xCordinate = (float)(_e.HpUnit(dataIdxCell) / HpValues.MAX);
+                            var xCordinate = (float)(_e.HpUnit(dataIdxCell) / HpUnitValues.MAX);
                             _hpBarSRC[cellIdxCurrent].Transform.localScale = new Vector3(xCordinate * 0.67f, 0.13f, 1);
 
                             _needSetColorToBar[cellIdxCurrent] = _e.UnitPlayerT(dataIdxCell) == PlayerTypes.First ? Color.blue : Color.red;

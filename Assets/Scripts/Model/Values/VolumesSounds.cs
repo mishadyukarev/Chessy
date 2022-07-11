@@ -26,6 +26,10 @@
                 case ClipTypes.Music: return testMode == TestModeTypes.Standart ? 0 : 0.2f;
                 case ClipTypes.Click: return 0.15f;
                 case ClipTypes.SoundRunningUnit: return 0.25f;
+                case ClipTypes.SighUnit: return 0.25f;
+                case ClipTypes.ExtractAdultForestWithWarrior: return 0.7f;
+                case ClipTypes.BuildingWoodcutterWithWarrior: return 0.5f;
+                case ClipTypes.AttackAnimal: return 0.4f;
 
                 case ClipTypes.Background1: return 1;
                 case ClipTypes.Background2: return 0.6f;

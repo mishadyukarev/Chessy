@@ -8,7 +8,7 @@ namespace Chessy.Model.System
         internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte forSettingCellIdx)
         {
             _e.UnitMainC(forSettingCellIdx).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
-            _e.UnitE(forSettingCellIdx).SetStats(HpValues.MAX, 1, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
+            _e.UnitE(forSettingCellIdx).SetStats(HpUnitValues.MAX, 1, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
             _e.UnitExtraTWC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
             _e.UnitEffectsC(forSettingCellIdx).Set(0, 0, false);
 

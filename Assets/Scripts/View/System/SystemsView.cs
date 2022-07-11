@@ -160,28 +160,25 @@ namespace Chessy.View.System
 
 
 
-                if (_e.HaveCloud(cellIdxCurrent))
+                if (_e.IsCenterCloud(cellIdxCurrent))
                 {
-                    whereSkinIdxCell = _e.CloudWhereViewDataOnCell(cellIdxCurrent).ViewIdxCell;
+                    whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(cellIdxCurrent).ViewIdxCell;
 
                     var curPos = _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position;
                     var nextPos = _e.CloudPossitionC(whereSkinIdxCell).Position;
 
                     _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(curPos, nextPos, t);
 
-                    //foreach (var nextCellIdx in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
-                    //{
-                    //    whereSkinIdxCell = _e.CloudWhereSkinDataOnCell(nextCellIdx).SkinIdxCell;
 
-                    //    nextPos = _e.CellE(_e.GetIdxCellByDirect(nextCellIdx, DistanceFromCellTypes.First, _e.DirectWindT)).StartPositionC.Possition;
+                    foreach (var item in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
+                    {
+                        whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(item).ViewIdxCell;
 
-                    //    //if (nextPos.magnitude > 0)
-                    //    //{
-                    //    _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position, nextPos, t);
-                    //    //}
-                    //}
+                        curPos = _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position;
+                        nextPos = _e.CloudPossitionC(whereSkinIdxCell).Position;
 
-
+                        _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(curPos, nextPos, t);
+                    }
                 }
             }
         }

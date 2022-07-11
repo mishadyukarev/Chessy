@@ -1,5 +1,6 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Chessy.View.System;
 using Chessy.View.UI.Entity;
@@ -60,14 +61,14 @@ namespace Chessy.View.System
                 {
                     for (byte curCellIdx = 0; curCellIdx < IndexCellsValues.CELLS; curCellIdx++)
                     {
-                        if (_e.HaveCloud(curCellIdx))
+                        if (_e.IsCenterCloud(curCellIdx))
                         {
-                            if (!_e.IsCenterCloud(curCellIdx))
+                            foreach (var item in _e.IdxsCellsAround(curCellIdx, DistanceFromCellTypes.First))
                             {
-                                _needActive[curCellIdx] = true;
-                                _needColor[curCellIdx] = ColorsValues.Color(SupportCellVisionTypes.Shift);
+                                _needActive[item] = true;
+                                _needColor[item] = ColorsValues.Color(SupportCellVisionTypes.Shift);
                             }
-                        } 
+                        }
                     }
                 }
 

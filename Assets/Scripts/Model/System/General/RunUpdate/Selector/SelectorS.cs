@@ -100,7 +100,7 @@ namespace Chessy.Model
 
                                             case AbilityTypes.ChangeDirectionWind:
                                                 {
-                                                    if (_e.HaveCloud(_e.CurrentCellIdx) && !_e.IsCenterCloud(_e.CurrentCellIdx))
+                                                    if (/*_e.IdxsCellsAround() HaveCloud(_e.CurrentCellIdx) &&*/ !_e.IsCenterCloud(_e.CurrentCellIdx))
                                                     {
                                                         _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryChangeDirectWindWithSnowyM), _e.SelectedCellIdx, _e.CurrentCellIdx });
                                                     }

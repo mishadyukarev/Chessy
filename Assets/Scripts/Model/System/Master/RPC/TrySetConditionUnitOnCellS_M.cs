@@ -25,21 +25,10 @@ namespace Chessy.Model.System
                         else
                         {
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
-                            //_e.EnergyUnitC(cellIdx).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
                             _e.SetUnitConditionT(cellIdx, condT);
 
                             if (_e.LessonT == LessonTypes.ClickDefend) SetNextLesson();
                         }
-
-                        //else if (_e.EnergyUnitC(cellIdx).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
-                        //{
-
-                        //}
-
-                        //else
-                        //{
-                        //    RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                        //}
                         break;
 
 
@@ -49,25 +38,21 @@ namespace Chessy.Model.System
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
                         }
-
-                        //else if (_e.EnergyUnitC(cellIdx).Energy >= StepValues.FOR_TOGGLE_CONDITION_UNIT)
-                        //{
-
-                        //}
-
                         else
                         {
-                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+
                             _e.SetUnitConditionT(cellIdx, condT);
-                            //_e.EnergyUnitC(cellIdx).Energy -= StepValues.FOR_TOGGLE_CONDITION_UNIT;
+
+                            var clipT = ClipTypes.SighUnit;
 
                             if (_e.UnitT(cellIdx).Is(UnitTypes.Pawn))
                             {
-                                if (!_e.HaveBuildingOnCell(cellIdx))
+                                if (_e.AdultForestC(cellIdx).HaveAnyResources)
                                 {
-                                    if (_e.AdultForestC(cellIdx).HaveAnyResources)
+                                    if (!_e.HaveBuildingOnCell(cellIdx))
                                     {
-                                        if (_e.HpUnitC(cellIdx).Health >= HpValues.MAX)
+
+                                        if (_e.HpUnitC(cellIdx).Health >= HpUnitValues.MAX)
                                         {
                                             if (_e.PlayerInfoE(_e.UnitPlayerT(cellIdx)).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
                                             {
@@ -75,10 +60,12 @@ namespace Chessy.Model.System
                                             }
                                         }
                                     }
+
+                                    clipT = ClipTypes.ExtractAdultForestWithWarrior;
                                 }
                             }
 
-                            //RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            RpcSs.ExecuteSoundActionToGeneral(sender, clipT);
                         }
                         break;
 

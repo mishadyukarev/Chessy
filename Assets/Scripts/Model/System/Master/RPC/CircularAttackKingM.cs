@@ -34,7 +34,7 @@ namespace Chessy.Model.System
 
                                 else
                                 {
-                                    _s.AttackUnitOnCell(HpValues.MAX / 4, _e.UnitPlayerT(cell_0), idx_1);
+                                    _s.AttackUnitOnCell(HpUnitValues.MAX / 4, _e.UnitPlayerT(cell_0), idx_1);
                                 }
                             }
                         }

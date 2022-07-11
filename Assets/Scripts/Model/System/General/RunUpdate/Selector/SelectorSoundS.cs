@@ -50,12 +50,26 @@ namespace Chessy.Model
                 }
 
 
-                
 
-                if (_e.HaveCloud(cell_0))
+
+
+
+                if (_e.IsCenterCloud(cell_0))
                 {
                     _e.SoundAction(ClipTypes.ShortRain).Invoke();
                 }
+                else
+                {
+                    foreach (var item in _e.IdxsCellsAround(cell_0, Enum.DistanceFromCellTypes.First))
+                    {
+                        if (_e.IsCenterCloud(item))
+                        {
+                            _e.SoundAction(ClipTypes.ShortRain).Invoke();
+                            break;
+                        }
+                    }
+                }
+
             }
         }
     }

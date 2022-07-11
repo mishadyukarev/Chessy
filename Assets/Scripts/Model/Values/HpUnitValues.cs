@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Chessy.Model.Values
 {
-    public static class HpValues
+    public static class HpUnitValues
     {
         public const double MAX = 1;
 

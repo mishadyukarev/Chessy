@@ -38,7 +38,6 @@ namespace Chessy
             new ShopS(eM);
 
             var rpc = eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().FillRpcWithSystems(sM);
-
             eV.PhotonC.PhotonView.ObservedComponents = new List<Component>() { rpc };
 
             var photonParent = new GameObject("Photons");
