@@ -6,6 +6,7 @@ namespace Chessy.Model.Values
     {
         public const float MAX_WATER_FOR_ANY_UNIT = 1;
 
+        public const float WATER_FOR_ADDING_WATER_ANIMATION = MAX_WATER_FOR_ANY_UNIT * 0.2f;
 
         #region Costs
 

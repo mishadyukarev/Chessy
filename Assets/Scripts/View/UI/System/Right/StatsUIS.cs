@@ -29,17 +29,17 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 var needActiveDamage = false;
 
 
-                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
+                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Install1WarriorsNextToTheRiver)
                 {
                     needActiveHp = true;
                 }
 
-                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ThatsYourDamage)
+                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.UniqueAttackInfo)
                 {
                     needActiveDamage = true;
                 }
 
-                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Install3WarriorsNextToTheRiver)
+                if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.Install1WarriorsNextToTheRiver)
                 {
                     //if (!_e.UnitT(idx_sel).Is(UnitTypes.Elfemale))
                     //{

@@ -18,7 +18,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var needActiveZone = false;
 
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ThatsYourEffects)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.UniqueAttackInfo)
             {
                 if (_e.CellsC.IsSelectedCell)
                 {

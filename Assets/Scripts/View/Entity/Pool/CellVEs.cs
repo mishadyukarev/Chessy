@@ -26,6 +26,8 @@ namespace Chessy.View.Entity
         internal readonly UnitVEs UnitEs;
         internal readonly CellBuildingVE BuildingEs;
 
+
+
         internal readonly SpriteRendererVC CloudSRC;
         internal readonly SpriteRendererVC SunSideSRC;
 

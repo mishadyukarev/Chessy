@@ -89,6 +89,9 @@ TagManager:
   - name: Unit
     uniqueID: 1121464767
     locked: 0
+  - name: AddingWaterAnimation
+    uniqueID: 2486071293
+    locked: 0
   - name: MaxSteps
     uniqueID: 517785969
     locked: 0

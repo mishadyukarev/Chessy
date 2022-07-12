@@ -20,7 +20,7 @@
         public const float UNDEAD = 2f;
         public const float HELL = 2f;
         public const float SKELETON = 0.5f;
-        public const float TREE = 3f;
+        public const float TREE = 4f;
         public const float CAMEL = 0f;
 
 

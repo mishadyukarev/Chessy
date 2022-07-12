@@ -974,7 +974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1077007514138842344
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4149,7 +4149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1690595952383024801}
   m_Layer: 5
-  m_Name: HoldPressReady+
+  m_Name: HoldPressTown+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4171,7 +4171,7 @@ RectTransform:
   - {fileID: 2108668409720444805}
   - {fileID: 1844210626816599979}
   m_Father: {fileID: 7937045876705157359}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4794,7 +4794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7076769008790601511
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5102,7 +5102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2689508547101320520
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8572,7 +8572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1859600317269895683
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10077,7 +10077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6273775930006366410
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11293,18 +11293,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2660827725644034453}
-  m_LocalRotation: {x: -0, y: -0, z: 0.9659236, w: -0.25882724}
+  m_LocalRotation: {x: -0, y: -0, z: 0.9659283, w: 0.25880995}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5483421996224336674}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -509.999}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -399, y: -311}
-  m_SizeDelta: {x: 342.809, y: 181.556}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -569.999}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -270, y: 262}
+  m_SizeDelta: {x: 342.80896, y: 181.556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7122878845681455109
 CanvasRenderer:
@@ -13560,7 +13560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8957139937937670616
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13924,7 +13924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7337805702665218892
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15595,17 +15595,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3526895594780614341}
-  m_LocalRotation: {x: -0, y: -0, z: -0.31042883, w: 0.95059663}
+  m_LocalRotation: {x: -0, y: -0, z: -0.9784548, w: 0.20646095}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1690595952383024801}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -36.17}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -412, y: 139}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -156.17}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 239, y: 346}
   m_SizeDelta: {x: 278.24707, y: 217.754}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7373289141985671825
@@ -15872,7 +15872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4101985120915206222
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18173,7 +18173,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6770900823199538629
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19106,7 +19106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2281540690418463079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20479,7 +20479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9115823293677770174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22372,7 +22372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &480577119920712213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24268,7 +24268,7 @@ RectTransform:
   - {fileID: 780780388673754469}
   - {fileID: 7110332288674935820}
   m_Father: {fileID: 7937045876705157359}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -24560,10 +24560,10 @@ RectTransform:
   m_Father: {fileID: 5483421996224336674}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -551, y: -469.44012}
-  m_SizeDelta: {x: 170.328, y: 181.437}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -100, y: 77}
+  m_SizeDelta: {x: 170.328, y: 181.43701}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7999244947303596578
 CanvasRenderer:
@@ -29146,7 +29146,7 @@ RectTransform:
   - {fileID: 5959718682866619572}
   - {fileID: 1543951143351782495}
   m_Father: {fileID: 7937045876705157359}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -29570,10 +29570,10 @@ RectTransform:
   m_Father: {fileID: 1690595952383024801}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -123, y: 76}
-  m_SizeDelta: {x: 285.95703, y: 253.426}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 100}
+  m_SizeDelta: {x: 242.194, y: 214.642}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7596678043236644277
 CanvasRenderer:
@@ -32410,7 +32410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4951697465369115416}
   m_Layer: 5
-  m_Name: Install3WarriorsNextToTheRiver+
+  m_Name: Install1WarriorsNextToTheRiver+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32475,9 +32475,9 @@ RectTransform:
   - {fileID: 2887457150517905046}
   - {fileID: 5483421996224336674}
   - {fileID: 8552678512014207740}
+  - {fileID: 1690595952383024801}
   - {fileID: 1537293966743020889}
   - {fileID: 3034186644433068001}
-  - {fileID: 1690595952383024801}
   - {fileID: 6534833887126288804}
   - {fileID: 5782199237819511698}
   - {fileID: 2546708159278563826}
@@ -36001,7 +36001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3894411574606009298
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37071,7 +37071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4359689078199579567
 RectTransform:
   m_ObjectHideFlags: 0
@@ -39892,7 +39892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2854701308367331572
 RectTransform:
   m_ObjectHideFlags: 0
@@ -41340,22 +41340,22 @@ PrefabInstance:
     - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
-        type: 3}
-      propertyPath: m_AnchorMin.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
         type: 3}
-      propertyPath: m_AnchorMin.y
+      propertyPath: m_AnchorMin.x
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
         type: 3}
@@ -41420,12 +41420,12 @@ PrefabInstance:
     - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -964
+      value: -182
       objectReference: {fileID: 0}
     - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 234
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 2693351446934607920, guid: fa3d7603daa025b4da325e90cbe0870c,
         type: 3}
@@ -43400,22 +43400,22 @@ PrefabInstance:
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
-        type: 3}
-      propertyPath: m_AnchorMin.x
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
-      propertyPath: m_AnchorMin.y
+      propertyPath: m_AnchorMin.x
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -43465,12 +43465,12 @@ PrefabInstance:
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -724
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 225
+      value: -216
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -43490,13 +43490,13 @@ PrefabInstance:
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_text
-      value: Enable Relax mod(condition) of warrior and click "Ready" for extract
-        resources or for healing unit.
+      value: Enable Relax mod(condition) of warrior for extract resources or for
+        healing unit. You need wait in this condition
       objectReference: {fileID: 0}
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_fontSize
-      value: 38.55
+      value: 36.6
       objectReference: {fileID: 0}
     - target: {fileID: 5830635995600166393, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -44334,7 +44334,7 @@ PrefabInstance:
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -44344,7 +44344,7 @@ PrefabInstance:
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -44399,12 +44399,12 @@ PrefabInstance:
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -503
+      value: -550
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -76
+      value: -52
       objectReference: {fileID: 0}
     - target: {fileID: 4029417837592581644, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -46283,7 +46283,7 @@ PrefabInstance:
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_text
-      value: Hold press "Ready" button and you're gonna open full information about
+      value: Hold press "Town" button and you're gonna open full information about
         it. That way almost everything work
       objectReference: {fileID: 0}
     - target: {fileID: 5830635995600166393, guid: 0a992d0ef82404144916e94273580e98,
@@ -48209,8 +48209,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Just go by the river and  warriors auto-drink water. Your units wanna
-        drink except some gods. Install 3 warriors next to the river so that they
-        drink water
+        drink except some gods. Install 1 warrior next to the river so that he drinks
+        water
       objectReference: {fileID: 0}
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -49759,7 +49759,7 @@ PrefabInstance:
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_text
-      value: Build more 5 houses for hire warriors in your town. Don't forget hire
+      value: Build more 1 house for hire warriors in your town. Don't forget hire
         them for faster extraction of forest :)
       objectReference: {fileID: 0}
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,

@@ -16,5 +16,7 @@ namespace Chessy.Model
         public override sealed void OnJoinedRoom() => _s.ForPhotonSceneS.OnJoinedRoom();
         public override void OnPlayerEnteredRoom(Player newPlayer) => _s.ForPhotonSceneS.OnPlayerEnteredRoom(newPlayer);
         public override void OnDisconnected(DisconnectCause cause) => _s.ForPhotonSceneS.OnDisconnected();
+        public override void OnConnected() => _s.ForPhotonSceneS.OnConnected();
+        public override void OnConnectedToMaster() => _s.ForPhotonSceneS.OnConnectedToMaster();
     }
 }

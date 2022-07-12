@@ -20,6 +20,7 @@ namespace Chessy.View.Entity
         internal readonly EffectVE EffectE;
         internal readonly AnimationVC AnimationUnitC;
         internal readonly AnimationVC CircularAttackAnimC;
+        internal readonly AnimationVC AddingWaterAnimationC;
         internal readonly SpriteRendererVC UnitHpBarSRC;
 
 
@@ -43,6 +44,7 @@ namespace Chessy.View.Entity
 
 
             CircularAttackAnimC.Animation["CircularAttackKing"].time = 0;
+            AddingWaterAnimationC = new AnimationVC(unitZ.Find("AddingWater+").GetComponent<Animation>());
 
 
             EffectE = new EffectVE(unitZ);

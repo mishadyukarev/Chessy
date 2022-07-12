@@ -27,7 +27,7 @@ namespace Chessy.Model.System
                             RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.SetUnitConditionT(cellIdx, condT);
 
-                            if (_e.LessonT == LessonTypes.ClickDefend) SetNextLesson();
+                            //if (_e.LessonT == LessonTypes.ClickDefend) SetNextLesson();
                         }
                         break;
 

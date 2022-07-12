@@ -1,4 +1,5 @@
 ﻿using Chessy.Model.Entity;
+using Chessy.Model.Enum;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -7,9 +8,9 @@ using UnityEngine;
 
 namespace Chessy.Model.System
 {
-    sealed class RpcSs : SystemModelAbstract
+    sealed class RpcInternetSs : SystemModelAbstract
     {
-        internal RpcSs(in SystemsModel sM, in EntitiesModel eM) : base(sM, eM)
+        internal RpcInternetSs(in SystemsModel sM, in EntitiesModel eM) : base(sM, eM)
         {
         }
 
@@ -130,6 +131,10 @@ namespace Chessy.Model.System
                         _s.ExecuteAnimationClip((byte)objects[cellIdxCurrent++], (AnimationCellTypes)objects[cellIdxCurrent++]);
                         break;
 
+                    case nameof(_s.ExecuteAnimationCellDirectlyClip):
+                        _s.ExecuteAnimationCellDirectlyClip((byte)objects[cellIdxCurrent++], (CellAnimationDirectlyTypes)objects[cellIdxCurrent++]);
+                        break;
+
                     case nameof(_s.ActiveMotion):
                         _s.ActiveMotion();
                         break;
@@ -166,6 +171,7 @@ namespace Chessy.Model.System
         internal void ActiveMotionZoneToGeneneral(in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ActiveMotion) });
 
         internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
+        internal void ExecuteAnimationCellDirectlyToGeneral(in byte cellIdx, in CellAnimationDirectlyTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Action0(_e.RpcC.PunRPCName, rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
 
         internal void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => _e.RpcC.Action1(_e.RpcC.PunRPCName, playerTo, new object[] { nameof(_s.ExecuteMistake), mistakeType });
         internal void SimpleMistakeToGeneral(Player playerTo, Dictionary<ResourceTypes, float> needRes)

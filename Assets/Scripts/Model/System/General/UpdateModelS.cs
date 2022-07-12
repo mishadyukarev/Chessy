@@ -112,7 +112,6 @@ namespace Chessy.Model.System
                     PutOutFireWithClouds();
                     BurnAdultForest();
                     FireUpdate();
-                    TryGiveWaterToUnitsDuringLessons();
                     TryExtractForestWithPawn();
                     TryExtractWoodWithWoodcutter();
                     TryGiveWaterToBotUnits();
@@ -134,7 +133,7 @@ namespace Chessy.Model.System
                     ToggleConditionUnitsIfTheresFire();
                     TryGiveHealthToUnitsWithRelaxCondition();
                     TryGiveWaterToUnitsAroundRainy();
-                    //TryActiveGodsUniqueAbilityEveryUpdate();
+                    TryActiveGodsUniqueAbilityEveryUpdate();
                     TrySetDefendWithoutConditionUnits();
                     TryExecuteTruce();
 
@@ -248,42 +247,49 @@ namespace Chessy.Model.System
                 //}
             }
         }
+
+        int _secondsForGodsAbilities;
+
         void TryActiveGodsUniqueAbilityEveryUpdate()
         {
+            _secondsForGodsAbilities++;
+
             if (!_e.LessonT.HaveLesson())
             {
-                if (_e.Motions % ValuesChessy.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0)
+                if(_secondsForGodsAbilities >= 60)
                 {
                     RpcSs.SoundToGeneral(RpcTarget.All, AbilityTypes.GrowAdultForest);
 
                     for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                     {
-                        if (!_e.IsBorder(cell_0))
+                        if (_e.IsBorder(cell_0)) continue;
+
+                        if (_e.UnitT(cell_0).HaveUnit())
                         {
-                            if (_e.UnitT(cell_0).HaveUnit())
+                            if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
                             {
-                                if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
+                                if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
                                 {
-                                    if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
+                                    if (_e.MainToolWeaponT(cell_0).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                                     {
-                                        if (_e.MainToolWeaponT(cell_0).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
-                                        {
-                                            _e.UnitEffectsC(cell_0).HaveFrozenArrawArcher = true;
-                                        }
-                                        else
-                                        {
-                                            _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ValuesChessy.PROTECTION_MAGIC_SHIELD_AFTER_5_MOTIONS_RAINY;
-                                        }
+                                        _e.UnitEffectsC(cell_0).HaveFrozenArrawArcher = true;
                                     }
                                     else
                                     {
                                         _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ValuesChessy.PROTECTION_MAGIC_SHIELD_AFTER_5_MOTIONS_RAINY;
                                     }
                                 }
+                                else
+                                {
+                                    _e.UnitEffectsC(cell_0).ProtectionRainyMagicShield = ValuesChessy.PROTECTION_MAGIC_SHIELD_AFTER_5_MOTIONS_RAINY;
+                                }
                             }
-                            else
+                        }
+                        else
+                        {
+                            if (_e.AdultForestC(cell_0).HaveAnyResources)
                             {
-                                if (_e.AdultForestC(cell_0).HaveAnyResources)
+                                if (!_e.BuildingOnCellT(cell_0).HaveBuilding())
                                 {
                                     if (!_e.HaveTreeUnit)
                                     {
@@ -293,6 +299,9 @@ namespace Chessy.Model.System
                                             {
                                                 SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
 
+                                                _e.AdultForestC(cell_0).Resources = 0;
+                                                _e.SetBuildingOnCellT(cell_0, BuildingTypes.None);
+
                                                 break;
                                             }
                                         }
@@ -301,6 +310,29 @@ namespace Chessy.Model.System
                             }
                         }
                     }
+
+                    for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+                    {
+                        if (_e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
+                        {
+
+                            for (byte curCell_0 = 0; curCell_0 < IndexCellsValues.CELLS; curCell_0++)
+                            {
+                                if (_e.IsBorder(curCell_0)) continue;
+
+                                if (_e.AdultForestC(curCell_0).HaveAnyResources)
+                                {
+                                    if (_e.UnitT(curCell_0).HaveUnit() && _e.UnitPlayerT(curCell_0) != playerT)
+                                    {
+                                        _e.UnitEffectsC(curCell_0).StunHowManyUpdatesNeedStay = StunUnitValues.AFTER_ELFEMALE_BLOWOUT;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    _secondsForGodsAbilities = 0;
                 }
             }
         }
@@ -715,29 +747,29 @@ namespace Chessy.Model.System
 
         void TakeWaterUnits()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                if (_e.UnitT(cellIdxCurrent).HaveUnit())
-                {
-                    var speed = 0.01f;
-
-                    _e.WaterUnitC(cellIdxCurrent).Water -= speed;// ValuesChessy.NeedWaterForThirsty(_e.UnitT(cellIdxCurrent));
-                }
-            }
-        }
-        void TryGiveWaterToUnitsDuringLessons()
-        {
-            if (_e.LessonT! >= LessonTypes.Install3WarriorsNextToTheRiver)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Install1WarriorsNextToTheRiver)
             {
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
+                    var speed = 0.01f;
                     if (_e.UnitT(cellIdxCurrent).HaveUnit())
                     {
-                        _e.WaterUnitC(cellIdxCurrent).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+                        if (_e.LessonT >= LessonTypes.Install1WarriorsNextToTheRiver)
+                        {
+                            if (_e.UnitT(cellIdxCurrent) == UnitTypes.Pawn)
+                            {
+                                _e.WaterUnitC(cellIdxCurrent).Water -= speed;
+                            }
+                        }
+                        else
+                        {
+                            _e.WaterUnitC(cellIdxCurrent).Water -= speed;
+                        }
                     }
                 }
             }
         }
+
         void TryGiveWaterToBotUnits()
         {
             if (_e.GameModeT == GameModeTypes.TrainingOffline)
@@ -762,6 +794,8 @@ namespace Chessy.Model.System
                 {
                     if (_e.RiverT(cellIdxCurrent).HaveRiverNear())
                     {
+                        TryExecuteAddingUnitAnimationM(cellIdxCurrent);
+
                         _e.WaterUnitC(cellIdxCurrent).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
                     }
                 }

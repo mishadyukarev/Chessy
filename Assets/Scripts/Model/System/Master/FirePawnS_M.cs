@@ -16,10 +16,10 @@ namespace Chessy.Model.System
                     _e.HaveFire(cellIdxForFire) = true;
                     //_e.EnergyUnitC(cellIdxForFire).Energy -= StepValues.FIRE_PAWN;
 
-                    if (_e.LessonT == Enum.LessonTypes.PawnFireAdultForest)
-                    {
-                         _s.SetNextLesson();
-                    }
+                    //if (_e.LessonT == Enum.LessonTypes.PawnFireAdultForest)
+                    //{
+                    //     _s.SetNextLesson();
+                    //}
                 }
                 else
                 {

@@ -116,6 +116,7 @@ namespace Chessy.Model.System
                                 break;
 
                             case UnitTypes.Tree:
+                                needDistance += StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL * 2;
                                 break;
 
                             case UnitTypes.Wolf:

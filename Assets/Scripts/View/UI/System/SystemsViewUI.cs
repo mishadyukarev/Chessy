@@ -91,8 +91,8 @@ namespace Chessy.View.UI.System
                     eUI.UpEs.SettingsButtonC.SetActiveParent(!eM.LessonT.HaveLesson());
                     eUI.UpEs.DiscordButtonC.SetActive(!eM.LessonT.HaveLesson());
                     eUI.UpEs.LeaveButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.MenuInfo);
-                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressReady);
-
+                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressTown);
+                    eUI.DownEs.CityButtonUIE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.HoldPressTown);
 
                     eUI.GameCanvasGOC.SetActive(_e.SceneT == SceneTypes.Game);
                     eUI.ShopE.ShopZoneGOC.SetActive(_e.ShopC.IsOpenedShopZone);

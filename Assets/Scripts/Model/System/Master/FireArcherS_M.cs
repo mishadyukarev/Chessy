@@ -17,10 +17,10 @@ namespace Chessy.Model.System
 
                     _e.UnitMainC(cell_from).CooldownForAttackAnyUnitInSeconds = ValuesChessy.COOLDOWN_AFTER_ATTACK;
 
-                    if (_e.LessonT == Enum.LessonTypes.PawnFireAdultForest)
-                    {
-                        _s.SetNextLesson();
-                    }
+                    //if (_e.LessonT == Enum.LessonTypes.PawnFireAdultForest)
+                    //{
+                    //    _s.SetNextLesson();
+                    //}
                     
                 }
             }

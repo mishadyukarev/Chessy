@@ -18,7 +18,7 @@ namespace Chessy.Model.System
         {
             _e.Motions++;
 
-            TryGivePeople();
+            //TryGivePeople();
 
             //TryChangeDirectionOfWindRandomly();
             //TryShiftWolf();
@@ -51,37 +51,37 @@ namespace Chessy.Model.System
 
         
 
-        void TryGivePeople()
-        {
-            if (_e.Motions % 5 == 0)
-            {
-                for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
-                {
-                    _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity++;
-                }
-            }
-        }
-        void TrySkipLessonWithRiver()
-        {
+        //void TryGivePeople()
+        //{
+        //    if (_e.Motions % 5 == 0)
+        //    {
+        //        for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
+        //        {
+        //            _e.PlayerInfoE(playerT).PawnInfoC.PeopleInCity++;
+        //        }
+        //    }
+        //}
+        //void TrySkipLessonWithRiver()
+        //{
 
-            if (_e.LessonT == LessonTypes.Install3WarriorsNextToTheRiver)
-            {
-                var amountUnitsNearRiverForLesson = 0;
+        //    if (_e.LessonT == LessonTypes.Install1WarriorsNextToTheRiver)
+        //    {
+        //        var amountUnitsNearRiverForLesson = 0;
 
-                for (byte cellIdx0 = 0; cellIdx0 < IndexCellsValues.CELLS; cellIdx0++)
-                {
-                    if (_e.UnitT(cellIdx0) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdx0) == PlayerTypes.First && _e.RiverT(cellIdx0).HaveRiverNear())
-                    {
-                        amountUnitsNearRiverForLesson++;
-                    }
-                }
+        //        for (byte cellIdx0 = 0; cellIdx0 < IndexCellsValues.CELLS; cellIdx0++)
+        //        {
+        //            if (_e.UnitT(cellIdx0) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdx0) == PlayerTypes.First && _e.RiverT(cellIdx0).HaveRiverNear())
+        //            {
+        //                amountUnitsNearRiverForLesson++;
+        //            }
+        //        }
 
-                if (amountUnitsNearRiverForLesson >= 3)
-                {
-                     _s.SetNextLesson();
-                }
-            }
-        }
+        //        if (amountUnitsNearRiverForLesson >= 3)
+        //        {
+        //             _s.SetNextLesson();
+        //        }
+        //    }
+        //}
 
 
 

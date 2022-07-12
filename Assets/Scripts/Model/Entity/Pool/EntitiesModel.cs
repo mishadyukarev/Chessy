@@ -413,9 +413,7 @@ namespace Chessy.Model.Entity
 
         public EntitiesModel(in DataFromViewC dataFromViewC, in string nameRpcMethod, in List<object> actions, in TestModeTypes testModeT)
         {
-            CommonInfoAboutGameC = new CommonInfoAboutGameC(testModeT, DateTime.Now);
-
-            CommonGameE = new CommonGameE(dataFromViewC);
+            CommonGameE = new CommonGameE(dataFromViewC, testModeT, DateTime.Now);
 
             for (var playerT = (PlayerTypes)0; playerT < PlayerTypes.End; playerT++)
             {

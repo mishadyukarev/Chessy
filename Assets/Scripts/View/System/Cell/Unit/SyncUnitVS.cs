@@ -1,14 +1,17 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using Chessy.View.Entity;
 using Chessy.View.System;
 using Chessy.View.UI.Entity;
-using System.Collections.Generic;
 using UnityEngine;
+
 namespace Chessy.Model
 {
     sealed class SyncUnitVS : SystemViewAbstract
     {
         readonly EntitiesView _eV;
+
+        readonly UnitVEs[] _unitVEs = new UnitVEs[IndexCellsValues.CELLS];
 
         readonly bool[] _needActiveUnit = new bool[(byte)UnitTypes.End];
         readonly Color[] _needColorUnit = new Color[(byte)UnitTypes.End];
@@ -24,6 +27,11 @@ namespace Chessy.Model
         internal SyncUnitVS(in EntitiesView eV, in EntitiesModel eM) : base(eM)
         {
             _eV = eV;
+
+            for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
+            {
+                _unitVEs[cellIdx] = _eV.CellEs(cellIdx).UnitEs;
+            }
         }
 
         internal override void Sync()
@@ -91,7 +99,7 @@ namespace Chessy.Model
 
                 if (_e.UnitT(givenIdxCell).HaveUnit())
                 {
-                    if (_e.UnitVisibleC(givenIdxCell).IsVisible(_e.CurrentPlayerIT))
+                    if (_e.UnitVisibleC(givenIdxCell).IsVisible(_e.CurrentPlayerIT) || _e.CellsC.IsSelectedCell && _e.UnitT(_e.SelectedCellIdx) == UnitTypes.Elfemale)
                     {
                         var isSelectedCell = givenIdxCell == _e.SelectedCellIdx;
 
@@ -145,8 +153,8 @@ namespace Chessy.Model
             {
                 if (unitT != UnitTypes.Pawn)
                 {
-                    _eV.CellEs(cellIdx).UnitEs.UnitSRC(unitT).SetColor(_needColorUnit[(byte)unitT]);
-                    _eV.CellEs(cellIdx).UnitEs.UnitSRC(unitT).SetActiveGO(_needActiveUnit[(byte)unitT]);
+                    _unitVEs[cellIdx].UnitSRC(unitT).SetColor(_needColorUnit[(byte)unitT]);
+                    _unitVEs[cellIdx].UnitSRC(unitT).SetActiveGO(_needActiveUnit[(byte)unitT]);
                 }
             }
 
@@ -162,21 +170,21 @@ namespace Chessy.Model
                     //    //_eV.CellEs(cellIdx).UnitEs.AnimationUnitC.Play();
                     //}
 
-                    _eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).SetActiveGO(_needActiveMainTW[levelTbyte, (byte)toolWeaponT]);
-                    _eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).SetColor(_needColorMainTW[levelTbyte, (byte)toolWeaponT]);
+                    _unitVEs[cellIdx].MainToolWeaponSRC(levelT, toolWeaponT).SetActiveGO(_needActiveMainTW[levelTbyte, (byte)toolWeaponT]);
+                    _unitVEs[cellIdx].MainToolWeaponSRC(levelT, toolWeaponT).SetColor(_needColorMainTW[levelTbyte, (byte)toolWeaponT]);
                 }
 
 
                 foreach (var isRight in new[] { true, false })
                 {
-                    _eV.CellEs(cellIdx).UnitEs.MainBowCrossbowSRC(levelT, isRight).SetActiveGO(_needActiveBowCrossbow[levelTbyte, isRight ? 1 : 0]);
-                    _eV.CellEs(cellIdx).UnitEs.MainBowCrossbowSRC(levelT, isRight).SetColor(_needColorBowCrossbow[levelTbyte, isRight ? 1 : 0]);
+                    _unitVEs[cellIdx].MainBowCrossbowSRC(levelT, isRight).SetActiveGO(_needActiveBowCrossbow[levelTbyte, isRight ? 1 : 0]);
+                    _unitVEs[cellIdx].MainBowCrossbowSRC(levelT, isRight).SetColor(_needColorBowCrossbow[levelTbyte, isRight ? 1 : 0]);
                 }
 
                 foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Pick, ToolsWeaponsWarriorTypes.Shield, ToolsWeaponsWarriorTypes.Sword })
                 {
-                    _eV.CellEs(cellIdx).UnitEs.ExtraToolWeaponSRC(levelT, twT).SetActiveGO(_needActiveExtraTW[levelTbyte, (byte)twT]);
-                    _eV.CellEs(cellIdx).UnitEs.ExtraToolWeaponSRC(levelT, twT).SetColor(_needColorExtraTW[levelTbyte, (byte)twT]);
+                    _unitVEs[cellIdx].ExtraToolWeaponSRC(levelT, twT).SetActiveGO(_needActiveExtraTW[levelTbyte, (byte)twT]);
+                    _unitVEs[cellIdx].ExtraToolWeaponSRC(levelT, twT).SetColor(_needColorExtraTW[levelTbyte, (byte)twT]);
                 }
             }
         }

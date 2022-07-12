@@ -32,5 +32,13 @@ namespace Chessy.Model.System
         {
             PhotonNetwork.OfflineMode = true;
         }
+        public void OnConnected()
+        {
+            _e.NeedUpdateView = true;
+        }
+        public void OnConnectedToMaster()
+        {
+            _e.NeedUpdateView = true;
+        }
     }
 }

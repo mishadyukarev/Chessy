@@ -18,7 +18,7 @@ namespace Chessy.Model.System
         internal readonly GetDataCellsAfterAnyDoingS_M GetDataCellsS;
         internal readonly ExecuteAIBotLogicAfterUpdateS_M AIBotS;
         internal readonly ExecuteUpdateEverythingMS ExecuteUpdateEverythingMS;
-        internal readonly RpcSs RpcSs;
+        internal readonly RpcInternetSs RpcSs;
         internal readonly ForPhotonSceneS ForPhotonSceneS;
         internal readonly SyncDataS SyncDataS;
         internal readonly TryShiftCloudsMS TryShiftCloudsMS;
@@ -43,7 +43,7 @@ namespace Chessy.Model.System
             GetDataCellsS = new GetDataCellsAfterAnyDoingS_M(this, eM);
             AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eM);
             ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eM);
-            RpcSs = new RpcSs(this, eM);
+            RpcSs = new RpcInternetSs(this, eM);
             SyncDataS = new SyncDataS(this, eM);
             TryShiftCloudsMS = new TryShiftCloudsMS(this, eM);
 
@@ -98,9 +98,23 @@ namespace Chessy.Model.System
                 {
                     if (_e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(cellIdxDirect))
                     {
+                        TryExecuteAddingUnitAnimationM(cellIdxDirect);
+
                         _e.WaterUnitC(cellIdxDirect).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
                     }
                 }
+            }
+        }
+
+        internal void TryExecuteAddingUnitAnimationM(in byte cellIdx)
+        {
+            if (ValuesChessy.MAX_WATER_FOR_ANY_UNIT - _e.WaterUnitC(cellIdx).Water >= ValuesChessy.WATER_FOR_ADDING_WATER_ANIMATION)
+            {
+                var idxCellView = _e.SkinInfoUnitC(cellIdx).ViewIdxCell;
+
+                RpcSs.ExecuteAnimationCellDirectlyToGeneral(idxCellView, CellAnimationDirectlyTypes.AddingWaterUnit, RpcTarget.All);
+
+                _e.DataFromViewC.AnimationCellDirectly(CellAnimationDirectlyTypes.AddingWaterUnit).Invoke(idxCellView);
             }
         }
 
@@ -108,6 +122,7 @@ namespace Chessy.Model.System
         internal void ExecuteSoundActionAbility(in AbilityTypes abilityT) => _e.SoundAction(abilityT).Invoke();
 
         internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _e.DataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
+        internal void ExecuteAnimationCellDirectlyClip(in byte cellIdx, in CellAnimationDirectlyTypes cellAnimationDirectlyT) => _e.DataFromViewC.AnimationCellDirectly(cellAnimationDirectlyT).Invoke(cellIdx);
 
         internal void ActiveMotion() => _e.MotionTimer = 4;
 

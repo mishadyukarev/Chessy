@@ -60,17 +60,23 @@ namespace Chessy.View.System
                                 break;
                         }
 
-                        if (_e.LessonT >= LessonTypes.SettingKing)
-                        {
-                            if (_e.UnitT(currentCellIdx) == UnitTypes.King)
-                            {
-                                _isActive[currentCellIdx] = true;
-                            }
-                        }
+                        //if (_e.LessonT >= LessonTypes.SettingKing)
+                        //{
+                        //    if (_e.UnitT(currentCellIdx) == UnitTypes.King)
+                        //    {
+                        //        _isActive[currentCellIdx] = true;
+                        //    }
+                        //    if (_e.LessonT >= LessonTypes.UniqueAttackInfo)
+                        //    {
+                        //        if (_e.UnitT(currentCellIdx) == UnitTypes.King)
+                        //        {
+                        //        }
+                        //    }
+                        //}
 
 
 
-                        if (_e.LessonT < LessonTypes.ChangeDirectionWind)
+                        if (_e.LessonT < LessonTypes.MenuInfo)
                         {
                             if (_e.UnitT(currentCellIdx) == UnitTypes.Snowy)
                             {
@@ -93,6 +99,14 @@ namespace Chessy.View.System
                                     {
                                         _isActive[currentCellIdx] = true;
                                     }
+                                }
+                            }
+
+                            if (_e.LessonT <= LessonTypes.ComeToYourKing)
+                            {
+                                if (_e.UnitT(currentCellIdx) == UnitTypes.King)
+                                {
+                                    _isActive[currentCellIdx] = true;
                                 }
                             }
                         }

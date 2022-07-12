@@ -53,7 +53,7 @@ namespace Chessy.Model.System
 
                     else
                     {
-                        RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceFarm, sender);
+                        RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlaceSeed, sender);
                     }
                 }
             //}

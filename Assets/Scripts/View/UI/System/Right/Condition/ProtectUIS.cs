@@ -15,7 +15,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             var isEnableButt = false;
 
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ClickDefend)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.UniqueAttackInfo)
             {
                 if (_e.UnitT(_e.SelectedCellIdx).HaveUnit())
                 {

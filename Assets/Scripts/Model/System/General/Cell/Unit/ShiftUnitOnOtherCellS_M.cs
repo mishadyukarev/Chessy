@@ -105,7 +105,11 @@ namespace Chessy.Model.System
 
                 if (_e.RiverT(toCellIdx).HaveRiverNear())
                 {
+                    TryExecuteAddingUnitAnimationM(toCellIdx);
+
                     _e.WaterUnitC(toCellIdx).Water = ValuesChessy.MAX_WATER_FOR_ANY_UNIT;
+
+                    if (_e.LessonT == LessonTypes.Install1WarriorsNextToTheRiver) SetNextLesson();
                 }
             }
 

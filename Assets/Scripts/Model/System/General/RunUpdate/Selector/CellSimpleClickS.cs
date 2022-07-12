@@ -15,10 +15,10 @@ namespace Chessy.Model.System
 
         internal void Execute()
         {
-            if (_e.LessonT.Is(LessonTypes.RelaxExtractPawn, LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
-            {
-                return;
-            }
+            //if (_e.LessonT.Is(LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.ClickDefend))
+            //{
+            //    return;
+            //}
 
 
             _e.MistakeT = MistakeTypes.None;
@@ -67,33 +67,33 @@ namespace Chessy.Model.System
                                 if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx) || _e.WhereUnitCanAttackUniqueAttackToEnemyC(_e.SelectedCellIdx).Can(_e.CurrentCellIdx))
                                 {
                                     TryAttack(_e.SelectedCellIdx, _e.CurrentCellIdx);
-                                    SetNewSelectedCell();
-                                    _selectorSoundS.Sound();
+                                    //_selectorSoundS.Sound();
                                 }
-                                else if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn) && _e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT)
-                                    || !_e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT))
-                                {
-                                    SetNewSelectedCell();
-                                    _selectorSoundS.Sound();
-                                }
+                                //else if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn) && _e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT)
+                                //    || !_e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT))
+                                //{
+                                //    //_selectorSoundS.Sound();
+                                //}
 
-                                if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Snowy)
-                                {
-                                    if (_e.LessonT >= LessonTypes.ChangeDirectionWind)
-                                    {
-                                        _e.IsSelectedCity = false;
+                                //if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Snowy)
+                                //{
+                                //    if (_e.LessonT >= LessonTypes.ChangeDirectionWind)
+                                //    {
+                                //        _e.IsSelectedCity = false;
 
-                                        SetNewSelectedCell();
-                                        _selectorSoundS.Sound();
-                                    }
-                                }
-                                else if (!_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.King))
-                                {
-                                    _e.IsSelectedCity = false;
+                                //        _selectorSoundS.Sound();
+                                //    }
+                                //}
+                                //else if (!_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.King))
+                                //{
+                                    
 
-                                    SetNewSelectedCell();
-                                    _selectorSoundS.Sound();
-                                }
+                                    
+                                //}
+
+                                _e.IsSelectedCity = false;
+                                SetNewSelectedCell();
+                                _selectorSoundS.Sound();
                             }
 
                             else
@@ -113,23 +113,23 @@ namespace Chessy.Model.System
 
                         else
                         {
-                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Snowy)
-                            {
-                                if (_e.LessonT >= LessonTypes.ChangeDirectionWind)
-                                {
-                                    _e.IsSelectedCity = false;
+                            //if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Snowy)
+                            //{
+                            //    if (_e.LessonT >= LessonTypes.ChangeDirectionWind)
+                            //    {
+                                   
 
-                                    SetNewSelectedCell();
-                                    _selectorSoundS.Sound();
-                                }
-                            }
-                            else if (!_e.UnitT(_e.SelectedCellIdx).Is(UnitTypes.King))
-                            {
-                                _e.IsSelectedCity = false;
-
-                                SetNewSelectedCell();
-                                _selectorSoundS.Sound();
-                            }
+                                   
+                            //        _selectorSoundS.Sound();
+                            //    }
+                            //}
+                            //else if (!_e.UnitT(_e.SelectedCellIdx).Is(UnitTypes.King))
+                            //{
+                            //    _e.IsSelectedCity = false;
+                            //}
+                            _e.IsSelectedCity = false;
+                            SetNewSelectedCell();
+                            _selectorSoundS.Sound();
                         }
                     }
                 }

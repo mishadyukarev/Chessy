@@ -1,5 +1,6 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Component;
+using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Chessy.View.Component;
 using Chessy.View.Entity;
@@ -120,6 +121,7 @@ namespace Chessy.View.UI.Entity
             var possitionsCells = new Vector3[IndexCellsValues.CELLS];
 
             var animationsCells = new Dictionary<byte, Action[]>();
+            var animationsCellsDirected = new Action<byte>[(byte)CellAnimationDirectlyTypes.End];
 
             for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {
@@ -133,6 +135,8 @@ namespace Chessy.View.UI.Entity
                 animations[(byte)AnimationCellTypes.AdultForest] = CellEs(cellIdxStart).EnvironmentVEs.AnimationC.Play;
                 animations[(byte)AnimationCellTypes.JumpAppearanceUnit] = CellEs(cellIdxStart).UnitEs.AnimationUnitC.Play;
                 animations[(byte)AnimationCellTypes.CircularAttackKing] = CellEs(cellIdxStart).UnitEs.CircularAttackAnimC.Play;
+
+                animationsCellsDirected[(byte)CellAnimationDirectlyTypes.AddingWaterUnit] = (byte cellIdx) => { CellEs(cellIdx).UnitEs.AddingWaterAnimationC.Play(); };
 
                 animationsCells.Add(cellIdxStart, animations);
 
@@ -195,7 +199,7 @@ namespace Chessy.View.UI.Entity
             }
 
 
-            dataFromViewC = new DataFromViewC((sounds0, sounds1, isBorder, idCells, possitionsCells, animationsCells));
+            dataFromViewC = new DataFromViewC((sounds0, sounds1, isBorder, idCells, possitionsCells, animationsCells, animationsCellsDirected));
         }
     }
 }

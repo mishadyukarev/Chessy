@@ -1,4 +1,6 @@
 ﻿using Chessy.Model.Component;
+using System;
+
 namespace Chessy.Model.Entity
 {
     public struct CommonGameE
@@ -20,10 +22,11 @@ namespace Chessy.Model.Entity
         public InputC InputC;
         internal RpcPoolC RpcC;
 
-        internal CommonGameE(in DataFromViewC dataFromViewC) : this()
+        internal CommonGameE(in DataFromViewC dataFromViewC, in TestModeTypes testModeT, in DateTime startGame) : this()
         {
             DataFromViewC = dataFromViewC;
             Resources = new FromResourcesC(default);
+            CommonInfoAboutGameC = new CommonInfoAboutGameC(testModeT, startGame);
         }
     }
 }

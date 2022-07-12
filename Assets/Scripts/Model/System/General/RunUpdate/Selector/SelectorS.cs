@@ -47,7 +47,7 @@ namespace Chessy.Model
                      _s.SetNextLesson();
                 }
                 else if (_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
-                    LessonTypes.ThatsYourEffects, LessonTypes.ThatsYourDamage, LessonTypes.MenuInfo))
+                     LessonTypes.MenuInfo))
                 {
                      _s.SetNextLesson();
                 }

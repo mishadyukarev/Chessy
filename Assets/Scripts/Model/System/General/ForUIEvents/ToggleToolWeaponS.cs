@@ -9,8 +9,6 @@ namespace Chessy.Model.System
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
 
-            if (_e.LessonT.Is(LessonTypes.ThatsYourDamage, LessonTypes.ThatsYourEffects, LessonTypes.ClickDefend)) return;
-
             _e.SelectedCellIdx = 0;
 
             if (_e.CurrentPlayerIT.Is(_e.CurrentPlayerIT))
