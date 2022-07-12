@@ -18,11 +18,11 @@ namespace Chessy.View.UI.System
         {
             if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.OpeningTown)
             {
-                _cityButtonUIE.ParentGOC.SetActive(true);
+                _cityButtonUIE.ParentGOC.TrySetActive(true);
             }
             else
             {
-                _cityButtonUIE.ParentGOC.SetActive(false);
+                _cityButtonUIE.ParentGOC.TrySetActive(false);
             }
         }
     }

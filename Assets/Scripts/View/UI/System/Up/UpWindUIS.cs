@@ -38,7 +38,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.ClickWindInfo)
             {
-                _eUI.UpEs.ParentWindGOC.SetActive(true);
+                _eUI.UpEs.ParentWindGOC.TrySetActive(true);
 
                 _eUI.UpEs.WindTrC.EulerAngles = _directs[_e.DirectWindT];
                 if (_e.CurrentPlayerIT == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
@@ -48,7 +48,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             }
             else
             {
-                _eUI.UpEs.ParentWindGOC.SetActive(false);
+                _eUI.UpEs.ParentWindGOC.TrySetActive(false);
             }
         }
     }

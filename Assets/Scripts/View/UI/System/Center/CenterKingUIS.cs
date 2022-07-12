@@ -24,7 +24,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 }
             }
 
-            _eUI.CenterEs.KingE.Paren.SetActive(_needActive);
+            _eUI.CenterEs.KingE.Paren.TrySetActive(_needActive);
         }
     }
 }

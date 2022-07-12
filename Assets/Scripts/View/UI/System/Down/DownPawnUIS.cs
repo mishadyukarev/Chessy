@@ -17,7 +17,7 @@ namespace Chessy.Model
         {
             if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.SettingPawn)
             {
-                _pawnE.ParenGOC.SetActive(true);
+                _pawnE.ParenGOC.TrySetActive(true);
 
                 var curPlayerI = _e.CurrentPlayerIT;
 
@@ -26,7 +26,7 @@ namespace Chessy.Model
             }
             else
             {
-                _pawnE.ParenGOC.SetActive(false);
+                _pawnE.ParenGOC.TrySetActive(false);
             }
         }
     }

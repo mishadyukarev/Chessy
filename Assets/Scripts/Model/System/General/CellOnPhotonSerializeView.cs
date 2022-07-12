@@ -52,6 +52,29 @@ namespace Chessy.Model.System
 
                             stream.SendNext(_e.HaveFire(_cellIdx));
 
+                            for (var abilityT = (AbilityTypes)1; abilityT < AbilityTypes.End; abilityT++)
+                            {
+                                stream.SendNext(_e.UnitCooldownAbilitiesC(_cellIdx).Cooldown(abilityT));
+                            }
+
+                            stream.SendNext(_e.StunUnit(_cellIdx));
+                            stream.SendNext(_e.ProtectionRainyMagicShield(_cellIdx));
+                            stream.SendNext(_e.HaveFrozenArrawArcher(_cellIdx));
+
+                            stream.SendNext(_e.BuildingOnCellT(_cellIdx));
+                            stream.SendNext(_e.BuildingLevelT(_cellIdx));
+                            stream.SendNext(_e.BuildingPlayerT(_cellIdx));
+
+                            for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
+                            {
+                                stream.SendNext(_e.UnitButtonAbilitiesC(_cellIdx).Ability(buttonT));
+                                stream.SendNext(_e.EffectsUnitsRightBarsC(_cellIdx).Effect(buttonT));
+                            }
+
+                            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+                            {
+                                stream.SendNext(_e.HasKingEffectHereC(_cellIdx).Has(playerT));
+                            }
                         }
 
                         else
@@ -81,228 +104,56 @@ namespace Chessy.Model.System
 
                             _e.EffectE(_cellIdx).HaveFire = (bool)stream.ReceiveNext();
 
-                            _e.NeedUpdateView = true;
-                        }
-                    }
-                    break;
 
-                case SyncCellTypes.EffectsUnit:
-                    {
-                        if (stream.IsWriting)
-                        {
-                            stream.SendNext(_e.StunUnit(_cellIdx));
-                            stream.SendNext(_e.ProtectionRainyMagicShield(_cellIdx));
-                            stream.SendNext(_e.HaveFrozenArrawArcher(_cellIdx));
-                        }
-
-                        else
-                        {
-                            _e.UnitEffectsC(_cellIdx).StunHowManyUpdatesNeedStay = (float)stream.ReceiveNext();
-                            _e.UnitEffectsC(_cellIdx).ProtectionRainyMagicShield = (float)stream.ReceiveNext();
-                            _e.UnitEffectsC(_cellIdx).HaveFrozenArrawArcher = (bool)stream.ReceiveNext();
-
-                            _e.NeedUpdateView = true;
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.CooldownsUnit:
-                    {
-                        if (stream.IsWriting)
-                        {
-                            for (var abilityT = (AbilityTypes)1; abilityT < AbilityTypes.End; abilityT++)
-                            {
-                                stream.SendNext(_e.UnitCooldownAbilitiesC(_cellIdx).Cooldown(abilityT));
-                            }
-                        }
-
-                        else
-                        {
                             for (var abilityT = (AbilityTypes)1; abilityT < AbilityTypes.End; abilityT++)
                             {
                                 _e.UnitCooldownAbilitiesC(_cellIdx).Set(abilityT, (int)stream.ReceiveNext());
                             }
 
-                            _e.NeedUpdateView = true;
-                        }
-                    }
-                    break;
 
-                case SyncCellTypes.Building:
-                    {
-                        if (stream.IsWriting)
-                        {
-                            stream.SendNext(_e.BuildingOnCellT(_cellIdx));
-                            stream.SendNext(_e.BuildingLevelT(_cellIdx));
-                            stream.SendNext(_e.BuildingPlayerT(_cellIdx));
-                        }
+                            _e.UnitEffectsC(_cellIdx).StunHowManyUpdatesNeedStay = (float)stream.ReceiveNext();
+                            _e.UnitEffectsC(_cellIdx).ProtectionRainyMagicShield = (float)stream.ReceiveNext();
+                            _e.UnitEffectsC(_cellIdx).HaveFrozenArrawArcher = (bool)stream.ReceiveNext();
 
-                        else
-                        {
                             _e.BuildingC(_cellIdx).BuildingT = (BuildingTypes)stream.ReceiveNext();
                             _e.BuildingC(_cellIdx).LevelT = (LevelTypes)stream.ReceiveNext();
                             _e.BuildingC(_cellIdx).PlayerT = (PlayerTypes)stream.ReceiveNext();
 
-                            _e.NeedUpdateView = true;
-                        }
-                    }
-                    break;
 
-                case SyncCellTypes.TrailHealth:
-                    {
-                        if (stream.IsWriting)
-                        {
-                            for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
-                            {
-                                stream.SendNext(_e.HealthTrail(_cellIdx).Health(directT));
-                            }
-                        }
-
-                        else
-                        {
-                            for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
-                            {
-                                _e.HealthTrail(_cellIdx).Set(directT, (float)stream.ReceiveNext());
-                            }
-
-                            _e.NeedUpdateView = true;
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.WaterUnit:
-                    {
-                        if (stream.IsWriting)
-                        {
-                            stream.SendNext(_e.WaterUnit(_cellIdx));
-                        }
-
-                        else
-                        {
-                            _e.WaterUnitC(_cellIdx).Water = (double)stream.ReceiveNext();
-
-                            _e.NeedUpdateView = true;
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.WaterOnCell:
-                    {
-                        if (stream.IsWriting)
-                        {
-                            stream.SendNext(_e.WaterOnCellC(_cellIdx).Resources);
-                        }
-
-                        else
-                        {
-                            _e.WaterOnCellC(_cellIdx).Resources = (float)stream.ReceiveNext();
-
-                            _e.NeedUpdateView = true;
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.WhereUnitCanShift:
-                    {
-                        for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-                        {
-                            if (stream.IsWriting)
-                            {
-                                stream.SendNext(_e.WhereUnitCanShiftC(_cellIdx).CanShiftHere(cellIdxCurrent));
-                            }
-                            else
-                            {
-                                _e.WhereUnitCanShiftC(_cellIdx).Set(cellIdxCurrent, (bool)stream.ReceiveNext());
-
-                                _e.NeedUpdateView = true;
-                            }
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.UnitButtonAbilities:
-                    {
-                        for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
-                        {
-                            if (stream.IsWriting)
-                            {
-                                stream.SendNext(_e.UnitButtonAbilitiesC(_cellIdx).Ability(buttonT));
-                            }
-                            else
+                            for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
                             {
                                 _e.UnitButtonAbilitiesC(_cellIdx).SetAbility(buttonT, (AbilityTypes)stream.ReceiveNext());
-
-                                _e.NeedUpdateView = true;
-                            }
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.EffectsBarsUnitsRight:
-                    {
-                        for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++)
-                        {
-                            if (stream.IsWriting)
-                            {
-                                stream.SendNext(_e.EffectsUnitsRightBarsC(_cellIdx).Effect(buttonT));
-                            }
-                            else
-                            {
                                 _e.EffectsUnitsRightBarsC(_cellIdx).Set(buttonT, (EffectTypes)stream.ReceiveNext());
-
-                                _e.NeedUpdateView = true;
                             }
+
+                            for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
+                            {
+                                _e.HasKingEffectHereC(_cellIdx).Set(playerT, (bool)stream.ReceiveNext());
+                            }
+
+
+                            _e.NeedUpdateView = true;
                         }
                     }
                     break;
 
-                case SyncCellTypes.WhereUnitCanAttackSimple:
+                case SyncCellTypes.WhereUnitCanAttack:
                     {
                         for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                         {
                             if (stream.IsWriting)
                             {
                                 stream.SendNext(_e.WhereUnitCanAttackSimpleAttackToEnemyC(_cellIdx).Can(cellIdxCurrent));
+                                stream.SendNext(_e.WhereUnitCanAttackUniqueAttackToEnemyC(_cellIdx).Can(cellIdxCurrent));
+
+                                stream.SendNext(_e.WhereUnitCanShiftC(_cellIdx).CanShiftHere(cellIdxCurrent));
                             }
                             else
                             {
                                 _e.WhereUnitCanAttackSimpleAttackToEnemyC(_cellIdx).Set(cellIdxCurrent, (bool)stream.ReceiveNext());
-
-                                _e.NeedUpdateView = true;
-                            }
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.WhereUnitCanAttackUnique:
-                    {
-                        for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-                        {
-                            if (stream.IsWriting)
-                            {
-                                stream.SendNext(_e.WhereUnitCanAttackUniqueAttackToEnemyC(_cellIdx).Can(cellIdxCurrent));
-                            }
-                            else
-                            {
                                 _e.WhereUnitCanAttackUniqueAttackToEnemyC(_cellIdx).Set(cellIdxCurrent, (bool)stream.ReceiveNext());
 
-                                _e.NeedUpdateView = true;
-                            }
-                        }
-                    }
-                    break;
-
-                case SyncCellTypes.HasKingEffectHere:
-                    {
-                        for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
-                        {
-                            if (stream.IsWriting)
-                            {
-                                stream.SendNext(_e.HasKingEffectHereC(_cellIdx).Has(playerT));
-                            }
-                            else
-                            {
-                                _e.HasKingEffectHereC(_cellIdx).Set(playerT, (bool)stream.ReceiveNext());
+                                _e.WhereUnitCanShiftC(_cellIdx).Set(cellIdxCurrent, (bool)stream.ReceiveNext());
 
                                 _e.NeedUpdateView = true;
                             }
@@ -431,6 +282,14 @@ namespace Chessy.Model.System
                             stream.SendNext(_e.CloudWhereViewDataOnCellC(_cellIdx).ViewIdxCell);
 
                             stream.SendNext(_e.UnitPossitionOnCell(_cellIdx));
+
+                            stream.SendNext(_e.WaterUnit(_cellIdx));
+                            stream.SendNext(_e.WaterOnCellC(_cellIdx).Resources);
+
+                            for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
+                            {
+                                stream.SendNext(_e.HealthTrail(_cellIdx).Health(directT));
+                            }
                         }
                         else
                         {
@@ -440,6 +299,14 @@ namespace Chessy.Model.System
                             _e.CloudWhereViewDataOnCellC(_cellIdx).ViewIdxCell = (byte)stream.ReceiveNext();
 
                             _e.UnitPossitionOnCellC(_cellIdx).Position = (Vector3)stream.ReceiveNext();
+
+                            _e.WaterUnitC(_cellIdx).Water = (double)stream.ReceiveNext();
+                            _e.WaterOnCellC(_cellIdx).Resources = (float)stream.ReceiveNext();
+
+                            for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
+                            {
+                                _e.HealthTrail(_cellIdx).Set(directT, (float)stream.ReceiveNext());
+                            }
 
                             _e.NeedUpdateView = true;
                         }
@@ -457,18 +324,7 @@ namespace Chessy.Model.System
         None,
 
         Main,
-        EffectsUnit,
-        CooldownsUnit,
-        Building,
-        TrailHealth,
-        WaterUnit,
-        WaterOnCell,
-        WhereUnitCanShift,
-        UnitButtonAbilities,
-        EffectsBarsUnitsRight,
-        WhereUnitCanAttackSimple,
-        WhereUnitCanAttackUnique,
-        HasKingEffectHere,
+        WhereUnitCanAttack,
         UnitVisible,
         TrailVisible,
         BuildingVisible,

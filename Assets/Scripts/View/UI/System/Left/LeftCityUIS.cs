@@ -46,9 +46,9 @@ namespace Chessy.Model
                 needActivePremum = true;
             }
 
-            eUI.LeftEs.CityE(BuildingTypes.Smelter).ZoneGOC.SetActive(isActiveSmelter);
-            eUI.LeftEs.CityE(BuildingTypes.Market).ZoneGOC.SetActive(needActiveMarket);
-            eUI.LeftEs.FutureGOC.SetActive(needActiveFuture);
+            eUI.LeftEs.CityE(BuildingTypes.Smelter).ZoneGOC.TrySetActive(isActiveSmelter);
+            eUI.LeftEs.CityE(BuildingTypes.Market).ZoneGOC.TrySetActive(needActiveMarket);
+            eUI.LeftEs.FutureGOC.TrySetActive(needActiveFuture);
             eUI.LeftEs.PremiumButtonC.SetActive(needActivePremum);
 
 
@@ -56,7 +56,7 @@ namespace Chessy.Model
             {
                 if (buildingT == BuildingTypes.Market || buildingT == BuildingTypes.Smelter)
                 {
-                    eUI.LeftEs.CityE(buildingT).CostGOC.SetActive(!_e.PlayerInfoE(whoseMove).BuildingsInTownInfoC.HaveBuilding(buildingT));
+                    eUI.LeftEs.CityE(buildingT).CostGOC.TrySetActive(!_e.PlayerInfoE(whoseMove).BuildingsInTownInfoC.HaveBuilding(buildingT));
                 }
             }
 

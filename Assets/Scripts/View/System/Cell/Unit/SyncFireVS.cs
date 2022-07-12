@@ -36,7 +36,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _fireSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+                _fireSRCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
             }
         }
     }

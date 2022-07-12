@@ -205,7 +205,7 @@ namespace Chessy.View.System
                     }
 
 
-                    _noneVisionSRC[currentCellIdx].SetActiveGO(_isActive[currentCellIdx]);
+                    _noneVisionSRC[currentCellIdx].TrySetActiveGO(_isActive[currentCellIdx]);
                 }
             }
 

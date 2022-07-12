@@ -40,7 +40,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _shieldSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+                _shieldSRCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
             }
 
 

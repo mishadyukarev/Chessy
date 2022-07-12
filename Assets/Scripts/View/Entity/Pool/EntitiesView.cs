@@ -78,7 +78,7 @@ namespace Chessy.View.UI.Entity
 
 
 
-            GameZoneGOC.GameObject = new GameObject(Names.GAME);
+            GameZoneGOC.GO.name = Names.GAME;
 
             var parCells = new GameObject("Cells");
             parCells.transform.SetParent(GameZoneGOC.Transform);

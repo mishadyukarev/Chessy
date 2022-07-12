@@ -7,12 +7,23 @@ namespace Chessy.Model.System
     sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
     {
         readonly GetCellsForShiftUnitsS _getCellsForShiftUnitsS;
-        readonly Dictionary<EffectTypes, bool> _isFilled = new Dictionary<EffectTypes, bool>();
+        readonly bool[] _isFilled = new bool[(byte)EffectTypes.End];
+
+        readonly WhereUnitCanAttackToEnemyC[] _whereSimple = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
+        readonly WhereUnitCanAttackToEnemyC[] _whereUnque = new WhereUnitCanAttackToEnemyC[IndexCellsValues.CELLS];
 
         internal GetDataCellsAfterAnyDoingS_M(in SystemsModel s, in EntitiesModel e) : base(s, e)
         {
             _getCellsForShiftUnitsS = new GetCellsForShiftUnitsS(s, e);
-            for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled.Add(effectT, false);
+
+            for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
+            {
+                ref var v = ref _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdx);
+                ref var vv = ref _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdx);
+
+                _whereSimple[cellIdx] = v;
+                _whereUnque[cellIdx] = vv;
+            }
         }
 
         internal void GetDataCellsM()
@@ -23,6 +34,9 @@ namespace Chessy.Model.System
                 {
                     _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxStart).Set(cellIdxDirect, false);
                     _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxStart).Set(cellIdxDirect, false);
+
+                    //_whereSimple[cellIdxStart].Set(cellIdxDirect, false);
+                    //_whereUnque[cellIdxStart].Set(cellIdxDirect, false);
                 }
             }
 
@@ -49,7 +63,7 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                for (var effectT = EffectTypes.None; effectT < EffectTypes.End; effectT++) _isFilled[effectT] = false;
+                for (byte effectIdx = 0; effectIdx < _isFilled.Length; effectIdx++) _isFilled[effectIdx] = false;
 
 
                 if (_e.UnitT(cellIdxCurrent).HaveUnit())
@@ -58,25 +72,25 @@ namespace Chessy.Model.System
                     {
                         _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.None);
 
-                        if (!_isFilled[EffectTypes.Shield] && _e.UnitEffectsC(cellIdxCurrent).HaveAnyProtectionRainyMagicShield)
+                        if (!_isFilled[(byte)EffectTypes.Shield] && _e.UnitEffectsC(cellIdxCurrent).HaveAnyProtectionRainyMagicShield)
                         {
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Shield);
-                            _isFilled[EffectTypes.Shield] = true;
+                            _isFilled[(byte)EffectTypes.Shield] = true;
                         }
-                        else if (!_isFilled[EffectTypes.Arraw] && _e.UnitEffectsC(cellIdxCurrent).HaveFrozenArrawArcher)
+                        else if (!_isFilled[(byte)EffectTypes.Arraw] && _e.UnitEffectsC(cellIdxCurrent).HaveFrozenArrawArcher)
                         {
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Arraw);
-                            _isFilled[EffectTypes.Arraw] = true;
+                            _isFilled[(byte)EffectTypes.Arraw] = true;
                         }
-                        else if (!_isFilled[EffectTypes.Stun] && _e.UnitEffectsC(cellIdxCurrent).IsStunned)
+                        else if (!_isFilled[(byte)EffectTypes.Stun] && _e.UnitEffectsC(cellIdxCurrent).IsStunned)
                         {
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.Stun);
-                            _isFilled[EffectTypes.Stun] = true;
+                            _isFilled[(byte)EffectTypes.Stun] = true;
                         }
-                        else if (!_isFilled[EffectTypes.DamageAdd] && _e.HasKingEffectHereC(cellIdxCurrent).Has(_e.UnitPlayerT(cellIdxCurrent)))
+                        else if (!_isFilled[(byte)EffectTypes.DamageAdd] && _e.HasKingEffectHereC(cellIdxCurrent).Has(_e.UnitPlayerT(cellIdxCurrent)))
                         {
                             _e.EffectsUnitsRightBarsC(cellIdxCurrent).Set(buttonT, EffectTypes.DamageAdd);
-                            _isFilled[EffectTypes.DamageAdd] = true;
+                            _isFilled[(byte)EffectTypes.DamageAdd] = true;
                         }
                     }
                 }

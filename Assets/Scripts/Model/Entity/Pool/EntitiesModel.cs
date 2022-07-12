@@ -331,8 +331,8 @@ namespace Chessy.Model.Entity
         public PlayerTypes LastDiedPlayerT(in byte idx) => LastDiedE(idx).PlayerT;
         internal void SetLastDiedPlayerT(in byte cellIdx, in PlayerTypes playerT) => LastDiedE(cellIdx).PlayerT = playerT;
 
-        public WhereUnitCanAttackToEnemyC WhereUnitCanAttackSimpleAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackSimpleAttackToEnemyC;
-        public WhereUnitCanAttackToEnemyC WhereUnitCanAttackUniqueAttackToEnemyC(in byte cellIdx) => UnitE(cellIdx).WhereCanAttackUniqueAttackToEnemyC;
+        public ref WhereUnitCanAttackToEnemyC WhereUnitCanAttackSimpleAttackToEnemyC(in byte cellIdx) => ref UnitE(cellIdx).WhereCanAttackSimpleAttackToEnemyC;
+        public ref WhereUnitCanAttackToEnemyC WhereUnitCanAttackUniqueAttackToEnemyC(in byte cellIdx) => ref UnitE(cellIdx).WhereCanAttackUniqueAttackToEnemyC;
         public ButtonsAbilitiesUnitC UnitButtonAbilitiesC(in byte cell) => UnitE(cell).UniqueButtonsC;
         public HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC(in byte cell) => UnitE(cell).HowManyDistanceNeedForShiftingUnitC;
         public WhereUnitCanShiftC WhereUnitCanShiftC(in byte cellIdx) => UnitE(cellIdx).WhereCanShiftC;

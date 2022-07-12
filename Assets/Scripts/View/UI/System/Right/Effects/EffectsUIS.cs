@@ -37,7 +37,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                                 _eUI.RightEs.Effect(buttonT).ImageC.Image.sprite = _resourcesE.Sprite(_e.EffectsUnitsRightBarsC(idx_sel).Effect(buttonT));
                             }
 
-                            _eUI.RightEs.Effect(buttonT).GO.SetActive(_needActiveButton[(byte)buttonT]);
+                            _eUI.RightEs.Effect(buttonT).GO.TrySetActive(_needActiveButton[(byte)buttonT]);
                         }
                     }
                 }

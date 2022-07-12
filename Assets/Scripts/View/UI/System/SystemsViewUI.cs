@@ -94,9 +94,9 @@ namespace Chessy.View.UI.System
                     eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressTown);
                     eUI.DownEs.CityButtonUIE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.HoldPressTown);
 
-                    eUI.GameCanvasGOC.SetActive(_e.SceneT == SceneTypes.Game);
-                    eUI.ShopE.ShopZoneGOC.SetActive(_e.ShopC.IsOpenedShopZone);
-                    eUI.MenuCanvasGOC.SetActive(_e.SceneT == SceneTypes.Menu);
+                    eUI.GameCanvasGOC.TrySetActive(_e.SceneT == SceneTypes.Game);
+                    eUI.ShopE.ShopZoneGOC.TrySetActive(_e.ShopC.IsOpenedShopZone);
+                    eUI.MenuCanvasGOC.TrySetActive(_e.SceneT == SceneTypes.Menu);
                 },
             };
 

@@ -50,8 +50,8 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _conditionSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
-                _conditionSRCs[cellIdxCurrent].SetColor(_needColor[cellIdxCurrent]);
+                _conditionSRCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
+                _conditionSRCs[cellIdxCurrent].Color = _needColor[cellIdxCurrent];
             }
         }
     }

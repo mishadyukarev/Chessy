@@ -57,7 +57,7 @@ namespace Chessy.View.UI.System
 
             for (var unitT = (UnitTypes)1; unitT < UnitTypes.End; unitT++)
             {
-                _relaxUIE.Button(unitT).SetActive(_needActiveZone[(byte)unitT]);
+                _relaxUIE.Button(unitT).TrySetActive(_needActiveZone[(byte)unitT]);
             }
 
             _relaxUIE.ButtonC.SetActiveParent(activeButt);

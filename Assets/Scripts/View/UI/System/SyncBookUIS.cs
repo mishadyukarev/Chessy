@@ -15,13 +15,13 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            _bookUIE.ParenGOC.SetActive(_e.BookC.IsOpenedBook());
+            _bookUIE.ParenGOC.TrySetActive(_e.BookC.IsOpenedBook());
 
             if (_e.BookC.IsOpenedBook())
             {
                 for (var pageT = PageBookTypes.None + 1; pageT < PageBookTypes.End; pageT++)
                 {
-                    _bookUIE.PageGOC(pageT).SetActive(pageT == _e.OpenedNowPageBookT);
+                    _bookUIE.PageGOC(pageT).TrySetActive(pageT == _e.OpenedNowPageBookT);
                 }
 
                 _bookUIE.BackButtonC.SetActive(_e.OpenedNowPageBookT != PageBookTypes.Main);

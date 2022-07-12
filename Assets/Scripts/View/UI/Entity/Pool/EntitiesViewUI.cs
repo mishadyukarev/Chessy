@@ -40,8 +40,8 @@ namespace Chessy.View.UI.Entity
             MenuCanvasGOC = new GameObjectVC(canvas.transform.Find("Menu+").gameObject);
             GameCanvasGOC = new GameObjectVC(canvas.transform.Find("Game+").gameObject);
 
-            GameCanvasGOC.SetActive(false);
-            MenuCanvasGOC.SetActive(true);
+            GameCanvasGOC.TrySetActive(false);
+            MenuCanvasGOC.TrySetActive(true);
 
 
             canvas.name = "Canvas";

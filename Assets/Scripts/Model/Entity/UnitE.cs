@@ -24,8 +24,8 @@ namespace Chessy.Model
 
         public readonly HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC;
         public readonly WhereUnitCanShiftC WhereCanShiftC;
-        public readonly WhereUnitCanAttackToEnemyC WhereCanAttackSimpleAttackToEnemyC;
-        public readonly WhereUnitCanAttackToEnemyC WhereCanAttackUniqueAttackToEnemyC;
+        public WhereUnitCanAttackToEnemyC WhereCanAttackSimpleAttackToEnemyC;
+        public WhereUnitCanAttackToEnemyC WhereCanAttackUniqueAttackToEnemyC;
         public readonly ButtonsAbilitiesUnitC UniqueButtonsC;
         public readonly CooldownAbilitiesInSecondsC CooldownsC;
         public readonly VisibleToOtherPlayerOrNotC VisibleToOtherPlayerOrNotC;

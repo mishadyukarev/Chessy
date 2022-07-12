@@ -15,7 +15,7 @@ namespace Chessy.View.UI
 
         internal override void Sync()
         {
-            _settingsUIE.ParentGOC.SetActive(_e.SettingsC.IsOpenedBarWithSettings);
+            _settingsUIE.ParentGOC.TrySetActive(_e.SettingsC.IsOpenedBarWithSettings);
         }
     }
 }

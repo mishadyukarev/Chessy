@@ -62,7 +62,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _eVG.CellEs(cellIdxCurrent).SunSideSRC.SetActiveGO(_needActive[cellIdxCurrent]);
+                _eVG.CellEs(cellIdxCurrent).SunSideSRC.TrySetActiveGO(_needActive[cellIdxCurrent]);
             }
 
         }

@@ -23,11 +23,11 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                     {
                         isEnableButt = true;
 
-                        _protectUIE.Button(UnitTypes.King).SetActive(false);
-                        _protectUIE.Button(UnitTypes.Pawn).SetActive(false);
-                        _protectUIE.Button(UnitTypes.Elfemale).SetActive(false);
+                        _protectUIE.Button(UnitTypes.King).TrySetActive(false);
+                        _protectUIE.Button(UnitTypes.Pawn).TrySetActive(false);
+                        _protectUIE.Button(UnitTypes.Elfemale).TrySetActive(false);
 
-                        _protectUIE.Button(_e.UnitT(_e.SelectedCellIdx)).SetActive(true);
+                        _protectUIE.Button(_e.UnitT(_e.SelectedCellIdx)).TrySetActive(true);
 
                         if (_e.UnitConditionT(_e.SelectedCellIdx).Is(ConditionUnitTypes.Protected))
                         {

@@ -56,7 +56,7 @@ namespace Chessy.View.System
                         }
                     }
 
-                    _trailSRCs[cellIdxCurrent, directTbyte].SetActiveGO(_needActive[cellIdxCurrent, directTbyte]);
+                    _trailSRCs[cellIdxCurrent, directTbyte].TrySetActiveGO(_needActive[cellIdxCurrent, directTbyte]);
                 }
             }
         }

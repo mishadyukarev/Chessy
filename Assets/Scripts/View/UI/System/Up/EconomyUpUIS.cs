@@ -57,7 +57,7 @@ namespace Chessy.View.UI.System
                 }
             }
 
-            _economyUIE.ParenGOC.SetActive(activeResZone);
+            _economyUIE.ParenGOC.TrySetActive(activeResZone);
 
 
 

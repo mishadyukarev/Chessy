@@ -51,7 +51,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
             for (var mistakeT = (MistakeTypes)1; mistakeT < MistakeTypes.End; mistakeT++)
             {
-                _mistakeUIE.Zones(mistakeT).SetActive(_needActiveMistakeZone[(byte)mistakeT]);
+                _mistakeUIE.Zones(mistakeT).TrySetActive(_needActiveMistakeZone[(byte)mistakeT]);
             }
         }
     }

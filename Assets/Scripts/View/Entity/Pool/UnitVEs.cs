@@ -8,7 +8,7 @@ namespace Chessy.View.Entity
     public readonly struct UnitVEs
     {
         readonly SpriteRendererVC[] _blocks;
-        readonly SpriteRendererVC[] _units;
+        readonly UnitMainVE[] _units;
         readonly SpriteRendererVC[,] _mainToolWeapons;
         readonly SpriteRendererVC[,] _bowCrossbows;
         readonly SpriteRendererVC[,] _extraToolWeapons;
@@ -24,7 +24,7 @@ namespace Chessy.View.Entity
         internal readonly SpriteRendererVC UnitHpBarSRC;
 
 
-        public SpriteRendererVC UnitSRC(in UnitTypes unitT) => _units[(byte)unitT];
+        internal UnitMainVE UnitSRC(in UnitTypes unitT) => _units[(byte)unitT];
         public SpriteRendererVC MainToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes tw) => _mainToolWeapons[(byte)level, (byte)tw];
         public SpriteRendererVC MainBowCrossbowSRC(in LevelTypes level, in bool isRight) => _bowCrossbows[(byte)level, isRight ? 1 : 0];
         public SpriteRendererVC ExtraToolWeaponSRC(in LevelTypes level, in ToolsWeaponsWarriorTypes twT) => _extraToolWeapons[(byte)level, (byte)twT];
@@ -62,12 +62,17 @@ namespace Chessy.View.Entity
                 _blocks[(byte)block] = new SpriteRendererVC(sr);
             }
 
-            _units = new SpriteRendererVC[(byte)UnitTypes.End];
+            _units = new UnitMainVE[(byte)UnitTypes.End];
             for (var unitT = (UnitTypes)1; unitT < UnitTypes.End; unitT++)
             {
                 if (unitT != UnitTypes.Pawn)
                 {
-                    _units[(byte)unitT] = new SpriteRendererVC(unitZ.Find(unitT.ToString() + "_" + "SR+").GetComponent<SpriteRenderer>());
+                    var sr = unitZ.Find(unitT.ToString() + "_" + "SR+").GetComponent<SpriteRenderer>();
+                    var go = sr.gameObject;
+
+                    var srC = new SpriteRendererVC(sr);
+
+                    _units[(byte)unitT] = new UnitMainVE(new GameObjectVC(go), srC);
                 }
             }
 

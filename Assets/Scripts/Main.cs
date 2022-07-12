@@ -71,8 +71,8 @@ namespace Chessy
 
             PhotonNetwork.PhotonServerSettings.AppSettings.Protocol = ConnectionProtocol.Tcp;
 
-            //PhotonNetwork.SendRate = 5;
-            //PhotonNetwork.SerializationRate = 5;
+            //PhotonNetwork.SendRate = 200;
+            //PhotonNetwork.SerializationRate = 200;
             //PhotonNetwork.IsMessageQueueRunning = true;
 
 

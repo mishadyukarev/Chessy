@@ -2,24 +2,21 @@
 
 namespace Chessy.View.Component
 {
-    public struct GameObjectVC
+    public readonly struct GameObjectVC
     {
-        public readonly int InstanceID;
-        public GameObject GameObject;
+        public readonly GameObject GO;
 
-        public Transform Transform => GameObject.transform;
-        public bool IsActiveSelf => GameObject.activeSelf;
+        public Transform Transform => GO.transform;
+        public bool IsActiveSelf => GO.activeSelf;
 
         public GameObjectVC(in GameObject gO)
         {
-            GameObject = gO;
-            InstanceID = gO.GetInstanceID();
+            GO = gO;
         }
 
-        public void SetActive(in bool needActive)
+        public void TrySetActive(in bool needActive)
         {
-            if (needActive != GameObject.activeSelf)
-                GameObject.SetActive(needActive);
+            if (needActive != GO.activeSelf) GO.SetActive(needActive);
         }
     }
 }

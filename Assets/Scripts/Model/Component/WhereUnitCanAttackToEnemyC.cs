@@ -2,15 +2,15 @@
 {
     public struct WhereUnitCanAttackToEnemyC
     {
-        readonly bool[] _where;
+        public bool[] WhereUnitCanAttack;
 
-        public bool Can(in byte cellIdx) => _where[cellIdx];
+        public bool Can(in byte cellIdx) => WhereUnitCanAttack[cellIdx];
 
         internal WhereUnitCanAttackToEnemyC(in bool[] where)
         {
-            _where = where;
+            WhereUnitCanAttack = where;
         }
 
-        internal void Set(in byte idxCell, in bool canAttack) => _where[idxCell] = canAttack;
+        internal void Set(in byte idxCell, in bool canAttack) => WhereUnitCanAttack[idxCell] = canAttack;
     }
 }

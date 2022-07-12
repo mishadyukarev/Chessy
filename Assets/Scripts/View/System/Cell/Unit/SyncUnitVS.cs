@@ -1,5 +1,6 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
+using Chessy.View.Component;
 using Chessy.View.Entity;
 using Chessy.View.System;
 using Chessy.View.UI.Entity;
@@ -13,8 +14,10 @@ namespace Chessy.Model
 
         readonly UnitVEs[] _unitVEs = new UnitVEs[IndexCellsValues.CELLS];
 
-        readonly bool[] _needActiveUnit = new bool[(byte)UnitTypes.End];
+        readonly bool[,] _wasActivatedUnitBefore = new bool[IndexCellsValues.CELLS, (byte)UnitTypes.End];
+        readonly bool[,] _needActiveUnit = new bool[IndexCellsValues.CELLS, (byte)UnitTypes.End];
         readonly Color[] _needColorUnit = new Color[(byte)UnitTypes.End];
+
 
         readonly bool[,] _needActiveMainTW = new bool[(byte)LevelTypes.End, (byte)ToolsWeaponsWarriorTypes.End];
         readonly Color[,] _needColorMainTW = new Color[(byte)LevelTypes.End, (byte)ToolsWeaponsWarriorTypes.End];
@@ -24,6 +27,10 @@ namespace Chessy.Model
         readonly Color[,] _needColorExtraTW = new Color[(byte)LevelTypes.End, (byte)ToolsWeaponsWarriorTypes.End];
 
 
+        readonly SpriteRenderer[,] _unitSRCs = new SpriteRenderer[IndexCellsValues.CELLS, (byte)UnitTypes.End];
+        readonly GameObject[,] _unitGOCs = new GameObject[IndexCellsValues.CELLS, (byte)UnitTypes.End];
+        readonly SpriteRendererVC[,,] _mainToolWeapon = new SpriteRendererVC[IndexCellsValues.CELLS, (byte)LevelTypes.End, (byte)ToolsWeaponsWarriorTypes.End];
+
         internal SyncUnitVS(in EntitiesView eV, in EntitiesModel eM) : base(eM)
         {
             _eV = eV;
@@ -31,6 +38,20 @@ namespace Chessy.Model
             for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
             {
                 _unitVEs[cellIdx] = _eV.CellEs(cellIdx).UnitEs;
+
+                for (var unitT = (UnitTypes)1; unitT < UnitTypes.End; unitT++)
+                {
+                    _unitSRCs[cellIdx, (byte)unitT] = _eV.CellEs(cellIdx).UnitEs.UnitSRC(unitT).SRVC.SR;
+                    _unitGOCs[cellIdx, (byte)unitT] = _eV.CellEs(cellIdx).UnitEs.UnitSRC(unitT).GOVC.GO;
+                }
+
+                for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
+                {
+                    for (var toolWeaponT = (ToolsWeaponsWarriorTypes)1; toolWeaponT < ToolsWeaponsWarriorTypes.End; toolWeaponT++)
+                    {
+                        _mainToolWeapon[cellIdx, (byte)levelT, (byte)toolWeaponT] = _eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT);
+                    }
+                }
             }
         }
 
@@ -44,9 +65,9 @@ namespace Chessy.Model
 
         internal void Sync(in byte cellIdx)
         {
-            for (var i = 0; i < _needActiveUnit.Length; i++)
+            for (var i = 0; i < _needColorUnit.Length; i++)
             {
-                _needActiveUnit[i] = false;
+                _needActiveUnit[cellIdx, i] = false;
                 _needColorUnit[i] = ColorsValues.ColorStandart;
             }
             for (var levelT = (LevelTypes)1; levelT < LevelTypes.End; levelT++)
@@ -88,7 +109,7 @@ namespace Chessy.Model
                     }
                     else
                     {
-                        _needActiveUnit[(byte)selUnitT] = true;
+                        _needActiveUnit[cellIdx, (byte)selUnitT] = true;
                     }
                 }
             }
@@ -141,7 +162,7 @@ namespace Chessy.Model
                         }
                         else
                         {
-                            _needActiveUnit[(byte)unitT] = true;
+                            _needActiveUnit[cellIdx, (byte)unitT] = true;
                         }
                     }
                 }
@@ -151,10 +172,17 @@ namespace Chessy.Model
 
             for (var unitT = (UnitTypes)1; unitT < UnitTypes.End; unitT++)
             {
+                var unitTbyte = (byte)unitT;
+
                 if (unitT != UnitTypes.Pawn)
                 {
-                    _unitVEs[cellIdx].UnitSRC(unitT).SetColor(_needColorUnit[(byte)unitT]);
-                    _unitVEs[cellIdx].UnitSRC(unitT).SetActiveGO(_needActiveUnit[(byte)unitT]);
+                    _unitSRCs[cellIdx, unitTbyte].color = _needColorUnit[unitTbyte];
+
+                    var neededActive = _needActiveUnit[cellIdx, unitTbyte];
+
+                    if (_wasActivatedUnitBefore[cellIdx, unitTbyte] != neededActive) _unitGOCs[cellIdx, unitTbyte].SetActive(neededActive);
+
+                    _wasActivatedUnitBefore[cellIdx, unitTbyte] = neededActive;
                 }
             }
 
@@ -165,26 +193,26 @@ namespace Chessy.Model
 
                 foreach (var toolWeaponT in new[] { ToolsWeaponsWarriorTypes.Staff, ToolsWeaponsWarriorTypes.Axe })
                 {
-                    //if (_eV.CellEs(cellIdx).UnitEs.MainToolWeaponSRC(levelT, toolWeaponT).GO.activeSelf != _needActiveMainTW[levelT][(byte)toolWeaponT])
-                    //{
-                    //    //_eV.CellEs(cellIdx).UnitEs.AnimationUnitC.Play();
-                    //}
 
-                    _unitVEs[cellIdx].MainToolWeaponSRC(levelT, toolWeaponT).SetActiveGO(_needActiveMainTW[levelTbyte, (byte)toolWeaponT]);
-                    _unitVEs[cellIdx].MainToolWeaponSRC(levelT, toolWeaponT).SetColor(_needColorMainTW[levelTbyte, (byte)toolWeaponT]);
+                    _mainToolWeapon[cellIdx, levelTbyte, (byte)toolWeaponT].TrySetActiveGO(_needActiveMainTW[levelTbyte, (byte)toolWeaponT]);
+                    _mainToolWeapon[cellIdx, levelTbyte, (byte)toolWeaponT].Color = _needColorMainTW[levelTbyte, (byte)toolWeaponT];
+
+
+                    //_unitVEs[cellIdx].MainToolWeaponSRC(levelT, toolWeaponT).SetActiveGO();
+                    //_unitVEs[cellIdx].MainToolWeaponSRC(levelT, toolWeaponT).SetColor();
                 }
 
 
                 foreach (var isRight in new[] { true, false })
                 {
-                    _unitVEs[cellIdx].MainBowCrossbowSRC(levelT, isRight).SetActiveGO(_needActiveBowCrossbow[levelTbyte, isRight ? 1 : 0]);
-                    _unitVEs[cellIdx].MainBowCrossbowSRC(levelT, isRight).SetColor(_needColorBowCrossbow[levelTbyte, isRight ? 1 : 0]);
+                    _unitVEs[cellIdx].MainBowCrossbowSRC(levelT, isRight).TrySetActiveGO(_needActiveBowCrossbow[levelTbyte, isRight ? 1 : 0]);
+                    _unitVEs[cellIdx].MainBowCrossbowSRC(levelT, isRight).Color = _needColorBowCrossbow[levelTbyte, isRight ? 1 : 0];
                 }
 
                 foreach (var twT in new[] { ToolsWeaponsWarriorTypes.Pick, ToolsWeaponsWarriorTypes.Shield, ToolsWeaponsWarriorTypes.Sword })
                 {
-                    _unitVEs[cellIdx].ExtraToolWeaponSRC(levelT, twT).SetActiveGO(_needActiveExtraTW[levelTbyte, (byte)twT]);
-                    _unitVEs[cellIdx].ExtraToolWeaponSRC(levelT, twT).SetColor(_needColorExtraTW[levelTbyte, (byte)twT]);
+                    _unitVEs[cellIdx].ExtraToolWeaponSRC(levelT, twT).TrySetActiveGO(_needActiveExtraTW[levelTbyte, (byte)twT]);
+                    _unitVEs[cellIdx].ExtraToolWeaponSRC(levelT, twT).Color = _needColorExtraTW[levelTbyte, (byte)twT];
                 }
             }
         }

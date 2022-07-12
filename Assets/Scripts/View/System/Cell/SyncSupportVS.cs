@@ -123,8 +123,8 @@ namespace Chessy.View.System
 
             for (byte cell_start = 0; cell_start < IndexCellsValues.CELLS; cell_start++)
             {
-                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetActiveGO(_needActive[cell_start]);
-                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.SetColor(_needColor[cell_start]);
+                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.TrySetActiveGO(_needActive[cell_start]);
+                _eVG.CellEs(cell_start).SupportCellEs.SupportSRC.Color = _needColor[cell_start];
             }
         }
     }

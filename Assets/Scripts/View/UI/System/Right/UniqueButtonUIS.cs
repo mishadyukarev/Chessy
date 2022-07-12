@@ -65,7 +65,7 @@ namespace Chessy.View.UI.System
             }
 
 
-            _buttonE.ParenC.SetActive(needActive);
+            _buttonE.ParenC.TrySetActive(needActive);
 
 
             if (needActive)
@@ -79,9 +79,9 @@ namespace Chessy.View.UI.System
 
                 for (var abilityT = AbilityTypes.None + 1; abilityT < AbilityTypes.End; abilityT++)
                 {
-                    _buttonE.Zone(abilityT).SetActive(false);
+                    _buttonE.Zone(abilityT).TrySetActive(false);
                 }
-                _buttonE.Zone(ability_cur).SetActive(true);
+                _buttonE.Zone(ability_cur).TrySetActive(true);
 
 
                 _buttonE.WaterTextC.ParentG.SetActive(false);

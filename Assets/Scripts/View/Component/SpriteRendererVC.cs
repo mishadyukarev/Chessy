@@ -23,30 +23,25 @@ namespace Chessy.View.Component
 
         internal SpriteRendererVC(in SpriteRenderer sr) => SR = sr;
 
-        internal void SetEnabled(in bool needActive)
+        internal void TrySetEnabled(in bool needActive)
         {
             if (SR.enabled != needActive)
                 SR.enabled = needActive;
         }
-        internal void Enable()
+        internal void TryEnable()
         {
             if (SR.enabled == false)
                 SR.enabled = true;
         }
-        internal void Disable()
+        internal void TryDisable()
         {
             if (SR.enabled == true)
                 SR.enabled = false;
         }
 
-        internal void SetActiveGO(in bool needActive)
+        internal void TrySetActiveGO(in bool needActive)
         {
             if (GO.activeSelf != needActive) GO.SetActive(needActive);
-        }
-
-        internal void SetColor(in Color color)
-        {
-            /*if (color != Color)*/ Color = color;
         }
     }
 }

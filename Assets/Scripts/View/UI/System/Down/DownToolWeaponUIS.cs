@@ -24,7 +24,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             }
 
 
-            _twE.ParentGOC.SetActive(needActiveZone);
+            _twE.ParentGOC.TrySetActive(needActiveZone);
 
 
             if (needActiveZone)

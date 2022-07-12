@@ -69,7 +69,7 @@ namespace Chessy.Model
                     }
                 }
 
-                _redCircularSRCs[currentIdxCell].SetActiveGO(_needActive[currentIdxCell]);
+                _redCircularSRCs[currentIdxCell].TrySetActiveGO(_needActive[currentIdxCell]);
             }
         }
     }

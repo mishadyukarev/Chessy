@@ -31,7 +31,7 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _srVCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+                _srVCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
             }
         }
     }

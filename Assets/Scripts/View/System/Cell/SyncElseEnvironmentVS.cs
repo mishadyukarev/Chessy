@@ -20,19 +20,19 @@ namespace Chessy.View.System
             {
                 if (_e.AdultForestC(cellIdxCurrent).HaveAnyResources)
                 {
-                    _environmentVEs[cellIdxCurrent].HillUnderC.SetActiveGO(_e.HillC(cellIdxCurrent).HaveAnyResources);
+                    _environmentVEs[cellIdxCurrent].HillUnderC.TrySetActiveGO(_e.HillC(cellIdxCurrent).HaveAnyResources);
 
-                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).SetActiveGO(false);
+                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).TrySetActiveGO(false);
                 }
                 else
                 {
-                    _environmentVEs[cellIdxCurrent].HillUnderC.SetActiveGO(false);
-                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).SetActiveGO(_e.HillC(cellIdxCurrent).HaveAnyResources);
+                    _environmentVEs[cellIdxCurrent].HillUnderC.TrySetActiveGO(false);
+                    _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Hill).TrySetActiveGO(_e.HillC(cellIdxCurrent).HaveAnyResources);
                 }
 
-                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Fertilizer).SetActiveGO(_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources);
-                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.YoungForest).SetActiveGO(_e.YoungForestC(cellIdxCurrent).HaveAnyResources);
-                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Mountain).SetActiveGO(_e.MountainC(cellIdxCurrent).HaveAnyResources);
+                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Fertilizer).TrySetActiveGO(_e.WaterOnCellC(cellIdxCurrent).HaveAnyResources);
+                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.YoungForest).TrySetActiveGO(_e.YoungForestC(cellIdxCurrent).HaveAnyResources);
+                _environmentVEs[cellIdxCurrent].EnvironmentE(EnvironmentTypes.Mountain).TrySetActiveGO(_e.MountainC(cellIdxCurrent).HaveAnyResources);
             }
         }
     }

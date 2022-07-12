@@ -145,6 +145,7 @@ namespace Chessy.View.System
             }
 
             var t = Time.deltaTime * 7f;
+            if (!PhotonNetwork.IsMasterClient) t /= 3;
             if (t > 1) t = 1;
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)

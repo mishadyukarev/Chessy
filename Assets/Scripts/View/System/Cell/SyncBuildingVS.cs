@@ -49,7 +49,7 @@ namespace Chessy.View.System
             {
                 for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
                 {
-                    _buildingSRCs[buildingT][cellIdxCurrent].SetActiveGO(_needActive[buildingT][cellIdxCurrent]);
+                    _buildingSRCs[buildingT][cellIdxCurrent].TrySetActiveGO(_needActive[buildingT][cellIdxCurrent]);
                 }
             }
 

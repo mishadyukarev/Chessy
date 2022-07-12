@@ -31,8 +31,8 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             }
 
 
-            _eUI.LeftEs.CityE(BuildingTypes.House).ParentGOC.SetActive(needActiveCity);
-            _eUI.LeftEnvEs.Zone.SetActive(needActiveEnvironment);
+            _eUI.LeftEs.CityE(BuildingTypes.House).ParentGOC.TrySetActive(needActiveCity);
+            _eUI.LeftEnvEs.Zone.TrySetActive(needActiveEnvironment);
         }
     }
 }

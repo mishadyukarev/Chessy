@@ -55,8 +55,8 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _rightSRCs[cellIdxCurrent].SetActiveGO(_needActiveRight[cellIdxCurrent]);
-                _upSRCs[cellIdxCurrent].SetActiveGO(_needActiveUp[cellIdxCurrent]);
+                _rightSRCs[cellIdxCurrent].TrySetActiveGO(_needActiveRight[cellIdxCurrent]);
+                _upSRCs[cellIdxCurrent].TrySetActiveGO(_needActiveUp[cellIdxCurrent]);
             }
         }
     }

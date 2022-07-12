@@ -28,7 +28,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 }
             }
 
-            eUI.RightEs.Zone.SetActive(activeParent);
+            eUI.RightEs.Zone.TrySetActive(activeParent);
         }
     }
 }

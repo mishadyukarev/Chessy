@@ -38,7 +38,7 @@ namespace Chessy.Model.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _stunSRC[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+                _stunSRC[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
             }
         }
     }

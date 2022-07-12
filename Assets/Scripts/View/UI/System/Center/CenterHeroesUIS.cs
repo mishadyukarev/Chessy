@@ -29,7 +29,7 @@ namespace Chessy.Model
             }
 
 
-            _eUI.CenterEs.HeroE(UnitTypes.Elfemale).Parent.SetActive(_needActiveZone);
+            _eUI.CenterEs.HeroE(UnitTypes.Elfemale).Parent.TrySetActive(_needActiveZone);
 
 
             if (_needActiveZone)

@@ -21,7 +21,7 @@ namespace Chessy.View.UI.System
 
             if (myHeroT != UnitTypes.None && _e.PlayerInfoE(curPlayerI).GodInfoC.HaveGodInInventor)
             {
-                _downHeroUIE.Parent.SetActive(true);
+                _downHeroUIE.Parent.TrySetActive(true);
 
                 var cooldown = _e.PlayerInfoE(curPlayerI).GodInfoC.CooldownInSecondsForNextAppearance;
 
@@ -44,7 +44,7 @@ namespace Chessy.View.UI.System
             }
             else
             {
-                _downHeroUIE.Parent.SetActive(false);
+                _downHeroUIE.Parent.TrySetActive(false);
             }
         }
     }

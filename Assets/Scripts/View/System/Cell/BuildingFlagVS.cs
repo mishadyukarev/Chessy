@@ -28,13 +28,13 @@ namespace Chessy.View.System
                 if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {
                     _needActive[cellIdxCurrent] = true;
-                    _flagSRCs[cellIdxCurrent].SetColor(_e.BuildingPlayerT(cellIdxCurrent).Is(PlayerTypes.First) ? Color.blue : Color.red);
+                    _flagSRCs[cellIdxCurrent].Color = _e.BuildingPlayerT(cellIdxCurrent).Is(PlayerTypes.First) ? Color.blue : Color.red;
                 }
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _flagSRCs[cellIdxCurrent].SetActiveGO(_needActive[cellIdxCurrent]);
+                _flagSRCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
             }
 
                 
