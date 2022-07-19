@@ -26,7 +26,7 @@ namespace Chessy.Model.System
             }
         }
 
-        internal void GetDataCellsM()
+        internal void GetDataCells()
         {
             for (byte cellIdxStart = 0; cellIdxStart < IndexCellsValues.CELLS; cellIdxStart++)
             {

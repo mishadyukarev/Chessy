@@ -142,6 +142,11 @@ namespace Chessy.Model.System
                         _e.PlayerInfoC(whoseMove).AmountBuiltHouses++;
                         //E.PlayerE(whoseMove).MaxPeopleInCity = (int)(E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns + E.PlayerE(whoseMove).PawnInfoE.MaxAvailablePawns);
                         _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse += _e.PlayerInfoE(whoseMove).PlayerInfoC.WoodForBuyHouse;
+
+                        if (_e.LessonT == LessonTypes.BuildHouseForWarrior)
+                        {
+                            SetNextLesson();
+                        }
                         break;
 
                     case BuildingTypes.Market:
@@ -156,13 +161,7 @@ namespace Chessy.Model.System
                 }
 
 
-                if (_e.LessonT == LessonTypes.BuildHouses)
-                {
-                    if (_e.PlayerInfoC(PlayerTypes.First).AmountBuiltHouses >= ValuesChessy.BUILDINGS_FOR_SKIP_LESSON)
-                    {
-                         SetNextLesson();
-                    }
-                }
+
 
 
                 RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.Building);

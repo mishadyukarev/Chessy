@@ -4,7 +4,7 @@
     {
         public bool[] WhereUnitCanAttack;
 
-        public bool Can(in byte cellIdx) => WhereUnitCanAttack[cellIdx];
+        public ref bool Can(in byte cellIdx) => ref WhereUnitCanAttack[cellIdx];
 
         internal WhereUnitCanAttackToEnemyC(in bool[] where)
         {

@@ -145,38 +145,38 @@ namespace Chessy.View.System
             }
 
             var t = Time.deltaTime * 7f;
-            if (!PhotonNetwork.IsMasterClient) t /= 3;
+            if (!PhotonNetwork.IsMasterClient) t /= 1.5f;
             if (t > 1) t = 1;
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                var whereSkinIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).ViewIdxCell;
+                var whereSkinIdxCell = _e.WhereViewDataUnitC(cellIdxCurrent).ViewIdxCellP;
 
-                if ( _e.UnitPossitionOnCellC(whereSkinIdxCell).Position.magnitude > 0)
+                if ( _e.UnitPossitionOnCellC(whereSkinIdxCell).PositionP.magnitude > 0)
                 {
 
 
-                    _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitPossitionOnCellC(whereSkinIdxCell).Position, t);
+                    _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitPossitionOnCellC(whereSkinIdxCell).PositionP, t);
                 }
 
 
 
                 if (_e.IsCenterCloud(cellIdxCurrent))
                 {
-                    whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(cellIdxCurrent).ViewIdxCell;
+                    whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(cellIdxCurrent).ViewIdxCellP;
 
                     var curPos = _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position;
-                    var nextPos = _e.CloudPossitionC(whereSkinIdxCell).Position;
+                    var nextPos = _e.CloudPossitionC(whereSkinIdxCell).PositionP;
 
                     _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(curPos, nextPos, t);
 
 
                     foreach (var item in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
                     {
-                        whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(item).ViewIdxCell;
+                        whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(item).ViewIdxCellP;
 
                         curPos = _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position;
-                        nextPos = _e.CloudPossitionC(whereSkinIdxCell).Position;
+                        nextPos = _e.CloudPossitionC(whereSkinIdxCell).PositionP;
 
                         _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(curPos, nextPos, t);
                     }

@@ -3,7 +3,7 @@
     public struct ShiftingObjectC
     {
         public bool NeedReturnBack { get; internal set; }
-        public byte WhereNeedShiftIdxCell { get; internal set; }
+        internal byte WhereNeedShiftIdxCell;
         public float Distance { get; internal set; }
 
         public bool IsShifting => WhereNeedShiftIdxCell != 0;

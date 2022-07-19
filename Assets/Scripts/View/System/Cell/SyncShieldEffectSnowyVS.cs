@@ -20,9 +20,9 @@ namespace Chessy.View.System
             {
                 _needActive[cellIdxCurrent] = false;
 
-                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveDataReference)
+                if (_e.WhereViewDataUnitC(cellIdxCurrent).HaveDataReference)
                 {
-                    var dataIdxCell = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
+                    var dataIdxCell = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
 
 
                     if (_e.UnitEffectsC(dataIdxCell).HaveAnyProtectionRainyMagicShield)

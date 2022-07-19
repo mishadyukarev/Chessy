@@ -13,7 +13,7 @@ namespace Chessy.Model.System
             _e.ZoneInfoC.IsActiveFriend = _e.GameModeT.Is(GameModeTypes.WithFriendOffline);
             _e.CellClickT = StartGameValues.CELL_CLICK;
 
-            _e.WeatherE.WindC = new WindC() { DirectT = StartGameValues.DIRECT_WIND, Speed = StartGameValues.SPEED_WIND };
+            _e.WeatherE.WindC = new WindC() { DirectType = StartGameValues.DIRECT_WIND, Speed = StartGameValues.SPEED_WIND };
             _e.SunSideT = StartGameValues.SUN_SIDE;
 
 
@@ -259,7 +259,7 @@ namespace Chessy.Model.System
                 }
             }
 
-            GetDataCellsS.GetDataCellsM();
+            GetDataCellsS.GetDataCells();
         }
 
         internal void SetClouds(in byte centerCellIdx)

@@ -40,7 +40,7 @@ namespace Chessy.Model.System
                                 e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
                             }
 
-                            e.SkinInfoUnitC(e.SkinInfoUnitC(cellIdxCurrent).ViewIdxCell).DataIdxCell = 0;
+                            e.WhereViewDataUnitC(e.WhereViewDataUnitC(cellIdxCurrent).ViewIdxCell).DataIdxCell = 0;
                             e.UnitE(cellIdxCurrent).Dispose();
                         }
                     }
@@ -51,7 +51,7 @@ namespace Chessy.Model.System
                             e.AddToolWeaponsInInventor(e.UnitPlayerT(cellIdxCurrent), e.ExtraTWLevelT(cellIdxCurrent), e.ExtraToolWeaponT(cellIdxCurrent), 1);
                         }
 
-                        e.SkinInfoUnitC(e.SkinInfoUnitC(cellIdxCurrent).ViewIdxCell).DataIdxCell = 0;
+                        e.WhereViewDataUnitC(e.WhereViewDataUnitC(cellIdxCurrent).ViewIdxCell).DataIdxCell = 0;
                         e.UnitE(cellIdxCurrent).Dispose();
                     }
                 }

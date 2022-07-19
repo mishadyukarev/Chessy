@@ -37,42 +37,35 @@ namespace Chessy
             var adLaunchS = new TryLaunchAdS(eM);
             new ShopS(eM);
 
-            var rpc = eV.PhotonC.PhotonView.gameObject.AddComponent<Rpc>().FillRpcWithSystems(sM);
-            eV.PhotonC.PhotonView.ObservedComponents = new List<Component>() { rpc };
 
-            var photonParent = new GameObject("Photons");
+            #region Photon
 
-            var currentIdPhoton = 1001;
+            var photonV = eV.PhotonC.PhotonView;
+            photonV.gameObject.AddComponent<Rpc>().Fill(sM);
 
-            for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
+            var idPhoton = 2;
+            for (var syncT = (SyncTypes)1; syncT < SyncTypes.End; syncT++)
             {
-                var forPhoton = new GameObject();
-                forPhoton.transform.SetParent(photonParent.transform);
-
-                for (var syncCellT = (SyncCellTypes)1; syncCellT < SyncCellTypes.End; syncCellT++)
-                {
-                    currentIdPhoton++;
-
-                    var photonV = forPhoton.AddComponent<PhotonView>();
-                    photonV.ViewID = currentIdPhoton;
-
-                    var system = photonV.gameObject.AddComponent<CellOnPhotonSerializeView>();
-                    system.GiveData(cellIdx, syncCellT, eM);
-
-                    photonV.ObservedComponents = new List<Component>() { system };
-                }
+                photonV = gameObject.AddComponent<PhotonView>();
+                photonV.ViewID = idPhoton++;
+                var photonSerializeView = photonV.gameObject.AddComponent<PhotonSerializeView>().Fill(syncT, sM);
+                photonV.ObservedComponents = new List<Component>() { photonSerializeView };
+                photonV.Synchronization = ViewSynchronization.ReliableDeltaCompressed;
             }
 
-            
+            #endregion
+
+
             gameObject.AddComponent<PhotonSceneManager>().GiveSystems(sM);
 
 
-            PhotonNetwork.KeepAliveInBackground = 180;
 
-            PhotonNetwork.PhotonServerSettings.AppSettings.Protocol = ConnectionProtocol.Tcp;
+            //PhotonNetwork.KeepAliveInBackground = 180;
 
-            //PhotonNetwork.SendRate = 200;
-            //PhotonNetwork.SerializationRate = 200;
+            //PhotonNetwork.PhotonServerSettings.AppSettings.Protocol = ConnectionProtocol.Tcp;
+
+            //PhotonNetwork.SendRate = 12;
+            //PhotonNetwork.SerializationRate = 60;
             //PhotonNetwork.IsMessageQueueRunning = true;
 
 

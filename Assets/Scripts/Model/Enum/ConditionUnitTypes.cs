@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public enum ConditionUnitTypes
+    public enum ConditionUnitTypes : byte
     {
         None,
 

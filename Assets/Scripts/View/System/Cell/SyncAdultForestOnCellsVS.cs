@@ -1,17 +1,26 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
 using Chessy.View.Component;
+using UnityEngine;
 
 namespace Chessy.View.System
 {
     sealed class SyncAdultForestOnCellsVS : SystemViewAbstract
     {
+        readonly bool[] _wasActivated = new bool[IndexCellsValues.CELLS];
         readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
-        readonly SpriteRendererVC[] _srVCs;
+        readonly SpriteRenderer[] _srs = new SpriteRenderer[IndexCellsValues.CELLS];
+        readonly GameObject[] _gos = new GameObject[IndexCellsValues.CELLS];
 
         internal SyncAdultForestOnCellsVS(in SpriteRendererVC[] adultForestVCs, in EntitiesModel eM) : base(eM)
         {
-            _srVCs = adultForestVCs;
+            for (var i = 0; i < adultForestVCs.Length; i++)
+            {
+                var sr = adultForestVCs[i].SR;
+
+                _srs[i] = adultForestVCs[i].SR;
+                _gos[i] = sr.gameObject;
+            }
         }
 
         internal override void Sync()
@@ -31,7 +40,12 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _srVCs[cellIdxCurrent].TrySetActiveGO(_needActive[cellIdxCurrent]);
+                var needActive = _needActive[cellIdxCurrent];
+                ref var wasActivated = ref _wasActivated[cellIdxCurrent];
+
+                if(needActive != wasActivated) _gos[cellIdxCurrent].SetActive(needActive);
+
+                wasActivated = needActive;
             }
         }
     }

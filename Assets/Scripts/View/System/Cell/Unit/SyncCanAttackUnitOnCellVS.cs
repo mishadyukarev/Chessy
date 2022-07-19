@@ -25,9 +25,9 @@ namespace Chessy.View.System
                 _needColor[cellIdxCurrent] = Color.white;
 
 
-                if (_e.SkinInfoUnitC(cellIdxCurrent).HaveDataReference)
+                if (_e.WhereViewDataUnitC(cellIdxCurrent).HaveDataReference)
                 {
-                    var dataCellIdx = _e.SkinInfoUnitC(cellIdxCurrent).DataIdxCell;
+                    var dataCellIdx = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
 
                     if (_e.UnitVisibleC(dataCellIdx).IsVisible(_e.CurrentPlayerIT))
                     {

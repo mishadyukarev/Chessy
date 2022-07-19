@@ -114,13 +114,13 @@ namespace Chessy.Model
                 }
             }
 
-            if (_e.SkinInfoUnitC(cellIdx).HaveDataReference)
+            if (_e.WhereViewDataUnitC(cellIdx).HaveDataReference)
             {
-                var givenIdxCell = _e.SkinInfoUnitC(cellIdx).DataIdxCell;
+                var givenIdxCell = _e.WhereViewDataUnitC(cellIdx).DataIdxCellP;
 
                 if (_e.UnitT(givenIdxCell).HaveUnit())
                 {
-                    if (_e.UnitVisibleC(givenIdxCell).IsVisible(_e.CurrentPlayerIT) || _e.CellsC.IsSelectedCell && _e.UnitT(_e.SelectedCellIdx) == UnitTypes.Elfemale)
+                    if (_e.UnitVisibleC(givenIdxCell).IsVisible(_e.CurrentPlayerIT) || _e.CellsC.IsSelectedCell && _e.UnitT(_e.SelectedCellIdx) == UnitTypes.Elfemale && _e.UnitPlayerT(_e.SelectedCellIdx) == _e.CurrentPlayerIT)
                     {
                         var isSelectedCell = givenIdxCell == _e.SelectedCellIdx;
 

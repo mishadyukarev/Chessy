@@ -18,6 +18,8 @@ namespace Chessy.Model.Entity
         //public PlayerTypes WhoseMovePlayerT;
         public PlayerTypes CurrentPlayerIT;
 
+        internal bool NeedGetDataCellsForNextClient;
+
 
         public SelectedObjectsE SelectedE;
 
@@ -127,7 +129,7 @@ namespace Chessy.Model.Entity
         public DirectTypes DirectWindT
         {
             get => WindC.DirectT;
-            internal set => WindC.DirectT = value;
+            internal set => WindC.DirectType = value;
         }
         public byte SpeedWind
         {
@@ -139,7 +141,7 @@ namespace Chessy.Model.Entity
         public SunSideTypes SunSideT
         {
             get => SunC.SunSideT;
-            internal set => SunC.SunSideT = value;
+            internal set => SunC.SunSideType = value;
         }
 
         #endregion
@@ -151,7 +153,8 @@ namespace Chessy.Model.Entity
 
         public RaycastTypes RaycastT { get; internal set; }
         public CellClickTypes CellClickT { get; internal set; }
-        public bool IsStartedGame { get; internal set; }
+
+        public bool IsStartedGame;
         public bool IsSelectedCity { get; internal set; }
         public bool HaveTreeUnit { get; internal set; }
         public bool IsActivatedIdxAndXyInfoCells { get; internal set; }
@@ -275,21 +278,21 @@ namespace Chessy.Model.Entity
         public ref UnitE UnitE(in byte idx) => ref CellEs(idx).UnitE;
 
         public ref UnitOnCellC UnitMainC(in byte idx) => ref UnitE(idx).MainC;
-        public UnitTypes UnitT(in byte idx) => UnitMainC(idx).UnitT;
-        internal void SetUnitOnCellT(in byte idx, in UnitTypes unitT) => UnitMainC(idx).UnitT = unitT;
-        public PlayerTypes UnitPlayerT(in byte idx) => UnitMainC(idx).PlayerT;
-        internal void SetUnitPlayerT(in byte cellIdx, in PlayerTypes playerT) => UnitMainC(cellIdx).PlayerT = playerT;
-        public LevelTypes UnitLevelT(in byte idx) => UnitMainC(idx).LevelT;
-        public void SetUnitLevelT(in byte idx, in LevelTypes levelT) => UnitMainC(idx).LevelT = levelT;
-        public ConditionUnitTypes UnitConditionT(in byte idx) => UnitMainC(idx).ConditionT;
-        internal void SetUnitConditionT(in byte cellIdx, in ConditionUnitTypes conditionUnitT) => UnitMainC(cellIdx).ConditionT = conditionUnitT;
+        public UnitTypes UnitT(in byte idx) => UnitMainC(idx).UnitType;
+        internal void SetUnitOnCellT(in byte idx, in UnitTypes unitT) => UnitMainC(idx).UnitType = unitT;
+        public PlayerTypes UnitPlayerT(in byte idx) => UnitMainC(idx).PlayerType;
+        internal void SetUnitPlayerT(in byte cellIdx, in PlayerTypes playerT) => UnitMainC(cellIdx).PlayerType = playerT;
+        public LevelTypes UnitLevelT(in byte idx) => UnitMainC(idx).LevelType;
+        public void SetUnitLevelT(in byte idx, in LevelTypes levelT) => UnitMainC(idx).LevelType = levelT;
+        public ConditionUnitTypes UnitConditionT(in byte idx) => UnitMainC(idx).ConditionType;
+        internal void SetUnitConditionT(in byte cellIdx, in ConditionUnitTypes conditionUnitT) => UnitMainC(cellIdx).ConditionType = conditionUnitT;
         public bool IsRightArcherUnit(in byte idx) => UnitMainC(idx).IsArcherDirectedToRight;
         public double DamageSimpleAttack(in byte cell) => UnitMainC(cell).DamageSimpleAttack;
         public double DamageOnCell(in byte cell) => UnitMainC(cell).DamageOnCell;
 
         public ref ShiftingObjectC ShiftingInfoForUnitC(in byte cellIdx) => ref UnitE(cellIdx).ShiftingInfoForUnitC;
 
-        public ref WhereViewIdxCellC SkinInfoUnitC(in byte cellIdx) => ref UnitE(cellIdx).SkinInfoUnitC;
+        public ref WhereViewIdxCellC WhereViewDataUnitC(in byte cellIdx) => ref UnitE(cellIdx).WhereViewDataUnitC;
 
         public ref PositionC UnitPossitionOnCellC(in byte cellIdx) => ref UnitE(cellIdx).PositionC;
         public Vector3 UnitPossitionOnCell(in byte cellIdx) => UnitPossitionOnCellC(cellIdx).Position;

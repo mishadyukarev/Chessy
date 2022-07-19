@@ -19,7 +19,7 @@ namespace Chessy.Model.System
 
                         foreach (var idx_1 in _e.IdxsCellsAround(cellIdxCell, DistanceFromCellTypes.First))
                         {
-                            dir_cur += 1;
+                            dir_cur  = _e.DirectionAround(cellIdxCell, idx_1);
 
                             if (!_e.MountainC(idx_1).HaveAnyResources)
                             {

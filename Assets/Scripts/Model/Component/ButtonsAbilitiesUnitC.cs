@@ -16,7 +16,7 @@
                 return abilities;
             }
         }
-        public AbilityTypes Ability(in ButtonTypes button) => _uniqueButtons[(byte)button];
+        public ref AbilityTypes Ability(in ButtonTypes button) => ref _uniqueButtons[(byte)button];
 
         internal ButtonsAbilitiesUnitC(in AbilityTypes[] uniqueButtons) => _uniqueButtons = uniqueButtons;
 

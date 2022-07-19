@@ -1,17 +1,12 @@
 ﻿namespace Chessy.Model
 {
-    public enum SyncTypes
+    public enum SyncTypes : byte
     {
         None,
 
-        //Cell,
-        Cell,
-        Environment,
-        WaterOnCell,
-        //Unit
-        MainToolWeapon,
-        WaterUnit,
-
+        Main,
+        UnitShift,
+        CloudShift,
         Else,
 
         End

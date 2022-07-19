@@ -64,8 +64,8 @@ namespace Chessy.View.UI.Entity
 
             var photonV = photonView_Rpc.AddComponent<PhotonView>();
 
-            /*if (PhotonNetwork.IsMasterClient)*/ //PhotonNetwork.AllocateViewID(photonV);
-            photonV.ViewID = 1001;
+            /*if (PhotonNetwork.IsMasterClient)*/ //PhotonNetwork.RegisterPhotonView(photonV);
+            photonV.ViewID = 1;
             PhotonC = new PhotonVC(photonV, out actions);
 
 
@@ -135,27 +135,12 @@ namespace Chessy.View.UI.Entity
                 animations[(byte)AnimationCellTypes.AdultForest] = CellEs(cellIdxStart).EnvironmentVEs.AnimationC.Play;
                 animations[(byte)AnimationCellTypes.JumpAppearanceUnit] = CellEs(cellIdxStart).UnitEs.AnimationUnitC.Play;
                 animations[(byte)AnimationCellTypes.CircularAttackKing] = CellEs(cellIdxStart).UnitEs.CircularAttackAnimC.Play;
+                animations[(byte)AnimationCellTypes.ExtractWood] = CellEs(cellIdxStart).ExtractWoodAnimationC.Play;
+                animations[(byte)AnimationCellTypes.AttackSword] = CellEs(cellIdxStart).AttackAnimationC.Play;
 
                 animationsCellsDirected[(byte)CellAnimationDirectlyTypes.AddingWaterUnit] = (byte cellIdx) => { CellEs(cellIdx).UnitEs.AddingWaterAnimationC.Play(); };
 
                 animationsCells.Add(cellIdxStart, animations);
-
-                //if (isBorder[cellIdxStart])
-                //{
-                //    CellEs(cellIdxStart).StandartCellGO.SetActive(false);
-
-                //    if(UnityEngine.Random.Range(0f, 1f) <= 0.5f)
-                //    {
-                //        CellEs(cellIdxStart).DesertCell1GOC.SetActive(true);
-                //    }
-                //    else
-                //    {
-                //        CellEs(cellIdxStart).DesertCell2GOC.SetActive(true);
-                //    }
-
-                //    CellEs(cellIdxStart).BoxCollider2D.gameObject.SetActive(false);
-                //}
-
             }
 
 

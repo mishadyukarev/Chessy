@@ -40,7 +40,7 @@ namespace Chessy.View.UI.System
 
                 _needActive[ResourceTypes.Wood] = true;
 
-                if (_e.LessonT >= LessonTypes.Build3Farms)
+                if (_e.LessonT >= LessonTypes.Build1Farms)
                 {
                     _needActive[ResourceTypes.Food] = true;
 
@@ -48,7 +48,7 @@ namespace Chessy.View.UI.System
                     {
                         _needActive[ResourceTypes.Ore] = true;
 
-                        if (_e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre)
+                        if (_e.LessonT >= LessonTypes.NeedBuildSmelterAndMeltOre + 1)
                         {
                             _needActive[ResourceTypes.Iron] = true;
                             _needActive[ResourceTypes.Gold] = true;

@@ -22,8 +22,10 @@ namespace Chessy.Model.System
         internal readonly ForPhotonSceneS ForPhotonSceneS;
         internal readonly SyncDataS SyncDataS;
         internal readonly TryShiftCloudsMS TryShiftCloudsMS;
+        internal readonly OnPhotonSerializeViewS OnPhotonSerializeViewS;
 
         public readonly ForButtonsSystemsModel ForUISs;
+
 
         public SystemsModel(in EntitiesModel eM)
         {
@@ -49,6 +51,10 @@ namespace Chessy.Model.System
 
             ForPhotonSceneS = new ForPhotonSceneS(this, eM);
             ForUISs = new ForButtonsSystemsModel(this, eM);
+
+            OnPhotonSerializeViewS = new OnPhotonSerializeViewS(this, eM);
+
+            
 
             Application.runInBackground = true;
             var nowTime = DateTime.Now;
@@ -110,7 +116,7 @@ namespace Chessy.Model.System
         {
             if (ValuesChessy.MAX_WATER_FOR_ANY_UNIT - _e.WaterUnitC(cellIdx).Water >= ValuesChessy.WATER_FOR_ADDING_WATER_ANIMATION)
             {
-                var idxCellView = _e.SkinInfoUnitC(cellIdx).ViewIdxCell;
+                var idxCellView = _e.WhereViewDataUnitC(cellIdx).ViewIdxCell;
 
                 RpcSs.ExecuteAnimationCellDirectlyToGeneral(idxCellView, CellAnimationDirectlyTypes.AddingWaterUnit, RpcTarget.All);
 

@@ -26,7 +26,7 @@ namespace Chessy.Model.Component
         {
             if (!IsOpenedBook)
             {
-                OpenedNowPageBookT = WasOpenedBookT;
+                OpenedNowPageBookT = WasOpenedAnytimeBook ? WasOpenedBookT : (PageBookTypes)1;
                 return true;
             }
             else return false;

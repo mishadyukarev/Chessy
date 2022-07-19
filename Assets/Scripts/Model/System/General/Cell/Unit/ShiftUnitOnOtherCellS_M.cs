@@ -7,10 +7,10 @@ namespace Chessy.Model.System
     {
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
-            var dataFromIdxCell = _e.SkinInfoUnitC(fromCellIdx).DataIdxCell;
+            var dataFromIdxCell = _e.WhereViewDataUnitC(fromCellIdx).DataIdxCell;
             var possitionFrom = _e.UnitPossitionOnCellC(fromCellIdx).Position;
 
-            var dataToIdxCell = _e.SkinInfoUnitC(toCellIdx).DataIdxCell;
+            var dataToIdxCell = _e.WhereViewDataUnitC(toCellIdx).DataIdxCell;
             var possitionTo = _e.UnitPossitionOnCellC(toCellIdx).Position;
 
 
@@ -20,8 +20,8 @@ namespace Chessy.Model.System
 
 
 
-            _e.SkinInfoUnitC(fromCellIdx).DataIdxCell = dataFromIdxCell;
-            _e.SkinInfoUnitC(toCellIdx).DataIdxCell = dataToIdxCell;  
+            _e.WhereViewDataUnitC(fromCellIdx).DataIdxCell = dataFromIdxCell;
+            _e.WhereViewDataUnitC(toCellIdx).DataIdxCell = dataToIdxCell;  
 
             _e.UnitPossitionOnCellC(fromCellIdx).Position = possitionFrom;
             _e.UnitPossitionOnCellC(toCellIdx).Position = possitionTo;
@@ -30,11 +30,11 @@ namespace Chessy.Model.System
 
             
 
-            if(!_e.SkinInfoUnitC(toCellIdx).HaveDataReference)
+            if(!_e.WhereViewDataUnitC(toCellIdx).HaveDataReference)
             {
-                _e.UnitPossitionOnCellC(_e.SkinInfoUnitC(toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
+                _e.UnitPossitionOnCellC(_e.WhereViewDataUnitC(toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
             }
-            _e.SkinInfoUnitC(_e.SkinInfoUnitC(toCellIdx).ViewIdxCell).DataIdxCell = toCellIdx;
+            _e.WhereViewDataUnitC(_e.WhereViewDataUnitC(toCellIdx).ViewIdxCell).DataIdxCell = toCellIdx;
 
 
             _e.SetUnitConditionT(toCellIdx, ConditionUnitTypes.None);

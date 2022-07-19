@@ -193,6 +193,8 @@ namespace Chessy.Model.System
 
         public void ClickOpenBookCenterInMenu()
         {
+            _e.BookC.TryOpenBook();
+
             _e.SoundAction(_e.BookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
 
             _e.NeedUpdateView = true;

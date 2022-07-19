@@ -322,7 +322,7 @@ namespace Chessy
                 default: throw new Exception();
             }
         }
-        public static void ToggleNextSunSideT(this ref SunC sunC) => sunC.SunSideT = sunC.SunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++sunC.SunSideT;
+        public static void ToggleNextSunSideT(this ref SunC sunC) => sunC.SunSideType = sunC.SunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++sunC.SunSideType;
 
         #endregion
 

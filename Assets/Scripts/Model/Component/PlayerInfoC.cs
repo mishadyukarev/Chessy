@@ -2,10 +2,15 @@
 {
     public struct PlayerInfoC
     {
-        public bool HaveKingInInventor { get; internal set; }
-        public bool IsReadyForStartOnlineGame { get; internal set; }
-        public float WoodForBuyHouse { get; internal set; }
+        internal float WoodForBuyHouse;
+        internal int AmountBuiltHouses;
+        internal bool IsReadyForStartOnlineGame;
+        internal bool HaveKingInInventor;
+
+        public bool IsReadyForStartOnlineGameP => IsReadyForStartOnlineGame;
+        public float WoodForBuyHouseP => WoodForBuyHouse;
+        public bool HaveKingInInventorP => HaveKingInInventor;
         public int AmountFarmsInGame { get; internal set; }
-        public int AmountBuiltHouses { get; internal set; }
+        public int AmountBuiltHousesP => AmountBuiltHouses;
     }
 }

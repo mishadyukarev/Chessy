@@ -2,8 +2,8 @@
 {
     public struct BuildingOnCellC
     {
-        public BuildingTypes BuildingT { get; internal set; }
-        public PlayerTypes PlayerT { get; internal set; }
-        public LevelTypes LevelT { get; internal set; }
+        internal BuildingTypes BuildingT;
+        internal PlayerTypes PlayerT;
+        internal LevelTypes LevelT;
     }
 }

@@ -41,7 +41,7 @@ namespace Chessy.Model.System
                     }
                 }
 
-                _s.RpcSs.AnimationCellToGeneral(_e.SkinInfoUnitC(cell_0).ViewIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
+                _s.RpcSs.AnimationCellToGeneral(_e.WhereViewDataUnitC(cell_0).ViewIdxCell, AnimationCellTypes.CircularAttackKing, RpcTarget.All);
 
                 _e.SetUnitConditionT(cell_0, ConditionUnitTypes.None);
 

@@ -4,7 +4,7 @@
     {
         readonly bool[] _where;
 
-        public bool CanShiftHere(in byte cellIdx) => _where[cellIdx];
+        public ref bool CanShiftHere(in byte cellIdx) => ref _where[cellIdx];
         public bool[] Where => (bool[])_where.Clone();
 
         internal WhereUnitCanShiftC(in bool[] cells) => _where = cells;

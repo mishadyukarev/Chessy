@@ -33,12 +33,12 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
                     for (var res = ResourceTypes.None + 1; res < ResourceTypes.End; res++)
                     {
-                        if (_e.MistakeEconomy(res).Resources > 0)
+                        if (_e.MistakeEconomy(res).ResourcesP > 0)
                         {
                             _mistakeUIE.NeedAmountResources(res).SetActive(true);
 
                             _mistakeUIE.NeedAmountResources(res).TextUI.text
-                                = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + _e.MistakeEconomy(res).Resources : ">= " + ((int)(100 * _e.MistakeEconomy(res).Resources));
+                                = res == ResourceTypes.Iron || res == ResourceTypes.Gold ? ">= " + _e.MistakeEconomy(res).ResourcesP : ">= " + ((int)(100 * _e.MistakeEconomy(res).ResourcesP));
                         }
                     }
                 }

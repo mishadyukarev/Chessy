@@ -1,18 +1,23 @@
-﻿using UnityEngine;
-
-namespace Chessy.Model.Component
+﻿namespace Chessy.Model.Component
 {
     public struct UnitOnCellC
     {
-        public UnitTypes UnitT { get; internal set; }
-        public LevelTypes LevelT { get; internal set; }
-        public PlayerTypes PlayerT { get; internal set; }
-        public ConditionUnitTypes ConditionT { get; internal set; }
-        public bool IsArcherDirectedToRight { get; internal set; }
-        public double DamageSimpleAttack { get; internal set; }
-        public double DamageOnCell { get; internal set; }
-        public int HowManySecondUnitWasHereInThisCondition { get; internal set; }
-        public int CooldownForAttackAnyUnitInSeconds { get; internal set; }
+        internal UnitTypes UnitType;
+        internal LevelTypes LevelType;
+        internal PlayerTypes PlayerType;
+        internal ConditionUnitTypes ConditionType;
+        internal bool IsArcherDirectedToRight;
+
+        internal double DamageSimpleAttack;
+        internal double DamageOnCell;
+        internal int HowManySecondUnitWasHereInThisCondition;
+        internal int CooldownForAttackAnyUnitInSeconds;
+
+        public UnitTypes UnitT => UnitType;
+        public LevelTypes LevelT => LevelType;
+        public PlayerTypes PlayerT => PlayerType;
+        public ConditionUnitTypes ConditionT => ConditionType;
+        public bool IsArcherDirectedToRightP => IsArcherDirectedToRight;
 
         public bool HaveCoolDownForAttackAnyUnit => CooldownForAttackAnyUnitInSeconds > 0;
     }

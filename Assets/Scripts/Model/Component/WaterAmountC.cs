@@ -2,6 +2,8 @@
 {
     public struct WaterAmountC
     {
-        public double Water { get; internal set; }
+        internal double Water;
+
+        public double WaterP => Water;
     }
 }

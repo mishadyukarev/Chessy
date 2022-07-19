@@ -2,6 +2,7 @@
 {
     public struct HealthC
     {
-        public double Health { get; internal set; }
+        internal double Health;
+        public double HealthP => Health;
     }
 }

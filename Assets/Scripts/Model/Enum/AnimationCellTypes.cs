@@ -7,6 +7,8 @@
         AdultForest,
         JumpAppearanceUnit,
         CircularAttackKing,
+        ExtractWood,
+        AttackSword,
 
         End
     }

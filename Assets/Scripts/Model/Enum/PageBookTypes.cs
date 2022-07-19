@@ -7,7 +7,7 @@
         Main,
 
         Pawn,
-        Steps,
+        //Steps,
         Water,
         Damage,
         Defend,
@@ -37,7 +37,7 @@
 
         AttackUnits,
 
-        DonerReady,
+        //DonerReady,
 
         Truce,
 

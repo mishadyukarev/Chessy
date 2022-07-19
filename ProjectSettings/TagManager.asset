@@ -89,6 +89,9 @@ TagManager:
   - name: Unit
     uniqueID: 1121464767
     locked: 0
+  - name: AttackAnimation
+    uniqueID: 2246072513
+    locked: 0
   - name: AddingWaterAnimation
     uniqueID: 2486071293
     locked: 0
@@ -112,6 +115,9 @@ TagManager:
     locked: 0
   - name: Cloud
     uniqueID: 1231844777
+    locked: 0
+  - name: ExtractResourcesAnimations
+    uniqueID: 1088804807
     locked: 0
   - name: SunSide
     uniqueID: 1213293303

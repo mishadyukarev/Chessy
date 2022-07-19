@@ -140,9 +140,9 @@ namespace Chessy.Model
 
                     else
                     {
-                        if (_e.LessonT == Enum.LessonTypes.HoldPressTown)
+                        if (_e.LessonT == Enum.LessonTypes.HoldPressWarrior)
                         {
-                            if (_neededPageBookT == PageBookTypes.Town)  _s.SetNextLesson();
+                            /*if (_neededPageBookT == PageBookTypes.Town)  */_s.SetNextLesson();
                         }
 
                         _e.OpenedNowPageBookT = _neededPageBookT;

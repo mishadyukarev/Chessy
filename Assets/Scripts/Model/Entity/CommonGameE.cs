@@ -3,7 +3,7 @@ using System;
 
 namespace Chessy.Model.Entity
 {
-    public struct CommonGameE
+    public sealed class CommonGameE
     {
         public readonly DataFromViewC DataFromViewC;
         public readonly FromResourcesC Resources;
@@ -22,7 +22,7 @@ namespace Chessy.Model.Entity
         public InputC InputC;
         internal RpcPoolC RpcC;
 
-        internal CommonGameE(in DataFromViewC dataFromViewC, in TestModeTypes testModeT, in DateTime startGame) : this()
+        internal CommonGameE(in DataFromViewC dataFromViewC, in TestModeTypes testModeT, in DateTime startGame)
         {
             DataFromViewC = dataFromViewC;
             Resources = new FromResourcesC(default);

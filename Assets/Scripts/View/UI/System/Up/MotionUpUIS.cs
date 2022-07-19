@@ -16,18 +16,18 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            if (_e.LessonT.HaveLesson())
-            {
-                _motionTextC.GameObject.SetActive(false);
-            }
-            else
-            {
-                _motionTextC.GameObject.SetActive(true);
+            //if (_e.LessonT.HaveLesson())
+            //{
+            //    _motionTextC.GameObject.SetActive(false);
+            //}
+            //else
+            //{
+            //    _motionTextC.GameObject.SetActive(true);
 
-                _motionTextC.TextUI.text = "Motions: " + _e.Motions.ToString();
+            //    _motionTextC.TextUI.text = "Motions: " + _e.Motions.ToString();
 
-                _motionTextC.TextUI.color = _e.Motions % ValuesChessy.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0 && _e.Motions != 0 ? Color.red : Color.white;
-            }
+            //    _motionTextC.TextUI.color = _e.Motions % ValuesChessy.EVERY_MOTION_FOR_ACTIVE_GOD_ABILITY == 0 && _e.Motions != 0 ? Color.red : Color.white;
+            //}
         }
     }
 }

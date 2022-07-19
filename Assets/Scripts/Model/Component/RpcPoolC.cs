@@ -19,5 +19,8 @@ namespace Chessy.Model
 
             PunRPCName = name;
         }
+
+        internal void Rpc(in RpcTarget rpcTarget, in object[] objs) => Action0(PunRPCName, rpcTarget, objs );
+        internal void Rpc(in Player player, in object[] objs) => Action1(PunRPCName, player, objs);
     }
 }

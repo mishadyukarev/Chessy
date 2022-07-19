@@ -139,13 +139,16 @@ namespace Chessy.Model.System
 
                     
 
-                    GetDataCellsS.GetDataCellsM();
+                    GetDataCellsS.GetDataCells();
 
                     _dateTimeLastUpdate = DateTime.Now;
                 }
 
                 TryExecuteShiftingUnit();
                 TryShiftCloudsMS.TryShift();
+
+
+                //SyncDataS.TrySyncDataM();
             }
         }
 
@@ -168,7 +171,7 @@ namespace Chessy.Model.System
                             _e.ShiftingInfoForUnitC(cell_0).NeedReturnBack = false;
                             _e.ShiftingInfoForUnitC(cell_0).Distance = 0;
 
-                            GetDataCellsS.GetDataCellsM();
+                            GetDataCellsS.GetDataCells();
                         }
 
                         else
@@ -197,7 +200,7 @@ namespace Chessy.Model.System
                                 _e.ShiftingInfoForUnitC(cellIdxCurrent).Distance = 0;
                                 _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedReturnBack = false;
 
-                                GetDataCellsS.GetDataCellsM();
+                                GetDataCellsS.GetDataCells();
                             }
 
                             else
@@ -213,7 +216,7 @@ namespace Chessy.Model.System
 
                     var t = _e.ShiftingInfoForUnitC(cell_0).Distance / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
 
-                    _e.UnitPossitionOnCellC(_e.SkinInfoUnitC(cell_0).ViewIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
+                    _e.UnitPossitionOnCellC(_e.WhereViewDataUnitC(cell_0).ViewIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
                 }
             }
         }
@@ -266,7 +269,7 @@ namespace Chessy.Model.System
 
                         if (_e.UnitT(cell_0).HaveUnit())
                         {
-                            if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitT.Is(UnitTypes.Snowy))
+                            if (_e.PlayerInfoE(_e.UnitPlayerT(cell_0)).GodInfoC.UnitType.Is(UnitTypes.Snowy))
                             {
                                 if (_e.UnitT(cell_0).Is(UnitTypes.Pawn))
                                 {
@@ -295,7 +298,7 @@ namespace Chessy.Model.System
                                     {
                                         for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                                         {
-                                            if (_e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(playerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
                                             {
                                                 SetNewUnitOnCellS(UnitTypes.Tree, playerT, cell_0);
 
@@ -313,7 +316,7 @@ namespace Chessy.Model.System
 
                     for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
                     {
-                        if (_e.PlayerInfoE(playerT).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
+                        if (_e.PlayerInfoE(playerT).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
                         {
 
                             for (byte curCell_0 = 0; curCell_0 < IndexCellsValues.CELLS; curCell_0++)
@@ -420,7 +423,7 @@ namespace Chessy.Model.System
             {
                 if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build1Farms)
                     {
                         if (_e.UnitT(cellIdxCurrent).Is(UnitTypes.Pawn))
                             _e.ResourcesInInventoryC(_e.UnitPlayerT(cellIdxCurrent)).Subtract(ResourceTypes.Food, EconomyValues.FOOD_FOR_FEEDING_ONE_UNIT_AFTER_EVERY_UPDATE);
@@ -533,7 +536,7 @@ namespace Chessy.Model.System
         }
         void TryExecuteHungry()
         {
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build1Farms)
             {
                 for (var playerT = PlayerTypes.First; playerT < PlayerTypes.End; playerT++)
                 {
@@ -584,7 +587,7 @@ namespace Chessy.Model.System
         }
         void GiveFoodAfterUpdate()
         {
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build1Farms)
             {
                 for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {

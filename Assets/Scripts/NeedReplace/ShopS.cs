@@ -46,7 +46,7 @@ namespace Chessy.Model
 
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
-            Debug.Log("OnInitialized: PASS");
+            //Debug.Log("OnInitialized: PASS");
             _e.ShopC.StoreController = controller;
             _e.ShopC.StoreExtProvider = extensions;
         }

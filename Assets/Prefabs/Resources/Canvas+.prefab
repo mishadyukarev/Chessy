@@ -4149,7 +4149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1690595952383024801}
   m_Layer: 5
-  m_Name: HoldPressTown+
+  m_Name: HoldPressWarrior+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4507,7 +4507,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9215826521769416506
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6322,7 +6322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5830898511676483175
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14306,7 +14306,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6923329026785431056
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15603,9 +15603,9 @@ RectTransform:
   m_Father: {fileID: 1690595952383024801}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -156.17}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 239, y: 346}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 94, y: 322}
   m_SizeDelta: {x: 278.24707, y: 217.754}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7373289141985671825
@@ -26522,7 +26522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968576746796284702}
   m_Layer: 5
-  m_Name: BuildHouses+
+  m_Name: BuildHouseForWarrior+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29570,10 +29570,10 @@ RectTransform:
   m_Father: {fileID: 1690595952383024801}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100, y: 100}
-  m_SizeDelta: {x: 242.194, y: 214.642}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -16, y: 85}
+  m_SizeDelta: {x: 404.78198, y: 214.642}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7596678043236644277
 CanvasRenderer:
@@ -32065,7 +32065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1138218645456483360
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32195,8 +32195,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You can play with friends online or offline in the \"Menu\". To train
-    with bots at first.\r \nYou can restart lessons there."
+  m_text: "You can play with friends online in the \"Menu\". To train with bots at
+    first.\r \nYou can restart lessons there."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -32223,7 +32223,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 33.55
+  m_fontSize: 33.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -34031,7 +34031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3850533814011873335
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35343,7 +35343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 469407693937664695}
   m_Layer: 5
-  m_Name: Build3Farms+
+  m_Name: Build1Farms+
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43491,12 +43491,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Enable Relax mod(condition) of warrior for extract resources or for
-        healing unit. You need wait in this condition
+        healing unit. You need wait in this condition!!!
       objectReference: {fileID: 0}
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_fontSize
-      value: 36.6
+      value: 36.1
       objectReference: {fileID: 0}
     - target: {fileID: 5830635995600166393, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -46283,8 +46283,8 @@ PrefabInstance:
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_text
-      value: Hold press "Town" button and you're gonna open full information about
-        it. That way almost everything work
+      value: Hold press a button and you're gonna open full information about it.
+        That way almost everything work
       objectReference: {fileID: 0}
     - target: {fileID: 5830635995600166393, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
@@ -55013,6 +55013,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6401377477238875187, guid: 7fd7878cb5dfedc4ba18adc8b48c7e7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7814548857141917504, guid: 7fd7878cb5dfedc4ba18adc8b48c7e7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7fd7878cb5dfedc4ba18adc8b48c7e7a, type: 3}
 --- !u!224 &8503554401107192674 stripped
@@ -55316,7 +55326,7 @@ PrefabInstance:
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_text
-      value: 'Build 3 farms for food. Your warriors wanna eat they''ll die without
+      value: 'Build a farm for food. Your warriors wanna eat they''ll die without
         food! Don''t build on dry cells. '
       objectReference: {fileID: 0}
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
@@ -56296,7 +56306,7 @@ PrefabInstance:
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,
         type: 3}
       propertyPath: m_text
-      value: 1.Click at a warrior and seed 5 future forests where you want. It'll
+      value: 1.Click at a warrior and seed a future forest where you want. It'll
         grow after ~100 years (after "Truce").
       objectReference: {fileID: 0}
     - target: {fileID: 4230926081973666692, guid: 0a992d0ef82404144916e94273580e98,

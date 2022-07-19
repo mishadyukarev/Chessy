@@ -2,7 +2,10 @@
 {
     public struct WindC
     {
-        public DirectTypes DirectT { get; internal set; }
-        public byte Speed { get; internal set; }
+        internal DirectTypes DirectType;
+        internal byte Speed;
+
+        public DirectTypes DirectT => DirectType;
+        public byte SpeedP => Speed;
     }
 }

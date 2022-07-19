@@ -79,8 +79,8 @@ namespace Chessy.View.UI
 
             #region Down
 
-            eUI.DownEs.DonerE.ButtonC.AddListener(sM.ForUISs.DoneReadyClick);
-            eUI.DownEs.DonerE.ButtonC.GameObject.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.DonerReady].Press(b));
+            //eUI.DownEs.DonerE.ButtonC.AddListener(sM.ForUISs.DoneReadyClick);
+            //eUI.DownEs.DonerE.ButtonC.GameObject.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.DonerReady].Press(b));
 
             eUI.DownEs.HeroE.ButtonC.AddListener(delegate { sM.ForUISs.OpenHeroClick(); });
             eUI.DownEs.HeroE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.God].Press(b));
@@ -168,7 +168,7 @@ namespace Chessy.View.UI
             eUI.RightEs.RelaxE.ButtonC.AddListener(delegate { sM.ForUISs.Click(ConditionUnitTypes.Relaxed); });
             eUI.RightEs.RelaxE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.ExtractPawn].Press(b));
 
-            eUI.RightEs.StatsEs.EnergyE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Steps].Press(b));
+            //eUI.RightEs.StatsEs.EnergyE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Steps].Press(b));
             eUI.RightEs.StatsEs.DamageE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Damage].Press(b));
             eUI.RightEs.StatsEs.WaterE.ButtonC.AddComponent<PressedButtonUIS>().SetAction((bool b) => _pressHintSs[PageBookTypes.Water].Press(b));
 

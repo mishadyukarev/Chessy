@@ -7,7 +7,7 @@ namespace Chessy.Model.System
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
 
-            if (!_e.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressTown))
+            if (!_e.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressWarrior))
             {
                 if (_e.PawnPeopleInfoC(_e.CurrentPlayerIT).HaveAnyPeopleInCity)
                 {

@@ -35,12 +35,11 @@ namespace Chessy.Model.System
                     case ConditionUnitTypes.Relaxed:
                         if (_e.UnitConditionT(cellIdx).Is(ConditionUnitTypes.Relaxed))
                         {
-                            RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
+                            //RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.ClickToTable);
                             _e.SetUnitConditionT(cellIdx, ConditionUnitTypes.None);
                         }
                         else
                         {
-
                             _e.SetUnitConditionT(cellIdx, condT);
 
                             var clipT = ClipTypes.SighUnit;
@@ -54,7 +53,7 @@ namespace Chessy.Model.System
 
                                         if (_e.HpUnitC(cellIdx).Health >= HpUnitValues.MAX)
                                         {
-                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cellIdx)).GodInfoC.UnitT.Is(UnitTypes.Elfemale))
+                                            if (_e.PlayerInfoE(_e.UnitPlayerT(cellIdx)).GodInfoC.UnitType.Is(UnitTypes.Elfemale))
                                             {
                                                 _e.Build(BuildingTypes.Woodcutter, LevelTypes.First, _e.UnitPlayerT(cellIdx), ValuesChessy.MAX_HP_ANY_BUILDING, cellIdx);
                                             }
@@ -62,6 +61,8 @@ namespace Chessy.Model.System
                                     }
 
                                     clipT = ClipTypes.ExtractAdultForestWithWarrior;
+
+                                    RpcSs.AnimationCellToGeneral(cellIdx, AnimationCellTypes.ExtractWood, sender);
                                 }
                             }
 

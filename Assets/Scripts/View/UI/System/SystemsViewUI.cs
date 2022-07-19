@@ -24,9 +24,9 @@ namespace Chessy.View.UI.System
                 new EconomyUpUIS(eUI.UpEs.EconomyE, eM).Sync,
                 new UpWindUIS(eUI, eM).Sync,
                 new UpSunsUIS(eUI, eM).Sync,
+                new MotionUpUIS(eUI.UpEs.MotionsTextC, eM).Sync,
 
                 //Center
-                new MotionUpUIS(eUI.UpEs.MotionsTextC, eM).Sync,
                 new SkipLessonUIS(eUI.CenterEs.SkipLessonE, eM).Sync,
                 new LessonUIS(eUI.CenterEs, eM).Sync,
                 new CenterEndGameUIS(eUI, eM).Sync,
@@ -91,8 +91,7 @@ namespace Chessy.View.UI.System
                     eUI.UpEs.SettingsButtonC.SetActiveParent(!eM.LessonT.HaveLesson());
                     eUI.UpEs.DiscordButtonC.SetActive(!eM.LessonT.HaveLesson());
                     eUI.UpEs.LeaveButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.MenuInfo);
-                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressTown);
-                    eUI.DownEs.CityButtonUIE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.HoldPressTown);
+                    eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressWarrior);
 
                     eUI.GameCanvasGOC.TrySetActive(_e.SceneT == SceneTypes.Game);
                     eUI.ShopE.ShopZoneGOC.TrySetActive(_e.ShopC.IsOpenedShopZone);

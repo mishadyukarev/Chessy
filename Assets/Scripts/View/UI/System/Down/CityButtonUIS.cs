@@ -7,6 +7,7 @@ namespace Chessy.View.UI.System
 {
     sealed class CityButtonUIS : SystemUIAbstract
     {
+        bool _needActive;
         readonly CityButtonUIE _cityButtonUIE;
 
         internal CityButtonUIS(in CityButtonUIE cityButtonUIE, in EntitiesModel eMG) : base(eMG)
@@ -16,14 +17,9 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.OpeningTown)
-            {
-                _cityButtonUIE.ParentGOC.TrySetActive(true);
-            }
-            else
-            {
-                _cityButtonUIE.ParentGOC.TrySetActive(false);
-            }
+            _needActive = !_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.OpeningTown;
+
+            _cityButtonUIE.ParentGOC.TrySetActive(_needActive);
         }
     }
 }

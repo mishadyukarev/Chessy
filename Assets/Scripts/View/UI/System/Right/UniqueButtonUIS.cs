@@ -36,7 +36,7 @@ namespace Chessy.View.UI.System
                 }
                 else if (_buttonT == ButtonTypes.Second)
                 {
-                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build3Farms)
+                    if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build1Farms)
                     {
                         needActive = true;
                     }

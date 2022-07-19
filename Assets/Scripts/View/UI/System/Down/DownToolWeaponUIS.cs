@@ -45,27 +45,27 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                     {
                         needAxe = true;
 
-                        if (_e.LessonT >= LessonTypes.GiveStaff)
-                        {
-                            needStaff = true;
+                        //if (_e.LessonT >= LessonTypes.GiveStaff)
+                        //{
+                        //    needStaff = true;
 
-                            if (_e.LessonT >= LessonTypes.GiveBowCrossbow)
-                            {
-                                needBowCrossbow = true;
+                        //    if (_e.LessonT >= LessonTypes.GiveBowCrossbow)
+                        //    {
+                        //        needBowCrossbow = true;
 
-                                if (_e.LessonT >= LessonTypes.GiveShield)
-                                {
-                                    needShield = true;
+                        //        if (_e.LessonT >= LessonTypes.GiveShield)
+                        //        {
+                        //            needShield = true;
 
-                                    if (_e.LessonT >= LessonTypes.GiveSword)
-                                    {
-                                        needSword = true;
+                        //            if (_e.LessonT >= LessonTypes.GiveSword)
+                        //            {
+                        //                needSword = true;
 
 
-                                    }
-                                }
-                            }
-                        }
+                        //            }
+                        //        }
+                        //    }
+                        //}
                     }
 
 

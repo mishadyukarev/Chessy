@@ -2,7 +2,9 @@
 {
     public struct SunC
     {
-        public SunSideTypes SunSideT { get; internal set; }
+        internal SunSideTypes SunSideType;
+
+        public SunSideTypes SunSideT => SunSideType;
         public int SecondsForChangingSideSun { get; internal set; }
     }
 }

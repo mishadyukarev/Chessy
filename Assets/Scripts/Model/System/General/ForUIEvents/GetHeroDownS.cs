@@ -11,7 +11,7 @@
 
             var curPlayer = _e.CurrentPlayerIT;
 
-            var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoC.UnitT;
+            var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoC.UnitType;
 
             if (_e.PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
             {

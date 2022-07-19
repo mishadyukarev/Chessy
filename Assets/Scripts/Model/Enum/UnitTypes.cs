@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public enum UnitTypes
+    public enum UnitTypes : byte
     {
         None,
 

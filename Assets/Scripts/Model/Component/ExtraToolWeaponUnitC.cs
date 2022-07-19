@@ -2,9 +2,9 @@
 {
     public struct ExtraToolWeaponUnitC
     {
-        public ToolsWeaponsWarriorTypes ToolWeaponT { get; internal set; }
-        public LevelTypes LevelT { get; internal set; }
-        public float ProtectionShield { get; internal set; }
+        internal ToolsWeaponsWarriorTypes ToolWeaponT;
+        internal LevelTypes LevelT;
+        internal float ProtectionShield;
 
         public bool HaveAnyProtectionShield => ProtectionShield >= 1;
     }

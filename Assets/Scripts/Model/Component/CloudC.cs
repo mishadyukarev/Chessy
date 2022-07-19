@@ -2,7 +2,9 @@
 {
     public struct CloudC
     {
-        public bool IsCenter { get; internal set; }
+        internal bool IsCenter;
+
+        public bool IsCenterP => IsCenter;
 
         internal void Dispose()
         {

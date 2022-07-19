@@ -4,7 +4,7 @@
     {
         readonly float[] _resources;
 
-        public float Resources(in ResourceTypes resourceT) => _resources[(byte)resourceT];
+        public ref float Resources(in ResourceTypes resourceT) => ref _resources[(byte)resourceT];
 
         internal ResourcesInInventoryC(in float[] resources) => _resources = resources;
 

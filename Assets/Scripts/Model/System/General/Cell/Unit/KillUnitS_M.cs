@@ -61,14 +61,14 @@ namespace Chessy.Model.System
                 _e.PawnPeopleInfoC(_e.UnitPlayerT(cellIdxForKilling)).AmountInGame--;
             }
 
-            _e.SkinInfoUnitC(_e.SkinInfoUnitC(cellIdxForKilling).ViewIdxCell).DataIdxCell = 0;
+            _e.WhereViewDataUnitC(_e.WhereViewDataUnitC(cellIdxForKilling).ViewIdxCell).DataIdxCell = 0;
 
 
-            var dataIdxCell = _e.SkinInfoUnitC(cellIdxForKilling).DataIdxCell;
+            var dataIdxCell = _e.WhereViewDataUnitC(cellIdxForKilling).DataIdxCell;
 
             _e.UnitE(cellIdxForKilling).Dispose();
 
-            _e.SkinInfoUnitC(cellIdxForKilling).DataIdxCell = dataIdxCell;
+            _e.WhereViewDataUnitC(cellIdxForKilling).DataIdxCell = dataIdxCell;
         }
     }
 }

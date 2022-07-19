@@ -20,7 +20,7 @@ namespace Chessy.Model
         public ExtractionResourcesWithUnitC ExtractionResourcesC;
         public NeedUpdateViewC NeedUpdateViewC;
         public ShiftingObjectC ShiftingInfoForUnitC;
-        public WhereViewIdxCellC SkinInfoUnitC;
+        public WhereViewIdxCellC WhereViewDataUnitC;
 
         public readonly HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC;
         public readonly WhereUnitCanShiftC WhereCanShiftC;
@@ -48,7 +48,7 @@ namespace Chessy.Model
             ExtractionResourcesC = default;
             NeedUpdateViewC = default;
             ShiftingInfoForUnitC = default;
-            SkinInfoUnitC = default;
+            WhereViewDataUnitC = default;
 
             VisibleToOtherPlayerOrNotC = new VisibleToOtherPlayerOrNotC(default);
             CanSetUnitHereC = new CanSetUnitHereC(new bool[(byte)PlayerTypes.End]);
@@ -68,9 +68,9 @@ namespace Chessy.Model
 
         internal void Dispose()
         {
-            MainC.UnitT = UnitTypes.None;
+            MainC.UnitType = UnitTypes.None;
 
-            SkinInfoUnitC = default;
+            WhereViewDataUnitC = default;
         }
 
         internal UnitE Clone()
@@ -88,7 +88,7 @@ namespace Chessy.Model
             unitE.ExtractionResourcesC = ExtractionResourcesC;
             unitE.NeedUpdateViewC = NeedUpdateViewC;
 
-            unitE.SkinInfoUnitC = SkinInfoUnitC;
+            unitE.WhereViewDataUnitC = WhereViewDataUnitC;
 
 
             unitE.UniqueButtonsC.Sync(UniqueButtonsC.AbilityTypesClone);

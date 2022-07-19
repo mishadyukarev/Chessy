@@ -5,18 +5,18 @@ namespace Chessy.Model
     {
         internal static void Set(this ref UnitOnCellC mainUnitE, in UnitTypes unitT, in LevelTypes levelT, in PlayerTypes playerT, in ConditionUnitTypes conditionT, in bool isRight)
         {
-            mainUnitE.UnitT = unitT;
-            mainUnitE.LevelT = levelT;
-            mainUnitE.PlayerT = playerT;
-            mainUnitE.ConditionT = conditionT;
+            mainUnitE.UnitType = unitT;
+            mainUnitE.LevelType = levelT;
+            mainUnitE.PlayerType = playerT;
+            mainUnitE.ConditionType = conditionT;
             mainUnitE.IsArcherDirectedToRight = isRight;
         }
         internal static void CopyFrom(this ref UnitOnCellC mainUnitToE, in UnitOnCellC unitMainFromE)
         {
-            mainUnitToE.UnitT = unitMainFromE.UnitT;
-            mainUnitToE.LevelT = unitMainFromE.LevelT;
-            mainUnitToE.PlayerT = unitMainFromE.PlayerT;
-            mainUnitToE.ConditionT = unitMainFromE.ConditionT;
+            mainUnitToE.UnitType = unitMainFromE.UnitType;
+            mainUnitToE.LevelType = unitMainFromE.LevelType;
+            mainUnitToE.PlayerType = unitMainFromE.PlayerType;
+            mainUnitToE.ConditionType = unitMainFromE.ConditionType;
             mainUnitToE.IsArcherDirectedToRight = unitMainFromE.IsArcherDirectedToRight;
         }
     }

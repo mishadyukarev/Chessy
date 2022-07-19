@@ -5,7 +5,7 @@
         readonly int[] _cooldownsInSeconds;
 
         public int[] CooldonwsCopy => (int[])_cooldownsInSeconds.Clone();
-        public int Cooldown(in AbilityTypes ability) => _cooldownsInSeconds[(byte)ability];
+        public ref int Cooldown(in AbilityTypes ability) => ref _cooldownsInSeconds[(byte)ability];
         public bool HaveCooldown(in AbilityTypes ability) => Cooldown(ability) > 0;
 
         internal CooldownAbilitiesInSecondsC(in bool def) => _cooldownsInSeconds = new int[(byte)AbilityTypes.End];

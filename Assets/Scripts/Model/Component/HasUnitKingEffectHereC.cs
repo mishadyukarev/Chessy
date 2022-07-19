@@ -4,7 +4,7 @@
     {
         readonly bool[] _have;
 
-        public bool Has(in PlayerTypes playerT) => _have[(byte)playerT];
+        public ref bool Has(in PlayerTypes playerT) => ref _have[(byte)playerT];
 
         internal HasUnitKingEffectHereC(in bool[] have) => _have = have;
 

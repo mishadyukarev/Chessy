@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-namespace Chessy.Model
+﻿namespace Chessy.Model
 {
     public struct EffectsUnitsRightBarsC
     {
         readonly EffectTypes[] _effectBars;
 
-        public EffectTypes Effect(in ButtonTypes buttonT) => _effectBars[(byte)buttonT];
+        public ref EffectTypes Effect(in ButtonTypes buttonT) => ref _effectBars[(byte)buttonT];
 
         internal EffectsUnitsRightBarsC(in bool def)
         {

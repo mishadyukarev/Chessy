@@ -2,10 +2,14 @@
 {
     public struct GodInfoC
     {
-        public bool HaveGodInInventor { get; internal set; }
-        public UnitTypes UnitT { get; internal set; }
-        public int CooldownInSecondsForNextAppearance { get; internal set; }
+        internal UnitTypes UnitType;
+        internal int CooldownInSecondsForNextAppearance;
 
+        internal bool HaveGodInInventor;
+
+        public bool HaveGodInInventorP => HaveGodInInventor;
+        public int CooldownInSecondsForNextAppearanceP => CooldownInSecondsForNextAppearance;
+        public UnitTypes UnitT => UnitType;
         public bool HaveCooldown => CooldownInSecondsForNextAppearance >= 1;
     }
 }

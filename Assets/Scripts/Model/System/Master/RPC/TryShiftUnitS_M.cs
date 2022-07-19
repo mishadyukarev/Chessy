@@ -8,13 +8,10 @@ namespace Chessy.Model.System
         {
             var whoDoing = PhotonNetwork.OfflineMode ? PlayerTypes.First : sender.GetPlayer();
 
-            if(_e.UnitT(cellIdxFrom) == UnitTypes.Pawn)
-            {
-
-            }
-
             if (_e.WhereUnitCanShiftC(cellIdxFrom).CanShiftHere(cellIdxTo) && _e.UnitPlayerT(cellIdxFrom).Is(whoDoing))
             {
+                _e.NeedGetDataCellsForNextClient = true;
+
                 _e.SetUnitConditionT(cellIdxFrom, ConditionUnitTypes.None);
 
                 if (_e.ShiftingInfoForUnitC(cellIdxFrom).WhereNeedShiftIdxCell != 0)

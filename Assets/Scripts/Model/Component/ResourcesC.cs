@@ -2,13 +2,10 @@
 {
     public struct ResourcesC
     {
-        public float Resources
-        {
-            get;
-            internal set;
-        }
+        internal float Resources;
 
-        public bool HaveAnyResources => Resources > 0;
+        public float ResourcesP => Resources;
+        public bool HaveAnyResources => Resources > 0.009;
 
         internal void SetRandom(in float low, in float max) => Resources = UnityEngine.Random.Range(low, max);
     }
