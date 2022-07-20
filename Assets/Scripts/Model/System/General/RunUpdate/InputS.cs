@@ -9,9 +9,9 @@ namespace Chessy.Model
 
         internal void Update()
         {
-            _e.IsClicked = Input.GetMouseButtonDown(0);
+            _inputC.IsClicked = Input.GetMouseButtonDown(0);
 
-            if (_e.IsClicked)
+            if (_inputC.IsClicked)
             {
                 Screen.fullScreen = true;
             }

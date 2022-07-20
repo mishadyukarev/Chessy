@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct EnvironmentE
+    public sealed class EnvironmentE
     {
         public ResourcesC FertilizeC;
         public ResourcesC YoungForestC;

@@ -1,15 +1,12 @@
 ﻿namespace Chessy.Model
 {
-    public struct WhereUnitCanAttackToEnemyC
+    public sealed class WhereUnitCanAttackToEnemyC
     {
-        public bool[] WhereUnitCanAttack;
+        internal readonly bool[] WhereUnitCanAttack;
 
-        public ref bool Can(in byte cellIdx) => ref WhereUnitCanAttack[cellIdx];
+        public bool Can(in byte cellIdx) => WhereUnitCanAttack[cellIdx];
 
-        internal WhereUnitCanAttackToEnemyC(in bool[] where)
-        {
-            WhereUnitCanAttack = where;
-        }
+        internal WhereUnitCanAttackToEnemyC(in bool[] where) { WhereUnitCanAttack = where; }
 
         internal void Set(in byte idxCell, in bool canAttack) => WhereUnitCanAttack[idxCell] = canAttack;
     }

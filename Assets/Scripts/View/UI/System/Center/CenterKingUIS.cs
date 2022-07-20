@@ -16,7 +16,7 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_e.PlayerInfoE(_e.CurrentPlayerIT).PlayerInfoC.HaveKingInInventorP && _e.CellClickT != CellClickTypes.SetUnit)
+            if (_e.PlayerInfoE(_aboutGameC.CurrentPlayerIType).PlayerInfoC.HaveKingInInventorP && _e.CellClickT != CellClickTypes.SetUnit)
             {
                 if (!_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn))
                 {

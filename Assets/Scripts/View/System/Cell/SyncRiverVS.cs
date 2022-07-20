@@ -20,7 +20,7 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                switch (_e.CurrentPlayerIT)
+                switch (_aboutGameC.CurrentPlayerIType)
                 {
                     case PlayerTypes.None: throw new Exception();
                     case PlayerTypes.First:

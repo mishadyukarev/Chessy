@@ -24,7 +24,7 @@ namespace Chessy.Model.System
                             _s.RpcSs.SoundToGeneral(RpcTarget.All, abilityT);
 
 
-                            foreach (var idx_1 in _e.IdxsCellsAround(cell_to, DistanceFromCellTypes.First))
+                            foreach (var idx_1 in _e.IdxsCellsAround(cell_to))
                             {
                                 if (_e.AdultForestC(idx_1).HaveAnyResources)
                                 {

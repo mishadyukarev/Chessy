@@ -14,15 +14,15 @@ namespace Chessy.Model
         public void Update()
         {
 
-            if (_e.TestModeT.Is(TestModeTypes.Standart))
+            if (_aboutGameC.TestModeT.Is(TestModeTypes.Standart))
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (Input.GetKey(KeyCode.Alpha1)) _e.ResourcesInInventoryC(_e.CurrentPlayerIT).Add(ResourceTypes.Food, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha2)) _e.ResourcesInInventoryC(_e.CurrentPlayerIT).Add(ResourceTypes.Wood, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha3)) _e.ResourcesInInventoryC(_e.CurrentPlayerIT).Add(ResourceTypes.Ore, 0.5f);
-                    if (Input.GetKey(KeyCode.Alpha4)) _e.ResourcesInInventoryC(_e.CurrentPlayerIT).Add(ResourceTypes.Iron, 1);
-                    if (Input.GetKey(KeyCode.Alpha5)) _e.ResourcesInInventoryC(_e.CurrentPlayerIT).Add(ResourceTypes.Gold, 1);
+                    if (Input.GetKey(KeyCode.Alpha1)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Food, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha2)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Wood, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha3)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Ore, 0.5f);
+                    if (Input.GetKey(KeyCode.Alpha4)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Iron, 1);
+                    if (Input.GetKey(KeyCode.Alpha5)) _e.ResourcesInInventoryC(_aboutGameC.CurrentPlayerIT).Add(ResourceTypes.Gold, 1);
                 }
 
 

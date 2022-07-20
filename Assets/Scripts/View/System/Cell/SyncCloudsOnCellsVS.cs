@@ -28,7 +28,7 @@ namespace Chessy.View.System
                 {
                     _needActive[_e.CloudWhereViewDataOnCellC(cellIdxCurrent).ViewIdxCellP] = true;
 
-                    foreach (var item in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
+                    foreach (var item in _e.IdxsCellsAround(cellIdxCurrent))
                     {
                         _needActive[_e.CloudWhereViewDataOnCellC(item).ViewIdxCellP] = true;
                     }

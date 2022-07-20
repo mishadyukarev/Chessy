@@ -7,17 +7,13 @@ using System.Collections.Generic;
 
 namespace Chessy.View.UI.System
 {
-    public sealed class SystemsViewUI : IUpdate
+    public sealed class SystemsViewUI : SystemAbstract, IUpdate
     {
-        readonly EntitiesModel _e;
-
         readonly List<Action> _syncUpdates;
 
 
-        public SystemsViewUI(EntitiesViewUI eUI, EntitiesModel eM)
+        public SystemsViewUI(EntitiesViewUI eUI, EntitiesModel eM) : base(eM)
         {
-            _e = eM;
-
             _syncUpdates = new List<Action>()
             {
                 //Up
@@ -36,7 +32,6 @@ namespace Chessy.View.UI.System
                 new CenterBuildingZonesUIS(eUI, eM).Sync,
                 new CenterFriendUIS(eUI, eM).Sync,
                 new MistakeUIS(eUI.CenterEs.MistakeE, eM).Sync,
-                new MotionUIS(eUI, eM).Sync,
 
                 //Down
                 new DonerUIS(eUI.DownEs.DonerE, eM).Sync,
@@ -66,7 +61,7 @@ namespace Chessy.View.UI.System
 
                 () =>
                 {
-                    if (eM.BookC.IsOpenedBook())
+                    if (_bookC.IsOpenedBook())
                     {
                         eUI.DownEs.BookLittleE.AnimationVC.Play();
                     }
@@ -93,9 +88,9 @@ namespace Chessy.View.UI.System
                     eUI.UpEs.LeaveButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT >= LessonTypes.MenuInfo);
                     eUI.DownEs.BookLittleE.ButtonC.SetActiveParent(!eM.LessonT.HaveLesson() || eM.LessonT > LessonTypes.HoldPressWarrior);
 
-                    eUI.GameCanvasGOC.TrySetActive(_e.SceneT == SceneTypes.Game);
-                    eUI.ShopE.ShopZoneGOC.TrySetActive(_e.ShopC.IsOpenedShopZone);
-                    eUI.MenuCanvasGOC.TrySetActive(_e.SceneT == SceneTypes.Menu);
+                    eUI.GameCanvasGOC.TrySetActive(_aboutGameC.SceneType == SceneTypes.Game);
+                    eUI.ShopE.ShopZoneGOC.TrySetActive(_shopC.IsOpenedShopZone);
+                    eUI.MenuCanvasGOC.TrySetActive(_aboutGameC.SceneType == SceneTypes.Menu);
                 },
             };
 

@@ -3,7 +3,7 @@ using System;
 
 namespace Chessy.Model.Component
 {
-    public struct BookC
+    public sealed class BookC
     {
         public PageBookTypes OpenedNowPageBookT { get; internal set; }
         public PageBookTypes WasOpenedBookT { get; internal set; }

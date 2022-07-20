@@ -26,19 +26,19 @@ namespace Chessy.Model.System
         {
             if (_e.LessonT == LessonTypes.ClickWindInfo)
             {
-                _e.SunSideT = SunSideTypes.Dawn;
+                _sunC.SunSideT = SunSideTypes.Dawn;
                  _s.SetNextLesson();
             }
             else
             {
-                if (_e.BookC.IsOpenedBook())
+                if (_bookC.IsOpenedBook())
                 {
-                    _e.OpenedNowPageBookT = PageBookTypes.None;
+                    _bookC.OpenedNowPageBookT = PageBookTypes.None;
                     _e.SoundAction(ClipTypes.CloseBook).Invoke();
                 }
                 else
                 {
-                    _e.OpenedNowPageBookT = PageBookTypes.Wind;
+                    _bookC.OpenedNowPageBookT = PageBookTypes.Wind;
                     _e.SoundAction(ClipTypes.OpenBook).Invoke();
                 }
             }
@@ -47,7 +47,7 @@ namespace Chessy.Model.System
         }
         public void ClickSettingUpGame()
         {
-            _e.SettingsC.IsOpenedBarWithSettings = !_e.SettingsC.IsOpenedBarWithSettings;
+            _settingsC.IsOpenedBarWithSettings = !_settingsC.IsOpenedBarWithSettings;
             _e.SoundAction(ClipTypes.Click);
         }
         public void ClickDiscordUpButton()
@@ -56,21 +56,21 @@ namespace Chessy.Model.System
         }
         public void ClickSettingsCenterMenu()
         {
-            _e.SettingsC.IsOpenedBarWithSettings = !_e.SettingsC.IsOpenedBarWithSettings;
+            _settingsC.IsOpenedBarWithSettings = !_settingsC.IsOpenedBarWithSettings;
             _e.NeedUpdateView = true;
         }
         public void ClickBuyPremiumProduct()
         {
-            if (_e.ShopC.IsInitialized) //если покупка инициализирована 
+            if (_shopC.IsInitialized) //если покупка инициализирована 
             {
-                var product = _e.ShopC.StoreController.products.WithID(ShopC.PREMIUM_NAME); //находим продукт покупки 
+                var product = _shopC.StoreController.products.WithID(ShopValues.PREMIUM_NAME); //находим продукт покупки 
 
                 if (product == default) throw new Exception();
 
                 if (product.availableToPurchase) //если продукт найдет и готов для продажи
                 {
                     Debug.Log(string.Format("Purchasing product asychronously: '{0}'", product.definition.id));
-                    _e.ShopC.StoreController.InitiatePurchase(product); //покупаем
+                    _shopC.StoreController.InitiatePurchase(product); //покупаем
                 }
                 else
                 {
@@ -84,22 +84,22 @@ namespace Chessy.Model.System
         }
         public void ClickLittleBookDownInGame()
         {
-            if (_e.BookC.IsOpenedBook)
+            if (_bookC.IsOpenedBook)
             {
-                _e.BookC.CloseBook();
+                _bookC.CloseBook();
             }
             else
             {
-                _e.BookC.OpenBook();
+                _bookC.OpenBook();
             }
 
-            _e.SoundAction(_e.BookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+            _e.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
             _e.NeedUpdateView = true;
         }
         public void ClickPremiumButtonInHeroZoneInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
-            _e.ShopC.IsOpenedShopZone = true;
+            _shopC.IsOpenedShopZone = true;
             _e.NeedUpdateView = true;
 
             _e.NeedUpdateView = true;
@@ -107,21 +107,21 @@ namespace Chessy.Model.System
         public void ClickExitSmelterBarInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
-            _e.SelectedE.BuildingsC.Set(BuildingTypes.Smelter, false);
+            _selectedBuildingsInTownC.Set(BuildingTypes.Smelter, false);
 
             _e.NeedUpdateView = true;
         }
         public void ClickExitMarketBarInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
-            _e.SelectedE.BuildingsC.Set(BuildingTypes.Market, false);
+            _selectedBuildingsInTownC.Set(BuildingTypes.Market, false);
 
             _e.NeedUpdateView = true;
         }
         public void ClickPremiumButtonLeftInGame()
         {
             _e.SoundAction(ClipTypes.Click).Invoke();
-            _e.ShopC.IsOpenedShopZone = true;
+            _shopC.IsOpenedShopZone = true;
             _e.NeedUpdateView = true;
         }
         public void ClickLeaveButtonInGame()
@@ -134,9 +134,9 @@ namespace Chessy.Model.System
 
         public void ClickNextButtonInBookZone()
         {
-            if (_e.OpenedNowPageBookT < PageBookTypes.End - 1)
+            if (_bookC.OpenedNowPageBookT < PageBookTypes.End - 1)
             {
-                _e.OpenedNowPageBookT++;
+                _bookC.OpenedNowPageBookT++;
                 _e.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
                 _e.NeedUpdateView = true;
@@ -144,9 +144,9 @@ namespace Chessy.Model.System
         }
         public void ClickBackButtonInBookZone()
         {
-            if (_e.OpenedNowPageBookT > 0)
+            if (_bookC.OpenedNowPageBookT > 0)
             {
-                _e.OpenedNowPageBookT--;
+                _bookC.OpenedNowPageBookT--;
                 _e.SoundAction(ClipTypes.ShiftBookSheet).Invoke();
 
                 _e.NeedUpdateView = true;
@@ -154,8 +154,8 @@ namespace Chessy.Model.System
         }
         public void ClickExitBookInBookZone()
         {
-            _e.WasOpenedLastPageBookT = _e.OpenedNowPageBookT;
-            _e.OpenedNowPageBookT = PageBookTypes.None;
+            _bookC.WasOpenedBookT = _bookC.OpenedNowPageBookT;
+            _bookC.OpenedNowPageBookT = PageBookTypes.None;
 
             _e.SoundAction(ClipTypes.CloseBook).Invoke();
 
@@ -169,7 +169,7 @@ namespace Chessy.Model.System
 
         public void ClickExitInOpenedSettingBarZone()
         {
-            _e.SettingsC.IsOpenedBarWithSettings = false;
+            _settingsC.IsOpenedBarWithSettings = false;
             //eVCommon.Sound(ClipTypes.Click).Play();
 
             _e.NeedUpdateView = true;
@@ -182,7 +182,7 @@ namespace Chessy.Model.System
 
         public void ClickExitShopInShopZone()
         {
-            _e.ShopC.IsOpenedShopZone = false;
+            _shopC.IsOpenedShopZone = false;
         }
 
         #endregion
@@ -193,9 +193,9 @@ namespace Chessy.Model.System
 
         public void ClickOpenBookCenterInMenu()
         {
-            _e.BookC.TryOpenBook();
+            _bookC.TryOpenBook();
 
-            _e.SoundAction(_e.BookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
+            _e.SoundAction(_bookC.IsOpenedBook() ? ClipTypes.OpenBook : ClipTypes.CloseBook).Invoke();
 
             _e.NeedUpdateView = true;
         }
@@ -219,7 +219,7 @@ namespace Chessy.Model.System
         {
             RoomOptions roomOptions = new RoomOptions();
 
-            _e.GameModeT = GameModeTypes.PublicOnline;
+            _aboutGameC.GameModeT = GameModeTypes.PublicOnline;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
@@ -234,7 +234,7 @@ namespace Chessy.Model.System
         }
         public void ClickCreateFriendRoomInMenu(in string roomNameFromViewBar)
         {
-            _e.GameModeT = GameModeTypes.WithFriendOnline;
+            _aboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -245,19 +245,19 @@ namespace Chessy.Model.System
         }
         public void ClickJoinRandomPublicRoomInMenu()
         {
-            _e.GameModeT = GameModeTypes.PublicOnline;
+            _aboutGameC.GameModeT = GameModeTypes.PublicOnline;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
         public void ClickJoinFriendRoomInMenu(in string nameRoomFromViewBar)
         {
-            _e.GameModeT = GameModeTypes.WithFriendOnline;
+            _aboutGameC.GameModeT = GameModeTypes.WithFriendOnline;
             PhotonNetwork.JoinRoom(nameRoomFromViewBar);
         }
 
         public void ClickCreateOffGameInMenu(in GameModeTypes offGameMode)
         {
-            _e.GameModeT = offGameMode;
+            _aboutGameC.GameModeT = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
 

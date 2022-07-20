@@ -19,7 +19,7 @@ namespace Chessy.Model
             {
                 _pawnE.ParenGOC.TrySetActive(true);
 
-                var curPlayerI = _e.CurrentPlayerIT;
+                var curPlayerI = _aboutGameC.CurrentPlayerIType;
 
                 _pawnE.AmountTextC.TextUI.text = _e.PawnPeopleInfoC(curPlayerI).AmountInGame.ToString() + "/" + _e.PawnPeopleInfoC(curPlayerI).MaxAvailablePawns(_e.PlayerInfoC(curPlayerI).AmountBuiltHousesP);
                 _pawnE.MaxPawnsTextC.TextUI.text = _e.PawnPeopleInfoC(curPlayerI).PeopleInCity.ToString();

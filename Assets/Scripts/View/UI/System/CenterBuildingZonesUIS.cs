@@ -14,8 +14,8 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
         internal override void Sync()
         {
-            eUI.CenterEs.MarketE.Zone.TrySetActive(_e.SelectedE.BuildingsC.Is(BuildingTypes.Market));
-            eUI.CenterEs.SmelterE.Zone.TrySetActive(_e.SelectedE.BuildingsC.Is(BuildingTypes.Smelter));
+            eUI.CenterEs.MarketE.Zone.TrySetActive(_selectedBuildingsInTownC.Is(BuildingTypes.Market));
+            eUI.CenterEs.SmelterE.Zone.TrySetActive(_selectedBuildingsInTownC.Is(BuildingTypes.Smelter));
 
 
             eUI.CenterEs.MarketE.Text1C(MarketBuyTypes.FoodToWood).TextUI.text = (EconomyValues.FOR_BUY_FROM_MARKET_FOOD_TO_WOOD * Valuess.FOR_ROUND_UP_RESOURCES).ToString();

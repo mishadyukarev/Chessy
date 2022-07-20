@@ -16,7 +16,7 @@ namespace Chessy.Model.System
 
         internal void Execute()
         {
-            _e.Motions++;
+            //_e.Motions++;
 
             //TryGivePeople();
 

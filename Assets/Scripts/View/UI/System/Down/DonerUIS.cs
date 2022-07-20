@@ -23,7 +23,7 @@ namespace Chessy.View.UI.System
             //    _donerE.ButtonC.SetActiveParent(false);
             //    _donerE.WaitGoC.SetActive(false);
 
-            //    if (_e.CurrentPlayerIT == PlayerTypes.First)
+            //    if (_aboutGameC.CurrentPlayerIT == PlayerTypes.First)
             //    {
             //        _donerE.WaitGoC.SetActive(false);
             //        _donerE.ImageC.Image.color = Color.white;

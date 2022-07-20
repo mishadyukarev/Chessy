@@ -8,7 +8,7 @@ namespace Chessy.View.Entity
     {
         public readonly SpriteRendererVC[] EnvironmentSRs;
 
-        public readonly SpriteRendererVC HillUnderC;
+        public readonly SpriteRendererVC HillOverC;
         public readonly AnimationVC AnimationC;
 
         public SpriteRendererVC EnvironmentE(in EnvironmentTypes env) => EnvironmentSRs[(byte)env];
@@ -24,7 +24,7 @@ namespace Chessy.View.Entity
                 EnvironmentSRs[(byte)envT] = new SpriteRendererVC(parent.Find(envT.ToString() + "_SR+").GetComponent<SpriteRenderer>());
             }
 
-            HillUnderC = new SpriteRendererVC(parent.Find(EnvironmentTypes.Hill.ToString() + "Under" + "_SR+").GetComponent<SpriteRenderer>());
+            HillOverC = new SpriteRendererVC(parent.Find(EnvironmentTypes.Hill.ToString() + "Under" + "_SR+").GetComponent<SpriteRenderer>());
 
 
             AnimationC = new AnimationVC(EnvironmentSRs[(byte)EnvironmentTypes.AdultForest].GO.GetComponent<Animation>());

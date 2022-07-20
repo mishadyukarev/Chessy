@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Chessy.Model.Component
 {
-    public readonly struct DataFromViewC
+    public sealed class DataFromViewC
     {
         readonly Action[] _sound0;
         readonly Action[] _sound1;

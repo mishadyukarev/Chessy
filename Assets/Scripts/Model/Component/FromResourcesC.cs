@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 namespace Chessy.Model
 {
-    public readonly struct FromResourcesC
+    public sealed class FromResourcesC
     {
         readonly Sprite[] _abilities;
         readonly Sprite[] _effects;
@@ -10,7 +10,7 @@ namespace Chessy.Model
         public Sprite Sprite(in EffectTypes effects) => _effects[(byte)effects];
 
 
-        public FromResourcesC(in bool def)
+        public FromResourcesC()
         {
             _abilities = new Sprite[(byte)AbilityTypes.End];
             _effects = new Sprite[(byte)EffectTypes.End];

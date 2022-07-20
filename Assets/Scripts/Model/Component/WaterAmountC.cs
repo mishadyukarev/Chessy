@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct WaterAmountC
+    public sealed class WaterAmountC
     {
         internal double Water;
 

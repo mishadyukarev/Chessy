@@ -10,17 +10,18 @@ namespace Chessy.Model.System
         {
             _e.Dispose();
 
-            _e.ZoneInfoC.IsActiveFriend = _e.GameModeT.Is(GameModeTypes.WithFriendOffline);
+            _e.ZoneInfoC.IsActiveFriend = _aboutGameC.GameModeT.Is(GameModeTypes.WithFriendOffline);
             _e.CellClickT = StartGameValues.CELL_CLICK;
 
-            _e.WeatherE.WindC = new WindC() { DirectType = StartGameValues.DIRECT_WIND, Speed = StartGameValues.SPEED_WIND };
-            _e.SunSideT = StartGameValues.SUN_SIDE;
+            _windC.Set(StartGameValues.DIRECT_WIND, StartGameValues.SPEED_WIND);
+            _sunC.SunSideT = StartGameValues.SUN_SIDE;
 
 
             SetClouds(StartGameValues.CLOUD_CELL_INDEX);
 
 
-            _e.SelectedE.ToolWeaponC = new SelectedToolWeaponC(StartGameValues.SELECTED_TOOL_WEAPON, StartGameValues.SELECTED_LEVEL_TOOL_WEAPON);
+            _selectedToolWeaponC.ToolWeaponT = StartGameValues.SELECTED_TOOL_WEAPON;
+            _selectedToolWeaponC.LevelT = StartGameValues.SELECTED_LEVEL_TOOL_WEAPON;
 
             _e.LessonT = withTraining ? (LessonTypes)1 : 0;
 
@@ -31,7 +32,7 @@ namespace Chessy.Model.System
 
                 if (playerT == PlayerTypes.Second)
                 {
-                    if (_e.GameModeT == GameModeTypes.TrainingOffline)
+                    if (_aboutGameC.GameModeT == GameModeTypes.TrainingOffline)
                         _e.PlayerInfoC(playerT).AmountBuiltHouses += 5;
                 }
 
@@ -59,13 +60,13 @@ namespace Chessy.Model.System
 
 
 
-            if (_e.GameModeT.IsOffline())
+            if (_aboutGameC.GameModeT.IsOffline())
             {
-                _e.CurrentPlayerIT = PlayerTypes.First;
+                _aboutGameC.CurrentPlayerIT = PlayerTypes.First;
             }
             else
             {
-                _e.CurrentPlayerIT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
+                _aboutGameC.CurrentPlayerIT = PhotonNetwork.IsMasterClient ? PlayerTypes.First : PlayerTypes.Second;
             }
 
             if (PhotonNetwork.IsMasterClient)
@@ -80,7 +81,7 @@ namespace Chessy.Model.System
                     _e.HaveFire(cell_0) = false;
 
 
-                    if (!_e.IsBorder(cell_0))
+                    if (!_cellCs[cell_0].IsBorder)
                     {
                         if (y >= 4 && y <= 6 && x > 6)
                         {
@@ -136,7 +137,7 @@ namespace Chessy.Model.System
                         {
                             if (_e.HaveRiverC(cell_0).HaveRive(dir))
                             {
-                                var idx_next = _e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dir);
+                                var idx_next = _e.GetIdxCellByDirectAround(cell_0, dir);
 
                                 _e.SetRiverT(idx_next, RiverTypes.EndRiver);
                             }
@@ -144,7 +145,7 @@ namespace Chessy.Model.System
 
                         foreach (var dir in corners)
                         {
-                            var idx_next = _e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dir);
+                            var idx_next = _e.GetIdxCellByDirectAround(cell_0, dir);
 
                             _e.SetRiverT(idx_next, RiverTypes.Corner);
                         }
@@ -160,17 +161,17 @@ namespace Chessy.Model.System
 
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    if (!_e.IsBorder(cell_0))
+                    if (!_cellCs[cell_0].IsBorder)
                     {
                         if (_e.MountainC(cell_0).HaveAnyResources)
                         {
                             for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                             {
-                                var idx_1 = _e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dirT);
+                                var idx_1 = _e.GetIdxCellByDirectAround(cell_0, dirT);
 
                                 if (UnityEngine.Random.Range(0f, 1f) <= 0.7)
                                 {
-                                    if (!_e.MountainC(_e.GetIdxCellByDirect(cell_0, DistanceFromCellTypes.First, dirT)).HaveAnyResources && !_e.HaveBuildingOnCell(idx_1))
+                                    if (!_e.MountainC(_e.GetIdxCellByDirectAround(cell_0, dirT)).HaveAnyResources && !_e.HaveBuildingOnCell(idx_1))
                                     {
                                         _e.HillC(idx_1).Resources = UnityEngine.Random.Range(0.5f, 1f);
                                     }
@@ -183,7 +184,7 @@ namespace Chessy.Model.System
             }
 
 
-            if (_e.GameModeT.Is(GameModeTypes.TrainingOffline))
+            if (_aboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
             {
                 _e.SetResourcesInInventory(PlayerTypes.Second, ResourceTypes.Food, 999999);
 
@@ -267,9 +268,9 @@ namespace Chessy.Model.System
             _e.CloudC(centerCellIdx).IsCenter = true;
             SetDataAndSkinCloud(centerCellIdx);
 
-            _e.CloudShiftingC(centerCellIdx).WhereNeedShiftIdxCell = _e.GetIdxCellByDirect(centerCellIdx, DistanceFromCellTypes.First, _e.DirectWindT);
+            _e.CloudShiftingC(centerCellIdx).WhereNeedShiftIdxCell = _e.GetIdxCellByDirectAround(centerCellIdx, _windC.DirectT);
 
-            foreach (var aroundCell_0 in _e.IdxsCellsAround(centerCellIdx, DistanceFromCellTypes.First))
+            foreach (var aroundCell_0 in _e.IdxsCellsAround(centerCellIdx))
             {
                 SetDataAndSkinCloud(aroundCell_0);
             }
@@ -278,7 +279,8 @@ namespace Chessy.Model.System
             {
                 for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
                 {
-                    if (_e.IsBorder(currentCellIdx)) continue;
+                    if (_cellCs[currentCellIdx].IsBorder) continue;
+
                     if (_e.CloudWhereViewDataOnCellC(currentCellIdx).HaveDataReference) continue;
 
                     _e.CloudWhereViewDataOnCellC(currentCellIdx).DataIdxCell = cellIdx;

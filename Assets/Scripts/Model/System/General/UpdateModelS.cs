@@ -21,12 +21,12 @@ namespace Chessy.Model.System
             {
                 if ((DateTime.Now - _dateTimeLastUpdate).Seconds >= 1)
                 {
-                    _e.SunC.SecondsForChangingSideSun--;
+                    _sunC.SecondsForChangingSideSun--;
 
-                    if (_e.SunC.SecondsForChangingSideSun <= 0)
+                    if (_sunC.SecondsForChangingSideSun <= 0)
                     {
-                        _e.SunC.ToggleNextSunSideT();
-                        _e.SunC.SecondsForChangingSideSun = 20;
+                        _sunC.ToggleNextSunSideT();
+                        _sunC.SecondsForChangingSideSun = 20;
                     }
 
                     for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
@@ -46,7 +46,7 @@ namespace Chessy.Model.System
                                 _e.HealthTrail(currentIdxCell).Health(dirT) = 0;
                             }
 
-                            foreach (var item in _e.IdxsCellsAround(currentIdxCell, DistanceFromCellTypes.First))
+                            foreach (var item in _e.IdxsCellsAround(currentIdxCell))
                             {
                                 for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                                 {
@@ -144,82 +144,12 @@ namespace Chessy.Model.System
                     _dateTimeLastUpdate = DateTime.Now;
                 }
 
-                TryExecuteShiftingUnit();
+                TryExecuteShiftingUnitS.TryExecute();
                 TryShiftCloudsMS.TryShift();
-
-
-                //SyncDataS.TrySyncDataM();
             }
         }
 
-        void TryExecuteShiftingUnit()
-        {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                var cell_0 = cellIdxCurrent;
-                var cell_1 = _e.ShiftingInfoForUnitC(cell_0).WhereNeedShiftIdxCell;
-
-                if (cell_1 != 0)
-                {
-                    if (_e.ShiftingInfoForUnitC(cell_0).NeedReturnBack)
-                    {
-                        _e.ShiftingInfoForUnitC(cell_0).Distance -= Time.deltaTime;
-
-                        if (_e.ShiftingInfoForUnitC(cell_0).Distance <= 0)
-                        {
-                            _e.ShiftingInfoForUnitC(cell_0).WhereNeedShiftIdxCell = 0;
-                            _e.ShiftingInfoForUnitC(cell_0).NeedReturnBack = false;
-                            _e.ShiftingInfoForUnitC(cell_0).Distance = 0;
-
-                            GetDataCellsS.GetDataCells();
-                        }
-
-                        else
-                        {
-                            if (_e.ShiftingInfoForUnitC(cell_0).Distance / _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).WhereNeedShiftIdxCell) >= 0.3)
-                            {
-                                if (!_e.UnitT(cell_1).HaveUnit())
-                                {
-                                    _e.ShiftingInfoForUnitC(cell_0).NeedReturnBack = false;
-                                }
-                            }
-                        }
-                    }
-
-                    else
-                    {
-                        _e.ShiftingInfoForUnitC(cellIdxCurrent).Distance += Time.deltaTime;
-
-                        if (_e.ShiftingInfoForUnitC(cellIdxCurrent).Distance >= _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(_e.ShiftingInfoForUnitC(cellIdxCurrent).WhereNeedShiftIdxCell))
-                        {
-                            if (!_e.UnitT(cell_1).HaveUnit())
-                            {
-                                ShiftUnitOnOtherCellM(cellIdxCurrent, _e.ShiftingInfoForUnitC(cellIdxCurrent).WhereNeedShiftIdxCell);
-
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).WhereNeedShiftIdxCell = 0;
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).Distance = 0;
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedReturnBack = false;
-
-                                GetDataCellsS.GetDataCells();
-                            }
-
-                            else
-                            {
-                                _e.ShiftingInfoForUnitC(cellIdxCurrent).NeedReturnBack = true;
-                            }
-                        }
-                    }
-
-
-                    var pos_0 = _e.CellE(cell_0).PositionC.Position;
-                    var pos_1 = _e.CellE(cell_1).PositionC.Position;
-
-                    var t = _e.ShiftingInfoForUnitC(cell_0).Distance / _e.HowManyDistanceNeedForShiftingUnitC(cell_0).HowMany(cell_1);
-
-                    _e.UnitPossitionOnCellC(_e.WhereViewDataUnitC(cell_0).ViewIdxCell).Position = Vector3.Lerp(pos_0, pos_1, t);
-                }
-            }
-        }
+        
 
         void TrySetDefendWithoutConditionUnits()
         {
@@ -265,7 +195,7 @@ namespace Chessy.Model.System
 
                     for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                     {
-                        if (_e.IsBorder(cell_0)) continue;
+                        if (_cellCs[cell_0].IsBorder) continue;
 
                         if (_e.UnitT(cell_0).HaveUnit())
                         {
@@ -321,7 +251,7 @@ namespace Chessy.Model.System
 
                             for (byte curCell_0 = 0; curCell_0 < IndexCellsValues.CELLS; curCell_0++)
                             {
-                                if (_e.IsBorder(curCell_0)) continue;
+                                if (_cellCs[curCell_0].IsBorder) continue;
 
                                 if (_e.AdultForestC(curCell_0).HaveAnyResources)
                                 {
@@ -379,7 +309,7 @@ namespace Chessy.Model.System
                         _e.WaterOnCellC(curCellIdx).Resources = ValuesChessy.MAX_RESOURCES_ENVIRONMENT;
                     }
 
-                    foreach (var item in _e.IdxsCellsAround(curCellIdx, DistanceFromCellTypes.First))
+                    foreach (var item in _e.IdxsCellsAround(curCellIdx))
                     {
                         if (!_e.MountainC(item).HaveAnyResources)
                         {
@@ -393,7 +323,7 @@ namespace Chessy.Model.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (_e.IsBorder(cellIdxCurrent)) continue;
+                if (_cellCs[cellIdxCurrent].IsBorder) continue;
                 if (_e.BuildingOnCellT(cellIdxCurrent) != BuildingTypes.Woodcutter) continue;
 
                 GetDataCellsS.GetWoodcutterExtractCells(cellIdxCurrent);
@@ -597,7 +527,7 @@ namespace Chessy.Model.System
         }
         void TryChangeDirectionOfWindRandomly()
         {
-            if (UnityEngine.Random.Range(0f, 1f) <= ValuesChessy.PERCENT_FOR_CHANGING_WIND) _e.WindC.Speed = (byte)UnityEngine.Random.Range(1, 4);
+            if (UnityEngine.Random.Range(0f, 1f) <= ValuesChessy.PERCENT_FOR_CHANGING_WIND) _windC.Speed = (byte)UnityEngine.Random.Range(1, 4);
         }
         void TryGiveHealthToBots()
         {
@@ -605,7 +535,7 @@ namespace Chessy.Model.System
             {
                 if (_e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (_e.GameModeT.Is(GameModeTypes.TrainingOffline))
+                    if (_aboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
                     {
                         if (_e.UnitPlayerT(cellIdxCurrent).Is(PlayerTypes.Second))
                         {
@@ -700,7 +630,7 @@ namespace Chessy.Model.System
                         _e.HaveFire(cell_0) = false;
 
 
-                        foreach (var cell_1 in _e.IdxsCellsAround(cell_0, DistanceFromCellTypes.First))
+                        foreach (var cell_1 in _e.IdxsCellsAround(cell_0))
                         {
                             needForFireNext.Add(cell_1);
                         }
@@ -710,7 +640,7 @@ namespace Chessy.Model.System
 
             foreach (var cell_0 in needForFireNext)
             {
-                if (!_e.IsBorder(cell_0))
+                if (!_cellCs[cell_0].IsBorder)
                 {
                     if (_e.AdultForestC(cell_0).HaveAnyResources)
                     {
@@ -727,7 +657,7 @@ namespace Chessy.Model.System
                 {
                     _e.HaveFire(curCellIdx) = false;
 
-                    foreach (var item in _e.IdxsCellsAround(curCellIdx, DistanceFromCellTypes.First))
+                    foreach (var item in _e.IdxsCellsAround(curCellIdx))
                     {
                         _e.HaveFire(item) = false;
                     }
@@ -775,7 +705,7 @@ namespace Chessy.Model.System
 
         void TryGiveWaterToBotUnits()
         {
-            if (_e.GameModeT == GameModeTypes.TrainingOffline)
+            if (_aboutGameC.GameModeT == GameModeTypes.TrainingOffline)
             {
                 for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
                 {
@@ -827,13 +757,13 @@ namespace Chessy.Model.System
             {
                 var cell_0 = (byte)UnityEngine.Random.Range(0, IndexCellsValues.CELLS);
 
-                if (!_e.IsBorder(cell_0))
+                if (!_cellCs[cell_0].IsBorder)
                 {
                     if (!_e.UnitT(cell_0).HaveUnit() && !_e.MountainC(cell_0).HaveAnyResources)
                     {
                         bool haveNearUnit = false;
 
-                        foreach (var cell_1 in _e.IdxsCellsAround(cell_0, DistanceFromCellTypes.First))
+                        foreach (var cell_1 in _e.IdxsCellsAround(cell_0))
                         {
                             if (_e.UnitT(cell_1).HaveUnit())
                             {
@@ -866,9 +796,9 @@ namespace Chessy.Model.System
                         {
                             var randDir = UnityEngine.Random.Range((float)DirectTypes.None + 1, (float)DirectTypes.End);
 
-                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, DistanceFromCellTypes.First, (DirectTypes)randDir);
+                            var idx_1 = _e.GetIdxCellByDirectAround(cellIdxCurrent, (DirectTypes)randDir);
 
-                            if (!_e.IsBorder(idx_1) && !_e.MountainC(idx_1).HaveAnyResources
+                            if (!_cellCs[idx_1].IsBorder && !_e.MountainC(idx_1).HaveAnyResources
                                 && !_e.UnitT(idx_1).HaveUnit())
                             {
                                 _e.ShiftingInfoForUnitC(cellIdxCurrent).WhereNeedShiftIdxCell = idx_1;

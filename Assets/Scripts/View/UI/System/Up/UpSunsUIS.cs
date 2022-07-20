@@ -21,9 +21,9 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
 
             if (!_e.LessonT.HaveLesson() || _e.LessonT >= Enum.LessonTypes.LookInfoAboutSun)
             {
-                var isFirstPlayer = _e.CurrentPlayerIT == PlayerTypes.First;
+                var isFirstPlayer = _aboutGameC.CurrentPlayerIType == PlayerTypes.First;
 
-                switch (_e.SunSideT)
+                switch (_sunC.SunSideType)
                 {
                     case SunSideTypes.Dawn:
                         _needActiveLeft = isFirstPlayer;

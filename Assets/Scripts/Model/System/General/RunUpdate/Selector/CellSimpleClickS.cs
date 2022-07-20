@@ -43,7 +43,7 @@ namespace Chessy.Model.System
                     {
                         if (_e.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurrentPlayerIT)
+                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _aboutGameC.CurrentPlayerIT)
                             {
                                  _s.SetNextLesson();
                             }
@@ -69,8 +69,8 @@ namespace Chessy.Model.System
                                     TryAttack(_e.SelectedCellIdx, _e.CurrentCellIdx);
                                     //_selectorSoundS.Sound();
                                 }
-                                //else if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn) && _e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT)
-                                //    || !_e.UnitPlayerT(_e.CurrentCellIdx).Is(_e.CurrentPlayerIT))
+                                //else if (_e.UnitT(_e.CurrentCellIdx).Is(UnitTypes.Pawn) && _e.UnitPlayerT(_e.CurrentCellIdx).Is(_aboutGameC.CurrentPlayerIT)
+                                //    || !_e.UnitPlayerT(_e.CurrentCellIdx).Is(_aboutGameC.CurrentPlayerIT))
                                 //{
                                 //    //_selectorSoundS.Sound();
                                 //}
@@ -98,7 +98,7 @@ namespace Chessy.Model.System
 
                             else
                             {
-                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
+                                if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_aboutGameC.CurrentPlayerIT) && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
                                 {
                                     TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
                                 }
@@ -144,7 +144,7 @@ namespace Chessy.Model.System
                             TryAttack(_e.SelectedCellIdx, _e.CurrentCellIdx);
                         }
 
-                        else if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_e.CurrentPlayerIT)
+                        else if (_e.UnitPlayerT(_e.SelectedCellIdx).Is(_aboutGameC.CurrentPlayerIT)
                             && _e.WhereUnitCanShiftC(_e.SelectedCellIdx).CanShiftHere(_e.CurrentCellIdx))
                         {
                             TryShift(_e.SelectedCellIdx, _e.CurrentCellIdx);
@@ -184,7 +184,7 @@ namespace Chessy.Model.System
                     {
                         if (_e.LessonT == LessonTypes.ClickAtYourPawn)
                         {
-                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _e.CurrentPlayerIT)
+                            if (_e.UnitT(_e.CurrentCellIdx) == UnitTypes.Pawn && _e.UnitPlayerT(_e.CurrentCellIdx) == _aboutGameC.CurrentPlayerIT)
                             {
                                  _s.SetNextLesson();
                             }

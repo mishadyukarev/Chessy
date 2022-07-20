@@ -34,9 +34,9 @@ namespace Chessy.View.UI.System
                     {
                         if (_e.UnitT(dataIdxCell).Is(UnitTypes.Pawn))
                         {
-                            if (_e.UnitPlayerT(dataIdxCell).Is(_e.CurrentPlayerIT))
+                            if (_e.UnitPlayerT(dataIdxCell).Is(_aboutGameC.CurrentPlayerIType))
                             {
-                                _needActive[cellIdxCurrent] = _e.ResourcesInInventory(_e.CurrentPlayerIT, ResourceTypes.Food) < 1;
+                                _needActive[cellIdxCurrent] = _e.ResourcesInInventory(_aboutGameC.CurrentPlayerIType, ResourceTypes.Food) < 1;
                             }
                         }
                     }

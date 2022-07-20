@@ -1,23 +1,32 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
 using Chessy.Model.Values;
-using Chessy.View.Component;
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chessy.View.System
 {
     sealed class SyncBuildingVS : SystemViewAbstract
     {
-        readonly Dictionary<BuildingTypes, SpriteRendererVC[]> _buildingSRCs = new Dictionary<BuildingTypes, SpriteRendererVC[]>();
-        readonly Dictionary<BuildingTypes, bool[]> _needActive = new Dictionary<BuildingTypes, bool[]>();
+        readonly SpriteRenderer[][] _buildingSRs = new SpriteRenderer[IndexCellsValues.CELLS][];
+        readonly GameObject[][] _buildingGOs = new GameObject[IndexCellsValues.CELLS][];
+        readonly bool[][] _wasActivated = new bool[IndexCellsValues.CELLS][];
+        readonly bool[][] _needActive = new bool[IndexCellsValues.CELLS][];
 
-        internal SyncBuildingVS(in Dictionary<BuildingTypes, SpriteRendererVC[]> buildingSRCs, in EntitiesModel eM) : base(eM)
+        internal SyncBuildingVS(in SpriteRenderer[][] buildingSRCs, in EntitiesModel eM) : base(eM)
         {
-            _buildingSRCs = buildingSRCs;
+            _buildingSRs = buildingSRCs;
 
-            for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+
+            for (var cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
             {
-                _needActive.Add(buildingT, new bool[IndexCellsValues.CELLS]);
+                _needActive[cellIdx] = new bool[(byte)BuildingTypes.End];
+                _wasActivated[cellIdx] = new bool[(byte)BuildingTypes.End];
+                _buildingGOs[cellIdx] = new GameObject[(byte)BuildingTypes.End]; 
+
+                for (var buildingTByte = (byte)1; buildingTByte < (byte)BuildingTypes.End; buildingTByte++)
+                {
+                    _buildingGOs[cellIdx][buildingTByte] = _buildingSRs[cellIdx][buildingTByte].gameObject;
+                }   
             }
         }
 
@@ -25,36 +34,38 @@ namespace Chessy.View.System
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+                for (var buildingTByte = (byte)1; buildingTByte < (byte)BuildingTypes.End; buildingTByte++)
                 {
-                    _needActive[buildingT][cellIdxCurrent] = false;
+                    _needActive[cellIdxCurrent][buildingTByte] = false;
                 }
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                var isVisForMe = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT);
-                var isVisForNext = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT.NextPlayer());
+                var isVisForMe = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_aboutGameC.CurrentPlayerIType);
+                var isVisForNext = _e.BuildingVisibleC(cellIdxCurrent).IsVisible(_aboutGameC.CurrentPlayerIType.NextPlayer());
 
                 if (_e.BuildingOnCellT(cellIdxCurrent).HaveBuilding())
                 {
                     if (isVisForMe)
                     {
-                        _needActive[_e.BuildingOnCellT(cellIdxCurrent)][cellIdxCurrent] = true;
+                        _needActive[cellIdxCurrent][(byte)_e.BuildingOnCellT(cellIdxCurrent)] = true;
                     }
                 }
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
+                for (var buildingTByte = (byte)1; buildingTByte < (byte)BuildingTypes.End; buildingTByte++)
                 {
-                    _buildingSRCs[buildingT][cellIdxCurrent].TrySetActiveGO(_needActive[buildingT][cellIdxCurrent]);
+                    var needActive = _needActive[cellIdxCurrent][buildingTByte];
+                    ref var wasActivated = ref _wasActivated[cellIdxCurrent][buildingTByte];
+
+                    if (wasActivated != needActive) _buildingGOs[cellIdxCurrent][buildingTByte].SetActive(needActive);
+
+                    wasActivated = needActive;
                 }
             }
-
-
-
         }
     }
 

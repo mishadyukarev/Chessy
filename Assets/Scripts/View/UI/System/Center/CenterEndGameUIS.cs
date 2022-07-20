@@ -15,12 +15,12 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            if (_e.WinnerPlayerT == default)
+            if (_aboutGameC.WinnerPlayerType == default)
             {
                 eUI.CenterEs.EndGame.SetActiveParent(false);
             }
 
-            else if (_e.WinnerPlayerT != _e.CurrentPlayerIT)
+            else if (_aboutGameC.WinnerPlayerType != _aboutGameC.CurrentPlayerIType)
             {
                 eUI.CenterEs.EndGame.TextUI.text = "You are loser";
                 eUI.CenterEs.EndGame.SetActiveParent(true);

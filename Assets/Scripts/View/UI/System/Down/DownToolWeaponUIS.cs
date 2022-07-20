@@ -104,8 +104,8 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                 }
 
 
-                var tw_sel = _e.SelectedE.ToolWeaponC.ToolWeaponT;
-                var levTw_sel = _e.SelectedE.ToolWeaponC.LevelT;
+                var tw_sel = _selectedToolWeaponC.ToolWeaponT;
+                var levTw_sel = _selectedToolWeaponC.LevelT;
 
                 color = _twE.ImageC(tw_sel).Image.color;
                 color.a = 1;
@@ -120,13 +120,13 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
                     _twE.LevelImageC(twT, levTw_sel).SetActive(true);
                 }
 
-                var curPlayerI = _e.CurrentPlayerIT;
+                var curPlayerI = _aboutGameC.CurrentPlayerIType;
 
                 _twE.TextC(ToolsWeaponsWarriorTypes.Pick).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolsWeaponsWarriorTypes.Pick).ToString();
                 _twE.TextC(ToolsWeaponsWarriorTypes.Sword).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolsWeaponsWarriorTypes.Sword).ToString();
                 _twE.TextC(ToolsWeaponsWarriorTypes.Axe).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.Second, ToolsWeaponsWarriorTypes.Axe).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.Shield).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.Shield).ToString();
-                _twE.TextC(ToolsWeaponsWarriorTypes.BowCrossbow).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _e.SelectedE.ToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.BowCrossbow).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.Shield).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _selectedToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.Shield).ToString();
+                _twE.TextC(ToolsWeaponsWarriorTypes.BowCrossbow).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, _selectedToolWeaponC.LevelT, ToolsWeaponsWarriorTypes.BowCrossbow).ToString();
                 _twE.TextC(ToolsWeaponsWarriorTypes.Staff).TextUI.text = _e.ToolWeaponsInInventor(curPlayerI, LevelTypes.First, ToolsWeaponsWarriorTypes.Staff).ToString();
             }
         }

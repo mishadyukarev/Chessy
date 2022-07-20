@@ -1,14 +1,9 @@
 ﻿using Chessy.Model.Entity;
 using Chessy.View.UI.Entity; namespace Chessy.Model
 {
-    internal abstract class SystemUIAbstract
+    internal abstract class SystemUIAbstract : SystemAbstract
     {
-        protected readonly EntitiesModel _e;
-
-        protected SystemUIAbstract(in EntitiesModel eMG)
-        {
-            _e = eMG;
-        }
+        protected SystemUIAbstract(in EntitiesModel eM) : base(eM) { }
 
         internal abstract void Sync();
     }

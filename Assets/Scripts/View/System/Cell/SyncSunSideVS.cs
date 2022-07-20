@@ -1,21 +1,24 @@
-﻿using Chessy.Model;
-using Chessy.Model.Entity;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
-using Chessy.View.System;
 using Chessy.View.UI.Entity;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Chessy.View.System
 {
     sealed class SyncSunSideVS : SystemViewAbstract
     {
-        readonly bool[] _needActive;
-        readonly EntitiesView _eVG;
+        readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
+        readonly bool[] _wasActivated = new bool[IndexCellsValues.CELLS];
+        readonly GameObject[] _gos = new GameObject[IndexCellsValues.CELLS];
+        readonly HashSet<byte> _simpleUnqiueCells = new HashSet<byte>();
 
-        internal SyncSunSideVS(in EntitiesView eVG, in EntitiesModel eMG) : base(eMG)
+        internal SyncSunSideVS(in EntitiesView eV, in EntitiesModel eM) : base(eM)
         {
-            _needActive = new bool[IndexCellsValues.CELLS];
-            _eVG = eVG;
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            {
+                _gos[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).SunSideSRC.GO;
+            }
         }
 
         internal override void Sync()
@@ -25,33 +28,35 @@ namespace Chessy.View.System
                 _needActive[cellIdxCurrent] = false;
             }
 
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (_e.SelectedCellIdx == cellIdxCurrent && _e.SunSideT.IsAcitveSun())
+                if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
+
+                if (_e.SelectedCellIdx == cellIdxCurrent_0 && _sunC.IsAcitveSun)
                 {
-                    var simpleUnqiueCells = new HashSet<byte>();
+                    _simpleUnqiueCells.Clear();
 
                     for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
                     {
-                        if (_e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCurrent).Can(cellIdx))
+                        if (_whereSimpleAttackCs[cellIdxCurrent_0].Can(cellIdx))
                         {
-                            simpleUnqiueCells.Add(cellIdx);
+                            _simpleUnqiueCells.Add(cellIdx);
                         }
-                        if (_e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCurrent).Can(cellIdx))
+                        if (_whereUniqueAttackCs[cellIdxCurrent_0].Can(cellIdx))
                         {
-                            simpleUnqiueCells.Add(cellIdx);
+                            _simpleUnqiueCells.Add(cellIdx);
                         }
                     }
 
 
 
-                    foreach (var cellIdxAttack in simpleUnqiueCells)
+                    foreach (var cellIdxAttack in _simpleUnqiueCells)
                     {
-                        foreach (var sunDirectT in _e.SunSideT.RaysSun())
+                        foreach (var sunDirectT in _sunC.RaysSun)
                         {
                             var invertSunDirectT = sunDirectT.Invert();
 
-                            if (_e.DirectionAround(cellIdxCurrent, cellIdxAttack) == invertSunDirectT)
+                            if (_e.DirectionAround(cellIdxCurrent_0, cellIdxAttack) == invertSunDirectT)
                             {
                                 _needActive[cellIdxAttack] = true;
                             }
@@ -62,9 +67,13 @@ namespace Chessy.View.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _eVG.CellEs(cellIdxCurrent).SunSideSRC.TrySetActiveGO(_needActive[cellIdxCurrent]);
-            }
+                var needActive = _needActive[cellIdxCurrent];
+                ref var wasActivated = ref _wasActivated[cellIdxCurrent];
 
+                if (needActive != wasActivated) _gos[cellIdxCurrent].SetActive(needActive);
+
+                wasActivated = needActive;
+            }
         }
     }
 }

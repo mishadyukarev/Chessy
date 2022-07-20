@@ -1,11 +1,22 @@
 ﻿namespace Chessy.Model
 {
-    public struct WindC
+    public sealed class WindC
     {
-        internal DirectTypes DirectType;
+        internal DirectTypes DirectT;
         internal byte Speed;
 
-        public DirectTypes DirectT => DirectType;
+        public DirectTypes DirectType => DirectT;
         public byte SpeedP => Speed;
+
+        internal void Set(in DirectTypes directT, in byte speed)
+        {
+            DirectT = directT;
+            Speed = speed;
+        }
+        internal void Dispose()
+        {
+            DirectT = default;
+            Speed = default;
+        }
     }
 }

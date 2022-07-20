@@ -1,8 +1,8 @@
 ﻿namespace Chessy
 {
-    public struct UpdateAllViewC
+    public sealed class UpdateAllViewC
     {
-        public bool NeedUpdateView;
         internal float TimeForUpdateEverything;
+        public bool NeedUpdateView;
     }
 }

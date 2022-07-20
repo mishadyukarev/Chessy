@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 namespace Chessy.Model
 {
-    public struct HowManyToolWeaponsInInventoryC
+    public sealed class HowManyToolWeaponsInInventoryC
     {
         readonly Dictionary<ToolsWeaponsWarriorTypes, int[]> _toolWeapons;
 
         public ref int ToolWeapons(in ToolsWeaponsWarriorTypes twT, LevelTypes levelT) => ref _toolWeapons[twT][(byte)levelT];
 
-        public HowManyToolWeaponsInInventoryC(in bool def)
+        public HowManyToolWeaponsInInventoryC()
         {
             _toolWeapons = new Dictionary<ToolsWeaponsWarriorTypes, int[]>();
             for (var twT = (ToolsWeaponsWarriorTypes)0; twT < ToolsWeaponsWarriorTypes.End; twT++)

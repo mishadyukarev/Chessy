@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct EffectE
+    public sealed class EffectE
     {
         public bool HaveFire;
     }

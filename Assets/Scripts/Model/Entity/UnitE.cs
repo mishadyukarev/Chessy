@@ -5,96 +5,57 @@ using System;
 using System.Collections.Generic;
 namespace Chessy.Model
 {
-    public struct UnitE
+    public sealed class UnitE
     {
-        public UnitOnCellC MainC;
-        public PositionC PositionC;
-        public HealthC HealthC;
-        public EnergyC EnergyC;
-        public WaterAmountC WaterC;
-        public EffectsUnitC EffectsC;
+        public readonly UnitOnCellC MainC = new();
+        public readonly HealthC HealthC = new();
+        public readonly WaterAmountC WaterC = new();
+        public readonly EffectsUnitC EffectsC = new();
 
-        public MainToolWeaponUnitC MainToolWeaponC;
-        public ExtraToolWeaponUnitC ExtraToolWeaponC;
-        public WhoLastDiedOnCellC WhoLastDiedHereC;
-        public ExtractionResourcesWithUnitC ExtractionResourcesC;
-        public NeedUpdateViewC NeedUpdateViewC;
-        public ShiftingObjectC ShiftingInfoForUnitC;
-        public WhereViewIdxCellC WhereViewDataUnitC;
+        public readonly MainToolWeaponUnitC MainToolWeaponC = new();
+        public readonly ExtraToolWeaponUnitC ExtraToolWeaponC = new();
+        public readonly WhoLastDiedOnCellC WhoLastDiedHereC = new();
+        public readonly ExtractionResourcesWithUnitC ExtractionResourcesC = new();
+        public readonly NeedUpdateViewC NeedUpdateViewC = new();
+        public readonly ShiftingObjectC ShiftingInfoForUnitC = new();
+        public readonly WhereViewIdxCellC WhereViewDataUnitC = new();
 
-        public readonly HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC;
-        public readonly WhereUnitCanShiftC WhereCanShiftC;
-        public WhereUnitCanAttackToEnemyC WhereCanAttackSimpleAttackToEnemyC;
-        public WhereUnitCanAttackToEnemyC WhereCanAttackUniqueAttackToEnemyC;
-        public readonly ButtonsAbilitiesUnitC UniqueButtonsC;
-        public readonly CooldownAbilitiesInSecondsC CooldownsC;
-        public readonly VisibleToOtherPlayerOrNotC VisibleToOtherPlayerOrNotC;
-        public readonly CanSetUnitHereC CanSetUnitHereC;
-        public readonly WhereUnitCanFireAdultForestC WhereUnitCanFireAdultForestC;
-        public readonly EffectsUnitsRightBarsC EffectsUnitsRightBarsC;
-        public readonly HasUnitKingEffectHereC HasKingEffectHereC;
-
-        internal UnitE(in bool def)
-        {
-            MainC = default;
-            PositionC = default;
-            HealthC = default;
-            EnergyC = default;
-            WaterC = default;
-            EffectsC = default;
-            MainToolWeaponC = default;
-            ExtraToolWeaponC = default;
-            WhoLastDiedHereC = default;
-            ExtractionResourcesC = default;
-            NeedUpdateViewC = default;
-            ShiftingInfoForUnitC = default;
-            WhereViewDataUnitC = default;
-
-            VisibleToOtherPlayerOrNotC = new VisibleToOtherPlayerOrNotC(default);
-            CanSetUnitHereC = new CanSetUnitHereC(new bool[(byte)PlayerTypes.End]);
-            HowManyDistanceNeedForShiftingUnitC = new HowManyDistanceNeedForShiftingUnitC(new float[IndexCellsValues.CELLS]);
-            WhereCanShiftC = new WhereUnitCanShiftC(new bool[IndexCellsValues.CELLS]);
-            WhereCanAttackSimpleAttackToEnemyC = new WhereUnitCanAttackToEnemyC(new bool[IndexCellsValues.CELLS]);
-            WhereCanAttackUniqueAttackToEnemyC = new WhereUnitCanAttackToEnemyC(new bool[IndexCellsValues.CELLS]);
-            UniqueButtonsC = new ButtonsAbilitiesUnitC(new AbilityTypes[(byte)ButtonTypes.End]);
-            CooldownsC = new CooldownAbilitiesInSecondsC(default);
-            WhereUnitCanFireAdultForestC = new WhereUnitCanFireAdultForestC(new bool[IndexCellsValues.CELLS]);
-            HasKingEffectHereC = new HasUnitKingEffectHereC(new bool[(byte)PlayerTypes.End]);
-
-            var dict = new Dictionary<ButtonTypes, EffectTypes>();
-            for (var buttonT = (ButtonTypes)1; buttonT < ButtonTypes.End; buttonT++) dict.Add(buttonT, default);
-            EffectsUnitsRightBarsC = new EffectsUnitsRightBarsC(default);
-        }
+        public readonly HowManyDistanceNeedForShiftingUnitC HowManyDistanceNeedForShiftingUnitC = new(new float[IndexCellsValues.CELLS]);
+        public readonly WhereUnitCanShiftC WhereCanShiftC = new(new bool[IndexCellsValues.CELLS]);
+        public readonly WhereUnitCanAttackToEnemyC WhereCanAttackSimpleAttackToEnemyC = new(new bool[IndexCellsValues.CELLS]);
+        public readonly WhereUnitCanAttackToEnemyC WhereCanAttackUniqueAttackToEnemyC = new(new bool[IndexCellsValues.CELLS]);
+        public readonly ButtonsAbilitiesUnitC UniqueButtonsC = new(new AbilityTypes[(byte)ButtonTypes.End]);
+        public readonly CooldownAbilitiesInSecondsC CooldownsC = new(default);
+        public readonly VisibleToOtherPlayerOrNotC VisibleToOtherPlayerOrNotC = new(default);
+        public readonly CanSetUnitHereC CanSetUnitHereC = new(new bool[(byte)PlayerTypes.End]);
+        public readonly WhereUnitCanFireAdultForestC WhereUnitCanFireAdultForestC = new(new bool[IndexCellsValues.CELLS]);
+        public readonly EffectsUnitsRightBarsC EffectsUnitsRightBarsC = new(default);
+        public readonly HasUnitKingEffectHereC HasKingEffectHereC = new(new bool[(byte)PlayerTypes.End]);
 
         internal void Dispose()
         {
-            MainC.UnitType = UnitTypes.None;
+            MainC.UnitT = UnitTypes.None;
 
-            WhereViewDataUnitC = default;
+            WhereViewDataUnitC.Dispose();
         }
 
-        internal UnitE Clone()
+        internal void Clone(in UnitE newUnitE)
         {
-            var unitE = new UnitE(default);
+            MainC.Clone(newUnitE.MainC);
+            HealthC.Health = newUnitE.HealthC.Health;
+            WaterC.Water = newUnitE.WaterC.Water;
+            EffectsC.Clone(newUnitE.EffectsC);
 
-            unitE.MainC = MainC;
-            unitE.HealthC = HealthC;
-            unitE.WaterC = WaterC;
-            unitE.EffectsC = EffectsC;
+            MainToolWeaponC.Clone(newUnitE.MainToolWeaponC);
+            ExtraToolWeaponC.Clone(newUnitE.ExtraToolWeaponC);
+            WhoLastDiedHereC.Clone(newUnitE.WhoLastDiedHereC);
+            ExtractionResourcesC.Clone(newUnitE.ExtractionResourcesC);
 
-            unitE.MainToolWeaponC = MainToolWeaponC;
-            unitE.ExtraToolWeaponC = ExtraToolWeaponC;
-            unitE.WhoLastDiedHereC = WhoLastDiedHereC;
-            unitE.ExtractionResourcesC = ExtractionResourcesC;
-            unitE.NeedUpdateViewC = NeedUpdateViewC;
-
-            unitE.WhereViewDataUnitC = WhereViewDataUnitC;
+            WhereViewDataUnitC.Clone(newUnitE.WhereViewDataUnitC);
 
 
-            unitE.UniqueButtonsC.Sync(UniqueButtonsC.AbilityTypesClone);
-            unitE.CooldownsC.Sync(CooldownsC.CooldonwsCopy);
-
-            return unitE;
+            UniqueButtonsC.Sync(newUnitE.UniqueButtonsC.AbilityTypesClone);
+            CooldownsC.Sync(newUnitE.CooldownsC.CooldonwsCopy);
         }
     }
 }

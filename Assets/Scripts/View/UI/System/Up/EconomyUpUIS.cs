@@ -82,7 +82,7 @@ namespace Chessy.View.UI.System
                 {
 
 
-                    if (_e.UnitPlayerT(idx_0).Is(_e.CurrentPlayerIT))
+                    if (_e.UnitPlayerT(idx_0).Is(_aboutGameC.CurrentPlayerIType))
                     {
                         if (_e.UnitT(idx_0).Is(UnitTypes.Pawn))
                         {
@@ -93,7 +93,7 @@ namespace Chessy.View.UI.System
                         }
                     }
 
-                    if (_e.BuildingPlayerT(idx_0).Is(_e.CurrentPlayerIT))
+                    if (_e.BuildingPlayerT(idx_0).Is(_aboutGameC.CurrentPlayerIType))
                     {
                         _extracts[ResourceTypes.Wood] += _e.WoodcutterExtract(idx_0);
                         _extracts[ResourceTypes.Food] += _e.FarmExtract(idx_0);
@@ -113,11 +113,11 @@ namespace Chessy.View.UI.System
                     string name = default;
                     if (res == ResourceTypes.Iron || res == ResourceTypes.Gold)
                     {
-                        name = _e.ResourcesInInventory(_e.CurrentPlayerIT, res).ToString();
+                        name = _e.ResourcesInInventory(_aboutGameC.CurrentPlayerIType, res).ToString();
                     }
                     else
                     {
-                        name = ((int)(100 * _e.ResourcesInInventory(_e.CurrentPlayerIT, res))).ToString();
+                        name = ((int)(100 * _e.ResourcesInInventory(_aboutGameC.CurrentPlayerIType, res))).ToString();
                     }
 
                     _economyUIE.Economy(res).TextUI.text = name;

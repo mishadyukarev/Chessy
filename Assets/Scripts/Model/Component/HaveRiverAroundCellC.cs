@@ -1,13 +1,13 @@
 ﻿namespace Chessy.Model.Component
 {
-    public struct HaveRiverAroundCellC
+    public sealed class HaveRiverAroundCellC
     {
         readonly bool[] _haveRives;
 
         internal bool[] HaveRives => (bool[])_haveRives.Clone();
         public ref bool HaveRive(in DirectTypes dir) => ref _haveRives[(byte)dir];
 
-        internal HaveRiverAroundCellC(in bool[] haveRive) => _haveRives = haveRive;
+        internal HaveRiverAroundCellC() => _haveRives = new bool[(byte)DirectTypes.End];
 
         internal void Sync(in bool[] haveRives)
         {

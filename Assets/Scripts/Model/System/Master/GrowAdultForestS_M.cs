@@ -16,7 +16,7 @@ namespace Chessy.Model.System
 
                     _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                    foreach (var idx_1 in _e.IdxsCellsAround(cell_0, DistanceFromCellTypes.First))
+                    foreach (var idx_1 in _e.IdxsCellsAround(cell_0))
                     {
                         if (_e.YoungForestC(idx_1).HaveAnyResources)
                         {

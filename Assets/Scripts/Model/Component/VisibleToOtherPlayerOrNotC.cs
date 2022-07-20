@@ -4,7 +4,6 @@
     {
         readonly bool[] _isVisible;
 
-        internal bool[] IsVisibleClone => (bool[])_isVisible.Clone();
         public ref bool IsVisible(in PlayerTypes playerT) => ref _isVisible[(byte)playerT];
 
         internal VisibleToOtherPlayerOrNotC(in bool def) => _isVisible = new bool[(byte)PlayerTypes.End];

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct IdxCellC
+    public sealed class IdxCellC
     {
         public readonly byte Idx;
 

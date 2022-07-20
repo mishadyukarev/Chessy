@@ -1,34 +1,51 @@
 ﻿using Chessy.Model.Entity;
-using Chessy.View.UI.Entity; namespace Chessy.Model
+using Chessy.View.UI.Entity;
+using UnityEngine;
+
+namespace Chessy.Model
 {
     sealed class RightZoneUIS : SystemUIAbstract
     {
-        readonly EntitiesViewUI eUI;
+        bool _needAppear;
+        bool _wasApeared;
+        readonly Animation _animation;
 
-        internal RightZoneUIS(in EntitiesViewUI entsUI, in EntitiesModel ents) : base(ents)
+        const string APPEAR_NAME = "RightZoneAppearUI";
+        const string DISAPPEAR_NAME = "RightZoneDisappearUI";
+
+        internal RightZoneUIS(in EntitiesViewUI eUI, in EntitiesModel ents) : base(ents)
         {
-            eUI = entsUI;
+            var go = eUI.RightEs.Zone.GO;
+
+            _animation = go.GetComponent<Animation>();
+            _animation.Play(DISAPPEAR_NAME);
         }
 
         internal override void Sync()
         {
             var idx_sel = _e.SelectedCellIdx;
 
-            var activeParent = false;
+            _needAppear = false;
 
 
             if (_e.SelectedCellIdx > 0)
             {
-                if (_e.UnitT(idx_sel).HaveUnit())
+                if (_unitCs[idx_sel].UnitType.HaveUnit())
                 {
-                    if (_e.UnitVisibleC(idx_sel).IsVisible(_e.CurrentPlayerIT))
+                    if (_unitVisibleCs[idx_sel].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
-                        activeParent = true;
+                        _needAppear = true;
                     }
                 }
             }
 
-            eUI.RightEs.Zone.TrySetActive(activeParent);
+
+            if(_wasApeared != _needAppear)
+            {
+                _animation.Play(_needAppear ? APPEAR_NAME : DISAPPEAR_NAME);
+            }
+
+            _wasApeared = _needAppear;
         }
     }
 }

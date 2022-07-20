@@ -135,10 +135,6 @@ namespace Chessy.Model.System
                         _s.ExecuteAnimationCellDirectlyClip((byte)objects[cellIdxCurrent++], (CellAnimationDirectlyTypes)objects[cellIdxCurrent++]);
                         break;
 
-                    case nameof(_s.ActiveMotion):
-                        _s.ActiveMotion();
-                        break;
-
                     case nameof(_s.ExecuteMistake):
                         var mistakeT = (MistakeTypes)objects[cellIdxCurrent++];
                         _s.ExecuteMistake(mistakeT, mistakeT == MistakeTypes.Economy ? (float[])objects[cellIdxCurrent++] : default);
@@ -168,9 +164,6 @@ namespace Chessy.Model.System
         internal void ExecuteSoundActionToGeneral(in Player playerTo, ClipTypes clipT) => _e.RpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionClip), clipT });
         internal void SoundToGeneral(RpcTarget rpcTarget, AbilityTypes abilityT) => _e.RpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
         internal void SoundToGeneral(Player playerTo, AbilityTypes abilityT) => _e.RpcC.Rpc(playerTo, new object[] { nameof(_s.ExecuteSoundActionAbility), abilityT });
-
-        internal void ActiveMotionZoneToGeneneral(in Player player) => _e.RpcC.Rpc(player, new object[] { nameof(_s.ActiveMotion) });
-        internal void ActiveMotionZoneToGeneneral(in RpcTarget rpcTarget) => _e.RpcC.Rpc(rpcTarget, new object[] { nameof(_s.ActiveMotion) });
 
         internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in RpcTarget rpcTarget) => _e.RpcC.Rpc(rpcTarget, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });
         internal void AnimationCellToGeneral(in byte cellIdx, in AnimationCellTypes animationCellT, in Player sender) => _e.RpcC.Rpc(sender, new object[] { nameof(_s.ExecuteAnimationClip), cellIdx, animationCellT });

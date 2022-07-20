@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct XyCellC
+    public sealed class XyCellC
     {
         readonly byte[] _xy;
         public byte X => _xy[0];

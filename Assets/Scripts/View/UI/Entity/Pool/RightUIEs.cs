@@ -25,7 +25,6 @@ namespace Chessy.View.UI.Entity
 
 
             new UIEntExtraTW(rightZone);
-            new RightEffectsUIE(rightZone);
 
             var conditionZone = rightZone.Find("Condition+");
             ProtectE = new RightProtectUIE(conditionZone);

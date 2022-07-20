@@ -14,7 +14,7 @@ namespace Chessy.Model
             var cell_0 = _e.CurrentCellIdx;
 
             if (_e.UnitT(cell_0).HaveUnit()
-                && _e.UnitVisibleC(cell_0).IsVisible(_e.CurrentPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
+                && _e.UnitVisibleC(cell_0).IsVisible(_aboutGameC.CurrentPlayerIT) && !_e.UnitT(cell_0).Is(UnitTypes.Wolf))
             {
                 if (_e.UnitT(cell_0).Is(UnitTypes.Tree))
                 {
@@ -60,7 +60,7 @@ namespace Chessy.Model
                 }
                 else
                 {
-                    foreach (var item in _e.IdxsCellsAround(cell_0, Enum.DistanceFromCellTypes.First))
+                    foreach (var item in _e.IdxsCellsAround(cell_0))
                     {
                         if (_e.IsCenterCloud(item))
                         {

@@ -3,20 +3,25 @@ using Chessy.Model.Enum;
 using Chessy.Model.Values;
 using Chessy.View.Component;
 using Chessy.View.System;
+using UnityEngine;
+
 namespace Chessy.Model
 {
     sealed class SyncRedCircularVS : SystemViewAbstract
     {
-        bool[] _needActive = new bool[IndexCellsValues.CELLS];
-        SpriteRendererVC[] _redCircularSRCs;
+        readonly bool[] _needActive = new bool[IndexCellsValues.CELLS];
+        readonly bool[] _wasActivated = new bool[IndexCellsValues.CELLS];
+        readonly SpriteRenderer[] _redCircularSRCs;
 
-        internal SyncRedCircularVS(in SpriteRendererVC[] redCircularSRCs, in EntitiesModel eMG) : base(eMG)
+        internal SyncRedCircularVS(in SpriteRenderer[] redCircularSRCs, in EntitiesModel eMG) : base(eMG)
         {
             _redCircularSRCs = redCircularSRCs;
         }
 
         internal override void Sync()
         {
+            var currentLessonT = _aboutGameC.LessonType;
+
             for (var currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
                 _needActive[currentIdxCell] = false;
@@ -24,52 +29,47 @@ namespace Chessy.Model
 
             for (byte currentIdxCell = 0; currentIdxCell < IndexCellsValues.CELLS; currentIdxCell++)
             {
-                //if (_e.LessonT == LessonTypes.ShiftPawnForSeedingHere)
-                //{
-                //    if (StartValues.CELL_FOR_SHIFT_PAWN_FOR_SEEDING_LESSON == currentIdxCell)
-                //    {
-                //        _needActive[currentIdxCell] = true;
-                //    }
-                //}
-                if (_e.LessonT == LessonTypes.StepAwayFromWoodcutter)
+                if (_cellCs[currentIdxCell].IsBorder) continue;
+
+                var currentUnitT_0 = _unitCs[currentIdxCell].UnitType;
+                ref var needActiveRef = ref _needActive[currentIdxCell];
+
+                if (currentLessonT == LessonTypes.StepAwayFromWoodcutter)
                 {
                     if (KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_FOR_StepAwayFromWoodcutter == currentIdxCell)
                     {
-                        _needActive[currentIdxCell] = true;
+                        needActiveRef = true;
                     }
                 }
-                else if (_e.LessonT == LessonTypes.ShiftPawnHere)
+                else if (currentLessonT == LessonTypes.ShiftPawnHere)
                 {
                     if (KeyIndexCellsForLesson.CELL_FOR_SHIFT_PAWN_TO_FOREST_LESSON == currentIdxCell)
                     {
-                        _needActive[currentIdxCell] = true;
+                        needActiveRef = true;
                     }
                 }
-                //else if (_e.LessonT == LessonTypes.ShiftPawnForFireForestHere)
-                //{
-                //    if (StartValues.CELL_IDX_FOR_SHIFT_PAWN_TO_FIRE_ADULT_FOREST == currentIdxCell)
-                //    {
-                //        _needActive[currentIdxCell] = true;
-                //    }
-                //}
 
 
-
-                if (!_e.LessonT.HaveLesson())
+                if (!currentLessonT.HaveLesson())
                 {
-                    if (_e.GameModeT == GameModeTypes.TrainingOffline)
+                    if (_aboutGameC.GameModeType == GameModeTypes.TrainingOffline)
                     {
-                        if (_e.UnitT(currentIdxCell) == UnitTypes.King)
+                        if (currentUnitT_0 == UnitTypes.King)
                         {
                             if (_e.UnitPlayerT(currentIdxCell) == PlayerTypes.Second)
                             {
-                                _needActive[currentIdxCell] = true;
+                                needActiveRef = true;
                             }
                         }
                     }
                 }
 
-                _redCircularSRCs[currentIdxCell].TrySetActiveGO(_needActive[currentIdxCell]);
+
+                ref var wasActivatedRef = ref _wasActivated[currentIdxCell];
+
+                if (needActiveRef != wasActivatedRef) _redCircularSRCs[currentIdxCell].gameObject.SetActive(needActiveRef);
+
+                wasActivatedRef = needActiveRef;
             }
         }
     }

@@ -1,24 +1,20 @@
 ﻿using Chessy.Model;
 using Chessy.Model.Entity;
+using Chessy.Model.Values;
 using UnityEngine;
 using UnityEngine.Purchasing; //библиотека с покупками, будет доступна когда активируем сервисы
 
 namespace Chessy.Model
 {
-    public sealed class ShopS : IStoreListener //для получения сообщений из Unity Purchasing
+    public sealed class ShopS : SystemAbstract, IStoreListener //для получения сообщений из Unity Purchasing
     {
-        readonly EntitiesModel _e;
-
-
-        public ShopS(in EntitiesModel eM)
+        public ShopS(in EntitiesModel eM) : base(eM)
         {
-            _e = eM;
-
-            if (!eM.ShopC.IsInitialized)
+            if (!_shopC.IsInitialized)
             {
                 var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-                builder.AddProduct(ShopC.PREMIUM_NAME, ProductType.NonConsumable);
+                builder.AddProduct(ShopValues.PREMIUM_NAME, ProductType.NonConsumable);
 
                 UnityPurchasing.Initialize(this, builder);
             }
@@ -47,8 +43,8 @@ namespace Chessy.Model
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
             //Debug.Log("OnInitialized: PASS");
-            _e.ShopC.StoreController = controller;
-            _e.ShopC.StoreExtProvider = extensions;
+            _shopC.StoreController = controller;
+            _shopC.StoreExtProvider = extensions;
         }
 
         public void OnInitializeFailed(InitializationFailureReason error)

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct PlayerInfoC
+    public sealed class PlayerInfoC
     {
         internal float WoodForBuyHouse;
         internal int AmountBuiltHouses;
@@ -12,5 +12,13 @@
         public bool HaveKingInInventorP => HaveKingInInventor;
         public int AmountFarmsInGame { get; internal set; }
         public int AmountBuiltHousesP => AmountBuiltHouses;
+
+        internal void Dispose()
+        {
+            WoodForBuyHouse = default;
+            AmountBuiltHouses = default;
+            IsReadyForStartOnlineGame = default;
+            HaveKingInInventor = default;
+        }
     }
 }

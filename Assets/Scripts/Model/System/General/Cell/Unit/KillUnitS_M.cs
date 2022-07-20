@@ -19,7 +19,7 @@ namespace Chessy.Model.System
 
             if (whoKiller != PlayerTypes.None)
             {
-                if (_e.UnitT(cellIdxForKilling) == UnitTypes.King) _e.WinnerPlayerT = whoKiller;
+                if (_e.UnitT(cellIdxForKilling) == UnitTypes.King) _aboutGameC.WinnerPlayerT = whoKiller;
             }
 
             if (_e.UnitT(cellIdxForKilling).IsGod())

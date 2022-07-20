@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct RiverC
+    public sealed class RiverC
     {
         public RiverTypes RiverT { get; internal set; }
     }

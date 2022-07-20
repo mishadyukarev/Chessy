@@ -5,27 +5,24 @@ using System;
 
 namespace Chessy.Model.Entity
 {
-    public struct CellEs
+    public sealed class CellEs
     {
         readonly CellAroundE[] _aroundEs;
         public readonly CellE CellE;
-        public UnitE UnitE;
-        public BuildingE BuildingE;
-        public EnvironmentE EnvironmentE;
-        public EffectE EffectE;
-        public RiverE RiverE;
-        public TrailE TrailE;
-        public CloudOnCellE CloudE;
 
-        public ref CellAroundE AroundCellE(in byte cellIdx) => ref _aroundEs[cellIdx];
+        public readonly UnitE UnitE = new();
+        public readonly BuildingE BuildingE = new();
+        public readonly EnvironmentE EnvironmentE = new();
+        public readonly EffectE EffectE = new();
+        public readonly RiverE RiverE = new();
+        public readonly TrailE TrailE = new();
+        public readonly CloudOnCellE CloudE = new();
 
-        internal CellEs(in DataFromViewC dataFromViewC, in int idCell, in byte idxCell, in EntitiesModel e, params byte[] xyCell) : this()
+        public CellAroundE AroundCellE(in byte cellIdx) => _aroundEs[cellIdx];
+
+        internal CellEs(in DataFromViewC dataFromViewC, in int idCell, in byte idxCell, in EntitiesModel e, params byte[] xyCell)
         {
             CellE = new CellE(dataFromViewC, idxCell, idCell, xyCell);
-            UnitE = new UnitE(default);
-            BuildingE = new BuildingE(default);
-            RiverE = new RiverE(new bool[(byte)DirectTypes.End]);
-            TrailE = new TrailE(default);
 
 
             _aroundEs = new CellAroundE[IndexCellsValues.CELLS];
@@ -34,53 +31,53 @@ namespace Chessy.Model.Entity
             {
                 for (var startDirectionT = (DirectTypes)0; startDirectionT < DirectTypes.End; startDirectionT++)
                 {
-                    var xyDirect = new short[EntitiesModel.XY_FOR_ARRAY];
+                    var xyDirect = new short[IndexCellsValues.XY_FOR_ARRAY];
 
                     switch (startDirectionT)
                     {
                         case DirectTypes.None:
-                            xyDirect[EntitiesModel.X] = 0;
-                            xyDirect[EntitiesModel.Y] = 0;
+                            xyDirect[IndexCellsValues.X] = 0;
+                            xyDirect[IndexCellsValues.Y] = 0;
                             break;
 
                         case DirectTypes.Right:
-                            xyDirect[EntitiesModel.X] = 1;
-                            xyDirect[EntitiesModel.Y] = 0;
+                            xyDirect[IndexCellsValues.X] = 1;
+                            xyDirect[IndexCellsValues.Y] = 0;
                             break;
 
                         case DirectTypes.Left:
-                            xyDirect[EntitiesModel.X] = -1;
-                            xyDirect[EntitiesModel.Y] = 0;
+                            xyDirect[IndexCellsValues.X] = -1;
+                            xyDirect[IndexCellsValues.Y] = 0;
                             break;
 
                         case DirectTypes.Up:
-                            xyDirect[EntitiesModel.X] = 0;
-                            xyDirect[EntitiesModel.Y] = 1;
+                            xyDirect[IndexCellsValues.X] = 0;
+                            xyDirect[IndexCellsValues.Y] = 1;
                             break;
 
                         case DirectTypes.Down:
-                            xyDirect[EntitiesModel.X] = 0;
-                            xyDirect[EntitiesModel.Y] = -1;
+                            xyDirect[IndexCellsValues.X] = 0;
+                            xyDirect[IndexCellsValues.Y] = -1;
                             break;
 
                         case DirectTypes.UpRight:
-                            xyDirect[EntitiesModel.X] = 1;
-                            xyDirect[EntitiesModel.Y] = 1;
+                            xyDirect[IndexCellsValues.X] = 1;
+                            xyDirect[IndexCellsValues.Y] = 1;
                             break;
 
                         case DirectTypes.LeftUp:
-                            xyDirect[EntitiesModel.X] = -1;
-                            xyDirect[EntitiesModel.Y] = 1;
+                            xyDirect[IndexCellsValues.X] = -1;
+                            xyDirect[IndexCellsValues.Y] = 1;
                             break;
 
                         case DirectTypes.RightDown:
-                            xyDirect[EntitiesModel.X] = 1;
-                            xyDirect[EntitiesModel.Y] = -1;
+                            xyDirect[IndexCellsValues.X] = 1;
+                            xyDirect[IndexCellsValues.Y] = -1;
                             break;
 
                         case DirectTypes.DownLeft:
-                            xyDirect[EntitiesModel.X] = -1;
-                            xyDirect[EntitiesModel.Y] = -1;
+                            xyDirect[IndexCellsValues.X] = -1;
+                            xyDirect[IndexCellsValues.Y] = -1;
                             break;
 
                         default:
@@ -88,8 +85,8 @@ namespace Chessy.Model.Entity
                     }
 
 
-                    var x = (byte)(xyCell[EntitiesModel.X] + xyDirect[EntitiesModel.X]);
-                    var y = (byte)(xyCell[EntitiesModel.Y] + xyDirect[EntitiesModel.Y]);
+                    var x = (byte)(xyCell[IndexCellsValues.X] + xyDirect[IndexCellsValues.X]);
+                    var y = (byte)(xyCell[IndexCellsValues.Y] + xyDirect[IndexCellsValues.Y]);
 
                     var xy_0 = new[] { x, y };
 
@@ -109,8 +106,8 @@ namespace Chessy.Model.Entity
 
                     if (!dataFromViewC.IsBorder(idxCellStart))
                     {
-                        x = (byte)(xy_0[EntitiesModel.X] + xyDirect[EntitiesModel.X]);
-                        y = (byte)(xy_0[EntitiesModel.Y] + xyDirect[EntitiesModel.Y]);
+                        x = (byte)(xy_0[IndexCellsValues.X] + xyDirect[IndexCellsValues.X]);
+                        y = (byte)(xy_0[IndexCellsValues.Y] + xyDirect[IndexCellsValues.Y]);
 
                         var nextXy = new[] { x, y };
 
@@ -128,7 +125,7 @@ namespace Chessy.Model.Entity
             TrailE.Dispose();
             UnitE.Dispose();
             BuildingE.Dispose();
-            CloudE = default;
+            CloudE.Dispose();
         }
     }
 }

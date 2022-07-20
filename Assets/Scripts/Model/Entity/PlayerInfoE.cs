@@ -2,30 +2,20 @@
 
 namespace Chessy.Model.Entity
 {
-    public struct PlayerInfoE
+    public sealed class PlayerInfoE
     {
-        public PlayerInfoC PlayerInfoC;
-        public GodInfoC GodInfoC;
-        public PawnPeopleInfoC PawnInfoC;
-        public readonly BuildingsInTownInfoC BuildingsInTownInfoC;
-        public readonly ResourcesInInventoryC ResourcesInInventoryC;
-        public readonly HowManyToolWeaponsInInventoryC HowManyToolWeaponsInInventoryC;
-
-        internal PlayerInfoE(in bool def)
-        {
-            PlayerInfoC = default;
-            GodInfoC = default;
-            PawnInfoC = default;
-            BuildingsInTownInfoC = new BuildingsInTownInfoC(new bool[(byte)BuildingTypes.End]);
-            ResourcesInInventoryC = new ResourcesInInventoryC(new float[(byte)ResourceTypes.End]);
-            HowManyToolWeaponsInInventoryC = new HowManyToolWeaponsInInventoryC(def);
-        }
+        public readonly PlayerInfoC PlayerInfoC = new();
+        public readonly GodInfoC GodInfoC = new();
+        public readonly PawnPeopleInfoC PawnInfoC = new();
+        public readonly BuildingsInTownInfoC BuildingsInTownInfoC = new();
+        public readonly ResourcesInInventoryC ResourcesInInventoryC = new();
+        public readonly HowManyToolWeaponsInInventoryC HowManyToolWeaponsInInventoryC = new();
 
         internal void Dispose()
         {
-            PlayerInfoC = default;
-            GodInfoC = default;
-            PawnInfoC = default;
+            PlayerInfoC.Dispose();
+            GodInfoC.Dispose();
+            PawnInfoC.Dispose();
             BuildingsInTownInfoC.Dispose();
             ResourcesInInventoryC.Dispose();
             HowManyToolWeaponsInInventoryC.Dispose();

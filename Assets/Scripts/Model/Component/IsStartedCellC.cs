@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-namespace Chessy.Model.Component
+﻿namespace Chessy.Model.Component
 {
-    public readonly struct IsStartedCellC
+    public sealed class IsStartedCellC
     {
-        readonly Dictionary<PlayerTypes, bool> _isStartedCell;
-        public bool IsStartedCell(in PlayerTypes playerT) => _isStartedCell[playerT];
+        readonly bool[] _isStartedCell;
+        public bool IsStartedCell(in PlayerTypes playerT) => _isStartedCell[(byte)playerT];
 
-        internal IsStartedCellC(in Dictionary<PlayerTypes, bool> isStarted) => _isStartedCell = isStarted;
+        internal IsStartedCellC(in bool[] isStarted) => _isStartedCell = isStarted;
     }
 }

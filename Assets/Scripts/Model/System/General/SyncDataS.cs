@@ -9,12 +9,12 @@ namespace Chessy.Model.System
 {
     sealed class SyncDataS : SystemModelAbstract
     {
-        readonly EntitiesModel _eCopy;
+        //readonly EntitiesModel _eCopy;
         //readonly bool[] _needSync = new bool[(byte)SyncTypes.End];
 
         internal SyncDataS(in SystemsModel sM, in EntitiesModel eM) : base(sM, eM)
         {
-            _eCopy = new EntitiesModel(eM.DataFromViewC, eM.RpcC.PunRPCName, new List<object>() { eM.RpcC.Action0, eM.RpcC.Action1 }, eM.TestModeT);
+            //_eCopy = new EntitiesModel(eM.DataFromViewC, eM.RpcC.PunRPCName, new List<object>() { eM.RpcC.Action0, eM.RpcC.Action1 }, eM.TestModeT);
         }
 
         internal void TrySyncDataM()

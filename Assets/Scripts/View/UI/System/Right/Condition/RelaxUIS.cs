@@ -32,7 +32,7 @@ namespace Chessy.View.UI.System
 
             if (_e.UnitT(idx_0).HaveUnit())
             {
-                if (_e.UnitPlayerT(idx_0).Is(_e.CurrentPlayerIT))
+                if (_e.UnitPlayerT(idx_0).Is(_aboutGameC.CurrentPlayerIType))
                 {
                     if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.RelaxExtractPawn)
                     {

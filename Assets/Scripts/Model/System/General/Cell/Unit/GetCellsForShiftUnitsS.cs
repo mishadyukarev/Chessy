@@ -9,43 +9,38 @@ namespace Chessy.Model.System
 {
     sealed class GetCellsForShiftUnitsS : SystemModelAbstract
     {
-        //readonly HowManyDistanceNeedForShiftingUnitC[] _howManyDistanceNeed = new HowManyDistanceNeedForShiftingUnitC[IndexCellsValues.CELLS];
-        //readonly WhereUnitCanShiftC[] _whereUnitCanShiftCs = new WhereUnitCanShiftC[IndexCellsValues.CELLS];
+        readonly float[][] _howManyDistanceNeed = new float[IndexCellsValues.CELLS][];
+        readonly bool[][] _whereUnitCanShiftCs = new bool[IndexCellsValues.CELLS][];
 
-        internal GetCellsForShiftUnitsS(in SystemsModel s, in EntitiesModel e) : base(s, e)
+        internal GetCellsForShiftUnitsS(in SystemsModel s, EntitiesModel e) : base(s, e)
         {
-            //for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
-            //{
-            //    //_howManyDistanceNeed[cellIdx] = e.HowManyDistanceNeedForShiftingUnitC(cellIdx);
-            //    //_whereUnitCanShiftCs[cellIdx] = e.WhereUnitCanShiftC(cellIdx);
-            //}
+            for (byte cellIdx_0 = 0; cellIdx_0 < IndexCellsValues.CELLS; cellIdx_0++)
+            {
+                _howManyDistanceNeed[cellIdx_0] = _e.HowManyDistanceNeedForShiftingUnitC(cellIdx_0).HowManyArray;
+                _whereUnitCanShiftCs[cellIdx_0] = _e.WhereUnitCanShiftC(cellIdx_0).WhereArray;
+            }
         }
 
         internal void Get()
         {
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+            for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
             {
-                if (_e.IsBorder(cellIdxCurrent)) continue;
-
-
-                var curWhereUnitCanShift = _e.WhereUnitCanShiftC(cellIdxCurrent);
-                var curHowManyDistanceNeed = _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent);
-
+                if (_cellCs[cellIdxCurrent_0].IsBorder) continue;
 
                 for (byte idxCell = 0; idxCell < IndexCellsValues.CELLS; idxCell++)
                 {
-                    curWhereUnitCanShift.Set(idxCell, false);
-                    curHowManyDistanceNeed.Set(idxCell, 0);
+                    _whereUnitCanShiftCs[cellIdxCurrent_0][idxCell] = default;
+                    _howManyDistanceNeed[cellIdxCurrent_0][idxCell] = default;
                 }
 
 
-                var curUnitT = _e.UnitT(cellIdxCurrent);
+                var curUnitC = _unitCs[cellIdxCurrent_0];
 
-                if (!_e.UnitEffectsC(cellIdxCurrent).IsStunned &&  curUnitT.HaveUnit())
+                if (!_e.UnitEffectsC(cellIdxCurrent_0).IsStunned &&  curUnitC.UnitT.HaveUnit())
                 {
-                    foreach (var toCellIdx in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
+                    foreach (var toCellIdx in _e.IdxsCellsAround(cellIdxCurrent_0))
                     {
-                        var dirT = _e.DirectionAround(cellIdxCurrent, toCellIdx);
+                        var dirT = _e.DirectionAround(cellIdxCurrent_0, toCellIdx);
 
                         var needDistance = StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL;
 
@@ -59,13 +54,13 @@ namespace Chessy.Model.System
                             }
                         }
 
-                        switch (curUnitT)
+                        switch (curUnitC.UnitT)
                         {
                             case UnitTypes.King:
                                 break;
 
                             case UnitTypes.Pawn:
-                                if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff))
+                                if (_e.MainToolWeaponT(cellIdxCurrent_0).Is(ToolsWeaponsWarriorTypes.Staff))
                                 {
                                     needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
 
@@ -82,7 +77,7 @@ namespace Chessy.Model.System
                                         needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                     }
                                 }
-                                else if (_e.MainToolWeaponT(cellIdxCurrent) == ToolsWeaponsWarriorTypes.BowCrossbow)
+                                else if (_e.MainToolWeaponT(cellIdxCurrent_0) == ToolsWeaponsWarriorTypes.BowCrossbow)
                                 {
                                     needDistance -= StepValues.FOR_SHIFT_ATTACK_EMPTY_CELL / 2;
                                 }
@@ -125,22 +120,10 @@ namespace Chessy.Model.System
                             default: throw new Exception();
                         }
 
-                        curHowManyDistanceNeed.Set(toCellIdx, needDistance);
+                        _howManyDistanceNeed[cellIdxCurrent_0][toCellIdx] = needDistance;
+           
 
-
-
-                        //var vv = _howManyDistanceNeed[cellIdxCurrent].HowMany(toCellIdx);
-
-                        //var v = _e.HowManyDistanceNeedForShiftingUnitC(cellIdxCurrent).HowMany(toCellIdx);
-
-                        //if (true)
-                        //{
-                            
-                        //}
-
-                        
-
-                        if (!_e.ShiftingInfoForUnitC(cellIdxCurrent).IsShifting)
+                        if (!_e.ShiftingInfoForUnitC(cellIdxCurrent_0).IsShifting)
                         {
                             var toUnitT = _e.UnitT(toCellIdx);
 
@@ -148,8 +131,7 @@ namespace Chessy.Model.System
                             {
                                 if (!_e.MountainC(toCellIdx).HaveAnyResources)
                                 {
-                                    _e.WhereUnitCanShiftC(cellIdxCurrent).Set(toCellIdx, true);
-                                    //_whereUnitCanShiftCs[cellIdxCurrent].Set(toCellIdx, true);
+                                    _whereUnitCanShiftCs[cellIdxCurrent_0][toCellIdx] = true;
                                 }
                             }
                         }

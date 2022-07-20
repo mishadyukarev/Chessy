@@ -17,7 +17,7 @@ namespace Chessy.Model.System
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                if (!_e.IsBorder(cellIdxCurrent))
+                if (!_cellCs[cellIdxCurrent].IsBorder)
                 {
                     if (_e.HealthTrail(cellIdxCurrent).HaveAnyTrail)
                     {
@@ -25,7 +25,7 @@ namespace Chessy.Model.System
                             _e.TrailVisibleC(cellIdxCurrent).Set(_e.UnitPlayerT(cellIdxCurrent), true);
 
 
-                        foreach (var cellIdx1 in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
+                        foreach (var cellIdx1 in _e.IdxsCellsAround(cellIdxCurrent))
                         {
                             if (_e.UnitT(cellIdx1).HaveUnit() && !_e.UnitT(cellIdxCurrent).IsAnimal())
                             {

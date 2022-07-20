@@ -31,7 +31,7 @@ namespace Chessy.Model.System
 
                 if (e.UnitT(cellIdxCurrent).HaveUnit())
                 {
-                    if (e.GameModeT.Is(GameModeTypes.TrainingOffline))
+                    if (e.AboutGameC.GameModeT.Is(GameModeTypes.TrainingOffline))
                     {
                         if (e.UnitPlayerT(cellIdxCurrent).Is(PlayerTypes.First))
                         {

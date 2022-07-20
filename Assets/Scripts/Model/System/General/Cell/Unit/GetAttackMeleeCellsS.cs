@@ -1,44 +1,58 @@
-﻿using Chessy.Model.Enum;
+﻿using Chessy.Model.Entity;
 using Chessy.Model.Values;
 
 namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
+    sealed class GetAttackMeleeCellsS : SystemModelAbstract
     {
-        internal void GetAttackMeleeCells()
+        internal GetAttackMeleeCellsS(in SystemsModel sM, EntitiesModel eM) : base(sM, eM)
         {
-            for (byte cellIdxCell = 0; cellIdxCell < IndexCellsValues.CELLS; cellIdxCell++)
+
+        }
+
+        internal void Get()
+        {
+            for (byte currentCellIdx_0 = 0; currentCellIdx_0 < IndexCellsValues.CELLS; currentCellIdx_0++)
             {
-                if (_e.IsBorder(cellIdxCell)) continue;
+                if (_cellCs[currentCellIdx_0].IsBorder) continue;
 
-                if (!_e.UnitEffectsC(cellIdxCell).IsStunned)
+
+                if (!_effectsUnitCs[currentCellIdx_0].IsStunned)
                 {
-                    if (_e.UnitT(cellIdxCell).HaveUnit() && _e.UnitT(cellIdxCell).IsMelee(_e.MainToolWeaponT(cellIdxCell)) && !_e.UnitT(cellIdxCell).IsAnimal() && !_e.ShiftingInfoForUnitC(cellIdxCell).IsShifting)
-                    {
-                        DirectTypes dir_cur = default;
+                    var curUnitMainC_0 = _unitCs[currentCellIdx_0];
+                    var curUnitT_0 = curUnitMainC_0.UnitT;
+                    var curUnitPlayerT_0 = curUnitMainC_0.PlayerT;
 
-                        foreach (var idx_1 in _e.IdxsCellsAround(cellIdxCell, DistanceFromCellTypes.First))
+                    if (curUnitT_0.HaveUnit() && curUnitT_0.IsMelee(_e.MainToolWeaponT(currentCellIdx_0)) && !curUnitT_0.IsAnimal() && !_shiftingUnitCs[currentCellIdx_0].IsShifting)
+                    {
+                        DirectTypes directT_1 = default;
+
+                        foreach (var idx_1 in _e.IdxsCellsAround(currentCellIdx_0))
                         {
-                            dir_cur  = _e.DirectionAround(cellIdxCell, idx_1);
+                            directT_1 = _e.DirectionAround(currentCellIdx_0, idx_1);
+
+                            var curUnitMain_1 = _unitCs[idx_1];
+                            var curUnitT_1 = curUnitMain_1.UnitT;
+                            var curUnitPlayerT_1 = curUnitMain_1.PlayerT;
 
                             if (!_e.MountainC(idx_1).HaveAnyResources)
                             {
-                                if (_e.UnitT(idx_1).HaveUnit() && !_e.ShiftingInfoForUnitC(idx_1).IsShifting)
+                                if (curUnitT_1.HaveUnit() && !_shiftingUnitCs[idx_1].IsShifting)
                                 {
-                                    if (!_e.UnitPlayerT(idx_1).Is(_e.UnitPlayerT(cellIdxCell)))
+                                    if (curUnitPlayerT_1 != curUnitPlayerT_0)
                                     {
-                                        if (_e.UnitT(cellIdxCell).Is(UnitTypes.Pawn))
+                                        if (curUnitT_0 == UnitTypes.Pawn)
                                         {
-                                            if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
-                                           || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
+                                            if (directT_1 == DirectTypes.Left || directT_1 == DirectTypes.Right
+                                           || directT_1 == DirectTypes.Up || directT_1 == DirectTypes.Down)
                                             {
-                                                _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
+                                                _whereSimpleAttackCs[currentCellIdx_0].Set(idx_1, true);
                                             }
-                                            else _e.WhereUnitCanAttackUniqueAttackToEnemyC(cellIdxCell).Set(idx_1, true);
+                                            else _whereUniqueAttackCs[currentCellIdx_0].Set(idx_1, true);
                                         }
                                         else
                                         {
-                                            _e.WhereUnitCanAttackSimpleAttackToEnemyC(cellIdxCell).Set(idx_1, true);
+                                            _whereSimpleAttackCs[currentCellIdx_0].Set(idx_1, true);
                                         }
                                     }
                                 }

@@ -1,15 +1,9 @@
 ﻿using Chessy.Model.Component;
 namespace Chessy.Model
 {
-    public struct RiverE
+    public sealed class RiverE
     {
-        public RiverC RiverC;
-        public HaveRiverAroundCellC HaveRiverC;
-
-        internal RiverE(in bool[] haveRive)
-        {
-            RiverC = default;
-            HaveRiverC = new HaveRiverAroundCellC(haveRive);
-        }
+        public readonly RiverC RiverC = new();
+        public readonly HaveRiverAroundCellC HaveRiverC = new();
     }
 }

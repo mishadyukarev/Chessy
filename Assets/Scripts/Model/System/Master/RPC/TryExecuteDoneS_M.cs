@@ -31,7 +31,7 @@ namespace Chessy.Model.System
             //                {
             //                    UpdateCooldonsStunsAndOther(0.5f);
 
-            //                    var nextPlayer = _e.CurrentPlayerIT.NextPlayer();
+            //                    var nextPlayer = _aboutGameC.CurrentPlayerIT.NextPlayer();
 
             //                    if (nextPlayer == PlayerTypes.First)
             //                    {
@@ -39,7 +39,7 @@ namespace Chessy.Model.System
             //                    }
 
             //                    _e.WhoseMovePlayerT = nextPlayer;
-            //                    _e.CurrentPlayerIT = nextPlayer;
+            //                    _aboutGameC.CurrentPlayerIT = nextPlayer;
 
             //                    _e.ZoneInfoC.IsActiveFriend = true;
             //                }

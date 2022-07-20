@@ -16,13 +16,13 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
         {
             _needActive = false;
 
-            if (_e.GameModeT.Is(GameModeTypes.WithFriendOffline))
+            if (_aboutGameC.GameModeType.Is(GameModeTypes.WithFriendOffline))
             {
                 if (_e.ZoneInfoC.IsActiveFriend)
                 {
                     _needActive = true;
 
-                    if (_e.CurrentPlayerIT == PlayerTypes.First)
+                    if (_aboutGameC.CurrentPlayerIType == PlayerTypes.First)
                     {
                         _eUI.CenterEs.FriendE.TextC.TextUI.text = "1";
                     }

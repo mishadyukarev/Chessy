@@ -1,13 +1,16 @@
 ﻿namespace Chessy.Model.Component
 {
-    public struct ShiftingObjectC
+    public sealed class ShiftingObjectC
     {
-        public bool NeedReturnBack { get; internal set; }
+        internal bool NeedReturnBack;
         internal byte WhereNeedShiftIdxCell;
-        public float Distance { get; internal set; }
+        internal float Distance;
 
+        public byte WhereNeedShiftIdxCellP => WhereNeedShiftIdxCell;
+        public float DistanceP => Distance;
         public bool IsShifting => WhereNeedShiftIdxCell != 0;
         public bool IsIdle => !IsShifting;
+
 
         internal void Dispose()
         {
@@ -21,6 +24,11 @@
             NeedReturnBack = needReturnBack;
             WhereNeedShiftIdxCell = whereIdxCell;
             Distance = distance;
+        }
+
+        internal void Clone(in ShiftingObjectC newShiftingObjectC)
+        {
+            Set(newShiftingObjectC.NeedReturnBack, newShiftingObjectC.WhereNeedShiftIdxCell, newShiftingObjectC.Distance);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Component;
 using Chessy.Model.Entity;
 using Chessy.Model.Values;
 using Chessy.View.Component;
@@ -11,11 +12,28 @@ namespace Chessy.View.System
     sealed class SyncTrailVS : SystemViewAbstract
     {
         readonly bool[,] _needActive = new bool[IndexCellsValues.CELLS, (byte)DirectTypes.End];
-        readonly SpriteRendererVC[,] _trailSRCs;
+        readonly bool[,] _wasActivated = new bool[IndexCellsValues.CELLS, (byte)DirectTypes.End];
+        readonly SpriteRenderer[,] _trailSRs;
+        readonly GameObject[,] _gOs = new GameObject[IndexCellsValues.CELLS, (byte)DirectTypes.End];
 
-        internal SyncTrailVS(in SpriteRendererVC[,] trailSRCs, in EntitiesModel eM) : base(eM)
+        readonly Vector3 _vector0 = new Vector3(0, 0, 0);
+        readonly Vector3 _vector1 = new Vector3(0, 0, 180);
+
+        readonly VisibleToOtherPlayerOrNotC[] _trailVisible = new VisibleToOtherPlayerOrNotC[IndexCellsValues.CELLS];
+
+        internal SyncTrailVS(in SpriteRenderer[,] trailSRs, in EntitiesModel eM) : base(eM)
         {
-            _trailSRCs = trailSRCs;
+            _trailSRs = trailSRs;
+
+            for (byte cellIdx = 0; cellIdx < IndexCellsValues.CELLS; cellIdx++)
+            {
+                for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
+                {
+                    _gOs[cellIdx, (byte)directT] = trailSRs[cellIdx, (byte)directT].gameObject;
+                }
+
+                _trailVisible[cellIdx] = eM.TrailVisibleC(cellIdx);
+            }
         }
 
         internal sealed override void Sync()
@@ -28,35 +46,41 @@ namespace Chessy.View.System
                 }
             }
 
-
-            for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
+            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                var directTbyte = (byte)directT;
-
-                for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
+                for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                 {
-                    if (_e.TrailVisibleC(cellIdxCurrent).IsVisible(_e.CurrentPlayerIT))
+                    var directTbyte = (byte)directT;
+
+
+                    if (_trailVisible[cellIdxCurrent].IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
                         _needActive[cellIdxCurrent, directTbyte] = _e.HealthTrail(cellIdxCurrent).IsAlive(directT);
                     }
 
-                    if(directT == DirectTypes.Up)
+                    if (directT == DirectTypes.Up)
                     {
-                        switch (_e.CurrentPlayerIT)
+                        switch (_aboutGameC.CurrentPlayerIType)
                         {
                             case PlayerTypes.First:
-                                _trailSRCs[cellIdxCurrent, directTbyte].ParentTransform.localEulerAngles = new Vector3(0, 0, 0);
+                                _trailSRs[cellIdxCurrent, directTbyte].transform.parent.localEulerAngles = _vector0;
                                 break;
 
                             case PlayerTypes.Second:
-                                _trailSRCs[cellIdxCurrent, directTbyte].ParentTransform.localEulerAngles = new Vector3(0, 0, 180);
+                                _trailSRs[cellIdxCurrent, directTbyte].transform.parent.localEulerAngles = _vector1;
                                 break;
 
                             default: throw new Exception();
                         }
                     }
 
-                    _trailSRCs[cellIdxCurrent, directTbyte].TrySetActiveGO(_needActive[cellIdxCurrent, directTbyte]);
+
+                    var needActive = _needActive[cellIdxCurrent, directTbyte];
+                    ref var wasActivated = ref _wasActivated[cellIdxCurrent, directTbyte];
+
+                    if(needActive != wasActivated) _gOs[cellIdxCurrent, directTbyte].SetActive(_needActive[cellIdxCurrent, directTbyte]);
+
+                    wasActivated = needActive;
                 }
             }
         }

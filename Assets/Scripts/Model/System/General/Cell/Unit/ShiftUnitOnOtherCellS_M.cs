@@ -8,14 +8,14 @@ namespace Chessy.Model.System
         internal void ShiftUnitOnOtherCellM(in byte fromCellIdx, in byte toCellIdx)
         {
             var dataFromIdxCell = _e.WhereViewDataUnitC(fromCellIdx).DataIdxCell;
-            var possitionFrom = _e.UnitPossitionOnCellC(fromCellIdx).Position;
+            //var possitionFrom = _e.UnitPossitionOnCellC(fromCellIdx).Position;
 
             var dataToIdxCell = _e.WhereViewDataUnitC(toCellIdx).DataIdxCell;
-            var possitionTo = _e.UnitPossitionOnCellC(toCellIdx).Position;
+            //var possitionTo = _e.UnitPossitionOnCellC(toCellIdx).Position;
 
 
 
-            _e.UnitE(toCellIdx) = _e.UnitE(fromCellIdx).Clone();
+            _e.UnitE(toCellIdx).Clone(_e.UnitE(fromCellIdx));
             _e.UnitE(fromCellIdx).Dispose();
 
 
@@ -23,8 +23,8 @@ namespace Chessy.Model.System
             _e.WhereViewDataUnitC(fromCellIdx).DataIdxCell = dataFromIdxCell;
             _e.WhereViewDataUnitC(toCellIdx).DataIdxCell = dataToIdxCell;  
 
-            _e.UnitPossitionOnCellC(fromCellIdx).Position = possitionFrom;
-            _e.UnitPossitionOnCellC(toCellIdx).Position = possitionTo;
+            //_e.UnitPossitionOnCellC(fromCellIdx).Position = possitionFrom;
+            //_e.UnitPossitionOnCellC(toCellIdx).Position = possitionTo;
 
 
 
@@ -32,7 +32,7 @@ namespace Chessy.Model.System
 
             if(!_e.WhereViewDataUnitC(toCellIdx).HaveDataReference)
             {
-                _e.UnitPossitionOnCellC(_e.WhereViewDataUnitC(toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
+                //_e.UnitPossitionOnCellC(_e.WhereViewDataUnitC(toCellIdx).ViewIdxCell).Position = _e.CellE(toCellIdx).PositionC.Position;
             }
             _e.WhereViewDataUnitC(_e.WhereViewDataUnitC(toCellIdx).ViewIdxCell).DataIdxCell = toCellIdx;
 
@@ -67,7 +67,7 @@ namespace Chessy.Model.System
 
                     if (_e.LessonT == LessonTypes.ComeToYourKing)
                     {
-                        foreach (var cellIdx in _e.IdxsCellsAround(toCellIdx, DistanceFromCellTypes.First))
+                        foreach (var cellIdx in _e.IdxsCellsAround(toCellIdx))
                         {
                             if (_e.UnitT(cellIdx) == UnitTypes.King && _e.UnitPlayerT(cellIdx) == _e.UnitPlayerT(toCellIdx))
                             {

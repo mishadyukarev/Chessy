@@ -211,7 +211,7 @@ namespace Chessy
 
         #region ArcherSide
 
-        internal static void ToggleSide(this ref UnitOnCellC unitMainC) => unitMainC.IsArcherDirectedToRight = !unitMainC.IsArcherDirectedToRight;
+        internal static void ToggleSide(this UnitOnCellC unitMainC) => unitMainC.IsArcherDirectedToRight = !unitMainC.IsArcherDirectedToRight;
 
         #endregion
 
@@ -287,42 +287,7 @@ namespace Chessy
 
         #region SunSideT
 
-        public static DirectTypes[] RaysSun(this SunSideTypes sunSideT)
-        {
-            var directs = new DirectTypes[3];
-            switch (sunSideT)
-            {
-                case SunSideTypes.Dawn:
-                    {
-                        directs[0] = DirectTypes.UpRight;
-                        directs[1] = DirectTypes.Right;
-                        directs[2] = DirectTypes.RightDown;
-                    }
-                    break;
-                case SunSideTypes.Sunset:
-                    {
-                        directs[0] = DirectTypes.LeftUp;
-                        directs[1] = DirectTypes.Left;
-                        directs[2] = DirectTypes.DownLeft;
-                    }
-                    break;
-                default: throw new Exception();
-            }
 
-            return directs;
-        }
-        public static bool IsAcitveSun(this SunSideTypes sunSideT)
-        {
-            switch (sunSideT)
-            {
-                case SunSideTypes.Dawn: return true;
-                case SunSideTypes.Center: return false;
-                case SunSideTypes.Sunset: return true;
-                case SunSideTypes.Night: return false;
-                default: throw new Exception();
-            }
-        }
-        public static void ToggleNextSunSideT(this ref SunC sunC) => sunC.SunSideType = sunC.SunSideT == SunSideTypes.Night ? SunSideTypes.Dawn : ++sunC.SunSideType;
 
         #endregion
 

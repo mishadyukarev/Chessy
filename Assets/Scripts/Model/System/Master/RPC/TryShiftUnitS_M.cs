@@ -10,8 +10,6 @@ namespace Chessy.Model.System
 
             if (_e.WhereUnitCanShiftC(cellIdxFrom).CanShiftHere(cellIdxTo) && _e.UnitPlayerT(cellIdxFrom).Is(whoDoing))
             {
-                _e.NeedGetDataCellsForNextClient = true;
-
                 _e.SetUnitConditionT(cellIdxFrom, ConditionUnitTypes.None);
 
                 if (_e.ShiftingInfoForUnitC(cellIdxFrom).WhereNeedShiftIdxCell != 0)
@@ -23,7 +21,7 @@ namespace Chessy.Model.System
                     _e.ShiftingInfoForUnitC(cellIdxFrom).WhereNeedShiftIdxCell = cellIdxTo;
                 }
 
-                _e.SoundAction(ClipTypes.SoundRunningUnit).Invoke();
+                RpcSs.ExecuteSoundActionToGeneral(sender, ClipTypes.SoundRunningUnit);
             }
         }
     }

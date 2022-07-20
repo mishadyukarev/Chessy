@@ -31,7 +31,7 @@ namespace Chessy.Model.System
                             break;
 
                         case AbilityTypes.FireArcher:
-                            _e.SelectedE.AbilityT = AbilityTypes.FireArcher;
+                            _aboutGameC.AbilityT = AbilityTypes.FireArcher;
                             _e.CellClickT = CellClickTypes.UniqueAbility;
                             break;
 
@@ -41,7 +41,7 @@ namespace Chessy.Model.System
 
                         case AbilityTypes.StunElfemale:
                             {
-                                _e.SelectedE.AbilityT = AbilityTypes.StunElfemale;
+                                _aboutGameC.AbilityT = AbilityTypes.StunElfemale;
                                 _e.CellClickT = CellClickTypes.UniqueAbility;
                             }
                             break;
@@ -72,7 +72,7 @@ namespace Chessy.Model.System
 
                         case AbilityTypes.ChangeDirectionWind:
                             {
-                                _e.SelectedE.AbilityT = AbilityTypes.ChangeDirectionWind;
+                                _aboutGameC.AbilityT = AbilityTypes.ChangeDirectionWind;
                                 _e.CellClickT = CellClickTypes.UniqueAbility;
                             }
                             break;

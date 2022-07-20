@@ -2,14 +2,12 @@
 
 namespace Chessy.Model.System
 {
-    public abstract class SystemModelAbstract
+    public abstract class SystemModelAbstract : SystemAbstract
     {
-        protected readonly EntitiesModel _e;
         protected readonly SystemsModel _s;
 
-        protected SystemModelAbstract(in SystemsModel sM, in EntitiesModel eM)
+        protected SystemModelAbstract(in SystemsModel sM, EntitiesModel eM) : base(eM)
         {
-            _e = eM;
             _s = sM;
         }
     }

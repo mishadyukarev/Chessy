@@ -8,47 +8,37 @@ namespace Chessy.Model.System
         {
             if (!_e.UnitCooldownAbilitiesC(cell_0).HaveCooldown(abilityT))
             {
-                //if (_e.EnergyUnitC(cell_0).Energy >= StepValues.Need(abilityT))
-                //{
-                    if (needIncrese)
+                if (needIncrese)
+                {
+                    if (!_e.WeatherE.WindC.IsMaxSpeed())
                     {
-                        if (!_e.WeatherE.WindC.IsMaxSpeed())
-                        {
-                            //_e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
-                            _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
+                        _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
 
-                            _e.SpeedWind++;
+                        _windC.Speed++;
 
-                            _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
-                        }
-                        else
-                        {
-                            _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MaxSpeedWind, sender);
-                        }
+                        _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
                     }
-
                     else
                     {
-                        if (!_e.WeatherE.WindC.IsMinSpeed())
-                        {
-                            //_e.EnergyUnitC(cell_0).Energy -= StepValues.Need(abilityT);
-                            _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
-
-                            _e.SpeedWind--;
-
-                            _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
-                        }
-                        else
-                        {
-                            _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MinSpeedWind, sender);
-                        }
+                        _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MaxSpeedWind, sender);
                     }
+                }
 
-                //}
-                //else
-                //{
-                //    _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                //}
+                else
+                {
+                    if (!_e.WeatherE.WindC.IsMinSpeed())
+                    {
+                        _e.UnitCooldownAbilitiesC(cell_0).Set(abilityT, AbilityCooldownUnitValues.NeedAfterAbility(abilityT));
+
+                        _windC.Speed--;
+
+                        _s.RpcSs.SoundToGeneral(Photon.Pun.RpcTarget.All, AbilityTypes.ChangeDirectionWind);
+                    }
+                    else
+                    {
+                        _s.RpcSs.SimpleMistakeToGeneral(MistakeTypes.MinSpeedWind, sender);
+                    }
+                }
             }
         }
 

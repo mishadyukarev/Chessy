@@ -16,7 +16,7 @@ namespace Chessy.Model.System
 
         internal OnPhotonSerializeViewS(in SystemsModel sM, in EntitiesModel eM) : base(sM, eM)
         {
-            _eCopy = new EntitiesModel(eM.DataFromViewC, eM.RpcC.PunRPCName, new List<object>() { eM.RpcC.Action0, eM.RpcC.Action1 }, eM.TestModeT);
+            _eCopy = new EntitiesModel(eM.DataFromViewC, eM.RpcC.PunRPCName, new List<object>() { eM.RpcC.Action0, eM.RpcC.Action1 }, eM.AboutGameC.TestModeT);
         }
 
         internal void OnPhotonSerializeView0(in SyncTypes syncType, PhotonStream stream, PhotonMessageInfo info)
@@ -27,15 +27,14 @@ namespace Chessy.Model.System
                     {
                         if (stream.IsWriting)
                         {
-                            stream.SendNext(_e.NeedGetDataCellsForNextClient);
-
-                            TryAddDataForSync(_e.IsStartedGame, ref _eCopy.IsStartedGame, _canSync, _objsForSync);
-                            TryAddDataForSync(_e.WinnerPlayerT, ref _eCopy.WinnerPlayerT, _canSync, _objsForSync);
-                            ref var windC = ref _eCopy.WeatherE.WindC;
-                            TryAddDataForSync(_e.DirectWindT, ref windC.DirectType, _canSync, _objsForSync);
-                            TryAddDataForSync(_e.SpeedWind, ref windC.Speed, _canSync, _objsForSync);
-                            ref var sunC = ref _eCopy.SunC;
-                            TryAddDataForSync(_e.SunSideT, ref sunC.SunSideType, _canSync, _objsForSync);
+                            TryAddDataForSync(_aboutGameC.IsStartedGame, ref _eCopy.AboutGameC.IsStartedGame, _canSync, _objsForSync);
+                            TryAddDataForSync(_aboutGameC.WinnerPlayerT, ref _eCopy.AboutGameC.WinnerPlayerT, _canSync, _objsForSync);
+                            var weatherE = _eCopy.WeatherE;
+                            var windC = weatherE.WindC;
+                            TryAddDataForSync(_windC.DirectT, ref windC.DirectT, _canSync, _objsForSync);
+                            TryAddDataForSync(_windC.Speed, ref windC.Speed, _canSync, _objsForSync);
+                            var sunC = weatherE.SunC;
+                            TryAddDataForSync(_sunC.SunSideT, ref sunC.SunSideT, _canSync, _objsForSync);
 
                             TrySync(stream, _canSync, _objsForSync);
 
@@ -45,19 +44,19 @@ namespace Chessy.Model.System
                                 ref var playerInfoE = ref _e.PlayerInfoE(playerT);
                                 ref var playerInfoEcopy = ref _eCopy.PlayerInfoE(playerT);
 
-                                ref var playerInfoC = ref playerInfoE.PlayerInfoC;
-                                ref var playerInfoCcopy = ref playerInfoEcopy.PlayerInfoC;
+                                var playerInfoC = playerInfoE.PlayerInfoC;
+                                var playerInfoCcopy = playerInfoEcopy.PlayerInfoC;
 
                                 TryAddDataForSync(playerInfoC.IsReadyForStartOnlineGame, ref playerInfoCcopy.IsReadyForStartOnlineGame, _canSync, _objsForSync);
                                 TryAddDataForSync(playerInfoC.WoodForBuyHouse, ref playerInfoCcopy.WoodForBuyHouse, _canSync, _objsForSync);
                                 TryAddDataForSync(playerInfoC.HaveKingInInventor, ref playerInfoCcopy.HaveKingInInventor, _canSync, _objsForSync);
                                 TryAddDataForSync(playerInfoC.AmountBuiltHouses, ref playerInfoCcopy.AmountBuiltHouses, _canSync, _objsForSync);
-                                ref var pawnPeopleInfoC = ref playerInfoE.PawnInfoC;
-                                ref var pawnPeopleInfoCcopy = ref playerInfoEcopy.PawnInfoC;
+                                var pawnPeopleInfoC = playerInfoE.PawnInfoC;
+                                var pawnPeopleInfoCcopy = playerInfoEcopy.PawnInfoC;
                                 TryAddDataForSync(pawnPeopleInfoC.PeopleInCity, ref pawnPeopleInfoCcopy.PeopleInCity, _canSync, _objsForSync);
                                 TryAddDataForSync(pawnPeopleInfoC.AmountInGame, ref pawnPeopleInfoCcopy.AmountInGame, _canSync, _objsForSync);
-                                ref var godInfoC = ref playerInfoE.GodInfoC;
-                                ref var godInfoCcopy = ref playerInfoEcopy.GodInfoC;
+                                var godInfoC = playerInfoE.GodInfoC;
+                                var godInfoCcopy = playerInfoEcopy.GodInfoC;
                                 TryAddDataForSync(godInfoC.HaveGodInInventor, ref godInfoCcopy.HaveGodInInventor, _canSync, _objsForSync);
                                 TryAddDataForSync(godInfoC.UnitType, ref godInfoCcopy.UnitType, _canSync, _objsForSync);
                                 TryAddDataForSync(godInfoC.CooldownInSecondsForNextAppearance, ref godInfoCcopy.CooldownInSecondsForNextAppearance, _canSync, _objsForSync);
@@ -104,45 +103,46 @@ namespace Chessy.Model.System
 
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_e.IsBorder(curCellIdx_0)) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
-                                ref var cellEs = ref _e.CellEs(curCellIdx_0);
-                                ref var cellEsCopy = ref _eCopy.CellEs(curCellIdx_0);
+                                var cellEs = _e.CellEs(curCellIdx_0);
+                                var cellEsCopy = _eCopy.CellEs(curCellIdx_0);
 
-                                ref var unitE = ref cellEs.UnitE;
-                                ref var unitECopy = ref cellEsCopy.UnitE;
+                                var unitE = cellEs.UnitE;
+                                var unitECopy = cellEsCopy.UnitE;
 
-                                ref var unitMainC = ref unitE.MainC;
-                                ref var unitMainCCopy = ref unitECopy.MainC;
+                                var unitMainC = unitE.MainC;
+                                var unitMainCCopy = unitECopy.MainC;
 
-                                TryAddDataForSync(unitMainC.UnitType, ref unitMainCCopy.UnitType, _canSync, _objsForSync);
-                                TryAddDataForSync(unitMainC.LevelType, ref unitMainCCopy.LevelType, _canSync, _objsForSync);
-                                TryAddDataForSync(unitMainC.PlayerType, ref unitMainCCopy.PlayerType, _canSync, _objsForSync);
-                                TryAddDataForSync(unitMainC.ConditionType, ref unitMainCCopy.ConditionType, _canSync, _objsForSync);
+                                TryAddDataForSync(unitMainC.UnitT, ref unitMainCCopy.UnitT, _canSync, _objsForSync);
+                                TryAddDataForSync(unitMainC.LevelT, ref unitMainCCopy.LevelT, _canSync, _objsForSync);
+                                TryAddDataForSync(unitMainC.PlayerType, ref unitMainCCopy.PlayerT, _canSync, _objsForSync);
+                                TryAddDataForSync(unitMainC.ConditionType, ref unitMainCCopy.ConditionT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainC.IsArcherDirectedToRight, ref unitMainCCopy.IsArcherDirectedToRight, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainC.DamageSimpleAttack, ref unitMainCCopy.DamageSimpleAttack, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainC.DamageOnCell, ref unitMainCCopy.DamageOnCell, _canSync, _objsForSync);
 
-                                ref var unitHpC = ref unitE.HealthC;
-                                ref var unitHpCCopy = ref unitECopy.HealthC;
+                                var unitHpC = unitE.HealthC;
+                                var unitHpCCopy = unitECopy.HealthC;
                                 TryAddDataForSync(unitHpC.Health, ref unitHpCCopy.Health, _canSync, _objsForSync);
 
-                                ref var unitMainTwC = ref unitE.MainToolWeaponC;
-                                ref var unitMainTwCCopy = ref unitECopy.MainToolWeaponC;
+                                var unitMainTwC = unitE.MainToolWeaponC;
+                                var unitMainTwCCopy = unitECopy.MainToolWeaponC;
                                 TryAddDataForSync(unitMainTwC.ToolWeaponT, ref unitMainTwCCopy.ToolWeaponT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitMainTwC.LevelT, ref unitMainTwCCopy.LevelT, _canSync, _objsForSync);
 
-                                ref var unitExtraTwC = ref unitE.ExtraToolWeaponC;
-                                ref var unitExtraTwCCopy = ref unitECopy.ExtraToolWeaponC;
+                                var unitExtraTwC = unitE.ExtraToolWeaponC;
+                                var unitExtraTwCCopy = unitECopy.ExtraToolWeaponC;
                                 TryAddDataForSync(unitExtraTwC.ToolWeaponT, ref unitExtraTwCCopy.ToolWeaponT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitExtraTwC.LevelT, ref unitExtraTwCCopy.LevelT, _canSync, _objsForSync);
                                 TryAddDataForSync(unitExtraTwC.ProtectionShield, ref unitExtraTwCCopy.ProtectionShield, _canSync, _objsForSync);
 
-                                ref var unitDataViewC = ref unitE.WhereViewDataUnitC;
-                                ref var unitDataViewCCopy = ref unitECopy.WhereViewDataUnitC;
+                                var unitDataViewC = unitE.WhereViewDataUnitC;
+                                var unitDataViewCCopy = unitECopy.WhereViewDataUnitC;
                                 TryAddDataForSync(unitDataViewC.DataIdxCell, ref unitDataViewCCopy.DataIdxCell, _canSync, _objsForSync);
                                 TryAddDataForSync(unitDataViewC.ViewIdxCell, ref unitDataViewCCopy.ViewIdxCell, _canSync, _objsForSync);
                                 TryAddDataForSync(_e.ShiftingInfoForUnitC(curCellIdx_0).WhereNeedShiftIdxCell, ref _eCopy.ShiftingInfoForUnitC(curCellIdx_0).WhereNeedShiftIdxCell, _canSync, _objsForSync);
+                                TryAddDataForSync(_e.StunUnit(curCellIdx_0), ref _eCopy.UnitEffectsC(curCellIdx_0).StunHowManyUpdatesNeedStay, _canSync, _objsForSync);
 
                                 TrySync(stream, _canSync, _objsForSync);
 
@@ -224,15 +224,13 @@ namespace Chessy.Model.System
 
                         else
                         {
-                            _e.NeedGetDataCellsForNextClient = (bool)stream.ReceiveNext();
-
                             if ((bool)stream.ReceiveNext())
                             {
-                                if ((bool)stream.ReceiveNext()) _e.IsStartedGame = (bool)stream.ReceiveNext();
-                                if ((bool)stream.ReceiveNext()) _e.WinnerPlayerT = (PlayerTypes)stream.ReceiveNext();
-                                if ((bool)stream.ReceiveNext()) _e.DirectWindT = (DirectTypes)stream.ReceiveNext();
-                                if ((bool)stream.ReceiveNext()) _e.SpeedWind = (byte)stream.ReceiveNext();
-                                if ((bool)stream.ReceiveNext()) _e.SunSideT = (SunSideTypes)stream.ReceiveNext();
+                                if ((bool)stream.ReceiveNext()) _aboutGameC.IsStartedGame = (bool)stream.ReceiveNext();
+                                if ((bool)stream.ReceiveNext()) _aboutGameC.WinnerPlayerT = (PlayerTypes)stream.ReceiveNext();
+                                if ((bool)stream.ReceiveNext()) _windC.DirectT = (DirectTypes)stream.ReceiveNext();
+                                if ((bool)stream.ReceiveNext()) _windC.Speed = (byte)stream.ReceiveNext();
+                                if ((bool)stream.ReceiveNext()) _sunC.SunSideT = (SunSideTypes)stream.ReceiveNext();
                             }
 
                             for (var playerT = (PlayerTypes)1; playerT < PlayerTypes.End; playerT++)
@@ -284,12 +282,12 @@ namespace Chessy.Model.System
 
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_e.IsBorder(curCellIdx_0)) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
-                                ref var cellEs = ref _e.CellEs(curCellIdx_0);
+                                var cellEs = _e.CellEs(curCellIdx_0);
 
-                                ref var unitE = ref cellEs.UnitE;
-                                ref var unitMainC = ref unitE.MainC;
+                                var unitE = cellEs.UnitE;
+                                var unitMainC = unitE.MainC;
 
 
                                 if ((bool)stream.ReceiveNext())
@@ -306,7 +304,7 @@ namespace Chessy.Model.System
                                     if ((bool)stream.ReceiveNext()) _e.HpUnitC(curCellIdx_0).Health = (double)stream.ReceiveNext();
 
 
-                                    ref var unitMainTWC = ref unitE.MainToolWeaponC;
+                                    var unitMainTWC = unitE.MainToolWeaponC;
                                     if ((bool)stream.ReceiveNext()) unitMainTWC.ToolWeaponT = (ToolsWeaponsWarriorTypes)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) unitMainTWC.LevelT = (LevelTypes)stream.ReceiveNext();
 
@@ -318,6 +316,8 @@ namespace Chessy.Model.System
                                     if ((bool)stream.ReceiveNext()) _e.WhereViewDataUnitC(curCellIdx_0).ViewIdxCell = (byte)stream.ReceiveNext();
 
                                     if ((bool)stream.ReceiveNext()) _e.ShiftingInfoForUnitC(curCellIdx_0).WhereNeedShiftIdxCell = (byte)stream.ReceiveNext();
+
+                                    if ((bool)stream.ReceiveNext()) _e.UnitEffectsC(curCellIdx_0).StunHowManyUpdatesNeedStay = (float)stream.ReceiveNext();
                                 }
 
                                 if ((bool)stream.ReceiveNext())
@@ -409,30 +409,30 @@ namespace Chessy.Model.System
                     {
                         if (stream.IsWriting)
                         {
-                            for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
-                            {
-                                if (_e.IsBorder(curCellIdx_0)) continue;
+                            //for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
+                            //{
+                            //    if (_e.IsBorder(curCellIdx_0)) continue;
 
-                                var unitPos = _e.UnitPossitionOnCell(curCellIdx_0);
-                                TryAddDataForSync(unitPos.x, ref _eCopy.UnitPossitionOnCellC(curCellIdx_0).Position.x, _canSync, _objsForSync);
-                                TryAddDataForSync(unitPos.y, ref _eCopy.UnitPossitionOnCellC(curCellIdx_0).Position.y, _canSync, _objsForSync);
-                            }
+                            //    var unitPos = _e.UnitPossitionOnCell(curCellIdx_0);
+                            //    TryAddDataForSync(unitPos.x, ref _eCopy.UnitPossitionOnCellC(curCellIdx_0).Position.x, _canSync, _objsForSync);
+                            //    TryAddDataForSync(unitPos.y, ref _eCopy.UnitPossitionOnCellC(curCellIdx_0).Position.y, _canSync, _objsForSync);
+                            //}
 
-                            TrySync(stream, _canSync, _objsForSync);
+                            //TrySync(stream, _canSync, _objsForSync);
                         }
                         else
                         {
-                            if ((bool)stream.ReceiveNext())
-                            {
-                                for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
-                                {
-                                    if (_e.IsBorder(curCellIdx_0)) continue;
+                            //if ((bool)stream.ReceiveNext())
+                            //{
+                            //    for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
+                            //    {
+                            //        if (_e.IsBorder(curCellIdx_0)) continue;
 
-                                    if ((bool)stream.ReceiveNext()) _e.UnitPossitionOnCellC(curCellIdx_0).X = (float)stream.ReceiveNext();
-                                    if ((bool)stream.ReceiveNext()) _e.UnitPossitionOnCellC(curCellIdx_0).Y = (float)stream.ReceiveNext();
+                            //        if ((bool)stream.ReceiveNext()) _e.UnitPossitionOnCellC(curCellIdx_0).X = (float)stream.ReceiveNext();
+                            //        if ((bool)stream.ReceiveNext()) _e.UnitPossitionOnCellC(curCellIdx_0).Y = (float)stream.ReceiveNext();
 
-                                }
-                            }
+                            //    }
+                            //}
                         }
                     }
                     break;
@@ -443,7 +443,7 @@ namespace Chessy.Model.System
                         {
                             for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                             {
-                                if (_e.IsBorder(curCellIdx_0)) continue;
+                                if (_cellCs[curCellIdx_0].IsBorder) continue;
 
                                 var cloudPos = _e.CloudPossitionC(curCellIdx_0).Position;
                                 TryAddDataForSync(cloudPos.x, ref _eCopy.CloudPossitionC(curCellIdx_0).Position.x, _canSync, _objsForSync);
@@ -457,7 +457,7 @@ namespace Chessy.Model.System
                             {
                                 for (byte curCellIdx_0 = 0; curCellIdx_0 < IndexCellsValues.CELLS; curCellIdx_0++)
                                 {
-                                    if (_e.IsBorder(curCellIdx_0)) continue;
+                                    if (_cellCs[curCellIdx_0].IsBorder) continue;
 
                                     if ((bool)stream.ReceiveNext()) _e.CloudPossitionC(curCellIdx_0).X = (float)stream.ReceiveNext();
                                     if ((bool)stream.ReceiveNext()) _e.CloudPossitionC(curCellIdx_0).Y = (float)stream.ReceiveNext();

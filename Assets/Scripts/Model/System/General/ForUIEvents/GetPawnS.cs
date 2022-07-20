@@ -9,9 +9,9 @@ namespace Chessy.Model.System
 
             if (!_e.LessonT.Is(LessonTypes.TryBuyingHouse, LessonTypes.HoldPressWarrior))
             {
-                if (_e.PawnPeopleInfoC(_e.CurrentPlayerIT).HaveAnyPeopleInCity)
+                if (_e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).HaveAnyPeopleInCity)
                 {
-                    if (_e.PawnPeopleInfoC(_e.CurrentPlayerIT).AmountInGame < _e.PawnPeopleInfoC(_e.CurrentPlayerIT).MaxAvailablePawns(_e.PlayerInfoC(_e.CurrentPlayerIT).AmountBuiltHouses))
+                    if (_e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).AmountInGame < _e.PawnPeopleInfoC(_aboutGameC.CurrentPlayerIT).MaxAvailablePawns(_e.PlayerInfoC(_aboutGameC.CurrentPlayerIT).AmountBuiltHouses))
                     {
                         _e.SelectedCellIdx = 0;
 

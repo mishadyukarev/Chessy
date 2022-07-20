@@ -9,13 +9,13 @@
 
             _e.SoundAction(ClipTypes.Click).Invoke();
 
-            var curPlayer = _e.CurrentPlayerIT;
+            var curPlayer = _aboutGameC.CurrentPlayerIT;
 
             var myHeroT = _e.PlayerInfoE(curPlayer).GodInfoC.UnitType;
 
             if (_e.PlayerInfoE(curPlayer).GodInfoC.HaveGodInInventor)
             {
-                if (!_e.PlayerInfoE(_e.CurrentPlayerIT).GodInfoC.HaveCooldown)
+                if (!_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).GodInfoC.HaveCooldown)
                 {
                     _e.SelectedUnitC.UnitT = myHeroT;
                     _e.SelectedUnitC.LevelT = LevelTypes.First;

@@ -29,7 +29,7 @@ namespace Chessy.View.System
                 {
                     var dataCellIdx = _e.WhereViewDataUnitC(cellIdxCurrent).DataIdxCellP;
 
-                    if (_e.UnitVisibleC(dataCellIdx).IsVisible(_e.CurrentPlayerIT))
+                    if (_e.UnitVisibleC(dataCellIdx).IsVisible(_aboutGameC.CurrentPlayerIType))
                     {
                         if (_e.UnitT(dataCellIdx).HaveUnit() && !_e.UnitT(dataCellIdx).IsAnimal())
                         {

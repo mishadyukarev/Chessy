@@ -34,8 +34,9 @@ namespace Chessy
 
             #region NeedReplace
 
-            var adLaunchS = new TryLaunchAdS(eM);
             new ShopS(eM);
+            var adLaunchS = new TryLaunchAdVideoAndBannerS(eM);
+            
 
 
             #region Photon

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct HealthC
+    public sealed class HealthC
     {
         internal double Health;
         public double HealthP => Health;

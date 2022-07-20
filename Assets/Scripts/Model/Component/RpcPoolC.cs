@@ -3,14 +3,14 @@ using Photon.Realtime;
 using System.Collections.Generic;
 namespace Chessy.Model
 {
-    struct RpcPoolC
+    sealed class RpcPoolC
     {
         internal readonly ActionMy<string, RpcTarget, object[]> Action0;
         internal readonly ActionMy<string, Player, object[]> Action1;
 
         internal readonly string PunRPCName;
 
-        internal RpcPoolC(in List<object> actions, in string name) : this()
+        internal RpcPoolC(in List<object> actions, in string name)
         {
             var idx = 0;
 

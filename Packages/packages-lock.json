@@ -73,6 +73,15 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.ads": {
+      "version": "3.7.5",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.burst": {
       "version": "1.6.6",
       "depth": 2,
@@ -162,39 +171,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.services.mediation": {
-      "version": "file:C:/Users/GooPy/Desktop/3cc0f97555862eecaa5994e5c93905a7fd7787aa.tgz",
-      "depth": 0,
-      "source": "local-tarball",
-      "dependencies": {
-        "com.unity.settings-manager": "1.0.3",
-        "com.unity.modules.ui": "1.0.0",
-        "com.unity.services.core": "1.4.0"
-      }
-    },
-    "com.unity.settings-manager": {
-      "version": "1.0.3",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.sysroot": {
-      "version": "0.1.19-preview",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.sysroot.linux-x86_64": {
-      "version": "0.1.14-preview",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.sysroot": "0.1.18-preview"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.test-framework": {
       "version": "1.1.31",
       "depth": 0,
@@ -224,16 +200,6 @@
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.toolchain.win-x86_64-linux-x86_64": {
-      "version": "0.1.21-preview",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.sysroot": "0.1.19-preview",
-        "com.unity.sysroot.linux-x86_64": "0.1.14-preview"
       },
       "url": "https://packages.unity.com"
     },

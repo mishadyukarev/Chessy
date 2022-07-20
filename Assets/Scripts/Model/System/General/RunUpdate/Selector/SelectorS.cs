@@ -33,7 +33,7 @@ namespace Chessy.Model
             }
 
 
-            if (_e.IsClicked)
+            if (_inputC.IsClicked)
             {
                 _e.NeedUpdateView = true;
                 _e.MistakeT = MistakeTypes.None;
@@ -41,15 +41,15 @@ namespace Chessy.Model
 
 
 
-                if (_e.LessonT == LessonTypes.UniqueAttackInfo)
+                if (_aboutGameC.LessonT == LessonTypes.UniqueAttackInfo)
                 {
-                    _e.SunSideT = SunSideTypes.Dawn;
-                     _s.SetNextLesson();
+                    _sunC.SunSideT = SunSideTypes.Dawn;
+                    _s.SetNextLesson();
                 }
                 else if (_e.LessonT.Is(LessonTypes.YouNeedDestroyKing, LessonTypes.ThatIsYourSpawn, LessonTypes.ClickBuyMarketInTown, LessonTypes.LookInfoAboutSun,
                      LessonTypes.MenuInfo))
                 {
-                     _s.SetNextLesson();
+                    _s.SetNextLesson();
                 }
 
                 switch (_e.RaycastT)
@@ -73,9 +73,9 @@ namespace Chessy.Model
                                     {
                                         _e.SelectedCellIdx = _e.CurrentCellIdx;
 
-                                        if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _e.UnitPlayerT(idx_cur).Is(_e.CurrentPlayerIT))
+                                        if (_e.UnitT(idx_cur).Is(UnitTypes.Pawn) && _e.UnitPlayerT(idx_cur).Is(_aboutGameC.CurrentPlayerIT))
                                         {
-                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM), _e.CurrentCellIdx, _e.SelectedE.ToolWeaponC.ToolWeaponT, _e.SelectedE.ToolWeaponC.LevelT });
+                                            _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.TryGiveTakeToolOrWeaponToUnitOnCellM), _e.CurrentCellIdx, _selectedToolWeaponC.ToolWeaponT, _selectedToolWeaponC.LevelT });
                                         }
                                         else
                                         {
@@ -88,7 +88,7 @@ namespace Chessy.Model
 
                                 case CellClickTypes.UniqueAbility:
                                     {
-                                        switch (_e.SelectedE.AbilityT)
+                                        switch (_aboutGameC.AbilityT)
                                         {
                                             case AbilityTypes.FireArcher:
                                                 _e.RpcC.Action0(_e.RpcC.PunRPCName, RpcTarget.MasterClient, new object[] { nameof(_s.UnitSs.UnitAbilitiesSs.TryFireForestWithArcherM), _e.SelectedCellIdx, _e.CurrentCellIdx });

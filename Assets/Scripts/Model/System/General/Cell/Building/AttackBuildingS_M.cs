@@ -16,7 +16,7 @@ namespace Chessy.Model
                 {
                     if (e.BuildingOnCellT(cellIdxForAttack).Is(BuildingTypes.City))
                     {
-                        e.WinnerPlayerT = whoKiller.NextPlayer();
+                        e.AboutGameC.WinnerPlayerT = whoKiller.NextPlayer();
                     }
 
                     //else if (E.BuildingTC(Idx).Is(BuildingTypes.House))

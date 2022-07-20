@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model.Component
 {
-    public readonly struct BuildingsInTownInfoC
+    public sealed class BuildingsInTownInfoC
     {
         readonly bool[] _haveBuilding;
 
@@ -8,7 +8,10 @@
 
         public ref bool HaveBuilding(in BuildingTypes buildingT) => ref _haveBuilding[(byte)buildingT];
 
-        internal BuildingsInTownInfoC(in bool[] haves) => _haveBuilding = haves;
+        internal BuildingsInTownInfoC()
+        {
+            _haveBuilding = new bool[(byte)BuildingTypes.End];
+        }
 
         internal void Set(in BuildingTypes buildingT, in bool have) => _haveBuilding[(byte)buildingT] = have;
         internal void Destroy(in BuildingTypes buildingT) => _haveBuilding[(byte)buildingT] = false;

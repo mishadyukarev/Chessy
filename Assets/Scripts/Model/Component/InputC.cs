@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct InputC
+    public sealed class InputC
     {
         public bool IsClicked { get; internal set; }
     }

@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct SelectedUnitC
+    public sealed class SelectedUnitC
     {
         public UnitTypes UnitT { get; internal set; }
         public LevelTypes LevelT { get; internal set; }

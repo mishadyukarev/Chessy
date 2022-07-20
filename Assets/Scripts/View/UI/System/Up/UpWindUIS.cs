@@ -40,9 +40,9 @@ using Chessy.View.UI.Entity; namespace Chessy.Model
             {
                 _eUI.UpEs.ParentWindGOC.TrySetActive(true);
 
-                _eUI.UpEs.WindTrC.EulerAngles = _directs[_e.DirectWindT];
-                if (_e.CurrentPlayerIT == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
-                _eUI.UpEs.WindTextC.TextUI.text = _e.SpeedWind.ToString() + "/" + ValuesChessy.MAX_SPEED_WIND;
+                _eUI.UpEs.WindTrC.EulerAngles = _directs[_windC.DirectType];
+                if (_aboutGameC.CurrentPlayerIType == PlayerTypes.Second) _eUI.UpEs.WindTrC.EulerAngles += _rotationForOtherPlayer;
+                _eUI.UpEs.WindTextC.TextUI.text = _windC.SpeedP.ToString() + "/" + ValuesChessy.MAX_SPEED_WIND;
 
 
             }

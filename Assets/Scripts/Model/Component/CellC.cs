@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model
 {
-    public struct CellC
+    public sealed class CellC
     {
         public readonly bool IsBorder;
         public readonly int InstanceID;

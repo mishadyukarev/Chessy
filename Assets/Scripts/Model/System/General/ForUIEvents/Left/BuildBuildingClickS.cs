@@ -8,14 +8,14 @@ namespace Chessy.Model.System
         {
             if (buildT == BuildingTypes.Market || buildT == BuildingTypes.Smelter)
             {
-                if (_e.SelectedE.BuildingsC.Is(buildT))
+                if (_selectedBuildingsInTownC.Is(buildT))
                 {
-                    _e.SelectedE.BuildingsC.Set(buildT, false);
+                    _selectedBuildingsInTownC.Set(buildT, false);
                     _e.SoundAction(ClipTypes.Click).Invoke();
                 }
-                else if (_e.PlayerInfoE(_e.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
+                else if (_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).BuildingsInTownInfoC.HaveBuilding(buildT))
                 {
-                    _e.SelectedE.BuildingsC.Set(buildT, true);
+                    _selectedBuildingsInTownC.Set(buildT, true);
                     _e.SoundAction(ClipTypes.Click).Invoke();
                 }
                 else

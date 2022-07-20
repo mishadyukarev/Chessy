@@ -21,6 +21,9 @@ namespace Chessy.Model
             //#endif
 
 
+            var two = raycast.transform.gameObject.GetInstanceID();
+
+
             _e.RaycastT = RaycastTypes.None;
 
             if (EventSystem.current.IsPointerOverGameObject())
@@ -31,8 +34,7 @@ namespace Chessy.Model
             {
                 for (byte cell_0 = 0; cell_0 < IndexCellsValues.CELLS; cell_0++)
                 {
-                    int one = _e.InstanceID(cell_0);
-                    int two = raycast.transform.gameObject.GetInstanceID();
+                    int one = _cellCs[cell_0].InstanceID;
 
                     if (one == two)
                     {

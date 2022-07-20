@@ -9,7 +9,7 @@ namespace Chessy.Model.System
         {
             if (!_e.UnitT(cellIdx).HaveUnit()) throw new Exception();
             if (damage <= 0) throw new Exception();
-            if (_e.IsBorder(cellIdx)) throw new Exception();
+            if (_cellCs[cellIdx].IsBorder) throw new Exception();
 
             _e.HpUnitC(cellIdx).Health -= damage;
             if (_e.HpUnitC(cellIdx).Health <= HpUnitValues.HP_FOR_DEATH_AFTER_ATTACK)

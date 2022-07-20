@@ -11,7 +11,7 @@ namespace Chessy.Model.System
 
             _e.SelectedCellIdx = 0;
 
-            if (_e.CurrentPlayerIT.Is(_e.CurrentPlayerIT))
+            if (_aboutGameC.CurrentPlayerIT.Is(_aboutGameC.CurrentPlayerIT))
             {
                 //if (_eMG.LessonTC.Is(LessonTypes.ClickPick))
                 //{
@@ -21,7 +21,7 @@ namespace Chessy.Model.System
                 //    }
                 //}
 
-                if (_e.PlayerInfoE(_e.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
+                if (_e.PlayerInfoE(_aboutGameC.CurrentPlayerIT).PawnInfoC.AmountInGame > 0)
                 {
                     //if (tw == ToolWeaponTypes.Pick)
                     //{
@@ -41,13 +41,13 @@ namespace Chessy.Model.System
                         {
                             if (twT == ToolsWeaponsWarriorTypes.Shield || twT == ToolsWeaponsWarriorTypes.BowCrossbow)
                             {
-                                if (_e.SelectedE.ToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
+                                if (_selectedToolWeaponC.LevelT == LevelTypes.First) levT = LevelTypes.Second;
                             }
                             else if (twT != ToolsWeaponsWarriorTypes.BowCrossbow) levT = LevelTypes.Second;
                         }
                         else
                         {
-                            levT = _e.SelectedE.ToolWeaponC.LevelT;
+                            levT = _selectedToolWeaponC.LevelT;
                         }
                     }
                     else if (twT == ToolsWeaponsWarriorTypes.Axe || twT == ToolsWeaponsWarriorTypes.Sword)
@@ -55,8 +55,8 @@ namespace Chessy.Model.System
                         levT = LevelTypes.Second;
                     }
 
-                    _e.SelectedE.ToolWeaponC.ToolWeaponT = twT;
-                    _e.SelectedE.ToolWeaponC.LevelT = levT;
+                    _selectedToolWeaponC.ToolWeaponT = twT;
+                    _selectedToolWeaponC.LevelT = levT;
 
 
                     _e.CellClickT = CellClickTypes.GiveTakeTW;

@@ -28,7 +28,11 @@ namespace Chessy.Model.System
                 }
             }
 
-            RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.AttackSword, RpcTarget.All);
+            if (_e.UnitVisibleC(idx_from).IsVisible(_e.UnitPlayerT(idx_from).NextPlayer()))
+            {
+                RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.AttackSword, RpcTarget.All);
+            }
+            
             RpcSs.AnimationCellToGeneral(idx_to, AnimationCellTypes.AttackSword, RpcTarget.All);
 
             RpcSs.AnimationCellToGeneral(idx_from, AnimationCellTypes.JumpAppearanceUnit, RpcTarget.All);
@@ -46,11 +50,11 @@ namespace Chessy.Model.System
 
             var dirAttack = _e.DirectionAround(idx_from, idx_to);
 
-            if (_e.SunSideT.IsAcitveSun())
+            if (_sunC.IsAcitveSun)
             {
                 var isSunnedUnit = true;
 
-                foreach (var dir in _e.SunSideT.RaysSun())
+                foreach (var dir in _sunC.RaysSun)
                 {
                     if (dirAttack == dir) isSunnedUnit = false;
                 }

@@ -1,19 +1,11 @@
 ﻿using Chessy.Model.Component;
-using System.Collections.Generic;
-namespace Chessy.Model
+
+namespace Chessy.Model.Entity
 {
-    public readonly struct TrailE
+    public sealed class TrailE
     {
-        public readonly VisibleToOtherPlayerOrNotC VisibleC;
-        public readonly HealthTrailC HealthC;
-
-        internal TrailE(in bool b)
-        {
-            var vis = new Dictionary<PlayerTypes, bool>();
-
-            VisibleC = new VisibleToOtherPlayerOrNotC(default);
-            HealthC = new HealthTrailC(new float[(byte)DirectTypes.End]);
-        }
+        public readonly VisibleToOtherPlayerOrNotC VisibleC = new(default);
+        public readonly HealthTrailC HealthC = new(new float[(byte)DirectTypes.End]);
 
         internal void Dispose()
         {

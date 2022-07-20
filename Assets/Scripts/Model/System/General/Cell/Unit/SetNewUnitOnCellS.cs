@@ -7,8 +7,8 @@ namespace Chessy.Model.System
     {
         internal void SetNewUnitOnCellS(in UnitTypes unitT, in PlayerTypes playerT, in byte forSettingCellIdx)
         {
-            _e.UnitMainC(forSettingCellIdx).Set(unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false);
-            _e.UnitE(forSettingCellIdx).SetStats(HpUnitValues.MAX, 1, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
+            _e.UnitMainC(forSettingCellIdx).Set((unitT, LevelTypes.First, playerT, ConditionUnitTypes.None, false));
+            _e.UnitE(forSettingCellIdx).SetStats(HpUnitValues.MAX, ValuesChessy.MAX_WATER_FOR_ANY_UNIT);
             _e.UnitExtraTWC(forSettingCellIdx).Set(ToolsWeaponsWarriorTypes.None, LevelTypes.None, 0);
             _e.UnitEffectsC(forSettingCellIdx).Set(0, 0, false);
 
@@ -45,7 +45,7 @@ namespace Chessy.Model.System
 
             for (byte currentCellIdx = 0; currentCellIdx < IndexCellsValues.CELLS; currentCellIdx++)
             {
-                if (_e.IsBorder(currentCellIdx)) continue;
+                if (_cellCs[currentCellIdx].IsBorder) continue;
 
                 if (!_e.WhereViewDataUnitC(currentCellIdx).HaveDataReference)
                 {
@@ -61,7 +61,7 @@ namespace Chessy.Model.System
                     //_e.UnitMainC(currentCellIdx).Possition = Vector3.Lerp(pos_0, pos_1, 1);
 
 
-                    _e.UnitPossitionOnCellC(currentCellIdx).Position = _e.CellE(forSettingCellIdx).PositionC.Position;
+                    //_e.UnitPossitionOnCellC(currentCellIdx).Position = _e.CellE(forSettingCellIdx).PositionC.Position;
 
                     break;
                 }

@@ -27,7 +27,7 @@ namespace Chessy.Model.System
             {
                 if (_e.UnitT(cellIdxStart) == UnitTypes.Pawn && _e.UnitPlayerT(cellIdxStart) == playerBotT)
                 {
-                    foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdxStart, DistanceFromCellTypes.First))
+                    foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdxStart))
                     {
                         if (_e.UnitT(cellIdxDirect).HaveUnit())
                         {

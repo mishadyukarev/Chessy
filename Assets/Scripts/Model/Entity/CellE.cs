@@ -1,10 +1,8 @@
 ﻿using Chessy.Model.Component;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Chessy.Model.Entity
 {
-    public readonly struct CellE
+    public sealed class CellE
     {
         public readonly CellC CellC;
         public readonly XyCellC XyCellC;
@@ -22,24 +20,24 @@ namespace Chessy.Model.Entity
             var x = xy[0];
             var y = xy[1];
 
-            var isStartedCell = new Dictionary<PlayerTypes, bool>();
+            var isStartedCell = new bool[(byte)PlayerTypes.End];
 
             for (var playerT = PlayerTypes.None + 1; playerT < PlayerTypes.End; playerT++)
             {
-                isStartedCell.Add(playerT, false);
+                isStartedCell[(byte)playerT] = false;
 
                 if (playerT == PlayerTypes.First)
                 {
                     if (y < 3 && x > 3 && x < 12)
                     {
-                        isStartedCell[playerT] = true;
+                        isStartedCell[(byte)playerT] = true;
                     }
                 }
                 else
                 {
                     if (y > 7 && x > 3 && x < 12)
                     {
-                        isStartedCell[playerT] = true;
+                        isStartedCell[(byte)playerT] = true;
                     }
                 }
             }

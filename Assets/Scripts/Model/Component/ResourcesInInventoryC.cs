@@ -1,13 +1,15 @@
 ﻿namespace Chessy.Model
 {
-    public struct ResourcesInInventoryC
+    public sealed class ResourcesInInventoryC
     {
         readonly float[] _resources;
 
         public ref float Resources(in ResourceTypes resourceT) => ref _resources[(byte)resourceT];
 
-        internal ResourcesInInventoryC(in float[] resources) => _resources = resources;
-
+        internal ResourcesInInventoryC()
+        {
+            _resources = new float[(byte)ResourceTypes.End];
+        }
         internal void Set(in ResourceTypes resourceT, in float resources) => _resources[(byte)resourceT] = resources;
         internal void Subtract(in ResourceTypes resourceT, in float subtraction) => _resources[(byte)resourceT] -= subtraction;
         internal void Add(in ResourceTypes resourceT, in float adding) => _resources[(byte)resourceT] += adding;

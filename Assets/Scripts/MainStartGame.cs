@@ -24,7 +24,7 @@ namespace Chessy
 
             while (!operation.isDone)
             {
-                Debug.Log(operation.progress);
+                //Debug.Log(operation.progress);
 
                 Image.fillAmount = operation.progress;
 

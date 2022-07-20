@@ -5,7 +5,7 @@ namespace Chessy.Model.System
     {
         public void Click(in ConditionUnitTypes conditionT)
         {
-            //if (_e.CurrentPlayerIT.Is(_e.WhoseMovePlayerT))
+            //if (_aboutGameC.CurrentPlayerIT.Is(_e.WhoseMovePlayerT))
             //{
                 if (_e.UnitConditionT(_e.SelectedCellIdx).Is(conditionT))
                 {

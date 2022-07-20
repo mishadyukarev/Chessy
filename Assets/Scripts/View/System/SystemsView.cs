@@ -1,4 +1,5 @@
 ﻿using Chessy.Model;
+using Chessy.Model.Component;
 using Chessy.Model.Entity;
 using Chessy.Model.Enum;
 using Chessy.Model.System;
@@ -21,6 +22,12 @@ namespace Chessy.View.System
         readonly EntitiesView _eV;
 
         readonly SyncUnitVS _syncUnitVS;
+        readonly SyncMainToolWeaponUnitVS _syncMainToolWeaponUnitVS;
+        readonly SyncExtraToolWeaponUnitVS _syncExtraToolWeaponUnitVS;
+        readonly ShiftUnitVS _shiftUnitVS;
+        readonly CloudShiftVS _cloudShiftVS;
+
+        readonly UpdateAllViewC _needUpdateViewC;
 
 
         public SystemsView(in EntitiesView eV, in EntitiesModel eM) : base(eM)
@@ -29,8 +36,8 @@ namespace Chessy.View.System
             _eV = eV;
 
             var cellParentGOCs = new GameObjectVC[IndexCellsValues.CELLS];
-            var blackVisisionSrCs = new SpriteRendererVC[IndexCellsValues.CELLS];
-            var redCircularSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
+            var blackVisisionSrCs = new SpriteRenderer[IndexCellsValues.CELLS];
+            var redCircularSRCs = new SpriteRenderer[IndexCellsValues.CELLS];
             var needFoodSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var buildingFlagSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var riverEs = new RiverVE[IndexCellsValues.CELLS];
@@ -47,20 +54,20 @@ namespace Chessy.View.System
             var shieldSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var frozenArrawRightSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
             var frozenArrawUpSRCs = new SpriteRendererVC[IndexCellsValues.CELLS];
-            var trailsSRCs = new SpriteRendererVC[IndexCellsValues.CELLS, (byte)DirectTypes.End];
-            var buildingSRCs = new Dictionary<BuildingTypes, SpriteRendererVC[]>();
+            var trailsSRCs = new SpriteRenderer[IndexCellsValues.CELLS, (byte)DirectTypes.End];
+            var buildingSRCs = new SpriteRenderer[IndexCellsValues.CELLS][];
             //var circularAttackKingSRCs = new AnimationVC[IndexCellsValues.CELLS];
 
             for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
             {
-                buildingSRCs.Add(buildingT, new SpriteRendererVC[IndexCellsValues.CELLS]);
+                buildingSRCs[(byte)buildingT] = new SpriteRenderer[IndexCellsValues.CELLS];
             }
 
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
                 cellParentGOCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).CellParentGOC;
-                blackVisisionSrCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).SupportCellEs.NoneSRC;
-                redCircularSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).RedCircularSRC;
+                blackVisisionSrCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).SupportCellEs.NoneSRC.SR;
+                redCircularSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).RedCircularSRC.SR;
                 needFoodSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.Block(CellBlockTypes.NeedFood);
                 buildingFlagSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).BuildingEs.FlagSRC;
                 riverEs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).RiverE;
@@ -79,17 +86,21 @@ namespace Chessy.View.System
                 frozenArrawUpSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.EffectE.FrozenArraw(false);
                 //circularAttackKingSRCs[cellIdxCurrent] = eV.CellEs(cellIdxCurrent).UnitEs.CircularAttackAnimC;
 
+                buildingSRCs[cellIdxCurrent] = new SpriteRenderer[(byte)BuildingTypes.End];
+
                 for (var directT = (DirectTypes)1; directT < DirectTypes.End; directT++)
                 {
-                    trailsSRCs[cellIdxCurrent, (byte)directT] = eV.CellEs(cellIdxCurrent).TrailCellVC(directT);
+                    trailsSRCs[cellIdxCurrent, (byte)directT] = eV.CellEs(cellIdxCurrent).TrailCellVC(directT).SR;
                 }
                 for (var buildingT = (BuildingTypes)1; buildingT < BuildingTypes.End; buildingT++)
                 {
-                    buildingSRCs[buildingT][cellIdxCurrent] = eV.CellEs(cellIdxCurrent).BuildingEs.Main(buildingT);
+                    buildingSRCs[cellIdxCurrent][(byte)buildingT] = eV.CellEs(cellIdxCurrent).BuildingEs.Main(buildingT).SR;
                 }
             }
 
             _syncUnitVS = new SyncUnitVS(eV, eM);
+            _syncMainToolWeaponUnitVS = new SyncMainToolWeaponUnitVS(eV, eM);
+            _syncExtraToolWeaponUnitVS = new SyncExtraToolWeaponUnitVS(eV, eM);
 
             _updates = new List<Action>()
             {
@@ -121,7 +132,16 @@ namespace Chessy.View.System
                 new SyncTrailVS(trailsSRCs, eM).Sync,
 
                 _syncUnitVS.Sync,
+                _syncMainToolWeaponUnitVS.Sync,
+                _syncExtraToolWeaponUnitVS.Sync,
             };
+
+
+            _shiftUnitVS = new ShiftUnitVS(eV, eM);
+            _cloudShiftVS = new CloudShiftVS(eV, eM);
+
+
+            _needUpdateViewC = _e.UpdateAllViewC;
         }
 
         public void Update()
@@ -131,57 +151,21 @@ namespace Chessy.View.System
                 if (_eM.UnitNeedUpdateViewC(cellIdxCurrent).NeedUpdateView)
                 {
                     _syncUnitVS.Sync(cellIdxCurrent);
+                    _syncMainToolWeaponUnitVS.Sync(cellIdxCurrent);
+                    _syncExtraToolWeaponUnitVS.Sync(cellIdxCurrent);
                     _eM.UnitNeedUpdateViewC(cellIdxCurrent).NeedUpdateView = false;
                 }
             }
 
-            if (_eM.NeedUpdateView)
+            if (_needUpdateViewC.NeedUpdateView)
             {
                 _updates.ForEach((Action action) => action.Invoke());
 
-
-
-                _eM.NeedUpdateView = false;
+                _needUpdateViewC.NeedUpdateView = false;
             }
 
-            var t = Time.deltaTime * 7f;
-            if (!PhotonNetwork.IsMasterClient) t /= 1.5f;
-            if (t > 1) t = 1;
-
-            for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
-            {
-                var whereSkinIdxCell = _e.WhereViewDataUnitC(cellIdxCurrent).ViewIdxCellP;
-
-                if ( _e.UnitPossitionOnCellC(whereSkinIdxCell).PositionP.magnitude > 0)
-                {
-
-
-                    _eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position = Vector3.Lerp(_eV.CellEs(whereSkinIdxCell).UnitEs.ParentTC.Transform.position, _e.UnitPossitionOnCellC(whereSkinIdxCell).PositionP, t);
-                }
-
-
-
-                if (_e.IsCenterCloud(cellIdxCurrent))
-                {
-                    whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(cellIdxCurrent).ViewIdxCellP;
-
-                    var curPos = _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position;
-                    var nextPos = _e.CloudPossitionC(whereSkinIdxCell).PositionP;
-
-                    _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(curPos, nextPos, t);
-
-
-                    foreach (var item in _e.IdxsCellsAround(cellIdxCurrent, DistanceFromCellTypes.First))
-                    {
-                        whereSkinIdxCell = _e.CloudWhereViewDataOnCellC(item).ViewIdxCellP;
-
-                        curPos = _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.position;
-                        nextPos = _e.CloudPossitionC(whereSkinIdxCell).PositionP;
-
-                        _eV.CellEs(whereSkinIdxCell).CloudSRC.Transform.parent.position = Vector3.Lerp(curPos, nextPos, t);
-                    }
-                }
-            }
+            _shiftUnitVS.Sync();
+            _cloudShiftVS.Sync();
         }
     }
 }

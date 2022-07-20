@@ -15,20 +15,20 @@ namespace Chessy.View.UI.System
 
         internal override void Sync()
         {
-            _bookUIE.ParenGOC.TrySetActive(_e.BookC.IsOpenedBook());
+            _bookUIE.ParenGOC.TrySetActive(_bookC.IsOpenedBook());
 
-            if (_e.BookC.IsOpenedBook())
+            if (_bookC.IsOpenedBook())
             {
                 for (var pageT = PageBookTypes.None + 1; pageT < PageBookTypes.End; pageT++)
                 {
-                    _bookUIE.PageGOC(pageT).TrySetActive(pageT == _e.OpenedNowPageBookT);
+                    _bookUIE.PageGOC(pageT).TrySetActive(pageT == _bookC.OpenedNowPageBookT);
                 }
 
-                _bookUIE.BackButtonC.SetActive(_e.OpenedNowPageBookT != PageBookTypes.Main);
-                _bookUIE.NextButtonC.SetActive(_e.OpenedNowPageBookT < PageBookTypes.End - 1);
+                _bookUIE.BackButtonC.SetActive(_bookC.OpenedNowPageBookT != PageBookTypes.Main);
+                _bookUIE.NextButtonC.SetActive(_bookC.OpenedNowPageBookT < PageBookTypes.End - 1);
 
-                _bookUIE.LeftPageTextC.TextUI.text = ((int)_e.OpenedNowPageBookT).ToString() + "/" + _e.OpenedNowPageBookT;
-                _bookUIE.RightPageTextC.TextUI.text = ((int)_e.OpenedNowPageBookT + 1).ToString() + "/" + _e.OpenedNowPageBookT;
+                _bookUIE.LeftPageTextC.TextUI.text = ((int)_bookC.OpenedNowPageBookT).ToString() + "/" + _bookC.OpenedNowPageBookT;
+                _bookUIE.RightPageTextC.TextUI.text = ((int)_bookC.OpenedNowPageBookT + 1).ToString() + "/" + _bookC.OpenedNowPageBookT;
             }
         }
     }

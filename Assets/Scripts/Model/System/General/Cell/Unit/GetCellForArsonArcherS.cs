@@ -16,7 +16,7 @@ namespace Chessy.Model.System
                     {
                         for (var dirT = DirectTypes.None + 1; dirT < DirectTypes.End; dirT++)
                         {
-                            var idx_1 = _e.GetIdxCellByDirect(cellIdxCurrent, DistanceFromCellTypes.First, dirT);
+                            var idx_1 = _e.GetIdxCellByDirectAround(cellIdxCurrent, dirT);
 
                             if (!_e.HaveFire(idx_1))
                             {

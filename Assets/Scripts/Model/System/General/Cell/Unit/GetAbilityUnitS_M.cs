@@ -1,19 +1,33 @@
-﻿using Chessy.Model.Values;
+﻿using Chessy.Model.Component;
+using Chessy.Model.Entity;
+using Chessy.Model.Values;
 using System;
 
 namespace Chessy.Model.System
 {
-    sealed partial class GetDataCellsAfterAnyDoingS_M : SystemModelAbstract
+    sealed class GetAbilityUnitS_M : SystemModelAbstract
     {
+        readonly ButtonsAbilitiesUnitC[] _buttonsAbilitiesUnitCs = new ButtonsAbilitiesUnitC[IndexCellsValues.CELLS];
+
+        internal GetAbilityUnitS_M(in SystemsModel sM, EntitiesModel eM) : base(sM, eM)
+        {
+            for (byte cellIdxCurrent_0 = 0; cellIdxCurrent_0 < IndexCellsValues.CELLS; cellIdxCurrent_0++)
+            {
+                _buttonsAbilitiesUnitCs[cellIdxCurrent_0] = _e.UnitButtonAbilitiesC(cellIdxCurrent_0);
+            }
+        }
+
         internal void GetAbilityUnit()
         {
             for (byte cellIdxCurrent = 0; cellIdxCurrent < IndexCellsValues.CELLS; cellIdxCurrent++)
             {
-                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.None);
-                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.None);
-                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.None);
-                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fourth, AbilityTypes.None);
-                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fifth, AbilityTypes.None);
+                if (_cellCs[cellIdxCurrent].IsBorder) continue;
+
+                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.None);
+                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.None);
+                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.None);
+                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fourth, AbilityTypes.None);
+                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fifth, AbilityTypes.None);
 
 
                 if (_e.UnitT(cellIdxCurrent).HaveUnit())
@@ -23,16 +37,16 @@ namespace Chessy.Model.System
                         case UnitTypes.None: throw new Exception();
 
                         case UnitTypes.King:
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.CircularAttack);
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fourth, AbilityTypes.KingPassiveNearBonus);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.CircularAttack);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fourth, AbilityTypes.KingPassiveNearBonus);
                             break;
 
                         case UnitTypes.Pawn:
 
                             if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                             {
-                                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
-                                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
+                                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.FireArcher);
+                                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.ChangeCornerArcher);
                             }
                             else if (_e.MainToolWeaponT(cellIdxCurrent).Is(ToolsWeaponsWarriorTypes.Staff))
                             {
@@ -40,19 +54,19 @@ namespace Chessy.Model.System
                             }
                             else
                             {
-                                _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.Seed);
+                                _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.Seed);
 
                                 if (_e.HaveBuildingOnCell(cellIdxCurrent))
                                 {
-                                    _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.DestroyBuilding);
+                                    _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.DestroyBuilding);
                                 }
                                 else
                                 {
-                                    _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
+                                    _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.SetFarm);
                                 }
 
-                                if (_e.HaveFire(cellIdxCurrent)) _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
-                                else _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
+                                if (_e.HaveFire(cellIdxCurrent)) _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.PutOutFirePawn);
+                                else _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.FirePawn);
 
 
 
@@ -75,23 +89,23 @@ namespace Chessy.Model.System
                             break;
 
                         case UnitTypes.Elfemale:
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.StunElfemale);
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.GrowAdultForest);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.StunElfemale);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.GrowAdultForest);
 
                             break;
 
                         case UnitTypes.Snowy:
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.IncreaseWindSnowy);
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.DecreaseWindSnowy);
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.ChangeDirectionWind);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.IncreaseWindSnowy);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.DecreaseWindSnowy);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.ChangeDirectionWind);
                             //E.UnitEs(Idx).Ability(ButtonTypes.Third, AbilityTypes.IceWall;
                             break;
 
                         case UnitTypes.Undead:
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.First, AbilityTypes.Resurrect);
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Second, AbilityTypes.SetTeleport);
-                            _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Third, AbilityTypes.InvokeSkeletons);
-                            if (_e.HaveBuildingOnCell(cellIdxCurrent)) _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.First, AbilityTypes.Resurrect);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Second, AbilityTypes.SetTeleport);
+                            _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Third, AbilityTypes.InvokeSkeletons);
+                            if (_e.HaveBuildingOnCell(cellIdxCurrent)) _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fourth, AbilityTypes.DestroyBuilding);
                             break;
 
                         case UnitTypes.Hell:
@@ -111,7 +125,7 @@ namespace Chessy.Model.System
 
                     if (_e.IsBuildingOnCell(cellIdxCurrent, BuildingTypes.Teleport))
                     {
-                        _e.UnitButtonAbilitiesC(cellIdxCurrent).SetAbility(ButtonTypes.Fifth, AbilityTypes.Teleport);
+                        _buttonsAbilitiesUnitCs[cellIdxCurrent].SetAbility(ButtonTypes.Fifth, AbilityTypes.Teleport);
                     }
                 }
             }

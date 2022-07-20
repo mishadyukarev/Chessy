@@ -9,9 +9,8 @@ using UnityEngine;
 
 namespace Chessy.Model.System
 {
-    public partial class SystemsModel : IUpdate
+    public partial class SystemsModel : SystemAbstract, IUpdate
     {
-        protected readonly EntitiesModel _e;
         readonly List<Action> _runs;
 
         internal readonly UnitSystems UnitSs;
@@ -22,15 +21,14 @@ namespace Chessy.Model.System
         internal readonly ForPhotonSceneS ForPhotonSceneS;
         internal readonly SyncDataS SyncDataS;
         internal readonly TryShiftCloudsMS TryShiftCloudsMS;
+        internal readonly TryExecuteShiftingUnitS TryExecuteShiftingUnitS;
         internal readonly OnPhotonSerializeViewS OnPhotonSerializeViewS;
 
         public readonly ForButtonsSystemsModel ForUISs;
 
 
-        public SystemsModel(in EntitiesModel eM)
+        public SystemsModel(in EntitiesModel eM) : base(eM)
         {
-            _e = eM;
-
             _runs = new List<Action>()
             {
                 new InputS(this, eM).Update,
@@ -46,8 +44,8 @@ namespace Chessy.Model.System
             AIBotS = new ExecuteAIBotLogicAfterUpdateS_M(this, eM);
             ExecuteUpdateEverythingMS = new ExecuteUpdateEverythingMS(this, eM);
             RpcSs = new RpcInternetSs(this, eM);
-            SyncDataS = new SyncDataS(this, eM);
             TryShiftCloudsMS = new TryShiftCloudsMS(this, eM);
+            TryExecuteShiftingUnitS = new TryExecuteShiftingUnitS(this, eM);
 
             ForPhotonSceneS = new ForPhotonSceneS(this, eM);
             ForUISs = new ForButtonsSystemsModel(this, eM);
@@ -57,16 +55,14 @@ namespace Chessy.Model.System
             
 
             Application.runInBackground = true;
-            var nowTime = DateTime.Now;
-            _e.AdC = new AdC(nowTime);
-            _e.OpenedNowPageBookT = PageBookTypes.None;
-            _e.SceneT = SceneTypes.Menu;
+            _bookC.OpenedNowPageBookT = PageBookTypes.None;
+            _aboutGameC.SceneT = SceneTypes.Menu;
             _dateTimeLastUpdate = DateTime.Now;
         }
         
         public void ToggleScene(in SceneTypes newSceneT)
         {
-            _e.SceneT = newSceneT;
+            _aboutGameC.SceneT = newSceneT;
 
             switch (newSceneT)
             {
@@ -91,14 +87,14 @@ namespace Chessy.Model.System
         public void ComeIntoTrainingAfterDownloadingGame()
         {
             PhotonNetwork.OfflineMode = true;
-            _e.GameModeT = GameModeTypes.TrainingOffline;
+            _aboutGameC.GameModeT = GameModeTypes.TrainingOffline;
             PhotonNetwork.CreateRoom(default);
         }
 
 
         internal void RainyGiveWaterToUnitsAround(in byte cellIdx)
         {
-            foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdx, DistanceFromCellTypes.First))
+            foreach (var cellIdxDirect in _e.IdxsCellsAround(cellIdx))
             {
                 if (_e.UnitT(cellIdxDirect).HaveUnit())
                 {
@@ -130,8 +126,6 @@ namespace Chessy.Model.System
         internal void ExecuteAnimationClip(in byte cellIdx, in AnimationCellTypes animationCellT) => _e.DataFromViewC.AnimationCell(cellIdx, animationCellT).Invoke();
         internal void ExecuteAnimationCellDirectlyClip(in byte cellIdx, in CellAnimationDirectlyTypes cellAnimationDirectlyT) => _e.DataFromViewC.AnimationCellDirectly(cellAnimationDirectlyT).Invoke(cellIdx);
 
-        internal void ActiveMotion() => _e.MotionTimer = 4;
-
         internal void ExecuteMistake(in MistakeTypes mistakeT, in float[] needRes)
         {
             Mistake(mistakeT);
@@ -155,15 +149,15 @@ namespace Chessy.Model.System
 
         internal void SetNextLesson()
         {
-            if (_e.CommonInfoAboutGameC.LessonT == LessonTypes.End - 1)
+            if (_e.AboutGameC.LessonT == LessonTypes.End - 1)
             {
-                _e.CommonInfoAboutGameC.LessonT = LessonTypes.None;
+                _e.AboutGameC.LessonT = LessonTypes.None;
             }
-            else _e.CommonInfoAboutGameC.LessonT++;
+            else _e.AboutGameC.LessonT++;
         }
         internal void SetPreviousLesson()
         {
-            _e.CommonInfoAboutGameC.LessonT--;
+            _e.AboutGameC.LessonT--;
         }
     }
 }

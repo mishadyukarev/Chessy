@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Model.Component
 {
-    public struct NeedUpdateViewC
+    public sealed class NeedUpdateViewC
     {
         public bool NeedUpdateView;
     }

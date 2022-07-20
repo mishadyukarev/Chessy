@@ -3,11 +3,11 @@ using Chessy.Model.Enum;
 
 namespace Chessy.Model
 {
-    public struct CellAroundE
+    public sealed class CellAroundE
     {
         public readonly IdxCellC IdxC;
         public readonly XyCellC XyC;
-        public CellAroundC CellAroundC;
+        public readonly CellAroundC CellAroundC;
 
         internal CellAroundE(in byte cellIdx, in byte[] xy, in DirectTypes dirT, in DistanceFromCellTypes levelFromCellT)
         {

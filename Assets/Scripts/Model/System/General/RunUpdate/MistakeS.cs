@@ -24,12 +24,12 @@ namespace Chessy.Model
                 }
             }
 
-            if (_e.MotionTimer > 0)
-            {
-                _e.MotionTimer -= Time.deltaTime;
+            //if (_e.MotionTimer > 0)
+            //{
+            //    _e.MotionTimer -= Time.deltaTime;
 
-                if (_e.MotionTimer <= 0) _e.NeedUpdateView = true;
-            }
+            //    if (_e.MotionTimer <= 0) _e.NeedUpdateView = true;
+            //}
         }
     }
 }

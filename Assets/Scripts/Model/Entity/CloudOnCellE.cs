@@ -2,19 +2,27 @@
 
 namespace Chessy.Model.Entity
 {
-    public struct CloudOnCellE
+    public sealed class CloudOnCellE
     {
-        public CloudC CloudC;
-        public WhereViewIdxCellC WhereSkinAndWhereDataInfoC;
-        public ShiftingObjectC ShiftingC;
-        public PositionC PositionC;
+        public readonly CloudC CloudC = new CloudC();
+        public readonly WhereViewIdxCellC WhereSkinAndWhereDataInfoC = new WhereViewIdxCellC();
+        public readonly ShiftingObjectC ShiftingC = new ShiftingObjectC();
+        public readonly PositionC PositionC = new PositionC();
 
         internal void Dispose()
         {
             CloudC.Dispose();
-            WhereSkinAndWhereDataInfoC = default;
-            ShiftingC = default;
-            PositionC = default;
+            WhereSkinAndWhereDataInfoC.Dispose();
+            ShiftingC.Dispose();
+            PositionC.Dispose();
+        }
+
+        internal void Clone(in CloudOnCellE newCloudOnCellE)
+        {
+            CloudC.Clone(newCloudOnCellE.CloudC);
+            WhereSkinAndWhereDataInfoC.Clone(newCloudOnCellE.WhereSkinAndWhereDataInfoC);
+            ShiftingC.Clone(newCloudOnCellE.ShiftingC);
+            PositionC.Clone(newCloudOnCellE.PositionC);
         }
     }
 }

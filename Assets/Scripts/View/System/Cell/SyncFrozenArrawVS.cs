@@ -32,7 +32,7 @@ namespace Chessy.View.System
 
                     if (_e.UnitT(dataIdxCell).HaveUnit())
                     {
-                        if (_e.UnitVisibleC(dataIdxCell).IsVisible(_e.CurrentPlayerIT))
+                        if (_e.UnitVisibleC(dataIdxCell).IsVisible(_aboutGameC.CurrentPlayerIType))
                         {
                             if (_e.MainToolWeaponT(dataIdxCell).Is(ToolsWeaponsWarriorTypes.BowCrossbow))
                             {

@@ -8,6 +8,9 @@ namespace Chessy.View.UI.System
 {
     sealed class UniqueButtonUIS : SystemUIAbstract
     {
+        bool _needActive;
+        bool _wasActivated;
+
         readonly ButtonTypes _buttonT;
         readonly UniqueButtonUIE _buttonE;
         readonly FromResourcesC _resources;
@@ -23,52 +26,53 @@ namespace Chessy.View.UI.System
         {
             var ability_cur = _e.UnitButtonAbilitiesC(_e.SelectedCellIdx).Ability(_buttonT);
 
-            var needActive = false;
+            _needActive = false;
 
-            if (_e.UnitPlayerT(_e.SelectedCellIdx) == _e.CurrentPlayerIT && ability_cur != AbilityTypes.None)
+            if (_e.UnitPlayerT(_e.SelectedCellIdx) == _aboutGameC.CurrentPlayerIType && ability_cur != AbilityTypes.None)
             {
                 if (_buttonT == ButtonTypes.First)
                 {
                     if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.SeedingPawn)
                     {
-                        needActive = true;
+                        _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Second)
                 {
                     if (!_e.LessonT.HaveLesson() || _e.LessonT >= LessonTypes.Build1Farms)
                     {
-                        needActive = true;
+                        _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Third)
                 {
                     if (!_e.LessonT.HaveLesson())
                     {
-                        needActive = true;
+                        _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Fourth)
                 {
                     if (!_e.LessonT.HaveLesson())
                     {
-                        needActive = true;
+                        _needActive = true;
                     }
                 }
                 else if (_buttonT == ButtonTypes.Fifth)
                 {
                     if (!_e.LessonT.HaveLesson())
                     {
-                        needActive = true;
+                        _needActive = true;
                     }
                 }
             }
 
 
-            _buttonE.ParenC.TrySetActive(needActive);
+            if (_needActive != _wasActivated) _buttonE.ParenC.GO.SetActive(_needActive);
 
+            _wasActivated = _needActive;
 
-            if (needActive)
+            if (_needActive)
             {
                 _buttonE.CooldonwTextC.SetActiveParent(_e.UnitCooldownAbilitiesC(_e.SelectedCellIdx).HaveCooldown(ability_cur));
                 _buttonE.CooldonwTextC.TextUI.text = _e.UnitCooldownAbilitiesC(_e.SelectedCellIdx).Cooldown(ability_cur).ToString();
